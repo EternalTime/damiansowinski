@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: The Universe is Mathemagical
+title: The Universe is Mathemagical!
 email: DRSowinski@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Everything is interesting! Mathematics provides us with a rich language for talking
@@ -29,7 +29,9 @@ url: "https://damiansowinski.com"
 baseurl: ""
 twitter_username: DRSowinski
 github_username:  EternalTime
-
+minima:
+  social_links:
+    linkedin: damian-sowinski-413b4214
 
 
 # Build settings

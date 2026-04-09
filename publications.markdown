@@ -4,7 +4,9 @@ title: Publications
 permalink: /publications/
 ---
 
-<h1>Publications</h1>
+<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
+  Publications (with no pay-walls!)
+</h1>
 
 <div id="publications-list"></div>
 
@@ -14,6 +16,19 @@ permalink: /publications/
 const Cite = require('citation-js');
 
 const bibtex = `
+
+
+@article{sowinski2026beh,
+  title     = {Behavioral Speciation in the Neuroevolution of Recurrent Neural Net Foragers driven by Environmental Homogeneity},
+  author    = {Sowinski, Damian R},
+  journal   = {.},
+  volume    = {.},
+  number    = {Submitted to ALife Conference},
+  pages     = {.},
+  year      = {2026},
+  publisher = {.},
+  url       = {/assets/docs/RNNs_Sowinski_2026.pdf}
+}
 
 @article{sowinski2025exo,
   title     = {Exo-Daisy World: Revisiting Gaia theory through an informational architecture perspective},
@@ -124,17 +139,6 @@ const bibtex = `
   journal   = {Ph. D. Thesis},
   year      = {2016}
 }
-
-@article{gleiser2013information,
-  title     = {Information-entropic stability bound for compact objects: Application to Q-balls and the Chandrasekhar limit of polytropes},
-  author    = {Gleiser, Marcelo and Sowinski, Damian},
-  journal   = {Physics Letters B},
-  volume    = {727},
-  number    = {1-3},
-  pages     = {272--275},
-  year      = {2013},
-  publisher = {Elsevier},
-  url       = {/assets/docs/Polytropes_Sowinski_2013.pdf}
 }
 
 @article{pinero2026information,
@@ -142,7 +146,8 @@ const bibtex = `
   author    = {Pinero, Jordi and Sowinski, Damian R and Ghoshal, Gourab and Frank, Adam and Kolchinsky, Artemy},
   journal   = {Communications Physics},
   year      = {2026},
-  publisher = {Nature Publishing Group UK London}
+  publisher = {Nature Publishing Group UK London},
+  url       = {/assets/docs/Replicators_Pinero_2026.pdf}
 }
 
 @article{quillen2025notions,
@@ -163,7 +168,8 @@ const bibtex = `
   volume    = {15},
   number    = {1},
   year      = {2025},
-  publisher = {The Royal Society}
+  publisher = {The Royal Society},
+  url={/assets/docs/Pressure_McGarry_2025.pdf}
 }
 
 @article{mcgarry2022mapping,
@@ -172,7 +178,8 @@ const bibtex = `
   journal   = {Medical Image Analysis},
   volume    = {78},
   year      = {2022},
-  publisher = {Elsevier}
+  publisher = {Elsevier},
+  url={/assets/docs/Transverse_McGarry_2022.pdf}
 }
 
 @article{mcgarry2021heterogenous,
@@ -183,7 +190,8 @@ const bibtex = `
   number    = {5},
   pages     = {055029},
   year      = {2021},
-  publisher = {IOP Publishing}
+  publisher = {IOP Publishing},
+  url       = {/assets/docs/NITI_McGarry_2021.pdf}
 }
 
 @article{hannum2022correlated,
@@ -260,7 +268,6 @@ const bibtex = `
   year      = {2013},
   publisher = {Elsevier}
 }
-
 `;
 
 const cite = new Cite(bibtex);
