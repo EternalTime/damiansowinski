@@ -1,0 +1,175 @@
+@font-face {
+  font-family: 'Lazer84';
+  src: url('../fonts/Lazer84/Lazer84.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('../fonts/EB_Garamond/EBGaramond-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('../fonts/EB_Garamond/EBGaramond-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('../fonts/Source_Code_Pro/SourceCodePro-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('../fonts/Source_Code_Pro/SourceCodePro-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Pump';
+  src: url('../fonts/Pump/PumpOpti-Medium.otf') format('opentype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Pump';
+  src: url('../fonts/Pump/PumpOpti-DemiBold.otf') format('opentype');
+  font-weight: 600;
+}
+
+/* === Fonts === */
+body, p, li, td, th, blockquote {
+  font-family: 'EB Garamond', Georgia, serif !important;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: #222;
+}
+
+a, a:visited, a:link {
+  font-family: 'EB Garamond', Georgia, serif !important;
+  color: #23bbad !important;
+  text-shadow: 1px 0px 0px #000;
+}
+
+a:hover {
+  color: #ff6da2 !important;
+  text-decoration: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Pump', Georgia, serif !important;
+  font-weight: 600;
+}
+
+code, pre, tt {
+  font-family: 'Source Code Pro', monospace !important;
+  font-size: 0.88rem;
+}
+
+.site-title, .site-title:visited {
+  font-family: 'Pump', sans-serif !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 0.05em;
+}
+
+.site-nav a {
+  font-family: 'EB Garamond', Georgia, serif !important;
+  transition: text-shadow 0.2s ease;
+}
+
+.site-nav a:hover {
+  text-shadow: 1px 2px 4px #23bbad !important;
+}
+
+/* === Gradient title === */
+.gradient-text {
+  background: linear-gradient(to right, var(--teal-light), var(--pink-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+}
+
+.gradient-text2 {
+  background: linear-gradient(to right, var(--teal-dark), var(--pink-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+}
+
+/* === Layout === */
+.page-content {
+  padding: 0 !important;
+}
+
+.page-content > .wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* === Floating paper === */
+.paper-layer {
+  background-color: #ffffffd4;
+  max-width: 850px;
+  margin: 60px auto;
+  padding: 60px;
+  box-shadow:
+    0 4px 6px rgba(42, 190, 217, 0.9),
+    0 10px 40px rgba(42, 190, 217, 0.5),
+    0 30px 80px rgba(42, 190, 217, 0.2);
+  border-radius: 50px;
+  border: 5px solid rgba(42, 190, 217, 1);
+  overflow: hidden;
+}
+
+/* === Header / Footer === */
+.site-header {
+  background-color: transparent !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.site-footer {
+  background-color: transparent !important;
+  border-top: none !important;
+  box-shadow: none !important;
+  color: #ccc !important;
+}
+
+.site-title, .site-title:visited,
+.site-nav a, .site-nav a:visited,
+.site-footer a, .site-footer a:visited,
+.footer-col, .footer-col p {
+  color: #ff6da2!important;
+}
+
+#publications-list {
+  font-family: "EB Garamond", Times, serif; /* Traditional academic feel */
+  color: #333;
+}
+.csl-entry {
+  margin-bottom: 2em;
+  padding-left: 1.5em;
+  text-indent: -1.5em; /* Creates a hanging indent */
+}
+.csl-entry a {
+  color: #0077cc;
+  text-decoration: none;
+}
+.csl-entry a:hover {
+  text-decoration: underline;
+}
+
+/* === Press article titles === */
+.press-entry a strong {
+  font-size: 1.5em;
+}

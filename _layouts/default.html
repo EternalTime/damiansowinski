@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  {%- include head.html -%}
+
+  <link rel="stylesheet" href="{{ '/assets/css/palette.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <body>
+
+    <canvas id="wavy-grid" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background-color:#0f0f0f;"></canvas>
+
+    {%- include header.html -%}
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="paper-layer">
+          {{ content }}
+        </div>
+      </div>
+    </main>
+
+    {%- include footer.html -%}
+
+    <script>
+      (function() {
+        const canvas = document.getElementById('wavy-grid');
+        const ctx = canvas.getContext('2d');
+        let t = 0;
+
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          const spacing = 20;
+          const amplitude = 3;
+          const speed = 0.055;
+          ctx.lineWidth = 2;
+
+          // Diagonal gradient: green (top-left) to blue (bottom-right)
+          const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+          grad.addColorStop(0, 'rgba(35, 187, 173, 0.28)');   /* --teal-dark */
+          grad.addColorStop(1, 'rgba(249, 38, 114, 0.28)');   /* --pink-dark */
+          ctx.strokeStyle = grad;
+
+          for (let y = 0; y < canvas.height + spacing; y += spacing) {
+            ctx.beginPath();
+            for (let x = 0; x <= canvas.width; x += 2) {
+              const wave = amplitude * Math.sin((x / 80) + (y / 120) + t);
+              if (x === 0) ctx.moveTo(x, y + wave);
+              else ctx.lineTo(x, y + wave);
+            }
+            ctx.stroke();
+          }
+
+          for (let x = 0; x < canvas.width + spacing; x += spacing) {
+            ctx.beginPath();
+            for (let y = 0; y <= canvas.height; y += 2) {
+              const wave = amplitude * Math.sin((y / 80) + (x / 120) + t);
+              if (y === 0) ctx.moveTo(x + wave, y);
+              else ctx.lineTo(x + wave, y);
+            }
+            ctx.stroke();
+          }
+
+          t += speed;
+          requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        draw();
+      })();
+    </script>
+
+  </body>
+
+</html>
