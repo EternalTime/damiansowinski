@@ -1,25 +1,47 @@
 ---
 permalink: /404.html
-layout: page
+layout: default
 ---
 
-<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
+<div class="paper-layer" style="text-align: center; padding: 100px 20px;">
+  <div class="container">
+    
+    <h1 style="font-family: 'Pump', sans-serif; font-size: 8em; line-height: 1; margin: 0; background: linear-gradient(to right, #23bbad, #f92672); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;">
+      404
+    </h1>
+
+    <div style="margin-top: 20px;">
+      <h2 style="font-family: 'Pump', sans-serif; font-size: 1.5em; text-transform: uppercase; letter-spacing: 2px; color: #555;">
+        Observation Failed
+      </h2>
+      
+      <p style="font-size: 1.1em; color: #666; max-width: 500px; margin: 20px auto; line-height: 1.6;">
+        The resource you are looking for does not exist in this manifold. It may have been moved, deleted, or never existed in this coordinate system.
+      </p>
+      
+      <div style="margin-top: 40px;">
+        <a href="{{ '/' | relative_url }}" style="font-family: 'Pump', sans-serif; text-decoration: none; color: #0077cc; border: 2px solid #0077cc; padding: 10px 20px; border-radius: 4px; transition: all 0.3s ease;">
+          Return to Origin
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  /* Hover effect for your Pump-styled button */
+  .container a:hover {
+    background-color: cyan;
+    color: #fff !important;
   }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
+  
+  /* Ensure the paper layer centers nicely on the 404 page */
+  .paper-layer {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 </style>
-
-<div class="container">
-  <h1>404</h1>
-
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
