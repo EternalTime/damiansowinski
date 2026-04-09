@@ -1,0 +1,8 @@
+/* 80s Retro Palette — color-hex.com/color-palette/89476 */
+:root {
+  --teal-dark:  #23bbad;  /* rgb(35, 187, 173)  */
+  --teal-light: #25d9c8;  /* rgb(37, 217, 200)  */
+  --cyan:       #2abed9;  /* rgb(42, 190, 217)  */
+  --pink-light: #ff6da2;  /* rgb(255, 109, 162) */
+  --pink-dark:  #f92672;  /* rgb(249, 38, 114)  */
+}
