@@ -276,7 +276,7 @@ entries.forEach(entry => {
 });
 
 output = output.replace(
-  /(https?:\/\/[^\s<>"]+|\/damiansowinski\/assets\/docs\/[^\s<>"]+)/g,
+  /(https?:\/\/[^\s<>"]+|\/assets\/docs\/[^\s<>"]+)/g,
   '<a href="$1" target="_blank" style="font-size: 0.7em; font-weight: bold;">[PDF]</a>'
 );
 
