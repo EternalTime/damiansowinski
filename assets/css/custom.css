@@ -1,3 +1,8 @@
+/* ============================================================
+   FONT DECLARATIONS
+   Local font files loaded from assets/fonts/
+   ============================================================ */
+
 @font-face {
   font-family: 'Lazer84';
   src: url('../fonts/Lazer84/Lazer84.ttf') format('truetype');
@@ -45,7 +50,10 @@
   font-weight: 600;
 }
 
-/* === Fonts === */
+/* ============================================================
+   BODY & GENERAL TEXT
+   Base font, size, line height, and color for all body text
+   ============================================================ */
 body, p, li, td, th, blockquote {
   font-family: 'EB Garamond', Georgia, serif !important;
   font-size: 1.15rem;
@@ -53,6 +61,28 @@ body, p, li, td, th, blockquote {
   color: #222;
 }
 
+/* ============================================================
+   HEADINGS
+   All h1-h6 use Pump font
+   ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Pump', Georgia, serif !important;
+  font-weight: 600;
+}
+
+/* ============================================================
+   CODE & MONOSPACE
+   Inline code, code blocks, and teletype text
+   ============================================================ */
+code, pre, tt {
+  font-family: 'Source Code Pro', monospace !important;
+  font-size: 0.88rem;
+}
+
+/* ============================================================
+   LINKS
+   Default link color, visited, and hover states
+   ============================================================ */
 a, a:visited, a:link {
   font-family: 'EB Garamond', Georgia, serif !important;
   color: #23bbad !important;
@@ -64,32 +94,11 @@ a:hover {
   text-decoration: none !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Pump', Georgia, serif !important;
-  font-weight: 600;
-}
-
-code, pre, tt {
-  font-family: 'Source Code Pro', monospace !important;
-  font-size: 0.88rem;
-}
-
-.site-title, .site-title:visited {
-  font-family: 'Pump', sans-serif !important;
-  font-size: 1.1rem !important;
-  letter-spacing: 0.05em;
-}
-
-.site-nav a {
-  font-family: 'EB Garamond', Georgia, serif !important;
-  transition: text-shadow 0.2s ease;
-}
-
-.site-nav a:hover {
-  text-shadow: 1px 2px 4px #23bbad !important;
-}
-
-/* === Gradient title === */
+/* ============================================================
+   GRADIENT TEXT STYLES
+   .gradient-text  — light teal to light pink (used for main title)
+   .gradient-text2 — dark teal to dark pink (used for subtitles)
+   ============================================================ */
 .gradient-text {
   background: linear-gradient(to right, var(--teal-light), var(--pink-light));
   -webkit-background-clip: text;
@@ -104,7 +113,11 @@ code, pre, tt {
   display: block;
 }
 
-/* === Layout === */
+/* ============================================================
+   LAYOUT
+   Removes Minima's default padding/margin from the content wrapper
+   so the paper-layer can center itself
+   ============================================================ */
 .page-content {
   padding: 0 !important;
 }
@@ -115,7 +128,11 @@ code, pre, tt {
   margin: 0 !important;
 }
 
-/* === Floating paper === */
+/* ============================================================
+   FLOATING PAPER
+   The white/translucent content card floating over the background
+   Adjust border-radius, border color, and box-shadow for the glow
+   ============================================================ */
 .paper-layer {
   background-color: #ffffffd4;
   max-width: 850px;
@@ -124,52 +141,95 @@ code, pre, tt {
   box-shadow:
     0 4px 6px rgba(42, 190, 217, 0.9),
     0 10px 40px rgba(42, 190, 217, 0.5),
-    0 30px 80px rgba(42, 190, 217, 0.2);
+    0 30px 80px rgba(42, 191, 217, 0.652);
   border-radius: 50px;
   border: 5px solid rgba(42, 190, 217, 1);
   overflow: hidden;
 }
 
-/* === Header / Footer === */
+/* ============================================================
+   HEADER
+   Top bar — transparent background, Pump font
+   ============================================================ */
 .site-header {
   background-color: transparent !important;
   border-top: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
+  font-family: 'Pump', Times, serif;
 }
 
+/* Site title (upper left) */
+.site-header .site-title,
+.site-header .site-title:visited,
+.site-header a.site-title {
+  font-family: 'Pump', sans-serif !important;
+  font-size: 1.5rem !important;
+  letter-spacing: 0.05em;
+  transition: text-shadow 0.2s ease;
+}
+
+.site-header a:hover {
+  text-shadow: 1px 2px 4px #23bbad !important;
+}
+
+/* Nav links (upper right — About, Research, etc.) */
+.site-nav a {
+  font-family: 'Pump', Georgia, serif !important;
+  transition: text-shadow 0.2s ease;
+}
+
+.site-nav a:hover {
+  text-shadow: 1px 2px 4px #23bbad !important;
+}
+
+/* ============================================================
+   FOOTER
+   Bottom bar — transparent background, light text
+   ============================================================ */
 .site-footer {
   background-color: transparent !important;
   border-top: none !important;
   box-shadow: none !important;
-  color: #ccc !important;
+  color:  #ff6da2;
 }
 
+/* Header and footer link/text colors */
 .site-title, .site-title:visited,
 .site-nav a, .site-nav a:visited,
 .site-footer a, .site-footer a:visited,
 .footer-col, .footer-col p {
-  color: #ff6da2!important;
+  color: #ff6da2 !important;
 }
 
+/* ============================================================
+   PUBLICATIONS
+   Citation.js rendered entries
+   ============================================================ */
 #publications-list {
-  font-family: "EB Garamond", Times, serif; /* Traditional academic feel */
+  font-family: 'EB Garamond', Times, serif;
   color: #333;
 }
+
 .csl-entry {
   margin-bottom: 2em;
   padding-left: 1.5em;
-  text-indent: -1.5em; /* Creates a hanging indent */
+  text-indent: -1.5em; /* Hanging indent */
 }
+
 .csl-entry a {
   color: #0077cc;
   text-decoration: none;
 }
+
 .csl-entry a:hover {
   text-decoration: underline;
 }
 
-/* === Press article titles === */
+/* ============================================================
+   PRESS PAGE
+   Article title size relative to description text
+   ============================================================ */
 .press-entry a strong {
   font-size: 1.5em;
 }
