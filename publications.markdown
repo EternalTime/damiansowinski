@@ -24,7 +24,7 @@ const bibtex = `
   pages     = {176},
   year      = {2025},
   publisher = {The American Astronomical Society},
-  url       = {/damiansowinski/assets/docs/ExoDaisy_Sowinski_2025.pdf}
+  url       = {/assets/docs/ExoDaisy_Sowinski_2025.pdf}
 }
 
 @inproceedings{sowinski2025causal,
@@ -36,7 +36,7 @@ const bibtex = `
   pages     = {43},
   year      = {2025},
   organization = {MIT Press},
-  url       = {/damiansowinski/assets/docs/CLD_Sowinski_2025.pdf}
+  url       = {/assets/docs/CLD_Sowinski_2025.pdf}
 }
 
 @article{sowinski2025configurational,
@@ -44,7 +44,7 @@ const bibtex = `
   author    = {Sowinski, Damian R and Kelty, Sean and Ghoshal, Gourab},
   journal   = {arXiv preprint arXiv:2503.02980},
   year      = {2025},
-  url       = {/damiansowinski/assets/docs/Ising_Sowinski_2025.pdf}
+  url       = {/assets/docs/Ising_Sowinski_2025.pdf}
 }
 
 @article{sowinski2024information,
@@ -56,7 +56,7 @@ const bibtex = `
   pages     = {043188},
   year      = {2024},
   publisher = {APS},
-  url       = {/damiansowinski/assets/docs/Kuramoto_Sowinski_2024.pdf}
+  url       = {/assets/docs/Kuramoto_Sowinski_2024.pdf}
 }
 
 @article{sowinski2023semantic,
@@ -68,7 +68,7 @@ const bibtex = `
   pages     = {023003},
   year      = {2023},
   publisher = {APS},
-  url       = {/damiansowinski/assets/docs/Foraging_Sowinski_2023.pdf}
+  url       = {/assets/docs/Foraging_Sowinski_2023.pdf}
 }
 
 @article{sowinski2022consensus,
@@ -80,7 +80,7 @@ const bibtex = `
   pages     = {1378},
   year      = {2022},
   publisher = {MDPI},
-  url       = {/damiansowinski/assets/docs/Consensus_Sowinski_2022.pdf}
+  url       = {/assets/docs/Consensus_Sowinski_2022.pdf}
 }
 
 @article{sowinski2021poroelasticity,
@@ -91,7 +91,7 @@ const bibtex = `
   pages     = {617582},
   year      = {2021},
   publisher = {Frontiers Media SA},
-  url       = {/damiansowinski/assets/docs/Poro_Sowinski_2020.pdf}
+  url       = {/assets/docs/Poro_Sowinski_2020.pdf}
 }
 
 @article{gleiser2018configurational,
@@ -103,7 +103,7 @@ const bibtex = `
   pages     = {056026},
   year      = {2018},
   publisher = {APS},
-  url       = {/damiansowinski/assets/docs/Instantons_Sowinski_2018.pdf}
+  url       = {/assets/docs/Instantons_Sowinski_2018.pdf}
 }
 
 @article{sowinski2017information,
@@ -115,7 +115,7 @@ const bibtex = `
   pages     = {1221--1232},
   year      = {2017},
   publisher = {Springer},
-  url       = {/damiansowinski/assets/docs/PhaseDynamics_Sowinski_2017.pdf}
+  url       = {/assets/docs/PhaseDynamics_Sowinski_2017.pdf}
 }
 
 @article{sowinski2016complexity,
@@ -134,7 +134,7 @@ const bibtex = `
   pages     = {272--275},
   year      = {2013},
   publisher = {Elsevier},
-  url       = {/damiansowinski/assets/docs/Polytropes_Sowinski_2013.pdf}
+  url       = {/assets/docs/Polytropes_Sowinski_2013.pdf}
 }
 
 @article{pinero2026information,
