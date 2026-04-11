@@ -34,6 +34,14 @@ minima:
     linkedin: damian-sowinski-413b4214
 
 
+header_pages:
+  - about.markdown
+  - publications.markdown
+  - research.markdown
+  - teaching.markdown
+  - notes.markdown
+  - press.markdown
+
 # Build settings
 theme: minima
 plugins:
@@ -47,7 +55,8 @@ plugins:
 # Excluded items can be processed by explicitly listing the directories or
 # their entries' file path in the `include:` list.
 #
-# exclude:
+exclude:
+    - Teaching/university-of-rochester/
 #   - .sass-cache/
 #   - .jekyll-cache/
 #   - gemfiles/
