@@ -5,7 +5,7 @@ permalink: /about/
 ---
 
 <img src="{{ '/assets/images/profile_photo.jpg' | relative_url }}"
-     style="float: right; width: 40%; margin: 0 0 20px 20px; border-radius: 15px; border: 5px solid #ff6da2;"
+     style="float: right; width: 40%; margin: 0 0 20px 20px; border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
      alt="Description">
  
 
@@ -18,11 +18,11 @@ I earned my B.A. in physics from the University of California, Berkeley, and my 
 After completing my doctorate I postdoced in multiple fields: neuroscience, psychophysics, and continuum mechanics/biomedical physics. I was a fellow at the Institute for Cross-Disciplinary Engagement, giving me a multi-faceted perspective on the scientific endeavor.
 
 <img src="{{ '/assets/images/Ursy.png' | relative_url }}"
-     style="float: right; width: 35%; margin: 0 20px 20px 20px; border-radius: 15px; border: 5px solid #ff6da2;"
+     style="float: right; width: 35%; margin: 0 20px 20px 20px; border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
      alt="Description"> 
 
 <img src="{{ '/assets/images/Gaius.png' | relative_url }}"
-     style="float: left; width: 30%; margin: 20px 20px 0 0px;border-radius: 15px; border: 5px solid #ff6da2;"
+     style="float: left; width: 30%; margin: 20px 20px 0 0px;border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
      alt="Description">
 
 I have loved art and mathematics for as long as I can remember. 
@@ -39,6 +39,6 @@ He likes lounging at home all day with his younger brother, Gaius, whose favorit
 Animals are amazing, and I'm grateful to have these three guys in my life. 
 
 <img src="{{ '/assets/images/Cosmas.png' | relative_url }}"
-     style="float: right; width: 30%; margin: 0 0 20px 20px;border-radius: 15px; border: 5px solid #ff6da2;"
+     style="float: right; width: 30%; margin: 0 0 20px 20px;border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
      alt="Description">
 
