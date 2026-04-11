@@ -27,7 +27,7 @@ const bibtex = `
   pages     = {.},
   year      = {2026},
   publisher = {.},
-  url       = {/assets/docs/RNNs_Sowinski_2026.pdf}
+  url       = {/assets/docs/papers/RNNs_Sowinski_2026.pdf}
 }
 
 @article{sowinski2025exo,
@@ -39,7 +39,7 @@ const bibtex = `
   pages     = {176},
   year      = {2025},
   publisher = {The American Astronomical Society},
-  url       = {/assets/docs/ExoDaisy_Sowinski_2025.pdf}
+  url       = {/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf}
 }
 
 @inproceedings{sowinski2025causal,
@@ -51,7 +51,7 @@ const bibtex = `
   pages     = {43},
   year      = {2025},
   organization = {MIT Press},
-  url       = {/assets/docs/CLD_Sowinski_2025.pdf}
+  url       = {/assets/docs/papers/CLD_Sowinski_2025.pdf}
 }
 
 @article{sowinski2025configurational,
@@ -59,7 +59,7 @@ const bibtex = `
   author    = {Sowinski, Damian R and Kelty, Sean and Ghoshal, Gourab},
   journal   = {arXiv preprint arXiv:2503.02980},
   year      = {2025},
-  url       = {/assets/docs/Ising_Sowinski_2025.pdf}
+  url       = {/assets/docs/papers/Ising_Sowinski_2025.pdf}
 }
 
 @article{sowinski2024information,
@@ -71,7 +71,7 @@ const bibtex = `
   pages     = {043188},
   year      = {2024},
   publisher = {APS},
-  url       = {/assets/docs/Kuramoto_Sowinski_2024.pdf}
+  url       = {/assets/docs/papers/Kuramoto_Sowinski_2024.pdf}
 }
 
 @article{sowinski2023semantic,
@@ -83,7 +83,7 @@ const bibtex = `
   pages     = {023003},
   year      = {2023},
   publisher = {APS},
-  url       = {/assets/docs/Foraging_Sowinski_2023.pdf}
+  url       = {/assets/docs/papers/Foraging_Sowinski_2023.pdf}
 }
 
 @article{sowinski2022consensus,
@@ -95,7 +95,7 @@ const bibtex = `
   pages     = {1378},
   year      = {2022},
   publisher = {MDPI},
-  url       = {/assets/docs/Consensus_Sowinski_2022.pdf}
+  url       = {/assets/docs/papers/Consensus_Sowinski_2022.pdf}
 }
 
 @article{sowinski2021poroelasticity,
@@ -106,7 +106,7 @@ const bibtex = `
   pages     = {617582},
   year      = {2021},
   publisher = {Frontiers Media SA},
-  url       = {/assets/docs/Poro_Sowinski_2020.pdf}
+  url       = {/assets/docs/papers/Poro_Sowinski_2020.pdf}
 }
 
 @article{gleiser2018configurational,
@@ -118,7 +118,7 @@ const bibtex = `
   pages     = {056026},
   year      = {2018},
   publisher = {APS},
-  url       = {/assets/docs/Instantons_Sowinski_2018.pdf}
+  url       = {/assets/docs/papers/Instantons_Sowinski_2018.pdf}
 }
 
 @article{sowinski2017information,
@@ -130,7 +130,7 @@ const bibtex = `
   pages     = {1221--1232},
   year      = {2017},
   publisher = {Springer},
-  url       = {/assets/docs/PhaseDynamics_Sowinski_2017.pdf}
+  url       = {/assets/docs/papers/PhaseDynamics_Sowinski_2017.pdf}
 }
 
 @article{sowinski2016complexity,
@@ -147,7 +147,7 @@ const bibtex = `
   journal   = {Communications Physics},
   year      = {2026},
   publisher = {Nature Publishing Group UK London},
-  url       = {/assets/docs/Replicators_Pinero_2026.pdf}
+  url       = {/assets/docs/papers/Replicators_Pinero_2026.pdf}
 }
 
 @article{quillen2025notions,
@@ -169,7 +169,7 @@ const bibtex = `
   number    = {1},
   year      = {2025},
   publisher = {The Royal Society},
-  url={/assets/docs/Pressure_McGarry_2025.pdf}
+  url={/assets/docs/papers/Pressure_McGarry_2025.pdf}
 }
 
 @article{mcgarry2022mapping,
@@ -179,7 +179,7 @@ const bibtex = `
   volume    = {78},
   year      = {2022},
   publisher = {Elsevier},
-  url={/assets/docs/Transverse_McGarry_2022.pdf}
+  url={/assets/docs/papers/Transverse_McGarry_2022.pdf}
 }
 
 @article{mcgarry2021heterogenous,
@@ -191,7 +191,7 @@ const bibtex = `
   pages     = {055029},
   year      = {2021},
   publisher = {IOP Publishing},
-  url       = {/assets/docs/NITI_McGarry_2021.pdf}
+  url       = {/assets/docs/papers/NITI_McGarry_2021.pdf}
 }
 
 @article{hannum2022correlated,
