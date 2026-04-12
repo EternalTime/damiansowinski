@@ -1,7 +1,4 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
 layout: default
 mathjax: true
 ---
@@ -27,10 +24,10 @@ Artificial Life & Intelligence | Complexity | Information | Simulation |Visualiz
 
 <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 40px;">
   <video style="flex: 1; min-width: 0; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
-    <source src="{{ '/assets/videos/flockMF_0p15.mp4' | relative_url }}" type="video/mp4">
+    <source src="{{ '/assets/videos/flockMF_0p45.mp4' | relative_url }}" type="video/mp4">
   </video>
   <video style="flex: 1; min-width: 0; border-radius: 15px; border: 3px solid #25d9c8;  filter: drop-shadow(0px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
-    <source src="{{ '/assets/videos/flockMF_0p45.mp4' | relative_url }}" type="video/mp4">
+    <source src="{{ '/assets/videos/flockMF_0p15.mp4' | relative_url }}" type="video/mp4">
   </video>
   <video style="flex: 1; min-width: 0; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(-1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
     <source src="{{ '/assets/videos/flockMF_0p75.mp4' | relative_url }}" type="video/mp4">
