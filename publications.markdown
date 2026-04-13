@@ -4,10 +4,13 @@ title: Publications
 permalink: /publications/
 ---
 
+<a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
 <h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
   Publications (with no pay-walls!)
 </h1>
 
+---
+<br>
 <div id="publications-list"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/citation-js"></script>

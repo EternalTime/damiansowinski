@@ -3,6 +3,8 @@ layout: default
 title: Press
 permalink: /press/
 ---
+
+<a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
 <h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
   Press Releases, Media Mentions, & Podcasts
 </h1>

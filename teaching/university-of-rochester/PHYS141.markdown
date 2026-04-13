@@ -4,8 +4,7 @@ title: PHYS141
 permalink: /teaching/university-of-rochester/PHYS141/
 nav_exclude: true
 ---
-
-
+<a href="{{ '/teaching/' | relative_url }}" style="float: right;">← Back to Teaching</a>
 <div style="font-size: 1.5em;"><strong>Physics 141: Honors Classical Mechanics</strong></div>
 <br>
 <div> 
@@ -23,7 +22,6 @@ Welcome!
 <br>
 Here are notes on some of the topics you will learn about:
 <ul>
-  <li><a href="{{ '/assets/docs/notes/notes_shell_theorem.pdf' | relative_url }}">Newton's Shell Theorem</a></li>
   <li><a href="{{ '/assets/docs/notes/notes_shell_theorem.pdf' | relative_url }}">Newton's Shell Theorem</a></li>
 </ul>
 
