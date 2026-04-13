@@ -4,9 +4,13 @@ title: Teaching
 permalink: /teaching/
 ---
 
+<a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
 <h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
   Teaching
 </h1>
+
+---
+<br>
 <h2>University of Rochester</h2>
 <a href="{{ '/teaching/university-of-rochester/PHYS100/' | relative_url }}">PHYS 100: Physics and the Natural World</a>
 <br>
