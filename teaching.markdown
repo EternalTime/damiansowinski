@@ -11,6 +11,11 @@ permalink: /teaching/
 
 ---
 <br>
+<h2>Institute for Cross-Disciplinary Engagement<br> at Dartmouth College</h2>
+<a href="{{ '/teaching/ice-dartmouth/Lectures/' | relative_url }}">From Epistemology to Information, 3 part lecture series</a>
+
+---
+<br>
 <h2>University of Rochester</h2>
 <a href="{{ '/teaching/university-of-rochester/PHYS100/' | relative_url }}">PHYS 100: Physics and the Natural World</a>
 <br>

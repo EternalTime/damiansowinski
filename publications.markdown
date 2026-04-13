@@ -205,7 +205,8 @@ const bibtex = `
   number    = {3},
   pages     = {1313--1328},
   year      = {2022},
-  publisher = {Wiley Online Library}
+  publisher = {Wiley Online Library},
+  url       = {/assets/docs/papers/Noise_Hannum_2021.pdf}
 }
 
 @article{jyoti2022quantifying,
@@ -216,7 +217,8 @@ const bibtex = `
   number    = {3},
   pages     = {035015},
   year      = {2022},
-  publisher = {IOP Publishing}
+  publisher = {IOP Publishing},
+  url       = {/assets/docs/papers/Stability_Jyoti_2021.pdf}
 }
 
 @article{bowen2022visual,
@@ -227,7 +229,8 @@ const bibtex = `
   number    = {11},
   pages     = {4--4},
   year      = {2022},
-  publisher = {The Association for Research in Vision and Ophthalmology}
+  publisher = {The Association for Research in Vision and Ophthalmology},
+  url       = {/assets/docs/papers/Vision_Bowen_2021.pdf}
 }
 
 @article{gleiser2018configurational,
@@ -238,7 +241,8 @@ const bibtex = `
   number    = {9},
   pages     = {096007},
   year      = {2018},
-  publisher = {APS}
+  publisher = {APS},
+  url       = {/assets/docs/papers/Oscillons_Gleiser_2018.pdf}
 }
 
 @incollection{key,
@@ -258,7 +262,8 @@ const bibtex = `
   volume    = {747},
   pages     = {125--128},
   year      = {2015},
-  publisher = {Elsevier}
+  publisher = {Elsevier},
+  url       = {/assets/docs/papers/Critical_Gleiser_2018.pdf}
 }
 
 @article{gleiser2013information,
@@ -269,7 +274,8 @@ const bibtex = `
   number    = {1-3},
   pages     = {272--275},
   year      = {2013},
-  publisher = {Elsevier}
+  publisher = {Elsevier},
+  url       = {/assets/docs/papers/Polytropes_Gleiser_2013.pdf}
 }
 `;
 
