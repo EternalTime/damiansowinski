@@ -4,6 +4,7 @@ title: PHYS100
 permalink: /teaching/university-of-rochester/PHYS100/
 nav_exclude: true
 ---
+<a href="{{ '/teaching/' | relative_url }}" style="float: right;">← Back to Teaching</a>
 <div style="font-size: 1.5em;"><strong>Physics 100: Physics and the Natural World</strong></div>
 <br>
 <div> 

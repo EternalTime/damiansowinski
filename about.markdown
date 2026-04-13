@@ -4,6 +4,8 @@ title: About
 permalink: /about/
 ---
 
+<a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
+<br>
 <img src="{{ '/assets/images/profile_photo.jpg' | relative_url }}"
      style="float: right; width: 40%; margin: 0 0 20px 20px; border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
      alt="Description">
