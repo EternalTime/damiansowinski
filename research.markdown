@@ -45,10 +45,17 @@ Or is it, too, simply a bag of chemicals, reacting and metabolizing its surround
 <br>
  
  ---
- <h2>The coevolution of Agents and their Environments</h2>
+<br>
+<h2>The coevolution of Agents and their Environments</h2>
 
-<video style="float: left; width: 50%; margin: 0 0 20px 20px; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(-1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
-  <source src="{{ '/assets/videos/MicroCosmos.mp4' | relative_url }}" type="video/mp4">
-</video>
+<div style="display: flex; gap: 40px; align-items: flex-start;">
+  <video style="flex-shrink: 0; width: 50%; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(-1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
+    <source src="{{'/assets/videos/MicroCosmos.mp4' | relative_url }}" type="video/mp4">
+  </video>
+  <div>
+Life does not emerge from the soup of particles that is our Universe fully formed.
+<a href="{{ 'https://www.nature.com/articles/s41586-023-06600-9' }}">Assembly theory</a> provides an excellent argument for why evolution starts as soon as molecules reach sizes of around 20 atoms. 
+The combinatorial explosion in possible molecular configurations begins to vastly outnumber the 
 
-Life does not emerge from the soup of particles that is our Universe fully formed. 
+  </div>
+</div>
