@@ -10,6 +10,45 @@ permalink: /research/
 
 ---
 <br>
+<h2>The Role of Information in Physics and Biology</h2>
+Information is a slippery concept.
+Is it a subjective quantity or an objective one?
+It's probably clear that there's information in a book.
+What about a book written in a language you don't understand?
+The book may be informative to someone, even if it is not informative to you, so it still contains information.
+What if the book is written in a language that no living person can read?
+Does it still contain information?
+To describe these situations more precisely one needs to distill information that has meaning from the information that doesn't.
+Subjective, meaningful information is *semantic*.
+The structural aspects of information, which may or may not have semantics, is referred to as *syntactic*.
+
+Surprisingly (pun intended, IYKYK), syntactic information is closely related to entropy, an objective aspect of the physical world.
+Take the microcanonical definition of entropy as the number of microstates in a given macrostate; for example imagine all the ways that the stuff in your bedroom could be positioned. 
+A cheeky way of describing entropy is to say that there are WAAAY more ways for your bedroom to be disorganized than there are ways of it being organized.
+Where is your favorite shirt?
+In a disorganized room, you may have to look in many places before you find it, the room is said to have higher entropy.
+Entropy is synonymous with uncertainty - the more uncertain you are about the exact state of your bedroom, the more entropy it has.
+When you look around your bedroom you discount areas where the shirt is not, becoming more certain about where the shirt actually is. 
+The information you gain reduces your uncertainty; the entropy of the room is smaller the more you know about it!
+
+Wait up. Hold on. Didn't that last paragraph start by saying that entropy is an objective aspect of the world?
+Why are we talking about subjective uncertainty?
+Thermodynamic entropy is related to the temperature of a system. 
+How can looking around for a particular molecule (your favorite one) in a gas, change the temperature of the gas?!
+Here's where the subjective and the objective shake hands to create what seems like a paradox. 
+When you find your favorite shirt in your messy room, you grab it and put it on. 
+Or put it into a dresser drawer. 
+Whatever.
+The point is that you organize your room a little with the information you gain.
+Similarly, one can use the information about a particular molecule in a gas to change the temperature of the gas.
+James Clerk Maxwell first described such a 
+
+<button class="applet-launch-btn" onclick="demonOpen()">Maxwell's Demon</button>
+
+{% include maxwell_demon_applet.html %}
+
+---
+<br>
 <h2>The Emergence of Agency</h2>
 
 <video style="float: right; width: 50%; margin: 0 0 20px 20px; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(-1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
@@ -54,8 +93,16 @@ Or is it, too, simply a bag of chemicals, reacting and metabolizing its surround
   </video>
   <div>
 Life does not emerge from the soup of particles that is our Universe fully formed.
-<a href="{{ 'https://www.nature.com/articles/s41586-023-06600-9' }}">Assembly theory</a> provides an excellent argument for why evolution starts as soon as molecules reach sizes of around 20 atoms. 
-The combinatorial explosion in possible molecular configurations begins to vastly outnumber the 
+<a href="{{ 'https://www.nature.com/articles/s41586-023-06600-9' }}">Assembly theory</a> provides an excellent argument for why evolution starts as soon as molecules reach sizes of around 20 atoms: 
+the combinatorial explosion in possible molecular configurations vastly exceeds the exploratory ability of all the atoms in the universe!
+Natural selection places pressure on any configurations that reach that size, leading to lineages of ever growing complexity. 
+
 
   </div>
 </div>
+
+---
+<br>
+<h2>Try It: LEAFS Foraging Simulator</h2>
+
+{% include leafs_applet.html %}

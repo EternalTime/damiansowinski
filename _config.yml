@@ -41,6 +41,7 @@ header_pages:
   - teaching.markdown
   - notes.markdown
   - press.markdown
+  - applets.markdown
 
 # Build settings
 theme: minima

@@ -1,0 +1,488 @@
+<!-- ISING Applet Include -->
+
+<style>
+
+/* ── Overlay backdrop ── */
+#ising-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+#ising-overlay.ising-open {
+  display: block;
+  pointer-events: auto;
+}
+
+/* ── Shared panel style ── */
+.ising-panel {
+  position: fixed;
+  z-index: 910;
+  background: #16212a;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  border: 2px solid #25d9c8;
+  box-shadow:
+    -12px 0 40px rgba(42, 191, 217, 0.55),
+     12px 0 40px rgba(255, 109, 162, 0.55),
+     0 12px 40px rgba(42, 191, 217, 0.4);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity  0.0s ease;
+  opacity: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.ising-panel.ising-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.ising-panel.ising-closing {
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ── Header panel — slides from top ── */
+#ising-header {
+  left:   var(--ising-left);
+  top:    var(--ising-top-hdr);
+  width:  var(--ising-W);
+  height: var(--ising-H-hdr);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  transform: translateY(-120px);
+}
+#ising-header.ising-open { transform: translateY(0); }
+#ising-header h2 {
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: #eef2f5;
+  font-weight: normal;
+  margin: 0;
+  text-transform: uppercase;
+}
+#ising-close-btn {
+  background: none;
+  border: 1px solid #3d5a6e;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 3px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#ising-close-btn:hover { background: #2a3d4e; }
+
+/* ── Sim panel — slides from left ── */
+#ising-sim-panel {
+  left:   var(--ising-left);
+  top:    var(--ising-top-body);
+  width:  var(--ising-W-sim);
+  height: var(--ising-H-body);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-110vw);
+}
+#ising-sim-panel.ising-open { transform: translateX(0); }
+#ising-canvas {
+  flex: 1;
+  display: block;
+  width: 100%;
+  min-height: 0;
+  image-rendering: pixelated;
+}
+
+/* ── Controls panel — slides from right ── */
+#ising-ctrl-panel {
+  top:    var(--ising-top-body);
+  left:   calc(var(--ising-left) + var(--ising-W-sim) + var(--ising-gap));
+  width:  var(--ising-W-ctrl);
+  height: var(--ising-H-body);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #1a2530;
+  transform: translateX(110vw);
+}
+#ising-ctrl-panel.ising-open { transform: translateX(0); }
+
+.ising-ctrl-section {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #2e3f4f;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ising-ctrl-section:last-child { border-bottom: none; }
+
+.ising-ctrl-title {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #a8c0d0;
+  margin: 0 0 2px;
+}
+
+/* slider rows: label on left, slider fills remaining width, value on right */
+.ising-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.ising-slider-row .ising-side {
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: #a8c0d0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.ising-slider-row input[type=range] {
+  flex: 1;
+  min-width: 0;        /* allow shrink below intrinsic size */
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(100,120,140,0.35);
+  outline: none;
+  cursor: pointer;
+}
+.ising-slider-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #25d9c8;
+  cursor: pointer;
+  margin-top: -4.5px;
+}
+.ising-slider-row input[type=range]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #25d9c8;
+  border: none;
+  cursor: pointer;
+}
+.ising-val {
+  font-size: 16px;
+  color: #25d9c8;
+  min-width: 34px;
+  text-align: right;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.ising-btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ising-btn {
+  background: #2a3d4e;
+  color: #eef2f5;
+  border: 1px solid #3d5a6e;
+  padding: 5px 14px;
+  cursor: pointer;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.ising-btn:hover { background: #3a5060; }
+.ising-btn.active {
+  background: #1e3a4a;
+  border-color: #25d9c8;
+  color: #25d9c8;
+  box-shadow: 0 0 10px rgba(37, 217, 200, 0.6), 0 0 20px rgba(37, 217, 200, 0.3);
+}
+</style>
+
+
+<!-- Overlay -->
+<div id="ising-overlay">
+
+  <!-- Header: slides from top -->
+  <div id="ising-header" class="ising-panel">
+    <h2>Ising Model &mdash; Glauber Dynamics</h2>
+    <button id="ising-close-btn" onclick="isingClose()">Close</button>
+  </div>
+
+  <!-- Sim canvas: slides from left -->
+  <div id="ising-sim-panel" class="ising-panel">
+    <canvas id="ising-canvas"></canvas>
+  </div>
+
+  <!-- Controls: slides from right -->
+  <div id="ising-ctrl-panel" class="ising-panel">
+
+    <div class="ising-ctrl-section">
+      <div class="ising-ctrl-title">Temperature</div>
+      <div class="ising-slider-row">
+        <span class="ising-side">Cold</span>
+        <input type="range" id="ising-temp" min="0.5" max="5.0" step="0.05" value="2.5">
+        <span class="ising-side">Hot</span>
+      </div>
+    </div>
+
+    <div class="ising-ctrl-section">
+      <div class="ising-ctrl-title">Speed</div>
+      <div class="ising-slider-row">
+        <span class="ising-side">Slow</span>
+        <input type="range" id="ising-speed" min="1" max="20" step="1" value="10">
+        <span class="ising-side">Fast</span>
+      </div>
+    </div>
+
+    <div class="ising-ctrl-section">
+      <div class="ising-ctrl-title">Lattice</div>
+      <div class="ising-btn-row">
+        <button class="ising-btn active" id="ising-btn-square"   onclick="isingSetLattice('square')">Square</button>
+        <button class="ising-btn"        id="ising-btn-triangle" onclick="isingSetLattice('triangle')">Triangular</button>
+      </div>
+    </div>
+
+    <div class="ising-ctrl-section">
+      <div class="ising-ctrl-title">Coupling</div>
+      <div class="ising-btn-row">
+        <button class="ising-btn active" id="ising-btn-ferro"  onclick="isingSetCoupling('ferro')">Ferro</button>
+        <button class="ising-btn"        id="ising-btn-antiferro" onclick="isingSetCoupling('antiferro')">Antiferro</button>
+      </div>
+    </div>
+
+    <div class="ising-ctrl-section">
+      <div class="ising-ctrl-title">Initialise</div>
+      <div class="ising-btn-row">
+        <button class="ising-btn" onclick="isingHotStart()">Hot</button>
+        <button class="ising-btn" onclick="isingColdStart()">Cold</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  /* ── Layout constants ── */
+  const GAP     = 10;
+  const PAD     = 20;
+  const PHI     = 1.6180339887;
+
+  /* ── Simulation constants ── */
+  const N = 400;
+  const TC = 2.269;
+
+  /* ── State ── */
+  const spins = new Int8Array(N * N);
+  let T              = 2.5;
+  let sweepsPerFrame = 10;
+  let running        = false;
+  let frameId        = null;
+  let lattice        = 'square';   // 'square' | 'triangle'
+  let J              = 1;          // +1 ferromagnetic, -1 antiferromagnetic
+
+  // expTable indexed by dE + maxNeighbours*2
+  // square:   neighbours=4, dE in {-8..8 step 4}, offset=8,  size=17
+  // triangle: neighbours=6, dE in {-12..12 step 4}, offset=12, size=25
+  const expTable = new Float64Array(25);
+
+  function buildExpTable() {
+    const maxdE = lattice === 'triangle' ? 12 : 8;
+    for (let dE = -maxdE; dE <= maxdE; dE += 4) {
+      expTable[dE + 12] = Math.exp(-dE / T);
+    }
+  }
+
+  function hotStart() {
+    for (let i = 0; i < N * N; i++) spins[i] = Math.random() < 0.5 ? 1 : -1;
+  }
+
+  function coldStart() { spins.fill(1); }
+
+  /* ── Monte-Carlo sweep ── */
+  function sweep() {
+    const tri = lattice === 'triangle';
+    for (let k = 0; k < N * N; k++) {
+      const i   = (Math.random() * N * N) | 0;
+      const row = (i / N) | 0;
+      const col = i % N;
+      const s   = spins[i];
+      const rU  = ((row - 1 + N) % N) * N;
+      const rD  = ((row + 1)     % N) * N;
+      const cL  = (col - 1 + N) % N;
+      const cR  = (col + 1)     % N;
+      let sum =
+        spins[rU + col] +
+        spins[rD + col] +
+        spins[row * N + cL] +
+        spins[row * N + cR];
+      if (tri) {
+        // triangular lattice: two extra neighbours depend on row parity
+        // even rows: extra neighbours at (row-1, col+1) and (row+1, col+1)
+        // odd  rows: extra neighbours at (row-1, col-1) and (row+1, col-1)
+        const cX = (row % 2 === 0) ? cR : cL;
+        sum += spins[rU + cX] + spins[rD + cX];
+      }
+      const dE = 2 * J * s * sum;
+      if (dE <= 0 || Math.random() < expTable[dE + 12]) spins[i] = -s;
+    }
+  }
+
+  /* ── Rendering ── */
+  let canvas, ctx, imgData, buf;
+  // Per-cell pixel spans — recomputed in layout()
+  // rowStarts[r] = first pixel row for lattice row r
+  // colStarts[c] = first pixel col for lattice col c
+  let rowStarts = new Int32Array(N + 1);
+  let colStarts = new Int32Array(N + 1);
+
+  function initCanvas() {
+    canvas = document.getElementById('ising-canvas');
+    ctx    = canvas.getContext('2d');
+  }
+
+  function render() {
+    for (let row = 0; row < N; row++) {
+      const y0 = rowStarts[row], y1 = rowStarts[row + 1];
+      for (let col = 0; col < N; col++) {
+        // spin up → teal #25d9c8 (37,217,200), spin down → pink #f92672 (249,38,114)
+        const up = spins[row * N + col] === 1;
+        const r  = up ?  37 : 249;
+        const g  = up ? 217 :  38;
+        const b  = up ? 200 : 114;
+        const x0 = colStarts[col], x1 = colStarts[col + 1];
+        for (let py = y0; py < y1; py++) {
+          for (let px = x0; px < x1; px++) {
+            const idx    = (py * canvas.width + px) * 4;
+            buf[idx]     = r;
+            buf[idx + 1] = g;
+            buf[idx + 2] = b;
+            buf[idx + 3] = 255;
+          }
+        }
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+  }
+
+  function loop() {
+    if (running) {
+      for (let s = 0; s < sweepsPerFrame; s++) sweep();
+      render();
+    }
+    frameId = requestAnimationFrame(loop);
+  }
+
+  /* ── Layout ── */
+  function layout() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    // Square sim panel; ctrl width = S/φ; header height = S*0.1; all centred
+    const sFromW = (vw - 2 * PAD - GAP) / (1 + 1 / PHI);
+    const sFromH = (vh - 2 * PAD) / 1.1;
+    const S      = Math.floor(Math.min(sFromW, sFromH));
+
+    const ctrlW  = Math.floor(S / PHI);
+    const hdrH   = Math.floor(S * 0.1);
+    const totalW = S + GAP + ctrlW;
+    const left   = Math.floor((vw - totalW) / 2);
+    const top    = Math.floor((vh - (hdrH + S)) / 2);
+
+    const el = document.getElementById('ising-overlay');
+    el.style.setProperty('--ising-left',     left           + 'px');
+    el.style.setProperty('--ising-top-hdr',  top            + 'px');
+    el.style.setProperty('--ising-top-body', (top + hdrH)   + 'px');
+    el.style.setProperty('--ising-W',        totalW         + 'px');
+    el.style.setProperty('--ising-W-sim',    S              + 'px');
+    el.style.setProperty('--ising-W-ctrl',   ctrlW          + 'px');
+    el.style.setProperty('--ising-H-hdr',    hdrH           + 'px');
+    el.style.setProperty('--ising-H-body',   S              + 'px');
+    el.style.setProperty('--ising-gap',      GAP            + 'px');
+
+    if (canvas) {
+      canvas.width  = S;
+      canvas.height = S;
+      for (let i = 0; i <= N; i++) {
+        rowStarts[i] = Math.round(S * i / N);
+        colStarts[i] = Math.round(S * i / N);
+      }
+      imgData = ctx.createImageData(S, S);
+      buf     = imgData.data;
+      for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+    }
+  }
+
+  /* ── Open / close ── */
+  window.isingOpen = function () {
+    initCanvas();
+    layout();
+    hotStart();
+    buildExpTable();
+
+    document.getElementById('ising-overlay').classList.add('ising-open');
+    // slight delay so the display:block fires before transforms
+    requestAnimationFrame(() => {
+      document.getElementById('ising-header').classList.add('ising-open');
+      document.getElementById('ising-sim-panel').classList.add('ising-open');
+      document.getElementById('ising-ctrl-panel').classList.add('ising-open');
+    });
+
+    running = true;
+    if (!frameId) loop();
+  };
+
+  window.isingClose = function () {
+    running = false;
+    ['ising-header', 'ising-sim-panel', 'ising-ctrl-panel'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('ising-open');
+      el.classList.add('ising-closing');
+    });
+    setTimeout(() => {
+      document.getElementById('ising-overlay').classList.remove('ising-open');
+      ['ising-header', 'ising-sim-panel', 'ising-ctrl-panel'].forEach(id => {
+        document.getElementById(id).classList.remove('ising-closing');
+      });
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+    }, 550);
+  };
+
+  window.isingHotStart  = hotStart;
+  window.isingColdStart = coldStart;
+
+  window.isingSetLattice = function (type) {
+    lattice = type;
+    buildExpTable();
+    document.getElementById('ising-btn-square').classList.toggle('active',   type === 'square');
+    document.getElementById('ising-btn-triangle').classList.toggle('active', type === 'triangle');
+  };
+
+  window.isingSetCoupling = function (type) {
+    J = type === 'ferro' ? 1 : -1;
+    document.getElementById('ising-btn-ferro').classList.toggle('active',     type === 'ferro');
+    document.getElementById('ising-btn-antiferro').classList.toggle('active', type === 'antiferro');
+  };
+
+  window.addEventListener('resize', () => { if (running) layout(); });
+
+  /* ── Controls ── */
+  document.getElementById('ising-temp').addEventListener('input', function () {
+    T = parseFloat(this.value);
+    buildExpTable();
+  });
+
+  document.getElementById('ising-speed').addEventListener('input', function () {
+    sweepsPerFrame = parseInt(this.value);
+  });
+
+})();
+</script>

@@ -1,0 +1,64 @@
+LEAFS Applet — Fixed Simulation Parameters
+===========================================
+Generated: 2026-04-14
+
+SPATIAL GRID
+  Nx, Ny          = 5, 5          (number of regions along x and y)
+  L               = 10            (region side length) [L]
+  Domain          = 50 x 50       (Nx*L x Ny*L) [L]
+
+TIME
+  dt              = 0.025         [T]
+
+RESOURCE DYNAMICS
+  Gamma           = 0.001         (birth rate per unit area) [E / L² / T]
+  gamma           = 0.1           (decay rate) [1 / T]
+  epsilon         = 0.1           (energy per resource) [E]
+  N_eq per region = Gamma*L² / (epsilon*gamma)
+                  = 0.001*100 / (0.1*0.1) = 10  (agent-free equilibrium)
+
+AGENT PHYSICS
+  v               = 20.0          (translational speed) [L / T]
+  sigma           = 0.1           (tumble noise strength)
+  tau_A           = 1.0           (persistence timescale) [T]
+  dphi            = pi/8 = 22.5°  (rotation step magnitude) [rad]
+
+SENSORS
+  n_sensors       = 3
+  sensor_angles   = [-pi/3, 0, pi/3]  (relative to heading: -60°, 0°, +60°) [rad]
+  sensor_phi      = pi/6 = 30°    (cone half-angle) [rad]
+  R_sense         = 6.0           (sensing radius) [L]
+
+HARVESTING
+  r_col           = 1.0           (collection radius) [L]
+
+METABOLISM
+  mu0             = 1.0           (basal metabolic rate) [E / T]
+  b_rot           = 0             (rotational cost, disabled)
+  s_max           = 1.0           (maximum health) [E]
+
+REPRODUCTION
+  repro_threshold = 0.8 * s_max   (health threshold to reproduce)
+  daughters       = exact clones (no mutation)
+  spawn offset    = 1.5 L (random direction from mother)
+  health split    = mother and daughter each receive health/2
+
+POPULATION
+  n_agents (initial) = 5
+  repopulation       = none (extinction is terminal)
+
+SPEED SLIDER
+  Range: 1 – 20 steps per animation frame
+  Effective time advance per frame = steps * dt:
+    speed =  1  ->  0.025 T/frame
+    speed =  5  ->  0.125 T/frame
+    speed = 10  ->  0.250 T/frame
+    speed = 20  ->  0.500 T/frame
+
+GENOME ARCHITECTURE (single hidden-layer Elman RNN)
+  Inputs  : 3 binary cone sensors (no health input)
+  Hidden  : 3 units, tanh activation, Elman recurrent self-connection
+  Output  : 2 units (p_left, p_right); softmax over [y_left, 0, y_right]
+  Weights : W_in  (3x3), W_rec (3x3), W_out (2x3)
+  Biases  : b_in  (3x1), b_out (2x1)
+  Slider range for all weights and biases: [-1, 1]
