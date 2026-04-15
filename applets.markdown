@@ -3,6 +3,8 @@ layout: default
 title: Applets
 ---
 
+<a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
+<br>
 
 <button class="applet-launch-btn" onclick="isingOpen()">Ising Model</button>
 
