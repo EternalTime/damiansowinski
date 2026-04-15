@@ -18,6 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
+google_analytics: G-XR8KFTKTC1
 title: The Universe is Mathemagical!
 email: DRSowinski@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
@@ -32,7 +33,7 @@ github_username:  EternalTime
 minima:
   social_links:
     linkedin: damian-sowinski-413b4214
-
+google_analytics: "G-XR8KFTKTC1"
 
 header_pages:
   - about.markdown
