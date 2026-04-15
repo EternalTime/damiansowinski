@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ginzburg–Landau Field Theory</title>
+<style>
+  body {
+    background: #111;
+    color: #ddd;
+    font-family: monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 { font-size: 1.1em; letter-spacing: 0.1em; margin-bottom: 4px; }
+  p.eq { font-size: 0.8em; color: #aaa; margin: 2px 0 12px 0; }
+  canvas {
+    image-rendering: pixelated;
+    border: 1px solid #444;
+  }
+  .controls {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  label { font-size: 0.85em; }
+  input[type=range] { width: 140px; vertical-align: middle; }
+  button {
+    background: #333;
+    color: #ddd;
+    border: 1px solid #555;
+    padding: 4px 14px;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 0.85em;
+  }
+  button:hover { background: #444; }
+  .stat { font-size: 0.78em; color: #aaa; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<h1>Ginzburg–Landau / φ⁴ Field Theory</h1>
+<p class="eq">φ̈ + γφ̇ = ∇²φ + φ − φ³ + η &nbsp;|&nbsp; ⟨ηη⟩ = 2γT δ</p>
+
+<canvas id="canvas" width="256" height="256" style="width:512px;height:512px;"></canvas>
+
+<div class="controls">
+  <label>T = <span id="Tval">0.50</span>
+    <br><input type="range" id="Tslider" min="0" max="2" step="0.01" value="0.50">
+  </label>
+  <label>γ = <span id="Gval">1.00</span>
+    <br><input type="range" id="Gslider" min="0.1" max="5" step="0.05" value="1.00">
+  </label>
+  <label>dt = <span id="DTval">0.050</span>
+    <br><input type="range" id="DTslider" min="0.01" max="0.12" step="0.005" value="0.050">
+  </label>
+  <button id="resetBtn">Reset</button>
+  <button id="pauseBtn">Pause</button>
+</div>
+<div class="stat" id="stat"></div>
+
+<script>
+const N = 256;
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const imageData = ctx.createImageData(N, N);
+const buf = imageData.data;
+
+// Field arrays
+let phi     = new Float32Array(N * N);
+let phi_old = new Float32Array(N * N);  // φ at t-dt (for velocity via Verlet)
+let phi_new = new Float32Array(N * N);
+
+function idx(i, j) {
+  return ((i + N) % N) * N + ((j + N) % N);
+}
+
+function initRandom() {
+  for (let k = 0; k < N * N; k++) {
+    phi[k]     = (Math.random() - 0.5) * 0.5;
+    phi_old[k] = phi[k];  // zero initial velocity
+  }
+}
+
+// Box-Muller
+let _spare = null;
+function randn() {
+  if (_spare !== null) { const v = _spare; _spare = null; return v; }
+  let u, v, s;
+  do { u = Math.random()*2-1; v = Math.random()*2-1; s = u*u+v*v; } while (s>=1||s===0);
+  const m = Math.sqrt(-2*Math.log(s)/s);
+  _spare = v * m;
+  return u * m;
+}
+
+function getParams() {
+  return {
+    T:  parseFloat(document.getElementById('Tslider').value),
+    g:  parseFloat(document.getElementById('Gslider').value),
+    dt: parseFloat(document.getElementById('DTslider').value),
+  };
+}
+
+function step() {
+  const { T, g, dt } = getParams();
+  const dt2 = dt * dt;
+  const noiseMag = Math.sqrt(2 * g * T / dt2);  // per step, in Verlet form
+
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      const k = idx(i, j);
+      const p = phi[k];
+
+      // Laplacian (5-point)
+      const lap = phi[idx(i+1,j)] + phi[idx(i-1,j)]
+                + phi[idx(i,j+1)] + phi[idx(i,j-1)]
+                - 4 * p;
+
+      // V'(phi) for V = -phi^2/2 + phi^4/4  =>  V' = -phi + phi^3
+      const force = lap - (-p + p*p*p);
+
+      // Störmer–Verlet with damping and noise
+      // phi_new = 2*phi - phi_old + dt^2*(force - g*(phi-phi_old)/dt + noise)
+      // Derived from: phi_ddot = force - g*phi_dot + eta
+      // phi_dot ~ (phi - phi_old)/dt
+      const phi_dot = (p - phi_old[k]) / dt;
+      phi_new[k] = p + (p - phi_old[k]) * (1 - g * dt)
+                     + dt2 * force
+                     + dt2 * noiseMag * randn();
+    }
+  }
+
+  // rotate buffers
+  const tmp = phi_old;
+  phi_old = phi;
+  phi = phi_new;
+  phi_new = tmp;
+}
+
+// Color map: blue (φ≈-1) → black (φ≈0) → red (φ≈+1)
+function toColor(phi) {
+  // clamp to [-2, 2], map to [0,1]
+  const t = Math.max(-2, Math.min(2, phi));
+  if (t < 0) {
+    // negative: blue channel
+    const s = -t / 2;
+    return [Math.round(20 * (1 - s)), Math.round(20 * (1 - s)), Math.round(50 + 205 * s)];
+  } else {
+    const s = t / 2;
+    return [Math.round(50 + 205 * s), Math.round(20 * (1 - s)), Math.round(20 * (1 - s))];
+  }
+}
+
+function render() {
+  for (let k = 0; k < N * N; k++) {
+    const [r, g, b] = toColor(phi[k]);
+    const p = k * 4;
+    buf[p]   = r;
+    buf[p+1] = g;
+    buf[p+2] = b;
+    buf[p+3] = 255;
+  }
+  ctx.putImageData(imageData, 0, 0);
+}
+
+function stats() {
+  let sum = 0, sum2 = 0;
+  for (let k = 0; k < N * N; k++) { sum += phi[k]; sum2 += phi[k]*phi[k]; }
+  const mean = sum / (N*N);
+  const rms  = Math.sqrt(sum2 / (N*N));
+  document.getElementById('stat').textContent =
+    `⟨φ⟩ = ${mean.toFixed(4)}   ⟨φ²⟩^½ = ${rms.toFixed(4)}`;
+}
+
+let paused = false;
+let frameCount = 0;
+const STEPS_PER_FRAME = 5;
+
+function loop() {
+  if (!paused) {
+    for (let s = 0; s < STEPS_PER_FRAME; s++) step();
+    render();
+    frameCount++;
+    if (frameCount % 10 === 0) stats();
+  }
+  requestAnimationFrame(loop);
+}
+
+// Controls
+document.getElementById('Tslider').addEventListener('input', function() {
+  document.getElementById('Tval').textContent = parseFloat(this.value).toFixed(2);
+});
+document.getElementById('Gslider').addEventListener('input', function() {
+  document.getElementById('Gval').textContent = parseFloat(this.value).toFixed(2);
+});
+document.getElementById('DTslider').addEventListener('input', function() {
+  document.getElementById('DTval').textContent = parseFloat(this.value).toFixed(3);
+});
+document.getElementById('resetBtn').addEventListener('click', initRandom);
+document.getElementById('pauseBtn').addEventListener('click', function() {
+  paused = !paused;
+  this.textContent = paused ? 'Resume' : 'Pause';
+});
+
+initRandom();
+loop();
+</script>
+</body>
+</html>

@@ -1,0 +1,736 @@
+<!-- GAS Applet Include -->
+
+<style>
+
+/* ── Overlay backdrop ── */
+#gas-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+#gas-overlay.gas-open {
+  display: block;
+  pointer-events: auto;
+}
+
+/* ── Shared panel style ── */
+.gas-panel {
+  position: fixed;
+  z-index: 910;
+  background: #16212a;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  border: 2px solid #25d9c8;
+  box-shadow:
+    -12px 0 40px rgba(42, 191, 217, 0.55),
+     12px 0 40px rgba(255, 109, 162, 0.55),
+     0 12px 40px rgba(42, 191, 217, 0.4);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity  0.0s ease;
+  opacity: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.gas-panel.gas-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.gas-panel.gas-closing {
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ── Header panel — slides from top ── */
+#gas-header {
+  left:   var(--gas-left);
+  top:    var(--gas-top-hdr);
+  width:  var(--gas-W);
+  height: var(--gas-H-hdr);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  transform: translateY(-120px);
+}
+#gas-header.gas-open { transform: translateY(0); }
+#gas-header h2 {
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: #eef2f5;
+  font-weight: normal;
+  margin: 0;
+  text-transform: uppercase;
+}
+#gas-close-btn {
+  background: none;
+  border: 1px solid #3d5a6e;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 3px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#gas-close-btn:hover { background: #2a3d4e; }
+
+/* ── Sim panel — slides from left ── */
+#gas-sim-panel {
+  left:   var(--gas-left);
+  top:    var(--gas-top-body);
+  width:  var(--gas-W-sim);
+  height: var(--gas-H-body);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-110vw);
+}
+#gas-sim-panel.gas-open { transform: translateX(0); }
+#gas-canvas {
+  flex: 1;
+  display: block;
+  width: 100%;
+  min-height: 0;
+}
+
+/* ── Controls panel — slides from right ── */
+#gas-ctrl-panel {
+  top:    var(--gas-top-body);
+  left:   calc(var(--gas-left) + var(--gas-W-sim) + var(--gas-gap));
+  width:  var(--gas-W-ctrl);
+  height: var(--gas-H-body);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #1a2530;
+  transform: translateX(110vw);
+}
+#gas-ctrl-panel.gas-open { transform: translateX(0); }
+
+.gas-ctrl-section {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #2e3f4f;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.gas-ctrl-section:last-child { border-bottom: none; }
+
+.gas-ctrl-title {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #a8c0d0;
+  margin: 0 0 2px;
+}
+
+.gas-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.gas-slider-row .gas-side {
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: #a8c0d0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.gas-slider-row input[type=range] {
+  flex: 1;
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(100,120,140,0.35);
+  outline: none;
+  cursor: pointer;
+}
+.gas-slider-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #25d9c8;
+  cursor: pointer;
+  margin-top: -4.5px;
+}
+.gas-slider-row input[type=range]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #25d9c8;
+  border: none;
+  cursor: pointer;
+}
+
+.gas-btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.gas-btn {
+  background: #2a3d4e;
+  color: #eef2f5;
+  border: 1px solid #3d5a6e;
+  padding: 5px 14px;
+  cursor: pointer;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.gas-btn:hover { background: #3a5060; }
+.gas-btn.active {
+  background: #1e3a4a;
+  border-color: #25d9c8;
+  color: #25d9c8;
+  box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
+}
+
+/* histogram canvas fills remaining ctrl panel space */
+#gas-hist-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px 10px;
+  min-height: 0;
+}
+#gas-hist-canvas {
+  flex: 1;
+  display: block;
+  width: 100%;
+  min-height: 0;
+}
+</style>
+
+
+
+<!-- Overlay -->
+<div id="gas-overlay">
+
+  <!-- Header: slides from top -->
+  <div id="gas-header" class="gas-panel">
+    <h2>Hard-Sphere Gas &mdash; 2D</h2>
+    <button id="gas-close-btn" onclick="gasClose()">Close</button>
+  </div>
+
+  <!-- Sim canvas: slides from left -->
+  <div id="gas-sim-panel" class="gas-panel">
+    <canvas id="gas-canvas"></canvas>
+  </div>
+
+  <!-- Controls: slides from right -->
+  <div id="gas-ctrl-panel" class="gas-panel">
+
+    <div class="gas-ctrl-section">
+      <div class="gas-ctrl-title">Particles</div>
+      <div class="gas-slider-row">
+        <span class="gas-side">Few</span>
+        <input type="range" id="gas-nslider" min="10" max="300" step="5" value="100">
+        <span class="gas-side">Many</span>
+      </div>
+    </div>
+
+    <div class="gas-ctrl-section">
+      <div class="gas-ctrl-title">Temperature</div>
+      <div class="gas-slider-row">
+        <span class="gas-side">Cold</span>
+        <input type="range" id="gas-tslider" min="0.1" max="5.0" step="0.05" value="1.0">
+        <span class="gas-side">Hot</span>
+      </div>
+    </div>
+
+    <div class="gas-ctrl-section">
+      <div class="gas-ctrl-title">Radius</div>
+      <div class="gas-slider-row">
+        <span class="gas-side">Small</span>
+        <input type="range" id="gas-rslider" min="2" max="20" step="1" value="10">
+        <span class="gas-side">Large</span>
+      </div>
+    </div>
+
+    <div class="gas-ctrl-section">
+      <div class="gas-ctrl-title">Piston</div>
+      <div class="gas-slider-row">
+        <span class="gas-side">Out</span>
+        <input type="range" id="gas-piston" min="0" max="1" step="0.01" value="0">
+        <span class="gas-side">In</span>
+      </div>
+    </div>
+
+    <div class="gas-ctrl-section">
+      <div class="gas-ctrl-title">Gravity</div>
+      <div class="gas-slider-row">
+        <span class="gas-side">Off</span>
+        <input type="range" id="gas-gslider" min="0" max="1" step="0.01" value="0">
+        <span class="gas-side">Strong</span>
+      </div>
+    </div>
+
+    <div class="gas-ctrl-section">
+      <div class="gas-ctrl-title">Actions</div>
+      <div class="gas-btn-row">
+        <button class="gas-btn" onclick="gasReset()">Reset</button>
+      </div>
+    </div>
+
+    <!-- Speed histogram fills remaining space -->
+    <div id="gas-hist-section">
+      <div class="gas-ctrl-title">Speed distribution</div>
+      <canvas id="gas-hist-canvas"></canvas>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  /* ── Layout constants (mirror Ising) ── */
+  const GAP = 10;
+  const PAD = 20;
+  const PHI = 1.6180339887;
+
+  /* ── Simulation state ── */
+  let N   = 100;
+  let T   = 1.0;
+  let R   = 10;
+  let L   = 500;   // box side in pixels — updated in layout()
+
+  let px, py, vx, vy;
+  let running  = false;
+  let frameId  = null;
+  let canvas, ctx;
+  let hctx;
+
+  /* ── Piston ── */
+  // wallX     : current wall position (pixels), moves smoothly each sub-step
+  // wallTarget: where the slider wants the wall to be
+  // The wall moves at a fixed speed (WALL_SPEED px/sub-step) toward wallTarget.
+  // vWall is then exactly WALL_SPEED (or 0), never a large spike.
+  let wallX      = 0;
+  let wallTarget = 0;
+  const WALL_SPEED  = 0.4;   // pixels per sub-step the wall moves toward target
+  const WALL_DV     = 0.04;  // speed impulse added/removed per bounce while wall moves
+
+  /* ── Gravity ── */
+  let gravity = 0;   // current acceleration in px/dt² — set by slider
+
+  /* ── Cell list ── */
+  let cellW, nCellsX, nCellsY;
+  let cellHead, cellNext;
+
+  function buildCellList() {
+    // Effective box left edge is wallX
+    const boxW  = L - wallX;
+    cellW       = Math.max(2 * R, 1);
+    nCellsX     = Math.max(Math.floor(boxW / cellW), 1);
+    nCellsY     = Math.max(Math.floor(L    / cellW), 1);
+    const cW    = boxW / nCellsX;
+    const cH    = L    / nCellsY;
+    const nCells = nCellsX * nCellsY;
+    cellHead = new Int32Array(nCells).fill(-1);
+    cellNext = new Int32Array(N);
+    for (let i = 0; i < N; i++) {
+      const cx = Math.min(Math.max(((px[i] - wallX) / cW) | 0, 0), nCellsX - 1);
+      const cy = Math.min(Math.max((py[i]           / cH) | 0, 0), nCellsY - 1);
+      const c  = cy * nCellsX + cx;
+      cellNext[i] = cellHead[c];
+      cellHead[c] = i;
+    }
+    // store actual cell dims for neighbour lookup
+    buildCellList._cW = cW;
+    buildCellList._cH = cH;
+  }
+
+  /* ── Maxwell-Boltzmann initialisation ── */
+  function gaussRand() {
+    let u;
+    do { u = Math.random(); } while (u === 0);
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * Math.random());
+  }
+
+  function initParticles() {
+    px = new Float64Array(N);
+    py = new Float64Array(N);
+    vx = new Float64Array(N);
+    vy = new Float64Array(N);
+
+    // Particles always initialise in the right-hand portion (piston retracted)
+    const leftEdge = wallX + R + 1;
+    const diameter = 2 * R;
+    const marginY  = R + 1;
+    const innerW   = L - leftEdge - R - 1;
+    const innerH   = L - 2 * marginY;
+    const cols = Math.max(Math.ceil(Math.sqrt(N * innerW / Math.max(innerH, 1))), 1);
+    const rows = Math.ceil(N / cols);
+    const dx   = innerW / cols;
+    const dy   = innerH / rows;
+    let placed = 0;
+    for (let r = 0; r < rows && placed < N; r++) {
+      for (let c = 0; c < cols && placed < N; c++) {
+        const x0 = leftEdge + (c + 0.5) * dx;
+        const y0 = marginY  + (r + 0.5) * dy;
+        let ok = true;
+        for (let j = 0; j < placed; j++) {
+          const ddx = x0 - px[j], ddy = y0 - py[j];
+          if (ddx*ddx + ddy*ddy < diameter*diameter) { ok = false; break; }
+        }
+        if (!ok) continue;
+        px[placed] = x0;
+        py[placed] = y0;
+        vx[placed] = gaussRand() * Math.sqrt(T);
+        vy[placed] = gaussRand() * Math.sqrt(T);
+        placed++;
+      }
+    }
+    N = placed;
+
+    // Zero net momentum
+    let svx = 0, svy = 0;
+    for (let i = 0; i < N; i++) { svx += vx[i]; svy += vy[i]; }
+    svx /= N; svy /= N;
+    for (let i = 0; i < N; i++) { vx[i] -= svx; vy[i] -= svy; }
+
+    // Rescale to T
+    let ke = 0;
+    for (let i = 0; i < N; i++) ke += vx[i]*vx[i] + vy[i]*vy[i];
+    ke /= (2 * N);
+    const sc = Math.sqrt(T / Math.max(ke, 1e-12));
+    for (let i = 0; i < N; i++) { vx[i] *= sc; vy[i] *= sc; }
+  }
+
+  /* ── Physics step ── */
+  function step(dt) {
+    // 1. Gravity kick
+    if (gravity > 0) {
+      for (let i = 0; i < N; i++) vy[i] += gravity * dt;
+    }
+
+    // 2. Free advection
+    for (let i = 0; i < N; i++) {
+      px[i] += vx[i] * dt;
+      py[i] += vy[i] * dt;
+    }
+
+    // 3. Advance wall one small step toward target
+    const diff = wallTarget - wallX;
+    if (Math.abs(diff) > WALL_SPEED) {
+      wallX += Math.sign(diff) * WALL_SPEED;
+    } else {
+      wallX = wallTarget;
+    }
+    const wallMoved = Math.abs(diff) > 1e-6;
+    const wallDir   = Math.sign(diff);   // +1 compressing, -1 expanding
+
+    // Wall reflections
+    for (let i = 0; i < N; i++) {
+      // Left piston wall
+      if (px[i] - R < wallX) {
+        px[i] = wallX + R;
+        // Elastic reflection; if wall is moving add a small impulse
+        vx[i] = Math.abs(vx[i]);
+        if (wallMoved) vx[i] = Math.max(vx[i] + wallDir * WALL_DV, 1e-4);
+      }
+      // Right wall
+      if (px[i] + R > L)  { px[i] = L - R; vx[i] = -Math.abs(vx[i]); }
+      // Top/bottom walls
+      if (py[i] - R < 0)  { py[i] = R;     vy[i] =  Math.abs(vy[i]); }
+      if (py[i] + R > L)  { py[i] = L - R; vy[i] = -Math.abs(vy[i]); }
+    }
+
+    // 4. Cell list + particle-particle collisions
+    buildCellList();
+    const d2min = (2 * R) * (2 * R);
+    const cW = buildCellList._cW, cH = buildCellList._cH;
+    for (let cy = 0; cy < nCellsY; cy++) {
+      for (let cx = 0; cx < nCellsX; cx++) {
+        const c = cy * nCellsX + cx;
+        // neighbour cells (upper triangle)
+        for (let dcy = 0; dcy <= 1; dcy++) {
+          for (let dcx = (dcy === 0 ? 1 : -1); dcx <= 1; dcx++) {
+            const nx2 = cx + dcx, ny2 = cy + dcy;
+            if (nx2 < 0 || nx2 >= nCellsX || ny2 < 0 || ny2 >= nCellsY) continue;
+            const c2 = ny2 * nCellsX + nx2;
+            for (let i = cellHead[c];  i !== -1; i = cellNext[i])
+              for (let j = cellHead[c2]; j !== -1; j = cellNext[j])
+                collidePair(i, j, d2min);
+          }
+        }
+        // same-cell pairs
+        for (let i = cellHead[c]; i !== -1; i = cellNext[i])
+          for (let j = cellNext[i]; j !== -1; j = cellNext[j])
+            collidePair(i, j, d2min);
+      }
+    }
+  }
+
+  function collidePair(i, j, d2min) {
+    const ddx = px[j] - px[i], ddy = py[j] - py[i];
+    const d2  = ddx*ddx + ddy*ddy;
+    if (d2 < d2min && d2 > 1e-12) {
+      const d  = Math.sqrt(d2);
+      const nx = ddx / d, ny = ddy / d;
+      const ov = 2 * R - d;
+      px[i] -= nx * ov * 0.5;  py[i] -= ny * ov * 0.5;
+      px[j] += nx * ov * 0.5;  py[j] += ny * ov * 0.5;
+      const dvx = vx[j] - vx[i], dvy = vy[j] - vy[i];
+      const vn  = dvx * nx + dvy * ny;
+      if (vn < 0) {
+        vx[i] += vn * nx;  vy[i] += vn * ny;
+        vx[j] -= vn * nx;  vy[j] -= vn * ny;
+      }
+    }
+  }
+
+  /* ── Simulation rendering ── */
+  function render() {
+    ctx.fillStyle = '#0f1a22';
+    ctx.fillRect(0, 0, L, L);
+
+    // Draw piston wall if active
+    if (wallX > 0) {
+      ctx.fillStyle = 'rgba(37,217,200,0.25)';
+      ctx.fillRect(0, 0, wallX, L);
+      ctx.fillStyle = '#25d9c8';
+      ctx.fillRect(wallX - 2, 0, 3, L);
+    }
+
+    // Particles coloured by kinetic speed relative to current mean speed
+    let meanSpd = 0;
+    for (let i = 0; i < N; i++) meanSpd += Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
+    meanSpd /= N;
+    const spdRef = Math.max(meanSpd * 2, 0.001);
+
+    for (let i = 0; i < N; i++) {
+      const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
+      const hot = Math.min(spd / spdRef, 1);
+      const r = Math.round(37  + (249 - 37)  * hot);
+      const g = Math.round(217 + (38  - 217) * hot);
+      const b = Math.round(200 + (114 - 200) * hot);
+      ctx.beginPath();
+      ctx.arc(px[i], py[i], R, 0, Math.PI * 2);
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fill();
+    }
+  }
+
+  /* ── Speed histogram ── */
+  const N_BINS = 30;
+  let smoothBins    = new Float64Array(N_BINS);
+  let histYMax      = 0;          // smoothed y-axis ceiling
+  const HIST_ALPHA  = 0.10;
+  const YMAX_ALPHA  = 0.04;       // slow relaxation for y-axis — prevents jitter
+
+  function renderHistogram() {
+    const hc = document.getElementById('gas-hist-canvas');
+    const W  = hc.clientWidth  || 200;
+    const H  = hc.clientHeight || 120;
+    if (hc.width !== W || hc.height !== H) { hc.width = W; hc.height = H; }
+
+    // Current mean speed (used to set x-axis range — stays physical)
+    const vref  = Math.sqrt(T);
+    const vmax  = 6 * vref + 0.5;
+    const dv    = vmax / N_BINS;
+
+    // Raw histogram
+    const raw = new Float64Array(N_BINS);
+    for (let i = 0; i < N; i++) {
+      const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
+      const b   = Math.min((spd / dv) | 0, N_BINS - 1);
+      raw[b]++;
+    }
+    let tot = 0;
+    for (let b = 0; b < N_BINS; b++) tot += raw[b];
+    if (tot > 0) for (let b = 0; b < N_BINS; b++) raw[b] /= tot;
+
+    // EMA smooth
+    for (let b = 0; b < N_BINS; b++)
+      smoothBins[b] += HIST_ALPHA * (raw[b] - smoothBins[b]);
+
+    // MB curve (2D): P(v) ∝ v·exp(-v²/2T), normalised over bins
+    const mb = new Float64Array(N_BINS);
+    let mbSum = 0;
+    for (let b = 0; b < N_BINS; b++) {
+      const v   = (b + 0.5) * dv;
+      mb[b]     = (v / T) * Math.exp(-v * v / (2 * T));
+      mbSum    += mb[b];
+    }
+    if (mbSum > 0) for (let b = 0; b < N_BINS; b++) mb[b] /= mbSum;
+
+    // y-axis: track the MB peak so the scale is always physics-based,
+    // not driven by statistical fluctuations in the histogram.
+    const mbPeak = Math.max(...mb, 1e-9);
+    // Give 20% headroom above MB peak
+    const targetYMax = mbPeak * 1.20;
+    histYMax += YMAX_ALPHA * (targetYMax - histYMax);
+    const ymax = Math.max(histYMax, 1e-9);
+
+    // Draw
+    const PL = 4, PR = 4, PT = 6, PB = 4;
+    const pw = W - PL - PR, ph = H - PT - PB;
+    const bw = pw / N_BINS;
+
+    hctx.clearRect(0, 0, W, H);
+
+    // Bars
+    hctx.fillStyle = 'rgba(37,217,200,0.45)';
+    for (let b = 0; b < N_BINS; b++) {
+      const bh = Math.min(smoothBins[b] / ymax, 1) * ph;
+      hctx.fillRect(PL + b * bw, PT + ph - bh, bw - 1, bh);
+    }
+
+    // MB curve
+    hctx.beginPath();
+    hctx.strokeStyle = '#f92672';
+    hctx.lineWidth   = 1.5;
+    for (let b = 0; b < N_BINS; b++) {
+      const x = PL + (b + 0.5) * bw;
+      const y = PT + ph - Math.min(mb[b] / ymax, 1) * ph;
+      b === 0 ? hctx.moveTo(x, y) : hctx.lineTo(x, y);
+    }
+    hctx.stroke();
+  }
+
+  /* ── Animation loop ── */
+  const DT_BASE  = 0.5;
+  const SUBSTEPS = 4;
+  const dt       = DT_BASE / SUBSTEPS;
+
+  function loop() {
+    if (running) {
+      for (let s = 0; s < SUBSTEPS; s++) step(dt);
+      render();
+      renderHistogram();
+    }
+    frameId = requestAnimationFrame(loop);
+  }
+
+  /* ── Layout ── */
+  function layout() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    const sFromW = (vw - 2 * PAD - GAP) / (1 + 1 / PHI);
+    const sFromH = (vh - 2 * PAD) / 1.1;
+    const S      = Math.floor(Math.min(sFromW, sFromH));
+
+    const ctrlW  = Math.floor(S / PHI);
+    const hdrH   = Math.floor(S * 0.1);
+    const totalW = S + GAP + ctrlW;
+    const left   = Math.floor((vw - totalW) / 2);
+    const top    = Math.floor((vh - (hdrH + S)) / 2);
+
+    const el = document.getElementById('gas-overlay');
+    el.style.setProperty('--gas-left',     left         + 'px');
+    el.style.setProperty('--gas-top-hdr',  top          + 'px');
+    el.style.setProperty('--gas-top-body', (top + hdrH) + 'px');
+    el.style.setProperty('--gas-W',        totalW       + 'px');
+    el.style.setProperty('--gas-W-sim',    S            + 'px');
+    el.style.setProperty('--gas-W-ctrl',   ctrlW        + 'px');
+    el.style.setProperty('--gas-H-hdr',    hdrH         + 'px');
+    el.style.setProperty('--gas-H-body',   S            + 'px');
+    el.style.setProperty('--gas-gap',      GAP          + 'px');
+
+    if (canvas) {
+      canvas.width  = S;
+      canvas.height = S;
+      L = S;
+    }
+  }
+
+  /* ── Open / close ── */
+  window.gasOpen = function () {
+    canvas = document.getElementById('gas-canvas');
+    ctx    = canvas.getContext('2d');
+    hctx   = document.getElementById('gas-hist-canvas').getContext('2d');
+    layout();
+
+    N          = parseInt(document.getElementById('gas-nslider').value);
+    T          = parseFloat(document.getElementById('gas-tslider').value);
+    R          = parseInt(document.getElementById('gas-rslider').value);
+    wallX      = 0;
+    wallTarget = 0;
+    gravity    = 0;
+    document.getElementById('gas-piston').value  = 0;
+    document.getElementById('gas-gslider').value = 0;
+    smoothBins = new Float64Array(N_BINS);
+    histYMax   = 0;
+    initParticles();
+
+    document.getElementById('gas-overlay').classList.add('gas-open');
+    requestAnimationFrame(() => {
+      document.getElementById('gas-header').classList.add('gas-open');
+      document.getElementById('gas-sim-panel').classList.add('gas-open');
+      document.getElementById('gas-ctrl-panel').classList.add('gas-open');
+    });
+
+    running = true;
+    if (!frameId) frameId = requestAnimationFrame(loop);
+  };
+
+  window.gasClose = function () {
+    running = false;
+    ['gas-header', 'gas-sim-panel', 'gas-ctrl-panel'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('gas-open');
+      el.classList.add('gas-closing');
+    });
+    setTimeout(() => {
+      document.getElementById('gas-overlay').classList.remove('gas-open');
+      ['gas-header', 'gas-sim-panel', 'gas-ctrl-panel'].forEach(id => {
+        document.getElementById(id).classList.remove('gas-closing');
+      });
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+    }, 550);
+  };
+
+  window.gasReset = function () {
+    N          = parseInt(document.getElementById('gas-nslider').value);
+    T          = parseFloat(document.getElementById('gas-tslider').value);
+    R          = parseInt(document.getElementById('gas-rslider').value);
+    wallX      = 0;
+    wallTarget = 0;
+    gravity    = 0;
+    document.getElementById('gas-piston').value  = 0;
+    document.getElementById('gas-gslider').value = 0;
+    smoothBins = new Float64Array(N_BINS);
+    histYMax   = 0;
+    initParticles();
+  };
+
+  window.addEventListener('resize', () => {
+    if (running) { layout(); initParticles(); }
+  });
+
+  /* ── Slider listeners ── */
+  document.getElementById('gas-tslider').addEventListener('input', function () {
+    T = parseFloat(this.value);
+    if (!px) return;
+    let ke = 0;
+    for (let i = 0; i < N; i++) ke += vx[i]*vx[i] + vy[i]*vy[i];
+    ke /= (2 * N);
+    const sc = Math.sqrt(T / Math.max(ke, 1e-12));
+    for (let i = 0; i < N; i++) { vx[i] *= sc; vy[i] *= sc; }
+    smoothBins = new Float64Array(N_BINS);
+    histYMax   = 0;
+  });
+
+  document.getElementById('gas-gslider').addEventListener('input', function () {
+    gravity = parseFloat(this.value) * 0.12;   // max ~0.12 px/dt²
+  });
+
+  document.getElementById('gas-piston').addEventListener('input', function () {
+    // Slider sets the target; the physics loop moves the wall smoothly.
+    wallTarget = parseFloat(this.value) * L * 0.60;
+  });
+
+})();
+</script>
