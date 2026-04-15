@@ -238,3 +238,32 @@ a:hover {
 .press-entry a strong {
   font-size: 1.5em;
 }
+
+/* ============================================================
+   APPLET LAUNCH BUTTON
+   Shared across applets.markdown and any research page
+   ============================================================ */
+.applet-launch-btn {
+  display: inline-block;
+  background: #16212a;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  padding: 10px 28px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 2px solid #25d9c8;
+  box-shadow:
+    -8px 0 30px rgba(42, 191, 217, 0.5),
+     8px 0 30px rgba(255, 109, 162, 0.5),
+     0 4px 20px rgba(42, 191, 217, 0.35);
+  transition: box-shadow 0.2s ease, background 0.2s ease;
+}
+.applet-launch-btn:hover {
+  background: #1e3040;
+  box-shadow:
+    -12px 0 40px rgba(42, 191, 217, 0.75),
+     12px 0 40px rgba(255, 109, 162, 0.75),
+     0 6px 30px rgba(42, 191, 217, 0.5);
+}

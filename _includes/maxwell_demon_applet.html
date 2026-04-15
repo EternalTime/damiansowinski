@@ -1,0 +1,612 @@
+<!-- Maxwell's Demon Applet Include -->
+
+<style>
+
+/* ── Overlay backdrop ── */
+#demon-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+#demon-overlay.demon-open {
+  display: block;
+  pointer-events: auto;
+}
+
+/* ── Shared panel style ── */
+.demon-panel {
+  position: fixed;
+  z-index: 910;
+  background: #16212a;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  border: 2px solid #25d9c8;
+  box-shadow:
+    -12px 0 40px rgba(42, 191, 217, 0.55),
+     12px 0 40px rgba(255, 109, 162, 0.55),
+     0 12px 40px rgba(42, 191, 217, 0.4);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity  0.0s ease;
+  opacity: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.demon-panel.demon-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.demon-panel.demon-closing {
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ── Header panel — slides from top ── */
+#demon-header {
+  left:   var(--demon-left);
+  top:    var(--demon-top-hdr);
+  width:  var(--demon-W);
+  height: var(--demon-H-hdr);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  transform: translateY(-120px);
+}
+#demon-header.demon-open { transform: translateY(0); }
+#demon-header h2 {
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: #eef2f5;
+  font-weight: normal;
+  margin: 0;
+  text-transform: uppercase;
+}
+#demon-close-btn {
+  background: none;
+  border: 1px solid #3d5a6e;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 3px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#demon-close-btn:hover { background: #2a3d4e; }
+
+/* ── Sim panel — slides from left ── */
+#demon-sim-panel {
+  left:   var(--demon-left);
+  top:    var(--demon-top-body);
+  width:  var(--demon-W);
+  height: var(--demon-H-sim);
+  transform: translateX(-110vw);
+}
+#demon-sim-panel.demon-open { transform: translateX(0); }
+#demon-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Controls panel — slides from bottom ── */
+#demon-ctrl-panel {
+  left:   var(--demon-left);
+  top:    calc(var(--demon-top-body) + var(--demon-H-sim) + var(--demon-gap));
+  width:  var(--demon-W);
+  height: var(--demon-H-ctrl);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #1a2530;
+  transform: translateY(110vh);
+  padding: 0 24px;
+  box-sizing: border-box;
+  gap: 0;
+}
+#demon-ctrl-panel.demon-open { transform: translateY(0); }
+
+/* Left temperature readout */
+.demon-temp-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 4px;
+}
+.demon-temp-label {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #a8c0d0;
+}
+.demon-temp-value {
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: #eef2f5;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Center button block */
+.demon-btn-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 0 28px;
+}
+.demon-btn {
+  background: #2a3d4e;
+  color: #eef2f5;
+  border: 1px solid #3d5a6e;
+  padding: 6px 24px;
+  cursor: pointer;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  border-radius: 4px;
+  transition: background 0.15s;
+  min-width: 100px;
+  text-align: center;
+}
+.demon-btn:hover { background: #3a5060; }
+.demon-btn.demon-active {
+  background: #1e3a4a;
+  border-color: #25d9c8;
+  color: #25d9c8;
+  box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
+}
+</style>
+
+
+
+<!-- Overlay -->
+<div id="demon-overlay">
+
+  <!-- Header: slides from top -->
+  <div id="demon-header" class="demon-panel">
+    <h2>Maxwell's Demon</h2>
+    <button id="demon-close-btn" onclick="demonClose()">Close</button>
+  </div>
+
+  <!-- Simulation canvas: slides from left -->
+  <div id="demon-sim-panel" class="demon-panel">
+    <canvas id="demon-canvas"></canvas>
+  </div>
+
+  <!-- Controls: slides from bottom -->
+  <div id="demon-ctrl-panel" class="demon-panel">
+    <div class="demon-temp-block">
+      <span class="demon-temp-label" id="demon-label-left">Left Temperature</span>
+      <span class="demon-temp-value" id="demon-temp-left">—</span>
+    </div>
+    <div class="demon-btn-block">
+      <button class="demon-btn" id="demon-door-btn" onclick="demonToggleDoor()">Open</button>
+      <button class="demon-btn" onclick="demonReset()">Reset</button>
+    </div>
+    <div class="demon-temp-block">
+      <span class="demon-temp-label" id="demon-label-right">Right Temperature</span>
+      <span class="demon-temp-value" id="demon-temp-right">—</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const GAP  = 10;
+  const PAD  = 20;
+  const PHI  = 1.6180339887;
+
+  /* ── Simulation parameters ── */
+  const N_EACH   = 50;        // particles per side
+  let R          = 8;         // particle radius px — updated in layout()
+  const T_INIT   = 1.0;       // initial temperature (sets speed scale)
+  const DT_BASE  = 0.5;
+  const SUBSTEPS = 4;
+  const dt       = DT_BASE / SUBSTEPS;
+
+  /* ── Door ── */
+  // doorOpen: logical state
+  // doorFrac: 0 = fully closed, 1 = fully open (animated)
+  // doorGap:  pixel gap actually enforced during collision (doorFrac * doorH)
+  let doorOpen   = false;
+  let doorFrac   = 0;          // 0–1
+  const DOOR_SPEED = 0.04;    // fraction per frame (~0.7s full travel)
+
+  /* ── Canvas / box geometry (set in layout()) ── */
+  let canvas, ctx;
+  let BW, BH;    // box width (full), box height
+  let midX;      // x of centre wall
+
+  /* ── Particle arrays ── */
+  let N;
+  let px, py, vx, vy;
+  let side;   // Int8Array: 0 = left, 1 = right — authoritative, updated only on gap crossing
+
+  /* ── Temperature tracking ── */
+  let T0 = 1.0;  // initial mean KE per particle (set after init, used for normalisation)
+
+  /* ── Running state ── */
+  let running = false;
+  let frameId = null;
+
+  /* ── Gaussian RNG ── */
+  function gaussRand() {
+    let u;
+    do { u = Math.random(); } while (u === 0);
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * Math.random());
+  }
+
+  /* ── Initialise particles ── */
+  function initParticles() {
+    N    = 2 * N_EACH;
+    px   = new Float64Array(N);
+    py   = new Float64Array(N);
+    vx   = new Float64Array(N);
+    vy   = new Float64Array(N);
+    side = new Int8Array(N);   // 0 = left, 1 = right
+
+    // Place N_EACH on the left half, N_EACH on the right half
+    for (let side_idx = 0; side_idx < 2; side_idx++) {
+      const xMin = side_idx === 0 ? R + 1        : midX + R + 5;
+      const xMax = side_idx === 0 ? midX - R - 5 : BW - R - 1;
+      const cols = Math.max(Math.ceil(Math.sqrt(N_EACH * (xMax - xMin) / Math.max(BH - 2*(R+1), 1))), 1);
+      const rows = Math.ceil(N_EACH / cols);
+      const dx   = (xMax - xMin) / cols;
+      const dy   = (BH - 2*(R+1)) / rows;
+      let placed = 0;
+      const base = side_idx * N_EACH;
+      outer:
+      for (let r = 0; r < rows && placed < N_EACH; r++) {
+        for (let c = 0; c < cols && placed < N_EACH; c++) {
+          const x0 = xMin + (c + 0.5) * dx;
+          const y0 = (R+1) + (r + 0.5) * dy;
+          for (let j = 0; j < placed; j++) {
+            const ddx = x0 - px[base+j], ddy = y0 - py[base+j];
+            if (ddx*ddx + ddy*ddy < (2*R)*(2*R)) continue outer;
+          }
+          px[base+placed]   = x0;
+          py[base+placed]   = y0;
+          vx[base+placed]   = gaussRand() * Math.sqrt(T_INIT);
+          vy[base+placed]   = gaussRand() * Math.sqrt(T_INIT);
+          side[base+placed] = side_idx;
+          placed++;
+        }
+      }
+    }
+
+    // Zero net momentum per side, then rescale each side to exactly T_INIT
+    // so both sides start at identical temperatures
+    for (let side_idx = 0; side_idx < 2; side_idx++) {
+      const base = side_idx * N_EACH;
+      let svx = 0, svy = 0;
+      for (let i = base; i < base + N_EACH; i++) { svx += vx[i]; svy += vy[i]; }
+      svx /= N_EACH; svy /= N_EACH;
+      for (let i = base; i < base + N_EACH; i++) { vx[i] -= svx; vy[i] -= svy; }
+      let ke = 0;
+      for (let i = base; i < base + N_EACH; i++) ke += vx[i]*vx[i] + vy[i]*vy[i];
+      ke /= (2 * N_EACH);
+      const sc = Math.sqrt(T_INIT / Math.max(ke, 1e-12));
+      for (let i = base; i < base + N_EACH; i++) { vx[i] *= sc; vy[i] *= sc; }
+    }
+
+    // T0 is now exactly T_INIT by construction
+    T0 = T_INIT;
+  }
+
+  /* ── Physics step ── */
+  function step(dt) {
+    // Advect
+    for (let i = 0; i < N; i++) {
+      px[i] += vx[i] * dt;
+      py[i] += vy[i] * dt;
+    }
+
+    // Wall / door collision
+    const gapHalf = doorFrac * BH * 0.05;  // open gap = 10% of panel height
+    const doorCY  = BH * 0.5;
+    const gapTop  = doorCY - gapHalf;
+    const gapBot  = doorCY + gapHalf;
+
+    for (let i = 0; i < N; i++) {
+      // Outer walls — only reflect if moving into the wall
+      if (px[i] - R < 0   && vx[i] < 0) { px[i] = R;      vx[i] = -vx[i]; }
+      if (px[i] + R > BW  && vx[i] > 0) { px[i] = BW - R; vx[i] = -vx[i]; }
+      if (py[i] - R < 0   && vy[i] < 0) { py[i] = R;      vy[i] = -vy[i]; }
+      if (py[i] + R > BH  && vy[i] > 0) { py[i] = BH - R; vy[i] = -vy[i]; }
+
+      // Centre wall: use authoritative side[] to decide reflection, never infer from px
+      const inGap = py[i] > gapTop && py[i] < gapBot;
+      if (!inGap) {
+        if (side[i] === 0 && px[i] + R > midX) {
+          // Left-side particle touching wall from left — reflect regardless of velocity sign
+          px[i] = midX - R;
+          if (vx[i] > 0) vx[i] = -vx[i];
+        } else if (side[i] === 1 && px[i] - R < midX) {
+          // Right-side particle touching wall from right — reflect
+          px[i] = midX + R;
+          if (vx[i] < 0) vx[i] = -vx[i];
+        }
+      } else {
+        // Particle is in the gap — update side if it has crossed
+        if (side[i] === 0 && px[i] > midX) side[i] = 1;
+        else if (side[i] === 1 && px[i] < midX) side[i] = 0;
+      }
+    }
+
+    // Particle-particle collisions — purely velocity exchange, no KE injection
+    const d2min = (2 * R) * (2 * R);
+    for (let i = 0; i < N - 1; i++) {
+      for (let j = i + 1; j < N; j++) {
+        const ddx = px[j] - px[i], ddy = py[j] - py[i];
+        const d2  = ddx*ddx + ddy*ddy;
+        if (d2 < d2min && d2 > 1e-12) {
+          const d   = Math.sqrt(d2);
+          const nx  = ddx / d, ny = ddy / d;
+          // Only resolve if approaching
+          const dvx = vx[j] - vx[i], dvy = vy[j] - vy[i];
+          const vn  = dvx * nx + dvy * ny;
+          if (vn < 0) {
+            // Elastic impulse (equal masses): exchange normal components
+            vx[i] += vn * nx;  vy[i] += vn * ny;
+            vx[j] -= vn * nx;  vy[j] -= vn * ny;
+            // Correct overlap after velocity update so next step starts clean
+            const ov = 2 * R - d;
+            px[i] -= nx * ov * 0.5;  py[i] -= ny * ov * 0.5;
+            px[j] += nx * ov * 0.5;  py[j] += ny * ov * 0.5;
+            // Clamp back to authoritative side — prevents overlap nudge from
+            // pushing a particle through the centre wall
+            if (side[i] === 0 && px[i] + R > midX) px[i] = midX - R;
+            if (side[i] === 1 && px[i] - R < midX) px[i] = midX + R;
+            if (side[j] === 0 && px[j] + R > midX) px[j] = midX - R;
+            if (side[j] === 1 && px[j] - R < midX) px[j] = midX + R;
+          }
+        }
+      }
+    }
+  }
+
+  /* ── Temperature calculation — excludes particles in the gap zone ── */
+  function sideTemp(s) {
+    const gapHalf = doorFrac * BH * 0.05;
+    const gapTop  = BH * 0.5 - gapHalf;
+    const gapBot  = BH * 0.5 + gapHalf;
+    let ke = 0, count = 0;
+    for (let i = 0; i < N; i++) {
+      if (side[i] !== s) continue;
+      if (py[i] > gapTop && py[i] < gapBot) continue;  // transiting the gap
+      ke += vx[i]*vx[i] + vy[i]*vy[i];
+      count++;
+    }
+    return count > 0 ? ke / (2 * count) : 0;
+  }
+
+  /* ── Render ── */
+  function render() {
+    ctx.fillStyle = '#0f1a22';
+    ctx.fillRect(0, 0, BW, BH);
+
+    // Centre wall
+    const doorH   = BH;
+    const gapHalf = doorFrac * BH * 0.05;   // open gap = 10% of panel height
+    const doorCY  = BH * 0.5;
+    const gapTop  = doorCY - gapHalf;
+    const gapBot  = doorCY + gapHalf;
+    const wallW   = R;
+
+    ctx.fillStyle = '#25d9c8';
+    // Wall above gap
+    if (gapTop > 0) {
+      ctx.fillRect(midX - wallW * 0.5, 0, wallW, gapTop);
+    }
+    // Wall below gap
+    if (gapBot < BH) {
+      ctx.fillRect(midX - wallW * 0.5, gapBot, wallW, BH - gapBot);
+    }
+
+    // Sliding door segment — pink whenever not fully open
+    if (doorFrac < 1) {
+      const doorTop = doorCY - BH * 0.05;
+      const doorBot = doorCY + BH * 0.05;
+      ctx.fillStyle = '#c0396a';
+      ctx.fillRect(midX - wallW * 0.5, doorTop, wallW, doorBot - doorTop);
+    }
+
+    // Particles coloured by speed relative to global mean
+    let meanSpd = 0;
+    for (let i = 0; i < N; i++) meanSpd += Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
+    meanSpd /= N;
+    const spdRef = Math.max(meanSpd * 2, 0.001);
+
+    for (let i = 0; i < N; i++) {
+      const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
+      const hot = Math.min(spd / spdRef, 1);
+      const r = Math.round(37  + (249 - 37)  * hot);
+      const g = Math.round(217 + (38  - 217) * hot);
+      const b = Math.round(200 + (114 - 200) * hot);
+      ctx.beginPath();
+      ctx.arc(px[i], py[i], R, 0, Math.PI * 2);
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fill();
+    }
+  }
+
+  /* ── Update temperature display ── */
+  function updateTemps() {
+    const TL = sideTemp(0);
+    const TR = sideTemp(1);
+    const norm = Math.max(T0, 1e-12);
+
+    // Use same colour mapping as particles: cool rgb(37,217,200) → hot rgb(249,38,114)
+    // hot = sideSpeed / (2 * globalMeanSpeed), clamped to [0,1]
+    const gapHalf = doorFrac * BH * 0.05;
+    const gapTop  = BH * 0.5 - gapHalf;
+    const gapBot  = BH * 0.5 + gapHalf;
+    let meanSpd = 0;
+    for (let i = 0; i < N; i++) meanSpd += Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
+    meanSpd /= N;
+    const spdRef = Math.max(meanSpd * 2, 0.001);
+
+    function sideColor(s) {
+      let spd = 0, count = 0;
+      for (let i = 0; i < N; i++) {
+        if (side[i] !== s) continue;
+        if (py[i] > gapTop && py[i] < gapBot) continue;
+        spd += Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
+        count++;
+      }
+      spd = count > 0 ? spd / count : 0;
+      const hot = Math.min(spd / spdRef, 1);
+      const r = Math.round(37  + (249 - 37)  * hot);
+      const g = Math.round(217 + (38  - 217) * hot);
+      const b = Math.round(200 + (114 - 200) * hot);
+      return `rgb(${r},${g},${b})`;
+    }
+
+    const colorL = sideColor(0);
+    const colorR = sideColor(1);
+
+    const labelL = document.getElementById('demon-label-left');
+    const valueL = document.getElementById('demon-temp-left');
+    const labelR = document.getElementById('demon-label-right');
+    const valueR = document.getElementById('demon-temp-right');
+
+    labelL.style.color = colorL;  valueL.style.color = colorL;
+    labelR.style.color = colorR;  valueR.style.color = colorR;
+
+    valueL.textContent = (TL / norm).toFixed(2);
+    valueR.textContent = (TR / norm).toFixed(2);
+  }
+
+  /* ── Animation loop ── */
+  function loop() {
+    if (running) {
+      // Animate door
+      const target = doorOpen ? 1 : 0;
+      if (Math.abs(doorFrac - target) > DOOR_SPEED) {
+        doorFrac += Math.sign(target - doorFrac) * DOOR_SPEED;
+      } else {
+        doorFrac = target;
+      }
+
+      for (let s = 0; s < SUBSTEPS; s++) step(dt);
+      render();
+      updateTemps();
+    }
+    frameId = requestAnimationFrame(loop);
+  }
+
+  /* ── Layout — matches gas_applet sizing ── */
+  function layout() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    // Gas applet's S is its sim-square side; its total width = S*(1+1/PHI).
+    // Use that same total width as our simW, then derive simH at 2:1.
+    const sFromW  = (vw - 2 * PAD - GAP) / (1 + 1 / PHI);
+    const sFromH  = (vh - 2 * PAD) / 1.1;
+    const S       = Math.floor(Math.min(sFromW, sFromH));
+    const totalW  = Math.floor(S * (1 + 1 / PHI));  // same footprint as gas applet
+
+    const simW   = Math.min(totalW, vw - 2 * PAD);
+    const hdrH   = Math.floor(S * 0.1);
+    const simH   = Math.floor(simW * 0.5);           // 2:1 wide rectangle
+    const ctrlH  = hdrH;                             // same height as header strip
+    const totalH = hdrH + GAP + simH + GAP + ctrlH;
+    const left   = Math.floor((vw - simW) / 2);
+    const top    = Math.floor((vh - totalH) / 2);
+
+    const el = document.getElementById('demon-overlay');
+    el.style.setProperty('--demon-left',     left                + 'px');
+    el.style.setProperty('--demon-top-hdr',  top                 + 'px');
+    el.style.setProperty('--demon-top-body', (top + hdrH + GAP)  + 'px');
+    el.style.setProperty('--demon-W',        simW                + 'px');
+    el.style.setProperty('--demon-H-hdr',    hdrH                + 'px');
+    el.style.setProperty('--demon-H-sim',    simH                + 'px');
+    el.style.setProperty('--demon-H-ctrl',   ctrlH               + 'px');
+    el.style.setProperty('--demon-gap',      GAP                 + 'px');
+
+    if (canvas) {
+      canvas.width  = simW;
+      canvas.height = simH;
+    }
+    BW   = simW;
+    BH   = simH;
+    midX = Math.floor(BW / 2);
+    R    = Math.max(1, Math.floor(BH / 40));  // diameter = BH/20
+  }
+
+  /* ── Open / close ── */
+  window.demonOpen = function () {
+    canvas = document.getElementById('demon-canvas');
+    ctx    = canvas.getContext('2d');
+    layout();
+
+    doorOpen = false;
+    doorFrac = 0;
+    document.getElementById('demon-door-btn').textContent = 'Open';
+    document.getElementById('demon-door-btn').classList.remove('demon-active');
+
+    initParticles();
+
+    document.getElementById('demon-overlay').classList.add('demon-open');
+    requestAnimationFrame(() => {
+      document.getElementById('demon-header').classList.add('demon-open');
+      document.getElementById('demon-sim-panel').classList.add('demon-open');
+      document.getElementById('demon-ctrl-panel').classList.add('demon-open');
+    });
+
+    running = true;
+    if (!frameId) frameId = requestAnimationFrame(loop);
+  };
+
+  window.demonClose = function () {
+    running = false;
+    ['demon-header', 'demon-sim-panel', 'demon-ctrl-panel'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('demon-open');
+      el.classList.add('demon-closing');
+    });
+    setTimeout(() => {
+      document.getElementById('demon-overlay').classList.remove('demon-open');
+      ['demon-header', 'demon-sim-panel', 'demon-ctrl-panel'].forEach(id => {
+        document.getElementById(id).classList.remove('demon-closing');
+      });
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+    }, 550);
+  };
+
+  window.demonReset = function () {
+    doorOpen = false;
+    doorFrac = 0;
+    document.getElementById('demon-door-btn').textContent = 'Open';
+    document.getElementById('demon-door-btn').classList.remove('demon-active');
+    initParticles();
+  };
+
+  window.demonToggleDoor = function () {
+    doorOpen = !doorOpen;
+    const btn = document.getElementById('demon-door-btn');
+    if (doorOpen) {
+      btn.textContent = 'Close';
+      btn.classList.add('demon-active');
+    } else {
+      btn.textContent = 'Open';
+      btn.classList.remove('demon-active');
+    }
+  };
+
+  window.addEventListener('resize', () => {
+    if (running) { layout(); initParticles(); }
+  });
+
+})();
+</script>

@@ -1,0 +1,474 @@
+<!-- Ginzburg–Landau Applet Include -->
+
+<style>
+
+/* ── Overlay backdrop ── */
+#gl-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+#gl-overlay.gl-open {
+  display: block;
+  pointer-events: auto;
+}
+
+/* ── Shared panel style ── */
+.gl-panel {
+  position: fixed;
+  z-index: 910;
+  background: #16212a;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  border: 2px solid #25d9c8;
+  box-shadow:
+    -12px 0 40px rgba(42, 191, 217, 0.55),
+     12px 0 40px rgba(255, 109, 162, 0.55),
+     0 12px 40px rgba(42, 191, 217, 0.4);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity  0.0s ease;
+  opacity: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.gl-panel.gl-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.gl-panel.gl-closing {
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ── Header panel — slides from top ── */
+#gl-header {
+  left:   var(--gl-left);
+  top:    var(--gl-top-hdr);
+  width:  var(--gl-W);
+  height: var(--gl-H-hdr);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  transform: translateY(-120px);
+}
+#gl-header.gl-open { transform: translateY(0); }
+#gl-header h2 {
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: #eef2f5;
+  font-weight: normal;
+  margin: 0;
+  text-transform: uppercase;
+}
+#gl-close-btn {
+  background: none;
+  border: 1px solid #3d5a6e;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 3px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#gl-close-btn:hover { background: #2a3d4e; }
+
+/* ── Sim panel — slides from left ── */
+#gl-sim-panel {
+  left:   var(--gl-left);
+  top:    var(--gl-top-body);
+  width:  var(--gl-W-sim);
+  height: var(--gl-H-body);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-110vw);
+}
+#gl-sim-panel.gl-open { transform: translateX(0); }
+#gl-canvas {
+  flex: 1;
+  display: block;
+  width: 100%;
+  min-height: 0;
+  image-rendering: pixelated;
+}
+
+/* ── Controls panel — slides from right ── */
+#gl-ctrl-panel {
+  top:    var(--gl-top-body);
+  left:   calc(var(--gl-left) + var(--gl-W-sim) + var(--gl-gap));
+  width:  var(--gl-W-ctrl);
+  height: var(--gl-H-body);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #1a2530;
+  transform: translateX(110vw);
+}
+#gl-ctrl-panel.gl-open { transform: translateX(0); }
+
+.gl-ctrl-section {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #2e3f4f;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.gl-ctrl-section:last-child { border-bottom: none; }
+
+.gl-ctrl-title {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #a8c0d0;
+  margin: 0 0 2px;
+}
+
+.gl-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.gl-slider-row .gl-side {
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: #a8c0d0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.gl-slider-row input[type=range] {
+  flex: 1;
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(100,120,140,0.35);
+  outline: none;
+  cursor: pointer;
+}
+.gl-slider-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #25d9c8;
+  cursor: pointer;
+  margin-top: -4.5px;
+}
+.gl-slider-row input[type=range]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #25d9c8;
+  border: none;
+  cursor: pointer;
+}
+.gl-val {
+  font-size: 16px;
+  color: #25d9c8;
+  min-width: 34px;
+  text-align: right;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.gl-btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.gl-btn {
+  background: #2a3d4e;
+  color: #eef2f5;
+  border: 1px solid #3d5a6e;
+  padding: 5px 14px;
+  cursor: pointer;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.gl-btn:hover { background: #3a5060; }
+
+.gl-stat {
+  font-size: 13px;
+  color: #a8c0d0;
+  letter-spacing: 0.5px;
+  padding: 10px 16px 4px;
+}
+</style>
+
+
+
+<!-- Overlay -->
+<div id="gl-overlay">
+
+  <!-- Header: slides from top -->
+  <div id="gl-header" class="gl-panel">
+    <h2>Ginzburg&ndash;Landau &mdash; Langevin Dynamics</h2>
+    <button id="gl-close-btn" onclick="glClose()">Close</button>
+  </div>
+
+  <!-- Sim canvas: slides from left -->
+  <div id="gl-sim-panel" class="gl-panel">
+    <canvas id="gl-canvas"></canvas>
+  </div>
+
+  <!-- Controls: slides from right -->
+  <div id="gl-ctrl-panel" class="gl-panel">
+
+    <div class="gl-ctrl-section">
+      <div class="gl-ctrl-title">Temperature</div>
+      <div class="gl-slider-row">
+        <span class="gl-side">Cold</span>
+        <input type="range" id="gl-temp" min="0" max="0.1" step="0.0005" value="0.025">
+        <span class="gl-side">Hot</span>
+      </div>
+    </div>
+
+    <div class="gl-ctrl-section">
+      <div class="gl-ctrl-title">Damping &gamma;</div>
+      <div class="gl-slider-row">
+        <span class="gl-side">Low</span>
+        <input type="range" id="gl-gamma" min="0.1" max="5" step="0.05" value="1.0">
+        <span class="gl-side">High</span>
+      </div>
+    </div>
+
+    <div class="gl-ctrl-section">
+      <div class="gl-ctrl-title">Initialise</div>
+      <div class="gl-btn-row">
+        <button class="gl-btn" onclick="glReset()">Random</button>
+      </div>
+    </div>
+
+    <div class="gl-stat" id="gl-stat"></div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  const GAP = 10;
+  const PAD = 20;
+  const PHI = 1.6180339887;
+  const N   = 256;
+  const DT  = 0.05;
+
+  let phi     = new Float32Array(N * N);
+  let phi_old = new Float32Array(N * N);
+  let phi_new = new Float32Array(N * N);
+
+  let T = 0.025, gamma = 1.0;
+  let running = false, frameId = null;
+
+  /* ── Box-Muller ── */
+  let _spare = null;
+  function randn() {
+    if (_spare !== null) { const v = _spare; _spare = null; return v; }
+    let u, v, s;
+    do { u = Math.random()*2-1; v = Math.random()*2-1; s = u*u+v*v; } while (s>=1||s===0);
+    const m = Math.sqrt(-2*Math.log(s)/s);
+    _spare = v * m;
+    return u * m;
+  }
+
+  function idx(i, j) {
+    return ((i + N) % N) * N + ((j + N) % N);
+  }
+
+  function initRandom() {
+    for (let k = 0; k < N * N; k++) {
+      phi[k]     = (Math.random() - 0.5) * 0.5;
+      phi_old[k] = phi[k];
+    }
+  }
+
+  function step() {
+    const dt2      = DT * DT;
+    const noiseMag = Math.sqrt(2 * gamma * T / dt2);
+
+    for (let i = 0; i < N; i++) {
+      for (let j = 0; j < N; j++) {
+        const k = idx(i, j);
+        const p = phi[k];
+        const lap = phi[idx(i+1,j)] + phi[idx(i-1,j)]
+                  + phi[idx(i,j+1)] + phi[idx(i,j-1)]
+                  - 4 * p;
+        // V'(phi) = -phi + phi^3  (double-well V = -phi^2/2 + phi^4/4)
+        const force = lap - (-p + p*p*p);
+        phi_new[k] = p + (p - phi_old[k]) * (1 - gamma * DT)
+                       + dt2 * force
+                       + dt2 * noiseMag * randn();
+      }
+    }
+    const tmp = phi_old; phi_old = phi; phi = phi_new; phi_new = tmp;
+  }
+
+  /* ── Palette LUT ──
+     5 stops over φ ∈ [-1, +1]:
+       -1.0  pink-dark   #f92672  (249,  38, 114)
+       -0.5  pink-light  #ff6da2  (255, 109, 162)
+        0.0  cyan        #2abed9  ( 42, 190, 217)
+       +0.5  teal-light  #25d9c8  ( 37, 217, 200)
+       +1.0  teal-dark   #23bbad  ( 35, 187, 173)
+  ── */
+  const LUT_SIZE = 512;
+  const lut = new Uint8Array(LUT_SIZE * 3);
+  (function buildLUT() {
+    const stops = [
+      [249,  38, 114],   // φ = -1   pink-dark
+      [255, 109, 162],   // φ = -0.5 pink-light
+      [ 42, 190, 217],   // φ =  0   cyan
+      [ 37, 217, 200],   // φ = +0.5 teal-light
+      [ 35, 187, 173],   // φ = +1   teal-dark
+    ];
+    for (let i = 0; i < LUT_SIZE; i++) {
+      const t  = i / (LUT_SIZE - 1);          // 0..1
+      const ft = t * (stops.length - 1);      // 0..4
+      const lo = Math.floor(ft);
+      const hi = Math.min(lo + 1, stops.length - 1);
+      const f  = ft - lo;
+      lut[i*3]   = Math.round(stops[lo][0] + f * (stops[hi][0] - stops[lo][0]));
+      lut[i*3+1] = Math.round(stops[lo][1] + f * (stops[hi][1] - stops[lo][1]));
+      lut[i*3+2] = Math.round(stops[lo][2] + f * (stops[hi][2] - stops[lo][2]));
+    }
+  })();
+
+  function phiToLUT(v) {
+    // clamp φ to [-1.5, 1.5], map to [0, LUT_SIZE-1]
+    const clamped = Math.max(-1.5, Math.min(1.5, v));
+    const idx = Math.round((clamped + 1.5) / 3.0 * (LUT_SIZE - 1));
+    return idx * 3;
+  }
+
+  let canvas, ctx, imgData, buf;
+
+  function render() {
+    const W = canvas.width, H = canvas.height;
+    for (let pi = 0; pi < N; pi++) {
+      const y0 = Math.round(H * pi / N);
+      const y1 = Math.round(H * (pi + 1) / N);
+      for (let pj = 0; pj < N; pj++) {
+        const x0  = Math.round(W * pj / N);
+        const x1  = Math.round(W * (pj + 1) / N);
+        const li  = phiToLUT(phi[pi * N + pj]);
+        const r = lut[li], g = lut[li+1], b = lut[li+2];
+        for (let py = y0; py < y1; py++) {
+          for (let px = x0; px < x1; px++) {
+            const base = (py * W + px) * 4;
+            buf[base]   = r;
+            buf[base+1] = g;
+            buf[base+2] = b;
+            buf[base+3] = 255;
+          }
+        }
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+  }
+
+  let _frameCount = 0;
+  function loop() {
+    if (running) {
+      for (let s = 0; s < 4; s++) step();
+      render();
+      if (++_frameCount % 15 === 0) {
+        let sum = 0, sum2 = 0;
+        for (let k = 0; k < N*N; k++) { sum += phi[k]; sum2 += phi[k]*phi[k]; }
+        document.getElementById('gl-stat').textContent =
+          '\u27e8\u03c6\u27e9 = ' + (sum/(N*N)).toFixed(4) +
+          '   \u27e8\u03c6\u00b2\u27e9\u00bd = ' + Math.sqrt(sum2/(N*N)).toFixed(4);
+      }
+    }
+    frameId = requestAnimationFrame(loop);
+  }
+
+  /* ── Layout ── */
+  function layout() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const sFromW = (vw - 2*PAD - GAP) / (1 + 1/PHI);
+    const sFromH = (vh - 2*PAD) / 1.1;
+    const S      = Math.floor(Math.min(sFromW, sFromH));
+    const ctrlW  = Math.floor(S / PHI);
+    const hdrH   = Math.floor(S * 0.1);
+    const totalW = S + GAP + ctrlW;
+    const left   = Math.floor((vw - totalW) / 2);
+    const top    = Math.floor((vh - (hdrH + S)) / 2);
+
+    const el = document.getElementById('gl-overlay');
+    el.style.setProperty('--gl-left',     left         + 'px');
+    el.style.setProperty('--gl-top-hdr',  top          + 'px');
+    el.style.setProperty('--gl-top-body', (top + hdrH) + 'px');
+    el.style.setProperty('--gl-W',        totalW       + 'px');
+    el.style.setProperty('--gl-W-sim',    S            + 'px');
+    el.style.setProperty('--gl-W-ctrl',   ctrlW        + 'px');
+    el.style.setProperty('--gl-H-hdr',    hdrH         + 'px');
+    el.style.setProperty('--gl-H-body',   S            + 'px');
+    el.style.setProperty('--gl-gap',      GAP          + 'px');
+
+    if (canvas) {
+      canvas.width  = S;
+      canvas.height = S;
+      imgData = ctx.createImageData(S, S);
+      buf     = imgData.data;
+      for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+    }
+  }
+
+  /* ── Open / close ── */
+  window.glOpen = function () {
+    canvas = document.getElementById('gl-canvas');
+    ctx    = canvas.getContext('2d');
+    layout();
+    initRandom();
+
+    document.getElementById('gl-overlay').classList.add('gl-open');
+    requestAnimationFrame(() => {
+      document.getElementById('gl-header').classList.add('gl-open');
+      document.getElementById('gl-sim-panel').classList.add('gl-open');
+      document.getElementById('gl-ctrl-panel').classList.add('gl-open');
+    });
+
+    running = true;
+    if (!frameId) loop();
+  };
+
+  window.glClose = function () {
+    running = false;
+    ['gl-header', 'gl-sim-panel', 'gl-ctrl-panel'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('gl-open');
+      el.classList.add('gl-closing');
+    });
+    setTimeout(() => {
+      document.getElementById('gl-overlay').classList.remove('gl-open');
+      ['gl-header', 'gl-sim-panel', 'gl-ctrl-panel'].forEach(id => {
+        document.getElementById(id).classList.remove('gl-closing');
+      });
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+    }, 550);
+  };
+
+  window.glReset = initRandom;
+
+  window.addEventListener('resize', () => { if (running) layout(); });
+
+  document.getElementById('gl-temp').addEventListener('input', function () {
+    T = parseFloat(this.value);
+  });
+
+  document.getElementById('gl-gamma').addEventListener('input', function () {
+    gamma = parseFloat(this.value);
+  });
+
+})();
+</script>

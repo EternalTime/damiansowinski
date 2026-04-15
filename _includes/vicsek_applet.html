@@ -1,0 +1,455 @@
+<!-- VICSEK Applet Include -->
+
+<style>
+
+/* ── Overlay backdrop ── */
+#vicsek-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+#vicsek-overlay.vicsek-open {
+  display: block;
+  pointer-events: auto;
+}
+
+/* ── Shared panel style ── */
+.vicsek-panel {
+  position: fixed;
+  z-index: 910;
+  background: #16212a;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  border: 2px solid #25d9c8;
+  box-shadow:
+    -12px 0 40px rgba(42, 191, 217, 0.55),
+     12px 0 40px rgba(255, 109, 162, 0.55),
+     0 12px 40px rgba(42, 191, 217, 0.4);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity  0.45s ease;
+  opacity: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.vicsek-panel.vicsek-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Header panel ── */
+#vicsek-header {
+  left:   var(--vicsek-left);
+  top:    var(--vicsek-top-hdr);
+  width:  var(--vicsek-W);
+  height: var(--vicsek-H-hdr);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  transform: translateY(-120px);
+}
+#vicsek-header.vicsek-open { transform: translateY(0); }
+#vicsek-header h2 {
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: #eef2f5;
+  font-weight: normal;
+  margin: 0;
+  text-transform: uppercase;
+}
+#vicsek-close-btn {
+  background: none;
+  border: 1px solid #3d5a6e;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 3px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#vicsek-close-btn:hover { background: #2a3d4e; }
+
+/* ── Sim panel ── */
+#vicsek-sim-panel {
+  left:   var(--vicsek-left);
+  top:    var(--vicsek-top-body);
+  width:  var(--vicsek-W-sim);
+  height: var(--vicsek-H-body);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-110vw);
+}
+#vicsek-sim-panel.vicsek-open { transform: translateX(0); }
+#vicsek-canvas {
+  flex: 1;
+  display: block;
+  width: 100%;
+  min-height: 0;
+}
+
+/* ── Controls panel ── */
+#vicsek-ctrl-panel {
+  top:    var(--vicsek-top-body);
+  left:   calc(var(--vicsek-left) + var(--vicsek-W-sim) + var(--vicsek-gap));
+  width:  var(--vicsek-W-ctrl);
+  height: var(--vicsek-H-body);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #1a2530;
+  transform: translateX(110vw);
+}
+#vicsek-ctrl-panel.vicsek-open { transform: translateX(0); }
+
+.vicsek-ctrl-section {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #2e3f4f;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vicsek-ctrl-section:last-child { border-bottom: none; }
+
+.vicsek-ctrl-title {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #a8c0d0;
+  margin: 0 0 2px;
+}
+
+.vicsek-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.vicsek-slider-row .vicsek-side {
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: #a8c0d0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.vicsek-slider-row input[type=range] {
+  flex: 1;
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(100,120,140,0.35);
+  outline: none;
+  cursor: pointer;
+}
+.vicsek-slider-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #25d9c8;
+  cursor: pointer;
+  margin-top: -4.5px;
+}
+.vicsek-slider-row input[type=range]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #25d9c8;
+  border: none;
+  cursor: pointer;
+}
+.vicsek-val {
+  font-size: 16px;
+  color: #25d9c8;
+  min-width: 34px;
+  text-align: right;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.vicsek-btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.vicsek-btn {
+  background: #2a3d4e;
+  color: #eef2f5;
+  border: 1px solid #3d5a6e;
+  padding: 5px 14px;
+  cursor: pointer;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.vicsek-btn:hover { background: #3a5060; }
+</style>
+
+
+
+<!-- Overlay -->
+<div id="vicsek-overlay">
+
+  <!-- Header -->
+  <div id="vicsek-header" class="vicsek-panel">
+    <h2>Vicsek Model &mdash; Flocking Dynamics</h2>
+    <button id="vicsek-close-btn" onclick="vicsekClose()">Close</button>
+  </div>
+
+  <!-- Sim canvas -->
+  <div id="vicsek-sim-panel" class="vicsek-panel">
+    <canvas id="vicsek-canvas"></canvas>
+  </div>
+
+  <!-- Controls -->
+  <div id="vicsek-ctrl-panel" class="vicsek-panel">
+
+    <div class="vicsek-ctrl-section">
+      <div class="vicsek-ctrl-title">Noise &eta;</div>
+      <div class="vicsek-slider-row">
+        <span class="vicsek-side">Low</span>
+        <input type="range" id="vicsek-noise" min="0.0" max="1.0" step="0.01" value="0.2">
+        <span class="vicsek-side">High</span>
+      </div>
+    </div>
+
+    <div class="vicsek-ctrl-section">
+      <div class="vicsek-ctrl-title">Boids</div>
+      <div class="vicsek-slider-row">
+        <span class="vicsek-side">Few</span>
+        <input type="range" id="vicsek-count" min="50" max="1600" step="50" value="300">
+        <span class="vicsek-side">Many</span>
+      </div>
+    </div>
+
+    <div class="vicsek-ctrl-section">
+      <div class="vicsek-ctrl-title">Speed</div>
+      <div class="vicsek-slider-row">
+        <span class="vicsek-side">Slow</span>
+        <input type="range" id="vicsek-speed" min="0.5" max="5.0" step="0.5" value="2.0">
+        <span class="vicsek-side">Fast</span>
+      </div>
+    </div>
+
+    <div class="vicsek-ctrl-section">
+      <div class="vicsek-ctrl-title">Reset</div>
+      <div class="vicsek-btn-row">
+        <button class="vicsek-btn" onclick="vicsekReset()">Randomise</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  /* ── Layout constants ── */
+  const GAP   = 10;   // px between sim and ctrl panels
+  const PAD   = 20;   // margin from viewport edge
+  const PHI   = 1.6180339887;   // golden ratio
+
+  /* ── Vicsek parameters ── */
+  const R = 25;          // interaction radius (pixels at 1x — rescaled with canvas)
+  let eta  = 0.2;        // noise amplitude  [0, 1]
+  let v0   = 2.0;        // speed (pixels/step)
+  let N    = 300;        // number of boids
+
+  /* ── Boid state arrays (pre-allocated to max size) ── */
+  const MAX = 1600;
+  const px  = new Float32Array(MAX);
+  const py  = new Float32Array(MAX);
+  const th  = new Float32Array(MAX);  // heading in radians
+
+  let canvasEl, ctx;
+  let W = 1, H = 1;   // canvas dimensions in pixels
+  let running = false, frameId = null;
+
+  /* ── Initialise boids ── */
+  function reset() {
+    for (let i = 0; i < N; i++) {
+      px[i] = Math.random() * W;
+      py[i] = Math.random() * H;
+      th[i] = (Math.random() - 0.5) * 2 * Math.PI;
+    }
+  }
+
+  /* ── One Vicsek step ── */
+  function step() {
+    const R2 = R * R;
+    const halfEtaPi = eta * Math.PI;
+
+    // Compute new headings: average angle of neighbours within radius R
+    const newTh = new Float32Array(N);
+    for (let i = 0; i < N; i++) {
+      let sx = 0, sy = 0;
+      const xi = px[i], yi = py[i];
+      for (let j = 0; j < N; j++) {
+        let dx = px[j] - xi;
+        let dy = py[j] - yi;
+        // periodic boundary
+        if (dx >  W / 2) dx -= W;
+        if (dx < -W / 2) dx += W;
+        if (dy >  H / 2) dy -= H;
+        if (dy < -H / 2) dy += H;
+        if (dx * dx + dy * dy <= R2) {
+          sx += Math.cos(th[j]);
+          sy += Math.sin(th[j]);
+        }
+      }
+      newTh[i] = Math.atan2(sy, sx) + (Math.random() - 0.5) * 2 * halfEtaPi;
+    }
+
+    // Update positions with periodic BC
+    for (let i = 0; i < N; i++) {
+      th[i] = newTh[i];
+      px[i] = (px[i] + v0 * Math.cos(th[i]) + W) % W;
+      py[i] = (py[i] + v0 * Math.sin(th[i]) + H) % H;
+    }
+  }
+
+  /* ── Rendering ── */
+  // Boid: isosceles triangle, pointing in direction of heading
+  const BODY = 7;   // half-length of long axis (px)
+  const WING = 3.5; // half-width
+
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#16212a';
+    ctx.fillRect(0, 0, W, H);
+
+    for (let i = 0; i < N; i++) {
+      const x = px[i], y = py[i], a = th[i];
+      const cos = Math.cos(a), sin = Math.sin(a);
+
+      // Triangle vertices in local frame: tip at (BODY,0), base at (-BODY/2, ±WING)
+      const tipX  =  x + cos * BODY;
+      const tipY  =  y + sin * BODY;
+      const b1X   =  x - cos * (BODY * 0.5) - sin * WING;
+      const b1Y   =  y - sin * (BODY * 0.5) + cos * WING;
+      const b2X   =  x - cos * (BODY * 0.5) + sin * WING;
+      const b2Y   =  y - sin * (BODY * 0.5) - cos * WING;
+
+      // Colour: map heading angle to teal–pink hue blend
+      const t = (Math.sin(a) + 1) * 0.5;   // 0..1
+      const r = Math.round(37  + t * (249 - 37));
+      const g = Math.round(217 + t * (38  - 217));
+      const b = Math.round(200 + t * (114 - 200));
+
+      ctx.beginPath();
+      ctx.moveTo(tipX, tipY);
+      ctx.lineTo(b1X, b1Y);
+      ctx.lineTo(b2X, b2Y);
+      ctx.closePath();
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fill();
+    }
+  }
+
+  function loop() {
+    if (running) {
+      step();
+      render();
+    }
+    frameId = requestAnimationFrame(loop);
+  }
+
+  /* ── Layout ── */
+  function layout() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    // Sim is a square of side S.
+    // Ctrl width = S / PHI  so that  S × (S + ctrlW)  is a golden rectangle.
+    // Header height = 0.1 × S, sits above the body with no extra gap.
+    // Fit S into the available viewport, respecting PAD on all sides.
+    //   available width  = vw - 2*PAD - GAP - S/PHI  →  S*(1 + 1/PHI) = vw - 2*PAD - GAP
+    //   available height = vh - 2*PAD - 0.1*S         →  S*1.1        = vh - 2*PAD
+    const sFromW = (vw - 2 * PAD - GAP) / (1 + 1 / PHI);
+    const sFromH = (vh - 2 * PAD) / 1.1;
+    const S      = Math.floor(Math.min(sFromW, sFromH));
+
+    const ctrlW  = Math.floor(S / PHI);
+    const hdrH   = Math.floor(S * 0.1);
+    const totalW = S + GAP + ctrlW;
+    const left   = Math.floor((vw - totalW) / 2);
+    const top    = Math.floor((vh - (hdrH + S)) / 2);
+
+    const el = document.getElementById('vicsek-overlay');
+    el.style.setProperty('--vicsek-left',     left         + 'px');
+    el.style.setProperty('--vicsek-top-hdr',  top          + 'px');
+    el.style.setProperty('--vicsek-top-body', (top + hdrH) + 'px');
+    el.style.setProperty('--vicsek-W',        totalW       + 'px');
+    el.style.setProperty('--vicsek-W-sim',    S            + 'px');
+    el.style.setProperty('--vicsek-W-ctrl',   ctrlW        + 'px');
+    el.style.setProperty('--vicsek-H-hdr',    hdrH         + 'px');
+    el.style.setProperty('--vicsek-H-body',   S            + 'px');
+    el.style.setProperty('--vicsek-gap',      GAP          + 'px');
+
+    if (canvasEl) {
+      canvasEl.width  = S;
+      canvasEl.height = S;
+      W = S;
+      H = S;
+    }
+  }
+
+  /* ── Open / close ── */
+  window.vicsekOpen = function () {
+    canvasEl = document.getElementById('vicsek-canvas');
+    ctx = canvasEl.getContext('2d');
+    layout();
+    reset();
+
+    document.getElementById('vicsek-overlay').classList.add('vicsek-open');
+    requestAnimationFrame(() => {
+      document.getElementById('vicsek-header').classList.add('vicsek-open');
+      document.getElementById('vicsek-sim-panel').classList.add('vicsek-open');
+      document.getElementById('vicsek-ctrl-panel').classList.add('vicsek-open');
+    });
+
+    running = true;
+    if (!frameId) loop();
+  };
+
+  window.vicsekClose = function () {
+    running = false;
+    ['vicsek-header', 'vicsek-sim-panel', 'vicsek-ctrl-panel'].forEach(id => {
+      document.getElementById(id).classList.remove('vicsek-open');
+    });
+    setTimeout(() => {
+      document.getElementById('vicsek-overlay').classList.remove('vicsek-open');
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+    }, 550);
+  };
+
+  window.vicsekReset = function () { reset(); };
+
+  window.addEventListener('resize', () => {
+    if (running) { layout(); reset(); }
+  });
+
+  /* ── Controls ── */
+  document.getElementById('vicsek-noise').addEventListener('input', function () {
+    eta = parseFloat(this.value);
+  });
+
+  document.getElementById('vicsek-count').addEventListener('input', function () {
+    N = parseInt(this.value);
+    reset();
+  });
+
+  document.getElementById('vicsek-speed').addEventListener('input', function () {
+    v0 = parseFloat(this.value);
+  });
+
+})();
+</script>
