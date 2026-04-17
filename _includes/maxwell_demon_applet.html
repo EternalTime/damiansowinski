@@ -22,11 +22,7 @@
   background: #16212a;
   color: #eef2f5;
   font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid #25d9c8;
-  box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.55),
-     12px 0 40px rgba(255, 109, 162, 0.55),
-     0 12px 40px rgba(42, 191, 217, 0.4);
+  border: 2px solid transparent;
   border-radius: 14px;
   overflow: hidden;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
@@ -44,6 +40,20 @@
   pointer-events: none;
 }
 
+/* Per-panel border + glow colours */
+#demon-header {
+  border-color: var(--pink-dark);
+  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
+}
+#demon-sim-panel {
+  border-color: var(--teal-dark);
+  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
+}
+#demon-ctrl-panel {
+  border-color: var(--cyan);
+  box-shadow: 0 12px 35px rgba(42, 190, 217, 0.5), 0 -4px 20px rgba(42, 190, 217, 0.3);
+}
+
 /* ── Header panel — slides from top ── */
 #demon-header {
   left:   var(--demon-left);
@@ -55,6 +65,8 @@
   justify-content: space-between;
   padding: 0 18px;
   transform: translateY(-120px);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 #demon-header.demon-open { transform: translateY(0); }
 #demon-header h2 {
@@ -85,6 +97,7 @@
   width:  var(--demon-W);
   height: var(--demon-H-sim);
   transform: translateX(-110vw);
+  border-radius: 0;
 }
 #demon-sim-panel.demon-open { transform: translateX(0); }
 #demon-canvas {
@@ -113,7 +126,7 @@
 /* ── Controls panel — slides from bottom ── */
 #demon-ctrl-panel {
   left:   var(--demon-left);
-  top:    calc(var(--demon-top-body) + var(--demon-H-sim) + var(--demon-gap));
+  top:    calc(var(--demon-top-body) + var(--demon-H-sim));
   width:  var(--demon-W);
   height: var(--demon-H-ctrl);
   display: flex;
@@ -124,6 +137,8 @@
   padding: 0 24px;
   box-sizing: border-box;
   gap: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 #demon-ctrl-panel.demon-open { transform: translateY(0); }
 
@@ -224,7 +239,7 @@
 
 <script>
 (function () {
-  const GAP  = 10;
+  const GAP  = 0;
   const PAD  = 20;
   const PHI  = 1.6180339887;
 
@@ -558,19 +573,18 @@
     const hdrH   = Math.floor(S * 0.1);
     const simH   = Math.floor(simW * 0.5);           // 2:1 wide rectangle
     const ctrlH  = hdrH;                             // same height as header strip
-    const totalH = hdrH + GAP + simH + GAP + ctrlH;
+    const totalH = hdrH + simH + ctrlH;
     const left   = Math.floor((vw - simW) / 2);
     const top    = Math.floor((vh - totalH) / 2);
 
     const el = document.getElementById('demon-overlay');
-    el.style.setProperty('--demon-left',     left                + 'px');
-    el.style.setProperty('--demon-top-hdr',  top                 + 'px');
-    el.style.setProperty('--demon-top-body', (top + hdrH + GAP)  + 'px');
-    el.style.setProperty('--demon-W',        simW                + 'px');
-    el.style.setProperty('--demon-H-hdr',    hdrH                + 'px');
-    el.style.setProperty('--demon-H-sim',    simH                + 'px');
-    el.style.setProperty('--demon-H-ctrl',   ctrlH               + 'px');
-    el.style.setProperty('--demon-gap',      GAP                 + 'px');
+    el.style.setProperty('--demon-left',     left           + 'px');
+    el.style.setProperty('--demon-top-hdr',  top            + 'px');
+    el.style.setProperty('--demon-top-body', (top + hdrH)   + 'px');
+    el.style.setProperty('--demon-W',        simW           + 'px');
+    el.style.setProperty('--demon-H-hdr',    hdrH           + 'px');
+    el.style.setProperty('--demon-H-sim',    simH           + 'px');
+    el.style.setProperty('--demon-H-ctrl',   ctrlH          + 'px');
 
     if (canvas) {
       canvas.width  = simW;

@@ -22,22 +22,36 @@
   background: #16212a;
   color: #eef2f5;
   font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid #25d9c8;
-  box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.55),
-     12px 0 40px rgba(255, 109, 162, 0.55),
-     0 12px 40px rgba(42, 191, 217, 0.4);
+  border: 2px solid transparent;
   border-radius: 14px;
   overflow: hidden;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity  0.45s ease;
+              opacity  0.0s ease;
   opacity: 0;
   pointer-events: none;
   box-sizing: border-box;
 }
+
+/* Per-panel border + glow colours */
+#vicsek-header {
+  border-color: var(--pink-dark);
+  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
+}
+#vicsek-sim-panel {
+  border-color: var(--teal-dark);
+  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
+}
+#vicsek-ctrl-panel {
+  border-color: var(--cyan);
+  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5), 0 12px 30px rgba(42, 190, 217, 0.3);
+}
 .vicsek-panel.vicsek-open {
   opacity: 1;
   pointer-events: auto;
+}
+.vicsek-panel.vicsek-closing {
+  opacity: 1;
+  pointer-events: none;
 }
 
 /* ── Header panel ── */
@@ -83,6 +97,8 @@
   display: flex;
   flex-direction: column;
   transform: translateX(-110vw);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 #vicsek-sim-panel.vicsek-open { transform: translateX(0); }
 #vicsek-canvas {
@@ -95,7 +111,7 @@
 /* ── Controls panel ── */
 #vicsek-ctrl-panel {
   top:    var(--vicsek-top-body);
-  left:   calc(var(--vicsek-left) + var(--vicsek-W-sim) + var(--vicsek-gap));
+  left:   calc(var(--vicsek-left) + var(--vicsek-W-sim));
   width:  var(--vicsek-W-ctrl);
   height: var(--vicsek-H-body);
   display: flex;
@@ -103,6 +119,8 @@
   gap: 0;
   background: #1a2530;
   transform: translateX(110vw);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 #vicsek-ctrl-panel.vicsek-open { transform: translateX(0); }
 
@@ -253,7 +271,7 @@
 <script>
 (function () {
   /* ── Layout constants ── */
-  const GAP   = 10;   // px between sim and ctrl panels
+  const GAP   = 0;    // px between sim and ctrl panels
   const PAD   = 20;   // margin from viewport edge
   const PHI   = 1.6180339887;   // golden ratio
 
