@@ -139,9 +139,9 @@ a:hover {
   margin: 60px auto;
   padding: 60px;
   box-shadow:
-    -20px 0 80px rgba(42, 191, 217, 0.747),
-    20px 0 80px #ff6da2bb,
-    0 20px 80px #2abfd9b0;
+    -10px 0 40px rgba(42, 191, 217, 0.747),
+    10px 0 40px #ff6da2bb,
+    0 10px 40px #2abfd9b0;
   border-radius: 50px;
   border: 5px solid rgba(42, 190, 217, 1);
 }
@@ -260,6 +260,17 @@ a:hover {
      0 4px 20px rgba(42, 191, 217, 0.35);
   transition: box-shadow 0.2s ease, background 0.2s ease;
 }
+canvas:focus, canvas {
+  outline: none !important;
+}
+
+.applet-launch-btn:focus,
+.applet-launch-btn:focus-visible,
+.applet-launch-btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
 .applet-launch-btn:hover {
   background: #1e3040;
   box-shadow:
