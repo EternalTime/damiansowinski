@@ -22,11 +22,7 @@
   background: #16212a;
   color: #eef2f5;
   font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid #25d9c8;
-  box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.55),
-     12px 0 40px rgba(255, 109, 162, 0.55),
-     0 12px 40px rgba(42, 191, 217, 0.4);
+  border: 2px solid transparent;
   border-radius: 14px;
   overflow: hidden;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
@@ -35,6 +31,21 @@
   pointer-events: none;
   box-sizing: border-box;
 }
+
+/* Per-panel border + glow colours */
+#gl-header {
+  border-color: var(--pink-dark);
+  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
+}
+#gl-sim-panel {
+  border-color: var(--teal-dark);
+  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
+}
+#gl-ctrl-panel {
+  border-color: var(--cyan);
+  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5), 0 12px 30px rgba(42, 190, 217, 0.3);
+}
+
 .gl-panel.gl-open {
   opacity: 1;
   pointer-events: auto;
@@ -87,6 +98,8 @@
   display: flex;
   flex-direction: column;
   transform: translateX(-110vw);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 #gl-sim-panel.gl-open { transform: translateX(0); }
 #gl-canvas {
@@ -95,13 +108,12 @@
   width: 100%;
   min-height: 0;
   image-rendering: pixelated;
-  outline: none;
 }
 
 /* ── Controls panel — slides from right ── */
 #gl-ctrl-panel {
   top:    var(--gl-top-body);
-  left:   calc(var(--gl-left) + var(--gl-W-sim) + var(--gl-gap));
+  left:   calc(var(--gl-left) + var(--gl-W-sim));
   width:  var(--gl-W-ctrl);
   height: var(--gl-H-body);
   display: flex;
@@ -109,6 +121,8 @@
   gap: 0;
   background: #1a2530;
   transform: translateX(110vw);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 #gl-ctrl-panel.gl-open { transform: translateX(0); }
 
@@ -171,14 +185,6 @@
   border: none;
   cursor: pointer;
 }
-.gl-val {
-  font-size: 16px;
-  color: #25d9c8;
-  min-width: 34px;
-  text-align: right;
-  letter-spacing: 0.5px;
-  flex-shrink: 0;
-}
 
 .gl-btn-row {
   display: flex;
@@ -198,16 +204,7 @@
   transition: background 0.15s;
 }
 .gl-btn:hover { background: #3a5060; }
-
-.gl-stat {
-  font-size: 13px;
-  color: #a8c0d0;
-  letter-spacing: 0.5px;
-  padding: 10px 16px 4px;
-}
 </style>
-
-
 
 <!-- Overlay -->
 <div id="gl-overlay">
@@ -251,14 +248,11 @@
       </div>
     </div>
 
-    <div class="gl-stat" id="gl-stat"></div>
-
   </div>
 </div>
 
 <script>
 (function () {
-  const GAP = 10;
   const PAD = 20;
   const PHI = 1.6180339887;
   const N   = 256;
@@ -304,7 +298,7 @@
         const lap = phi[idx(i+1,j)] + phi[idx(i-1,j)]
                   + phi[idx(i,j+1)] + phi[idx(i,j-1)]
                   - 4 * p;
-        // V'(phi) = -phi + phi^3  (double-well V = -phi^2/2 + phi^4/4)
+        // V'(phi) = -phi + phi^3
         const force = lap - (-p + p*p*p);
         phi_new[k] = p + (p - phi_old[k]) * (1 - gamma * DT)
                        + dt2 * force
@@ -315,26 +309,21 @@
   }
 
   /* ── Palette LUT ──
-     5 stops over φ ∈ [-1, +1]:
-       -1.0  pink-dark   #f92672  (249,  38, 114)
-       -0.5  pink-light  #ff6da2  (255, 109, 162)
-        0.0  cyan        #2abed9  ( 42, 190, 217)
-       +0.5  teal-light  #25d9c8  ( 37, 217, 200)
-       +1.0  teal-dark   #23bbad  ( 35, 187, 173)
+     pink-dark → pink-light → cyan → teal-light → teal-dark
   ── */
   const LUT_SIZE = 512;
   const lut = new Uint8Array(LUT_SIZE * 3);
   (function buildLUT() {
     const stops = [
-      [249,  38, 114],   // φ = -1   pink-dark
-      [255, 109, 162],   // φ = -0.5 pink-light
-      [ 42, 190, 217],   // φ =  0   cyan
-      [ 37, 217, 200],   // φ = +0.5 teal-light
-      [ 35, 187, 173],   // φ = +1   teal-dark
+      [249,  38, 114],
+      [255, 109, 162],
+      [ 42, 190, 217],
+      [ 37, 217, 200],
+      [ 35, 187, 173],
     ];
     for (let i = 0; i < LUT_SIZE; i++) {
-      const t  = i / (LUT_SIZE - 1);          // 0..1
-      const ft = t * (stops.length - 1);      // 0..4
+      const t  = i / (LUT_SIZE - 1);
+      const ft = t * (stops.length - 1);
       const lo = Math.floor(ft);
       const hi = Math.min(lo + 1, stops.length - 1);
       const f  = ft - lo;
@@ -345,10 +334,9 @@
   })();
 
   function phiToLUT(v) {
-    // clamp φ to [-1.5, 1.5], map to [0, LUT_SIZE-1]
     const clamped = Math.max(-1.5, Math.min(1.5, v));
-    const idx = Math.round((clamped + 1.5) / 3.0 * (LUT_SIZE - 1));
-    return idx * 3;
+    const i = Math.round((clamped + 1.5) / 3.0 * (LUT_SIZE - 1));
+    return i * 3;
   }
 
   let canvas, ctx, imgData, buf;
@@ -359,9 +347,9 @@
       const y0 = Math.round(H * pi / N);
       const y1 = Math.round(H * (pi + 1) / N);
       for (let pj = 0; pj < N; pj++) {
-        const x0  = Math.round(W * pj / N);
-        const x1  = Math.round(W * (pj + 1) / N);
-        const li  = phiToLUT(phi[pi * N + pj]);
+        const x0 = Math.round(W * pj / N);
+        const x1 = Math.round(W * (pj + 1) / N);
+        const li = phiToLUT(phi[pi * N + pj]);
         const r = lut[li], g = lut[li+1], b = lut[li+2];
         for (let py = y0; py < y1; py++) {
           for (let px = x0; px < x1; px++) {
@@ -377,18 +365,10 @@
     ctx.putImageData(imgData, 0, 0);
   }
 
-  let _frameCount = 0;
   function loop() {
     if (running) {
       for (let s = 0; s < 4; s++) step();
       render();
-      if (++_frameCount % 15 === 0) {
-        let sum = 0, sum2 = 0;
-        for (let k = 0; k < N*N; k++) { sum += phi[k]; sum2 += phi[k]*phi[k]; }
-        document.getElementById('gl-stat').textContent =
-          '\u27e8\u03c6\u27e9 = ' + (sum/(N*N)).toFixed(4) +
-          '   \u27e8\u03c6\u00b2\u27e9\u00bd = ' + Math.sqrt(sum2/(N*N)).toFixed(4);
-      }
     }
     frameId = requestAnimationFrame(loop);
   }
@@ -396,12 +376,12 @@
   /* ── Layout ── */
   function layout() {
     const vw = window.innerWidth, vh = window.innerHeight;
-    const sFromW = (vw - 2*PAD - GAP) / (1 + 1/PHI);
+    const sFromW = (vw - 2*PAD) / (1 + 1/PHI);
     const sFromH = (vh - 2*PAD) / 1.1;
     const S      = Math.floor(Math.min(sFromW, sFromH));
     const ctrlW  = Math.floor(S / PHI);
     const hdrH   = Math.floor(S * 0.1);
-    const totalW = S + GAP + ctrlW;
+    const totalW = S + ctrlW;
     const left   = Math.floor((vw - totalW) / 2);
     const top    = Math.floor((vh - (hdrH + S)) / 2);
 
@@ -414,7 +394,6 @@
     el.style.setProperty('--gl-W-ctrl',   ctrlW        + 'px');
     el.style.setProperty('--gl-H-hdr',    hdrH         + 'px');
     el.style.setProperty('--gl-H-body',   S            + 'px');
-    el.style.setProperty('--gl-gap',      GAP          + 'px');
 
     if (canvas) {
       canvas.width  = S;
