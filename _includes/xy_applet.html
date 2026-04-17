@@ -22,11 +22,7 @@
   background: #16212a;
   color: #eef2f5;
   font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid #25d9c8;
-  box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.55),
-     12px 0 40px rgba(255, 109, 162, 0.55),
-     0 12px 40px rgba(42, 191, 217, 0.4);
+  border: 2px solid transparent;
   border-radius: 14px;
   overflow: hidden;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
@@ -34,6 +30,20 @@
   opacity: 0;
   pointer-events: none;
   box-sizing: border-box;
+}
+
+/* Per-panel border + glow colours */
+#xy-header {
+  border-color: var(--pink-dark);
+  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
+}
+#xy-sim-panel {
+  border-color: var(--teal-dark);
+  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
+}
+#xy-ctrl-panel {
+  border-color: var(--cyan);
+  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5), 0 12px 30px rgba(42, 190, 217, 0.3);
 }
 .xy-panel.xy-open {
   opacity: 1;
@@ -44,7 +54,7 @@
   pointer-events: none;
 }
 
-/* ── Header panel ── */
+/* ── Header panel — slides from top ── */
 #xy-header {
   left:   var(--xy-left);
   top:    var(--xy-top-hdr);
@@ -78,7 +88,7 @@
 }
 #xy-close-btn:hover { background: #2a3d4e; }
 
-/* ── Sim panel ── */
+/* ── Sim panel — slides from left ── */
 #xy-sim-panel {
   left:   var(--xy-left);
   top:    var(--xy-top-body);
@@ -87,6 +97,8 @@
   display: flex;
   flex-direction: column;
   transform: translateX(-110vw);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 #xy-sim-panel.xy-open { transform: translateX(0); }
 #xy-canvas {
@@ -96,10 +108,10 @@
   min-height: 0;
 }
 
-/* ── Controls panel ── */
+/* ── Controls panel — slides from right ── */
 #xy-ctrl-panel {
   top:    var(--xy-top-body);
-  left:   calc(var(--xy-left) + var(--xy-W-sim) + var(--xy-gap));
+  left:   calc(var(--xy-left) + var(--xy-W-sim));
   width:  var(--xy-W-ctrl);
   height: var(--xy-H-body);
   display: flex;
@@ -107,6 +119,8 @@
   gap: 0;
   background: #1a2530;
   transform: translateX(110vw);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 #xy-ctrl-panel.xy-open { transform: translateX(0); }
 
@@ -169,14 +183,6 @@
   border: none;
   cursor: pointer;
 }
-.xy-val {
-  font-size: 16px;
-  color: #25d9c8;
-  min-width: 34px;
-  text-align: right;
-  letter-spacing: 0.5px;
-  flex-shrink: 0;
-}
 
 .xy-btn-row {
   display: flex;
@@ -196,25 +202,35 @@
   transition: background 0.15s;
 }
 .xy-btn:hover { background: #3a5060; }
+.xy-btn.active {
+  background: #1e3a4a;
+  border-color: #25d9c8;
+  color: #25d9c8;
+  box-shadow: 0 0 10px rgba(37, 217, 200, 0.6), 0 0 20px rgba(37, 217, 200, 0.3);
+}
+.xy-btn.active-pink {
+  background: #2a1a28;
+  border-color: #f92672;
+  color: #f92672;
+  box-shadow: 0 0 10px rgba(249, 38, 114, 0.6), 0 0 20px rgba(249, 38, 114, 0.3);
+}
 </style>
-
-
 
 <!-- Overlay -->
 <div id="xy-overlay">
 
-  <!-- Header -->
+  <!-- Header: slides from top -->
   <div id="xy-header" class="xy-panel">
-    <h2>XY Model &mdash; Spin Dynamics</h2>
+    <h2>XY Model &mdash; Glauber Dynamics</h2>
     <button id="xy-close-btn" onclick="xyClose()">Close</button>
   </div>
 
-  <!-- Sim canvas -->
+  <!-- Sim canvas: slides from left -->
   <div id="xy-sim-panel" class="xy-panel">
     <canvas id="xy-canvas"></canvas>
   </div>
 
-  <!-- Controls -->
+  <!-- Controls: slides from right -->
   <div id="xy-ctrl-panel" class="xy-panel">
 
     <div class="xy-ctrl-section">
@@ -257,11 +273,8 @@
 <script>
 (function () {
   /* ── Layout constants ── */
-  const GAP     = 10;
-  const HDR_H   = 48;
-  const HDR_GAP = 8;
-  const CTRL_W  = 220;
-  const PAD     = 20;
+  const GAP = 0;
+  const PAD = 20;
 
   /* ── XY model parameters ── */
   let T  = 0.5;   // temperature
@@ -327,53 +340,72 @@
     }
   }
 
+  /* ── Vorticity: topological charge on each plaquette (x,y)→(x+1,y)→(x+1,y+1)→(x,y+1) ── */
+  function wrap(dth) {
+    // wrap angle difference to (−π, π]
+    const TWO_PI = 2 * Math.PI;
+    dth = dth % TWO_PI;
+    if (dth >  Math.PI) dth -= TWO_PI;
+    if (dth <= -Math.PI) dth += TWO_PI;
+    return dth;
+  }
+
+  function vorticityAt(x, y) {
+    // sum wrapped differences around the plaquette counter-clockwise
+    const s00 = spins[idx(x,   y  )];
+    const s10 = spins[idx(x+1, y  )];
+    const s11 = spins[idx(x+1, y+1)];
+    const s01 = spins[idx(x,   y+1)];
+    const circulation = wrap(s10 - s00) + wrap(s11 - s10)
+                      + wrap(s01 - s11) + wrap(s00 - s01);
+    return Math.round(circulation / (2 * Math.PI));  // 0, +1, or −1
+  }
+
   /* ── Rendering ── */
   function render() {
     const cellW = W / L;
     const cellH = H / L;
     const arrowLen = Math.min(cellW, cellH) * 0.38;
-
-    // ── Background: bilinear interpolation of spin angles per pixel ──
     const imgData = ctx.createImageData(W, H);
     const pix = imgData.data;
 
+    // ── Background: muted bilinear phase hue ──
     for (let py = 0; py < H; py++) {
       for (let px = 0; px < W; px++) {
-        // fractional grid coords (centre-aligned)
         const gx = px / cellW - 0.5;
         const gy = py / cellH - 0.5;
+        const ix = Math.floor(gx), iy = Math.floor(gy);
+        const tx = gx - ix,       ty = gy - iy;
 
-        // integer cell and local fraction
-        const ix = Math.floor(gx);
-        const iy = Math.floor(gy);
-        const tx = gx - ix;
-        const ty = gy - iy;
-
-        // four neighbouring spin angles (with periodic BC)
         const th00 = spins[idx(ix,   iy  )];
         const th10 = spins[idx(ix+1, iy  )];
         const th01 = spins[idx(ix,   iy+1)];
         const th11 = spins[idx(ix+1, iy+1)];
 
-        // bilinear interpolation on the unit circle (via vector averaging)
-        const cx00 = Math.cos(th00), sx00 = Math.sin(th00);
-        const cx10 = Math.cos(th10), sx10 = Math.sin(th10);
-        const cx01 = Math.cos(th01), sx01 = Math.sin(th01);
-        const cx11 = Math.cos(th11), sx11 = Math.sin(th11);
+        const bx = Math.cos(th00)*(1-tx)*(1-ty) + Math.cos(th10)*tx*(1-ty)
+                 + Math.cos(th01)*(1-tx)*ty      + Math.cos(th11)*tx*ty;
+        const by = Math.sin(th00)*(1-tx)*(1-ty) + Math.sin(th10)*tx*(1-ty)
+                 + Math.sin(th01)*(1-tx)*ty      + Math.sin(th11)*tx*ty;
 
-        const bx = cx00*(1-tx)*(1-ty) + cx10*tx*(1-ty) + cx01*(1-tx)*ty + cx11*tx*ty;
-        const by = sx00*(1-tx)*(1-ty) + sx10*tx*(1-ty) + sx01*(1-tx)*ty + sx11*tx*ty;
-        const th_interp = Math.atan2(by, bx);
-
-        const [r, g, b] = angleToRGB(th_interp);
+        const [r, g, b] = angleToRGB(Math.atan2(by, bx));
         const off = (py * W + px) * 4;
-        pix[off]   = r;
-        pix[off+1] = g;
-        pix[off+2] = b;
-        pix[off+3] = 255;
+        pix[off] = r; pix[off+1] = g; pix[off+2] = b; pix[off+3] = 255;
       }
     }
     ctx.putImageData(imgData, 0, 0);
+
+    // ── Vortex markers: bright circles at plaquette centres ──
+    const vr = Math.min(cellW, cellH) * 0.42;
+    for (let y = 0; y < L; y++) {
+      for (let x = 0; x < L; x++) {
+        const v = vorticityAt(x, y);
+        if (v === 0) continue;
+        ctx.beginPath();
+        ctx.arc((x + 1) * cellW, (y + 1) * cellH, vr, 0, 2 * Math.PI);
+        ctx.fillStyle = v > 0 ? '#f92672' : '#25d9c8';
+        ctx.fill();
+      }
+    }
 
     // ── Arrows ──
     const lw = Math.max(1.2, cellW * 0.13);
@@ -398,9 +430,8 @@
         ctx.lineTo(ex, ey);
         ctx.stroke();
 
-        // Arrowhead
-        const headLen = arrowLen * 0.0;
-        const headAng = 0.0;
+        const headLen = arrowLen * 0.45;
+        const headAng = 0.45;
         const a1 = th + Math.PI - headAng;
         const a2 = th + Math.PI + headAng;
         ctx.beginPath();
@@ -425,11 +456,11 @@
     ];
   }
   const PALETTE = [
-    mute(0x23, 0xbb, 0xad, 0.0),  // teal-dark
-    mute(0x25, 0xd9, 0xc8, 0.0),  // teal-light
-    mute(0x2a, 0xbe, 0xd9, 0.0),  // cyan
-    mute(0xff, 0x6d, 0xa2, 0.0),  // pink-light
-    mute(0xf9, 0x26, 0x72, 0.0),  // pink-dark
+    mute(0x23, 0xbb, 0xad, 0.45),  // teal-dark
+    mute(0x25, 0xd9, 0xc8, 0.45),  // teal-light
+    mute(0x2a, 0xbe, 0xd9, 0.45),  // cyan
+    mute(0xf9, 0x26, 0x72, 0.45),  // pink-dark
+    mute(0xff, 0x6d, 0xa2, 0.45),  // pink-light
     mute(0x23, 0xbb, 0xad, 0.0),  // wrap back to teal-dark for continuity
   ];
   const NSTOPS = PALETTE.length - 1;  // 5 segments
@@ -467,13 +498,13 @@
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
-    const sFromW = (vw - 2 * PAD - GAP) / (1 + 1 / PHI);
+    const sFromW = (vw - 2 * PAD) / (1 + 1 / PHI);
     const sFromH = (vh - 2 * PAD) / 1.1;
     const S      = Math.floor(Math.min(sFromW, sFromH));
 
     const ctrlW  = Math.floor(S / PHI);
     const hdrH   = Math.floor(S * 0.1);
-    const totalW = S + GAP + ctrlW;
+    const totalW = S + ctrlW;
     const left   = Math.floor((vw - totalW) / 2);
     const top    = Math.floor((vh - (hdrH + S)) / 2);
 
@@ -486,7 +517,6 @@
     el.style.setProperty('--xy-W-ctrl',   ctrlW        + 'px');
     el.style.setProperty('--xy-H-hdr',    hdrH         + 'px');
     el.style.setProperty('--xy-H-body',   S            + 'px');
-    el.style.setProperty('--xy-gap',      GAP          + 'px');
 
     if (canvasEl) {
       canvasEl.width  = S;
@@ -532,7 +562,7 @@
 
   window.xyReset = function () { reset(); };
 
-  window.addEventListener('resize', () => {
+window.addEventListener('resize', () => {
     if (running) { layout(); }
   });
 

@@ -22,11 +22,7 @@
   background: #16212a;
   color: #eef2f5;
   font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid #25d9c8;
-  box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.55),
-     12px 0 40px rgba(255, 109, 162, 0.55),
-     0 12px 40px rgba(42, 191, 217, 0.4);
+  border: 2px solid transparent;
   border-radius: 14px;
   overflow: hidden;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
@@ -34,6 +30,20 @@
   opacity: 0;
   pointer-events: none;
   box-sizing: border-box;
+}
+
+/* Per-panel border + glow colours */
+#ising-header {
+  border-color: var(--pink-dark);
+  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
+}
+#ising-sim-panel {
+  border-color: var(--teal-dark);
+  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
+}
+#ising-ctrl-panel {
+  border-color: var(--cyan);
+  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5), 0 12px 30px rgba(42, 190, 217, 0.3);
 }
 .ising-panel.ising-open {
   opacity: 1;
@@ -87,6 +97,8 @@
   display: flex;
   flex-direction: column;
   transform: translateX(-110vw);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 #ising-sim-panel.ising-open { transform: translateX(0); }
 #ising-canvas {
@@ -100,7 +112,7 @@
 /* ── Controls panel — slides from right ── */
 #ising-ctrl-panel {
   top:    var(--ising-top-body);
-  left:   calc(var(--ising-left) + var(--ising-W-sim) + var(--ising-gap));
+  left:   calc(var(--ising-left) + var(--ising-W-sim));
   width:  var(--ising-W-ctrl);
   height: var(--ising-H-body);
   display: flex;
@@ -108,6 +120,8 @@
   gap: 0;
   background: #1a2530;
   transform: translateX(110vw);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 #ising-ctrl-panel.ising-open { transform: translateX(0); }
 
@@ -180,6 +194,29 @@
   flex-shrink: 0;
 }
 
+/* centre-tick mark on the field slider */
+.ising-slider-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ising-slider-wrap input[type=range] {
+  width: 100%;
+}
+.ising-slider-tick {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 8px;
+  background: #a8c0d0;
+  pointer-events: none;
+}
+
 .ising-btn-row {
   display: flex;
   gap: 8px;
@@ -203,6 +240,12 @@
   border-color: #25d9c8;
   color: #25d9c8;
   box-shadow: 0 0 10px rgba(37, 217, 200, 0.6), 0 0 20px rgba(37, 217, 200, 0.3);
+}
+.ising-btn.active-pink {
+  background: #2a1a28;
+  border-color: #f92672;
+  color: #f92672;
+  box-shadow: 0 0 10px rgba(249, 38, 114, 0.6), 0 0 20px rgba(249, 38, 114, 0.3);
 }
 </style>
 
@@ -251,10 +294,29 @@
     </div>
 
     <div class="ising-ctrl-section">
+      <div class="ising-ctrl-title">External Field</div>
+      <div class="ising-slider-row">
+        <span class="ising-side">&minus;</span>
+        <div class="ising-slider-wrap">
+          <input type="range" id="ising-field" min="-1" max="1" step="0.02" value="0">
+          <div class="ising-slider-tick"></div>
+        </div>
+        <span class="ising-side">&plus;</span>
+      </div>
+    </div>
+
+    <div class="ising-ctrl-section">
       <div class="ising-ctrl-title">Coupling</div>
       <div class="ising-btn-row">
         <button class="ising-btn active" id="ising-btn-ferro"  onclick="isingSetCoupling('ferro')">Ferro</button>
         <button class="ising-btn"        id="ising-btn-antiferro" onclick="isingSetCoupling('antiferro')">Antiferro</button>
+      </div>
+    </div>
+
+    <div class="ising-ctrl-section">
+      <div class="ising-ctrl-title">Display</div>
+      <div class="ising-btn-row">
+        <button class="ising-btn active" id="ising-btn-display" onclick="isingToggleDisplay()">Magnetization</button>
       </div>
     </div>
 
@@ -272,7 +334,7 @@
 <script>
 (function () {
   /* ── Layout constants ── */
-  const GAP     = 10;
+  const GAP     = 0;
   const PAD     = 20;
   const PHI     = 1.6180339887;
 
@@ -288,6 +350,8 @@
   let frameId        = null;
   let lattice        = 'square';   // 'square' | 'triangle'
   let J              = 1;          // +1 ferromagnetic, -1 antiferromagnetic
+  let h              = 0;          // external field
+  let stagger        = false;      // display staggered magnetization
 
   // expTable indexed by dE + maxNeighbours*2
   // square:   neighbours=4, dE in {-8..8 step 4}, offset=8,  size=17
@@ -331,8 +395,8 @@
         const cX = (row % 2 === 0) ? cR : cL;
         sum += spins[rU + cX] + spins[rD + cX];
       }
-      const dE = 2 * J * s * sum;
-      if (dE <= 0 || Math.random() < expTable[dE + 12]) spins[i] = -s;
+      const dE = 2 * (J * sum + h) * s;
+      if (dE <= 0 || Math.random() < Math.exp(-dE / T)) spins[i] = -s;
     }
   }
 
@@ -353,8 +417,11 @@
     for (let row = 0; row < N; row++) {
       const y0 = rowStarts[row], y1 = rowStarts[row + 1];
       for (let col = 0; col < N; col++) {
+        // in antiferro mode apply staggered mask (-1)^(row+col) before colouring
+        const raw  = spins[row * N + col];
+        const disp = stagger ? raw * (((row + col) & 1) ? -1 : 1) : raw;
         // spin up → teal #25d9c8 (37,217,200), spin down → pink #f92672 (249,38,114)
-        const up = spins[row * N + col] === 1;
+        const up = disp === 1;
         const r  = up ?  37 : 249;
         const g  = up ? 217 :  38;
         const b  = up ? 200 : 114;
@@ -472,6 +539,20 @@
     document.getElementById('ising-btn-antiferro').classList.toggle('active', type === 'antiferro');
   };
 
+  window.isingToggleDisplay = function () {
+    stagger = !stagger;
+    const btn = document.getElementById('ising-btn-display');
+    if (stagger) {
+      btn.textContent = 'Staggered Magnetization';
+      btn.classList.remove('active');
+      btn.classList.add('active-pink');
+    } else {
+      btn.textContent = 'Magnetization';
+      btn.classList.remove('active-pink');
+      btn.classList.add('active');
+    }
+  };
+
   window.addEventListener('resize', () => { if (running) layout(); });
 
   /* ── Controls ── */
@@ -482,6 +563,10 @@
 
   document.getElementById('ising-speed').addEventListener('input', function () {
     sweepsPerFrame = parseInt(this.value);
+  });
+
+  document.getElementById('ising-field').addEventListener('input', function () {
+    h = parseFloat(this.value);
   });
 
 })();

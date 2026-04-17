@@ -238,7 +238,6 @@ const GAMMA_DECAY = 0.1;
 const TAU_E       = 1.0 / GAMMA_DECAY;
 const RHO_EQ      = GAMMA * TAU_E;          // energy density Γ/γ (J/area)
 const N_A_MAX     = (GAMMA / MU0) * DOMAIN * DOMAIN; // max agents ~10
-const TRAIL_LEN   = 200;
 
 // ── Mutable parameters ─────────────────────────────────────────────────────
 let R_sense = 6.0, vel = 20.0, sigma = 0.1, Xi = 0.5;
@@ -262,7 +261,8 @@ function nEqResources() {
 function nRMax() { return nEqResources(); }
 
 // ── State ──────────────────────────────────────────────────────────────────
-let resources = [], agents = [], simTime = 0, trail = [];
+let resources = [], agents = [], simTime = 0;
+let phaseTrail = [];        // ring buffer of {nr, na}, length PHASE_LEN
 let running = false, frameId = null, initialized = false;
 
 // ── Environment ────────────────────────────────────────────────────────────
@@ -350,8 +350,8 @@ function simStep() {
   }
   agents.push(...newborns);
   simTime++;
-  trail.push({ nr: resources.length / nRMax(), na: agents.length / N_A_MAX });
-  if (trail.length > TRAIL_LEN) trail.shift();
+  phaseTrail.push({ nr: resources.length / nRMax(), na: agents.length / N_A_MAX });
+  if (phaseTrail.length > PHASE_LEN) phaseTrail.shift();
 }
 
 function poissonSample(lam) {
@@ -363,7 +363,7 @@ function poissonSample(lam) {
 }
 
 function faInitSim() {
-  simTime = 0; trail = [];
+  simTime = 0; phaseTrail = [];
   epsilon = epsilonFromXi(Xi);
   initResources();
   const nA = Math.round(N_A_MAX);
@@ -372,6 +372,7 @@ function faInitSim() {
 
 // ── Canvas handles ─────────────────────────────────────────────────────────
 let simCanvas, simCtx, phaseCanvas, phaseCtx;
+let accumCanvas, accumCtx;  // offscreen accumulation for blob density
 
 // ── Draw sim ───────────────────────────────────────────────────────────────
 function drawSim() {
@@ -409,43 +410,79 @@ function drawSim() {
   }
 }
 
-// ── Draw phase plane ───────────────────────────────────────────────────────
+// ── Phase plane blob density ───────────────────────────────────────────────
+const BLOB_A    = 0.12;  // peak alpha per blob
+const PHASE_LEN = 500;   // number of points to keep
+
+function initAccum() {
+  accumCanvas = document.createElement('canvas');
+  accumCanvas.width  = phaseCanvas.width;
+  accumCanvas.height = phaseCanvas.height;
+  accumCtx = accumCanvas.getContext('2d');
+}
+
+function resizeAccum() {
+  // Preserve contents scaled to new size
+  const tmp = document.createElement('canvas');
+  tmp.width  = phaseCanvas.width;
+  tmp.height = phaseCanvas.height;
+  const tCtx = tmp.getContext('2d');
+  if (accumCanvas) tCtx.drawImage(accumCanvas, 0, 0, tmp.width, tmp.height);
+  accumCanvas        = tmp;
+  accumCtx           = tCtx;
+}
+
+function clearAccum() {
+  if (accumCtx) accumCtx.clearRect(0, 0, accumCanvas.width, accumCanvas.height);
+}
+
+function addBlob(nr, na, alphaMul = 1) {
+  const W = accumCanvas.width, H = accumCanvas.height;
+  const cx = nr * W;
+  const cy = (1 - na) * H;
+  const r  = W * 0.18;  // blob radius = 18% of canvas width
+  const a  = BLOB_A * alphaMul;
+  const grad = accumCtx.createRadialGradient(cx, cy, 0, cx, cy, r);
+  grad.addColorStop(0,   `rgba(77,184,74,${a})`);
+  grad.addColorStop(0.5, `rgba(77,184,74,${a * 0.4})`);
+  grad.addColorStop(1,   'rgba(77,184,74,0)');
+  accumCtx.save();
+  accumCtx.globalCompositeOperation = 'lighter';
+  accumCtx.fillStyle = grad;
+  accumCtx.beginPath();
+  accumCtx.arc(cx, cy, r, 0, 2 * Math.PI);
+  accumCtx.fill();
+  accumCtx.restore();
+}
+
 function drawPhase() {
   const W = phaseCanvas.width, H = phaseCanvas.height;
   if (W === 0 || H === 0) return;
-  const M = 4;
-  const plotX = M, plotY = M, plotW = W - 2 * M, plotH = H - 2 * M;
-  const px = v => plotX + v * plotW;
-  const py = v => plotY + (1 - v) * plotH;
 
+  // Repaint accumulation canvas from the current ring buffer
+  clearAccum();
+  for (let i = 0; i < phaseTrail.length; i++) {
+    const t = (i + 1) / phaseTrail.length;
+    const alphaMul = 0.3 + 0.7 * t;  // floor at 0.3 so old points stay visible
+    addBlob(phaseTrail[i].nr, phaseTrail[i].na, alphaMul);
+  }
+
+  // Background then density layer
   phaseCtx.fillStyle = '#1a2530';
   phaseCtx.fillRect(0, 0, W, H);
+  phaseCtx.drawImage(accumCanvas, 0, 0);
 
-  // Equilibrium dashed line: N_R/N_R^max + N_A/N_A^max = 1
+  // Equilibrium dashed line on top
   phaseCtx.save();
   phaseCtx.setLineDash([5, 4]);
   phaseCtx.strokeStyle = 'rgba(255,200,80,0.45)';
   phaseCtx.lineWidth = 1;
-  phaseCtx.beginPath(); phaseCtx.moveTo(px(0), py(1)); phaseCtx.lineTo(px(1), py(0));
+  phaseCtx.beginPath();
+  phaseCtx.moveTo(0, H);
+  phaseCtx.lineTo(W, 0);
   phaseCtx.stroke();
   phaseCtx.setLineDash([]);
   phaseCtx.restore();
-
-  if (trail.length < 2) return;
-
-  for (let i = 1; i < trail.length; i++) {
-    const alpha = i / trail.length;
-    phaseCtx.strokeStyle = `rgba(77,184,74,${alpha * 0.9})`;
-    phaseCtx.lineWidth = 1.5;
-    phaseCtx.beginPath();
-    phaseCtx.moveTo(px(trail[i-1].nr), py(trail[i-1].na));
-    phaseCtx.lineTo(px(trail[i].nr),   py(trail[i].na));
-    phaseCtx.stroke();
-  }
-
-  const last = trail[trail.length - 1];
-  phaseCtx.beginPath(); phaseCtx.arc(px(last.nr), py(last.na), 3, 0, 2 * Math.PI);
-  phaseCtx.fillStyle = '#6ab8d8'; phaseCtx.fill();
 }
 
 // ── Animation loop ─────────────────────────────────────────────────────────
@@ -484,9 +521,10 @@ function layout() {
   if (simCanvas) { simCanvas.width = S; simCanvas.height = S; }
 
   if (phaseCanvas) {
-    const side = ctrlW*0.5; // 16px padding each side
+    const side = ctrlW - 32;
     phaseCanvas.width  = side;
     phaseCanvas.height = side;
+    if (accumCanvas) resizeAccum();
   }
 }
 
@@ -500,6 +538,7 @@ window.faOpen = function () {
   layout();
 
   if (!initialized) { faInitSim(); initialized = true; }
+  initAccum();
 
   document.getElementById('fa-overlay').classList.add('fa-open');
   requestAnimationFrame(() => {
@@ -541,7 +580,7 @@ document.getElementById('fa-btn-run').addEventListener('click', () => {
 });
 
 document.getElementById('fa-btn-reset').addEventListener('click', () => {
-  faInitSim(); drawSim(); drawPhase();
+  faInitSim(); clearAccum(); drawSim(); drawPhase();
 });
 
 document.getElementById('fa-sl-speed').addEventListener('input', function () {
