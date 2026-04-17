@@ -22,6 +22,12 @@ If you find any mistakes, please let me know.
   <li><a href="{{ '/assets/docs/notes/notes_shell_theorem.pdf' | relative_url }}">Newton's Shell Theorem</a></li>
 </ul>
 
+<h2 class="gradient-text2" style="font-size: 1.5em;">Statistical Mechanics</h2>
+
+<ul>
+  <li><a href="{{ '/assets/docs/notes/Introduction_to_the_Vicsek_Model.pdf' | relative_url }}">Vicsek Model of Flocking</a></li>
+</ul>
+
 <h2 class="gradient-text2" style="font-size: 1.5em;">Cosmology</h2>
 
 <ul>

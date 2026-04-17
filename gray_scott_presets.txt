@@ -1,0 +1,39 @@
+Gray-Scott Reaction-Diffusion: Preset Parameter Notes
+======================================================
+
+Canonical normalization used on this site:
+  Du = 0.2, Dv = 0.1 (ratio = 2), dt = 1
+  Source: Pearson 1993 / Karl Sims parameterization
+
+All (f, k) values below are for this normalization only.
+Different sources use different Du/Dv (e.g. 1.0/0.5, 2e-5/1e-5),
+and their (f,k) values are NOT interchangeable with ours.
+
+Presets
+-------
+Solitons:  f=0.055, k=0.062  — stable self-replicating pulses, robust, easy to seed
+Worms:     f=0.078, k=0.061  — stripe/worm morphology; well separated from soliton regime
+Spots:     f=0.030, k=0.062  — stable spots; lower feed rate, slow to develop from seed
+Mitosis:   f=0.037, k=0.065  — dividing spots (cell-division-like); f=0.0367, k=0.0649 also cited
+
+Notes
+-----
+- Spots and Mitosis are slow to bootstrap from a small perturbation.
+  The seed needs to survive long enough for the autocatalytic reaction to amplify v.
+  A 5x5 pixel seed is marginal; larger seeds are more reliable.
+
+- Worms at f=0.058, k=0.065 (previously used) is too close to the soliton
+  regime and does not produce distinct worm morphology.
+
+- Mitosis k value: 0.065 used here; 0.0649 also cited in literature.
+  Difference is small but can matter near bifurcation boundaries.
+
+- The (f,k) parameter space has a crescent-shaped active region between
+  the Hopf curve and the static bifurcation curve (Pearson 1993).
+  Outside this region the system goes to a homogeneous steady state.
+
+Sources consulted
+-----------------
+- Pearson, J.E. (1993). Complex patterns in a simple system. Science 261:189-192.
+- Karl Sims: https://www.karlsims.com/rd.html
+- Robert Munafo (mrob): https://mrob.com/pub/comp/xmorphia/pearson-classes.html
