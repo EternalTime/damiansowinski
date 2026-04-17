@@ -1,0 +1,566 @@
+<!-- Forager Applet Include -->
+
+<style>
+
+#fa-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+#fa-overlay.fa-open {
+  display: block;
+  pointer-events: auto;
+}
+
+.fa-panel {
+  position: fixed;
+  z-index: 910;
+  background: #16212a;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  border: 2px solid #25d9c8;
+  box-shadow:
+    -12px 0 40px rgba(42, 191, 217, 0.55),
+     12px 0 40px rgba(255, 109, 162, 0.55),
+     0 12px 40px rgba(42, 191, 217, 0.4);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.0s ease;
+  opacity: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.fa-panel.fa-open    { opacity: 1; pointer-events: auto; }
+.fa-panel.fa-closing { opacity: 1; pointer-events: none; }
+
+/* ── Header ── */
+#fa-header {
+  left: var(--fa-left); top: var(--fa-top-hdr);
+  width: var(--fa-W);   height: var(--fa-H-hdr);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 18px;
+  transform: translateY(-120px);
+}
+#fa-header.fa-open { transform: translateY(0); }
+#fa-header h2 {
+  font-size: 15px; letter-spacing: 2px; color: #eef2f5;
+  font-weight: normal; margin: 0; text-transform: uppercase;
+}
+#fa-close-btn {
+  background: none; border: 1px solid #3d5a6e; color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif; font-size: 13px;
+  letter-spacing: 1px; padding: 3px 12px; border-radius: 4px; cursor: pointer;
+}
+#fa-close-btn:hover { background: #2a3d4e; }
+
+/* ── Sim panel ── */
+#fa-sim-panel {
+  left: var(--fa-left); top: var(--fa-top-body);
+  width: var(--fa-W-sim); height: var(--fa-H-body);
+  display: flex; flex-direction: column;
+  transform: translateX(-110vw);
+}
+#fa-sim-panel.fa-open { transform: translateX(0); }
+#fa-sim-canvas { flex: 1; display: block; width: 100%; min-height: 0; }
+
+/* ── Controls panel ── */
+#fa-ctrl-panel {
+  top: var(--fa-top-body);
+  left: calc(var(--fa-left) + var(--fa-W-sim) + var(--fa-gap));
+  width: var(--fa-W-ctrl); height: var(--fa-H-body);
+  display: flex; flex-direction: column;
+  background: #1a2530;
+  transform: translateX(110vw);
+}
+#fa-ctrl-panel.fa-open { transform: translateX(0); }
+
+.fa-ctrl-section {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #2e3f4f;
+  display: flex; flex-direction: column; gap: 10px;
+  flex-shrink: 0;
+}
+.fa-ctrl-section:last-child { border-bottom: none; }
+.fa-ctrl-title {
+  font-size: 14px; text-transform: uppercase;
+  letter-spacing: 1.5px; color: #a8c0d0; margin: 0 0 2px;
+}
+
+.fa-slider-row {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; box-sizing: border-box;
+}
+.fa-slider-row .fa-side {
+  font-size: 13px; color: #a8c0d0; white-space: nowrap; flex-shrink: 0;
+}
+.fa-slider-row input[type=range] {
+  flex: 1; min-width: 0;
+  -webkit-appearance: none; appearance: none;
+  height: 3px; border-radius: 2px;
+  background: rgba(100,120,140,0.35); outline: none; cursor: pointer;
+}
+.fa-slider-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 12px; height: 12px;
+  border-radius: 50%; background: #25d9c8; cursor: pointer; margin-top: -4.5px;
+}
+.fa-slider-row input[type=range]::-moz-range-thumb {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #25d9c8; border: none; cursor: pointer;
+}
+
+.fa-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.fa-btn {
+  background: #2a3d4e; color: #eef2f5; border: 1px solid #3d5a6e;
+  padding: 5px 14px; cursor: pointer;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 16px; letter-spacing: 1px; border-radius: 4px;
+  transition: background 0.15s;
+}
+.fa-btn:hover { background: #3a5060; }
+.fa-btn.fa-active {
+  background: #1e3a4a; border-color: #25d9c8; color: #25d9c8;
+  box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
+}
+
+/* ── Phase plane: square, flush, fills remaining space ── */
+#fa-phase-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px 16px 14px;
+  min-height: 0;
+}
+#fa-phase-canvas {
+  display: block;
+  background: #1a2530;
+  /* width/height set in JS as a square equal to ctrl panel width minus padding */
+}
+
+</style>
+
+<div id="fa-overlay">
+
+  <div id="fa-header" class="fa-panel">
+    <h2>Forager &mdash; Active Energy Harvesting</h2>
+    <button id="fa-close-btn" onclick="faClose()">Close</button>
+  </div>
+
+  <div id="fa-sim-panel" class="fa-panel">
+    <canvas id="fa-sim-canvas"></canvas>
+  </div>
+
+  <div id="fa-ctrl-panel" class="fa-panel">
+
+    <div class="fa-ctrl-section">
+      <div class="fa-ctrl-title">Simulation</div>
+      <div class="fa-btn-row">
+        <button class="fa-btn" id="fa-btn-run">Run</button>
+        <button class="fa-btn" id="fa-btn-reset">Reset</button>
+      </div>
+    </div>
+
+    <div class="fa-ctrl-section">
+      <div class="fa-ctrl-title">Speed</div>
+      <div class="fa-slider-row">
+        <span class="fa-side">Slow</span>
+        <input type="range" id="fa-sl-speed" min="1" max="20" step="1" value="5">
+        <span class="fa-side">Fast</span>
+      </div>
+    </div>
+
+    <div class="fa-ctrl-section">
+      <div class="fa-ctrl-title">Sense Radius</div>
+      <div class="fa-slider-row">
+        <span class="fa-side">Small</span>
+        <input type="range" id="fa-sl-sense" min="1" max="20" step="0.5" value="6">
+        <span class="fa-side">Large</span>
+      </div>
+    </div>
+
+    <div class="fa-ctrl-section">
+      <div class="fa-ctrl-title">Velocity</div>
+      <div class="fa-slider-row">
+        <span class="fa-side">Slow</span>
+        <input type="range" id="fa-sl-vel" min="1" max="40" step="1" value="20">
+        <span class="fa-side">Fast</span>
+      </div>
+    </div>
+
+    <div class="fa-ctrl-section">
+      <div class="fa-ctrl-title">Tumble</div>
+      <div class="fa-slider-row">
+        <span class="fa-side">Ballistic</span>
+        <input type="range" id="fa-sl-sigma" min="0" max="2" step="0.05" value="0.1">
+        <span class="fa-side">Diffusive</span>
+      </div>
+    </div>
+
+    <div class="fa-ctrl-section">
+      <div class="fa-ctrl-title">Homogeneity</div>
+      <div class="fa-slider-row">
+        <span class="fa-side">Sparse</span>
+        <input type="range" id="fa-sl-xi" min="0.05" max="2.0" step="0.05" value="0.5">
+        <span class="fa-side">Dense</span>
+      </div>
+    </div>
+
+    <!-- Phase plane fills remaining space -->
+    <div id="fa-phase-section">
+      <div class="fa-ctrl-title">Phase Plane</div>
+      <canvas id="fa-phase-canvas"></canvas>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+'use strict';
+
+const GAP = 10, PAD = 20, PHI = 1.6180339887;
+
+// ── Fixed parameters ───────────────────────────────────────────────────────
+const NX          = 10;             // regions along x
+const NY          = 10;             // regions along y
+const L           = 10;             // region side length
+const DOMAIN      = NX * L;         // 100
+const GAMMA       = 1e-3;
+const MU0         = 0.1;
+const S_MAX       = 1.0;
+const S_REP       = 0.8;
+const R_COL       = 1.0;
+const DT          = 0.02;
+const GAMMA_DECAY = 0.1;
+const TAU_E       = 1.0 / GAMMA_DECAY;
+const RHO_EQ      = GAMMA * TAU_E;          // energy density Γ/γ (J/area)
+const N_A_MAX     = (GAMMA / MU0) * DOMAIN * DOMAIN; // max agents ~10
+const TRAIL_LEN   = 200;
+
+// ── Mutable parameters ─────────────────────────────────────────────────────
+let R_sense = 6.0, vel = 20.0, sigma = 0.1, Xi = 0.5;
+let epsilon = epsilonFromXi(Xi);
+let stepsPerFrame = 1;
+
+function epsilonFromXi(xi) {
+  // Ξ = ℓ_A/ℓ_E,  ℓ_E = n_eq^{-1/2},  ℓ_A = R_COL
+  // => n_eq = (Ξ/ℓ_A)² = Ξ²/R_COL²
+  // => ε = Γ / (n_eq · γ)
+  const n_eq = (xi / R_COL) * (xi / R_COL);
+  return GAMMA / (n_eq * GAMMA_DECAY);
+}
+
+// Equilibrium resource count (no agents)
+function nEqResources() {
+  const n_eq = (Xi / R_COL) * (Xi / R_COL);
+  return n_eq * DOMAIN * DOMAIN;
+}
+
+function nRMax() { return nEqResources(); }
+
+// ── State ──────────────────────────────────────────────────────────────────
+let resources = [], agents = [], simTime = 0, trail = [];
+let running = false, frameId = null, initialized = false;
+
+// ── Environment ────────────────────────────────────────────────────────────
+function initResources() {
+  resources = [];
+  const n = Math.round(nEqResources());
+  for (let i = 0; i < n; i++)
+    resources.push({ x: Math.random() * DOMAIN, y: Math.random() * DOMAIN });
+}
+
+function updateResources() {
+  const birthMean = GAMMA * DOMAIN * DOMAIN * DT / epsilon;
+  const nBirth = poissonSample(birthMean);
+  for (let i = 0; i < nBirth; i++)
+    resources.push({ x: Math.random() * DOMAIN, y: Math.random() * DOMAIN });
+  const pDecay = 1 - Math.exp(-GAMMA_DECAY * DT);
+  for (let i = resources.length - 1; i >= 0; i--)
+    if (Math.random() < pDecay) { resources[i] = resources[resources.length - 1]; resources.pop(); }
+}
+
+// ── Agents ─────────────────────────────────────────────────────────────────
+function makeAgent(x, y, theta, s) {
+  return {
+    x:     x     !== undefined ? x     : Math.random() * DOMAIN,
+    y:     y     !== undefined ? y     : Math.random() * DOMAIN,
+    theta: theta !== undefined ? theta : Math.random() * 2 * Math.PI,
+    s:     s     !== undefined ? s     : S_MAX * (0.3 + Math.random() * 0.5),
+  };
+}
+
+function randn() {
+  return Math.sqrt(-2 * Math.log(Math.random() || 1e-20)) * Math.cos(2 * Math.PI * Math.random());
+}
+
+function wrap(v) { return ((v % DOMAIN) + DOMAIN) % DOMAIN; }
+
+function toroidalDisp(ax, ay, bx, by) {
+  let dx = bx - ax, dy = by - ay;
+  if (dx >  DOMAIN / 2) dx -= DOMAIN;
+  if (dx < -DOMAIN / 2) dx += DOMAIN;
+  if (dy >  DOMAIN / 2) dy -= DOMAIN;
+  if (dy < -DOMAIN / 2) dy += DOMAIN;
+  return [dx, dy];
+}
+
+function agentStep(a) {
+  let best2 = R_sense * R_sense, bestIdx = -1;
+  for (let i = 0; i < resources.length; i++) {
+    const [dx, dy] = toroidalDisp(a.x, a.y, resources[i].x, resources[i].y);
+    const d2 = dx * dx + dy * dy;
+    if (d2 < best2) { best2 = d2; bestIdx = i; }
+  }
+  if (bestIdx >= 0) {
+    const [dx, dy] = toroidalDisp(a.x, a.y, resources[bestIdx].x, resources[bestIdx].y);
+    a.theta = Math.atan2(dy, dx);
+  } else {
+    a.theta += sigma * randn() * Math.sqrt(DT);
+  }
+  a.x = wrap(a.x + vel * Math.cos(a.theta) * DT);
+  a.y = wrap(a.y + vel * Math.sin(a.theta) * DT);
+  let harvested = 0;
+  for (let i = resources.length - 1; i >= 0; i--) {
+    const [dx, dy] = toroidalDisp(a.x, a.y, resources[i].x, resources[i].y);
+    if (dx * dx + dy * dy <= R_COL * R_COL) {
+      resources[i] = resources[resources.length - 1]; resources.pop(); harvested++;
+    }
+  }
+  a.s = Math.min(S_MAX, a.s - MU0 * DT + harvested * epsilon);
+}
+
+function simStep() {
+  updateResources();
+  const newborns = [];
+  for (let i = agents.length - 1; i >= 0; i--) {
+    const a = agents[i];
+    agentStep(a);
+    if (a.s >= S_REP) {
+      const ang = Math.random() * 2 * Math.PI;
+      a.s /= 2;
+      newborns.push(makeAgent(wrap(a.x + Math.cos(ang) * R_COL),
+                              wrap(a.y + Math.sin(ang) * R_COL),
+                              Math.random() * 2 * Math.PI, a.s));
+    }
+    if (a.s <= 0) agents.splice(i, 1);
+  }
+  agents.push(...newborns);
+  simTime++;
+  trail.push({ nr: resources.length / nRMax(), na: agents.length / N_A_MAX });
+  if (trail.length > TRAIL_LEN) trail.shift();
+}
+
+function poissonSample(lam) {
+  if (lam <= 0) return 0;
+  if (lam > 30) return Math.max(0, Math.round(lam + Math.sqrt(lam) * randn()));
+  const L = Math.exp(-lam); let k = 0, p = 1;
+  do { k++; p *= Math.random(); } while (p > L);
+  return k - 1;
+}
+
+function faInitSim() {
+  simTime = 0; trail = [];
+  epsilon = epsilonFromXi(Xi);
+  initResources();
+  const nA = Math.round(N_A_MAX);
+  agents = Array.from({ length: nA }, () => makeAgent());
+}
+
+// ── Canvas handles ─────────────────────────────────────────────────────────
+let simCanvas, simCtx, phaseCanvas, phaseCtx;
+
+// ── Draw sim ───────────────────────────────────────────────────────────────
+function drawSim() {
+  const W = simCanvas.width, H = simCanvas.height;
+  const scale = Math.min(W / DOMAIN, H / DOMAIN);
+  const offX = (W - DOMAIN * scale) / 2, offY = (H - DOMAIN * scale) / 2;
+  const tx = x => offX + x * scale, ty = y => offY + y * scale;
+
+  simCtx.fillStyle = '#5a7a96';
+  simCtx.fillRect(0, 0, W, H);
+
+  for (const r of resources) {
+    simCtx.beginPath(); simCtx.arc(tx(r.x), ty(r.y), 3.5, 0, 2 * Math.PI);
+    simCtx.fillStyle = '#4db84a'; simCtx.fill();
+    simCtx.beginPath(); simCtx.arc(tx(r.x), ty(r.y), 1.8, 0, 2 * Math.PI);
+    simCtx.fillStyle = '#2a6e2a'; simCtx.fill();
+  }
+
+  for (const a of agents) {
+    const ax = tx(a.x), ay = ty(a.y);
+    const hf = Math.max(0, a.s / S_MAX);
+    const agR = scale * 1.2 * (0.35 + 0.65 * hf);
+
+    simCtx.beginPath(); simCtx.arc(ax, ay, R_sense * scale, 0, 2 * Math.PI);
+    simCtx.fillStyle = 'rgba(106,184,216,0.12)'; simCtx.fill();
+
+    simCtx.beginPath(); simCtx.arc(ax, ay, agR, 0, 2 * Math.PI);
+    simCtx.fillStyle = ' #b08890'; simCtx.fill();
+    simCtx.strokeStyle = '#eef2f5'; simCtx.lineWidth = 1.5; simCtx.stroke();
+
+    simCtx.beginPath();
+    simCtx.moveTo(ax, ay);
+    simCtx.lineTo(ax + Math.cos(a.theta) * agR * 1.5, ay + Math.sin(a.theta) * agR * 1.5);
+    simCtx.strokeStyle = '#eef2f5'; simCtx.lineWidth = 1.5; simCtx.stroke();
+  }
+}
+
+// ── Draw phase plane ───────────────────────────────────────────────────────
+function drawPhase() {
+  const W = phaseCanvas.width, H = phaseCanvas.height;
+  if (W === 0 || H === 0) return;
+  const M = 4;
+  const plotX = M, plotY = M, plotW = W - 2 * M, plotH = H - 2 * M;
+  const px = v => plotX + v * plotW;
+  const py = v => plotY + (1 - v) * plotH;
+
+  phaseCtx.fillStyle = '#1a2530';
+  phaseCtx.fillRect(0, 0, W, H);
+
+  // Equilibrium dashed line: N_R/N_R^max + N_A/N_A^max = 1
+  phaseCtx.save();
+  phaseCtx.setLineDash([5, 4]);
+  phaseCtx.strokeStyle = 'rgba(255,200,80,0.45)';
+  phaseCtx.lineWidth = 1;
+  phaseCtx.beginPath(); phaseCtx.moveTo(px(0), py(1)); phaseCtx.lineTo(px(1), py(0));
+  phaseCtx.stroke();
+  phaseCtx.setLineDash([]);
+  phaseCtx.restore();
+
+  if (trail.length < 2) return;
+
+  for (let i = 1; i < trail.length; i++) {
+    const alpha = i / trail.length;
+    phaseCtx.strokeStyle = `rgba(77,184,74,${alpha * 0.9})`;
+    phaseCtx.lineWidth = 1.5;
+    phaseCtx.beginPath();
+    phaseCtx.moveTo(px(trail[i-1].nr), py(trail[i-1].na));
+    phaseCtx.lineTo(px(trail[i].nr),   py(trail[i].na));
+    phaseCtx.stroke();
+  }
+
+  const last = trail[trail.length - 1];
+  phaseCtx.beginPath(); phaseCtx.arc(px(last.nr), py(last.na), 3, 0, 2 * Math.PI);
+  phaseCtx.fillStyle = '#6ab8d8'; phaseCtx.fill();
+}
+
+// ── Animation loop ─────────────────────────────────────────────────────────
+function loop() {
+  if (running) {
+    for (let i = 0; i < stepsPerFrame; i++) simStep();
+    drawSim();
+    drawPhase();
+  }
+  frameId = requestAnimationFrame(loop);
+}
+
+// ── Layout ─────────────────────────────────────────────────────────────────
+function layout() {
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const sFromW = (vw - 2 * PAD - GAP) / (1 + 1 / PHI);
+  const sFromH = (vh - 2 * PAD) / 1.1;
+  const S      = Math.floor(Math.min(sFromW, sFromH));
+  const ctrlW  = Math.floor(S / PHI);
+  const hdrH   = Math.floor(S * 0.1);
+  const totalW = S + GAP + ctrlW;
+  const left   = Math.floor((vw - totalW) / 2);
+  const top    = Math.floor((vh - (hdrH + S)) / 2);
+
+  const el = document.getElementById('fa-overlay');
+  el.style.setProperty('--fa-left',     left         + 'px');
+  el.style.setProperty('--fa-top-hdr',  top          + 'px');
+  el.style.setProperty('--fa-top-body', (top + hdrH) + 'px');
+  el.style.setProperty('--fa-W',        totalW       + 'px');
+  el.style.setProperty('--fa-W-sim',    S            + 'px');
+  el.style.setProperty('--fa-W-ctrl',   ctrlW        + 'px');
+  el.style.setProperty('--fa-H-hdr',    hdrH         + 'px');
+  el.style.setProperty('--fa-H-body',   S            + 'px');
+  el.style.setProperty('--fa-gap',      GAP          + 'px');
+
+  if (simCanvas) { simCanvas.width = S; simCanvas.height = S; }
+
+  if (phaseCanvas) {
+    const side = ctrlW*0.5; // 16px padding each side
+    phaseCanvas.width  = side;
+    phaseCanvas.height = side;
+  }
+}
+
+// ── Open / close ───────────────────────────────────────────────────────────
+window.faOpen = function () {
+  simCanvas = document.getElementById('fa-sim-canvas');
+  simCtx    = simCanvas.getContext('2d');
+  phaseCanvas = document.getElementById('fa-phase-canvas');
+  phaseCtx    = phaseCanvas.getContext('2d');
+
+  layout();
+
+  if (!initialized) { faInitSim(); initialized = true; }
+
+  document.getElementById('fa-overlay').classList.add('fa-open');
+  requestAnimationFrame(() => {
+    document.getElementById('fa-header').classList.add('fa-open');
+    document.getElementById('fa-sim-panel').classList.add('fa-open');
+    document.getElementById('fa-ctrl-panel').classList.add('fa-open');
+  });
+
+  running = true;
+  document.getElementById('fa-btn-run').textContent = 'Pause';
+  document.getElementById('fa-btn-run').classList.add('fa-active');
+  if (!frameId) frameId = requestAnimationFrame(loop);
+};
+
+window.faClose = function () {
+  running = false;
+  ['fa-header', 'fa-sim-panel', 'fa-ctrl-panel'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('fa-open');
+    el.classList.add('fa-closing');
+  });
+  setTimeout(() => {
+    document.getElementById('fa-overlay').classList.remove('fa-open');
+    ['fa-header', 'fa-sim-panel', 'fa-ctrl-panel'].forEach(id => {
+      document.getElementById(id).classList.remove('fa-closing');
+    });
+    if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+    document.getElementById('fa-btn-run').textContent = 'Run';
+    document.getElementById('fa-btn-run').classList.remove('fa-active');
+  }, 550);
+};
+
+// ── Controls ───────────────────────────────────────────────────────────────
+document.getElementById('fa-btn-run').addEventListener('click', () => {
+  running = !running;
+  document.getElementById('fa-btn-run').textContent = running ? 'Pause' : 'Run';
+  document.getElementById('fa-btn-run').classList.toggle('fa-active', running);
+  if (running && !frameId) frameId = requestAnimationFrame(loop);
+});
+
+document.getElementById('fa-btn-reset').addEventListener('click', () => {
+  faInitSim(); drawSim(); drawPhase();
+});
+
+document.getElementById('fa-sl-speed').addEventListener('input', function () {
+  stepsPerFrame = parseInt(this.value);
+});
+document.getElementById('fa-sl-sense').addEventListener('input', function () {
+  R_sense = parseFloat(this.value);
+});
+document.getElementById('fa-sl-vel').addEventListener('input', function () {
+  vel = parseFloat(this.value);
+});
+document.getElementById('fa-sl-sigma').addEventListener('input', function () {
+  sigma = parseFloat(this.value);
+});
+document.getElementById('fa-sl-xi').addEventListener('input', function () {
+  Xi = parseFloat(this.value); epsilon = epsilonFromXi(Xi);
+});
+
+window.addEventListener('resize', () => { if (running) layout(); });
+
+})();
+</script>

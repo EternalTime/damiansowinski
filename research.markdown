@@ -31,21 +31,27 @@ Entropy is synonymous with uncertainty - the more uncertain you are about the ex
 When you look around your bedroom you discount areas where the shirt is not, becoming more certain about where the shirt actually is. 
 The information you gain reduces your uncertainty; the entropy of the room is smaller the more you know about it!
 
-Wait up. Hold on. Didn't that last paragraph start by saying that entropy is an objective aspect of the world?
-Why are we talking about subjective uncertainty?
+Wait up. Hold on. Didn't that last paragraph start by saying entropy is an *objective* aspect of the world?
+Why are we talking about *subjective* uncertainty?
 Thermodynamic entropy is related to the temperature of a system. 
 How can looking around for a particular molecule (your favorite one) in a gas, change the temperature of the gas?!
-Here's where the subjective and the objective shake hands to create what seems like a paradox. 
+The subjective and the objective shake hands to create what seems like a paradox. 
 When you find your favorite shirt in your messy room, you grab it and put it on. 
 Or put it into a dresser drawer. 
 Whatever.
 The point is that you organize your room a little with the information you gain.
 Similarly, one can use the information about a particular molecule in a gas to change the temperature of the gas.
-James Clerk Maxwell first described such a 
+James Clerk Maxwell first described such a *neat fingered being* in 1867, and dubbed *Maxwell's Demon* several years later by Lord Kelvin.
+The demon sits at a tiny doorway between two volumes of gas at equal temperature. 
+When it sees a fast moving molecule approaching the door from the right, it lets it through.
+Similarly, if it sees a slow moving molecule moving from the left it also lets it through. 
+By observing the gas, and acting on that information, the demon can make the gas on the left get hotter, while the gas on the right cools.
+Why don't you try it:
 
 <button class="applet-launch-btn" onclick="demonOpen()">Maxwell's Demon</button>
-
 {% include maxwell_demon_applet.html %}
+
+
 
 ---
 <br>
@@ -79,8 +85,10 @@ By that definition, however, LLMs too are agents.
 Whether one agrees or disagrees with that statement or, it is clear that agency itself is stilla nebulous concet. <br>
 
 Sweeping such concerns under the rug for the moment, when does a system transition from being purely mechanistic to having true agency?
-The chmoton may not have agency, but does the paramecium?
+The chemoton may not have agency, but does the paramecium?
 Or is it, too, simply a bag of chemicals, reacting and metabolizing its surroundings, all the while fooling us into rationalizing it is something more?
+I'm interested in models that live at this awkward boundary between automoton and agent.
+Understanding how complexity, computation, and control intertwine to create behavioral autonomy will get us one very large step closer to understanding its emergence in the physical substrate.
 <br>
  
  ---
@@ -101,8 +109,3 @@ Natural selection places pressure on any configurations that reach that size, le
   </div>
 </div>
 
----
-<br>
-<h2>Try It: LEAFS Foraging Simulator</h2>
-
-{% include leafs_applet.html %}

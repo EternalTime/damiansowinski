@@ -92,6 +92,23 @@
   width: 100%;
   height: 100%;
 }
+#demon-hired-stamp {
+  display: none;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  color: #cc2233;
+  font-size: 52px;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-weight: bold;
+  letter-spacing: 4px;
+  border: 6px solid #cc2233;
+  padding: 12px 28px;
+  opacity: 0.92;
+  pointer-events: none;
+  text-shadow: 2px 2px 8px #000;
+  white-space: nowrap;
+}
 
 /* ── Controls panel — slides from bottom ── */
 #demon-ctrl-panel {
@@ -135,10 +152,10 @@
 /* Center button block */
 .demon-btn-block {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 14px;
   flex-shrink: 0;
   padding: 0 28px;
 }
@@ -146,14 +163,13 @@
   background: #2a3d4e;
   color: #eef2f5;
   border: 1px solid #3d5a6e;
-  padding: 6px 24px;
+  padding: 10px 36px;
   cursor: pointer;
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px;
-  letter-spacing: 1.5px;
-  border-radius: 4px;
+  font-size: 22px;
+  letter-spacing: 2px;
+  border-radius: 6px;
   transition: background 0.15s;
-  min-width: 100px;
   text-align: center;
 }
 .demon-btn:hover { background: #3a5060; }
@@ -162,6 +178,12 @@
   border-color: #25d9c8;
   color: #25d9c8;
   box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
+}
+.demon-btn-small {
+  padding: 6px 14px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  border-radius: 4px;
 }
 </style>
 
@@ -179,6 +201,7 @@
   <!-- Simulation canvas: slides from left -->
   <div id="demon-sim-panel" class="demon-panel">
     <canvas id="demon-canvas"></canvas>
+    <div id="demon-hired-stamp">You're Hired!</div>
   </div>
 
   <!-- Controls: slides from bottom -->
@@ -189,7 +212,7 @@
     </div>
     <div class="demon-btn-block">
       <button class="demon-btn" id="demon-door-btn" onclick="demonToggleDoor()">Open</button>
-      <button class="demon-btn" onclick="demonReset()">Reset</button>
+      <button class="demon-btn demon-btn-small" onclick="demonReset()">Reset</button>
     </div>
     <div class="demon-temp-block">
       <span class="demon-temp-label" id="demon-label-right">Right Temperature</span>
@@ -311,10 +334,11 @@
     }
 
     // Wall / door collision
-    const gapHalf = doorFrac * BH * 0.05;  // open gap = 10% of panel height
-    const doorCY  = BH * 0.5;
-    const gapTop  = doorCY - gapHalf;
-    const gapBot  = doorCY + gapHalf;
+    const gapHalf    = doorFrac * 3 * R;
+    const doorCY     = BH * 0.5;
+    const gapTop     = doorCY - gapHalf;
+    const gapBot     = doorCY + gapHalf;
+    const wallExclude = R * 1.5;  // particle centres kept this far from midX
 
     for (let i = 0; i < N; i++) {
       // Outer walls — only reflect if moving into the wall
@@ -324,15 +348,14 @@
       if (py[i] + R > BH  && vy[i] > 0) { py[i] = BH - R; vy[i] = -vy[i]; }
 
       // Centre wall: use authoritative side[] to decide reflection, never infer from px
+      // Keep particle centres at least 1.5R from midX so edges can't overlap across the wall
       const inGap = py[i] > gapTop && py[i] < gapBot;
       if (!inGap) {
-        if (side[i] === 0 && px[i] + R > midX) {
-          // Left-side particle touching wall from left — reflect regardless of velocity sign
-          px[i] = midX - R;
+        if (side[i] === 0 && px[i] > midX - wallExclude) {
+          px[i] = midX - wallExclude;
           if (vx[i] > 0) vx[i] = -vx[i];
-        } else if (side[i] === 1 && px[i] - R < midX) {
-          // Right-side particle touching wall from right — reflect
-          px[i] = midX + R;
+        } else if (side[i] === 1 && px[i] < midX + wallExclude) {
+          px[i] = midX + wallExclude;
           if (vx[i] < 0) vx[i] = -vx[i];
         }
       } else {
@@ -364,10 +387,10 @@
             px[j] += nx * ov * 0.5;  py[j] += ny * ov * 0.5;
             // Clamp back to authoritative side — prevents overlap nudge from
             // pushing a particle through the centre wall
-            if (side[i] === 0 && px[i] + R > midX) px[i] = midX - R;
-            if (side[i] === 1 && px[i] - R < midX) px[i] = midX + R;
-            if (side[j] === 0 && px[j] + R > midX) px[j] = midX - R;
-            if (side[j] === 1 && px[j] - R < midX) px[j] = midX + R;
+            if (side[i] === 0 && px[i] > midX - wallExclude) px[i] = midX - wallExclude;
+            if (side[i] === 1 && px[i] < midX + wallExclude) px[i] = midX + wallExclude;
+            if (side[j] === 0 && px[j] > midX - wallExclude) px[j] = midX - wallExclude;
+            if (side[j] === 1 && px[j] < midX + wallExclude) px[j] = midX + wallExclude;
           }
         }
       }
@@ -376,7 +399,7 @@
 
   /* ── Temperature calculation — excludes particles in the gap zone ── */
   function sideTemp(s) {
-    const gapHalf = doorFrac * BH * 0.05;
+    const gapHalf = doorFrac * 3 * R;
     const gapTop  = BH * 0.5 - gapHalf;
     const gapBot  = BH * 0.5 + gapHalf;
     let ke = 0, count = 0;
@@ -396,7 +419,7 @@
 
     // Centre wall
     const doorH   = BH;
-    const gapHalf = doorFrac * BH * 0.05;   // open gap = 10% of panel height
+    const gapHalf = doorFrac * 3 * R;   // open gap = 10% of panel height
     const doorCY  = BH * 0.5;
     const gapTop  = doorCY - gapHalf;
     const gapBot  = doorCY + gapHalf;
@@ -412,12 +435,10 @@
       ctx.fillRect(midX - wallW * 0.5, gapBot, wallW, BH - gapBot);
     }
 
-    // Sliding door segment — pink whenever not fully open
-    if (doorFrac < 1) {
-      const doorTop = doorCY - BH * 0.05;
-      const doorBot = doorCY + BH * 0.05;
+    // Pink seam — visible only when door is fully closed, marks the door position
+    if (doorFrac === 0) {
       ctx.fillStyle = '#c0396a';
-      ctx.fillRect(midX - wallW * 0.5, doorTop, wallW, doorBot - doorTop);
+      ctx.fillRect(midX - wallW * 0.5, doorCY - 1, wallW, 2);
     }
 
     // Particles coloured by speed relative to global mean
@@ -426,15 +447,27 @@
     meanSpd /= N;
     const spdRef = Math.max(meanSpd * 2, 0.001);
 
+    // Light source direction (upper-left), offset for specular highlight
+    const LX = -0.45, LY = -0.45;   // normalised light direction
     for (let i = 0; i < N; i++) {
       const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
       const hot = Math.min(spd / spdRef, 1);
       const r = Math.round(37  + (249 - 37)  * hot);
       const g = Math.round(217 + (38  - 217) * hot);
       const b = Math.round(200 + (114 - 200) * hot);
+
+      // Radial gradient: highlight offset toward light, base colour at edge
+      const hx = px[i] + LX * R * 0.45;
+      const hy = py[i] + LY * R * 0.45;
+      const grad = ctx.createRadialGradient(hx, hy, 0, px[i], py[i], R);
+      grad.addColorStop(0.0, `rgba(255,255,255,0.85)`);         // specular peak
+      grad.addColorStop(0.25, `rgba(${r},${g},${b},1.0)`);      // base colour
+      grad.addColorStop(0.75, `rgba(${Math.round(r*0.45)},${Math.round(g*0.45)},${Math.round(b*0.45)},1.0)`); // shadow
+      grad.addColorStop(1.0, `rgba(${Math.round(r*0.25)},${Math.round(g*0.25)},${Math.round(b*0.25)},1.0)`); // deep shadow
+
       ctx.beginPath();
       ctx.arc(px[i], py[i], R, 0, Math.PI * 2);
-      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillStyle = grad;
       ctx.fill();
     }
   }
@@ -447,7 +480,7 @@
 
     // Use same colour mapping as particles: cool rgb(37,217,200) → hot rgb(249,38,114)
     // hot = sideSpeed / (2 * globalMeanSpeed), clamped to [0,1]
-    const gapHalf = doorFrac * BH * 0.05;
+    const gapHalf = doorFrac * 3 * R;
     const gapTop  = BH * 0.5 - gapHalf;
     const gapBot  = BH * 0.5 + gapHalf;
     let meanSpd = 0;
@@ -484,6 +517,11 @@
 
     valueL.textContent = (TL / norm).toFixed(2);
     valueR.textContent = (TR / norm).toFixed(2);
+
+    // Show stamp when temperature difference reaches 0.5 (normalised)
+    if (Math.abs(TL - TR) / norm >= 0.5) {
+      document.getElementById('demon-hired-stamp').style.display = 'block';
+    }
   }
 
   /* ── Animation loop ── */
@@ -589,6 +627,7 @@
     doorFrac = 0;
     document.getElementById('demon-door-btn').textContent = 'Open';
     document.getElementById('demon-door-btn').classList.remove('demon-active');
+    document.getElementById('demon-hired-stamp').style.display = 'none';
     initParticles();
   };
 
