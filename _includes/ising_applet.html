@@ -1,200 +1,7 @@
 <!-- ISING Applet Include -->
 
 <style>
-
-/* ── Overlay backdrop ── */
-#ising-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-  pointer-events: none;
-}
-#ising-overlay.ising-open {
-  display: block;
-  pointer-events: auto;
-}
-
-/* ── Shared panel style ── */
-.ising-panel {
-  position: fixed;
-  z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid transparent;
-  border-radius: 14px;
-  overflow: hidden;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity  0.0s ease;
-  opacity: 0;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-
-/* Per-panel border + glow colours */
-#ising-header {
-  border-color: var(--pink-dark);
-  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
-}
-#ising-sim-panel {
-  border-color: var(--teal-dark);
-  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
-}
-#ising-ctrl-panel {
-  border-color: var(--cyan);
-  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5), 0 12px 30px rgba(42, 190, 217, 0.3);
-}
-.ising-panel.ising-open {
-  opacity: 1;
-  pointer-events: auto;
-}
-.ising-panel.ising-closing {
-  opacity: 1;
-  pointer-events: none;
-}
-
-/* ── Header panel — slides from top ── */
-#ising-header {
-  left:   var(--ising-left);
-  top:    var(--ising-top-hdr);
-  width:  var(--ising-W);
-  height: var(--ising-H-hdr);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 18px;
-  transform: translateY(-120px);
-}
-#ising-header.ising-open { transform: translateY(0); }
-#ising-header h2 {
-  font-size: 15px;
-  letter-spacing: 2px;
-  color: #eef2f5;
-  font-weight: normal;
-  margin: 0;
-  text-transform: uppercase;
-}
-#ising-close-btn {
-  background: none;
-  border: 1px solid #3d5a6e;
-  color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 13px;
-  letter-spacing: 1px;
-  padding: 3px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-#ising-close-btn:hover { background: #2a3d4e; }
-
-/* ── Sim panel — slides from left ── */
-#ising-sim-panel {
-  left:   var(--ising-left);
-  top:    var(--ising-top-body);
-  width:  var(--ising-W-sim);
-  height: var(--ising-H-body);
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-110vw);
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-#ising-sim-panel.ising-open { transform: translateX(0); }
-#ising-canvas {
-  flex: 1;
-  display: block;
-  width: 100%;
-  min-height: 0;
-  image-rendering: pixelated;
-}
-
-/* ── Controls panel — slides from right ── */
-#ising-ctrl-panel {
-  top:    var(--ising-top-body);
-  left:   calc(var(--ising-left) + var(--ising-W-sim));
-  width:  var(--ising-W-ctrl);
-  height: var(--ising-H-body);
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  background: #1a2530;
-  transform: translateX(110vw);
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-#ising-ctrl-panel.ising-open { transform: translateX(0); }
-
-.ising-ctrl-section {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid #2e3f4f;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.ising-ctrl-section:last-child { border-bottom: none; }
-
-.ising-ctrl-title {
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: #a8c0d0;
-  margin: 0 0 2px;
-}
-
-/* slider rows: label on left, slider fills remaining width, value on right */
-.ising-slider-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
-}
-.ising-slider-row .ising-side {
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  color: #a8c0d0;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.ising-slider-row input[type=range] {
-  flex: 1;
-  min-width: 0;        /* allow shrink below intrinsic size */
-  -webkit-appearance: none;
-  appearance: none;
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(100,120,140,0.35);
-  outline: none;
-  cursor: pointer;
-}
-.ising-slider-row input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #25d9c8;
-  cursor: pointer;
-  margin-top: -4.5px;
-}
-.ising-slider-row input[type=range]::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #25d9c8;
-  border: none;
-  cursor: pointer;
-}
-.ising-val {
-  font-size: 16px;
-  color: #25d9c8;
-  min-width: 34px;
-  text-align: right;
-  letter-spacing: 0.5px;
-  flex-shrink: 0;
-}
-
-/* centre-tick mark on the field slider */
+/* ── Ising-specific: centre-tick mark on the field slider ── */
 .ising-slider-wrap {
   position: relative;
   flex: 1;
@@ -203,9 +10,7 @@
   flex-direction: column;
   align-items: center;
 }
-.ising-slider-wrap input[type=range] {
-  width: 100%;
-}
+.ising-slider-wrap input[type=range] { width: 100%; }
 .ising-slider-tick {
   position: absolute;
   top: 0;
@@ -216,146 +21,25 @@
   background: #a8c0d0;
   pointer-events: none;
 }
-
-.ising-btn-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.ising-btn {
-  background: #2a3d4e;
-  color: #eef2f5;
-  border: 1px solid #3d5a6e;
-  padding: 5px 14px;
-  cursor: pointer;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px;
-  letter-spacing: 1px;
-  border-radius: 4px;
-  transition: background 0.15s;
-}
-.ising-btn:hover { background: #3a5060; }
-.ising-btn.active {
-  background: #1e3a4a;
-  border-color: #25d9c8;
-  color: #25d9c8;
-  box-shadow: 0 0 10px rgba(37, 217, 200, 0.6), 0 0 20px rgba(37, 217, 200, 0.3);
-}
-.ising-btn.active-pink {
-  background: #2a1a28;
-  border-color: #f92672;
-  color: #f92672;
-  box-shadow: 0 0 10px rgba(249, 38, 114, 0.6), 0 0 20px rgba(249, 38, 114, 0.3);
-}
 </style>
-
-
-<!-- Overlay -->
-<div id="ising-overlay">
-
-  <!-- Header: slides from top -->
-  <div id="ising-header" class="ising-panel">
-    <h2>Ising Model &mdash; Glauber Dynamics</h2>
-    <button id="ising-close-btn" onclick="isingClose()">Close</button>
-  </div>
-
-  <!-- Sim canvas: slides from left -->
-  <div id="ising-sim-panel" class="ising-panel">
-    <canvas id="ising-canvas"></canvas>
-  </div>
-
-  <!-- Controls: slides from right -->
-  <div id="ising-ctrl-panel" class="ising-panel">
-
-    <div class="ising-ctrl-section">
-      <div class="ising-ctrl-title">Temperature</div>
-      <div class="ising-slider-row">
-        <span class="ising-side">Cold</span>
-        <input type="range" id="ising-temp" min="0.5" max="5.0" step="0.05" value="2.5">
-        <span class="ising-side">Hot</span>
-      </div>
-    </div>
-
-    <div class="ising-ctrl-section">
-      <div class="ising-ctrl-title">Speed</div>
-      <div class="ising-slider-row">
-        <span class="ising-side">Slow</span>
-        <input type="range" id="ising-speed" min="1" max="20" step="1" value="10">
-        <span class="ising-side">Fast</span>
-      </div>
-    </div>
-
-    <div class="ising-ctrl-section">
-      <div class="ising-ctrl-title">Lattice</div>
-      <div class="ising-btn-row">
-        <button class="ising-btn active" id="ising-btn-square"   onclick="isingSetLattice('square')">Square</button>
-        <button class="ising-btn"        id="ising-btn-triangle" onclick="isingSetLattice('triangle')">Triangular</button>
-      </div>
-    </div>
-
-    <div class="ising-ctrl-section">
-      <div class="ising-ctrl-title">External Field</div>
-      <div class="ising-slider-row">
-        <span class="ising-side">&minus;</span>
-        <div class="ising-slider-wrap">
-          <input type="range" id="ising-field" min="-1" max="1" step="0.02" value="0">
-          <div class="ising-slider-tick"></div>
-        </div>
-        <span class="ising-side">&plus;</span>
-      </div>
-    </div>
-
-    <div class="ising-ctrl-section">
-      <div class="ising-ctrl-title">Coupling</div>
-      <div class="ising-btn-row">
-        <button class="ising-btn active" id="ising-btn-ferro"  onclick="isingSetCoupling('ferro')">Ferro</button>
-        <button class="ising-btn"        id="ising-btn-antiferro" onclick="isingSetCoupling('antiferro')">Antiferro</button>
-      </div>
-    </div>
-
-    <div class="ising-ctrl-section">
-      <div class="ising-ctrl-title">Display</div>
-      <div class="ising-btn-row">
-        <button class="ising-btn active" id="ising-btn-display" onclick="isingToggleDisplay()">Magnetization</button>
-      </div>
-    </div>
-
-    <div class="ising-ctrl-section">
-      <div class="ising-ctrl-title">Initialise</div>
-      <div class="ising-btn-row">
-        <button class="ising-btn" onclick="isingHotStart()">Hot</button>
-        <button class="ising-btn" onclick="isingColdStart()">Cold</button>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 <script>
 (function () {
-  /* ── Layout constants ── */
-  const GAP     = 0;
-  const PAD     = 20;
-  const PHI     = 1.6180339887;
-
   /* ── Simulation constants ── */
-  const N = 400;
+  const N  = 400;
   const TC = 2.269;
 
   /* ── State ── */
   const spins = new Int8Array(N * N);
-  let T              = 2.5;
+  let T              = 2.3;
   let sweepsPerFrame = 10;
   let running        = false;
   let frameId        = null;
-  let lattice        = 'square';   // 'square' | 'triangle'
-  let J              = 1;          // +1 ferromagnetic, -1 antiferromagnetic
-  let h              = 0;          // external field
-  let stagger        = false;      // display staggered magnetization
+  let lattice        = 'square';
+  let J              = 1;
+  let h              = 0;
+  let stagger        = false;
 
-  // expTable indexed by dE + maxNeighbours*2
-  // square:   neighbours=4, dE in {-8..8 step 4}, offset=8,  size=17
-  // triangle: neighbours=6, dE in {-12..12 step 4}, offset=12, size=25
   const expTable = new Float64Array(25);
 
   function buildExpTable() {
@@ -368,10 +52,8 @@
   function hotStart() {
     for (let i = 0; i < N * N; i++) spins[i] = Math.random() < 0.5 ? 1 : -1;
   }
-
   function coldStart() { spins.fill(1); }
 
-  /* ── Monte-Carlo sweep ── */
   function sweep() {
     const tri = lattice === 'triangle';
     for (let k = 0; k < N * N; k++) {
@@ -384,14 +66,9 @@
       const cL  = (col - 1 + N) % N;
       const cR  = (col + 1)     % N;
       let sum =
-        spins[rU + col] +
-        spins[rD + col] +
-        spins[row * N + cL] +
-        spins[row * N + cR];
+        spins[rU + col] + spins[rD + col] +
+        spins[row * N + cL] + spins[row * N + cR];
       if (tri) {
-        // triangular lattice: two extra neighbours depend on row parity
-        // even rows: extra neighbours at (row-1, col+1) and (row+1, col+1)
-        // odd  rows: extra neighbours at (row-1, col-1) and (row+1, col-1)
         const cX = (row % 2 === 0) ? cR : cL;
         sum += spins[rU + cX] + spins[rD + cX];
       }
@@ -402,29 +79,19 @@
 
   /* ── Rendering ── */
   let canvas, ctx, imgData, buf;
-  // Per-cell pixel spans — recomputed in layout()
-  // rowStarts[r] = first pixel row for lattice row r
-  // colStarts[c] = first pixel col for lattice col c
   let rowStarts = new Int32Array(N + 1);
   let colStarts = new Int32Array(N + 1);
-
-  function initCanvas() {
-    canvas = document.getElementById('ising-canvas');
-    ctx    = canvas.getContext('2d');
-  }
 
   function render() {
     for (let row = 0; row < N; row++) {
       const y0 = rowStarts[row], y1 = rowStarts[row + 1];
       for (let col = 0; col < N; col++) {
-        // in antiferro mode apply staggered mask (-1)^(row+col) before colouring
         const raw  = spins[row * N + col];
         const disp = stagger ? raw * (((row + col) & 1) ? -1 : 1) : raw;
-        // spin up → teal #25d9c8 (37,217,200), spin down → pink #f92672 (249,38,114)
-        const up = disp === 1;
-        const r  = up ?  37 : 249;
-        const g  = up ? 217 :  38;
-        const b  = up ? 200 : 114;
+        const up   = disp === 1;
+        const r = up ?  37 : 249;
+        const g = up ? 217 :  38;
+        const b = up ? 200 : 114;
         const x0 = colStarts[col], x1 = colStarts[col + 1];
         for (let py = y0; py < y1; py++) {
           for (let px = x0; px < x1; px++) {
@@ -448,34 +115,98 @@
     frameId = requestAnimationFrame(loop);
   }
 
-  /* ── Layout ── */
-  function layout() {
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+  function initCanvas(S) {
+    canvas = document.getElementById('ising-canvas');
+    ctx    = canvas.getContext('2d');
+    canvas.width  = S;
+    canvas.height = S;
+    for (let i = 0; i <= N; i++) {
+      rowStarts[i] = Math.round(S * i / N);
+      colStarts[i] = Math.round(S * i / N);
+    }
+    imgData = ctx.createImageData(S, S);
+    buf     = imgData.data;
+    for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+  }
 
-    // Square sim panel; ctrl width = S/φ; header height = S*0.1; all centred
-    const sFromW = (vw - 2 * PAD - GAP) / (1 + 1 / PHI);
-    const sFromH = (vh - 2 * PAD) / 1.1;
-    const S      = Math.floor(Math.min(sFromW, sFromH));
+  /* ── Shell wiring ── */
+  const shell = new AppletShell({
+    id:    'ising',
+    title: 'Ising Model &mdash; Glauber Dynamics',
+    gap:   0,
 
-    const ctrlW  = Math.floor(S / PHI);
-    const hdrH   = Math.floor(S * 0.1);
-    const totalW = S + GAP + ctrlW;
-    const left   = Math.floor((vw - totalW) / 2);
-    const top    = Math.floor((vh - (hdrH + S)) / 2);
+    ctrlHTML: `
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Temperature</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Cold</span>
+          <input type="range" id="ising-temp" min="0.5" max="5.0" step="0.05" value="2.5">
+          <span class="applet-shell-side">Hot</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Speed</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Slow</span>
+          <input type="range" id="ising-speed" min="1" max="20" step="1" value="10">
+          <span class="applet-shell-side">Fast</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Lattice</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn active" id="ising-btn-square"   onclick="isingSetLattice('square')">Square</button>
+          <button class="applet-shell-btn"        id="ising-btn-triangle" onclick="isingSetLattice('triangle')">Triangular</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">External Field</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">&minus;</span>
+          <div class="ising-slider-wrap">
+            <input type="range" id="ising-field" min="-1" max="1" step="0.02" value="0">
+            <div class="ising-slider-tick"></div>
+          </div>
+          <span class="applet-shell-side">&plus;</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Coupling</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn active" id="ising-btn-ferro"     onclick="isingSetCoupling('ferro')">Ferro</button>
+          <button class="applet-shell-btn"        id="ising-btn-antiferro" onclick="isingSetCoupling('antiferro')">Antiferro</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Display</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn active" id="ising-btn-display" onclick="isingToggleDisplay()">Magnetization</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Initialise</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" onclick="isingHotStart()">Hot</button>
+          <button class="applet-shell-btn" onclick="isingColdStart()">Cold</button>
+        </div>
+      </div>
+    `,
 
-    const el = document.getElementById('ising-overlay');
-    el.style.setProperty('--ising-left',     left           + 'px');
-    el.style.setProperty('--ising-top-hdr',  top            + 'px');
-    el.style.setProperty('--ising-top-body', (top + hdrH)   + 'px');
-    el.style.setProperty('--ising-W',        totalW         + 'px');
-    el.style.setProperty('--ising-W-sim',    S              + 'px');
-    el.style.setProperty('--ising-W-ctrl',   ctrlW          + 'px');
-    el.style.setProperty('--ising-H-hdr',    hdrH           + 'px');
-    el.style.setProperty('--ising-H-body',   S              + 'px');
-    el.style.setProperty('--ising-gap',      GAP            + 'px');
+    onOpen: function ({ canvas: c, S }) {
+      initCanvas(S);
+      hotStart();
+      buildExpTable();
+      running = true;
+      if (!frameId) loop();
+    },
 
-    if (canvas) {
+    onClose: function () {
+      running = false;
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+    },
+
+    onResize: function ({ S }) {
+      if (!canvas) return;
       canvas.width  = S;
       canvas.height = S;
       for (let i = 0; i <= N; i++) {
@@ -485,43 +216,11 @@
       imgData = ctx.createImageData(S, S);
       buf     = imgData.data;
       for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
-    }
-  }
+    },
+  });
 
-  /* ── Open / close ── */
-  window.isingOpen = function () {
-    initCanvas();
-    layout();
-    hotStart();
-    buildExpTable();
-
-    document.getElementById('ising-overlay').classList.add('ising-open');
-    // slight delay so the display:block fires before transforms
-    requestAnimationFrame(() => {
-      document.getElementById('ising-header').classList.add('ising-open');
-      document.getElementById('ising-sim-panel').classList.add('ising-open');
-      document.getElementById('ising-ctrl-panel').classList.add('ising-open');
-    });
-
-    running = true;
-    if (!frameId) loop();
-  };
-
-  window.isingClose = function () {
-    running = false;
-    ['ising-header', 'ising-sim-panel', 'ising-ctrl-panel'].forEach(id => {
-      const el = document.getElementById(id);
-      el.classList.remove('ising-open');
-      el.classList.add('ising-closing');
-    });
-    setTimeout(() => {
-      document.getElementById('ising-overlay').classList.remove('ising-open');
-      ['ising-header', 'ising-sim-panel', 'ising-ctrl-panel'].forEach(id => {
-        document.getElementById(id).classList.remove('ising-closing');
-      });
-      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
-    }, 550);
-  };
+  window.isingOpen  = () => shell.open();
+  window.isingClose = () => shell.close();
 
   window.isingHotStart  = hotStart;
   window.isingColdStart = coldStart;
@@ -553,18 +252,12 @@
     }
   };
 
-  window.addEventListener('resize', () => { if (running) layout(); });
-
-  /* ── Controls ── */
   document.getElementById('ising-temp').addEventListener('input', function () {
-    T = parseFloat(this.value);
-    buildExpTable();
+    T = parseFloat(this.value); buildExpTable();
   });
-
   document.getElementById('ising-speed').addEventListener('input', function () {
     sweepsPerFrame = parseInt(this.value);
   });
-
   document.getElementById('ising-field').addEventListener('input', function () {
     h = parseFloat(this.value);
   });

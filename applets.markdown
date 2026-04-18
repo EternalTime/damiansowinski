@@ -3,6 +3,8 @@ layout: default
 title: Applets
 ---
 
+<script src="{{ '/assets/js/applet-shell.js' | relative_url }}"></script>
+
 <a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
 <br>
 
