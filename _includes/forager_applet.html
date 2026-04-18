@@ -14,23 +14,34 @@
   pointer-events: auto;
 }
 
+/* ── Shared panel style ── */
 .fa-panel {
   position: fixed;
   z-index: 910;
   background: #16212a;
   color: #eef2f5;
   font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid #25d9c8;
-  box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.55),
-     12px 0 40px rgba(255, 109, 162, 0.55),
-     0 12px 40px rgba(42, 191, 217, 0.4);
+  border: 2px solid transparent;
   border-radius: 14px;
   overflow: hidden;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.0s ease;
   opacity: 0;
   pointer-events: none;
   box-sizing: border-box;
+}
+
+/* Per-panel border + glow colours */
+#fa-header {
+  border-color: var(--pink-dark);
+  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
+}
+#fa-sim-panel {
+  border-color: var(--teal-dark);
+  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
+}
+#fa-ctrl-panel {
+  border-color: var(--cyan);
+  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5), 0 12px 30px rgba(42, 190, 217, 0.3);
 }
 .fa-panel.fa-open    { opacity: 1; pointer-events: auto; }
 .fa-panel.fa-closing { opacity: 1; pointer-events: none; }
@@ -61,6 +72,8 @@
   width: var(--fa-W-sim); height: var(--fa-H-body);
   display: flex; flex-direction: column;
   transform: translateX(-110vw);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 #fa-sim-panel.fa-open { transform: translateX(0); }
 #fa-sim-canvas { flex: 1; display: block; width: 100%; min-height: 0; }
@@ -68,11 +81,13 @@
 /* ── Controls panel ── */
 #fa-ctrl-panel {
   top: var(--fa-top-body);
-  left: calc(var(--fa-left) + var(--fa-W-sim) + var(--fa-gap));
+  left: calc(var(--fa-left) + var(--fa-W-sim));
   width: var(--fa-W-ctrl); height: var(--fa-H-body);
   display: flex; flex-direction: column;
   background: #1a2530;
   transform: translateX(110vw);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 #fa-ctrl-panel.fa-open { transform: translateX(0); }
 
@@ -93,7 +108,7 @@
   width: 100%; box-sizing: border-box;
 }
 .fa-slider-row .fa-side {
-  font-size: 13px; color: #a8c0d0; white-space: nowrap; flex-shrink: 0;
+  font-size: 14px; color: #a8c0d0; white-space: nowrap; flex-shrink: 0;
 }
 .fa-slider-row input[type=range] {
   flex: 1; min-width: 0;
@@ -119,25 +134,60 @@
   transition: background 0.15s;
 }
 .fa-btn:hover { background: #3a5060; }
-.fa-btn.fa-active {
+.fa-btn.active {
   background: #1e3a4a; border-color: #25d9c8; color: #25d9c8;
   box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
 }
 
-/* ── Phase plane: square, flush, fills remaining space ── */
-#fa-phase-section {
+/* ── Scrollable slider region (top half) ── */
+#fa-sliders-scroll {
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+#fa-sliders-scroll::-webkit-scrollbar { width: 0; }
+
+/* ── Phase plane (fixed 50% of panel height) ── */
+#fa-phase-section {
+  flex-shrink: 0;
+  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  padding: 8px 16px 14px;
-  min-height: 0;
+  border-top: 1px solid #2e3f4f;
+  overflow: hidden;
+}
+#fa-phase-title {
+  font-size: 14px; text-transform: uppercase;
+  letter-spacing: 1.5px; color: #a8c0d0;
+  padding: 6px 16px 4px;
+  align-self: flex-start;
+  flex-shrink: 0;
 }
 #fa-phase-canvas {
   display: block;
   background: #1a2530;
-  /* width/height set in JS as a square equal to ctrl panel width minus padding */
+  flex: 1;
+  min-height: 0;
+}
+
+#fa-extinction-stamp {
+  display: none;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  color: #cc2233;
+  font-size: 48px;
+  font-weight: bold;
+  letter-spacing: 6px;
+  border: 6px solid #cc2233;
+  padding: 10px 24px;
+  opacity: 0.92;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: 'EB Garamond', Georgia, serif;
 }
 
 </style>
@@ -151,10 +201,12 @@
 
   <div id="fa-sim-panel" class="fa-panel">
     <canvas id="fa-sim-canvas"></canvas>
+    <div id="fa-extinction-stamp">EXTINCTION</div>
   </div>
 
   <div id="fa-ctrl-panel" class="fa-panel">
 
+    <!-- Permanent buttons (not scrollable) -->
     <div class="fa-ctrl-section">
       <div class="fa-ctrl-title">Simulation</div>
       <div class="fa-btn-row">
@@ -163,54 +215,59 @@
       </div>
     </div>
 
-    <div class="fa-ctrl-section">
-      <div class="fa-ctrl-title">Speed</div>
-      <div class="fa-slider-row">
-        <span class="fa-side">Slow</span>
-        <input type="range" id="fa-sl-speed" min="1" max="20" step="1" value="5">
-        <span class="fa-side">Fast</span>
-      </div>
-    </div>
+    <!-- Scrollable sliders -->
+    <div id="fa-sliders-scroll">
 
-    <div class="fa-ctrl-section">
-      <div class="fa-ctrl-title">Sense Radius</div>
-      <div class="fa-slider-row">
-        <span class="fa-side">Small</span>
-        <input type="range" id="fa-sl-sense" min="1" max="20" step="0.5" value="6">
-        <span class="fa-side">Large</span>
+      <div class="fa-ctrl-section">
+        <div class="fa-ctrl-title">Speed</div>
+        <div class="fa-slider-row">
+          <span class="fa-side">Slow</span>
+          <input type="range" id="fa-sl-speed" min="1" max="20" step="1" value="5">
+          <span class="fa-side">Fast</span>
+        </div>
       </div>
-    </div>
 
-    <div class="fa-ctrl-section">
-      <div class="fa-ctrl-title">Velocity</div>
-      <div class="fa-slider-row">
-        <span class="fa-side">Slow</span>
-        <input type="range" id="fa-sl-vel" min="1" max="40" step="1" value="20">
-        <span class="fa-side">Fast</span>
+      <div class="fa-ctrl-section">
+        <div class="fa-ctrl-title">Sense Radius</div>
+        <div class="fa-slider-row">
+          <span class="fa-side">Small</span>
+          <input type="range" id="fa-sl-sense" min="1" max="20" step="0.5" value="6">
+          <span class="fa-side">Large</span>
+        </div>
       </div>
-    </div>
 
-    <div class="fa-ctrl-section">
-      <div class="fa-ctrl-title">Tumble</div>
-      <div class="fa-slider-row">
-        <span class="fa-side">Ballistic</span>
-        <input type="range" id="fa-sl-sigma" min="0" max="2" step="0.05" value="0.1">
-        <span class="fa-side">Diffusive</span>
+      <div class="fa-ctrl-section">
+        <div class="fa-ctrl-title">Velocity</div>
+        <div class="fa-slider-row">
+          <span class="fa-side">Slow</span>
+          <input type="range" id="fa-sl-vel" min="1" max="40" step="1" value="20">
+          <span class="fa-side">Fast</span>
+        </div>
       </div>
-    </div>
 
-    <div class="fa-ctrl-section">
-      <div class="fa-ctrl-title">Homogeneity</div>
-      <div class="fa-slider-row">
-        <span class="fa-side">Sparse</span>
-        <input type="range" id="fa-sl-xi" min="0.05" max="2.0" step="0.05" value="0.5">
-        <span class="fa-side">Dense</span>
+      <div class="fa-ctrl-section">
+        <div class="fa-ctrl-title">Tumble</div>
+        <div class="fa-slider-row">
+          <span class="fa-side">Ballistic</span>
+          <input type="range" id="fa-sl-sigma" min="0" max="2" step="0.05" value="0.1">
+          <span class="fa-side">Diffusive</span>
+        </div>
       </div>
-    </div>
 
-    <!-- Phase plane fills remaining space -->
+      <div class="fa-ctrl-section">
+        <div class="fa-ctrl-title">Homogeneity</div>
+        <div class="fa-slider-row">
+          <span class="fa-side">Sparse</span>
+          <input type="range" id="fa-sl-xi" min="0.05" max="2.0" step="0.05" value="0.5">
+          <span class="fa-side">Dense</span>
+        </div>
+      </div>
+
+    </div><!-- #fa-sliders-scroll -->
+
+    <!-- Phase plane (bottom half) -->
     <div id="fa-phase-section">
-      <div class="fa-ctrl-title">Phase Plane</div>
+      <div id="fa-phase-title">Phase Plane</div>
       <canvas id="fa-phase-canvas"></canvas>
     </div>
 
@@ -221,12 +278,12 @@
 (function () {
 'use strict';
 
-const GAP = 10, PAD = 20, PHI = 1.6180339887;
+const GAP = 0, PAD = 20, PHI = 1.6180339887;
 
 // ── Fixed parameters ───────────────────────────────────────────────────────
-const NX          = 10;             // regions along x
-const NY          = 10;             // regions along y
-const L           = 10;             // region side length
+const NX          = 10;
+const NY          = 10;
+const L           = 10;
 const DOMAIN      = NX * L;         // 100
 const GAMMA       = 1e-3;
 const MU0         = 0.1;
@@ -236,8 +293,8 @@ const R_COL       = 1.0;
 const DT          = 0.02;
 const GAMMA_DECAY = 0.1;
 const TAU_E       = 1.0 / GAMMA_DECAY;
-const RHO_EQ      = GAMMA * TAU_E;          // energy density Γ/γ (J/area)
-const N_A_MAX     = (GAMMA / MU0) * DOMAIN * DOMAIN; // max agents ~10
+const RHO_EQ      = GAMMA * TAU_E;
+const N_A_MAX     = (GAMMA / MU0) * DOMAIN * DOMAIN;
 
 // ── Mutable parameters ─────────────────────────────────────────────────────
 let R_sense = 6.0, vel = 20.0, sigma = 0.1, Xi = 0.5;
@@ -245,14 +302,10 @@ let epsilon = epsilonFromXi(Xi);
 let stepsPerFrame = 1;
 
 function epsilonFromXi(xi) {
-  // Ξ = ℓ_A/ℓ_E,  ℓ_E = n_eq^{-1/2},  ℓ_A = R_COL
-  // => n_eq = (Ξ/ℓ_A)² = Ξ²/R_COL²
-  // => ε = Γ / (n_eq · γ)
   const n_eq = (xi / R_COL) * (xi / R_COL);
   return GAMMA / (n_eq * GAMMA_DECAY);
 }
 
-// Equilibrium resource count (no agents)
 function nEqResources() {
   const n_eq = (Xi / R_COL) * (Xi / R_COL);
   return n_eq * DOMAIN * DOMAIN;
@@ -262,8 +315,8 @@ function nRMax() { return nEqResources(); }
 
 // ── State ──────────────────────────────────────────────────────────────────
 let resources = [], agents = [], simTime = 0;
-let phaseTrail = [];        // ring buffer of {nr, na}, length PHASE_LEN
-let running = false, frameId = null, initialized = false;
+let phaseTrail = [];
+let running = false, frameId = null, initialized = false, extinct = false;
 
 // ── Environment ────────────────────────────────────────────────────────────
 function initResources() {
@@ -352,6 +405,13 @@ function simStep() {
   simTime++;
   phaseTrail.push({ nr: resources.length / nRMax(), na: agents.length / N_A_MAX });
   if (phaseTrail.length > PHASE_LEN) phaseTrail.shift();
+
+  if (agents.length === 0 && !extinct) {
+    extinct = true; running = false;
+    document.getElementById('fa-btn-run').textContent = 'Run';
+    document.getElementById('fa-btn-run').classList.remove('active');
+    document.getElementById('fa-extinction-stamp').style.display = 'block';
+  }
 }
 
 function poissonSample(lam) {
@@ -363,16 +423,18 @@ function poissonSample(lam) {
 }
 
 function faInitSim() {
-  simTime = 0; phaseTrail = [];
+  simTime = 0; phaseTrail = []; extinct = false;
+  document.getElementById('fa-extinction-stamp').style.display = 'none';
   epsilon = epsilonFromXi(Xi);
   initResources();
   const nA = Math.round(N_A_MAX);
   agents = Array.from({ length: nA }, () => makeAgent());
+  phaseTrail.push({ nr: 1, na: 1 });
 }
 
 // ── Canvas handles ─────────────────────────────────────────────────────────
 let simCanvas, simCtx, phaseCanvas, phaseCtx;
-let accumCanvas, accumCtx;  // offscreen accumulation for blob density
+let accumCanvas, accumCtx;
 
 // ── Draw sim ───────────────────────────────────────────────────────────────
 function drawSim() {
@@ -400,8 +462,8 @@ function drawSim() {
     simCtx.fillStyle = 'rgba(106,184,216,0.12)'; simCtx.fill();
 
     simCtx.beginPath(); simCtx.arc(ax, ay, agR, 0, 2 * Math.PI);
-    simCtx.fillStyle = ' #b08890'; simCtx.fill();
-    simCtx.strokeStyle = '#eef2f5'; simCtx.lineWidth = 1.5; simCtx.stroke();
+    simCtx.fillStyle = '#ff6da2'; simCtx.fill();
+    simCtx.strokeStyle = '#23bbad'; simCtx.lineWidth = 2.5; simCtx.stroke();
 
     simCtx.beginPath();
     simCtx.moveTo(ax, ay);
@@ -411,8 +473,8 @@ function drawSim() {
 }
 
 // ── Phase plane blob density ───────────────────────────────────────────────
-const BLOB_A    = 0.12;  // peak alpha per blob
-const PHASE_LEN = 500;   // number of points to keep
+const BLOB_A    = 0.12;
+const PHASE_LEN = 200;
 
 function initAccum() {
   accumCanvas = document.createElement('canvas');
@@ -422,25 +484,43 @@ function initAccum() {
 }
 
 function resizeAccum() {
-  // Preserve contents scaled to new size
   const tmp = document.createElement('canvas');
   tmp.width  = phaseCanvas.width;
   tmp.height = phaseCanvas.height;
   const tCtx = tmp.getContext('2d');
   if (accumCanvas) tCtx.drawImage(accumCanvas, 0, 0, tmp.width, tmp.height);
-  accumCanvas        = tmp;
-  accumCtx           = tCtx;
+  accumCanvas = tmp;
+  accumCtx    = tCtx;
 }
 
 function clearAccum() {
   if (accumCtx) accumCtx.clearRect(0, 0, accumCanvas.width, accumCanvas.height);
 }
 
+// Phase plane margins (fraction of canvas size)
+const MARGIN        = 0.15;   // left and bottom
+const MARGIN_INNER  = 0.075;  // right and top (half)
+const LOG_MIN  = 0.01;   // axis lower bound (normalised units)
+const LOG_MAX  = 10.0;   // axis upper bound (normalised units)
+const LOG_SPAN = Math.log10(LOG_MAX / LOG_MIN);  // 4 decades
+
+function logScale(v) {
+  // Map v ∈ [LOG_MIN, LOG_MAX] → [0, 1] on a log₁₀ axis
+  const clamped = Math.max(LOG_MIN, Math.min(LOG_MAX, v));
+  return (Math.log10(clamped) - Math.log10(LOG_MIN)) / LOG_SPAN;
+}
+
+// Map normalised (nr, na) → pixel coords within the plot area (log scale)
+function phaseToPixel(nr, na, W, H) {
+  const x0 = W * MARGIN,       x1 = W * (1 - MARGIN_INNER);
+  const y0 = H * MARGIN_INNER, y1 = H * (1 - MARGIN);
+  return [ x0 + logScale(nr) * (x1 - x0), y1 - logScale(na) * (y1 - y0) ];
+}
+
 function addBlob(nr, na, alphaMul = 1) {
   const W = accumCanvas.width, H = accumCanvas.height;
-  const cx = nr * W;
-  const cy = (1 - na) * H;
-  const r  = W * 0.18;  // blob radius = 18% of canvas width
+  const [cx, cy] = phaseToPixel(nr, na, W, H);
+  const r  = W * 0.03;
   const a  = BLOB_A * alphaMul;
   const grad = accumCtx.createRadialGradient(cx, cy, 0, cx, cy, r);
   grad.addColorStop(0,   `rgba(77,184,74,${a})`);
@@ -459,29 +539,89 @@ function drawPhase() {
   const W = phaseCanvas.width, H = phaseCanvas.height;
   if (W === 0 || H === 0) return;
 
-  // Repaint accumulation canvas from the current ring buffer
+  // Plot area bounds in pixels
+  const x0 = W * MARGIN,       x1 = W * (1 - MARGIN_INNER);
+  const y0 = H * MARGIN_INNER, y1 = H * (1 - MARGIN);
+
+  // Repaint blobs
   clearAccum();
+  const decay = Math.log(200) / 100;  // e-folding over ~100 most-recent points
   for (let i = 0; i < phaseTrail.length; i++) {
-    const t = (i + 1) / phaseTrail.length;
-    const alphaMul = 0.3 + 0.7 * t;  // floor at 0.3 so old points stay visible
+    const age = phaseTrail.length - 1 - i;  // 0 = newest
+    const alphaMul = Math.exp(-decay * age);
     addBlob(phaseTrail[i].nr, phaseTrail[i].na, alphaMul);
   }
 
-  // Background then density layer
+  // Background
   phaseCtx.fillStyle = '#1a2530';
   phaseCtx.fillRect(0, 0, W, H);
+
+  // Blob density layer
   phaseCtx.drawImage(accumCanvas, 0, 0);
 
-  // Equilibrium dashed line on top
+  // Equilibrium curve: nr + na = 1, traced on the log-log plot
+  {
+    phaseCtx.save();
+    phaseCtx.setLineDash([5, 4]);
+    phaseCtx.strokeStyle = 'rgba(255,109,162,0.7)';
+    phaseCtx.lineWidth = 1;
+    phaseCtx.beginPath();
+    const nSteps = 200;
+    let started = false;
+    for (let k = 0; k <= nSteps; k++) {
+      const nr = LOG_MIN + (1 - 2 * LOG_MIN) * k / nSteps;
+      const na = 1 - nr;
+      if (na < LOG_MIN || nr < LOG_MIN) continue;
+      const [px, py] = phaseToPixel(nr, na, W, H);
+      if (!started) { phaseCtx.moveTo(px, py); started = true; }
+      else phaseCtx.lineTo(px, py);
+    }
+    phaseCtx.stroke();
+    phaseCtx.setLineDash([]);
+    phaseCtx.restore();
+  }
+
+  // Axes — L-shape, each fading from opaque at origin to transparent at far end
   phaseCtx.save();
-  phaseCtx.setLineDash([5, 4]);
-  phaseCtx.strokeStyle = 'rgba(255,200,80,0.45)';
   phaseCtx.lineWidth = 1;
+
+  // x-axis: origin (x0,y1) → far right (x1,y1)
+  const gx = phaseCtx.createLinearGradient(x0, y1, x1, y1);
+  gx.addColorStop(0, 'rgba(42,190,217,0.85)');
+  gx.addColorStop(1, 'rgba(42,190,217,0)');
+  phaseCtx.strokeStyle = gx;
   phaseCtx.beginPath();
-  phaseCtx.moveTo(0, H);
-  phaseCtx.lineTo(W, 0);
+  phaseCtx.moveTo(x0, y1); phaseCtx.lineTo(x1, y1);
   phaseCtx.stroke();
-  phaseCtx.setLineDash([]);
+
+  // y-axis: origin (x0,y1) → far top (x0,y0)
+  const gy = phaseCtx.createLinearGradient(x0, y1, x0, y0);
+  gy.addColorStop(0, 'rgba(42,190,217,0.85)');
+  gy.addColorStop(1, 'rgba(42,190,217,0)');
+  phaseCtx.strokeStyle = gy;
+  phaseCtx.beginPath();
+  phaseCtx.moveTo(x0, y1); phaseCtx.lineTo(x0, y0);
+  phaseCtx.stroke();
+
+  phaseCtx.restore();
+
+  // Axis labels
+  const fontSize = Math.round(W * 0.05);
+  phaseCtx.save();
+  phaseCtx.font = `${fontSize}px 'EB Garamond', Georgia, serif`;
+
+  phaseCtx.textAlign = 'center';
+  phaseCtx.textBaseline = 'top';
+  phaseCtx.fillStyle = '#4db84a';
+  phaseCtx.fillText('Resources', (x0 + x1) / 2, y1 + fontSize * 0.3);
+
+  phaseCtx.translate(x0 - fontSize * 0.3, (y0 + y1) / 2);
+  phaseCtx.rotate(-Math.PI / 2);
+  phaseCtx.textAlign = 'center';
+  phaseCtx.textBaseline = 'bottom';
+  phaseCtx.fillStyle = '#ff6da2';
+  phaseCtx.fillText('Foragers', 0, 0);
+
   phaseCtx.restore();
 }
 
@@ -521,7 +661,11 @@ function layout() {
   if (simCanvas) { simCanvas.width = S; simCanvas.height = S; }
 
   if (phaseCanvas) {
-    const side = ctrlW - 32;
+    const phaseSection = document.getElementById('fa-phase-section');
+    const title        = document.getElementById('fa-phase-title');
+    const sectionH     = Math.round(S * 0.5);
+    const titleH       = title.offsetHeight || 32;
+    const side         = Math.min(ctrlW - 16, sectionH - titleH - 8);
     phaseCanvas.width  = side;
     phaseCanvas.height = side;
     if (accumCanvas) resizeAccum();
@@ -530,8 +674,8 @@ function layout() {
 
 // ── Open / close ───────────────────────────────────────────────────────────
 window.faOpen = function () {
-  simCanvas = document.getElementById('fa-sim-canvas');
-  simCtx    = simCanvas.getContext('2d');
+  simCanvas   = document.getElementById('fa-sim-canvas');
+  simCtx      = simCanvas.getContext('2d');
   phaseCanvas = document.getElementById('fa-phase-canvas');
   phaseCtx    = phaseCanvas.getContext('2d');
 
@@ -549,7 +693,7 @@ window.faOpen = function () {
 
   running = true;
   document.getElementById('fa-btn-run').textContent = 'Pause';
-  document.getElementById('fa-btn-run').classList.add('fa-active');
+  document.getElementById('fa-btn-run').classList.add('active');
   if (!frameId) frameId = requestAnimationFrame(loop);
 };
 
@@ -567,7 +711,7 @@ window.faClose = function () {
     });
     if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
     document.getElementById('fa-btn-run').textContent = 'Run';
-    document.getElementById('fa-btn-run').classList.remove('fa-active');
+    document.getElementById('fa-btn-run').classList.remove('active');
   }, 550);
 };
 
@@ -575,7 +719,7 @@ window.faClose = function () {
 document.getElementById('fa-btn-run').addEventListener('click', () => {
   running = !running;
   document.getElementById('fa-btn-run').textContent = running ? 'Pause' : 'Run';
-  document.getElementById('fa-btn-run').classList.toggle('fa-active', running);
+  document.getElementById('fa-btn-run').classList.toggle('active', running);
   if (running && !frameId) frameId = requestAnimationFrame(loop);
 });
 
@@ -588,6 +732,7 @@ document.getElementById('fa-sl-speed').addEventListener('input', function () {
 });
 document.getElementById('fa-sl-sense').addEventListener('input', function () {
   R_sense = parseFloat(this.value);
+  if (!running && simCanvas) drawSim();
 });
 document.getElementById('fa-sl-vel').addEventListener('input', function () {
   vel = parseFloat(this.value);

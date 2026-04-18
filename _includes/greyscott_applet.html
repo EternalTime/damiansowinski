@@ -1,224 +1,7 @@
 <!-- Gray–Scott Reaction–Diffusion Applet Include -->
 
-<style>
-
-#gs-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-  pointer-events: none;
-}
-#gs-overlay.gs-open {
-  display: block;
-  pointer-events: auto;
-}
-
-.gs-panel {
-  position: fixed;
-  z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid transparent;
-  border-radius: 14px;
-  overflow: hidden;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.0s ease;
-  opacity: 0;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-
-/* Per-panel border + glow colours */
-#gs-header {
-  border-color: var(--pink-dark);
-  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
-}
-#gs-sim-panel {
-  border-color: var(--teal-dark);
-  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
-}
-#gs-ctrl-panel {
-  border-color: var(--cyan);
-  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5), 0 12px 30px rgba(42, 190, 217, 0.3);
-}
-
-.gs-panel.gs-open   { opacity: 1; pointer-events: auto; }
-.gs-panel.gs-closing{ opacity: 1; pointer-events: none; }
-
-#gs-header {
-  left: var(--gs-left); top: var(--gs-top-hdr);
-  width: var(--gs-W);   height: var(--gs-H-hdr);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 18px;
-  transform: translateY(-120px);
-}
-#gs-header.gs-open { transform: translateY(0); }
-#gs-header h2 {
-  font-size: 15px; letter-spacing: 2px; color: #eef2f5;
-  font-weight: normal; margin: 0; text-transform: uppercase;
-}
-#gs-close-btn {
-  background: none; border: 1px solid #3d5a6e; color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif; font-size: 13px;
-  letter-spacing: 1px; padding: 3px 12px; border-radius: 4px; cursor: pointer;
-}
-#gs-close-btn:hover { background: #2a3d4e; }
-
-#gs-sim-panel {
-  left: var(--gs-left); top: var(--gs-top-body);
-  width: var(--gs-W-sim); height: var(--gs-H-body);
-  display: flex; flex-direction: column;
-  transform: translateX(-110vw);
-  cursor: crosshair;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-#gs-sim-panel.gs-open { transform: translateX(0); }
-#gs-canvas {
-  flex: 1; display: block; width: 100%; min-height: 0;
-  image-rendering: pixelated;
-}
-
-#gs-ctrl-panel {
-  top: var(--gs-top-body);
-  left: calc(var(--gs-left) + var(--gs-W-sim));
-  width: var(--gs-W-ctrl); height: var(--gs-H-body);
-  display: flex; flex-direction: column;
-  background: #1a2530;
-  transform: translateX(110vw);
-  overflow-y: auto;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-#gs-ctrl-panel.gs-open { transform: translateX(0); }
-
-.gs-ctrl-section {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid #2e3f4f;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.gs-ctrl-section:last-child { border-bottom: none; }
-.gs-ctrl-title {
-  font-size: 14px; text-transform: uppercase;
-  letter-spacing: 1.5px; color: #a8c0d0; margin: 0 0 2px;
-}
-.gs-slider-row {
-  display: flex; align-items: center; gap: 8px;
-  width: 100%; box-sizing: border-box;
-}
-.gs-slider-row .gs-side {
-  font-size: 14px; color: #a8c0d0; white-space: nowrap; flex-shrink: 0;
-}
-.gs-slider-row input[type=range] {
-  flex: 1; min-width: 0;
-  -webkit-appearance: none; appearance: none;
-  height: 3px; border-radius: 2px;
-  background: rgba(100,120,140,0.35); outline: none; cursor: pointer;
-}
-.gs-slider-row input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 12px; height: 12px;
-  border-radius: 50%; background: #25d9c8; cursor: pointer; margin-top: -4.5px;
-}
-.gs-slider-row input[type=range]::-moz-range-thumb {
-  width: 12px; height: 12px; border-radius: 50%;
-  background: #25d9c8; border: none; cursor: pointer;
-}
-.gs-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
-.gs-btn {
-  background: #2a3d4e; color: #eef2f5; border: 1px solid #3d5a6e;
-  padding: 5px 14px; cursor: pointer;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px; letter-spacing: 1px; border-radius: 4px;
-  transition: background 0.15s;
-}
-.gs-btn:hover { background: #3a5060; }
-.gs-btn.active {
-  background: #1e3a4a;
-  border-color: #25d9c8;
-  color: #25d9c8;
-  box-shadow: 0 0 10px rgba(37, 217, 200, 0.6), 0 0 20px rgba(37, 217, 200, 0.3);
-}
-.gs-stat {
-  font-size: 13px; color: #a8c0d0;
-  letter-spacing: 0.5px; padding: 10px 16px 4px;
-}
-</style>
-
-<div id="gs-overlay">
-
-  <div id="gs-header" class="gs-panel">
-    <h2>Gray&ndash;Scott &mdash; Reaction&ndash;Diffusion</h2>
-    <button id="gs-close-btn" onclick="gsClose()">Close</button>
-  </div>
-
-  <div id="gs-sim-panel" class="gs-panel">
-    <canvas id="gs-canvas"></canvas>
-  </div>
-
-  <div id="gs-ctrl-panel" class="gs-panel">
-
-    <div class="gs-ctrl-section">
-      <div class="gs-ctrl-title">Feed Rate f</div>
-      <div class="gs-slider-row">
-        <span class="gs-side">Low</span>
-        <input type="range" id="gs-feed" min="0.01" max="0.10" step="0.0005" value="0.055">
-        <span class="gs-side">High</span>
-      </div>
-    </div>
-
-    <div class="gs-ctrl-section">
-      <div class="gs-ctrl-title">Kill Rate k</div>
-      <div class="gs-slider-row">
-        <span class="gs-side">Low</span>
-        <input type="range" id="gs-kill" min="0.03" max="0.07" step="0.0005" value="0.062">
-        <span class="gs-side">High</span>
-      </div>
-    </div>
-
-    <div class="gs-ctrl-section">
-      <div class="gs-ctrl-title">Diffusion Ratio D<sub>u</sub>/D<sub>v</sub></div>
-      <div class="gs-slider-row">
-        <span class="gs-side">1&times;</span>
-        <input type="range" id="gs-dratio" min="1.0" max="4.0" step="0.05" value="2.0">
-        <span class="gs-side">4&times;</span>
-      </div>
-    </div>
-
-    <div class="gs-ctrl-section">
-      <div class="gs-ctrl-title">Resolution</div>
-      <div class="gs-btn-row">
-        <button class="gs-btn gs-res active" data-n="128">128</button>
-        <button class="gs-btn gs-res"            data-n="256">256</button>
-        <button class="gs-btn gs-res"            data-n="512">512</button>
-      </div>
-    </div>
-
-    <div class="gs-ctrl-section">
-      <div class="gs-ctrl-title">Presets</div>
-      <div class="gs-btn-row">
-        <button class="gs-btn gs-preset active" data-f="0.055" data-k="0.062" data-r="2.0">Coral</button>
-        <button class="gs-btn gs-preset"           data-f="0.078" data-k="0.061" data-r="2.0">Worms</button>
-        <button class="gs-btn gs-preset"           data-f="0.029" data-k="0.057" data-r="2.0">Maze</button>
-        <button class="gs-btn gs-preset"           data-f="0.039" data-k="0.058" data-r="2.0">Holes</button>
-        <button class="gs-btn gs-preset"           data-f="0.037" data-k="0.065" data-r="2.0">Mitosis</button>
-      </div>
-    </div>
-
-    <div class="gs-ctrl-section">
-      <div class="gs-ctrl-title">Initialise</div>
-      <div class="gs-btn-row">
-        <button class="gs-btn" onclick="gsReset()">Reset</button>
-      </div>
-    </div>
-
-
-  </div>
-</div>
-
 <script>
 (function () {
-  const GAP = 0, PAD = 20, PHI = 1.6180339887;
   const Dv = 0.1, V_MAX = 0.4, STEPS_PER_FRAME = 8;
 
   let N = 128;
@@ -227,7 +10,7 @@
   let canvas, ctx, offCanvas, offCtx, imgData, imgBuf;
   let U, V, Un, Vn;
 
-  // ── LUT ──
+  /* ── LUT ── */
   const LUT_SIZE = 4096;
   const lut = new Uint8Array(LUT_SIZE * 3);
   (function () {
@@ -250,7 +33,6 @@
     }
   })();
 
-  // ── State ──
   function initState() {
     U  = new Float32Array(N * N);
     V  = new Float32Array(N * N);
@@ -268,7 +50,6 @@
     imgBuf  = imgData.data;
   }
 
-  // ── Step ──
   function step() {
     const Du = ratio * Dv;
     for (let c = 0; c < N * N; c++) {
@@ -288,7 +69,6 @@
     tmp = V; V = Vn; Vn = tmp;
   }
 
-  // ── Render ──
   function render() {
     for (let c = 0; c < N * N; c++) {
       const vi = Math.round(Math.max(0, Math.min(V_MAX, V[c])) / V_MAX * (LUT_SIZE - 1));
@@ -302,7 +82,6 @@
     ctx.drawImage(offCanvas, 0, 0, canvas.width, canvas.height);
   }
 
-  // ── Seed ──
   function seedAt(cx, cy) {
     const r = 2;
     for (let di = -r; di <= r; di++) {
@@ -315,7 +94,6 @@
     }
   }
 
-  // ── Loop ──
   function loop() {
     if (running) {
       for (let s = 0; s < STEPS_PER_FRAME; s++) step();
@@ -324,98 +102,110 @@
     frameId = requestAnimationFrame(loop);
   }
 
-  // ── Layout ──
-  function layout() {
-    const vw = window.innerWidth, vh = window.innerHeight;
-    const sFromW = (vw - 2*PAD - GAP) / (1 + 1/PHI);
-    const sFromH = (vh - 2*PAD) / 1.1;
-    const S      = Math.floor(Math.min(sFromW, sFromH));
-    const ctrlW  = Math.floor(S / PHI);
-    const hdrH   = Math.floor(S * 0.1);
-    const totalW = S + GAP + ctrlW;
-    const left   = Math.floor((vw - totalW) / 2);
-    const top    = Math.floor((vh - (hdrH + S)) / 2);
+  /* ── Shell wiring ── */
+  const shell = new AppletShell({
+    id:    'gs',
+    title: 'Gray&ndash;Scott &mdash; Reaction&ndash;Diffusion',
+    gap:   0,
 
-    const el = document.getElementById('gs-overlay');
-    el.style.setProperty('--gs-left',     left         + 'px');
-    el.style.setProperty('--gs-top-hdr',  top          + 'px');
-    el.style.setProperty('--gs-top-body', (top + hdrH) + 'px');
-    el.style.setProperty('--gs-W',        totalW       + 'px');
-    el.style.setProperty('--gs-W-sim',    S            + 'px');
-    el.style.setProperty('--gs-W-ctrl',   ctrlW        + 'px');
-    el.style.setProperty('--gs-H-hdr',    hdrH         + 'px');
-    el.style.setProperty('--gs-H-body',   S            + 'px');
-    el.style.setProperty('--gs-gap',      GAP          + 'px');
+    ctrlHTML: `
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Feed Rate f</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Low</span>
+          <input type="range" id="gs-feed" min="0.01" max="0.10" step="0.0005" value="0.055">
+          <span class="applet-shell-side">High</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Kill Rate k</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Low</span>
+          <input type="range" id="gs-kill" min="0.03" max="0.07" step="0.0005" value="0.062">
+          <span class="applet-shell-side">High</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Diffusion Ratio D<sub>u</sub>/D<sub>v</sub></div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">1&times;</span>
+          <input type="range" id="gs-dratio" min="1.0" max="4.0" step="0.05" value="2.0">
+          <span class="applet-shell-side">4&times;</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Resolution</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn gs-res active" data-n="128">128</button>
+          <button class="applet-shell-btn gs-res"        data-n="256">256</button>
+          <button class="applet-shell-btn gs-res"        data-n="512">512</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Presets</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn gs-preset active" data-f="0.055" data-k="0.062" data-r="2.0">Coral</button>
+          <button class="applet-shell-btn gs-preset"        data-f="0.078" data-k="0.061" data-r="2.0">Worms</button>
+          <button class="applet-shell-btn gs-preset"        data-f="0.029" data-k="0.057" data-r="2.0">Maze</button>
+          <button class="applet-shell-btn gs-preset"        data-f="0.039" data-k="0.058" data-r="2.0">Holes</button>
+          <button class="applet-shell-btn gs-preset"        data-f="0.037" data-k="0.065" data-r="2.0">Mitosis</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Initialise</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" onclick="gsReset()">Reset</button>
+        </div>
+      </div>
+    `,
 
-    if (canvas) { canvas.width = S; canvas.height = S; }
-  }
+    onOpen: function ({ canvas: c, S }) {
+      canvas = c;
+      canvas.style.cursor = 'crosshair';
+      ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
 
-  // ── Open / close ──
-  window.gsOpen = function () {
-    canvas = document.getElementById('gs-canvas');
-    layout();
+      offCanvas = document.createElement('canvas');
+      offCanvas.width  = N;
+      offCanvas.height = N;
+      offCtx  = offCanvas.getContext('2d');
+      imgData = offCtx.createImageData(N, N);
+      imgBuf  = imgData.data;
 
-    ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
+      initState();
 
-    offCanvas = document.createElement('canvas');
-    offCanvas.width  = N;
-    offCanvas.height = N;
-    offCtx  = offCanvas.getContext('2d');
-    imgData = offCtx.createImageData(N, N);
-    imgBuf  = imgData.data;
+      let painting = false;
+      function canvasCoords(e) {
+        const rect = canvas.getBoundingClientRect();
+        return [
+          Math.floor((e.clientX - rect.left) / rect.width  * N),
+          Math.floor((e.clientY - rect.top)  / rect.height * N),
+        ];
+      }
+      canvas.addEventListener('mousedown', function(e) { painting = true; const [cx, cy] = canvasCoords(e); seedAt(cx, cy); });
+      canvas.addEventListener('mousemove', function(e) { if (!painting) return; const [cx, cy] = canvasCoords(e); seedAt(cx, cy); });
+      canvas.addEventListener('mouseup',    function() { painting = false; });
+      canvas.addEventListener('mouseleave', function() { painting = false; });
 
-    initState();
+      running = true;
+      if (!frameId) loop();
+    },
 
-    let painting = false;
-    function canvasCoords(e) {
-      const rect = canvas.getBoundingClientRect();
-      return [
-        Math.floor((e.clientX - rect.left) / rect.width  * N),
-        Math.floor((e.clientY - rect.top)  / rect.height * N),
-      ];
-    }
-    canvas.addEventListener('mousedown', function(e) {
-      painting = true;
-      const [cx, cy] = canvasCoords(e); seedAt(cx, cy);
-    });
-    canvas.addEventListener('mousemove', function(e) {
-      if (!painting) return;
-      const [cx, cy] = canvasCoords(e); seedAt(cx, cy);
-    });
-    canvas.addEventListener('mouseup',    function() { painting = false; });
-    canvas.addEventListener('mouseleave', function() { painting = false; });
-
-    document.getElementById('gs-overlay').classList.add('gs-open');
-    requestAnimationFrame(() => {
-      document.getElementById('gs-header').classList.add('gs-open');
-      document.getElementById('gs-sim-panel').classList.add('gs-open');
-      document.getElementById('gs-ctrl-panel').classList.add('gs-open');
-    });
-
-    running = true;
-    if (!frameId) loop();
-  };
-
-  window.gsClose = function () {
-    running = false;
-    ['gs-header', 'gs-sim-panel', 'gs-ctrl-panel'].forEach(id => {
-      const el = document.getElementById(id);
-      el.classList.remove('gs-open');
-      el.classList.add('gs-closing');
-    });
-    setTimeout(() => {
-      document.getElementById('gs-overlay').classList.remove('gs-open');
-      ['gs-header', 'gs-sim-panel', 'gs-ctrl-panel'].forEach(id => {
-        document.getElementById(id).classList.remove('gs-closing');
-      });
+    onClose: function () {
+      running = false;
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
-    }, 550);
-  };
+    },
 
+    onResize: function ({ canvas: c, S }) {
+      canvas = c;
+      ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
+    },
+  });
+
+  window.gsOpen  = () => shell.open();
+  window.gsClose = () => shell.close();
   window.gsReset = function () { initState(); };
-
-  window.addEventListener('resize', () => { if (running) layout(); });
 
   document.getElementById('gs-feed').addEventListener('input', function() {
     f = parseFloat(this.value);
