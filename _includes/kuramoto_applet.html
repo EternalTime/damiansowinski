@@ -2,136 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
-
-#km-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-  pointer-events: none;
-}
-#km-overlay.km-open {
-  display: block;
-  pointer-events: auto;
-}
-
-.km-panel {
-  position: fixed;
-  z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid #25d9c8;
-  box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.55),
-     12px 0 40px rgba(255, 109, 162, 0.55),
-     0 12px 40px rgba(42, 191, 217, 0.4);
-  border-radius: 14px;
-  overflow: hidden;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.0s ease;
-  opacity: 0;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-.km-panel.km-open   { opacity: 1; pointer-events: auto; }
-.km-panel.km-closing{ opacity: 1; pointer-events: none; }
-
-/* ── Header ── */
-#km-header {
-  left: var(--km-left); top: var(--km-top-hdr);
-  width: var(--km-W);   height: var(--km-H-hdr);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 18px;
-  transform: translateY(-120px);
-}
-#km-header.km-open { transform: translateY(0); }
-#km-header h2 {
-  font-size: 15px; letter-spacing: 2px; color: #eef2f5;
-  font-weight: normal; margin: 0; text-transform: uppercase;
-}
-#km-close-btn {
-  background: none; border: 1px solid #3d5a6e; color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif; font-size: 13px;
-  letter-spacing: 1px; padding: 3px 12px; border-radius: 4px; cursor: pointer;
-}
-#km-close-btn:hover { background: #2a3d4e; }
-
-/* ── Sim panel ── */
-#km-sim-panel {
-  left: var(--km-left); top: var(--km-top-body);
-  width: var(--km-W-sim); height: var(--km-H-body);
-  display: flex; flex-direction: column;
-  transform: translateX(-110vw);
-}
-#km-sim-panel.km-open { transform: translateX(0); }
-#km-canvas {
-  flex: 1; display: block; width: 100%; height: 100%;
-  min-height: 0;
-}
-
-/* ── Controls panel ── */
-#km-ctrl-panel {
-  top: var(--km-top-body);
-  left: calc(var(--km-left) + var(--km-W-sim) + var(--km-gap));
-  width: var(--km-W-ctrl); height: var(--km-H-body);
-  display: flex; flex-direction: column;
-  background: #1a2530;
-  transform: translateX(110vw);
-  overflow-y: auto;
-}
-#km-ctrl-panel.km-open { transform: translateX(0); }
-
-.km-ctrl-section {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid #2e3f4f;
-  display: flex; flex-direction: column; gap: 10px;
-  flex-shrink: 0;
-}
-.km-ctrl-section:last-child { border-bottom: none; }
-.km-ctrl-title {
-  font-size: 14px; text-transform: uppercase;
-  letter-spacing: 1.5px; color: #a8c0d0; margin: 0 0 2px;
-}
-
-.km-slider-row {
-  display: flex; align-items: center; gap: 8px;
-  width: 100%; box-sizing: border-box;
-}
-.km-slider-row .km-side {
-  font-size: 13px; color: #a8c0d0; white-space: nowrap; flex-shrink: 0;
-}
-.km-slider-row input[type=range] {
-  flex: 1; min-width: 0;
-  -webkit-appearance: none; appearance: none;
-  height: 3px; border-radius: 2px;
-  background: rgba(100,120,140,0.35); outline: none; cursor: pointer;
-}
-.km-slider-row input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 12px; height: 12px;
-  border-radius: 50%; background: #25d9c8; cursor: pointer; margin-top: -4.5px;
-}
-.km-slider-row input[type=range]::-moz-range-thumb {
-  width: 12px; height: 12px; border-radius: 50%;
-  background: #25d9c8; border: none; cursor: pointer;
-}
-
-.km-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
-.km-btn {
-  background: #2a3d4e; color: #eef2f5; border: 1px solid #3d5a6e;
-  padding: 5px 14px; cursor: pointer;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px; letter-spacing: 1px; border-radius: 4px;
-  transition: background 0.15s;
-}
-.km-btn:hover { background: #3a5060; }
-.km-btn.km-active {
-  background: #1e3a4a;
-  border-color: #25d9c8;
-  color: #25d9c8;
-  box-shadow: 0 0 10px rgba(37, 217, 200, 0.6), 0 0 20px rgba(37, 217, 200, 0.3);
-}
-
-/* ── Phase histogram fills remaining space ── */
+/* ── Kuramoto-specific: phase histogram fills remaining ctrl space ── */
 #km-hist-section {
   flex: 1;
   display: flex;
@@ -145,70 +16,11 @@
   width: 100%;
   min-height: 0;
 }
-
 </style>
-
-<div id="km-overlay">
-
-  <div id="km-header" class="km-panel">
-    <h2>Kuramoto Model &mdash; Synchronisation</h2>
-    <button id="km-close-btn" onclick="kmClose()">Close</button>
-  </div>
-
-  <div id="km-sim-panel" class="km-panel">
-    <canvas id="km-canvas"></canvas>
-    <div id="km-cam-readout" style="position:absolute; bottom:8px; left:10px; font-family:monospace; font-size:11px; color:rgba(255,255,255,0.55); pointer-events:none;"></div>
-  </div>
-
-  <div id="km-ctrl-panel" class="km-panel">
-
-    <div class="km-ctrl-section">
-      <div class="km-ctrl-title">Graph</div>
-      <div class="km-btn-row" id="km-graph-btns"></div>
-    </div>
-
-    <div class="km-ctrl-section">
-      <div class="km-ctrl-title">Coupling</div>
-      <div class="km-slider-row">
-        <span class="km-side">Weak</span>
-        <input type="range" id="km-K" min="0" max="1" step="0.001" value="0.5">
-        <span class="km-side">Strong</span>
-      </div>
-    </div>
-
-    <div class="km-ctrl-section">
-      <div class="km-ctrl-title">Frequency Spread</div>
-      <div class="km-slider-row">
-        <span class="km-side">Narrow</span>
-        <input type="range" id="km-sigma" min="0.01" max="1" step="0.01" value="0.5">
-        <span class="km-side">Wide</span>
-      </div>
-    </div>
-
-    <div class="km-ctrl-section">
-      <div class="km-ctrl-title">Reset</div>
-      <div class="km-btn-row">
-        <button class="km-btn" onclick="kmRandomiseFreqs()">Randomise Frequencies</button>
-      </div>
-    </div>
-
-    <!-- Phase histogram -->
-    <div id="km-hist-section">
-      <div class="km-ctrl-title">Phase Distribution</div>
-      <canvas id="km-hist-canvas"></canvas>
-    </div>
-
-  </div>
-</div>
 
 <script>
 (function () {
 
-/* ════════════════════════════════════════════════════════
-   GRAPH DATA  —  edit only this array to change graphs
-   Each entry: { name, N, edges[[i,j],...], Kmin, Kmax }
-   Kmin/Kmax map the coupling slider [0,1] → [Kmin,Kmax]
-   ════════════════════════════════════════════════════════ */
 const GRAPHS = [
   {
     name: "Full",
@@ -257,87 +69,51 @@ const GRAPHS = [
   }
 ];
 
-/* ════════════════════════════════════════════════════════
-   SIMULATION STATE
-   ════════════════════════════════════════════════════════ */
-let gIdx    = 0;       // current graph index
-let phases  = null;    // Float64Array[N]  — θ_i in [0,2π)
-let omegas  = null;    // Float64Array[N]  — natural frequencies
-let nbrs    = null;    // Array[N] of Int32Array — adjacency lists
-let N       = 0;
-let K       = 1.0;     // coupling (mapped from slider)
-let sigma   = 2 * Math.PI * 0.125;  // 0.125 Hz in rad/s
-const STEPS = 4;       // Euler substeps per frame
-let lastTime = null;   // wall-clock time of previous frame (ms)
+let gIdx   = 0;
+let phases = null, omegas = null, nbrs = null, N = 0;
+let K      = 1.0;
+let sigma  = 2 * Math.PI * 0.125;
+const STEPS = 4;
+let lastTime = null;
 
-/* ── Phase histogram ── */
 const N_BINS = 30;
 let smoothBins = new Float64Array(N_BINS);
 const HIST_ALPHA = 0.12;
 let hctx;
 
-/* ════════════════════════════════════════════════════════
-   THREE.JS SCENE
-   ════════════════════════════════════════════════════════ */
 let renderer, scene, camera;
 let nodeMeshes = [], edgeLines = null, edgeMeshes = [];
 let simCanvas;
 
-/* ── Orbit state ── */
-let orbit = { dragging: false, lastX: 0, lastY: 0,
-              theta: 0.4, phi: 1.1, radius: 9.0 };
+let orbit = { dragging: false, lastX: 0, lastY: 0, theta: 0.4, phi: 1.1, radius: 9.0 };
+let nodePos = null, nodeDeg = null;
+let relaxIter = 0, RELAX_FRAMES = 120;
 
-/* ── Relaxation animation state ── */
-let nodePos   = null;   // current 3D positions, updated during settle
-let nodeDeg   = null;   // degree of each node, for relaxation charge
-let relaxIter = 0;
-let RELAX_FRAMES = 120;  // set per-graph from GRAPHS[].layout.relaxFrames
-
-/* ════════════════════════════════════════════════════════
-   PALETTE  (same as XY applet)
-   ════════════════════════════════════════════════════════ */
-// Palette stops with non-uniform positions in [0,1] to balance perceptual width.
-// Teal colors compressed, pinks given more room.
 const PALETTE_STOPS = [
-  { u: 0.00, c: [0x25/255, 0xd9/255, 0xc8/255] },  // teal-light (left)
-  { u: 0.12, c: [0x23/255, 0xbb/255, 0xad/255] },  // teal-dark
-  { u: 0.50, c: [0x2a/255, 0xbe/255, 0xd9/255] },  // cyan (wide)
-  { u: 0.88, c: [0xf9/255, 0x26/255, 0x72/255] },  // pink-dark
-  { u: 1.00, c: [0xff/255, 0x6d/255, 0xa2/255] },  // pink-light (right)
+  { u: 0.00, c: [0x25/255, 0xd9/255, 0xc8/255] },
+  { u: 0.12, c: [0x23/255, 0xbb/255, 0xad/255] },
+  { u: 0.50, c: [0x2a/255, 0xbe/255, 0xd9/255] },
+  { u: 0.88, c: [0xf9/255, 0x26/255, 0x72/255] },
+  { u: 1.00, c: [0xff/255, 0x6d/255, 0xa2/255] },
 ];
 function angleToColor(th) {
   const TWO_PI = 2 * Math.PI;
   const u = ((th % TWO_PI) + TWO_PI) % TWO_PI / TWO_PI;
-  // Find surrounding stops
   let i = 0;
   while (i < PALETTE_STOPS.length - 2 && PALETTE_STOPS[i+1].u <= u) i++;
   const s0 = PALETTE_STOPS[i], s1 = PALETTE_STOPS[Math.min(i+1, PALETTE_STOPS.length-1)];
   const t = (u - s0.u) / (s1.u - s0.u);
   const c0 = s0.c, c1 = s1.c;
-  return new THREE.Color(
-    c0[0] + t*(c1[0]-c0[0]),
-    c0[1] + t*(c1[1]-c0[1]),
-    c0[2] + t*(c1[2]-c0[2])
-  );
+  return new THREE.Color(c0[0]+t*(c1[0]-c0[0]), c0[1]+t*(c1[1]-c0[1]), c0[2]+t*(c1[2]-c0[2]));
 }
 
-/* ════════════════════════════════════════════════════════
-   GRAPH INITIALISATION
-   ════════════════════════════════════════════════════════ */
 function buildGraph(idx) {
   gIdx = idx;
   const g = GRAPHS[idx];
   N = g.N;
-
-  // Build adjacency lists
   nbrs = Array.from({length: N}, () => []);
-  for (const [a, b] of g.edges) {
-    nbrs[a].push(b);
-    nbrs[b].push(a);
-  }
+  for (const [a, b] of g.edges) { nbrs[a].push(b); nbrs[b].push(a); }
   nbrs = nbrs.map(arr => new Int32Array(arr));
-
-  // Seeded RNG (mulberry32) for reproducible initial layout
   let seed = g.layout.seed || 42;
   function seededRand() {
     seed |= 0; seed = seed + 0x6D2B79F5 | 0;
@@ -345,86 +121,56 @@ function buildGraph(idx) {
     t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
     return ((t ^ t >>> 14) >>> 0) / 4294967296;
   }
-
-  // Random 3D positions on unit sphere — relaxation happens animatedly
   const pos = Array.from({length: N}, () => {
     const th = Math.acos(2*seededRand()-1);
     const ph = seededRand()*2*Math.PI;
     return [Math.sin(th)*Math.cos(ph), Math.sin(th)*Math.sin(ph), Math.cos(th)];
   });
-
-  // Compute per-node degree for relaxation charge
   nodeDeg = new Float32Array(N);
   for (const [a, b] of g.edges) { nodeDeg[a]++; nodeDeg[b]++; }
-  // Charge = degree², normalised so degree-1 nodes have charge 1
   const minDeg2 = Math.max(1, Math.min(...nodeDeg));
   for (let i = 0; i < N; i++) nodeDeg[i] = (nodeDeg[i] / minDeg2) ** 2;
-
-  nodePos      = pos;
-  relaxIter    = 0;
-  RELAX_FRAMES = g.layout.relaxFrames;
-
-  // Apply per-graph camera
+  nodePos = pos; relaxIter = 0; RELAX_FRAMES = g.layout.relaxFrames;
   const cam = g.camera;
-  orbit.radius = cam.radius;
-  orbit.theta  = cam.theta;
-  orbit.phi    = cam.phi;
+  orbit.radius = cam.radius; orbit.theta = cam.theta; orbit.phi = cam.phi;
   if (camera) updateCamera();
-
   return pos;
 }
 
 function relaxStep(pos, edges, t, idealEdge, nodeDeg) {
-  // t in [0,1]: step size tapers off as layout settles
-  const n      = pos.length;
-  const stepSz = 0.12 * (1 - t);
-  const force   = Array.from({length: n}, () => [0,0,0]);
-
-  // Repulsion between all pairs — charge scales with degree so hubs push harder
+  const n = pos.length, stepSz = 0.12 * (1 - t);
+  const force = Array.from({length: n}, () => [0,0,0]);
   const baseRepulse = idealEdge * idealEdge * 0.5;
   for (let i = 0; i < n; i++) {
     for (let j = i+1; j < n; j++) {
-      const dx = pos[i][0]-pos[j][0],
-            dy = pos[i][1]-pos[j][1],
-            dz = pos[i][2]-pos[j][2];
+      const dx = pos[i][0]-pos[j][0], dy = pos[i][1]-pos[j][1], dz = pos[i][2]-pos[j][2];
       const d = Math.sqrt(dx*dx+dy*dy+dz*dz) + 1e-6;
-      const charge = nodeDeg ? (nodeDeg[i] + nodeDeg[j]) * 0.5 : 1.0;
+      const charge = nodeDeg ? (nodeDeg[i]+nodeDeg[j])*0.5 : 1.0;
       const f = baseRepulse * charge / (d*d);
-      force[i][0] += f*dx/d; force[i][1] += f*dy/d; force[i][2] += f*dz/d;
-      force[j][0] -= f*dx/d; force[j][1] -= f*dy/d; force[j][2] -= f*dz/d;
+      force[i][0]+=f*dx/d; force[i][1]+=f*dy/d; force[i][2]+=f*dz/d;
+      force[j][0]-=f*dx/d; force[j][1]-=f*dy/d; force[j][2]-=f*dz/d;
     }
   }
-  // Spring attraction along edges
   for (const [a, b] of edges) {
-    const dx = pos[b][0]-pos[a][0],
-          dy = pos[b][1]-pos[a][1],
-          dz = pos[b][2]-pos[a][2];
+    const dx = pos[b][0]-pos[a][0], dy = pos[b][1]-pos[a][1], dz = pos[b][2]-pos[a][2];
     const d = Math.sqrt(dx*dx+dy*dy+dz*dz) + 1e-6;
     const f = (d - idealEdge) * 0.3;
-    force[a][0] += f*dx/d; force[a][1] += f*dy/d; force[a][2] += f*dz/d;
-    force[b][0] -= f*dx/d; force[b][1] -= f*dy/d; force[b][2] -= f*dz/d;
+    force[a][0]+=f*dx/d; force[a][1]+=f*dy/d; force[a][2]+=f*dz/d;
+    force[b][0]-=f*dx/d; force[b][1]-=f*dy/d; force[b][2]-=f*dz/d;
   }
   for (let i = 0; i < n; i++) {
-    pos[i][0] += stepSz * force[i][0];
-    pos[i][1] += stepSz * force[i][1];
-    pos[i][2] += stepSz * force[i][2];
+    pos[i][0]+=stepSz*force[i][0]; pos[i][1]+=stepSz*force[i][1]; pos[i][2]+=stepSz*force[i][2];
   }
 }
 
-/* ════════════════════════════════════════════════════════
-   PHASE / FREQUENCY INIT
-   ════════════════════════════════════════════════════════ */
 function initPhases() {
   phases = new Float64Array(N);
   for (let i = 0; i < N; i++) phases[i] = Math.random() * 2 * Math.PI;
 }
 
 function initOmegas() {
-  // Box-Muller Gaussian(0, sigma)
   omegas = new Float64Array(N);
-  // omegas in true rad/s. Mean = 2π × 0.5 Hz = π rad/s.
-  const TWO_PI = 2 * Math.PI;
-  const OMEGA_MEAN = Math.PI;  // 0.5 Hz in rad/s
+  const TWO_PI = 2 * Math.PI, OMEGA_MEAN = Math.PI;
   for (let i = 0; i < N; i += 2) {
     const u1 = Math.random(), u2 = Math.random();
     const mag = sigma * Math.sqrt(-2 * Math.log(u1 + 1e-15));
@@ -433,44 +179,28 @@ function initOmegas() {
   }
 }
 
-/* ════════════════════════════════════════════════════════
-   KURAMOTO STEP  (Euler)
-   ════════════════════════════════════════════════════════ */
 function step(dt) {
-  const TWO_PI = 2 * Math.PI;
-  const KoverN = K / N;
+  const TWO_PI = 2 * Math.PI, KoverN = K / N;
   const newPhases = new Float64Array(N);
   for (let i = 0; i < N; i++) {
     let coupling = 0;
     const nb = nbrs[i];
-    for (let k = 0; k < nb.length; k++) {
-      coupling += Math.sin(phases[nb[k]] - phases[i]);
-    }
+    for (let k = 0; k < nb.length; k++) coupling += Math.sin(phases[nb[k]] - phases[i]);
     newPhases[i] = phases[i] + dt * (omegas[i] + KoverN * coupling);
   }
-  // wrap to [0, 2π)
-  for (let i = 0; i < N; i++) {
-    phases[i] = ((newPhases[i] % TWO_PI) + TWO_PI) % TWO_PI;
-  }
+  for (let i = 0; i < N; i++) phases[i] = ((newPhases[i] % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
 }
 
-
-/* ════════════════════════════════════════════════════════
-   THREE.JS SETUP
-   ════════════════════════════════════════════════════════ */
 function initThree(pos) {
   if (!renderer) {
     simCanvas = document.getElementById('km-canvas');
     renderer = new THREE.WebGLRenderer({ canvas: simCanvas, antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x16212a);
-
     camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
     updateCamera();
     setupOrbitControls();
   }
-
-  // Dispose old geometries and materials before rebuilding
   if (scene) {
     scene.traverse(obj => {
       if (obj.geometry) obj.geometry.dispose();
@@ -478,54 +208,33 @@ function initThree(pos) {
     });
   }
   scene = new THREE.Scene();
-  nodeMeshes = [];
-
-  // Ambient + directional light
+  nodeMeshes = []; edgeLines = null; edgeMeshes = [];
   scene.add(new THREE.AmbientLight(0xffffff, 0.4));
   const dLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  dLight.position.set(5, 8, 6);
-  scene.add(dLight);
-
-  // Edges — cylinders or lines depending on edgeStyle
-  edgeLines = null;
-  edgeMeshes = [];
+  dLight.position.set(5, 8, 6); scene.add(dLight);
   const layout = GRAPHS[gIdx].layout;
-
-  // Compute node degrees
   const deg = new Int32Array(N);
   for (const [a, b] of GRAPHS[gIdx].edges) { deg[a]++; deg[b]++; }
   const minDeg = Math.min(...deg), maxDeg = Math.max(...deg);
-  const rMin = layout.nodeRadiusMin || 0.10;
-  const rMax = layout.nodeRadiusMax || 0.22;
-
-  // Node spheres — radius scales with degree
+  const rMin = layout.nodeRadiusMin || 0.10, rMax = layout.nodeRadiusMax || 0.22;
   for (let i = 0; i < N; i++) {
-    const t = maxDeg > minDeg ? (deg[i] - minDeg) / (maxDeg - minDeg) : 0.5;
+    const t = maxDeg > minDeg ? (deg[i]-minDeg)/(maxDeg-minDeg) : 0.5;
     const r = rMin + t * (rMax - rMin);
     const geo = new THREE.SphereGeometry(r, 16, 12);
-    const mat = new THREE.MeshPhongMaterial({
-      color: angleToColor(phases[i]),
-      emissive: angleToColor(phases[i]),
-      emissiveIntensity: 0.45,
-      shininess: 60
-    });
+    const mat = new THREE.MeshPhongMaterial({ color: angleToColor(phases[i]), emissive: angleToColor(phases[i]), emissiveIntensity: 0.45, shininess: 60 });
     const mesh = new THREE.Mesh(geo, mat);
     mesh.position.set(pos[i][0], pos[i][1], pos[i][2]);
-    scene.add(mesh);
-    nodeMeshes.push(mesh);
+    scene.add(mesh); nodeMeshes.push(mesh);
   }
-
   if (layout.edgeStyle === 'cylinder') {
     const cylGeo = new THREE.CylinderGeometry(layout.edgeRadius, layout.edgeRadius, 1, 6, 1);
     for (const [a, b] of GRAPHS[gIdx].edges) {
       const ca = angleToColor(phases[a]), cb = angleToColor(phases[b]);
-      // Average color for cylinder (can't do per-vertex easily on a mesh)
       const col = new THREE.Color((ca.r+cb.r)/2, (ca.g+cb.g)/2, (ca.b+cb.b)/2);
       const mat = new THREE.MeshPhongMaterial({ color: col, emissive: col, emissiveIntensity: 0.3, transparent: true, opacity: layout.edgeOpacity });
       const cyl = new THREE.Mesh(cylGeo, mat);
       positionCylinder(cyl, pos[a], pos[b]);
-      scene.add(cyl);
-      edgeMeshes.push({ mesh: cyl, a, b });
+      scene.add(cyl); edgeMeshes.push({ mesh: cyl, a, b });
     }
   } else {
     const edgeGeo = new THREE.BufferGeometry();
@@ -541,154 +250,91 @@ function initThree(pos) {
     edgeLines = new THREE.LineSegments(edgeGeo, edgeMat);
     scene.add(edgeLines);
   }
-
   resizeRenderer();
 }
 
 function positionCylinder(cyl, pa, pb) {
-  const ax = pa[0], ay = pa[1], az = pa[2];
-  const bx = pb[0], by = pb[1], bz = pb[2];
-  const dx = bx-ax, dy = by-ay, dz = bz-az;
-  const len = Math.sqrt(dx*dx + dy*dy + dz*dz);
+  const dx = pb[0]-pa[0], dy = pb[1]-pa[1], dz = pb[2]-pa[2];
+  const len = Math.sqrt(dx*dx+dy*dy+dz*dz);
   cyl.scale.y = len;
-  cyl.position.set((ax+bx)/2, (ay+by)/2, (az+bz)/2);
-  // Rotate from default Y-axis to the edge direction
+  cyl.position.set((pa[0]+pb[0])/2, (pa[1]+pb[1])/2, (pa[2]+pb[2])/2);
   const dir = new THREE.Vector3(dx/len, dy/len, dz/len);
-  const up  = new THREE.Vector3(0, 1, 0);
-  const quat = new THREE.Quaternion().setFromUnitVectors(up, dir);
-  cyl.setRotationFromQuaternion(quat);
+  cyl.setRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0), dir));
 }
 
 function updateCamera() {
   const { theta, phi, radius } = orbit;
-  camera.position.set(
-    radius * Math.sin(phi) * Math.cos(theta),
-    radius * Math.cos(phi),
-    radius * Math.sin(phi) * Math.sin(theta)
-  );
+  camera.position.set(radius*Math.sin(phi)*Math.cos(theta), radius*Math.cos(phi), radius*Math.sin(phi)*Math.sin(theta));
   camera.lookAt(0, 0, 0);
 }
 
 function resizeRenderer() {
-  const w = simCanvas.clientWidth;
-  const h = simCanvas.clientHeight;
+  const w = simCanvas.clientWidth, h = simCanvas.clientHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
 }
 
-/* ════════════════════════════════════════════════════════
-   ORBIT CONTROLS  (pointer events)
-   ════════════════════════════════════════════════════════ */
 function setupOrbitControls() {
-  simCanvas.addEventListener('pointerdown', e => {
-    orbit.dragging = true;
-    orbit.lastX = e.clientX;
-    orbit.lastY = e.clientY;
-    simCanvas.setPointerCapture(e.pointerId);
-  });
+  simCanvas.addEventListener('pointerdown', e => { orbit.dragging=true; orbit.lastX=e.clientX; orbit.lastY=e.clientY; simCanvas.setPointerCapture(e.pointerId); });
   simCanvas.addEventListener('pointermove', e => {
     if (!orbit.dragging) return;
-    const dx = e.clientX - orbit.lastX;
-    const dy = e.clientY - orbit.lastY;
-    orbit.theta -= dx * 0.008;
-    orbit.phi   = Math.max(0.1, Math.min(Math.PI - 0.1, orbit.phi + dy * 0.008));
-    orbit.lastX = e.clientX;
-    orbit.lastY = e.clientY;
-    updateCamera();
+    orbit.theta -= (e.clientX-orbit.lastX)*0.008;
+    orbit.phi = Math.max(0.1, Math.min(Math.PI-0.1, orbit.phi+(e.clientY-orbit.lastY)*0.008));
+    orbit.lastX=e.clientX; orbit.lastY=e.clientY; updateCamera();
   });
-  simCanvas.addEventListener('pointerup', () => { orbit.dragging = false; });
-  simCanvas.addEventListener('wheel', e => {
-    e.preventDefault();
-    orbit.radius = Math.max(2, Math.min(18, orbit.radius + e.deltaY * 0.01));
-    updateCamera();
-  }, { passive: false });
+  simCanvas.addEventListener('pointerup', () => { orbit.dragging=false; });
+  simCanvas.addEventListener('wheel', e => { e.preventDefault(); orbit.radius=Math.max(2,Math.min(18,orbit.radius+e.deltaY*0.01)); updateCamera(); }, { passive: false });
 }
 
-/* ════════════════════════════════════════════════════════
-   PHASE HISTOGRAM
-   ════════════════════════════════════════════════════════ */
 function renderHistogram() {
   const hc = document.getElementById('km-hist-canvas');
-  const W  = hc.clientWidth  || 200;
-  const H  = hc.clientHeight || 120;
-  if (hc.width !== W || hc.height !== H) { hc.width = W; hc.height = H; }
-
-  // Raw bin counts over [0, 2π)
-  const TWO_PI = 2 * Math.PI;
+  const W = hc.clientWidth||200, H = hc.clientHeight||120;
+  if (hc.width!==W||hc.height!==H) { hc.width=W; hc.height=H; }
+  const TWO_PI = 2*Math.PI;
   const raw = new Float64Array(N_BINS);
   for (let i = 0; i < N; i++) {
-    const b = Math.min((phases[i] / TWO_PI * N_BINS) | 0, N_BINS - 1);
+    const b = Math.min((phases[i]/TWO_PI*N_BINS)|0, N_BINS-1);
     raw[b]++;
   }
-  // Normalise
   for (let b = 0; b < N_BINS; b++) raw[b] /= N;
-
-  // EMA smooth
-  for (let b = 0; b < N_BINS; b++)
-    smoothBins[b] += HIST_ALPHA * (raw[b] - smoothBins[b]);
-
-  // y-axis ceiling: uniform distribution height × 8 gives headroom for sharp sync peaks
-  const uniformH = 1 / N_BINS;
-  const ymax = uniformH * 8;
-
-  const PL = 4, PR = 4, PT = 6, PB = 4;
-  const pw = W - PL - PR, ph = H - PT - PB;
-  const bw = pw / N_BINS;
-
-  hctx.clearRect(0, 0, W, H);
-
-  // Bars — coloured by bin centre phase
+  for (let b = 0; b < N_BINS; b++) smoothBins[b] += HIST_ALPHA*(raw[b]-smoothBins[b]);
+  const ymax = (1/N_BINS)*8;
+  const PL=4,PR=4,PT=6,PB=4, pw=W-PL-PR, ph=H-PT-PB, bw=pw/N_BINS;
+  hctx.clearRect(0,0,W,H);
   for (let b = 0; b < N_BINS; b++) {
-    const bh = Math.min(smoothBins[b] / ymax, 1) * ph;
-    const phase = (b + 0.5) / N_BINS * 2 * Math.PI;
-    const col = angleToColor(phase);
+    const bh = Math.min(smoothBins[b]/ymax,1)*ph;
+    const col = angleToColor((b+0.5)/N_BINS*TWO_PI);
     hctx.fillStyle = `rgba(${Math.round(col.r*255)},${Math.round(col.g*255)},${Math.round(col.b*255)},0.8)`;
-    hctx.fillRect(PL + b * bw, PT + ph - bh, bw - 1, bh);
+    hctx.fillRect(PL+b*bw, PT+ph-bh, bw-1, bh);
   }
 }
 
-/* ════════════════════════════════════════════════════════
-   ANIMATION LOOP
-   ════════════════════════════════════════════════════════ */
 let running = false, frameId = null;
 
 function loop(now) {
   if (running) {
-    // Real wall-clock dt in seconds, capped to avoid spiral of death on tab resume
-    if (lastTime === null) lastTime = now;
-    const dtReal = Math.min((now - lastTime) / 1000, 0.05);
+    if (lastTime===null) lastTime=now;
+    const dtReal = Math.min((now-lastTime)/1000, 0.05);
     lastTime = now;
-    const dtSub = dtReal / STEPS;
-
-    // Animated relaxation for first RELAX_FRAMES frames
+    const dtSub = dtReal/STEPS;
     if (relaxIter < RELAX_FRAMES) {
-      const t = relaxIter / RELAX_FRAMES;
-      relaxStep(nodePos, GRAPHS[gIdx].edges, t, GRAPHS[gIdx].layout.idealEdge, nodeDeg);
-      // Push updated positions to meshes and edges
-      for (let i = 0; i < N; i++) {
-        nodeMeshes[i].position.set(nodePos[i][0], nodePos[i][1], nodePos[i][2]);
-      }
-      // Update edge geometry
+      relaxStep(nodePos, GRAPHS[gIdx].edges, relaxIter/RELAX_FRAMES, GRAPHS[gIdx].layout.idealEdge, nodeDeg);
+      for (let i = 0; i < N; i++) nodeMeshes[i].position.set(nodePos[i][0], nodePos[i][1], nodePos[i][2]);
       if (edgeLines) {
         const posAttr = edgeLines.geometry.attributes.position;
         let vi = 0;
         for (const [a, b] of GRAPHS[gIdx].edges) {
-          posAttr.array[vi++] = nodePos[a][0]; posAttr.array[vi++] = nodePos[a][1]; posAttr.array[vi++] = nodePos[a][2];
-          posAttr.array[vi++] = nodePos[b][0]; posAttr.array[vi++] = nodePos[b][1]; posAttr.array[vi++] = nodePos[b][2];
+          posAttr.array[vi++]=nodePos[a][0]; posAttr.array[vi++]=nodePos[a][1]; posAttr.array[vi++]=nodePos[a][2];
+          posAttr.array[vi++]=nodePos[b][0]; posAttr.array[vi++]=nodePos[b][1]; posAttr.array[vi++]=nodePos[b][2];
         }
         posAttr.needsUpdate = true;
       } else {
-        for (const { mesh, a, b } of edgeMeshes) {
-          positionCylinder(mesh, nodePos[a], nodePos[b]);
-        }
+        for (const { mesh, a, b } of edgeMeshes) positionCylinder(mesh, nodePos[a], nodePos[b]);
       }
       relaxIter++;
     }
-
     for (let s = 0; s < STEPS; s++) step(dtSub);
-
-    // Update node colors and edge colors
     for (let i = 0; i < N; i++) {
       const col = angleToColor(phases[i]);
       nodeMeshes[i].material.color.copy(col);
@@ -699,69 +345,31 @@ function loop(now) {
       let ci = 0;
       for (const [a, b] of GRAPHS[gIdx].edges) {
         const ca = angleToColor(phases[a]), cb = angleToColor(phases[b]);
-        colAttr.array[ci++] = ca.r; colAttr.array[ci++] = ca.g; colAttr.array[ci++] = ca.b;
-        colAttr.array[ci++] = cb.r; colAttr.array[ci++] = cb.g; colAttr.array[ci++] = cb.b;
+        colAttr.array[ci++]=ca.r; colAttr.array[ci++]=ca.g; colAttr.array[ci++]=ca.b;
+        colAttr.array[ci++]=cb.r; colAttr.array[ci++]=cb.g; colAttr.array[ci++]=cb.b;
       }
       colAttr.needsUpdate = true;
     } else {
       for (const { mesh, a, b } of edgeMeshes) {
         const ca = angleToColor(phases[a]), cb = angleToColor(phases[b]);
-        const col = new THREE.Color((ca.r+cb.r)/2, (ca.g+cb.g)/2, (ca.b+cb.b)/2);
-        mesh.material.color.copy(col);
-        mesh.material.emissive.copy(col);
+        const col = new THREE.Color((ca.r+cb.r)/2,(ca.g+cb.g)/2,(ca.b+cb.b)/2);
+        mesh.material.color.copy(col); mesh.material.emissive.copy(col);
       }
     }
-
     renderer.render(scene, camera);
     renderHistogram();
-    document.getElementById('km-cam-readout').textContent =
-      `θ: ${orbit.theta.toFixed(3)}  φ: ${orbit.phi.toFixed(3)}  r: ${orbit.radius.toFixed(2)}`;
+    const ro = document.getElementById('km-cam-readout');
+    if (ro) ro.textContent = `θ: ${orbit.theta.toFixed(3)}  φ: ${orbit.phi.toFixed(3)}  r: ${orbit.radius.toFixed(2)}`;
   }
   frameId = requestAnimationFrame(loop);
 }
 
-/* ════════════════════════════════════════════════════════
-   LAYOUT
-   ════════════════════════════════════════════════════════ */
-const PHI = 1.6180339887;
-const GAP = 10, PAD = 20;
-
-function layout() {
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-
-  const sFromW = (vw - 2*PAD - GAP) / (1 + 1/PHI);
-  const sFromH = (vh - 2*PAD) / 1.1;
-  const S      = Math.floor(Math.min(sFromW, sFromH));
-  const ctrlW  = Math.floor(S / PHI);
-  const hdrH   = Math.floor(S * 0.1);
-  const totalW = S + GAP + ctrlW;
-  const left   = Math.floor((vw - totalW) / 2);
-  const top    = Math.floor((vh - (hdrH + S)) / 2);
-
-  const ov = document.getElementById('km-overlay');
-  ov.style.setProperty('--km-left',     left         + 'px');
-  ov.style.setProperty('--km-top-hdr',  top          + 'px');
-  ov.style.setProperty('--km-top-body', (top + hdrH) + 'px');
-  ov.style.setProperty('--km-W',        totalW       + 'px');
-  ov.style.setProperty('--km-W-sim',    S            + 'px');
-  ov.style.setProperty('--km-W-ctrl',   ctrlW        + 'px');
-  ov.style.setProperty('--km-H-hdr',    hdrH         + 'px');
-  ov.style.setProperty('--km-H-body',   S            + 'px');
-  ov.style.setProperty('--km-gap',      GAP          + 'px');
-
-  if (renderer) resizeRenderer();
-}
-
-/* ════════════════════════════════════════════════════════
-   GRAPH BUTTONS
-   ════════════════════════════════════════════════════════ */
 function buildButtons() {
   const row = document.getElementById('km-graph-btns');
   row.innerHTML = '';
   GRAPHS.forEach((g, i) => {
     const btn = document.createElement('button');
-    btn.className = 'km-btn km-graph-btn' + (i === gIdx ? ' km-active' : '');
+    btn.className = 'applet-shell-btn km-graph-btn' + (i===gIdx ? ' active' : '');
     btn.textContent = g.name;
     btn.addEventListener('click', () => switchGraph(i));
     row.appendChild(btn);
@@ -769,103 +377,110 @@ function buildButtons() {
 }
 
 function switchGraph(idx) {
-  if (idx === gIdx && running) return;
-  document.querySelectorAll('.km-graph-btn').forEach((b, i) => {
-    b.classList.toggle('km-active', i === idx);
-  });
-
-  // Remap K slider to new graph's range
-  const oldG = GRAPHS[gIdx];
-  const newG = GRAPHS[idx];
-  const t = (K - oldG.Kmin) / (oldG.Kmax - oldG.Kmin);
-  K = newG.Kmin + t * (newG.Kmax - newG.Kmin);
-  document.getElementById('km-K').value =
-    (K - newG.Kmin) / (newG.Kmax - newG.Kmin);
-
+  if (idx===gIdx && running) return;
+  document.querySelectorAll('.km-graph-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  const oldG = GRAPHS[gIdx], newG = GRAPHS[idx];
+  const t = (K-oldG.Kmin)/(oldG.Kmax-oldG.Kmin);
+  K = newG.Kmin + t*(newG.Kmax-newG.Kmin);
+  document.getElementById('km-K').value = (K-newG.Kmin)/(newG.Kmax-newG.Kmin);
   const pos = buildGraph(idx);
-  initPhases();
-  initOmegas();
+  initPhases(); initOmegas();
   smoothBins = new Float64Array(N_BINS);
   lastTime = null;
   initThree(pos);
 }
 
-/* ════════════════════════════════════════════════════════
-   OPEN / CLOSE
-   ════════════════════════════════════════════════════════ */
-window.kmOpen = function () {
-  layout();
-  buildButtons();
+/* ── Shell wiring ── */
+const shell = new AppletShell({
+  id:    'km',
+  title: 'Kuramoto Model &mdash; Synchronisation',
+  gap:   10,
 
-  // Init first graph
-  const pos = buildGraph(0);
-  initPhases();
-  initOmegas();
-  smoothBins = new Float64Array(N_BINS);
+  ctrlHTML: `
+    <div class="applet-shell-ctrl-section">
+      <div class="applet-shell-ctrl-title">Graph</div>
+      <div class="applet-shell-btn-row" id="km-graph-btns"></div>
+    </div>
+    <div class="applet-shell-ctrl-section">
+      <div class="applet-shell-ctrl-title">Coupling</div>
+      <div class="applet-shell-slider-row">
+        <span class="applet-shell-side">Weak</span>
+        <input type="range" id="km-K" min="0" max="1" step="0.001" value="0.5">
+        <span class="applet-shell-side">Strong</span>
+      </div>
+    </div>
+    <div class="applet-shell-ctrl-section">
+      <div class="applet-shell-ctrl-title">Frequency Spread</div>
+      <div class="applet-shell-slider-row">
+        <span class="applet-shell-side">Narrow</span>
+        <input type="range" id="km-sigma" min="0.01" max="1" step="0.01" value="0.5">
+        <span class="applet-shell-side">Wide</span>
+      </div>
+    </div>
+    <div class="applet-shell-ctrl-section">
+      <div class="applet-shell-ctrl-title">Reset</div>
+      <div class="applet-shell-btn-row">
+        <button class="applet-shell-btn" onclick="kmRandomiseFreqs()">Randomise Frequencies</button>
+      </div>
+    </div>
+    <div id="km-hist-section">
+      <div class="applet-shell-ctrl-title">Phase Distribution</div>
+      <canvas id="km-hist-canvas"></canvas>
+    </div>
+  `,
 
-  // Set K from slider
-  const g = GRAPHS[0];
-  const t = parseFloat(document.getElementById('km-K').value);
-  K = g.Kmin + t * (g.Kmax - g.Kmin);
+  onOpen: function ({ canvas: c, S }) {
+    // Inject camera readout div into the sim panel
+    const simPanel = document.getElementById('km-sim-panel');
+    if (!document.getElementById('km-cam-readout')) {
+      const ro = document.createElement('div');
+      ro.id = 'km-cam-readout';
+      ro.style.cssText = 'position:absolute;bottom:8px;left:10px;font-family:monospace;font-size:11px;color:rgba(255,255,255,0.55);pointer-events:none;';
+      simPanel.appendChild(ro);
+    }
 
-  document.getElementById('km-overlay').classList.add('km-open');
-  requestAnimationFrame(() => {
-    document.getElementById('km-header').classList.add('km-open');
-    document.getElementById('km-sim-panel').classList.add('km-open');
-    document.getElementById('km-ctrl-panel').classList.add('km-open');
-  });
+    buildButtons();
+    const pos = buildGraph(0);
+    initPhases(); initOmegas();
+    smoothBins = new Float64Array(N_BINS);
+    const g = GRAPHS[0];
+    const t = parseFloat(document.getElementById('km-K').value);
+    K = g.Kmin + t*(g.Kmax-g.Kmin);
 
-  // Init Three.js after panels are visible so canvas has size
-  setTimeout(() => {
-    hctx = document.getElementById('km-hist-canvas').getContext('2d');
-    initThree(pos);
-    lastTime = null;
-    running = true;
-    if (!frameId) frameId = requestAnimationFrame(loop);
-  }, 80);
-};
+    setTimeout(() => {
+      hctx = document.getElementById('km-hist-canvas').getContext('2d');
+      initThree(pos);
+      lastTime = null;
+      running = true;
+      if (!frameId) frameId = requestAnimationFrame(loop);
+    }, 80);
+  },
 
-window.kmClose = function () {
-  running = false;
-  ['km-header', 'km-sim-panel', 'km-ctrl-panel'].forEach(id => {
-    const el = document.getElementById(id);
-    el.classList.remove('km-open');
-    el.classList.add('km-closing');
-  });
-  setTimeout(() => {
-    document.getElementById('km-overlay').classList.remove('km-open');
-    ['km-header', 'km-sim-panel', 'km-ctrl-panel'].forEach(id => {
-      document.getElementById(id).classList.remove('km-closing');
-    });
+  onClose: function () {
+    running = false;
     if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
-  }, 550);
-};
+  },
 
+  onResize: function () {
+    if (renderer) resizeRenderer();
+  },
+});
+
+window.kmOpen  = () => shell.open();
+window.kmClose = () => shell.close();
 window.kmRandomiseFreqs = function () {
-  initPhases();
-  initOmegas();
+  initPhases(); initOmegas();
   smoothBins = new Float64Array(N_BINS);
 };
 
-/* ════════════════════════════════════════════════════════
-   CONTROLS
-   ════════════════════════════════════════════════════════ */
 document.getElementById('km-K').addEventListener('input', function () {
   const g = GRAPHS[gIdx];
-  const t = parseFloat(this.value);
-  K = g.Kmin + t * (g.Kmax - g.Kmin);
-  // Don't clear history — accumulate across K values
+  K = g.Kmin + parseFloat(this.value)*(g.Kmax-g.Kmin);
 });
-
 document.getElementById('km-sigma').addEventListener('input', function () {
-  // maps [0,1] → [2π×0.025, 2π×0.25] rad/s = [0.025, 0.25] Hz
-  sigma = 2*Math.PI * (0.025 + parseFloat(this.value) * 0.225);
-  initOmegas();
-  smoothBins = new Float64Array(N_BINS);
+  sigma = 2*Math.PI*(0.025+parseFloat(this.value)*0.225);
+  initOmegas(); smoothBins = new Float64Array(N_BINS);
 });
-
-window.addEventListener('resize', () => { if (running) layout(); });
 
 })();
 </script>
-

@@ -1,329 +1,34 @@
 <!-- XY Model Applet Include -->
 
-<style>
-
-/* ── Overlay backdrop ── */
-#xy-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-  pointer-events: none;
-}
-#xy-overlay.xy-open {
-  display: block;
-  pointer-events: auto;
-}
-
-/* ── Shared panel style ── */
-.xy-panel {
-  position: fixed;
-  z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid transparent;
-  border-radius: 14px;
-  overflow: hidden;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity  0.0s ease;
-  opacity: 0;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-
-/* Per-panel border + glow colours */
-#xy-header {
-  border-color: var(--pink-dark);
-  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
-}
-#xy-sim-panel {
-  border-color: var(--teal-dark);
-  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
-}
-#xy-ctrl-panel {
-  border-color: var(--cyan);
-  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5), 0 12px 30px rgba(42, 190, 217, 0.3);
-}
-.xy-panel.xy-open {
-  opacity: 1;
-  pointer-events: auto;
-}
-.xy-panel.xy-closing {
-  opacity: 1;
-  pointer-events: none;
-}
-
-/* ── Header panel — slides from top ── */
-#xy-header {
-  left:   var(--xy-left);
-  top:    var(--xy-top-hdr);
-  width:  var(--xy-W);
-  height: var(--xy-H-hdr);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 18px;
-  transform: translateY(-120px);
-}
-#xy-header.xy-open { transform: translateY(0); }
-#xy-header h2 {
-  font-size: 15px;
-  letter-spacing: 2px;
-  color: #eef2f5;
-  font-weight: normal;
-  margin: 0;
-  text-transform: uppercase;
-}
-#xy-close-btn {
-  background: none;
-  border: 1px solid #3d5a6e;
-  color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 13px;
-  letter-spacing: 1px;
-  padding: 3px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-#xy-close-btn:hover { background: #2a3d4e; }
-
-/* ── Sim panel — slides from left ── */
-#xy-sim-panel {
-  left:   var(--xy-left);
-  top:    var(--xy-top-body);
-  width:  var(--xy-W-sim);
-  height: var(--xy-H-body);
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-110vw);
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-#xy-sim-panel.xy-open { transform: translateX(0); }
-#xy-canvas {
-  flex: 1;
-  display: block;
-  width: 100%;
-  min-height: 0;
-}
-
-/* ── Controls panel — slides from right ── */
-#xy-ctrl-panel {
-  top:    var(--xy-top-body);
-  left:   calc(var(--xy-left) + var(--xy-W-sim));
-  width:  var(--xy-W-ctrl);
-  height: var(--xy-H-body);
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  background: #1a2530;
-  transform: translateX(110vw);
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-#xy-ctrl-panel.xy-open { transform: translateX(0); }
-
-.xy-ctrl-section {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid #2e3f4f;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.xy-ctrl-section:last-child { border-bottom: none; }
-
-.xy-ctrl-title {
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: #a8c0d0;
-  margin: 0 0 2px;
-}
-
-.xy-slider-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
-}
-.xy-slider-row .xy-side {
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  color: #a8c0d0;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.xy-slider-row input[type=range] {
-  flex: 1;
-  min-width: 0;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(100,120,140,0.35);
-  outline: none;
-  cursor: pointer;
-}
-.xy-slider-row input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #25d9c8;
-  cursor: pointer;
-  margin-top: -4.5px;
-}
-.xy-slider-row input[type=range]::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #25d9c8;
-  border: none;
-  cursor: pointer;
-}
-
-.xy-btn-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.xy-btn {
-  background: #2a3d4e;
-  color: #eef2f5;
-  border: 1px solid #3d5a6e;
-  padding: 5px 14px;
-  cursor: pointer;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px;
-  letter-spacing: 1px;
-  border-radius: 4px;
-  transition: background 0.15s;
-}
-.xy-btn:hover { background: #3a5060; }
-.xy-btn.active {
-  background: #1e3a4a;
-  border-color: #25d9c8;
-  color: #25d9c8;
-  box-shadow: 0 0 10px rgba(37, 217, 200, 0.6), 0 0 20px rgba(37, 217, 200, 0.3);
-}
-.xy-btn.active-pink {
-  background: #2a1a28;
-  border-color: #f92672;
-  color: #f92672;
-  box-shadow: 0 0 10px rgba(249, 38, 114, 0.6), 0 0 20px rgba(249, 38, 114, 0.3);
-}
-</style>
-
-<!-- Overlay -->
-<div id="xy-overlay">
-
-  <!-- Header: slides from top -->
-  <div id="xy-header" class="xy-panel">
-    <h2>XY Model &mdash; Glauber Dynamics</h2>
-    <button id="xy-close-btn" onclick="xyClose()">Close</button>
-  </div>
-
-  <!-- Sim canvas: slides from left -->
-  <div id="xy-sim-panel" class="xy-panel">
-    <canvas id="xy-canvas"></canvas>
-  </div>
-
-  <!-- Controls: slides from right -->
-  <div id="xy-ctrl-panel" class="xy-panel">
-
-    <div class="xy-ctrl-section">
-      <div class="xy-ctrl-title">Temperature T</div>
-      <div class="xy-slider-row">
-        <span class="xy-side">Cold</span>
-        <input type="range" id="xy-temp" min="0.1" max="3.0" step="0.05" value="0.5">
-        <span class="xy-side">Hot</span>
-      </div>
-    </div>
-
-    <div class="xy-ctrl-section">
-      <div class="xy-ctrl-title">Grid Size L</div>
-      <div class="xy-slider-row">
-        <span class="xy-side">Small</span>
-        <input type="range" id="xy-size" min="16" max="96" step="8" value="48">
-        <span class="xy-side">Large</span>
-      </div>
-    </div>
-
-    <div class="xy-ctrl-section">
-      <div class="xy-ctrl-title">Speed</div>
-      <div class="xy-slider-row">
-        <span class="xy-side">Slow</span>
-        <input type="range" id="xy-speed" min="1" max="20" step="1" value="5">
-        <span class="xy-side">Fast</span>
-      </div>
-    </div>
-
-    <div class="xy-ctrl-section">
-      <div class="xy-ctrl-title">Reset</div>
-      <div class="xy-btn-row">
-        <button class="xy-btn" onclick="xyReset()">Randomise</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
 <script>
 (function () {
-  /* ── Layout constants ── */
-  const GAP = 0;
-  const PAD = 20;
-
   /* ── XY model parameters ── */
-  let T  = 0.5;   // temperature
-  let L  = 48;    // grid side length
-  let stepsPerFrame = 5;  // Glauber sweeps per animation frame
+  let T  = 0.5;
+  let L  = 48;
+  let stepsPerFrame = 5;
 
-  /* ── Spin array ── */
-  let spins = null;   // Float32Array of length L*L, values in [0, 2π)
-
+  let spins = null;
   let canvasEl, ctx;
   let W = 1, H = 1;
   let running = false, frameId = null;
 
-  /* ── Helpers ── */
   function idx(x, y) { return ((y + L) % L) * L + ((x + L) % L); }
 
   function reset() {
     spins = new Float32Array(L * L);
-    for (let i = 0; i < L * L; i++) {
-      spins[i] = Math.random() * 2 * Math.PI;
-    }
+    for (let i = 0; i < L * L; i++) spins[i] = Math.random() * 2 * Math.PI;
   }
 
-  /* ── Glauber dynamics: one full sweep (L² single-spin proposals) ── */
   function sweep() {
     const TWO_PI = 2 * Math.PI;
-    const invT   = 1.0 / T;
-    const N      = L * L;
-
+    const invT = 1.0 / T;
+    const N = L * L;
     for (let k = 0; k < N; k++) {
-      // pick a random site
       const i = (Math.random() * N) | 0;
       const x = i % L;
       const y = (i / L) | 0;
-
-      // sum of neighbour spins (nearest-neighbour coupling J=1)
-      const nb =
-        spins[idx(x + 1, y)] +
-        spins[idx(x - 1, y)] +
-        spins[idx(x, y + 1)] +
-        spins[idx(x, y - 1)];
-
-      // propose a new angle uniformly in [0, 2π)
-      const old_th  = spins[i];
-      const new_th  = Math.random() * TWO_PI;
-
-      // ΔE = -J Σ_nn [cos(θ_new − θ_nn) − cos(θ_old − θ_nn)]
-      // With J=1 and summing over 4 neighbours via the dot product trick:
-      // field_x = Σ cos(θ_nn), field_y = Σ sin(θ_nn)
+      const old_th = spins[i];
+      const new_th = Math.random() * TWO_PI;
       let fx = 0, fy = 0;
       const nn = [idx(x+1,y), idx(x-1,y), idx(x,y+1), idx(x,y-1)];
       for (let n = 0; n < 4; n++) {
@@ -332,17 +37,11 @@
       }
       const dE = -(Math.cos(new_th) * fx + Math.sin(new_th) * fy)
                  +(Math.cos(old_th) * fx + Math.sin(old_th) * fy);
-
-      // Metropolis acceptance
-      if (dE <= 0 || Math.random() < Math.exp(-dE * invT)) {
-        spins[i] = new_th;
-      }
+      if (dE <= 0 || Math.random() < Math.exp(-dE * invT)) spins[i] = new_th;
     }
   }
 
-  /* ── Vorticity: topological charge on each plaquette (x,y)→(x+1,y)→(x+1,y+1)→(x,y+1) ── */
   function wrap(dth) {
-    // wrap angle difference to (−π, π]
     const TWO_PI = 2 * Math.PI;
     dth = dth % TWO_PI;
     if (dth >  Math.PI) dth -= TWO_PI;
@@ -351,50 +50,71 @@
   }
 
   function vorticityAt(x, y) {
-    // sum wrapped differences around the plaquette counter-clockwise
     const s00 = spins[idx(x,   y  )];
     const s10 = spins[idx(x+1, y  )];
     const s11 = spins[idx(x+1, y+1)];
     const s01 = spins[idx(x,   y+1)];
     const circulation = wrap(s10 - s00) + wrap(s11 - s10)
                       + wrap(s01 - s11) + wrap(s00 - s01);
-    return Math.round(circulation / (2 * Math.PI));  // 0, +1, or −1
+    return Math.round(circulation / (2 * Math.PI));
   }
 
-  /* ── Rendering ── */
+  const BG = [0x16, 0x21, 0x2a];
+  function mute(r, g, b, f) {
+    return [
+      Math.round(r + f * (BG[0] - r)),
+      Math.round(g + f * (BG[1] - g)),
+      Math.round(b + f * (BG[2] - b))
+    ];
+  }
+  const PALETTE = [
+    mute(0x23, 0xbb, 0xad, 0.45),
+    mute(0x25, 0xd9, 0xc8, 0.45),
+    mute(0x2a, 0xbe, 0xd9, 0.45),
+    mute(0xf9, 0x26, 0x72, 0.45),
+    mute(0xff, 0x6d, 0xa2, 0.45),
+    mute(0x23, 0xbb, 0xad, 0.0),
+  ];
+  const NSTOPS = PALETTE.length - 1;
+
+  function angleToRGB(th) {
+    const TWO_PI = 2 * Math.PI;
+    const u = ((th % TWO_PI) + TWO_PI) % TWO_PI / TWO_PI;
+    const seg = u * NSTOPS;
+    const i = Math.floor(seg);
+    const t = seg - i;
+    const c0 = PALETTE[i], c1 = PALETTE[i + 1];
+    return [
+      Math.round(c0[0] + t * (c1[0] - c0[0])),
+      Math.round(c0[1] + t * (c1[1] - c0[1])),
+      Math.round(c0[2] + t * (c1[2] - c0[2])),
+    ];
+  }
+
   function render() {
-    const cellW = W / L;
-    const cellH = H / L;
+    const cellW = W / L, cellH = H / L;
     const arrowLen = Math.min(cellW, cellH) * 0.38;
     const imgData = ctx.createImageData(W, H);
     const pix = imgData.data;
-
-    // ── Background: muted bilinear phase hue ──
     for (let py = 0; py < H; py++) {
       for (let px = 0; px < W; px++) {
-        const gx = px / cellW - 0.5;
-        const gy = py / cellH - 0.5;
+        const gx = px / cellW - 0.5, gy = py / cellH - 0.5;
         const ix = Math.floor(gx), iy = Math.floor(gy);
-        const tx = gx - ix,       ty = gy - iy;
-
+        const tx = gx - ix, ty = gy - iy;
         const th00 = spins[idx(ix,   iy  )];
         const th10 = spins[idx(ix+1, iy  )];
         const th01 = spins[idx(ix,   iy+1)];
         const th11 = spins[idx(ix+1, iy+1)];
-
         const bx = Math.cos(th00)*(1-tx)*(1-ty) + Math.cos(th10)*tx*(1-ty)
                  + Math.cos(th01)*(1-tx)*ty      + Math.cos(th11)*tx*ty;
         const by = Math.sin(th00)*(1-tx)*(1-ty) + Math.sin(th10)*tx*(1-ty)
                  + Math.sin(th01)*(1-tx)*ty      + Math.sin(th11)*tx*ty;
-
         const [r, g, b] = angleToRGB(Math.atan2(by, bx));
         const off = (py * W + px) * 4;
         pix[off] = r; pix[off+1] = g; pix[off+2] = b; pix[off+3] = 255;
       }
     }
     ctx.putImageData(imgData, 0, 0);
-
-    // ── Vortex markers: bright circles at plaquette centres ──
     const vr = Math.min(cellW, cellH) * 0.42;
     for (let y = 0; y < L; y++) {
       for (let x = 0; x < L; x++) {
@@ -406,79 +126,26 @@
         ctx.fill();
       }
     }
-
-    // ── Arrows ──
     const lw = Math.max(1.2, cellW * 0.13);
     ctx.strokeStyle = 'rgba(0,0,0,0.82)';
-    ctx.lineWidth   = lw;
-    ctx.lineCap     = 'round';
-
+    ctx.lineWidth = lw;
+    ctx.lineCap = 'round';
     for (let y = 0; y < L; y++) {
       for (let x = 0; x < L; x++) {
         const th = spins[y * L + x];
-        const cx = (x + 0.5) * cellW;
-        const cy = (y + 0.5) * cellH;
+        const cx = (x + 0.5) * cellW, cy = (y + 0.5) * cellH;
         const cosTh = Math.cos(th), sinTh = Math.sin(th);
-
-        const ex = cx + cosTh * arrowLen;
-        const ey = cy + sinTh * arrowLen;
-        const sx = cx - cosTh * arrowLen;
-        const sy = cy - sinTh * arrowLen;
-
+        const ex = cx + cosTh * arrowLen, ey = cy + sinTh * arrowLen;
+        const sx = cx - cosTh * arrowLen, sy = cy - sinTh * arrowLen;
+        ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(ex, ey); ctx.stroke();
+        const headLen = arrowLen * 0.45, headAng = 0.45;
+        const a1 = th + Math.PI - headAng, a2 = th + Math.PI + headAng;
         ctx.beginPath();
-        ctx.moveTo(sx, sy);
-        ctx.lineTo(ex, ey);
-        ctx.stroke();
-
-        const headLen = arrowLen * 0.45;
-        const headAng = 0.45;
-        const a1 = th + Math.PI - headAng;
-        const a2 = th + Math.PI + headAng;
-        ctx.beginPath();
-        ctx.moveTo(ex, ey);
-        ctx.lineTo(ex + Math.cos(a1) * headLen, ey + Math.sin(a1) * headLen);
-        ctx.moveTo(ex, ey);
-        ctx.lineTo(ex + Math.cos(a2) * headLen, ey + Math.sin(a2) * headLen);
+        ctx.moveTo(ex, ey); ctx.lineTo(ex + Math.cos(a1) * headLen, ey + Math.sin(a1) * headLen);
+        ctx.moveTo(ex, ey); ctx.lineTo(ex + Math.cos(a2) * headLen, ey + Math.sin(a2) * headLen);
         ctx.stroke();
       }
     }
-  }
-
-  /* ── Palette: 5 stops evenly spaced over [0, 2π), muted for arrow legibility ── */
-  // Base colors from palette.css, blended 50% toward #16212a (background dark)
-  // teal-dark #23bbad, teal-light #25d9c8, cyan #2abed9, pink-light #ff6da2, pink-dark #f92672
-  const BG = [0x16, 0x21, 0x2a];
-  function mute(r, g, b, f) {   // f=mix fraction toward BG (0=original, 1=BG)
-    return [
-      Math.round(r + f * (BG[0] - r)),
-      Math.round(g + f * (BG[1] - g)),
-      Math.round(b + f * (BG[2] - b))
-    ];
-  }
-  const PALETTE = [
-    mute(0x23, 0xbb, 0xad, 0.45),  // teal-dark
-    mute(0x25, 0xd9, 0xc8, 0.45),  // teal-light
-    mute(0x2a, 0xbe, 0xd9, 0.45),  // cyan
-    mute(0xf9, 0x26, 0x72, 0.45),  // pink-dark
-    mute(0xff, 0x6d, 0xa2, 0.45),  // pink-light
-    mute(0x23, 0xbb, 0xad, 0.0),  // wrap back to teal-dark for continuity
-  ];
-  const NSTOPS = PALETTE.length - 1;  // 5 segments
-
-  function angleToRGB(th) {
-    // Normalise θ to [0, 1)
-    const TWO_PI = 2 * Math.PI;
-    const u = ((th % TWO_PI) + TWO_PI) % TWO_PI / TWO_PI;
-    const seg = u * NSTOPS;
-    const i   = Math.floor(seg);
-    const t   = seg - i;
-    const c0  = PALETTE[i];
-    const c1  = PALETTE[i + 1];
-    return [
-      Math.round(c0[0] + t * (c1[0] - c0[0])),
-      Math.round(c0[1] + t * (c1[1] - c0[1])),
-      Math.round(c0[2] + t * (c1[2] - c0[2])),
-    ];
   }
 
   function loop() {
@@ -489,93 +156,74 @@
     frameId = requestAnimationFrame(loop);
   }
 
-  /* ── Layout ── */
-  // Body panel (sim + ctrl) forms a golden rectangle: width / height = φ
-  // Header adds 10% of body height on top.
-  const PHI = 1.6180339887;
+  /* ── Shell wiring ── */
+  const shell = new AppletShell({
+    id:    'xy',
+    title: 'XY Model &mdash; Glauber Dynamics',
+    gap:   0,
 
-  function layout() {
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+    ctrlHTML: `
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Temperature T</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Cold</span>
+          <input type="range" id="xy-temp" min="0.1" max="3.0" step="0.05" value="0.5">
+          <span class="applet-shell-side">Hot</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Grid Size L</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Small</span>
+          <input type="range" id="xy-size" min="16" max="96" step="8" value="48">
+          <span class="applet-shell-side">Large</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Speed</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Slow</span>
+          <input type="range" id="xy-speed" min="1" max="20" step="1" value="5">
+          <span class="applet-shell-side">Fast</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Reset</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" onclick="xyReset()">Randomise</button>
+        </div>
+      </div>
+    `,
 
-    const sFromW = (vw - 2 * PAD) / (1 + 1 / PHI);
-    const sFromH = (vh - 2 * PAD) / 1.1;
-    const S      = Math.floor(Math.min(sFromW, sFromH));
+    onOpen: function ({ canvas: c, S }) {
+      canvasEl = c;
+      ctx = canvasEl.getContext('2d');
+      W = S; H = S;
+      reset();
+      running = true;
+      if (!frameId) loop();
+    },
 
-    const ctrlW  = Math.floor(S / PHI);
-    const hdrH   = Math.floor(S * 0.1);
-    const totalW = S + ctrlW;
-    const left   = Math.floor((vw - totalW) / 2);
-    const top    = Math.floor((vh - (hdrH + S)) / 2);
-
-    const el = document.getElementById('xy-overlay');
-    el.style.setProperty('--xy-left',     left         + 'px');
-    el.style.setProperty('--xy-top-hdr',  top          + 'px');
-    el.style.setProperty('--xy-top-body', (top + hdrH) + 'px');
-    el.style.setProperty('--xy-W',        totalW       + 'px');
-    el.style.setProperty('--xy-W-sim',    S            + 'px');
-    el.style.setProperty('--xy-W-ctrl',   ctrlW        + 'px');
-    el.style.setProperty('--xy-H-hdr',    hdrH         + 'px');
-    el.style.setProperty('--xy-H-body',   S            + 'px');
-
-    if (canvasEl) {
-      canvasEl.width  = S;
-      canvasEl.height = S;
-      W = S;
-      H = S;
-    }
-  }
-
-  /* ── Open / close ── */
-  window.xyOpen = function () {
-    canvasEl = document.getElementById('xy-canvas');
-    ctx = canvasEl.getContext('2d');
-    layout();
-    reset();
-
-    document.getElementById('xy-overlay').classList.add('xy-open');
-    requestAnimationFrame(() => {
-      document.getElementById('xy-header').classList.add('xy-open');
-      document.getElementById('xy-sim-panel').classList.add('xy-open');
-      document.getElementById('xy-ctrl-panel').classList.add('xy-open');
-    });
-
-    running = true;
-    if (!frameId) loop();
-  };
-
-  window.xyClose = function () {
-    running = false;
-    ['xy-header', 'xy-sim-panel', 'xy-ctrl-panel'].forEach(id => {
-      const el = document.getElementById(id);
-      el.classList.remove('xy-open');
-      el.classList.add('xy-closing');
-    });
-    setTimeout(() => {
-      document.getElementById('xy-overlay').classList.remove('xy-open');
-      ['xy-header', 'xy-sim-panel', 'xy-ctrl-panel'].forEach(id => {
-        document.getElementById(id).classList.remove('xy-closing');
-      });
+    onClose: function () {
+      running = false;
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
-    }, 550);
-  };
+    },
 
-  window.xyReset = function () { reset(); };
-
-window.addEventListener('resize', () => {
-    if (running) { layout(); }
+    onResize: function ({ S }) {
+      W = S; H = S;
+    },
   });
 
-  /* ── Controls ── */
+  window.xyOpen  = () => shell.open();
+  window.xyClose = () => shell.close();
+  window.xyReset = function () { reset(); };
+
   document.getElementById('xy-temp').addEventListener('input', function () {
     T = parseFloat(this.value);
   });
-
   document.getElementById('xy-size').addEventListener('input', function () {
-    L = parseInt(this.value);
-    reset();
+    L = parseInt(this.value); reset();
   });
-
   document.getElementById('xy-speed').addEventListener('input', function () {
     stepsPerFrame = parseInt(this.value);
   });
