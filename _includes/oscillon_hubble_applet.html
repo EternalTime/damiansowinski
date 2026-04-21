@@ -1,0 +1,594 @@
+<!-- Oscillon Hubble Applet Include -->
+
+<style>
+
+/* ── Overlay backdrop ── */
+#oh-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+#oh-overlay.oh-open {
+  display: block;
+  pointer-events: auto;
+}
+
+/* ── Shared panel style ── */
+.oh-panel {
+  position: fixed;
+  z-index: 910;
+  background: #16212a;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity  0.0s ease;
+  opacity: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.oh-panel.oh-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.oh-panel.oh-closing {
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Per-panel border + glow colours */
+#oh-header {
+  border-color: var(--pink-dark);
+  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
+}
+#oh-sim-panel {
+  border-color: var(--teal-dark);
+  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
+}
+#oh-ctrl-panel {
+  border-color: var(--cyan);
+  box-shadow: 0 12px 35px rgba(42, 190, 217, 0.5), 0 -4px 20px rgba(42, 190, 217, 0.3);
+}
+
+/* ── Header panel — slides from top ── */
+#oh-header {
+  left:   var(--oh-left);
+  top:    var(--oh-top-hdr);
+  width:  var(--oh-W);
+  height: var(--oh-H-hdr);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  transform: translateY(-120px);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#oh-header.oh-open { transform: translateY(0); }
+#oh-header h2 {
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: #eef2f5;
+  font-weight: normal;
+  margin: 0;
+  text-transform: uppercase;
+}
+#oh-close-btn {
+  background: none;
+  border: 1px solid #3d5a6e;
+  color: #eef2f5;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 3px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#oh-close-btn:hover { background: #2a3d4e; }
+
+/* ── Sim panel — slides from left ── */
+#oh-sim-panel {
+  left:   var(--oh-left);
+  top:    var(--oh-top-body);
+  width:  var(--oh-W);
+  height: var(--oh-H-sim);
+  transform: translateX(-110vw);
+  border-radius: 0;
+}
+#oh-sim-panel.oh-open { transform: translateX(0); }
+#oh-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Controls panel — slides from bottom ── */
+#oh-ctrl-panel {
+  left:   var(--oh-left);
+  top:    calc(var(--oh-top-body) + var(--oh-H-sim));
+  width:  var(--oh-W);
+  height: var(--oh-H-ctrl);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: #1a2530;
+  transform: translateY(110vh);
+  padding: 0 24px;
+  box-sizing: border-box;
+  gap: 14px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+#oh-ctrl-panel.oh-open { transform: translateY(0); }
+
+/* Buttons */
+.oh-btn {
+  background: #2a3d4e;
+  color: #eef2f5;
+  border: 1px solid #3d5a6e;
+  padding: 8px 28px;
+  cursor: pointer;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 17px;
+  letter-spacing: 2px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  text-align: center;
+  white-space: nowrap;
+}
+.oh-btn:hover { background: #3a5060; }
+.oh-btn.oh-active-teal {
+  background: #1e3a4a;
+  border-color: #25d9c8;
+  color: #25d9c8;
+  box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
+}
+.oh-btn.oh-active-pink {
+  background: #3a1a2e;
+  border-color: #f92672;
+  color: #f92672;
+  box-shadow: 0 0 10px rgba(249,38,114,0.6), 0 0 20px rgba(249,38,114,0.3);
+}
+
+/* Divider */
+.oh-divider {
+  width: 1px;
+  height: 60%;
+  background: #3d5a6e;
+  flex-shrink: 0;
+}
+
+/* Time readout */
+.oh-time-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.oh-time-label {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #a8c0d0;
+}
+.oh-time-value {
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #eef2f5;
+  font-variant-numeric: tabular-nums;
+}
+
+</style>
+
+<!-- Overlay -->
+<div id="oh-overlay">
+
+  <!-- Header: slides from top -->
+  <div id="oh-header" class="oh-panel">
+    <h2>Oscillon &mdash; FRW Scalar Field</h2>
+    <button id="oh-close-btn" onclick="ohClose()">Close</button>
+  </div>
+
+  <!-- Simulation canvas: slides from left -->
+  <div id="oh-sim-panel" class="oh-panel">
+    <canvas id="oh-canvas"></canvas>
+  </div>
+
+  <!-- Controls: slides from bottom -->
+  <div id="oh-ctrl-panel" class="oh-panel">
+    <button class="oh-btn" id="oh-playpause-btn" onclick="ohTogglePause()">Pause</button>
+    <button class="oh-btn" onclick="ohReset()">Reset</button>
+    <div class="oh-divider"></div>
+    <button class="oh-btn oh-active-teal" id="oh-btn-matter" onclick="ohSetMode('matter')">Matter</button>
+    <button class="oh-btn" id="oh-btn-radiation" onclick="ohSetMode('radiation')">Radiation</button>
+    <button class="oh-btn" id="oh-btn-desitter" onclick="ohSetMode('desitter')">de Sitter</button>
+    <div class="oh-divider"></div>
+    <div class="oh-time-block">
+      <span class="oh-time-label">t</span>
+      <span class="oh-time-value" id="oh-time-val">1.00</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Palette ── */
+  const TEAL_DARK  = '#23bbad';
+  const TEAL_LIGHT = '#25d9c8';
+  const PINK_DARK  = '#f92672';
+  const PINK_LIGHT = '#ff6da2';
+
+  /* ── Grid parameters ── */
+  const N      = 2048;          // lattice sites
+  const L      = 50.0;         // comoving box size
+  const dx     = L / N;         // comoving lattice spacing
+  const dt     = dx * 0.5;      // Courant factor 0.5 for safety
+  const LAMBDA = 4.0;          // quartic coupling
+  const T0     = 0.4;           // initial time
+  const H_DS   = 1.0;           // de Sitter Hubble constant
+  const SIGMA0 = 1.5;           // initial field std dev
+  const SUBSTEPS = 4;           // leapfrog substeps per frame
+
+  /* ── Simulation state ── */
+  let phi     = new Float64Array(N);
+  let pi_f    = new Float64Array(N);   // conjugate momentum φ̇
+  let phi_tmp = new Float64Array(N);
+
+  let simTime = T0;
+  let running = false;
+  let frameId = null;
+  let frwMode = 'matter';   // 'matter' | 'radiation' | 'desitter'
+
+  /* ── Canvas ── */
+  let canvas, ctx, simW, simH;
+
+  /* ── Hubble parameter ── */
+  function hubble(t) {
+    if (frwMode === 'matter')    return (2.0 / 3.0) / t;
+    if (frwMode === 'radiation') return 0.5 / t;
+    return H_DS;   // de Sitter
+  }
+
+  /* ── Scale factor (comoving coords: spatial derivative term gets /a²) ── */
+  function scaleFactor(t) {
+    if (frwMode === 'matter')    return Math.pow(t, 2.0 / 3.0);
+    if (frwMode === 'radiation') return Math.sqrt(t);
+    return Math.exp(H_DS * (t - T0));
+  }
+
+  /* ── Potential derivative: V'(φ) = (λ/2) φ(φ−1)(2φ−1) ──
+     V(φ) = λ φ²(φ−1)²  →  V' = 2λ φ(φ-1)(2φ-1)  */
+  function dV(phi_val) {
+    /*return 2.0 * LAMBDA * phi_val * (phi_val - 1.0) * (2.0 * phi_val - 1.0);*/
+    return 4.0 * LAMBDA * phi_val * phi_val * phi_val;
+  }
+
+  /* ── 8th-order Laplacian with periodic BCs ── */
+  function laplacian(arr, i) {
+    const i1p = (i + 1 + N) % N, i1m = (i - 1 + N) % N;
+    const i2p = (i + 2 + N) % N, i2m = (i - 2 + N) % N;
+    const i3p = (i + 3 + N) % N, i3m = (i - 3 + N) % N;
+    const i4p = (i + 4 + N) % N, i4m = (i - 4 + N) % N;
+    return (
+      -9.0    * (arr[i4p] + arr[i4m])
+      + 128.0 * (arr[i3p] + arr[i3m])
+      - 1008.0* (arr[i2p] + arr[i2m])
+      + 8064.0* (arr[i1p] + arr[i1m])
+      - 14350.0*  arr[i]
+    ) / (5040.0 * dx * dx);
+  }
+
+  /* ── Leapfrog step ── */
+  // EOM: φ̈ + H φ̇ − φ''/a² + V'(φ) = 0
+  // Written as:  dφ/dt = π,   dπ/dt = φ''/a² − 3H π − V'(φ)
+  function step(ddt) {
+    const t   = simTime;
+    const H   = hubble(t);
+    const a   = scaleFactor(t);
+    const a2  = a * a;
+    const damp1 = 1 - 0.5 * H * ddt;
+    const damp2 = 1 + 0.5 * H * ddt;
+
+    // kick π
+    for (let i = 0; i < N; i++) {
+      const lap = laplacian(phi, i);
+      const acc = (lap / a2 - dV(phi[i])) / damp1;
+      pi_f[i] = (pi_f[i] + ddt * acc) * damp1 / damp2;
+    }
+
+    // Full drift φ
+    for (let i = 0; i < N; i++) {
+      phi[i] += ddt * pi_f[i];
+    }
+
+    simTime = t + ddt;
+  }
+
+  /* ── Energy density: ρ = ½π² + (φ')²/(2a²) + V(φ) ── */
+  function energyDensity(i, a) {
+    const a2  = a * a;
+    const ip  = (i + 1) % N;
+    const dphi = (phi[ip] - phi[i]) / dx;   // forward difference
+    const pi_val = pi_f[i];
+    const phi_val = phi[i];
+    /*const V = LAMBDA * phi_val * phi_val * (phi_val - 1.0) * (phi_val - 1.0);*/
+    const V = LAMBDA * phi_val * phi_val * phi_val * phi_val;
+    return 0.5 * pi_val * pi_val + 0.5 * dphi * dphi / a2 + V;
+  }
+
+  /* ── Gaussian RNG (Box-Muller) ── */
+  function gauss() {
+    let u;
+    do { u = Math.random(); } while (u === 0);
+    return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * Math.random());
+  }
+
+  /* ── Initialise ── */
+  function init() {
+    simTime = T0;
+    // Draw raw noise
+    for (let i = 0; i < N; i++) {
+      phi[i]  = SIGMA0 * gauss();
+      pi_f[i] = 0.0;
+    }
+    // Convolve with Gaussian kernel (σ = 5 lattice sites, periodic BCs)
+    const SMOOTH_SIGMA = 2;                          // line to adjust kernel width
+    const KR = Math.ceil(3 * SMOOTH_SIGMA);          // kernel half-width (3σ truncation)
+    const kernel = new Float64Array(2 * KR + 1);
+    let ksum = 0.0;
+    for (let k = -KR; k <= KR; k++) {
+      kernel[k + KR] = Math.exp(-0.5 * (k / SMOOTH_SIGMA) ** 2);
+      ksum += kernel[k + KR];
+    }
+    for (let k = 0; k < kernel.length; k++) kernel[k] /= ksum;
+    const raw = phi.slice();
+    for (let i = 0; i < N; i++) {
+      let v = 0.0;
+      for (let k = -KR; k <= KR; k++) {
+        v += kernel[k + KR] * raw[(i + k + N) % N];
+      }
+      phi[i] = v;
+    }
+    document.getElementById('oh-time-val').textContent = simTime.toFixed(2);
+  }
+
+  /* ── Render ── */
+  function render() {
+    ctx.clearRect(0, 0, simW, simH);
+
+    // Background
+    ctx.fillStyle = '#0f1a22';
+    ctx.fillRect(0, 0, simW, simH);
+
+    const a = scaleFactor(simTime);
+
+    // Plot geometry
+    const padY = simH * 0.08;
+    const plotH = simH - 2 * padY;
+    const midY  = simH * 0.5;
+    const phiScale = plotH * 0.5 / 2.0;   // ±2 maps to ±(plotH/2), filling full panel
+
+    // Compute energy density and total energy
+    const rho = new Float32Array(N);
+    let rhoTotal = 0.0;
+    for (let i = 0; i < N; i++) {
+      rho[i] = energyDensity(i, a);
+      rhoTotal += rho[i];
+    }
+    // Normalise by total energy: uniform distribution (rhoTotal/N per site)
+    // maps to plotH * 0.45; oscillons appear as sharp peaks above that baseline
+    const rhoScale = (plotH * 0.005) / (rhoTotal / N);
+
+    // Draw ρ glow (wide, dim pass)
+    ctx.save();
+    ctx.shadowColor = PINK_LIGHT;
+    ctx.shadowBlur  = 10;
+    ctx.strokeStyle = PINK_DARK;
+    ctx.lineWidth   = 1.5;
+    ctx.globalAlpha = 0.5;
+    ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const x  = (i / N) * simW;
+      const y  = simH - padY - rho[i] * rhoScale;
+      if (i === 0) ctx.moveTo(x, y);
+      else         ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    // Draw ρ main line
+    ctx.save();
+    ctx.shadowColor = PINK_LIGHT;
+    ctx.shadowBlur  = 18;
+    ctx.strokeStyle = PINK_LIGHT;
+    ctx.lineWidth   = 1.5;
+    ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const x  = (i / N) * simW;
+      const y  = simH - padY - rho[i] * rhoScale;
+      if (i === 0) ctx.moveTo(x, y);
+      else         ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    // ── Scalar field φ (teal) ──
+
+    // Draw φ glow pass
+    ctx.save();
+    ctx.shadowColor = TEAL_LIGHT;
+    ctx.shadowBlur  = 10;
+    ctx.strokeStyle = TEAL_DARK;
+    ctx.lineWidth   = 1.5;
+    ctx.globalAlpha = 0.5;
+    ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const x = (i / N) * simW;
+      const y = midY - phi[i] * phiScale;
+      if (i === 0) ctx.moveTo(x, y);
+      else         ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    // Draw φ main line
+    ctx.save();
+    ctx.shadowColor = TEAL_LIGHT;
+    ctx.shadowBlur  = 18;
+    ctx.strokeStyle = TEAL_LIGHT;
+    ctx.lineWidth   = 1.5;
+    ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const x = (i / N) * simW;
+      const y = midY - phi[i] * phiScale;
+      if (i === 0) ctx.moveTo(x, y);
+      else         ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    // ── Axis lines: dashed white lines at the two potential minima φ=0 and φ=1 ──
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([4, 6]);
+
+    [0, 1].forEach(v => {
+      const y = midY - v * phiScale;
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(simW, y);
+      ctx.stroke();
+    });
+
+    ctx.restore();
+
+    // Update time display
+    document.getElementById('oh-time-val').textContent = simTime.toFixed(2);
+  }
+
+  /* ── Animation loop ── */
+  function loop() {
+    if (running) {
+      for (let s = 0; s < SUBSTEPS; s++) step(dt);
+      render();
+    }
+    frameId = requestAnimationFrame(loop);
+  }
+
+  /* ── Layout — mirrors Maxwell Demon sizing ── */
+  function layout() {
+    const PAD = 20;
+    const PHI = 1.6180339887;
+    const vw  = window.innerWidth;
+    const vh  = window.innerHeight;
+
+    const sFromW = (vw - 2 * PAD) / (1 + 1 / PHI);
+    const sFromH = (vh - 2 * PAD) / 1.1;
+    const S      = Math.floor(Math.min(sFromW, sFromH));
+    const totalW = Math.floor(S * (1 + 1 / PHI));
+
+    const W      = Math.min(totalW, vw - 2 * PAD);
+    const hdrH   = Math.floor(S * 0.1);
+    const simHpx = Math.floor(W * 0.5);   // 2:1 wide rectangle
+    const ctrlH  = hdrH;
+    const totalH = hdrH + simHpx + ctrlH;
+    const left   = Math.floor((vw - W) / 2);
+    const top    = Math.floor((vh - totalH) / 2);
+
+    const el = document.getElementById('oh-overlay');
+    el.style.setProperty('--oh-left',     left           + 'px');
+    el.style.setProperty('--oh-top-hdr',  top            + 'px');
+    el.style.setProperty('--oh-top-body', (top + hdrH)   + 'px');
+    el.style.setProperty('--oh-W',        W              + 'px');
+    el.style.setProperty('--oh-H-hdr',    hdrH           + 'px');
+    el.style.setProperty('--oh-H-sim',    simHpx         + 'px');
+    el.style.setProperty('--oh-H-ctrl',   ctrlH          + 'px');
+
+    if (canvas) {
+      canvas.width  = W;
+      canvas.height = simHpx;
+    }
+    simW = W;
+    simH = simHpx;
+  }
+
+  /* ── FRW mode switching ── */
+  function ohSetMode(mode) {
+    frwMode = mode;
+    ['matter','radiation','desitter'].forEach(m => {
+      const btn = document.getElementById('oh-btn-' + m);
+      btn.classList.remove('oh-active-teal');
+    });
+    document.getElementById('oh-btn-' + mode).classList.add('oh-active-teal');
+    // Reset so t0=1 is valid for all modes
+    init();
+  }
+  window.ohSetMode = ohSetMode;
+
+  /* ── Open / close ── */
+  window.ohOpen = function () {
+    canvas = document.getElementById('oh-canvas');
+    ctx    = canvas.getContext('2d');
+    layout();
+    init();
+
+    running = true;
+    const pb = document.getElementById('oh-playpause-btn');
+    if (pb) { pb.textContent = 'Pause'; pb.classList.remove('oh-active-pink'); }
+
+    document.getElementById('oh-overlay').classList.add('oh-open');
+    requestAnimationFrame(() => {
+      document.getElementById('oh-header').classList.add('oh-open');
+      document.getElementById('oh-sim-panel').classList.add('oh-open');
+      document.getElementById('oh-ctrl-panel').classList.add('oh-open');
+    });
+
+    if (!frameId) frameId = requestAnimationFrame(loop);
+  };
+
+  window.ohClose = function () {
+    running = false;
+    ['oh-header','oh-sim-panel','oh-ctrl-panel'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('oh-open');
+      el.classList.add('oh-closing');
+    });
+    setTimeout(() => {
+      document.getElementById('oh-overlay').classList.remove('oh-open');
+      ['oh-header','oh-sim-panel','oh-ctrl-panel'].forEach(id => {
+        document.getElementById(id).classList.remove('oh-closing');
+      });
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+    }, 550);
+  };
+
+  window.ohReset = function () {
+    init();
+  };
+
+  window.ohTogglePause = function () {
+    running = !running;
+    const pb = document.getElementById('oh-playpause-btn');
+    if (pb) {
+      pb.textContent = running ? 'Pause' : 'Resume';
+      pb.classList.toggle('oh-active-pink', !running);
+    }
+  };
+
+  window.addEventListener('resize', () => {
+    layout();
+  });
+
+})();
+</script>

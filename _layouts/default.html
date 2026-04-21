@@ -8,6 +8,21 @@
   <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 
   <script>
+    /* ── Device detection — runs before first paint ── */
+    (function () {
+      var touch  = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      var narrow = window.innerWidth <= 768;
+      var ua     = navigator.userAgent || '';
+      var mobileUA = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+      if (touch && (narrow || mobileUA)) {
+        document.documentElement.classList.add('is-mobile');
+      } else {
+        document.documentElement.classList.add('is-desktop');
+      }
+    })();
+  </script>
+
+  <script>
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],

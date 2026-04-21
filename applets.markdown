@@ -28,6 +28,10 @@ title: Applets
 
 {% include gas_applet.html %}
 
+<button class="applet-launch-btn" onclick="bmOpen(); this.blur()">Brownian Motion</button>
+
+{% include brownian_applet.html %}
+
 <button class="applet-launch-btn" onclick="demonOpen(); this.blur()">Maxwell's Demon</button>
 
 {% include maxwell_demon_applet.html %}
@@ -47,3 +51,19 @@ title: Applets
 <button class="applet-launch-btn" onclick="faOpen(); this.blur()">Forager</button>
 
 {% include forager_applet.html %}
+
+<button class="applet-launch-btn" onclick="ltOpen(); this.blur()">Relativistic Lattice</button>
+
+{% include lattice_applet.html %}
+
+<button class="applet-launch-btn" onclick="slOpen(); this.blur()">Spring Lattice</button>
+
+{% include spring_lattice_applet.html %}
+
+<button class="applet-launch-btn" onclick="ltzOpen(); this.blur()">Lorentz Transformation</button>
+
+{% include lorentz_applet.html %}
+
+<button class="applet-launch-btn" onclick="ohOpen(); this.blur()">Oscillon &mdash; FRW</button>
+
+{% include oscillon_hubble_applet.html %}

@@ -394,9 +394,16 @@ function switchGraph(idx) {
 const shell = new AppletShell({
   id:    'km',
   title: 'Kuramoto Model &mdash; Synchronisation',
-  gap:   10,
+  gap:   0,
 
   ctrlHTML: `
+    <div class="applet-shell-ctrl-section">
+      <div class="applet-shell-ctrl-title">Actions</div>
+      <div class="applet-shell-btn-row">
+        <button class="applet-shell-btn" onclick="kmRandomiseFreqs()">Reset</button>
+        <button class="applet-shell-btn" id="km-pause-btn" onclick="kmTogglePause()">Pause</button>
+      </div>
+    </div>
     <div class="applet-shell-ctrl-section">
       <div class="applet-shell-ctrl-title">Graph</div>
       <div class="applet-shell-btn-row" id="km-graph-btns"></div>
@@ -415,12 +422,6 @@ const shell = new AppletShell({
         <span class="applet-shell-side">Narrow</span>
         <input type="range" id="km-sigma" min="0.01" max="1" step="0.01" value="0.5">
         <span class="applet-shell-side">Wide</span>
-      </div>
-    </div>
-    <div class="applet-shell-ctrl-section">
-      <div class="applet-shell-ctrl-title">Reset</div>
-      <div class="applet-shell-btn-row">
-        <button class="applet-shell-btn" onclick="kmRandomiseFreqs()">Randomise Frequencies</button>
       </div>
     </div>
     <div id="km-hist-section">
@@ -447,6 +448,8 @@ const shell = new AppletShell({
     const t = parseFloat(document.getElementById('km-K').value);
     K = g.Kmin + t*(g.Kmax-g.Kmin);
 
+    const pb = document.getElementById('km-pause-btn');
+    if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
     setTimeout(() => {
       hctx = document.getElementById('km-hist-canvas').getContext('2d');
       initThree(pos);
@@ -459,6 +462,8 @@ const shell = new AppletShell({
   onClose: function () {
     running = false;
     if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+    const pb = document.getElementById('km-pause-btn');
+    if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
   },
 
   onResize: function () {
@@ -471,6 +476,15 @@ window.kmClose = () => shell.close();
 window.kmRandomiseFreqs = function () {
   initPhases(); initOmegas();
   smoothBins = new Float64Array(N_BINS);
+};
+window.kmTogglePause = function () {
+  running = !running;
+  if (running) lastTime = null;
+  const pb = document.getElementById('km-pause-btn');
+  if (pb) {
+    pb.textContent = running ? 'Pause' : 'Resume';
+    pb.classList.toggle('active', !running);
+  }
 };
 
 document.getElementById('km-K').addEventListener('input', function () {

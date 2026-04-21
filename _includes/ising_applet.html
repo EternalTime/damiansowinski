@@ -137,37 +137,10 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Temperature</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Cold</span>
-          <input type="range" id="ising-temp" min="0.5" max="5.0" step="0.05" value="2.5">
-          <span class="applet-shell-side">Hot</span>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Speed</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Slow</span>
-          <input type="range" id="ising-speed" min="1" max="20" step="1" value="10">
-          <span class="applet-shell-side">Fast</span>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Lattice</div>
         <div class="applet-shell-btn-row">
           <button class="applet-shell-btn active" id="ising-btn-square"   onclick="isingSetLattice('square')">Square</button>
           <button class="applet-shell-btn"        id="ising-btn-triangle" onclick="isingSetLattice('triangle')">Triangular</button>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">External Field</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">&minus;</span>
-          <div class="ising-slider-wrap">
-            <input type="range" id="ising-field" min="-1" max="1" step="0.02" value="0">
-            <div class="ising-slider-tick"></div>
-          </div>
-          <span class="applet-shell-side">&plus;</span>
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
@@ -188,6 +161,33 @@
         <div class="applet-shell-btn-row">
           <button class="applet-shell-btn" onclick="isingHotStart()">Hot</button>
           <button class="applet-shell-btn" onclick="isingColdStart()">Cold</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Temperature</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Cold</span>
+          <input type="range" id="ising-temp" min="0.5" max="5.0" step="0.05" value="2.5">
+          <span class="applet-shell-side">Hot</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Speed</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Slow</span>
+          <input type="range" id="ising-speed" min="1" max="20" step="1" value="10">
+          <span class="applet-shell-side">Fast</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">External Field</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">&minus;</span>
+          <div class="ising-slider-wrap">
+            <input type="range" id="ising-field" min="-1" max="1" step="0.02" value="0">
+            <div class="ising-slider-tick"></div>
+          </div>
+          <span class="applet-shell-side">&plus;</span>
         </div>
       </div>
     `,

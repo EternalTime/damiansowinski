@@ -40,4 +40,4 @@ This approach, pioneered by Richard Threlkeld Cox, provides a rigorous foundatio
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/39pC49MOEa4?si=3IBpZrU_susHFOzn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/c_kncsLBxyE?si=72M7pBm3d1sl3V7P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe float: rightwidth="560" height="315" src="https://www.youtube.com/embed/c_kncsLBxyE?si=72M7pBm3d1sl3V7P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
