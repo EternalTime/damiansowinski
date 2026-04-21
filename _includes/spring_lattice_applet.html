@@ -1,0 +1,433 @@
+<!-- Spring Lattice Applet Include -->
+
+<style>
+#sl-ctrl-fixed  { flex-shrink: 0; }
+#sl-ctrl-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+#sl-ctrl-scroll::-webkit-scrollbar { width: 0; }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Parameters ── */
+  let springK     = 200.0;
+  let massM       = 1.0;
+  let damping     = 0.5;
+  let viewMode    = 'tile';
+  let latticeType = 'square';
+  let Nbase       = 22;   // interior+2 in x; Ny adjusted for triangular aspect ratio
+
+  let Nx, Ny;             // actual grid dimensions
+  let spacing = 1.0;
+  let px, py, vx, vy, rx, ry;
+  let running = false, frameId = null;
+  let canvas, ctx, S;
+  let dragIdx = -1, simPanel = null;
+
+  function gridDims() {
+    if (latticeType === 'square') {
+      return [Nbase, Nbase];
+    } else {
+      // Row pitch is spacing*√3/2, so to cover the same height need Ny = Nx * 2/√3
+      return [Nbase, Math.round(Nbase * 2 / Math.sqrt(3))];
+    }
+  }
+
+  /* ── Init ── */
+  function init(canvasSize) {
+    S = canvasSize;
+    [Nx, Ny] = gridDims();
+    // Interior spans full canvas: spacing = S / (Nx - 1)
+    spacing = S / (Nx - 1);
+
+    const n2 = Nx * Ny;
+    px = new Float64Array(n2); py = new Float64Array(n2);
+    vx = new Float64Array(n2); vy = new Float64Array(n2);
+    rx = new Float64Array(n2); ry = new Float64Array(n2);
+
+    const rowPitch = (latticeType === 'triangular') ? spacing * Math.sqrt(3) / 2 : spacing;
+
+    for (let j = 0; j < Ny; j++) {
+      for (let i = 0; i < Nx; i++) {
+        const idx = j * Nx + i;
+        const xOff = (latticeType === 'triangular') ? (j % 2) * spacing * 0.5 : 0;
+        rx[idx] = i * spacing + xOff;
+        ry[idx] = j * rowPitch;
+        px[idx] = rx[idx];
+        py[idx] = ry[idx];
+        vx[idx] = 0;
+        vy[idx] = 0;
+      }
+    }
+    dragIdx = -1;
+  }
+
+  /* ── Physics ── */
+  const DT = 0.002;
+  const SUBSTEPS = 8;
+
+  function stepOnce(dt) {
+    const n2 = Nx * Ny;
+    const ax = new Float64Array(n2);
+    const ay = new Float64Array(n2);
+
+    const squareDirs = [[1,0],[-1,0],[0,1],[0,-1]];
+
+    for (let j = 0; j < Ny; j++) {
+      for (let i = 0; i < Nx; i++) {
+        const a = j * Nx + i;
+        const dirs = (latticeType === 'triangular')
+          ? [[1,0],[-1,0], ...(j%2===0 ? [[0,1],[-1,1],[0,-1],[-1,-1]] : [[0,1],[1,1],[0,-1],[1,-1]])]
+          : squareDirs;
+        for (let d = 0; d < dirs.length; d++) {
+          const ni = i + dirs[d][0], nj = j + dirs[d][1];
+          if (ni < 0 || ni >= Nx || nj < 0 || nj >= Ny) continue;
+          const b = nj * Nx + ni;
+          const rdx = rx[b]-rx[a], rdy = ry[b]-ry[a];
+          const restLen = Math.sqrt(rdx*rdx + rdy*rdy);
+          const cdx = px[b]-px[a], cdy = py[b]-py[a];
+          const curLen = Math.sqrt(cdx*cdx + cdy*cdy);
+          if (curLen < 1e-9) continue;
+          const f = (springK / massM) * (curLen - restLen) / curLen;
+          ax[a] += f * cdx;
+          ay[a] += f * cdy;
+        }
+      }
+    }
+
+    for (let idx = 0; idx < n2; idx++) {
+      const i = idx % Nx, j = (idx / Nx) | 0;
+      if (i === 0 || i === Nx-1 || j === 0 || j === Ny-1) continue;
+      if (idx === dragIdx) continue;
+      ax[idx] -= (damping / massM) * vx[idx];
+      ay[idx] -= (damping / massM) * vy[idx];
+      vx[idx] += ax[idx] * dt;
+      vy[idx] += ay[idx] * dt;
+      px[idx] += vx[idx] * dt;
+      py[idx] += vy[idx] * dt;
+    }
+  }
+
+  function step() { for (let s = 0; s < SUBSTEPS; s++) stepOnce(DT); }
+
+  /* ── Color ramp ── */
+  function lerpCh(a, b, t) { return Math.round(a + t * (b - a)); }
+
+  function paletteColor(signed, scale) {
+    const t = Math.max(0, Math.min(1, Math.abs(signed) / scale));
+    let r, g, b;
+    if (signed >= 0) {
+      if (t < 0.5) { const s=t/0.5;      r=lerpCh(4,35,s);   g=lerpCh(4,187,s);  b=lerpCh(14,173,s); }
+      else         { const s=(t-0.5)/0.5; r=lerpCh(35,37,s);  g=lerpCh(187,217,s);b=lerpCh(173,200,s);}
+    } else {
+      if (t < 0.5) { const s=t/0.5;      r=lerpCh(4,249,s);  g=lerpCh(4,38,s);   b=lerpCh(14,114,s); }
+      else         { const s=(t-0.5)/0.5; r=lerpCh(249,255,s);g=lerpCh(38,109,s); b=lerpCh(114,162,s);}
+    }
+    return `rgb(${r},${g},${b})`;
+  }
+
+  /* ── Divergence ── */
+  function divergence(i, j) {
+    if (i < 1 || i >= Nx-1 || j < 1 || j >= Ny-1) return 0;
+    const ip=j*Nx+(i+1), im=j*Nx+(i-1), jp=(j+1)*Nx+i, jm=(j-1)*Nx+i;
+    const dux = ((px[ip]-rx[ip]) - (px[im]-rx[im])) / (2*spacing);
+    const duy = ((py[jp]-ry[jp]) - (py[jm]-ry[jm])) / (2*spacing);
+    return dux + duy;
+  }
+
+  /* ── Spring extension ── */
+  function springExt(a, b) {
+    const rdx=rx[b]-rx[a], rdy=ry[b]-ry[a];
+    const restLen = Math.sqrt(rdx*rdx + rdy*rdy);
+    const cdx=px[b]-px[a], cdy=py[b]-py[a];
+    const curLen  = Math.sqrt(cdx*cdx + cdy*cdy);
+    return (curLen - restLen) / restLen;
+  }
+
+  /* ── Render ── */
+  function render() {
+    ctx.fillStyle = '#04040e';
+    ctx.fillRect(0, 0, S, S);
+    if (viewMode === 'tile') renderTile(); else renderNetwork();
+    if (dragIdx >= 0) {
+      const dotR = Math.max(2, spacing * 0.1);
+      ctx.beginPath();
+      ctx.arc(px[dragIdx], py[dragIdx], dotR*2.5, 0, Math.PI*2);
+      ctx.strokeStyle='#23bbad'; ctx.lineWidth=1.5; ctx.stroke();
+    }
+  }
+
+  function renderTile() {
+    let maxDiv = 0.001;
+    for (let j=1; j<Ny-1; j++)
+      for (let i=1; i<Nx-1; i++) { const d=Math.abs(divergence(i,j)); if(d>maxDiv) maxDiv=d; }
+    const scale = Math.max(maxDiv*0.5, 0.02);
+    const half  = spacing*0.5;
+    for (let j=1; j<Ny-1; j++)
+      for (let i=1; i<Nx-1; i++) {
+        const idx=j*Nx+i;
+        ctx.fillStyle=paletteColor(divergence(i,j),scale);
+        ctx.fillRect(px[idx]-half, py[idx]-half, spacing, spacing);
+      }
+    const dotR = Math.max(1.5, spacing*0.08);
+    ctx.fillStyle='rgba(255,255,255,0.75)';
+    for (let j=1; j<Ny-1; j++)
+      for (let i=1; i<Nx-1; i++) {
+        const idx=j*Nx+i;
+        ctx.beginPath(); ctx.arc(px[idx],py[idx],dotR,0,Math.PI*2); ctx.fill();
+      }
+  }
+
+  function renderNetwork() {
+    let maxExt = 0.001;
+    for (let j=1; j<Ny-1; j++)
+      for (let i=1; i<Nx-1; i++) {
+        const a=j*Nx+i;
+        if (i<Nx-2) maxExt=Math.max(maxExt,Math.abs(springExt(a,j*Nx+(i+1))));
+        if (j<Ny-2) {
+          if (latticeType==='square') {
+            maxExt=Math.max(maxExt,Math.abs(springExt(a,(j+1)*Nx+i)));
+          } else {
+            const di0=(j%2===0)?0:1, di1=(j%2===0)?-1:0;
+            const ni0=i+di0, ni1=i+di1;
+            if (ni0>=1&&ni0<=Nx-2) maxExt=Math.max(maxExt,Math.abs(springExt(a,(j+1)*Nx+ni0)));
+            if (ni1>=1&&ni1<=Nx-2) maxExt=Math.max(maxExt,Math.abs(springExt(a,(j+1)*Nx+ni1)));
+          }
+        }
+      }
+    const scale=Math.max(maxExt*0.5,0.001);
+
+    ctx.lineWidth=1.5;
+    for (let j=1; j<Ny-1; j++) {
+      for (let i=1; i<Nx-1; i++) {
+        const a=j*Nx+i;
+        const ax=px[a], ay=py[a];
+
+        if (i<Nx-2) {
+          const b=j*Nx+(i+1);
+          ctx.strokeStyle=paletteColor(springExt(a,b),scale);
+          ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(px[b],py[b]); ctx.stroke();
+        }
+        if (j<Ny-2) {
+          if (latticeType==='square') {
+            const b=(j+1)*Nx+i;
+            ctx.strokeStyle=paletteColor(springExt(a,b),scale);
+            ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(px[b],py[b]); ctx.stroke();
+          } else {
+            const di0=(j%2===0)?0:1, di1=(j%2===0)?-1:0;
+            const ni0=i+di0, ni1=i+di1;
+            if (ni0>=1&&ni0<=Nx-2) {
+              const b=(j+1)*Nx+ni0;
+              ctx.strokeStyle=paletteColor(springExt(a,b),scale);
+              ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(px[b],py[b]); ctx.stroke();
+            }
+            if (ni1>=1&&ni1<=Nx-2) {
+              const b=(j+1)*Nx+ni1;
+              ctx.strokeStyle=paletteColor(springExt(a,b),scale);
+              ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(px[b],py[b]); ctx.stroke();
+            }
+          }
+        }
+      }
+    }
+
+    const dotR=Math.max(2,spacing*0.1);
+    ctx.fillStyle='rgba(255,255,255,0.85)';
+    for (let j=1; j<Ny-1; j++)
+      for (let i=1; i<Nx-1; i++) {
+        const idx=j*Nx+i;
+        ctx.beginPath(); ctx.arc(px[idx],py[idx],dotR,0,Math.PI*2); ctx.fill();
+      }
+  }
+
+  /* ── Loop ── */
+  function loop() {
+    if (running) { step(); render(); }
+    frameId = requestAnimationFrame(loop);
+  }
+
+  /* ── Input ── */
+  function canvasXY(e) {
+    const rect=canvas.getBoundingClientRect();
+    const sx=canvas.width/rect.width, sy=canvas.height/rect.height;
+    if (e.touches) return [(e.touches[0].clientX-rect.left)*sx,(e.touches[0].clientY-rect.top)*sy];
+    return [(e.clientX-rect.left)*sx,(e.clientY-rect.top)*sy];
+  }
+
+  function nearestInteriorMass(cx,cy) {
+    let best=-1, bestD2=Infinity;
+    const thresh=spacing*1.5;
+    for (let j=1; j<Ny-1; j++)
+      for (let i=1; i<Nx-1; i++) {
+        const idx=j*Nx+i, dx=px[idx]-cx, dy=py[idx]-cy, d2=dx*dx+dy*dy;
+        if (d2<thresh*thresh && d2<bestD2) { bestD2=d2; best=idx; }
+      }
+    return best;
+  }
+
+  function onDown(e) { const [cx,cy]=canvasXY(e); dragIdx=nearestInteriorMass(cx,cy); e.preventDefault(); }
+  function onMove(e) {
+    if (dragIdx<0) return;
+    const [cx,cy]=canvasXY(e);
+    px[dragIdx]=cx; py[dragIdx]=cy; vx[dragIdx]=0; vy[dragIdx]=0;
+    e.preventDefault();
+  }
+  function onUp() { dragIdx=-1; }
+
+  /* ── Shell ── */
+  const shell = new AppletShell({
+    id: 'sl', title: 'Spring Lattice', gap: 0,
+
+    ctrlHTML: `
+      <div id="sl-ctrl-fixed">
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Actions &amp; Resolution</div>
+          <div class="applet-shell-btn-row">
+            <button class="applet-shell-btn" onclick="slReset()">Reset</button>
+            <button class="applet-shell-btn" id="sl-pause-btn" onclick="slTogglePause()">Pause</button>
+            <button class="applet-shell-btn active" id="sl-res-20" onclick="slSetRes(22)">20</button>
+            <button class="applet-shell-btn"         id="sl-res-40" onclick="slSetRes(42)">40</button>
+            <button class="applet-shell-btn"         id="sl-res-80" onclick="slSetRes(82)">80</button>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Lattice</div>
+          <div class="applet-shell-btn-row">
+            <button class="applet-shell-btn active" id="sl-sq-btn"  onclick="slSetLattice('square')">Square</button>
+            <button class="applet-shell-btn"         id="sl-tri-btn" onclick="slSetLattice('triangular')">Triangular</button>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">View</div>
+          <div class="applet-shell-btn-row">
+            <button class="applet-shell-btn active" id="sl-tile-btn"    onclick="slSetView('tile')">Tile</button>
+            <button class="applet-shell-btn"         id="sl-network-btn" onclick="slSetView('network')">Network</button>
+          </div>
+        </div>
+      </div>
+      <div id="sl-ctrl-scroll">
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Spring constant</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Soft</span>
+            <input type="range" id="sl-k" min="10" max="800" step="5" value="200">
+            <span class="applet-shell-side">Stiff</span>
+            <span class="applet-shell-val" id="sl-k-val">200</span>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Mass</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Light</span>
+            <input type="range" id="sl-m" min="0.1" max="5" step="0.1" value="1.0">
+            <span class="applet-shell-side">Heavy</span>
+            <span class="applet-shell-val" id="sl-m-val">1.0</span>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Damping</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">None</span>
+            <input type="range" id="sl-damp" min="0" max="5" step="0.05" value="0.5">
+            <span class="applet-shell-side">High</span>
+            <span class="applet-shell-val" id="sl-damp-val">0.50</span>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div style="font-size:0.78em;color:var(--text-muted,#aaa);line-height:2.0;">
+            <div style="color:#23bbad;">&#9632; Expansion / stretched</div>
+            <div style="color:#f92672;">&#9632; Compression / compressed</div>
+          </div>
+        </div>
+      </div>
+    `,
+
+    onOpen: function ({ canvas: c, S: canvasS }) {
+      canvas=c; ctx=canvas.getContext('2d');
+      init(canvasS);
+      running=true;
+      const pb=document.getElementById('sl-pause-btn');
+      if (pb) { pb.textContent='Pause'; pb.classList.remove('active'); }
+      if (!frameId) loop();
+      simPanel=document.getElementById('sl-sim-panel')||canvas.parentElement;
+      simPanel.addEventListener('mousedown',  onDown);
+      simPanel.addEventListener('touchstart', onDown, {passive:false});
+      window.addEventListener('mousemove',   onMove);
+      window.addEventListener('touchmove',   onMove, {passive:false});
+      window.addEventListener('mouseup',     onUp);
+      window.addEventListener('touchend',    onUp);
+    },
+
+    onClose: function () {
+      running=false;
+      if (frameId) { cancelAnimationFrame(frameId); frameId=null; }
+      const pb=document.getElementById('sl-pause-btn');
+      if (pb) { pb.textContent='Pause'; pb.classList.remove('active'); }
+      if (simPanel) {
+        simPanel.removeEventListener('mousedown',  onDown);
+        simPanel.removeEventListener('touchstart', onDown);
+      }
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('touchmove', onMove);
+      window.removeEventListener('mouseup',   onUp);
+      window.removeEventListener('touchend',  onUp);
+    },
+
+    onResize: function ({ canvas: c, S: canvasS }) {
+      canvas=c; ctx=canvas.getContext('2d'); init(canvasS);
+    },
+  });
+
+  /* ── Globals ── */
+  window.slOpen  = () => shell.open();
+  window.slClose = () => shell.close();
+  window.slReset = () => init(S);
+
+  window.slTogglePause = function () {
+    running=!running;
+    const pb=document.getElementById('sl-pause-btn');
+    if (pb) { pb.textContent=running?'Pause':'Resume'; pb.classList.toggle('active',!running); }
+  };
+
+  window.slSetRes = function (n) {
+    Nbase=n; init(S);
+    const map={22:'sl-res-20',42:'sl-res-40',82:'sl-res-80'};
+    ['sl-res-20','sl-res-40','sl-res-80'].forEach(id => {
+      const b=document.getElementById(id); if(b) b.classList.toggle('active',map[n]===id);
+    });
+  };
+
+  window.slSetLattice = function (type) {
+    latticeType=type; init(S);
+    document.getElementById('sl-sq-btn') .classList.toggle('active',type==='square');
+    document.getElementById('sl-tri-btn').classList.toggle('active',type==='triangular');
+  };
+
+  window.slSetView = function (mode) {
+    viewMode=mode;
+    document.getElementById('sl-tile-btn')   .classList.toggle('active',mode==='tile');
+    document.getElementById('sl-network-btn').classList.toggle('active',mode==='network');
+  };
+
+  document.getElementById('sl-k').addEventListener('input', function () {
+    springK=parseFloat(this.value);
+    document.getElementById('sl-k-val').textContent=springK.toFixed(0);
+  });
+  document.getElementById('sl-m').addEventListener('input', function () {
+    massM=parseFloat(this.value);
+    document.getElementById('sl-m-val').textContent=massM.toFixed(1);
+  });
+  document.getElementById('sl-damp').addEventListener('input', function () {
+    damping=parseFloat(this.value);
+    document.getElementById('sl-damp-val').textContent=damping.toFixed(2);
+  });
+
+})();
+</script>

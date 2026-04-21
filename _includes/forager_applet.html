@@ -1,145 +1,7 @@
 <!-- Forager Applet Include -->
 
 <style>
-
-#fa-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-  pointer-events: none;
-}
-#fa-overlay.fa-open {
-  display: block;
-  pointer-events: auto;
-}
-
-/* ── Shared panel style ── */
-.fa-panel {
-  position: fixed;
-  z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid transparent;
-  border-radius: 14px;
-  overflow: hidden;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.0s ease;
-  opacity: 0;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-
-/* Per-panel border + glow colours */
-#fa-header {
-  border-color: var(--pink-dark);
-  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
-}
-#fa-sim-panel {
-  border-color: var(--teal-dark);
-  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
-}
-#fa-ctrl-panel {
-  border-color: var(--cyan);
-  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5), 0 12px 30px rgba(42, 190, 217, 0.3);
-}
-.fa-panel.fa-open    { opacity: 1; pointer-events: auto; }
-.fa-panel.fa-closing { opacity: 1; pointer-events: none; }
-
-/* ── Header ── */
-#fa-header {
-  left: var(--fa-left); top: var(--fa-top-hdr);
-  width: var(--fa-W);   height: var(--fa-H-hdr);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 18px;
-  transform: translateY(-120px);
-}
-#fa-header.fa-open { transform: translateY(0); }
-#fa-header h2 {
-  font-size: 15px; letter-spacing: 2px; color: #eef2f5;
-  font-weight: normal; margin: 0; text-transform: uppercase;
-}
-#fa-close-btn {
-  background: none; border: 1px solid #3d5a6e; color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif; font-size: 13px;
-  letter-spacing: 1px; padding: 3px 12px; border-radius: 4px; cursor: pointer;
-}
-#fa-close-btn:hover { background: #2a3d4e; }
-
-/* ── Sim panel ── */
-#fa-sim-panel {
-  left: var(--fa-left); top: var(--fa-top-body);
-  width: var(--fa-W-sim); height: var(--fa-H-body);
-  display: flex; flex-direction: column;
-  transform: translateX(-110vw);
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-#fa-sim-panel.fa-open { transform: translateX(0); }
-#fa-sim-canvas { flex: 1; display: block; width: 100%; min-height: 0; }
-
-/* ── Controls panel ── */
-#fa-ctrl-panel {
-  top: var(--fa-top-body);
-  left: calc(var(--fa-left) + var(--fa-W-sim));
-  width: var(--fa-W-ctrl); height: var(--fa-H-body);
-  display: flex; flex-direction: column;
-  background: #1a2530;
-  transform: translateX(110vw);
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-#fa-ctrl-panel.fa-open { transform: translateX(0); }
-
-.fa-ctrl-section {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid #2e3f4f;
-  display: flex; flex-direction: column; gap: 10px;
-  flex-shrink: 0;
-}
-.fa-ctrl-section:last-child { border-bottom: none; }
-.fa-ctrl-title {
-  font-size: 14px; text-transform: uppercase;
-  letter-spacing: 1.5px; color: #a8c0d0; margin: 0 0 2px;
-}
-
-.fa-slider-row {
-  display: flex; align-items: center; gap: 8px;
-  width: 100%; box-sizing: border-box;
-}
-.fa-slider-row .fa-side {
-  font-size: 14px; color: #a8c0d0; white-space: nowrap; flex-shrink: 0;
-}
-.fa-slider-row input[type=range] {
-  flex: 1; min-width: 0;
-  -webkit-appearance: none; appearance: none;
-  height: 3px; border-radius: 2px;
-  background: rgba(100,120,140,0.35); outline: none; cursor: pointer;
-}
-.fa-slider-row input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 12px; height: 12px;
-  border-radius: 50%; background: #25d9c8; cursor: pointer; margin-top: -4.5px;
-}
-.fa-slider-row input[type=range]::-moz-range-thumb {
-  width: 12px; height: 12px; border-radius: 50%;
-  background: #25d9c8; border: none; cursor: pointer;
-}
-
-.fa-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
-.fa-btn {
-  background: #2a3d4e; color: #eef2f5; border: 1px solid #3d5a6e;
-  padding: 5px 14px; cursor: pointer;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px; letter-spacing: 1px; border-radius: 4px;
-  transition: background 0.15s;
-}
-.fa-btn:hover { background: #3a5060; }
-.fa-btn.active {
-  background: #1e3a4a; border-color: #25d9c8; color: #25d9c8;
-  box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
-}
-
-/* ── Scrollable slider region (top half) ── */
+/* ── Forager-specific ctrl panel layout ── */
 #fa-sliders-scroll {
   flex: 1;
   min-height: 0;
@@ -149,7 +11,6 @@
 }
 #fa-sliders-scroll::-webkit-scrollbar { width: 0; }
 
-/* ── Phase plane (fixed 50% of panel height) ── */
 #fa-phase-section {
   flex-shrink: 0;
   height: 50%;
@@ -189,102 +50,14 @@
   white-space: nowrap;
   font-family: 'EB Garamond', Georgia, serif;
 }
-
 </style>
-
-<div id="fa-overlay">
-
-  <div id="fa-header" class="fa-panel">
-    <h2>Forager &mdash; Active Energy Harvesting</h2>
-    <button id="fa-close-btn" onclick="faClose()">Close</button>
-  </div>
-
-  <div id="fa-sim-panel" class="fa-panel">
-    <canvas id="fa-sim-canvas"></canvas>
-    <div id="fa-extinction-stamp">EXTINCTION</div>
-  </div>
-
-  <div id="fa-ctrl-panel" class="fa-panel">
-
-    <!-- Permanent buttons (not scrollable) -->
-    <div class="fa-ctrl-section">
-      <div class="fa-ctrl-title">Simulation</div>
-      <div class="fa-btn-row">
-        <button class="fa-btn" id="fa-btn-run">Run</button>
-        <button class="fa-btn" id="fa-btn-reset">Reset</button>
-      </div>
-    </div>
-
-    <!-- Scrollable sliders -->
-    <div id="fa-sliders-scroll">
-
-      <div class="fa-ctrl-section">
-        <div class="fa-ctrl-title">Speed</div>
-        <div class="fa-slider-row">
-          <span class="fa-side">Slow</span>
-          <input type="range" id="fa-sl-speed" min="1" max="20" step="1" value="5">
-          <span class="fa-side">Fast</span>
-        </div>
-      </div>
-
-      <div class="fa-ctrl-section">
-        <div class="fa-ctrl-title">Sense Radius</div>
-        <div class="fa-slider-row">
-          <span class="fa-side">Small</span>
-          <input type="range" id="fa-sl-sense" min="1" max="20" step="0.5" value="6">
-          <span class="fa-side">Large</span>
-        </div>
-      </div>
-
-      <div class="fa-ctrl-section">
-        <div class="fa-ctrl-title">Velocity</div>
-        <div class="fa-slider-row">
-          <span class="fa-side">Slow</span>
-          <input type="range" id="fa-sl-vel" min="1" max="40" step="1" value="20">
-          <span class="fa-side">Fast</span>
-        </div>
-      </div>
-
-      <div class="fa-ctrl-section">
-        <div class="fa-ctrl-title">Tumble</div>
-        <div class="fa-slider-row">
-          <span class="fa-side">Ballistic</span>
-          <input type="range" id="fa-sl-sigma" min="0" max="2" step="0.05" value="0.1">
-          <span class="fa-side">Diffusive</span>
-        </div>
-      </div>
-
-      <div class="fa-ctrl-section">
-        <div class="fa-ctrl-title">Homogeneity</div>
-        <div class="fa-slider-row">
-          <span class="fa-side">Sparse</span>
-          <input type="range" id="fa-sl-xi" min="0.05" max="2.0" step="0.05" value="0.5">
-          <span class="fa-side">Dense</span>
-        </div>
-      </div>
-
-    </div><!-- #fa-sliders-scroll -->
-
-    <!-- Phase plane (bottom half) -->
-    <div id="fa-phase-section">
-      <div id="fa-phase-title">Phase Plane</div>
-      <canvas id="fa-phase-canvas"></canvas>
-    </div>
-
-  </div>
-</div>
 
 <script>
 (function () {
 'use strict';
 
-const GAP = 0, PAD = 20, PHI = 1.6180339887;
-
-// ── Fixed parameters ───────────────────────────────────────────────────────
-const NX          = 10;
-const NY          = 10;
-const L           = 10;
-const DOMAIN      = NX * L;         // 100
+const NX = 10, NY = 10, L = 10;
+const DOMAIN      = NX * L;
 const GAMMA       = 1e-3;
 const MU0         = 0.1;
 const S_MAX       = 1.0;
@@ -296,7 +69,6 @@ const TAU_E       = 1.0 / GAMMA_DECAY;
 const RHO_EQ      = GAMMA * TAU_E;
 const N_A_MAX     = (GAMMA / MU0) * DOMAIN * DOMAIN;
 
-// ── Mutable parameters ─────────────────────────────────────────────────────
 let R_sense = 6.0, vel = 20.0, sigma = 0.1, Xi = 0.5;
 let epsilon = epsilonFromXi(Xi);
 let stepsPerFrame = 1;
@@ -305,20 +77,13 @@ function epsilonFromXi(xi) {
   const n_eq = (xi / R_COL) * (xi / R_COL);
   return GAMMA / (n_eq * GAMMA_DECAY);
 }
-
-function nEqResources() {
-  const n_eq = (Xi / R_COL) * (Xi / R_COL);
-  return n_eq * DOMAIN * DOMAIN;
-}
-
+function nEqResources() { return (Xi / R_COL) * (Xi / R_COL) * DOMAIN * DOMAIN; }
 function nRMax() { return nEqResources(); }
 
-// ── State ──────────────────────────────────────────────────────────────────
 let resources = [], agents = [], simTime = 0;
 let phaseTrail = [];
 let running = false, frameId = null, initialized = false, extinct = false;
 
-// ── Environment ────────────────────────────────────────────────────────────
 function initResources() {
   resources = [];
   const n = Math.round(nEqResources());
@@ -336,7 +101,6 @@ function updateResources() {
     if (Math.random() < pDecay) { resources[i] = resources[resources.length - 1]; resources.pop(); }
 }
 
-// ── Agents ─────────────────────────────────────────────────────────────────
 function makeAgent(x, y, theta, s) {
   return {
     x:     x     !== undefined ? x     : Math.random() * DOMAIN,
@@ -410,7 +174,8 @@ function simStep() {
     extinct = true; running = false;
     document.getElementById('fa-btn-run').textContent = 'Run';
     document.getElementById('fa-btn-run').classList.remove('active');
-    document.getElementById('fa-extinction-stamp').style.display = 'block';
+    const stamp = document.getElementById('fa-extinction-stamp');
+    if (stamp) stamp.style.display = 'block';
   }
 }
 
@@ -424,47 +189,39 @@ function poissonSample(lam) {
 
 function faInitSim() {
   simTime = 0; phaseTrail = []; extinct = false;
-  document.getElementById('fa-extinction-stamp').style.display = 'none';
+  const stamp = document.getElementById('fa-extinction-stamp');
+  if (stamp) stamp.style.display = 'none';
   epsilon = epsilonFromXi(Xi);
   initResources();
-  const nA = Math.round(N_A_MAX);
-  agents = Array.from({ length: nA }, () => makeAgent());
+  agents = Array.from({ length: Math.round(N_A_MAX) }, () => makeAgent());
   phaseTrail.push({ nr: 1, na: 1 });
 }
 
-// ── Canvas handles ─────────────────────────────────────────────────────────
 let simCanvas, simCtx, phaseCanvas, phaseCtx;
 let accumCanvas, accumCtx;
 
-// ── Draw sim ───────────────────────────────────────────────────────────────
 function drawSim() {
   const W = simCanvas.width, H = simCanvas.height;
   const scale = Math.min(W / DOMAIN, H / DOMAIN);
   const offX = (W - DOMAIN * scale) / 2, offY = (H - DOMAIN * scale) / 2;
   const tx = x => offX + x * scale, ty = y => offY + y * scale;
-
   simCtx.fillStyle = '#5a7a96';
   simCtx.fillRect(0, 0, W, H);
-
   for (const r of resources) {
     simCtx.beginPath(); simCtx.arc(tx(r.x), ty(r.y), 3.5, 0, 2 * Math.PI);
     simCtx.fillStyle = '#4db84a'; simCtx.fill();
     simCtx.beginPath(); simCtx.arc(tx(r.x), ty(r.y), 1.8, 0, 2 * Math.PI);
     simCtx.fillStyle = '#2a6e2a'; simCtx.fill();
   }
-
   for (const a of agents) {
     const ax = tx(a.x), ay = ty(a.y);
     const hf = Math.max(0, a.s / S_MAX);
     const agR = scale * 1.2 * (0.35 + 0.65 * hf);
-
     simCtx.beginPath(); simCtx.arc(ax, ay, R_sense * scale, 0, 2 * Math.PI);
     simCtx.fillStyle = 'rgba(106,184,216,0.12)'; simCtx.fill();
-
     simCtx.beginPath(); simCtx.arc(ax, ay, agR, 0, 2 * Math.PI);
     simCtx.fillStyle = '#ff6da2'; simCtx.fill();
     simCtx.strokeStyle = '#23bbad'; simCtx.lineWidth = 2.5; simCtx.stroke();
-
     simCtx.beginPath();
     simCtx.moveTo(ax, ay);
     simCtx.lineTo(ax + Math.cos(a.theta) * agR * 1.5, ay + Math.sin(a.theta) * agR * 1.5);
@@ -472,9 +229,18 @@ function drawSim() {
   }
 }
 
-// ── Phase plane blob density ───────────────────────────────────────────────
-const BLOB_A    = 0.12;
-const PHASE_LEN = 200;
+const BLOB_A = 0.12, PHASE_LEN = 200;
+const MARGIN = 0.15, MARGIN_INNER = 0.075;
+const LOG_MIN = 0.01, LOG_MAX = 10.0;
+const LOG_SPAN = Math.log10(LOG_MAX / LOG_MIN);
+
+function logScale(v) {
+  return (Math.log10(Math.max(LOG_MIN, Math.min(LOG_MAX, v))) - Math.log10(LOG_MIN)) / LOG_SPAN;
+}
+function phaseToPixel(nr, na, W, H) {
+  const x0=W*MARGIN, x1=W*(1-MARGIN_INNER), y0=H*MARGIN_INNER, y1=H*(1-MARGIN);
+  return [x0 + logScale(nr)*(x1-x0), y1 - logScale(na)*(y1-y0)];
+}
 
 function initAccum() {
   accumCanvas = document.createElement('canvas');
@@ -482,46 +248,21 @@ function initAccum() {
   accumCanvas.height = phaseCanvas.height;
   accumCtx = accumCanvas.getContext('2d');
 }
-
 function resizeAccum() {
   const tmp = document.createElement('canvas');
-  tmp.width  = phaseCanvas.width;
-  tmp.height = phaseCanvas.height;
+  tmp.width = phaseCanvas.width; tmp.height = phaseCanvas.height;
   const tCtx = tmp.getContext('2d');
   if (accumCanvas) tCtx.drawImage(accumCanvas, 0, 0, tmp.width, tmp.height);
-  accumCanvas = tmp;
-  accumCtx    = tCtx;
+  accumCanvas = tmp; accumCtx = tCtx;
 }
-
 function clearAccum() {
   if (accumCtx) accumCtx.clearRect(0, 0, accumCanvas.width, accumCanvas.height);
 }
 
-// Phase plane margins (fraction of canvas size)
-const MARGIN        = 0.15;   // left and bottom
-const MARGIN_INNER  = 0.075;  // right and top (half)
-const LOG_MIN  = 0.01;   // axis lower bound (normalised units)
-const LOG_MAX  = 10.0;   // axis upper bound (normalised units)
-const LOG_SPAN = Math.log10(LOG_MAX / LOG_MIN);  // 4 decades
-
-function logScale(v) {
-  // Map v ∈ [LOG_MIN, LOG_MAX] → [0, 1] on a log₁₀ axis
-  const clamped = Math.max(LOG_MIN, Math.min(LOG_MAX, v));
-  return (Math.log10(clamped) - Math.log10(LOG_MIN)) / LOG_SPAN;
-}
-
-// Map normalised (nr, na) → pixel coords within the plot area (log scale)
-function phaseToPixel(nr, na, W, H) {
-  const x0 = W * MARGIN,       x1 = W * (1 - MARGIN_INNER);
-  const y0 = H * MARGIN_INNER, y1 = H * (1 - MARGIN);
-  return [ x0 + logScale(nr) * (x1 - x0), y1 - logScale(na) * (y1 - y0) ];
-}
-
 function addBlob(nr, na, alphaMul = 1) {
-  const W = accumCanvas.width, H = accumCanvas.height;
+  const W=accumCanvas.width, H=accumCanvas.height;
   const [cx, cy] = phaseToPixel(nr, na, W, H);
-  const r  = W * 0.03;
-  const a  = BLOB_A * alphaMul;
+  const r = W * 0.03, a = BLOB_A * alphaMul;
   const grad = accumCtx.createRadialGradient(cx, cy, 0, cx, cy, r);
   grad.addColorStop(0,   `rgba(77,184,74,${a})`);
   grad.addColorStop(0.5, `rgba(77,184,74,${a * 0.4})`);
@@ -529,193 +270,179 @@ function addBlob(nr, na, alphaMul = 1) {
   accumCtx.save();
   accumCtx.globalCompositeOperation = 'lighter';
   accumCtx.fillStyle = grad;
-  accumCtx.beginPath();
-  accumCtx.arc(cx, cy, r, 0, 2 * Math.PI);
-  accumCtx.fill();
+  accumCtx.beginPath(); accumCtx.arc(cx, cy, r, 0, 2 * Math.PI); accumCtx.fill();
   accumCtx.restore();
 }
 
 function drawPhase() {
-  const W = phaseCanvas.width, H = phaseCanvas.height;
-  if (W === 0 || H === 0) return;
-
-  // Plot area bounds in pixels
-  const x0 = W * MARGIN,       x1 = W * (1 - MARGIN_INNER);
-  const y0 = H * MARGIN_INNER, y1 = H * (1 - MARGIN);
-
-  // Repaint blobs
+  const W=phaseCanvas.width, H=phaseCanvas.height;
+  if (W===0||H===0) return;
+  const x0=W*MARGIN, x1=W*(1-MARGIN_INNER), y0=H*MARGIN_INNER, y1=H*(1-MARGIN);
   clearAccum();
-  const decay = Math.log(200) / 100;  // e-folding over ~100 most-recent points
+  const decay = Math.log(200) / 100;
   for (let i = 0; i < phaseTrail.length; i++) {
-    const age = phaseTrail.length - 1 - i;  // 0 = newest
-    const alphaMul = Math.exp(-decay * age);
-    addBlob(phaseTrail[i].nr, phaseTrail[i].na, alphaMul);
+    addBlob(phaseTrail[i].nr, phaseTrail[i].na, Math.exp(-decay*(phaseTrail.length-1-i)));
   }
-
-  // Background
-  phaseCtx.fillStyle = '#1a2530';
-  phaseCtx.fillRect(0, 0, W, H);
-
-  // Blob density layer
+  phaseCtx.fillStyle = '#1a2530'; phaseCtx.fillRect(0, 0, W, H);
   phaseCtx.drawImage(accumCanvas, 0, 0);
-
-  // Equilibrium curve: nr + na = 1, traced on the log-log plot
-  {
-    phaseCtx.save();
-    phaseCtx.setLineDash([5, 4]);
-    phaseCtx.strokeStyle = 'rgba(255,109,162,0.7)';
-    phaseCtx.lineWidth = 1;
-    phaseCtx.beginPath();
-    const nSteps = 200;
-    let started = false;
-    for (let k = 0; k <= nSteps; k++) {
-      const nr = LOG_MIN + (1 - 2 * LOG_MIN) * k / nSteps;
-      const na = 1 - nr;
-      if (na < LOG_MIN || nr < LOG_MIN) continue;
-      const [px, py] = phaseToPixel(nr, na, W, H);
-      if (!started) { phaseCtx.moveTo(px, py); started = true; }
-      else phaseCtx.lineTo(px, py);
-    }
-    phaseCtx.stroke();
-    phaseCtx.setLineDash([]);
-    phaseCtx.restore();
-  }
-
-  // Axes — L-shape, each fading from opaque at origin to transparent at far end
   phaseCtx.save();
+  phaseCtx.setLineDash([5, 4]);
+  phaseCtx.strokeStyle = 'rgba(255,109,162,0.7)';
   phaseCtx.lineWidth = 1;
-
-  // x-axis: origin (x0,y1) → far right (x1,y1)
-  const gx = phaseCtx.createLinearGradient(x0, y1, x1, y1);
-  gx.addColorStop(0, 'rgba(42,190,217,0.85)');
-  gx.addColorStop(1, 'rgba(42,190,217,0)');
+  phaseCtx.beginPath();
+  let started = false;
+  for (let k = 0; k <= 200; k++) {
+    const nr = LOG_MIN + (1 - 2*LOG_MIN)*k/200, na = 1 - nr;
+    if (na < LOG_MIN || nr < LOG_MIN) continue;
+    const [px, py] = phaseToPixel(nr, na, W, H);
+    if (!started) { phaseCtx.moveTo(px, py); started = true; } else phaseCtx.lineTo(px, py);
+  }
+  phaseCtx.stroke(); phaseCtx.setLineDash([]); phaseCtx.restore();
+  phaseCtx.save(); phaseCtx.lineWidth = 1;
+  const gx = phaseCtx.createLinearGradient(x0,y1,x1,y1);
+  gx.addColorStop(0,'rgba(42,190,217,0.85)'); gx.addColorStop(1,'rgba(42,190,217,0)');
   phaseCtx.strokeStyle = gx;
-  phaseCtx.beginPath();
-  phaseCtx.moveTo(x0, y1); phaseCtx.lineTo(x1, y1);
-  phaseCtx.stroke();
-
-  // y-axis: origin (x0,y1) → far top (x0,y0)
-  const gy = phaseCtx.createLinearGradient(x0, y1, x0, y0);
-  gy.addColorStop(0, 'rgba(42,190,217,0.85)');
-  gy.addColorStop(1, 'rgba(42,190,217,0)');
+  phaseCtx.beginPath(); phaseCtx.moveTo(x0,y1); phaseCtx.lineTo(x1,y1); phaseCtx.stroke();
+  const gy = phaseCtx.createLinearGradient(x0,y1,x0,y0);
+  gy.addColorStop(0,'rgba(42,190,217,0.85)'); gy.addColorStop(1,'rgba(42,190,217,0)');
   phaseCtx.strokeStyle = gy;
-  phaseCtx.beginPath();
-  phaseCtx.moveTo(x0, y1); phaseCtx.lineTo(x0, y0);
-  phaseCtx.stroke();
-
+  phaseCtx.beginPath(); phaseCtx.moveTo(x0,y1); phaseCtx.lineTo(x0,y0); phaseCtx.stroke();
   phaseCtx.restore();
-
-  // Axis labels
   const fontSize = Math.round(W * 0.05);
   phaseCtx.save();
   phaseCtx.font = `${fontSize}px 'EB Garamond', Georgia, serif`;
-
-  phaseCtx.textAlign = 'center';
-  phaseCtx.textBaseline = 'top';
-  phaseCtx.fillStyle = '#4db84a';
-  phaseCtx.fillText('Resources', (x0 + x1) / 2, y1 + fontSize * 0.3);
-
-  phaseCtx.translate(x0 - fontSize * 0.3, (y0 + y1) / 2);
-  phaseCtx.rotate(-Math.PI / 2);
-  phaseCtx.textAlign = 'center';
-  phaseCtx.textBaseline = 'bottom';
-  phaseCtx.fillStyle = '#ff6da2';
-  phaseCtx.fillText('Foragers', 0, 0);
-
+  phaseCtx.textAlign='center'; phaseCtx.textBaseline='top'; phaseCtx.fillStyle='#4db84a';
+  phaseCtx.fillText('Resources', (x0+x1)/2, y1+fontSize*0.3);
+  phaseCtx.translate(x0-fontSize*0.3, (y0+y1)/2);
+  phaseCtx.rotate(-Math.PI/2); phaseCtx.textAlign='center'; phaseCtx.textBaseline='bottom';
+  phaseCtx.fillStyle='#ff6da2'; phaseCtx.fillText('Foragers', 0, 0);
   phaseCtx.restore();
 }
 
-// ── Animation loop ─────────────────────────────────────────────────────────
 function loop() {
   if (running) {
     for (let i = 0; i < stepsPerFrame; i++) simStep();
-    drawSim();
-    drawPhase();
+    drawSim(); drawPhase();
   }
   frameId = requestAnimationFrame(loop);
 }
 
-// ── Layout ─────────────────────────────────────────────────────────────────
-function layout() {
-  const vw = window.innerWidth, vh = window.innerHeight;
-  const sFromW = (vw - 2 * PAD - GAP) / (1 + 1 / PHI);
-  const sFromH = (vh - 2 * PAD) / 1.1;
-  const S      = Math.floor(Math.min(sFromW, sFromH));
-  const ctrlW  = Math.floor(S / PHI);
-  const hdrH   = Math.floor(S * 0.1);
-  const totalW = S + GAP + ctrlW;
-  const left   = Math.floor((vw - totalW) / 2);
-  const top    = Math.floor((vh - (hdrH + S)) / 2);
-
-  const el = document.getElementById('fa-overlay');
-  el.style.setProperty('--fa-left',     left         + 'px');
-  el.style.setProperty('--fa-top-hdr',  top          + 'px');
-  el.style.setProperty('--fa-top-body', (top + hdrH) + 'px');
-  el.style.setProperty('--fa-W',        totalW       + 'px');
-  el.style.setProperty('--fa-W-sim',    S            + 'px');
-  el.style.setProperty('--fa-W-ctrl',   ctrlW        + 'px');
-  el.style.setProperty('--fa-H-hdr',    hdrH         + 'px');
-  el.style.setProperty('--fa-H-body',   S            + 'px');
-  el.style.setProperty('--fa-gap',      GAP          + 'px');
-
-  if (simCanvas) { simCanvas.width = S; simCanvas.height = S; }
-
-  if (phaseCanvas) {
-    const phaseSection = document.getElementById('fa-phase-section');
-    const title        = document.getElementById('fa-phase-title');
-    const sectionH     = Math.round(S * 0.5);
-    const titleH       = title.offsetHeight || 32;
-    const side         = Math.min(ctrlW - 16, sectionH - titleH - 8);
-    phaseCanvas.width  = side;
-    phaseCanvas.height = side;
-    if (accumCanvas) resizeAccum();
-  }
+function resizePhaseCanvas(S, ctrlW) {
+  if (!phaseCanvas) return;
+  const title  = document.getElementById('fa-phase-title');
+  const titleH = title ? (title.offsetHeight || 32) : 32;
+  const side   = Math.min(ctrlW - 16, Math.round(S * 0.5) - titleH - 8);
+  phaseCanvas.width  = side;
+  phaseCanvas.height = side;
+  if (accumCanvas) resizeAccum();
 }
 
-// ── Open / close ───────────────────────────────────────────────────────────
-window.faOpen = function () {
-  simCanvas   = document.getElementById('fa-sim-canvas');
-  simCtx      = simCanvas.getContext('2d');
-  phaseCanvas = document.getElementById('fa-phase-canvas');
-  phaseCtx    = phaseCanvas.getContext('2d');
+/* ── Shell wiring ── */
+const shell = new AppletShell({
+  id:    'fa',
+  title: 'Forager &mdash; Active Energy Harvesting',
+  gap:   0,
 
-  layout();
+  ctrlHTML: `
+    <div class="applet-shell-ctrl-section">
+      <div class="applet-shell-ctrl-title">Simulation</div>
+      <div class="applet-shell-btn-row">
+        <button class="applet-shell-btn" id="fa-btn-run">Run</button>
+        <button class="applet-shell-btn" id="fa-btn-reset">Reset</button>
+      </div>
+    </div>
+    <div id="fa-sliders-scroll">
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Speed</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Slow</span>
+          <input type="range" id="fa-sl-speed" min="1" max="20" step="1" value="5">
+          <span class="applet-shell-side">Fast</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Sense Radius</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Small</span>
+          <input type="range" id="fa-sl-sense" min="1" max="20" step="0.5" value="6">
+          <span class="applet-shell-side">Large</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Velocity</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Slow</span>
+          <input type="range" id="fa-sl-vel" min="1" max="40" step="1" value="20">
+          <span class="applet-shell-side">Fast</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Tumble</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Ballistic</span>
+          <input type="range" id="fa-sl-sigma" min="0" max="2" step="0.05" value="0.1">
+          <span class="applet-shell-side">Diffusive</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Homogeneity</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Sparse</span>
+          <input type="range" id="fa-sl-xi" min="0.05" max="2.0" step="0.05" value="0.5">
+          <span class="applet-shell-side">Dense</span>
+        </div>
+      </div>
+    </div>
+    <div id="fa-phase-section">
+      <div id="fa-phase-title">Phase Plane</div>
+      <canvas id="fa-phase-canvas"></canvas>
+    </div>
+  `,
 
-  if (!initialized) { faInitSim(); initialized = true; }
-  initAccum();
+  onOpen: function ({ canvas: c, S }) {
+    // Inject extinction stamp into sim panel
+    const simPanel = document.getElementById('fa-sim-panel');
+    if (!document.getElementById('fa-extinction-stamp')) {
+      const stamp = document.createElement('div');
+      stamp.id = 'fa-extinction-stamp';
+      stamp.textContent = 'EXTINCTION';
+      simPanel.appendChild(stamp);
+    }
 
-  document.getElementById('fa-overlay').classList.add('fa-open');
-  requestAnimationFrame(() => {
-    document.getElementById('fa-header').classList.add('fa-open');
-    document.getElementById('fa-sim-panel').classList.add('fa-open');
-    document.getElementById('fa-ctrl-panel').classList.add('fa-open');
-  });
+    simCanvas = c;
+    simCtx    = simCanvas.getContext('2d');
+    phaseCanvas = document.getElementById('fa-phase-canvas');
+    phaseCtx    = phaseCanvas.getContext('2d');
 
-  running = true;
-  document.getElementById('fa-btn-run').textContent = 'Pause';
-  document.getElementById('fa-btn-run').classList.add('active');
-  if (!frameId) frameId = requestAnimationFrame(loop);
-};
+    const ctrlW = Math.floor(S / 1.6180339887);
+    resizePhaseCanvas(S, ctrlW);
 
-window.faClose = function () {
-  running = false;
-  ['fa-header', 'fa-sim-panel', 'fa-ctrl-panel'].forEach(id => {
-    const el = document.getElementById(id);
-    el.classList.remove('fa-open');
-    el.classList.add('fa-closing');
-  });
-  setTimeout(() => {
-    document.getElementById('fa-overlay').classList.remove('fa-open');
-    ['fa-header', 'fa-sim-panel', 'fa-ctrl-panel'].forEach(id => {
-      document.getElementById(id).classList.remove('fa-closing');
-    });
+    if (!initialized) { faInitSim(); initialized = true; }
+    initAccum();
+
+    running = true;
+    document.getElementById('fa-btn-run').textContent = 'Pause';
+    document.getElementById('fa-btn-run').classList.add('active');
+    if (!frameId) frameId = requestAnimationFrame(loop);
+  },
+
+  onClose: function () {
+    running = false;
     if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
-    document.getElementById('fa-btn-run').textContent = 'Run';
-    document.getElementById('fa-btn-run').classList.remove('active');
-  }, 550);
-};
+    const btn = document.getElementById('fa-btn-run');
+    if (btn) { btn.textContent = 'Run'; btn.classList.remove('active'); }
+  },
 
-// ── Controls ───────────────────────────────────────────────────────────────
+  onResize: function ({ canvas: c, S }) {
+    simCanvas = c;
+    const ctrlW = Math.floor(S / 1.6180339887);
+    resizePhaseCanvas(S, ctrlW);
+  },
+});
+
+window.faOpen  = () => shell.open();
+window.faClose = () => shell.close();
+
 document.getElementById('fa-btn-run').addEventListener('click', () => {
   running = !running;
   document.getElementById('fa-btn-run').textContent = running ? 'Pause' : 'Run';
@@ -743,8 +470,6 @@ document.getElementById('fa-sl-sigma').addEventListener('input', function () {
 document.getElementById('fa-sl-xi').addEventListener('input', function () {
   Xi = parseFloat(this.value); epsilon = epsilonFromXi(Xi);
 });
-
-window.addEventListener('resize', () => { if (running) layout(); });
 
 })();
 </script>

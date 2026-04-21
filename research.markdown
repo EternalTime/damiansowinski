@@ -10,7 +10,7 @@ permalink: /research/
 
 ---
 <br>
-<h2>The Role of Information in Physics and Biology</h2>
+<h2>What is Information?</h2>
 Information is a slippery concept.
 Is it a subjective quantity or an objective one?
 It's probably clear that there's information in a book.
@@ -55,7 +55,7 @@ Why don't you try it:
 
 ---
 <br>
-<h2>The Emergence of Agency</h2>
+<h2>How does Agency emerge from Complexity?</h2>
 
 <video style="float: right; width: 50%; margin: 0 0 20px 20px; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(-1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
   <source src="{{ '/assets/videos/cell_09.mp4' | relative_url }}" type="video/mp4">
@@ -93,7 +93,7 @@ Understanding how complexity, computation, and control intertwine to create beha
  
  ---
 <br>
-<h2>The coevolution of Agents and their Environments</h2>
+<h2>How do Complex Systems Evolve?</h2>
 
 <div style="display: flex; gap: 40px; align-items: flex-start;">
   <video style="flex-shrink: 0; width: 50%; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(-1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
@@ -104,8 +104,16 @@ Life does not emerge from the soup of particles that is our Universe fully forme
 <a href="{{ 'https://www.nature.com/articles/s41586-023-06600-9' }}">Assembly theory</a> provides an excellent argument for why evolution starts as soon as molecules reach sizes of around 20 atoms: 
 the combinatorial explosion in possible molecular configurations vastly exceeds the exploratory ability of all the atoms in the universe!
 Natural selection places pressure on any configurations that reach that size, leading to lineages of ever growing complexity. 
-
+What this implies is that evolution 
 
   </div>
 </div>
 
+
+---
+<br>
+<h2>Is Life a Phase Transition?</h2>
+
+---
+<br>
+<h2>What does General Relativity tell us is possible?</h2>
