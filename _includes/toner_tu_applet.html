@@ -1,301 +1,17 @@
 <!-- Toner–Tu Applet Include -->
 
-<style>
-
-/* ── Overlay backdrop ── */
-#tt-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-  pointer-events: none;
-}
-#tt-overlay.tt-open {
-  display: block;
-  pointer-events: auto;
-}
-
-/* ── Shared panel style ── */
-.tt-panel {
-  position: fixed;
-  z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid #25d9c8;
-  box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.55),
-     12px 0 40px rgba(255, 109, 162, 0.55),
-     0 12px 40px rgba(42, 191, 217, 0.4);
-  border-radius: 14px;
-  overflow: hidden;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity  0.0s ease;
-  opacity: 0;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-.tt-panel.tt-open {
-  opacity: 1;
-  pointer-events: auto;
-}
-.tt-panel.tt-closing {
-  opacity: 1;
-  pointer-events: none;
-}
-
-/* ── Header panel ── */
-#tt-header {
-  left:   var(--tt-left);
-  top:    var(--tt-top-hdr);
-  width:  var(--tt-W);
-  height: var(--tt-H-hdr);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 18px;
-  transform: translateY(-120px);
-}
-#tt-header.tt-open { transform: translateY(0); }
-#tt-header h2 {
-  font-size: 15px;
-  letter-spacing: 2px;
-  color: #eef2f5;
-  font-weight: normal;
-  margin: 0;
-  text-transform: uppercase;
-}
-#tt-close-btn {
-  background: none;
-  border: 1px solid #3d5a6e;
-  color: #eef2f5;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 13px;
-  letter-spacing: 1px;
-  padding: 3px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-#tt-close-btn:hover { background: #2a3d4e; }
-
-/* ── Sim panel ── */
-#tt-sim-panel {
-  left:   var(--tt-left);
-  top:    var(--tt-top-body);
-  width:  var(--tt-W-sim);
-  height: var(--tt-H-body);
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-110vw);
-}
-#tt-sim-panel.tt-open { transform: translateX(0); }
-#tt-canvas {
-  flex: 1;
-  display: block;
-  width: 100%;
-  min-height: 0;
-  image-rendering: pixelated;
-}
-
-/* ── Controls panel ── */
-#tt-ctrl-panel {
-  top:    var(--tt-top-body);
-  left:   calc(var(--tt-left) + var(--tt-W-sim) + var(--tt-gap));
-  width:  var(--tt-W-ctrl);
-  height: var(--tt-H-body);
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  background: #1a2530;
-  transform: translateX(110vw);
-}
-#tt-ctrl-panel.tt-open { transform: translateX(0); }
-
-.tt-ctrl-section {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid #2e3f4f;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.tt-ctrl-section:last-child { border-bottom: none; }
-
-.tt-ctrl-title {
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: #a8c0d0;
-  margin: 0 0 2px;
-}
-
-.tt-slider-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
-}
-.tt-slider-row .tt-side {
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  color: #a8c0d0;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.tt-slider-row input[type=range] {
-  flex: 1;
-  min-width: 0;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(100,120,140,0.35);
-  outline: none;
-  cursor: pointer;
-}
-.tt-slider-row input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #25d9c8;
-  cursor: pointer;
-  margin-top: -4.5px;
-}
-.tt-slider-row input[type=range]::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #25d9c8;
-  border: none;
-  cursor: pointer;
-}
-.tt-val {
-  font-size: 16px;
-  color: #25d9c8;
-  min-width: 34px;
-  text-align: right;
-  letter-spacing: 0.5px;
-  flex-shrink: 0;
-}
-
-.tt-btn-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.tt-btn {
-  background: #2a3d4e;
-  color: #eef2f5;
-  border: 1px solid #3d5a6e;
-  padding: 5px 14px;
-  cursor: pointer;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px;
-  letter-spacing: 1px;
-  border-radius: 4px;
-  transition: background 0.15s;
-}
-.tt-btn:hover { background: #3a5060; }
-
-.tt-stat {
-  font-size: 13px;
-  color: #a8c0d0;
-  letter-spacing: 0.5px;
-  padding: 10px 16px 4px;
-}
-</style>
-
-
-
-<!-- Overlay -->
-<div id="tt-overlay">
-
-  <!-- Header -->
-  <div id="tt-header" class="tt-panel">
-    <h2>Toner&ndash;Tu &mdash; Active Fluid</h2>
-    <button id="tt-close-btn" onclick="ttClose()">Close</button>
-  </div>
-
-  <!-- Sim canvas -->
-  <div id="tt-sim-panel" class="tt-panel">
-    <canvas id="tt-canvas"></canvas>
-  </div>
-
-  <!-- Controls -->
-  <div id="tt-ctrl-panel" class="tt-panel">
-
-    <div class="tt-ctrl-section">
-      <div class="tt-ctrl-title">Noise &eta;</div>
-      <div class="tt-slider-row">
-        <span class="tt-side">Low</span>
-        <input type="range" id="tt-noise" min="0.0" max="1.0" step="0.01" value="0.2">
-        <span class="tt-side">High</span>
-        <span class="tt-val" id="tt-noise-val">0.20</span>
-      </div>
-    </div>
-
-    <div class="tt-ctrl-section">
-      <div class="tt-ctrl-title">Activity &alpha;</div>
-      <div class="tt-slider-row">
-        <span class="tt-side">Disordered</span>
-        <input type="range" id="tt-alpha" min="-1.0" max="1.0" step="0.05" value="0.3">
-        <span class="tt-side">Ordered</span>
-        <span class="tt-val" id="tt-alpha-val">0.30</span>
-      </div>
-    </div>
-
-    <div class="tt-ctrl-section">
-      <div class="tt-ctrl-title">Self-advection &lambda;</div>
-      <div class="tt-slider-row">
-        <span class="tt-side">0</span>
-        <input type="range" id="tt-lambda" min="0.0" max="2.0" step="0.05" value="0.5">
-        <span class="tt-side">2</span>
-        <span class="tt-val" id="tt-lambda-val">0.50</span>
-      </div>
-    </div>
-
-    <div class="tt-ctrl-section">
-      <div class="tt-ctrl-title">Speed v&#8320;</div>
-      <div class="tt-slider-row">
-        <span class="tt-side">Slow</span>
-        <input type="range" id="tt-speed" min="0.1" max="2.0" step="0.05" value="0.5">
-        <span class="tt-side">Fast</span>
-        <span class="tt-val" id="tt-speed-val">0.50</span>
-      </div>
-    </div>
-
-    <div class="tt-ctrl-section">
-      <div class="tt-ctrl-title">Initialise</div>
-      <div class="tt-btn-row">
-        <button class="tt-btn" onclick="ttReset()">Random</button>
-      </div>
-    </div>
-
-    <div class="tt-stat" id="tt-stat"></div>
-
-  </div>
-</div>
-
 <script>
 (function () {
-  const GAP = 10;
-  const PAD = 20;
-  const PHI = 1.6180339887;
-
-  /* ── Grid ── */
-  const N  = 128;   // grid cells per side
+  const N  = 128;
   const DT = 0.05;
-  const DR = 1.0;   // spatial step (cell size)
+  const DR = 1.0;
 
-  /* ── Parameters ── */
-  let eta    = 0.2;   // noise amplitude
-  let alpha  = 0.3;   // linear activity coefficient (a in Toner-Tu)
-  let beta   = 1.0;   // saturation coefficient (b), fixed
-  let lam    = 0.5;   // self-advection lambda
-  let v0     = 0.5;   // preferred speed (sets saturation |v|² = alpha/beta when alpha>0)
+  let eta   = 0.2;
+  let alpha = 0.3;
+  let beta  = 1.0;
+  let lam   = 0.5;
+  let v0    = 0.5;
 
-  /* ── Fields: density rho, velocity vx/vy ── */
   let rho  = new Float32Array(N * N);
   let vx   = new Float32Array(N * N);
   let vy   = new Float32Array(N * N);
@@ -303,11 +19,8 @@
   let vx2  = new Float32Array(N * N);
   let vy2  = new Float32Array(N * N);
 
-  /* ── Diffusion coefficients ── */
-  const D_rho = 0.2;
-  const D_v   = 0.3;
+  const D_rho = 0.2, D_v = 0.3;
 
-  /* ── Box-Muller ── */
   let _spare = null;
   function randn() {
     if (_spare !== null) { const s = _spare; _spare = null; return s; }
@@ -318,134 +31,72 @@
     return u * m;
   }
 
-  function idx(i, j) {
-    return ((i + N) % N) * N + ((j + N) % N);
-  }
+  function idx(i, j) { return ((i + N) % N) * N + ((j + N) % N); }
 
   function init() {
     for (let k = 0; k < N * N; k++) {
       rho[k] = 1.0 + 0.1 * (Math.random() - 0.5);
       const angle = Math.random() * 2 * Math.PI;
       const speed = v0 * (0.5 + Math.random() * 0.5);
-      vx[k]  = speed * Math.cos(angle);
-      vy[k]  = speed * Math.sin(angle);
+      vx[k] = speed * Math.cos(angle);
+      vy[k] = speed * Math.sin(angle);
     }
   }
 
-  /* ── One forward-Euler step ── */
   function step() {
-    const dt  = DT;
-    const dr  = DR;
-    const dr2 = dr * dr;
-    const noiseMag = eta * Math.sqrt(dt);
-
+    const dr2 = DR * DR;
+    const noiseMag = eta * Math.sqrt(DT);
     for (let i = 0; i < N; i++) {
       for (let j = 0; j < N; j++) {
-        const k  = idx(i, j);
-        const r  = rho[k];
-        const wx = vx[k];
-        const wy = vy[k];
-
-        /* neighbours — cardinal */
-        const rE = rho[idx(i,j+1)], rW = rho[idx(i,j-1)];
-        const rN = rho[idx(i-1,j)], rS = rho[idx(i+1,j)];
-        const wE = vx[idx(i,j+1)],  wW = vx[idx(i,j-1)];
-        const wN = vx[idx(i-1,j)],  wS = vx[idx(i+1,j)];
-        const hE = vy[idx(i,j+1)],  hW = vy[idx(i,j-1)];
-        const hN = vy[idx(i-1,j)],  hS = vy[idx(i+1,j)];
-
-        /* neighbours — diagonal */
-        const rNE = rho[idx(i-1,j+1)], rNW = rho[idx(i-1,j-1)];
-        const rSE = rho[idx(i+1,j+1)], rSW = rho[idx(i+1,j-1)];
-        const wNE =  vx[idx(i-1,j+1)], wNW =  vx[idx(i-1,j-1)];
-        const wSE =  vx[idx(i+1,j+1)], wSW =  vx[idx(i+1,j-1)];
-        const hNE =  vy[idx(i-1,j+1)], hNW =  vy[idx(i-1,j-1)];
-        const hSE =  vy[idx(i+1,j+1)], hSW =  vy[idx(i+1,j-1)];
-
-        /* Laplacians — Lindeberg isotropic stencil
-           2/3*[0 1 0;1 -4 1;0 1 0] + 1/3*[1 0 1;0 -4 0;1 0 1]/2
-           cardinal: 2/3,  diagonal: 1/6,  center: -10/3,  all / dr² */
-        const lap_r  = ((2/3)*(rE+rW+rN+rS) + (1/6)*(rNE+rNW+rSE+rSW) - (10/3)*r)  / dr2;
-        const lap_wx = ((2/3)*(wE+wW+wN+wS) + (1/6)*(wNE+wNW+wSE+wSW) - (10/3)*wx) / dr2;
-        const lap_wy = ((2/3)*(hE+hW+hN+hS) + (1/6)*(hNE+hNW+hSE+hSW) - (10/3)*wy) / dr2;
-
-        /* Divergence of velocity (for density continuity) */
-        const div_v = (wE - wW) / (2*dr) + (hS - hN) / (2*dr);
-
-        /* Gradients of density (pressure P = rho) */
-        const drdx = (rE - rW) / (2*dr);
-        const drdy = (rS - rN) / (2*dr);
-
-        /* Self-advection (v·∇)v */
-        const dvx_dx = (wE - wW) / (2*dr);
-        const dvx_dy = (wS - wN) / (2*dr);
-        const dvy_dx = (hE - hW) / (2*dr);
-        const dvy_dy = (hS - hN) / (2*dr);
-
-        const advx = wx * dvx_dx + wy * dvx_dy;
-        const advy = wx * dvy_dx + wy * dvy_dy;
-
-        /* |v|² */
+        const k = idx(i, j);
+        const r = rho[k], wx = vx[k], wy = vy[k];
+        const rE=rho[idx(i,j+1)],rW=rho[idx(i,j-1)],rN=rho[idx(i-1,j)],rS=rho[idx(i+1,j)];
+        const wE=vx[idx(i,j+1)],wW=vx[idx(i,j-1)],wN=vx[idx(i-1,j)],wS=vx[idx(i+1,j)];
+        const hE=vy[idx(i,j+1)],hW=vy[idx(i,j-1)],hN=vy[idx(i-1,j)],hS=vy[idx(i+1,j)];
+        const rNE=rho[idx(i-1,j+1)],rNW=rho[idx(i-1,j-1)],rSE=rho[idx(i+1,j+1)],rSW=rho[idx(i+1,j-1)];
+        const wNE=vx[idx(i-1,j+1)],wNW=vx[idx(i-1,j-1)],wSE=vx[idx(i+1,j+1)],wSW=vx[idx(i+1,j-1)];
+        const hNE=vy[idx(i-1,j+1)],hNW=vy[idx(i-1,j-1)],hSE=vy[idx(i+1,j+1)],hSW=vy[idx(i+1,j-1)];
+        const lap_r  = ((2/3)*(rE+rW+rN+rS)+(1/6)*(rNE+rNW+rSE+rSW)-(10/3)*r) /dr2;
+        const lap_wx = ((2/3)*(wE+wW+wN+wS)+(1/6)*(wNE+wNW+wSE+wSW)-(10/3)*wx)/dr2;
+        const lap_wy = ((2/3)*(hE+hW+hN+hS)+(1/6)*(hNE+hNW+hSE+hSW)-(10/3)*wy)/dr2;
+        const div_v = (wE-wW)/(2*DR) + (hS-hN)/(2*DR);
+        const drdx = (rE-rW)/(2*DR), drdy = (rS-rN)/(2*DR);
+        const advx = wx*(wE-wW)/(2*DR) + wy*(wS-wN)/(2*DR);
+        const advy = wx*(hE-hW)/(2*DR) + wy*(hS-hN)/(2*DR);
         const v2 = wx*wx + wy*wy;
-
-        /* Toner-Tu velocity equation:
-           ∂v/∂t = (alpha - beta*|v|²)*v - lambda*(v·∇)v - grad(P) + D_v*lap(v) + noise */
         const coeff = alpha - beta * v2;
-        const new_vx = wx + dt * (coeff*wx - lam*advx - drdx + D_v*lap_wx)
-                          + noiseMag * randn();
-        const new_vy = wy + dt * (coeff*wy - lam*advy - drdy + D_v*lap_wy)
-                          + noiseMag * randn();
-
-        /* Density continuity: ∂rho/∂t = -lambda*rho*div(v) + D_rho*lap(rho) */
-        const new_r = r + dt * (-lam * r * div_v + D_rho * lap_r);
-
-        rho2[k] = Math.max(0.01, new_r);
-        vx2[k]  = new_vx;
-        vy2[k]  = new_vy;
+        rho2[k] = Math.max(0.01, r + DT*(-lam*r*div_v + D_rho*lap_r));
+        vx2[k]  = wx + DT*(coeff*wx - lam*advx - drdx + D_v*lap_wx) + noiseMag*randn();
+        vy2[k]  = wy + DT*(coeff*wy - lam*advy - drdy + D_v*lap_wy) + noiseMag*randn();
       }
     }
-
-    /* swap buffers */
     let tmp;
-    tmp = rho; rho = rho2; rho2 = tmp;
-    tmp = vx;  vx  = vx2;  vx2  = tmp;
-    tmp = vy;  vy  = vy2;  vy2  = tmp;
+    tmp=rho; rho=rho2; rho2=tmp;
+    tmp=vx;  vx=vx2;   vx2=tmp;
+    tmp=vy;  vy=vy2;   vy2=tmp;
   }
 
-  /* ── Colour LUT: density mapped teal→cyan→pink ──
-     palette.css values, low→high density:
-     rho ~ 0   →  teal-dark   #23bbad  ( 35, 187, 173)
-     rho ~ 0.5 →  teal-light  #25d9c8  ( 37, 217, 200)
-     rho ~ 1.0 →  cyan        #2abed9  ( 42, 190, 217)
-     rho ~ 1.5 →  pink-light  #ff6da2  (255, 109, 162)
-     rho ~ 2   →  pink-dark   #f92672  (249,  38, 114)
-  ── */
   const LUT_SIZE = 512;
   const lut = new Uint8Array(LUT_SIZE * 3);
   (function buildLUT() {
     const stops = [
-      [ 35, 187, 173],   // teal-dark  — low density
-      [ 37, 217, 200],   // teal-light
-      [ 42, 190, 217],   // cyan       — mean density
-      [255, 109, 162],   // pink-light
-      [249,  38, 114],   // pink-dark  — high density
+      [ 35, 187, 173],
+      [ 37, 217, 200],
+      [ 42, 190, 217],
+      [255, 109, 162],
+      [249,  38, 114],
     ];
     for (let i = 0; i < LUT_SIZE; i++) {
-      const t  = i / (LUT_SIZE - 1);
-      const ft = t * (stops.length - 1);
-      const lo = Math.floor(ft);
-      const hi = Math.min(lo + 1, stops.length - 1);
-      const f  = ft - lo;
-      lut[i*3]   = Math.round(stops[lo][0] + f*(stops[hi][0]-stops[lo][0]));
-      lut[i*3+1] = Math.round(stops[lo][1] + f*(stops[hi][1]-stops[lo][1]));
-      lut[i*3+2] = Math.round(stops[lo][2] + f*(stops[hi][2]-stops[lo][2]));
+      const t=i/(LUT_SIZE-1), ft=t*(stops.length-1);
+      const lo=Math.floor(ft), hi=Math.min(lo+1,stops.length-1), f=ft-lo;
+      lut[i*3]  =Math.round(stops[lo][0]+f*(stops[hi][0]-stops[lo][0]));
+      lut[i*3+1]=Math.round(stops[lo][1]+f*(stops[hi][1]-stops[lo][1]));
+      lut[i*3+2]=Math.round(stops[lo][2]+f*(stops[hi][2]-stops[lo][2]));
     }
   })();
 
   function rhoToLUT(r) {
-    /* map rho in [0, 2] to LUT index */
-    const clamped = Math.max(0, Math.min(2, r));
-    return Math.round(clamped / 2 * (LUT_SIZE - 1)) * 3;
+    return Math.round(Math.max(0,Math.min(2,r))/2*(LUT_SIZE-1))*3;
   }
 
   let canvas, ctx, imgData, buf;
@@ -453,22 +104,16 @@
   function render() {
     const W = canvas.width, H = canvas.height;
     for (let i = 0; i < N; i++) {
-      const y0 = Math.round(H * i / N);
-      const y1 = Math.round(H * (i + 1) / N);
+      const y0=Math.round(H*i/N), y1=Math.round(H*(i+1)/N);
       for (let j = 0; j < N; j++) {
-        const x0 = Math.round(W * j / N);
-        const x1 = Math.round(W * (j + 1) / N);
-        const li = rhoToLUT(rho[i * N + j]);
-        const r = lut[li], g = lut[li+1], b = lut[li+2];
-        for (let py = y0; py < y1; py++) {
-          for (let px = x0; px < x1; px++) {
-            const base = (py * W + px) * 4;
-            buf[base]   = r;
-            buf[base+1] = g;
-            buf[base+2] = b;
-            buf[base+3] = 255;
+        const x0=Math.round(W*j/N), x1=Math.round(W*(j+1)/N);
+        const li=rhoToLUT(rho[i*N+j]);
+        const r=lut[li], g=lut[li+1], b=lut[li+2];
+        for (let py=y0; py<y1; py++)
+          for (let px=x0; px<x1; px++) {
+            const base=(py*W+px)*4;
+            buf[base]=r; buf[base+1]=g; buf[base+2]=b; buf[base+3]=255;
           }
-        }
       }
     }
     ctx.putImageData(imgData, 0, 0);
@@ -483,105 +128,124 @@
       render();
       if (++_frameCount % 20 === 0) {
         let sumR = 0, sumV2 = 0;
-        for (let k = 0; k < N*N; k++) {
-          sumR  += rho[k];
-          sumV2 += vx[k]*vx[k] + vy[k]*vy[k];
-        }
+        for (let k = 0; k < N*N; k++) { sumR += rho[k]; sumV2 += vx[k]*vx[k]+vy[k]*vy[k]; }
         const nn = N * N;
-        document.getElementById('tt-stat').textContent =
-          '\u27e8\u03c1\u27e9 = ' + (sumR/nn).toFixed(3) +
-          '   \u27e8|v|\u27e9 = ' + Math.sqrt(sumV2/nn).toFixed(3);
+        const el = document.getElementById('tt-stat');
+        if (el) el.textContent = '\u27e8\u03c1\u27e9 = '+(sumR/nn).toFixed(3)+'   \u27e8|v|\u27e9 = '+Math.sqrt(sumV2/nn).toFixed(3);
       }
     }
     frameId = requestAnimationFrame(loop);
   }
 
-  /* ── Layout (identical golden-ratio scheme) ── */
-  function layout() {
-    const vw = window.innerWidth, vh = window.innerHeight;
-    const sFromW = (vw - 2*PAD - GAP) / (1 + 1/PHI);
-    const sFromH = (vh - 2*PAD) / 1.1;
-    const S      = Math.floor(Math.min(sFromW, sFromH));
-    const ctrlW  = Math.floor(S / PHI);
-    const hdrH   = Math.floor(S * 0.1);
-    const totalW = S + GAP + ctrlW;
-    const left   = Math.floor((vw - totalW) / 2);
-    const top    = Math.floor((vh - (hdrH + S)) / 2);
+  /* ── Shell wiring ── */
+  const shell = new AppletShell({
+    id:    'tt',
+    title: 'Toner&ndash;Tu &mdash; Active Fluid',
+    gap:   0,
 
-    const el = document.getElementById('tt-overlay');
-    el.style.setProperty('--tt-left',     left         + 'px');
-    el.style.setProperty('--tt-top-hdr',  top          + 'px');
-    el.style.setProperty('--tt-top-body', (top + hdrH) + 'px');
-    el.style.setProperty('--tt-W',        totalW       + 'px');
-    el.style.setProperty('--tt-W-sim',    S            + 'px');
-    el.style.setProperty('--tt-W-ctrl',   ctrlW        + 'px');
-    el.style.setProperty('--tt-H-hdr',    hdrH         + 'px');
-    el.style.setProperty('--tt-H-body',   S            + 'px');
-    el.style.setProperty('--tt-gap',      GAP          + 'px');
+    ctrlHTML: `
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Actions</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" onclick="ttReset()">Initialise</button>
+          <button class="applet-shell-btn" id="tt-pause-btn" onclick="ttTogglePause()">Pause</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Noise &eta;</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Low</span>
+          <input type="range" id="tt-noise" min="0.0" max="1.0" step="0.01" value="0.2">
+          <span class="applet-shell-side">High</span>
+          <span class="applet-shell-val" id="tt-noise-val">0.20</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Activity &alpha;</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Disordered</span>
+          <input type="range" id="tt-alpha" min="-1.0" max="1.0" step="0.05" value="0.3">
+          <span class="applet-shell-side">Ordered</span>
+          <span class="applet-shell-val" id="tt-alpha-val">0.30</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Self-advection &lambda;</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">0</span>
+          <input type="range" id="tt-lambda" min="0.0" max="2.0" step="0.05" value="0.5">
+          <span class="applet-shell-side">2</span>
+          <span class="applet-shell-val" id="tt-lambda-val">0.50</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Speed v&#8320;</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Slow</span>
+          <input type="range" id="tt-speed" min="0.1" max="2.0" step="0.05" value="0.5">
+          <span class="applet-shell-side">Fast</span>
+          <span class="applet-shell-val" id="tt-speed-val">0.50</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section" id="tt-stat" style="font-size:13px;color:#a8c0d0;letter-spacing:0.5px;"></div>
+    `,
 
-    if (canvas) {
+    onOpen: function ({ canvas: c, S }) {
+      canvas = c;
+      ctx    = canvas.getContext('2d');
       canvas.width  = S;
       canvas.height = S;
       imgData = ctx.createImageData(S, S);
       buf     = imgData.data;
       for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
-    }
-  }
+      init();
+      running = true;
+      const pb = document.getElementById('tt-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
+      if (!frameId) loop();
+    },
 
-  /* ── Open / close ── */
-  window.ttOpen = function () {
-    canvas = document.getElementById('tt-canvas');
-    ctx    = canvas.getContext('2d');
-    layout();
-    init();
-
-    document.getElementById('tt-overlay').classList.add('tt-open');
-    requestAnimationFrame(() => {
-      document.getElementById('tt-header').classList.add('tt-open');
-      document.getElementById('tt-sim-panel').classList.add('tt-open');
-      document.getElementById('tt-ctrl-panel').classList.add('tt-open');
-    });
-
-    running = true;
-    if (!frameId) loop();
-  };
-
-  window.ttClose = function () {
-    running = false;
-    ['tt-header', 'tt-sim-panel', 'tt-ctrl-panel'].forEach(id => {
-      const el = document.getElementById(id);
-      el.classList.remove('tt-open');
-      el.classList.add('tt-closing');
-    });
-    setTimeout(() => {
-      document.getElementById('tt-overlay').classList.remove('tt-open');
-      ['tt-header', 'tt-sim-panel', 'tt-ctrl-panel'].forEach(id => {
-        document.getElementById(id).classList.remove('tt-closing');
-      });
+    onClose: function () {
+      running = false;
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
-    }, 550);
+      const pb = document.getElementById('tt-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
+    },
+
+    onResize: function ({ canvas: c, S }) {
+      canvas = c;
+      canvas.width  = S;
+      canvas.height = S;
+      imgData = ctx.createImageData(S, S);
+      buf     = imgData.data;
+      for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+    },
+  });
+
+  window.ttOpen  = () => shell.open();
+  window.ttClose = () => shell.close();
+  window.ttReset = init;
+  window.ttTogglePause = function () {
+    running = !running;
+    const pb = document.getElementById('tt-pause-btn');
+    if (pb) {
+      pb.textContent = running ? 'Pause' : 'Resume';
+      pb.classList.toggle('active', !running);
+    }
   };
 
-  window.ttReset = init;
-
-  window.addEventListener('resize', () => { if (running) layout(); });
-
-  /* ── Controls ── */
   document.getElementById('tt-noise').addEventListener('input', function () {
     eta = parseFloat(this.value);
     document.getElementById('tt-noise-val').textContent = eta.toFixed(2);
   });
-
   document.getElementById('tt-alpha').addEventListener('input', function () {
     alpha = parseFloat(this.value);
     document.getElementById('tt-alpha-val').textContent = alpha.toFixed(2);
   });
-
   document.getElementById('tt-lambda').addEventListener('input', function () {
     lam = parseFloat(this.value);
     document.getElementById('tt-lambda-val').textContent = lam.toFixed(2);
   });
-
   document.getElementById('tt-speed').addEventListener('input', function () {
     v0 = parseFloat(this.value);
     document.getElementById('tt-speed-val').textContent = v0.toFixed(2);

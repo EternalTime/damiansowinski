@@ -32,7 +32,6 @@
   let wallX      = 0;
   let wallTarget = 0;
   const WALL_SPEED = 0.4;
-  const WALL_DV    = 0.04;
   let gravity = 0;
 
   let cellW, nCellsX, nCellsY;
@@ -126,15 +125,15 @@
     if (gravity > 0) for (let i = 0; i < N; i++) vy[i] += gravity * dt;
     for (let i = 0; i < N; i++) { px[i] += vx[i] * dt; py[i] += vy[i] * dt; }
     const diff = wallTarget - wallX;
-    if (Math.abs(diff) > WALL_SPEED) wallX += Math.sign(diff) * WALL_SPEED;
-    else wallX = wallTarget;
     const wallMoved = Math.abs(diff) > 1e-6;
     const wallDir   = Math.sign(diff);
+    if (wallMoved) wallX += wallDir * Math.min(Math.abs(diff), WALL_SPEED);
+    const v_wall = wallMoved ? wallDir * WALL_SPEED / dt : 0;
     for (let i = 0; i < N; i++) {
       if (px[i] - R < wallX) {
         px[i] = wallX + R;
-        vx[i] = Math.abs(vx[i]);
-        if (wallMoved) vx[i] = Math.max(vx[i] + wallDir * WALL_DV, 1e-4);
+        vx[i] = 2 * v_wall - vx[i];
+        if (vx[i] < v_wall) vx[i] = v_wall + 1e-4;  // ensure moving away from wall
       }
       if (px[i] + R > L) { px[i] = L - R; vx[i] = -Math.abs(vx[i]); }
       if (py[i] - R < 0) { py[i] = R;     vy[i] =  Math.abs(vy[i]); }
@@ -175,15 +174,23 @@
     for (let i = 0; i < N; i++) meanSpd += Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
     meanSpd /= N;
     const spdRef = Math.max(meanSpd * 2, 0.001);
+    const LX = -0.45, LY = -0.45;
     for (let i = 0; i < N; i++) {
       const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
       const hot = Math.min(spd / spdRef, 1);
       const r = Math.round(37  + (249 - 37)  * hot);
       const g = Math.round(217 + (38  - 217) * hot);
       const b = Math.round(200 + (114 - 200) * hot);
+      const hx = px[i] + LX * R * 0.45;
+      const hy = py[i] + LY * R * 0.45;
+      const grad = ctx.createRadialGradient(hx, hy, 0, px[i], py[i], R);
+      grad.addColorStop(0.00, `rgba(255,255,255,0.85)`);
+      grad.addColorStop(0.25, `rgba(${r},${g},${b},1.0)`);
+      grad.addColorStop(0.75, `rgba(${Math.round(r*0.45)},${Math.round(g*0.45)},${Math.round(b*0.45)},1.0)`);
+      grad.addColorStop(1.00, `rgba(${Math.round(r*0.25)},${Math.round(g*0.25)},${Math.round(b*0.25)},1.0)`);
       ctx.beginPath();
       ctx.arc(px[i], py[i], R, 0, Math.PI * 2);
-      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillStyle = grad;
       ctx.fill();
     }
   }
@@ -273,9 +280,16 @@
   const shell = new AppletShell({
     id:    'gas',
     title: 'Hard-Sphere Gas &mdash; 2D',
-    gap:   10,
+    gap:   0,
 
     ctrlHTML: `
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Actions</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" onclick="gasReset()">Reset</button>
+          <button class="applet-shell-btn" id="gas-pause-btn" onclick="gasTogglePause()">Pause</button>
+        </div>
+      </div>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Particles</div>
         <div class="applet-shell-slider-row">
@@ -316,12 +330,6 @@
           <span class="applet-shell-side">Strong</span>
         </div>
       </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Actions</div>
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="gasReset()">Reset</button>
-        </div>
-      </div>
       <div id="gas-hist-section">
         <div class="applet-shell-ctrl-title">Speed distribution</div>
         <canvas id="gas-hist-canvas"></canvas>
@@ -335,12 +343,16 @@
       L = S;
       doReset();
       running = true;
+      const pb = document.getElementById('gas-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
       if (!frameId) frameId = requestAnimationFrame(loop);
     },
 
     onClose: function () {
       running = false;
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+      const pb = document.getElementById('gas-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
     },
 
     onResize: function ({ S }) {
@@ -352,6 +364,14 @@
   window.gasOpen  = () => shell.open();
   window.gasClose = () => shell.close();
   window.gasReset = doReset;
+  window.gasTogglePause = function () {
+    running = !running;
+    const pb = document.getElementById('gas-pause-btn');
+    if (pb) {
+      pb.textContent = running ? 'Pause' : 'Resume';
+      pb.classList.toggle('active', !running);
+    }
+  };
 
   document.getElementById('gas-tslider').addEventListener('input', function () {
     T = parseFloat(this.value);

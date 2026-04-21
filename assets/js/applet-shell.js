@@ -27,8 +27,11 @@
   'use strict';
 
   /* ── Layout constants ──────────────────────────────────────────────────── */
-  const PHI = 1.6180339887;
-  const PAD = 20;            // viewport margin (px)
+  const PHI        = 1.6180339887;
+  const PAD        = 20;    // viewport margin (px)
+  const FS_REF     = 300;   // ctrl panel width at which font scale = 1.0
+  const FS_MIN     = 0.65;  // never shrink below 65% of reference sizes
+  const FS_MAX     = 1.15;  // never grow above 115%
 
   /* ── Shared CSS — injected once ────────────────────────────────────────── */
   const SHARED_STYLE_ID = 'applet-shell-shared-styles';
@@ -91,7 +94,7 @@
   height: 100%;
 }
 .applet-shell-header-inner h2 {
-  font-size: 15px;
+  font-size: calc(15px * var(--shell-fs, 1));
   letter-spacing: 2px;
   color: #eef2f5;
   font-weight: normal;
@@ -103,9 +106,9 @@
   border: 1px solid #3d5a6e;
   color: #eef2f5;
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: 13px;
+  font-size: calc(13px * var(--shell-fs, 1));
   letter-spacing: 1px;
-  padding: 3px 12px;
+  padding: calc(3px * var(--shell-fs, 1)) calc(12px * var(--shell-fs, 1));
   border-radius: 4px;
   cursor: pointer;
 }
@@ -122,16 +125,16 @@
 
 /* ── Control panel sections ── */
 .applet-shell-ctrl-section {
-  padding: 14px 16px 10px;
+  padding: calc(14px * var(--shell-fs, 1)) calc(16px * var(--shell-fs, 1)) calc(10px * var(--shell-fs, 1));
   border-bottom: 1px solid #2e3f4f;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: calc(10px * var(--shell-fs, 1));
 }
 .applet-shell-ctrl-section:last-child { border-bottom: none; }
 
 .applet-shell-ctrl-title {
-  font-size: 14px;
+  font-size: calc(14px * var(--shell-fs, 1));
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: #a8c0d0;
@@ -142,12 +145,12 @@
 .applet-shell-slider-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: calc(8px * var(--shell-fs, 1));
   width: 100%;
   box-sizing: border-box;
 }
 .applet-shell-slider-row .applet-shell-side {
-  font-size: 14px;
+  font-size: calc(14px * var(--shell-fs, 1));
   letter-spacing: 0.5px;
   color: #a8c0d0;
   white-space: nowrap;
@@ -166,25 +169,25 @@
 }
 .applet-shell-slider-row input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
+  width: calc(12px * var(--shell-fs, 1));
+  height: calc(12px * var(--shell-fs, 1));
   border-radius: 50%;
   background: #25d9c8;
   cursor: pointer;
-  margin-top: -4.5px;
+  margin-top: calc(-4.5px * var(--shell-fs, 1));
 }
 .applet-shell-slider-row input[type=range]::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
+  width: calc(12px * var(--shell-fs, 1));
+  height: calc(12px * var(--shell-fs, 1));
   border-radius: 50%;
   background: #25d9c8;
   border: none;
   cursor: pointer;
 }
 .applet-shell-val {
-  font-size: 16px;
+  font-size: calc(16px * var(--shell-fs, 1));
   color: #25d9c8;
-  min-width: 34px;
+  min-width: calc(34px * var(--shell-fs, 1));
   text-align: right;
   letter-spacing: 0.5px;
   flex-shrink: 0;
@@ -193,17 +196,17 @@
 /* ── Buttons ── */
 .applet-shell-btn-row {
   display: flex;
-  gap: 8px;
+  gap: calc(8px * var(--shell-fs, 1));
   flex-wrap: wrap;
 }
 .applet-shell-btn {
   background: #2a3d4e;
   color: #eef2f5;
   border: 1px solid #3d5a6e;
-  padding: 5px 14px;
+  padding: calc(5px * var(--shell-fs, 1)) calc(14px * var(--shell-fs, 1));
   cursor: pointer;
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px;
+  font-size: calc(16px * var(--shell-fs, 1));
   letter-spacing: 1px;
   border-radius: 4px;
   transition: background 0.15s;
@@ -335,6 +338,7 @@
 
   function applyLayout(id, gap) {
     const { S, ctrlW, hdrH, totalW, left, top } = computeLayout(gap);
+    const fs = Math.min(FS_MAX, Math.max(FS_MIN, ctrlW / FS_REF));
     const el = document.getElementById(id + '-overlay');
     el.style.setProperty('--' + id + '-left',     left           + 'px');
     el.style.setProperty('--' + id + '-top-hdr',  top            + 'px');
@@ -345,6 +349,7 @@
     el.style.setProperty('--' + id + '-H-hdr',    hdrH           + 'px');
     el.style.setProperty('--' + id + '-H-body',   S              + 'px');
     el.style.setProperty('--' + id + '-gap',      gap            + 'px');
+    el.style.setProperty('--shell-fs',             fs.toFixed(4));
     return S;
   }
 

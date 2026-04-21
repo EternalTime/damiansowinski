@@ -96,6 +96,13 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Actions</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" onclick="vicsekReset()">Reset</button>
+          <button class="applet-shell-btn" id="vicsek-pause-btn" onclick="vicsekTogglePause()">Pause</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Noise &eta;</div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">Low</span>
@@ -119,12 +126,6 @@
           <span class="applet-shell-side">Fast</span>
         </div>
       </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Reset</div>
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="vicsekReset()">Randomise</button>
-        </div>
-      </div>
     `,
 
     onOpen: function ({ canvas: c, S }) {
@@ -133,12 +134,16 @@
       W = S; H = S;
       reset();
       running = true;
+      const pb = document.getElementById('vicsek-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
       if (!frameId) loop();
     },
 
     onClose: function () {
       running = false;
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+      const pb = document.getElementById('vicsek-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
     },
 
     onResize: function ({ S }) {
@@ -150,6 +155,14 @@
   window.vicsekOpen  = () => shell.open();
   window.vicsekClose = () => shell.close();
   window.vicsekReset = function () { reset(); };
+  window.vicsekTogglePause = function () {
+    running = !running;
+    const pb = document.getElementById('vicsek-pause-btn');
+    if (pb) {
+      pb.textContent = running ? 'Pause' : 'Resume';
+      pb.classList.toggle('active', !running);
+    }
+  };
 
   document.getElementById('vicsek-noise').addEventListener('input', function () {
     eta = parseFloat(this.value);

@@ -202,6 +202,13 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Actions</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" onclick="glReset()">Initialise</button>
+          <button class="applet-shell-btn" id="gl-pause-btn" onclick="glTogglePause()">Pause</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Temperature</div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">Cold</span>
@@ -215,12 +222,6 @@
           <span class="applet-shell-side">Low</span>
           <input type="range" id="gl-gamma" min="0.1" max="5" step="0.05" value="1.0">
           <span class="applet-shell-side">High</span>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Initialise</div>
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="glReset()">Random</button>
         </div>
       </div>
       <div class="applet-shell-ctrl-section gl-plot-section">
@@ -247,12 +248,16 @@
 
       initRandom();
       running = true;
+      const pb = document.getElementById('gl-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
       if (!frameId) loop();
     },
 
     onClose: function () {
       running = false;
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+      const pb = document.getElementById('gl-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
     },
 
     onResize: function ({ canvas: c, S }) {
@@ -275,6 +280,14 @@
   window.glOpen  = () => shell.open();
   window.glClose = () => shell.close();
   window.glReset = initRandom;
+  window.glTogglePause = function () {
+    running = !running;
+    const pb = document.getElementById('gl-pause-btn');
+    if (pb) {
+      pb.textContent = running ? 'Pause' : 'Resume';
+      pb.classList.toggle('active', !running);
+    }
+  };
 
   document.getElementById('gl-temp').addEventListener('input', function () {
     T = parseFloat(this.value);

@@ -110,6 +110,31 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Actions</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" onclick="gsReset()">Reset</button>
+          <button class="applet-shell-btn" id="gs-pause-btn" onclick="gsTogglePause()">Pause</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Presets</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn gs-preset active" data-f="0.055" data-k="0.062" data-r="2.0">Coral</button>
+          <button class="applet-shell-btn gs-preset"        data-f="0.078" data-k="0.061" data-r="2.0">Worms</button>
+          <button class="applet-shell-btn gs-preset"        data-f="0.029" data-k="0.057" data-r="2.0">Maze</button>
+          <button class="applet-shell-btn gs-preset"        data-f="0.039" data-k="0.058" data-r="2.0">Holes</button>
+          <button class="applet-shell-btn gs-preset"        data-f="0.037" data-k="0.065" data-r="2.0">Mitosis</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Resolution</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn gs-res active" data-n="128">128</button>
+          <button class="applet-shell-btn gs-res"        data-n="256">256</button>
+          <button class="applet-shell-btn gs-res"        data-n="512">512</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Feed Rate f</div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">Low</span>
@@ -131,30 +156,6 @@
           <span class="applet-shell-side">1&times;</span>
           <input type="range" id="gs-dratio" min="1.0" max="4.0" step="0.05" value="2.0">
           <span class="applet-shell-side">4&times;</span>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Resolution</div>
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn gs-res active" data-n="128">128</button>
-          <button class="applet-shell-btn gs-res"        data-n="256">256</button>
-          <button class="applet-shell-btn gs-res"        data-n="512">512</button>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Presets</div>
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn gs-preset active" data-f="0.055" data-k="0.062" data-r="2.0">Coral</button>
-          <button class="applet-shell-btn gs-preset"        data-f="0.078" data-k="0.061" data-r="2.0">Worms</button>
-          <button class="applet-shell-btn gs-preset"        data-f="0.029" data-k="0.057" data-r="2.0">Maze</button>
-          <button class="applet-shell-btn gs-preset"        data-f="0.039" data-k="0.058" data-r="2.0">Holes</button>
-          <button class="applet-shell-btn gs-preset"        data-f="0.037" data-k="0.065" data-r="2.0">Mitosis</button>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Initialise</div>
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="gsReset()">Reset</button>
         </div>
       </div>
     `,
@@ -188,12 +189,16 @@
       canvas.addEventListener('mouseleave', function() { painting = false; });
 
       running = true;
+      const pb = document.getElementById('gs-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
       if (!frameId) loop();
     },
 
     onClose: function () {
       running = false;
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+      const pb = document.getElementById('gs-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
     },
 
     onResize: function ({ canvas: c, S }) {
@@ -206,6 +211,14 @@
   window.gsOpen  = () => shell.open();
   window.gsClose = () => shell.close();
   window.gsReset = function () { initState(); };
+  window.gsTogglePause = function () {
+    running = !running;
+    const pb = document.getElementById('gs-pause-btn');
+    if (pb) {
+      pb.textContent = running ? 'Pause' : 'Resume';
+      pb.classList.toggle('active', !running);
+    }
+  };
 
   document.getElementById('gs-feed').addEventListener('input', function() {
     f = parseFloat(this.value);
