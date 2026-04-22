@@ -17,6 +17,9 @@ permalink: /teaching/
 ---
 <br>
 <h2>University of Rochester</h2>
+<br>
+<a href="{{ '/teaching/university-of-rochester/PHYSLABS/' | relative_url }}">PHYS LAB: Undergraduate Physics Labs</a>
+<br>
 <a href="{{ '/teaching/university-of-rochester/PHYS100/' | relative_url }}">PHYS 100: Physics and the Natural World</a>
 <br>
 <a href="{{ '/teaching/university-of-rochester/PHYS141/' | relative_url }}">PHYS 141: Honors Classical Mechanics</a>

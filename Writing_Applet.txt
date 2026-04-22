@@ -1,0 +1,204 @@
+WRITING A PHYSICS APPLET FOR DAMIANSOWINSKI.COM
+================================================
+
+All applets live in MyWebPage/_includes/ as self-contained HTML partials
+(e.g. ising_applet.html). Each is a single <script> block (plus an optional
+<style> block for applet-specific CSS) that uses the shared AppletShell
+defined in assets/js/applet-shell.js.
+
+The shell handles all layout, animation, panel styling, and open/close
+transitions. Your job is to write the physics and wire it to the shell.
+
+
+STRUCTURE OF AN APPLET FILE
+----------------------------
+
+<!-- MyModel Applet Include -->
+
+<!-- Optional: applet-specific CSS only (no layout, no colours — the shell owns those) -->
+<style>
+  /* e.g. a histogram section that should expand to fill remaining ctrl panel height */
+  #mymodel-hist-section { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  #mymodel-hist-canvas  { flex: 1; display: block; width: 100%; min-height: 0; }
+</style>
+
+<script>
+(function () {          // IIFE — everything is private by default
+  'use strict';
+
+  /* ── 1. Simulation state ── */
+  let param1 = 1.0;
+  let running = false, frameId = null;
+  let canvas, ctx;
+
+  /* ── 2. Physics functions ── */
+  function init()  { /* set up initial conditions */ }
+  function step()  { /* advance simulation by one time step */ }
+  function render(){ /* draw current state to canvas */ }
+
+  /* ── 3. Animation loop ── */
+  function loop() {
+    if (running) { step(); render(); }
+    frameId = requestAnimationFrame(loop);
+  }
+
+  /* ── 4. Shell wiring ── */
+  const shell = new AppletShell({
+    id:    'mymodel',                         // short prefix, all lowercase, no spaces
+    title: 'My Model &mdash; Subtitle',       // HTML allowed; shown in header
+    gap:   0,                                 // always 0 — keeps panels flush
+
+    ctrlHTML: `
+      <!-- Buttons first, sliders below -->
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Actions</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" onclick="mymodelReset()">Reset</button>
+          <button class="applet-shell-btn" id="mymodel-pause-btn" onclick="mymodelTogglePause()">Pause</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Parameter</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Low</span>
+          <input type="range" id="mymodel-param1" min="0" max="2" step="0.01" value="1.0">
+          <span class="applet-shell-side">High</span>
+          <span class="applet-shell-val" id="mymodel-param1-val">1.00</span>
+        </div>
+      </div>
+    `,
+
+    onOpen: function ({ canvas: c, S }) {
+      // S is the side length in pixels of the square simulation panel.
+      // c is the <canvas> element — already sized to S×S by the shell.
+      canvas = c;
+      ctx    = canvas.getContext('2d');
+      init();
+      running = true;
+      const pb = document.getElementById('mymodel-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
+      if (!frameId) loop();
+    },
+
+    onClose: function () {
+      running = false;
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+      const pb = document.getElementById('mymodel-pause-btn');
+      if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
+    },
+
+    onResize: function ({ canvas: c, S }) {
+      // Called when the browser window is resized while the applet is open.
+      // Update your canvas reference and re-initialise any size-dependent state.
+      canvas = c;
+      // e.g. re-initialise particles for new box size
+    },
+  });
+
+  /* ── 5. Global entry points (required) ── */
+  window.mymodelOpen  = () => shell.open();
+  window.mymodelClose = () => shell.close();
+
+  /* ── 6. Global action handlers ── */
+  window.mymodelReset = function () { init(); };
+
+  window.mymodelTogglePause = function () {
+    running = !running;
+    const pb = document.getElementById('mymodel-pause-btn');
+    if (pb) {
+      pb.textContent = running ? 'Pause' : 'Resume';
+      pb.classList.toggle('active', !running);
+    }
+  };
+
+  /* ── 7. Slider / button event listeners ── */
+  document.getElementById('mymodel-param1').addEventListener('input', function () {
+    param1 = parseFloat(this.value);
+    document.getElementById('mymodel-param1-val').textContent = param1.toFixed(2);
+  });
+
+})();
+</script>
+
+
+CTRL HTML REFERENCE
+-------------------
+
+Every control sits inside a section div. Sections are separated by a thin
+horizontal rule automatically.
+
+Section wrapper:
+  <div class="applet-shell-ctrl-section"> ... </div>
+
+Section title:
+  <div class="applet-shell-ctrl-title">Label</div>
+
+Slider row:
+  <div class="applet-shell-slider-row">
+    <span class="applet-shell-side">Low label</span>
+    <input type="range" id="mymodel-foo" min="0" max="1" step="0.01" value="0.5">
+    <span class="applet-shell-side">High label</span>
+    <span class="applet-shell-val" id="mymodel-foo-val">0.50</span>   <!-- optional readout -->
+  </div>
+
+Button row:
+  <div class="applet-shell-btn-row">
+    <button class="applet-shell-btn" onclick="...">Label</button>
+  </div>
+
+Button states (add/remove these classes in JS):
+  .active        — teal glow (used for "on" / selected state)
+  .active-pink   — pink glow (used for an alternative active state)
+
+
+LAYOUT FACTS
+------------
+- The simulation canvas is always a square of side S px.
+- The control panel is S/φ wide (φ = 1.618) and S px tall.
+- The header is 0.1·S tall.
+- All three panels are flush (no gap), with corners flattened at the joins.
+- S is recomputed on window resize; onResize is called with the new S.
+
+
+NAMING CONVENTIONS
+------------------
+- id prefix:           short, lowercase (e.g. 'gs', 'tt', 'km')
+- HTML element IDs:    <prefix>-<thing>   (e.g. 'gs-feed', 'tt-noise-val')
+- Global JS functions: <prefix><Action>() (e.g. gsReset(), ttTogglePause())
+- window.* exports:    <prefix>Open, <prefix>Close (required by the page)
+
+
+REGISTERING THE APPLET IN THE PAGE
+-----------------------------------
+In MyWebPage/applets.markdown (or wherever applets are listed):
+
+1. Add a Jekyll include tag where you want the applet's HTML injected:
+     {% include mymodel_applet.html %}
+
+2. Add a button or link that calls window.mymodelOpen() on click.
+
+The shell script tag (assets/js/applet-shell.js) is already loaded globally
+in the page — you do not need to include it again.
+
+
+SPECIAL CASES
+-------------
+
+If your ctrl panel needs a section to expand and fill remaining vertical space
+(e.g. a live histogram or phase-plane canvas), add the section to ctrlHTML
+with an id and style it in the applet's <style> block:
+  #mymodel-hist-section { flex: 1; min-height: 0; ... }
+
+If you need to inject DOM elements into the sim panel (e.g. an overlay stamp
+or a readout div), do it in onOpen using getElementById + appendChild,
+guarding against re-injection on re-open:
+  const simPanel = document.getElementById('mymodel-sim-panel');
+  if (!document.getElementById('mymodel-overlay')) {
+    const el = document.createElement('div');
+    el.id = 'mymodel-overlay';
+    simPanel.appendChild(el);
+  }
+
+If your renderer needs a moment for the CSS transition to finish before
+measuring panel dimensions (e.g. Three.js), wrap the init in setTimeout:
+  setTimeout(() => { initThree(); running = true; ... }, 80);
