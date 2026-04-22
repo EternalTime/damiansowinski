@@ -67,3 +67,7 @@ title: Applets
 <button class="applet-launch-btn" onclick="ohOpen(); this.blur()">Oscillon &mdash; FRW</button>
 
 {% include oscillon_hubble_applet.html %}
+
+<button class="applet-launch-btn" onclick="shoOpen(); this.blur()">SHO</button>
+
+{% include sho_applet.html %}
