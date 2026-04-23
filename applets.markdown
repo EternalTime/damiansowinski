@@ -8,6 +8,12 @@ title: Applets
 <a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
 <br>
 
+<img src="{{ '/assets/images/Under-Construction-Sign.png' | relative_url }}"
+     style="float: center; width: 55%; margin: 0 20px 20px 20px; border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
+     alt="Description"> 
+
+---
+
 <button class="applet-launch-btn" onclick="isingOpen(); this.blur()">Ising Model</button>
 
 {% include ising_applet.html %}
