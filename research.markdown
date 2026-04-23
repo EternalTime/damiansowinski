@@ -51,7 +51,11 @@ Why don't you try it:
 <button class="applet-launch-btn" onclick="demonOpen()">Maxwell's Demon</button>
 {% include maxwell_demon_applet.html %}
 
+Were you hired?
 
+<img src="{{ '/assets/images/Under-Construction-Sign.png' | relative_url }}"
+     style="float: center; width: 55%; margin: 0 20px 20px 20px; border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
+     alt="Description"> 
 
 ---
 <br>
@@ -82,7 +86,7 @@ For that matter, what exactly do we mean when we say *Agency*?
 We are agents, right?
 Entities capable of acting teleologically, of having goals and directing our actions towards attaining them.
 By that definition, however, LLMs too are agents.
-Whether one agrees or disagrees with that statement or, it is clear that agency itself is stilla nebulous concet. <br>
+Whether one agrees or disagrees with that statement, it is clear that agency itself is still a nebulous concet. <br>
 
 Sweeping such concerns under the rug for the moment, when does a system transition from being purely mechanistic to having true agency?
 The chemoton may not have agency, but does the paramecium?
