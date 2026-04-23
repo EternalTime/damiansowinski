@@ -44,3 +44,8 @@ Animals are amazing, and I'm grateful to have these three guys in my life.
      style="float: right; width: 30%; margin: 0 0 20px 20px;border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
      alt="Description">
 
+<br>
+
+<img src="{{ '/assets/images/Under-Construction-Sign.png' | relative_url }}"
+     style="float: center; width: 55%; margin: 0 20px 20px 20px; border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
+     alt="Description"> 
