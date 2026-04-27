@@ -28,11 +28,9 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 </h1>
 
 <button class="applet-launch-btn" onclick="isingOpen(); this.blur()">Ising Model</button>
-
-{% include applets/ising_applet.html %}
-
 <button class="applet-launch-btn" onclick="vicsekOpen(); this.blur()">Vicsek Model</button>
 
+{% include applets/ising_applet.html %}
 {% include applets/vicsek_applet.html %}
 
 <button class="applet-launch-btn" onclick="xyOpen(); this.blur()">XY Model</button>
@@ -90,6 +88,9 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 <button class="applet-launch-btn" onclick="shoOpen(); this.blur()">SHO</button>
 
 {% include applets/sho_applet.html %}
+
+
+
 
 ---
 
