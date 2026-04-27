@@ -58,7 +58,7 @@ body, p, li, td, th, blockquote {
   font-family: 'EB Garamond', Georgia, serif !important;
   font-size: 1.15rem;
   line-height: 1.2;
-  color: #222;
+  color: var(--text-body);
 }
 
 /* ============================================================
@@ -85,12 +85,12 @@ code, pre, tt {
    ============================================================ */
 a, a:visited, a:link {
   font-family: 'EB Garamond', Georgia, serif !important;
-  color: #23bbad !important;
-  text-shadow: 1px 0px 0px #000;
+  color: var(--teal-dark) !important;
+  text-shadow: 1px 0px 0px var(--black);
 }
 
 a:hover {
-  color: #ff6da2 !important;
+  color: var(--pink-light) !important;
   text-decoration: none !important;
 }
 
@@ -134,16 +134,16 @@ a:hover {
    Adjust border-radius, border color, and box-shadow for the glow
    ============================================================ */
 .paper-layer {
-  background-color: #ffffffe7;
+  background-color: var(--paper-bg);
   max-width: 850px;
   margin: 60px auto;
   padding: 60px;
   box-shadow:
-    -10px 0 40px rgba(42, 191, 217, 0.747),
-    10px 0 40px #ff6da2bb,
-    0 10px 40px #2abfd9b0;
+    -10px 0 40px rgba(var(--cyan-rgb), 0.747),
+    10px 0 40px rgba(var(--pink-light-rgb), 0.733),
+    0 10px 40px rgba(var(--cyan-rgb), 0.690);
   border-radius: 50px;
-  border: 5px solid rgba(42, 190, 217, 1);
+  border: 5px solid var(--cyan);
 }
 
 .paper-layer::after {
@@ -175,7 +175,7 @@ a:hover {
 }
 
 .site-header a:hover {
-  text-shadow: 1px 2px 4px #23bbad !important;
+  text-shadow: 1px 2px 4px var(--teal-dark) !important;
 }
 
 /* Nav links (upper right — About, Research, etc.) */
@@ -185,7 +185,7 @@ a:hover {
 }
 
 .site-nav a:hover {
-  text-shadow: 1px 2px 4px #23bbad !important;
+  text-shadow: 1px 2px 4px var(--teal-dark) !important;
 }
 
 /* ============================================================
@@ -196,7 +196,7 @@ a:hover {
   background-color: transparent !important;
   border-top: none !important;
   box-shadow: none !important;
-  color:  #ff6da2;
+  color: var(--pink-light);
 }
 
 /* Header and footer link/text colors */
@@ -204,7 +204,7 @@ a:hover {
 .site-nav a, .site-nav a:visited,
 .site-footer a, .site-footer a:visited,
 .footer-col, .footer-col p {
-  color: #ff6da2 !important;
+  color: var(--pink-light) !important;
 }
 
 /* ============================================================
@@ -213,7 +213,7 @@ a:hover {
    ============================================================ */
 #publications-list {
   font-family: 'EB Garamond', Times, serif;
-  color: #333;
+  color: var(--text-dark);
 }
 
 .csl-entry {
@@ -223,7 +223,7 @@ a:hover {
 }
 
 .csl-entry a {
-  color: #0077cc;
+  color: var(--link-academic);
   text-decoration: none;
 }
 
@@ -245,19 +245,19 @@ a:hover {
    ============================================================ */
 .applet-launch-btn {
   display: inline-block;
-  background: #16212a;
-  color: #eef2f5;
+  background: var(--bg-dark);
+  color: var(--text-bright);
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 1rem;
   letter-spacing: 2px;
   padding: 10px 28px;
   cursor: pointer;
   border-radius: 10px;
-  border: 2px solid #25d9c8;
+  border: 2px solid var(--teal-light);
   box-shadow:
-    -8px 0 30px rgba(42, 191, 217, 0.5),
-     8px 0 30px rgba(255, 109, 162, 0.5),
-     0 4px 20px rgba(42, 191, 217, 0.35);
+    -8px 0 30px rgba(var(--cyan-rgb), 0.5),
+     8px 0 30px rgba(var(--pink-light-rgb), 0.5),
+     0 4px 20px rgba(var(--cyan-rgb), 0.35);
   transition: box-shadow 0.2s ease, background 0.2s ease;
 }
 canvas:focus, canvas {
@@ -272,9 +272,9 @@ canvas:focus, canvas {
 }
 
 .applet-launch-btn:hover {
-  background: #1e3040;
+  background: var(--bg-mid);
   box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.75),
-     12px 0 40px rgba(255, 109, 162, 0.75),
-     0 6px 30px rgba(42, 191, 217, 0.5);
+    -12px 0 40px rgba(var(--cyan-rgb), 0.75),
+     12px 0 40px rgba(var(--pink-light-rgb), 0.75),
+     0 6px 30px rgba(var(--cyan-rgb), 0.5);
 }

@@ -54,6 +54,12 @@
         const ctx = canvas.getContext('2d');
         let t = 0;
 
+        const cs = getComputedStyle(document.documentElement);
+        const tealRgb = cs.getPropertyValue('--teal-dark-rgb').trim();
+        const pinkRgb = cs.getPropertyValue('--pink-dark-rgb').trim();
+        const gradStop0 = `rgba(${tealRgb}, 0.28)`;
+        const gradStop1 = `rgba(${pinkRgb}, 0.28)`;
+
         function resize() {
           canvas.width = window.innerWidth;
           canvas.height = window.innerHeight;
@@ -69,8 +75,8 @@
 
           // Diagonal gradient: green (top-left) to blue (bottom-right)
           const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-          grad.addColorStop(0, 'rgba(35, 187, 173, 0.28)');   /* --teal-dark */
-          grad.addColorStop(1, 'rgba(249, 38, 114, 0.28)');   /* --pink-dark */
+          grad.addColorStop(0, gradStop0);
+          grad.addColorStop(1, gradStop1);
           ctx.strokeStyle = grad;
 
           for (let y = 0; y < canvas.height + spacing; y += spacing) {

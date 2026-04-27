@@ -43,19 +43,19 @@
     s.textContent = `
 /* ── Per-panel glow colours (fixed for all applets) ── */
 .applet-shell-header  {
-  border-color: var(--pink-dark, #f92672);
-  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45),
-              0  8px 20px rgba(249, 38, 114, 0.25);
+  border-color: var(--pink-dark);
+  box-shadow: 0 -8px 30px rgba(var(--pink-dark-rgb), 0.45),
+              0  8px 20px rgba(var(--pink-dark-rgb), 0.25);
 }
 .applet-shell-sim {
-  border-color: var(--teal-dark, #23bbad);
-  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5),
-                0 12px 30px rgba(35, 187, 173, 0.3);
+  border-color: var(--teal-dark);
+  box-shadow: -12px 0 35px rgba(var(--teal-dark-rgb), 0.5),
+                0 12px 30px rgba(var(--teal-dark-rgb), 0.3);
 }
 .applet-shell-ctrl {
-  border-color: var(--cyan, #2abed9);
-  box-shadow: 12px 0 35px rgba(42, 190, 217, 0.5),
-               0 12px 30px rgba(42, 190, 217, 0.3);
+  border-color: var(--cyan);
+  box-shadow: 12px 0 35px rgba(var(--cyan-rgb), 0.5),
+               0 12px 30px rgba(var(--cyan-rgb), 0.3);
   clip-path: inset(0px -60px -60px -60px);
 }
 
@@ -63,8 +63,8 @@
 .applet-shell-panel {
   position: fixed;
   z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
+  background: var(--bg-dark);
+  color: var(--text-bright);
   font-family: 'EB Garamond', Georgia, serif;
   border-width: 2px;
   border-style: solid;
@@ -96,15 +96,15 @@
 .applet-shell-header-inner h2 {
   font-size: calc(15px * var(--shell-fs, 1));
   letter-spacing: 2px;
-  color: #eef2f5;
+  color: var(--text-bright);
   font-weight: normal;
   margin: 0;
   text-transform: uppercase;
 }
 .applet-shell-close-btn {
   background: none;
-  border: 1px solid #3d5a6e;
-  color: #eef2f5;
+  border: 1px solid var(--border-mid);
+  color: var(--text-bright);
   font-family: 'EB Garamond', Georgia, serif;
   font-size: calc(13px * var(--shell-fs, 1));
   letter-spacing: 1px;
@@ -112,7 +112,7 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.applet-shell-close-btn:hover { background: #2a3d4e; }
+.applet-shell-close-btn:hover { background: var(--bg-control); }
 
 /* ── Canvas fills sim panel ── */
 .applet-shell-canvas {
@@ -126,7 +126,7 @@
 /* ── Control panel sections ── */
 .applet-shell-ctrl-section {
   padding: calc(14px * var(--shell-fs, 1)) calc(16px * var(--shell-fs, 1)) calc(10px * var(--shell-fs, 1));
-  border-bottom: 1px solid #2e3f4f;
+  border-bottom: 1px solid var(--border-dark);
   display: flex;
   flex-direction: column;
   gap: calc(10px * var(--shell-fs, 1));
@@ -137,7 +137,7 @@
   font-size: calc(14px * var(--shell-fs, 1));
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: #a8c0d0;
+  color: var(--text-dim);
   margin: 0 0 2px;
 }
 
@@ -152,7 +152,7 @@
 .applet-shell-slider-row .applet-shell-side {
   font-size: calc(14px * var(--shell-fs, 1));
   letter-spacing: 0.5px;
-  color: #a8c0d0;
+  color: var(--text-dim);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -163,7 +163,7 @@
   appearance: none;
   height: 3px;
   border-radius: 2px;
-  background: rgba(100, 120, 140, 0.35);
+  background: rgba(var(--slider-track-rgb), 0.35);
   outline: none;
   cursor: pointer;
 }
@@ -172,7 +172,7 @@
   width: calc(12px * var(--shell-fs, 1));
   height: calc(12px * var(--shell-fs, 1));
   border-radius: 50%;
-  background: #25d9c8;
+  background: var(--teal-light);
   cursor: pointer;
   margin-top: calc(-4.5px * var(--shell-fs, 1));
 }
@@ -180,13 +180,13 @@
   width: calc(12px * var(--shell-fs, 1));
   height: calc(12px * var(--shell-fs, 1));
   border-radius: 50%;
-  background: #25d9c8;
+  background: var(--teal-light);
   border: none;
   cursor: pointer;
 }
 .applet-shell-val {
   font-size: calc(16px * var(--shell-fs, 1));
-  color: #25d9c8;
+  color: var(--teal-light);
   min-width: calc(34px * var(--shell-fs, 1));
   text-align: right;
   letter-spacing: 0.5px;
@@ -200,9 +200,9 @@
   flex-wrap: wrap;
 }
 .applet-shell-btn {
-  background: #2a3d4e;
-  color: #eef2f5;
-  border: 1px solid #3d5a6e;
+  background: var(--bg-control);
+  color: var(--text-bright);
+  border: 1px solid var(--border-mid);
   padding: calc(5px * var(--shell-fs, 1)) calc(14px * var(--shell-fs, 1));
   cursor: pointer;
   font-family: 'EB Garamond', Georgia, serif;
@@ -211,20 +211,20 @@
   border-radius: 4px;
   transition: background 0.15s;
 }
-.applet-shell-btn:hover { background: #3a5060; }
+.applet-shell-btn:hover { background: var(--bg-hover); }
 .applet-shell-btn.active {
-  background: #1e3a4a;
-  border-color: #25d9c8;
-  color: #25d9c8;
-  box-shadow: 0 0 10px rgba(37, 217, 200, 0.6),
-              0 0 20px rgba(37, 217, 200, 0.3);
+  background: var(--bg-active-teal);
+  border-color: var(--teal-light);
+  color: var(--teal-light);
+  box-shadow: 0 0 10px rgba(var(--teal-light-rgb), 0.6),
+              0 0 20px rgba(var(--teal-light-rgb), 0.3);
 }
 .applet-shell-btn.active-pink {
-  background: #2a1a28;
-  border-color: #f92672;
-  color: #f92672;
-  box-shadow: 0 0 10px rgba(249, 38, 114, 0.6),
-              0 0 20px rgba(249, 38, 114, 0.3);
+  background: var(--bg-active-pink2);
+  border-color: var(--pink-dark);
+  color: var(--pink-dark);
+  box-shadow: 0 0 10px rgba(var(--pink-dark-rgb), 0.6),
+              0 0 20px rgba(var(--pink-dark-rgb), 0.3);
 }
     `;
     document.head.appendChild(s);
