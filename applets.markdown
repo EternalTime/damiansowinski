@@ -8,11 +8,24 @@ title: Applets
 <a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
 <br>
 
+
+<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
+  Computational Physics+ Applets
+</h1>
+
+<div>
+Computational physics is awesome. It's the art of telling a computer how to simulate phenomena we see in the world. But it's not limited to just those phenomena we know about. We can use 
+</div>
+
 <img src="{{ '/assets/images/Under-Construction-Sign.png' | relative_url }}"
      style="float: center; width: 55%; margin: 0 20px 20px 20px; border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
      alt="Description"> 
 
 ---
+
+<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
+  Statistical Physics
+</h1>
 
 <button class="applet-launch-btn" onclick="isingOpen(); this.blur()">Ising Model</button>
 
@@ -77,3 +90,8 @@ title: Applets
 <button class="applet-launch-btn" onclick="shoOpen(); this.blur()">SHO</button>
 
 {% include sho_applet.html %}
+
+<button class="applet-launch-btn" onclick="iswOpen(); this.blur()">Infinite Square Well</button>
+
+{% include isw_applet.html %}
+
