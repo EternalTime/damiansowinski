@@ -19,8 +19,8 @@
 .demon-panel {
   position: fixed;
   z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
+  background: var(--bg-dark);
+  color: var(--text-bright);
   font-family: 'EB Garamond', Georgia, serif;
   border: 2px solid transparent;
   border-radius: 14px;
@@ -43,15 +43,15 @@
 /* Per-panel border + glow colours */
 #demon-header {
   border-color: var(--pink-dark);
-  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
+  box-shadow: 0 -8px 30px color-mix(in srgb, var(--pink-dark) 45%, transparent), 0 8px 20px color-mix(in srgb, var(--pink-dark) 25%, transparent);
 }
 #demon-sim-panel {
   border-color: var(--teal-dark);
-  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
+  box-shadow: -12px 0 35px color-mix(in srgb, var(--teal-dark) 50%, transparent), 0 12px 30px color-mix(in srgb, var(--teal-dark) 30%, transparent);
 }
 #demon-ctrl-panel {
   border-color: var(--cyan);
-  box-shadow: 0 12px 35px rgba(42, 190, 217, 0.5), 0 -4px 20px rgba(42, 190, 217, 0.3);
+  box-shadow: 0 12px 35px color-mix(in srgb, var(--cyan) 50%, transparent), 0 -4px 20px color-mix(in srgb, var(--cyan) 30%, transparent);
 }
 
 /* ── Header panel — slides from top ── */
@@ -72,15 +72,15 @@
 #demon-header h2 {
   font-size: 15px;
   letter-spacing: 2px;
-  color: #eef2f5;
+  color: var(--text-bright);
   font-weight: normal;
   margin: 0;
   text-transform: uppercase;
 }
 #demon-close-btn {
   background: none;
-  border: 1px solid #3d5a6e;
-  color: #eef2f5;
+  border: 1px solid var(--border-mid);
+  color: var(--text-bright);
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 13px;
   letter-spacing: 1px;
@@ -88,7 +88,7 @@
   border-radius: 4px;
   cursor: pointer;
 }
-#demon-close-btn:hover { background: #2a3d4e; }
+#demon-close-btn:hover { background: var(--bg-control); }
 
 /* ── Sim panel — slides from left ── */
 #demon-sim-panel {
@@ -110,16 +110,16 @@
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%) rotate(-12deg);
-  color: #cc2233;
+  color: var(--red);
   font-size: 52px;
   font-family: 'EB Garamond', Georgia, serif;
   font-weight: bold;
   letter-spacing: 4px;
-  border: 6px solid #cc2233;
+  border: 6px solid var(--red);
   padding: 12px 28px;
   opacity: 0.92;
   pointer-events: none;
-  text-shadow: 2px 2px 8px #000;
+  text-shadow: 2px 2px 8px var(--black);
   white-space: nowrap;
 }
 
@@ -132,7 +132,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: #1a2530;
+  background: var(--bg-panel);
   transform: translateY(110vh);
   padding: 0 24px;
   box-sizing: border-box;
@@ -155,12 +155,12 @@
   font-size: 12px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #a8c0d0;
+  color: var(--text-dim);
 }
 .demon-temp-value {
   font-size: 22px;
   letter-spacing: 1px;
-  color: #eef2f5;
+  color: var(--text-bright);
   font-variant-numeric: tabular-nums;
 }
 
@@ -175,9 +175,9 @@
   padding: 0 28px;
 }
 .demon-btn {
-  background: #2a3d4e;
-  color: #eef2f5;
-  border: 1px solid #3d5a6e;
+  background: var(--bg-control);
+  color: var(--text-bright);
+  border: 1px solid var(--border-mid);
   padding: 10px 36px;
   cursor: pointer;
   font-family: 'EB Garamond', Georgia, serif;
@@ -187,12 +187,12 @@
   transition: background 0.15s;
   text-align: center;
 }
-.demon-btn:hover { background: #3a5060; }
+.demon-btn:hover { background: var(--bg-hover); }
 .demon-btn.demon-active {
-  background: #1e3a4a;
-  border-color: #25d9c8;
-  color: #25d9c8;
-  box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
+  background: var(--bg-active-teal);
+  border-color: var(--teal-light);
+  color: var(--teal-light);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--teal-light) 60%, transparent), 0 0 20px color-mix(in srgb, var(--teal-light) 30%, transparent);
 }
 .demon-btn-small {
   padding: 6px 14px;
@@ -239,6 +239,13 @@
 
 <script>
 (function () {
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+
+  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
+  const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+
   const GAP  = 0;
   const PAD  = 20;
   const PHI  = 1.6180339887;
@@ -429,7 +436,7 @@
 
   /* ── Render ── */
   function render() {
-    ctx.fillStyle = '#0f1a22';
+    ctx.fillStyle = _c('--bg-deep');
     ctx.fillRect(0, 0, BW, BH);
 
     // Centre wall
@@ -440,7 +447,7 @@
     const gapBot  = doorCY + gapHalf;
     const wallW   = R;
 
-    ctx.fillStyle = '#25d9c8';
+    ctx.fillStyle = _c('--teal-light');
     // Wall above gap
     if (gapTop > 0) {
       ctx.fillRect(midX - wallW * 0.5, 0, wallW, gapTop);
@@ -452,7 +459,7 @@
 
     // Pink seam — visible only when door is fully closed, marks the door position
     if (doorFrac === 0) {
-      ctx.fillStyle = '#c0396a';
+      ctx.fillStyle = _c('--pink-mid');
       ctx.fillRect(midX - wallW * 0.5, doorCY - 1, wallW, 2);
     }
 
@@ -467,9 +474,9 @@
     for (let i = 0; i < N; i++) {
       const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
       const hot = Math.min(spd / spdRef, 1);
-      const r = Math.round(37  + (249 - 37)  * hot);
-      const g = Math.round(217 + (38  - 217) * hot);
-      const b = Math.round(200 + (114 - 200) * hot);
+      const r = Math.round(_TLR + (_PDR - _TLR) * hot);
+      const g = Math.round(_TLG + (_PDG - _TLG) * hot);
+      const b = Math.round(_TLB + (_PDB - _TLB) * hot);
 
       // Radial gradient: highlight offset toward light, base colour at edge
       const hx = px[i] + LX * R * 0.45;
@@ -513,9 +520,9 @@
       }
       spd = count > 0 ? spd / count : 0;
       const hot = Math.min(spd / spdRef, 1);
-      const r = Math.round(37  + (249 - 37)  * hot);
-      const g = Math.round(217 + (38  - 217) * hot);
-      const b = Math.round(200 + (114 - 200) * hot);
+      const r = Math.round(_TLR + (_PDR - _TLR) * hot);
+      const g = Math.round(_TLG + (_PDG - _TLG) * hot);
+      const b = Math.round(_TLB + (_PDB - _TLB) * hot);
       return `rgb(${r},${g},${b})`;
     }
 

@@ -25,24 +25,32 @@
   overflow-y: auto;
   min-height: 0;
   scrollbar-width: thin;
-  scrollbar-color: #2e3f4f #16212a;
+  scrollbar-color: var(--border-dark) var(--bg-dark);
 }
 #sho-scrollable::-webkit-scrollbar { width: 4px; }
-#sho-scrollable::-webkit-scrollbar-track { background: #16212a; }
-#sho-scrollable::-webkit-scrollbar-thumb { background: #2e3f4f; border-radius: 2px; }
+#sho-scrollable::-webkit-scrollbar-track { background: var(--bg-dark); }
+#sho-scrollable::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 2px; }
 </style>
 
 <script>
 (function () {
   'use strict';
 
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+  const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
+
   /* ── Palette ── */
-  const TEAL_DARK  = '#23bbad';
-  const TEAL_LIGHT = '#25d9c8';
-  const CYAN       = '#2abed9';
-  const PINK_LIGHT = '#ff6da2';
-  const PINK_DARK  = '#f92672';
-  const BG         = '#0d1117';
+  const TEAL_DARK  = _c('--teal-dark');
+  const TEAL_LIGHT = _c('--teal-light');
+  const CYAN       = _c('--cyan');
+  const PINK_LIGHT = _c('--pink-light');
+  const PINK_DARK  = _c('--pink-dark');
+  const BG         = _c('--bg-canvas');
+
+  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
+  const [_PLR, _PLG, _PLB] = _rgb('--pink-light');
 
   /* ── Parameters ── */
   let mass    = 1.0;
@@ -279,7 +287,7 @@
     }
 
     // Solid background matching control panel
-    phaseCtx.fillStyle = '#16212a';
+    phaseCtx.fillStyle = _c('--bg-dark');
     phaseCtx.fillRect(0, 0, W, H);
 
     const nM = (mode === '1mass') ? 1 : numMasses;
@@ -302,7 +310,7 @@
     const cx = PL + pw / 2, cy = PT + ph / 2;
 
     // Axes
-    phaseCtx.strokeStyle = 'rgba(168,192,208,0.60)';
+    phaseCtx.strokeStyle = _rgba('--text-dim', 0.60);
     phaseCtx.lineWidth = 1;
     phaseCtx.beginPath();
     phaseCtx.moveTo(PL, cy); phaseCtx.lineTo(PL + pw, cy);
@@ -310,7 +318,7 @@
     phaseCtx.stroke();
 
     // Axis labels
-    phaseCtx.fillStyle = '#a8c0d0';
+    phaseCtx.fillStyle = _c('--text-dim');
     phaseCtx.font = `${fontSize}px 'EB Garamond', Georgia, serif`;
     phaseCtx.textAlign = 'center';
     phaseCtx.textBaseline = 'bottom';
@@ -342,12 +350,12 @@
         // Color: teal for single mass, gradient teal→pink for lattice
         let r, g, b;
         if (nM === 1) {
-          r = 37; g = 217; b = 200;
+          r = _TLR; g = _TLG; b = _TLB;
         } else {
           const t = mi / Math.max(nM - 1, 1);
-          r = Math.round(37  + (255 - 37)  * t);
-          g = Math.round(217 + (109 - 217) * t);
-          b = Math.round(200 + (162 - 200) * t);
+          r = Math.round(_TLR + (_PLR - _TLR) * t);
+          g = Math.round(_TLG + (_PLG - _TLG) * t);
+          b = Math.round(_TLB + (_PLB - _TLB) * t);
         }
 
         // Inner bright core + soft outer glow
@@ -476,9 +484,9 @@
     const panelH = S * 0.10;
     const panelW = maxLen * 2 + S * 0.08;
     const grdBg  = ctx.createRadialGradient(cx, cy, 0, cx, cy, panelW * 0.55);
-    grdBg.addColorStop(0,   'rgba(249,38,114,0.18)');
-    grdBg.addColorStop(0.6, 'rgba(249,38,114,0.07)');
-    grdBg.addColorStop(1,   'rgba(249,38,114,0)');
+    grdBg.addColorStop(0,   _rgba('--pink-dark', 0.18));
+    grdBg.addColorStop(0.6, _rgba('--pink-dark', 0.07));
+    grdBg.addColorStop(1,   _rgba('--pink-dark', 0));
     ctx.fillStyle = grdBg;
     ctx.fillRect(cx - panelW / 2, cy - panelH / 2, panelW, panelH);
 
@@ -525,7 +533,7 @@
 
     // Equilibrium marker
     ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = 'rgba(37,217,200,0.18)';
+    ctx.strokeStyle = _rgba('--teal-light', 0.18);
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(eqX(), cy - r * 2);
@@ -537,7 +545,7 @@
     drawSpring(ctx, wallX, cy, mx - r, 8, TEAL_DARK);
 
     // Mass ball (teal)
-    drawBall(ctx, mx, cy, r, [37, 217, 200]);
+    drawBall(ctx, mx, cy, r, _rgb('--teal-light'));
 
     renderDriveArrow();
   }
@@ -593,9 +601,9 @@
     // Masses: teal → pink
     for (let i = 0; i < N; i++) {
       const t  = N > 1 ? i / (N - 1) : 0;
-      const cr = Math.round(37  + (255 - 37)  * t);
-      const cg = Math.round(217 + (109 - 217) * t);
-      const cb = Math.round(200 + (162 - 200) * t);
+      const cr = Math.round(_TLR + (_PLR - _TLR) * t);
+      const cg = Math.round(_TLG + (_PLG - _TLG) * t);
+      const cb = Math.round(_TLB + (_PLB - _TLB) * t);
       drawBall(ctx, mx[i], cy, r, [cr, cg, cb]);
     }
   }

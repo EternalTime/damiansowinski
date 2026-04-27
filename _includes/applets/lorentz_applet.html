@@ -4,11 +4,15 @@
 (function () {
   'use strict';
 
-  /* ── Palette (from assets/css/palette.css) ── */
-  const PINK_DARK   = '#f92672';   /* rgb(249,  38, 114) */
-  const PINK_LIGHT  = '#ff6da2';   /* rgb(255, 109, 162) */
-  const TEAL_DARK   = '#23bbad';   /* rgb( 35, 187, 173) */
-  const TEAL_LIGHT  = '#25d9c8';   /* rgb( 37, 217, 200) */
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+  const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
+
+  const PINK_DARK   = _c('--pink-dark');
+  const PINK_LIGHT  = _c('--pink-light');
+  const TEAL_DARK   = _c('--teal-dark');
+  const TEAL_LIGHT  = _c('--teal-light');
 
   /* ── State ── */
   let beta1 = 0.0;   // frame 1 (pink)
@@ -35,7 +39,7 @@
     ctx.clearRect(0, 0, S, S);
 
     // Background
-    ctx.fillStyle = '#0d0d0d';
+    ctx.fillStyle = _c('--bg-black');
     ctx.fillRect(0, 0, S, S);
 
     const cx = S / 2;   // diagram origin in canvas pixels
@@ -80,7 +84,7 @@
     ctx.lineTo(top.px, top.py);
     ctx.lineTo(tr.px, tr.py);
     ctx.closePath();
-    ctx.fillStyle = 'rgba(212, 175, 55, 0.1)';
+    ctx.fillStyle = _rgba('--gold', 0.1);
     ctx.fill();
 
     // Past lightcone (lower triangle)
@@ -90,7 +94,7 @@
     ctx.lineTo(bot.px, bot.py);
     ctx.lineTo(br.px, br.py);
     ctx.closePath();
-    ctx.fillStyle = 'rgba(212, 175, 55, 0.1)';
+    ctx.fillStyle = _rgba('--gold', 0.1);
     ctx.fill();
 
     // Spacelike regions (left and right triangles) — dimmer
@@ -100,7 +104,7 @@
     ctx.lineTo(left.px, left.py);
     ctx.lineTo(bl.px, bl.py);
     ctx.closePath();
-    ctx.fillStyle = 'rgba(212, 175, 55, 0.0)';
+    ctx.fillStyle = _rgba('--gold', 0.0);
     ctx.fill();
 
     ctx.beginPath();
@@ -109,11 +113,11 @@
     ctx.lineTo(right.px, right.py);
     ctx.lineTo(br.px, br.py);
     ctx.closePath();
-    ctx.fillStyle = 'rgba(212, 175, 55, 0.0)';
+    ctx.fillStyle = _rgba('--gold', 0.0);
     ctx.fill();
 
     // Light cone lines
-    ctx.strokeStyle = 'rgba(212, 175, 55, 1.0)';
+    ctx.strokeStyle = _rgba('--gold', 1.0);
     ctx.lineWidth = 1;
     ctx.setLineDash([4, 6]);
     diagLine(-1.5, -1.5,  1.5,  1.5);
@@ -181,7 +185,7 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Worldline A &nbsp;<span style="color:#f92672">&#9632;</span></div>
+        <div class="applet-shell-ctrl-title">Worldline A &nbsp;<span style="color:var(--pink-dark)">&#9632;</span></div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">&minus;1</span>
           <input type="range" id="ltz-beta1" min="-0.99" max="0.99" step="0.01" value="0">
@@ -190,7 +194,7 @@
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Worldline B &nbsp;<span style="color:#23bbad">&#9632;</span></div>
+        <div class="applet-shell-ctrl-title">Worldline B &nbsp;<span style="color:var(--teal-dark)">&#9632;</span></div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">&minus;1</span>
           <input type="range" id="ltz-beta2" min="-0.99" max="0.99" step="0.01" value="0">

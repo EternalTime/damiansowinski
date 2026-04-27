@@ -19,8 +19,8 @@
 .oh-panel {
   position: fixed;
   z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
+  background: var(--bg-dark);
+  color: var(--text-bright);
   font-family: 'EB Garamond', Georgia, serif;
   border: 2px solid transparent;
   border-radius: 14px;
@@ -43,15 +43,15 @@
 /* Per-panel border + glow colours */
 #oh-header {
   border-color: var(--pink-dark);
-  box-shadow: 0 -8px 30px rgba(249, 38, 114, 0.45), 0 8px 20px rgba(249, 38, 114, 0.25);
+  box-shadow: 0 -8px 30px color-mix(in srgb, var(--pink-dark) 45%, transparent), 0 8px 20px color-mix(in srgb, var(--pink-dark) 25%, transparent);
 }
 #oh-sim-panel {
   border-color: var(--teal-dark);
-  box-shadow: -12px 0 35px rgba(35, 187, 173, 0.5), 0 12px 30px rgba(35, 187, 173, 0.3);
+  box-shadow: -12px 0 35px color-mix(in srgb, var(--teal-dark) 50%, transparent), 0 12px 30px color-mix(in srgb, var(--teal-dark) 30%, transparent);
 }
 #oh-ctrl-panel {
   border-color: var(--cyan);
-  box-shadow: 0 12px 35px rgba(42, 190, 217, 0.5), 0 -4px 20px rgba(42, 190, 217, 0.3);
+  box-shadow: 0 12px 35px color-mix(in srgb, var(--cyan) 50%, transparent), 0 -4px 20px color-mix(in srgb, var(--cyan) 30%, transparent);
 }
 
 /* ── Header panel — slides from top ── */
@@ -72,15 +72,15 @@
 #oh-header h2 {
   font-size: 15px;
   letter-spacing: 2px;
-  color: #eef2f5;
+  color: var(--text-bright);
   font-weight: normal;
   margin: 0;
   text-transform: uppercase;
 }
 #oh-close-btn {
   background: none;
-  border: 1px solid #3d5a6e;
-  color: #eef2f5;
+  border: 1px solid var(--border-mid);
+  color: var(--text-bright);
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 13px;
   letter-spacing: 1px;
@@ -88,7 +88,7 @@
   border-radius: 4px;
   cursor: pointer;
 }
-#oh-close-btn:hover { background: #2a3d4e; }
+#oh-close-btn:hover { background: var(--bg-control); }
 
 /* ── Sim panel — slides from left ── */
 #oh-sim-panel {
@@ -116,7 +116,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: #1a2530;
+  background: var(--bg-panel);
   transform: translateY(110vh);
   padding: 0 24px;
   box-sizing: border-box;
@@ -128,9 +128,9 @@
 
 /* Buttons */
 .oh-btn {
-  background: #2a3d4e;
-  color: #eef2f5;
-  border: 1px solid #3d5a6e;
+  background: var(--bg-control);
+  color: var(--text-bright);
+  border: 1px solid var(--border-mid);
   padding: 8px 28px;
   cursor: pointer;
   font-family: 'EB Garamond', Georgia, serif;
@@ -141,25 +141,25 @@
   text-align: center;
   white-space: nowrap;
 }
-.oh-btn:hover { background: #3a5060; }
+.oh-btn:hover { background: var(--bg-hover); }
 .oh-btn.oh-active-teal {
-  background: #1e3a4a;
-  border-color: #25d9c8;
-  color: #25d9c8;
-  box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
+  background: var(--bg-active-teal);
+  border-color: var(--teal-light);
+  color: var(--teal-light);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--teal-light) 60%, transparent), 0 0 20px color-mix(in srgb, var(--teal-light) 30%, transparent);
 }
 .oh-btn.oh-active-pink {
-  background: #3a1a2e;
-  border-color: #f92672;
-  color: #f92672;
-  box-shadow: 0 0 10px rgba(249,38,114,0.6), 0 0 20px rgba(249,38,114,0.3);
+  background: var(--bg-active-pink);
+  border-color: var(--pink-dark);
+  color: var(--pink-dark);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--pink-dark) 60%, transparent), 0 0 20px color-mix(in srgb, var(--pink-dark) 30%, transparent);
 }
 
 /* Divider */
 .oh-divider {
   width: 1px;
   height: 60%;
-  background: #3d5a6e;
+  background: var(--border-mid);
   flex-shrink: 0;
 }
 
@@ -176,12 +176,12 @@
   font-size: 11px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #a8c0d0;
+  color: var(--text-dim);
 }
 .oh-time-value {
   font-size: 18px;
   letter-spacing: 1px;
-  color: #eef2f5;
+  color: var(--text-bright);
   font-variant-numeric: tabular-nums;
 }
 
@@ -222,11 +222,16 @@
 (function () {
   'use strict';
 
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+  const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
+
   /* ── Palette ── */
-  const TEAL_DARK  = '#23bbad';
-  const TEAL_LIGHT = '#25d9c8';
-  const PINK_DARK  = '#f92672';
-  const PINK_LIGHT = '#ff6da2';
+  const TEAL_DARK  = _c('--teal-dark');
+  const TEAL_LIGHT = _c('--teal-light');
+  const PINK_DARK  = _c('--pink-dark');
+  const PINK_LIGHT = _c('--pink-light');
 
   /* ── Grid parameters ── */
   const N      = 2048;          // lattice sites
@@ -367,7 +372,7 @@
     ctx.clearRect(0, 0, simW, simH);
 
     // Background
-    ctx.fillStyle = '#0f1a22';
+    ctx.fillStyle = _c('--bg-deep');
     ctx.fillRect(0, 0, simW, simH);
 
     const a = scaleFactor(simTime);
@@ -459,7 +464,7 @@
 
     // ── Axis lines: dashed white lines at the two potential minima φ=0 and φ=1 ──
     ctx.save();
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.strokeStyle = _rgba('--white', 0.3);
     ctx.lineWidth   = 1;
     ctx.setLineDash([4, 6]);
 
