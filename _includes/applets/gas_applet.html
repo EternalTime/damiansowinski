@@ -19,6 +19,14 @@
 
 <script>
 (function () {
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+  const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
+
+  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
+  const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+
   /* ── Simulation state ── */
   let N  = 100;
   let T  = 1.0;
@@ -162,12 +170,12 @@
   }
 
   function render() {
-    ctx.fillStyle = '#0f1a22';
+    ctx.fillStyle = _c('--bg-deep');
     ctx.fillRect(0, 0, L, L);
     if (wallX > 0) {
-      ctx.fillStyle = 'rgba(37,217,200,0.25)';
+      ctx.fillStyle = _rgba('--teal-light', 0.25);
       ctx.fillRect(0, 0, wallX, L);
-      ctx.fillStyle = '#25d9c8';
+      ctx.fillStyle = _c('--teal-light');
       ctx.fillRect(wallX - 2, 0, 3, L);
     }
     let meanSpd = 0;
@@ -178,9 +186,9 @@
     for (let i = 0; i < N; i++) {
       const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
       const hot = Math.min(spd / spdRef, 1);
-      const r = Math.round(37  + (249 - 37)  * hot);
-      const g = Math.round(217 + (38  - 217) * hot);
-      const b = Math.round(200 + (114 - 200) * hot);
+      const r = Math.round(_TLR + (_PDR - _TLR) * hot);
+      const g = Math.round(_TLG + (_PDG - _TLG) * hot);
+      const b = Math.round(_TLB + (_PDB - _TLB) * hot);
       const hx = px[i] + LX * R * 0.45;
       const hy = py[i] + LY * R * 0.45;
       const grad = ctx.createRadialGradient(hx, hy, 0, px[i], py[i], R);
@@ -234,13 +242,13 @@
     const pw = W - PL - PR, ph = H - PT - PB;
     const bw = pw / N_BINS;
     hctx.clearRect(0, 0, W, H);
-    hctx.fillStyle = 'rgba(37,217,200,0.45)';
+    hctx.fillStyle = _rgba('--teal-light', 0.45);
     for (let b = 0; b < N_BINS; b++) {
       const bh = Math.min(smoothBins[b] / ymax, 1) * ph;
       hctx.fillRect(PL + b * bw, PT + ph - bh, bw - 1, bh);
     }
     hctx.beginPath();
-    hctx.strokeStyle = '#f92672';
+    hctx.strokeStyle = _c('--pink-dark');
     hctx.lineWidth   = 1.5;
     for (let b = 0; b < N_BINS; b++) {
       const x = PL + (b + 0.5) * bw;

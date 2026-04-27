@@ -4,27 +4,27 @@
 /* ── Launch button ── */
 .leafs-launch-btn {
   display: inline-block;
-  background: #16212a;
-  color: #cdd6de;
+  background: var(--bg-dark);
+  color: var(--text-light);
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 1rem;
   letter-spacing: 2px;
   padding: 10px 28px;
   cursor: pointer;
   border-radius: 10px;
-  border: 2px solid #25d9c8;
+  border: 2px solid var(--teal-light);
   box-shadow:
-    -8px 0 30px rgba(42, 191, 217, 0.5),
-    8px 0 30px rgba(255, 109, 162, 0.5),
-    0 4px 20px rgba(42, 191, 217, 0.35);
+    -8px 0 30px color-mix(in srgb, var(--cyan) 50%, transparent),
+    8px 0 30px color-mix(in srgb, var(--pink-light) 50%, transparent),
+    0 4px 20px color-mix(in srgb, var(--cyan) 35%, transparent);
   transition: box-shadow 0.2s ease, background 0.2s ease;
 }
 .leafs-launch-btn:hover {
-  background: #1e3040;
+  background: var(--bg-mid);
   box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.75),
-    12px 0 40px rgba(255, 109, 162, 0.75),
-    0 6px 30px rgba(42, 191, 217, 0.5);
+    -12px 0 40px color-mix(in srgb, var(--cyan) 75%, transparent),
+    12px 0 40px color-mix(in srgb, var(--pink-light) 75%, transparent),
+    0 6px 30px color-mix(in srgb, var(--cyan) 50%, transparent);
 }
 
 /* ── Overlay backdrop ── */
@@ -48,14 +48,14 @@
 .leafs-panel {
   position: fixed;
   z-index: 910;
-  background: #16212a;
-  color: #cdd6de;
+  background: var(--bg-dark);
+  color: var(--text-light);
   font-family: 'EB Garamond', Georgia, serif;
-  border: 2px solid #25d9c8;
+  border: 2px solid var(--teal-light);
   box-shadow:
-    -12px 0 40px rgba(42, 191, 217, 0.55),
-    12px 0 40px rgba(255, 109, 162, 0.55),
-    0 12px 40px rgba(42, 191, 217, 0.4);
+    -12px 0 40px color-mix(in srgb, var(--cyan) 55%, transparent),
+    12px 0 40px color-mix(in srgb, var(--pink-light) 55%, transparent),
+    0 12px 40px color-mix(in srgb, var(--cyan) 40%, transparent);
   border-radius: 14px;
   overflow: hidden;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
@@ -86,7 +86,7 @@
 #leafs-header h2 {
   font-size: 15px;
   letter-spacing: 2px;
-  color: #cdd6de;
+  color: var(--text-light);
   font-weight: normal;
   font-family: 'EB Garamond', Georgia, serif;
   margin: 0;
@@ -112,10 +112,10 @@
 #leafs-status-bar {
   padding: 4px 12px;
   font-size: 13px;
-  color: #cdd6de;
-  border-top: 1px solid #2e3f4f;
+  color: var(--text-light);
+  border-top: 1px solid var(--border-dark);
   flex-shrink: 0;
-  background: #16212a;
+  background: var(--bg-dark);
   font-family: 'EB Garamond', Georgia, serif;
 }
 #leafs-extinction-stamp {
@@ -123,15 +123,15 @@
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%) rotate(-15deg);
-  color: #cc2233;
+  color: var(--red);
   font-size: 48px;
   font-weight: bold;
   letter-spacing: 6px;
-  border: 6px solid #cc2233;
+  border: 6px solid var(--red);
   padding: 10px 24px;
   opacity: 0.92;
   pointer-events: none;
-  text-shadow: 2px 2px 8px #000;
+  text-shadow: 2px 2px 8px var(--black);
   white-space: nowrap;
 }
 
@@ -143,13 +143,13 @@
   height: var(--leafs-H-body);
   display: flex;
   flex-direction: column;
-  background: #1a2530;
+  background: var(--bg-panel);
   transform: translateX(110vw);
 }
 #leafs-right-panel.leafs-open { transform: translateX(0); }
 #leafs-genome-header {
   padding: 6px 12px;
-  border-bottom: 1px solid #2e3f4f;
+  border-bottom: 1px solid var(--border-dark);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -157,7 +157,7 @@
 }
 #leafs-genome-header span {
   font-size: 11px;
-  color: #cdd6de;
+  color: var(--text-light);
   text-transform: uppercase;
   letter-spacing: 1px;
   font-family: 'EB Garamond', Georgia, serif;
@@ -172,7 +172,7 @@
   flex: 1;
   min-height: 0;
   box-sizing: border-box;
-  border-top: 1px solid #2e3f4f;
+  border-top: 1px solid var(--border-dark);
   display: flex;
   flex-direction: column;
 }
@@ -189,8 +189,8 @@
   letter-spacing: 1px;
   font-family: 'EB Garamond', Georgia, serif;
 }
-#leafs-slider-labels span:first-child { color: rgba(142, 48, 80, 0.8); }
-#leafs-slider-labels span:last-child  { color: rgba(122, 173, 224, 0.8); }
+#leafs-slider-labels span:first-child { color: color-mix(in srgb, var(--pink-deep) 80%, transparent); }
+#leafs-slider-labels span:last-child  { color: color-mix(in srgb, var(--blue-lighter) 80%, transparent); }
 #leafs-slider-panel {
   flex: 1;
   overflow-y: auto;
@@ -214,7 +214,7 @@
   transform: rotate(180deg);
   font-size: 16px;
   letter-spacing: 0.5px;
-  color: #b8c8d4;
+  color: var(--text-mid);
   font-family: 'EB Garamond', Georgia, serif;
   white-space: nowrap;
 }
@@ -234,16 +234,16 @@
   gap: 8px;
 }
 .leafs-panel .leafs-ctrl-group label {
-  color: #cdd6de;
+  color: var(--text-light);
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-family: 'EB Garamond', Georgia, serif;
 }
 .leafs-panel button {
-  background: #2a3d4e;
-  color: #cdd6de;
-  border: 1px solid #3d5a6e;
+  background: var(--bg-control);
+  color: var(--text-light);
+  border: 1px solid var(--border-mid);
   padding: 4px 12px;
   cursor: pointer;
   font-family: 'EB Garamond', Georgia, serif;
@@ -251,12 +251,12 @@
   letter-spacing: 1px;
   border-radius: 4px;
 }
-.leafs-panel button:hover  { background: #3a5060; }
-.leafs-panel button.active { background: #4a6a80; border-color: #6ab8d8; color: #fff; }
+.leafs-panel button:hover  { background: var(--bg-hover); }
+.leafs-panel button.active { background: var(--bg-active); border-color: var(--blue-light); color: var(--white); }
 .leafs-panel select {
-  background: #2a3d4e;
-  color: #cdd6de;
-  border: 1px solid #3d5a6e;
+  background: var(--bg-control);
+  color: var(--text-light);
+  border: 1px solid var(--border-mid);
   padding: 4px 8px;
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 14px;
@@ -272,20 +272,20 @@
   border-radius: 2px;
   /* set via JS per-slider using --pct */
   background: linear-gradient(to right,
-    rgba(142, 48, 80, 0.45)   0%,
-    rgba(142, 48, 80, 0.45)   50%,
-    rgba(122, 173, 224, 0.45) 50%,
-    rgba(122, 173, 224, 0.45) 100%
+    color-mix(in srgb, var(--pink-deep) 45%, transparent)    0%,
+    color-mix(in srgb, var(--pink-deep) 45%, transparent)    50%,
+    color-mix(in srgb, var(--blue-lighter) 45%, transparent) 50%,
+    color-mix(in srgb, var(--blue-lighter) 45%, transparent) 100%
   );
 }
 .leafs-slider-row input[type=range]::-moz-range-track {
   height: 3px;
   border-radius: 2px;
-  background: rgba(100, 100, 120, 0.3);
+  background: color-mix(in srgb, var(--bg-control) 30%, transparent);
 }
 .leafs-slider-row input[type=range]::-moz-range-progress {
   height: 3px;
-  background: rgba(142, 48, 80, 0.45);
+  background: color-mix(in srgb, var(--pink-deep) 45%, transparent);
 }
 .leafs-slider-row input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -293,7 +293,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #cdd6de;
+  background: var(--text-light);
   border: none;
   cursor: pointer;
   margin-top: -4.5px;
@@ -302,7 +302,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #cdd6de;
+  background: var(--text-light);
   border: none;
   cursor: pointer;
 }
@@ -330,7 +330,7 @@
     <div class="leafs-ctrl-group">
       <label>Speed</label>
       <input type="range" id="leafs-speed-slider" min="1" max="20" step="1" value="5" style="width:70px">
-      <span id="leafs-speed-val" style="color:#cdd6de;width:20px;">5</span>
+      <span id="leafs-speed-val" style="color:var(--text-light);width:20px;">5</span>
     </div>
     <div class="leafs-ctrl-group">
       <label>Preset</label>
@@ -355,7 +355,7 @@
   <div id="leafs-right-panel" class="leafs-panel">
     <div id="leafs-genome-header">
       <span>Genome Editor</span>
-      <span style="color:#4a6a80;font-size:10px;">drag slider &#183; graph highlights</span>
+      <span style="color:var(--bg-active);font-size:10px;">drag slider &#183; graph highlights</span>
     </div>
     <canvas id="leafs-genome-canvas"></canvas>
     <div id="leafs-slider-wrapper">
@@ -372,6 +372,10 @@
 <script>
 (function() {
 'use strict';
+
+const _cs = getComputedStyle(document.documentElement);
+const _c   = n => _cs.getPropertyValue(n).trim();
+const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
 
 let leafsInitialized = false;
 let leafsRunning = false;
@@ -456,11 +460,18 @@ window.leafsToggle = function() {
 
 // ── Palette ────────────────────────────────────────────────────────────────
 const PAL = {
-  bg: '#5a7a96', resource: '#4db84a', resourceInner: '#2a6e2a',
-  agentBody: '#b08890', agentBorder: '#cdd6de',
-  cone: '#6ab8d8', coneFired: '#b08890',
-  posEdge: '#7aade0', negEdge: '#8e3050',
-  hidNode: '#b08890', inNode: '#6ab8d8', outNode: '#7a9aae',
+  bg:            _c('--blue-mid'),
+  resource:      _c('--green-light'),
+  resourceInner: _c('--green-dark'),
+  agentBody:     _c('--pink-muted'),
+  agentBorder:   _c('--text-light'),
+  cone:          _c('--blue-light'),
+  coneFired:     _c('--pink-muted'),
+  posEdge:       _c('--blue-lighter'),
+  negEdge:       _c('--pink-deep'),
+  hidNode:       _c('--pink-muted'),
+  inNode:        _c('--blue-light'),
+  outNode:       _c('--blue-muted'),
 };
 
 // ── Parameters ─────────────────────────────────────────────────────────────
@@ -757,7 +768,7 @@ function drawSelfLoop(ctx,cx,cy,lw,col,sign){
 }
 function drawGenomeGraph(){
   const W=genCanvas.width,H=genCanvas.height;
-  genCtx.clearRect(0,0,W,H);genCtx.fillStyle='#1a2530';genCtx.fillRect(0,0,W,H);
+  genCtx.clearRect(0,0,W,H);genCtx.fillStyle=_c('--bg-panel');genCtx.fillRect(0,0,W,H);
   const{inNodes,hidNodes,outNodes}=getNodePositions(W,H),gm=genome;
   const allW=[...gm.W_in.flat(),...gm.W_rec.flat(),...gm.W_out.flat(),...gm.b_in,...gm.b_out];
   const wMax=Math.max(...allW.map(Math.abs),1e-6);
@@ -767,7 +778,7 @@ function drawGenomeGraph(){
   const isActive=key=>key===activeSliderKey;
 
   // White glow helpers — set before drawing, clear after
-  function glowOn()  { genCtx.shadowColor='#ffffff'; genCtx.shadowBlur=18; }
+  function glowOn()  { genCtx.shadowColor=_c('--white'); genCtx.shadowBlur=18; }
   function glowOff() { genCtx.shadowColor='transparent'; genCtx.shadowBlur=0; }
 
   for(let hi=0;hi<3;hi++)for(let ii=0;ii<3;ii++){
@@ -803,9 +814,9 @@ function drawGenomeGraph(){
     const key=`S${i+1}`;
     genCtx.beginPath();genCtx.arc(x,y,NODE_R,0,2*Math.PI);
     genCtx.fillStyle=PAL.inNode;genCtx.fill();
-    genCtx.strokeStyle='#6090a8';genCtx.lineWidth=1.5;genCtx.stroke();
+    genCtx.strokeStyle=_c('--blue');genCtx.lineWidth=1.5;genCtx.stroke();
     // S with subscript inside node
-    genCtx.fillStyle='#1a2530';
+    genCtx.fillStyle=_c('--bg-panel');
     genCtx.font='bold 17px serif';genCtx.textAlign='center';
     genCtx.fillText('S',x-4,y+6);
     genCtx.font='bold 12px serif';
@@ -816,10 +827,10 @@ function drawGenomeGraph(){
     if(hl)glowOn();
     genCtx.beginPath();genCtx.arc(x,y,NODE_R,0,2*Math.PI);
     genCtx.fillStyle=PAL.hidNode;genCtx.fill();
-    genCtx.strokeStyle=hl?'#ffffff':biasCol(b);genCtx.lineWidth=hl?3.5:biasLW(b);genCtx.stroke();
+    genCtx.strokeStyle=hl?_c('--white'):biasCol(b);genCtx.lineWidth=hl?3.5:biasLW(b);genCtx.stroke();
     glowOff();
     // H with subscript inside node
-    genCtx.fillStyle='#1a2530';
+    genCtx.fillStyle=_c('--bg-panel');
     genCtx.font='bold 17px serif';genCtx.textAlign='center';
     genCtx.fillText('H',x-4,y+6);
     genCtx.font='bold 12px serif';
@@ -831,10 +842,10 @@ function drawGenomeGraph(){
     if(hl)glowOn();
     genCtx.beginPath();genCtx.arc(x,y,NODE_R,0,2*Math.PI);
     genCtx.fillStyle=PAL.outNode;genCtx.fill();
-    genCtx.strokeStyle=hl?'#ffffff':biasCol(b);genCtx.lineWidth=hl?3.5:biasLW(b);genCtx.stroke();
+    genCtx.strokeStyle=hl?_c('--white'):biasCol(b);genCtx.lineWidth=hl?3.5:biasLW(b);genCtx.stroke();
     glowOff();
     // A with subscript inside node
-    genCtx.fillStyle='#1a2530';
+    genCtx.fillStyle=_c('--bg-panel');
     genCtx.font='bold 17px serif';genCtx.textAlign='center';
     genCtx.fillText('A',x-4,y+6);
     genCtx.font='bold 12px serif';
