@@ -56,4 +56,19 @@
   --near-black:   #111111;
   --amber:        #f9b450;  /* Brownian trail                */
   --gold:         #d4af37;  /* Lorentz light cone            */
+
+  /* --- Page / content --- */
+  --text-body:    #222222;  /* body/paragraph text           */
+  --text-dark:    #333333;  /* publications list text        */
+  --link-academic: #0077cc; /* CSL entry links               */
+  --paper-bg:     #ffffffe7; /* paper-layer background       */
+  --bg-active-pink2: #2a1a28; /* active-pink btn (shell)     */
+
+  /* --- RGB channels for rgba() calls --- */
+  --teal-dark-rgb:    35, 187, 173;
+  --teal-light-rgb:   37, 217, 200;
+  --cyan-rgb:         42, 190, 217;
+  --pink-dark-rgb:    249, 38, 114;
+  --pink-light-rgb:   255, 109, 162;
+  --slider-track-rgb: 100, 120, 140;
 }
