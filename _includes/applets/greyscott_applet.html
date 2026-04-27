@@ -2,6 +2,10 @@
 
 <script>
 (function () {
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+
   const Dv = 0.1, V_MAX = 0.4, STEPS_PER_FRAME = 8;
 
   let N = 128;
@@ -15,12 +19,12 @@
   const lut = new Uint8Array(LUT_SIZE * 3);
   (function () {
     const stops = [
-      [ 17,  17,  17],
-      [ 35, 187, 173],
-      [ 37, 217, 200],
-      [ 42, 190, 217],
-      [255, 109, 162],
-      [249,  38, 114],
+      _rgb('--near-black'),
+      _rgb('--teal-dark'),
+      _rgb('--teal-light'),
+      _rgb('--cyan'),
+      _rgb('--pink-light'),
+      _rgb('--pink-dark'),
     ];
     for (let i = 0; i < LUT_SIZE; i++) {
       const t = i / (LUT_SIZE - 1);

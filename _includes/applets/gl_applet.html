@@ -16,6 +16,11 @@
 
 <script>
 (function () {
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+  const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
+
   const PAD = 20;
   const N   = 256;
   const DT  = 0.05;
@@ -72,11 +77,11 @@
   const lut = new Uint8Array(LUT_SIZE * 3);
   (function buildLUT() {
     const stops = [
-      [249,  38, 114],
-      [255, 109, 162],
-      [ 42, 190, 217],
-      [ 37, 217, 200],
-      [ 35, 187, 173],
+      _rgb('--pink-dark'),
+      _rgb('--pink-light'),
+      _rgb('--cyan'),
+      _rgb('--teal-light'),
+      _rgb('--teal-dark'),
     ];
     for (let i = 0; i < LUT_SIZE; i++) {
       const t  = i / (LUT_SIZE - 1);
@@ -152,7 +157,7 @@
       plotCtx.fillRect(PAD_L + b * barW, PAD_T + ph - bh, Math.max(barW - 0.5, 1), bh);
     }
     plotCtx.beginPath();
-    plotCtx.strokeStyle = 'rgba(180,200,210,0.85)';
+    plotCtx.strokeStyle = _rgba('--text-mid', 0.85);
     plotCtx.lineWidth   = 1.5;
     for (let i = 0; i < N_CURVE; i++) {
       const x = PAD_L + (curveX[i] - PHI_MIN) / (PHI_MAX - PHI_MIN) * pw;
