@@ -1,8 +1,59 @@
 /* 80s Retro Palette — color-hex.com/color-palette/89476 */
 :root {
-  --teal-dark:  #23bbad;  /* rgb(35, 187, 173)  */
-  --teal-light: #25d9c8;  /* rgb(37, 217, 200)  */
-  --cyan:       #2abed9;  /* rgb(42, 190, 217)  */
-  --pink-light: #ff6da2;  /* rgb(255, 109, 162) */
-  --pink-dark:  #f92672;  /* rgb(249, 38, 114)  */
+  /* --- Accent / neon --- */
+  --teal-dark:    #23bbad;  /* rgb( 35, 187, 173) */
+  --teal-light:   #25d9c8;  /* rgb( 37, 217, 200) */
+  --cyan:         #2abed9;  /* rgb( 42, 190, 217) */
+  --pink-light:   #ff6da2;  /* rgb(255, 109, 162) */
+  --pink-dark:    #f92672;  /* rgb(249,  38, 114) */
+
+  /* --- Extended pink / red --- */
+  --pink-mid:     #c0396a;  /* hot-particle mid tone        */
+  --pink-deep:    #8e3050;  /* negative-weight edge         */
+  --pink-muted:   #b08890;  /* agent body / hidden node     */
+  --red:          #cc2233;  /* error / alert                */
+
+  /* --- Green (ecology / forager) --- */
+  --green-light:  #4db84a;
+  --green-dark:   #2a6e2a;
+
+  /* --- Blue accents (visualization) --- */
+  --blue-lighter: #7aade0;  /* positive-weight edge         */
+  --blue-light:   #6ab8d8;  /* cone / active border         */
+  --blue:         #6090a8;  /* graph axis strokes           */
+  --blue-muted:   #7a9aae;  /* output node                  */
+  --blue-mid:     #5a7a96;  /* simulation background        */
+
+  /* --- Canvas backgrounds (near-black) --- */
+  --bg-void:      #04040e;  /* spring-lattice deepest bg    */
+  --bg-black:     #0d0d0d;  /* Lorentz canvas               */
+  --bg-canvas:    #0d1117;  /* SHO canvas                   */
+  --bg-deep:      #0f1a22;  /* common canvas fill           */
+
+  /* --- UI backgrounds (dark panels) --- */
+  --bg-dark:      #16212a;  /* main applet shell background */
+  --bg-panel:     #1a2530;  /* inner panel background       */
+  --bg-mid:       #1e3040;  /* mid-depth panel              */
+  --bg-active-teal: #1e3a4a; /* active button, teal accent  */
+  --bg-active-pink: #3a1a2e; /* active button, pink accent  */
+  --bg-control:   #2a3d4e;  /* button / input background    */
+  --bg-hover:     #3a5060;  /* button hover                 */
+  --bg-active:    #4a6a80;  /* active / selected button     */
+
+  /* --- Borders --- */
+  --border-dark:  #2e3f4f;  /* subtle dividers / scrollbar  */
+  --border-mid:   #3d5a6e;  /* control borders              */
+
+  /* --- Text scale (dim → bright) --- */
+  --text-dim:     #a8c0d0;
+  --text-mid:     #b8c8d4;
+  --text-light:   #cdd6de;
+  --text-bright:  #eef2f5;
+
+  /* --- Utility --- */
+  --white:        #ffffff;
+  --black:        #000000;
+  --near-black:   #111111;
+  --amber:        #f9b450;  /* Brownian trail                */
+  --gold:         #d4af37;  /* Lorentz light cone            */
 }

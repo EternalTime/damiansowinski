@@ -4,6 +4,13 @@
 (function () {
   'use strict';
 
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+
+  const [_TDR, _TDG, _TDB] = _rgb('--teal-dark');
+  const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+
   /*
    * COORDINATE CONVENTION
    * ---------------------
@@ -90,18 +97,16 @@
     const t  = Math.log2(ratio);
     const tc = Math.max(-2.5, Math.min(2.5, t));
     if (tc >= 0) {
-      // white (255,255,255) → teal-dark (35,187,173)
       const s = tc / 2.5;
-      const r = Math.round(255 + s * (35  - 255));
-      const g = Math.round(255 + s * (187 - 255));
-      const b = Math.round(255 + s * (173 - 255));
+      const r = Math.round(255 + s * (_TDR - 255));
+      const g = Math.round(255 + s * (_TDG - 255));
+      const b = Math.round(255 + s * (_TDB - 255));
       return (r << 16) | (g << 8) | b;
     } else {
-      // white (255,255,255) → pink-dark (249,38,114)
       const s = -tc / 2.5;
-      const r = Math.round(255 + s * (249 - 255));
-      const g = Math.round(255 + s * (38  - 255));
-      const b = Math.round(255 + s * (114 - 255));
+      const r = Math.round(255 + s * (_PDR - 255));
+      const g = Math.round(255 + s * (_PDG - 255));
+      const b = Math.round(255 + s * (_PDB - 255));
       return (r << 16) | (g << 8) | b;
     }
   }
@@ -110,7 +115,7 @@
   function initThree(canvas, S) {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     renderer.setSize(S, S, false);
-    renderer.setClearColor(0x04040e, 1);
+    renderer.setClearColor(new THREE.Color(_c('--bg-void')), 1);
 
     scene  = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(70, 1, 0.1, 800);
@@ -290,11 +295,11 @@
       </div>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Relativistic effects</div>
-        <div style="font-size:0.78em;color:var(--text-muted,#aaa);line-height:1.9;">
+        <div style="font-size:0.78em;color:var(--text-dim);line-height:1.9;">
           <div id="lt-gamma-val">&gamma; = 1.000</div>
           <div id="lt-contract-val">Contraction: 1.000&times;</div>
-          <div style="margin-top:6px;color:#23bbad;">&#9632; Blueshift (ahead)</div>
-          <div style="color:#f92672;">&#9632; Redshift (behind)</div>
+          <div style="margin-top:6px;color:var(--teal-dark);">&#9632; Blueshift (ahead)</div>
+          <div style="color:var(--pink-dark);">&#9632; Redshift (behind)</div>
         </div>
       </div>
     `,

@@ -49,7 +49,7 @@ By observing the gas, and acting on that information, the demon can make the gas
 Why don't you try it:
 
 <button class="applet-launch-btn" onclick="demonOpen()">Maxwell's Demon</button>
-{% include maxwell_demon_applet.html %}
+{% include applets/maxwell_demon_applet.html %}
 
 Were you hired?
 
