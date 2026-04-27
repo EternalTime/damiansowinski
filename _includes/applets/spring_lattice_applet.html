@@ -16,6 +16,17 @@
 (function () {
   'use strict';
 
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+  const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
+
+  const [_BVR, _BVG, _BVB] = _rgb('--bg-void');
+  const [_TDR, _TDG, _TDB] = _rgb('--teal-dark');
+  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
+  const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+  const [_PLR, _PLG, _PLB] = _rgb('--pink-light');
+
   /* ── Parameters ── */
   let springK     = 200.0;
   let massM       = 1.0;
@@ -124,11 +135,11 @@
     const t = Math.max(0, Math.min(1, Math.abs(signed) / scale));
     let r, g, b;
     if (signed >= 0) {
-      if (t < 0.5) { const s=t/0.5;      r=lerpCh(4,35,s);   g=lerpCh(4,187,s);  b=lerpCh(14,173,s); }
-      else         { const s=(t-0.5)/0.5; r=lerpCh(35,37,s);  g=lerpCh(187,217,s);b=lerpCh(173,200,s);}
+      if (t < 0.5) { const s=t/0.5;      r=lerpCh(_BVR,_TDR,s); g=lerpCh(_BVG,_TDG,s); b=lerpCh(_BVB,_TDB,s); }
+      else         { const s=(t-0.5)/0.5; r=lerpCh(_TDR,_TLR,s); g=lerpCh(_TDG,_TLG,s); b=lerpCh(_TDB,_TLB,s); }
     } else {
-      if (t < 0.5) { const s=t/0.5;      r=lerpCh(4,249,s);  g=lerpCh(4,38,s);   b=lerpCh(14,114,s); }
-      else         { const s=(t-0.5)/0.5; r=lerpCh(249,255,s);g=lerpCh(38,109,s); b=lerpCh(114,162,s);}
+      if (t < 0.5) { const s=t/0.5;      r=lerpCh(_BVR,_PDR,s); g=lerpCh(_BVG,_PDG,s); b=lerpCh(_BVB,_PDB,s); }
+      else         { const s=(t-0.5)/0.5; r=lerpCh(_PDR,_PLR,s); g=lerpCh(_PDG,_PLG,s); b=lerpCh(_PDB,_PLB,s); }
     }
     return `rgb(${r},${g},${b})`;
   }
@@ -153,14 +164,14 @@
 
   /* ── Render ── */
   function render() {
-    ctx.fillStyle = '#04040e';
+    ctx.fillStyle = _c('--bg-void');
     ctx.fillRect(0, 0, S, S);
     if (viewMode === 'tile') renderTile(); else renderNetwork();
     if (dragIdx >= 0) {
       const dotR = Math.max(2, spacing * 0.1);
       ctx.beginPath();
       ctx.arc(px[dragIdx], py[dragIdx], dotR*2.5, 0, Math.PI*2);
-      ctx.strokeStyle='#23bbad'; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.strokeStyle=_c('--teal-dark'); ctx.lineWidth=1.5; ctx.stroke();
     }
   }
 
@@ -177,7 +188,7 @@
         ctx.fillRect(px[idx]-half, py[idx]-half, spacing, spacing);
       }
     const dotR = Math.max(1.5, spacing*0.08);
-    ctx.fillStyle='rgba(255,255,255,0.75)';
+    ctx.fillStyle=_rgba('--white',0.75);
     for (let j=1; j<Ny-1; j++)
       for (let i=1; i<Nx-1; i++) {
         const idx=j*Nx+i;
@@ -239,7 +250,7 @@
     }
 
     const dotR=Math.max(2,spacing*0.1);
-    ctx.fillStyle='rgba(255,255,255,0.85)';
+    ctx.fillStyle=_rgba('--white',0.85);
     for (let j=1; j<Ny-1; j++)
       for (let i=1; i<Nx-1; i++) {
         const idx=j*Nx+i;
@@ -341,9 +352,9 @@
           </div>
         </div>
         <div class="applet-shell-ctrl-section">
-          <div style="font-size:0.78em;color:var(--text-muted,#aaa);line-height:2.0;">
-            <div style="color:#23bbad;">&#9632; Expansion / stretched</div>
-            <div style="color:#f92672;">&#9632; Compression / compressed</div>
+          <div style="font-size:0.78em;color:var(--text-dim);line-height:2.0;">
+            <div style="color:var(--teal-dark);">&#9632; Expansion / stretched</div>
+            <div style="color:var(--pink-dark);">&#9632; Compression / compressed</div>
           </div>
         </div>
       </div>

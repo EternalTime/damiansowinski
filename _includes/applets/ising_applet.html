@@ -18,13 +18,20 @@
   transform: translateX(-50%);
   width: 1px;
   height: 8px;
-  background: #a8c0d0;
+  background: var(--text-dim);
   pointer-events: none;
 }
 </style>
 
 <script>
 (function () {
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+
+  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
+  const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+
   /* ── Simulation constants ── */
   const N  = 400;
   const TC = 2.269;
@@ -89,9 +96,9 @@
         const raw  = spins[row * N + col];
         const disp = stagger ? raw * (((row + col) & 1) ? -1 : 1) : raw;
         const up   = disp === 1;
-        const r = up ?  37 : 249;
-        const g = up ? 217 :  38;
-        const b = up ? 200 : 114;
+        const r = up ? _TLR : _PDR;
+        const g = up ? _TLG : _PDG;
+        const b = up ? _TLB : _PDB;
         const x0 = colStarts[col], x1 = colStarts[col + 1];
         for (let py = y0; py < y1; py++) {
           for (let px = x0; px < x1; px++) {

@@ -17,19 +17,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: 1px solid #2e3f4f;
+  border-top: 1px solid var(--border-dark);
   overflow: hidden;
 }
 #fa-phase-title {
   font-size: 14px; text-transform: uppercase;
-  letter-spacing: 1.5px; color: #a8c0d0;
+  letter-spacing: 1.5px; color: var(--text-dim);
   padding: 6px 16px 4px;
   align-self: flex-start;
   flex-shrink: 0;
 }
 #fa-phase-canvas {
   display: block;
-  background: #1a2530;
+  background: var(--bg-panel);
   flex: 1;
   min-height: 0;
 }
@@ -39,11 +39,11 @@
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%) rotate(-15deg);
-  color: #cc2233;
+  color: var(--red);
   font-size: 48px;
   font-weight: bold;
   letter-spacing: 6px;
-  border: 6px solid #cc2233;
+  border: 6px solid var(--red);
   padding: 10px 24px;
   opacity: 0.92;
   pointer-events: none;
@@ -55,6 +55,13 @@
 <script>
 (function () {
 'use strict';
+
+const _cs = getComputedStyle(document.documentElement);
+const _c   = n => _cs.getPropertyValue(n).trim();
+const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
+
+const [_GLR, _GLG, _GLB] = _rgb('--green-light');
 
 const NX = 10, NY = 10, L = 10;
 const DOMAIN      = NX * L;
@@ -205,27 +212,27 @@ function drawSim() {
   const scale = Math.min(W / DOMAIN, H / DOMAIN);
   const offX = (W - DOMAIN * scale) / 2, offY = (H - DOMAIN * scale) / 2;
   const tx = x => offX + x * scale, ty = y => offY + y * scale;
-  simCtx.fillStyle = '#5a7a96';
+  simCtx.fillStyle = _c('--blue-mid');
   simCtx.fillRect(0, 0, W, H);
   for (const r of resources) {
     simCtx.beginPath(); simCtx.arc(tx(r.x), ty(r.y), 3.5, 0, 2 * Math.PI);
-    simCtx.fillStyle = '#4db84a'; simCtx.fill();
+    simCtx.fillStyle = _c('--green-light'); simCtx.fill();
     simCtx.beginPath(); simCtx.arc(tx(r.x), ty(r.y), 1.8, 0, 2 * Math.PI);
-    simCtx.fillStyle = '#2a6e2a'; simCtx.fill();
+    simCtx.fillStyle = _c('--green-dark'); simCtx.fill();
   }
   for (const a of agents) {
     const ax = tx(a.x), ay = ty(a.y);
     const hf = Math.max(0, a.s / S_MAX);
     const agR = scale * 1.2 * (0.35 + 0.65 * hf);
     simCtx.beginPath(); simCtx.arc(ax, ay, R_sense * scale, 0, 2 * Math.PI);
-    simCtx.fillStyle = 'rgba(106,184,216,0.12)'; simCtx.fill();
+    simCtx.fillStyle = _rgba('--blue-light', 0.12); simCtx.fill();
     simCtx.beginPath(); simCtx.arc(ax, ay, agR, 0, 2 * Math.PI);
-    simCtx.fillStyle = '#ff6da2'; simCtx.fill();
-    simCtx.strokeStyle = '#23bbad'; simCtx.lineWidth = 2.5; simCtx.stroke();
+    simCtx.fillStyle = _c('--pink-light'); simCtx.fill();
+    simCtx.strokeStyle = _c('--teal-dark'); simCtx.lineWidth = 2.5; simCtx.stroke();
     simCtx.beginPath();
     simCtx.moveTo(ax, ay);
     simCtx.lineTo(ax + Math.cos(a.theta) * agR * 1.5, ay + Math.sin(a.theta) * agR * 1.5);
-    simCtx.strokeStyle = '#eef2f5'; simCtx.lineWidth = 1.5; simCtx.stroke();
+    simCtx.strokeStyle = _c('--text-bright'); simCtx.lineWidth = 1.5; simCtx.stroke();
   }
 }
 
@@ -264,9 +271,9 @@ function addBlob(nr, na, alphaMul = 1) {
   const [cx, cy] = phaseToPixel(nr, na, W, H);
   const r = W * 0.03, a = BLOB_A * alphaMul;
   const grad = accumCtx.createRadialGradient(cx, cy, 0, cx, cy, r);
-  grad.addColorStop(0,   `rgba(77,184,74,${a})`);
-  grad.addColorStop(0.5, `rgba(77,184,74,${a * 0.4})`);
-  grad.addColorStop(1,   'rgba(77,184,74,0)');
+  grad.addColorStop(0,   `rgba(${_GLR},${_GLG},${_GLB},${a})`);
+  grad.addColorStop(0.5, `rgba(${_GLR},${_GLG},${_GLB},${a * 0.4})`);
+  grad.addColorStop(1,   `rgba(${_GLR},${_GLG},${_GLB},0)`);
   accumCtx.save();
   accumCtx.globalCompositeOperation = 'lighter';
   accumCtx.fillStyle = grad;
@@ -283,11 +290,11 @@ function drawPhase() {
   for (let i = 0; i < phaseTrail.length; i++) {
     addBlob(phaseTrail[i].nr, phaseTrail[i].na, Math.exp(-decay*(phaseTrail.length-1-i)));
   }
-  phaseCtx.fillStyle = '#1a2530'; phaseCtx.fillRect(0, 0, W, H);
+  phaseCtx.fillStyle = _c('--bg-panel'); phaseCtx.fillRect(0, 0, W, H);
   phaseCtx.drawImage(accumCanvas, 0, 0);
   phaseCtx.save();
   phaseCtx.setLineDash([5, 4]);
-  phaseCtx.strokeStyle = 'rgba(255,109,162,0.7)';
+  phaseCtx.strokeStyle = _rgba('--pink-light', 0.7);
   phaseCtx.lineWidth = 1;
   phaseCtx.beginPath();
   let started = false;
@@ -300,22 +307,22 @@ function drawPhase() {
   phaseCtx.stroke(); phaseCtx.setLineDash([]); phaseCtx.restore();
   phaseCtx.save(); phaseCtx.lineWidth = 1;
   const gx = phaseCtx.createLinearGradient(x0,y1,x1,y1);
-  gx.addColorStop(0,'rgba(42,190,217,0.85)'); gx.addColorStop(1,'rgba(42,190,217,0)');
+  gx.addColorStop(0,_rgba('--cyan',0.85)); gx.addColorStop(1,_rgba('--cyan',0));
   phaseCtx.strokeStyle = gx;
   phaseCtx.beginPath(); phaseCtx.moveTo(x0,y1); phaseCtx.lineTo(x1,y1); phaseCtx.stroke();
   const gy = phaseCtx.createLinearGradient(x0,y1,x0,y0);
-  gy.addColorStop(0,'rgba(42,190,217,0.85)'); gy.addColorStop(1,'rgba(42,190,217,0)');
+  gy.addColorStop(0,_rgba('--cyan',0.85)); gy.addColorStop(1,_rgba('--cyan',0));
   phaseCtx.strokeStyle = gy;
   phaseCtx.beginPath(); phaseCtx.moveTo(x0,y1); phaseCtx.lineTo(x0,y0); phaseCtx.stroke();
   phaseCtx.restore();
   const fontSize = Math.round(W * 0.05);
   phaseCtx.save();
   phaseCtx.font = `${fontSize}px 'EB Garamond', Georgia, serif`;
-  phaseCtx.textAlign='center'; phaseCtx.textBaseline='top'; phaseCtx.fillStyle='#4db84a';
+  phaseCtx.textAlign='center'; phaseCtx.textBaseline='top'; phaseCtx.fillStyle=_c('--green-light');
   phaseCtx.fillText('Resources', (x0+x1)/2, y1+fontSize*0.3);
   phaseCtx.translate(x0-fontSize*0.3, (y0+y1)/2);
   phaseCtx.rotate(-Math.PI/2); phaseCtx.textAlign='center'; phaseCtx.textBaseline='bottom';
-  phaseCtx.fillStyle='#ff6da2'; phaseCtx.fillText('Foragers', 0, 0);
+  phaseCtx.fillStyle=_c('--pink-light'); phaseCtx.fillText('Foragers', 0, 0);
   phaseCtx.restore();
 }
 
