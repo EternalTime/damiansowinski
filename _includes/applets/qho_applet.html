@@ -68,9 +68,10 @@
 
   /* ── Physics constants (ℏ = m = ω = 1) ── */
   const N_STATES = 15;
-  const XMAX     = 7.0;    // domain: x ∈ [−XMAX, XMAX]
+  const XMAX     = 5.0;    // domain: x ∈ [−XMAX, XMAX]
   const PSI_YMAX = 1.5;    // y-axis half-range for wavefunction plot
-  const PDF_YMAX = 3.5;    // y-axis max for probability density plot
+  const PDF_YMIN = -0.5;   // y-axis min for probability density plot
+  const PDF_YMAX = 1.75;   // y-axis max for probability density plot
   function energy(n) { return n + 0.5; }  // Eₙ = (n + ½)ℏω
 
   /* ── Simulation state ── */
@@ -79,7 +80,7 @@
   let running  = false;
   let frameId  = null;
   let simTime  = 0;
-  let simSpeed = 0.05;
+  let simSpeed = 0.5;
 
   const amp   = new Float64Array(N_STATES);
   const phase = new Float64Array(N_STATES);
@@ -238,15 +239,15 @@
   /* Canvas pixel → physics coords on the prob plot  (x ∈ [−XMAX, XMAX]) */
   function canvasToProbCoords(cx, cy) {
     const L  = getLayout();
-    const xp = ((cx - L.mL) / L.plotW) * 2 * XMAX - XMAX;
-    const yf = PDF_YMAX * (1 - (cy - L.y2top) / L.plotH);
+    const xp = ((cx - L.p2x) / L.p2w) * 2 * XMAX - XMAX;
+    const yf = PDF_YMIN + (PDF_YMAX - PDF_YMIN) * (1 - (cy - L.y2top) / L.p2h);
     return { xf: Math.max(-XMAX, Math.min(XMAX, xp)), yf: Math.max(0, yf) };
   }
 
   function isInProbPlot(cx, cy) {
     const L = getLayout();
-    return cx >= L.mL && cx <= L.mL + L.plotW &&
-           cy >= L.y2top && cy <= L.y2top + L.plotH;
+    return cx >= L.p2x && cx <= L.p2x + L.p2w &&
+           cy >= L.y2top && cy <= L.y2top + L.p2h;
   }
 
   function onCanvasDown(evt) {
@@ -341,20 +342,23 @@
 
   /* ── Layout ── */
   function getLayout() {
-    const mL    = Math.round(S * 0.06);
-    const mR    = Math.round(S * 0.06);
+    const mL    = 0;
+    const mR    = 0;
     const mTop  = Math.round(S * 0.04);
-    const mBot  = Math.round(S * 0.12);
     const mMid  = Math.round(S * 0.06);
-    const plotW = S - mL - mR;
-    const plotH = Math.floor((S - mTop - mBot - mMid) / 2);
+    const plotW = S;
+    // Wavefunction panel height; prob panel fills remaining space to canvas bottom
+    const plotH = Math.floor((S - mTop - mMid) / 2);
     const y1top = mTop;
     const y2top = mTop + plotH + mMid;
-    return { mL, mR, mTop, mBot, mMid, plotW, plotH, y1top, y2top };
+    const p2x   = 0;
+    const p2w   = S;
+    const p2h   = S - y2top;
+    return { mL, mR, mTop, mMid, plotW, plotH, y1top, y2top, p2x, p2w, p2h };
   }
 
   /* ── Rendering ── */
-  const NX = 300;
+  const NX = 150;
 
   function render() {
     if (!canvas) return;
@@ -368,55 +372,72 @@
       drawDrawModeOverlay(L);
     } else {
       drawWavefunctionPlot(L.mL, L.y1top, L.plotW, L.plotH);
-      drawProbabilityPlot (L.mL, L.y2top, L.plotW, L.plotH);
+      drawProbabilityPlot (L.p2x, L.y2top, L.p2w, L.p2h);
     }
   }
 
   /* ── Parabolic well  V(x) = x²/2  drawn on the prob-density panel ── */
   function drawParabola(L) {
-    const x0 = L.mL, y0 = L.y2top, w = L.plotW, h = L.plotH;
-
-    // Scale so V(XMAX) = PDF_YMAX × 0.30  (fills ~30 % of the panel height)
-    const vScale = PDF_YMAX * 0.30 / (XMAX * XMAX / 2);
+    const x0 = L.p2x, y0 = L.y2top, w = L.p2w, h = L.p2h;
+    const wallW = Math.max(1, Math.round(S * 0.008));
+    const step  = Math.round(S * 0.04);
+    const NP    = 200;
+    const yBottom = y0 + h;
+    const yRange    = PDF_YMAX - PDF_YMIN;
+    const wellYMin  = PDF_YMIN * 2;    // lower limit × 2
+    const wellYMax  = PDF_YMAX * 2.5;  // upper limit × 1.5
+    const wellRange = wellYMax - wellYMin;
 
     function toCanvasX(xp) { return x0 + (xp + XMAX) / (2 * XMAX) * w; }
-    function toCanvasY(xp) {
-      const v = xp * xp / 2 * vScale;
-      return y0 + h * (1 - Math.min(v, PDF_YMAX) / PDF_YMAX);
+    // toCanvasY uses scaled y range for the well
+    function toCanvasY(v)  { return y0 + h * (1 - (v - wellYMin) / wellRange); }
+
+    // V(x) = x²/2
+    function potential(xp) { return xp * xp / 2; }
+
+    // Build parabola path — arms allowed to extend above y2top
+    const parabolaPath = [];
+    for (let k = 0; k <= NP; k++) {
+      const xp = -XMAX + 2 * XMAX * k / NP;
+      parabolaPath.push({ px: toCanvasX(xp), py: toCanvasY(potential(xp)) });
     }
 
-    const NP      = 200;
-    const yBottom = y0 + h;
-
-    // Shaded fill under the parabola
+    // Hatch below the parabola, clipped to canvas bottom but not to panel top
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(x0, yBottom);
-    for (let k = 0; k <= NP; k++) {
-      const xp = -XMAX + 2 * XMAX * k / NP;
-      ctx.lineTo(toCanvasX(xp), toCanvasY(xp));
-    }
+    ctx.moveTo(parabolaPath[0].px, parabolaPath[0].py);
+    for (let k = 1; k <= NP; k++) ctx.lineTo(parabolaPath[k].px, parabolaPath[k].py);
     ctx.lineTo(x0 + w, yBottom);
+    ctx.lineTo(x0,     yBottom);
     ctx.closePath();
-    ctx.fillStyle = _rgba('--text-dim', 0.07);
-    ctx.fill();
+    ctx.clip();
+
+    // Hatch lines tall enough to cover the full canvas height
+    ctx.strokeStyle = _rgba('--text-dim', 0.30);
+    ctx.lineWidth   = wallW;
+    for (let d = -S; d <= w + S; d += step) {
+      ctx.beginPath();
+      ctx.moveTo(x0 + d,      0);
+      ctx.lineTo(x0 + d - S,  S);
+      ctx.stroke();
+    }
+    ctx.restore();
 
     // Parabola outline
+    ctx.save();
+    ctx.strokeStyle = _rgba('--text-dim', 0.35);
+    ctx.lineWidth   = wallW;
+    ctx.lineCap     = 'round';
     ctx.beginPath();
-    for (let k = 0; k <= NP; k++) {
-      const xp = -XMAX + 2 * XMAX * k / NP;
-      const px = toCanvasX(xp), py = toCanvasY(xp);
-      if (k === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-    }
-    ctx.strokeStyle = _rgba('--text-dim', 0.30);
-    ctx.lineWidth   = 1;
+    ctx.moveTo(parabolaPath[0].px, parabolaPath[0].py);
+    for (let k = 1; k <= NP; k++) ctx.lineTo(parabolaPath[k].px, parabolaPath[k].py);
     ctx.stroke();
     ctx.restore();
   }
 
   /* ── Draw-mode overlay ── */
   function drawDrawModeOverlay(L) {
-    const x0 = L.mL, y0 = L.y2top, w = L.plotW, h = L.plotH;
+    const x0 = L.p2x, y0 = L.y2top, w = L.p2w, h = L.p2h;
 
     ctx.save();
     ctx.fillStyle = _rgba('--pink-dark', 0.07);
@@ -513,7 +534,7 @@
   /* ── Probability density plot: |ψ|² with cyan fill ── */
   function drawProbabilityPlot(x0, y0, w, h) {
     const t = simTime;
-    function toY(v)  { return y0 + h * (1 - v / PDF_YMAX); }
+    function toY(v)  { return y0 + h * (1 - (v - PDF_YMIN) / (PDF_YMAX - PDF_YMIN)); }
     function toX(xp) { return x0 + (xp + XMAX) / (2 * XMAX) * w; }
 
     const prob = new Float32Array(NX + 1);
@@ -544,7 +565,7 @@
   }
 
   /* ── Animation loop ── */
-  const DT = 1 / 60;
+  const DT = 1 / 20;
 
   function loop() {
     if (running) {
