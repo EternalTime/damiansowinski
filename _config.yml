@@ -59,6 +59,10 @@ plugins:
 #
 exclude:
     - Teaching/university-of-rochester/
+    - Writing_Applet.txt
+    - HowToUpdateWebsite.txt
+    - CLAUDE.md
+    - README.md
 #   - .sass-cache/
 #   - .jekyll-cache/
 #   - gemfiles/
