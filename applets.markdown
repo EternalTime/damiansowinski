@@ -91,9 +91,17 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 
 {% include applets/sho_applet.html %}
 
-<button class="applet-launch-btn" onclick="iswOpen(); this.blur()">Infinite Square Well</button>
+---
 
-{% include isw_applet.html %}
+<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
+  Quantum Mechanics
+</h1>
+
+<button class="applet-launch-btn" onclick="iswOpen(); this.blur()">Infinite Square Well</button>
+<button class="applet-launch-btn" onclick="qhoOpen(); this.blur()">Quantum Harmonic Oscillator</button>
+
+{% include applets/isw_applet.html %}
+{% include applets/qho_applet.html %}
 
 {% comment %}
 <button class="applet-launch-btn" onclick="qtunOpen(); this.blur()">Quantum Tunneling</button>
