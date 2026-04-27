@@ -20,6 +20,22 @@
 #sho-drive-controls {
   display: none;
 }
+#sho-break-stamp {
+  display: none;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  color: #cc2233;
+  font-size: 48px;
+  font-weight: bold;
+  letter-spacing: 6px;
+  border: 6px solid #cc2233;
+  padding: 10px 24px;
+  opacity: 0.92;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: 'EB Garamond', Georgia, serif;
+}
 #sho-scrollable {
   flex: 1;
   overflow-y: auto;
@@ -50,6 +66,7 @@
   let damping    = 0.0;
   let driveAmp   = 0.0;
   let driveFreq  = 1.0;  // Hz
+  let simSpeed   = 1.0;  // multiplier on DT
   let numMasses  = 6;
   let bcMode     = 'clamped';   // 'clamped' | 'clamped-open' | 'open'
   let mode       = '1mass';     // '1mass' | 'lattice'
@@ -614,11 +631,41 @@
   }
 
   /* ── Animation loop ── */
+  function showBreakStamp() {
+    const stamp = document.getElementById('sho-break-stamp');
+    if (!stamp) return;
+    stamp.style.display = 'block';
+    setTimeout(() => { stamp.style.display = 'none'; }, 500);
+  }
+
+  function checkBounds() {
+    if (mode !== 'lattice') return;
+    const L = wallInnerLeft();
+    const R = wallInnerRight();
+    const dscl = latticeDispScale();
+    for (let i = 0; i < numMasses; i++) {
+      const px = latticeEqX(i) + lPos[i] * dscl;
+      if (px < L || px > R) {
+        initLattice();
+        dragging  = false;
+        dragIndex = -1;
+        showBreakStamp();
+        return;
+      }
+    }
+  }
+
+  let speedAccum = 0;
   function loop() {
     if (running && !dragging) {
-      if (mode === '1mass') stepSingle();
-      else stepLattice();
-      simTime += DT;
+      speedAccum += simSpeed;
+      while (speedAccum >= 1) {
+        speedAccum -= 1;
+        if (mode === '1mass') stepSingle();
+        else stepLattice();
+        simTime += DT;
+      }
+      checkBounds();
     }
     render();
     frameId = requestAnimationFrame(loop);
@@ -816,6 +863,12 @@
           <button class="applet-shell-btn" onclick="shoReset()">Reset</button>
           <button class="applet-shell-btn" id="sho-pause-btn" onclick="shoTogglePause()">Pause</button>
         </div>
+        <div class="applet-shell-ctrl-title" style="margin-top:6px;">Speed</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Slow</span>
+          <input type="range" id="sho-speed" min="0.1" max="5" step="0.1" value="1.0">
+          <span class="applet-shell-side">Fast</span>
+        </div>
       </div>
 
       <div id="sho-scrollable">
@@ -898,6 +951,15 @@
       phaseCvs = document.getElementById('sho-phase-canvas');
       phaseCtx = phaseCvs.getContext('2d');
 
+      // Inject stamp into sim panel if not already present
+      const simPanel = document.getElementById('sho-sim-panel');
+      if (simPanel && !document.getElementById('sho-break-stamp')) {
+        const stamp = document.createElement('div');
+        stamp.id = 'sho-break-stamp';
+        stamp.textContent = "DON'T BREAK ME";
+        simPanel.appendChild(stamp);
+      }
+
       // Set initial mode display
       setMode('1mass');
 
@@ -908,6 +970,7 @@
       driveAmp  = parseFloat(document.getElementById('sho-drive-amp').value);
       driveFreq = parseFloat(document.getElementById('sho-drive-freq').value);
       numMasses = parseInt(document.getElementById('sho-nmasses').value);
+      simSpeed  = parseFloat(document.getElementById('sho-speed').value);
 
       init();
       attachDragListeners();
@@ -984,6 +1047,10 @@
   document.getElementById('sho-nmasses').addEventListener('input', function () {
     numMasses = parseInt(this.value);
     initLattice();
+  });
+
+  document.getElementById('sho-speed').addEventListener('input', function () {
+    simSpeed = parseFloat(this.value);
   });
 
 })();
