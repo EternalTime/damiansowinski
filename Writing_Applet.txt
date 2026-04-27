@@ -1,9 +1,9 @@
 WRITING A PHYSICS APPLET FOR DAMIANSOWINSKI.COM
 ================================================
 
-All applets live in MyWebPage/_includes/ as self-contained HTML partials
-(e.g. ising_applet.html). Each is a single <script> block (plus an optional
-<style> block for applet-specific CSS) that uses the shared AppletShell
+All applets live in MyWebPage/_includes/applets/ as self-contained HTML
+partials (e.g. ising_applet.html). Each is a single <script> block (plus an
+optional <style> block for applet-specific CSS) that uses the shared AppletShell
 defined in assets/js/applet-shell.js.
 
 The shell handles all layout, animation, panel styling, and open/close
@@ -173,12 +173,76 @@ REGISTERING THE APPLET IN THE PAGE
 In MyWebPage/applets.markdown (or wherever applets are listed):
 
 1. Add a Jekyll include tag where you want the applet's HTML injected:
-     {% include mymodel_applet.html %}
+     {% include applets/mymodel_applet.html %}
 
 2. Add a button or link that calls window.mymodelOpen() on click.
 
 The shell script tag (assets/js/applet-shell.js) is already loaded globally
 in the page — you do not need to include it again.
+
+
+COLORS
+------
+
+All colors must come from the centralized palette in assets/css/palette.css.
+Never write a raw hex value (#rrggbb) or hardcoded rgb/rgba component inside
+an applet file. If you need a color that isn't in the palette, add it there
+first with a descriptive name and a comment.
+
+Add these four helpers at the very top of your IIFE (before any other code):
+
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+  const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
+
+Then use colors according to context:
+
+  CSS <style> block or HTML inline style="...":
+    Use var(--name) directly.
+      background: var(--bg-dark);
+      color: var(--text-light);
+
+  Semi-transparent color in CSS (box-shadow, border, etc.):
+    Use color-mix() — CSS cannot use var() inside rgba().
+      box-shadow: 0 4px 20px color-mix(in srgb, var(--cyan) 35%, transparent);
+
+  Canvas 2D fillStyle / strokeStyle / shadowColor:
+    Use _c() to read the CSS variable as a string at runtime.
+      ctx.fillStyle   = _c('--bg-deep');
+      ctx.strokeStyle = _c('--pink-dark');
+
+  Canvas 2D with variable alpha (rgba):
+    Use _rgba() which resolves the var and builds an rgba() string.
+      ctx.fillStyle = _rgba('--teal-light', 0.45);
+
+  putImageData pixel buffers and LUT tables (need integer r, g, b):
+    Use _rgb() which returns [r, g, b] as 0–255 integers.
+      const [R, G, B] = _rgb('--teal-light');
+      buf[base] = R; buf[base+1] = G; buf[base+2] = B;
+
+    For a LUT built at init time, call _rgb() inside the IIFE that
+    populates the lookup table:
+      const stops = [ _rgb('--teal-dark'), _rgb('--cyan'), _rgb('--pink-dark') ];
+
+  Three.js clear color:
+    THREE.Color accepts a CSS color string.
+      renderer.setClearColor(new THREE.Color(_c('--bg-dark')), 1);
+
+  Three.js palette stops (float 0–1 components):
+    Decompose with _rgb() then divide by 255.
+      const [R, G, B] = _rgb('--teal-light');
+      { u: 0.0, c: [R/255, G/255, B/255] }
+
+Common palette variables (see palette.css for the full list):
+  Backgrounds:  --bg-void, --bg-deep, --bg-dark, --bg-panel, --bg-mid
+  Borders:      --border-dark, --border-mid
+  Text:         --text-dim, --text-mid, --text-light, --text-bright
+  Accent teal:  --teal-dark, --teal-light, --cyan
+  Accent pink:  --pink-dark, --pink-light, --pink-mid, --pink-deep
+  Accent other: --amber, --gold, --green-light, --green-dark
+  UI states:    --bg-control, --bg-hover, --bg-active, --bg-active-teal, --bg-active-pink
+  Utility:      --white, --black, --near-black, --red
 
 
 SPECIAL CASES
