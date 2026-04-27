@@ -22,5 +22,12 @@ Designed as a cluster course for non-science majors, the course considers cultur
 <br>
 <div><strong>Spring 2026</strong></div>
 <ul><br>
-<li><a href="{{ '/assets/docs/teaching/UofR_PHYSICS_141_Syllabus.pdf' | relative_url }}">Syllabus</a></li>
+<li><a href="{{ '/assets/docs/teaching/university-of-rochester/PHYS100/UofR_PHYSICS_100_Course_Syllabus.pdf' | relative_url }}">Syllabus</a></li>
+<li><a href="{{ '/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet2.pdf' | relative_url }}">Worksheet 2</a></li>
+<li><a href="{{ '/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet3.pdf' | relative_url }}">Worksheet 3</a></li>
+<li><a href="{{ '/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet4.pdf' | relative_url }}">Worksheet 4</a></li>
+<li><a href="{{ '/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet5.pdf' | relative_url }}">Worksheet 5</a></li>
+<li><a href="{{ '/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet6.pdf' | relative_url }}">Worksheet 6</a></li>
+<li><a href="{{ '/assets/docs/teaching/university-of-rochester/PHYS100/PHYS100_midterm_studysheet.pdf' | relative_url }}">Midterm Study Sheet</a></li>
+<li><a href="{{ '/assets/docs/teaching/university-of-rochester/PHYS100/PHYS100_Final_StudySheet.pdf' | relative_url }}">Final Exam Study Sheet</a></li>
 <ul>
