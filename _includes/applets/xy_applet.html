@@ -2,6 +2,10 @@
 
 <script>
 (function () {
+  const _cs = getComputedStyle(document.documentElement);
+  const _c   = n => _cs.getPropertyValue(n).trim();
+  const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
+
   /* ── XY model parameters ── */
   let T  = 0.5;
   let L  = 48;
@@ -59,21 +63,21 @@
     return Math.round(circulation / (2 * Math.PI));
   }
 
-  const BG = [0x16, 0x21, 0x2a];
-  function mute(r, g, b, f) {
+  const BG = _rgb('--bg-dark');
+  function mute(rgb, f) {
     return [
-      Math.round(r + f * (BG[0] - r)),
-      Math.round(g + f * (BG[1] - g)),
-      Math.round(b + f * (BG[2] - b))
+      Math.round(rgb[0] + f * (BG[0] - rgb[0])),
+      Math.round(rgb[1] + f * (BG[1] - rgb[1])),
+      Math.round(rgb[2] + f * (BG[2] - rgb[2]))
     ];
   }
   const PALETTE = [
-    mute(0x23, 0xbb, 0xad, 0.45),
-    mute(0x25, 0xd9, 0xc8, 0.45),
-    mute(0x2a, 0xbe, 0xd9, 0.45),
-    mute(0xf9, 0x26, 0x72, 0.45),
-    mute(0xff, 0x6d, 0xa2, 0.45),
-    mute(0x23, 0xbb, 0xad, 0.0),
+    mute(_rgb('--teal-dark'),  0.45),
+    mute(_rgb('--teal-light'), 0.45),
+    mute(_rgb('--cyan'),       0.45),
+    mute(_rgb('--pink-dark'),  0.45),
+    mute(_rgb('--pink-light'), 0.45),
+    mute(_rgb('--teal-dark'),  0.0),
   ];
   const NSTOPS = PALETTE.length - 1;
 
@@ -122,7 +126,7 @@
         if (v === 0) continue;
         ctx.beginPath();
         ctx.arc((x + 1) * cellW, (y + 1) * cellH, vr, 0, 2 * Math.PI);
-        ctx.fillStyle = v > 0 ? '#f92672' : '#25d9c8';
+        ctx.fillStyle = v > 0 ? _c('--pink-dark') : _c('--teal-light');
         ctx.fill();
       }
     }
