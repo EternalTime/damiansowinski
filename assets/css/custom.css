@@ -136,7 +136,7 @@ a:hover {
 .paper-layer {
   background-color: var(--paper-bg);
   max-width: 850px;
-  margin: 60px auto;
+  margin: 30px auto;
   padding: 60px;
   box-shadow:
     -10px 0 40px rgba(var(--cyan-rgb), 0.747),
@@ -468,32 +468,6 @@ canvas:focus, canvas {
     line-height: 1.1;
   }
 
-  .site-nav .trigger {
-    z-index: 50;
-    position: relative;
-    background-color: var(--bg-dark);
-    border: 2px solid var(--cyan);
-    border-radius: 8px;
-    padding: 8px;
-    box-shadow:
-      -6px 0 20px rgba(var(--cyan-rgb), 0.5),
-       6px 0 20px rgba(var(--pink-light-rgb), 0.5),
-       0 6px 20px rgba(var(--cyan-rgb), 0.35);
-  }
-
-  .site-nav label[for="nav-trigger"] {
-    border: 2px solid var(--cyan);
-    border-radius: 6px;
-    padding: 4px 6px;
-    box-shadow:
-      0 0 10px rgba(var(--cyan-rgb), 0.5),
-      0 0 10px rgba(var(--pink-light-rgb), 0.5);
-  }
-
-  .site-nav .menu-icon svg path {
-    fill: var(--pink-light);
-  }
-
   .home-videos {
     width: 100%;
     gap: 6px;
@@ -544,4 +518,34 @@ canvas:focus, canvas {
     width: 100% !important;
     margin: 0 0 20px 0 !important;
   }
+}
+
+/* ============================================================
+   MOBILE-ONLY NAV STYLES — scoped to is-mobile so desktop zoom
+   does not trigger the dropdown background / border
+   ============================================================ */
+html.is-mobile .site-nav .trigger {
+  z-index: 50;
+  position: relative;
+  background-color: var(--bg-dark);
+  border: 2px solid var(--cyan);
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow:
+    -6px 0 20px rgba(var(--cyan-rgb), 0.5),
+     6px 0 20px rgba(var(--pink-light-rgb), 0.5),
+     0 6px 20px rgba(var(--cyan-rgb), 0.35);
+}
+
+html.is-mobile .site-nav label[for="nav-trigger"] {
+  border: 2px solid var(--cyan);
+  border-radius: 6px;
+  padding: 4px 6px;
+  box-shadow:
+    0 0 10px rgba(var(--cyan-rgb), 0.5),
+    0 0 10px rgba(var(--pink-light-rgb), 0.5);
+}
+
+html.is-mobile .site-nav .menu-icon svg path {
+  fill: var(--pink-light);
 }
