@@ -369,8 +369,8 @@ function loop(now) {
     }
     renderer.render(scene, camera);
     renderHistogram();
-    const ro = document.getElementById('km-cam-readout');
-    if (ro) ro.textContent = `θ: ${orbit.theta.toFixed(3)}  φ: ${orbit.phi.toFixed(3)}  r: ${orbit.radius.toFixed(2)}`;
+    // const ro = document.getElementById('km-cam-readout');
+    // if (ro) ro.textContent = `θ: ${orbit.theta.toFixed(3)}  φ: ${orbit.phi.toFixed(3)}  r: ${orbit.radius.toFixed(2)}`;
   }
   frameId = requestAnimationFrame(loop);
 }
@@ -442,14 +442,14 @@ const shell = new AppletShell({
   `,
 
   onOpen: function ({ canvas: c, S }) {
-    // Inject camera readout div into the sim panel
-    const simPanel = document.getElementById('km-sim-panel');
-    if (!document.getElementById('km-cam-readout')) {
-      const ro = document.createElement('div');
-      ro.id = 'km-cam-readout';
-      ro.style.cssText = 'position:absolute;bottom:8px;left:10px;font-family:monospace;font-size:11px;color:' + _rgba('--white', 0.55) + ';pointer-events:none;';
-      simPanel.appendChild(ro);
-    }
+    // // Inject camera readout div into the sim panel
+    // const simPanel = document.getElementById('km-sim-panel') || document.getElementById('km-asm-sim');
+    // if (simPanel && !document.getElementById('km-cam-readout')) {
+    //   const ro = document.createElement('div');
+    //   ro.id = 'km-cam-readout';
+    //   ro.style.cssText = 'position:absolute;bottom:8px;left:10px;font-family:monospace;font-size:11px;color:' + _rgba('--white', 0.55) + ';pointer-events:none;';
+    //   simPanel.appendChild(ro);
+    // }
 
     buildButtons();
     const pos = buildGraph(0);
