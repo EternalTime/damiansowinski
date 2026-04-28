@@ -433,6 +433,7 @@
     return self;
   }
 
+  window.AppletShellDesktop = AppletShell;
   window.AppletShell = AppletShell;
 
 })();

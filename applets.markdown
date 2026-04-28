@@ -4,6 +4,7 @@ title: Applets
 ---
 
 <script src="{{ '/assets/js/applet-shell.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/applet-shell-mobile.js' | relative_url }}"></script>
 
 <a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
 <br>
@@ -17,9 +18,7 @@ title: Applets
 Computational physics is awesome. It's the art of telling a computer how to simulate phenomena we see in the world. But it's not limited to just those phenomena we know about. We can use 
 </div>
 
-<img src="{{ '/assets/images/Under-Construction-Sign.png' | relative_url }}"
-     style="float: center; width: 55%; margin: 0 20px 20px 20px; border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
-     alt="Description"> 
+<img class="research-img-placeholder" src="{{ '/assets/images/Under-Construction-Sign.png' | relative_url }}" alt="Under Construction">
 
 ---
 

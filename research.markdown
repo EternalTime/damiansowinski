@@ -23,28 +23,28 @@ Subjective, meaningful information is *semantic*.
 The structural aspects of information, which may or may not have semantics, is referred to as *syntactic*.
 
 Surprisingly (pun intended, IYKYK), syntactic information is closely related to entropy, an objective aspect of the physical world.
-Take the microcanonical definition of entropy as the number of microstates in a given macrostate; for example imagine all the ways that the stuff in your bedroom could be positioned. 
+Take the microcanonical definition of entropy as the number of microstates in a given macrostate; for example imagine all the ways that the stuff in your bedroom could be positioned.
 A cheeky way of describing entropy is to say that there are WAAAY more ways for your bedroom to be disorganized than there are ways of it being organized.
 Where is your favorite shirt?
 In a disorganized room, you may have to look in many places before you find it, the room is said to have higher entropy.
 Entropy is synonymous with uncertainty - the more uncertain you are about the exact state of your bedroom, the more entropy it has.
-When you look around your bedroom you discount areas where the shirt is not, becoming more certain about where the shirt actually is. 
+When you look around your bedroom you discount areas where the shirt is not, becoming more certain about where the shirt actually is.
 The information you gain reduces your uncertainty; the entropy of the room is smaller the more you know about it!
 
 Wait up. Hold on. Didn't that last paragraph start by saying entropy is an *objective* aspect of the world?
 Why are we talking about *subjective* uncertainty?
-Thermodynamic entropy is related to the temperature of a system. 
+Thermodynamic entropy is related to the temperature of a system.
 How can looking around for a particular molecule (your favorite one) in a gas, change the temperature of the gas?!
-The subjective and the objective shake hands to create what seems like a paradox. 
-When you find your favorite shirt in your messy room, you grab it and put it on. 
-Or put it into a dresser drawer. 
+The subjective and the objective shake hands to create what seems like a paradox.
+When you find your favorite shirt in your messy room, you grab it and put it on.
+Or put it into a dresser drawer.
 Whatever.
 The point is that you organize your room a little with the information you gain.
 Similarly, one can use the information about a particular molecule in a gas to change the temperature of the gas.
 James Clerk Maxwell first described such a *neat fingered being* in 1867, and dubbed *Maxwell's Demon* several years later by Lord Kelvin.
-The demon sits at a tiny doorway between two volumes of gas at equal temperature. 
+The demon sits at a tiny doorway between two volumes of gas at equal temperature.
 When it sees a fast moving molecule approaching the door from the right, it lets it through.
-Similarly, if it sees a slow moving molecule moving from the left it also lets it through. 
+Similarly, if it sees a slow moving molecule moving from the left it also lets it through.
 By observing the gas, and acting on that information, the demon can make the gas on the left get hotter, while the gas on the right cools.
 Why don't you try it:
 
@@ -53,15 +53,13 @@ Why don't you try it:
 
 Were you hired?
 
-<img src="{{ '/assets/images/Under-Construction-Sign.png' | relative_url }}"
-     style="float: center; width: 55%; margin: 0 20px 20px 20px; border-radius: 15px; border: 5px solid #ff6da2; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));"
-     alt="Description"> 
+<img class="research-img-placeholder" src="{{ '/assets/images/Under-Construction-Sign.png' | relative_url }}" alt="Under Construction">
 
 ---
 <br>
 <h2>How does Agency emerge from Complexity?</h2>
 
-<video style="float: right; width: 50%; margin: 0 0 20px 20px; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(-1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
+<video class="research-video-float" autoplay muted loop playsinline>
   <source src="{{ '/assets/videos/cell_09.mp4' | relative_url }}" type="video/mp4">
 </video>
 Look at that.<br>
@@ -73,10 +71,10 @@ It's behavior looks complex, much like the behavior of paramecia under the micro
 But is it?<br>
 <br>
 
-What you're seeing is the simulation of a chemoton - a protocell consisting of a small collection of chemical species trapped inside a membrane. 
+What you're seeing is the simulation of a chemoton - a protocell consisting of a small collection of chemical species trapped inside a membrane.
 The environment contains sources of another chemical species, one that is metabolized by the species in the membrane to produce more membrane.
 As time goes by the membrane decays, causing the chemoton to shrink.
-The motion you're seeing is due to the front end of the chemoton's membrane growing, and its back shrinking. 
+The motion you're seeing is due to the front end of the chemoton's membrane growing, and its back shrinking.
 
 Seemingly complex behavior is what our eyes are drawn to, and agency is how our brains rationalize what they see.
 That is not what is actually there.
@@ -94,21 +92,21 @@ Or is it, too, simply a bag of chemicals, reacting and metabolizing its surround
 I'm interested in models that live at this awkward boundary between automoton and agent.
 Understanding how complexity, computation, and control intertwine to create behavioral autonomy will get us one very large step closer to understanding its emergence in the physical substrate.
 <br>
- 
+
  ---
 <br>
 <h2>How do Complex Systems Evolve?</h2>
 
-<div style="display: flex; gap: 40px; align-items: flex-start;">
-  <video style="flex-shrink: 0; width: 50%; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(-1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
+<div class="research-video-flex-wrap">
+  <video class="research-video-flex" autoplay muted loop playsinline>
     <source src="{{'/assets/videos/MicroCosmos.mp4' | relative_url }}" type="video/mp4">
   </video>
   <div>
 Life does not emerge from the soup of particles that is our Universe fully formed.
-<a href="{{ 'https://www.nature.com/articles/s41586-023-06600-9' }}">Assembly theory</a> provides an excellent argument for why evolution starts as soon as molecules reach sizes of around 20 atoms: 
+<a href="{{ 'https://www.nature.com/articles/s41586-023-06600-9' }}">Assembly theory</a> provides an excellent argument for why evolution starts as soon as molecules reach sizes of around 20 atoms:
 the combinatorial explosion in possible molecular configurations vastly exceeds the exploratory ability of all the atoms in the universe!
-Natural selection places pressure on any configurations that reach that size, leading to lineages of ever growing complexity. 
-What this implies is that evolution 
+Natural selection places pressure on any configurations that reach that size, leading to lineages of ever growing complexity.
+What this implies is that evolution
 
   </div>
 </div>
