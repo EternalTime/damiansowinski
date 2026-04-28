@@ -406,10 +406,11 @@ const shell = new AppletShell({
     </div>
   `,
 
-  onOpen: function ({ canvas: c, S }) {
+  onOpen: function ({ canvas: c, S, ctrlW: ctrlWArg }) {
     // Inject extinction stamp into sim panel
-    const simPanel = document.getElementById('fa-sim-panel');
-    if (!document.getElementById('fa-extinction-stamp')) {
+    const simPanelId = document.getElementById('fa-sim-panel') ? 'fa-sim-panel' : 'fa-asm-sim';
+    const simPanel = document.getElementById(simPanelId);
+    if (simPanel && !document.getElementById('fa-extinction-stamp')) {
       const stamp = document.createElement('div');
       stamp.id = 'fa-extinction-stamp';
       stamp.textContent = 'EXTINCTION';
@@ -421,7 +422,7 @@ const shell = new AppletShell({
     phaseCanvas = document.getElementById('fa-phase-canvas');
     phaseCtx    = phaseCanvas.getContext('2d');
 
-    const ctrlW = Math.floor(S / 1.6180339887);
+    const ctrlW = ctrlWArg !== undefined ? ctrlWArg : Math.floor(S / 1.6180339887);
     resizePhaseCanvas(S, ctrlW);
 
     if (!initialized) { faInitSim(); initialized = true; }
@@ -440,9 +441,9 @@ const shell = new AppletShell({
     if (btn) { btn.textContent = 'Run'; btn.classList.remove('active'); }
   },
 
-  onResize: function ({ canvas: c, S }) {
+  onResize: function ({ canvas: c, S, ctrlW: ctrlWArg }) {
     simCanvas = c;
-    const ctrlW = Math.floor(S / 1.6180339887);
+    const ctrlW = ctrlWArg !== undefined ? ctrlWArg : Math.floor(S / 1.6180339887);
     resizePhaseCanvas(S, ctrlW);
   },
 });

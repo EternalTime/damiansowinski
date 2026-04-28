@@ -1,0 +1,65 @@
+GIMP Palette
+Name: DamianSowinski
+Columns: 5
+#
+# Accent / neon
+ 35 187 173	teal-dark
+ 37 217 200	teal-light
+ 42 190 217	cyan
+255 109 162	pink-light
+249  38 114	pink-dark
+#
+# Extended pink / red
+192  57 106	pink-mid
+142  48  80	pink-deep
+176 136 144	pink-muted
+204  34  51	red
+#
+# Green
+ 77 184  74	green-light
+ 42 110  42	green-dark
+#
+# Blue accents
+122 173 224	blue-lighter
+106 184 216	blue-light
+ 96 144 168	blue
+122 154 174	blue-muted
+ 90 122 150	blue-mid
+#
+# Canvas backgrounds
+  4   4  14	bg-void
+ 13  13  13	bg-black
+ 13  17  23	bg-canvas
+ 15  26  34	bg-deep
+#
+# UI backgrounds
+ 22  33  42	bg-dark
+ 26  37  48	bg-panel
+ 30  48  64	bg-mid
+ 30  58  74	bg-active-teal
+ 58  26  46	bg-active-pink
+ 42  61  78	bg-control
+ 58  80  96	bg-hover
+ 74 106 128	bg-active
+#
+# Borders
+ 46  63  79	border-dark
+ 61  90 110	border-mid
+#
+# Text
+168 192 208	text-dim
+184 200 212	text-mid
+205 214 222	text-light
+238 242 245	text-bright
+216 208 208	text-gray
+ 85  85  85	text-muted
+#
+# Page / content
+ 34  34  34	text-body
+ 51  51  51	text-dark
+  0 119 204	link-academic
+255 255 255	white
+  0   0   0	black
+ 17  17  17	near-black
+249 180  80	amber
+212 175  55	gold

@@ -357,7 +357,7 @@
       ctrlEl.style.height = ctrlH + 'px';
       ctrlEl.classList.remove('asm-landscape');
     }
-    return S;
+    return { S, ctrlW: landscape ? (window.innerWidth - S) : window.innerWidth };
   }
 
   /* ── AppletShellMobile constructor ──────────────────────────────────────── */
@@ -386,18 +386,18 @@
     ];
 
     function layout() {
-      const S      = applyLayout(id);
+      const { S, ctrlW } = applyLayout(id);
       const canvas = document.getElementById(id + '-canvas');
       if (canvas) {
         canvas.width  = S;
         canvas.height = S;
       }
-      return S;
+      return { S, ctrlW };
     }
 
     const self = {
       open: function () {
-        const S      = layout();
+        const { S, ctrlW } = layout();
         const canvas = document.getElementById(id + '-canvas');
 
         /* Prevent body scroll while applet is open */
@@ -428,7 +428,7 @@
           }, { passive: false });
         }
 
-        onOpen({ canvas: canvas, S: S });
+        onOpen({ canvas: canvas, S: S, ctrlW: ctrlW });
       },
 
       close: function () {
@@ -455,9 +455,9 @@
     window.addEventListener('resize', function () {
       const overlay = document.getElementById(id + '-asm-overlay');
       if (!overlay.classList.contains(id + '-asm-open')) return;
-      const S      = layout();
+      const { S, ctrlW } = layout();
       const canvas = document.getElementById(id + '-canvas');
-      if (onResize) onResize({ canvas: canvas, S: S });
+      if (onResize) onResize({ canvas: canvas, S: S, ctrlW: ctrlW });
     });
 
     return self;
