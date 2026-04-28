@@ -49,6 +49,8 @@
   --text-mid:     #b8c8d4;
   --text-light:   #cdd6de;
   --text-bright:  #eef2f5;
+  --text-gray:    #d8d0d0;  /* 404 page body text        */
+  --text-muted:   #555555;  /* 404 page subtitle         */
 
   /* --- Utility --- */
   --white:        #ffffff;

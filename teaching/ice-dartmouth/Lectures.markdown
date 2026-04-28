@@ -9,9 +9,9 @@ nav_exclude: true
 
 ---
 <br>
-<img src="{{ '/assets/docs/teaching/ICE-epistemology-to-information-poster.png' | relative_url }}"
+<img class="lecture-poster" src="{{ '/assets/docs/teaching/ICE-epistemology-to-information-poster.png' | relative_url }}"
      style="float: right; width: 40%; margin: 0 0 20px 20px;"
-     alt="Description">
+     alt="Epistemology to Information poster">
 
 What is information?
 It seems like a simple question, but turns out to be very difficult to answer.
@@ -36,8 +36,14 @@ In the second lecture of the series, *How do we reason about the world rationall
 Again, consistency provides a powerful constraint, forcing the algebra of belief functions to satisfy the same rules as probability functions.
 This approach, pioneered by Richard Threlkeld Cox, provides a rigorous foundation for the Bayesian interpretation of probability theory.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/fNPxAL3jvvg?si=L9UnJwKRAWC8mGMN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div class="yt-wrap">
+  <iframe class="yt-embed" src="https://www.youtube.com/embed/fNPxAL3jvvg?si=L9UnJwKRAWC8mGMN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/39pC49MOEa4?si=3IBpZrU_susHFOzn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div class="yt-wrap">
+  <iframe class="yt-embed" src="https://www.youtube.com/embed/39pC49MOEa4?si=3IBpZrU_susHFOzn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
-<iframe float: rightwidth="560" height="315" src="https://www.youtube.com/embed/c_kncsLBxyE?si=72M7pBm3d1sl3V7P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div class="yt-wrap">
+  <iframe class="yt-embed" src="https://www.youtube.com/embed/c_kncsLBxyE?si=72M7pBm3d1sl3V7P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>

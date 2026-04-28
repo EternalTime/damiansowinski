@@ -3,26 +3,26 @@ permalink: /404.html
 layout: default
 ---
 
-<div class="paper-layer" style="text-align: center; padding: 100px 20px;">
+<div class="error-404" style="text-align: center; padding: 100px 20px;">
   <div class="container">
-    
-    <h1 style="font-family: 'Pump', sans-serif; font-size: 8em; line-height: 1; margin: 0; background: linear-gradient(to right, #23bbad, #f92672); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;">
+
+    <h1 class="gradient-text error-404-title">
       404
     </h1>
 
     <div style="margin-top: 20px;">
-      <h2 style="font-family: 'Pump', sans-serif; font-size: 1.5em; text-transform: uppercase; letter-spacing: 2px; color: #555;">
+      <h2 class="error-404-subtitle">
         Observation Failed
       </h2>
-      
-      <p style="font-size: 1.1em; color: #d8d0d0; max-width: 500px; margin: 20px auto; line-height: 1.6;">
-        The resource you are looking for does not exist in this manifold. 
+
+      <p class="error-404-body">
+        The resource you are looking for does not exist in this manifold.
         It may have been moved, fallen into a black hole, or never existed in this slice of the polycosmos.
         Please doublecheck the coordinate system you are using, and good luck.
       </p>
-      
+
       <div style="margin-top: 40px;">
-        <a href="{{ '/' | relative_url }}" style="font-family: 'Pump', sans-serif; text-decoration: none; color: #0077cc; border: 2px solid #0077cc; padding: 10px 20px; border-radius: 4px; transition: all 0.3s ease;">
+        <a class="error-404-btn" href="{{ '/' | relative_url }}">
           Return to Origin
         </a>
       </div>
@@ -32,13 +32,46 @@ layout: default
 </div>
 
 <style>
-  /* Hover effect for your Pump-styled button */
-  .container a:hover {
-    background-color: cyan;
-    color: #fff !important;
+  .error-404-title {
+    font-family: 'Pump', sans-serif;
+    font-size: 8em;
+    line-height: 1;
+    margin: 0;
+    display: inline-block;
   }
-  
-  /* Ensure the paper layer centers nicely on the 404 page */
+
+  .error-404-subtitle {
+    font-family: 'Pump', sans-serif;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+  }
+
+  .error-404-body {
+    font-size: 1.1em;
+    color: var(--text-gray);
+    max-width: 500px;
+    margin: 20px auto;
+    line-height: 1.6;
+  }
+
+  .error-404-btn {
+    font-family: 'Pump', sans-serif;
+    text-decoration: none;
+    color: var(--link-academic) !important;
+    border: 2px solid var(--link-academic);
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .container a:hover {
+    background-color: var(--cyan);
+    color: var(--white) !important;
+  }
+
+  .error-404 .paper-layer,
   .paper-layer {
     min-height: 60vh;
     display: flex;

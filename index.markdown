@@ -3,33 +3,30 @@ layout: default
 mathjax: true
 ---
 
-<h1 class="gradient-text" style="font-size: 4em; text-align: center; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));">
+<h1 class="gradient-text home-title">
   <strong>Damian R. Sowinski</strong>
 </h1>
 <div class="gradient-text2" style="font-size: 2em; text-align: center; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
 Theoretical Physicist & Applied Mathemagician
 </div>
 
-<div style="text-align: center; margin: 40px auto; width: 66%;">
-  <img src="{{ '/assets/images/Damian_in_Key_West.jpg' | relative_url }}" 
-       style="width: 50%; border-radius: 20px; border: 5px solid #ff6da2;filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9));" 
-       alt="Description">
+<div class="home-photo-wrap">
+  <img class="home-photo-img" src="{{ '/assets/images/Damian_in_Key_West.jpg' | relative_url }}" alt="Damian Sowinski">
 </div>
 
-
-<div class="gradient-text2" style="font-size: 1.3em; text-align: center; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
+<div class="gradient-text2 home-subtitle" style="text-align: center; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
 Artificial Life & Intelligence | Complexity | Information | Simulation |Visualization
 </div>
 <br>
 
-<div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 40px;">
-  <video style="flex: 1; min-width: 0; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
+<div class="home-videos">
+  <video class="home-video" autoplay muted loop playsinline>
     <source src="{{ '/assets/videos/flockMF_0p45.mp4' | relative_url }}" type="video/mp4">
   </video>
-  <video style="flex: 1; min-width: 0; border-radius: 15px; border: 3px solid #25d9c8;  filter: drop-shadow(0px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
+  <video class="home-video" autoplay muted loop playsinline>
     <source src="{{ '/assets/videos/flockMF_0p15.mp4' | relative_url }}" type="video/mp4">
   </video>
-  <video style="flex: 1; min-width: 0; border-radius: 15px; border: 3px solid #25d9c8; filter: drop-shadow(-1px 1px 5px rgba(0,0,0,0.9));" autoplay muted loop playsinline>
+  <video class="home-video" autoplay muted loop playsinline>
     <source src="{{ '/assets/videos/flockMF_0p75.mp4' | relative_url }}" type="video/mp4">
   </video>
 </div>
@@ -57,7 +54,7 @@ And, if the conditions are just right, macroscopic structure supervenes over mic
 Matter, once subject solely to the whims of energy and entropy, gains the ability to scream **No! Not today Equilibrium!**, to act to suppress its slide towards that inevitable end.
 Our description of the physical stuff of the world, in the language of modern physics, does not know how matter does that.
 
-As AI gets more sophisticated, the ethical question of whether it is alive will grow in importance over the coming decades. 
+As AI gets more sophisticated, the ethical question of whether it is alive will grow in importance over the coming decades.
 My research is a cross-disciplinary approach towards trying to understand how agency emerges from the physical substrate of the world, a question of profound importance to humanity's understanding of itself, artificial intelligence, the biosphere both are a part of.
 Living systems act teleologically; since prediction is the providence of information theory, my approach towards tackling this enormous question draws not just from the physical and life sciences, but computer science and machine learning, neuroscience, the philosophy of language, and epistemology.
 A large component of this program is using the techniques of information theory to create informational narratives of systems complementing their traditional physical descriptions.
