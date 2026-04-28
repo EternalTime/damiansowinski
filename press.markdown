@@ -14,10 +14,10 @@ permalink: /press/
 <br>
 <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/episode/1prG1n4RISTGiYSUvRDsFG?utm_source=generator" width="100%" height="175" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 <br>
-<div class="press-entry" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px;">
+<div class="press-entry">
   <a href="https://www.universetoday.com/articles/a-new-way-to-detect-daisy-worlds" target="_blank">
-    <img src="{{ '/assets/images/press/UniverseToday.jpg' | relative_url }}"
-         style="width: 500px; border-radius: 8px; border: 3px solid #ff6da2; flex-shrink: 0;"
+    <img class="press-img" src="{{ '/assets/images/press/UniverseToday.jpg' | relative_url }}"
+         style="width: 500px;"
          alt="Article title">
   </a>
   <div>
@@ -29,10 +29,10 @@ permalink: /press/
   </div>
 </div>
 
-<div class="press-entry" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px;">
+<div class="press-entry">
   <a href="https://phys.org/news/2024-11-daisy-worlds.html" target="_blank">
-    <img src="{{ '/assets/images/press/PhysOrg.png' | relative_url }}"
-         style="width: 150px; border-radius: 8px; border: 3px solid #ff6da2; flex-shrink: 0;"
+    <img class="press-img" src="{{ '/assets/images/press/PhysOrg.png' | relative_url }}"
+         style="width: 150px;"
          alt="Article title">
   </a>
   <div>
@@ -43,11 +43,10 @@ permalink: /press/
   </div>
 </div>
 
-
-<div class="press-entry" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px;">
+<div class="press-entry">
   <a href="https://mindmatters.ai/2024/07/physicists-perhaps-life-is-a-unique-state-of-matter/" target="_blank">
-    <img src="{{ '/assets/images/press/MindMatters2024.jpg' | relative_url }}"
-         style="width: 180px; border-radius: 8px; border: 3px solid #ff6da2; flex-shrink: 0;"
+    <img class="press-img" src="{{ '/assets/images/press/MindMatters2024.jpg' | relative_url }}"
+         style="width: 180px;"
          alt="Article title">
   </a>
   <div>
@@ -59,11 +58,10 @@ permalink: /press/
   </div>
 </div>
 
-
-<div class="press-entry" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 20px;">
+<div class="press-entry">
   <a href="https://bigthink.com/13-8/a-new-model-for-defining-life-across-the-universe/" target="_blank">
-    <img src="{{ '/assets/images/press/BigThink2024.png' | relative_url }}"
-         style="width: 380px; border-radius: 8px; border: 3px solid #ff6da2; flex-shrink: 0;"
+    <img class="press-img" src="{{ '/assets/images/press/BigThink2024.png' | relative_url }}"
+         style="width: 380px;"
          alt="Article title">
   </a>
   <div>
@@ -75,10 +73,10 @@ permalink: /press/
   </div>
 </div>
 
-<div class="press-entry" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px;">
+<div class="press-entry">
   <a href="https://www.rochester.edu/newscenter/semantic-information-theory-living-systems-574112/" target="_blank">
-    <img src="{{ '/assets/images/press/UofR2023.jpg' | relative_url }}"
-         style="width: 400px; border-radius: 8px; border: 3px solid #ff6da2; flex-shrink: 0;"
+    <img class="press-img" src="{{ '/assets/images/press/UofR2023.jpg' | relative_url }}"
+         style="width: 400px;"
          alt="Article title">
   </a>
   <div>
@@ -90,10 +88,10 @@ permalink: /press/
   </div>
 </div>
 
-<div class="press-entry" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px;">
+<div class="press-entry">
   <a href="https://www.npr.org/sections/13.7/2015/12/09/459092106/exploring-the-universe-in-a-video-game" target="_blank">
-    <img src="{{ '/assets/images/press/npr.png' | relative_url }}"
-         style="width: 200px; border-radius: 8px; border: 3px solid #ff6da2; flex-shrink: 0;"
+    <img class="press-img" src="{{ '/assets/images/press/npr.png' | relative_url }}"
+         style="width: 200px;"
          alt="Article title">
   </a>
   <div>
@@ -104,4 +102,3 @@ permalink: /press/
     Shout out to my Ph.D. advisor for mentioning me while talking about No Man's Sky. I'm more of a Bethesda fan. :P
   </div>
 </div>
-

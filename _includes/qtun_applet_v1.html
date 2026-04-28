@@ -17,8 +17,8 @@
 .qtun-panel {
   position: fixed;
   z-index: 910;
-  background: #16212a;
-  color: #eef2f5;
+  background: var(--bg-dark);
+  color: var(--text-bright);
   font-family: 'EB Garamond', Georgia, serif;
   border: 2px solid transparent;
   border-radius: 14px;
@@ -38,8 +38,8 @@
 }
 
 #qtun-header {
-  border-color: var(--pink-dark, #f92672);
-  box-shadow: 0 -8px 30px rgba(249,38,114,0.45), 0 8px 20px rgba(249,38,114,0.25);
+  border-color: var(--pink-dark);
+  box-shadow: 0 -8px 30px rgba(var(--pink-dark-rgb),0.45), 0 8px 20px rgba(var(--pink-dark-rgb),0.25);
   left:   var(--qtun-left);
   top:    var(--qtun-top-hdr);
   width:  var(--qtun-W);
@@ -56,15 +56,15 @@
 #qtun-header h2 {
   font-size: 15px;
   letter-spacing: 2px;
-  color: #eef2f5;
+  color: var(--text-bright);
   font-weight: normal;
   margin: 0;
   text-transform: uppercase;
 }
 #qtun-close-btn {
   background: none;
-  border: 1px solid #3d5a6e;
-  color: #eef2f5;
+  border: 1px solid var(--border-mid);
+  color: var(--text-bright);
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 13px;
   letter-spacing: 1px;
@@ -72,11 +72,11 @@
   border-radius: 4px;
   cursor: pointer;
 }
-#qtun-close-btn:hover { background: #2a3d4e; }
+#qtun-close-btn:hover { background: var(--bg-control); }
 
 #qtun-sim-panel {
-  border-color: var(--teal-dark, #23bbad);
-  box-shadow: -12px 0 35px rgba(35,187,173,0.5), 0 12px 30px rgba(35,187,173,0.3);
+  border-color: var(--teal-dark);
+  box-shadow: -12px 0 35px rgba(var(--teal-dark-rgb),0.5), 0 12px 30px rgba(var(--teal-dark-rgb),0.3);
   left:   var(--qtun-left);
   top:    var(--qtun-top-body);
   width:  var(--qtun-W);
@@ -92,8 +92,8 @@
 }
 
 #qtun-ctrl-panel {
-  border-color: var(--cyan, #2abed9);
-  box-shadow: 0 12px 35px rgba(42,190,217,0.5), 0 -4px 20px rgba(42,190,217,0.3);
+  border-color: var(--cyan);
+  box-shadow: 0 12px 35px rgba(var(--cyan-rgb),0.5), 0 -4px 20px rgba(var(--cyan-rgb),0.3);
   left:   var(--qtun-left);
   top:    calc(var(--qtun-top-body) + var(--qtun-H-sim));
   width:  var(--qtun-W);
@@ -102,7 +102,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: #1a2530;
+  background: var(--bg-panel);
   transform: translateY(110vh);
   padding: 0 24px;
   gap: 14px;
@@ -112,9 +112,9 @@
 #qtun-ctrl-panel.qtun-open { transform: translateY(0); }
 
 .qtun-btn {
-  background: #2a3d4e;
-  color: #eef2f5;
-  border: 1px solid #3d5a6e;
+  background: var(--bg-control);
+  color: var(--text-bright);
+  border: 1px solid var(--border-mid);
   padding: 8px 22px;
   cursor: pointer;
   font-family: 'EB Garamond', Georgia, serif;
@@ -124,24 +124,24 @@
   transition: background 0.15s;
   white-space: nowrap;
 }
-.qtun-btn:hover { background: #3a5060; }
+.qtun-btn:hover { background: var(--bg-hover); }
 .qtun-btn.qtun-active-teal {
-  background: #1e3a4a;
-  border-color: #25d9c8;
-  color: #25d9c8;
-  box-shadow: 0 0 10px rgba(37,217,200,0.6), 0 0 20px rgba(37,217,200,0.3);
+  background: var(--bg-active-teal);
+  border-color: var(--teal-light);
+  color: var(--teal-light);
+  box-shadow: 0 0 10px rgba(var(--teal-light-rgb),0.6), 0 0 20px rgba(var(--teal-light-rgb),0.3);
 }
 .qtun-btn.qtun-active-pink {
-  background: #3a1a2e;
-  border-color: #f92672;
-  color: #f92672;
-  box-shadow: 0 0 10px rgba(249,38,114,0.6), 0 0 20px rgba(249,38,114,0.3);
+  background: var(--bg-active-pink);
+  border-color: var(--pink-dark);
+  color: var(--pink-dark);
+  box-shadow: 0 0 10px rgba(var(--pink-dark-rgb),0.6), 0 0 20px rgba(var(--pink-dark-rgb),0.3);
 }
 
 .qtun-divider {
   width: 1px;
   height: 60%;
-  background: #3d5a6e;
+  background: var(--border-mid);
   flex-shrink: 0;
 }
 
@@ -156,7 +156,7 @@
   font-size: 11px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #a8c0d0;
+  color: var(--text-dim);
   white-space: nowrap;
 }
 .qtun-slider-row {
@@ -166,16 +166,16 @@
 }
 .qtun-slider-row input[type=range] {
   width: 100px;
-  accent-color: #25d9c8;
+  accent-color: var(--teal-light);
 }
 .qtun-slider-side {
   font-size: 11px;
-  color: #a8c0d0;
+  color: var(--text-dim);
   white-space: nowrap;
 }
 .qtun-val {
   font-size: 13px;
-  color: #eef2f5;
+  color: var(--text-bright);
   width: 36px;
   text-align: left;
   font-variant-numeric: tabular-nums;
@@ -234,13 +234,15 @@
 (function () {
   'use strict';
 
-  /* ── Palette ── */
-  const TEAL_DARK  = '#23bbad';
-  const TEAL_LIGHT = '#25d9c8';
-  const CYAN       = '#2abed9';
-  const PINK_LIGHT = '#ff6da2';
-  const PINK_DARK  = '#f92672';
-  const BG         = '#0d1117';
+  /* ── Palette — read from CSS custom properties ── */
+  const _cs = getComputedStyle(document.documentElement);
+  const _c  = n => _cs.getPropertyValue(n).trim();
+  const TEAL_DARK  = _c('--teal-dark');
+  const TEAL_LIGHT = _c('--teal-light');
+  const CYAN       = _c('--cyan');
+  const PINK_LIGHT = _c('--pink-light');
+  const PINK_DARK  = _c('--pink-dark');
+  const BG         = _c('--bg-canvas');
 
   /* ── Physics (ℏ = 1, E = k²/(2M)) ── */
   const MASS = 3.0;   /* particle mass in units where ℏ=1 */
