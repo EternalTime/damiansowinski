@@ -1,6 +1,3 @@
-<!-- Gray–Scott Reaction–Diffusion Applet Include -->
-
-<script>
 (function () {
   const _cs = getComputedStyle(document.documentElement);
   const _c   = n => _cs.getPropertyValue(n).trim();
@@ -256,4 +253,3 @@
   });
 
 })();
-</script>

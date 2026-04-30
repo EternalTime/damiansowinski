@@ -1,52 +1,3 @@
-<!-- Quantum Harmonic Oscillator Applet Include -->
-
-<style>
-#qho-scrollable {
-  flex: 1;
-  overflow-y: auto;
-  min-height: 0;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-dark) var(--bg-dark);
-}
-#qho-scrollable::-webkit-scrollbar { width: 4px; }
-#qho-scrollable::-webkit-scrollbar-track { background: var(--bg-dark); }
-#qho-scrollable::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 2px; }
-
-.qho-eigen-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-}
-.qho-eigen-label {
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: calc(14px * var(--shell-fs, 1));
-  color: var(--text-dim);
-  width: 26px;
-  flex-shrink: 0;
-  text-align: right;
-}
-.qho-eigen-row input[type=range] {
-  flex: 1;
-  min-width: 0;
-  accent-color: var(--teal-light);
-}
-.qho-gauge-wrap {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  cursor: pointer;
-  user-select: none;
-  touch-action: none;
-}
-.qho-gauge-svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-</style>
-
-<script>
 (function () {
   'use strict';
 
@@ -808,4 +759,3 @@
   window.qhoToggleDrawMode  = toggleDrawMode;
 
 })();
-</script>

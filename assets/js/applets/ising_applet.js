@@ -1,29 +1,3 @@
-<!-- ISING Applet Include -->
-
-<style>
-/* ── Ising-specific: centre-tick mark on the field slider ── */
-.ising-slider-wrap {
-  position: relative;
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.ising-slider-wrap input[type=range] { width: 100%; }
-.ising-slider-tick {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 8px;
-  background: var(--text-dim);
-  pointer-events: none;
-}
-</style>
-
-<script>
 (function () {
   const _cs = getComputedStyle(document.documentElement);
   const _c   = n => _cs.getPropertyValue(n).trim();
@@ -270,4 +244,3 @@
   });
 
 })();
-</script>
