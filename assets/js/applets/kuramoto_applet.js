@@ -1,25 +1,17 @@
-<!-- Kuramoto Model Applet Include -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<style>
-/* ── Kuramoto-specific: phase histogram fills remaining ctrl space ── */
-#km-hist-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 14px 16px 10px;
-  min-height: 0;
-}
-#km-hist-canvas {
-  flex: 1;
-  display: block;
-  width: 100%;
-  min-height: 0;
-}
-</style>
-
-<script>
 (function () {
+
+// ── Inject kuramoto-specific styles ──────────────────────────────────────────
+(function() {
+  const s = document.createElement('style');
+  s.textContent = `
+    #km-hist-section {
+      flex: 1; display: flex; flex-direction: column;
+      padding: 14px 16px 10px; min-height: 0;
+    }
+    #km-hist-canvas { flex: 1; display: block; width: 100%; min-height: 0; }
+  `;
+  document.head.appendChild(s);
+})();
 
 const _cs = getComputedStyle(document.documentElement);
 const _c   = n => _cs.getPropertyValue(n).trim();
@@ -207,7 +199,7 @@ function initThree(pos) {
     simCanvas = document.getElementById('km-canvas');
     renderer = new THREE.WebGLRenderer({ canvas: simCanvas, antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setClearColor(new THREE.Color(_c('--bg-dark')), 1);
+    renderer.setClearColor(new THREE.Color(_c('--bg-void')), 1);
     camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
     updateCamera();
     setupOrbitControls();
@@ -461,13 +453,23 @@ const shell = new AppletShell({
 
     const pb = document.getElementById('km-pause-btn');
     if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
-    setTimeout(() => {
-      hctx = document.getElementById('km-hist-canvas').getContext('2d');
-      initThree(pos);
-      lastTime = null;
-      running = true;
-      if (!frameId) frameId = requestAnimationFrame(loop);
-    }, 80);
+    function startThree() {
+      setTimeout(() => {
+        hctx = document.getElementById('km-hist-canvas').getContext('2d');
+        initThree(pos);
+        lastTime = null;
+        running = true;
+        if (!frameId) frameId = requestAnimationFrame(loop);
+      }, 80);
+    }
+    if (window.THREE) {
+      startThree();
+    } else {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+      s.onload = startThree;
+      document.head.appendChild(s);
+    }
   },
 
   onClose: function () {
@@ -508,4 +510,3 @@ document.getElementById('km-sigma').addEventListener('input', function () {
 });
 
 })();
-</script>

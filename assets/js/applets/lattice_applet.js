@@ -1,6 +1,3 @@
-<!-- Relativistic Lattice Applet Include -->
-
-<script>
 (function () {
   'use strict';
 
@@ -404,4 +401,3 @@
   });
 
 })();
-</script>

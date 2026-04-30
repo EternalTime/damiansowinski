@@ -1,22 +1,3 @@
-<!-- Brownian Motion Applet Include -->
-
-<style>
-#bm-hist-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 14px 16px 10px;
-  min-height: 0;
-}
-#bm-hist-canvas {
-  flex: 1;
-  display: block;
-  width: 100%;
-  min-height: 0;
-}
-</style>
-
-<script>
 (function () {
   'use strict';
 
@@ -536,4 +517,3 @@
   });
 
 })();
-</script>
