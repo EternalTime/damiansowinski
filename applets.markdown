@@ -99,9 +99,7 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 <button class="applet-launch-btn" onclick="ohOpen(); this.blur()">Oscillon Formation</button>
 {% include applets/oscillon_hubble_applet.html %}
 
-{% comment %}
 <button class="applet-launch-btn" onclick="qtunOpen(); this.blur()">Quantum Tunneling</button>
 
-{% include qtun_applet.html %}
-{% endcomment %}
+{% include applets/qtun_applet.html %}
 
