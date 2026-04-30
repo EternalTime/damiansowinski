@@ -1,23 +1,3 @@
-<!-- GAS Applet Include -->
-
-<style>
-/* ── Gas-specific: histogram section fills remaining ctrl panel space ── */
-#gas-hist-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 14px 16px 10px;
-  min-height: 0;
-}
-#gas-hist-canvas {
-  flex: 1;
-  display: block;
-  width: 100%;
-  min-height: 0;
-}
-</style>
-
-<script>
 (function () {
   const _cs = getComputedStyle(document.documentElement);
   const _c   = n => _cs.getPropertyValue(n).trim();
@@ -402,4 +382,3 @@
   });
 
 })();
-</script>

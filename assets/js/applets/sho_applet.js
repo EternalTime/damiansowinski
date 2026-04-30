@@ -1,54 +1,3 @@
-<!-- Simple Harmonic Oscillator Applet Include -->
-
-<style>
-#sho-phase-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 10px 16px 10px;
-  min-height: 0;
-}
-#sho-phase-canvas {
-  flex: 1;
-  display: block;
-  width: 100%;
-  min-height: 0;
-}
-#sho-lattice-controls {
-  display: none;
-}
-#sho-drive-controls {
-  display: none;
-}
-#sho-break-stamp {
-  display: none;
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) rotate(-15deg);
-  color: var(--red);
-  font-size: 48px;
-  font-weight: bold;
-  letter-spacing: 6px;
-  border: 6px solid var(--red);
-  padding: 10px 24px;
-  opacity: 0.92;
-  pointer-events: none;
-  white-space: nowrap;
-  font-family: 'EB Garamond', Georgia, serif;
-}
-#sho-scrollable {
-  flex: 1;
-  overflow-y: auto;
-  min-height: 0;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-dark) var(--bg-dark);
-}
-#sho-scrollable::-webkit-scrollbar { width: 4px; }
-#sho-scrollable::-webkit-scrollbar-track { background: var(--bg-dark); }
-#sho-scrollable::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 2px; }
-</style>
-
-<script>
 (function () {
   'use strict';
 
@@ -1062,4 +1011,3 @@
   });
 
 })();
-</script>

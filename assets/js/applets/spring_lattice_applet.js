@@ -1,18 +1,3 @@
-<!-- Spring Lattice Applet Include -->
-
-<style>
-#sl-ctrl-fixed  { flex-shrink: 0; }
-#sl-ctrl-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-#sl-ctrl-scroll::-webkit-scrollbar { width: 0; }
-</style>
-
-<script>
 (function () {
   'use strict';
 
@@ -441,4 +426,3 @@
   });
 
 })();
-</script>

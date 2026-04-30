@@ -1,6 +1,3 @@
-<!-- Lorentz Transformation Applet Include -->
-
-<script>
 (function () {
   'use strict';
 
@@ -240,4 +237,3 @@
   });
 
 })();
-</script>

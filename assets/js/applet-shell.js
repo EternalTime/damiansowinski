@@ -184,6 +184,28 @@
   border: none;
   cursor: pointer;
 }
+/* ── Slider tick marks ── */
+.applet-shell-slider-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+.applet-shell-slider-wrap input[type=range] {
+  width: 100%;
+}
+.applet-shell-tick {
+  position: absolute;
+  bottom: -6px;
+  width: 2px;
+  height: 5px;
+  background: var(--text-dim);
+  transform: translateX(-50%);
+  pointer-events: none;
+  border-radius: 1px;
+}
+
 .applet-shell-val {
   font-size: calc(16px * var(--shell-fs, 1));
   color: var(--teal-light);

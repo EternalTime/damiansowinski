@@ -1,20 +1,3 @@
-<!-- Ginzburg–Landau Applet Include -->
-
-<style>
-/* ── GL-specific: plot section fills remaining ctrl panel space ── */
-.gl-plot-section {
-  flex: 1;
-  min-height: 0;
-  padding: 36px 14px;
-}
-#gl-plot {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-</style>
-
-<script>
 (function () {
   const _cs = getComputedStyle(document.documentElement);
   const _c   = n => _cs.getPropertyValue(n).trim();
@@ -302,4 +285,3 @@
   });
 
 })();
-</script>

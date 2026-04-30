@@ -48,8 +48,10 @@ Similarly, if it sees a slow moving molecule moving from the left it also lets i
 By observing the gas, and acting on that information, the demon can make the gas on the left get hotter, while the gas on the right cools.
 Why don't you try it:
 
+<script src="{{ '/assets/js/applet-shell.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/applet-shell-mobile.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/applets/maxwell_demon_applet.js' | relative_url }}" defer></script>
 <button class="applet-launch-btn" onclick="demonOpen()">Maxwell's Demon</button>
-{% include applets/maxwell_demon_applet.html %}
 
 Were you hired?
 

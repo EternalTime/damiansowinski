@@ -1,58 +1,3 @@
-<!-- Forager Applet Include -->
-
-<style>
-/* ── Forager-specific ctrl panel layout ── */
-#fa-sliders-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-#fa-sliders-scroll::-webkit-scrollbar { width: 0; }
-
-#fa-phase-section {
-  flex-shrink: 0;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-top: 1px solid var(--border-dark);
-  overflow: hidden;
-}
-#fa-phase-title {
-  font-size: 14px; text-transform: uppercase;
-  letter-spacing: 1.5px; color: var(--text-dim);
-  padding: 6px 16px 4px;
-  align-self: flex-start;
-  flex-shrink: 0;
-}
-#fa-phase-canvas {
-  display: block;
-  background: var(--bg-panel);
-  flex: 1;
-  min-height: 0;
-}
-
-#fa-extinction-stamp {
-  display: none;
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) rotate(-15deg);
-  color: var(--red);
-  font-size: 48px;
-  font-weight: bold;
-  letter-spacing: 6px;
-  border: 6px solid var(--red);
-  padding: 10px 24px;
-  opacity: 0.92;
-  pointer-events: none;
-  white-space: nowrap;
-  font-family: 'EB Garamond', Georgia, serif;
-}
-</style>
-
-<script>
 (function () {
 'use strict';
 
@@ -480,4 +425,3 @@ document.getElementById('fa-sl-xi').addEventListener('input', function () {
 });
 
 })();
-</script>

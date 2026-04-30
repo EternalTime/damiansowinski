@@ -5,6 +5,8 @@ title: Applets
 
 <script src="{{ '/assets/js/applet-shell.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/applet-shell-mobile.js' | relative_url }}"></script>
+{% for f in site.static_files %}{% if f.path contains '/assets/js/applets/' and f.extname == '.js' %}<script src="{{ f.path | relative_url }}" defer></script>
+{% endif %}{% endfor %}
 
 <a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
 <br>
@@ -31,12 +33,6 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 <button class="applet-launch-btn" onclick="bmOpen(); this.blur()">Brownian Motion</button>
 <button class="applet-launch-btn" onclick="gasOpen(); this.blur()">Hard Spheres</button>
 <button class="applet-launch-btn" onclick="demonOpen(); this.blur()">Maxwell's Demon</button>
-{% include applets/ising_applet.html %}
-{% include applets/xy_applet.html %}
-{% include applets/gl_applet.html %}
-{% include applets/brownian_applet.html %}
-{% include applets/gas_applet.html %}
-{% include applets/maxwell_demon_applet.html %}
 
 ---
 
@@ -44,7 +40,6 @@ Computational physics is awesome. It's the art of telling a computer how to simu
   Pattern Formation
 </h1>
 <button class="applet-launch-btn" onclick="gsOpen(); this.blur()">Gray&ndash;Scott</button>
-{% include applets/greyscott_applet.html %}
 
 ---
 
@@ -55,10 +50,6 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 <button class="applet-launch-btn" onclick="ttOpen(); this.blur()">Toner&ndash;Tu Model</button>
 <button class="applet-launch-btn" onclick="faOpen(); this.blur()">Forager</button>
 <button class="applet-launch-btn" onclick="kmOpen(); this.blur()">Kuramoto Model</button>
-{% include applets/vicsek_applet.html %}
-{% include applets/forager_applet.html %}
-{% include applets/toner_tu_applet.html %}
-{% include applets/kuramoto_applet.html %}
 
 ---
 
@@ -67,8 +58,6 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 </h1>
 <button class="applet-launch-btn" onclick="ltOpen(); this.blur()">Relativistic Lattice</button>
 <button class="applet-launch-btn" onclick="ltzOpen(); this.blur()">Lorentz Transformation</button>
-{% include applets/lattice_applet.html %}
-{% include applets/lorentz_applet.html %}
 
 ---
 
@@ -77,8 +66,8 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 </h1>
 <button class="applet-launch-btn" onclick="slOpen(); this.blur()">Spring Lattice</button>
 <button class="applet-launch-btn" onclick="shoOpen(); this.blur()">SHO</button>
-{% include applets/spring_lattice_applet.html %}
-{% include applets/sho_applet.html %}
+<button class="applet-launch-btn" onclick="femOpen(); this.blur()">Elastic Cylinder</button>
+<button class="applet-launch-btn" onclick="tbOpen(); this.blur()">Three-Body Problem</button>
 
 ---
 
@@ -88,8 +77,6 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 
 <button class="applet-launch-btn" onclick="iswOpen(); this.blur()">Infinite Square Well</button>
 <button class="applet-launch-btn" onclick="qhoOpen(); this.blur()">Quantum Harmonic Oscillator</button>
-{% include applets/isw_applet.html %}
-{% include applets/qho_applet.html %}
 
 ---
 
@@ -97,9 +84,7 @@ Computational physics is awesome. It's the art of telling a computer how to simu
   Field Theory
 </h1>
 <button class="applet-launch-btn" onclick="ohOpen(); this.blur()">Oscillon Formation</button>
-{% include applets/oscillon_hubble_applet.html %}
 
 <button class="applet-launch-btn" onclick="qtunOpen(); this.blur()">Quantum Tunneling</button>
 
-{% include applets/qtun_applet.html %}
 
