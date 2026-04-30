@@ -13,16 +13,17 @@ permalink: /about/
   A Nerd and his three housemates
 </h1>
 
-I am a researcher currently at the University of Rochester's Department of Physics and Astronomy. I was born in Poland, grew up in Berlin and California.
-I earned my B.A. in physics from the University of California, Berkeley, and my Ph.D. in theoretical physics from Dartmouth College in the lovely woods of New England. I started off in Cosmology, but slowly found myself thinking about the nature of knowledge and how mushy brains come to know things about the world. What exactly is information, how is it instantiated in the physical world, and how does it have causal power.
-After completing my doctorate I postdoced in multiple fields: neuroscience, psychophysics, and continuum mechanics/biomedical physics. I was a fellow at the Institute for Cross-Disciplinary Engagement, giving me a multi-faceted perspective on the scientific endeavor.
+I am a researcher currently at the <a href="https://www.pas.rochester.edu/">University of Rochester's Department of Physics and Astronomy</a>. I was born in Poland, grew up in Berlin and California.
+I earned my B.A. in physics from the <a href="https://physics.berkeley.edu/">University of California, Berkeley</a>, and my Ph.D. in theoretical physics from <a href="https://physics.dartmouth.edu/">Dartmouth College</a> in the lovely woods of New England. I started off in Cosmology, but slowly found myself thinking about the nature of knowledge and how mushy brains come to know things about the world. What exactly is information, how is it instantiated in the physical world, and how does it have causal power.
+After completing my doctorate I postdoced in multiple fields: neuroscience, psychophysics, and continuum mechanics/biomedical physics. I was a fellow at the <a href="https://www.ice.dartmouth.edu/">Institute for Cross-Disciplinary Engagement</a>, giving me a multi-faceted perspective on the scientific endeavor.
 
 <img class="about-img about-img-right about-img-35" src="{{ '/assets/images/Ursy.png' | relative_url }}" alt="Ursus">
 
 <img class="about-img about-img-left about-img-30" src="{{ '/assets/images/Gaius.png' | relative_url }}" alt="Gaius">
 
 I have loved art and mathematics for as long as I can remember.
-I'm keen on synthesizing the two, and make visualizations of the projects I work on. After all, if a picture is worth a thousand words, then a thousand frames of video is, what, a million words?
+I'm keen on synthesizing the two, and make visualizations of the projects I work on. 
+After all, if a picture is worth a thousand words, then a thousand frames of video is, what, a million words?
 That's also why I like mathematics.
 It's a formal language that lets us convey the pictures in our heads with high fidelity to other people's heads.
 And that is rad.

@@ -146,13 +146,43 @@ Theoretical Physicist & Applied Mathemagician
   </defs>
   <g id="layer1">
     <!-- ── Body (static) ── -->
+    <g id="body-wrap">
     <g id="g85" transform="matrix(0.05094524,0.03653251,-0.03956829,0.05517869,1177.5959,1339.4251)">
       <ellipse style="opacity:1;fill:url(#radialGradient23);stroke:#16212a;stroke-width:35.4;stroke-dasharray:none;stroke-opacity:1" cx="-10606.979" cy="-7183.3892" rx="1926.718" ry="1848.3049" />
       <ellipse style="fill:url(#radialGradient21-0);stroke:#16212a;stroke-width:36.3702;stroke-dasharray:none;stroke-opacity:1" cx="-10091.127" cy="4387.8589" rx="467.32199" ry="172.01118" transform="matrix(0.48049341,0.87699834,-0.97597084,0.21790115,0,0)" />
       <ellipse style="fill:url(#radialGradient21-0-2);stroke:#04040e;stroke-width:20.0794;stroke-dasharray:none;stroke-opacity:1" cx="-4284.5249" cy="-14322.3" rx="499.98361" ry="152.92207" transform="matrix(-0.39333297,0.91939609,0.96147016,0.27490931,0,0)" />
     </g>
+    </g><!-- end body-wrap -->
 
-    <!-- ── Arm-R chain wrapper — rotates entire right arm around shoulder (1107, 575) ── -->
+    <!-- ── Left arm (static) ── -->
+    <g id="arm-l-wrap">
+      <g id="g87" transform="matrix(0.05094524,0.03653251,-0.03956829,0.05517869,1175.209,1344.4043)">
+        <ellipse style="fill:url(#radialGradient23-4-1);stroke:#16212a;stroke-width:15.0307;stroke-dasharray:none;stroke-opacity:1" cx="-13156.368" cy="-8447.207" rx="795.03589" ry="807.53137" />
+        <ellipse style="fill:url(#radialGradient23-4-1-0);stroke:#16212a;stroke-width:7.9756;stroke-dasharray:none;stroke-opacity:1" cx="-13452.227" cy="-7701.2949" rx="418.96292" ry="431.4584" />
+        <ellipse style="fill:url(#radialGradient23-4-1-0-3);stroke:#16212a;stroke-width:7.9756;stroke-dasharray:none;stroke-opacity:1" cx="-13831.334" cy="-7140.9316" rx="418.96292" ry="431.4584" />
+      </g>
+      <g id="g88" transform="matrix(0.05094524,0.03653251,-0.03956829,0.05517869,1175.2549,1338.5101)">
+        <ellipse style="fill:url(#radialGradient23-4-1-0-3-9);stroke:#16212a;stroke-width:7.9756;stroke-dasharray:none;stroke-opacity:1" cx="-14337.857" cy="-6707.2114" rx="418.96292" ry="431.4584" />
+        <ellipse style="fill:url(#radialGradient23-4-1-0-3-9-5);stroke:#16212a;stroke-width:7.9756;stroke-dasharray:none;stroke-opacity:1" cx="-14771.473" cy="-6237.5991" rx="418.96292" ry="431.4584" />
+      </g>
+      <g id="g89" transform="matrix(0.02761697,0.01980395,0.03816365,-0.05321989,1761.2586,667.64081)">
+        <path style="opacity:1;fill:url(#linearGradient61);stroke:#04040e;stroke-width:35;stroke-dasharray:none;stroke-opacity:1" d="m -30603.877,-9273.0679 c -138.754,0 -276.911,9.02 -410.944,26.83 v 559.404 l -0.228,-5.881 266.683,266.108 204.336,-28.784 c 281.349,6.494 741.714,132.944 674.246,256.641 -205.445,85.015 -486.487,132.99 -779.99,133.147 -258.492,-0.113 -508.539,-37.338 -705.826,-105.08 l -11.988,4.221 -24.02,-17.145 v 0 c -17.112,-6.42 -33.713,-13.06 -49.779,-19.91 4.478,-1.997 9,-3.977 13.566,-5.94 l -293.998,-209.853 -18.875,-616.106 c -250.819,127.486 -407.249,293.373 -443.797,470.627 h -4.281 v 24.553 c -2.647,18.545 -3.972,37.13 -3.973,55.721 0,18.593 1.325,37.181 3.973,55.728 l 43.865,628.481 c 59.902,183.285 246.476,349.854 526.472,470.023 279.997,120.169 635.225,186.1308 1002.38,186.1308 364.407,0 717.158,-64.9798 996.271,-183.5228 279.114,-118.544 499.011,-295.978 562.17,-477.571 0,0 74.893,-418.139 74.892,-692.181 0,-209.137 -199.677,-396.796 -497.649,-544.678 -297.971,-147.882 -702.107,-230.961 -1123.503,-230.961 z" />
+        <path style="fill:url(#linearGradient49);stroke:#04040e;stroke-width:35;stroke-dasharray:none;stroke-opacity:1" d="m -30585.106,-8696.1519 c -155.704,0 -279.15,-8.274 -428.197,14.08 l 290.741,303.512 c 707.29,-65.174 883.727,209.367 944.942,274.139 261.949,277.17 -603.643,900.852 -1627.096,485.753 -205.202,-83.227 -320.483,-196.107 -320.484,-313.808 0,-126.557 133.22,-247.093 366.159,-331.299 l -349.467,-151.881 c -208.623,33.246 -465.47,222.151 -465.469,508.057 0,209.137 167.399,409.708 465.37,557.59 297.971,147.882 702.106,230.9608 1123.501,230.9608 667.401,0 1556.594,-348.4678 1556.594,-830.5138 0,-209.137 -135.118,-367.746 -433.09,-515.628 -297.972,-147.883 -702.108,-230.962 -1123.504,-230.962 z" />
+        <path style="fill:#5a7a96;stroke:#04040e;stroke-width:41.1216;stroke-dasharray:none;stroke-opacity:1" d="m -31385.017,-8838.1929 -355.276,-202.534 24.571,593.523 366.93,169.181 z" />
+      </g>
+    </g><!-- end arm-l-wrap -->
+
+    <!-- ── Head wrapper — behind right arm ── -->
+    <g id="head-wrap">
+      <g id="g86" transform="matrix(0.05094524,0.03653251,-0.03956829,0.05517869,1201.2948,1304.2352)">
+        <path style="opacity:1;fill:url(#linearGradient18);stroke:#1a2530;stroke-width:35;stroke-dasharray:none;stroke-opacity:1" d="m -10582.662,-10369.072 a 1136.1144,377.78194 0 0 0 -1136.115,377.7809 1136.1144,377.78194 0 0 0 11.188,52.8891 l -7.508,0.092 388.353,1151.0154 5.234,0.034 a 725.90213,299.33059 0 0 0 710.919,238.8297 725.90213,299.33059 0 0 0 725.9041,-299.3313 725.90213,299.33059 0 0 0 -0.097,-4.9024 l 429.1931,-1076.3619 -6.427,-0.1315 a 1136.1144,377.78194 0 0 0 15.4708,-62.1328 1136.1144,377.78194 0 0 0 -1136.116,-377.7812 z" />
+        <ellipse style="opacity:1;fill:url(#radialGradient21);stroke:#16212a;stroke-width:35;stroke-dasharray:none;stroke-opacity:1" cx="-10610.604" cy="-10012.765" rx="838.74628" ry="271.52487" />
+        <ellipse style="fill:url(#radialGradient21-0-5);stroke:#16212a;stroke-width:24.4353;stroke-dasharray:none;stroke-opacity:1" cx="-6309.7124" cy="12137.764" rx="241.57495" ry="150.19849" transform="matrix(-0.25358355,0.96731349,-0.97140791,-0.23741665,0,0)" />
+        <ellipse style="fill:url(#radialGradient21-0-5-4);stroke:#16212a;stroke-width:24.9001;stroke-dasharray:none;stroke-opacity:1" cx="-11293.675" cy="-8258.4941" rx="241.97014" ry="155.71249" transform="matrix(0.26302262,0.96478967,0.97347685,-0.22878552,0,0)" />
+      </g>
+    </g><!-- end head-wrap -->
+
+    <!-- ── Arm-R chain wrapper — on top of head ── -->
     <g id="arm-r-wrap">
       <!-- Arm-R upper segment -->
       <g id="g91" transform="matrix(0.05548605,-0.02499983,0.02329575,0.05534193,1577.7482,738.32652)">
@@ -177,32 +207,6 @@ Theoretical Physicist & Applied Mathemagician
         </g><!-- end hand-r-wrap -->
       </g><!-- end forearm-r-wrap -->
     </g><!-- end arm-r-wrap -->
-
-    <!-- ── Left arm (static) ── -->
-    <g id="g87" transform="matrix(0.05094524,0.03653251,-0.03956829,0.05517869,1175.209,1344.4043)">
-      <ellipse style="fill:url(#radialGradient23-4-1);stroke:#16212a;stroke-width:15.0307;stroke-dasharray:none;stroke-opacity:1" cx="-13156.368" cy="-8447.207" rx="795.03589" ry="807.53137" />
-      <ellipse style="fill:url(#radialGradient23-4-1-0);stroke:#16212a;stroke-width:7.9756;stroke-dasharray:none;stroke-opacity:1" cx="-13452.227" cy="-7701.2949" rx="418.96292" ry="431.4584" />
-      <ellipse style="fill:url(#radialGradient23-4-1-0-3);stroke:#16212a;stroke-width:7.9756;stroke-dasharray:none;stroke-opacity:1" cx="-13831.334" cy="-7140.9316" rx="418.96292" ry="431.4584" />
-    </g>
-    <g id="g88" transform="matrix(0.05094524,0.03653251,-0.03956829,0.05517869,1175.2549,1338.5101)">
-      <ellipse style="fill:url(#radialGradient23-4-1-0-3-9);stroke:#16212a;stroke-width:7.9756;stroke-dasharray:none;stroke-opacity:1" cx="-14337.857" cy="-6707.2114" rx="418.96292" ry="431.4584" />
-      <ellipse style="fill:url(#radialGradient23-4-1-0-3-9-5);stroke:#16212a;stroke-width:7.9756;stroke-dasharray:none;stroke-opacity:1" cx="-14771.473" cy="-6237.5991" rx="418.96292" ry="431.4584" />
-    </g>
-    <g id="g89" transform="matrix(0.02761697,0.01980395,0.03816365,-0.05321989,1761.2586,667.64081)">
-      <path style="opacity:1;fill:url(#linearGradient61);stroke:#04040e;stroke-width:35;stroke-dasharray:none;stroke-opacity:1" d="m -30603.877,-9273.0679 c -138.754,0 -276.911,9.02 -410.944,26.83 v 559.404 l -0.228,-5.881 266.683,266.108 204.336,-28.784 c 281.349,6.494 741.714,132.944 674.246,256.641 -205.445,85.015 -486.487,132.99 -779.99,133.147 -258.492,-0.113 -508.539,-37.338 -705.826,-105.08 l -11.988,4.221 -24.02,-17.145 v 0 c -17.112,-6.42 -33.713,-13.06 -49.779,-19.91 4.478,-1.997 9,-3.977 13.566,-5.94 l -293.998,-209.853 -18.875,-616.106 c -250.819,127.486 -407.249,293.373 -443.797,470.627 h -4.281 v 24.553 c -2.647,18.545 -3.972,37.13 -3.973,55.721 0,18.593 1.325,37.181 3.973,55.728 l 43.865,628.481 c 59.902,183.285 246.476,349.854 526.472,470.023 279.997,120.169 635.225,186.1308 1002.38,186.1308 364.407,0 717.158,-64.9798 996.271,-183.5228 279.114,-118.544 499.011,-295.978 562.17,-477.571 0,0 74.893,-418.139 74.892,-692.181 0,-209.137 -199.677,-396.796 -497.649,-544.678 -297.971,-147.882 -702.107,-230.961 -1123.503,-230.961 z" />
-      <path style="fill:url(#linearGradient49);stroke:#04040e;stroke-width:35;stroke-dasharray:none;stroke-opacity:1" d="m -30585.106,-8696.1519 c -155.704,0 -279.15,-8.274 -428.197,14.08 l 290.741,303.512 c 707.29,-65.174 883.727,209.367 944.942,274.139 261.949,277.17 -603.643,900.852 -1627.096,485.753 -205.202,-83.227 -320.483,-196.107 -320.484,-313.808 0,-126.557 133.22,-247.093 366.159,-331.299 l -349.467,-151.881 c -208.623,33.246 -465.47,222.151 -465.469,508.057 0,209.137 167.399,409.708 465.37,557.59 297.971,147.882 702.106,230.9608 1123.501,230.9608 667.401,0 1556.594,-348.4678 1556.594,-830.5138 0,-209.137 -135.118,-367.746 -433.09,-515.628 -297.972,-147.883 -702.108,-230.962 -1123.504,-230.962 z" />
-      <path style="fill:#5a7a96;stroke:#04040e;stroke-width:41.1216;stroke-dasharray:none;stroke-opacity:1" d="m -31385.017,-8838.1929 -355.276,-202.534 24.571,593.523 366.93,169.181 z" />
-    </g>
-
-    <!-- ── Head wrapper — rotates slightly around its own center (1072, 346) for jiggle ── -->
-    <g id="head-wrap">
-      <g id="g86" transform="matrix(0.05094524,0.03653251,-0.03956829,0.05517869,1201.2948,1304.2352)">
-        <path style="opacity:1;fill:url(#linearGradient18);stroke:#1a2530;stroke-width:35;stroke-dasharray:none;stroke-opacity:1" d="m -10582.662,-10369.072 a 1136.1144,377.78194 0 0 0 -1136.115,377.7809 1136.1144,377.78194 0 0 0 11.188,52.8891 l -7.508,0.092 388.353,1151.0154 5.234,0.034 a 725.90213,299.33059 0 0 0 710.919,238.8297 725.90213,299.33059 0 0 0 725.9041,-299.3313 725.90213,299.33059 0 0 0 -0.097,-4.9024 l 429.1931,-1076.3619 -6.427,-0.1315 a 1136.1144,377.78194 0 0 0 15.4708,-62.1328 1136.1144,377.78194 0 0 0 -1136.116,-377.7812 z" />
-        <ellipse style="opacity:1;fill:url(#radialGradient21);stroke:#16212a;stroke-width:35;stroke-dasharray:none;stroke-opacity:1" cx="-10610.604" cy="-10012.765" rx="838.74628" ry="271.52487" />
-        <ellipse style="fill:url(#radialGradient21-0-5);stroke:#16212a;stroke-width:24.4353;stroke-dasharray:none;stroke-opacity:1" cx="-6309.7124" cy="12137.764" rx="241.57495" ry="150.19849" transform="matrix(-0.25358355,0.96731349,-0.97140791,-0.23741665,0,0)" />
-        <ellipse style="fill:url(#radialGradient21-0-5-4);stroke:#16212a;stroke-width:24.9001;stroke-dasharray:none;stroke-opacity:1" cx="-11293.675" cy="-8258.4941" rx="241.97014" ry="155.71249" transform="matrix(0.26302262,0.96478967,0.97347685,-0.22878552,0,0)" />
-      </g>
-    </g><!-- end head-wrap -->
   </g>
   </svg>
 </div>
@@ -254,9 +258,21 @@ html.is-desktop #robot-wrap {
   var trigger     = document.getElementById('robot-trigger');
   var wrap        = document.getElementById('robot-wrap');
   var headWrap    = document.getElementById('head-wrap');
+  var bodyWrap    = document.getElementById('body-wrap');
+  var armLWrap    = document.getElementById('arm-l-wrap');
   var armWrap     = document.getElementById('arm-r-wrap');     // whole arm chain; pivot = shoulder
   var forearmWrap = document.getElementById('forearm-r-wrap'); // forearm+hand; pivot = elbow
   var handWrap    = document.getElementById('hand-r-wrap');    // hand only; pivot = wrist
+
+  // Current scale state for each animated part
+  // scale is applied as part of the transform string alongside rotate()
+  var scaleBody    = 1, scaleHead = 1;
+  var scaleArmL    = 1;
+  var scaleArmR    = 1, scaleForearm = 1, scaleHand = 1;
+
+  // Pivot centres for body and left arm (scale from centre of each part)
+  var BODY  = { x: 922, y: 556 };
+  var ARML  = { x: 820, y: 650 };
 
   // ── Pivot points in SVG viewBox coordinates ──────────────────────
   var HEAD     = { x: 1072, y: 346 };  // head center
@@ -279,6 +295,11 @@ html.is-desktop #robot-wrap {
   function setPivot(el, x, y) {
     el.style.transformBox    = 'view-box';
     el.style.transformOrigin = x + 'px ' + y + 'px';
+  }
+
+  // Build transform string combining current rotation and scale for an element
+  function applyTransform(el, rotateDeg, scale) {
+    el.style.transform = 'rotate(' + rotateDeg + 'deg) scale(' + scale + ')';
   }
 
   // Animate an element's rotation from startDeg to endDeg over dur ms
@@ -304,24 +325,57 @@ html.is-desktop #robot-wrap {
 
   // ── Slide container in/out ────────────────────────────────────────
   // Slides to -33% (robot peeks in ~⅔ of its width from left edge)
+  // Animate scale linearly from 1 to targetScale over dur ms on a single element
+  // Animate scale linearly; onUpdate(s) called each frame so caller can track current scale
+  function animateScale(el, fromScale, toScale, dur, onUpdate, onDone) {
+    var t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min((ts - t0) / dur, 1);
+      var s = fromScale + (toScale - fromScale) * p;
+      el.style.transform = 'scale(' + s + ')';
+      if (onUpdate) onUpdate(s);
+      if (p < 1) requestAnimationFrame(step);
+      else { if (onDone) onDone(); }
+    }
+    requestAnimationFrame(step);
+  }
+
   function slideIn(dur, onDone) {
     var t0 = null;
     function step(ts) {
       if (!t0) t0 = ts;
       var p = Math.min((ts - t0) / dur, 1);
       wrap.style.transform = 'translateX(' + (-100 + 67 * easeOut(p)) + '%)';
+      scaleHead = 1 + 0.2 * p; // 1 → 1.2 linear, read by jiggle each step
       if (p < 1) requestAnimationFrame(step);
       else onDone();
     }
+    // Scale body in parallel with slide
+    animateScale(bodyWrap, 1, 0.9, dur, function(s) { scaleBody = s; }, null);
+    // Head scale is tracked via scaleHead variable; jiggle reads it each step
     requestAnimationFrame(step);
   }
 
   function slideOut(dur, onDone) {
+    // Capture starting scales at moment slideOut begins
+    var s0Body    = scaleBody,    s0Head = scaleHead;
+    var s0ArmL    = scaleArmL;
+    var s0ArmR    = scaleArmR,    s0Forearm = scaleForearm, s0Hand = scaleHand;
     var t0 = null;
     function step(ts) {
       if (!t0) t0 = ts;
       var p = Math.min((ts - t0) / dur, 1);
       wrap.style.transform = 'translateX(' + (-33 - 67 * easeInOut(p)) + '%)';
+      // linear scale each part by ×1.1 from its starting scale
+      var sB = s0Body    * (1 + 0.1 * p); scaleBody    = sB;
+      var sH = s0Head    * (1 + 0.1 * p); scaleHead    = sH;
+      var sL = s0ArmL    * (1 + 0.1 * p); scaleArmL    = sL;
+      var sR = s0ArmR    * (1 + 0.1 * p); scaleArmR    = sR;
+      var sF = s0Forearm * (1 + 0.1 * p); scaleForearm = sF;
+      var sHa= s0Hand    * (1 + 0.1 * p); scaleHand    = sHa;
+      bodyWrap.style.transform = 'scale(' + sB + ')';
+      headWrap.style.transform = 'scale(' + sH + ')';
       if (p < 1) requestAnimationFrame(step);
       else { wrap.style.transform = 'translateX(-100%)'; if (onDone) onDone(); }
     }
@@ -333,14 +387,14 @@ html.is-desktop #robot-wrap {
   function startHeadJiggle() {
     setPivot(headWrap, HEAD.x, HEAD.y);
     headWrap.style.transition = 'none';
-    headWrap.style.transform  = 'rotate(0deg)';
-    var seq = [5, -5, 5, -5, 5, -5, 0]; // degrees per step
-    var dur = 285; // ms per step
+    headWrap.style.transform  = 'rotateY(0deg) scale(' + scaleHead + ')';
+    var seq = [15, -15, 15, -15, 15, -15, 0];
+    var dur = 285;
     var idx = 0;
     function next() {
       if (idx >= seq.length) return;
       headWrap.style.transition = 'transform ' + dur + 'ms ease-in-out';
-      headWrap.style.transform  = 'rotate(' + seq[idx] + 'deg)';
+      headWrap.style.transform  = 'rotateY(' + seq[idx] + 'deg) scale(' + scaleHead + ')';
       idx++;
       setTimeout(next, dur);
     }
@@ -357,58 +411,60 @@ html.is-desktop #robot-wrap {
     var idx = 0;
     function next() {
       if (idx >= seq.length) return;
-      var dx = amp * seq[idx] * AXIS.x;
-      var dy = amp * seq[idx] * AXIS.y;
+      var dx = amp * seq[idx] * (-AXIS.y);
+      var dy = amp * seq[idx] * AXIS.x;
       headWrap.style.transition = 'transform ' + dur + 'ms ease-in-out';
-      headWrap.style.transform  = 'translate(' + dx + 'px, ' + dy + 'px)';
+      headWrap.style.transform  = 'translate(' + dx + 'px, ' + dy + 'px) scale(' + scaleHead + ')';
       idx++;
       setTimeout(next, dur);
     }
     next();
   }
 
-  // ── Arm raise — Arm-R CCW 90°, t=1–3s (2000ms) ───────────────────
+  // ── Arm raise — CCW 90°, scale 1→1.1, over 2000ms ────────────────
   function startArmRaise() {
     console.log('startArmRaise fired at', performance.now().toFixed(0), 'ms');
     armWrap.style.transition = 'none';
-    armWrap.style.transform  = 'rotate(0deg)';
-    // force layout before starting transition
+    armWrap.style.transform  = 'rotate(0deg) scale(1)';
     armWrap.getBoundingClientRect();
+    scaleArmR = 1.1;
     armWrap.style.transition = 'transform 2000ms cubic-bezier(0,0,0.2,1)';
-    armWrap.style.transform  = 'rotate(-90deg)';
+    armWrap.style.transform  = 'rotate(-90deg) scale(1.1)';
   }
 
-  // ── Forearm raise — CCW 70° relative, same start as arm, t=1–3.5s ─
+  // ── Forearm raise — CCW 70°, scale 1→1.265, over 2500ms ──────────
   function startForearmRaise() {
+    scaleForearm = 1.265 / 1.1; // absolute 1.265 → local 1.15
     forearmWrap.style.transition = 'none';
-    forearmWrap.style.transform  = 'rotate(0deg)';
+    forearmWrap.style.transform  = 'rotate(0deg) scale(1)';
     forearmWrap.getBoundingClientRect();
     forearmWrap.style.transition = 'transform 2500ms cubic-bezier(0,0,0.2,1)';
-    forearmWrap.style.transform  = 'rotate(-70deg)';
+    forearmWrap.style.transform  = 'rotate(-70deg) scale(' + scaleForearm + ')';
   }
 
-  // ── Hand raise — CCW 10° relative, t=1–3.75s ─────────────────────
+  // ── Hand raise — CCW 10°, scale 1→1.375, over 2750ms ─────────────
   function startHandRaise() {
+    scaleHand = 1.375 / (1.1 * 1.15); // absolute 1.375 → local ~1.087
     handWrap.style.transition = 'none';
-    handWrap.style.transform  = 'rotate(0deg)';
+    handWrap.style.transform  = 'rotate(0deg) scale(1)';
     handWrap.getBoundingClientRect();
     handWrap.style.transition = 'transform 2750ms cubic-bezier(0,0,0.2,1)';
-    handWrap.style.transform  = 'rotate(-10deg)';
+    handWrap.style.transform  = 'rotate(-10deg) scale(' + scaleHand + ')';
   }
 
   // ── Forearm wave — CW/CCW alternating, t=3.5–5.5s ────────────────
   // Relative to its raised position (-60°). Steps: +20,-20,+20,-10
   // Each half-swing = 500ms
   function startForearmWave() {
-    // Current rotation is -70° (from raise). Wave is relative to that.
     var base = -70;
-    var seq  = [base+20, base-20, base+20, base-10, base]; // end back at base
+    var seq  = [base+20, base-20, base+20, base-10, base];
     var dur  = 500;
     var idx  = 0;
+    var sf   = scaleForearm;
     function next() {
       if (idx >= seq.length) return;
       forearmWrap.style.transition = 'transform ' + dur + 'ms ease-in-out';
-      forearmWrap.style.transform  = 'rotate(' + seq[idx] + 'deg)';
+      forearmWrap.style.transform  = 'rotate(' + seq[idx] + 'deg) scale(' + sf + ')';
       idx++;
       setTimeout(next, dur);
     }
@@ -416,46 +472,48 @@ html.is-desktop #robot-wrap {
   }
 
   // ── Hand wave — CW/CCW, 250ms behind forearm, t=3.75–5.75s ───────
-  // Larger amplitude: +30,-30,+30,-15. Relative to raised position (-10°).
   function startHandWave() {
     var base = -10;
     var seq  = [base+30, base-30, base+30, base-15, base];
     var dur  = 500;
     var idx  = 0;
+    var sh   = scaleHand;
     function next() {
       if (idx >= seq.length) return;
       handWrap.style.transition = 'transform ' + dur + 'ms ease-in-out';
-      handWrap.style.transform  = 'rotate(' + seq[idx] + 'deg)';
+      handWrap.style.transform  = 'rotate(' + seq[idx] + 'deg) scale(' + sh + ')';
       idx++;
       setTimeout(next, dur);
     }
     next();
   }
 
-  // ── Arm return — CW back to 0°, t=5.5–7s (1500ms) ───────────────
+  // ── Arm return — CW back to 0°, t=4.5s (1500ms) ─────────────────
   function startArmReturn() {
     armWrap.style.transition = 'transform 1500ms cubic-bezier(0.8,0,1,1)';
-    armWrap.style.transform  = 'rotate(0deg)';
+    armWrap.style.transform  = 'rotate(0deg) scale(' + scaleArmR + ')';
   }
 
-  // ── Forearm return — CW to -20°, after wave ends at t=6000ms ──────
+  // ── Forearm return — CW to -20°, after wave ends ─────────────────
   function startForearmReturn() {
     forearmWrap.style.transition = 'transform 1000ms ease-in';
-    forearmWrap.style.transform  = 'rotate(-20deg)';
+    forearmWrap.style.transform  = 'rotate(-20deg) scale(' + scaleForearm + ')';
   }
 
   // ── Hand return — CW to 10°, 250ms after forearm ─────────────────
   function startHandReturn() {
     handWrap.style.transition = 'transform 1000ms ease-in';
-    handWrap.style.transform  = 'rotate(10deg)';
+    handWrap.style.transform  = 'rotate(10deg) scale(' + scaleHand + ')';
   }
 
   // ── Reset all ─────────────────────────────────────────────────────
   function resetAll() {
-    [headWrap, armWrap, forearmWrap, handWrap].forEach(function(el) {
+    [bodyWrap, headWrap, armLWrap, armWrap, forearmWrap, handWrap].forEach(function(el) {
       el.style.transition = 'none';
       el.style.transform  = '';
     });
+    scaleBody = 1; scaleHead = 1; scaleArmL = 1;
+    scaleArmR = 1; scaleForearm = 1; scaleHand = 1;
   }
 
   // ── Full sequence — all timings relative to t=0 (start of animation)
@@ -472,9 +530,10 @@ html.is-desktop #robot-wrap {
     startHeadJiggle();
 
     // t=0: arm, forearm, hand start raising simultaneously with slide-in
-    setTimeout(startArmRaise,     500);
-    setTimeout(startForearmRaise, 500);
-    setTimeout(startHandRaise,    500);
+    // scale 1→1.1 is baked into the raise transitions
+    setTimeout(startArmRaise,     0);
+    setTimeout(startForearmRaise, 0);
+    setTimeout(startHandRaise,    0);
 
     // t=2500: head up-down (2000ms, ends at t=4500)
     setTimeout(startHeadUpDown, 2500);
@@ -513,7 +572,9 @@ html.is-desktop #robot-wrap {
   });
 
   // Set pivots immediately so transform-origin is ready
+  setPivot(bodyWrap,    BODY.x,     BODY.y);
   setPivot(headWrap,    HEAD.x,     HEAD.y);
+  setPivot(armLWrap,    ARML.x,     ARML.y);
   setPivot(armWrap,     SHOULDER.x, SHOULDER.y);
   setPivot(forearmWrap, ELBOW.x,    ELBOW.y);
   setPivot(handWrap,    WRIST.x,    WRIST.y);
