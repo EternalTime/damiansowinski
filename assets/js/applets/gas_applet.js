@@ -4,6 +4,44 @@
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
   const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
 
+  /* ── Inject CSS ── */
+  (function () {
+    if (document.getElementById('gas-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'gas-styles';
+    s.textContent = `
+      #gas-ctrl-panel {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      #gas-scrollable {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+      }
+      #gas-hist-section {
+        flex: 0 0 33%;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 6px 12px 8px;
+        border-top: 1px solid var(--border-dark);
+      }
+      #gas-hist-section .applet-shell-ctrl-title {
+        flex-shrink: 0;
+        margin-bottom: 4px;
+      }
+      #gas-hist-canvas {
+        flex: 1;
+        min-height: 0;
+        display: block;
+        width: 100%;
+      }
+    `;
+    document.head.appendChild(s);
+  })();
+
   const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
   const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
 
@@ -222,9 +260,14 @@
     const pw = W - PL - PR, ph = H - PT - PB;
     const bw = pw / N_BINS;
     hctx.clearRect(0, 0, W, H);
-    hctx.fillStyle = _rgba('--teal-light', 0.45);
     for (let b = 0; b < N_BINS; b++) {
-      const bh = Math.min(smoothBins[b] / ymax, 1) * ph;
+      const bh  = Math.min(smoothBins[b] / ymax, 1) * ph;
+      const v   = (b + 0.5) * dv;
+      const hot = Math.min(v / (Math.sqrt(T) * 2), 1);
+      const r   = Math.round(_TLR + (_PDR - _TLR) * hot);
+      const g   = Math.round(_TLG + (_PDG - _TLG) * hot);
+      const bb  = Math.round(_TLB + (_PDB - _TLB) * hot);
+      hctx.fillStyle = `rgba(${r},${g},${bb},0.75)`;
       hctx.fillRect(PL + b * bw, PT + ph - bh, bw - 1, bh);
     }
     hctx.beginPath();
@@ -271,51 +314,52 @@
     gap:   0,
 
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Actions</div>
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="gasReset()">Reset</button>
-          <button class="applet-shell-btn" id="gas-pause-btn" onclick="gasTogglePause()">Pause</button>
+      <div id="gas-scrollable">
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-btn-row">
+            <button class="applet-shell-btn" onclick="gasReset()">Reset</button>
+            <button class="applet-shell-btn" id="gas-pause-btn" onclick="gasTogglePause()">Pause</button>
+          </div>
         </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Particles</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Few</span>
-          <input type="range" id="gas-nslider" min="10" max="300" step="5" value="100">
-          <span class="applet-shell-side">Many</span>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Particles</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Few</span>
+            <input type="range" id="gas-nslider" min="10" max="300" step="5" value="100">
+            <span class="applet-shell-side">Many</span>
+          </div>
         </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Temperature</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Cold</span>
-          <input type="range" id="gas-tslider" min="0.1" max="5.0" step="0.05" value="1.0">
-          <span class="applet-shell-side">Hot</span>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Temperature</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Cold</span>
+            <input type="range" id="gas-tslider" min="0.1" max="5.0" step="0.05" value="1.0">
+            <span class="applet-shell-side">Hot</span>
+          </div>
         </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Radius</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Small</span>
-          <input type="range" id="gas-rslider" min="2" max="20" step="1" value="10">
-          <span class="applet-shell-side">Large</span>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Radius</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Small</span>
+            <input type="range" id="gas-rslider" min="2" max="20" step="1" value="10">
+            <span class="applet-shell-side">Large</span>
+          </div>
         </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Piston</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Out</span>
-          <input type="range" id="gas-piston" min="0" max="1" step="0.01" value="0">
-          <span class="applet-shell-side">In</span>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Piston</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Out</span>
+            <input type="range" id="gas-piston" min="0" max="1" step="0.01" value="0">
+            <span class="applet-shell-side">In</span>
+          </div>
         </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Gravity</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Off</span>
-          <input type="range" id="gas-gslider" min="0" max="1" step="0.01" value="0">
-          <span class="applet-shell-side">Strong</span>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Gravity</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Off</span>
+            <input type="range" id="gas-gslider" min="0" max="1" step="0.01" value="0">
+            <span class="applet-shell-side">Strong</span>
+          </div>
         </div>
       </div>
       <div id="gas-hist-section">

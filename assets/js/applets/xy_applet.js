@@ -165,7 +165,6 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Actions</div>
         <div class="applet-shell-btn-row">
           <button class="applet-shell-btn" onclick="xyReset()">Reset</button>
           <button class="applet-shell-btn" id="xy-pause-btn" onclick="xyTogglePause()">Pause</button>

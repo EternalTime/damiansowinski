@@ -7,6 +7,49 @@
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
   const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
 
+  /* ── Inject applet-specific CSS ── */
+  (function () {
+    if (document.getElementById('qho-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'qho-styles';
+    s.textContent = `
+      .qho-eigen-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 0;
+      }
+      .qho-eigen-label {
+        font-size: 13px;
+        min-width: 22px;
+        flex-shrink: 0;
+        text-align: right;
+      }
+      .qho-eigen-row input[type=range] {
+        flex: 1;
+        min-width: 0;
+      }
+      .qho-gauge-wrap {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        cursor: grab;
+      }
+      .qho-gauge-svg {
+        width: 28px;
+        height: 28px;
+        display: block;
+      }
+      #qho-scrollable {
+        flex: 1;
+        overflow-y: auto;
+        padding: 4px 12px 8px;
+        min-height: 0;
+      }
+    `;
+    document.head.appendChild(s);
+  })();
+
   const TEAL_DARK  = _c('--teal-dark');
   const TEAL_LIGHT = _c('--teal-light');
   const CYAN       = _c('--cyan');
@@ -634,7 +677,6 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section" style="flex-shrink:0;">
-        <div class="applet-shell-ctrl-title">Actions</div>
         <div class="applet-shell-btn-row">
           <button class="applet-shell-btn" onclick="qhoReset()">Reset</button>
           <button class="applet-shell-btn active" id="qho-pause-btn" onclick="qhoTogglePause()">Resume</button>

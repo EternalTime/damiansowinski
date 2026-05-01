@@ -188,6 +188,27 @@
   flex-shrink: 0;
 }
 
+/* ── Slider wrap + tick marks ── */
+.applet-shell-slider-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+.applet-shell-slider-wrap input[type=range] {
+  width: 100%;
+}
+.applet-shell-tick {
+  position: absolute;
+  bottom: -6px;
+  width: 2px;
+  height: 6px;
+  background: var(--text-dim);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
 /* ── Buttons ── */
 .applet-shell-btn-row {
   display: flex;
@@ -198,10 +219,10 @@
   background: var(--bg-control);
   color: var(--text-bright);
   border: 1px solid var(--border-mid);
-  padding: calc(10px * var(--shell-fs, 1)) calc(18px * var(--shell-fs, 1));
+  padding: calc(6px * var(--shell-fs, 1)) calc(12px * var(--shell-fs, 1));
   cursor: pointer;
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: calc(18px * var(--shell-fs, 1));
+  font-size: calc(14px * var(--shell-fs, 1));
   letter-spacing: 1px;
   border-radius: 6px;
   transition: background 0.15s;

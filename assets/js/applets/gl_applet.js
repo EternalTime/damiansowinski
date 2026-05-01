@@ -4,6 +4,34 @@
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
   const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
 
+  /* ── Inject CSS ── */
+  (function () {
+    if (document.getElementById('gl-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'gl-styles';
+    s.textContent = `
+      #gl-ctrl-panel {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .gl-plot-section {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 8px 12px 10px;
+      }
+      #gl-plot {
+        flex: 1;
+        min-height: 0;
+        width: 100%;
+        display: block;
+      }
+    `;
+    document.head.appendChild(s);
+  })();
+
   const PAD = 20;
   const N   = 256;
   const DT  = 0.05;
@@ -182,6 +210,14 @@
     frameId = requestAnimationFrame(loop);
   }
 
+  function resizePlotCanvas() {
+    if (!plotCanvas) return;
+    const section = plotCanvas.closest('.gl-plot-section');
+    if (!section) return;
+    plotCanvas.width  = section.clientWidth  - 24;
+    plotCanvas.height = section.clientHeight - 18;
+  }
+
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'gl',
@@ -190,7 +226,6 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Actions</div>
         <div class="applet-shell-btn-row">
           <button class="applet-shell-btn" onclick="glReset()">Initialise</button>
           <button class="applet-shell-btn" id="gl-pause-btn" onclick="glTogglePause()">Pause</button>
@@ -228,11 +263,7 @@
 
       plotCanvas = document.getElementById('gl-plot');
       plotCtx    = plotCanvas.getContext('2d');
-      const rect = plotCanvas.getBoundingClientRect();
-      const PHI  = 1.6180339887;
-      const ctrlW = Math.floor(S / PHI);
-      plotCanvas.width  = Math.round(rect.width)  || ctrlW - 28;
-      plotCanvas.height = Math.round(rect.height) || Math.round(S * 0.4);
+      setTimeout(resizePlotCanvas, 80);
 
       initRandom();
       running = true;
@@ -255,13 +286,7 @@
       imgData = ctx.createImageData(S, S);
       buf     = imgData.data;
       for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
-      if (plotCanvas) {
-        const rect = plotCanvas.getBoundingClientRect();
-        const PHI  = 1.6180339887;
-        const ctrlW = Math.floor(S / PHI);
-        plotCanvas.width  = Math.round(rect.width)  || ctrlW - 28;
-        plotCanvas.height = Math.round(rect.height) || Math.round(S * 0.4);
-      }
+      resizePlotCanvas();
     },
   });
 
