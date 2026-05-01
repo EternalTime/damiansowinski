@@ -252,6 +252,31 @@ function buildSceneObjects() {
   });
 }
 
+function rebuildTrailBuffers() {
+  trailLines.forEach((line, i) => {
+    scene.remove(line);
+    line.geometry.dispose();
+    line.material.dispose();
+  });
+  trailLines = []; trailGeos = [];
+  bodies.forEach((b, i) => {
+    const [r,g,bv] = _rgb(BODY_COLORS[i]);
+    const col = new THREE.Color(r/255, g/255, bv/255);
+    const trailGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(trailLen * 3);
+    trailGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    trailGeo.setDrawRange(0, 0);
+    const trailMat = new THREE.PointsMaterial({
+      color: col, size: 0.12, map: spriteTexture,
+      transparent: true, opacity: 0.5, depthWrite: false, sizeAttenuation: true,
+    });
+    const line = new THREE.Points(trailGeo, trailMat);
+    scene.add(line);
+    trailLines.push(line);
+    trailGeos.push(trailGeo);
+  });
+}
+
 function updateSceneObjects() {
   bodies.forEach((b, i) => {
     // Update body position
@@ -370,7 +395,6 @@ const shell = new AppletShell({
 
   ctrlHTML: `
     <div class="applet-shell-ctrl-section">
-      <div class="applet-shell-ctrl-title">Actions</div>
       <div class="applet-shell-btn-row">
         <button class="applet-shell-btn" onclick="tbReset()">Reset</button>
         <button class="applet-shell-btn" id="tb-pause-btn" onclick="tbTogglePause()">Pause</button>
@@ -513,17 +537,18 @@ document.getElementById('tb-speed').addEventListener('input', function () {
 });
 document.getElementById('tb-trail').addEventListener('input', function () {
   trailLen = parseInt(this.value);
-  trails = bodies.map(() => []);
-  if (scene) buildSceneObjects();
+  // Trim existing trails to new max length, preserve history
+  trails = trails.map(t => t.length > trailLen ? t.slice(t.length - trailLen) : t);
+  if (scene) rebuildTrailBuffers();
 });
 document.getElementById('tb-r12').addEventListener('input', function () {
   r12 = parseFloat(this.value);
-  initPreset(currentPreset, false);
+  applyMassRatios(bodies);
   if (scene) buildSceneObjects();
 });
 document.getElementById('tb-r23').addEventListener('input', function () {
   r23 = parseFloat(this.value);
-  initPreset(currentPreset, false);
+  applyMassRatios(bodies);
   if (scene) buildSceneObjects();
 });
 

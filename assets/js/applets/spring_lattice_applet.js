@@ -165,19 +165,41 @@
     for (let j=1; j<Ny-1; j++)
       for (let i=1; i<Nx-1; i++) { const d=Math.abs(divergence(i,j)); if(d>maxDiv) maxDiv=d; }
     const scale = Math.max(maxDiv*0.5, 0.02);
-    const half  = spacing*0.5;
-    for (let j=1; j<Ny-1; j++)
-      for (let i=1; i<Nx-1; i++) {
-        const idx=j*Nx+i;
-        ctx.fillStyle=paletteColor(divergence(i,j),scale);
-        ctx.fillRect(px[idx]-half, py[idx]-half, spacing, spacing);
-      }
+
+    if (latticeType === 'square') {
+      const half = spacing * 0.5;
+      for (let j=1; j<Ny-1; j++)
+        for (let i=1; i<Nx-1; i++) {
+          const idx = j*Nx+i;
+          ctx.fillStyle = paletteColor(divergence(i,j), scale);
+          ctx.fillRect(px[idx]-half, py[idx]-half, spacing, spacing);
+        }
+    } else {
+      // Triangular lattice: Voronoi cells are regular hexagons.
+      // Circumradius = spacing / sqrt(3), flat-top orientation (angle offset π/6).
+      const R = spacing / Math.sqrt(3);
+      for (let j=1; j<Ny-1; j++)
+        for (let i=1; i<Nx-1; i++) {
+          const idx = j*Nx+i;
+          ctx.fillStyle = paletteColor(divergence(i,j), scale);
+          ctx.beginPath();
+          for (let k=0; k<6; k++) {
+            const a = Math.PI/6 + k * Math.PI/3;
+            const hx = px[idx] + R * Math.cos(a);
+            const hy = py[idx] + R * Math.sin(a);
+            k === 0 ? ctx.moveTo(hx, hy) : ctx.lineTo(hx, hy);
+          }
+          ctx.closePath();
+          ctx.fill();
+        }
+    }
+
     const dotR = Math.max(1.5, spacing*0.08);
-    ctx.fillStyle=_rgba('--white',0.75);
+    ctx.fillStyle = _rgba('--white', 0.75);
     for (let j=1; j<Ny-1; j++)
       for (let i=1; i<Nx-1; i++) {
-        const idx=j*Nx+i;
-        ctx.beginPath(); ctx.arc(px[idx],py[idx],dotR,0,Math.PI*2); ctx.fill();
+        const idx = j*Nx+i;
+        ctx.beginPath(); ctx.arc(px[idx], py[idx], dotR, 0, Math.PI*2); ctx.fill();
       }
   }
 
@@ -284,7 +306,6 @@
     ctrlHTML: `
       <div id="sl-ctrl-fixed">
         <div class="applet-shell-ctrl-section">
-          <div class="applet-shell-ctrl-title">Actions &amp; Resolution</div>
           <div class="applet-shell-btn-row">
             <button class="applet-shell-btn" onclick="slReset()">Reset</button>
             <button class="applet-shell-btn" id="sl-pause-btn" onclick="slTogglePause()">Pause</button>

@@ -164,9 +164,9 @@
         <div class="applet-shell-ctrl-title">External Field</div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">&minus;</span>
-          <div class="ising-slider-wrap">
+          <div class="applet-shell-slider-wrap">
             <input type="range" id="ising-field" min="-1" max="1" step="0.02" value="0">
-            <div class="ising-slider-tick"></div>
+            <div class="applet-shell-tick" style="left:50%;"></div>
           </div>
           <span class="applet-shell-side">&plus;</span>
         </div>

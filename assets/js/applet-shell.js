@@ -317,6 +317,69 @@
     document.head.appendChild(s);
   }
 
+  function injectAppletStylesStacked(id) {
+    const styleId = 'applet-shell-styles-' + id;
+    if (document.getElementById(styleId)) return;
+    const s = document.createElement('style');
+    s.id = styleId;
+    s.textContent = `
+#${id}-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+#${id}-overlay.${id}-open {
+  display: block;
+  pointer-events: auto;
+}
+
+/* Header — slides from top */
+#${id}-header {
+  left:   var(--${id}-left);
+  top:    var(--${id}-top-hdr);
+  width:  var(--${id}-W);
+  height: var(--${id}-H-hdr);
+  transform: translateY(-120px);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#${id}-header.applet-shell-open { transform: translateY(0); }
+
+/* Sim panel — slides from left */
+#${id}-sim-panel {
+  left:   var(--${id}-left);
+  top:    var(--${id}-top-sim);
+  width:  var(--${id}-W);
+  height: var(--${id}-H-sim);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-110vw);
+  border-radius: 0;
+}
+#${id}-sim-panel.applet-shell-open { transform: translateX(0); }
+
+/* Ctrl panel — slides from bottom */
+#${id}-ctrl-panel {
+  left:   var(--${id}-left);
+  top:    var(--${id}-top-ctrl);
+  width:  var(--${id}-W);
+  height: var(--${id}-H-ctrl);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transform: translateY(120px);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+#${id}-ctrl-panel.applet-shell-open { transform: translateY(0); }
+    `;
+    document.head.appendChild(s);
+  }
+
   /* ── HTML scaffold ──────────────────────────────────────────────────────── */
   function buildScaffold(id, title, ctrlHTML) {
     const div = document.createElement('div');
@@ -343,7 +406,7 @@
     return div.firstChild;
   }
 
-  /* ── Layout computation ─────────────────────────────────────────────────── */
+  /* ── Layout computation — 'side' (default) ─────────────────────────────── */
   function computeLayout(gap) {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
@@ -358,7 +421,7 @@
     return { S, ctrlW, hdrH, totalW, left, top };
   }
 
-  function applyLayout(id, gap) {
+  function applyLayoutSide(id, gap) {
     const { S, ctrlW, hdrH, totalW, left, top } = computeLayout(gap);
     const fs = Math.min(FS_MAX, Math.max(FS_MIN, ctrlW / FS_REF));
     const el = document.getElementById(id + '-overlay');
@@ -372,7 +435,45 @@
     el.style.setProperty('--' + id + '-H-body',   S              + 'px');
     el.style.setProperty('--' + id + '-gap',      gap            + 'px');
     el.style.setProperty('--shell-fs',             fs.toFixed(4));
-    return S;
+    return { W: S, H: S };
+  }
+
+  /* ── Layout computation — 'stacked' ─────────────────────────────────────── */
+  function computeLayoutStacked() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    // H/W = 1.1/PHI; fit within viewport with PAD margins
+    const wFromW = vw - 2 * PAD;
+    const wFromH = (vh - 2 * PAD) * PHI / 1.1;
+    const W      = Math.floor(Math.min(wFromW, wFromH));
+    const H      = Math.floor(W * 1.1 / PHI);
+    const hdrH   = Math.floor(H * 0.1);
+    const ctrlH  = Math.floor(H * 0.1);
+    const simH   = H - hdrH - ctrlH;
+    const left   = Math.floor((vw - W) / 2);
+    const top    = Math.floor((vh - H) / 2);
+    return { W, H, simH, hdrH, ctrlH, left, top };
+  }
+
+  function applyLayoutStacked(id) {
+    const { W, H, simH, hdrH, ctrlH, left, top } = computeLayoutStacked();
+    const fs = Math.min(FS_MAX, Math.max(FS_MIN, W / (FS_REF * PHI)));
+    const el = document.getElementById(id + '-overlay');
+    el.style.setProperty('--' + id + '-left',      left              + 'px');
+    el.style.setProperty('--' + id + '-top-hdr',   top               + 'px');
+    el.style.setProperty('--' + id + '-top-sim',   (top + hdrH)      + 'px');
+    el.style.setProperty('--' + id + '-top-ctrl',  (top + hdrH + simH) + 'px');
+    el.style.setProperty('--' + id + '-W',         W                 + 'px');
+    el.style.setProperty('--' + id + '-H-hdr',     hdrH              + 'px');
+    el.style.setProperty('--' + id + '-H-sim',     simH              + 'px');
+    el.style.setProperty('--' + id + '-H-ctrl',    ctrlH             + 'px');
+    el.style.setProperty('--shell-fs',              fs.toFixed(4));
+    return { W, H: simH };
+  }
+
+  function applyLayout(id, gap, layout) {
+    if (layout === 'stacked') return applyLayoutStacked(id);
+    return applyLayoutSide(id, gap);
   }
 
   /* ── AppletShell constructor ─────────────────────────────────────────────── */
@@ -380,6 +481,7 @@
     const id       = cfg.id;
     const title    = cfg.title;
     const gap      = cfg.gap || 0;
+    const layoutMode = cfg.layout || 'side';
     const onOpen   = cfg.onOpen   || function () {};
     const onClose  = cfg.onClose  || function () {};
     const onResize = cfg.onResize || null;
@@ -387,7 +489,8 @@
 
     // Inject styles
     injectSharedStyles();
-    injectAppletStyles(id);
+    if (layoutMode === 'stacked') injectAppletStylesStacked(id);
+    else injectAppletStyles(id);
 
     // Build and insert HTML scaffold
     const scaffold = buildScaffold(id, title, ctrlHTML);
@@ -401,19 +504,19 @@
     const panelIds = [id + '-header', id + '-sim-panel', id + '-ctrl-panel'];
 
     function layout() {
-      const S      = applyLayout(id, gap);
+      const { W, H } = applyLayout(id, gap, layoutMode);
       const canvas = document.getElementById(id + '-canvas');
       if (canvas) {
-        canvas.width  = S;
-        canvas.height = S;
+        canvas.width  = W;
+        canvas.height = H;
       }
-      return S;
+      return { W, H };
     }
 
     const self = {
       open: function () {
-        const S      = layout();
-        const canvas = document.getElementById(id + '-canvas');
+        const { W, H } = layout();
+        const canvas   = document.getElementById(id + '-canvas');
 
         document.getElementById(id + '-overlay').classList.add(id + '-open');
         requestAnimationFrame(function () {
@@ -422,7 +525,9 @@
           });
         });
 
-        onOpen({ canvas: canvas, S: S });
+        // Pass S for side layout (W===H===S), or {W,H} for stacked.
+        // For backwards compat, S = W for side layout.
+        onOpen({ canvas: canvas, S: W, W: W, H: H });
       },
 
       close: function () {
@@ -447,9 +552,9 @@
     window.addEventListener('resize', function () {
       const overlay = document.getElementById(id + '-overlay');
       if (!overlay.classList.contains(id + '-open')) return;
-      const S      = layout();
-      const canvas = document.getElementById(id + '-canvas');
-      if (onResize) onResize({ canvas: canvas, S: S });
+      const { W, H } = layout();
+      const canvas   = document.getElementById(id + '-canvas');
+      if (onResize) onResize({ canvas: canvas, S: W, W: W, H: H });
     });
 
     return self;

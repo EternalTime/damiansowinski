@@ -235,7 +235,7 @@ function drawPhase() {
   for (let i = 0; i < phaseTrail.length; i++) {
     addBlob(phaseTrail[i].nr, phaseTrail[i].na, Math.exp(-decay*(phaseTrail.length-1-i)));
   }
-  phaseCtx.fillStyle = _c('--bg-panel'); phaseCtx.fillRect(0, 0, W, H);
+  phaseCtx.fillStyle = _c('--bg-dark'); phaseCtx.fillRect(0, 0, W, H);
   phaseCtx.drawImage(accumCanvas, 0, 0);
   phaseCtx.save();
   phaseCtx.setLineDash([5, 4]);
@@ -279,15 +279,71 @@ function loop() {
   frameId = requestAnimationFrame(loop);
 }
 
-function resizePhaseCanvas(S, ctrlW) {
+function resizePhaseCanvas() {
   if (!phaseCanvas) return;
-  const title  = document.getElementById('fa-phase-title');
-  const titleH = title ? (title.offsetHeight || 32) : 32;
-  const side   = Math.min(ctrlW - 16, Math.round(S * 0.5) - titleH - 8);
+  const ctrl = document.getElementById('fa-ctrl-panel');
+  const side = ctrl ? Math.floor(ctrl.offsetWidth * 0.85) : 180;
   phaseCanvas.width  = side;
   phaseCanvas.height = side;
   if (accumCanvas) resizeAccum();
 }
+
+/* ── Inject CSS ── */
+(function () {
+  if (document.getElementById('fa-styles')) return;
+  const s = document.createElement('style');
+  s.id = 'fa-styles';
+  s.textContent = `
+    #fa-ctrl-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+    #fa-ctrl-fixed {
+      flex-shrink: 0;
+    }
+    #fa-sliders-scroll {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+    }
+    #fa-phase-section {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 6px 10px 8px;
+      border-top: 1px solid var(--border-dark);
+    }
+    #fa-phase-title {
+      font-size: calc(14px * var(--shell-fs, 1));
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+    #fa-phase-canvas {
+      display: block;
+    }
+    #fa-extinction-stamp {
+      display: none;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-20deg);
+      font-size: 3em;
+      color: var(--red);
+      opacity: 0.7;
+      pointer-events: none;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-family: 'EB Garamond', Georgia, serif;
+    }
+  `;
+  document.head.appendChild(s);
+})();
 
 /* ── Shell wiring ── */
 const shell = new AppletShell({
@@ -296,65 +352,67 @@ const shell = new AppletShell({
   gap:   0,
 
   ctrlHTML: `
-    <div class="applet-shell-ctrl-section">
-      <div class="applet-shell-ctrl-title">Simulation</div>
-      <div class="applet-shell-btn-row">
-        <button class="applet-shell-btn" id="fa-btn-run">Run</button>
-        <button class="applet-shell-btn" id="fa-btn-reset">Reset</button>
-      </div>
-    </div>
-    <div id="fa-sliders-scroll">
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Speed</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Slow</span>
-          <input type="range" id="fa-sl-speed" min="1" max="20" step="1" value="5">
-          <span class="applet-shell-side">Fast</span>
+    <div id="fa-ctrl-inner">
+      <div id="fa-ctrl-fixed">
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-btn-row">
+            <button class="applet-shell-btn" id="fa-btn-run">Run</button>
+            <button class="applet-shell-btn" id="fa-btn-reset">Reset</button>
+          </div>
         </div>
       </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Sense Radius</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Small</span>
-          <input type="range" id="fa-sl-sense" min="1" max="20" step="0.5" value="6">
-          <span class="applet-shell-side">Large</span>
+      <div id="fa-sliders-scroll">
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Speed</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Slow</span>
+            <input type="range" id="fa-sl-speed" min="1" max="20" step="1" value="5">
+            <span class="applet-shell-side">Fast</span>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Sense Radius</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Small</span>
+            <input type="range" id="fa-sl-sense" min="1" max="20" step="0.5" value="6">
+            <span class="applet-shell-side">Large</span>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Velocity</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Slow</span>
+            <input type="range" id="fa-sl-vel" min="1" max="40" step="1" value="20">
+            <span class="applet-shell-side">Fast</span>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Tumble</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Ballistic</span>
+            <input type="range" id="fa-sl-sigma" min="0" max="2" step="0.05" value="0.1">
+            <span class="applet-shell-side">Diffusive</span>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Homogeneity</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Sparse</span>
+            <input type="range" id="fa-sl-xi" min="0.05" max="2.0" step="0.05" value="0.5">
+            <span class="applet-shell-side">Dense</span>
+          </div>
         </div>
       </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Velocity</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Slow</span>
-          <input type="range" id="fa-sl-vel" min="1" max="40" step="1" value="20">
-          <span class="applet-shell-side">Fast</span>
-        </div>
+      <div id="fa-phase-section">
+        <div id="fa-phase-title">Phase Plane</div>
+        <canvas id="fa-phase-canvas"></canvas>
       </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Tumble</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Ballistic</span>
-          <input type="range" id="fa-sl-sigma" min="0" max="2" step="0.05" value="0.1">
-          <span class="applet-shell-side">Diffusive</span>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Homogeneity</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Sparse</span>
-          <input type="range" id="fa-sl-xi" min="0.05" max="2.0" step="0.05" value="0.5">
-          <span class="applet-shell-side">Dense</span>
-        </div>
-      </div>
-    </div>
-    <div id="fa-phase-section">
-      <div id="fa-phase-title">Phase Plane</div>
-      <canvas id="fa-phase-canvas"></canvas>
     </div>
   `,
 
-  onOpen: function ({ canvas: c, S, ctrlW: ctrlWArg }) {
+  onOpen: function ({ canvas: c }) {
     // Inject extinction stamp into sim panel
-    const simPanelId = document.getElementById('fa-sim-panel') ? 'fa-sim-panel' : 'fa-asm-sim';
-    const simPanel = document.getElementById(simPanelId);
+    const simPanel = document.getElementById('fa-sim-panel');
     if (simPanel && !document.getElementById('fa-extinction-stamp')) {
       const stamp = document.createElement('div');
       stamp.id = 'fa-extinction-stamp';
@@ -367,16 +425,16 @@ const shell = new AppletShell({
     phaseCanvas = document.getElementById('fa-phase-canvas');
     phaseCtx    = phaseCanvas.getContext('2d');
 
-    const ctrlW = ctrlWArg !== undefined ? ctrlWArg : Math.floor(S / 1.6180339887);
-    resizePhaseCanvas(S, ctrlW);
-
-    if (!initialized) { faInitSim(); initialized = true; }
-    initAccum();
-
-    running = true;
-    document.getElementById('fa-btn-run').textContent = 'Pause';
-    document.getElementById('fa-btn-run').classList.add('active');
-    if (!frameId) frameId = requestAnimationFrame(loop);
+    // Defer sizing until layout is painted
+    setTimeout(() => {
+      resizePhaseCanvas();
+      if (!initialized) { faInitSim(); initialized = true; }
+      initAccum();
+      running = true;
+      document.getElementById('fa-btn-run').textContent = 'Pause';
+      document.getElementById('fa-btn-run').classList.add('active');
+      if (!frameId) frameId = requestAnimationFrame(loop);
+    }, 80);
   },
 
   onClose: function () {
@@ -386,10 +444,9 @@ const shell = new AppletShell({
     if (btn) { btn.textContent = 'Run'; btn.classList.remove('active'); }
   },
 
-  onResize: function ({ canvas: c, S, ctrlW: ctrlWArg }) {
+  onResize: function ({ canvas: c }) {
     simCanvas = c;
-    const ctrlW = ctrlWArg !== undefined ? ctrlWArg : Math.floor(S / 1.6180339887);
-    resizePhaseCanvas(S, ctrlW);
+    resizePhaseCanvas();
   },
 });
 

@@ -6,6 +6,39 @@
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
   const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
 
+  /* ── Inject CSS ── */
+  (function () {
+    if (document.getElementById('bm-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'bm-styles';
+    s.textContent = `
+      #bm-ctrl-panel {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      #bm-hist-section {
+        flex: 0 0 33%;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 8px 12px 10px;
+        border-top: 1px solid var(--border-dark);
+      }
+      #bm-hist-section .applet-shell-ctrl-title {
+        margin-bottom: 4px;
+        flex-shrink: 0;
+      }
+      #bm-hist-canvas {
+        flex: 1;
+        min-height: 0;
+        width: 100%;
+        display: block;
+      }
+    `;
+    document.head.appendChild(s);
+  })();
+
   const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
   const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
 
@@ -419,7 +452,6 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Actions</div>
         <div class="applet-shell-btn-row">
           <button class="applet-shell-btn" onclick="bmReset()">Reset</button>
           <button class="applet-shell-btn" id="bm-pause-btn" onclick="bmTogglePause()">Pause</button>
@@ -466,8 +498,13 @@
     onOpen: function ({ canvas: c, S }) {
       canvas = c;
       ctx    = canvas.getContext('2d');
-      hctx   = document.getElementById('bm-hist-canvas').getContext('2d');
+      const hc = document.getElementById('bm-hist-canvas');
+      hctx = hc.getContext('2d');
       L = S;
+      setTimeout(() => {
+        hc.width  = hc.clientWidth  || 200;
+        hc.height = hc.clientHeight || 120;
+      }, 80);
       doReset();
       running = true;
       const pb = document.getElementById('bm-pause-btn');
