@@ -77,6 +77,7 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 
 <button class="applet-launch-btn" onclick="iswOpen(); this.blur()">Infinite Square Well</button>
 <button class="applet-launch-btn" onclick="qhoOpen(); this.blur()">Quantum Harmonic Oscillator</button>
+<button class="applet-launch-btn" onclick="qtunOpen(); this.blur()">Quantum Tunneling</button>
 
 ---
 
@@ -85,6 +86,5 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 </h1>
 <button class="applet-launch-btn" onclick="ohOpen(); this.blur()">Oscillon Formation</button>
 
-<button class="applet-launch-btn" onclick="qtunOpen(); this.blur()">Quantum Tunneling</button>
 
 

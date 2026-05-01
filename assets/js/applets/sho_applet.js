@@ -6,6 +6,41 @@
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
   const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
 
+  /* ── Inject CSS ── */
+  (function () {
+    if (document.getElementById('sho-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'sho-styles';
+    s.textContent = `
+      #sho-ctrl-panel {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      #sho-scrollable {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+      }
+      #sho-phase-section {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 6px 10px 8px;
+        border-top: 1px solid var(--border-dark);
+      }
+      #sho-phase-section .applet-shell-ctrl-title {
+        align-self: flex-start;
+        margin-bottom: 4px;
+      }
+      #sho-phase-canvas {
+        display: block;
+      }
+    `;
+    document.head.appendChild(s);
+  })();
+
   /* ── Palette ── */
   const TEAL_DARK  = _c('--teal-dark');
   const TEAL_LIGHT = _c('--teal-light');
@@ -244,13 +279,17 @@
     if (phaseHist.length > PHASE_HIST) phaseHist.shift();
   }
 
+  function resizePhaseCanvas() {
+    if (!phaseCvs) return;
+    const ctrl = document.getElementById('sho-ctrl-panel');
+    const side = ctrl ? Math.floor(ctrl.offsetWidth * 0.85) : 180;
+    phaseCvs.width  = side;
+    phaseCvs.height = side;
+  }
+
   function renderPhase() {
-    const W = phaseCvs.clientWidth  || 120;
-    const H = phaseCvs.clientHeight || 120;
-    if (phaseCvs.width !== W || phaseCvs.height !== H) {
-      phaseCvs.width  = W;
-      phaseCvs.height = H;
-    }
+    const W = phaseCvs.width  || 120;
+    const H = phaseCvs.height || 120;
 
     // Solid background matching control panel
     phaseCtx.fillStyle = _c('--bg-dark');
@@ -815,7 +854,6 @@
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Actions</div>
         <div class="applet-shell-btn-row">
           <button class="applet-shell-btn" onclick="shoReset()">Reset</button>
           <button class="applet-shell-btn" id="sho-pause-btn" onclick="shoTogglePause()">Pause</button>
@@ -907,6 +945,7 @@
       S      = s;
       phaseCvs = document.getElementById('sho-phase-canvas');
       phaseCtx = phaseCvs.getContext('2d');
+      setTimeout(resizePhaseCanvas, 80);
 
       // Inject stamp into sim panel if not already present
       const simPanel = document.getElementById('sho-sim-panel');
@@ -948,6 +987,7 @@
       canvas = c;
       ctx    = canvas.getContext('2d');
       S      = s;
+      resizePhaseCanvas();
     },
   });
 
