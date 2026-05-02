@@ -11,15 +11,18 @@ permalink: /teaching/
 
 ---
 <br>
-<h2>Institute for Cross-Disciplinary Engagement<br> at Dartmouth College</h2>
-<a href="{{ '/teaching/ice-dartmouth/Lectures/' | relative_url }}">From Epistemology to Information, 3 part lecture series</a>
+<h2 class="gradient-text2" style="font-size: 1.5em;">Institute for Cross-Disciplinary Engagement at Dartmouth College</h2>
+
+<ul>
+  <li><a href="{{ '/teaching/ice-dartmouth/Lectures/' | relative_url }}">From Epistemology to Information, 3 part lecture series</a></li>
+</ul>
 
 ---
 <br>
-<h2>University of Rochester</h2>
-<br>
-<a href="{{ '/teaching/university-of-rochester/PHYSLABS/' | relative_url }}">PHYS LAB: Undergraduate Physics Labs</a>
-<br>
-<a href="{{ '/teaching/university-of-rochester/PHYS100/' | relative_url }}">PHYS 100: Physics and the Natural World</a>
-<br>
-<a href="{{ '/teaching/university-of-rochester/PHYS141/' | relative_url }}">PHYS 141: Honors Classical Mechanics</a>
+<h2 class="gradient-text2" style="font-size: 1.5em;">University of Rochester</h2>
+
+<ul>
+  <li><a href="{{ '/teaching/university-of-rochester/PHYSLABS/' | relative_url }}">PHYS LAB: Undergraduate Physics Labs</a></li>
+  <li><a href="{{ '/teaching/university-of-rochester/PHYS100/' | relative_url }}">PHYS 100: Physics and the Natural World</a></li>
+  <li><a href="{{ '/teaching/university-of-rochester/PHYS141/' | relative_url }}">PHYS 141: Honors Classical Mechanics</a></li>
+</ul>

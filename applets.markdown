@@ -17,16 +17,12 @@ title: Applets
 </h1>
 
 <div>
-Computational physics is awesome. It's the art of telling a computer how to simulate phenomena we see in the world. But it's not limited to just those phenomena we know about. We can use 
+Computational physics is awesome. It's the art of telling a computer how to simulate phenomena we see in the world. But it's not limited to just those phenomena we know about. We can use
 </div>
-
-<img class="research-img-placeholder" src="{{ '/assets/images/Under-Construction-Sign.png' | relative_url }}" alt="Under Construction">
 
 ---
 
-<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
-  Statistical Physics
-</h1>
+<h2 class="gradient-text2" style="font-size: 1.5em;">Statistical Physics</h2>
 <button class="applet-launch-btn" onclick="isingOpen(); this.blur()">Ising Model</button>
 <button class="applet-launch-btn" onclick="xyOpen(); this.blur()">XY Model</button>
 <button class="applet-launch-btn" onclick="glOpen(); this.blur()">Ginzburg&ndash;Landau</button>
@@ -36,34 +32,28 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 
 ---
 
-<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
-  Pattern Formation
-</h1>
+<h2 class="gradient-text2" style="font-size: 1.5em;">Pattern Formation</h2>
 <button class="applet-launch-btn" onclick="gsOpen(); this.blur()">Gray&ndash;Scott</button>
 
 ---
 
-<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
-  Ecological Physics
-</h1>
+<h2 class="gradient-text2" style="font-size: 1.5em;">Ecological Physics</h2>
 <button class="applet-launch-btn" onclick="vicsekOpen(); this.blur()">Vicsek Model</button>
 <button class="applet-launch-btn" onclick="ttOpen(); this.blur()">Toner&ndash;Tu Model</button>
 <button class="applet-launch-btn" onclick="faOpen(); this.blur()">Forager</button>
+<button class="applet-launch-btn" onclick="fa3Open(); this.blur()">Forager 3D</button>
+<button class="applet-launch-btn" onclick="antsOpen(); this.blur()">Ant Colony</button>
 <button class="applet-launch-btn" onclick="kmOpen(); this.blur()">Kuramoto Model</button>
 
 ---
 
-<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
-  Special Relativity
-</h1>
+<h2 class="gradient-text2" style="font-size: 1.5em;">Special Relativity</h2>
 <button class="applet-launch-btn" onclick="ltOpen(); this.blur()">Relativistic Lattice</button>
 <button class="applet-launch-btn" onclick="ltzOpen(); this.blur()">Lorentz Transformation</button>
 
 ---
 
-<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
-  Continuum & Classical Mechanics
-</h1>
+<h2 class="gradient-text2" style="font-size: 1.5em;">Continuum &amp; Classical Mechanics</h2>
 <button class="applet-launch-btn" onclick="slOpen(); this.blur()">Spring Lattice</button>
 <button class="applet-launch-btn" onclick="shoOpen(); this.blur()">SHO</button>
 <button class="applet-launch-btn" onclick="femOpen(); this.blur()">Elastic Cylinder</button>
@@ -71,20 +61,12 @@ Computational physics is awesome. It's the art of telling a computer how to simu
 
 ---
 
-<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
-  Quantum Mechanics
-</h1>
-
+<h2 class="gradient-text2" style="font-size: 1.5em;">Quantum Mechanics</h2>
 <button class="applet-launch-btn" onclick="iswOpen(); this.blur()">Infinite Square Well</button>
 <button class="applet-launch-btn" onclick="qhoOpen(); this.blur()">Quantum Harmonic Oscillator</button>
 <button class="applet-launch-btn" onclick="qtunOpen(); this.blur()">Quantum Tunneling</button>
 
 ---
 
-<h1 class="gradient-text2" style="font-size: 2em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
-  Field Theory
-</h1>
+<h2 class="gradient-text2" style="font-size: 1.5em;">Field Theory</h2>
 <button class="applet-launch-btn" onclick="ohOpen(); this.blur()">Oscillon Formation</button>
-
-
-

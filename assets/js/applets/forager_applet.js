@@ -25,6 +25,39 @@ let R_sense = 6.0, vel = 20.0, sigma = 0.1, Xi = 0.5;
 let epsilon = epsilonFromXi(Xi);
 let stepsPerFrame = 1;
 
+/* ── Spatial grid ── */
+let grid = null;   // flat array of resource-index lists
+let gridNC = 0;    // number of cells per side
+let gridCS = 0;    // cell size
+
+function buildGrid() {
+  gridNC = Math.max(1, Math.ceil(DOMAIN / R_sense));
+  gridCS = DOMAIN / gridNC;
+  grid = new Array(gridNC * gridNC);
+  for (let i = 0; i < grid.length; i++) grid[i] = [];
+  for (let i = 0; i < resources.length; i++) {
+    const ix = Math.min(gridNC - 1, Math.floor(resources[i].x / gridCS));
+    const iy = Math.min(gridNC - 1, Math.floor(resources[i].y / gridCS));
+    grid[iy * gridNC + ix].push(i);
+  }
+}
+
+function gridNeighbors(ax, ay) {
+  // Returns indices of resources in the 3x3 neighbourhood of (ax,ay)
+  const cx = Math.min(gridNC - 1, Math.floor(ax / gridCS));
+  const cy = Math.min(gridNC - 1, Math.floor(ay / gridCS));
+  const out = [];
+  for (let dy = -1; dy <= 1; dy++) {
+    const iy = ((cy + dy) % gridNC + gridNC) % gridNC;
+    for (let dx = -1; dx <= 1; dx++) {
+      const ix = ((cx + dx) % gridNC + gridNC) % gridNC;
+      const cell = grid[iy * gridNC + ix];
+      for (let k = 0; k < cell.length; k++) out.push(cell[k]);
+    }
+  }
+  return out;
+}
+
 function epsilonFromXi(xi) {
   const n_eq = (xi / R_COL) * (xi / R_COL);
   return GAMMA / (n_eq * GAMMA_DECAY);
@@ -79,7 +112,10 @@ function toroidalDisp(ax, ay, bx, by) {
 
 function agentStep(a) {
   let best2 = R_sense * R_sense, bestIdx = -1;
-  for (let i = 0; i < resources.length; i++) {
+  const candidates = gridNeighbors(a.x, a.y);
+  for (let k = 0; k < candidates.length; k++) {
+    const i = candidates[k];
+    if (i >= resources.length) continue;
     const [dx, dy] = toroidalDisp(a.x, a.y, resources[i].x, resources[i].y);
     const d2 = dx * dx + dy * dy;
     if (d2 < best2) { best2 = d2; bestIdx = i; }
@@ -93,7 +129,10 @@ function agentStep(a) {
   a.x = wrap(a.x + vel * Math.cos(a.theta) * DT);
   a.y = wrap(a.y + vel * Math.sin(a.theta) * DT);
   let harvested = 0;
-  for (let i = resources.length - 1; i >= 0; i--) {
+  const colCandidates = gridNeighbors(a.x, a.y);
+  for (let k = colCandidates.length - 1; k >= 0; k--) {
+    const i = colCandidates[k];
+    if (i >= resources.length) continue;
     const [dx, dy] = toroidalDisp(a.x, a.y, resources[i].x, resources[i].y);
     if (dx * dx + dy * dy <= R_COL * R_COL) {
       resources[i] = resources[resources.length - 1]; resources.pop(); harvested++;
@@ -104,6 +143,7 @@ function agentStep(a) {
 
 function simStep() {
   updateResources();
+  buildGrid();
   const newborns = [];
   for (let i = agents.length - 1; i >= 0; i--) {
     const a = agents[i];

@@ -10,7 +10,7 @@ permalink: /research/
 
 ---
 <br>
-<h2>What is Information?</h2>
+<h2 class="gradient-text2" style="font-size: 1.5em;">What is Information?</h2>
 Information is a slippery concept.
 Is it a subjective quantity or an objective one?
 It's probably clear that there's information in a book.
@@ -59,7 +59,7 @@ Were you hired?
 
 ---
 <br>
-<h2>How does Agency emerge from Complexity?</h2>
+<h2 class="gradient-text2" style="font-size: 1.5em;">How does Agency emerge from Complexity?</h2>
 
 <video class="research-video-float" autoplay muted loop playsinline>
   <source src="{{ '/assets/videos/cell_09.mp4' | relative_url }}" type="video/mp4">
@@ -97,11 +97,11 @@ Understanding how complexity, computation, and control intertwine to create beha
 
  ---
 <br>
-<h2>How do Complex Systems Evolve?</h2>
+<h2 class="gradient-text2" style="font-size: 1.5em;">How do Complex Systems Evolve?</h2>
 
 <div class="research-video-flex-wrap">
-  <video class="research-video-flex" autoplay muted loop playsinline>
-    <source src="{{'/assets/videos/MicroCosmos.mp4' | relative_url }}" type="video/mp4">
+  <video id="microcosmos-video" class="research-video-flex" muted loop playsinline>
+    <source data-src="{{'/assets/videos/MicroCosmos.mp4' | relative_url }}" type="video/mp4">
   </video>
   <div>
 Life does not emerge from the soup of particles that is our Universe fully formed.
@@ -114,10 +114,26 @@ What this implies is that evolution
 </div>
 
 
----
-<br>
-<h2>Is Life a Phase Transition?</h2>
+<script>
+(function() {
+  var v = document.getElementById('microcosmos-video');
+  var src = v.querySelector('source[data-src]');
+  var obs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) {
+      src.setAttribute('src', src.getAttribute('data-src'));
+      v.load();
+      v.play();
+      obs.disconnect();
+    }
+  }, { threshold: 0.1 });
+  obs.observe(v);
+})();
+</script>
 
 ---
 <br>
-<h2>What does General Relativity tell us is possible?</h2>
+<h2 class="gradient-text2" style="font-size: 1.5em;">Is Life a Phase Transition?</h2>
+
+---
+<br>
+<h2 class="gradient-text2" style="font-size: 1.5em;">What does General Relativity tell us is possible?</h2>
