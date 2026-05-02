@@ -37,12 +37,12 @@ google_analytics: "G-XR8KFTKTC1"
 
 header_pages:
   - about.markdown
+  - applets.markdown
+  - notes.markdown
+  - press.markdown
   - publications.markdown
   - research.markdown
   - teaching.markdown
-  - notes.markdown
-  - press.markdown
-  - applets.markdown
 
 # Build settings
 theme: minima
