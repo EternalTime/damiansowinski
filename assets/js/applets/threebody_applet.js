@@ -386,21 +386,17 @@ function loop() {
 }
 
 // ── Shell wiring ──────────────────────────────────────────────────────────────
-let currentPreset = 'Figure-8';
+let currentPreset = 'Chaotic';
 
 const shell = new AppletShell({
   id:    'tb',
   title: 'Three-Body Problem',
   gap:   0,
 
+  headerBtns: `<button class="applet-shell-header-btn" onclick="tbReset()">Reset</button><button class="applet-shell-header-btn" id="tb-pause-btn" onclick="tbTogglePause()">Pause</button>`,
+
+
   ctrlHTML: `
-    <div class="applet-shell-ctrl-section">
-      <div class="applet-shell-btn-row">
-        <button class="applet-shell-btn" onclick="tbReset()">Reset</button>
-        <button class="applet-shell-btn" id="tb-pause-btn" onclick="tbTogglePause()">Pause</button>
-        <button class="applet-shell-btn" onclick="tbRandomize()">Randomize</button>
-      </div>
-    </div>
     <div class="applet-shell-ctrl-section">
       <div class="applet-shell-ctrl-title">Preset</div>
       <div class="applet-shell-btn-row" id="tb-preset-btns"></div>
@@ -437,7 +433,7 @@ const shell = new AppletShell({
   `,
 
   onOpen: function ({ canvas: c, S }) {
-    currentPreset = 'Figure-8';
+    currentPreset = 'Chaotic';
     initPreset(currentPreset);
 
     // Build preset buttons

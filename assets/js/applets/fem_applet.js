@@ -938,14 +938,10 @@ const shell = new AppletShell({
   title: 'Axisymmetric FEM &mdash; Elastic Cylinder',
   gap:   0,
 
+  headerBtns: `<button class="applet-shell-header-btn" onclick="femReset()">Reset</button><button class="applet-shell-header-btn" id="fem-pause-btn" onclick="femTogglePause()">Pause</button>`,
+
+
   ctrlHTML: `
-    <div class="applet-shell-ctrl-section">
-      <div class="applet-shell-btn-row">
-        <button class="applet-shell-btn" onclick="femReset()">Reset</button>
-        <button class="applet-shell-btn" id="fem-pause-btn" onclick="femTogglePause()">Pause</button>
-        <!-- <button class="applet-shell-btn" id="fem-nl-btn" onclick="femToggleNonlinear()">Linear</button> -->
-      </div>
-    </div>
     <div class="applet-shell-ctrl-section">
       <div class="applet-shell-ctrl-title">Loading</div>
       <div class="applet-shell-slider-row">

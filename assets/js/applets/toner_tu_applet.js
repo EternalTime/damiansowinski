@@ -144,13 +144,10 @@
     title: 'Toner&ndash;Tu &mdash; Active Fluid',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="ttReset()">Initialise</button><button class="applet-shell-header-btn" id="tt-pause-btn" onclick="ttTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="ttReset()">Initialise</button>
-          <button class="applet-shell-btn" id="tt-pause-btn" onclick="ttTogglePause()">Pause</button>
-        </div>
-      </div>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Noise &eta;</div>
         <div class="applet-shell-slider-row">

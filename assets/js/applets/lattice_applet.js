@@ -258,13 +258,10 @@
     title: 'Relativistic Lattice',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="ltReset()">Reset</button><button class="applet-shell-header-btn" id="lt-pause-btn" onclick="ltTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="ltReset()">Reset</button>
-          <button class="applet-shell-btn" id="lt-pause-btn" onclick="ltTogglePause()">Pause</button>
-        </div>
-      </div>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Velocity</div>
         <div class="applet-shell-slider-row">

@@ -852,12 +852,11 @@
     title: 'Simple Harmonic Oscillator &mdash; 1D',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="shoReset()">Reset</button><button class="applet-shell-header-btn" id="sho-pause-btn" onclick="shoTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="shoReset()">Reset</button>
-          <button class="applet-shell-btn" id="sho-pause-btn" onclick="shoTogglePause()">Pause</button>
-        </div>
         <div class="applet-shell-ctrl-title" style="margin-top:6px;">Speed</div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">Slow</span>

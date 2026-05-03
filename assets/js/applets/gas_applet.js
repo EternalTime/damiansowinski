@@ -313,14 +313,11 @@
     title: 'Hard-Sphere Gas &mdash; 2D',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="gasReset()">Reset</button><button class="applet-shell-header-btn" id="gas-pause-btn" onclick="gasTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
       <div id="gas-scrollable">
-        <div class="applet-shell-ctrl-section">
-          <div class="applet-shell-btn-row">
-            <button class="applet-shell-btn" onclick="gasReset()">Reset</button>
-            <button class="applet-shell-btn" id="gas-pause-btn" onclick="gasTogglePause()">Pause</button>
-          </div>
-        </div>
         <div class="applet-shell-ctrl-section">
           <div class="applet-shell-ctrl-title">Particles</div>
           <div class="applet-shell-slider-row">

@@ -316,12 +316,13 @@ const shell = new AppletShell({
   gap:    0,
   layout: 'stacked',
 
+  headerBtns: `<button class="applet-shell-header-btn" onclick="qtunReset()">Reset</button><button class="applet-shell-header-btn" id="qtun-pause-btn" onclick="qtunPause()">Pause</button>`,
+
+
   ctrlHTML: `
-    <div class="applet-shell-ctrl-section" style="flex-direction:row; align-items:center; gap:10px; flex:0 0 auto;">
-      <div class="applet-shell-btn-row" style="flex-wrap:nowrap;">
+    <div class="applet-shell-ctrl-section">
+      <div class="applet-shell-btn-row">
         <button class="applet-shell-btn active" id="qtun-fire-btn" onclick="qtunFire()">Fire</button>
-        <button class="applet-shell-btn" id="qtun-pause-btn" onclick="qtunPause()">Pause</button>
-        <button class="applet-shell-btn" onclick="qtunReset()">Reset</button>
       </div>
     </div>
     <div class="applet-shell-ctrl-section" style="flex:1; min-width:120px;">
