@@ -242,13 +242,10 @@
     gap:    0,
     layout: 'stacked',
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="ohReset()">Reset</button><button class="applet-shell-header-btn" id="oh-pause-btn" onclick="ohTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section" style="flex:0 0 auto;">
-        <div class="applet-shell-btn-row" style="flex-wrap:nowrap;">
-          <button class="applet-shell-btn" onclick="ohReset()">Reset</button>
-          <button class="applet-shell-btn" id="oh-pause-btn" onclick="ohTogglePause()">Pause</button>
-        </div>
-      </div>
       <div class="applet-shell-ctrl-section" style="flex:0 0 auto;">
         <div class="applet-shell-btn-row" style="flex-wrap:nowrap;">
           <button class="applet-shell-btn active" id="oh-btn-matter"    onclick="ohSetMode('matter')">Matter</button>

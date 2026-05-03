@@ -261,19 +261,10 @@
     gap:    0,
     layout: 'stacked',
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="demonReset()">Restart</button>`,
+
+
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section" style="flex:1; flex-direction:row; align-items:center; justify-content:center; position:relative;">
-        <button class="applet-shell-btn" onclick="demonReset()" style="position:absolute; left:16px;">Restart</button>
-        <button class="applet-shell-btn" id="demon-door-btn" onclick="demonToggleDoor()" style="font-size:1.5em; padding:0.3em 1.2em;">Open Door</button>
-        <div style="position:absolute; left:0; right:0; top:0; bottom:0; display:flex; pointer-events:none;">
-          <div style="flex:1; display:flex; align-items:center; justify-content:center;">
-            <span id="demon-temp-left"  style="font-family:'EB Garamond',Georgia,serif; font-size:1.3em; letter-spacing:1px;">T = —</span>
-          </div>
-          <div style="flex:1; display:flex; align-items:center; justify-content:center;">
-            <span id="demon-temp-right" style="font-family:'EB Garamond',Georgia,serif; font-size:1.3em; letter-spacing:1px;">T = —</span>
-          </div>
-        </div>
-      </div>
     `,
 
     onOpen: function ({ canvas: c, W, H, S }) {

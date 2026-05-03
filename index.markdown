@@ -382,14 +382,14 @@ html.is-desktop #robot-wrap {
     requestAnimationFrame(step);
   }
 
-  // ── Head jiggle — ±5° rotation, t=0–2s ───────────────────────────
-  // 7 steps × 285ms ≈ 2000ms
+  // ── Head jiggle — ±5° rotation, t=0–1s ───────────────────────────
+  // 7 steps × 143ms ≈ 1000ms
   function startHeadJiggle() {
     setPivot(headWrap, HEAD.x, HEAD.y);
     headWrap.style.transition = 'none';
     headWrap.style.transform  = 'rotateY(0deg) scale(' + scaleHead + ')';
     var seq = [15, -15, 15, -15, 15, -15, 0];
-    var dur = 285;
+    var dur = 143;
     var idx = 0;
     function next() {
       if (idx >= seq.length) return;
@@ -401,13 +401,13 @@ html.is-desktop #robot-wrap {
     next();
   }
 
-  // ── Head up-down — translate along body axis, t=3.5–5.5s ─────────
-  // 4 half-cycles × 500ms = 2000ms, amplitude = 8px along axis
+  // ── Head up-down — translate along body axis, t=1.75–2.75s ─────────
+  // 4 half-cycles × 250ms = 1000ms, amplitude = 8px along axis
   function startHeadUpDown() {
     setPivot(headWrap, HEAD.x, HEAD.y); // keep same pivot
     var amp = 8; // pixels along body axis
     var seq = [1, -1, 1, -1, 0]; // multipliers of amp
-    var dur = 500; // ms per step
+    var dur = 250; // ms per step
     var idx = 0;
     function next() {
       if (idx >= seq.length) return;
@@ -428,7 +428,7 @@ html.is-desktop #robot-wrap {
     armWrap.style.transform  = 'rotate(0deg) scale(1)';
     armWrap.getBoundingClientRect();
     scaleArmR = 1.1;
-    armWrap.style.transition = 'transform 2000ms cubic-bezier(0,0,0.2,1)';
+    armWrap.style.transition = 'transform 1000ms cubic-bezier(0,0,0.2,1)';
     armWrap.style.transform  = 'rotate(-90deg) scale(1.1)';
   }
 
@@ -438,7 +438,7 @@ html.is-desktop #robot-wrap {
     forearmWrap.style.transition = 'none';
     forearmWrap.style.transform  = 'rotate(0deg) scale(1)';
     forearmWrap.getBoundingClientRect();
-    forearmWrap.style.transition = 'transform 2500ms cubic-bezier(0,0,0.2,1)';
+    forearmWrap.style.transition = 'transform 1250ms cubic-bezier(0,0,0.2,1)';
     forearmWrap.style.transform  = 'rotate(-70deg) scale(' + scaleForearm + ')';
   }
 
@@ -448,17 +448,17 @@ html.is-desktop #robot-wrap {
     handWrap.style.transition = 'none';
     handWrap.style.transform  = 'rotate(0deg) scale(1)';
     handWrap.getBoundingClientRect();
-    handWrap.style.transition = 'transform 2750ms cubic-bezier(0,0,0.2,1)';
+    handWrap.style.transition = 'transform 1375ms cubic-bezier(0,0,0.2,1)';
     handWrap.style.transform  = 'rotate(-10deg) scale(' + scaleHand + ')';
   }
 
-  // ── Forearm wave — CW/CCW alternating, t=3.5–5.5s ────────────────
-  // Relative to its raised position (-60°). Steps: +20,-20,+20,-10
-  // Each half-swing = 500ms
+  // ── Forearm wave — CW/CCW alternating, t=1.75–2.75s ────────────────
+  // Relative to its raised position (-70°). Steps: +20,-20,+20,-10
+  // Each half-swing = 250ms
   function startForearmWave() {
     var base = -70;
     var seq  = [base+20, base-20, base+20, base-10, base];
-    var dur  = 500;
+    var dur  = 250;
     var idx  = 0;
     var sf   = scaleForearm;
     function next() {
@@ -471,11 +471,11 @@ html.is-desktop #robot-wrap {
     next();
   }
 
-  // ── Hand wave — CW/CCW, 250ms behind forearm, t=3.75–5.75s ───────
+  // ── Hand wave — CW/CCW, 125ms behind forearm, t=1.875–2.875s ───────
   function startHandWave() {
     var base = -10;
     var seq  = [base+30, base-30, base+30, base-15, base];
-    var dur  = 500;
+    var dur  = 250;
     var idx  = 0;
     var sh   = scaleHand;
     function next() {
@@ -488,21 +488,21 @@ html.is-desktop #robot-wrap {
     next();
   }
 
-  // ── Arm return — CW back to 0°, t=4.5s (1500ms) ─────────────────
+  // ── Arm return — CW back to 0°, t=2.25s (750ms) ─────────────────
   function startArmReturn() {
-    armWrap.style.transition = 'transform 1500ms cubic-bezier(0.8,0,1,1)';
+    armWrap.style.transition = 'transform 750ms cubic-bezier(0.8,0,1,1)';
     armWrap.style.transform  = 'rotate(0deg) scale(' + scaleArmR + ')';
   }
 
   // ── Forearm return — CW to -20°, after wave ends ─────────────────
   function startForearmReturn() {
-    forearmWrap.style.transition = 'transform 1000ms ease-in';
+    forearmWrap.style.transition = 'transform 500ms ease-in';
     forearmWrap.style.transform  = 'rotate(-20deg) scale(' + scaleForearm + ')';
   }
 
-  // ── Hand return — CW to 10°, 250ms after forearm ─────────────────
+  // ── Hand return — CW to 10°, 125ms after forearm ─────────────────
   function startHandReturn() {
-    handWrap.style.transition = 'transform 1000ms ease-in';
+    handWrap.style.transition = 'transform 500ms ease-in';
     handWrap.style.transform  = 'rotate(10deg) scale(' + scaleHand + ')';
   }
 
@@ -523,10 +523,10 @@ html.is-desktop #robot-wrap {
     var seqStart = performance.now();
     console.log('runSequence started at', seqStart.toFixed(0), 'ms');
 
-    // t=0: slide in (1500ms)
-    slideIn(1500, function() {});
+    // t=0: slide in (750ms)
+    slideIn(750, function() {});
 
-    // t=0: head jiggles (2000ms)
+    // t=0: head jiggles (1000ms)
     startHeadJiggle();
 
     // t=0: arm, forearm, hand start raising simultaneously with slide-in
@@ -535,31 +535,31 @@ html.is-desktop #robot-wrap {
     setTimeout(startForearmRaise, 0);
     setTimeout(startHandRaise,    0);
 
-    // t=2500: head up-down (2000ms, ends at t=4500)
-    setTimeout(startHeadUpDown, 2500);
+    // t=1250: head up-down (1000ms, ends at t=2250)
+    setTimeout(startHeadUpDown, 1250);
 
-    // t=2500: forearm wave starts (2500ms, ends at t=5000)
-    setTimeout(startForearmWave, 2500);
+    // t=1250: forearm wave starts (1250ms, ends at t=2500)
+    setTimeout(startForearmWave, 1250);
 
-    // t=2750: hand wave starts 250ms after forearm (ends at t=5250)
-    setTimeout(startHandWave, 2750);
+    // t=1375: hand wave starts 125ms after forearm (ends at t=2625)
+    setTimeout(startHandWave, 1375);
 
-    // t=5000: forearm return after wave ends (1000ms → done at t=6000)
-    setTimeout(startForearmReturn, 5000);
+    // t=2500: forearm return after wave ends (500ms → done at t=3000)
+    setTimeout(startForearmReturn, 2500);
 
-    // t=5250: hand return 250ms after forearm (1000ms → done at t=6250)
-    setTimeout(startHandReturn, 5250);
+    // t=2625: hand return 125ms after forearm (500ms → done at t=3125)
+    setTimeout(startHandReturn, 2625);
 
-    // t=4500: arm return CW (1500ms → done at t=6000)
-    setTimeout(startArmReturn, 4500);
+    // t=2250: arm return CW (750ms → done at t=3000)
+    setTimeout(startArmReturn, 2250);
 
-    // t=5750: slide out (1000ms, ends at t=6750)
+    // t=2875: slide out (500ms, ends at t=3375)
     setTimeout(function() {
-      slideOut(1000, function() {
+      slideOut(500, function() {
         resetAll();
         animRunning = false;
       });
-    }, 5750);
+    }, 2875);
   }
 
   // ── Trigger: 3s hover on "Artificial Life & Intelligence" ─────────

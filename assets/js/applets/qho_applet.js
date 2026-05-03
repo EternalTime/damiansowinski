@@ -675,12 +675,11 @@
     title: 'Quantum Harmonic Oscillator &mdash; 1D',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="qhoReset()">Reset</button><button class="applet-shell-header-btn" id="qho-pause-btn" onclick="qhoTogglePause()">Resume</button>`,
+
+
     ctrlHTML: `
       <div class="applet-shell-ctrl-section" style="flex-shrink:0;">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="qhoReset()">Reset</button>
-          <button class="applet-shell-btn active" id="qho-pause-btn" onclick="qhoTogglePause()">Resume</button>
-        </div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">Slow</span>
           <input type="range" id="qho-speed" min="0.002" max="1.0" step="0.002" value="0.05">

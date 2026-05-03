@@ -109,13 +109,10 @@
     title: 'Gray&ndash;Scott &mdash; Reaction&ndash;Diffusion',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="gsReset()">Reset</button><button class="applet-shell-header-btn" id="gs-pause-btn" onclick="gsTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="gsReset()">Reset</button>
-          <button class="applet-shell-btn" id="gs-pause-btn" onclick="gsTogglePause()">Pause</button>
-        </div>
-      </div>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Presets</div>
         <div class="applet-shell-btn-row">

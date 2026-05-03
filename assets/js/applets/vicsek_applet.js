@@ -155,13 +155,10 @@
     title: 'Vicsek Model &mdash; Flocking Dynamics',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="vicsekReset()">Reset</button><button class="applet-shell-header-btn" id="vicsek-pause-btn" onclick="vicsekTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="vicsekReset()">Reset</button>
-          <button class="applet-shell-btn" id="vicsek-pause-btn" onclick="vicsekTogglePause()">Pause</button>
-        </div>
-      </div>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Interaction</div>
         <div class="applet-shell-btn-row">
@@ -170,19 +167,19 @@
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Noise &eta;</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Low</span>
-          <input type="range" id="vicsek-noise" min="0.0" max="1.0" step="0.01" value="0.2">
-          <span class="applet-shell-side">High</span>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Boids</div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">Few</span>
           <input type="range" id="vicsek-count" min="300" max="2500" step="50" value="300">
           <span class="applet-shell-side">Many</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Noise &eta;</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Low</span>
+          <input type="range" id="vicsek-noise" min="0.0" max="1.0" step="0.01" value="0.2">
+          <span class="applet-shell-side">High</span>
         </div>
       </div>
       <div class="applet-shell-ctrl-section" id="vicsek-k-row" style="display:none;">
