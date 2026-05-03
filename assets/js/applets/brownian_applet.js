@@ -17,6 +17,11 @@
         flex-direction: column;
         overflow: hidden;
       }
+      #bm-sliders {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+      }
       #bm-hist-section {
         flex: 0 0 33%;
         min-height: 0;
@@ -450,43 +455,42 @@
     title: 'Brownian Motion &mdash; Hard Spheres',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="bmReset()">Reset</button><button class="applet-shell-header-btn" id="bm-pause-btn" onclick="bmTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="bmReset()">Reset</button>
-          <button class="applet-shell-btn" id="bm-pause-btn" onclick="bmTogglePause()">Pause</button>
+      <div id="bm-sliders">
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Particles</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Few</span>
+            <input type="range" id="bm-nslider" min="50" max="600" step="10" value="500">
+            <span class="applet-shell-side">Many</span>
+          </div>
         </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Particles</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Few</span>
-          <input type="range" id="bm-nslider" min="50" max="600" step="10" value="500">
-          <span class="applet-shell-side">Many</span>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Temperature</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Cold</span>
+            <input type="range" id="bm-tslider" min="0.1" max="5.0" step="0.05" value="1.0">
+            <span class="applet-shell-side">Hot</span>
+          </div>
         </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Temperature</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Cold</span>
-          <input type="range" id="bm-tslider" min="0.1" max="5.0" step="0.05" value="1.0">
-          <span class="applet-shell-side">Hot</span>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Small Radius</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Small</span>
+            <input type="range" id="bm-rslider" min="2" max="8" step="1" value="5">
+            <span class="applet-shell-side">Large</span>
+          </div>
         </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Small Radius</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Small</span>
-          <input type="range" id="bm-rslider" min="2" max="8" step="1" value="5">
-          <span class="applet-shell-side">Large</span>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Gravity</div>
-        <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Off</span>
-          <input type="range" id="bm-gslider" min="0" max="1" step="0.01" value="0">
-          <span class="applet-shell-side">Strong</span>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Gravity</div>
+          <div class="applet-shell-slider-row">
+            <span class="applet-shell-side">Off</span>
+            <input type="range" id="bm-gslider" min="0" max="1" step="0.01" value="0">
+            <span class="applet-shell-side">Strong</span>
+          </div>
         </div>
       </div>
       <div id="bm-hist-section">

@@ -541,6 +541,8 @@ const shell = new AppletShell({
   title: 'Ant Colony',
   gap:   0,
 
+  headerBtns: `<button class="applet-shell-header-btn" onclick="antsReset()">Reset</button><button class="applet-shell-header-btn" onclick="antsResetColony()">Reset Colony</button><button class="applet-shell-header-btn" id="ants-btn-run" onclick="antsToggleRun()">Run</button>`,
+
   ctrlHTML: `
     <div class="applet-shell-ctrl-section">
       <div class="applet-shell-ctrl-title">Environment</div>
@@ -552,16 +554,6 @@ const shell = new AppletShell({
       </div>
       <div class="applet-shell-btn-row">
         <button class="applet-shell-btn" id="ants-btn-nest" onclick="antsSetMode('nest')">Move Nest</button>
-      </div>
-    </div>
-    <div class="applet-shell-ctrl-section">
-      <div class="applet-shell-ctrl-title">Simulation</div>
-      <div class="applet-shell-btn-row">
-        <button class="applet-shell-btn" id="ants-btn-run" onclick="antsToggleRun()">Run</button>
-        <button class="applet-shell-btn" onclick="antsReset()">Reset</button>
-      </div>
-      <div class="applet-shell-btn-row">
-        <button class="applet-shell-btn" onclick="antsResetColony()">Reset Colony</button>
       </div>
     </div>
     <div class="applet-shell-ctrl-section">

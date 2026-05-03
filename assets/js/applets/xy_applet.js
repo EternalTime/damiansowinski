@@ -163,13 +163,10 @@
     title: 'XY Model &mdash; Glauber Dynamics',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="xyReset()">Reset</button><button class="applet-shell-header-btn" id="xy-pause-btn" onclick="xyTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="xyReset()">Reset</button>
-          <button class="applet-shell-btn" id="xy-pause-btn" onclick="xyTogglePause()">Pause</button>
-        </div>
-      </div>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Temperature T</div>
         <div class="applet-shell-slider-row">

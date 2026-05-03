@@ -224,13 +224,10 @@
     title: 'Ginzburg&ndash;Landau &mdash; Langevin Dynamics',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="glReset()">Initialise</button><button class="applet-shell-header-btn" id="gl-pause-btn" onclick="glTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="glReset()">Initialise</button>
-          <button class="applet-shell-btn" id="gl-pause-btn" onclick="glTogglePause()">Pause</button>
-        </div>
-      </div>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Temperature</div>
         <div class="applet-shell-slider-row">

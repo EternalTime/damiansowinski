@@ -303,22 +303,24 @@
   const shell = new AppletShell({
     id: 'sl', title: 'Spring Lattice', gap: 0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="slReset()">Reset</button><button class="applet-shell-header-btn" id="sl-pause-btn" onclick="slTogglePause()">Pause</button>`,
+
+
     ctrlHTML: `
       <div id="sl-ctrl-fixed">
-        <div class="applet-shell-ctrl-section">
-          <div class="applet-shell-btn-row">
-            <button class="applet-shell-btn" onclick="slReset()">Reset</button>
-            <button class="applet-shell-btn" id="sl-pause-btn" onclick="slTogglePause()">Pause</button>
-            <button class="applet-shell-btn active" id="sl-res-20" onclick="slSetRes(22)">20</button>
-            <button class="applet-shell-btn"         id="sl-res-40" onclick="slSetRes(42)">40</button>
-            <button class="applet-shell-btn"         id="sl-res-80" onclick="slSetRes(82)">80</button>
-          </div>
-        </div>
         <div class="applet-shell-ctrl-section">
           <div class="applet-shell-ctrl-title">Lattice</div>
           <div class="applet-shell-btn-row">
             <button class="applet-shell-btn active" id="sl-sq-btn"  onclick="slSetLattice('square')">Square</button>
             <button class="applet-shell-btn"         id="sl-tri-btn" onclick="slSetLattice('triangular')">Triangular</button>
+          </div>
+        </div>
+        <div class="applet-shell-ctrl-section">
+          <div class="applet-shell-ctrl-title">Resolution</div>
+          <div class="applet-shell-btn-row">
+            <button class="applet-shell-btn active" id="sl-res-20" onclick="slSetRes(22)">20</button>
+            <button class="applet-shell-btn"         id="sl-res-40" onclick="slSetRes(42)">40</button>
+            <button class="applet-shell-btn"         id="sl-res-80" onclick="slSetRes(82)">80</button>
           </div>
         </div>
         <div class="applet-shell-ctrl-section">

@@ -399,13 +399,10 @@ const shell = new AppletShell({
   title: 'Kuramoto Model &mdash; Synchronisation',
   gap:   0,
 
+  headerBtns: `<button class="applet-shell-header-btn" onclick="kmRandomiseFreqs()">Reset</button><button class="applet-shell-header-btn" id="km-pause-btn" onclick="kmTogglePause()">Pause</button>`,
+
+
   ctrlHTML: `
-    <div class="applet-shell-ctrl-section">
-      <div class="applet-shell-btn-row">
-        <button class="applet-shell-btn" onclick="kmRandomiseFreqs()">Reset</button>
-        <button class="applet-shell-btn" id="km-pause-btn" onclick="kmTogglePause()">Pause</button>
-      </div>
-    </div>
     <div class="applet-shell-ctrl-section">
       <div class="applet-shell-ctrl-title">Graph</div>
       <div class="applet-shell-btn-row" id="km-graph-btns"></div>

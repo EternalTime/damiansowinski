@@ -96,6 +96,7 @@ Understanding how complexity, computation, and control intertwine to create beha
 <br>
 
  ---
+ 
 <br>
 <h2 class="gradient-text2" style="font-size: 1.5em;">How do Complex Systems Evolve?</h2>
 

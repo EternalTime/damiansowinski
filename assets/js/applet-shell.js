@@ -101,7 +101,13 @@
   margin: 0;
   text-transform: uppercase;
 }
-.applet-shell-close-btn {
+.applet-shell-header-actions {
+  display: flex;
+  align-items: center;
+  gap: calc(6px * var(--shell-fs, 1));
+}
+.applet-shell-close-btn,
+.applet-shell-header-btn {
   background: none;
   border: 1px solid var(--border-mid);
   color: var(--text-bright);
@@ -112,7 +118,13 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.applet-shell-close-btn:hover { background: var(--bg-control); }
+.applet-shell-close-btn:hover,
+.applet-shell-header-btn:hover { background: var(--bg-control); }
+.applet-shell-header-btn.active {
+  background: var(--bg-active-teal);
+  border-color: var(--teal-light);
+  color: var(--teal-light);
+}
 
 /* ── Canvas fills sim panel ── */
 .applet-shell-canvas {
@@ -381,7 +393,7 @@
   }
 
   /* ── HTML scaffold ──────────────────────────────────────────────────────── */
-  function buildScaffold(id, title, ctrlHTML) {
+  function buildScaffold(id, title, ctrlHTML, headerBtns) {
     const div = document.createElement('div');
     div.innerHTML = `
 <div id="${id}-overlay">
@@ -389,7 +401,10 @@
   <div id="${id}-header" class="applet-shell-panel applet-shell-header">
     <div class="applet-shell-header-inner">
       <h2>${title}</h2>
-      <button class="applet-shell-close-btn" data-shell-close="${id}">Close</button>
+      <div class="applet-shell-header-actions">
+        ${headerBtns || ''}
+        <button class="applet-shell-close-btn" data-shell-close="${id}">Close</button>
+      </div>
     </div>
   </div>
 
@@ -482,10 +497,11 @@
     const title    = cfg.title;
     const gap      = cfg.gap || 0;
     const layoutMode = cfg.layout || 'side';
-    const onOpen   = cfg.onOpen   || function () {};
-    const onClose  = cfg.onClose  || function () {};
-    const onResize = cfg.onResize || null;
-    const ctrlHTML = cfg.ctrlHTML || '';
+    const onOpen      = cfg.onOpen   || function () {};
+    const onClose     = cfg.onClose  || function () {};
+    const onResize    = cfg.onResize || null;
+    const ctrlHTML    = cfg.ctrlHTML    || '';
+    const headerBtns  = cfg.headerBtns  || '';
 
     // Inject styles
     injectSharedStyles();
@@ -493,7 +509,7 @@
     else injectAppletStyles(id);
 
     // Build and insert HTML scaffold
-    const scaffold = buildScaffold(id, title, ctrlHTML);
+    const scaffold = buildScaffold(id, title, ctrlHTML, headerBtns);
     document.body.appendChild(scaffold);
 
     // Wire up close button

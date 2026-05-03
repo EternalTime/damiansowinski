@@ -648,12 +648,11 @@
     title: 'Infinite Square Well &mdash; Quantum Mechanics',
     gap:   0,
 
+    headerBtns: `<button class="applet-shell-header-btn" onclick="iswReset()">Reset</button><button class="applet-shell-header-btn" id="isw-pause-btn" onclick="iswTogglePause()">Resume</button>`,
+
+
     ctrlHTML: `
       <div class="applet-shell-ctrl-section" style="flex-shrink:0;">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="iswReset()">Reset</button>
-          <button class="applet-shell-btn active" id="isw-pause-btn" onclick="iswTogglePause()">Resume</button>
-        </div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">Slow</span>
           <input type="range" id="isw-speed" min="0.002" max="1.0" step="0.002" value="0.05">

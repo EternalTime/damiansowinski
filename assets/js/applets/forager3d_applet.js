@@ -912,15 +912,11 @@ const shell = new AppletShell({
   title: 'Forager 3D &mdash; Active Energy Harvesting',
   gap:   0,
 
+  headerBtns: `<button class="applet-shell-header-btn" id="fa3-btn-reset">Reset</button><button class="applet-shell-header-btn" id="fa3-btn-run">Run</button>`,
+
   ctrlHTML: `
     <div id="fa3-ctrl-inner">
       <div id="fa3-ctrl-fixed">
-        <div class="applet-shell-ctrl-section">
-          <div class="applet-shell-btn-row">
-            <button class="applet-shell-btn" id="fa3-btn-run">Run</button>
-            <button class="applet-shell-btn" id="fa3-btn-reset">Reset</button>
-          </div>
-        </div>
       </div>
       <div id="fa3-sliders-scroll">
         <div class="applet-shell-ctrl-section">
