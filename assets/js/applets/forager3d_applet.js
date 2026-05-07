@@ -864,10 +864,14 @@ function attachOrbitControls(canvas) {
   const s = document.createElement('style');
   s.id = 'fa3-styles';
   s.textContent = `
+    #fa3-ctrl-panel {
+      overflow: hidden;
+    }
     #fa3-ctrl-inner {
       display: flex;
       flex-direction: column;
-      height: 100%;
+      flex: 1;
+      min-height: 0;
       overflow: hidden;
     }
     #fa3-ctrl-fixed { flex-shrink: 0; }

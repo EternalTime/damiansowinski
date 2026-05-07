@@ -142,7 +142,6 @@ const bibtex = `
   journal   = {Ph. D. Thesis},
   year      = {2016}
 }
-}
 
 @article{pinero2026information,
   title     = {Information bounds production in replicator systems},
@@ -161,7 +160,8 @@ const bibtex = `
   number    = {4},
   pages     = {042226},
   year      = {2025},
-  publisher = {APS}
+  publisher = {APS},
+  url       = {/assets/docs/papers/Harper_Alice_2025.pdf}
 }
 
 @article{mcgarry2025vivo,
