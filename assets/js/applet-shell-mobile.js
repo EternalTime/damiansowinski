@@ -90,7 +90,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.asm-close-btn {
+.asm-header-actions {
+  display: flex;
+  align-items: center;
+  gap: calc(6px * var(--shell-fs, 1));
+  flex-shrink: 0;
+}
+.asm-close-btn, .applet-shell-header-btn {
   background: none;
   border: 1px solid var(--border-mid);
   color: var(--text-bright);
@@ -101,9 +107,9 @@
   border-radius: 4px;
   cursor: pointer;
   flex-shrink: 0;
-  margin-left: 10px;
 }
-.asm-close-btn:hover { background: var(--bg-control); }
+.asm-close-btn:hover, .applet-shell-header-btn:hover { background: var(--bg-control); }
+.applet-shell-header-btn.active { background: var(--bg-active-teal); border-color: var(--teal-light); color: var(--teal-light); }
 
 /* ── Canvas fills sim panel ── */
 .asm-canvas {
@@ -300,7 +306,7 @@
   }
 
   /* ── HTML scaffold ──────────────────────────────────────────────────────── */
-  function buildScaffold(id, title, ctrlHTML) {
+  function buildScaffold(id, title, ctrlHTML, headerBtns) {
     const div = document.createElement('div');
     div.innerHTML = `
 <div id="${id}-asm-overlay">
@@ -308,7 +314,10 @@
   <div id="${id}-asm-header" class="asm-panel asm-header">
     <div class="asm-header-inner">
       <h2>${title}</h2>
-      <button class="asm-close-btn" data-asm-close="${id}">Close</button>
+      <div class="asm-header-actions">
+        ${headerBtns || ''}
+        <button class="asm-close-btn" data-asm-close="${id}">Close</button>
+      </div>
     </div>
   </div>
 
@@ -388,12 +397,13 @@
     const onOpen   = cfg.onOpen   || function () {};
     const onClose  = cfg.onClose  || function () {};
     const onResize = cfg.onResize || null;
-    const ctrlHTML = cfg.ctrlHTML || '';
+    const ctrlHTML   = cfg.ctrlHTML   || '';
+    const headerBtns = cfg.headerBtns || '';
 
     injectSharedStyles();
     injectAppletStyles(id);
 
-    const scaffold = buildScaffold(id, title, ctrlHTML);
+    const scaffold = buildScaffold(id, title, ctrlHTML, headerBtns);
     document.body.appendChild(scaffold);
 
     scaffold.querySelector('[data-asm-close]').addEventListener('click', function () {

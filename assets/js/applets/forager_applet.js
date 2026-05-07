@@ -334,10 +334,14 @@ function resizePhaseCanvas() {
   const s = document.createElement('style');
   s.id = 'fa-styles';
   s.textContent = `
+    #fa-ctrl-panel {
+      overflow: hidden;
+    }
     #fa-ctrl-inner {
       display: flex;
       flex-direction: column;
-      height: 100%;
+      flex: 1;
+      min-height: 0;
       overflow: hidden;
     }
     #fa-ctrl-fixed {

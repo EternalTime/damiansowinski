@@ -265,6 +265,11 @@
 
 
     ctrlHTML: `
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn" id="demon-door-btn" onclick="demonToggleDoor()">Open Door</button>
+        </div>
+      </div>
     `,
 
     onOpen: function ({ canvas: c, W, H, S }) {
