@@ -1,6 +1,8 @@
 (function() {
 'use strict';
 
+if (!document.getElementById('leafs-sim-canvas')) return;
+
 const _cs = getComputedStyle(document.documentElement);
 const _c   = n => _cs.getPropertyValue(n).trim();
 const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };

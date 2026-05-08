@@ -202,7 +202,7 @@
       ctx.fill();
     }
 
-    /* ── Temperature readout in ctrl panel ── */
+    /* ── Temperature readout on canvas ── */
     const TL   = sideTemp(0), TR = sideTemp(1);
     const norm = Math.max(T0, 1e-12);
     const gapHalf2 = doorFrac * 3 * R;
@@ -221,10 +221,18 @@
       const b = Math.round(_TLB + (_PDB-_TLB)*hot);
       return `rgb(${r},${g},${b})`;
     }
-    const elL = document.getElementById('demon-temp-left');
-    const elR = document.getElementById('demon-temp-right');
-    if (elL) { elL.textContent = 'T = ' + (TL/norm).toFixed(2); elL.style.color = sideColor(0); }
-    if (elR) { elR.textContent = 'T = ' + (TR/norm).toFixed(2); elR.style.color = sideColor(1); }
+    const fs = Math.max(12, Math.round(BH * 0.055));
+    ctx.save();
+    ctx.font = `${fs}px 'EB Garamond', Georgia, serif`;
+    ctx.textBaseline = 'top';
+    const pad = fs * 0.5;
+    const ty  = pad;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = sideColor(0);
+    ctx.fillText('T = ' + (TL/norm).toFixed(2), midX * 0.5, ty);
+    ctx.fillStyle = sideColor(1);
+    ctx.fillText('T = ' + (TR/norm).toFixed(2), midX + midX * 0.5, ty);
+    ctx.restore();
 
     /* Hired stamp */
     if (Math.abs(TL - TR) / norm >= 0.5) {
@@ -255,6 +263,35 @@
   }
 
   /* ── Shell wiring ── */
+  /* ── Inject styles ── */
+  (function () {
+    if (document.getElementById('demon-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'demon-styles';
+    s.textContent = `
+      #demon-ctrl-panel, #demon-asm-ctrl {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #demon-door-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding-bottom: 16px;
+        box-sizing: border-box;
+      }
+      /* Mobile: larger button */
+      #demon-asm-ctrl #demon-door-wrap .applet-shell-btn {
+        font-size: 1.2em;
+        padding: 10px 32px;
+      }
+    `;
+    document.head.appendChild(s);
+  })();
+
   const shell = new AppletShell({
     id:     'demon',
     title:  'Maxwell\'s Demon',
@@ -265,10 +302,8 @@
 
 
     ctrlHTML: `
-      <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" id="demon-door-btn" onclick="demonToggleDoor()">Open Door</button>
-        </div>
+      <div id="demon-door-wrap">
+        <button class="applet-shell-btn" id="demon-door-btn" onclick="demonToggleDoor()">Open Door</button>
       </div>
     `,
 

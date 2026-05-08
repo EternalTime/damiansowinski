@@ -563,21 +563,24 @@ html.is-desktop #robot-wrap {
   }
 
   // ── Trigger: 3s hover on "Artificial Life & Intelligence" ─────────
-  trigger.addEventListener('mouseenter', function () {
-    if (animRunning) return;
-    hoverTimer = setTimeout(runSequence, 1000);
-  });
-  trigger.addEventListener('mouseleave', function () {
-    clearTimeout(hoverTimer);
-  });
+  // Delay init until after slide-in animation completes (if coming from MFS)
+  var _initDelay = window.location.search.indexOf('from=mfs') !== -1 ? 650 : 0;
+  setTimeout(function() {
+    setPivot(bodyWrap,    BODY.x,     BODY.y);
+    setPivot(headWrap,    HEAD.x,     HEAD.y);
+    setPivot(armLWrap,    ARML.x,     ARML.y);
+    setPivot(armWrap,     SHOULDER.x, SHOULDER.y);
+    setPivot(forearmWrap, ELBOW.x,    ELBOW.y);
+    setPivot(handWrap,    WRIST.x,    WRIST.y);
 
-  // Set pivots immediately so transform-origin is ready
-  setPivot(bodyWrap,    BODY.x,     BODY.y);
-  setPivot(headWrap,    HEAD.x,     HEAD.y);
-  setPivot(armLWrap,    ARML.x,     ARML.y);
-  setPivot(armWrap,     SHOULDER.x, SHOULDER.y);
-  setPivot(forearmWrap, ELBOW.x,    ELBOW.y);
-  setPivot(handWrap,    WRIST.x,    WRIST.y);
+    trigger.addEventListener('mouseenter', function () {
+      if (animRunning) return;
+      hoverTimer = setTimeout(runSequence, 1000);
+    });
+    trigger.addEventListener('mouseleave', function () {
+      clearTimeout(hoverTimer);
+    });
+  }, _initDelay);
 
 })();
 </script>
@@ -596,7 +599,7 @@ html.is-desktop #robot-wrap {
 </div>
 
 <script>
-  window.addEventListener('load', function() {
+  (function initVideos() {
     document.querySelectorAll('video').forEach(function(v) {
       v.loop = true;
       v.muted = true;
@@ -604,7 +607,7 @@ html.is-desktop #robot-wrap {
       v.addEventListener('ended', function() { v.currentTime = 0; v.play(); });
       v.addEventListener('pause', function() { if (!document.hidden) { v.currentTime = 0; v.play(); } });
     });
-  });
+  })();
 </script>
 
 <h3 class="gradient-text2" style="font-size: 1.5em; text-align: left; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
