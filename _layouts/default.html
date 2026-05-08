@@ -32,7 +32,19 @@
   </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-  <body>
+  {%- assign _page_index = 0 -%}
+  {%- if page.path == "index.markdown" or page.path == "index.md" or page.path == "index.html" -%}
+    {%- assign _page_index = 0 -%}
+  {%- elsif page.path == "MFS/index.markdown" or page.path == "MFS/index.md" -%}
+    {%- assign _page_index = 9999 -%}
+  {%- else -%}
+    {%- for _nav_path in site.header_pages -%}
+      {%- if page.path == _nav_path -%}
+        {%- assign _page_index = forloop.index -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+  <body data-page-index="{{ _page_index }}">
 
     <canvas id="wavy-grid" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;"></canvas>
 
@@ -54,6 +66,10 @@
         const ctx = canvas.getContext('2d');
         let t = 0;
 
+        // Exposed so transition JS can animate these
+        window._waveAmplitude = 0.25;
+        window._waveSpeed     = 0.055;
+
         const cs = getComputedStyle(document.documentElement);
         const tealRgb = cs.getPropertyValue('--teal-dark-rgb').trim();
         const pinkRgb = cs.getPropertyValue('--pink-dark-rgb').trim();
@@ -70,11 +86,11 @@
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
           const spacing = 20;
-          const amplitude = 0.25;
-          const speed = 0.055;
+          const amplitude = window._waveAmplitude;
+          const speed     = window._waveSpeed;
           ctx.lineWidth = 2;
 
-          // Diagonal gradient: green (top-left) to blue (bottom-right)
+          // Diagonal gradient: teal (top-left) to pink (bottom-right)
           const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
           grad.addColorStop(0, gradStop0);
           grad.addColorStop(1, gradStop1);
@@ -107,6 +123,276 @@
         window.addEventListener('resize', resize);
         resize();
         draw();
+      })();
+    </script>
+
+    <script>
+      /* ── Slide-in from MFS exit ── */
+      (function() {
+        if (document.documentElement.classList.contains('is-mobile')) return;
+        if (window.location.search.indexOf('from=mfs') === -1) return;
+
+        var SLIDE_IN_MS = 600;
+        var header  = document.querySelector('.site-header');
+        var content = document.querySelector('.page-content');
+        var footer  = document.querySelector('footer');
+
+        // start offscreen
+        if (header)  { header.style.transition  = 'none'; header.style.transform  = 'translateY(-120%)'; }
+        if (content) { content.style.transition = 'none'; content.style.transform = 'translateY(120%)'; }
+        if (footer)  { footer.style.visibility  = 'hidden'; }
+
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            if (header)  { header.style.transition  = 'transform ' + (SLIDE_IN_MS/1000) + 's ease'; header.style.transform  = 'translateY(0)'; }
+            if (content) { content.style.transition = 'transform ' + (SLIDE_IN_MS/1000) + 's ease'; content.style.transform = 'translateY(0)'; }
+            setTimeout(function() {
+              if (footer)  { footer.style.visibility = 'visible'; }
+              if (header)  { header.style.transition = 'none'; header.style.transform  = ''; }
+              if (content) { content.style.transition = 'none'; content.style.transform = ''; }
+            }, SLIDE_IN_MS);
+          });
+        });
+
+        // clean up the URL
+        history.replaceState({}, document.title, window.location.pathname);
+      })();
+    </script>
+
+    <script>
+      /* ── Page transitions (desktop only) ── */
+      (function() {
+        if (document.documentElement.classList.contains('is-mobile')) return;
+
+        var BASE_AMP     = 0.25;
+        var BASE_SPEED   = 0.055;
+        var PEAK_AMP     = 18;
+        var PEAK_SPEED   = 0.12;
+        var SLIDE_MS     = 350;   // slide-out / slide-in duration
+        var RAMP_UP_MS   = 800;   // wave ramp-up duration
+        var RAMP_DOWN_MS = 700;   // wave ramp-down duration
+
+        /* ── utility: easeInOut ── */
+        function ease(p) { return p < 0.5 ? 2*p*p : -1+(4-2*p)*p; }
+
+        /* ── ramp wave amplitude continuously (non-blocking) ── */
+        function rampWave(targetAmp, targetSpeed, duration, onDone) {
+          var startAmp   = window._waveAmplitude;
+          var startSpeed = window._waveSpeed;
+          var t0 = null;
+          function step(ts) {
+            if (!t0) t0 = ts;
+            var p = Math.min((ts - t0) / duration, 1);
+            var e = ease(p);
+            window._waveAmplitude = startAmp   + (targetAmp   - startAmp)   * e;
+            window._waveSpeed     = startSpeed + (targetSpeed - startSpeed) * e;
+            if (p < 1) requestAnimationFrame(step);
+            else if (onDone) onDone();
+          }
+          requestAnimationFrame(step);
+        }
+
+        /* ── swap only .page-content, keep header/footer/canvas ── */
+        function swapPageContent(fetchedDoc, href) {
+          var newContent = fetchedDoc.querySelector('.page-content');
+          var newTitle   = fetchedDoc.querySelector('title');
+          var content    = document.querySelector('.page-content');
+
+          if (newContent && content) {
+            content.innerHTML = newContent.innerHTML;
+            // re-execute any inline scripts in new content
+            content.querySelectorAll('script').forEach(function(s) {
+              var ns = document.createElement('script');
+              if (s.src) ns.src = s.src;
+              else ns.textContent = s.textContent;
+              s.parentNode.replaceChild(ns, s);
+            });
+          }
+
+          // update body page index to match the new page
+          var newPageIndex = fetchedDoc.querySelector('body') && fetchedDoc.querySelector('body').getAttribute('data-page-index');
+          if (newPageIndex !== null) document.body.setAttribute('data-page-index', newPageIndex);
+
+          if (newTitle) document.title = newTitle.textContent;
+          history.pushState({}, document.title, href);
+        }
+
+        /* ── core transition ── */
+        // goingRight: true = target is to the left in nav (slide right), false = target is to the right (slide left)
+        function doTransition(href, swapFn, clickedEl, goingRight) {
+          var content = document.querySelector('.page-content');
+          var footer  = document.querySelector('footer');
+
+          var fetchedDoc   = null;
+          var slideOutDone = false;
+
+          // hide footer immediately
+          if (footer) footer.style.visibility = 'hidden';
+
+          function trySwap() {
+            if (!fetchedDoc || !slideOutDone) return;
+            if (clickedEl) clickedEl.blur();
+            if (document.activeElement) document.activeElement.blur();
+            swapFn(fetchedDoc, href);
+            // new content enters from the opposite side
+            if (content) {
+              content.style.transition = 'none';
+              if (goingRight) {
+                content.style.transform = 'translateX(-100%)';  // enter from left
+              } else {
+                content.style.transform = 'translateX(100%)';   // enter from right
+              }
+              // double rAF: ensure browser commits the no-transition frame first
+              requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                  content.style.transition = 'transform ' + (SLIDE_MS/1000) + 's ease';
+                  content.style.transform  = 'translateX(0)';
+                  // restore footer once slide-in completes
+                  setTimeout(function() {
+                    if (footer) footer.style.visibility = 'visible';
+                  }, SLIDE_MS);
+                });
+              });
+            }
+            rampWave(BASE_AMP, BASE_SPEED, RAMP_DOWN_MS, null);
+          }
+
+          // Start wave surge immediately
+          rampWave(PEAK_AMP, PEAK_SPEED, RAMP_UP_MS, null);
+
+          // Slide content out
+          if (content) {
+            content.style.transition = 'transform ' + (SLIDE_MS/1000) + 's ease';
+            if (goingRight) {
+              content.style.transform = 'translateX(100%)';   // exit to right
+            } else {
+              content.style.transform = 'translateX(-100%)';  // exit to left
+            }
+            setTimeout(function() { slideOutDone = true; trySwap(); }, SLIDE_MS);
+          } else {
+            slideOutDone = true;
+          }
+
+          // Safety: if fetch never returns, ramp back down after 3s
+          var _safetyTimer = setTimeout(function() {
+            rampWave(BASE_AMP, BASE_SPEED, RAMP_DOWN_MS, null);
+            window.location.href = href;
+          }, 3000);
+
+          // Fetch in parallel
+          fetch(href)
+            .then(function(r) { return r.text(); })
+            .then(function(html) {
+              clearTimeout(_safetyTimer);
+              fetchedDoc = new DOMParser().parseFromString(html, 'text/html');
+              trySwap();
+            })
+            .catch(function() {
+              clearTimeout(_safetyTimer);
+              window.location.href = href;
+            });
+        }
+
+        /* ── intercept internal nav links (not MFS icon — it uses full-body swap) ── */
+        document.addEventListener('click', function(e) {
+          var a = e.target.closest('a');
+          if (!a) return;
+          // skip MFS icon (handled separately below)
+          if (a.classList.contains('nav-icon-link')) return;
+          // only same-origin, non-hash, non-download links
+          var href = a.getAttribute('href');
+          if (!href || href.startsWith('#') || href.startsWith('mailto:')) return;
+          try {
+            var url = new URL(href, window.location.href);
+            if (url.origin !== window.location.origin) return;
+          } catch(err) { return; }
+
+          // skip if same page (by URL or by index)
+          if (url.pathname === window.location.pathname) return;
+          e.preventDefault();
+          a.blur();
+          var currentIdx  = parseInt(document.body.getAttribute('data-page-index') || '0', 10);
+          var targetIdx   = parseInt(a.getAttribute('data-page-index') || '0', 10);
+          var goingRight  = targetIdx < currentIdx;
+          doTransition(url.pathname, swapPageContent, a, goingRight);
+        });
+
+        /* ── MFS icon: slide header up, swap body, plateau ramps in MFS script ── */
+        var mfsLink = document.querySelector('a.nav-icon-link');
+        if (mfsLink) {
+          mfsLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            mfsLink.blur();
+            var href     = mfsLink.getAttribute('href');
+            var header   = document.querySelector('.site-header');
+            var content  = document.querySelector('.page-content');
+            var footer   = document.querySelector('footer');
+            var SLIDE_UP_MS = 600;
+
+            // header and title slide up, content and footer slide down
+            if (header) {
+              header.style.transition = 'transform ' + (SLIDE_UP_MS/1000) + 's ease';
+              header.style.transform  = 'translateY(-120%)';
+            }
+            if (content) {
+              content.style.transition = 'transform ' + (SLIDE_UP_MS/1000) + 's ease';
+              content.style.transform  = 'translateY(120%)';
+            }
+            if (footer) {
+              footer.style.transition = 'transform ' + (SLIDE_UP_MS/1000) + 's ease';
+              footer.style.transform  = 'translateY(120%)';
+            }
+
+            // fetch in parallel
+            fetch(href)
+              .then(function(r) { return r.text(); })
+              .then(function(html) {
+                var fetchedDoc = new DOMParser().parseFromString(html, 'text/html');
+
+                // Extract raw body script texts BEFORE DOMParser mangles < > in JS
+                var rawBodyScripts = [];
+                var bodyMatch = html.match(/<body[\s\S]*?>([\s\S]*)<\/body>/i);
+                if (bodyMatch) {
+                  var bodyHtml = bodyMatch[1];
+                  var scriptRe = /<script(?:[^>]*)>([\s\S]*?)<\/script>/gi;
+                  var m;
+                  while ((m = scriptRe.exec(bodyHtml)) !== null) {
+                    rawBodyScripts.push(m[1]);
+                  }
+                }
+
+                setTimeout(function() {
+                  var newBody  = fetchedDoc.querySelector('body');
+                  var newTitle = fetchedDoc.querySelector('title');
+                  if (newBody) {
+                    var canvas = document.getElementById('wavy-grid');
+                    document.body.innerHTML = newBody.innerHTML;
+                    document.body.insertBefore(canvas, document.body.firstChild);
+                    var mfsCss = fetchedDoc.querySelector('link[href*="mfs.css"]');
+                    if (mfsCss && !document.querySelector('link[href*="mfs.css"]')) {
+                      document.head.appendChild(mfsCss.cloneNode());
+                    }
+                    var rawIdx = 0;
+                    document.body.querySelectorAll('script').forEach(function(s) {
+                      var ns = document.createElement('script');
+                      if (s.src) {
+                        ns.src = s.src;
+                      } else {
+                        ns.textContent = rawBodyScripts[rawIdx] !== undefined
+                          ? rawBodyScripts[rawIdx] : s.textContent;
+                        rawIdx++;
+                      }
+                      s.parentNode.replaceChild(ns, s);
+                    });
+                  }
+                  if (newTitle) document.title = newTitle.textContent;
+                  history.pushState({}, document.title, href);
+                }, SLIDE_UP_MS);
+              })
+              .catch(function() { window.location.href = href; });
+          });
+        }
+
       })();
     </script>
 

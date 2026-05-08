@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {%- include head.txt -%}
+  {%- if site.google_analytics -%}{%- include google-analytics.html -%}{%- endif -%}
+
+  <title>{{ page.title | escape }} — My Favorite Spacetimes</title>
+  <link rel="stylesheet" href="{{ '/assets/css/palette.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/mfs.css' | relative_url }}">
+
+  <script>
+    /* ── Device detection — runs before first paint ── */
+    (function () {
+      var touch    = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      var narrow   = window.innerWidth <= 768;
+      var ua       = navigator.userAgent || '';
+      var mobileUA = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+      if (touch && (narrow || mobileUA)) {
+        document.documentElement.classList.add('is-mobile');
+      } else {
+        document.documentElement.classList.add('is-desktop');
+      }
+    })();
+  </script>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <canvas id="wavy-grid" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;"></canvas>
+
+  <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--teal-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
+
+  <div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px;
+    width:280px;height:320px;top:15%;left:2%;transform:none;
+    background:black;border:2px solid var(--cyan);
+    box-shadow:0 0 8px var(--cyan),0 0 20px var(--cyan);overflow:hidden;pointer-events:none;">
+  </div>
+
+  <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;"></div>
+
+  <script>
+    /* ════════════════════════════════════════════════
+       MFS WAVE CANVAS — multi-panel
+       ════════════════════════════════════════════════ */
+    (function () {
+
+      // ── Base wave ──
+      var BASE_AMPLITUDE = 0.25;
+      var BASE_SPEED     = 0.055;
+
+      // ── Lambda: vertical taper as function of normalised y ──
+      function lambda(yNorm) {
+        return 0.95 + 0.1 * yNorm;
+      }
+
+      // ── Panel definition ──
+      // Each panel: { amplitude, scale, x0, x1, y0, y1, anchorEl (optional) }
+      //   anchorEl: DOM element whose getBoundingClientRect drives x0/x1/y0/y1
+      //   If anchorEl is set, x0/x1/y0/y1 are recomputed on every resize().
+      var panels = [
+        // 0: title panel — affixed to #mfs-title
+        { amplitude: 80,  sigmaX: 20, sigmaY: 10, scale: 0, anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
+        // 1: exit panel — affixed to #mfs-exit
+        { amplitude: 40,  sigmaX: 10, sigmaY: 10, scale: 0, anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
+        // 2: search panel — affixed to #mfs-search-panel
+        { amplitude: 60, sigmaX: 10, sigmaY: 10, scale: 0, anchorEl: null, x0:0, x1:0, y0:0, y1:0 }
+      ];
+
+      // Attach DOM anchors after DOM is ready (elements exist at script run time)
+      panels[0].anchorEl = document.getElementById('mfs-title');
+      panels[1].anchorEl = document.getElementById('mfs-exit');
+      panels[2].anchorEl = document.getElementById('mfs-search-panel');
+      window._mfsPanels = panels;
+      window._mfsDisplace = displace;
+      // displaceAt: evaluate displacement with a specific scale for panel panelIdx
+      window._mfsDisplaceAt = function(x, y, panelIdx, scaleVal) {
+        var p   = panels[panelIdx];
+        var w   = p.x1 - p.x0;
+        var h   = p.y1 - p.y0;
+        if (w < 1 || h < 1) return {dx:0, dy:0};
+        var tx  = (x - p.x0) / w;
+        var ty  = (y - p.y0) / h;
+        var lam = lambda(Math.max(0, Math.min(1, ty)));
+        var W   = panelWx(p, tx, ty) * panelWy(p, tx, ty);
+        if (W < 0.0001) return {dx:0, dy:0};
+        return {
+          dx:  scaleVal * p.amplitude * W * (tx - 0.5) * lam,
+          dy: -scaleVal * p.amplitude * W * lam
+        };
+      };
+
+      // ── Flicker state ──
+      var _flickerOpacity = 0.28;
+      var _flickerTarget  = 0.28;
+      var _flickerTimer   = 0;
+
+      /* ─── canvas setup ─── */
+      var canvas = document.getElementById('wavy-grid');
+      var ctx    = canvas.getContext('2d');
+      var t      = 0;
+
+      var cs      = getComputedStyle(document.documentElement);
+      var tealRgb = cs.getPropertyValue('--teal-dark-rgb').trim();
+      var pinkRgb = cs.getPropertyValue('--pink-dark-rgb').trim();
+      canvas.style.backgroundColor = cs.getPropertyValue('--bg-black').trim();
+
+      function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+        panels.forEach(function(p) {
+          if (p.anchorEl) {
+            var r = p.anchorEl.getBoundingClientRect();
+            // Back-solve: find pre-displacement rect so element sits at plateau peak
+            var lam0 = lambda(0);
+            var lam1 = lambda(1);
+            p.x0 = r.left   + 0.5 * p.amplitude * lam0;
+            p.x1 = r.right  - 0.5 * p.amplitude * lam0;
+            p.y0 = r.top    + p.amplitude * lam0;
+            p.y1 = r.bottom + p.amplitude * lam1;
+            // Clamp if element too narrow for horizontal back-solve
+            if (p.x1 <= p.x0) { p.x0 = r.left; p.x1 = r.right; }
+          } else {
+            var lam0 = lambda(0);
+            var lam1 = lambda(1);
+            var fx0  = canvas.width  * p.x0frac;
+            var fx1  = canvas.width  * p.x1frac;
+            var fy0  = canvas.height * p.y0frac;
+            var fy1  = canvas.height * p.y1frac;
+            p.x0 = fx0 + 0.5 * p.amplitude * lam0;
+            p.x1 = fx1 - 0.5 * p.amplitude * lam0;
+            p.y0 = fy0 + p.amplitude * lam0;
+            p.y1 = fy1 + p.amplitude * lam1;
+          }
+        });
+      }
+
+      /* Per-panel window functions in normalised coords */
+      function panelWx(p, tx, ty) {
+        var lam  = lambda(Math.max(0, Math.min(1, ty)));
+        var sigX = lam * p.sigmaX / (p.x1 - p.x0);
+        return 0.5 * (1 + Math.tanh((tx + 2*sigX) / sigX)) *
+               0.5 * (1 - Math.tanh((tx - (1 + 2*sigX)) / sigX));
+      }
+      function panelWy(p, tx, ty) {
+        var lam  = lambda(Math.max(0, Math.min(1, ty)));
+        var sigY = lam * p.sigmaY / (p.y1 - p.y0);
+        return 0.5 * (1 + Math.tanh((ty + 2*sigY) / sigY)) *
+               0.5 * (1 - Math.tanh((ty - (1 + 2*sigY)) / sigY));
+      }
+
+      /* Max displacement from all panels (no superposition) */
+      function displace(x, y) {
+        var bestDx = 0, bestDy = 0, bestMag = 0;
+        for (var i = 0; i < panels.length; i++) {
+          var p  = panels[i];
+          if (p.scale < 0.0001) continue;
+          var w  = p.x1 - p.x0;
+          var h  = p.y1 - p.y0;
+          if (w < 1 || h < 1) continue;
+          var tx  = (x - p.x0) / w;
+          var ty  = (y - p.y0) / h;
+          var lam = lambda(Math.max(0, Math.min(1, ty)));
+          var W   = panelWx(p, tx, ty) * panelWy(p, tx, ty);
+          if (W < 0.0001) continue;
+          var dx  =  p.scale * p.amplitude * W * (tx - 0.5) * lam;
+          var dy  = -p.scale * p.amplitude * W * lam;
+          var mag = dx*dx + dy*dy;
+          if (mag > bestMag) { bestMag = mag; bestDx = dx; bestDy = dy; }
+        }
+        return {dx: bestDx, dy: bestDy};
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var spacing = 20;
+        ctx.lineWidth = 2;
+
+        // flicker driven by max scale across all panels
+        var maxP = 0;
+        for (var i = 0; i < panels.length; i++) maxP = Math.max(maxP, panels[i].scale);
+        var flickerStrength = 4 * maxP * (1 - maxP);
+        if (flickerStrength > 0.01) {
+          // snap directly to a new random value every frame
+          var lo = 0.10;
+          var hi = 0.28 + flickerStrength * 1.2;
+          _flickerOpacity = lo + Math.random() * (hi - lo);
+        } else {
+          _flickerOpacity += (0.28 - _flickerOpacity) * 0.2;
+        }
+
+        var grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        grad.addColorStop(0, 'rgba(' + tealRgb + ', ' + _flickerOpacity + ')');
+        grad.addColorStop(1, 'rgba(' + pinkRgb + ', ' + _flickerOpacity + ')');
+        ctx.strokeStyle = grad;
+        // Glow: scale with opacity, max during flicker
+        var glowStrength = (_flickerOpacity - 0.10) / (0.28 + 1.2 - 0.10);
+        ctx.shadowBlur   = glowStrength * 18;
+        ctx.shadowColor  = 'rgba(' + tealRgb + ', ' + _flickerOpacity + ')';
+
+        for (var y = 0; y < canvas.height + spacing; y += spacing) {
+          ctx.beginPath();
+          for (var x = 0; x <= canvas.width; x += 2) {
+            var wave = BASE_AMPLITUDE * Math.sin((x / 80) + (y / 120) + t);
+            var d    = displace(x, y);
+            var yd   = y + wave + d.dy;
+            if (x === 0) ctx.moveTo(x + d.dx, yd);
+            else         ctx.lineTo(x + d.dx, yd);
+          }
+          ctx.stroke();
+        }
+        for (var x = 0; x < canvas.width + spacing; x += spacing) {
+          ctx.beginPath();
+          for (var y = 0; y <= canvas.height; y += 2) {
+            var wave = BASE_AMPLITUDE * Math.sin((y / 80) + (x / 120) + t);
+            var d    = displace(x, y);
+            var xd   = x + wave + d.dx;
+            var yd   = y + d.dy;
+            if (y === 0) ctx.moveTo(xd, yd);
+            else         ctx.lineTo(xd, yd);
+          }
+          ctx.stroke();
+        }
+
+        t += BASE_SPEED;
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      // Re-anchor after fonts settle
+      document.fonts.ready.then(function() { resize(); });
+      // Expose so flicker-in script can re-anchor after spans are built
+      window._mfsResize = resize;
+
+      // ── Staggered ramp-up on load ──
+      var RAMP_DURATION = 1000;
+      var STAGGER_MS    = 100;
+
+      function rampPanelUp(panel, startDelay) {
+        setTimeout(function() {
+          var t0 = null;
+          function step(ts) {
+            if (!t0) t0 = ts;
+            var p = Math.min((ts - t0) / RAMP_DURATION, 1);
+            var e = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+            panel.scale = e;
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }, startDelay);
+      }
+
+      panels.forEach(function(panel, i) {
+        rampPanelUp(panel, i * STAGGER_MS);
+      });
+
+      // ── Expose ramp-down for exit transition ──
+      window._mfsRampDown = function(duration, onDone) {
+        var snapshots = panels.map(function(p) { return p.scale; });
+        var t0 = null;
+        // stagger: last panel starts first (reverse order)
+        var n = panels.length;
+        panels.forEach(function(panel, i) {
+          var delay = (n - 1 - i) * STAGGER_MS;
+          var snap  = snapshots[i];
+          setTimeout(function() {
+            var t0i = null;
+            function step(ts) {
+              if (!t0i) t0i = ts;
+              var p = Math.min((ts - t0i) / duration, 1);
+              var e = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+              panel.scale = snap * (1 - e);
+              if (p < 1) requestAnimationFrame(step);
+              else if (i === 0 && onDone) onDone();
+            }
+            requestAnimationFrame(step);
+          }, delay);
+        });
+      };
+
+      // Keep legacy _mfsPlateau readable (max across panels)
+      try {
+        Object.defineProperty(window, '_mfsPlateau', {
+          configurable: true,
+          get: function() {
+            var m = 0;
+            for (var i = 0; i < panels.length; i++) m = Math.max(m, panels[i].scale);
+            return m;
+          }
+        });
+      } catch(e) {}
+
+      draw();
+
+    })();
+  </script>
+
+  <script>
+    /* ── MFS neon flicker-in (title + exit sign) ── */
+    (function() {
+      var cs        = getComputedStyle(document.documentElement);
+      var tealLight = cs.getPropertyValue('--teal-light').trim();
+      var pinkLight = cs.getPropertyValue('--pink-light').trim();
+
+      var STAGGER_MS = 60;
+      var FLICKER_MS = 180;
+
+      // Per-element generation counters keyed by element id
+      var _flickerGens = {};
+
+      function flickerLetter(span, startTime, elId, gen) {
+        if (gen !== _flickerGens[elId]) return;
+        var elapsed = Date.now() - startTime;
+        if (elapsed < FLICKER_MS) {
+          var r = Math.random();
+          if (r < 0.45) {
+            span.style.opacity    = '1';
+            span.style.color      = tealLight;
+            span.style.textShadow =
+              '0 0 8px ' + tealLight + ', 0 0 20px ' + tealLight + ', 0 0 40px ' + tealLight;
+          } else if (r < 0.65) {
+            span.style.opacity    = '0.15';
+            span.style.textShadow = 'none';
+          } else if (r < 0.85) {
+            span.style.opacity    = '1';
+            span.style.color      = pinkLight;
+            span.style.textShadow =
+              '0 0 8px ' + pinkLight + ', 0 0 20px ' + pinkLight;
+          } else {
+            span.style.opacity = '0.5';
+          }
+          setTimeout(function() { flickerLetter(span, startTime, elId, gen); }, 30 + Math.random() * 40);
+        } else {
+          span.style.opacity    = '1';
+          span.style.color      = tealLight;
+          span.style.textShadow = '0 0 6px ' + tealLight + ', 0 0 14px ' + tealLight;
+          span.style.transition = 'text-shadow 0.4s ease';
+        }
+      }
+
+      function flickerIn(el, text, startDelay, panelIdx) {
+        if (!el) return;
+        var elId = el.id || ('el_' + Math.random());
+        _flickerGens[elId] = (_flickerGens[elId] || 0) + 1;
+        var gen = _flickerGens[elId];
+        // Get rise height from associated panel amplitude (if provided)
+        var riseY = (panelIdx !== undefined && window._mfsPanels)
+          ? window._mfsPanels[panelIdx].amplitude : 0;
+        el.innerHTML = '';
+        var spans = [];
+        for (var i = 0; i < text.length; i++) {
+          var span = document.createElement('span');
+          span.textContent   = text[i];
+          span.style.opacity = '0';
+          span.style.display    = 'inline-block';
+          span.style.whiteSpace = 'pre';
+          if (text[i] === ' ') span.style.fontSize = '0.5em';
+          // Start each letter below its resting position
+          if (riseY) span.style.transform = 'translateY(' + riseY + 'px)';
+          el.appendChild(span);
+          spans.push(span);
+        }
+        var SPREAD_MS = spans.length * STAGGER_MS;
+        // Record natural resting positions before any transform
+        var spanCenters = spans.map(function(span) {
+          var r = span.getBoundingClientRect();
+          return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+        });
+
+        for (var j = 0; j < spans.length; j++) {
+          (function(span, center) {
+            var delay = startDelay + Math.random() * SPREAD_MS;
+            // Track panel displacement so letters move with the plateau (x and y)
+            if (panelIdx !== undefined && window._mfsPanels && window._mfsDisplace) {
+              span.style.transform = 'translateY(' + riseY + 'px)';
+              (function trackDisplace() {
+                if (gen !== _flickerGens[elId]) return;
+                var s    = window._mfsPanels[panelIdx].scale;
+                // Get full displacement at scale=1 as reference
+                var dFull = window._mfsDisplaceAt(center.x, center.y, panelIdx, 1);
+                span.style.transition = 'none';
+                span.style.transform  = 'translate(' + (-dFull.dx * (1 - s)) + 'px, ' + (riseY * (1 - s)) + 'px)';
+                requestAnimationFrame(trackDisplace);
+              })();
+            }
+            setTimeout(function() {
+              span.style.transition = 'transform ' + FLICKER_MS + 'ms ease-out';
+              span.style.transform  = 'translateY(0)';
+              flickerLetter(span, Date.now(), elId, gen);
+            }, delay);
+          })(spans[j], spanCenters[j]);
+        }
+      }
+
+      var titleText = 'My Favorite Spacetimes';
+      var exitText  = 'Exit';
+      document.fonts.ready.then(function() {
+        flickerIn(document.getElementById('mfs-title'), titleText, 0, 0);
+        flickerIn(document.getElementById('mfs-exit'),  exitText,  540, 1);
+        // Re-anchor panels now that spans are built and elements have size
+        if (window._mfsResize) window._mfsResize();
+      });
+    })();
+  </script>
+
+  <script>
+    /* ── MFS search panel animation: point → line → rectangle ── */
+    (function() {
+      var el = document.getElementById('mfs-search-panel');
+      if (!el) return;
+
+      var cs    = getComputedStyle(document.documentElement);
+      var cyan  = cs.getPropertyValue('--cyan').trim();
+
+      var FINAL_W = el.offsetWidth;
+      var FINAL_H = el.offsetHeight;
+      var PHASE1  = 300;   // point → line
+      var PHASE2  = 350;   // line → rect
+      var DELAY2  = PHASE1 + 100;
+
+      function ease(p) { return p < 0.5 ? 2*p*p : -1+(4-2*p)*p; }
+
+      // Use clip-path to reveal: start as point at center, expand to line, then rect
+      // clip-path: inset(top right bottom left round radius)
+      function setClip(wFrac, hFrac) {
+        var xInset = ((1 - wFrac) / 2 * 100).toFixed(2) + '%';
+        var yInset = ((1 - hFrac) / 2 * 100).toFixed(2) + '%';
+        el.style.clipPath = 'inset(' + yInset + ' ' + xInset + ' ' + yInset + ' ' + xInset + ' round 12px)';
+      }
+
+      // Track y-offset from panel 2 scale
+      function getYOffset() {
+        if (!window._mfsPanels) return 0;
+        var p = window._mfsPanels[2];
+        return p.amplitude * (1 - p.scale);
+      }
+
+      // Show border/bg from start (hidden by clip-path)
+      el.style.background  = 'black';
+      el.style.border      = '2px solid ' + cyan;
+      el.style.boxShadow   = '0 0 8px ' + cyan + ', 0 0 20px ' + cyan;
+      setClip(0.001, 0.001);
+
+      // Track y-offset every frame
+      (function trackY() {
+        var r = el.getBoundingClientRect();
+        el.style.top = (parseFloat(el.style.top || 0) + getYOffset()) + 'px';
+        requestAnimationFrame(trackY);
+      })();
+
+      // Phase 1: point → vertical line
+      var t0p1 = null;
+      (function phase1(ts) {
+        if (!t0p1) t0p1 = ts;
+        var prog = Math.min((ts - t0p1) / PHASE1, 1);
+        setClip(0.001, ease(prog));
+        if (prog < 1) requestAnimationFrame(phase1);
+      })(performance.now());
+
+      // Phase 2: line → full rect
+      setTimeout(function() {
+        var t0p2 = null;
+        (function phase2(ts) {
+          if (!t0p2) t0p2 = ts;
+          var prog = Math.min((ts - t0p2) / PHASE2, 1);
+          setClip(ease(prog), 1);
+          if (prog < 1) requestAnimationFrame(phase2);
+          else { el.style.pointerEvents = 'all'; }
+        })(performance.now());
+      }, DELAY2);
+
+    })();
+  </script>
+
+  <script>
+    /* ── MFS exit transition: ramp scale down then navigate ── */
+    (function() {
+      // delegate so it works whether the link was in the original DOM or swapped in
+      document.addEventListener('click', function(e) {
+        var exitLink = e.target.closest('#mfs-exit');
+        if (!exitLink) return;
+        e.preventDefault();
+        var href         = exitLink.getAttribute('href') || '/';
+        var RAMP_MS = 1000;
+        var titleEl      = document.getElementById('mfs-title');
+        var exitEl       = document.getElementById('mfs-exit');
+        var cs2          = getComputedStyle(document.documentElement);
+        var tealLight2   = cs2.getPropertyValue('--teal-light').trim();
+        var pinkLight2   = cs2.getPropertyValue('--pink-light').trim();
+        var FLICKER_MS2  = 180;
+
+        function flickerOutLetter(span, startTime, endTime) {
+          var now = Date.now();
+          if (now < endTime) {
+            var r = Math.random();
+            if (r < 0.45) {
+              span.style.opacity    = '1';
+              span.style.color      = tealLight2;
+              span.style.textShadow = '0 0 8px ' + tealLight2 + ', 0 0 20px ' + tealLight2 + ', 0 0 40px ' + tealLight2;
+            } else if (r < 0.65) {
+              span.style.opacity    = '0.15';
+              span.style.textShadow = 'none';
+            } else if (r < 0.85) {
+              span.style.opacity    = '1';
+              span.style.color      = pinkLight2;
+              span.style.textShadow = '0 0 8px ' + pinkLight2 + ', 0 0 20px ' + pinkLight2;
+            } else {
+              span.style.opacity = '0.5';
+            }
+            setTimeout(function() { flickerOutLetter(span, startTime, endTime); }, 30 + Math.random() * 40);
+          } else {
+            span.style.opacity    = '0';
+            span.style.textShadow = 'none';
+          }
+        }
+
+        function flickerOutEl(el) {
+          if (!el) return;
+          var allSpans = el.querySelectorAll('span');
+          if (!allSpans.length) return;
+          var indices = Array.prototype.slice.call(allSpans).map(function(_, i) { return i; });
+          // shuffle
+          for (var i = indices.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+          }
+          var spread = RAMP_MS * 0.7;
+          indices.forEach(function(idx, order) {
+            var delay   = Math.random() * spread;
+            var endTime = Date.now() + delay + FLICKER_MS2;
+            setTimeout(function() {
+              flickerOutLetter(allSpans[idx], Date.now(), endTime);
+            }, delay);
+          });
+        }
+
+        flickerOutEl(titleEl);
+        flickerOutEl(exitEl);
+        window._mfsRampDown(RAMP_MS, function() {
+          window.location.href = href + '?from=mfs';
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

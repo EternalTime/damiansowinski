@@ -13,9 +13,8 @@ permalink: /publications/
 <br>
 <div id="publications-list"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/citation-js"></script>
-
 <script>
+function _renderPublications() {
 const Cite = require('citation-js');
 
 const bibtex = `
@@ -297,6 +296,12 @@ output = output.replace(
 );
 
 document.getElementById('publications-list').innerHTML = output;
+}
+
+var _cjsScript = document.createElement('script');
+_cjsScript.src = 'https://cdn.jsdelivr.net/npm/citation-js';
+_cjsScript.onload = _renderPublications;
+document.head.appendChild(_cjsScript);
 </script>
 
 <style>
