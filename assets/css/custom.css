@@ -121,6 +121,7 @@ a:hover {
    ============================================================ */
 .page-content {
   padding: 0 !important;
+  overflow-x: hidden;
 }
 
 .page-content > .wrapper {
@@ -550,4 +551,35 @@ html.is-mobile .site-nav label[for="nav-trigger"] {
 
 html.is-mobile .site-nav .menu-icon svg path {
   fill: var(--pink-light);
+}
+
+/* Sag A* nav icon */
+.nav-icon-link {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.nav-sag-icon {
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.nav-icon-link:hover .nav-sag-icon {
+  transform: scale(1.2);
+}
+
+/* ── Suppress all focus rings on header ── */
+.site-header *:focus,
+.site-header *:focus-visible,
+.site-nav:focus,
+.site-nav:focus-visible,
+.trigger:focus,
+.trigger:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
 }

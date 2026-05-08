@@ -1,0 +1,231 @@
+/* ============================================================
+   MFS — My Favorite Spacetimes
+   Custom layout CSS — uses palette.css variables only
+   ============================================================ */
+
+/* ── Reset / base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'EB Garamond', Georgia, serif;
+  color: var(--text-bright);
+  background: transparent;
+  overflow-x: hidden;
+}
+
+/* ── Panels container (desktop: fixed left strip) ── */
+#mfs-panels {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 22%;
+  height: 100vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none; /* let canvas show through gaps */
+}
+
+/* ── Main panel ── */
+#mfs-panel-main {
+  pointer-events: all;
+  background: rgba(13, 13, 13, 0.55);
+  backdrop-filter: blur(4px);
+  border-right: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border-dark);
+  padding: 1.2em 1em 1em 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+
+/* ── Sub-panel ── */
+#mfs-panel-sub {
+  pointer-events: all;
+  background: rgba(13, 13, 13, 0.45);
+  backdrop-filter: blur(4px);
+  border-right: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border-dark);
+  padding: 0.8em 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+#mfs-panel-sub.hidden {
+  display: none;
+}
+
+/* ── Search input ── */
+#mfs-search {
+  width: 100%;
+  background: var(--bg-control);
+  border: 1px solid var(--border-mid);
+  border-radius: 4px;
+  color: var(--text-bright);
+  padding: 0.4em 0.6em;
+  font-family: inherit;
+  font-size: 0.85em;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#mfs-search:focus {
+  border-color: var(--teal-dark);
+}
+
+#mfs-search::placeholder {
+  color: var(--text-dim);
+}
+
+#mfs-search-results {
+  font-size: 0.8em;
+  color: var(--text-dim);
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* ── Nav buttons ── */
+#mfs-nav, #mfs-metric-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+}
+
+.mfs-nav-btn {
+  background: var(--bg-control);
+  border: 1px solid var(--border-mid);
+  border-radius: 3px;
+  color: var(--text-dim);
+  padding: 0.3em 0.6em;
+  font-family: 'Pump', Georgia, serif;
+  font-size: 0.75em;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.mfs-nav-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-bright);
+  border-color: var(--teal-dark);
+}
+
+.mfs-nav-btn.active {
+  background: var(--bg-active-teal);
+  color: var(--teal-light);
+  border-color: var(--teal-dark);
+}
+
+/* ── Browse area ── */
+#mfs-browse {
+  font-size: 0.8em;
+  color: var(--text-dim);
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* ── Coordinate selector ── */
+#mfs-coord-select {
+  font-size: 0.8em;
+  color: var(--text-dim);
+}
+
+/* ── Main content area (desktop: offset from left panel) ── */
+#mfs-content {
+  position: relative;
+  z-index: 5;
+  margin-left: 24%;
+  padding: 2em 2.5em 2em 1.5em;
+  min-height: 100vh;
+  color: var(--text-bright);
+}
+
+/* ── Mobile toggle button (hidden on desktop) ── */
+#mfs-mobile-toggle {
+  display: none;
+}
+
+/* ── MFS page title ── */
+#mfs-content h1 {
+  font-family: 'Pump', sans-serif;
+  font-size: 2em;
+  background: linear-gradient(90deg, var(--teal-light), var(--pink-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));
+  margin-top: 0.5em;
+}
+
+/* ── Metric content sections ── */
+.mfs-section {
+  margin-bottom: 2em;
+}
+
+.mfs-section h2 {
+  font-family: 'Pump', sans-serif;
+  font-size: 1.1em;
+  color: var(--teal-light);
+  border-bottom: 1px solid var(--border-dark);
+  padding-bottom: 0.3em;
+  margin-bottom: 0.75em;
+}
+
+/* ── Math display ── */
+.mfs-math {
+  overflow-x: auto;
+  padding: 0.5em 0;
+  color: var(--text-bright);
+}
+
+/* ════════════════════════════════════════════════
+   MOBILE LAYOUT
+   ════════════════════════════════════════════════ */
+html.is-mobile #mfs-panels {
+  position: relative;
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+html.is-mobile #mfs-panels.open {
+  max-height: 600px;
+}
+
+html.is-mobile #mfs-panel-main,
+html.is-mobile #mfs-panel-sub {
+  border-right: none;
+  border-bottom: 1px solid var(--border-dark);
+  width: 100%;
+}
+
+html.is-mobile #mfs-content {
+  margin-left: 0;
+  padding: 1em;
+}
+
+html.is-mobile #mfs-mobile-toggle {
+  display: block;
+  position: fixed;
+  top: 0.75em;
+  left: 0.75em;
+  z-index: 20;
+  background: var(--bg-control);
+  border: 1px solid var(--border-mid);
+  border-radius: 4px;
+  color: var(--pink-light);
+  font-family: 'Pump', sans-serif;
+  font-size: 0.8em;
+  padding: 0.3em 0.7em;
+  cursor: pointer;
+}
+
+/* ── MFS overlay elements — override global font rules ── */
+#mfs-title, #mfs-exit, #mfs-exit:visited, #mfs-exit:link {
+  font-family: 'Source Code Pro', monospace !important;
+}
