@@ -39,10 +39,10 @@
 
   <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--teal-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
 
-  <div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px;
-    width:280px;height:320px;top:15%;left:2%;transform:none;
+<div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px;
+    width:280px;height:320px;
     background:black;border:2px solid var(--cyan);
-    box-shadow:0 0 8px var(--cyan),0 0 20px var(--cyan);overflow:hidden;pointer-events:none;">
+    box-shadow:0 0 8px var(--cyan),0 0 40px var(--cyan),0 0 80px var(--cyan),0 0 120px var(--cyan);overflow:hidden;pointer-events:none;">
   </div>
 
   <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;"></div>
@@ -68,17 +68,14 @@
       //   If anchorEl is set, x0/x1/y0/y1 are recomputed on every resize().
       var panels = [
         // 0: title panel — affixed to #mfs-title
-        { amplitude: 80,  sigmaX: 20, sigmaY: 10, scale: 0, anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
+        { amplitude: 80,  sigmaX: 10, sigmaY: 10, scale: 0, backSolve: true,  anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
         // 1: exit panel — affixed to #mfs-exit
-        { amplitude: 40,  sigmaX: 10, sigmaY: 10, scale: 0, anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
-        // 2: search panel — affixed to #mfs-search-panel
-        { amplitude: 60, sigmaX: 10, sigmaY: 10, scale: 0, anchorEl: null, x0:0, x1:0, y0:0, y1:0 }
+        { amplitude: 40,  sigmaX: 10, sigmaY: 10, scale: 0, backSolve: true,  anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
       ];
 
       // Attach DOM anchors after DOM is ready (elements exist at script run time)
       panels[0].anchorEl = document.getElementById('mfs-title');
       panels[1].anchorEl = document.getElementById('mfs-exit');
-      panels[2].anchorEl = document.getElementById('mfs-search-panel');
       window._mfsPanels = panels;
       window._mfsDisplace = displace;
       // displaceAt: evaluate displacement with a specific scale for panel panelIdx
@@ -118,16 +115,20 @@
         canvas.height = window.innerHeight;
         panels.forEach(function(p) {
           if (p.anchorEl) {
-            var r = p.anchorEl.getBoundingClientRect();
-            // Back-solve: find pre-displacement rect so element sits at plateau peak
+            var r    = p.anchorEl.getBoundingClientRect();
             var lam0 = lambda(0);
             var lam1 = lambda(1);
-            p.x0 = r.left   + 0.5 * p.amplitude * lam0;
-            p.x1 = r.right  - 0.5 * p.amplitude * lam0;
-            p.y0 = r.top    + p.amplitude * lam0;
-            p.y1 = r.bottom + p.amplitude * lam1;
-            // Clamp if element too narrow for horizontal back-solve
-            if (p.x1 <= p.x0) { p.x0 = r.left; p.x1 = r.right; }
+            p.x0 = r.left;
+            p.x1 = r.right;
+            if (p.backSolve) {
+              // y: back-solve so element sits at plateau peak
+              p.y0 = r.top    + p.amplitude * lam0;
+              p.y1 = r.bottom + p.amplitude * lam1;
+            } else {
+              // y: use element bounds directly — plateau matches element
+              p.y0 = r.top;
+              p.y1 = r.bottom;
+            }
           } else {
             var lam0 = lambda(0);
             var lam1 = lambda(1);
@@ -179,17 +180,63 @@
         return {dx: bestDx, dy: bestDy};
       }
 
+      // ── Displacement grid cache (recomputed each frame at grid resolution) ──
+      var _dispGrid = null;  // flat array of {dx,dy}, row-major
+      var _gridCols = 0;
+      var _gridRows = 0;
+      var SPACING   = 20;
+
+      function buildDispGrid() {
+        var cols = Math.ceil(canvas.width  / SPACING) + 2;
+        var rows = Math.ceil(canvas.height / SPACING) + 2;
+        if (cols !== _gridCols || rows !== _gridRows) {
+          _gridCols = cols;
+          _gridRows = rows;
+          _dispGrid = new Array(cols * rows);
+        }
+        for (var row = 0; row < rows; row++) {
+          for (var col = 0; col < cols; col++) {
+            _dispGrid[row * cols + col] = displace(col * SPACING, row * SPACING);
+          }
+        }
+      }
+
+      function displaceInterp(x, y) {
+        var col = x / SPACING;
+        var row = y / SPACING;
+        var c0  = Math.floor(col);
+        var r0  = Math.floor(row);
+        var c1  = c0 + 1;
+        var r1  = r0 + 1;
+        var fc  = col - c0;
+        var fr  = row - r0;
+        // clamp
+        c0 = Math.max(0, Math.min(_gridCols - 1, c0));
+        c1 = Math.max(0, Math.min(_gridCols - 1, c1));
+        r0 = Math.max(0, Math.min(_gridRows - 1, r0));
+        r1 = Math.max(0, Math.min(_gridRows - 1, r1));
+        var d00 = _dispGrid[r0 * _gridCols + c0];
+        var d10 = _dispGrid[r0 * _gridCols + c1];
+        var d01 = _dispGrid[r1 * _gridCols + c0];
+        var d11 = _dispGrid[r1 * _gridCols + c1];
+        return {
+          dx: d00.dx*(1-fc)*(1-fr) + d10.dx*fc*(1-fr) + d01.dx*(1-fc)*fr + d11.dx*fc*fr,
+          dy: d00.dy*(1-fc)*(1-fr) + d10.dy*fc*(1-fr) + d01.dy*(1-fc)*fr + d11.dy*fc*fr
+        };
+      }
+
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        var spacing = 20;
         ctx.lineWidth = 2;
+
+        // Precompute displacement grid once per frame
+        buildDispGrid();
 
         // flicker driven by max scale across all panels
         var maxP = 0;
         for (var i = 0; i < panels.length; i++) maxP = Math.max(maxP, panels[i].scale);
         var flickerStrength = 4 * maxP * (1 - maxP);
         if (flickerStrength > 0.01) {
-          // snap directly to a new random value every frame
           var lo = 0.10;
           var hi = 0.28 + flickerStrength * 1.2;
           _flickerOpacity = lo + Math.random() * (hi - lo);
@@ -201,27 +248,30 @@
         grad.addColorStop(0, 'rgba(' + tealRgb + ', ' + _flickerOpacity + ')');
         grad.addColorStop(1, 'rgba(' + pinkRgb + ', ' + _flickerOpacity + ')');
         ctx.strokeStyle = grad;
-        // Glow: scale with opacity, max during flicker
         var glowStrength = (_flickerOpacity - 0.10) / (0.28 + 1.2 - 0.10);
-        ctx.shadowBlur   = glowStrength * 18;
-        ctx.shadowColor  = 'rgba(' + tealRgb + ', ' + _flickerOpacity + ')';
+        if (glowStrength > 0.01) {
+          ctx.shadowBlur  = glowStrength * 18;
+          ctx.shadowColor = 'rgba(' + tealRgb + ', ' + _flickerOpacity + ')';
+        } else {
+          ctx.shadowBlur = 0;
+        }
 
-        for (var y = 0; y < canvas.height + spacing; y += spacing) {
+        for (var y = 0; y < canvas.height + SPACING; y += SPACING) {
           ctx.beginPath();
           for (var x = 0; x <= canvas.width; x += 2) {
             var wave = BASE_AMPLITUDE * Math.sin((x / 80) + (y / 120) + t);
-            var d    = displace(x, y);
+            var d    = displaceInterp(x, y);
             var yd   = y + wave + d.dy;
             if (x === 0) ctx.moveTo(x + d.dx, yd);
             else         ctx.lineTo(x + d.dx, yd);
           }
           ctx.stroke();
         }
-        for (var x = 0; x < canvas.width + spacing; x += spacing) {
+        for (var x = 0; x < canvas.width + SPACING; x += SPACING) {
           ctx.beginPath();
           for (var y = 0; y <= canvas.height; y += 2) {
             var wave = BASE_AMPLITUDE * Math.sin((y / 80) + (x / 120) + t);
-            var d    = displace(x, y);
+            var d    = displaceInterp(x, y);
             var xd   = x + wave + d.dx;
             var yd   = y + d.dy;
             if (y === 0) ctx.moveTo(xd, yd);
@@ -229,6 +279,7 @@
           }
           ctx.stroke();
         }
+
 
         t += BASE_SPEED;
         requestAnimationFrame(draw);
@@ -317,6 +368,10 @@
       // Per-element generation counters keyed by element id
       var _flickerGens = {};
 
+      // Shared letter-tracking loop — one rAF for all tracked letters
+      // Re-register all spans in an element for tracking during ramp-down (no-op now)
+      window._mfsTrackEl = function() {};
+
       function flickerLetter(span, startTime, elId, gen) {
         if (gen !== _flickerGens[elId]) return;
         var elapsed = Date.now() - startTime;
@@ -347,65 +402,45 @@
         }
       }
 
-      function flickerIn(el, text, startDelay, panelIdx) {
+      function flickerIn(el, text, startDelay, panelIdx, priorityIndices) {
         if (!el) return;
         var elId = el.id || ('el_' + Math.random());
         _flickerGens[elId] = (_flickerGens[elId] || 0) + 1;
         var gen = _flickerGens[elId];
-        // Get rise height from associated panel amplitude (if provided)
-        var riseY = (panelIdx !== undefined && window._mfsPanels)
-          ? window._mfsPanels[panelIdx].amplitude : 0;
         el.innerHTML = '';
         var spans = [];
         for (var i = 0; i < text.length; i++) {
           var span = document.createElement('span');
-          span.textContent   = text[i];
-          span.style.opacity = '0';
+          span.textContent      = text[i];
+          span.style.opacity    = '0';
           span.style.display    = 'inline-block';
           span.style.whiteSpace = 'pre';
           if (text[i] === ' ') span.style.fontSize = '0.5em';
-          // Start each letter below its resting position
-          if (riseY) span.style.transform = 'translateY(' + riseY + 'px)';
           el.appendChild(span);
           spans.push(span);
         }
         var SPREAD_MS = spans.length * STAGGER_MS;
-        // Record natural resting positions before any transform
-        var spanCenters = spans.map(function(span) {
-          var r = span.getBoundingClientRect();
-          return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-        });
 
+        // Priority indices: letters that flicker in first (before the random spread)
+        var PRIORITY_AFTER_MS = 120;
         for (var j = 0; j < spans.length; j++) {
-          (function(span, center) {
-            var delay = startDelay + Math.random() * SPREAD_MS;
-            // Track panel displacement so letters move with the plateau (x and y)
-            if (panelIdx !== undefined && window._mfsPanels && window._mfsDisplace) {
-              span.style.transform = 'translateY(' + riseY + 'px)';
-              (function trackDisplace() {
-                if (gen !== _flickerGens[elId]) return;
-                var s    = window._mfsPanels[panelIdx].scale;
-                // Get full displacement at scale=1 as reference
-                var dFull = window._mfsDisplaceAt(center.x, center.y, panelIdx, 1);
-                span.style.transition = 'none';
-                span.style.transform  = 'translate(' + (-dFull.dx * (1 - s)) + 'px, ' + (riseY * (1 - s)) + 'px)';
-                requestAnimationFrame(trackDisplace);
-              })();
-            }
+          (function(span, idx) {
+            var isPriority = priorityIndices && priorityIndices.indexOf(idx) !== -1;
+            var delay = isPriority
+              ? startDelay + Math.random() * FLICKER_MS
+              : startDelay + PRIORITY_AFTER_MS + Math.random() * SPREAD_MS;
             setTimeout(function() {
-              span.style.transition = 'transform ' + FLICKER_MS + 'ms ease-out';
-              span.style.transform  = 'translateY(0)';
               flickerLetter(span, Date.now(), elId, gen);
             }, delay);
-          })(spans[j], spanCenters[j]);
+          })(spans[j], j);
         }
       }
 
       var titleText = 'My Favorite Spacetimes';
       var exitText  = 'Exit';
       document.fonts.ready.then(function() {
-        flickerIn(document.getElementById('mfs-title'), titleText, 0, 0);
-        flickerIn(document.getElementById('mfs-exit'),  exitText,  540, 1);
+        flickerIn(document.getElementById('mfs-title'), titleText, 0, 0, [0, 3, 12]);
+        flickerIn(document.getElementById('mfs-exit'),  exitText,  270, 1);
         // Re-anchor panels now that spans are built and elements have size
         if (window._mfsResize) window._mfsResize();
       });
@@ -413,70 +448,41 @@
   </script>
 
   <script>
-    /* ── MFS search panel animation: point → line → rectangle ── */
+    /* ── MFS search panel animation: slide in from off-screen left ── */
     (function() {
       var el = document.getElementById('mfs-search-panel');
       if (!el) return;
 
-      var cs    = getComputedStyle(document.documentElement);
-      var cyan  = cs.getPropertyValue('--cyan').trim();
+      var PANEL_TOP   = 150;   // px from top of viewport — adjust once content is added
+      var PANEL_LEFT  = 13;    // px — matches title's left: 0.8em
+      var PANEL_W     = 280;
+      var PANEL_H     = 320;
+      var SLIDE_DELAY = 800;   // ms after flicker-in starts
+      var SLIDE_DUR   = 500;   // ms for the slide
 
-      var FINAL_W = el.offsetWidth;
-      var FINAL_H = el.offsetHeight;
-      var PHASE1  = 300;   // point → line
-      var PHASE2  = 350;   // line → rect
-      var DELAY2  = PHASE1 + 100;
+      // Set fixed size and top; start off-screen left
+      el.style.top    = PANEL_TOP + 'px';
+      el.style.left   = (-PANEL_W - 20) + 'px';
+      el.style.width  = PANEL_W + 'px';
+      el.style.height = PANEL_H + 'px';
 
-      function ease(p) { return p < 0.5 ? 2*p*p : -1+(4-2*p)*p; }
-
-      // Use clip-path to reveal: start as point at center, expand to line, then rect
-      // clip-path: inset(top right bottom left round radius)
-      function setClip(wFrac, hFrac) {
-        var xInset = ((1 - wFrac) / 2 * 100).toFixed(2) + '%';
-        var yInset = ((1 - hFrac) / 2 * 100).toFixed(2) + '%';
-        el.style.clipPath = 'inset(' + yInset + ' ' + xInset + ' ' + yInset + ' ' + xInset + ' round 12px)';
+      function syncPanel() {
+        el.style.top    = PANEL_TOP + 'px';
+        el.style.width  = PANEL_W + 'px';
+        el.style.height = PANEL_H + 'px';
       }
+      window._mfsSyncPanel = syncPanel;
+      window.addEventListener('resize', syncPanel);
 
-      // Track y-offset from panel 2 scale
-      function getYOffset() {
-        if (!window._mfsPanels) return 0;
-        var p = window._mfsPanels[2];
-        return p.amplitude * (1 - p.scale);
-      }
-
-      // Show border/bg from start (hidden by clip-path)
-      el.style.background  = 'black';
-      el.style.border      = '2px solid ' + cyan;
-      el.style.boxShadow   = '0 0 8px ' + cyan + ', 0 0 20px ' + cyan;
-      setClip(0.001, 0.001);
-
-      // Track y-offset every frame
-      (function trackY() {
-        var r = el.getBoundingClientRect();
-        el.style.top = (parseFloat(el.style.top || 0) + getYOffset()) + 'px';
-        requestAnimationFrame(trackY);
-      })();
-
-      // Phase 1: point → vertical line
-      var t0p1 = null;
-      (function phase1(ts) {
-        if (!t0p1) t0p1 = ts;
-        var prog = Math.min((ts - t0p1) / PHASE1, 1);
-        setClip(0.001, ease(prog));
-        if (prog < 1) requestAnimationFrame(phase1);
-      })(performance.now());
-
-      // Phase 2: line → full rect
+      // Slide in after delay
       setTimeout(function() {
-        var t0p2 = null;
-        (function phase2(ts) {
-          if (!t0p2) t0p2 = ts;
-          var prog = Math.min((ts - t0p2) / PHASE2, 1);
-          setClip(ease(prog), 1);
-          if (prog < 1) requestAnimationFrame(phase2);
-          else { el.style.pointerEvents = 'all'; }
-        })(performance.now());
-      }, DELAY2);
+        el.style.transition = 'left ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        el.style.left       = PANEL_LEFT + 'px';
+        setTimeout(function() {
+          el.style.pointerEvents = 'all';
+          el.style.transition    = '';
+        }, SLIDE_DUR);
+      }, SLIDE_DELAY);
 
     })();
   </script>
@@ -545,6 +551,10 @@
 
         flickerOutEl(titleEl);
         flickerOutEl(exitEl);
+        if (window._mfsTrackEl) {
+          window._mfsTrackEl(titleEl, 0);
+          window._mfsTrackEl(exitEl,  1);
+        }
         window._mfsRampDown(RAMP_MS, function() {
           window.location.href = href + '?from=mfs';
         });
