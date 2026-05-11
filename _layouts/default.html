@@ -69,12 +69,11 @@
         // Exposed so transition JS can animate these
         window._waveAmplitude = 0.25;
         window._waveSpeed     = 0.055;
+        window._waveOpacity   = 0.28;
 
         const cs = getComputedStyle(document.documentElement);
         const tealRgb = cs.getPropertyValue('--teal-dark-rgb').trim();
         const pinkRgb = cs.getPropertyValue('--pink-dark-rgb').trim();
-        const gradStop0 = `rgba(${tealRgb}, 0.28)`;
-        const gradStop1 = `rgba(${pinkRgb}, 0.28)`;
         canvas.style.backgroundColor = cs.getPropertyValue('--bg-black').trim();
 
         function resize() {
@@ -91,9 +90,10 @@
           ctx.lineWidth = 2;
 
           // Diagonal gradient: teal (top-left) to pink (bottom-right)
+          const op   = window._waveOpacity;
           const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-          grad.addColorStop(0, gradStop0);
-          grad.addColorStop(1, gradStop1);
+          grad.addColorStop(0, `rgba(${tealRgb}, ${op})`);
+          grad.addColorStop(1, `rgba(${pinkRgb}, ${op})`);
           ctx.strokeStyle = grad;
 
           for (let y = 0; y < canvas.height + spacing; y += spacing) {
@@ -229,6 +229,18 @@
           // hide footer immediately
           if (footer) footer.style.visibility = 'hidden';
 
+          // flicker grid opacity during transition
+          var _flickerActive = true;
+          var BASE_OPACITY = 0.28;
+          (function flicker() {
+            if (!_flickerActive) return;
+            var r = Math.random();
+            if      (r < 0.45) window._waveOpacity = 0.55 + Math.random() * 0.45;
+            else if (r < 0.65) window._waveOpacity = 0.05 + Math.random() * 0.08;
+            else               window._waveOpacity = 0.28 + Math.random() * 0.25;
+            setTimeout(flicker, 30 + Math.random() * 60);
+          })();
+
           function trySwap() {
             if (!fetchedDoc || !slideOutDone) return;
             if (clickedEl) clickedEl.blur();
@@ -254,6 +266,13 @@
                 });
               });
             }
+            _flickerActive = false;
+            // smoothly settle opacity back to baseline
+            (function settleOpacity() {
+              window._waveOpacity += (BASE_OPACITY - window._waveOpacity) * 0.15;
+              if (Math.abs(window._waveOpacity - BASE_OPACITY) > 0.002) requestAnimationFrame(settleOpacity);
+              else window._waveOpacity = BASE_OPACITY;
+            })();
             rampWave(BASE_AMP, BASE_SPEED, RAMP_DOWN_MS, null);
           }
 
