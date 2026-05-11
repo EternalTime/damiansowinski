@@ -42,7 +42,7 @@
 <div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px;
     width:280px;height:320px;
     background:black;border:2px solid var(--cyan);
-    box-shadow:0 0 8px var(--cyan),0 0 40px var(--cyan),0 0 80px var(--cyan),0 0 120px var(--cyan);overflow:hidden;pointer-events:none;">
+    box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;">
   </div>
 
   <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;"></div>
@@ -68,9 +68,9 @@
       //   If anchorEl is set, x0/x1/y0/y1 are recomputed on every resize().
       var panels = [
         // 0: title panel — affixed to #mfs-title
-        { amplitude: 80,  sigmaX: 10, sigmaY: 10, scale: 0, backSolve: true,  anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
+        { amplitude: 50,  sigmaX: 10, sigmaY: 20, scale: 0, backSolve: true,  anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
         // 1: exit panel — affixed to #mfs-exit
-        { amplitude: 40,  sigmaX: 10, sigmaY: 10, scale: 0, backSolve: true,  anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
+        { amplitude: 30,  sigmaX: 10, sigmaY: 15, scale: 0, backSolve: true,  anchorEl: null, x0:0, x1:0, y0:0, y1:0 },
       ];
 
       // Attach DOM anchors after DOM is ready (elements exist at script run time)
