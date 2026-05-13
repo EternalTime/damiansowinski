@@ -14,6 +14,13 @@ Theoretical Physicist & Applied Mathemagician
   <img class="home-photo-img" src="{{ '/assets/images/Damian_in_Key_West.jpg' | relative_url }}" alt="Damian Sowinski">
 </div>
 
+<div style="text-align: center; margin-bottom: 40px;">
+<a href="mailto:DRSowinski@gmail.com" target="_blank">Email</a> |
+<a href="{{ '/assets/docs/Sowinski_CV.pdf' | relative_url }}" target="_blank">Curriculum Vitae</a> |
+<a href="https://github.com/eternaltime" target="_blank">GitHub</a> |
+<a href="https://www.linkedin.com/in/damian-sowinski-413b4214" target="_blank">LinkedIn</a>
+</div>
+
 <div class="gradient-text2 home-subtitle" style="text-align: center; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));">
 <span id="robot-trigger" style="cursor:pointer;">Artificial Life &amp; Intelligence</span> | Complexity | Information | Simulation | Visualization
 </div>
@@ -629,12 +636,3 @@ This means characterizing how information is generated, stored, and flows in bio
 
 
 
----
-
-## Links
-
-<div style="text-align: center; margin-bottom: 40px;" markdown="1">
-
-[Email](mailto:DRSowinski@gmail.com) | [Curriculum Vitae]({{ '/assets/docs/Sowinski_CV.pdf' | relative_url }})|  [GitHub](https://github.com/eternaltime) | [LinkedIn](https://www.linkedin.com/in/damian-sowinski-413b4214)
-
-</div>

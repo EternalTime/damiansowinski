@@ -39,13 +39,84 @@
 
   <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--teal-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
 
-<div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px;
+<div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
     width:280px;height:320px;
-    background:black;border:2px solid var(--cyan);
-    box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;">
+    background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
+    box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
+    padding:1em; display:flex; flex-direction:column; gap:0.6em;">
+  <input id="mfs-search-input" type="text" placeholder="Search spacetimes…"
+    style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--cyan);border-radius:4px;
+    color:var(--text-bright);padding:0.4em 0.6em;font-family:'Source Code Pro',monospace;font-size:0.85em;
+    outline:none;box-sizing:border-box; flex-shrink:0;">
+  <div id="mfs-search-results" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:2px;"></div>
   </div>
 
-  <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;"></div>
+  <script>
+    /* ── MFS search: simple filter over metric index ── */
+    (function() {
+      // Metric index — id matches JSON filename in MFS/assets/data/metrics/
+      // Will be replaced by Lunr.js index later
+      var METRIC_INDEX = [
+        { id: 'minkowski',    name: 'Minkowski',    tags: ['flat', 'special relativity', 'vacuum'] },
+        { id: 'ellis_bronnikov', name: 'Ellis-Bronnikov', tags: ['wormhole', 'exotic matter', 'traversable'] }
+      ];
+
+      var input   = document.getElementById('mfs-search-input');
+      var results = document.getElementById('mfs-search-results');
+      if (!input || !results) return;
+
+      function renderResults(query) {
+        var q = query.trim().toLowerCase();
+        var matches = q === ''
+          ? METRIC_INDEX
+          : METRIC_INDEX.filter(function(m) {
+              return m.name.toLowerCase().indexOf(q) !== -1 ||
+                     m.tags.some(function(t) { return t.indexOf(q) !== -1; });
+            });
+
+        results.innerHTML = matches.map(function(m) {
+          return '<div class="mfs-result" data-id="' + m.id + '">' + m.name + '</div>';
+        }).join('');
+
+        results.querySelectorAll('.mfs-result').forEach(function(el) {
+          el.addEventListener('click', function() {
+            if (window._mfsSlideInRight) window._mfsSlideInRight();
+            if (window._mfsShowMetric) window._mfsShowMetric(this.dataset.id);
+            results.querySelectorAll('.mfs-result').forEach(function(r) { r.classList.remove('mfs-result-active'); });
+            el.classList.add('mfs-result-active');
+          });
+        });
+      }
+
+      input.addEventListener('input', function() { renderResults(this.value); });
+      renderResults('');
+    })();
+  </script>
+
+  <style>
+    .mfs-result {
+      padding: 5px 8px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 18px;
+      color: var(--teal-light);
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+    }
+    .mfs-result:hover, .mfs-result-active {
+      background: rgba(0,229,255,0.1);
+      color: var(--cyan);
+    }
+  </style>
+
+  <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 7em);"></div>
+
+  <div id="mfs-content-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px 0 0 12px;
+    top:150px;right:-100%;
+    background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-right:none;
+    box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);
+    overflow-y:auto;pointer-events:none;padding:1em;">
+  </div>
 
   <script>
     /* ════════════════════════════════════════════════
@@ -454,7 +525,7 @@
       if (!el) return;
 
       var PANEL_TOP   = 150;   // px from top of viewport — adjust once content is added
-      var PANEL_LEFT  = 13;    // px — matches title's left: 0.8em
+      var PANEL_LEFT  = 0;     // flush with left edge of window
       var PANEL_W     = 280;
       var PANEL_H     = 320;
       var SLIDE_DELAY = 800;   // ms after flicker-in starts
@@ -486,6 +557,567 @@
 
     })();
   </script>
+
+  <script>
+    /* ── MFS content panel: slide in from off-screen right ── */
+    (function() {
+      var el = document.getElementById('mfs-content-panel');
+      if (!el) return;
+
+      var LEFT_PANEL_W  = 280;
+      var GAP           = 20;
+      var PANEL_TOP     = 150;
+      var SLIDE_DELAY   = 800;
+      var SLIDE_DUR     = 500;
+
+      function syncPanel() {
+        var vw = window.innerWidth;
+        var panelW = vw - LEFT_PANEL_W - GAP;
+        el.style.top    = PANEL_TOP + 'px';
+        el.style.width  = panelW + 'px';
+        el.style.height = (window.innerHeight - PANEL_TOP - 20) + 'px';
+      }
+
+      // Start off-screen right
+      el.style.right = '0';
+      el.style.transform = 'translateX(100%)';
+      syncPanel();
+      window.addEventListener('resize', syncPanel);
+
+      var _slid = false;
+      // Expose for search result click to trigger
+      window._mfsSlideInRight = function() {
+        if (_slid) return;
+        _slid = true;
+        el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        el.style.transform  = 'translateX(0)';
+        setTimeout(function() {
+          el.style.pointerEvents = 'all';
+          el.style.transition    = '';
+        }, SLIDE_DUR);
+      };
+
+      // Expose for exit transition
+      window._mfsSlideOutRight = function(duration) {
+        el.style.transition = 'transform ' + duration + 'ms cubic-bezier(0.55, 0.06, 0.68, 0.19)';
+        el.style.transform  = 'translateX(100%)';
+      };
+    })();
+  </script>
+
+  <script>
+    /* ── MFS metric renderer ── */
+    (function() {
+      var contentPanel = document.getElementById('mfs-content-panel');
+      if (!contentPanel) return;
+
+      var _metricCache = {};  // id → parsed JSON
+      var _bibCache = null;   // cite key → parsed entry
+      var _currentMetric = null;
+      var _currentCoordIdx = 0;
+
+      // Fetch and parse the global .bib file into a lookup table
+      function fetchBib(cb) {
+        if (_bibCache) { cb(_bibCache); return; }
+        var url = '{{ "/assets/data/references.bib" | relative_url }}';
+        fetch(url)
+          .then(function(r) { return r.text(); })
+          .then(function(text) {
+            _bibCache = {};
+            // Split on @ but keep the @ by using a lookahead-style split
+            var entries = text.split(/(?=@\w+\s*\{)/);
+            entries.forEach(function(entry) {
+              entry = entry.trim();
+              if (!entry) return;
+              var keyMatch = entry.match(/^@\w+\s*\{\s*([\w:]+)\s*,/);
+              if (keyMatch) _bibCache[keyMatch[1]] = entry;
+            });
+            cb(_bibCache);
+          })
+          .catch(function(e) { console.error('Failed to load references.bib', e); cb({}); });
+      }
+
+      function fetchMetric(id, cb) {
+        if (_metricCache[id]) { cb(_metricCache[id]); return; }
+        var url = '{{ "/MFS/assets/data/metrics/" | relative_url }}' + id + '.json';
+        fetch(url)
+          .then(function(r) { return r.json(); })
+          .then(function(data) { _metricCache[id] = data; cb(data); })
+          .catch(function(e) { console.error('Failed to load metric:', id, e); });
+      }
+
+      function tex(str) {
+        return '\\(' + str + '\\)';
+      }
+
+      function unlatex(str) {
+        return str
+          .replace(/\\["']([aeiouAEIOUy])/g, function(_, c) {
+            return { a:'ä',e:'ë',i:'ï',o:'ö',u:'ü',A:'Ä',E:'Ë',I:'Ï',O:'Ö',U:'Ü',y:'ÿ' }[c] || c;
+          })
+          .replace(/\\'([aeiouAEIOUy])/g, function(_, c) {
+            return { a:'á',e:'é',i:'í',o:'ó',u:'ú',A:'Á',E:'É',I:'Í',O:'Ó',U:'Ú',y:'ý' }[c] || c;
+          })
+          .replace(/\\`([aeiouAEIOU])/g, function(_, c) {
+            return { a:'à',e:'è',i:'ì',o:'ò',u:'ù',A:'À',E:'È',I:'Ì',O:'Ò',U:'Ù' }[c] || c;
+          })
+          .replace(/\\~([nNaAoO])/g, function(_, c) {
+            return { n:'ñ',N:'Ñ',a:'ã',A:'Ã',o:'õ',O:'Õ' }[c] || c;
+          })
+          .replace(/\\c\{?([cCsS])\}?/g, function(_, c) {
+            return { c:'ç',C:'Ç',s:'ş',S:'Ş' }[c] || c;
+          })
+          .replace(/\\ss\b/g, 'ß')
+          .replace(/\{([^}]*)\}/g, '$1')  // strip remaining braces
+          .trim();
+      }
+
+      function parseBibtex(entry) {
+        // Extract type and key: @article{key, ...}
+        var typeKey = entry.match(/^@(\w+)\s*\{\s*([\w:]+)\s*,/);
+        var type = typeKey ? typeKey[1].toLowerCase() : 'misc';
+        // Extract fields: field = {value} or field = "value"
+        var fields = {};
+        var fieldRe = /(\w+)\s*=\s*(?:\{([^}]*(?:\{[^}]*\}[^}]*)*)\}|"([^"]*)")/g;
+        var m;
+        while ((m = fieldRe.exec(entry)) !== null) {
+          fields[m[1].toLowerCase()] = unlatex(m[2] !== undefined ? m[2] : m[3]);
+        }
+        return { type: type, fields: fields };
+      }
+
+      function formatBibtex(entry) {
+        var p = parseBibtex(entry);
+        var f = p.fields;
+        var author  = f.author  || '';
+        var title   = f.title   || '';
+        var year    = f.year    || '';
+        var journal = f.journal || f.booktitle || f.publisher || '';
+        var volume  = f.volume  || '';
+        var pages   = f.pages   || '';
+        var html = '';
+        if (author)  html += '<span class="mfs-ref-author">' + author + '</span> ';
+        if (year)    html += '<span class="mfs-ref-year">(' + year + ')</span>. ';
+        if (title)   html += '<span class="mfs-ref-title">' + title + '</span>. ';
+        if (journal) html += '<span class="mfs-ref-journal">' + journal + '</span>';
+        if (volume)  html += ' <span class="mfs-ref-volume">' + volume + '</span>';
+        if (pages)   html += ', ' + pages;
+        return html || entry;
+      }
+
+      function renderComponents(items, upperLabel, convention) {
+        if (!items || items.length === 0) return '<span class="mfs-zero">0 (all zero)</span>';
+        // convention: string like 'ull', 'ulll', 'll', 'llll'
+        // u = superscript, l = subscript
+        var conv = (convention || 'ull').toLowerCase();
+        return items.map(function(c) {
+          var idxStr = '';
+          var state  = null;  // 'u' or 'l'
+          for (var k = 0; k < conv.length; k++) {
+            var ch  = conv[k];
+            var idx = c.indices[k] || '';
+            if (ch === 'u') {
+              if (state === 'l') { idxStr += '}'; state = null; }
+              if (state !== 'u') { idxStr += '^{'; state = 'u'; }
+              else { idxStr += ' '; }
+              idxStr += idx;
+            } else {
+              if (state === 'u') { idxStr += '}'; state = null; }
+              if (state !== 'l') {
+                // empty group separator only if something precedes (avoids leading {})
+                idxStr += (idxStr.length > 0 ? '{}' : '') + '_{';
+                state = 'l';
+              } else {
+                idxStr += ' ';  // space between adjacent subscript tokens prevents e.g. \thetar
+              }
+              idxStr += idx;
+            }
+          }
+          // close final open brace
+          if (state === 'u') idxStr += '}';
+          if (state === 'l') idxStr += '}';
+          return '<div class="mfs-component">' + tex(upperLabel + idxStr + ' = ' + c.value) + '</div>';
+        }).join('');
+      }
+
+      function renderScalar(str) {
+        return '<div class="mfs-component">' + tex(str) + '</div>';
+      }
+
+      // Render the index position widget for a given convention string (e.g. 'ull').
+      // Only the first index is togglable; the rest are fixed lower.
+      // Render index widget. For tensors with all-fixed lower indices except first (ull, ulll, llll etc.),
+      // only the first column is togglable. For rank-2 symmetric tensors (uu/ul/ll), both columns toggle.
+      function renderConventionWidget(convention, tensorId) {
+        var symmetric = convention.length === 2;  // Ricci, Einstein
+        var cols = '';
+        for (var i = 0; i < convention.length; i++) {
+          var isToggle = (i === 0) || symmetric;
+          var cur = convention[i];
+          var topSel = cur === 'u' ? ' mfs-idx-on' : '';
+          var botSel = cur === 'l' ? ' mfs-idx-on' : '';
+          if (isToggle) {
+            cols += [
+              '<div class="mfs-idx-col mfs-idx-col-toggle" data-colidx="' + i + '">',
+                '<div class="mfs-idx-box' + topSel + '" data-pos="u" data-colidx="' + i + '"></div>',
+                '<div class="mfs-idx-box' + botSel + '" data-pos="l" data-colidx="' + i + '"></div>',
+              '</div>'
+            ].join('');
+          } else {
+            cols += [
+              '<div class="mfs-idx-col mfs-idx-col-fixed">',
+                '<div class="mfs-idx-spacer"></div>',
+                '<div class="mfs-idx-box mfs-idx-on mfs-idx-fixed"></div>',
+              '</div>'
+            ].join('');
+          }
+        }
+        return [
+          '<div class="mfs-idx-widget" data-tensor="' + tensorId + '" data-convention="' + convention + '">',
+            cols,
+          '</div>'
+        ].join('');
+      }
+
+      function renderMetric(data, coordIdx) {
+        _currentMetric  = data;
+        _currentCoordIdx = coordIdx;
+        var coord = data.coordinates[coordIdx];
+
+        // Coordinate selector
+        var coordOptions = data.coordinates.map(function(c, i) {
+          return '<option value="' + i + '"' + (i === coordIdx ? ' selected' : '') + '>' + c.name + '</option>';
+        }).join('');
+
+        // Geodesic toggle — default massive
+        var html = [
+          '<div class="mfs-header">',
+            '<div class="mfs-label">metric</div>',
+            '<div class="mfs-title">' + data.name + '</div>',
+          '</div>',
+
+          data.history ? [
+            '<div class="mfs-section">',
+              '<div class="mfs-section-label">history</div>',
+              '<div class="mfs-history">' + data.history.split('¶').map(function(p) { return '<p>' + p.trim() + '</p>'; }).join('') + '</div>',
+            '</div>'
+          ].join('') : '',
+
+          '<div class="mfs-section">',
+            '<div class="mfs-section-label">coordinates</div>',
+            '<select class="mfs-coord-select" id="mfs-coord-select">' + coordOptions + '</select>',
+            coord.domains && coord.domains.length ? [
+              '<div class="mfs-domains">',
+                coord.domains.map(function(d) {
+                  return '<div class="mfs-component">' + tex(d) + '</div>';
+                }).join(''),
+              '</div>'
+            ].join('') : '',
+          '</div>',
+
+          '<div class="mfs-section">',
+            '<div class="mfs-section-label">line element</div>',
+            '<div class="mfs-component">' + tex(coord.line_element) + '</div>',
+          '</div>',
+
+          (function() {
+            var chConv = coord.christoffel.default;
+            var chV    = coord.christoffel.variants[chConv];
+            return [
+              '<div class="mfs-section" id="mfs-sec-christoffel">',
+                '<div class="mfs-section-head">',
+                  '<div class="mfs-section-label">Christoffel symbols</div>',
+                  renderConventionWidget(chConv, 'christoffel'),
+                '</div>',
+                '<div id="mfs-comp-christoffel">',
+                  renderComponents(chV.nonzero, '\\Gamma', chConv),
+                '</div>',
+              '</div>'
+            ].join('');
+          })(),
+
+          (function() {
+            var rConv = coord.riemann.default;
+            var rV    = coord.riemann.variants[rConv];
+            return [
+              '<div class="mfs-section" id="mfs-sec-riemann">',
+                '<div class="mfs-section-head">',
+                  '<div class="mfs-section-label">Riemann tensor</div>',
+                  renderConventionWidget(rConv, 'riemann'),
+                '</div>',
+                '<div id="mfs-comp-riemann">',
+                  renderComponents(rV.nonzero, 'R', rConv),
+                '</div>',
+              '</div>'
+            ].join('');
+          })(),
+
+          (function() {
+            var rConv = coord.ricci_tensor.default;
+            var rV    = coord.ricci_tensor.variants[rConv];
+            return [
+              '<div class="mfs-section" id="mfs-sec-ricci">',
+                '<div class="mfs-section-head">',
+                  '<div class="mfs-section-label">Ricci tensor</div>',
+                  renderConventionWidget(rConv, 'ricci'),
+                '</div>',
+                '<div id="mfs-comp-ricci">',
+                  renderComponents(rV.nonzero, 'R', rConv),
+                '</div>',
+              '</div>'
+            ].join('');
+          })(),
+
+          '<div class="mfs-section">',
+            '<div class="mfs-section-label">Ricci scalar</div>',
+            renderScalar(coord.ricci_scalar),
+          '</div>',
+
+          '<div class="mfs-section">',
+            '<div class="mfs-section-label">Kretschmann scalar</div>',
+            renderScalar(coord.kretschmann),
+          '</div>',
+
+          (function() {
+            var eConv = coord.einstein_tensor.default;
+            var eV    = coord.einstein_tensor.variants[eConv];
+            return [
+              '<div class="mfs-section" id="mfs-sec-einstein">',
+                '<div class="mfs-section-head">',
+                  '<div class="mfs-section-label">Einstein tensor</div>',
+                  renderConventionWidget(eConv, 'einstein'),
+                '</div>',
+                '<div id="mfs-comp-einstein">',
+                  renderComponents(eV.nonzero, 'G', eConv),
+                '</div>',
+              '</div>'
+            ].join('');
+          })(),
+
+          (function() {
+            var wConv = coord.weyl_tensor.default;
+            var wV    = coord.weyl_tensor.variants[wConv];
+            return [
+              '<div class="mfs-section" id="mfs-sec-weyl">',
+                '<div class="mfs-section-head">',
+                  '<div class="mfs-section-label">Weyl tensor</div>',
+                  renderConventionWidget(wConv, 'weyl'),
+                '</div>',
+                '<div id="mfs-comp-weyl">',
+                  renderComponents(wV.nonzero, 'C', wConv),
+                '</div>',
+              '</div>'
+            ].join('');
+          })(),
+
+          '<div class="mfs-section">',
+            '<div class="mfs-section-label">Geodesics</div>',
+            (coord.geodesics.massive || []).map(function(eq) {
+              return '<div class="mfs-component">' + tex(eq) + '</div>';
+            }).join(''),
+          '</div>',
+
+          (data.references && data.references.length) ? [
+            '<div class="mfs-section mfs-references">',
+              '<div class="mfs-section-label">references</div>',
+              data.references.map(function(key) {
+                var entry = _bibCache && _bibCache[key];
+                if (!entry) return '<div class="mfs-reference mfs-ref-missing">' + key + '</div>';
+                return '<div class="mfs-reference">' + formatBibtex(entry) + '</div>';
+              }).join(''),
+            '</div>'
+          ].join('') : ''
+        ].join('');
+
+        contentPanel.innerHTML = html;
+
+        // Wire coordinate selector
+        document.getElementById('mfs-coord-select').addEventListener('change', function() {
+          renderMetric(data, parseInt(this.value));
+        });
+
+        // Wire convention widgets
+        var tensorMeta = {
+          christoffel: { label: '\\Gamma', variants: coord.christoffel.variants },
+          riemann:     { label: 'R',       variants: coord.riemann.variants },
+          ricci:       { label: 'R',       variants: coord.ricci_tensor.variants },
+          einstein:    { label: 'G',       variants: coord.einstein_tensor.variants },
+          weyl:        { label: 'C',       variants: coord.weyl_tensor.variants }
+        };
+        contentPanel.querySelectorAll('.mfs-idx-widget').forEach(function(widget) {
+          var tensorId = widget.dataset.tensor;
+          var meta = tensorMeta[tensorId];
+          if (!meta) return;
+          widget.querySelectorAll('.mfs-idx-box[data-pos]').forEach(function(box) {
+            box.addEventListener('click', function() {
+              var colIdx  = parseInt(box.dataset.colidx);
+              var pos     = box.dataset.pos;
+              var oldConv = widget.dataset.convention;
+              // Build new convention string with this column set to pos
+              var chars = oldConv.split('');
+              chars[colIdx] = pos;
+              var rawConv = chars.join('');
+              // Canonicalize: for rank-2 symmetric, ul=lu → always 'ul'
+              var canonical = rawConv;
+              if (rawConv === 'lu') canonical = 'ul';
+              // Only switch if this variant exists
+              if (!meta.variants[canonical]) return;
+              widget.dataset.convention = canonical;
+              // Update highlights for each toggleable column
+              widget.querySelectorAll('.mfs-idx-box[data-pos]').forEach(function(b) {
+                var bCol = parseInt(b.dataset.colidx);
+                b.classList.toggle('mfs-idx-on', b.dataset.pos === canonical[bCol]);
+              });
+              // Re-render components
+              var compEl = document.getElementById('mfs-comp-' + tensorId);
+              if (compEl) {
+                compEl.innerHTML = renderComponents(meta.variants[canonical].nonzero, meta.label, canonical);
+                if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([compEl]);
+              }
+            });
+          });
+        });
+
+
+        // Typeset MathJax
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([contentPanel]);
+        }
+      }
+
+      // Expose so search panel can call it
+      window._mfsShowMetric = function(id) {
+        fetchBib(function() {
+          fetchMetric(id, function(data) { renderMetric(data, 0); });
+        });
+      };
+
+    })();
+  </script>
+
+  <style>
+    #mfs-content-panel { overflow-y: auto; font-size: 21px !important; }
+    #mfs-content-panel .mfs-header {
+      padding: 10px 16px 8px;
+      border-bottom: 1px solid rgba(0,229,255,0.2);
+      position: sticky; top: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 1;
+    }
+    #mfs-content-panel .mfs-label {
+      font-size: 21px; color: rgba(0,229,255,0.5);
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    #mfs-content-panel .mfs-title {
+      font-size: 40px; font-weight: 600;
+      letter-spacing: 0.05em; margin: 2px 0 6px;
+      color: var(--cyan);
+    }
+    #mfs-content-panel .mfs-coord-select {
+      width: 100%; background: rgba(0,26,26,0.9);
+      border: 1px solid rgba(0,229,255,0.4);
+      color: var(--cyan);
+      font-family: 'Source Code Pro', monospace;
+      font-size: 26px; padding: 4px 6px;
+      border-radius: 4px; outline: none;
+    }
+    #mfs-content-panel .mfs-section {
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(0,229,255,0.12);
+    }
+    #mfs-content-panel .mfs-section-head {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    #mfs-content-panel .mfs-section-label {
+      font-size: 21px; color: rgba(0,229,255,0.5);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    #mfs-content-panel .mfs-convention {
+      font-size: 21px; color: rgba(0,229,255,0.4);
+      letter-spacing: 0.06em;
+    }
+    #mfs-content-panel .mfs-component {
+      font-size: 27px; color: var(--teal-light);
+      line-height: 1.8; padding: 1px 0;
+    }
+    #mfs-content-panel .mfs-domains {
+      display: flex; flex-wrap: wrap; gap: 0.4em 1.5em;
+      margin-top: 6px;
+    }
+    #mfs-comp-christoffel,
+    #mfs-comp-riemann,
+    #mfs-comp-ricci,
+    #mfs-comp-einstein,
+    #mfs-comp-weyl {
+      column-width: 280px;
+      column-gap: 1.5em;
+    }
+    #mfs-comp-christoffel .mfs-component,
+    #mfs-comp-riemann .mfs-component,
+    #mfs-comp-ricci .mfs-component,
+    #mfs-comp-einstein .mfs-component,
+    #mfs-comp-weyl .mfs-component {
+      break-inside: avoid;
+    }
+    #mfs-content-panel .mfs-history {
+      font-size: 21px !important; color: var(--teal-light) !important;
+      line-height: 1.7 !important; opacity: 0.8;
+    }
+    #mfs-content-panel .mfs-history p {
+      font-family: 'Source Code Pro', monospace !important;
+      font-size: 1em !important; color: var(--teal-light) !important;
+      line-height: 1.7 !important;
+      margin: 0 0 0.9em !important;
+    }
+    #mfs-content-panel .mfs-history p:last-child {
+      margin-bottom: 0 !important;
+    }
+    #mfs-content-panel .mfs-zero {
+      font-size: 26px; color: rgba(0,229,255,0.35);
+      font-style: italic;
+    }
+    #mfs-content-panel .mfs-idx-widget {
+      display: flex; flex-direction: row; align-items: flex-end; gap: 3px;
+    }
+    #mfs-content-panel .mfs-idx-col {
+      display: flex; flex-direction: column; gap: 3px; align-items: center;
+    }
+    #mfs-content-panel .mfs-idx-spacer {
+      width: 18px; height: 18px;
+    }
+    #mfs-content-panel .mfs-idx-box {
+      width: 18px; height: 18px;
+      border: 1.5px solid rgba(0,229,255,0.25);
+      border-radius: 3px;
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    #mfs-content-panel .mfs-idx-box.mfs-idx-on {
+      border-color: var(--cyan);
+      box-shadow: 0 0 4px var(--cyan), 0 0 10px var(--cyan);
+    }
+    #mfs-content-panel .mfs-idx-box.mfs-idx-fixed {
+      cursor: default;
+    }
+    #mfs-content-panel .mfs-idx-col-toggle .mfs-idx-box:not(.mfs-idx-on):hover {
+      border-color: rgba(0,229,255,0.5);
+    }
+    #mfs-content-panel .mfs-references {
+      margin-top: 8px;
+    }
+    #mfs-content-panel .mfs-reference {
+      font-size: 16px; color: rgba(0,229,255,0.5);
+      line-height: 1.7; margin-bottom: 12px;
+      word-break: break-word;
+    }
+    #mfs-content-panel .mfs-ref-author  { color: var(--teal-light); }
+    #mfs-content-panel .mfs-ref-year    { color: rgba(0,229,255,0.4); }
+    #mfs-content-panel .mfs-ref-title   { font-style: italic; color: rgba(0,229,255,0.7); }
+    #mfs-content-panel .mfs-ref-journal { color: rgba(0,229,255,0.5); }
+    #mfs-content-panel .mfs-ref-volume  { color: rgba(0,229,255,0.4); }
+  </style>
 
   <script>
     /* ── MFS exit transition: ramp scale down then navigate ── */
@@ -555,6 +1187,17 @@
           window._mfsTrackEl(titleEl, 0);
           window._mfsTrackEl(exitEl,  1);
         }
+
+        // slide search panel back out to the left
+        var searchPanel = document.getElementById('mfs-search-panel');
+        if (searchPanel) {
+          var panelW = searchPanel.offsetWidth;
+          searchPanel.style.transition = 'left ' + (RAMP_MS * 0.6 / 1000) + 's cubic-bezier(0.55, 0.06, 0.68, 0.19)';
+          searchPanel.style.left = (-panelW - 20) + 'px';
+        }
+        // slide content panel back out to the right
+        if (window._mfsSlideOutRight) window._mfsSlideOutRight(RAMP_MS * 0.6);
+
         window._mfsRampDown(RAMP_MS, function() {
           window.location.href = href + '?from=mfs';
         });
