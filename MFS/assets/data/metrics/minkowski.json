@@ -1,0 +1,255 @@
+{
+  "id": "minkowski",
+  "name": "Minkowski",
+  "description": "The flat spacetime of special relativity. No curvature, no gravity.",
+  "tags": ["flat", "special relativity", "vacuum"],
+  "signature": "(-,+,+,+)",
+  "convention": "Factors of c are kept explicit throughout. Coordinates are (t, x, y, z) with t having dimensions of time.",
+  "history": "Minkowski spacetime was introduced by Hermann Minkowski in 1908, one year after Einstein's special relativity paper, as a unified geometric framework for space and time. Minkowski showed that the Lorentz transformations of special relativity could be understood as rotations in a four-dimensional pseudo-Riemannian manifold with metric signature (-,+,+,+). Einstein initially dismissed the geometric formulation as superfluous, but later credited it as essential to the development of general relativity.¶Rindler coordinates, introduced by Wolfgang Rindler in 1966, provide a natural reference frame for a uniformly accelerated observer in flat spacetime. The coordinates cover only the right wedge \\(\\xi > 0\\) of Minkowski spacetime, bounded by the Rindler horizon at \\(\\xi = 0\\), which is a null surface analogous to a black hole event horizon. An observer at fixed \\(\\xi\\) follows a hyperbolic worldline with proper acceleration \\(a/\\xi\\), and the horizon marks the boundary beyond which signals can never reach such an observer. The deep significance of Rindler coordinates became clear with the Unruh effect, derived independently by Davies (1975) and Unruh (1976): an observer accelerating through the Minkowski vacuum detects a thermal spectrum of particles at temperature \\(T = \\hbar a / 2\\pi c k_B\\). This result, along with Hawking radiation, established the connection between acceleration, horizons, and thermodynamics. The Rindler metric is also the near-horizon limit of the Schwarzschild metric, making it an important toy model in the study of black hole thermodynamics and the information paradox.",
+  "references": ["minkowski1908", "minkowski1909", "misner1973", "rindler1966", "davies1975", "unruh1976"],
+  "coordinates": [
+    {
+      "id": "cartesian",
+      "name": "Cartesian",
+      "coords": ["t", "x", "y", "z"],
+      "domains": ["t \\in (-\\infty, \\infty)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)"],
+      "parameters": [],
+      "line_element": "ds^2 = -c^2 dt^2 + dx^2 + dy^2 + dz^2",
+      "metric_components": [
+        { "indices": ["t","t"], "value": "-c^2" },
+        { "indices": ["x","x"], "value": "1" },
+        { "indices": ["y","y"], "value": "1" },
+        { "indices": ["z","z"], "value": "1" }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": { "note": "\\Gamma^\\mu_{\\nu\\rho}", "nonzero": [] },
+          "lll": { "note": "\\Gamma_{\\mu\\nu\\rho}", "nonzero": [] }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": { "note": "R^\\mu{}_{\\nu\\rho\\sigma}", "nonzero": [] },
+          "llll": { "note": "R_{\\mu\\nu\\rho\\sigma}", "nonzero": [] }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": { "note": "R^{\\mu\\nu}", "nonzero": [] },
+          "ul": { "note": "R^\\mu{}_\\nu", "nonzero": [] },
+          "ll": { "note": "R_{\\mu\\nu}", "nonzero": [] }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = R_{\\mu\\nu\\rho\\sigma}R^{\\mu\\nu\\rho\\sigma} = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": { "note": "G^{\\mu\\nu}", "nonzero": [] },
+          "ul": { "note": "G^\\mu{}_\\nu", "nonzero": [] },
+          "ll": { "note": "G_{\\mu\\nu}", "nonzero": [] }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": { "note": "C^\\mu{}_{\\nu\\rho\\sigma}", "nonzero": [] },
+          "llll": { "note": "C_{\\mu\\nu\\rho\\sigma}", "nonzero": [] }
+        }
+      },
+      "geodesics": {
+        "massive": [
+          "\\ddot{t} = 0",
+          "\\ddot{x} = 0",
+          "\\ddot{y} = 0",
+          "\\ddot{z} = 0"
+        ],
+        "massless": [
+          "\\ddot{t} = 0",
+          "\\ddot{x} = 0",
+          "\\ddot{y} = 0",
+          "\\ddot{z} = 0"
+        ]
+      }
+    },
+    {
+      "id": "spherical",
+      "name": "Spherical",
+      "coords": ["t", "r", "\\theta", "\\phi"],
+      "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"],
+      "parameters": [],
+      "line_element": "ds^2 = -c^2 dt^2 + dr^2 + r^2 d\\theta^2 + r^2 \\sin^2\\theta\\, d\\phi^2",
+      "metric_components": [
+        { "indices": ["t","t"],               "value": "-c^2" },
+        { "indices": ["r","r"],               "value": "1" },
+        { "indices": ["\\theta","\\theta"],   "value": "r^2" },
+        { "indices": ["\\phi","\\phi"],       "value": "r^2 \\sin^2\\theta" }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu_{\\nu\\rho}",
+            "nonzero": [
+              { "indices": ["\\theta", "r",          "\\theta"], "value": "\\frac{1}{r}" },
+              { "indices": ["\\theta", "\\theta",    "r"      ], "value": "\\frac{1}{r}" },
+              { "indices": ["\\phi",   "r",          "\\phi"  ], "value": "\\frac{1}{r}" },
+              { "indices": ["\\phi",   "\\phi",      "r"      ], "value": "\\frac{1}{r}" },
+              { "indices": ["\\phi",   "\\theta",    "\\phi"  ], "value": "\\cot\\theta" },
+              { "indices": ["\\phi",   "\\phi",      "\\theta"], "value": "\\cot\\theta" },
+              { "indices": ["r",       "\\theta",    "\\theta"], "value": "-r" },
+              { "indices": ["r",       "\\phi",      "\\phi"  ], "value": "-r\\sin^2\\theta" },
+              { "indices": ["\\theta", "\\phi",      "\\phi"  ], "value": "-\\sin\\theta\\cos\\theta" }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              { "indices": ["\\theta", "r",          "\\theta"], "value": "r" },
+              { "indices": ["\\theta", "\\theta",    "r"      ], "value": "r" },
+              { "indices": ["\\phi",   "r",          "\\phi"  ], "value": "r\\sin^2\\theta" },
+              { "indices": ["\\phi",   "\\phi",      "r"      ], "value": "r\\sin^2\\theta" },
+              { "indices": ["\\phi",   "\\theta",    "\\phi"  ], "value": "r^2\\sin\\theta\\cos\\theta" },
+              { "indices": ["\\phi",   "\\phi",      "\\theta"], "value": "r^2\\sin\\theta\\cos\\theta" },
+              { "indices": ["r",       "\\theta",    "\\theta"], "value": "-r" },
+              { "indices": ["r",       "\\phi",      "\\phi"  ], "value": "-r\\sin^2\\theta" },
+              { "indices": ["\\theta", "\\phi",      "\\phi"  ], "value": "-r^2\\sin\\theta\\cos\\theta" }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": { "note": "R^\\mu{}_{\\nu\\rho\\sigma}", "nonzero": [] },
+          "llll": { "note": "R_{\\mu\\nu\\rho\\sigma}", "nonzero": [] }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": { "note": "R^{\\mu\\nu}", "nonzero": [] },
+          "ul": { "note": "R^\\mu{}_\\nu", "nonzero": [] },
+          "ll": { "note": "R_{\\mu\\nu}", "nonzero": [] }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = R_{\\mu\\nu\\rho\\sigma}R^{\\mu\\nu\\rho\\sigma} = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": { "note": "G^{\\mu\\nu}", "nonzero": [] },
+          "ul": { "note": "G^\\mu{}_\\nu", "nonzero": [] },
+          "ll": { "note": "G_{\\mu\\nu}", "nonzero": [] }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": { "note": "C^\\mu{}_{\\nu\\rho\\sigma}", "nonzero": [] },
+          "llll": { "note": "C_{\\mu\\nu\\rho\\sigma}", "nonzero": [] }
+        }
+      },
+      "geodesics": {
+        "massive": [
+          "\\ddot{t} = 0",
+          "\\ddot{r} = r\\dot{\\theta}^2 + r\\sin^2\\theta\\,\\dot{\\phi}^2",
+          "\\ddot{\\theta} = -\\frac{2}{r}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
+          "\\ddot{\\phi} = -\\frac{2}{r}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
+        ],
+        "massless": [
+          "\\ddot{t} = 0",
+          "\\ddot{r} = r\\dot{\\theta}^2 + r\\sin^2\\theta\\,\\dot{\\phi}^2",
+          "\\ddot{\\theta} = -\\frac{2}{r}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
+          "\\ddot{\\phi} = -\\frac{2}{r}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
+        ]
+      }
+    },
+    {
+      "id": "rindler",
+      "name": "Rindler",
+      "coords": ["\\eta", "\\xi", "y", "z"],
+      "domains": ["\\eta \\in (-\\infty, \\infty)", "\\xi \\in (0, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)"],
+      "parameters": [
+        { "symbol": "a", "description": "Proper acceleration of the Rindler observer" }
+      ],
+      "line_element": "ds^2 = -\\frac{a^2\\xi^2}{c^2} d\\eta^2 + d\\xi^2 + dy^2 + dz^2",
+      "metric_components": [
+        { "indices": ["\\eta","\\eta"], "value": "-\\frac{a^2\\xi^2}{c^2}" },
+        { "indices": ["\\xi","\\xi"],   "value": "1" },
+        { "indices": ["y","y"],         "value": "1" },
+        { "indices": ["z","z"],         "value": "1" }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu_{\\nu\\rho}",
+            "nonzero": [
+              { "indices": ["\\eta", "\\eta", "\\xi"],  "value": "\\frac{1}{\\xi}" },
+              { "indices": ["\\eta", "\\xi",  "\\eta"], "value": "\\frac{1}{\\xi}" },
+              { "indices": ["\\xi",  "\\eta", "\\eta"], "value": "\\frac{a^2\\xi}{c^2}" }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              { "indices": ["\\eta", "\\eta", "\\xi"],  "value": "-\\frac{a^2\\xi}{c^2}" },
+              { "indices": ["\\eta", "\\xi",  "\\eta"], "value": "-\\frac{a^2\\xi}{c^2}" },
+              { "indices": ["\\xi",  "\\eta", "\\eta"], "value": "\\frac{a^2\\xi}{c^2}" }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": { "note": "R^\\mu{}_{\\nu\\rho\\sigma}", "nonzero": [] },
+          "llll": { "note": "R_{\\mu\\nu\\rho\\sigma}", "nonzero": [] }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": { "note": "R^{\\mu\\nu}", "nonzero": [] },
+          "ul": { "note": "R^\\mu{}_\\nu", "nonzero": [] },
+          "ll": { "note": "R_{\\mu\\nu}", "nonzero": [] }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = R_{\\mu\\nu\\rho\\sigma}R^{\\mu\\nu\\rho\\sigma} = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": { "note": "G^{\\mu\\nu}", "nonzero": [] },
+          "ul": { "note": "G^\\mu{}_\\nu", "nonzero": [] },
+          "ll": { "note": "G_{\\mu\\nu}", "nonzero": [] }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": { "note": "C^\\mu{}_{\\nu\\rho\\sigma}", "nonzero": [] },
+          "llll": { "note": "C_{\\mu\\nu\\rho\\sigma}", "nonzero": [] }
+        }
+      },
+      "geodesics": {
+        "massive": [
+          "\\ddot{\\eta} = -\\frac{2}{\\xi}\\dot{\\xi}\\dot{\\eta}",
+          "\\ddot{\\xi} = \\frac{a^2\\xi}{c^2}\\dot{\\eta}^2",
+          "\\ddot{y} = 0",
+          "\\ddot{z} = 0"
+        ],
+        "massless": [
+          "\\ddot{\\eta} = -\\frac{2}{\\xi}\\dot{\\xi}\\dot{\\eta}",
+          "\\ddot{\\xi} = \\frac{a^2\\xi}{c^2}\\dot{\\eta}^2",
+          "\\ddot{y} = 0",
+          "\\ddot{z} = 0"
+        ]
+      }
+    }
+  ]
+}

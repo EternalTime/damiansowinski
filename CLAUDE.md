@@ -1,4 +1,5 @@
 # Claude Code — Project Notes
+Do not write any code until I give the go ahead. Give me an estimate of the amount of code you intend to write. 
 
 ## Working directory
 Always work directly in this repository on the `main` branch.
