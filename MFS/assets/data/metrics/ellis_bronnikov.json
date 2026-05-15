@@ -2,16 +2,33 @@
   "id": "ellis_bronnikov",
   "name": "Ellis-Bronnikov",
   "description": "A static, spherically symmetric traversable wormhole with zero redshift function, also known as the drainhole metric.",
-  "tags": ["wormhole", "exotic matter", "traversable", "static", "spherically symmetric", "stationary"],
+  "tags": [
+    "wormhole",
+    "exotic matter",
+    "traversable",
+    "static",
+    "spherically symmetric",
+    "stationary"
+  ],
   "signature": "(-,+,+,+)",
-  "convention": "Factors of c are kept explicit throughout. The coordinate r is the proper radial distance, r \\in (-\\infty,\\infty), with the wormhole throat at r = 0. The parameter \\ell > 0 is the throat radius.",
-  "history": "The Morris-Thorne wormhole was introduced by Michael Morris and Kip Thorne in 1988 as a framework for studying traversable wormholes within classical general relativity. Their paper, originally motivated by a question from Carl Sagan during the writing of the novel Contact, identified the conditions a wormhole metric must satisfy to be traversable by human travelers: no horizons, tidal forces tolerable to a human, and a traversal time short enough to be practical. The key result was that all traversable wormholes require exotic matter — stress-energy that violates the null energy condition, meaning some observer measures negative energy densities. This placed traversable wormholes in a theoretically consistent but physically problematic category, since no classical matter field satisfies the exotic matter condition.¶The simplified form of the metric given here — sometimes called the Ellis wormhole or the zero-tidal-force wormhole — sets the redshift function \\Phi = 0 and takes the shape function b(r) = \\ell^2/r, which in proper distance coordinates gives the particularly clean form ds^2 = -c^2dt^2 + dr^2 + (r^2 + \\ell^2)d\\Omega^2. This metric is geodesically complete, manifestly symmetric between the two asymptotically flat regions (r \\to \\pm\\infty), and is a standard homework problem in graduate GR courses. Despite the simplicity of the metric, the Einstein tensor is nonzero and requires exotic matter as its source.",
-  "references": ["morris1988", "ellis1973", "visser1995", "misner1973"],
+  "convention": "The time coordinate is $ct$. The coordinate $r$ is the proper radial distance, $r \\in (-\\infty,\\infty)$, with the wormhole throat at $r = 0$. The parameter $\\ell > 0$ is the throat radius.",
+  "history": "The Morris-Thorne wormhole was introduced by Michael Morris and Kip Thorne in 1988 as a framework for studying traversable wormholes within classical general relativity. Their paper, originally motivated by a question from Carl Sagan during the writing of the novel Contact, identified the conditions a wormhole metric must satisfy to be traversable by human travelers: no horizons, tidal forces tolerable to a human, and a traversal time short enough to be practical. The key result was that all traversable wormholes require exotic matter — stress-energy that violates the null energy condition, meaning some observer measures negative energy densities. This placed traversable wormholes in a theoretically consistent but physically problematic category, since no classical matter field satisfies the exotic matter condition.¶The simplified form of the metric given here — sometimes called the Ellis wormhole or the zero-tidal-force wormhole — sets the redshift function $\\Phi = 0$ and takes the shape function $b(r) = \\ell^2/r$, which in proper distance coordinates gives the particularly clean form $ds^2 = -c^2dt^2 + dr^2 + (r^2 + \\ell^2)d\\Omega^2$. This metric is geodesically complete, manifestly symmetric between the two asymptotically flat regions ($r \\to \\pm\\infty$), and is a standard homework problem in graduate GR courses. Despite the simplicity of the metric, the Einstein tensor is nonzero and requires exotic matter as its source.",
+  "references": [
+    "morris1988",
+    "ellis1973",
+    "visser1995",
+    "misner1973"
+  ],
   "coordinates": [
     {
       "id": "spherical",
       "name": "Spherical",
-      "coords": ["t", "r", "\\theta", "\\phi"],
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
       "domains": [
         "t \\in (-\\infty, \\infty)",
         "r \\in (-\\infty, \\infty)",
@@ -19,14 +36,41 @@
         "\\phi \\in [0, 2\\pi)"
       ],
       "parameters": [
-        { "symbol": "\\ell", "description": "Throat radius (\\ell > 0)" }
+        {
+          "symbol": "\\ell",
+          "description": "Throat radius (\\ell > 0)"
+        }
       ],
       "line_element": "ds^2 = -c^2 dt^2 + dr^2 + (r^2 + \\ell^2)\\left(d\\theta^2 + \\sin^2\\theta\\, d\\phi^2\\right)",
       "metric_components": [
-        { "indices": ["t","t"],             "value": "-c^2" },
-        { "indices": ["r","r"],             "value": "1" },
-        { "indices": ["\\theta","\\theta"], "value": "r^2 + \\ell^2" },
-        { "indices": ["\\phi","\\phi"],     "value": "(r^2 + \\ell^2)\\sin^2\\theta" }
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2 + \\ell^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "(r^2 + \\ell^2)\\sin^2\\theta"
+        }
       ],
       "christoffel": {
         "default": "ull",
@@ -34,29 +78,155 @@
           "ull": {
             "note": "\\Gamma^\\mu_{\\nu\\rho}",
             "nonzero": [
-              { "indices": ["r",       "\\theta", "\\theta"], "value": "-r" },
-              { "indices": ["r",       "\\phi",   "\\phi"  ], "value": "-r\\sin^2\\theta" },
-              { "indices": ["\\theta", "r",       "\\theta"], "value": "\\frac{r}{r^2+\\ell^2}" },
-              { "indices": ["\\theta", "\\theta", "r"      ], "value": "\\frac{r}{r^2+\\ell^2}" },
-              { "indices": ["\\theta", "\\phi",   "\\phi"  ], "value": "-\\sin\\theta\\cos\\theta" },
-              { "indices": ["\\phi",   "r",       "\\phi"  ], "value": "\\frac{r}{r^2+\\ell^2}" },
-              { "indices": ["\\phi",   "\\phi",   "r"      ], "value": "\\frac{r}{r^2+\\ell^2}" },
-              { "indices": ["\\phi",   "\\theta", "\\phi"  ], "value": "\\cot\\theta" },
-              { "indices": ["\\phi",   "\\phi",   "\\theta"], "value": "\\cot\\theta" }
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\frac{r}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\frac{r}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\frac{r}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\frac{r}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
             ]
           },
           "lll": {
             "note": "\\Gamma_{\\mu\\nu\\rho}",
             "nonzero": [
-              { "indices": ["r",       "\\theta", "\\theta"], "value": "-r" },
-              { "indices": ["r",       "\\phi",   "\\phi"  ], "value": "-r\\sin^2\\theta" },
-              { "indices": ["\\theta", "r",       "\\theta"], "value": "r" },
-              { "indices": ["\\theta", "\\theta", "r"      ], "value": "r" },
-              { "indices": ["\\theta", "\\phi",   "\\phi"  ], "value": "-(r^2+\\ell^2)\\sin\\theta\\cos\\theta" },
-              { "indices": ["\\phi",   "r",       "\\phi"  ], "value": "r\\sin^2\\theta" },
-              { "indices": ["\\phi",   "\\phi",   "r"      ], "value": "r\\sin^2\\theta" },
-              { "indices": ["\\phi",   "\\theta", "\\phi"  ], "value": "(r^2+\\ell^2)\\sin\\theta\\cos\\theta" },
-              { "indices": ["\\phi",   "\\phi",   "\\theta"], "value": "(r^2+\\ell^2)\\sin\\theta\\cos\\theta" }
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-(r^2+\\ell^2)\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "(r^2+\\ell^2)\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "(r^2+\\ell^2)\\sin\\theta\\cos\\theta"
+              }
             ]
           }
         }
@@ -67,33 +237,209 @@
           "ulll": {
             "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
             "nonzero": [
-              { "indices": ["r",       "\\theta", "r",       "\\theta"], "value": "\\frac{-\\ell^2}{r^2+\\ell^2}" },
-              { "indices": ["r",       "\\theta", "\\theta", "r"      ], "value": "\\frac{\\ell^2}{r^2+\\ell^2}" },
-              { "indices": ["r",       "\\phi",   "r",       "\\phi"  ], "value": "\\frac{-\\ell^2\\sin^2\\theta}{r^2+\\ell^2}" },
-              { "indices": ["r",       "\\phi",   "\\phi",   "r"      ], "value": "\\frac{\\ell^2\\sin^2\\theta}{r^2+\\ell^2}" },
-              { "indices": ["\\theta", "r",       "r",       "\\theta"], "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["\\theta", "r",       "\\theta", "r"      ], "value": "\\frac{-\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["\\theta", "\\phi",   "\\theta", "\\phi"  ], "value": "\\frac{\\ell^2\\sin^2\\theta}{r^2+\\ell^2}" },
-              { "indices": ["\\theta", "\\phi",   "\\phi",   "\\theta"], "value": "\\frac{-\\ell^2\\sin^2\\theta}{r^2+\\ell^2}" },
-              { "indices": ["\\phi",   "r",       "r",       "\\phi"  ], "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["\\phi",   "r",       "\\phi",   "r"      ], "value": "\\frac{-\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["\\phi",   "\\theta", "\\theta", "\\phi"  ], "value": "\\frac{-\\ell^2}{r^2+\\ell^2}" },
-              { "indices": ["\\phi",   "\\theta", "\\phi",   "\\theta"], "value": "\\frac{\\ell^2}{r^2+\\ell^2}" }
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\frac{\\ell^2}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\frac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\frac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\frac{\\ell^2}{r^2+\\ell^2}"
+              }
             ]
           },
           "llll": {
             "note": "R_{\\mu\\nu\\rho\\sigma}",
             "nonzero": [
-              { "indices": ["r",       "\\theta", "r",       "\\theta"], "value": "\\frac{-\\ell^2}{r^2+\\ell^2}" },
-              { "indices": ["r",       "\\theta", "\\theta", "r"      ], "value": "\\frac{\\ell^2}{r^2+\\ell^2}" },
-              { "indices": ["r",       "\\phi",   "r",       "\\phi"  ], "value": "\\frac{-\\ell^2\\sin^2\\theta}{r^2+\\ell^2}" },
-              { "indices": ["r",       "\\phi",   "\\phi",   "r"      ], "value": "\\frac{\\ell^2\\sin^2\\theta}{r^2+\\ell^2}" },
-              { "indices": ["\\theta", "r",       "r",       "\\theta"], "value": "\\frac{\\ell^2}{r^2+\\ell^2}" },
-              { "indices": ["\\theta", "r",       "\\theta", "r"      ], "value": "\\frac{-\\ell^2}{r^2+\\ell^2}" },
-              { "indices": ["\\theta", "\\phi",   "\\theta", "\\phi"  ], "value": "\\ell^2\\sin^2\\theta" },
-              { "indices": ["\\theta", "\\phi",   "\\phi",   "\\theta"], "value": "-\\ell^2\\sin^2\\theta" },
-              { "indices": ["\\phi",   "r",       "r",       "\\phi"  ], "value": "\\frac{\\ell^2\\sin^2\\theta}{r^2+\\ell^2}" },
-              { "indices": ["\\phi",   "r",       "\\phi",   "r"      ], "value": "\\frac{-\\ell^2\\sin^2\\theta}{r^2+\\ell^2}" }
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\frac{\\ell^2}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\frac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\frac{\\ell^2}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\frac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              }
             ]
           }
         }
@@ -104,53 +450,143 @@
           "uu": {
             "note": "R^{\\mu\\nu}",
             "nonzero": [
-              { "indices": ["r", "r"], "value": "\\frac{-2\\ell^2}{(r^2+\\ell^2)^2}" }
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              }
             ]
           },
           "ul": {
             "note": "R^\\mu{}_\\nu",
             "nonzero": [
-              { "indices": ["r", "r"], "value": "\\frac{-2\\ell^2}{(r^2+\\ell^2)^2}" }
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              }
             ]
           },
           "ll": {
             "note": "R_{\\mu\\nu}",
             "nonzero": [
-              { "indices": ["r", "r"], "value": "\\frac{-2\\ell^2}{(r^2+\\ell^2)^2}" }
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              }
             ]
           }
         }
       },
-      "ricci_scalar": "R = \\frac{-2\\ell^2}{(r^2+\\ell^2)^2}",
-      "kretschmann": "K = R_{\\mu\\nu\\rho\\sigma}R^{\\mu\\nu\\rho\\sigma} = \\frac{12\\ell^4}{(r^2+\\ell^2)^4}",
+      "ricci_scalar": "R = 2\\frac{\\ell^2}{(r^2+\\ell^2)^2}",
+      "kretschmann": "K = 12\\frac{\\ell^4}{(r^2+\\ell^2)^4}",
       "einstein_tensor": {
         "default": "ll",
         "variants": {
           "uu": {
             "note": "G^{\\mu\\nu}",
             "nonzero": [
-              { "indices": ["t",       "t"      ], "value": "\\frac{\\ell^2}{c^2(r^2+\\ell^2)^2}" },
-              { "indices": ["r",       "r"      ], "value": "\\frac{-\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["\\theta", "\\theta"], "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["\\phi",   "\\phi"  ], "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2\\sin^2\\theta}" }
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\frac{\\ell^2}{(r^2+\\ell^2)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\frac{\\ell^2\\csc^2\\theta}{(r^2+\\ell^2)^3}"
+              }
             ]
           },
           "ul": {
             "note": "G^\\mu{}_\\nu",
             "nonzero": [
-              { "indices": ["t",       "t"      ], "value": "\\frac{-\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["r",       "r"      ], "value": "\\frac{-\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["\\theta", "\\theta"], "value": "\\frac{\\ell^2}{r^2+\\ell^2}" },
-              { "indices": ["\\phi",   "\\phi"  ], "value": "\\frac{\\ell^2}{r^2+\\ell^2}" }
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              }
             ]
           },
           "ll": {
             "note": "G_{\\mu\\nu}",
             "nonzero": [
-              { "indices": ["t",       "t"      ], "value": "\\frac{-c^2\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["r",       "r"      ], "value": "\\frac{-\\ell^2}{(r^2+\\ell^2)^2}" },
-              { "indices": ["\\theta", "\\theta"], "value": "\\frac{\\ell^2}{r^2+\\ell^2}" },
-              { "indices": ["\\phi",   "\\phi"  ], "value": "\\frac{\\ell^2\\sin^2\\theta}{r^2+\\ell^2}" }
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\frac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              }
             ]
           }
         }
@@ -161,67 +597,363 @@
           "ulll": {
             "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
             "nonzero": [
-              { "indices": ["t",       "r",       "t",       "r"      ], "value": "\\frac{2\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["t",       "r",       "r",       "t"      ], "value": "\\frac{-2\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["t",       "\\theta", "t",       "\\theta"], "value": "\\frac{-\\ell^2}{3(r^2+\\ell^2)}" },
-              { "indices": ["t",       "\\theta", "\\theta", "t"      ], "value": "\\frac{\\ell^2}{3(r^2+\\ell^2)}" },
-              { "indices": ["t",       "\\phi",   "t",       "\\phi"  ], "value": "\\frac{-\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["t",       "\\phi",   "\\phi",   "t"      ], "value": "\\frac{\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["r",       "t",       "t",       "r"      ], "value": "\\frac{2\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["r",       "t",       "r",       "t"      ], "value": "\\frac{-2\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["r",       "\\theta", "r",       "\\theta"], "value": "\\frac{-\\ell^2}{3(r^2+\\ell^2)}" },
-              { "indices": ["r",       "\\theta", "\\theta", "r"      ], "value": "\\frac{\\ell^2}{3(r^2+\\ell^2)}" },
-              { "indices": ["r",       "\\phi",   "r",       "\\phi"  ], "value": "\\frac{-\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["r",       "\\phi",   "\\phi",   "r"      ], "value": "\\frac{\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["\\theta", "t",       "t",       "\\theta"], "value": "\\frac{-\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["\\theta", "t",       "\\theta", "t"      ], "value": "\\frac{\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["\\theta", "r",       "r",       "\\theta"], "value": "\\frac{\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["\\theta", "r",       "\\theta", "r"      ], "value": "\\frac{-\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["\\theta", "\\phi",   "\\theta", "\\phi"  ], "value": "\\frac{2\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["\\theta", "\\phi",   "\\phi",   "\\theta"], "value": "\\frac{-2\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["\\phi",   "t",       "t",       "\\phi"  ], "value": "\\frac{-\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["\\phi",   "t",       "\\phi",   "t"      ], "value": "\\frac{\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["\\phi",   "r",       "r",       "\\phi"  ], "value": "\\frac{\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["\\phi",   "r",       "\\phi",   "r"      ], "value": "\\frac{-\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["\\phi",   "\\theta", "\\theta", "\\phi"  ], "value": "\\frac{-2\\ell^2}{3(r^2+\\ell^2)}" },
-              { "indices": ["\\phi",   "\\theta", "\\phi",   "\\theta"], "value": "\\frac{2\\ell^2}{3(r^2+\\ell^2)}" }
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              }
             ]
           },
           "llll": {
             "note": "C_{\\mu\\nu\\rho\\sigma}",
             "nonzero": [
-              { "indices": ["t",       "r",       "t",       "r"      ], "value": "\\frac{-2\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["t",       "r",       "r",       "t"      ], "value": "\\frac{2\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["t",       "\\theta", "t",       "\\theta"], "value": "\\frac{\\ell^2}{3(r^2+\\ell^2)}" },
-              { "indices": ["t",       "\\theta", "\\theta", "t"      ], "value": "\\frac{-\\ell^2}{3(r^2+\\ell^2)}" },
-              { "indices": ["t",       "\\phi",   "t",       "\\phi"  ], "value": "\\frac{\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["t",       "\\phi",   "\\phi",   "t"      ], "value": "\\frac{-\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["r",       "t",       "t",       "r"      ], "value": "\\frac{2\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["r",       "t",       "r",       "t"      ], "value": "\\frac{-2\\ell^2}{3(r^2+\\ell^2)^2}" },
-              { "indices": ["r",       "\\theta", "r",       "\\theta"], "value": "\\frac{-\\ell^2}{3(r^2+\\ell^2)}" },
-              { "indices": ["r",       "\\theta", "\\theta", "r"      ], "value": "\\frac{\\ell^2}{3(r^2+\\ell^2)}" },
-              { "indices": ["r",       "\\phi",   "r",       "\\phi"  ], "value": "\\frac{-\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["r",       "\\phi",   "\\phi",   "r"      ], "value": "\\frac{\\ell^2\\sin^2\\theta}{3(r^2+\\ell^2)}" },
-              { "indices": ["\\theta", "\\phi",   "\\theta", "\\phi"  ], "value": "\\frac{2\\ell^2\\sin^2\\theta}{3}" },
-              { "indices": ["\\theta", "\\phi",   "\\phi",   "\\theta"], "value": "\\frac{-2\\ell^2\\sin^2\\theta}{3}" }
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\frac{2}{3}\\frac{\\ell^2}{(r^2+\\ell^2)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\frac{1}{3}\\frac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\frac{2}{3}\\ell^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\frac{2}{3}\\ell^2\\sin^2\\theta"
+              }
             ]
           }
         }
       },
-      "geodesics": {
-        "massive": [
-          "\\ddot{t} = 0",
-          "\\ddot{r} = -r\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2",
-          "\\ddot{\\theta} = -\\frac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
-          "\\ddot{\\phi} = -\\frac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
-        ],
-        "massless": [
-          "\\ddot{t} = 0",
-          "\\ddot{r} = -r\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2",
-          "\\ddot{\\theta} = -\\frac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
-          "\\ddot{\\phi} = -\\frac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
-        ]
-      }
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{r} = -r\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2",
+        "\\ddot{\\theta} = -\\frac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
+        "\\ddot{\\phi} = -\\frac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
+      ]
     }
   ]
 }

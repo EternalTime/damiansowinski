@@ -58,7 +58,9 @@
       // Will be replaced by Lunr.js index later
       var METRIC_INDEX = [
         { id: 'minkowski',    name: 'Minkowski',    tags: ['flat', 'special relativity', 'vacuum'] },
-        { id: 'ellis_bronnikov', name: 'Ellis-Bronnikov', tags: ['wormhole', 'exotic matter', 'traversable'] }
+        { id: 'ellis_bronnikov', name: 'Ellis-Bronnikov', tags: ['wormhole', 'exotic matter', 'traversable'] },
+        { id: 'frw', name: 'FLRW', tags: ['cosmology', 'expanding universe', 'homogeneous', 'isotropic', 'FLRW'] },
+        { id: 'schwarzschild', name: 'Schwarzschild', tags: ['vacuum', 'static', 'spherically symmetric', 'black hole', 'exact solution'] }
       ];
 
       var input   = document.getElementById('mfs-search-input');
@@ -661,6 +663,9 @@
           .replace(/\\`([aeiouAEIOU])/g, function(_, c) {
             return { a:'à',e:'è',i:'ì',o:'ò',u:'ù',A:'À',E:'È',I:'Ì',O:'Ò',U:'Ù' }[c] || c;
           })
+          .replace(/\\\^([aeiouAEIOU])/g, function(_, c) {
+            return { a:'â',e:'ê',i:'î',o:'ô',u:'û',A:'Â',E:'Ê',I:'Î',O:'Ô',U:'Û' }[c] || c;
+          })
           .replace(/\\~([nNaAoO])/g, function(_, c) {
             return { n:'ñ',N:'Ñ',a:'ã',A:'Ã',o:'õ',O:'Õ' }[c] || c;
           })
@@ -705,44 +710,76 @@
         return html || entry;
       }
 
-      function renderComponents(items, upperLabel, convention) {
-        if (!items || items.length === 0) return '<span class="mfs-zero">0 (all zero)</span>';
-        // convention: string like 'ull', 'ulll', 'll', 'llll'
-        // u = superscript, l = subscript
-        var conv = (convention || 'ull').toLowerCase();
-        return items.map(function(c) {
-          var idxStr = '';
-          var state  = null;  // 'u' or 'l'
-          for (var k = 0; k < conv.length; k++) {
-            var ch  = conv[k];
-            var idx = c.indices[k] || '';
-            if (ch === 'u') {
-              if (state === 'l') { idxStr += '}'; state = null; }
-              if (state !== 'u') { idxStr += '^{'; state = 'u'; }
-              else { idxStr += ' '; }
-              idxStr += idx;
+      function makeIdxStr(c, conv) {
+        var idxStr = '';
+        var state  = null;
+        for (var k = 0; k < conv.length; k++) {
+          var ch  = conv[k];
+          var idx = c.indices[k] || '';
+          if (ch === 'u') {
+            if (state === 'l') { idxStr += '}'; state = null; }
+            if (state !== 'u') { idxStr += '^{'; state = 'u'; }
+            else { idxStr += ' '; }
+            idxStr += idx;
+          } else {
+            if (state === 'u') { idxStr += '}'; state = null; }
+            if (state !== 'l') {
+              idxStr += (idxStr.length > 0 ? '{}' : '') + '_{';
+              state = 'l';
             } else {
-              if (state === 'u') { idxStr += '}'; state = null; }
-              if (state !== 'l') {
-                // empty group separator only if something precedes (avoids leading {})
-                idxStr += (idxStr.length > 0 ? '{}' : '') + '_{';
-                state = 'l';
-              } else {
-                idxStr += ' ';  // space between adjacent subscript tokens prevents e.g. \thetar
-              }
-              idxStr += idx;
+              idxStr += ' ';
             }
+            idxStr += idx;
           }
-          // close final open brace
-          if (state === 'u') idxStr += '}';
-          if (state === 'l') idxStr += '}';
-          return '<div class="mfs-component">' + tex(upperLabel + idxStr + ' = ' + c.value) + '</div>';
+        }
+        if (state === 'u') idxStr += '}';
+        if (state === 'l') idxStr += '}';
+        return idxStr;
+      }
+
+      function negateLatex(v) {
+        // Return the additive negation of a LaTeX value string
+        if (v.charAt(0) === '-') return v.slice(1);
+        return '-' + v;
+      }
+
+      function renderComponents(items, upperLabel, convention) {
+        if (!items || items.length === 0) return '<span class="mfs-zero">all vanish</span>';
+        var conv = (convention || 'ull').toLowerCase();
+
+        // Group items by value, also merging negatives into existing groups
+        var groups = [];
+        var seen   = {};  // value -> group index
+        items.forEach(function(c) {
+          var v    = c.value;
+          var negv = negateLatex(v);
+          if (seen[v] !== undefined) {
+            groups[seen[v]].items.push({ c: c, negated: false });
+          } else if (seen[negv] !== undefined) {
+            groups[seen[negv]].items.push({ c: c, negated: true });
+          } else {
+            seen[v] = groups.length;
+            groups.push({ value: v, items: [{ c: c, negated: false }] });
+          }
+        });
+
+        return groups.map(function(g) {
+          var lhs = g.items.map(function(entry) {
+            var label = upperLabel + makeIdxStr(entry.c, conv);
+            return entry.negated ? '-' + label : label;
+          }).join(' = ');
+          return '<div class="mfs-component">' + tex(lhs + ' = ' + g.value) + '</div>';
         }).join('');
       }
 
       function renderScalar(str) {
+        // If the scalar is zero (e.g. "R = 0"), show "vanishing" instead
+        if (/=\s*0\s*$/.test(str.trim())) {
+          return '<span class="mfs-zero">vanishing</span>';
+        }
         return '<div class="mfs-component">' + tex(str) + '</div>';
       }
+
 
       // Render the index position widget for a given convention string (e.g. 'ull').
       // Only the first index is togglable; the rest are fixed lower.
@@ -894,7 +931,7 @@
             ].join('');
           })(),
 
-          (function() {
+          coord.weyl_tensor ? (function() {
             var wConv = coord.weyl_tensor.default;
             var wV    = coord.weyl_tensor.variants[wConv];
             return [
@@ -908,14 +945,16 @@
                 '</div>',
               '</div>'
             ].join('');
-          })(),
+          })() : '',
 
-          '<div class="mfs-section">',
-            '<div class="mfs-section-label">Geodesics</div>',
-            (coord.geodesics.massive || []).map(function(eq) {
-              return '<div class="mfs-component">' + tex(eq) + '</div>';
-            }).join(''),
-          '</div>',
+          coord.geodesics ? [
+            '<div class="mfs-section">',
+              '<div class="mfs-section-label">Geodesics</div>',
+              (Array.isArray(coord.geodesics) ? coord.geodesics : (coord.geodesics.massive || [])).map(function(eq) {
+                return '<div class="mfs-component">' + tex(eq) + '</div>';
+              }).join(''),
+            '</div>'
+          ].join('') : '',
 
           (data.references && data.references.length) ? [
             '<div class="mfs-section mfs-references">',
@@ -931,6 +970,31 @@
 
         contentPanel.innerHTML = html;
 
+        // Force column reflow after MathJax typesetting
+        function reflowColumns() {
+          var compIds = ['mfs-comp-christoffel','mfs-comp-riemann','mfs-comp-ricci','mfs-comp-einstein','mfs-comp-weyl'];
+          compIds.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.style.columnCount = 'auto';
+            el.style.columnWidth = '';
+            void el.offsetWidth;
+            // Measure widest component using getBoundingClientRect in single-col mode
+            el.style.columnCount = '1';
+            void el.offsetWidth;
+            var maxW = 0;
+            el.querySelectorAll('.mfs-component').forEach(function(child) {
+              var r = child.getBoundingClientRect();
+              if (r.width > maxW) maxW = r.width;
+            });
+            if (maxW < 50) maxW = 400; // fallback
+            var panelW = el.getBoundingClientRect().width;
+            var gap = 24;
+            var count = Math.max(1, Math.floor((panelW + gap) / (maxW + gap)));
+            el.style.columnCount = String(count);
+          });
+        }
+
         // Wire coordinate selector
         document.getElementById('mfs-coord-select').addEventListener('change', function() {
           renderMetric(data, parseInt(this.value));
@@ -942,7 +1006,7 @@
           riemann:     { label: 'R',       variants: coord.riemann.variants },
           ricci:       { label: 'R',       variants: coord.ricci_tensor.variants },
           einstein:    { label: 'G',       variants: coord.einstein_tensor.variants },
-          weyl:        { label: 'C',       variants: coord.weyl_tensor.variants }
+          weyl:        coord.weyl_tensor ? { label: 'C', variants: coord.weyl_tensor.variants } : null
         };
         contentPanel.querySelectorAll('.mfs-idx-widget').forEach(function(widget) {
           var tensorId = widget.dataset.tensor;
@@ -972,7 +1036,11 @@
               var compEl = document.getElementById('mfs-comp-' + tensorId);
               if (compEl) {
                 compEl.innerHTML = renderComponents(meta.variants[canonical].nonzero, meta.label, canonical);
-                if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([compEl]);
+                if (window.MathJax && MathJax.typesetPromise) {
+                  MathJax.typesetPromise([compEl]).then(reflowColumns);
+                } else {
+                  reflowColumns();
+                }
               }
             });
           });
@@ -981,15 +1049,40 @@
 
         // Typeset MathJax
         if (window.MathJax && MathJax.typesetPromise) {
-          MathJax.typesetPromise([contentPanel]);
+          MathJax.typesetPromise([contentPanel]).then(reflowColumns);
+        } else {
+          reflowColumns();
         }
       }
 
       // Expose so search panel can call it
       window._mfsShowMetric = function(id) {
-        fetchBib(function() {
-          fetchMetric(id, function(data) { renderMetric(data, 0); });
-        });
+        var el = document.getElementById('mfs-content-panel');
+        var SLIDE_DUR = 350;
+        var isVisible = el && (el.style.transform === 'translateX(0px)' || el.style.transform === 'translateX(0)');
+        if (isVisible) {
+          el.style.transition    = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.55, 0.06, 0.68, 0.19)';
+          el.style.transform     = 'translateX(100%)';
+          el.style.pointerEvents = 'none';
+          setTimeout(function() {
+            fetchBib(function() {
+              fetchMetric(id, function(data) {
+                renderMetric(data, 0);
+                el.scrollTop = 0;
+                el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                el.style.transform  = 'translateX(0)';
+                setTimeout(function() {
+                  el.style.pointerEvents = 'all';
+                  el.style.transition    = '';
+                }, SLIDE_DUR);
+              });
+            });
+          }, SLIDE_DUR);
+        } else {
+          fetchBib(function() {
+            fetchMetric(id, function(data) { renderMetric(data, 0); });
+          });
+        }
       };
 
     })();
@@ -1050,7 +1143,6 @@
     #mfs-comp-ricci,
     #mfs-comp-einstein,
     #mfs-comp-weyl {
-      column-width: 280px;
       column-gap: 1.5em;
     }
     #mfs-comp-christoffel .mfs-component,

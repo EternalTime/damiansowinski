@@ -326,7 +326,7 @@
     const pb = document.getElementById('oh-pause-btn');
     if (pb) {
       pb.textContent = running ? 'Pause' : 'Resume';
-      pb.classList.toggle('active-pink', !running);
+      pb.classList.toggle('active', !running);
     }
   };
 
