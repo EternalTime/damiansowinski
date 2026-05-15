@@ -86,14 +86,14 @@ const MU0         = 0.1;
 const S_MAX       = 1.0;
 const S_REP       = 0.8;
 const R_COL       = 1.0;
-const DT          = 0.02;
+const DT          = 0.002;
 const GAMMA_DECAY = 0.1;
 const TAU_E       = 1.0 / GAMMA_DECAY;
 // N_A_MAX = Γ·DOMAIN³/µ₀ — constant, independent of Ξ (eq. 7)
 const N_A_MAX = Math.round(GAMMA * DOMAIN ** 3 / MU0);
 
 let R_sense = 6.0, vel = 20.0, sigma = 0.1, Xi = 0.5;
-let epsilon, stepsPerFrame = 1;
+let epsilon, stepsPerFrame = 5;
 
 const L_A = 2 * R_COL;  // agent length scale = diameter
 
@@ -292,7 +292,7 @@ let senseCenterBuf = null;                       // per-agent centers+radii
 let agentInstBuf = null;                         // per-agent: x,y,z,radius (4 floats)
 
 /* Orbit state */
-let orbit = { theta: 0.6, phi: 1.1, dist: 180, dragging: false, lastX: 0, lastY: 0 };
+let orbit = { theta: 0.6, phi: 1.1, dist: 90, dragging: false, lastX: 0, lastY: 0 };
 
 /* ── Shader sources ── */
 const VS_SPHERE = `
@@ -305,10 +305,12 @@ uniform mat4 uMVP;
 uniform vec2 uViewport;
 varying vec3 vColor;
 varying vec3 vColorInner;
+varying float vEyeDist;
 void main() {
   vec4 clip = uMVP * vec4(aOffset, 1.0);
   gl_Position = clip;
   float eyeDist = clip.w;
+  vEyeDist = eyeDist;
   gl_PointSize = clamp(aSize * uViewport.y / eyeDist, 2.0, 48.0);
   vColor = aColor;
   vColorInner = aColorInner;
@@ -318,16 +320,18 @@ const FS_SPHERE = `
 precision mediump float;
 varying vec3 vColor;
 varying vec3 vColorInner;
+varying float vEyeDist;
+uniform float uNear;
+uniform float uFar;
 void main() {
   vec2 uv = gl_PointCoord * 2.0 - 1.0;
   float r2 = dot(uv, uv);
   if (r2 > 1.0) discard;
   float r = sqrt(r2);
-  float glow = 1.0 - r;
-  // center: vColorInner (green-dark), edge: vColor (green-light)
   vec3 col = mix(vColorInner, vColor, r * r);
   float alpha = smoothstep(1.0, 0.5, r);
-  gl_FragColor = vec4(col, alpha);
+  float fog = 1.0 - clamp((vEyeDist - uNear) / (uFar - uNear), 0.0, 1.0);
+  gl_FragColor = vec4(col, alpha * fog);
 }`;
 
 const VS_LINE = `
@@ -368,9 +372,12 @@ attribute float aRadius;   // world-space radius
 uniform mat4 uMVP;
 uniform vec3 uEye;
 varying float vRim;
+varying float vEyeDist;
 void main() {
   vec3 worldPos = aCenter + aPos * aRadius;
-  gl_Position = uMVP * vec4(worldPos, 1.0);
+  vec4 clip = uMVP * vec4(worldPos, 1.0);
+  gl_Position = clip;
+  vEyeDist = clip.w;
   vec3 toEye = normalize(uEye - aCenter);
   vRim = 1.0 - abs(dot(aPos, toEye));
 }`;
@@ -379,10 +386,14 @@ const FS_AGENT = `
 precision mediump float;
 uniform vec3 uColorFace;
 uniform vec3 uColorRim;
+uniform float uNear;
+uniform float uFar;
 varying float vRim;
+varying float vEyeDist;
 void main() {
   vec3 col = mix(uColorFace, uColorRim, pow(vRim, 2.0));
-  gl_FragColor = vec4(col, 1.0);
+  float fog = 1.0 - clamp((vEyeDist - uNear) / (uFar - uNear), 0.0, 1.0);
+  gl_FragColor = vec4(col, fog);
 }`;
 
 /* ── Icosphere builder (1 subdivision) ── */
@@ -548,6 +559,8 @@ function drawScene() {
   gl.useProgram(progSphere);
   gl.uniformMatrix4fv(gl.getUniformLocation(progSphere, 'uMVP'), false, mvp);
   gl.uniform2f(gl.getUniformLocation(progSphere, 'uViewport'), W, H);
+  gl.uniform1f(gl.getUniformLocation(progSphere, 'uNear'), orbit.dist * 0.3);
+  gl.uniform1f(gl.getUniformLocation(progSphere, 'uFar'),  orbit.dist * 1.5);
   const aPosS      = gl.getAttribLocation(progSphere, 'aOffset');
   const aSizeS     = gl.getAttribLocation(progSphere, 'aSize');
   const aColS      = gl.getAttribLocation(progSphere, 'aColor');
@@ -597,6 +610,8 @@ function drawScene() {
     gl.uniform3fv(gl.getUniformLocation(progAgent, 'uEye'), eye);
     gl.uniform3f(gl.getUniformLocation(progAgent, 'uColorFace'), ...C.pinkLight);
     gl.uniform3f(gl.getUniformLocation(progAgent, 'uColorRim'),  ...C.blueMid);
+    gl.uniform1f(gl.getUniformLocation(progAgent, 'uNear'), orbit.dist * 0.3);
+    gl.uniform1f(gl.getUniformLocation(progAgent, 'uFar'),  orbit.dist * 1.5);
 
     const aPosAg  = gl.getAttribLocation(progAgent, 'aPos');
     const aCenAg  = gl.getAttribLocation(progAgent, 'aCenter');
@@ -821,7 +836,7 @@ function attachOrbitControls(canvas) {
     orbit.lastY = e.clientY;
   });
   canvas.addEventListener('wheel', e => {
-    orbit.dist = Math.max(50, Math.min(400, orbit.dist + e.deltaY * 0.3));
+    orbit.dist = Math.max(50, Math.min(120, orbit.dist + e.deltaY * 0.3));
     e.preventDefault();
   }, { passive: false });
   // Touch
@@ -851,7 +866,7 @@ function attachOrbitControls(canvas) {
       const dx = e.touches[0].clientX - e.touches[1].clientX;
       const dy = e.touches[0].clientY - e.touches[1].clientY;
       const d = Math.sqrt(dx*dx+dy*dy);
-      orbit.dist = Math.max(50, Math.min(400, orbit.dist - (d - lastTouchDist) * 0.5));
+      orbit.dist = Math.max(50, Math.min(120, orbit.dist - (d - lastTouchDist) * 0.5));
       lastTouchDist = d;
     }
     e.preventDefault();

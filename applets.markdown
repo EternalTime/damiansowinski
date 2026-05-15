@@ -67,6 +67,7 @@ We can use explore unknown worlds obeying strange rules, limited solely by our i
 <button class="applet-launch-btn" onclick="shoOpen(); this.blur()">SHO</button>
 <span class="wip-wrap"><button class="applet-launch-btn" onclick="femOpen(); this.blur()">Elastic Cylinder</button><span class="wip-label">Under Construction</span></span>
 <button class="applet-launch-btn" onclick="tbOpen(); this.blur()">Three-Body Problem</button>
+<span class="wip-wrap"><button class="applet-launch-btn" onclick="nbOpen(); this.blur()">N-Body Gravity</button><span class="wip-label">Under Construction</span></span>
 
 ---
 

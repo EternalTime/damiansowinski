@@ -113,7 +113,7 @@
   const WING = 3.5;
 
   function render() {
-    ctx.fillStyle = _c('--bg-dark');
+    ctx.fillStyle = _c('--black');
     ctx.fillRect(0, 0, W, H);
     for (let i = 0; i < N; i++) {
       const x = px[i], y = py[i], a = th[i];

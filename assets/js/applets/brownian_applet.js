@@ -310,7 +310,7 @@
 
   /* ── Render ── */
   function render() {
-    ctx.fillStyle = _c('--bg-deep');
+    ctx.fillStyle = _c('--black');
     ctx.fillRect(0, 0, L, L);
 
     /* Trail */
