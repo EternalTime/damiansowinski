@@ -11,7 +11,7 @@
   ],
   "signature": "(-,+,+,+)",
   "convention": "Coordinates are cosmic time $t$ and comoving radial distance $r$, with $\\theta \\in [0,\\pi]$ and $\\phi \\in [0,2\\pi)$. The scale factor $a(t) > 0$ describes the expansion of the universe. The curvature parameter $k \\in \\{-1, 0, +1\\}$ encodes the spatial geometry: $k=-1$ (open), $k=0$ (flat), $k=+1$ (closed). Dots denote derivatives with respect to $t$.",
-  "history": "The FRW metric (also called the FLRW metric, after Friedmann, Lemaître, Robertson, and Walker) was developed in the 1920s and 1930s as the unique spacetime consistent with the cosmological principle — the assumption that the universe is spatially homogeneous and isotropic on large scales. Alexander Friedmann derived the dynamical equations governing $a(t)$ in 1922 and 1924. Georges Lemaître independently obtained similar results in 1927 and was the first to connect the expanding solution to the recession of galaxies. Howard Robertson and Arthur Walker placed the metric on a rigorous geometric footing in the 1930s, proving it is the most general metric compatible with spatial homogeneity and isotropy.¶The curvature parameter $k$ encodes the global geometry of the spatial sections. When $k=0$ the spatial slices are flat Euclidean spaces; when $k=+1$ they are positively curved and closed, with the topology of a 3-sphere; when $k=-1$ they are negatively curved and open, with hyperbolic geometry. The value of $k$ is an empirical question, not fixed by the field equations alone, and is constrained by cosmological observations. Current measurements — particularly of the cosmic microwave background — strongly favor $k=0$, indicating that the universe is spatially flat to high precision.¶The Einstein field equations applied to this metric yield the Friedmann equations: $\\left(\\frac{\\dot{a}}{a}\\right)^2 = \\frac{8\\pi G}{3}\\rho - \\frac{k}{a^2} + \\frac{\\Lambda}{3}$ and $\\frac{\\ddot{a}}{a} = -\\frac{4\\pi G}{3}(\\rho + 3p) + \\frac{\\Lambda}{3}$. These govern the evolution of the universe given its matter and energy content. The FRW metric is the foundation of modern physical cosmology and underlies the standard $\\Lambda$CDM model.",
+  "history": "The FRW metric (also called the FLRW metric, after Friedmann, Lemaître, Robertson, and Walker) was developed in the 1920s and 1930s as the unique spacetime consistent with the cosmological principle — the assumption that the universe is spatially homogeneous and isotropic on large scales. Alexander Friedmann derived the dynamical equations governing $a(t)$ in 1922 and 1924. Georges Lemaître independently obtained similar results in 1927 and was the first to connect the expanding solution to the recession of galaxies. Howard Robertson and Arthur Walker placed the metric on a rigorous geometric footing in the 1930s, proving it is the most general metric compatible with spatial homogeneity and isotropy.¶The curvature parameter $k$ encodes the global geometry of the spatial sections. When $k=0$ the spatial slices are flat Euclidean spaces; when $k=+1$ they are positively curved and closed, with the topology of a 3-sphere; when $k=-1$ they are negatively curved and open, with hyperbolic geometry. The value of $k$ is an empirical question, not fixed by the field equations alone, and is constrained by cosmological observations. Current measurements — particularly of the cosmic microwave background — strongly favor $k=0$, indicating that the universe is spatially flat to high precision.¶The Einstein field equations applied to this metric yield the Friedmann equations: $\\left(\\dfrac{\\dot{a}}{a}\\right)^2 = \\dfrac{8\\pi G}{3}\\rho - \\dfrac{k}{a^2} + \\dfrac{\\Lambda}{3}$ and $\\dfrac{\\ddot{a}}{a} = -\\dfrac{4\\pi G}{3}(\\rho + 3p) + \\dfrac{\\Lambda}{3}$. These govern the evolution of the universe given its matter and energy content. The FRW metric is the foundation of modern physical cosmology and underlies the standard $\\Lambda$CDM model.",
   "references": [
     "friedmann1922",
     "lemaitre1927",
@@ -46,7 +46,7 @@
           "description": "Spatial curvature ($k \\in \\{-1,0,+1\\}$)"
         }
       ],
-      "line_element": "ds^2 = -c^2 dt^2 + a^2\\left(\\frac{dr^2}{1-kr^2} + r^2 d\\theta^2 + r^2\\sin^2\\theta\\, d\\phi^2\\right)",
+      "line_element": "ds^2 = -c^2 dt^2 + a^2\\left(\\dfrac{dr^2}{1-kr^2} + r^2 d\\theta^2 + r^2\\sin^2\\theta\\, d\\phi^2\\right)",
       "metric_components": [
         {
           "indices": [
@@ -60,7 +60,7 @@
             "r",
             "r"
           ],
-          "value": "\\frac{a^2}{1-kr^2}"
+          "value": "\\dfrac{a^2}{1-kr^2}"
         },
         {
           "indices": [
@@ -89,7 +89,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\frac{a\\,\\dot{a}}{1-kr^2}"
+                "value": "\\dfrac{a\\,\\dot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -113,7 +113,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\frac{\\dot{a}}{a}"
+                "value": "\\dfrac{\\dot{a}}{a}"
               },
               {
                 "indices": [
@@ -121,7 +121,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\frac{\\dot{a}}{a}"
+                "value": "\\dfrac{\\dot{a}}{a}"
               },
               {
                 "indices": [
@@ -129,7 +129,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\frac{kr}{1-kr^2}"
+                "value": "\\dfrac{kr}{1-kr^2}"
               },
               {
                 "indices": [
@@ -153,7 +153,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "\\frac{\\dot{a}}{a}"
+                "value": "\\dfrac{\\dot{a}}{a}"
               },
               {
                 "indices": [
@@ -161,7 +161,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "\\frac{\\dot{a}}{a}"
+                "value": "\\dfrac{\\dot{a}}{a}"
               },
               {
                 "indices": [
@@ -169,7 +169,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -177,7 +177,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -193,7 +193,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "\\frac{\\dot{a}}{a}"
+                "value": "\\dfrac{\\dot{a}}{a}"
               },
               {
                 "indices": [
@@ -201,7 +201,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "\\frac{\\dot{a}}{a}"
+                "value": "\\dfrac{\\dot{a}}{a}"
               },
               {
                 "indices": [
@@ -209,7 +209,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -217,7 +217,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -246,7 +246,7 @@
                   "r",
                   "r"
                 ],
-                "value": "-\\frac{a\\,\\dot{a}}{1-kr^2}"
+                "value": "-\\dfrac{a\\,\\dot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -270,7 +270,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\frac{a\\,\\dot{a}}{1-kr^2}"
+                "value": "\\dfrac{a\\,\\dot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -278,7 +278,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\frac{a\\,\\dot{a}}{1-kr^2}"
+                "value": "\\dfrac{a\\,\\dot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -286,7 +286,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\frac{kr\\,a^2}{(kr^2-1)^2}"
+                "value": "\\dfrac{kr\\,a^2}{(kr^2-1)^2}"
               },
               {
                 "indices": [
@@ -409,7 +409,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "-\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -418,7 +418,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -463,7 +463,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -472,7 +472,7 @@
                   "r",
                   "t"
                 ],
-                "value": "-\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "-\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -535,7 +535,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "-\\frac{\\dot{a}^2+k}{1-kr^2}"
+                "value": "-\\dfrac{\\dot{a}^2+k}{1-kr^2}"
               },
               {
                 "indices": [
@@ -544,7 +544,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\frac{\\dot{a}^2+k}{1-kr^2}"
+                "value": "\\dfrac{\\dot{a}^2+k}{1-kr^2}"
               },
               {
                 "indices": [
@@ -589,7 +589,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "-\\frac{\\dot{a}^2+k}{1-kr^2}\\sin^2\\theta"
+                "value": "-\\dfrac{\\dot{a}^2+k}{1-kr^2}\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -598,7 +598,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\frac{\\dot{a}^2+k}{1-kr^2}\\sin^2\\theta"
+                "value": "\\dfrac{\\dot{a}^2+k}{1-kr^2}\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -630,7 +630,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -639,7 +639,7 @@
                   "r",
                   "t"
                 ],
-                "value": "-\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "-\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": [
@@ -684,7 +684,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "-\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
+                "value": "-\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
               },
               {
                 "indices": [
@@ -693,7 +693,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
+                "value": "\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
               },
               {
                 "indices": [
@@ -702,7 +702,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "-\\frac{r^2a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
+                "value": "-\\dfrac{r^2a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -711,7 +711,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\frac{r^2a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
+                "value": "\\dfrac{r^2a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -746,14 +746,14 @@
                   "t",
                   "t"
                 ],
-                "value": "3\\frac{\\ddot{a}}{a}"
+                "value": "3\\dfrac{\\ddot{a}}{a}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\frac{a\\ddot{a}+2(\\dot{a}^2+k)}{1-kr^2}"
+                "value": "-\\dfrac{a\\ddot{a}+2(\\dot{a}^2+k)}{1-kr^2}"
               },
               {
                 "indices": [
@@ -779,28 +779,28 @@
                   "t",
                   "t"
                 ],
-                "value": "-3\\frac{\\ddot{a}}{a}"
+                "value": "-3\\dfrac{\\ddot{a}}{a}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\left(\\frac{\\ddot{a}}{a}+2\\frac{\\dot{a}^2}{a^2}+2\\frac{k}{a^2}\\right)"
+                "value": "-\\left(\\dfrac{\\ddot{a}}{a}+2\\dfrac{\\dot{a}^2}{a^2}+2\\dfrac{k}{a^2}\\right)"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\left(\\frac{\\ddot{a}}{a}+2\\frac{\\dot{a}^2}{a^2}+2\\frac{k}{a^2}\\right)"
+                "value": "-\\left(\\dfrac{\\ddot{a}}{a}+2\\dfrac{\\dot{a}^2}{a^2}+2\\dfrac{k}{a^2}\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\left(\\frac{\\ddot{a}}{a}+2\\frac{\\dot{a}^2}{a^2}+2\\frac{k}{a^2}\\right)"
+                "value": "-\\left(\\dfrac{\\ddot{a}}{a}+2\\dfrac{\\dot{a}^2}{a^2}+2\\dfrac{k}{a^2}\\right)"
               }
             ]
           },
@@ -812,35 +812,35 @@
                   "t",
                   "t"
                 ],
-                "value": "3\\frac{\\ddot{a}}{a}"
+                "value": "3\\dfrac{\\ddot{a}}{a}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\frac{a\\ddot{a}+2(\\dot{a}^2+k)}{(1-kr^2)a^4}"
+                "value": "-\\dfrac{a\\ddot{a}+2(\\dot{a}^2+k)}{(1-kr^2)a^4}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\frac{1}{r^2}\\left(\\frac{\\ddot{a}}{a^3}+2\\frac{\\dot{a}^2}{a^4}+2\\frac{k}{a^4}\\right)"
+                "value": "-\\dfrac{1}{r^2}\\left(\\dfrac{\\ddot{a}}{a^3}+2\\dfrac{\\dot{a}^2}{a^4}+2\\dfrac{k}{a^4}\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\frac{\\csc^2\\theta}{r^2}\\left(\\frac{\\ddot{a}}{a^3}+2\\frac{\\dot{a}^2}{a^4}+2\\frac{k}{a^4}\\right)"
+                "value": "-\\dfrac{\\csc^2\\theta}{r^2}\\left(\\dfrac{\\ddot{a}}{a^3}+2\\dfrac{\\dot{a}^2}{a^4}+2\\dfrac{k}{a^4}\\right)"
               }
             ]
           }
         }
       },
-      "ricci_scalar": "R = -6\\left(\\frac{\\ddot{a}}{a}+\\frac{\\dot{a}^2}{a^2}+\\frac{k}{a^2}\\right)",
-      "kretschmann": "K = 12\\frac{\\ddot{a}^2}{a^2}+12\\frac{(\\dot{a}^2+k)^2}{a^4}",
+      "ricci_scalar": "R = -6\\left(\\dfrac{\\ddot{a}}{a}+\\dfrac{\\dot{a}^2}{a^2}+\\dfrac{k}{a^2}\\right)",
+      "kretschmann": "K = 12\\dfrac{\\ddot{a}^2}{a^2}+12\\dfrac{(\\dot{a}^2+k)^2}{a^4}",
       "einstein_tensor": {
         "default": "ll",
         "variants": {
@@ -852,14 +852,14 @@
                   "t",
                   "t"
                 ],
-                "value": "-3\\frac{\\dot{a}^2}{a^2}-3\\frac{k}{a^2}"
+                "value": "-3\\dfrac{\\dot{a}^2}{a^2}-3\\dfrac{k}{a^2}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\frac{2a\\ddot{a}+\\dot{a}^2+k}{1-kr^2}"
+                "value": "\\dfrac{2a\\ddot{a}+\\dot{a}^2+k}{1-kr^2}"
               },
               {
                 "indices": [
@@ -885,28 +885,28 @@
                   "t",
                   "t"
                 ],
-                "value": "3\\frac{\\dot{a}^2}{a^2}+3\\frac{k}{a^2}"
+                "value": "3\\dfrac{\\dot{a}^2}{a^2}+3\\dfrac{k}{a^2}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "2\\frac{\\ddot{a}}{a}+\\frac{\\dot{a}^2}{a^2}+\\frac{k}{a^2}"
+                "value": "2\\dfrac{\\ddot{a}}{a}+\\dfrac{\\dot{a}^2}{a^2}+\\dfrac{k}{a^2}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "2\\frac{\\ddot{a}}{a}+\\frac{\\dot{a}^2}{a^2}+\\frac{k}{a^2}"
+                "value": "2\\dfrac{\\ddot{a}}{a}+\\dfrac{\\dot{a}^2}{a^2}+\\dfrac{k}{a^2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "2\\frac{\\ddot{a}}{a}+\\frac{\\dot{a}^2}{a^2}+\\frac{k}{a^2}"
+                "value": "2\\dfrac{\\ddot{a}}{a}+\\dfrac{\\dot{a}^2}{a^2}+\\dfrac{k}{a^2}"
               }
             ]
           },
@@ -918,28 +918,28 @@
                   "t",
                   "t"
                 ],
-                "value": "-3\\frac{\\dot{a}^2}{a^2}-3\\frac{k}{a^2}"
+                "value": "-3\\dfrac{\\dot{a}^2}{a^2}-3\\dfrac{k}{a^2}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "(1-kr^2)\\left(2\\frac{\\ddot{a}}{a^3}+\\frac{\\dot{a}^2}{a^4}+\\frac{k}{a^4}\\right)"
+                "value": "(1-kr^2)\\left(2\\dfrac{\\ddot{a}}{a^3}+\\dfrac{\\dot{a}^2}{a^4}+\\dfrac{k}{a^4}\\right)"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\frac{1}{r^2}\\left(2\\frac{\\ddot{a}}{a^3}+\\frac{\\dot{a}^2}{a^4}+\\frac{k}{a^4}\\right)"
+                "value": "\\dfrac{1}{r^2}\\left(2\\dfrac{\\ddot{a}}{a^3}+\\dfrac{\\dot{a}^2}{a^4}+\\dfrac{k}{a^4}\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\frac{\\csc^2\\theta}{r^2}\\left(2\\frac{\\ddot{a}}{a^3}+\\frac{\\dot{a}^2}{a^4}+\\frac{k}{a^4}\\right)"
+                "value": "\\dfrac{\\csc^2\\theta}{r^2}\\left(2\\dfrac{\\ddot{a}}{a^3}+\\dfrac{\\dot{a}^2}{a^4}+\\dfrac{k}{a^4}\\right)"
               }
             ]
           }
@@ -953,11 +953,11 @@
             "nonzero": [
               {
                 "indices": ["t", "r", "t", "r"],
-                "value": "\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": ["t", "r", "r", "t"],
-                "value": "-\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "-\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": ["t", "\\theta", "t", "\\theta"],
@@ -977,11 +977,11 @@
               },
               {
                 "indices": ["r", "t", "t", "r"],
-                "value": "\\frac{\\ddot{a}}{a}"
+                "value": "\\dfrac{\\ddot{a}}{a}"
               },
               {
                 "indices": ["r", "t", "r", "t"],
-                "value": "-\\frac{\\ddot{a}}{a}"
+                "value": "-\\dfrac{\\ddot{a}}{a}"
               },
               {
                 "indices": ["r", "\\theta", "r", "\\theta"],
@@ -1001,19 +1001,19 @@
               },
               {
                 "indices": ["\\theta", "t", "t", "\\theta"],
-                "value": "\\frac{\\ddot{a}}{a}"
+                "value": "\\dfrac{\\ddot{a}}{a}"
               },
               {
                 "indices": ["\\theta", "t", "\\theta", "t"],
-                "value": "-\\frac{\\ddot{a}}{a}"
+                "value": "-\\dfrac{\\ddot{a}}{a}"
               },
               {
                 "indices": ["\\theta", "r", "r", "\\theta"],
-                "value": "-\\frac{\\dot{a}^2+k}{1-kr^2}"
+                "value": "-\\dfrac{\\dot{a}^2+k}{1-kr^2}"
               },
               {
                 "indices": ["\\theta", "r", "\\theta", "r"],
-                "value": "\\frac{\\dot{a}^2+k}{1-kr^2}"
+                "value": "\\dfrac{\\dot{a}^2+k}{1-kr^2}"
               },
               {
                 "indices": ["\\theta", "\\phi", "\\theta", "\\phi"],
@@ -1025,19 +1025,19 @@
               },
               {
                 "indices": ["\\phi", "t", "t", "\\phi"],
-                "value": "\\frac{\\ddot{a}}{a}"
+                "value": "\\dfrac{\\ddot{a}}{a}"
               },
               {
                 "indices": ["\\phi", "t", "\\phi", "t"],
-                "value": "-\\frac{\\ddot{a}}{a}"
+                "value": "-\\dfrac{\\ddot{a}}{a}"
               },
               {
                 "indices": ["\\phi", "r", "r", "\\phi"],
-                "value": "-\\frac{\\dot{a}^2+k}{1-kr^2}"
+                "value": "-\\dfrac{\\dot{a}^2+k}{1-kr^2}"
               },
               {
                 "indices": ["\\phi", "r", "\\phi", "r"],
-                "value": "\\frac{\\dot{a}^2+k}{1-kr^2}"
+                "value": "\\dfrac{\\dot{a}^2+k}{1-kr^2}"
               },
               {
                 "indices": ["\\phi", "\\theta", "\\theta", "\\phi"],
@@ -1054,11 +1054,11 @@
             "nonzero": [
               {
                 "indices": ["t", "r", "t", "r"],
-                "value": "-\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "-\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": ["t", "r", "r", "t"],
-                "value": "\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": ["t", "\\theta", "t", "\\theta"],
@@ -1078,27 +1078,27 @@
               },
               {
                 "indices": ["r", "t", "t", "r"],
-                "value": "\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": ["r", "t", "r", "t"],
-                "value": "-\\frac{a\\,\\ddot{a}}{1-kr^2}"
+                "value": "-\\dfrac{a\\,\\ddot{a}}{1-kr^2}"
               },
               {
                 "indices": ["r", "\\theta", "r", "\\theta"],
-                "value": "\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
+                "value": "\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
               },
               {
                 "indices": ["r", "\\theta", "\\theta", "r"],
-                "value": "-\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
+                "value": "-\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
               },
               {
                 "indices": ["r", "\\phi", "r", "\\phi"],
-                "value": "\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
+                "value": "\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
               },
               {
                 "indices": ["r", "\\phi", "\\phi", "r"],
-                "value": "-\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
+                "value": "-\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
               },
               {
                 "indices": ["\\theta", "t", "t", "\\theta"],
@@ -1110,11 +1110,11 @@
               },
               {
                 "indices": ["\\theta", "r", "r", "\\theta"],
-                "value": "-\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
+                "value": "-\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
               },
               {
                 "indices": ["\\theta", "r", "\\theta", "r"],
-                "value": "\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
+                "value": "\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}"
               },
               {
                 "indices": ["\\theta", "\\phi", "\\theta", "\\phi"],
@@ -1134,11 +1134,11 @@
               },
               {
                 "indices": ["\\phi", "r", "r", "\\phi"],
-                "value": "-\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
+                "value": "-\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "r", "\\phi", "r"],
-                "value": "\\frac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
+                "value": "\\dfrac{r^2 a^2(\\dot{a}^2+k)}{1-kr^2}\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "\\theta", "\\theta", "\\phi"],
@@ -1153,10 +1153,10 @@
         }
       },
       "geodesics": [
-        "\\ddot{t} + a\\dot{a}\\left(\\frac{\\dot{r}^2}{1-kr^2} + r^2\\dot{\\theta}^2 + r^2\\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
-        "\\ddot{r} + 2\\frac{\\dot{a}}{a}\\dot{t}\\dot{r} + \\frac{kr}{1-kr^2}\\dot{r}^2 + r(kr^2-1)\\left(\\dot{\\theta}^2 + \\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
-        "\\ddot{\\theta} + \\frac{2\\dot{a}}{a}\\dot{t}\\dot{\\theta} + \\frac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
-        "\\ddot{\\phi} + \\frac{2\\dot{a}}{a}\\dot{t}\\dot{\\phi} + \\frac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+        "\\ddot{t} + a\\dot{a}\\left(\\dfrac{\\dot{r}^2}{1-kr^2} + r^2\\dot{\\theta}^2 + r^2\\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
+        "\\ddot{r} + 2\\dfrac{\\dot{a}}{a}\\dot{t}\\dot{r} + \\dfrac{kr}{1-kr^2}\\dot{r}^2 + r(kr^2-1)\\left(\\dot{\\theta}^2 + \\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\dot{a}}{a}\\dot{t}\\dot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\dot{a}}{a}\\dot{t}\\dot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
       ]
     },
     {
@@ -1184,7 +1184,7 @@
           "description": "Spatial curvature ($k \\in \\{-1,0,+1\\}$)"
         }
       ],
-      "line_element": "ds^2 = a^2\\left(-d\\eta^2 + \\frac{dr^2}{1-kr^2} + r^2 d\\theta^2 + r^2\\sin^2\\theta\\, d\\phi^2\\right)",
+      "line_element": "ds^2 = a^2\\left(-d\\eta^2 + \\dfrac{dr^2}{1-kr^2} + r^2 d\\theta^2 + r^2\\sin^2\\theta\\, d\\phi^2\\right)",
       "metric_components": [
         {
           "indices": [
@@ -1198,7 +1198,7 @@
             "r",
             "r"
           ],
-          "value": "\\frac{a^2}{1-kr^2}"
+          "value": "\\dfrac{a^2}{1-kr^2}"
         },
         {
           "indices": [
@@ -1227,7 +1227,7 @@
                   "\\eta",
                   "\\eta"
                 ],
-                "value": "\\frac{a'}{a}"
+                "value": "\\dfrac{a'}{a}"
               },
               {
                 "indices": [
@@ -1235,7 +1235,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\frac{a'}{a(1-kr^2)}"
+                "value": "\\dfrac{a'}{a(1-kr^2)}"
               },
               {
                 "indices": [
@@ -1243,7 +1243,7 @@
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\frac{r^2 a'}{a}"
+                "value": "\\dfrac{r^2 a'}{a}"
               },
               {
                 "indices": [
@@ -1251,7 +1251,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\frac{r^2a'}{a}\\sin^2\\theta"
+                "value": "\\dfrac{r^2a'}{a}\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -1259,7 +1259,7 @@
                   "\\eta",
                   "r"
                 ],
-                "value": "\\frac{a'}{a}"
+                "value": "\\dfrac{a'}{a}"
               },
               {
                 "indices": [
@@ -1267,7 +1267,7 @@
                   "r",
                   "\\eta"
                 ],
-                "value": "\\frac{a'}{a}"
+                "value": "\\dfrac{a'}{a}"
               },
               {
                 "indices": [
@@ -1275,7 +1275,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\frac{kr}{1-kr^2}"
+                "value": "\\dfrac{kr}{1-kr^2}"
               },
               {
                 "indices": [
@@ -1299,7 +1299,7 @@
                   "\\eta",
                   "\\theta"
                 ],
-                "value": "\\frac{a'}{a}"
+                "value": "\\dfrac{a'}{a}"
               },
               {
                 "indices": [
@@ -1307,7 +1307,7 @@
                   "\\theta",
                   "\\eta"
                 ],
-                "value": "\\frac{a'}{a}"
+                "value": "\\dfrac{a'}{a}"
               },
               {
                 "indices": [
@@ -1315,7 +1315,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -1323,7 +1323,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -1339,7 +1339,7 @@
                   "\\eta",
                   "\\phi"
                 ],
-                "value": "\\frac{a'}{a}"
+                "value": "\\dfrac{a'}{a}"
               },
               {
                 "indices": [
@@ -1347,7 +1347,7 @@
                   "\\phi",
                   "\\eta"
                 ],
-                "value": "\\frac{a'}{a}"
+                "value": "\\dfrac{a'}{a}"
               },
               {
                 "indices": [
@@ -1355,7 +1355,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -1363,7 +1363,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -1400,7 +1400,7 @@
                   "r",
                   "r"
                 ],
-                "value": "-\\frac{aa'}{1-kr^2}"
+                "value": "-\\dfrac{aa'}{1-kr^2}"
               },
               {
                 "indices": [
@@ -1424,7 +1424,7 @@
                   "\\eta",
                   "r"
                 ],
-                "value": "\\frac{aa'}{1-kr^2}"
+                "value": "\\dfrac{aa'}{1-kr^2}"
               },
               {
                 "indices": [
@@ -1432,7 +1432,7 @@
                   "r",
                   "\\eta"
                 ],
-                "value": "\\frac{aa'}{1-kr^2}"
+                "value": "\\dfrac{aa'}{1-kr^2}"
               },
               {
                 "indices": [
@@ -1440,7 +1440,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\frac{kr\\, a^2}{(kr^2-1)^2}"
+                "value": "\\dfrac{kr\\, a^2}{(kr^2-1)^2}"
               },
               {
                 "indices": [
@@ -1563,7 +1563,7 @@
                   "\\eta",
                   "r"
                 ],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}-\\frac{a''}{a}\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}\\right)"
               },
               {
                 "indices": [
@@ -1572,7 +1572,7 @@
                   "r",
                   "\\eta"
                 ],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a''}{a}-\\frac{a'^2}{a^2}\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}\\right)"
               },
               {
                 "indices": [
@@ -1581,7 +1581,7 @@
                   "\\eta",
                   "\\theta"
                 ],
-                "value": "r^2\\left(\\frac{a''}{a}-\\frac{a'^2}{a^2}\\right)"
+                "value": "r^2\\left(\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}\\right)"
               },
               {
                 "indices": [
@@ -1590,7 +1590,7 @@
                   "\\theta",
                   "\\eta"
                 ],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}-\\frac{a''}{a}\\right)"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}\\right)"
               },
               {
                 "indices": [
@@ -1599,7 +1599,7 @@
                   "\\eta",
                   "\\phi"
                 ],
-                "value": "r^2\\left(\\frac{a''}{a}-\\frac{a'^2}{a^2}\\right)\\sin^2\\theta"
+                "value": "r^2\\left(\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}\\right)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -1608,7 +1608,7 @@
                   "\\phi",
                   "\\eta"
                 ],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}-\\frac{a''}{a}\\right)\\sin^2\\theta"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}\\right)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -1617,7 +1617,7 @@
                   "\\eta",
                   "r"
                 ],
-                "value": "\\frac{a''}{a}-\\frac{a'^2}{a^2}"
+                "value": "\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}"
               },
               {
                 "indices": [
@@ -1626,7 +1626,7 @@
                   "r",
                   "\\eta"
                 ],
-                "value": "\\frac{a'^2}{a^2}-\\frac{a''}{a}"
+                "value": "\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}"
               },
               {
                 "indices": [
@@ -1635,7 +1635,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
@@ -1644,7 +1644,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "-r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
@@ -1653,7 +1653,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -1662,7 +1662,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-r^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -1671,7 +1671,7 @@
                   "\\eta",
                   "\\theta"
                 ],
-                "value": "\\frac{a''}{a}-\\frac{a'^2}{a^2}"
+                "value": "\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}"
               },
               {
                 "indices": [
@@ -1680,7 +1680,7 @@
                   "\\theta",
                   "\\eta"
                 ],
-                "value": "\\frac{a'^2}{a^2}-\\frac{a''}{a}"
+                "value": "\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}"
               },
               {
                 "indices": [
@@ -1689,7 +1689,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
@@ -1698,7 +1698,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
@@ -1707,7 +1707,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
@@ -1716,7 +1716,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "-r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
@@ -1725,7 +1725,7 @@
                   "\\eta",
                   "\\phi"
                 ],
-                "value": "\\frac{a''}{a}-\\frac{a'^2}{a^2}"
+                "value": "\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}"
               },
               {
                 "indices": [
@@ -1734,7 +1734,7 @@
                   "\\phi",
                   "\\eta"
                 ],
-                "value": "\\frac{a'^2}{a^2}-\\frac{a''}{a}"
+                "value": "\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}"
               },
               {
                 "indices": [
@@ -1743,7 +1743,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
@@ -1752,7 +1752,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
@@ -1761,7 +1761,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "-r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
@@ -1770,7 +1770,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               }
             ]
           },
@@ -1779,11 +1779,11 @@
             "nonzero": [
               {
                 "indices": ["\\eta", "r", "\\eta", "r"],
-                "value": "\\frac{a'^2-aa''}{1-kr^2}"
+                "value": "\\dfrac{a'^2-aa''}{1-kr^2}"
               },
               {
                 "indices": ["\\eta", "r", "r", "\\eta"],
-                "value": "\\frac{aa''-a'^2}{1-kr^2}"
+                "value": "\\dfrac{aa''-a'^2}{1-kr^2}"
               },
               {
                 "indices": ["\\eta", "\\theta", "\\eta", "\\theta"],
@@ -1803,27 +1803,27 @@
               },
               {
                 "indices": ["r", "\\eta", "\\eta", "r"],
-                "value": "\\frac{aa''-a'^2}{1-kr^2}"
+                "value": "\\dfrac{aa''-a'^2}{1-kr^2}"
               },
               {
                 "indices": ["r", "\\eta", "r", "\\eta"],
-                "value": "\\frac{a'^2-aa''}{1-kr^2}"
+                "value": "\\dfrac{a'^2-aa''}{1-kr^2}"
               },
               {
                 "indices": ["r", "\\theta", "r", "\\theta"],
-                "value": "\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["r", "\\theta", "\\theta", "r"],
-                "value": "-\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["r", "\\phi", "r", "\\phi"],
-                "value": "\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["r", "\\phi", "\\phi", "r"],
-                "value": "-\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\theta", "\\eta", "\\eta", "\\theta"],
@@ -1835,19 +1835,19 @@
               },
               {
                 "indices": ["\\theta", "r", "r", "\\theta"],
-                "value": "-\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["\\theta", "r", "\\theta", "r"],
-                "value": "\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["\\theta", "\\phi", "\\theta", "\\phi"],
-                "value": "r^4 a^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "r^4 a^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\theta", "\\phi", "\\phi", "\\theta"],
-                "value": "-r^4 a^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-r^4 a^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "\\eta", "\\eta", "\\phi"],
@@ -1859,19 +1859,19 @@
               },
               {
                 "indices": ["\\phi", "r", "r", "\\phi"],
-                "value": "-\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "r", "\\phi", "r"],
-                "value": "\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "\\theta", "\\theta", "\\phi"],
-                "value": "-r^4 a^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-r^4 a^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "\\theta", "\\phi", "\\theta"],
-                "value": "r^4 a^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "r^4 a^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               }
             ]
           }
@@ -1888,28 +1888,28 @@
                   "\\eta",
                   "\\eta"
                 ],
-                "value": "3\\left(\\frac{a''}{a}-\\frac{a'^2}{a^2}\\right)"
+                "value": "3\\left(\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}\\right)"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a''}{a}+2k+\\frac{a'^2}{a^2}\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a''}{a}+2k+\\dfrac{a'^2}{a^2}\\right)"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-r^2\\left(\\frac{a''}{a}+2k+\\frac{a'^2}{a^2}\\right)"
+                "value": "-r^2\\left(\\dfrac{a''}{a}+2k+\\dfrac{a'^2}{a^2}\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-r^2\\left(\\frac{a''}{a}+2k+\\frac{a'^2}{a^2}\\right)\\sin^2\\theta"
+                "value": "-r^2\\left(\\dfrac{a''}{a}+2k+\\dfrac{a'^2}{a^2}\\right)\\sin^2\\theta"
               }
             ]
           },
@@ -1921,28 +1921,28 @@
                   "\\eta",
                   "\\eta"
                 ],
-                "value": "3\\left(\\frac{a'^2}{a^4}-\\frac{a''}{a^3}\\right)"
+                "value": "3\\left(\\dfrac{a'^2}{a^4}-\\dfrac{a''}{a^3}\\right)"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\left(\\frac{a''}{a^3}+2\\frac{k}{a^2}+\\frac{a'^2}{a^4}\\right)"
+                "value": "-\\left(\\dfrac{a''}{a^3}+2\\dfrac{k}{a^2}+\\dfrac{a'^2}{a^4}\\right)"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\left(\\frac{a''}{a^3}+2\\frac{k}{a^2}+\\frac{a'^2}{a^4}\\right)"
+                "value": "-\\left(\\dfrac{a''}{a^3}+2\\dfrac{k}{a^2}+\\dfrac{a'^2}{a^4}\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\left(\\frac{a''}{a^3}+2\\frac{k}{a^2}+\\frac{a'^2}{a^4}\\right)"
+                "value": "-\\left(\\dfrac{a''}{a^3}+2\\dfrac{k}{a^2}+\\dfrac{a'^2}{a^4}\\right)"
               }
             ]
           },
@@ -1954,35 +1954,35 @@
                   "\\eta",
                   "\\eta"
                 ],
-                "value": "3\\left(\\frac{a''}{a^5}-\\frac{a'^2}{a^6}\\right)"
+                "value": "3\\left(\\dfrac{a''}{a^5}-\\dfrac{a'^2}{a^6}\\right)"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-(1-kr^2)\\left(\\frac{a''}{a^5}+2\\frac{k}{a^4}+\\frac{a'^2}{a^6}\\right)"
+                "value": "-(1-kr^2)\\left(\\dfrac{a''}{a^5}+2\\dfrac{k}{a^4}+\\dfrac{a'^2}{a^6}\\right)"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\frac{1}{r^2}\\left(\\frac{a''}{a^5}+2\\frac{k}{a^4}+\\frac{a'^2}{a^6}\\right)"
+                "value": "-\\dfrac{1}{r^2}\\left(\\dfrac{a''}{a^5}+2\\dfrac{k}{a^4}+\\dfrac{a'^2}{a^6}\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\frac{\\csc^2\\theta}{r^2}\\left(\\frac{a''}{a^5}+2\\frac{k}{a^4}+\\frac{a'^2}{a^6}\\right)"
+                "value": "-\\dfrac{\\csc^2\\theta}{r^2}\\left(\\dfrac{a''}{a^5}+2\\dfrac{k}{a^4}+\\dfrac{a'^2}{a^6}\\right)"
               }
             ]
           }
         }
       },
-      "ricci_scalar": "R = -6\\frac{a''}{a^3} - 6\\frac{k}{a^2}",
-      "kretschmann": "K = 12\\frac{a''^2}{a^6} + 24\\frac{a'^4}{a^8} + 24\\frac{k\\,a'^2}{a^6} - 24\\frac{a'^2 a''}{a^7} + 12\\frac{k^2}{a^4}",
+      "ricci_scalar": "R = -6\\dfrac{a''}{a^3} - 6\\dfrac{k}{a^2}",
+      "kretschmann": "K = 12\\dfrac{a''^2}{a^6} + 24\\dfrac{a'^4}{a^8} + 24\\dfrac{k\\,a'^2}{a^6} - 24\\dfrac{a'^2 a''}{a^7} + 12\\dfrac{k^2}{a^4}",
       "einstein_tensor": {
         "default": "ll",
         "variants": {
@@ -1994,28 +1994,28 @@
                   "\\eta",
                   "\\eta"
                 ],
-                "value": "-3\\frac{a'^2}{a^2} - 3k"
+                "value": "-3\\dfrac{a'^2}{a^2} - 3k"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}-2\\frac{a''}{a}-k\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}-2\\dfrac{a''}{a}-k\\right)"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "r^2\\left(2\\frac{a''}{a}-\\frac{a'^2}{a^2}+k\\right)"
+                "value": "r^2\\left(2\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "r^2\\left(2\\frac{a''}{a}-\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "r^2\\left(2\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               }
             ]
           },
@@ -2027,28 +2027,28 @@
                   "\\eta",
                   "\\eta"
                 ],
-                "value": "3\\frac{a'^2}{a^4}+3\\frac{k}{a^2}"
+                "value": "3\\dfrac{a'^2}{a^4}+3\\dfrac{k}{a^2}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "2\\frac{a''}{a^3}-\\frac{a'^2}{a^4}+\\frac{k}{a^2}"
+                "value": "2\\dfrac{a''}{a^3}-\\dfrac{a'^2}{a^4}+\\dfrac{k}{a^2}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "2\\frac{a''}{a^3}-\\frac{a'^2}{a^4}+\\frac{k}{a^2}"
+                "value": "2\\dfrac{a''}{a^3}-\\dfrac{a'^2}{a^4}+\\dfrac{k}{a^2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "2\\frac{a''}{a^3}-\\frac{a'^2}{a^4}+\\frac{k}{a^2}"
+                "value": "2\\dfrac{a''}{a^3}-\\dfrac{a'^2}{a^4}+\\dfrac{k}{a^2}"
               }
             ]
           },
@@ -2060,28 +2060,28 @@
                   "\\eta",
                   "\\eta"
                 ],
-                "value": "-3\\frac{a'^2}{a^6}-3\\frac{k}{a^4}"
+                "value": "-3\\dfrac{a'^2}{a^6}-3\\dfrac{k}{a^4}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "(1-kr^2)\\left(2\\frac{a''}{a^5}-\\frac{a'^2}{a^6}+\\frac{k}{a^4}\\right)"
+                "value": "(1-kr^2)\\left(2\\dfrac{a''}{a^5}-\\dfrac{a'^2}{a^6}+\\dfrac{k}{a^4}\\right)"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\frac{1}{r^2}\\left(2\\frac{a''}{a^5}-\\frac{a'^2}{a^6}+\\frac{k}{a^4}\\right)"
+                "value": "\\dfrac{1}{r^2}\\left(2\\dfrac{a''}{a^5}-\\dfrac{a'^2}{a^6}+\\dfrac{k}{a^4}\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\frac{\\csc^2\\theta}{r^2}\\left(2\\frac{a''}{a^5}-\\frac{a'^2}{a^6}+\\frac{k}{a^4}\\right)"
+                "value": "\\dfrac{\\csc^2\\theta}{r^2}\\left(2\\dfrac{a''}{a^5}-\\dfrac{a'^2}{a^6}+\\dfrac{k}{a^4}\\right)"
               }
             ]
           }
@@ -2095,99 +2095,99 @@
             "nonzero": [
               {
                 "indices": ["\\eta", "r", "\\eta", "r"],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}-\\frac{a''}{a}\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}\\right)"
               },
               {
                 "indices": ["\\eta", "r", "r", "\\eta"],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a''}{a}-\\frac{a'^2}{a^2}\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}\\right)"
               },
               {
                 "indices": ["\\eta", "\\theta", "\\eta", "\\theta"],
-                "value": "r^2\\left(\\frac{a''}{a}-\\frac{a'^2}{a^2}\\right)"
+                "value": "r^2\\left(\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}\\right)"
               },
               {
                 "indices": ["\\eta", "\\theta", "\\theta", "\\eta"],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}-\\frac{a''}{a}\\right)"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}\\right)"
               },
               {
                 "indices": ["\\eta", "\\phi", "\\eta", "\\phi"],
-                "value": "r^2\\left(\\frac{a''}{a}-\\frac{a'^2}{a^2}\\right)\\sin^2\\theta"
+                "value": "r^2\\left(\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\eta", "\\phi", "\\phi", "\\eta"],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}-\\frac{a''}{a}\\right)\\sin^2\\theta"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["r", "\\eta", "\\eta", "r"],
-                "value": "\\frac{a''}{a}-\\frac{a'^2}{a^2}"
+                "value": "\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}"
               },
               {
                 "indices": ["r", "\\eta", "r", "\\eta"],
-                "value": "\\frac{a'^2}{a^2}-\\frac{a''}{a}"
+                "value": "\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}"
               },
               {
                 "indices": ["r", "\\theta", "r", "\\theta"],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["r", "\\theta", "\\theta", "r"],
-                "value": "-r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["r", "\\phi", "r", "\\phi"],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["r", "\\phi", "\\phi", "r"],
-                "value": "-r^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\theta", "\\eta", "\\eta", "\\theta"],
-                "value": "\\frac{a''}{a}-\\frac{a'^2}{a^2}"
+                "value": "\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}"
               },
               {
                 "indices": ["\\theta", "\\eta", "\\theta", "\\eta"],
-                "value": "\\frac{a'^2}{a^2}-\\frac{a''}{a}"
+                "value": "\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}"
               },
               {
                 "indices": ["\\theta", "r", "r", "\\theta"],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["\\theta", "r", "\\theta", "r"],
-                "value": "\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["\\theta", "\\phi", "\\theta", "\\phi"],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\theta", "\\phi", "\\phi", "\\theta"],
-                "value": "-r^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "\\eta", "\\eta", "\\phi"],
-                "value": "\\frac{a''}{a}-\\frac{a'^2}{a^2}"
+                "value": "\\dfrac{a''}{a}-\\dfrac{a'^2}{a^2}"
               },
               {
                 "indices": ["\\phi", "\\eta", "\\phi", "\\eta"],
-                "value": "\\frac{a'^2}{a^2}-\\frac{a''}{a}"
+                "value": "\\dfrac{a'^2}{a^2}-\\dfrac{a''}{a}"
               },
               {
                 "indices": ["\\phi", "r", "r", "\\phi"],
-                "value": "-\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["\\phi", "r", "\\phi", "r"],
-                "value": "\\frac{1}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "\\dfrac{1}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["\\phi", "\\theta", "\\theta", "\\phi"],
-                "value": "-r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["\\phi", "\\theta", "\\phi", "\\theta"],
-                "value": "r^2\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "r^2\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               }
             ]
           },
@@ -2196,11 +2196,11 @@
             "nonzero": [
               {
                 "indices": ["\\eta", "r", "\\eta", "r"],
-                "value": "\\frac{a'^2-aa''}{1-kr^2}"
+                "value": "\\dfrac{a'^2-aa''}{1-kr^2}"
               },
               {
                 "indices": ["\\eta", "r", "r", "\\eta"],
-                "value": "\\frac{aa''-a'^2}{1-kr^2}"
+                "value": "\\dfrac{aa''-a'^2}{1-kr^2}"
               },
               {
                 "indices": ["\\eta", "\\theta", "\\eta", "\\theta"],
@@ -2220,27 +2220,27 @@
               },
               {
                 "indices": ["r", "\\eta", "\\eta", "r"],
-                "value": "\\frac{aa''-a'^2}{1-kr^2}"
+                "value": "\\dfrac{aa''-a'^2}{1-kr^2}"
               },
               {
                 "indices": ["r", "\\eta", "r", "\\eta"],
-                "value": "\\frac{a'^2-aa''}{1-kr^2}"
+                "value": "\\dfrac{a'^2-aa''}{1-kr^2}"
               },
               {
                 "indices": ["r", "\\theta", "r", "\\theta"],
-                "value": "\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["r", "\\theta", "\\theta", "r"],
-                "value": "-\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["r", "\\phi", "r", "\\phi"],
-                "value": "\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["r", "\\phi", "\\phi", "r"],
-                "value": "-\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\theta", "\\eta", "\\eta", "\\theta"],
@@ -2252,19 +2252,19 @@
               },
               {
                 "indices": ["\\theta", "r", "r", "\\theta"],
-                "value": "-\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "-\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["\\theta", "r", "\\theta", "r"],
-                "value": "\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)"
+                "value": "\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)"
               },
               {
                 "indices": ["\\theta", "\\phi", "\\theta", "\\phi"],
-                "value": "r^4 a^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "r^4 a^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\theta", "\\phi", "\\phi", "\\theta"],
-                "value": "-r^4 a^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-r^4 a^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "\\eta", "\\eta", "\\phi"],
@@ -2276,29 +2276,29 @@
               },
               {
                 "indices": ["\\phi", "r", "r", "\\phi"],
-                "value": "-\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "r", "\\phi", "r"],
-                "value": "\\frac{r^2 a^2}{1-kr^2}\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "\\dfrac{r^2 a^2}{1-kr^2}\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "\\theta", "\\theta", "\\phi"],
-                "value": "-r^4 a^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "-r^4 a^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               },
               {
                 "indices": ["\\phi", "\\theta", "\\phi", "\\theta"],
-                "value": "r^4 a^2\\left(\\frac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
+                "value": "r^4 a^2\\left(\\dfrac{a'^2}{a^2}+k\\right)\\sin^2\\theta"
               }
             ]
           }
         }
       },
       "geodesics": [
-        "\\ddot{\\eta} + \\frac{a'}{a}\\left(\\dot{\\eta}^2 + \\frac{\\dot{r}^2}{1-kr^2} + r^2\\dot{\\theta}^2 + r^2\\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
-        "\\ddot{r} + \\frac{2a'}{a}\\dot{\\eta}\\dot{r} + \\frac{kr}{1-kr^2}\\dot{r}^2 + r(kr^2-1)\\left(\\dot{\\theta}^2 + \\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
-        "\\ddot{\\theta} + \\frac{2a'}{a}\\dot{\\eta}\\dot{\\theta} + \\frac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
-        "\\ddot{\\phi} + \\frac{2a'}{a}\\dot{\\eta}\\dot{\\phi} + \\frac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+        "\\ddot{\\eta} + \\dfrac{a'}{a}\\left(\\dot{\\eta}^2 + \\dfrac{\\dot{r}^2}{1-kr^2} + r^2\\dot{\\theta}^2 + r^2\\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
+        "\\ddot{r} + \\dfrac{2a'}{a}\\dot{\\eta}\\dot{r} + \\dfrac{kr}{1-kr^2}\\dot{r}^2 + r(kr^2-1)\\left(\\dot{\\theta}^2 + \\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
+        "\\ddot{\\theta} + \\dfrac{2a'}{a}\\dot{\\eta}\\dot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2a'}{a}\\dot{\\eta}\\dot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
       ]
     }
   ]

@@ -83,7 +83,6 @@ body {
 #mfs-search-results {
   font-size: 0.8em;
   color: var(--text-dim);
-  max-height: 120px;
   overflow-y: auto;
 }
 
