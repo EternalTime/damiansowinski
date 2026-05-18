@@ -207,7 +207,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -215,7 +215,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -223,7 +223,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -231,7 +231,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\frac{1}{r}"
+                "value": "\\dfrac{1}{r}"
               },
               {
                 "indices": [
@@ -419,8 +419,8 @@
       "geodesics": [
         "\\ddot{t} = 0",
         "\\ddot{r} = r\\dot{\\theta}^2 + r\\sin^2\\theta\\,\\dot{\\phi}^2",
-        "\\ddot{\\theta} = -\\frac{2}{r}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
-        "\\ddot{\\phi} = -\\frac{2}{r}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
+        "\\ddot{\\theta} = -\\dfrac{2}{r}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
+        "\\ddot{\\phi} = -\\dfrac{2}{r}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
       ]
     },
     {
@@ -444,14 +444,14 @@
           "description": "Proper acceleration of the Rindler observer"
         }
       ],
-      "line_element": "ds^2 = -\\frac{a^2}{c^4}X^2 c^2 dT^2 + dX^2 + dY^2 + dZ^2",
+      "line_element": "ds^2 = -\\dfrac{a^2}{c^4}X^2 c^2 dT^2 + dX^2 + dY^2 + dZ^2",
       "metric_components": [
         {
           "indices": [
             "T",
             "T"
           ],
-          "value": "-\\frac{a^2 X^2}{c^4}"
+          "value": "-\\dfrac{a^2 X^2}{c^4}"
         },
         {
           "indices": [
@@ -487,7 +487,7 @@
                   "T",
                   "X"
                 ],
-                "value": "\\frac{1}{X}"
+                "value": "\\dfrac{1}{X}"
               },
               {
                 "indices": [
@@ -495,7 +495,7 @@
                   "X",
                   "T"
                 ],
-                "value": "\\frac{1}{X}"
+                "value": "\\dfrac{1}{X}"
               },
               {
                 "indices": [
@@ -503,7 +503,7 @@
                   "T",
                   "T"
                 ],
-                "value": "\\frac{a^2 X}{c^4}"
+                "value": "\\dfrac{a^2 X}{c^4}"
               }
             ]
           },
@@ -516,7 +516,7 @@
                   "T",
                   "X"
                 ],
-                "value": "-\\frac{a^2 X}{c^4}"
+                "value": "-\\dfrac{a^2 X}{c^4}"
               },
               {
                 "indices": [
@@ -524,7 +524,7 @@
                   "X",
                   "T"
                 ],
-                "value": "-\\frac{a^2 X}{c^4}"
+                "value": "-\\dfrac{a^2 X}{c^4}"
               },
               {
                 "indices": [
@@ -532,7 +532,7 @@
                   "T",
                   "T"
                 ],
-                "value": "\\frac{a^2 X}{c^4}"
+                "value": "\\dfrac{a^2 X}{c^4}"
               }
             ]
           }
@@ -601,8 +601,8 @@
         }
       },
       "geodesics": [
-        "\\ddot{T} = -\\frac{2}{X}\\dot{X}\\dot{T}",
-        "\\ddot{X} = \\frac{a^2 X}{c^4}\\dot{T}^2",
+        "\\ddot{T} = -\\dfrac{2}{X}\\dot{X}\\dot{T}",
+        "\\ddot{X} = \\dfrac{a^2 X}{c^4}\\dot{T}^2",
         "\\ddot{Y} = 0",
         "\\ddot{Z} = 0"
       ]

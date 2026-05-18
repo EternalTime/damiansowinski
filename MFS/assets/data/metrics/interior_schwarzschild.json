@@ -1,0 +1,288 @@
+{
+  "id": "interior_schwarzschild",
+  "name": "Interior Schwarzschild",
+  "description": "The unique static, spherically symmetric solution for a uniform-density incompressible perfect fluid ball of radius $R$ and Schwarzschild radius $r_s$.",
+  "tags": [
+    "perfect fluid",
+    "static",
+    "spherically symmetric",
+    "interior",
+    "exact solution"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The coordinate $r$ is the areal radius, $r \\in [0, R]$, where $R$ is the stellar radius. The parameter $r_s = 2GM/c^2$ is the Schwarzschild radius of the star. The solution assumes a uniform (incompressible) perfect fluid and matches the exterior Schwarzschild metric at $r = R$. Units with $c = 1$ are used throughout.",
+  "history": "Karl Schwarzschild derived two exact solutions to the Einstein field equations in 1916. The first, now called the exterior Schwarzschild solution, describes the vacuum spacetime outside a spherical mass. The second, derived shortly afterward in the same year, describes the interior of a static, spherically symmetric star composed of an incompressible perfect fluid of uniform density. This interior solution was among the first exact solutions to the field equations with a matter source.¶The solution reveals a fundamental limit on the compactness of a star: the central pressure diverges when $r_s/R = 8/9$, which means no static configuration can have $r_s > 8R/9$ regardless of the equation of state. This Buchdahl limit (later generalized by Hans Buchdahl in 1959) is more restrictive than the Schwarzschild radius condition and represents a physical bound on stellar compactness in general relativity.¶Despite its idealized assumption of uniform density — which is acausal, as incompressible fluids transmit disturbances instantaneously — the interior Schwarzschild metric remains a standard and pedagogically important exact solution, commonly used to illustrate gravitational redshift, hydrostatic equilibrium in GR, and the junction conditions connecting interior and exterior spacetimes.",
+  "references": [
+    "schwarzschild1916b",
+    "misner1973"
+  ],
+  "coordinates": [
+    {
+      "id": "spherical",
+      "name": "Spherical",
+      "coords": ["t", "r", "\\theta", "\\phi"],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in [0, R]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        { "symbol": "r_s", "description": "Schwarzschild radius of the star, $r_s = 2GM/c^2$" },
+        { "symbol": "R", "description": "Coordinate radius of the star" }
+      ],
+      "line_element": "ds^2 = -\\frac{1}{4}\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2} dt^2 + \\frac{dr^2}{1 - \\frac{r^2 r_s}{R^3}} + r^2 d\\Omega^2",
+      "metric_components": [
+        {
+          "indices": ["t", "t"],
+          "value": "-\\frac{1}{4}\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}"
+        },
+        {
+          "indices": ["r", "r"],
+          "value": "\\frac{1}{1 - \\frac{r^2 r_s}{R^3}}"
+        },
+        {
+          "indices": ["\\theta", "\\theta"],
+          "value": "r^2"
+        },
+        {
+          "indices": ["\\phi", "\\phi"],
+          "value": "r^2 \\sin^2\\theta"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "lll": {
+            "note": "\\Gamma_{abc}",
+            "nonzero": [
+              { "indices": ["t", "t", "r"], "value": "\\frac{r r_s}{4R^3}\\!\\left(1 - 3R\\sqrt{\\frac{R - r_s}{R^3 - r^2 r_s}}\\right)" },
+              { "indices": ["t", "r", "t"], "value": "\\frac{r r_s}{4R^3}\\!\\left(1 - 3R\\sqrt{\\frac{R - r_s}{R^3 - r^2 r_s}}\\right)" },
+              { "indices": ["r", "t", "t"], "value": "\\frac{r r_s}{4R^3}\\!\\left(3R\\sqrt{\\frac{R - r_s}{R^3 - r^2 r_s}} - 1\\right)" },
+              { "indices": ["r", "r", "r"], "value": "\\frac{r R^3 r_s}{\\left(R^3 - r^2 r_s\\right)^2}" },
+              { "indices": ["r", "\\theta", "\\theta"], "value": "-r" },
+              { "indices": ["r", "\\phi", "\\phi"], "value": "-r\\sin^2\\theta" },
+              { "indices": ["\\theta", "r", "\\theta"], "value": "r" },
+              { "indices": ["\\theta", "\\theta", "r"], "value": "r" },
+              { "indices": ["\\theta", "\\phi", "\\phi"], "value": "-r^2 \\cos\\theta\\sin\\theta" },
+              { "indices": ["\\phi", "r", "\\phi"], "value": "r\\sin^2\\theta" },
+              { "indices": ["\\phi", "\\theta", "\\phi"], "value": "r^2 \\cos\\theta\\sin\\theta" },
+              { "indices": ["\\phi", "\\phi", "r"], "value": "r\\sin^2\\theta" },
+              { "indices": ["\\phi", "\\phi", "\\theta"], "value": "r^2 \\cos\\theta\\sin\\theta" }
+            ]
+          },
+          "ull": {
+            "note": "\\Gamma^a{}_{bc}",
+            "nonzero": [
+              { "indices": ["t", "t", "r"], "value": "\\frac{r r_s}{-R^3 + r^2 r_s + 3R\\sqrt{(R - r_s)(R^3 - r^2 r_s)}}" },
+              { "indices": ["t", "r", "t"], "value": "\\frac{r r_s}{-R^3 + r^2 r_s + 3R\\sqrt{(R - r_s)(R^3 - r^2 r_s)}}" },
+              { "indices": ["r", "t", "t"], "value": "\\frac{r r_s (R^3 - r^2 r_s)}{4R^6}\\!\\left(3R\\sqrt{\\frac{R - r_s}{R^3 - r^2 r_s}} - 1\\right)" },
+              { "indices": ["r", "r", "r"], "value": "\\frac{r r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["r", "\\theta", "\\theta"], "value": "r\\!\\left(\\frac{r^2 r_s}{R^3} - 1\\right)" },
+              { "indices": ["r", "\\phi", "\\phi"], "value": "r\\!\\left(\\frac{r^2 r_s}{R^3} - 1\\right)\\sin^2\\theta" },
+              { "indices": ["\\theta", "r", "\\theta"], "value": "\\frac{1}{r}" },
+              { "indices": ["\\theta", "\\theta", "r"], "value": "\\frac{1}{r}" },
+              { "indices": ["\\theta", "\\phi", "\\phi"], "value": "-\\cos\\theta\\sin\\theta" },
+              { "indices": ["\\phi", "r", "\\phi"], "value": "\\frac{1}{r}" },
+              { "indices": ["\\phi", "\\theta", "\\phi"], "value": "\\cot\\theta" },
+              { "indices": ["\\phi", "\\phi", "r"], "value": "\\frac{1}{r}" },
+              { "indices": ["\\phi", "\\phi", "\\theta"], "value": "\\cot\\theta" }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^a{}_{bcd}",
+            "nonzero": [
+              { "indices": ["t", "r", "t", "r"], "value": "\\frac{r_s}{R^3 - r^2 r_s - 3R\\sqrt{(R - r_s)(R^3 - r^2 r_s)}}" },
+              { "indices": ["t", "r", "r", "t"], "value": "\\frac{r_s}{-R^3 + r^2 r_s + 3R\\sqrt{(R - r_s)(R^3 - r^2 r_s)}}" },
+              { "indices": ["t", "\\theta", "t", "\\theta"], "value": "\\frac{r^2 r_s (R^3 - r^2 r_s)}{R^3\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["t", "\\theta", "\\theta", "t"], "value": "\\frac{r^2 r_s (R^3 - r^2 r_s)}{R^3\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["t", "\\phi", "t", "\\phi"], "value": "\\frac{r^2 r_s (R^3 - r^2 r_s)\\sin^2\\theta}{R^3\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["t", "\\phi", "\\phi", "t"], "value": "\\frac{r^2 r_s (-R^3 + r^2 r_s)\\sin^2\\theta}{R^3\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["r", "t", "t", "r"], "value": "\\frac{r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["r", "t", "r", "t"], "value": "\\frac{r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["r", "\\theta", "r", "\\theta"], "value": "\\frac{r^2 r_s}{R^3}" },
+              { "indices": ["r", "\\theta", "\\theta", "r"], "value": "-\\frac{r^2 r_s}{R^3}" },
+              { "indices": ["r", "\\phi", "r", "\\phi"], "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["r", "\\phi", "\\phi", "r"], "value": "-\\frac{r^2 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\theta", "t", "t", "\\theta"], "value": "\\frac{r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\theta", "t", "\\theta", "t"], "value": "\\frac{r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\theta", "r", "r", "\\theta"], "value": "\\frac{r_s}{-R^3 + r^2 r_s}" },
+              { "indices": ["\\theta", "r", "\\theta", "r"], "value": "\\frac{r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["\\theta", "\\phi", "\\theta", "\\phi"], "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\theta", "\\phi", "\\phi", "\\theta"], "value": "-\\frac{r^2 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\phi", "t", "t", "\\phi"], "value": "\\frac{r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\phi", "t", "\\phi", "t"], "value": "\\frac{r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\phi", "r", "r", "\\phi"], "value": "\\frac{r_s}{-R^3 + r^2 r_s}" },
+              { "indices": ["\\phi", "r", "\\phi", "r"], "value": "\\frac{r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["\\phi", "\\theta", "\\theta", "\\phi"], "value": "-\\frac{r^2 r_s}{R^3}" },
+              { "indices": ["\\phi", "\\theta", "\\phi", "\\theta"], "value": "\\frac{r^2 r_s}{R^3}" }
+            ]
+          },
+          "llll": {
+            "note": "R_{abcd}",
+            "nonzero": [
+              { "indices": ["t", "r", "t", "r"], "value": "\\frac{r_s\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}{4\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["t", "r", "r", "t"], "value": "-\\frac{r_s\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}{4\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["t", "\\theta", "t", "\\theta"], "value": "\\frac{r^2 r_s (R^3 - r^2 r_s)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}{4R^3\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["t", "\\theta", "\\theta", "t"], "value": "\\frac{r^2 r_s (R^3 - r^2 r_s)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}{4R^3\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["t", "\\phi", "t", "\\phi"], "value": "\\frac{r^2 r_s (R^3 - r^2 r_s)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}\\sin^2\\theta}{4R^3\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["t", "\\phi", "\\phi", "t"], "value": "\\frac{r^2 r_s (R^3 - r^2 r_s)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}\\sin^2\\theta}{4R^3\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["r", "t", "t", "r"], "value": "\\frac{r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^3(R^3 - r^2 r_s)}" },
+              { "indices": ["r", "t", "r", "t"], "value": "\\frac{r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^3(R^3 - r^2 r_s)}" },
+              { "indices": ["r", "\\theta", "r", "\\theta"], "value": "\\frac{r^2 r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["r", "\\theta", "\\theta", "r"], "value": "-\\frac{r^2 r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["r", "\\phi", "r", "\\phi"], "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3 - r^2 r_s}" },
+              { "indices": ["r", "\\phi", "\\phi", "r"], "value": "-\\frac{r^2 r_s \\sin^2\\theta}{R^3 - r^2 r_s}" },
+              { "indices": ["\\theta", "t", "t", "\\theta"], "value": "\\frac{r^2 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\theta", "t", "\\theta", "t"], "value": "\\frac{r^2 r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\theta", "r", "r", "\\theta"], "value": "-\\frac{r^2 r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["\\theta", "r", "\\theta", "r"], "value": "\\frac{r^2 r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["\\theta", "\\phi", "\\theta", "\\phi"], "value": "\\frac{r^4 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\theta", "\\phi", "\\phi", "\\theta"], "value": "-\\frac{r^4 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\phi", "t", "t", "\\phi"], "value": "\\frac{r^2 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{4R^6}" },
+              { "indices": ["\\phi", "t", "\\phi", "t"], "value": "\\frac{r^2 r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{4R^6}" },
+              { "indices": ["\\phi", "r", "r", "\\phi"], "value": "-\\frac{r^2 r_s \\sin^2\\theta}{R^3 - r^2 r_s}" },
+              { "indices": ["\\phi", "r", "\\phi", "r"], "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3 - r^2 r_s}" },
+              { "indices": ["\\phi", "\\theta", "\\theta", "\\phi"], "value": "-\\frac{r^4 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\phi", "\\theta", "\\phi", "\\theta"], "value": "\\frac{r^4 r_s \\sin^2\\theta}{R^3}" }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{ab}",
+            "nonzero": [
+              { "indices": ["t", "t"], "value": "\\frac{3 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["r", "r"], "value": "r_s\\!\\left(\\frac{2}{-R^3 + r^2 r_s} + \\frac{1}{-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}}\\right)" },
+              { "indices": ["\\theta", "\\theta"], "value": "\\frac{r^2 r_s}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)" },
+              { "indices": ["\\phi", "\\phi"], "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)" }
+            ]
+          },
+          "ul": {
+            "note": "R^a{}_b",
+            "nonzero": [
+              { "indices": ["t", "t"], "value": "\\frac{3 r_s\\!\\left(R^3 - r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}" },
+              { "indices": ["r", "r"], "value": "\\frac{3 r_s\\!\\left(-r^2 r_s + R\\!\\left(-5R^2 + 6R r_s + \\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}" },
+              { "indices": ["\\theta", "\\theta"], "value": "\\frac{r_s}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)" },
+              { "indices": ["\\phi", "\\phi"], "value": "\\frac{r_s}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)" }
+            ]
+          },
+          "uu": {
+            "note": "R^{ab}",
+            "nonzero": [
+              { "indices": ["t", "t"], "value": "-\\frac{12 r_s\\!\\left(R^3 - r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{R^3\\!\\left(8R^3 + r^2 r_s - 9R^2 r_s\\right)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}" },
+              { "indices": ["r", "r"], "value": "\\frac{r_s\\!\\left(\\frac{r^2 r_s}{R^3} - 1\\right)}{R^3}\\!\\left(2 + \\frac{1}{1 - 3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}}}\\right)" },
+              { "indices": ["\\theta", "\\theta"], "value": "\\frac{r_s}{r^2 R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)" },
+              { "indices": ["\\phi", "\\phi"], "value": "\\frac{r_s \\csc^2\\theta}{r^2 R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)" }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "\\frac{6 r_s\\!\\left(9\\sqrt{R^5(R-r_s)} + 9 r_s\\sqrt{R^4 - r^2 R r_s} - 11\\sqrt{R^6 - r^2 R^3 r_s} + r^2 r_s\\!\\left(2\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 9\\sqrt{1 - \\frac{r_s}{R}}\\right)\\right)}{R^3\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)}",
+      "kretschmann": "\\frac{12 r_s^2\\!\\left(81R^4(R-r_s)^2 - 9R^2(R-r_s)(R^3-r^2 r_s) + 6R\\sqrt{R-r_s}\\,(R^3-r^2 r_s)^{3/2} + 2(R^3-r^2 r_s)^2\\right)}{R^{12}\\!\\left(8 + \\frac{(r^2 - 9R^2)r_s}{R^3}\\right)^{\\!2}}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{ab}",
+            "nonzero": [
+              { "indices": ["t", "t"], "value": "\\frac{3 r_s\\!\\left(-10R^3 + r^2 r_s + 9R^2 r_s + 6R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["r", "r"], "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{(R^3 - r^2 r_s)(8R^3 + r^2 r_s - 9R^2 r_s)}" },
+              { "indices": ["\\theta", "\\theta"], "value": "\\frac{3 r^2 r_s\\!\\left(-R^3 + r^2 r_s + R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{R^3\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" },
+              { "indices": ["\\phi", "\\phi"], "value": "\\frac{3 r^2 r_s\\!\\left(-R^3 + r^2 r_s + R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{R^3\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}" }
+            ]
+          },
+          "ul": {
+            "note": "G^a{}_b",
+            "nonzero": [
+              { "indices": ["t", "t"], "value": "\\frac{3 r_s}{R^3}" },
+              { "indices": ["r", "r"], "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}" },
+              { "indices": ["\\theta", "\\theta"], "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}" },
+              { "indices": ["\\phi", "\\phi"], "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}" }
+            ]
+          },
+          "uu": {
+            "note": "G^{ab}",
+            "nonzero": [
+              { "indices": ["t", "t"], "value": "-\\frac{12 r_s}{R^3\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}" },
+              { "indices": ["r", "r"], "value": "\\frac{3 r_s(-R^3 + r^2 r_s)\\!\\left(-2R^3 - r^2 r_s + 3R^2 r_s + 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^9 + r^2 R^6 r_s - 9R^8 r_s}" },
+              { "indices": ["\\theta", "\\theta"], "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{r^2 R^3\\!\\left(8R^3 + r^2 r_s - 9R^2 r_s\\right)}" },
+              { "indices": ["\\phi", "\\phi"], "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\csc^2\\theta}{r^2 R^3\\!\\left(8R^3 + r^2 r_s - 9R^2 r_s\\right)}" }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^a{}_{bcd}",
+            "nonzero": [
+              { "indices": ["t", "r", "t", "r"], "value": "\\frac{r_s}{R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}}" },
+              { "indices": ["t", "r", "r", "t"], "value": "\\frac{r_s}{-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}}" },
+              { "indices": ["t", "\\theta", "t", "\\theta"], "value": "\\frac{r^2 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{R^6\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}" },
+              { "indices": ["t", "\\theta", "\\theta", "t"], "value": "\\frac{r^2 r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{R^6\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}" },
+              { "indices": ["t", "\\phi", "t", "\\phi"], "value": "\\frac{r^2 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{R^6\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}" },
+              { "indices": ["t", "\\phi", "\\phi", "t"], "value": "\\frac{r^2 r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{R^6\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}" },
+              { "indices": ["r", "t", "t", "r"], "value": "\\frac{r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["r", "t", "r", "t"], "value": "\\frac{r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["r", "\\theta", "r", "\\theta"], "value": "\\frac{r^2 r_s}{R^3}" },
+              { "indices": ["r", "\\theta", "\\theta", "r"], "value": "-\\frac{r^2 r_s}{R^3}" },
+              { "indices": ["r", "\\phi", "r", "\\phi"], "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["r", "\\phi", "\\phi", "r"], "value": "-\\frac{r^2 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\theta", "t", "t", "\\theta"], "value": "\\frac{r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\theta", "t", "\\theta", "t"], "value": "\\frac{r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\theta", "r", "r", "\\theta"], "value": "\\frac{r_s}{-R^3 + r^2 r_s}" },
+              { "indices": ["\\theta", "r", "\\theta", "r"], "value": "\\frac{r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["\\theta", "\\phi", "\\theta", "\\phi"], "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\theta", "\\phi", "\\phi", "\\theta"], "value": "-\\frac{r^2 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\phi", "t", "t", "\\phi"], "value": "\\frac{r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\phi", "t", "\\phi", "t"], "value": "\\frac{r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\phi", "r", "r", "\\phi"], "value": "\\frac{r_s}{-R^3 + r^2 r_s}" },
+              { "indices": ["\\phi", "r", "\\phi", "r"], "value": "\\frac{r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["\\phi", "\\theta", "\\theta", "\\phi"], "value": "-\\frac{r^2 r_s}{R^3}" },
+              { "indices": ["\\phi", "\\theta", "\\phi", "\\theta"], "value": "\\frac{r^2 r_s}{R^3}" }
+            ]
+          },
+          "llll": {
+            "note": "C_{abcd}",
+            "nonzero": [
+              { "indices": ["t", "r", "t", "r"], "value": "\\frac{r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^3(R^3 - r^2 r_s)}" },
+              { "indices": ["t", "r", "r", "t"], "value": "\\frac{r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^3(R^3 - r^2 r_s)}" },
+              { "indices": ["t", "\\theta", "t", "\\theta"], "value": "\\frac{r^2 r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["t", "\\theta", "\\theta", "t"], "value": "\\frac{r^2 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["t", "\\phi", "t", "\\phi"], "value": "\\frac{r^2 r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{4R^6}" },
+              { "indices": ["t", "\\phi", "\\phi", "t"], "value": "\\frac{r^2 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{4R^6}" },
+              { "indices": ["r", "t", "t", "r"], "value": "\\frac{r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^3(R^3 - r^2 r_s)}" },
+              { "indices": ["r", "t", "r", "t"], "value": "\\frac{r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^3(R^3 - r^2 r_s)}" },
+              { "indices": ["r", "\\theta", "r", "\\theta"], "value": "\\frac{r^2 r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["r", "\\theta", "\\theta", "r"], "value": "-\\frac{r^2 r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["r", "\\phi", "r", "\\phi"], "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3 - r^2 r_s}" },
+              { "indices": ["r", "\\phi", "\\phi", "r"], "value": "-\\frac{r^2 r_s \\sin^2\\theta}{R^3 - r^2 r_s}" },
+              { "indices": ["\\theta", "t", "t", "\\theta"], "value": "\\frac{r^2 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\theta", "t", "\\theta", "t"], "value": "\\frac{r^2 r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}" },
+              { "indices": ["\\theta", "r", "r", "\\theta"], "value": "-\\frac{r^2 r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["\\theta", "r", "\\theta", "r"], "value": "\\frac{r^2 r_s}{R^3 - r^2 r_s}" },
+              { "indices": ["\\theta", "\\phi", "\\theta", "\\phi"], "value": "\\frac{r^4 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\theta", "\\phi", "\\phi", "\\theta"], "value": "-\\frac{r^4 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\phi", "t", "t", "\\phi"], "value": "\\frac{r^2 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{4R^6}" },
+              { "indices": ["\\phi", "t", "\\phi", "t"], "value": "\\frac{r^2 r_s\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{4R^6}" },
+              { "indices": ["\\phi", "r", "r", "\\phi"], "value": "-\\frac{r^2 r_s \\sin^2\\theta}{R^3 - r^2 r_s}" },
+              { "indices": ["\\phi", "r", "\\phi", "r"], "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3 - r^2 r_s}" },
+              { "indices": ["\\phi", "\\theta", "\\theta", "\\phi"], "value": "-\\frac{r^4 r_s \\sin^2\\theta}{R^3}" },
+              { "indices": ["\\phi", "\\theta", "\\phi", "\\theta"], "value": "\\frac{r^4 r_s \\sin^2\\theta}{R^3}" }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

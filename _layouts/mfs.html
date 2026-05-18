@@ -48,7 +48,7 @@
     style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--cyan);border-radius:4px;
     color:var(--text-bright);padding:0.4em 0.6em;font-family:'Source Code Pro',monospace;font-size:0.85em;
     outline:none;box-sizing:border-box; flex-shrink:0;">
-  <div id="mfs-search-results" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:2px;"></div>
+  <div id="mfs-search-results" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;"></div>
   </div>
 
   <script>
@@ -57,9 +57,11 @@
       // Metric index — id matches JSON filename in MFS/assets/data/metrics/
       // Will be replaced by Lunr.js index later
       var METRIC_INDEX = [
-        { id: 'minkowski',    name: 'Minkowski',    tags: ['flat', 'special relativity', 'vacuum'] },
         { id: 'ellis_bronnikov', name: 'Ellis-Bronnikov', tags: ['wormhole', 'exotic matter', 'traversable'] },
         { id: 'frw', name: 'FLRW', tags: ['cosmology', 'expanding universe', 'homogeneous', 'isotropic', 'FLRW'] },
+        { id: 'interior_schwarzschild', name: 'Interior Schwarzschild', tags: ['perfect fluid', 'static', 'spherically symmetric', 'interior', 'exact solution'] },
+        { id: 'minkowski',    name: 'Minkowski',    tags: ['flat', 'special relativity', 'vacuum'] },
+        { id: 'rn_metric', name: 'Reissner-Nordström', tags: ['vacuum', 'static', 'spherically symmetric', 'charged', 'black hole', 'exact solution', 'electrovacuum'] },
         { id: 'schwarzschild', name: 'Schwarzschild', tags: ['vacuum', 'static', 'spherically symmetric', 'black hole', 'exact solution'] }
       ];
 
@@ -104,6 +106,7 @@
       border-radius: 4px;
       cursor: pointer;
       letter-spacing: 0.04em;
+      flex-shrink: 0;
     }
     .mfs-result:hover, .mfs-result-active {
       background: rgba(0,229,255,0.1);
