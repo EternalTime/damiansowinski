@@ -9,19 +9,20 @@ const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); 
 const G = 1.0;       // gravitational constant (normalised)
 const DT_BASE = 5e-4; // base timestep
 let   speed = 20;    // steps per frame
-let   trailLen = 400; // max trail points per body
+const trailLen = 1000; // max trail points per body
 let   r12 = 1.0;     // m1/m2
 let   r23 = 1.0;     // m2/m3
 
 // ── Bodies state ──────────────────────────────────────────────────────────────
 // Each body: { m, r:[x,y,z], v:[vx,vy,vz] }
 let bodies = [];
-let trails = [[], [], []]; // ring-buffer of THREE.Vector3
+let trails = [[], [], []]; // ring-buffer of { x, y, z, spd }
 
 // ── Three.js state ────────────────────────────────────────────────────────────
 let renderer, scene, camera;
 let simCanvas;
 let bodyMeshes = [];
+let bodyGlows  = [];
 let trailLines = [];
 let trailGeos  = [];
 const BASE_RADIUS = 7.0;
@@ -216,32 +217,40 @@ function initThree() {
 function buildSceneObjects() {
   // Remove old
   bodyMeshes.forEach(m => { scene.remove(m); m.geometry.dispose(); m.material.dispose(); });
+  bodyGlows.forEach(g => { scene.remove(g); g.material.dispose(); });
   trailLines.forEach(l => { scene.remove(l); l.geometry.dispose(); l.material.dispose(); });
-  bodyMeshes = []; trailLines = []; trailGeos = [];
+  bodyMeshes = []; bodyGlows = []; trailLines = []; trailGeos = [];
 
   bodies.forEach((b, i) => {
-    const [r,g,bv] = _rgb(BODY_COLORS[i]);
-    const col = new THREE.Color(r/255, g/255, bv/255);
-
-    // Sphere — radius proportional to mass
-    const rad = 0.08 * Math.cbrt(b.m);
+    // Sphere — white, radius proportional to mass (steeper scaling)
+    const rad = 0.08 * Math.pow(b.m, 0.5);
     const geo = new THREE.SphereGeometry(rad, 16, 16);
-    const mat = new THREE.MeshPhongMaterial({ color: col, emissive: col, emissiveIntensity: 0.4, shininess: 80 });
+    const mat = new THREE.MeshPhongMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 1.0, shininess: 80 });
     const mesh = new THREE.Mesh(geo, mat);
     scene.add(mesh);
     bodyMeshes.push(mesh);
 
-    // Trail as Points (thick dots, works cross-platform unlike linewidth)
+    // Glow sprite behind each body (uses dark palette like pendulum chain)
+    const [tr, tg, tb2] = _rgb('--teal-dark');
+    const glowCol = new THREE.Color(tr/255, tg/255, tb2/255);
+    const glowMat = new THREE.SpriteMaterial({ map: spriteTexture, color: glowCol, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
+    const glow = new THREE.Sprite(glowMat);
+    glow.scale.set(rad * 6, rad * 6, 1);
+    scene.add(glow);
+    bodyGlows.push(glow);
+
+    // Trail as Points with vertexColors for teal→pink gradient
     const trailGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(trailLen * 3);
+    const colors    = new Float32Array(trailLen * 3);
     trailGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    trailGeo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
     trailGeo.setDrawRange(0, 0);
     const trailMat = new THREE.PointsMaterial({
-      color: col,
+      vertexColors: true,
       size: 0.12,
       map: spriteTexture,
       transparent: true,
-      opacity: 0.5,
       depthWrite: false,
       sizeAttenuation: true,
     });
@@ -260,15 +269,15 @@ function rebuildTrailBuffers() {
   });
   trailLines = []; trailGeos = [];
   bodies.forEach((b, i) => {
-    const [r,g,bv] = _rgb(BODY_COLORS[i]);
-    const col = new THREE.Color(r/255, g/255, bv/255);
     const trailGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(trailLen * 3);
+    const colors    = new Float32Array(trailLen * 3);
     trailGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    trailGeo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
     trailGeo.setDrawRange(0, 0);
     const trailMat = new THREE.PointsMaterial({
-      color: col, size: 0.12, map: spriteTexture,
-      transparent: true, opacity: 0.5, depthWrite: false, sizeAttenuation: true,
+      vertexColors: true, size: 0.12, map: spriteTexture,
+      transparent: true, depthWrite: false, sizeAttenuation: true,
     });
     const line = new THREE.Points(trailGeo, trailMat);
     scene.add(line);
@@ -277,25 +286,71 @@ function rebuildTrailBuffers() {
   });
 }
 
+// Gradient helpers for teal→pink trail coloring
+const _tealRGB  = () => _rgb('--teal-light');
+const _pinkRGB  = () => _rgb('--pink-light');
+const _tealDRGB = () => _rgb('--teal-dark');
+const _pinkDRGB = () => _rgb('--pink-dark');
+const SPD_MIN = 0.0;   // speed mapped to teal
+const SPD_MAX = 1.0;   // speed mapped to pink
+
 function updateSceneObjects() {
+  const teal  = _tealRGB();
+  const pink  = _pinkRGB();
+  const tealD = _tealDRGB();
+  const pinkD = _pinkDRGB();
+
+  // Compute current speeds and update trails first
+  const spds = bodies.map(b => Math.sqrt(b.v[0]**2 + b.v[1]**2 + b.v[2]**2));
   bodies.forEach((b, i) => {
-    // Update body position
+    trails[i].push({ x: b.r[0], y: b.r[1], z: b.r[2], spd: spds[i] });
+    if (trails[i].length > trailLen) trails[i].shift();
+  });
+
+  const gMin = SPD_MIN, spdRange = SPD_MAX - SPD_MIN;
+
+  // Track center of mass
+  let M = 0, cmx = 0, cmy = 0, cmz = 0;
+  for (const b of bodies) { M += b.m; cmx += b.m*b.r[0]; cmy += b.m*b.r[1]; cmz += b.m*b.r[2]; }
+  orbit.tx = cmx/M; orbit.ty = cmy/M; orbit.tz = cmz/M;
+  updateCamera();
+
+  bodies.forEach((b, i) => {
     bodyMeshes[i].position.set(b.r[0], b.r[1], b.r[2]);
 
-    // Append to trail
-    trails[i].push(new THREE.Vector3(b.r[0], b.r[1], b.r[2]));
-    if (trails[i].length > trailLen) trails[i].shift();
-
-    // Update trail geometry
     const pts = trails[i];
-    const attr = trailGeos[i].attributes.position;
-    for (let k=0; k<pts.length; k++) {
-      attr.array[k*3]   = pts[k].x;
-      attr.array[k*3+1] = pts[k].y;
-      attr.array[k*3+2] = pts[k].z;
+    const posAttr = trailGeos[i].attributes.position;
+    const colAttr = trailGeos[i].attributes.color;
+    const n = pts.length;
+    for (let k = 0; k < n; k++) {
+      const p = pts[k];
+      posAttr.array[k*3]   = p.x;
+      posAttr.array[k*3+1] = p.y;
+      posAttr.array[k*3+2] = p.z;
+
+      const t = Math.min(1, Math.max(0, (p.spd - gMin) / spdRange));
+      const cr = (teal[0] + t * (pink[0] - teal[0])) / 255;
+      const cg = (teal[1] + t * (pink[1] - teal[1])) / 255;
+      const cb = (teal[2] + t * (pink[2] - teal[2])) / 255;
+
+      // Alpha fade: 0 at tail (oldest), 1 at head (newest)
+      const alpha = n > 1 ? k / (n - 1) : 1;
+
+      colAttr.array[k*3]   = cr * alpha;
+      colAttr.array[k*3+1] = cg * alpha;
+      colAttr.array[k*3+2] = cb * alpha;
     }
-    attr.needsUpdate = true;
-    trailGeos[i].setDrawRange(0, pts.length);
+    posAttr.needsUpdate = true;
+    colAttr.needsUpdate = true;
+    trailGeos[i].setDrawRange(0, n);
+
+    // Glow sprite color based on current speed (dark palette)
+    const tCur = Math.min(1, Math.max(0, (spds[i] - gMin) / spdRange));
+    const gr = (tealD[0] + tCur * (pinkD[0] - tealD[0])) / 255;
+    const gg = (tealD[1] + tCur * (pinkD[1] - tealD[1])) / 255;
+    const gb = (tealD[2] + tCur * (pinkD[2] - tealD[2])) / 255;
+    bodyGlows[i].position.set(b.r[0], b.r[1], b.r[2]);
+    bodyGlows[i].material.color.setRGB(gr, gg, gb);
   });
 }
 
@@ -422,14 +477,6 @@ const shell = new AppletShell({
         <span class="applet-shell-side">Equal</span>
       </div>
     </div>
-    <div class="applet-shell-ctrl-section">
-      <div class="applet-shell-ctrl-title">Trail Length</div>
-      <div class="applet-shell-slider-row">
-        <span class="applet-shell-side">Short</span>
-        <input type="range" id="tb-trail" min="20" max="1000" step="20" value="400">
-        <span class="applet-shell-side">Long</span>
-      </div>
-    </div>
   `,
 
   onOpen: function ({ canvas: c, S }) {
@@ -446,7 +493,7 @@ const shell = new AppletShell({
         btn.textContent = name;
         btn.addEventListener('click', () => {
           currentPreset = name;
-          initPreset(name);
+                  initPreset(name);
           trails = bodies.map(() => []);
           buildSceneObjects();
           document.querySelectorAll('#tb-preset-btns .applet-shell-btn')
@@ -530,12 +577,6 @@ window.tbTogglePause = function () {
 
 document.getElementById('tb-speed').addEventListener('input', function () {
   speed = parseInt(this.value);
-});
-document.getElementById('tb-trail').addEventListener('input', function () {
-  trailLen = parseInt(this.value);
-  // Trim existing trails to new max length, preserve history
-  trails = trails.map(t => t.length > trailLen ? t.slice(t.length - trailLen) : t);
-  if (scene) rebuildTrailBuffers();
 });
 document.getElementById('tb-r12').addEventListener('input', function () {
   r12 = parseFloat(this.value);

@@ -200,9 +200,9 @@
   /* ════════════════════════════════════════════
      CHAIN (N-pendulum)
      ════════════════════════════════════════════ */
-  const CH_N       = 20;
+  const CH_N       = 15;
   let CH_DAMPING = 0.05;  // mild dissipation (tunable via slider)
-  const CH_G = G * CH_N;   // effective g for chain — compensates for short segment lengths
+  const CH_G = G * 15;     // effective g for chain — compensates for short segment lengths
   // Each segment: dimensionless length = 1/N, mass = 1/N
   const ch_l = 1 / CH_N;
   const ch_m = 1 / CH_N;
@@ -507,9 +507,8 @@
    */
   function ch_buildSubSystem(th_, w_, M_) {
     const m = ch_m, l = ch_l;
-    // Reuse _scrM and _scrF (safe: ch_buildSubSystem is never called concurrently with ch_buildSystem)
-    const M = _scrM;
-    const f = _scrF;
+    const M = new Float64Array(M_ * M_);
+    const f = new Float64Array(M_);
     for (let i = 0; i < M_; i++) {
       for (let j = 0; j < M_; j++) {
         const tail = m * (M_ - Math.max(i, j));
@@ -527,8 +526,8 @@
   }
 
   function ch_solveSubSystem(M, f, M_) {
-    // Reuse _scrA and _scrX (safe: ch_solveSubSystem is never called concurrently with ch_solveSystem)
-    const A = _scrA;
+    const A = new Float64Array(M_ * (M_ + 1));
+    const x = new Float64Array(M_);
     for (let i = 0; i < M_; i++) {
       for (let j = 0; j < M_; j++) A[i*(M_+1)+j] = M[i*M_+j];
       A[i*(M_+1)+M_] = f[i];
@@ -551,7 +550,6 @@
         for (let j = col; j <= M_; j++) A[row*(M_+1)+j] -= factor * A[col*(M_+1)+j];
       }
     }
-    const x = _scrX;
     for (let i = M_-1; i >= 0; i--) {
       x[i] = A[i*(M_+1)+M_];
       for (let j = i+1; j < M_; j++) x[i] -= A[i*(M_+1)+j] * x[j];
