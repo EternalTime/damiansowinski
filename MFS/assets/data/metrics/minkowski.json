@@ -9,11 +9,10 @@
   ],
   "signature": "(-,+,+,+)",
   "convention": "Factors of c are kept explicit throughout. Coordinates are (t, x, y, z) with t having dimensions of time.",
-  "history": "Minkowski spacetime was introduced by Hermann Minkowski in 1908, one year after Einstein's special relativity paper, as a unified geometric framework for space and time. Minkowski showed that the Lorentz transformations of special relativity could be understood as rotations in a four-dimensional pseudo-Riemannian manifold with metric signature (-,+,+,+). Einstein initially dismissed the geometric formulation as superfluous, but later credited it as essential to the development of general relativity.¶Rindler coordinates, introduced by Wolfgang Rindler in 1966, provide a natural reference frame for a uniformly accelerated observer in flat spacetime. The coordinates cover only the right wedge \\(X > 0\\) of Minkowski spacetime, bounded by the Rindler horizon at \\(X = 0\\), which is a null surface analogous to a black hole event horizon. An observer at fixed \\(X\\) follows a hyperbolic worldline with proper acceleration \\(a\\), and the horizon marks the boundary beyond which signals can never reach such an observer. The deep significance of Rindler coordinates became clear with the Unruh effect, derived independently by Davies (1975) and Unruh (1976): an observer accelerating through the Minkowski vacuum detects a thermal spectrum of particles at temperature \\(T = \\hbar a / 2\\pi c k_B\\). This result, along with Hawking radiation, established the connection between acceleration, horizons, and thermodynamics. The Rindler metric is also the near-horizon limit of the Schwarzschild metric, making it an important toy model in the study of black hole thermodynamics and the information paradox.",
+  "history": "Hermann Minkowski was Einstein's former mathematics professor at Zürich, and he understood what Einstein had done in 1905 better than Einstein did — at least geometrically. In 1908 he showed that the Lorentz transformations of special relativity are not ad hoc kinematic rules but rotations in a four-dimensional pseudo-Riemannian manifold with metric signature $(-,+,+,+)$ [minkowski1908]. \"Henceforth,\" he declared in his famous Cologne lecture, \"space by itself and time by itself are doomed to fade away into mere shadows, and only a kind of union of the two will preserve an independent reality.\" Einstein initially dismissed the geometric reformulation as superfluous erudition [noreika2021minkowski]. He came to regard it as indispensable only when he began wrestling with general relativity.¶The Rindler coordinates displayed here, introduced by Wolfgang Rindler in 1966, provide the natural reference frame for a uniformly accelerating observer in flat spacetime [rindler1966]. They cover only the right wedge of Minkowski spacetime, bounded by a null surface — the Rindler horizon — that marks the boundary beyond which signals can never reach the accelerating observer. The geometry is locally identical to the near-horizon limit of the Schwarzschild metric, making Rindler spacetime an important toy model in black hole thermodynamics.¶The deep significance of this horizon became clear with the Unruh effect, derived independently by Davies in 1975 and Unruh in 1976 [davies1975, unruh1976]: an observer accelerating through the Minkowski vacuum detects a thermal bath of particles at temperature $T = \\hbar a / 2\\pi c k_B$. This result — that acceleration and temperature are two sides of the same coin — established the connection between horizons and thermodynamics that continues to shape our understanding of quantum gravity.",
   "references": [
     "minkowski1908",
-    "minkowski1909",
-    "misner1973",
+    "noreika2021minkowski",
     "rindler1966",
     "davies1975",
     "unruh1976"
@@ -146,6 +145,36 @@
         "\\ddot{x} = 0",
         "\\ddot{y} = 0",
         "\\ddot{z} = 0"
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{c^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
       ]
     },
     {
@@ -421,6 +450,36 @@
         "\\ddot{r} = r\\dot{\\theta}^2 + r\\sin^2\\theta\\,\\dot{\\phi}^2",
         "\\ddot{\\theta} = -\\dfrac{2}{r}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
         "\\ddot{\\phi} = -\\dfrac{2}{r}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{c^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r^2\\sin^2\\theta}"
+        }
       ]
     },
     {
@@ -605,6 +664,36 @@
         "\\ddot{X} = \\dfrac{a^2 X}{c^4}\\dot{T}^2",
         "\\ddot{Y} = 0",
         "\\ddot{Z} = 0"
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-\\dfrac{c^4}{a^2 X^2}"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "Z",
+            "Z"
+          ],
+          "value": "1"
+        }
       ]
     }
   ]
