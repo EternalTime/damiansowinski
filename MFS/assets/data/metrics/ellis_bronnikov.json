@@ -12,12 +12,12 @@
   ],
   "signature": "(-,+,+,+)",
   "convention": "The time coordinate is $ct$. The coordinate $r$ is the proper radial distance, $r \\in (-\\infty,\\infty)$, with the wormhole throat at $r = 0$. The parameter $\\ell > 0$ is the throat radius.",
-  "history": "The Morris-Thorne wormhole was introduced by Michael Morris and Kip Thorne in 1988 as a framework for studying traversable wormholes within classical general relativity. Their paper, originally motivated by a question from Carl Sagan during the writing of the novel Contact, identified the conditions a wormhole metric must satisfy to be traversable by human travelers: no horizons, tidal forces tolerable to a human, and a traversal time short enough to be practical. The key result was that all traversable wormholes require exotic matter — stress-energy that violates the null energy condition, meaning some observer measures negative energy densities. This placed traversable wormholes in a theoretically consistent but physically problematic category, since no classical matter field satisfies the exotic matter condition.¶The simplified form of the metric given here — sometimes called the Ellis wormhole or the zero-tidal-force wormhole — sets the redshift function $\\Phi = 0$ and takes the shape function $b(r) = \\ell^2/r$, which in proper distance coordinates gives the particularly clean form $ds^2 = -c^2dt^2 + dr^2 + (r^2 + \\ell^2)d\\Omega^2$. This metric is geodesically complete, manifestly symmetric between the two asymptotically flat regions ($r \\to \\pm\\infty$), and is a standard homework problem in graduate GR courses. Despite the simplicity of the metric, the Einstein tensor is nonzero and requires exotic matter as its source.",
+  "history": "1973 produced, in two independent papers, one of the earliest known examples of a geodesically complete wormhole geometry in general relativity. Homer Ellis, working at the University of Colorado, wrote down what he called a \"drainhole\" — a solution to the Einstein equations coupled to a massless phantom scalar field, characterized by a throat connecting two asymptotically flat regions [ellis1973]. Kirill Bronnikov, working independently in the Soviet Union, found the same solution the same year by a different route [bronnikov1973]. Neither author was thinking primarily about traversability; that framing would come fifteen years later.¶What Ellis and Bronnikov had found was remarkable on its own terms. The metric is geodesically complete — there is no singularity anywhere, and the two asymptotically flat ends are connected by a smooth throat of radius $\\ell$. The price is a phantom scalar field, a matter source with the wrong-sign kinetic term that violates the null energy condition. This was the first clear instance of what Morris and Thorne would later identify as the exotic matter requirement [morris1988]: the wormhole geometry is geometrically clean but physically costly.¶The solution sat quietly in the literature until the late 1980s, when the traversable wormhole program brought it renewed attention [visser1995]. It is now a standard example in graduate GR — simple enough to work with by hand, rich enough to illustrate the essential tension between wormhole geometry and energy conditions.",
   "references": [
-    "morris1988",
     "ellis1973",
-    "visser1995",
-    "misner1973"
+    "bronnikov1973",
+    "morris1988",
+    "visser1995"
   ],
   "coordinates": [
     {
@@ -953,6 +953,36 @@
         "\\ddot{r} = -r\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2",
         "\\ddot{\\theta} = -\\dfrac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
         "\\ddot{\\phi} = -\\dfrac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2+\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{(r^2+\\ell^2)\\sin^2\\theta}"
+        }
       ]
     }
   ]

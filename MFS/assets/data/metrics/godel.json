@@ -1,0 +1,1286 @@
+{
+  "id": "godel",
+  "name": "Gödel",
+  "description": "An exact solution of Einstein's field equations describing a rotating dust universe with closed timelike curves.",
+  "tags": [
+    "dust",
+    "rotating",
+    "closed timelike curves",
+    "cosmological",
+    "exact solution"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "Coordinates $(t, x, y, z)$ all range over $\\mathbb{R}$. The parameter $\\omega$ is the angular velocity of the dust. Units with $G = c = 1$ are used throughout.",
+  "history": "Kurt Gödel presented his rotating universe in 1949 as a contribution to a volume honoring Einstein's seventieth birthday — a gift, as it were, that unsettled the honoree [godel1949]. The solution describes a universe filled with pressureless dust in uniform rotation, homogeneous in space and time, with no expansion. Gödel built on the Lanczos–van Stockum solution: by introducing a negative cosmological constant tuned to the dust density, he caused the light cones to tip as one moves away from the rotation axis, until at a critical radius they become tangent to a closed null curve. Beyond that radius, closed timelike curves — trajectories that loop back to their own past — exist through every event.¶A traveler following such a curve would return to the same event they departed from, having aged normally along the way. Einstein was troubled. He had hoped that general relativity would enforce some analog of absolute cosmic time; Gödel's solution demonstrated that the field equations permit no such thing in general.¶The Gödel universe is not a serious model of the cosmos we inhabit — it does not expand, and we observe expansion — but it remains one of the most important exact solutions in the theory. It forced a confrontation with the causal structure of spacetime that relativity had not previously demanded.",
+  "references": [
+    "godel1949"
+  ],
+  "coordinates": [
+    {
+      "id": "cartesian",
+      "name": "Cartesian-like",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\omega",
+          "description": "Angular velocity of the dust"
+        }
+      ],
+      "line_element": "ds^2 = -\\dfrac{1}{2\\omega^2}dt^2 + \\dfrac{1}{2\\omega^2}dx^2 - \\dfrac{e^x}{\\omega^2}\\,dt\\,dy - \\dfrac{e^{2x}}{4\\omega^2}dy^2 + \\dfrac{1}{2\\omega^2}dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{2\\omega^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "y"
+          ],
+          "value": "-\\dfrac{e^x}{2\\omega^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "t"
+          ],
+          "value": "-\\dfrac{e^x}{2\\omega^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{2\\omega^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "-\\dfrac{e^{2x}}{4\\omega^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{2\\omega^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "2\\omega^2"
+        },
+        {
+          "indices": [
+            "t",
+            "y"
+          ],
+          "value": "-4e^{-x}\\omega^2"
+        },
+        {
+          "indices": [
+            "y",
+            "t"
+          ],
+          "value": "-4e^{-x}\\omega^2"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "2\\omega^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "4e^{-2x}\\omega^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "2\\omega^2"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "lll": {
+            "note": "\\Gamma_{abc}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{e^{2x}}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^{2x}}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^{2x}}{4\\omega^2}"
+              }
+            ]
+          },
+          "ull": {
+            "note": "\\Gamma^a{}_{bc}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{e^{2x}}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\cosh x + \\sinh x"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\cosh x + \\sinh x"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^a{}_{bcd}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "e^x"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-e^x"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{e^{2x}}{4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2x}}{4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{3e^{2x}}{4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{3e^{2x}}{4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{abcd}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{3e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{3e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{3e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{3e^{2x}}{8\\omega^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{ab}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "-e^x"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "-e^x"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-e^{2x}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^a{}_b",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "2e^x\\omega^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{ab}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-4\\omega^4"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 2\\omega^2",
+      "kretschmann": "K = 12\\omega^4",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{ab}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{3e^{2x}}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^a{}_b",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "2e^x\\omega^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\omega^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{ab}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2\\omega^4"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "8\\omega^4\\cosh x"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "-4e^{-x}\\omega^4"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-2\\omega^4"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "4(-2 - e^{-2x})\\omega^4"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-2\\omega^4"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^a{}_{bcd}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "e^x"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-e^x"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{e^{2x}}{4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2x}}{4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{3e^{2x}}{4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{3e^{2x}}{4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^x}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{abcd}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{3e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{3e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^x}{4\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{3e^{2x}}{8\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{3e^{2x}}{8\\omega^2}"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
