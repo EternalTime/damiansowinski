@@ -1,0 +1,11 @@
+[
+  { "id": "ellis_bronnikov",        "name": "Ellis-Bronnikov",                    "tags": ["wormhole", "exotic matter", "traversable", "static", "spherically symmetric", "stationary"] },
+  { "id": "frw",                    "name": "Friedmann-Lemaître-Robertson-Walker", "tags": ["cosmology", "expanding universe", "homogeneous", "isotropic", "FLRW"] },
+  { "id": "godel",                   "name": "Gödel",                              "tags": ["dust", "rotating", "closed timelike curves", "cosmological", "exact solution", "non-vacuum"] },
+  { "id": "stockum_dust",           "name": "Lanczos–van Stockum",                "tags": ["dust", "rotating", "cylindrical symmetry", "closed timelike curves", "exact solution", "non-vacuum", "cosmology", "axial symmetry"] },
+  { "id": "minkowski",              "name": "Minkowski",                          "tags": ["flat", "special relativity", "vacuum"] },
+  { "id": "rn_metric",              "name": "Reissner-Nordström",                 "tags": ["vacuum", "static", "spherically symmetric", "charged", "black hole", "exact solution", "electrovacuum"] },
+  { "id": "schwarzschild",          "name": "Schwarzschild – Exterior",           "tags": ["vacuum", "static", "spherically symmetric", "black hole", "exact solution"] },
+  { "id": "interior_schwarzschild", "name": "Schwarzschild – Interior",           "tags": ["perfect fluid", "static", "spherically symmetric", "interior", "exact solution"] }
+]
+  

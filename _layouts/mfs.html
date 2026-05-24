@@ -54,22 +54,11 @@
   <script>
     /* ── MFS search: simple filter over metric index ── */
     (function() {
-      // Metric index — id matches JSON filename in MFS/assets/data/metrics/
-      // Will be replaced by Lunr.js index later
-      var METRIC_INDEX = [
-        { id: 'ellis_bronnikov', name: 'Ellis-Bronnikov', tags: ['wormhole', 'exotic matter', 'traversable'] },
-        { id: 'frw', name: 'FLRW', tags: ['cosmology', 'expanding universe', 'homogeneous', 'isotropic', 'FLRW'] },
-        { id: 'interior_schwarzschild', name: 'Interior Schwarzschild', tags: ['perfect fluid', 'static', 'spherically symmetric', 'interior', 'exact solution'] },
-        { id: 'minkowski',    name: 'Minkowski',    tags: ['flat', 'special relativity', 'vacuum'] },
-        { id: 'rn_metric', name: 'Reissner-Nordström', tags: ['vacuum', 'static', 'spherically symmetric', 'charged', 'black hole', 'exact solution', 'electrovacuum'] },
-        { id: 'schwarzschild', name: 'Schwarzschild', tags: ['vacuum', 'static', 'spherically symmetric', 'black hole', 'exact solution'] }
-      ];
-
       var input   = document.getElementById('mfs-search-input');
       var results = document.getElementById('mfs-search-results');
       if (!input || !results) return;
 
-      function renderResults(query) {
+      function renderResults(METRIC_INDEX, query) {
         var q = query.trim().toLowerCase();
         var matches = q === ''
           ? METRIC_INDEX
@@ -92,8 +81,12 @@
         });
       }
 
-      input.addEventListener('input', function() { renderResults(this.value); });
-      renderResults('');
+      fetch('{{ "/MFS/assets/data/metrics_index.json" | relative_url }}')
+        .then(function(r) { return r.json(); })
+        .then(function(index) {
+          renderResults(index, '');
+          input.addEventListener('input', function() { renderResults(index, this.value); });
+        });
     })();
   </script>
 
@@ -704,9 +697,12 @@
         var volume  = f.volume  || '';
         var pages   = f.pages   || '';
         var html = '';
+        var url = f.url || '';
         if (author)  html += '<span class="mfs-ref-author">' + author + '</span> ';
         if (year)    html += '<span class="mfs-ref-year">(' + year + ')</span>. ';
-        if (title)   html += '<span class="mfs-ref-title">' + title + '</span>. ';
+        if (title)   html += url
+          ? '<span class="mfs-ref-title"><a class="mfs-ref-link" href="' + url + '" target="_blank" rel="noopener">' + title + '</a></span>. '
+          : '<span class="mfs-ref-title">' + title + '</span>. ';
         if (journal) html += '<span class="mfs-ref-journal">' + journal + '</span>';
         if (volume)  html += ' <span class="mfs-ref-volume">' + volume + '</span>';
         if (pages)   html += ', ' + pages;
@@ -775,6 +771,23 @@
         }).join('');
       }
 
+      function buildMetricMatrix(components, coords, label) {
+        // Build a 4x4 grid initialized to '0'
+        var n = coords.length;
+        var grid = [];
+        for (var i = 0; i < n; i++) {
+          grid.push([]);
+          for (var j = 0; j < n; j++) grid[i].push('0');
+        }
+        (components || []).forEach(function(c) {
+          var i = coords.indexOf(c.indices[0]);
+          var j = coords.indexOf(c.indices[1]);
+          if (i >= 0 && j >= 0) grid[i][j] = c.value;
+        });
+        var rows = grid.map(function(row) { return row.join(' & '); }).join(' \\\\ ');
+        return '<div class="mfs-component">' + tex(label + ' = \\begin{bmatrix}' + rows + '\\end{bmatrix}') + '</div>';
+      }
+
       function renderScalar(str) {
         // If the scalar is zero (e.g. "R = 0"), show "vanishing" instead
         if (/=\s*0\s*$/.test(str.trim())) {
@@ -839,7 +852,26 @@
           data.history ? [
             '<div class="mfs-section">',
               '<div class="mfs-section-label">history</div>',
-              '<div class="mfs-history">' + data.history.split('¶').map(function(p) { return '<p>' + p.trim() + '</p>'; }).join('') + '</div>',
+              '<div class="mfs-history">' + data.history.split('¶').map(function(p) {
+                var refs = data.references || [];
+                // Split on $$...$$ display math blocks
+                var parts = p.trim().split(/(\$\$[\s\S]*?\$\$)/g);
+                return parts.map(function(part) {
+                  if (/^\$\$[\s\S]*\$\$$/.test(part)) {
+                    return '<div class="mfs-math">' + part + '</div>';
+                  }
+                  if (!part.trim()) return '';
+                  var text = part.replace(/\s*\[([^\]]+)\]/g, function(_, inner) {
+                    var keys = inner.split(',').map(function(k) { return k.trim(); });
+                    return keys.map(function(key) {
+                      var idx = refs.indexOf(key);
+                      if (idx === -1) return '';
+                      return '<sup><a class="mfs-cite" href="#ref-' + key + '">[' + (idx+1) + ']</a></sup>';
+                    }).join('');
+                  });
+                  return '<p>' + text + '</p>';
+                }).join('');
+              }).join('') + '</div>',
             '</div>'
           ].join('') : '',
 
@@ -859,6 +891,16 @@
             '<div class="mfs-section-label">line element</div>',
             '<div class="mfs-component">' + tex(coord.line_element) + '</div>',
           '</div>',
+
+          (coord.metric_components ? [
+            '<div class="mfs-section">',
+              '<div class="mfs-section-label">metric</div>',
+              buildMetricMatrix(coord.metric_components, coord.coords, 'g_{\\mu\\nu}'),
+              coord.inverse_metric_components
+                ? buildMetricMatrix(coord.inverse_metric_components, coord.coords, 'g^{\\mu\\nu}')
+                : '',
+            '</div>'
+          ].join('') : ''),
 
           (function() {
             var chConv = coord.christoffel.default;
@@ -962,10 +1004,10 @@
           (data.references && data.references.length) ? [
             '<div class="mfs-section mfs-references">',
               '<div class="mfs-section-label">references</div>',
-              data.references.map(function(key) {
+              data.references.map(function(key, i) {
                 var entry = _bibCache && _bibCache[key];
-                if (!entry) return '<div class="mfs-reference mfs-ref-missing">' + key + '</div>';
-                return '<div class="mfs-reference">' + formatBibtex(entry) + '</div>';
+                if (!entry) return '<div class="mfs-reference mfs-ref-missing" id="ref-' + key + '">' + key + '</div>';
+                return '<div class="mfs-reference" id="ref-' + key + '"><span class="mfs-ref-num">[' + (i+1) + ']</span> ' + formatBibtex(entry) + '</div>';
               }).join(''),
             '</div>'
           ].join('') : ''
@@ -1168,6 +1210,9 @@
     #mfs-content-panel .mfs-history p:last-child {
       margin-bottom: 0 !important;
     }
+    #mfs-content-panel .mfs-history .mfs-math {
+      color: var(--teal-light) !important;
+    }
     #mfs-content-panel .mfs-zero {
       font-size: 26px; color: rgba(0,229,255,0.35);
       font-style: italic;
@@ -1212,6 +1257,11 @@
     #mfs-content-panel .mfs-ref-title   { font-style: italic; color: rgba(0,229,255,0.7); }
     #mfs-content-panel .mfs-ref-journal { color: rgba(0,229,255,0.5); }
     #mfs-content-panel .mfs-ref-volume  { color: rgba(0,229,255,0.4); }
+    #mfs-content-panel .mfs-ref-num     { color: var(--teal-light); margin-right: 0.3em; font-size: 0.85em; }
+    #mfs-content-panel a.mfs-cite       { color: var(--teal-light); text-decoration: none; font-size: 0.8em; }
+    #mfs-content-panel a.mfs-cite:hover { text-decoration: underline; }
+    #mfs-content-panel a.mfs-ref-link   { color: inherit; text-decoration: underline; text-decoration-color: rgba(0,229,255,0.3); }
+    #mfs-content-panel a.mfs-ref-link:hover { text-decoration-color: var(--teal-light); }
   </style>
 
   <script>
