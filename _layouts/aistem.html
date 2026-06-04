@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {%- include head.txt -%}
+  {%- if site.google_analytics -%}{%- include google-analytics.html -%}{%- endif -%}
+
+  <title>{{ page.title | escape }} — AISTEM</title>
+  <link rel="stylesheet" href="{{ '/AISTEM/assets/css/aistem-palette.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/AISTEM/assets/css/aistem.css' | relative_url }}">
+
+  <script>
+    (function () {
+      var touch    = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      var narrow   = window.innerWidth <= 768;
+      var ua       = navigator.userAgent || '';
+      var mobileUA = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+      if (touch && (narrow || mobileUA)) {
+        document.documentElement.classList.add('is-mobile');
+      } else {
+        document.documentElement.classList.add('is-desktop');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <nav id="aistem-nav">
+    <a id="aistem-nav-title" href="{{ '/AISTEM/' | relative_url }}">AISTEM</a>
+    <ul id="aistem-nav-links">
+      <li><a href="{{ '/AISTEM/' | relative_url }}"{% if page.permalink == '/AISTEM/' %} class="active"{% endif %}>About</a></li>
+      <li><a href="{{ '/AISTEM/signup/' | relative_url }}"{% if page.permalink == '/AISTEM/signup/' %} class="active"{% endif %}>Sign Up</a></li>
+      <li><a href="{{ '/AISTEM/resources/' | relative_url }}"{% if page.permalink == '/AISTEM/resources/' %} class="active"{% endif %}>Resources</a></li>
+    </ul>
+  </nav>
+
+  <div id="aistem-body">
+    {{ content }}
+  </div>
+
+</body>
+</html>

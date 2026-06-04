@@ -1,0 +1,21 @@
+/* ============================================================
+   AISTEM palette
+   ============================================================ */
+:root {
+  --ai-bg-panel:      #faf6f0;  /* rgb(250, 246, 240) */
+  --ai-bg-main:       #f5e8cc;  /* rgb(245, 232, 204) */
+  --ai-bg-section:    #ede0cc;  /* rgb(237, 224, 204) */
+  --ai-border:        #d4b896;  /* rgb(212, 184, 150) */
+  --ai-terra-soft:    #e8a878;  /* rgb(232, 168, 120) */
+  --ai-terra-light:   #d4774a;  /* rgb(212, 119,  74) */
+  --ai-terra:         #c4623a;  /* rgb(196,  98,  58) */
+  --ai-terra-deep:    #b05a2a;  /* rgb(176,  90,  42) */
+  --ai-amber-glow:    #e8a040;  /* rgb(232, 160,  64) */
+  --ai-amber:         #f0a830;  /* rgb(240, 168,  48) */
+  --ai-blue:          #6aabdc;  /* rgb(106, 171, 220) */
+  --ai-blue-dark:     #4a8ab8;  /* rgb( 74, 138, 184) */
+  --ai-text-dim:      #9a7a62;  /* rgb(154, 122,  98) */
+  --ai-text-body:     #5a3e2b;  /* rgb( 90,  62,  43) */
+  --ai-text-head:     #2d1f14;  /* rgb( 45,  31,  20) */
+  --ai-text-dark:     #1e1008;  /* rgb( 30,  16,   8) */
+}

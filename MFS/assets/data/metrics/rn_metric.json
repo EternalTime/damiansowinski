@@ -1,6 +1,6 @@
 {
   "id": "rn_metric",
-  "name": "Reissner-Nordström",
+  "name": "Reissner-Nordström Charged Black Hole",
   "description": "The unique static, spherically symmetric vacuum solution to the Einstein-Maxwell equations describing the spacetime exterior to a charged, non-rotating mass.",
   "tags": [
     "vacuum",

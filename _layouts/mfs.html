@@ -896,9 +896,13 @@
             '<div class="mfs-section">',
               '<div class="mfs-section-label">metric</div>',
               buildMetricMatrix(coord.metric_components, coord.coords, 'g_{\\mu\\nu}'),
-              coord.inverse_metric_components
-                ? buildMetricMatrix(coord.inverse_metric_components, coord.coords, 'g^{\\mu\\nu}')
-                : '',
+            '</div>'
+          ].join('') : ''),
+
+          (coord.inverse_metric_components ? [
+            '<div class="mfs-section">',
+              '<div class="mfs-section-label">inverse metric</div>',
+              buildMetricMatrix(coord.inverse_metric_components, coord.coords, 'g^{\\mu\\nu}'),
             '</div>'
           ].join('') : ''),
 
@@ -1260,8 +1264,8 @@
     #mfs-content-panel .mfs-ref-num     { color: var(--teal-light); margin-right: 0.3em; font-size: 0.85em; }
     #mfs-content-panel a.mfs-cite       { color: var(--teal-light); text-decoration: none; font-size: 0.8em; }
     #mfs-content-panel a.mfs-cite:hover { text-decoration: underline; }
-    #mfs-content-panel a.mfs-ref-link   { color: inherit; text-decoration: underline; text-decoration-color: rgba(0,229,255,0.3); }
-    #mfs-content-panel a.mfs-ref-link:hover { text-decoration-color: var(--teal-light); }
+    #mfs-content-panel a.mfs-ref-link   { color: rgba(0,229,255,0.7) !important; text-decoration: underline; text-decoration-color: rgba(0,229,255,0.3); transition: color 0.15s, text-shadow 0.15s; }
+    #mfs-content-panel a.mfs-ref-link:hover { color: var(--cyan) !important; text-decoration-color: var(--teal-light); text-shadow: 0 0 8px var(--cyan), 0 0 20px var(--cyan); transition: color 0.15s, text-shadow 0.15s; }
   </style>
 
   <script>

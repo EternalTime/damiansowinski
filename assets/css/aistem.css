@@ -1,0 +1,27 @@
+/* ============================================================
+   AISTEM — AI Literacy in STEM
+   Custom layout CSS — uses palette.css variables only
+   Design TBD — skeleton only
+   ============================================================ */
+
+/* ── Reset / base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  /* font-family: TBD */
+  color: var(--text-bright);
+  background: transparent;
+  overflow-x: hidden;
+}
+
+/* ── Page structure — TBD after layout discussion ── */
+
+/* ── Typography — TBD ── */
+
+/* ── Navigation / sidebar — TBD ── */
+
+/* ── Content area — TBD ── */
+
+/* ── Mobile layout — TBD ── */

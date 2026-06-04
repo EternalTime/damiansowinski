@@ -58,6 +58,7 @@ plugins:
 # their entries' file path in the `include:` list.
 #
 exclude:
+    - LocalOnly/
     - Teaching/university-of-rochester/
     - Writing_Applet.txt
     - HowToUpdateWebsite.txt

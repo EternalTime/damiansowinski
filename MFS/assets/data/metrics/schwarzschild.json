@@ -1,6 +1,6 @@
 {
   "id": "schwarzschild",
-  "name": "Schwarzschild",
+  "name": "Schwarzschild Black Hole",
   "description": "The unique spherically symmetric vacuum solution of the Einstein field equations, describing the spacetime outside a static, uncharged, non-rotating mass.",
   "tags": [
     "vacuum",
@@ -52,7 +52,7 @@
             "t",
             "t"
           ],
-          "value": "-\\left(1-\\dfrac{r_s}{r}\\right)c^2"
+          "value": "-\\left(1-\\dfrac{r_s}{r}\\right)"
         },
         {
           "indices": [
@@ -1241,7 +1241,7 @@
             "t",
             "t"
           ],
-          "value": "-\\dfrac{1}{c^2}\\left(1-\\dfrac{r_s}{r}\\right)^{-1}"
+          "value": "-\\left(1-\\dfrac{r_s}{r}\\right)^{-1}"
         },
         {
           "indices": [

@@ -1,0 +1,209 @@
+/* ============================================================
+   AISTEM — AI Literacy in STEM
+   Main stylesheet — self-contained, uses aistem-palette.css vars
+   ============================================================ */
+
+/* ── Fonts ── */
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/Nunito/Nunito-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/Nunito/Nunito-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fredoka';
+  src: url('../fonts/Fredoka/Fredoka-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--ai-bg-main);
+  color: var(--ai-text-body);
+  font-family: 'Nunito', sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── Nav ── */
+#aistem-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: var(--ai-bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5em;
+  height: 56px;
+}
+
+#aistem-nav-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 1.25em;
+  color: var(--ai-terra-soft);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+#aistem-nav-links {
+  display: flex;
+  gap: 2em;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#aistem-nav-links a {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 0.95em;
+  color: var(--ai-terra-muted);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.15s;
+}
+
+#aistem-nav-links a:hover,
+#aistem-nav-links a.active {
+  color: var(--ai-amber);
+}
+
+/* ── Page body offset for fixed nav ── */
+#aistem-body {
+  padding-top: 56px;
+  min-height: 100vh;
+}
+
+/* ── Hero ── */
+#aistem-hero {
+  background: var(--ai-bg-dark);
+  color: var(--ai-text-light);
+  padding: 5em 2.5em 4em;
+  text-align: center;
+}
+
+#aistem-hero h1 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 3em;
+  color: var(--ai-terra-soft);
+  margin: 0 0 0.3em;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+#aistem-hero .aistem-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.1em;
+  color: var(--ai-terra-muted);
+  max-width: 600px;
+  margin: 0 auto 2em;
+}
+
+/* ── Section ── */
+.aistem-section {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 3.5em 2em;
+}
+
+.aistem-section h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 1.7em;
+  color: var(--ai-terra);
+  margin: 0 0 0.6em;
+}
+
+.aistem-section p {
+  font-family: 'Nunito', sans-serif;
+  color: var(--ai-text-body);
+  margin: 0 0 1em;
+}
+
+/* ── Divider ── */
+.aistem-divider {
+  border: none;
+  border-top: 1px solid var(--ai-border);
+  margin: 0;
+}
+
+/* ── CTA button ── */
+.aistem-btn {
+  display: inline-block;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 1em;
+  color: var(--ai-text-light);
+  background: var(--ai-terra);
+  border: none;
+  border-radius: 2em;
+  padding: 0.6em 1.8em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.aistem-btn:hover {
+  background: var(--ai-terra-light);
+}
+
+/* ── Card ── */
+.aistem-card {
+  background: var(--ai-bg-panel);
+  border: 1px solid var(--ai-border);
+  border-radius: 1em;
+  padding: 1.5em 2em;
+  margin-bottom: 1.5em;
+}
+
+.aistem-card h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 1.2em;
+  color: var(--ai-terra-deep);
+  margin: 0 0 0.4em;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  #aistem-nav { padding: 0 1.2em; }
+  #aistem-nav-links { gap: 1.2em; }
+  #aistem-hero { padding: 3.5em 1.2em 2.5em; }
+  #aistem-hero h1 { font-size: 2.2em; }
+  .aistem-section { padding: 2.5em 1.2em; }
+}
