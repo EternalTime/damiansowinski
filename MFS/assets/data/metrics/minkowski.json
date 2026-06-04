@@ -1,6 +1,6 @@
 {
   "id": "minkowski",
-  "name": "Minkowski",
+  "name": "Minkowski Vacuum Spacetime",
   "description": "The flat spacetime of special relativity. No curvature, no gravity.",
   "tags": [
     "flat",
@@ -41,7 +41,7 @@
             "t",
             "t"
           ],
-          "value": "-c^2"
+          "value": "-1"
         },
         {
           "indices": [
@@ -152,7 +152,7 @@
             "t",
             "t"
           ],
-          "value": "-\\dfrac{1}{c^2}"
+          "value": "-1"
         },
         {
           "indices": [
@@ -200,7 +200,7 @@
             "t",
             "t"
           ],
-          "value": "-c^2"
+          "value": "-1"
         },
         {
           "indices": [
@@ -457,7 +457,7 @@
             "t",
             "t"
           ],
-          "value": "-\\dfrac{1}{c^2}"
+          "value": "-1"
         },
         {
           "indices": [
@@ -510,7 +510,7 @@
             "T",
             "T"
           ],
-          "value": "-\\dfrac{a^2 X^2}{c^4}"
+          "value": "-\\dfrac{a^2 X^2}{c^2}"
         },
         {
           "indices": [
@@ -671,7 +671,7 @@
             "T",
             "T"
           ],
-          "value": "-\\dfrac{c^4}{a^2 X^2}"
+          "value": "-\\dfrac{c^2}{a^2 X^2}"
         },
         {
           "indices": [

@@ -1,6 +1,6 @@
 {
   "id": "ellis_bronnikov",
-  "name": "Ellis-Bronnikov",
+  "name": "Ellis-Bronnikov Wormhole",
   "description": "A static, spherically symmetric traversable wormhole with zero redshift function, also known as the drainhole metric.",
   "tags": [
     "wormhole",
@@ -953,36 +953,6 @@
         "\\ddot{r} = -r\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2",
         "\\ddot{\\theta} = -\\dfrac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
         "\\ddot{\\phi} = -\\dfrac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
-      ],
-      "inverse_metric_components": [
-        {
-          "indices": [
-            "t",
-            "t"
-          ],
-          "value": "-1"
-        },
-        {
-          "indices": [
-            "r",
-            "r"
-          ],
-          "value": "1"
-        },
-        {
-          "indices": [
-            "\\theta",
-            "\\theta"
-          ],
-          "value": "\\dfrac{1}{r^2+\\ell^2}"
-        },
-        {
-          "indices": [
-            "\\phi",
-            "\\phi"
-          ],
-          "value": "\\dfrac{1}{(r^2+\\ell^2)\\sin^2\\theta}"
-        }
       ]
     }
   ]

@@ -9,6 +9,20 @@ permalink: /press/
   Press Releases, Media Mentions, & Podcasts
 </h1>
 ---
+<div class="press-entry">
+  <a href="https://www.centauri-dreams.org/2026/05/30/evolving-strategies-in-the-search-for-extraterrestrial-civilizations/" target="_blank">
+    <img class="press-img" src="{{ '/assets/images/press/centauri-dreams-logo.webp' | relative_url }}"
+         style="width: 180px;"
+         alt="Article title">
+  </a>
+  <div>
+    <a href="https://www.centauri-dreams.org/2026/05/30/evolving-strategies-in-the-search-for-extraterrestrial-civilizations/" target="_blank">
+      <strong>Evolving strategies in search for civilizations</strong>
+    </a><br>
+    <em>Centauri Dreams</em> — May 2026<br>
+  </div>
+</div>
+
 <br>
 <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;overflow:hidden;border-radius:12px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/dr-damian-sowinski-on-information-theory/id1279127114?i=1000402894947"></iframe>
 <br>
