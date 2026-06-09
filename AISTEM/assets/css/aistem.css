@@ -62,12 +62,17 @@ html, body {
   left: 0;
   width: 100%;
   z-index: 100;
-  background: var(--ai-bg-dark);
+  background-image: url('/AISTEM/assets/images/aistem_banner.png');
+  background-position: left top;
+  background-size: 100% 150px;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2.5em;
-  height: 56px;
+  height: 150px;
+  align-items: flex-start;
+  padding-top: 0.5em;
 }
 
 #aistem-nav-title {
@@ -104,7 +109,7 @@ html, body {
 
 /* ── Page body offset for fixed nav ── */
 #aistem-body {
-  padding-top: 56px;
+  padding-top: 150px;
   min-height: 100vh;
 }
 

@@ -27,6 +27,7 @@ permalink: /publications/
     'sowinski2018instantons',
     'sowinski2017information',
     'sowinski2016complexity',
+    'bartlett2026ref',
     'pinero2026information',
     'quillen2025notions',
     'mcgarry2025vivo',
