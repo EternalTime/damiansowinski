@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyCE.math module &mdash; pyCE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab018f0f" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyCE.oscillons module" href="pyCE.oscillons.html" />
+    <link rel="prev" title="pyCE.instantons module" href="pyCE.instantons.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyCE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#your-first-configurational-entropy">Your first configurational entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_instantons.html">Instantons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_instantons.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_instantons.html#solving-a-bounce">Solving a bounce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_oscillons.html">Oscillons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_oscillons.html#the-setup">The setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_oscillons.html#running-a-simulation">Running a simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_polytropes.html">Polytropes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_polytropes.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_polytropes.html#solving-a-polytrope">Solving a polytrope</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_cosmology.html">The Cosmic Microwave Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_cosmology.html#loading-a-spectrum">Loading a spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_cosmology.html#from-spectrum-to-entropy">From spectrum to entropy</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyCE.html">pyCE package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pyCE.html#contents">Contents</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pyCE.cosmology.html">pyCE.cosmology package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.instantons.html">pyCE.instantons module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pyCE.math module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html">pyCE.oscillons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.polytropes.html">pyCE.polytropes module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.html#module-pyCE">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.html#modules">Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyCE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="pyCE.html">pyCE package</a></li>
+      <li class="breadcrumb-item active">pyCE.math module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/pyCE.math.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pyce-math-module">
+<h1>pyCE.math module<a class="headerlink" href="#pyce-math-module" title="Link to this heading"></a></h1>
+<section id="module-pyCE.math">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyCE.math" title="Link to this heading"></a></h2>
+<p>Radial Fourier analysis in d spatial dimensions.</p>
+<p>Helper routines shared by the physics modules of pyCE. A function f(r) that
+depends only on the radial coordinate in d spatial dimensions has a Fourier
+transform that is itself radial in k-space; the angular integrals can be done
+analytically, reducing the d-dimensional transform to a one-dimensional
+integral against a Bessel kernel,</p>
+<blockquote>
+<div><dl class="simple">
+<dt>ft(k) = sqrt(pi) * 2**(d/2-2) * k**(1-d/2)</dt><dd><ul class="simple">
+<li><p>Integral[ f(r) * J_{d/2-1}(k r) * r**(d/2) dr ].</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p>This module provides that transform (as a function and as a precomputed
+matrix), together with d-dimensional radial integration and normalization
+utilities.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCE.math.fourier_factor">
+<span class="sig-prename descclassname"><span class="pre">pyCE.math.</span></span><span class="sig-name descname"><span class="pre">fourier_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/math.html#fourier_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.math.fourier_factor" title="Link to this definition"></a></dt>
+<dd><p>Symmetric Fourier normalization constant, (2*pi)**(-d/2).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCE.math.normalize">
+<span class="sig-prename descclassname"><span class="pre">pyCE.math.</span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/math.html#normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.math.normalize" title="Link to this definition"></a></dt>
+<dd><p>Rescale y so its d-dimensional radial integral equals one.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCE.math.radialFT">
+<span class="sig-prename descclassname"><span class="pre">pyCE.math.</span></span><span class="sig-name descname"><span class="pre">radialFT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/math.html#radialFT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.math.radialFT" title="Link to this definition"></a></dt>
+<dd><p>Radial Fourier transform of a radial function in d dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> (<em>int</em>) – Number of spatial dimensions.</p></li>
+<li><p><strong>f</strong> (<em>ndarray</em>) – Field values f(r) sampled on the radial grid <cite>r</cite>.</p></li>
+<li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid. Assumed to start near 0 and be (close to) uniform.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>ft</strong> (<em>ndarray</em>) – Radial Fourier transform evaluated on the returned k-grid.</p></li>
+<li><p><strong>k</strong> (<em>ndarray</em>) – Conjugate radial grid in k-space. It has 5x as many points as <cite>r</cite>
+with spacing pi/(10*r[-1]), i.e. it resolves down to half the
+fundamental mode of the box and extends to 5x the usual band limit.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For d &gt; 1 the angular integrals are done analytically, leaving the
+one-dimensional Bessel integral quoted in the module docstring, which is
+evaluated with the trapezoidal rule. The kernel k**(1-d/2) is singular at
+k = 0, so ft[0] is instead obtained by extrapolating ft[1:8] with a
+seventh-order one-sided finite-difference (interpolation) stencil. For
+d = 1 the transform reduces to a plain cosine transform.</p>
+<p>The result is rescaled by a constant so that Plancherel’s theorem,
+||f||^2 = ||ft||^2 (with the d-dimensional radial measure), holds exactly
+on the discrete grids.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCE.math.radialFT_mat">
+<span class="sig-prename descclassname"><span class="pre">pyCE.math.</span></span><span class="sig-name descname"><span class="pre">radialFT_mat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/math.html#radialFT_mat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.math.radialFT_mat" title="Link to this definition"></a></dt>
+<dd><p>Matrix form of the radial Fourier transform.</p>
+<p>Builds the dense matrix F such that <code class="docutils literal notranslate"><span class="pre">ft</span> <span class="pre">=</span> <span class="pre">F</span> <span class="pre">&#64;</span> <span class="pre">f</span></code> approximates the
+transform computed by <a class="reference internal" href="#pyCE.math.radialFT" title="pyCE.math.radialFT"><code class="xref py py-func docutils literal notranslate"><span class="pre">radialFT()</span></code></a> (without the final Plancherel
+rescaling, which depends on f). Useful when many transforms are needed on
+the same grid, e.g. at every output step of a simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> (<em>int</em>) – Number of spatial dimensions.</p></li>
+<li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid the matrix will act on.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>F</strong> (<em>ndarray, shape (5*len(r), len(r))</em>) – Transform matrix. Trapezoidal weights (the half-weight on the first
+point and the grid spacings) are folded into the columns, and the
+k = 0 row implements the same seven-point extrapolation used in
+<a class="reference internal" href="#pyCE.math.radialFT" title="pyCE.math.radialFT"><code class="xref py py-func docutils literal notranslate"><span class="pre">radialFT()</span></code></a>.</p></li>
+<li><p><strong>k</strong> (<em>ndarray</em>) – Conjugate radial grid in k-space (same convention as
+<a class="reference internal" href="#pyCE.math.radialFT" title="pyCE.math.radialFT"><code class="xref py py-func docutils literal notranslate"><span class="pre">radialFT()</span></code></a>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCE.math.radial_integrate">
+<span class="sig-prename descclassname"><span class="pre">pyCE.math.</span></span><span class="sig-name descname"><span class="pre">radial_integrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/math.html#radial_integrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.math.radial_integrate" title="Link to this definition"></a></dt>
+<dd><p>Integrate a radial function over all of d-dimensional space.</p>
+<p>Computes Omega_d * Integral[ y(r) * r**(d-1) dr ] with the trapezoidal
+rule, where Omega_d is the solid angle from <a class="reference internal" href="#pyCE.math.sphere_solid_angle" title="pyCE.math.sphere_solid_angle"><code class="xref py py-func docutils literal notranslate"><span class="pre">sphere_solid_angle()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid.</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) – Integrand sampled on <cite>r</cite>.</p></li>
+<li><p><strong>d</strong> (<em>int</em>) – Number of spatial dimensions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The d-dimensional volume integral of y.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCE.math.sphere_solid_angle">
+<span class="sig-prename descclassname"><span class="pre">pyCE.math.</span></span><span class="sig-name descname"><span class="pre">sphere_solid_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/math.html#sphere_solid_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.math.sphere_solid_angle" title="Link to this definition"></a></dt>
+<dd><p>Total solid angle of the unit (d-1)-sphere, 2*pi**(d/2)/Gamma(d/2).</p>
+<p>E.g. 2 for d = 1, 2*pi for d = 2, 4*pi for d = 3.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyCE.instantons.html" class="btn btn-neutral float-left" title="pyCE.instantons module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyCE.oscillons.html" class="btn btn-neutral float-right" title="pyCE.oscillons module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

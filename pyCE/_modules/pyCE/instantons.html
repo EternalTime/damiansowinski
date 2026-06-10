@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyCE.instantons &mdash; pyCE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ab018f0f" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            pyCE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started.html#your-first-configurational-entropy">Your first configurational entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_instantons.html">Instantons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_instantons.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_instantons.html#solving-a-bounce">Solving a bounce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_oscillons.html">Oscillons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_oscillons.html#the-setup">The setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_oscillons.html#running-a-simulation">Running a simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_polytropes.html">Polytropes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_polytropes.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_polytropes.html#solving-a-polytrope">Solving a polytrope</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_cosmology.html">The Cosmic Microwave Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_cosmology.html#loading-a-spectrum">Loading a spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_cosmology.html#from-spectrum-to-entropy">From spectrum to entropy</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../source/modules.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../source/pyCE.html">pyCE package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../source/pyCE.html#contents">Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../source/pyCE.cosmology.html">pyCE.cosmology package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../source/pyCE.instantons.html">pyCE.instantons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../source/pyCE.math.html">pyCE.math module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../source/pyCE.oscillons.html">pyCE.oscillons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../source/pyCE.polytropes.html">pyCE.polytropes module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/pyCE.html#module-pyCE">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../source/pyCE.html#modules">Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyCE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyCE.instantons</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyCE.instantons</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Generation and configurational-entropy analysis of instantons.</span>
+
+<span class="sd">Solves for the O(d)-symmetric bounce (&quot;bubble&quot;) profile of a real scalar</span>
+<span class="sd">field in the asymmetric double-well potential</span>
+
+<span class="sd">    V(B) = (1/2) B**2 - (alpha/3) B**3 + (1/4) B**4,</span>
+
+<span class="sd">with asymmetry parametrized by alpha = (3/sqrt(2)) * (1 + g). The bounce</span>
+<span class="sd">satisfies the Euclidean equation of motion</span>
+
+<span class="sd">    B&#39;&#39; + (d/r) B&#39; = V&#39;(B) = B - alpha B**2 + B**3,</span>
+
+<span class="sd">with B&#39;(0) = 0 and B -&gt; 0 (the false vacuum) as r -&gt; infinity, and is found</span>
+<span class="sd">by a shooting method: bisect on the core value B(0) until the profile decays</span>
+<span class="sd">into the false vacuum instead of over- or under-shooting.</span>
+
+<span class="sd">From the profile, the class computes the energy densities, the Euclidean</span>
+<span class="sd">action, and the configurational entropy of the energy-density power spectrum.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">radialFT</span><span class="p">,</span><span class="n">radial_integrate</span>
+
+<div class="viewcode-block" id="instanton">
+<a class="viewcode-back" href="../../source/pyCE.instantons.html#pyCE.instantons.instanton">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">instanton</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;O(d)-symmetric bounce profile and its configurational entropy.</span>
+
+<span class="sd">    Instantiation does all the work: it solves for the bounce by shooting,</span>
+<span class="sd">    builds the energy profiles, and computes the Euclidean action and the</span>
+<span class="sd">    configurational entropy.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    asymmetry_factor : float</span>
+<span class="sd">        Asymmetry g of the potential; alpha = (3/sqrt(2)) * (1 + g).</span>
+<span class="sd">        g = 0 corresponds to the degenerate (thin-wall) limit.</span>
+<span class="sd">    dimension : int</span>
+<span class="sd">        Number of SPATIAL dimensions d.</span>
+<span class="sd">    N : int</span>
+<span class="sd">        Maximum number of radial integration steps (grid spacing dr = 0.01).</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r : ndarray</span>
+<span class="sd">        Radial grid on which the bounce was accepted.</span>
+<span class="sd">    B, DB : ndarray</span>
+<span class="sd">        Bounce profile B(r) and its radial derivative B&#39;(r).</span>
+<span class="sd">    B0 : float</span>
+<span class="sd">        Core value B(0) found by the shooting method.</span>
+<span class="sd">    Bmin, Bmax : float</span>
+<span class="sd">        Initial bracket for the shooting method.</span>
+<span class="sd">    PEdens, GEdens, rho : ndarray</span>
+<span class="sd">        Potential, gradient, and total energy densities.</span>
+<span class="sd">    PE, GE, E : float</span>
+<span class="sd">        Radially integrated potential, gradient, and total energies.</span>
+<span class="sd">    Se : float</span>
+<span class="sd">        Euclidean action: rho integrated in d+1 dimensions (the O(d+1)</span>
+<span class="sd">        bounce interpretation of the static d-dimensional profile).</span>
+<span class="sd">    denFT, k : ndarray</span>
+<span class="sd">        Radial Fourier transform of rho and its k-grid.</span>
+<span class="sd">    mf : ndarray</span>
+<span class="sd">        Modal fraction ``|denFT|**2 / max|denFT|**2``.</span>
+<span class="sd">    Sc : float</span>
+<span class="sd">        Configurational entropy, -Integral[ mf * ln(mf) ] over k-space</span>
+<span class="sd">        with the d-dimensional radial measure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#Remember d is the number of SPATIAL dimensions</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">asymmetry_factor</span><span class="p">,</span><span class="n">dimension</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">eps</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span>  <span class="o">=</span> <span class="n">dimension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">(</span><span class="n">asymmetry_factor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">(</span><span class="mf">.01</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dr</span>
+        <span class="n">alpha</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">asymmetry_factor</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__generate_bubble_profile__</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__get_energy_profiles__</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__get_euclidean_action__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__get_entropy__</span><span class="p">()</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__generate_bubble_profile__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bracket the core value and run the shooting method.</span>
+
+<span class="sd">        Bmax is the true-vacuum field value (the larger root of V&#39;(B)/B = 0);</span>
+<span class="sd">        starting above it overshoots. Bmin is the value where the inverted</span>
+<span class="sd">        potential -V has dropped enough that the field cannot escape the</span>
+<span class="sd">        false vacuum; starting below it undershoots. The bounce core value</span>
+<span class="sd">        B(0) lies between the two.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#Set up the bounds for the shooting method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Bmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">((</span><span class="n">alpha</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mf">4.</span><span class="p">))</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Bmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">((</span><span class="mf">2.</span><span class="o">*</span><span class="n">alpha</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mf">18.</span><span class="p">))</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__shootFor__</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__get_energy_profiles__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute potential/gradient/total energy densities and energies.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PEdens</span> <span class="o">=</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mf">3.0</span> <span class="o">+</span> <span class="mf">.25</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">**</span><span class="mi">4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GEdens</span> <span class="o">=</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">DB</span><span class="o">**</span><span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PE</span>     <span class="o">=</span> <span class="n">radial_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">PEdens</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GE</span>     <span class="o">=</span> <span class="n">radial_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">GEdens</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PEdens</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">GEdens</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PE</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">GE</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__get_euclidean_action__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Euclidean action: the energy density integrated in d+1 dimensions.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Se</span> <span class="o">=</span> <span class="n">radial_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__get_entropy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configurational entropy of the energy-density power spectrum.</span>
+
+<span class="sd">        Fourier transforms rho, normalizes the power spectrum by its peak to</span>
+<span class="sd">        form the modal fraction mf, and integrates -mf*ln(mf) over k-space.</span>
+<span class="sd">        The machine epsilon inside the log regularizes mf = 0 modes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">denFT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">radialFT</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">f</span>       <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denFT</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mf</span> <span class="o">=</span> <span class="n">f</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Sc</span> <span class="o">=</span> <span class="o">-</span><span class="n">radial_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">mf</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">mf</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__shootFor__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bisection shooting for the bounce core value B(0).</span>
+
+<span class="sd">        Starting from the midpoint of [Bmin, Bmax], integrate outward with</span>
+<span class="sd">        RK4 and inspect the last finite value of B: its sign says whether the</span>
+<span class="sd">        shot over- or undershot, and B0 is corrected by a bisection step</span>
+<span class="sd">        (deltaB * 2**-iteration). Iterate until the tail decays below 1e-18</span>
+<span class="sd">        or the result stops changing (breakTag guards against stagnation at</span>
+<span class="sd">        machine precision). Finally, keep only the radii where both B and</span>
+<span class="sd">        -DB are positive and finite (where the log is not NaN), i.e. the</span>
+<span class="sd">        monotonically decaying part of the profile, and demote the long-double</span>
+<span class="sd">        working arrays to float64.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">isnotnan</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">deltaB</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">(</span><span class="mf">.5</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Bmax</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bmin</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B0</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Bmin</span> <span class="o">+</span> <span class="n">deltaB</span><span class="p">)</span>
+        <span class="n">increment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">(</span><span class="mi">10</span><span class="p">)])</span>
+        <span class="n">lastB</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">isnotnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">)][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">breakTag</span>  <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lastB</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">1e-18</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__RK4__</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">lastBnew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">isnotnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">)][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1">#print(self.B0,lastBnew)</span>
+            <span class="k">if</span> <span class="n">lastBnew</span> <span class="o">==</span> <span class="n">lastB</span><span class="p">:</span>
+                <span class="n">breakTag</span> <span class="o">=</span> <span class="n">breakTag</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">breakTag</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">breakTag</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">lastB</span>     <span class="o">=</span> <span class="n">lastBnew</span>
+            <span class="n">increment</span> <span class="o">=</span> <span class="n">increment</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">B0</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">B0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">lastB</span><span class="p">))</span><span class="o">*</span><span class="n">deltaB</span><span class="o">*</span><span class="n">increment</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">isnotnan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">))</span> <span class="o">&amp;</span> <span class="n">isnotnan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">DB</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DB</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DB</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DB</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__RK4__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the bounce ODE outward from r ~ 0 with classic RK4.</span>
+
+<span class="sd">        The second-order equation is split into the first-order system</span>
+<span class="sd">        B&#39; = DB and DB&#39; = -(d/r) DB + V&#39;(B). Initial data sit at r = eps</span>
+<span class="sd">        with B = B0 and DB = -eps (an infinitesimal inward slope avoids the</span>
+<span class="sd">        coordinate singularity at the origin). Integration runs for at most</span>
+<span class="sd">        N steps of size dr; an OverflowError (the shot diverging at</span>
+<span class="sd">        long-double range) ends the run early, and the profile collected so</span>
+<span class="sd">        far is stored in self.B, self.DB, self.r.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span>  <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">B1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">b1</span><span class="p">:</span> <span class="n">b1</span>
+        <span class="n">B2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">b1</span><span class="p">:</span> <span class="o">-</span><span class="n">d</span><span class="o">*</span><span class="n">b1</span><span class="o">/</span><span class="n">r</span> <span class="o">+</span> <span class="n">b</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="o">*</span><span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">**</span><span class="mi">3</span>
+        <span class="n">B</span>  <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">B0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B0</span><span class="p">]</span>
+        <span class="n">DB</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span><span class="p">]</span>
+        <span class="n">r</span>  <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">longdouble</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">]</span>
+        <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">n</span>   <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">k31</span> <span class="o">=</span> <span class="n">B1</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">DB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">k41</span> <span class="o">=</span> <span class="n">B2</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">DB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+                <span class="n">k32</span> <span class="o">=</span> <span class="n">B1</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k31</span><span class="p">,</span><span class="n">DB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k41</span><span class="p">)</span>
+                <span class="n">k42</span> <span class="o">=</span> <span class="n">B2</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k31</span><span class="p">,</span><span class="n">DB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k41</span><span class="p">)</span>
+
+                <span class="n">k33</span> <span class="o">=</span> <span class="n">B1</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k32</span><span class="p">,</span><span class="n">DB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k42</span><span class="p">)</span>
+                <span class="n">k43</span> <span class="o">=</span> <span class="n">B2</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k32</span><span class="p">,</span><span class="n">DB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k42</span><span class="p">)</span>
+
+                <span class="n">k34</span> <span class="o">=</span> <span class="n">B1</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k33</span><span class="p">,</span><span class="n">DB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k43</span><span class="p">)</span>
+                <span class="n">k44</span> <span class="o">=</span> <span class="n">B2</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k33</span><span class="p">,</span><span class="n">DB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">*</span><span class="n">k43</span><span class="p">)</span>
+
+                <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">)</span>
+                <span class="n">B</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">/</span><span class="mf">6.</span><span class="o">*</span><span class="p">(</span><span class="n">k31</span><span class="o">+</span><span class="mf">2.</span><span class="o">*</span><span class="n">k32</span><span class="o">+</span><span class="mf">2.</span><span class="o">*</span><span class="n">k33</span><span class="o">+</span><span class="n">k34</span><span class="p">))</span>
+                <span class="n">DB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">/</span><span class="mf">6.</span><span class="o">*</span><span class="p">(</span><span class="n">k41</span><span class="o">+</span><span class="mf">2.</span><span class="o">*</span><span class="n">k42</span><span class="o">+</span><span class="mf">2.</span><span class="o">*</span><span class="n">k43</span><span class="o">+</span><span class="n">k44</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">OverflowError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Overflow occured at n =&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">DB</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyCA.measures module &mdash; pyCA 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=fda51166" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="License" href="../license.html" />
+    <link rel="prev" title="pyCA.ca2d module" href="pyCA.ca2d.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_eca.html">Elementary Cellular Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_stochastic.html">Thermal and Stochastic Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_life.html">Two-Dimensional Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_measures.html">Information Measures</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyCA.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyCA.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyCA.eca.html">pyCA.eca module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyCA.ica.html">pyCA.ica module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyCA.stochastic.html">pyCA.stochastic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyCA.ca2d.html">pyCA.ca2d module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyCA.measures module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyCA.measures.block_entropy"><code class="docutils literal notranslate"><span class="pre">block_entropy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyCA.measures.entropy_rate"><code class="docutils literal notranslate"><span class="pre">entropy_rate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyCA.measures.mutual_information"><code class="docutils literal notranslate"><span class="pre">mutual_information()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pyCA.html">API Reference</a></li>
+      <li class="breadcrumb-item active">pyCA.measures module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/pyCA.measures.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyCA.measures">
+<span id="pyca-measures-module"></span><h1>pyCA.measures module<a class="headerlink" href="#module-pyCA.measures" title="Link to this heading"></a></h1>
+<p>Information-theoretic measures for cellular automaton histories.</p>
+<p>A cellular automaton is a compression problem in disguise: the rule is a few
+bits, yet the spacetime diagrams range from dead uniformity to apparently
+irreducible randomness. The measures here quantify where on that range a
+history sits. All entropies are in bits, all distributions are estimated
+empirically from the supplied data, and all functions accept either a single
+state (1d array) or a spacetime history (2d array, time along axis 0) with
+periodic boundaries assumed in space.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCA.measures.block_entropy">
+<span class="sig-prename descclassname"><span class="pre">pyCA.measures.</span></span><span class="sig-name descname"><span class="pre">block_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCA/measures.html#block_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCA.measures.block_entropy" title="Link to this definition"></a></dt>
+<dd><p>Shannon entropy of the length-k block distribution, in bits.</p>
+<p>Slides a circular window of length <cite>k</cite> along each row of <cite>data</cite>,
+histograms the resulting k-bit words over all rows and positions, and
+returns the Shannon entropy of that empirical distribution. For k = 1
+this is the entropy of the cell-value distribution; growth with k probes
+spatial correlations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) – A state (1d) or spacetime history (2d, time along axis 0).</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Block length (default 1).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>H_k, between 0 (uniform lattice) and k (iid coin flips).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCA.measures.entropy_rate">
+<span class="sig-prename descclassname"><span class="pre">pyCA.measures.</span></span><span class="sig-name descname"><span class="pre">entropy_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCA/measures.html#entropy_rate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCA.measures.entropy_rate" title="Link to this definition"></a></dt>
+<dd><p>Estimate of the spatial entropy rate, H_k - H_{k-1}, in bits per cell.</p>
+<p>The block entropies H_k grow at most linearly in k; their increments
+converge (from above) to the entropy rate, the number of new bits each
+additional cell carries once its neighbors to one side are known. Larger
+<cite>k</cite> tightens the estimate but needs exponentially more data — keep
+2**k well below the number of samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) – A state (1d) or spacetime history (2d, time along axis 0).</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Block length of the finer scale (default 2). Must be &gt;= 1; k = 1
+returns H_1 itself, the rate estimate with no conditioning.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>h_k = H_k - H_{k-1}, between 0 and 1.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCA.measures.mutual_information">
+<span class="sig-prename descclassname"><span class="pre">pyCA.measures.</span></span><span class="sig-name descname"><span class="pre">mutual_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCA/measures.html#mutual_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCA.measures.mutual_information" title="Link to this definition"></a></dt>
+<dd><p>Mutual information between cells <cite>distance</cite> apart, in bits.</p>
+<p>Estimates I(X; Y) = H(X) + H(Y) - H(X, Y) where X and Y are the values
+of two cells separated by <cite>distance</cite> sites in the same row, pooled over
+all rows and positions (with periodic wrapping). Zero means the cells
+are statistically independent at that separation; the maximum, H(X),
+means one determines the other.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) – A state (1d) or spacetime history (2d, time along axis 0).</p></li>
+<li><p><strong>distance</strong> (<em>int</em><em>, </em><em>optional</em>) – Spatial separation between the cell pair (default 1).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>I(X; Y) &gt;= 0.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyCA.ca2d.html" class="btn btn-neutral float-left" title="pyCA.ca2d module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
