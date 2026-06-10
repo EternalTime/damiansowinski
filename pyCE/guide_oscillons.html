@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oscillons &mdash; pyCE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ab018f0f" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Polytropes" href="guide_polytropes.html" />
+    <link rel="prev" title="Instantons" href="guide_instantons.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyCE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#your-first-configurational-entropy">Your first configurational entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_instantons.html">Instantons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_instantons.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_instantons.html#solving-a-bounce">Solving a bounce</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Oscillons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-setup">The setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-a-simulation">Running a simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_polytropes.html">Polytropes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_polytropes.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_polytropes.html#solving-a-polytrope">Solving a polytrope</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_cosmology.html">The Cosmic Microwave Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_cosmology.html#loading-a-spectrum">Loading a spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cosmology.html#from-spectrum-to-entropy">From spectrum to entropy</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/modules.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/pyCE.html">pyCE package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyCE.html#contents">Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.cosmology.html">pyCE.cosmology package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.instantons.html">pyCE.instantons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.math.html">pyCE.math module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.oscillons.html">pyCE.oscillons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.polytropes.html">pyCE.polytropes module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyCE.html#module-pyCE">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.html#modules">Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyCE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Oscillons</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/guide_oscillons.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="oscillons">
+<h1>Oscillons<a class="headerlink" href="#oscillons" title="Link to this heading"></a></h1>
+<p>In 1976 Igor Bogolyubsky and Vladimir Makhankov noticed that a collapsing
+bubble of scalar field does not always die — it can settle into a localized,
+pulsating lump that persists for thousands of oscillations. Marcelo Gleiser
+rediscovered these objects in 1994 and christened them oscillons. They are
+not protected by any conserved charge; they survive on dynamics alone, which
+is what makes their longevity remarkable and their eventual death worth
+watching closely. The <a class="reference internal" href="source/pyCE.oscillons.html#module-pyCE.oscillons" title="pyCE.oscillons"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.oscillons</span></code></a> module lets you watch.</p>
+<section id="the-setup">
+<h2>The setup<a class="headerlink" href="#the-setup" title="Link to this heading"></a></h2>
+<p>The module evolves a spherically symmetric real scalar field in the same
+asymmetric double-well used by <a class="reference internal" href="source/pyCE.instantons.html#module-pyCE.instantons" title="pyCE.instantons"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.instantons</span></code></a> — the Kolb &amp; Turner
+parametrization, with asymmetry factor <span class="math notranslate nohighlight">\(\epsilon\)</span> setting
+<span class="math notranslate nohighlight">\(\alpha = \tfrac{3}{\sqrt{2}}(1+\epsilon)\)</span>. The numerical scheme has
+one trick worth understanding before you run it: the outer region of the
+radial grid is boosted outward — a monotonically increasingly boosted (MIB)
+coordinate system — so that radiation leaving the oscillon is carried off the
+lattice instead of reflecting from the boundary and contaminating the core.
+The grid mimics an infinite domain at the cost of a finite one. Time stepping
+is iterated Crank–Nicolson, with high-order numerical dissipation damping
+grid-scale noise.</p>
+</section>
+<section id="running-a-simulation">
+<h2>Running a simulation<a class="headerlink" href="#running-a-simulation" title="Link to this heading"></a></h2>
+<p>First create the environment, then initialize a field, then evolve it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.oscillons</span><span class="w"> </span><span class="kn">import</span> <span class="n">oscillon</span>
+
+<span class="n">env</span>    <span class="o">=</span> <span class="n">oscillon</span><span class="p">(</span><span class="n">asymmetry_factor</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">dimension</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">fields</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">initialize_field</span><span class="p">(</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">)</span>   <span class="c1"># Gaussian of radius 2.9</span>
+<span class="n">env</span><span class="o">.</span><span class="n">simulate_oscillon</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">E</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$t$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$E$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A word of warning before you press enter: the simulation runs until 99% of
+the initial energy has radiated through the cap radius, and oscillons are
+famous for refusing to die. A long-lived configuration on the default lattice
+of 1500 points means a long wait. For a first run, pass
+<code class="docutils literal notranslate"><span class="pre">plot_profile</span> <span class="pre">=</span> <span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">plot_energy_density</span> <span class="pre">=</span> <span class="pre">True</span></code> to watch the field
+live — seeing the initial Gaussian shed its excess energy and ring down into
+the oscillon attractor is worth the slowdown once.</p>
+<p>The energy history <code class="docutils literal notranslate"><span class="pre">env.E</span></code>, the core amplitude history <code class="docutils literal notranslate"><span class="pre">env.core</span></code>, and
+the corresponding times <code class="docutils literal notranslate"><span class="pre">env.time</span></code> are stored on the environment when the
+run completes. The stress-energy components are available at any moment
+through <code class="docutils literal notranslate"><span class="pre">env.stress_energy_tensor(fields)</span></code>, and <code class="docutils literal notranslate"><span class="pre">env.radialFT(y)</span></code> gives
+you the radial Fourier transform on the interior grid — the first call builds
+the transform matrix, so it is slow once and fast thereafter.</p>
+<p>Experiment with the initial radius. Not every Gaussian becomes an oscillon —
+too narrow and the field disperses promptly, too wide and the collapse
+overshoots. Map out the basin of attraction for yourself; keeping a record of
+which radii live and which die is exactly the kind of small journal that pays
+off later.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="guide_instantons.html" class="btn btn-neutral float-left" title="Instantons" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="guide_polytropes.html" class="btn btn-neutral float-right" title="Polytropes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

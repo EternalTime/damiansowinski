@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyCA.ica &mdash; pyCA 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=fda51166" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            pyCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_eca.html">Elementary Cellular Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_stochastic.html">Thermal and Stochastic Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_life.html">Two-Dimensional Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_measures.html">Information Measures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/pyCA.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyCA.ica</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyCA.ica</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Ising cellular automata: deterministic rules with thermal noise.</span>
+
+<span class="sd">An Ising cellular automaton (ICA) couples two dynamics on the same periodic</span>
+<span class="sd">lattice. A fraction of the cells, drawn fresh at random each step, evolve</span>
+<span class="sd">stochastically as Ising spins in contact with a heat bath — a cell flips</span>
+<span class="sd">with the heat-bath probability determined by its local Ising energy and the</span>
+<span class="sd">temperature. The remaining cells evolve deterministically by an elementary</span>
+<span class="sd">cellular automaton rule. With stochfrac = 0 the ICA reduces exactly to the</span>
+<span class="sd">underlying :class:`pyCA.eca.ECA`; with stochfrac = 1 it is a kinetic Ising</span>
+<span class="sd">chain; in between, determinism and thermal noise compete.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyCA.eca</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span>
+
+<div class="viewcode-block" id="ICA">
+<a class="viewcode-back" href="../../api/pyCA.ica.html#pyCA.ica.ICA">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ICA</span><span class="p">(</span><span class="n">ECA</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A 1-dimensional Ising cellular automaton.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rule : int</span>
+<span class="sd">        Wolfram rule number, 0-255, governing the deterministic cells.</span>
+<span class="sd">    state : array_like of 0s and 1s, optional</span>
+<span class="sd">        Initial state. If omitted, a random state of length `N` is drawn.</span>
+<span class="sd">    temperature : float, optional</span>
+<span class="sd">        Heat-bath temperature for the stochastic cells (default 1).</span>
+<span class="sd">    stochfrac : float, optional</span>
+<span class="sd">        Probability for each cell, each step, to evolve stochastically</span>
+<span class="sd">        instead of deterministically (default 0.5).</span>
+<span class="sd">    N, memory, rng</span>
+<span class="sd">        As for :class:`pyCA.eca.ECA`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energy : float</span>
+<span class="sd">        Mean Ising energy per site of the current state, updated at each</span>
+<span class="sd">        `evolve` call.</span>
+<span class="sd">    temperature : float</span>
+<span class="sd">        Validated property; reassign freely (an epsilon regularizes T = 0).</span>
+<span class="sd">    stochfrac : float</span>
+<span class="sd">        Validated property, in [0, 1].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">stochfrac</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">N</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="n">memory</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stochfrac</span> <span class="o">=</span> <span class="n">stochfrac</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state_energy</span><span class="p">())</span>
+
+    <span class="c1">#------------------------------------------------ validated properties</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span>
+
+    <span class="nd">@temperature</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newTemperature</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">newTemperature</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;temperature must be nonnegative&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">newTemperature</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_invT</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stochfrac</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stochfrac</span>
+
+    <span class="nd">@stochfrac</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stochfrac</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newStochFrac</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">newStochFrac</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;stochfrac must lie in [0, 1]&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stochfrac</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">newStochFrac</span><span class="p">)</span>
+
+    <span class="c1">#------------------------------------------------------------ dynamics</span>
+<div class="viewcode-block" id="ICA.evolve">
+<a class="viewcode-back" href="../../api/pyCA.ica.html#pyCA.ica.ICA.evolve">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">evolve</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance one step: thermal flips where chosen, the rule elsewhere.&quot;&quot;&quot;</span>
+        <span class="n">stochCellIdx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stochfrac</span><span class="p">)</span>
+        <span class="n">stochCellVal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="n">stochCellIdx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">stateEnergy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state_energy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">stateEnergy</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span>
+        <span class="n">flippedIdx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stoch_evolve</span><span class="p">(</span><span class="n">stateEnergy</span><span class="p">[</span><span class="n">stochCellIdx</span><span class="p">])</span>
+        <span class="n">stochCellVal</span><span class="p">[</span><span class="n">flippedIdx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">stochCellVal</span><span class="p">[</span><span class="n">flippedIdx</span><span class="p">]</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_rule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">)</span>
+        <span class="n">state</span><span class="p">[</span><span class="n">stochCellIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">stochCellVal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span></div>
+
+
+    <span class="c1">#------------------------------------------------------------ internals</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_state_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Per-site Ising energy, -s_i (s_{i-1} + s_{i+1})/2 with s = +/-1.&quot;&quot;&quot;</span>
+        <span class="n">isingArray</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">-</span> <span class="mf">1.0</span>
+        <span class="n">stateEnergy</span> <span class="o">=</span> <span class="mf">.5</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">isingArray</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">isingArray</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">isingArray</span><span class="o">*</span><span class="n">stateEnergy</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_stoch_evolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stateEnergy</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Heat-bath flips: cell i flips with probability 1/(1+e^(-2*E_i/T)).</span>
+
+<span class="sd">        High-energy (frustrated) cells flip eagerly; low-energy (aligned)</span>
+<span class="sd">        cells flip reluctantly, and not at all as T -&gt; 0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#clipping the exponent avoids a harmless overflow warning at T ~ 0</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_invT</span><span class="o">*</span><span class="n">stateEnergy</span><span class="p">,</span> <span class="o">-</span><span class="mf">700.0</span><span class="p">,</span> <span class="mf">700.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">stateEnergy</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)))</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

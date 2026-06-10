@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elementary Cellular Automata &mdash; pyCA 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=fda51166" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Thermal and Stochastic Automata" href="guide_stochastic.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Elementary Cellular Automata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#driving-the-class">Driving the class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-four-classes">The four classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_stochastic.html">Thermal and Stochastic Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_life.html">Two-Dimensional Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_measures.html">Information Measures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyCA.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Elementary Cellular Automata</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/guide_eca.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="elementary-cellular-automata">
+<h1>Elementary Cellular Automata<a class="headerlink" href="#elementary-cellular-automata" title="Link to this heading"></a></h1>
+<p>An elementary cellular automaton is a row of cells, each 0 or 1, each
+updating simultaneously from its own value and its two nearest neighbors’.
+That is the entire specification — three binary inputs, one binary output —
+yet the 256 possible update tables exhaust an astonishing range of behavior.
+Stephen Wolfram’s numbering scheme names each table by a single byte: bit
+<span class="math notranslate nohighlight">\(n\)</span> of the rule number is the output for the neighborhood whose
+(left, center, right) values, read as a binary number, equal <span class="math notranslate nohighlight">\(n\)</span>.
+Rule 90, for instance, is 01011010 in binary — work through the eight
+neighborhoods and convince yourself it computes left XOR right.</p>
+<section id="driving-the-class">
+<h2>Driving the class<a class="headerlink" href="#driving-the-class" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="api/pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a> class keeps the original MATLAB interface: <cite>rule</cite>
+and <cite>state</cite> are validated properties you can reassign mid-flight, <cite>evolve</cite>
+advances one step, and <cite>play</cite> opens a live display. The Python class adds
+<cite>run</cite> and <cite>spacetime</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span>
+
+<span class="n">ca</span> <span class="o">=</span> <span class="n">ECA</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>      <span class="c1"># random initial state on 256 cells</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">ca</span><span class="o">.</span><span class="n">spacetime</span><span class="p">()</span>  <span class="c1"># (time, space) array, newest row last</span>
+
+<span class="n">ca</span><span class="o">.</span><span class="n">rule</span> <span class="o">=</span> <span class="mi">90</span>              <span class="c1"># swap the rule; the state carries over</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>States live on a periodic lattice — the row is a ring — so boundary effects
+never contaminate the dynamics, though patterns that outrun the lattice will
+meet themselves coming around.</p>
+</section>
+<section id="the-four-classes">
+<h2>The four classes<a class="headerlink" href="#the-four-classes" title="Link to this heading"></a></h2>
+<p>Wolfram’s classification sorts the rules by what they do to almost any
+initial condition. Class I rules freeze into uniformity (rule 0, rule 255).
+Class II rules settle into stripes or simple periodic textures (rule 204,
+the identity, is the laziest member). Class III rules churn out apparent
+randomness forever — rule 30 is the archetype. Class IV rules live on the
+boundary, supporting localized structures that move and collide — rule 110,
+famously, is Turing complete: Matthew Cook proved in the 1990s that those
+colliding gliders can simulate any computation.</p>
+<p>Survey them yourself:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span>
+
+<span class="n">rules</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">110</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">rule</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rules</span><span class="p">,</span> <span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+    <span class="n">ca</span> <span class="o">=</span> <span class="n">ECA</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+    <span class="n">ca</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ca</span><span class="o">.</span><span class="n">spacetime</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Rule </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">rule</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Pick a handful of rules at random and classify them by eye before reading
+their known classes — the boundaries are blurrier than the taxonomy
+suggests, and deciding where a rule belongs is a better teacher than being
+told. Then come back with <a class="reference internal" href="guide_measures.html"><span class="doc">Information Measures</span></a> and classify them by number
+instead.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="guide_stochastic.html" class="btn btn-neutral float-right" title="Thermal and Stochastic Automata" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

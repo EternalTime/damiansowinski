@@ -49,6 +49,14 @@ theme: minima
 plugins:
   - jekyll-feed
 
+# Sphinx documentation subsites (pyCE/, pyCA/) use underscore-prefixed
+# directories that Jekyll would otherwise treat as special and drop.
+include:
+  - _static
+  - _sources
+  - _modules
+  - _images
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
