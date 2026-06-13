@@ -32,11 +32,6 @@ If you find any mistakes, please let me know.
 
 <ul>
   <li><a href="{{ '/assets/docs/notes/Understanding_the_CMB.pdf' | relative_url }}">The Cosmic Microwave Background</a></li>
-  <li><a href="{{ '/assets/docs/notes/Gas_Stress_Energy.pdf' | relative_url }}">Stress-energy tensor of a gas of particles</a></li>
-  <li><a href="{{ '/assets/docs/notes/Moving_Mass_Weak_Field.pdf' | relative_url }}">Weak field approximation of a moving mass</a></li>
-  <li><a href="{{ '/assets/docs/notes/Photon_Gas_Stress_Energy.pdf' | relative_url }}">Stress-energy tensor of a photon gas</a></li>
-  <li><a href="{{ '/assets/docs/notes/Scalar_Vector_Gravity.pdf' | relative_url }}">Gravity coupled to a scalar field and a massive vector field</a></li>
-  <li><a href="{{ '/assets/docs/notes/Scale_Evolutio.pdf' | relative_url }}">Derivation of the scale evolution in FLRW cosmology</a></li>
 </ul>
 
 <h2 class="gradient-text2" style="font-size: 1.5em;">Computational Physics</h2>
