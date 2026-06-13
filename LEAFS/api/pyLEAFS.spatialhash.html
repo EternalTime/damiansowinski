@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyLEAFS.spatialhash module &mdash; pyLEAFS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9b3e4fe7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyLEAFS.population module" href="pyLEAFS.population.html" />
+    <link rel="prev" title="pyLEAFS.fields module" href="pyLEAFS.fields.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyLEAFS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">The model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_core.html">The core and its seams</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyLEAFS.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.grid.html">pyLEAFS.grid module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.fields.html">pyLEAFS.fields module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyLEAFS.spatialhash module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyLEAFS.spatialhash.SpatialHash"><code class="docutils literal notranslate"><span class="pre">SpatialHash</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.spatialhash.SpatialHash.build"><code class="docutils literal notranslate"><span class="pre">SpatialHash.build()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.spatialhash.SpatialHash.query"><code class="docutils literal notranslate"><span class="pre">SpatialHash.query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.spatialhash.SpatialHash.query_within"><code class="docutils literal notranslate"><span class="pre">SpatialHash.query_within()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.population.html">pyLEAFS.population module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.simulation.html">pyLEAFS.simulation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.viewer.html">pyLEAFS.viewer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.palette.html">pyLEAFS.palette module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyLEAFS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pyLEAFS.html">API Reference</a></li>
+      <li class="breadcrumb-item active">pyLEAFS.spatialhash module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/pyLEAFS.spatialhash.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyLEAFS.spatialhash">
+<span id="pyleafs-spatialhash-module"></span><h1>pyLEAFS.spatialhash module<a class="headerlink" href="#module-pyLEAFS.spatialhash" title="Link to this heading"></a></h1>
+<p>Generic spatial hash over a point set.</p>
+<p>A <a class="reference internal" href="#pyLEAFS.spatialhash.SpatialHash" title="pyLEAFS.spatialhash.SpatialHash"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialHash</span></code></a> buckets an arbitrary <a href="#id1"><span class="problematic" id="id2">``</span></a>(n, D)` set of points into the
+regions of a shared <code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code>, then answers Moore-neighbourhood queries.
+It is deliberately agnostic about what the points are — resources, foragers,
+predators — so the same structure serves every layer. Unlike the resource
+field’s internal buffer, this is a lightweight index rebuilt from a positions
+array on demand.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyLEAFS.spatialhash.SpatialHash">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyLEAFS.spatialhash.</span></span><span class="sig-name descname"><span class="pre">SpatialHash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/spatialhash.html#SpatialHash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.spatialhash.SpatialHash" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Bucket a point set into grid regions for neighbourhood queries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid</strong> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><em>Grid</em></a>) – Shared spatial grid.</p></li>
+<li><p><strong>positions</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em><em>, </em><em>optional</em>) – Initial point set. May be rebuilt later with <a class="reference internal" href="#pyLEAFS.spatialhash.SpatialHash.build" title="pyLEAFS.spatialhash.SpatialHash.build"><code class="xref py py-meth docutils literal notranslate"><span class="pre">build()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">L</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">12.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sh</span> <span class="o">=</span> <span class="n">SpatialHash</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">idx</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">idx</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="go">[0, 2]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.spatialhash.SpatialHash.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/spatialhash.html#SpatialHash.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.spatialhash.SpatialHash.build" title="Link to this definition"></a></dt>
+<dd><p>(Re)index <code class="docutils literal notranslate"><span class="pre">positions</span></code> into per-region buckets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>positions</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical positions to index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.spatialhash.SpatialHash.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/spatialhash.html#SpatialHash.query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.spatialhash.SpatialHash.query" title="Link to this definition"></a></dt>
+<dd><p>Indices of points in the Moore neighbourhood of <code class="docutils literal notranslate"><span class="pre">pos</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pos</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>,</em><em>)</em>) – Physical query position.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Indices into the indexed positions array of every point whose
+region is in the Moore neighbourhood of <code class="docutils literal notranslate"><span class="pre">pos</span></code>. Not distance
+filtered — the caller refines with actual displacements.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.spatialhash.SpatialHash.query_within">
+<span class="sig-name descname"><span class="pre">query_within</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/spatialhash.html#SpatialHash.query_within"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.spatialhash.SpatialHash.query_within" title="Link to this definition"></a></dt>
+<dd><p>Indices of indexed points within <code class="docutils literal notranslate"><span class="pre">radius</span></code> of <code class="docutils literal notranslate"><span class="pre">pos</span></code>.</p>
+<p>Refines <a class="reference internal" href="#pyLEAFS.spatialhash.SpatialHash.query" title="pyLEAFS.spatialhash.SpatialHash.query"><code class="xref py py-meth docutils literal notranslate"><span class="pre">query()</span></code></a> by minimum-image distance. Assumes <code class="docutils literal notranslate"><span class="pre">radius</span></code> is
+no larger than one region side so the Moore neighbourhood suffices.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyLEAFS.fields.html" class="btn btn-neutral float-left" title="pyLEAFS.fields module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyLEAFS.population.html" class="btn btn-neutral float-right" title="pyLEAFS.population module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

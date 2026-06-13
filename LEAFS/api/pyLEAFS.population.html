@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyLEAFS.population module &mdash; pyLEAFS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9b3e4fe7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyLEAFS.simulation module" href="pyLEAFS.simulation.html" />
+    <link rel="prev" title="pyLEAFS.spatialhash module" href="pyLEAFS.spatialhash.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyLEAFS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">The model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_core.html">The core and its seams</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyLEAFS.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.grid.html">pyLEAFS.grid module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.fields.html">pyLEAFS.fields module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.spatialhash.html">pyLEAFS.spatialhash module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyLEAFS.population module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyLEAFS.population.Population"><code class="docutils literal notranslate"><span class="pre">Population</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.count"><code class="docutils literal notranslate"><span class="pre">Population.count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.pos"><code class="docutils literal notranslate"><span class="pre">Population.pos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.heading"><code class="docutils literal notranslate"><span class="pre">Population.heading</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.fuel"><code class="docutils literal notranslate"><span class="pre">Population.fuel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.age"><code class="docutils literal notranslate"><span class="pre">Population.age</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.ids"><code class="docutils literal notranslate"><span class="pre">Population.ids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.harvested"><code class="docutils literal notranslate"><span class="pre">Population.harvested</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.offspring"><code class="docutils literal notranslate"><span class="pre">Population.offspring</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.add"><code class="docutils literal notranslate"><span class="pre">Population.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.index_of"><code class="docutils literal notranslate"><span class="pre">Population.index_of()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.seed"><code class="docutils literal notranslate"><span class="pre">Population.seed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.population.Population.step"><code class="docutils literal notranslate"><span class="pre">Population.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.simulation.html">pyLEAFS.simulation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.viewer.html">pyLEAFS.viewer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.palette.html">pyLEAFS.palette module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyLEAFS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pyLEAFS.html">API Reference</a></li>
+      <li class="breadcrumb-item active">pyLEAFS.population module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/pyLEAFS.population.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyLEAFS.population">
+<span id="pyleafs-population-module"></span><h1>pyLEAFS.population module<a class="headerlink" href="#module-pyLEAFS.population" title="Link to this heading"></a></h1>
+<p>Forager populations.</p>
+<p>A <a class="reference internal" href="#pyLEAFS.population.Population" title="pyLEAFS.population.Population"><code class="xref py py-class docutils literal notranslate"><span class="pre">Population</span></code></a> is a struct-of-arrays bag of agent bodies sharing a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code>. Each agent has a position, a unit heading, a fuel reserve, and
+some bookkeeping. The v1 controller is <em>greedy</em> and lives in the agent body:
+steer toward the nearest resource within sensing range, otherwise move
+ballistically with rotational diffusion.</p>
+<p>The struct-of-arrays layout (parallel arrays rather than per-agent objects)
+keeps the step vectorizable and dimension-agnostic, and is the natural target
+for a later Numba pass. The <code class="docutils literal notranslate"><span class="pre">Controller</span></code> split (greedy vs. RNN) is reserved
+for a later layer; for now <code class="docutils literal notranslate"><span class="pre">step</span></code> calls the built-in greedy steering.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyLEAFS.population.</span></span><span class="sig-name descname"><span class="pre">Population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_collect</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R_sense</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repro_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/population.html#Population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.population.Population" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A single-species greedy forager population (struct-of-arrays).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid</strong> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><em>Grid</em></a>) – Shared spatial grid.</p></li>
+<li><p><strong>v</strong> (<em>float</em>) – Translational speed.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Timestep.</p></li>
+<li><p><strong>r_collect</strong> (<em>float</em>) – Collection radius; resources within this distance are harvested.</p></li>
+<li><p><strong>R_sense</strong> (<em>float</em>) – Sensing radius; only resources within this distance steer the agent.</p></li>
+<li><p><strong>mu0</strong> (<em>float</em>) – Basal metabolic rate (fuel burned per unit time).</p></li>
+<li><p><strong>s_max</strong> (<em>float</em>) – Maximum fuel reserve.</p></li>
+<li><p><strong>sigma</strong> (<em>float</em><em>, </em><em>optional</em>) – Rotational-diffusion noise strength (default 0.1).</p></li>
+<li><p><strong>tau_A</strong> (<em>float</em><em>, </em><em>optional</em>) – Heading persistence timescale (default 1.0).</p></li>
+<li><p><strong>repro_fraction</strong> (<em>float</em><em>, </em><em>optional</em>) – Fuel threshold for budding, as a fraction of <code class="docutils literal notranslate"><span class="pre">s_max</span></code> (default 0.8).</p></li>
+<li><p><strong>capacity</strong> (<em>int</em><em>, </em><em>optional</em>) – Initial array capacity; grows automatically as needed (default 256).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.count">
+<span class="sig-name descname"><span class="pre">count</span></span><a class="headerlink" href="#pyLEAFS.population.Population.count" title="Link to this definition"></a></dt>
+<dd><p>Number of live agents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.pos">
+<span class="sig-name descname"><span class="pre">pos</span></span><a class="headerlink" href="#pyLEAFS.population.Population.pos" title="Link to this definition"></a></dt>
+<dd><p>Agent positions (a live view; copy if you need to retain it).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="#pyLEAFS.population.Population.count" title="pyLEAFS.population.Population.count">count</a>, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.heading">
+<span class="sig-name descname"><span class="pre">heading</span></span><a class="headerlink" href="#pyLEAFS.population.Population.heading" title="Link to this definition"></a></dt>
+<dd><p>Unit heading vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="#pyLEAFS.population.Population.count" title="pyLEAFS.population.Population.count">count</a>, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.fuel">
+<span class="sig-name descname"><span class="pre">fuel</span></span><a class="headerlink" href="#pyLEAFS.population.Population.fuel" title="Link to this definition"></a></dt>
+<dd><p>Fuel reserves.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="#pyLEAFS.population.Population.count" title="pyLEAFS.population.Population.count">count</a>,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.age">
+<span class="sig-name descname"><span class="pre">age</span></span><a class="headerlink" href="#pyLEAFS.population.Population.age" title="Link to this definition"></a></dt>
+<dd><p>Age in timesteps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="#pyLEAFS.population.Population.count" title="pyLEAFS.population.Population.count">count</a>,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.ids">
+<span class="sig-name descname"><span class="pre">ids</span></span><a class="headerlink" href="#pyLEAFS.population.Population.ids" title="Link to this definition"></a></dt>
+<dd><p>Stable unique id per agent (survives compaction).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="#pyLEAFS.population.Population.count" title="pyLEAFS.population.Population.count">count</a>,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.harvested">
+<span class="sig-name descname"><span class="pre">harvested</span></span><a class="headerlink" href="#pyLEAFS.population.Population.harvested" title="Link to this definition"></a></dt>
+<dd><p>Lifetime resources collected per agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="#pyLEAFS.population.Population.count" title="pyLEAFS.population.Population.count">count</a>,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.offspring">
+<span class="sig-name descname"><span class="pre">offspring</span></span><a class="headerlink" href="#pyLEAFS.population.Population.offspring" title="Link to this definition"></a></dt>
+<dd><p>Number of daughters budded per agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="#pyLEAFS.population.Population.count" title="pyLEAFS.population.Population.count">count</a>,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fuel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/population.html#Population.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.population.Population.add" title="Link to this definition"></a></dt>
+<dd><p>Add one agent. Returns its stable id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pos</strong> (<em>array_like</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>,</em><em>)</em>) – Physical position (wrapped into the domain).</p></li>
+<li><p><strong>heading</strong> (<em>array_like</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>,</em><em>)</em><em>, </em><em>optional</em>) – Heading vector (normalised); random if omitted (requires <code class="docutils literal notranslate"><span class="pre">rng</span></code>).</p></li>
+<li><p><strong>fuel</strong> (<em>float</em><em>, </em><em>optional</em>) – Initial fuel; defaults to <code class="docutils literal notranslate"><span class="pre">s_max</span></code>.</p></li>
+<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) – Random source, used when <code class="docutils literal notranslate"><span class="pre">heading</span></code> is omitted.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.index_of">
+<span class="sig-name descname"><span class="pre">index_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/population.html#Population.index_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.population.Population.index_of" title="Link to this definition"></a></dt>
+<dd><p>Return the current array index of <code class="docutils literal notranslate"><span class="pre">agent_id</span></code>, or None if dead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fuel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/population.html#Population.seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.population.Population.seed" title="Link to this definition"></a></dt>
+<dd><p>Add <code class="docutils literal notranslate"><span class="pre">n</span></code> agents at uniformly random positions and headings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.population.Population.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/population.html#Population.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.population.Population.step" title="Link to this definition"></a></dt>
+<dd><p>Advance every agent one timestep against the field list.</p>
+<p>Greedy steering, motion, harvesting against the first
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code> in <code class="docutils literal notranslate"><span class="pre">fields</span></code>, metabolism, budding, and death.
+Returns nothing; mutates the population in place.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyLEAFS.spatialhash.html" class="btn btn-neutral float-left" title="pyLEAFS.spatialhash module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyLEAFS.simulation.html" class="btn btn-neutral float-right" title="pyLEAFS.simulation module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

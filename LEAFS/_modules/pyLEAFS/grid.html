@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyLEAFS.grid &mdash; pyLEAFS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=9b3e4fe7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            pyLEAFS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">The model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_core.html">The core and its seams</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/pyLEAFS.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyLEAFS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyLEAFS.grid</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyLEAFS.grid</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Shared spatial grid.</span>
+
+<span class="sd">The domain is a D-dimensional box partitioned into a regular array of cubical</span>
+<span class="sd">regions of side length ``L``, with periodic (toroidal) boundaries. Every field</span>
+<span class="sd">and population in a simulation references one :class:`Grid`, so geometry,</span>
+<span class="sd">neighbour lookups, and coordinate conventions are defined in exactly one place.</span>
+
+<span class="sd">The grid is dimension-agnostic: ``D = 2`` or ``D = 3`` is chosen by the length</span>
+<span class="sd">of the ``shape`` argument. Positions are always ``(n, D)`` arrays in physical</span>
+<span class="sd">units; region indices are ``(n, D)`` integer arrays.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<div class="viewcode-block" id="Grid">
+<a class="viewcode-back" href="../../api/pyLEAFS.grid.html#pyLEAFS.grid.Grid">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Grid</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A toroidal box partitioned into cubical regions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    shape : tuple of int</span>
+<span class="sd">        Number of regions along each axis, e.g. ``(5, 5)`` for a 2d grid or</span>
+<span class="sd">        ``(5, 5, 5)`` for 3d. Its length sets the dimension ``D``.</span>
+<span class="sd">    L : float, optional</span>
+<span class="sd">        Side length of one region in physical units (default 1.0).</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    shape : tuple of int</span>
+<span class="sd">        Regions per axis.</span>
+<span class="sd">    D : int</span>
+<span class="sd">        Spatial dimension.</span>
+<span class="sd">    L : float</span>
+<span class="sd">        Region side length.</span>
+<span class="sd">    n_regions : int</span>
+<span class="sd">        Total number of regions, ``prod(shape)``.</span>
+<span class="sd">    extent : ndarray of float, shape (D,)</span>
+<span class="sd">        Physical size of the domain along each axis (``shape * L``).</span>
+<span class="sd">    offsets : ndarray of int, shape (3**D, D)</span>
+<span class="sd">        Moore-neighbourhood offsets, the centre cell ``(0, ..., 0)`` first.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; g = Grid((5, 5), L=10.0)</span>
+<span class="sd">    &gt;&gt;&gt; g.D, g.n_regions</span>
+<span class="sd">    (2, 25)</span>
+<span class="sd">    &gt;&gt;&gt; g.region_of(np.array([[12.0, 3.0]]))</span>
+<span class="sd">    array([[1, 0]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;every entry of shape must be &gt;= 1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Grid supports D = 2 or D = 3 only&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shape_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_arr</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_regions</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape_arr</span><span class="p">))</span>
+
+        <span class="c1"># Moore-neighbourhood offsets (3**D of them), centre cell first.</span>
+        <span class="n">deltas</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">deltas</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------ coordinate conversions</span>
+<div class="viewcode-block" id="Grid.wrap">
+<a class="viewcode-back" href="../../api/pyLEAFS.grid.html#pyLEAFS.grid.Grid.wrap">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrap physical positions into the domain by the toroidal boundary.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pos : ndarray, shape (n, D)</span>
+<span class="sd">            Physical positions.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray, shape (n, D)</span>
+<span class="sd">            Positions wrapped into ``[0, extent)`` along each axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">extent</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.region_of">
+<a class="viewcode-back" href="../../api/pyLEAFS.grid.html#pyLEAFS.grid.Grid.region_of">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">region_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the region index ``(n, D)`` containing each position.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pos : ndarray, shape (n, D)</span>
+<span class="sd">            Physical positions (wrapped internally).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of int, shape (n, D)</span>
+<span class="sd">            Per-axis region indices in ``[0, shape[axis])``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="c1"># guard against floating-point landing exactly on the upper edge</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_arr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.region_id">
+<a class="viewcode-back" href="../../api/pyLEAFS.grid.html#pyLEAFS.grid.Grid.region_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">region_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region_idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Flatten ``(n, D)`` region indices to linear ids ``(n,)``.</span>
+
+<span class="sd">        Uses row-major (C) order consistent with ``numpy.ravel_multi_index``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">region_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">region_idx</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel_multi_index</span><span class="p">(</span>
+            <span class="nb">tuple</span><span class="p">(</span><span class="n">region_idx</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.displacement">
+<a class="viewcode-back" href="../../api/pyLEAFS.grid.html#pyLEAFS.grid.Grid.displacement">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">displacement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Minimum-image displacement ``b - a`` under periodic boundaries.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        a, b : ndarray, shape (n, D)</span>
+<span class="sd">            Physical positions.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray, shape (n, D)</span>
+<span class="sd">            The shortest displacement from ``a`` to ``b`` on the torus, each</span>
+<span class="sd">            component in ``[-extent/2, extent/2)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+        <span class="k">return</span> <span class="n">d</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">extent</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">d</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">extent</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.neighbour_ids">
+<a class="viewcode-back" href="../../api/pyLEAFS.grid.html#pyLEAFS.grid.Grid.neighbour_ids">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">neighbour_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region_idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Linear ids of the Moore neighbourhood of each region.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        region_idx : ndarray of int, shape (n, D)</span>
+<span class="sd">            Per-axis region indices.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of int, shape (n, 3**D)</span>
+<span class="sd">            Linear region ids of each region&#39;s Moore neighbourhood, the region</span>
+<span class="sd">            itself in column 0, wrapped toroidally.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">region_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">region_idx</span><span class="p">)</span>
+        <span class="c1"># (n, 1, D) + (1, 3**D, D) -&gt; (n, 3**D, D)</span>
+        <span class="n">nbr</span> <span class="o">=</span> <span class="n">region_idx</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">nbr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">nbr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_arr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel_multi_index</span><span class="p">(</span>
+            <span class="nb">tuple</span><span class="p">(</span><span class="n">nbr</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
