@@ -1,0 +1,355 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyLEAFS.fields module &mdash; pyLEAFS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9b3e4fe7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyLEAFS.spatialhash module" href="pyLEAFS.spatialhash.html" />
+    <link rel="prev" title="pyLEAFS.grid module" href="pyLEAFS.grid.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyLEAFS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">The model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_core.html">The core and its seams</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyLEAFS.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.grid.html">pyLEAFS.grid module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyLEAFS.fields module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyLEAFS.fields.Field"><code class="docutils literal notranslate"><span class="pre">Field</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.Field.deposit"><code class="docutils literal notranslate"><span class="pre">Field.deposit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.Field.sample"><code class="docutils literal notranslate"><span class="pre">Field.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.Field.step"><code class="docutils literal notranslate"><span class="pre">Field.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pyLEAFS.fields.ResourceField"><code class="docutils literal notranslate"><span class="pre">ResourceField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.N_eq"><code class="docutils literal notranslate"><span class="pre">ResourceField.N_eq</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.count"><code class="docutils literal notranslate"><span class="pre">ResourceField.count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.positions"><code class="docutils literal notranslate"><span class="pre">ResourceField.positions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.all_positions"><code class="docutils literal notranslate"><span class="pre">ResourceField.all_positions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.deposit"><code class="docutils literal notranslate"><span class="pre">ResourceField.deposit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.harvest"><code class="docutils literal notranslate"><span class="pre">ResourceField.harvest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.neighbourhood"><code class="docutils literal notranslate"><span class="pre">ResourceField.neighbourhood()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.sample"><code class="docutils literal notranslate"><span class="pre">ResourceField.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.seed"><code class="docutils literal notranslate"><span class="pre">ResourceField.seed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.step"><code class="docutils literal notranslate"><span class="pre">ResourceField.step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyLEAFS.fields.ResourceField.total"><code class="docutils literal notranslate"><span class="pre">ResourceField.total()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.spatialhash.html">pyLEAFS.spatialhash module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.population.html">pyLEAFS.population module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.simulation.html">pyLEAFS.simulation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.viewer.html">pyLEAFS.viewer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyLEAFS.palette.html">pyLEAFS.palette module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyLEAFS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pyLEAFS.html">API Reference</a></li>
+      <li class="breadcrumb-item active">pyLEAFS.fields module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/pyLEAFS.fields.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyLEAFS.fields">
+<span id="pyleafs-fields-module"></span><h1>pyLEAFS.fields module<a class="headerlink" href="#module-pyLEAFS.fields" title="Link to this heading"></a></h1>
+<p>Fields living on the shared grid.</p>
+<p>A <em>field</em> is anything spatially distributed that the simulation steps in time
+and that agents can sample: the resource field here, and later a pheromone
+field, chemical gradients, and so on. The simulation holds a <em>list</em> of fields
+and steps each one, so new field types are add-ons rather than rewrites.</p>
+<p><a class="reference internal" href="#pyLEAFS.fields.Field" title="pyLEAFS.fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> is the structural protocol every field follows. <a class="reference internal" href="#pyLEAFS.fields.ResourceField" title="pyLEAFS.fields.ResourceField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code></a>
+is the v1 implementation: a replenishing Poisson point process, ported from the
+MATLAB <code class="docutils literal notranslate"><span class="pre">Region</span></code>/<code class="docutils literal notranslate"><span class="pre">Environment</span></code> classes but stored as one flat struct-of-arrays
+buffer instead of per-region objects.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyLEAFS.fields.Field">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyLEAFS.fields.</span></span><span class="sig-name descname"><span class="pre">Field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#Field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.Field" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<p>Structural protocol for a steppable, samplable field.</p>
+<p>A field references a <code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code> and implements the three verbs the
+simulation and agents use. <code class="docutils literal notranslate"><span class="pre">deposit</span></code> is optional in spirit (the resource
+field does not accept deposits), but the signature is reserved so that
+pheromone-style fields slot in without changing call sites.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.Field.deposit">
+<span class="sig-name descname"><span class="pre">deposit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#Field.deposit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.Field.deposit" title="Link to this definition"></a></dt>
+<dd><p>Add <code class="docutils literal notranslate"><span class="pre">amount</span></code> to the field at positions <code class="docutils literal notranslate"><span class="pre">pos</span></code> (if supported).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.Field.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#Field.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.Field.sample" title="Link to this definition"></a></dt>
+<dd><p>Return whatever an agent senses of the field at positions <code class="docutils literal notranslate"><span class="pre">pos</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.Field.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#Field.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.Field.step" title="Link to this definition"></a></dt>
+<dd><p>Advance the field one timestep using random source <code class="docutils literal notranslate"><span class="pre">rng</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyLEAFS.fields.</span></span><span class="sig-name descname"><span class="pre">ResourceField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A replenishing Poisson resource field on the shared grid.</p>
+<p>Resources are points scattered through the domain. Each timestep, within
+every region, new resources are born and existing ones die:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}k_\mathrm{grow}  &amp;\sim \mathrm{Poisson}(\Gamma L^D\,dt / \epsilon) \\
+k_\mathrm{decay} &amp;\sim \mathrm{Binomial}(N,\, 1 - e^{-\gamma\,dt})\end{split}\]</div>
+<p>giving an agent-free equilibrium of <span class="math notranslate nohighlight">\(N_\mathrm{eq} = \Gamma L^D /
+(\epsilon\gamma)\)</span> resources per region. Positions are stored in one flat
+<code class="docutils literal notranslate"><span class="pre">(capacity,</span> <span class="pre">D)</span></code> buffer; each region owns a contiguous slot range and an
+active count, so births append, deaths swap-delete, and harvest is O(1) —
+the struct-of-arrays equivalent of the MATLAB active-prefix <code class="docutils literal notranslate"><span class="pre">Region</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid</strong> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><em>Grid</em></a>) – Shared spatial grid.</p></li>
+<li><p><strong>Gamma</strong> (<em>float</em>) – Resource birth rate per unit volume, <span class="math notranslate nohighlight">\(\Gamma\)</span>.</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – Resource decay rate, <span class="math notranslate nohighlight">\(\gamma\)</span>.</p></li>
+<li><p><strong>epsilon</strong> (<em>float</em>) – Energy yield per resource, <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Timestep.</p></li>
+<li><p><strong>capacity_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Per-region buffer is <code class="docutils literal notranslate"><span class="pre">max(20,</span> <span class="pre">ceil(capacity_factor</span> <span class="pre">*</span> <span class="pre">N_eq))</span></code> slots
+(default 4.0, matching the MATLAB <code class="docutils literal notranslate"><span class="pre">Region</span></code>).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.N_eq">
+<span class="sig-name descname"><span class="pre">N_eq</span></span><a class="headerlink" href="#pyLEAFS.fields.ResourceField.N_eq" title="Link to this definition"></a></dt>
+<dd><p>Agent-free equilibrium count per region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.count">
+<span class="sig-name descname"><span class="pre">count</span></span><a class="headerlink" href="#pyLEAFS.fields.ResourceField.count" title="Link to this definition"></a></dt>
+<dd><p>Current number of active resources in each region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of int, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.n_regions" title="pyLEAFS.grid.Grid.n_regions">n_regions</a>,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.positions">
+<span class="sig-name descname"><span class="pre">positions</span></span><a class="headerlink" href="#pyLEAFS.fields.ResourceField.positions" title="Link to this definition"></a></dt>
+<dd><p>Physical positions of all active resources (rebuilt on demand by
+<a class="reference internal" href="#pyLEAFS.fields.ResourceField.all_positions" title="pyLEAFS.fields.ResourceField.all_positions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">all_positions()</span></code></a>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n_active, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">L</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rf</span> <span class="o">=</span> <span class="n">ResourceField</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">Gamma</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.025</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">rf</span><span class="o">.</span><span class="n">N_eq</span><span class="p">)</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.all_positions">
+<span class="sig-name descname"><span class="pre">all_positions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField.all_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField.all_positions" title="Link to this definition"></a></dt>
+<dd><p>Return physical positions of every active resource, <code class="docutils literal notranslate"><span class="pre">(M,</span> <span class="pre">D)</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.deposit">
+<span class="sig-name descname"><span class="pre">deposit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField.deposit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField.deposit" title="Link to this definition"></a></dt>
+<dd><p>Resource fields do not accept deposits.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.harvest">
+<span class="sig-name descname"><span class="pre">harvest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slot</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField.harvest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField.harvest" title="Link to this definition"></a></dt>
+<dd><p>Remove one resource by <code class="docutils literal notranslate"><span class="pre">(region_id,</span> <span class="pre">slot)</span></code>. O(1) swap-delete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if a resource was removed; False if the slot was already
+empty (e.g. another agent harvested it first this step).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.neighbourhood">
+<span class="sig-name descname"><span class="pre">neighbourhood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField.neighbourhood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField.neighbourhood" title="Link to this definition"></a></dt>
+<dd><p>Resources in the Moore neighbourhood of a single query position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pos</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>,</em><em>)</em>) – Physical query position.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>disp</strong> (<em>ndarray, shape (m, D)</em>) – Minimum-image displacement from <code class="docutils literal notranslate"><span class="pre">pos</span></code> to each nearby resource.</p></li>
+<li><p><strong>region_ids</strong> (<em>ndarray of int, shape (m,)</em>) – Owning region id for each resource (for <a class="reference internal" href="#pyLEAFS.fields.ResourceField.harvest" title="pyLEAFS.fields.ResourceField.harvest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">harvest()</span></code></a>).</p></li>
+<li><p><strong>slots</strong> (<em>ndarray of int, shape (m,)</em>) – Within-region active index for each resource (for <a class="reference internal" href="#pyLEAFS.fields.ResourceField.harvest" title="pyLEAFS.fields.ResourceField.harvest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">harvest()</span></code></a>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField.sample" title="Link to this definition"></a></dt>
+<dd><p>Nearest-resource displacement for each query position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pos</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical query positions.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>disp</strong> (<em>ndarray, shape (n, D)</em>) – Displacement to the nearest resource (NaN row if none in range).</p></li>
+<li><p><strong>dist2</strong> (<em>ndarray, shape (n,)</em>) – Squared distance to that resource (inf if none).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Searches the Moore neighbourhood of each query position. This is the
+sensing primitive the greedy population uses; it is a per-agent loop
+for now and is a natural <code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code> target once the core is validated.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField.seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField.seed" title="Link to this definition"></a></dt>
+<dd><p>Populate every region near equilibrium.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rng</strong> (<em>numpy.random.Generator</em>) – Random source.</p></li>
+<li><p><strong>n0</strong> (<em>int</em><em>, </em><em>optional</em>) – Exact initial count per region. If omitted, each region draws
+<code class="docutils literal notranslate"><span class="pre">Poisson(N_eq)</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField.step" title="Link to this definition"></a></dt>
+<dd><p>Advance resource dynamics one timestep.</p>
+<p>Birth and death counts for all regions are drawn in two vectorized RNG
+calls; grow/decay order is randomised per region to avoid bias.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField.total">
+<span class="sig-name descname"><span class="pre">total</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField.total"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField.total" title="Link to this definition"></a></dt>
+<dd><p>Total active resource count across the domain.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyLEAFS.grid.html" class="btn btn-neutral float-left" title="pyLEAFS.grid module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyLEAFS.spatialhash.html" class="btn btn-neutral float-right" title="pyLEAFS.spatialhash module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
