@@ -22,29 +22,29 @@ If you find any mistakes, please let me know.
   <li><a href="{{ '/assets/docs/notes/notes_shell_theorem.pdf' | relative_url }}">Newton's Shell Theorem</a></li>
 </ul>
 
-<h2 class="gradient-text2" style="font-size: 1.5em;">Statistical Mechanics</h2>
-
-<ul>
-  <li><a href="{{ '/assets/docs/notes/Introduction_to_the_Vicsek_Model.pdf' | relative_url }}">Vicsek Model of Flocking</a></li>
-</ul>
-
-<h2 class="gradient-text2" style="font-size: 1.5em;">General Relativity &amp; Cosmology</h2>
-
-<ul>
-  <li><a href="{{ '/assets/docs/notes/Weak_Field_of_a_Moving_Mass.pdf' | relative_url }}">Weak Field of a Moving Mass</a></li>
-  <li><a href="{{ '/assets/docs/notes/Understanding_the_CMB.pdf' | relative_url }}">The Cosmic Microwave Background</a></li>
-  <li><a href="{{ '/assets/docs/notes/Expansion_of_the_Universe.pdf' | relative_url }}">Expansion of FLRW Universes</a></li>
-</ul>
-
 <h2 class="gradient-text2" style="font-size: 1.5em;">Computational Physics</h2>
 
 <ul>
   <li><a href="{{ '/assets/docs/notes/Introduction_to_Finite_Difference_Methods.pdf' | relative_url }}">Introduction to Finite Difference Methods</a></li>
 </ul>
 
+<h2 class="gradient-text2" style="font-size: 1.5em;">General Relativity &amp; Cosmology</h2>
+
+<ul>
+  <li><a href="{{ '/assets/docs/notes/Understanding_the_CMB.pdf' | relative_url }}">The Cosmic Microwave Background</a></li>
+  <li><a href="{{ '/assets/docs/notes/Expansion_of_the_Universe.pdf' | relative_url }}">Expansion of FLRW Universes</a></li>
+  <li><a href="{{ '/assets/docs/notes/Weak_Field_of_a_Moving_Mass.pdf' | relative_url }}">Weak Field of a Moving Mass</a></li>
+</ul>
+
 <h2 class="gradient-text2" style="font-size: 1.5em;">Mathematics</h2>
 
 <ul>
-  <li><a href="{{ '/assets/docs/notes/Introduction_to_Graph_Theory.pdf' | relative_url }}">Introduction to Graph Theory</a></li>
   <li><a href="{{ '/assets/docs/notes/notes_circulants.pdf' | relative_url }}">Circulants and Discrete Fourier Transforms</a></li>
+  <li><a href="{{ '/assets/docs/notes/Introduction_to_Graph_Theory.pdf' | relative_url }}">Introduction to Graph Theory</a></li>
+</ul>
+
+<h2 class="gradient-text2" style="font-size: 1.5em;">Statistical Mechanics</h2>
+
+<ul>
+  <li><a href="{{ '/assets/docs/notes/Introduction_to_the_Vicsek_Model.pdf' | relative_url }}">Vicsek Model of Flocking</a></li>
 </ul>
