@@ -27,6 +27,7 @@ permalink: /publications/
     'sowinski2018instantons',
     'sowinski2017information',
     'sowinski2016complexity',
+    'vidal2026technosignatures',
     'bartlett2026ref',
     'pinero2026information',
     'quillen2025notions',
