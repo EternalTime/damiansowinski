@@ -32,6 +32,7 @@ If you find any mistakes, please let me know.
 
 <ul>
   <li><a href="{{ '/assets/docs/notes/Understanding_the_CMB.pdf' | relative_url }}">The Cosmic Microwave Background</a></li>
+  <li><a href="{{ '/assets/docs/notes/Expansion_of_the_Universe.pdf' | relative_url }}">Expansion of FLRW Universes</a></li>
 </ul>
 
 <h2 class="gradient-text2" style="font-size: 1.5em;">Computational Physics</h2>
