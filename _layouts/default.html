@@ -322,9 +322,12 @@
           // only same-origin, non-hash, non-download links
           var href = a.getAttribute('href');
           if (!href || href.startsWith('#') || href.startsWith('mailto:')) return;
+          // let the browser handle downloads, new tabs, and non-HTML assets (PDF, images, etc.)
+          if (a.hasAttribute('download') || a.target === '_blank') return;
           try {
             var url = new URL(href, window.location.href);
             if (url.origin !== window.location.origin) return;
+            if (/\.(pdf|zip|png|jpe?g|gif|svg|mp4|mov|webm|csv|key|docx?|xlsx?|pptx?)$/i.test(url.pathname)) return;
           } catch(err) { return; }
 
           // skip if same page (by URL or by index)
