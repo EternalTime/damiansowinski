@@ -10,6 +10,21 @@ permalink: /press/
 </h1>
 ---
 <div class="press-entry">
+  <a href="https://astrobiology.com/2026/06/reflections-of-life-distinguishing-living-from-nonliving-worlds-with-complexity-metrics.html" target="_blank">
+    <img class="press-img" src="{{ '/assets/images/press/Astrobiology.svg' | relative_url }}"
+         style="width: 300px;"
+         alt="Article title">
+  </a>
+  <div>
+    <a href="https://astrobiology.com/2026/06/reflections-of-life-distinguishing-living-from-nonliving-worlds-with-complexity-metrics.html" target="_blank">
+      <strong>Reflections of Life: Distinguishing Living from Nonliving Worlds with Complexity Metrics</strong>
+    </a><br>
+    <em>Astrobiology</em> — June 2026<br>
+    A look at whether a world's complexity, read from the light it reflects, can betray the presence of life — testing the idea on two familiar planets standing in for distant exoplanets.
+  </div>
+</div>
+
+<div class="press-entry">
   <a href="https://www.centauri-dreams.org/2026/05/30/evolving-strategies-in-the-search-for-extraterrestrial-civilizations/" target="_blank">
     <img class="press-img" src="{{ '/assets/images/press/centauri-dreams-logo.webp' | relative_url }}"
          style="width: 180px;"
@@ -17,9 +32,10 @@ permalink: /press/
   </a>
   <div>
     <a href="https://www.centauri-dreams.org/2026/05/30/evolving-strategies-in-the-search-for-extraterrestrial-civilizations/" target="_blank">
-      <strong>Evolving strategies in search for civilizations</strong>
+      <strong>Evolving strategies in search for extraterrestrial civilizations</strong>
     </a><br>
     <em>Centauri Dreams</em> — May 2026<br>
+    A wide-ranging review of the search for technosignatures — from X-ray and neutrino beacons to warp-drive exotica — that has sparked a lively comment thread, with readers debating gravitational-lens beacons, the contested Palomar plate "glints," and whether SETI's long silence is itself a signal.
   </div>
 </div>
 
