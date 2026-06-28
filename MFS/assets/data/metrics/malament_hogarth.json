@@ -1,0 +1,22 @@
+{
+  "id": "malament_hogarth",
+  "name": "Malament–Hogarth Super-Turing Spacetimes",
+  "description": "A spacetime construction containing a worldline of infinite proper length that lies within the past of a single event reachable in finite proper time. It provides a relativistic model for hypercomputation that could complete infinite tasks.",
+  "tags": [
+    "causal structure",
+    "hypercomputation",
+    "supercritical",
+    "time-dependent",
+    "causality violation",
+    "idealized model",
+    "Lorentzian",
+    "four-dimensional"
+  ],
+  "history": "Most entries in this collection are metrics. Malament–Hogarth is not — it is a property a spacetime may or may not possess, and the spacetimes that possess it are strange enough to deserve a name. A spacetime is Malament–Hogarth if it contains a worldline of infinite proper duration whose entire history lies within the causal past of some single event. Picture a computer that runs forever along that worldline, and an observer who travels to the special event in finite time of their own: every step the computer will ever take has, by the time the observer arrives, already had the chance to send its result ahead. The observer can therefore learn the outcome of an unending computation in a finite span of their own life.¶The idea grew out of work by Itamar Pitowsky in 1990 and was put on firm footing by Mark Hogarth, who in 1992 proved that ordinary spacetimes cannot do this but that some — anti-de Sitter space among them — can [hogarth1992]. The name was fixed a year later by John Earman and John Norton, who analyzed these supertask geometries and credited the construction to both Hogarth and David Malament [earman1993]. The crucial point is that the property is a feature of global causal structure, not of any particular line element, which is why no metric is displayed here: Malament–Hogarth is a category of spacetimes, and its members include geometries already in this collection.¶What makes the category more than a curiosity is its bearing on the limits of computation. Gábor Etesi and István Németi showed in 2002 that an observer in a Malament–Hogarth spacetime could, in principle, settle questions no Turing machine can decide — the halting problem, or the consistency of arithmetic — by reading off the result of an infinite computation [etesi2002]. They also noted that the requisite causal structure is not confined to exotic toy models: the interior of a rotating or charged black hole, past its inner horizon, is Malament–Hogarth. The obstacles to ever building such a device are severe — the computer must survive an eternity, and the observer must cross a horizon where the infalling history of the universe arrives infinitely blueshifted — but the conclusion stands as a matter of principle: whether the Church–Turing thesis holds is not a fact of logic alone but depends on the shape of spacetime.",
+  "references": [
+    "hogarth1992",
+    "earman1993",
+    "etesi2002"
+  ],
+  "coordinates": []
+}

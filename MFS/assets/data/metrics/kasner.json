@@ -1,0 +1,23 @@
+{
+  "id": "kasner",
+  "name": "Kasner Anisotropic Vacuum Cosmology",
+  "description": "An anisotropic vacuum cosmology that expands along some axes while contracting along another, with expansion exponents constrained by two algebraic relations. It is a key building block of the chaotic approach to cosmological singularities.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "anisotropic",
+    "cosmology",
+    "cosmological",
+    "Kasner",
+    "exact solution",
+    "time-dependent",
+    "dynamical",
+    "singularity",
+    "spatially homogeneous",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "coordinates": []
+}

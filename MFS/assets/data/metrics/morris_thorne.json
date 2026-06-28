@@ -1,0 +1,23 @@
+{
+  "id": "morris_thorne",
+  "name": "Morris-Thorne Traversable Wormhole",
+  "description": "A static, spherically symmetric traversable wormhole engineered to have no horizon and tolerable tidal forces. Keeping its throat open requires exotic matter that violates the energy conditions.",
+  "tags": [
+    "wormhole",
+    "traversable",
+    "exotic matter",
+    "energy condition violation",
+    "negative energy",
+    "static",
+    "stationary",
+    "spherically symmetric",
+    "non-vacuum",
+    "asymptotically flat",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "coordinates": []
+}

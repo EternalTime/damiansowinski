@@ -835,25 +835,57 @@
       function renderMetric(data, coordIdx) {
         _currentMetric  = data;
         _currentCoordIdx = coordIdx;
-        var coord = data.coordinates[coordIdx];
+
+        // Render whatever is constructed, field by field. Coordinates may be
+        // absent (entry only has name/tags/history) — in that case coord is a
+        // safe empty object so the per-field guards below all fall through.
+        var hasCoords = !!(data.coordinates && data.coordinates.length);
+        var coord = hasCoords ? data.coordinates[coordIdx] : {};
 
         // Coordinate selector
-        var coordOptions = data.coordinates.map(function(c, i) {
+        var coordOptions = hasCoords ? data.coordinates.map(function(c, i) {
           return '<option value="' + i + '"' + (i === coordIdx ? ' selected' : '') + '>' + c.name + '</option>';
-        }).join('');
+        }).join('') : '';
 
-        // Geodesic toggle — default massive
-        var html = [
+        // Coordinate-level guard: a coordinate exists but has no constructed
+        // differential-geometry fields. Show placeholder under the selector.
+        var coordHasContent = coord && (
+          coord.line_element || coord.metric_components || coord.inverse_metric_components ||
+          coord.christoffel || coord.riemann || coord.ricci_tensor || coord.ricci_scalar ||
+          coord.kretschmann || coord.einstein_tensor || coord.weyl_tensor || coord.geodesics
+        );
+
+        // Header is always shown. Everything else is assembled into `body`;
+        // if nothing renders into it, we show the under-assembly placeholder.
+        // This way new fields need no change to the placeholder logic.
+        var header = [
           '<div class="mfs-header">',
             '<div class="mfs-label">metric</div>',
             '<div class="mfs-title">' + data.name + '</div>',
-          '</div>',
+          '</div>'
+        ].join('');
+
+        // Geodesic toggle — default massive
+        var body = [
 
           data.history ? [
             '<div class="mfs-section">',
               '<div class="mfs-section-label">history</div>',
               '<div class="mfs-history">' + data.history.split('¶').map(function(p) {
                 var refs = data.references || [];
+                // Table block: "TABLE:: h1 | h2 ;; r1c1 | r1c2 ;; ..."
+                // Rows separated by ';;', cells by '|', first row is the header.
+                // Cell text may contain inline $...$; MathJax typesets it afterward.
+                if (p.trim().indexOf('TABLE::') === 0) {
+                  var rows = p.trim().slice(7).split(';;').map(function(r) { return r.trim(); })
+                                .filter(function(r) { return r.length; });
+                  return '<table class="mfs-table">' + rows.map(function(row, ri) {
+                    var tag = ri === 0 ? 'th' : 'td';
+                    return '<tr>' + row.split('|').map(function(c) {
+                      return '<' + tag + '>' + c.trim() + '</' + tag + '>';
+                    }).join('') + '</tr>';
+                  }).join('') + '</table>';
+                }
                 // Split on $$...$$ display math blocks
                 var parts = p.trim().split(/(\$\$[\s\S]*?\$\$)/g);
                 return parts.map(function(part) {
@@ -875,22 +907,32 @@
             '</div>'
           ].join('') : '',
 
-          '<div class="mfs-section">',
-            '<div class="mfs-section-label">coordinates</div>',
-            '<select class="mfs-coord-select" id="mfs-coord-select">' + coordOptions + '</select>',
-            coord.domains && coord.domains.length ? [
-              '<div class="mfs-domains">',
-                coord.domains.map(function(d) {
-                  return '<div class="mfs-component">' + tex(d) + '</div>';
-                }).join(''),
-              '</div>'
-            ].join('') : '',
-          '</div>',
+          (hasCoords ? [
+            '<div class="mfs-section">',
+              '<div class="mfs-section-label">coordinates</div>',
+              '<select class="mfs-coord-select" id="mfs-coord-select">' + coordOptions + '</select>',
+              (coord.domains && coord.domains.length ? [
+                '<div class="mfs-domains">',
+                  coord.domains.map(function(d) {
+                    return '<div class="mfs-component">' + tex(d) + '</div>';
+                  }).join(''),
+                '</div>'
+              ].join('') : ''),
+            '</div>'
+          ].join('') : ''),
 
-          '<div class="mfs-section">',
-            '<div class="mfs-section-label">line element</div>',
-            '<div class="mfs-component">' + tex(coord.line_element) + '</div>',
-          '</div>',
+          ((hasCoords && !coordHasContent) ? [
+            '<div class="mfs-section"><div class="mfs-placeholder">',
+              'Differential geometry not yet complete. Come back soon.',
+            '</div></div>'
+          ].join('') : ''),
+
+          (coord.line_element ? [
+            '<div class="mfs-section">',
+              '<div class="mfs-section-label">line element</div>',
+              '<div class="mfs-component">' + tex(coord.line_element) + '</div>',
+            '</div>'
+          ].join('') : ''),
 
           (coord.metric_components ? [
             '<div class="mfs-section">',
@@ -906,7 +948,7 @@
             '</div>'
           ].join('') : ''),
 
-          (function() {
+          (coord.christoffel ? (function() {
             var chConv = coord.christoffel.default;
             var chV    = coord.christoffel.variants[chConv];
             return [
@@ -920,9 +962,9 @@
                 '</div>',
               '</div>'
             ].join('');
-          })(),
+          })() : ''),
 
-          (function() {
+          (coord.riemann ? (function() {
             var rConv = coord.riemann.default;
             var rV    = coord.riemann.variants[rConv];
             return [
@@ -936,9 +978,9 @@
                 '</div>',
               '</div>'
             ].join('');
-          })(),
+          })() : ''),
 
-          (function() {
+          (coord.ricci_tensor ? (function() {
             var rConv = coord.ricci_tensor.default;
             var rV    = coord.ricci_tensor.variants[rConv];
             return [
@@ -952,19 +994,23 @@
                 '</div>',
               '</div>'
             ].join('');
-          })(),
+          })() : ''),
 
-          '<div class="mfs-section">',
-            '<div class="mfs-section-label">Ricci scalar</div>',
-            renderScalar(coord.ricci_scalar),
-          '</div>',
+          (coord.ricci_scalar ? [
+            '<div class="mfs-section">',
+              '<div class="mfs-section-label">Ricci scalar</div>',
+              renderScalar(coord.ricci_scalar),
+            '</div>'
+          ].join('') : ''),
 
-          '<div class="mfs-section">',
-            '<div class="mfs-section-label">Kretschmann scalar</div>',
-            renderScalar(coord.kretschmann),
-          '</div>',
+          (coord.kretschmann ? [
+            '<div class="mfs-section">',
+              '<div class="mfs-section-label">Kretschmann scalar</div>',
+              renderScalar(coord.kretschmann),
+            '</div>'
+          ].join('') : ''),
 
-          (function() {
+          (coord.einstein_tensor ? (function() {
             var eConv = coord.einstein_tensor.default;
             var eV    = coord.einstein_tensor.variants[eConv];
             return [
@@ -978,7 +1024,7 @@
                 '</div>',
               '</div>'
             ].join('');
-          })(),
+          })() : ''),
 
           coord.weyl_tensor ? (function() {
             var wConv = coord.weyl_tensor.default;
@@ -1017,7 +1063,14 @@
           ].join('') : ''
         ].join('');
 
-        contentPanel.innerHTML = html;
+        // Nothing constructed below the header → under-assembly placeholder.
+        if (!body.replace(/\s/g, '')) {
+          body = '<div class="mfs-section"><div class="mfs-placeholder">' +
+                 'Manifold still under assembly. Please come back at a larger value of your local time coordinate.' +
+                 '</div></div>';
+        }
+
+        contentPanel.innerHTML = header + body;
 
         // Force column reflow after MathJax typesetting
         function reflowColumns() {
@@ -1044,18 +1097,21 @@
           });
         }
 
-        // Wire coordinate selector
-        document.getElementById('mfs-coord-select').addEventListener('change', function() {
-          renderMetric(data, parseInt(this.value));
-        });
+        // Wire coordinate selector (absent when no coordinates are constructed)
+        var coordSelect = document.getElementById('mfs-coord-select');
+        if (coordSelect) {
+          coordSelect.addEventListener('change', function() {
+            renderMetric(data, parseInt(this.value));
+          });
+        }
 
         // Wire convention widgets
         var tensorMeta = {
-          christoffel: { label: '\\Gamma', variants: coord.christoffel.variants },
-          riemann:     { label: 'R',       variants: coord.riemann.variants },
-          ricci:       { label: 'R',       variants: coord.ricci_tensor.variants },
-          einstein:    { label: 'G',       variants: coord.einstein_tensor.variants },
-          weyl:        coord.weyl_tensor ? { label: 'C', variants: coord.weyl_tensor.variants } : null
+          christoffel: coord.christoffel    ? { label: '\\Gamma', variants: coord.christoffel.variants }    : null,
+          riemann:     coord.riemann        ? { label: 'R',       variants: coord.riemann.variants }        : null,
+          ricci:       coord.ricci_tensor   ? { label: 'R',       variants: coord.ricci_tensor.variants }   : null,
+          einstein:    coord.einstein_tensor? { label: 'G',       variants: coord.einstein_tensor.variants }: null,
+          weyl:        coord.weyl_tensor    ? { label: 'C',       variants: coord.weyl_tensor.variants }     : null
         };
         contentPanel.querySelectorAll('.mfs-idx-widget').forEach(function(widget) {
           var tensorId = widget.dataset.tensor;
@@ -1174,6 +1230,24 @@
       font-size: 21px; color: rgba(0,229,255,0.5);
       letter-spacing: 0.1em; text-transform: uppercase;
       margin-bottom: 4px;
+    }
+    #mfs-content-panel .mfs-placeholder {
+      font-size: 23px; color: var(--teal-light);
+      line-height: 1.6; font-style: italic;
+      letter-spacing: 0.03em; padding: 1.2em 0;
+    }
+    #mfs-content-panel .mfs-table {
+      border-collapse: collapse; margin: 1em 0; width: 100%;
+      font-size: 19px; color: var(--teal-light);
+    }
+    #mfs-content-panel .mfs-table th,
+    #mfs-content-panel .mfs-table td {
+      border: 1px solid rgba(0,229,255,0.25);
+      padding: 6px 12px; text-align: left; vertical-align: top;
+    }
+    #mfs-content-panel .mfs-table th {
+      color: var(--cyan); font-weight: 600;
+      letter-spacing: 0.04em; background: rgba(0,229,255,0.06);
     }
     #mfs-content-panel .mfs-convention {
       font-size: 21px; color: rgba(0,229,255,0.4);

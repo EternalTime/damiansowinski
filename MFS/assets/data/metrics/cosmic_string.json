@@ -1,0 +1,31 @@
+{
+  "id": "cosmic_string",
+  "name": "Vilenkin-Gott Cosmic String",
+  "description": "The conical spacetime around an infinitely thin, straight topological defect, locally flat but with an angular deficit set by the string's tension. It produces no local gravity yet causes global lensing and double-image effects.",
+  "tags": [
+    "topological defect",
+    "conical",
+    "angular deficit",
+    "flat",
+    "gravitational lensing",
+    "cylindrical symmetry",
+    "axial symmetry",
+    "static",
+    "stationary",
+    "exact solution",
+    "asymptotically flat",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "A cosmic string is a relic of the early universe's growing pains. When a symmetry of the fundamental fields breaks as the universe cools, the vacuum need not settle into the same state everywhere, and along certain lines it can stay trapped in the old symmetric phase — a thread of unrelaxed energy, thinner than a proton and stretched across cosmological distances. Tom Kibble showed in 1976 that such defects are a generic outcome of cosmological phase transitions, their formation dictated by the topology of the vacuum [kibble1976]. The string carries an enormous tension equal to its mass per unit length, and the interesting physics is how that thread curves the space around it.¶The answer is unlike any ordinary gravitating body: a straight string exerts no local gravity at all. Spacetime around it is flat — a test particle at rest feels no pull — and yet the geometry is not Minkowski, because a wedge of angle has been cut out and its edges glued together, leaving a cone. Alexander Vilenkin found this conical structure in linearized gravity in 1981, identifying the deficit angle as proportional to the string's tension [vilenkin1981], and J. Richard Gott gave the exact solution in 1985, with a conical exterior matched to a spherical-cap interior, and worked out its optics [gott1985]. The metric displayed here is theirs. Its signature consequence follows directly from the missing wedge: light passing on either side of the string is brought together, so a single object behind it appears as a pair of identical images, and the cosmic microwave background acquires a sharp step in temperature across the string's path.¶That lensing-and-imprint signature is what made cosmic strings a candidate engine for cosmic structure. Robert Brandenberger and collaborators developed the scenario in which strings, rather than inflationary fluctuations, seed the formation of galaxies: Brandenberger and Turok computed the microwave-background anisotropies a string network would generate in 1986 [brandenberger1986], and Brandenberger's 1994 review laid out the full defect theory of structure formation and its observational tests [brandenberger1994]. Precision measurements of the CMB acoustic peaks later ruled strings out as the dominant source of structure, but they survive as a sought-after sub-dominant relic — a direct window onto symmetry breaking at energies no accelerator will ever reach.",
+  "references": [
+    "kibble1976",
+    "vilenkin1981",
+    "gott1985",
+    "brandenberger1986",
+    "brandenberger1994"
+  ],
+  "coordinates": []
+}

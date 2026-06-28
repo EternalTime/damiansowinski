@@ -1,0 +1,35 @@
+{
+  "id": "anti_de_sitter",
+  "name": "Anti-de Sitter",
+  "description": "The maximally symmetric vacuum solution with constant negative curvature, arising from a negative cosmological constant. Its conformal boundary underpins the AdS/CFT correspondence in theoretical physics.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "maximally symmetric",
+    "constant curvature",
+    "negative cosmological constant",
+    "cosmological constant",
+    "anti-de Sitter",
+    "AdS/CFT",
+    "holography",
+    "exact solution",
+    "static",
+    "homogeneous",
+    "isotropic",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "Anti-de Sitter space was born as the other branch of the same idea. When Willem de Sitter solved Einstein's amended equations for an empty universe in 1917, the cosmological constant $\\Lambda$ was free to take either sign [desitter1917, einstein1917]. Positive $\\Lambda$ gave the exponentially expanding world that bears his name; negative $\\Lambda$ gave its mirror image — a maximally symmetric vacuum with constant negative curvature. For decades this second solution had no champion and no name beyond the obvious one: the anti-de Sitter universe, de Sitter's geometry run in reverse.¶As a cosmology it was a non-starter, and its peculiarities are worth naming. Anti-de Sitter space is static, not expanding, so it cannot describe a universe like ours. Its spatial sections are hyperbolic, and in its natural form it is riddled with closed timelike curves — one must pass to the universal cover to be rid of them. Strangest of all, it has a timelike boundary at spatial infinity: a light ray can reach the edge of the universe and return in finite time, so the spacetime is not self-contained — to evolve anything inside it, one must say what happens at that boundary. For sixty years this was a catalogue of pathologies more than a subject.¶Then in 1997 Juan Maldacena turned the pathology into the point [maldacena1998]. That troublesome timelike boundary, he argued, is where a quantum field theory lives — and the gravitational physics of the anti-de Sitter interior is exactly equivalent to a conformal field theory on its lower-dimensional edge; within months Gubser, Klebanov, and Polyakov, and independently Witten, sharpened the proposal into a precise dictionary between the two sides [gubser1998, witten1998]. This is the AdS/CFT correspondence, the sharpest realization of the holographic principle anticipated by 't Hooft and Susskind [thooft1993, susskind1995], and it made anti-de Sitter space one of the most studied geometries in theoretical physics — not because the universe is anti-de Sitter, but because gravity there can be read off a boundary that has no gravity at all.",
+  "references": [
+    "desitter1917",
+    "einstein1917",
+    "maldacena1998",
+    "gubser1998",
+    "witten1998",
+    "thooft1993",
+    "susskind1995"
+  ],
+  "coordinates": []
+}

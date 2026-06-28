@@ -1,11 +1,20 @@
 {
   "id": "minkowski",
-  "name": "Minkowski Vacuum Spacetime",
+  "name": "Minkowski Flat Spacetime",
   "description": "The flat spacetime of special relativity. No curvature, no gravity.",
   "tags": [
     "flat",
     "special relativity",
-    "vacuum"
+    "vacuum",
+    "vacuum solution",
+    "static",
+    "maximally symmetric",
+    "constant curvature",
+    "asymptotically flat",
+    "exact solution",
+    "Lorentzian",
+    "four-dimensional",
+    "idealized model"
   ],
   "signature": "(-,+,+,+)",
   "convention": "Factors of c are kept explicit throughout. Coordinates are (t, x, y, z) with t having dimensions of time.",

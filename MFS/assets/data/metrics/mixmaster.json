@@ -1,0 +1,27 @@
+{
+  "id": "mixmaster",
+  "name": "Mixmaster Chaotic Cosmology",
+  "description": "A spatially homogeneous Bianchi type-IX cosmology whose approach to the singularity consists of an infinite, chaotic sequence of Kasner-like oscillations. It is the prototype of chaotic cosmological dynamics near a singularity.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "anisotropic",
+    "cosmology",
+    "cosmological",
+    "spatially homogeneous",
+    "Bianchi classification",
+    "chaotic",
+    "oscillatory",
+    "Kasner",
+    "Misner variables",
+    "singularity",
+    "time-dependent",
+    "dynamical",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "coordinates": []
+}

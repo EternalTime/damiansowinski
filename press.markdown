@@ -12,7 +12,7 @@ permalink: /press/
 <div class="press-entry">
   <a href="https://astrobiology.com/2026/06/reflections-of-life-distinguishing-living-from-nonliving-worlds-with-complexity-metrics.html" target="_blank">
     <img class="press-img" src="{{ '/assets/images/press/Astrobiology.svg' | relative_url }}"
-         style="width: 300px;"
+         style="width: 300px; background: #320f7b;"
          alt="Article title">
   </a>
   <div>
@@ -20,14 +20,14 @@ permalink: /press/
       <strong>Reflections of Life: Distinguishing Living from Nonliving Worlds with Complexity Metrics</strong>
     </a><br>
     <em>Astrobiology</em> — June 2026<br>
-    A look at whether a world's complexity, read from the light it reflects, can betray the presence of life — testing the idea on two familiar planets standing in for distant exoplanets.
+    Earth and Mars, two worlds that may once have been twins, read here as stand-ins for distant exoplanets. The question — can the sheer complexity of a planet's reflected light betray whether something is alive beneath it?
   </div>
 </div>
 
 <div class="press-entry">
   <a href="https://www.centauri-dreams.org/2026/05/30/evolving-strategies-in-the-search-for-extraterrestrial-civilizations/" target="_blank">
     <img class="press-img" src="{{ '/assets/images/press/centauri-dreams-logo.webp' | relative_url }}"
-         style="width: 180px;"
+         style="width: 500px;"
          alt="Article title">
   </a>
   <div>
@@ -35,7 +35,7 @@ permalink: /press/
       <strong>Evolving strategies in search for extraterrestrial civilizations</strong>
     </a><br>
     <em>Centauri Dreams</em> — May 2026<br>
-    A wide-ranging review of the search for technosignatures — from X-ray and neutrino beacons to warp-drive exotica — that has sparked a lively comment thread, with readers debating gravitational-lens beacons, the contested Palomar plate "glints," and whether SETI's long silence is itself a signal.
+    A survey of how we might recognize a technological civilization — X-ray and neutrino beacons, warp-drive wakes, the exotica at the field's edge. It set off a long comment thread, readers turning over gravitational-lens beacons, the disputed Palomar plate "glints," and whether SETI's silence is itself the signal.
   </div>
 </div>
 
@@ -70,6 +70,7 @@ permalink: /press/
       <strong>A new way to detect daisy worlds</strong>
     </a><br>
     <em>Phys.org</em> — November 2024<br>
+    A living planet can hold its own climate steady — the daisy-world idea, descended from Lovelock's Gaia. This coverage takes up the harder question: how would we catch one in the act from light-years away?
   </div>
 </div>
 

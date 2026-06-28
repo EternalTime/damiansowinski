@@ -1,0 +1,30 @@
+{
+  "id": "vaidya",
+  "name": "Vaidya Radiating Star",
+  "description": "A non-static solution describing the spacetime of a radiating or accreting spherical mass with outgoing or ingoing null dust. It models radiating stars and the evaporation or growth of black holes.",
+  "tags": [
+    "null dust",
+    "radiating",
+    "accreting",
+    "spherically symmetric",
+    "time-dependent",
+    "dynamical",
+    "black hole",
+    "mass",
+    "horizon",
+    "event horizon",
+    "non-vacuum",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "Schwarzschild's solution describes the empty space outside a static star, but a star that shines is not surrounded by empty space — it is surrounded by the energy it is pouring out. In 1951 the Indian physicist Prahalad Chunilal Vaidya found the metric for exactly this situation: the gravitational field outside a radiating spherical mass [vaidya1951]. The trick is disarmingly simple in hindsight. Take the Schwarzschild solution and let the mass $M$, instead of being constant, become a function $m(u)$ of retarded time — the time labelling outgoing light fronts — so that as radiation streams away to infinity the mass the metric reports steadily decreases. By Birkhoff's theorem a truly empty spherical exterior must be static Schwarzschild; Vaidya's is not empty, and so it need not be static.¶What fills it is null dust: a flux of pure radiation, energy streaming along light rays with no rest mass of its own. The solution comes in two faces — an outgoing version for a star losing energy and an ingoing version for one accreting it. In 1965 Richard Lindquist, R. A. Schwartz, and Charles Misner clarified what the time-dependence means physically, showing that $-dm/du$ is precisely the power the star radiates, tied by redshift and Doppler factors to the luminosity a moving observer would actually measure [lindquist1965].¶Because it is the simplest dynamical, non-vacuum black-hole spacetime, the Vaidya metric became a standard laboratory. Letting the mass decrease models, crudely, the evaporation of a black hole; letting it grow models accretion. Most consequentially, it became a testing ground for cosmic censorship — the conjecture that gravitational collapse always hides its singularities behind horizons. Achilles Papapetrou showed that the collapse of ingoing null dust can instead produce a naked singularity, visible to the outside universe, one of the first concrete counterexamples to the conjecture [papapetrou1985]. A metric built to describe a shining star turned out to be one of the sharpest probes of when general relativity keeps its singularities decently out of sight.",
+  "references": [
+    "vaidya1951",
+    "lindquist1965",
+    "papapetrou1985"
+  ],
+  "coordinates": []
+}
