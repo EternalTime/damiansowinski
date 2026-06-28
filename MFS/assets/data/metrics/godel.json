@@ -1,13 +1,23 @@
 {
   "id": "godel",
-  "name": "Gödel",
+  "name": "Gödel Rotating Universe",
   "description": "An exact solution of Einstein's field equations describing a rotating dust universe with closed timelike curves.",
   "tags": [
     "dust",
     "rotating",
     "closed timelike curves",
+    "causality violation",
     "cosmological",
-    "exact solution"
+    "cosmology",
+    "exact solution",
+    "non-vacuum",
+    "stationary",
+    "homogeneous",
+    "cosmological constant",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
   ],
   "signature": "(-,+,+,+)",
   "convention": "Coordinates $(t, x, y, z)$ all range over $\\mathbb{R}$. The parameter $\\omega$ is the angular velocity of the dust. Units with $G = c = 1$ are used throughout.",

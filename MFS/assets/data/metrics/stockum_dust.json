@@ -1,14 +1,23 @@
 {
   "id": "stockum_dust",
-  "name": "Lanczos–van Stockum",
+  "name": "Lanczos–van Stockum Rotating Dust-filled Universe",
   "description": "An exact solution to the Einstein field equations describing an infinite rotating cylinder of pressureless dust, exhibiting closed timelike curves beyond a critical radius.",
   "tags": [
     "dust",
     "rotating",
     "cylindrical symmetry",
+    "axial symmetry",
     "closed timelike curves",
+    "causality violation",
     "exact solution",
-    "non-vacuum"
+    "non-vacuum",
+    "cosmology",
+    "cosmological",
+    "stationary",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
   ],
   "signature": "(-,+,+,+)",
   "convention": "Cylindrical coordinates $(t, r, \\phi, z)$ are used. The parameter $R$ sets the scale of the dust cylinder; $r = R$ is the critical radius at which closed null curves first appear. The metric function $e^{-r^2/R^2}$ appears in the $g_{rr}$ and $g_{zz}$ components. The off-diagonal $g_{t\\phi}$ term encodes the frame-dragging due to rotation. Units with $G = c = 1$ are used throughout.",

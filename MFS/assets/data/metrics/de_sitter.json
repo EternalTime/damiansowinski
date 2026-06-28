@@ -1,0 +1,35 @@
+{
+  "id": "de_sitter",
+  "name": "de Sitter",
+  "description": "The maximally symmetric vacuum solution with constant positive curvature, driven by a positive cosmological constant. It models an exponentially expanding empty universe and describes both inflation and the far future of our cosmos.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "maximally symmetric",
+    "constant curvature",
+    "positive cosmological constant",
+    "cosmological constant",
+    "de Sitter",
+    "inflation",
+    "expanding universe",
+    "cosmology",
+    "cosmological",
+    "homogeneous",
+    "isotropic",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "In 1917, having just published the general theory two years earlier, Albert Einstein added a term to his field equations — the cosmological constant $\\Lambda$ — in an attempt to hold the universe static against its own gravity [einstein1917]. He had a particular cosmos in mind: ordinary matter spread uniformly through a closed, spherical space, with $\\Lambda$'s repulsion fine-tuned to balance the dust's self-attraction exactly, so that nothing moved for all time. Within months the Dutch astronomer Willem de Sitter found a second solution to the very same amended equations, and it was everything Einstein's was not [desitter1917]. He kept the same $\\Lambda$ and threw out the matter — and the empty world that remained refused to sit still. The distinction was never about which side of the equation $\\Lambda$ was written on; that choice, geometry or vacuum energy, is mere bookkeeping and changes no physics. What separated the two solutions was their matter content: Einstein's a knife-edge balance of dust against $\\Lambda$, de Sitter's the empty limit where only $\\Lambda$ remains. Eddington would later sum up the pair with a line that has outlived most of the physics around it: Einstein's was matter without motion, de Sitter's motion without matter.¶De Sitter wrote his solution in static coordinates, and in that form it looked like a strange, empty, eternal world. The strangeness turned out to be an artifact of the coordinates. In 1925 Georges Lemaître — and, independently, Howard Robertson three years later — showed that the de Sitter universe could be rewritten in coordinates that are spatially flat and homogeneous, at the cost of a scale factor growing exponentially in time [lemaitre1925, robertson1928]. The empty, static world was in fact expanding, and expanding forever; \"motion without matter\" had been hiding an accelerating universe.¶That accelerating expansion is why de Sitter space refuses to stay a historical curiosity. It is the unique maximally symmetric solution with positive $\\Lambda$, and it sits at both ends of modern cosmology — as the near-exponential expansion of the inflationary epoch, and as the late-time attractor toward which a dark-energy-dominated universe like our own appears to be heading [misner1973, wald1984].",
+  "references": [
+    "einstein1917",
+    "desitter1917",
+    "lemaitre1925",
+    "robertson1928",
+    "misner1973",
+    "wald1984"
+  ],
+  "coordinates": []
+}

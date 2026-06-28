@@ -1,0 +1,28 @@
+{
+  "id": "taub_nut",
+  "name": "Taub-Newman-Unti-Tamburino Vacuum Spacetime",
+  "description": "A vacuum solution with unusual topology and a \"gravitomagnetic\" NUT parameter, often called a counterexample to many GR conjectures. It exhibits closed timelike curves and a non-trivial fibered structure.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "stationary",
+    "NUT parameter",
+    "gravitomagnetic",
+    "closed timelike curves",
+    "causality violation",
+    "axisymmetric",
+    "mass",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "Taub-NUT is two discoveries that turned out to be one spacetime. In 1951 Abraham Taub, looking for vacuum solutions with a high degree of symmetry, wrote down an empty cosmology whose spatial slices carry the symmetry group of the three-sphere — a homogeneous but anisotropic universe that expands and recollapses [taub1951]. It was a clean, self-contained result, and for a decade it sat among the catalogue of exact solutions without causing trouble.¶The trouble arrived in 1963. Ezra Newman, Louis Tamburino, and Theodore Unti set out to generalize the Schwarzschild metric and found a new vacuum solution carrying one extra parameter beyond the mass — the NUT parameter, after their initials [nut1963]. That same year Charles Misner showed that their \"generalized Schwarzschild\" space and Taub's cosmology were not two solutions but one: Taub's universe is the interior, the NUT metric the exterior, joined across a horizon into a single analytic whole [misner1963]. Hence Taub-NUT.¶What Misner also showed is that the joined spacetime is spectacularly badly behaved, and that this is the point of it. The NUT parameter acts like a magnetic charge for gravity — a \"gravitomagnetic monopole\" — and like the Dirac string trailing a magnetic monopole, it drags along an unavoidable singular axis, the Misner string, that no choice of coordinates can remove without introducing closed timelike curves through every point. The spacetime is not asymptotically flat in any ordinary sense and is not globally hyperbolic. Misner's own verdict was that it serves as \"a counterexample to almost any conjecture one might make,\" and that is exactly why it endures: Taub-NUT is the geometry relativists reach for when they want to know whether a plausible-sounding theorem is actually true.",
+  "references": [
+    "taub1951",
+    "nut1963",
+    "misner1963"
+  ],
+  "coordinates": []
+}

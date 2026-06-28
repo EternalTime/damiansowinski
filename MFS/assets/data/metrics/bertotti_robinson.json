@@ -1,0 +1,29 @@
+{
+  "id": "bertotti_robinson",
+  "name": "Bertotti-Robinson Electrovacuum",
+  "description": "A conformally flat electrovacuum solution with uniform electromagnetic field, geometrically the product of two 2-spaces (AdS₂ × S²). It appears as the near-horizon limit of an extremal Reissner-Nordström black hole.",
+  "tags": [
+    "electrovacuum",
+    "electromagnetic field",
+    "charged",
+    "conformally flat",
+    "static",
+    "stationary",
+    "exact solution",
+    "near-horizon limit",
+    "extremal",
+    "spherically symmetric",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "In 1959 two relativists, working independently, wrote down the same unusual solution. Bruno Bertotti in Princeton and Ivor Robinson in the same year each solved the coupled Einstein-Maxwell equations for the case of a uniform electromagnetic field — a field that is the same, in a precise covariant sense, at every event [bertotti1959, robinson1959]. Most charged solutions of general relativity have a field that falls off with distance from a source; this one does not, and the price of that uniformity is paid in the geometry.¶The resulting spacetime is conformally flat and homogeneous, and it has a clean product structure: it factorizes into a two-dimensional anti-de Sitter spacetime, carrying the time and radial directions, multiplied by a round two-sphere of fixed radius — AdS$_2 \\times$ S$^2$. The electric field threads the sphere like the flux of a magnetic monopole through a closed surface, and the negative curvature of the AdS$_2$ factor exactly balances the positive curvature of the sphere, leaving a conformally flat whole with no singularity anywhere.¶For years the Bertotti-Robinson universe was a tidy oddity. Its importance became clear once black holes were understood: it is the near-horizon limit of an extremal Reissner-Nordström black hole — the geometry one finds deep in the throat of a charged hole pushed to the edge of having a horizon at all [reissner1916, nordstrom1918]. That AdS$_2 \\times$ S$^2$ throat is now a fixture of black-hole thermodynamics and of the lower-dimensional corners of the holographic correspondence, which has kept this 1959 solution in steady use.",
+  "references": [
+    "bertotti1959",
+    "robinson1959",
+    "reissner1916",
+    "nordstrom1918"
+  ],
+  "coordinates": []
+}

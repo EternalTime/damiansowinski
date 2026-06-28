@@ -1,0 +1,20 @@
+{
+  "id": "pp_wave",
+  "name": "pp-wave Plane Gravitational Waves",
+  "description": "A class of exact solutions describing plane-fronted gravitational waves with parallel rays. They model the radiation field of fast-moving sources and exact gravitational wave geometries.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "plane wave",
+    "gravitational wave",
+    "exact solution",
+    "time-dependent",
+    "dynamical",
+    "radiating",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "coordinates": []
+}

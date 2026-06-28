@@ -1,0 +1,33 @@
+{
+  "id": "tov",
+  "name": "Tolman-Oppenheimer-Volkoff Relativistic Star",
+  "description": "The hydrostatic equilibrium equations for a static, spherically symmetric relativistic star of perfect fluid. They set the maximum mass of neutron stars before collapse to a black hole.",
+  "tags": [
+    "perfect fluid",
+    "static",
+    "stationary",
+    "spherically symmetric",
+    "interior",
+    "stellar interior",
+    "hydrostatic equilibrium",
+    "neutron star",
+    "maximum mass",
+    "mass",
+    "matched solution",
+    "non-vacuum",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "A star is a truce between gravity, which pulls its matter inward, and pressure, which pushes back. Writing that truce down in Newtonian gravity gives the classical equation of stellar structure, and closing it requires one more ingredient: a relation between pressure and density, an equation of state [phillips1999]. The oldest useful choice is a polytrope, $p = K\\rho^{\\gamma}$, which reduces the whole problem to the Lane-Emden equation studied since the nineteenth century [lane1870]. The Tolman-Oppenheimer-Volkoff equation is the general-relativistic version of that truce — and it is the polytrope, or some richer equation of state in its place, that turns the equation into an actual star.¶The relativistic story has a sharp lineage. In 1931 Subrahmanyan Chandrasekhar fed a relativistically degenerate electron gas — itself a polytrope — into the Newtonian equations and discovered that white dwarfs possess a maximum mass, above which electron degeneracy pressure simply cannot hold [chandrasekhar1931]. Eight years later Richard Tolman gave a systematic method for static perfect-fluid spheres in full general relativity [tolman1939], and in the immediately following paper J. Robert Oppenheimer and George Volkoff applied the relativistic equilibrium equation to a cold gas of neutrons, deriving what is now called the TOV equation and finding that neutron cores, too, have a maximum mass [oppenheimer1939]. Their estimate was crude, but the conclusion was momentous: beyond it, nothing known could stop collapse.¶This is why the TOV equation, fed a polytrope, is the workhorse of compact-star physics. By itself the equation is underdetermined — it relates pressure, density, and the enclosed mass, but cannot say how pressure responds to compression. Supply that closure, whether an idealized polytrope or a detailed nuclear equation of state, and the TOV equation returns a one-parameter family of stars, a mass-radius curve, and a maximum mass past which static equilibrium is impossible and a black hole must form. The location of that maximum — near two solar masses for neutron stars — is now among the most pointed questions in physics, probed by pulsar timing, by the X-ray sizing of neutron stars, and by the gravitational waves of merging compact objects, each measurement a constraint on which equation of state the TOV equation should be given.",
+  "references": [
+    "phillips1999",
+    "lane1870",
+    "chandrasekhar1931",
+    "tolman1939",
+    "oppenheimer1939"
+  ],
+  "coordinates": []
+}

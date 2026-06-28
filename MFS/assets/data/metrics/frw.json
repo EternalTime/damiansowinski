@@ -4,14 +4,23 @@
   "description": "The Friedmann-Lemaître-Robertson-Walker metric describing a homogeneous, isotropic expanding universe.",
   "tags": [
     "cosmology",
+    "cosmological",
     "expanding universe",
     "homogeneous",
     "isotropic",
-    "FLRW"
+    "FLRW",
+    "time-dependent",
+    "dynamical",
+    "non-vacuum",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
   ],
   "signature": "(-,+,+,+)",
   "convention": "Coordinates are cosmic time $t$ and comoving radial distance $r$, with $\\theta \\in [0,\\pi]$ and $\\phi \\in [0,2\\pi)$. The scale factor $a(t) > 0$ describes the expansion of the universe. The curvature parameter $k \\in \\{-1, 0, +1\\}$ encodes the spatial geometry: $k=-1$ (open), $k=0$ (flat), $k=+1$ (closed). Dots denote derivatives with respect to $t$.",
-  "history": "Alexander Friedmann was the first to take the Einstein field equations seriously as a description of a dynamic universe. Working at the Petrograd Polytechnic Institute in 1922, he allowed the universe to expand or contract — something Einstein himself had resisted — and found a family of solutions parameterized by the energy content and spatial curvature of the cosmos [friedmann1922]. Einstein initially objected, then conceded. Five years later, Georges Lemaître independently derived the expanding solution and connected it to the growing observational record [lemaitre1927]: Vesto Slipher had been measuring the redshifts of spiral nebulae since 1913 [slipher1913], Carl Wilhelm Wirtz had noted a systematic recession trend in 1918 and again in 1922 [wirtz1918, wirtz1922], and Edwin Hubble would quantify the distance-recession relationship in 1929. Howard Robertson and Arthur Walker placed the whole framework on rigorous geometric footing in the 1930s, proving that the metric displayed here is the unique spacetime consistent with spatial homogeneity and isotropy [robertson1935, walker1937] — what physicists now call the cosmological principle.¶The curvature parameter $k$ encodes the global geometry of the spatial slices. When $k = 0$ space is flat; when $k = +1$ it closes on itself like a three-sphere; when $k = -1$ it opens into hyperbolic geometry. The field equations don't fix $k$ — that is an empirical question. Current observations of the cosmic microwave background favor $k = 0$ to high precision.¶The Einstein equations applied to this metric yield the Friedmann equations, governing how $a(t)$ evolves given the matter and energy content of the universe. These two equations are the foundation of modern physical cosmology and underlie the standard $\\Lambda$CDM model — the edifice on which our current picture of the universe rests [misner1973, wald1984].",
+  "history": "Alexander Friedmann was the first to take the Einstein field equations seriously as a description of a dynamic universe. Working at the Petrograd Polytechnic Institute in 1922, he allowed the universe to expand or contract — something Einstein himself had resisted — and found a family of solutions parameterized by the energy content and spatial curvature of the cosmos [friedmann1922]. Einstein initially objected, then conceded. Five years later, Georges Lemaître independently derived the expanding solution and connected it to the growing observational record [lemaitre1927]: Vesto Slipher had been measuring the redshifts of spiral nebulae since 1913 [slipher1913], Carl Wilhelm Wirtz had noted a systematic recession trend in 1918 and again in 1922 [wirtz1918, wirtz1922], and Edwin Hubble would quantify the distance-recession relationship in 1929. Howard Robertson and Arthur Walker placed the whole framework on rigorous geometric footing in the 1930s, proving that the metric displayed here is the unique spacetime consistent with spatial homogeneity and isotropy [robertson1935, walker1937] — what physicists now call the cosmological principle. Homogeneity and isotropy together make each spatial slice maximally symmetric, carrying the largest symmetry group a three-geometry can. The spacetime itself is not — the time-dependent scale factor $a(t)$ breaks the temporal symmetries that the maximally symmetric vacua, Minkowski and de Sitter and anti-de Sitter, retain; FLRW is the cosmology one gets by demanding maximal symmetry of space alone, and letting time do the rest.¶The curvature parameter $k$ encodes the global geometry of the spatial slices. When $k = 0$ space is flat; when $k = +1$ it closes on itself like a three-sphere; when $k = -1$ it opens into hyperbolic geometry. The field equations don't fix $k$ — that is an empirical question. Current observations of the cosmic microwave background favor $k = 0$ to high precision.¶The Einstein equations applied to this metric yield the Friedmann equations, governing how $a(t)$ evolves given the matter and energy content of the universe. These two equations are the foundation of modern physical cosmology and underlie the standard $\\Lambda$CDM model — the edifice on which our current picture of the universe rests [misner1973, wald1984].",
   "references": [
     "friedmann1922",
     "lemaitre1927",

@@ -1,0 +1,39 @@
+{
+  "id": "kerr",
+  "name": "Kerr Rotating Black Hole",
+  "description": "The exact vacuum solution for a rotating, uncharged black hole, characterized by mass and angular momentum. It features an ergosphere, frame dragging, and a ring singularity, and describes essentially all astrophysical black holes.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "rotating",
+    "rotating black hole",
+    "black hole",
+    "stationary",
+    "axisymmetric",
+    "angular momentum",
+    "mass",
+    "ergosphere",
+    "frame dragging",
+    "ring singularity",
+    "singularity",
+    "curvature singularity",
+    "horizon",
+    "event horizon",
+    "Cauchy horizon",
+    "causal structure",
+    "asymptotically flat",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "For nearly half a century after Schwarzschild, the rotating case resisted everyone. Schwarzschild's 1916 solution described a static, spherical mass, but real stars spin, and the search for the exterior field of a rotating body became one of the notorious unsolved problems of general relativity — attempted, and abandoned, by a generation of relativists. The breakthrough came in 1963 from Roy Kerr, a New Zealander then at the University of Texas, who found it not by brute force but by restricting attention to metrics of a special algebraic type and letting that structure guide him to the answer [kerr1963]. The paper is two pages long. It is, by a common reckoning, the most important exact solution ever found to Einstein's equations.¶The geometry Kerr uncovered is far richer than Schwarzschild's. A rotating black hole drags spacetime around with it — inertial frames near the hole are swept along in the direction of spin — and this frame dragging becomes inescapable inside a region called the ergosphere, where nothing can remain at rest relative to the distant stars. The solution has two horizons rather than one, and at its core the point singularity of Schwarzschild is stretched into a ring. Much of this structure was only made legible by later work: in 1967 Robert Boyer and Richard Lindquist gave the coordinates now universally used to write the metric and built its maximal analytic extension [boyer1967], and in 1968 Brandon Carter discovered a hidden constant of motion that renders the geodesic equations integrable — the reason orbits around a Kerr hole can be solved at all [carter1968].¶The ergosphere is not merely a curiosity. In 1969 Roger Penrose showed that a particle entering it can split so that one fragment falls in carrying negative energy while the other escapes with more energy than the original possessed — energy mined directly from the hole's rotation [penrose1969]. And the Kerr metric carries a significance beyond any single phenomenon: uniqueness theorems establish that an isolated, stationary black hole in our universe is characterized entirely by its mass and spin, which is to say that it is a Kerr black hole. Every quiescent black hole astronomers observe, from stellar remnants to the giants at the centers of galaxies, is described by these two pages of 1963.",
+  "references": [
+    "kerr1963",
+    "boyer1967",
+    "carter1968",
+    "penrose1969"
+  ],
+  "coordinates": []
+}

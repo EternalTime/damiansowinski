@@ -5,9 +5,18 @@
   "tags": [
     "perfect fluid",
     "static",
+    "stationary",
     "spherically symmetric",
     "interior",
-    "exact solution"
+    "stellar interior",
+    "non-vacuum",
+    "matched solution",
+    "mass",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The coordinate $r$ is the areal radius, $r \\in [0, R]$, where $R$ is the stellar radius. The parameter $r_s = 2GM/c^2$ is the Schwarzschild radius of the star. The solution assumes a uniform (incompressible) perfect fluid and matches the exterior Schwarzschild metric at $r = R$. Units with $c = 1$ are used throughout.",

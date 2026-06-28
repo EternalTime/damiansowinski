@@ -1,6 +1,6 @@
 {
   "id": "ellis_bronnikov",
-  "name": "Ellis-Bronnikov Wormhole",
+  "name": "Ellis-Bronnikov Traversable Wormhole",
   "description": "A static, spherically symmetric traversable wormhole with zero redshift function, also known as the drainhole metric.",
   "tags": [
     "wormhole",
@@ -8,7 +8,17 @@
     "traversable",
     "static",
     "spherically symmetric",
-    "stationary"
+    "stationary",
+    "scalar field",
+    "phantom field",
+    "energy condition violation",
+    "non-vacuum",
+    "asymptotically flat",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The time coordinate is $ct$. The coordinate $r$ is the proper radial distance, $r \\in (-\\infty,\\infty)$, with the wormhole throat at $r = 0$. The parameter $\\ell > 0$ is the throat radius.",

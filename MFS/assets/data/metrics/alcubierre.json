@@ -1,0 +1,31 @@
+{
+  "id": "alcubierre",
+  "name": "Alcubierre Warp Drive",
+  "description": "A warp-bubble metric that contracts space ahead of a ship and expands it behind, allowing effective faster-than-light travel without locally exceeding light speed. It requires negative energy density (exotic matter) to sustain the bubble.",
+  "tags": [
+    "warp drive",
+    "faster-than-light",
+    "exotic matter",
+    "negative energy",
+    "energy condition violation",
+    "time-dependent",
+    "non-vacuum",
+    "dynamical",
+    "idealized model",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "causality violation"
+  ],
+  "history": "The warp drive is the rare exact solution that began as a piece of science fiction taken seriously. In 1994 Miguel Alcubierre, then in Wales, asked whether the faster-than-light travel of Star Trek could be given an honest general-relativistic description, and found that it could [alcubierre1994]. His construction places the ship in a flat bubble of spacetime and contracts space ahead of the bubble while expanding it behind. Locally nothing moves faster than light — the ship sits at rest in its own little patch — yet the bubble itself glides through spacetime at any speed one likes. Special relativity forbids outrunning a light beam locally; it says nothing about how fast a region of space may be made to move.¶The catch is in the source. To bend spacetime this way the Einstein equations demand a region of negative energy density — exotic matter that violates the energy conditions every known form of matter obeys. Worse, the amount is not a technicality. In 1997 Michael Pfenning and Larry Ford applied quantum inequalities to the bubble and found that its walls must be only a few hundred Planck lengths thick, and that the total negative energy required exceeds, by many orders of magnitude, anything physically conceivable — comparable in scale to the mass-energy of the entire visible universe [pfenning1997].¶So the warp drive lives as a thought experiment rather than an engineering proposal, but a remarkably productive one. It sharpened the question of how far the energy conditions can be pushed, and it spawned a family of variants. In 1999 Chris Van Den Broeck showed that a clever change of the bubble's shape — a tiny throat opening into a large interior — could cut the required negative energy from universe-sized down to a few solar masses [vandenbroeck1999]; and in 2002 José Natário demonstrated that the contraction-ahead, expansion-behind picture is not even essential, constructing a warp drive with no volume expansion at all [natario2002]. Yet the central obstruction proved stubborn: in 2004 Francisco Lobo and Matt Visser showed that the energy-condition violations are not merely a high-speed extravagance but persist even for arbitrarily slow bubbles [lobo2004].¶The question was reopened rather than closed. In 2021 Alexey Bobrick and Gianni Martire gave a general framework that encompasses every warp-drive metric yet proposed and clarified which of their features are negotiable, describing physical, subluminal warp drives free of the worst pathologies [bobrick2021]; the same year Erik Lentz exhibited soliton solutions that can in principle be sourced by purely positive energy densities drawn from a conducting plasma and classical electromagnetic fields — the first warp-like geometries built from familiar matter rather than the forbidden kind [lentz2021]. Whether any of this ever leaves the page is another question entirely. But as a clean demonstration of what general relativity permits, and of exactly where it digs in its heels, the warp drive has few equals.",
+  "references": [
+    "alcubierre1994",
+    "pfenning1997",
+    "vandenbroeck1999",
+    "natario2002",
+    "lobo2004",
+    "bobrick2021",
+    "lentz2021"
+  ],
+  "coordinates": []
+}

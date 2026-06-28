@@ -1,0 +1,35 @@
+{
+  "id": "oppenheimer_snyder",
+  "name": "Oppenheimer-Snyder Gravitational Collapse",
+  "description": "The first dynamical model of gravitational collapse, matching a collapsing homogeneous dust sphere to an exterior Schwarzschild vacuum. It showed how a star can form a black hole in finite proper time.",
+  "tags": [
+    "dust",
+    "collapse",
+    "gravitational collapse",
+    "dynamical",
+    "matched solution",
+    "black hole",
+    "singularity",
+    "horizon",
+    "event horizon",
+    "time-dependent",
+    "non-vacuum",
+    "spherically symmetric",
+    "homogeneous",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "Earlier in 1939, Oppenheimer and Volkoff had shown that a cold star above a certain mass has nothing left to hold it up [oppenheimer1939]. The obvious next question — what happens to it then? — Oppenheimer answered that same year with his student Hartland Snyder, in a paper now recognized as the first description of a black hole forming in real time [oppenheimersnyder1939]. They took the simplest collapse imaginable: a uniform sphere of pressureless dust, with no internal pressure to slow its fall, and solved it exactly by matching a contracting interior — itself a piece of a closed dust cosmology — onto the static Schwarzschild geometry outside [schwarzschild1916].¶What they found split cleanly in two, depending on who is watching. An observer riding inward with the matter reaches the Schwarzschild radius, and then the central singularity, in a finite and unremarkable span of their own time — nothing local marks the crossing of the horizon. A distant observer sees something entirely different: the collapse appears to slow as the surface nears the Schwarzschild radius, the light from it reddening and dimming, until the star seems to freeze at the horizon and fade from view, \"closing itself off,\" in their words, from any communication with the outside. The same event is a swift plunge for one observer and an eternal, fading hover for the other.¶The paper was published on the day Germany invaded Poland, and it went largely unregarded for two decades — set aside by the war, and by a lingering disbelief that nature would permit such an object. Its vindication came in the 1960s. The worry had always been that the singularity was an artifact of the model's perfect symmetry, an idealization realistic, lumpy collapse would avoid; Roger Penrose's 1965 theorem dispelled that hope, proving that once a trapped surface forms a singularity is unavoidable, symmetry or no [penrose1965]. Oppenheimer and Snyder had not described a special case. They had described the generic fate of massive matter.¶Eighty-seven years later, astronomers may have watched it happen. In 2026 a team led by Kishalay De reported that M31-2014-DS1, a hydrogen-poor supergiant in the Andromeda galaxy, had brightened in the infrared for some three years and then quietly vanished, leaving only a shell of dust and no supernova — the signature, they argued, of a star whose core collapsed directly into a black hole [de2026]. Born around thirteen solar masses and down to roughly five at its disappearance, it offered the most complete record yet of the process Oppenheimer and Snyder had sketched on paper. The correspondence is suggestive rather than exact: the real star shed turbulent outer layers as it went, nothing like the pressureless, perfectly symmetric ball of the 1939 model, and the interpretation is contested — other observers, pointing to a mid-infrared source that lingers a decade on and the absence of X-rays from accretion, argue the event was a dusty stellar eruption rather than a black hole's birth [beasor2026]. Whichever way it resolves, the question Oppenheimer and Snyder opened — whether massive matter truly collapses without limit — has at last become one the telescopes can argue over.",
+  "references": [
+    "oppenheimer1939",
+    "oppenheimersnyder1939",
+    "schwarzschild1916",
+    "penrose1965",
+    "de2026",
+    "beasor2026"
+  ],
+  "coordinates": []
+}

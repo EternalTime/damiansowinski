@@ -1,0 +1,30 @@
+{
+  "id": "tolman_bondi",
+  "name": "Tolman-Bondi Inhomogeneous Dust Universe",
+  "description": "A spherically symmetric but inhomogeneous dust solution generalizing FLRW to position-dependent density and expansion. It is widely used to model voids, structure formation, and inhomogeneous cosmologies.",
+  "tags": [
+    "dust",
+    "inhomogeneous",
+    "spherically symmetric",
+    "cosmology",
+    "cosmological",
+    "void",
+    "structure formation",
+    "comoving",
+    "time-dependent",
+    "dynamical",
+    "non-vacuum",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "history": "The Tolman-Bondi solution is what the FLRW universe becomes when one stops insisting that the cosmos be the same everywhere. It keeps spherical symmetry and keeps the matter a pressureless dust, but lets the density and the rate of expansion vary with radius — so it can describe a universe with a lump in it, or a hole. Its name records three contributors in turn: Georges Lemaître wrote down the general spherically symmetric dust models in 1933 [lemaitre1933], Richard Tolman examined what inhomogeneity does to a cosmology the following year [tolman1934], and Hermann Bondi systematized the whole family in 1947, identifying the local energy as the parameter that fixes the geometry [bondi1947]. Hence Lemaître-Tolman-Bondi, or LTB.¶The solution's charm is that it is exactly solvable despite being inhomogeneous, and the reason is a kind of independence: each concentric shell of dust evolves on its own, like a miniature FLRW universe with its own spatial curvature and its own clock, neighboring shells neither knowing nor caring what the others do. Set the radial profiles to constants and ordinary FLRW reappears; take a single uniform ball and match it to an exterior vacuum and one recovers the Oppenheimer-Snyder model of collapse. LTB is the connective tissue between the homogeneous cosmos and the collapsing star.¶That flexibility has made it the standard tool for inhomogeneity in general relativity. It models the growth of cosmic voids and the nonlinear formation of structure, and it has been pressed into more provocative service: a sufficiently large local void, described by an LTB metric, can mimic the dimming of distant supernovae that is usually read as cosmic acceleration — raising the question of whether some of what we attribute to dark energy is instead a sign that we sit near the center of an underdensity. The proposal is constrained and largely disfavored, but that it can even be posed is a measure of how much room inhomogeneity leaves in the field equations.",
+  "references": [
+    "lemaitre1933",
+    "tolman1934",
+    "bondi1947"
+  ],
+  "coordinates": []
+}
