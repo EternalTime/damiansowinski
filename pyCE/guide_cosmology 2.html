@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Cosmic Microwave Background &mdash; pyCE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ab018f0f" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="source/modules.html" />
+    <link rel="prev" title="Polytropes" href="guide_polytropes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyCE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#your-first-configurational-entropy">Your first configurational entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_instantons.html">Instantons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_instantons.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_instantons.html#solving-a-bounce">Solving a bounce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_bosonstars.html">Boson Stars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_bosonstars.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_bosonstars.html#solving-a-star">Solving a star</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_bosonstars.html#the-mass-curve">The mass curve</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_oscillons.html">Oscillons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_oscillons.html#the-setup">The setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_oscillons.html#running-a-simulation">Running a simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_polytropes.html">Polytropes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_polytropes.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_polytropes.html#solving-a-polytrope">Solving a polytrope</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Cosmic Microwave Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-a-spectrum">Loading a spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#from-spectrum-to-entropy">From spectrum to entropy</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/modules.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/pyCE.html">pyCE package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyCE.html#contents">Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.cosmology.html">pyCE.cosmology package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.bosonstars.html">pyCE.bosonstars module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.instantons.html">pyCE.instantons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.math.html">pyCE.math module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.oscillons.html">pyCE.oscillons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.polytropes.html">pyCE.polytropes module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyCE.html#module-pyCE">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.html#modules">Modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.html#pyCE.docs"><code class="docutils literal notranslate"><span class="pre">docs()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyCE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The Cosmic Microwave Background</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/guide_cosmology.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-cosmic-microwave-background">
+<h1>The Cosmic Microwave Background<a class="headerlink" href="#the-cosmic-microwave-background" title="Link to this heading"></a></h1>
+<p>In 1965 Arno Penzias and Robert Wilson could not get rid of a persistent hiss
+in their horn antenna — not after pointing it away from New York City, and
+not after evicting the pigeons. The hiss was the cosmic microwave background,
+and in the decades since, COBE, WMAP, and Planck have turned that noise into
+the most precisely measured spectrum in cosmology. The angular power spectrum
+<span class="math notranslate nohighlight">\(C_\ell\)</span> is usually mined for cosmological parameters; the
+<a class="reference internal" href="source/pyCE.cosmology.html#module-pyCE.cosmology" title="pyCE.cosmology"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.cosmology</span></code></a> module asks a different question of it — how much
+information does the spectrum carry, and how is that information distributed
+across multipoles?</p>
+<section id="loading-a-spectrum">
+<h2>Loading a spectrum<a class="headerlink" href="#loading-a-spectrum" title="Link to this heading"></a></h2>
+<p>The nine-year WMAP TT spectrum ships with the package, so this works
+offline:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.cosmology</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">wmap</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">read_power_spectrum</span><span class="p">(</span><span class="n">telescope</span> <span class="o">=</span> <span class="s1">&#39;WMAP&#39;</span><span class="p">,</span> <span class="n">ps</span> <span class="o">=</span> <span class="s1">&#39;TT&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result is a dictionary with the multipoles <code class="docutils literal notranslate"><span class="pre">ell</span></code>, the spectra <code class="docutils literal notranslate"><span class="pre">Dl</span></code>
+and <code class="docutils literal notranslate"><span class="pre">Cl</span></code>, and the measurement <code class="docutils literal notranslate"><span class="pre">error</span></code>. The Planck release-2 spectra are
+downloaded from IRSA on demand — same call, <code class="docutils literal notranslate"><span class="pre">telescope</span> <span class="pre">=</span> <span class="pre">'Planck'</span></code> — and
+the Planck best-fit theory curve comes from <code class="docutils literal notranslate"><span class="pre">psType</span> <span class="pre">=</span> <span class="pre">'fit'</span></code>. Both require
+a network connection.</p>
+</section>
+<section id="from-spectrum-to-entropy">
+<h2>From spectrum to entropy<a class="headerlink" href="#from-spectrum-to-entropy" title="Link to this heading"></a></h2>
+<p>The information-theoretic measures live in
+<a class="reference internal" href="source/pyCE.cosmology.analysis.aps.html#module-pyCE.cosmology.analysis.aps" title="pyCE.cosmology.analysis.aps"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.cosmology.analysis.aps</span></code></a>. The modal fraction folds in the
+<span class="math notranslate nohighlight">\(2\ell+1\)</span> degenerate <span class="math notranslate nohighlight">\(m\)</span>-modes and normalizes, turning the
+spectrum into a probability distribution over multipoles; the Shannon entropy
+and Kullback–Leibler divergence then do what they always do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.cosmology.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">aps</span>
+
+<span class="n">mf</span> <span class="o">=</span> <span class="n">aps</span><span class="o">.</span><span class="n">modal_fraction</span><span class="p">(</span><span class="n">wmap</span><span class="p">[</span><span class="s1">&#39;ell&#39;</span><span class="p">],</span> <span class="n">wmap</span><span class="p">[</span><span class="s1">&#39;Cl&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">aps</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">mf</span><span class="o">.</span><span class="n">copy</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>Pay attention to the <code class="docutils literal notranslate"><span class="pre">.copy()</span></code> calls — they are not decoration. These
+functions flag invalid entries by writing NaN into their arguments in place,
+so hand them copies whenever you intend to reuse a spectrum.</p>
+<p>To compare data against theory, take the divergence between the two modal
+fractions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">planck_fit</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">read_power_spectrum</span><span class="p">(</span><span class="n">telescope</span> <span class="o">=</span> <span class="s1">&#39;Planck&#39;</span><span class="p">,</span>
+                                      <span class="n">psType</span> <span class="o">=</span> <span class="s1">&#39;fit&#39;</span><span class="p">)</span>
+<span class="c1"># interpolate onto the WMAP multipoles before comparing</span>
+<span class="n">Cl_fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">wmap</span><span class="p">[</span><span class="s1">&#39;ell&#39;</span><span class="p">],</span> <span class="n">planck_fit</span><span class="p">[</span><span class="s1">&#39;ell&#39;</span><span class="p">],</span> <span class="n">planck_fit</span><span class="p">[</span><span class="s1">&#39;Cl&#39;</span><span class="p">])</span>
+
+<span class="n">p</span>  <span class="o">=</span> <span class="n">aps</span><span class="o">.</span><span class="n">modal_fraction</span><span class="p">(</span><span class="n">wmap</span><span class="p">[</span><span class="s1">&#39;ell&#39;</span><span class="p">],</span> <span class="n">wmap</span><span class="p">[</span><span class="s1">&#39;Cl&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">q</span>  <span class="o">=</span> <span class="n">aps</span><span class="o">.</span><span class="n">modal_fraction</span><span class="p">(</span><span class="n">wmap</span><span class="p">[</span><span class="s1">&#39;ell&#39;</span><span class="p">],</span> <span class="n">Cl_fit</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">aps</span><span class="o">.</span><span class="n">KL_divergence</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">q</span><span class="o">.</span><span class="n">copy</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>The divergence is measured in bits, and it is not symmetric — <span class="math notranslate nohighlight">\(D(p\,\|\,q)\)</span>
+answers how surprised you are by the data when you believed the theory, which
+is the direction cosmology usually cares about.</p>
+<p>For spectra on a continuous wavenumber grid — matter power spectra — the
+parallel measures live in <a class="reference internal" href="source/pyCE.cosmology.analysis.mps.html#module-pyCE.cosmology.analysis.mps" title="pyCE.cosmology.analysis.mps"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.cosmology.analysis.mps</span></code></a>, with integrals
+in place of sums. And for fitting a noisy spectrum without committing to a
+parametric model, <a class="reference internal" href="source/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.nonparametric_fit" title="pyCE.cosmology.analysis.aps.nonparametric_fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCE.cosmology.analysis.aps.nonparametric_fit()</span></code></a>
+implements the shrinkage estimator of Aghamousa, Arjunwadkar &amp; Souradeep
+(arXiv:1107.0516): expand the data in an orthogonal basis, shrink, and let an
+unbiased risk estimate choose how much.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="guide_polytropes.html" class="btn btn-neutral float-left" title="Polytropes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="source/modules.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

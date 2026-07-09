@@ -57,6 +57,17 @@
     return ((i + N) % N) * N + ((j + N) % N);
   }
 
+  /* Precomputed wrapped neighbor offsets (avoids per-cell modulo) */
+  const rowOff = new Int32Array(N), rowUp = new Int32Array(N), rowDn = new Int32Array(N);
+  const colL = new Int32Array(N), colR = new Int32Array(N);
+  for (let i = 0; i < N; i++) {
+    rowOff[i] = i * N;
+    rowUp[i]  = ((i - 1 + N) % N) * N;
+    rowDn[i]  = ((i + 1) % N) * N;
+    colL[i]   = (i - 1 + N) % N;
+    colR[i]   = (i + 1) % N;
+  }
+
   function initRandom() {
     for (let k = 0; k < N * N; k++) {
       phi[k]     = (Math.random() - 0.5) * 0.5;
@@ -68,11 +79,12 @@
     const dt2      = DT * DT;
     const noiseMag = Math.sqrt(2 * gamma * T / dt2);
     for (let i = 0; i < N; i++) {
+      const r = rowOff[i], ru = rowUp[i], rd = rowDn[i];
       for (let j = 0; j < N; j++) {
-        const k = idx(i, j);
+        const k = r + j;
         const p = phi[k];
-        const lap = phi[idx(i+1,j)] + phi[idx(i-1,j)]
-                  + phi[idx(i,j+1)] + phi[idx(i,j-1)]
+        const lap = phi[rd + j] + phi[ru + j]
+                  + phi[r + colR[j]] + phi[r + colL[j]]
                   - 4 * p;
         const force = lap - (-p + p*p*p);
         phi_new[k] = p + (p - phi_old[k]) * (1 - gamma * DT)
@@ -179,25 +191,16 @@
     plotCtx.stroke();
   }
 
+  let off, offCtx;
+
   function render() {
-    const W = canvas.width, H = canvas.height;
-    for (let pi = 0; pi < N; pi++) {
-      const y0 = Math.round(H * pi / N);
-      const y1 = Math.round(H * (pi + 1) / N);
-      for (let pj = 0; pj < N; pj++) {
-        const x0 = Math.round(W * pj / N);
-        const x1 = Math.round(W * (pj + 1) / N);
-        const li = phiToLUT(phi[pi * N + pj]);
-        const r = lut[li], g = lut[li+1], b = lut[li+2];
-        for (let py = y0; py < y1; py++) {
-          for (let px = x0; px < x1; px++) {
-            const base = (py * W + px) * 4;
-            buf[base] = r; buf[base+1] = g; buf[base+2] = b; buf[base+3] = 255;
-          }
-        }
-      }
+    let q = 0;
+    for (let k = 0; k < N * N; k++, q += 4) {
+      const li = phiToLUT(phi[k]);
+      buf[q] = lut[li]; buf[q+1] = lut[li+1]; buf[q+2] = lut[li+2];
     }
-    ctx.putImageData(imgData, 0, 0);
+    offCtx.putImageData(imgData, 0, 0);
+    ctx.drawImage(off, 0, 0, canvas.width, canvas.height);
   }
 
   let _frameCount = 0;
@@ -254,9 +257,16 @@
       ctx    = canvas.getContext('2d');
       canvas.width  = S;
       canvas.height = S;
-      imgData = ctx.createImageData(S, S);
-      buf     = imgData.data;
-      for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+      ctx.imageSmoothingEnabled = false;
+      if (!off) {
+        off        = document.createElement('canvas');
+        off.width  = N;
+        off.height = N;
+        offCtx     = off.getContext('2d');
+        imgData    = offCtx.createImageData(N, N);
+        buf        = imgData.data;
+        for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+      }
 
       plotCanvas = document.getElementById('gl-plot');
       plotCtx    = plotCanvas.getContext('2d');
@@ -280,9 +290,7 @@
       canvas = c;
       canvas.width  = S;
       canvas.height = S;
-      imgData = ctx.createImageData(S, S);
-      buf     = imgData.data;
-      for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+      ctx.imageSmoothingEnabled = false;
       resizePlotCanvas();
     },
   });

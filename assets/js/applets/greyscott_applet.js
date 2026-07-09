@@ -3,17 +3,27 @@
   const _c   = n => _cs.getPropertyValue(n).trim();
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
 
-  const Dv = 0.1, V_MAX = 0.4, STEPS_PER_FRAME = 8;
+  const Dv = 0.1, V_MAX = 0.4;
 
   let N = 128;
   let f = 0.055, k = 0.062, ratio = 2.0;
+  let stepsPerFrame = 8;
+  let shading = false;
+  let brushMode = 0;            // 0 = seed, 1 = cut
+  let brushRadius = 0.02;       // in uv units
   let running = false, frameId = null;
-  let canvas, ctx, offCanvas, offCtx, imgData, imgBuf;
-  let U, V, Un, Vn;
 
-  /* ── LUT ── */
-  const LUT_SIZE = 4096;
-  const lut = new Uint8Array(LUT_SIZE * 3);
+  /* ── WebGL state ── */
+  let canvas, gl;
+  let simProg, brushProg, dispProg;
+  let tex = [null, null], fbo = [null, null], cur = 0;
+  let rampTex, sampNearest, sampLinear, vao;
+  let brushQueue = [];          // {x0,y0,x1,y1,mode}
+  let pointerDown = false, lastUV = null;
+
+  /* ── Palette ramp (256×1 RGBA8) ── */
+  const RAMP_SIZE = 256;
+  const rampPix = new Uint8Array(RAMP_SIZE * 4);
   (function () {
     const stops = [
       _rgb('--near-black'),
@@ -23,81 +33,269 @@
       _rgb('--pink-light'),
       _rgb('--pink-dark'),
     ];
-    for (let i = 0; i < LUT_SIZE; i++) {
-      const t = i / (LUT_SIZE - 1);
+    for (let i = 0; i < RAMP_SIZE; i++) {
+      const t = i / (RAMP_SIZE - 1);
       const ft = t * (stops.length - 1);
       const lo = Math.floor(ft), hi = Math.min(lo + 1, stops.length - 1);
       const a = ft - lo;
-      lut[i*3]   = Math.round(stops[lo][0] + a*(stops[hi][0]-stops[lo][0]));
-      lut[i*3+1] = Math.round(stops[lo][1] + a*(stops[hi][1]-stops[lo][1]));
-      lut[i*3+2] = Math.round(stops[lo][2] + a*(stops[hi][2]-stops[lo][2]));
+      rampPix[i*4]   = Math.round(stops[lo][0] + a*(stops[hi][0]-stops[lo][0]));
+      rampPix[i*4+1] = Math.round(stops[lo][1] + a*(stops[hi][1]-stops[lo][1]));
+      rampPix[i*4+2] = Math.round(stops[lo][2] + a*(stops[hi][2]-stops[lo][2]));
+      rampPix[i*4+3] = 255;
     }
   })();
 
+  /* ── Shaders ── */
+  const VERT = `#version 300 es
+  out vec2 v_uv;
+  void main() {
+    vec2 p = vec2(float((gl_VertexID << 1) & 2), float(gl_VertexID & 2));
+    v_uv = p;
+    gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);
+  }`;
+
+  const SIM_FRAG = `#version 300 es
+  precision highp float;
+  uniform sampler2D uState;
+  uniform vec2  uTexel;
+  uniform float uF, uK, uDu, uDv, uDt;
+  in vec2 v_uv;
+  out vec4 frag;
+  void main() {
+    vec2 s  = texture(uState, v_uv).rg;
+    vec2 lap = texture(uState, v_uv + vec2( uTexel.x, 0.0)).rg
+             + texture(uState, v_uv + vec2(-uTexel.x, 0.0)).rg
+             + texture(uState, v_uv + vec2(0.0,  uTexel.y)).rg
+             + texture(uState, v_uv + vec2(0.0, -uTexel.y)).rg
+             - 4.0 * s;
+    float uvv = s.x * s.y * s.y;
+    float nu = s.x + uDt * (uDu * lap.x - uvv + uF * (1.0 - s.x));
+    float nv = s.y + uDt * (uDv * lap.y + uvv - (uF + uK) * s.y);
+    frag = vec4(clamp(nu, 0.0, 1.0), clamp(nv, 0.0, 1.0), 0.0, 1.0);
+  }`;
+
+  const BRUSH_FRAG = `#version 300 es
+  precision highp float;
+  uniform sampler2D uState;
+  uniform vec2  uP0, uP1;
+  uniform float uRadius;
+  uniform int   uMode;
+  uniform float uSeed;
+  in vec2 v_uv;
+  out vec4 frag;
+  float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7)) + uSeed) * 43758.5453);
+  }
+  float distSeg(vec2 p, vec2 a, vec2 b) {
+    vec2 ab = b - a;
+    float t = clamp(dot(p - a, ab) / max(dot(ab, ab), 1e-12), 0.0, 1.0);
+    return length(p - (a + t * ab));
+  }
+  void main() {
+    vec2 s = texture(uState, v_uv).rg;
+    float d = distSeg(v_uv, uP0, uP1);
+    if (d < uRadius) {
+      if (uMode == 0) {
+        s.x = 0.8 + (hash(v_uv) - 0.5) * 0.05;
+        s.y = 0.4 + (hash(v_uv + 7.0) - 0.5) * 0.05;
+      } else {
+        s.y *= smoothstep(0.0, 1.0, d / uRadius);
+      }
+    }
+    frag = vec4(s, 0.0, 1.0);
+  }`;
+
+  const DISP_FRAG = `#version 300 es
+  precision highp float;
+  uniform sampler2D uState;
+  uniform sampler2D uRamp;
+  uniform vec2  uTexel;
+  uniform float uVMax;
+  uniform int   uShading;
+  in vec2 v_uv;
+  out vec4 frag;
+  void main() {
+    float v = texture(uState, v_uv).g;
+    vec3 col = texture(uRamp, vec2(clamp(v / uVMax, 0.0, 1.0), 0.5)).rgb;
+    if (uShading == 1) {
+      float gx = texture(uState, v_uv + vec2(uTexel.x, 0.0)).g
+               - texture(uState, v_uv - vec2(uTexel.x, 0.0)).g;
+      float gy = texture(uState, v_uv + vec2(0.0, uTexel.y)).g
+               - texture(uState, v_uv - vec2(0.0, uTexel.y)).g;
+      vec3 n = normalize(vec3(-gx * 6.0, -gy * 6.0, 1.0));
+      float light = 0.55 + 0.45 * dot(n, normalize(vec3(-0.4, -0.6, 0.7)));
+      col *= light;
+    }
+    frag = vec4(col, 1.0);
+  }`;
+
+  function compile(type, src) {
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+      throw new Error('shader: ' + gl.getShaderInfoLog(sh));
+    }
+    return sh;
+  }
+  function makeProg(fragSrc) {
+    const p = gl.createProgram();
+    gl.attachShader(p, compile(gl.VERTEX_SHADER, VERT));
+    gl.attachShader(p, compile(gl.FRAGMENT_SHADER, fragSrc));
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+      throw new Error('link: ' + gl.getProgramInfoLog(p));
+    }
+    return p;
+  }
+
+  function makeStateTextures() {
+    for (let i = 0; i < 2; i++) {
+      if (tex[i]) { gl.deleteTexture(tex[i]); gl.deleteFramebuffer(fbo[i]); }
+      tex[i] = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex[i]);
+      gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RG16F, N, N);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+      fbo[i] = gl.createFramebuffer();
+      gl.bindFramebuffer(gl.FRAMEBUFFER, fbo[i]);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex[i], 0);
+    }
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  }
+
   function initState() {
-    U  = new Float32Array(N * N);
-    V  = new Float32Array(N * N);
-    Un = new Float32Array(N * N);
-    Vn = new Float32Array(N * N);
-    for (let c = 0; c < N * N; c++) { U[c] = 1.0; V[c] = 0.0; }
+    if (!gl) return;
+    for (let i = 0; i < 2; i++) {
+      gl.bindFramebuffer(gl.FRAMEBUFFER, fbo[i]);
+      gl.viewport(0, 0, N, N);
+      gl.clearColor(1.0, 0.0, 0.0, 1.0);   // U = 1, V = 0
+      gl.clear(gl.COLOR_BUFFER_BIT);
+    }
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    brushQueue.length = 0;
   }
 
   function setResolution(newN) {
     N = newN;
+    if (!gl) return;
+    makeStateTextures();
     initState();
-    offCanvas.width  = N;
-    offCanvas.height = N;
-    imgData = offCtx.createImageData(N, N);
-    imgBuf  = imgData.data;
   }
 
-  function step() {
-    const Du = ratio * Dv;
-    for (let c = 0; c < N * N; c++) {
-      const i = (c / N) | 0, j = c % N;
-      const u = U[c], v = V[c];
-      const lapU = U[((i+1)%N)*N+j] + U[((i-1+N)%N)*N+j]
-                 + U[i*N+(j+1)%N]   + U[i*N+(j-1+N)%N] - 4*u;
-      const lapV = V[((i+1)%N)*N+j] + V[((i-1+N)%N)*N+j]
-                 + V[i*N+(j+1)%N]   + V[i*N+(j-1+N)%N] - 4*v;
-      const uvv = u * v * v;
-      let nu = u + Du * lapU - uvv + f * (1 - u);
-      let nv = v + Dv * lapV + uvv - (f + k) * v;
-      Un[c] = nu < 0 ? 0 : nu > 1 ? 1 : nu;
-      Vn[c] = nv < 0 ? 0 : nv > 1 ? 1 : nv;
-    }
-    let tmp = U; U = Un; Un = tmp;
-    tmp = V; V = Vn; Vn = tmp;
+  function initGL() {
+    gl = canvas.getContext('webgl2', { antialias: false, alpha: false, preserveDrawingBuffer: false });
+    if (!gl) return false;
+    const ext = gl.getExtension('EXT_color_buffer_float')
+             || gl.getExtension('EXT_color_buffer_half_float');
+    if (!ext) { gl = null; return false; }
+
+    simProg   = makeProg(SIM_FRAG);
+    brushProg = makeProg(BRUSH_FRAG);
+    dispProg  = makeProg(DISP_FRAG);
+
+    vao = gl.createVertexArray();
+
+    sampNearest = gl.createSampler();
+    gl.samplerParameteri(sampNearest, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.samplerParameteri(sampNearest, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.samplerParameteri(sampNearest, gl.TEXTURE_WRAP_S, gl.REPEAT);
+    gl.samplerParameteri(sampNearest, gl.TEXTURE_WRAP_T, gl.REPEAT);
+    sampLinear = gl.createSampler();
+    gl.samplerParameteri(sampLinear, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.samplerParameteri(sampLinear, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.samplerParameteri(sampLinear, gl.TEXTURE_WRAP_S, gl.REPEAT);
+    gl.samplerParameteri(sampLinear, gl.TEXTURE_WRAP_T, gl.REPEAT);
+
+    rampTex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, rampTex);
+    gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGBA8, RAMP_SIZE, 1);
+    gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, RAMP_SIZE, 1, gl.RGBA, gl.UNSIGNED_BYTE, rampPix);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+    makeStateTextures();
+    initState();
+    return true;
+  }
+
+  function drawFullscreen() {
+    gl.bindVertexArray(vao);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
+  function applyBrush(op) {
+    const dst = 1 - cur;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo[dst]);
+    gl.viewport(0, 0, N, N);
+    gl.useProgram(brushProg);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, tex[cur]);
+    gl.bindSampler(0, sampNearest);
+    gl.uniform1i(gl.getUniformLocation(brushProg, 'uState'), 0);
+    gl.uniform2f(gl.getUniformLocation(brushProg, 'uP0'), op.x0, op.y0);
+    gl.uniform2f(gl.getUniformLocation(brushProg, 'uP1'), op.x1, op.y1);
+    gl.uniform1f(gl.getUniformLocation(brushProg, 'uRadius'), brushRadius);
+    gl.uniform1i(gl.getUniformLocation(brushProg, 'uMode'), op.mode);
+    gl.uniform1f(gl.getUniformLocation(brushProg, 'uSeed'), Math.random() * 100.0);
+    drawFullscreen();
+    cur = dst;
+  }
+
+  function simStep(dt, Du) {
+    const dst = 1 - cur;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo[dst]);
+    gl.viewport(0, 0, N, N);
+    gl.useProgram(simProg);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, tex[cur]);
+    gl.bindSampler(0, sampNearest);
+    gl.uniform1i(gl.getUniformLocation(simProg, 'uState'), 0);
+    gl.uniform2f(gl.getUniformLocation(simProg, 'uTexel'), 1 / N, 1 / N);
+    gl.uniform1f(gl.getUniformLocation(simProg, 'uF'), f);
+    gl.uniform1f(gl.getUniformLocation(simProg, 'uK'), k);
+    gl.uniform1f(gl.getUniformLocation(simProg, 'uDu'), Du);
+    gl.uniform1f(gl.getUniformLocation(simProg, 'uDv'), Dv);
+    gl.uniform1f(gl.getUniformLocation(simProg, 'uDt'), dt);
+    drawFullscreen();
+    cur = dst;
   }
 
   function render() {
-    for (let c = 0; c < N * N; c++) {
-      const vi = Math.round(Math.max(0, Math.min(V_MAX, V[c])) / V_MAX * (LUT_SIZE - 1));
-      const p = c * 4;
-      imgBuf[p]   = lut[vi*3];
-      imgBuf[p+1] = lut[vi*3+1];
-      imgBuf[p+2] = lut[vi*3+2];
-      imgBuf[p+3] = 255;
-    }
-    offCtx.putImageData(imgData, 0, 0);
-    ctx.drawImage(offCanvas, 0, 0, canvas.width, canvas.height);
-  }
-
-  function seedAt(cx, cy) {
-    const r = 2;
-    for (let di = -r; di <= r; di++) {
-      for (let dj = -r; dj <= r; dj++) {
-        if (di*di + dj*dj > r*r) continue;
-        const c = ((cy+di+N)%N)*N + ((cx+dj+N)%N);
-        U[c] = 0.8 + (Math.random()-0.5)*0.05;
-        V[c] = 0.4 + (Math.random()-0.5)*0.05;
-      }
-    }
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.useProgram(dispProg);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, tex[cur]);
+    gl.bindSampler(0, sampLinear);
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, rampTex);
+    gl.bindSampler(1, null);
+    gl.uniform1i(gl.getUniformLocation(dispProg, 'uState'), 0);
+    gl.uniform1i(gl.getUniformLocation(dispProg, 'uRamp'), 1);
+    gl.uniform2f(gl.getUniformLocation(dispProg, 'uTexel'), 1 / N, 1 / N);
+    gl.uniform1f(gl.getUniformLocation(dispProg, 'uVMax'), V_MAX);
+    gl.uniform1i(gl.getUniformLocation(dispProg, 'uShading'), shading ? 1 : 0);
+    drawFullscreen();
   }
 
   function loop() {
-    if (running) {
-      for (let s = 0; s < STEPS_PER_FRAME; s++) step();
+    if (gl) {
+      // flush brush strokes (works while paused too)
+      for (let i = 0; i < brushQueue.length; i++) applyBrush(brushQueue[i]);
+      brushQueue.length = 0;
+      if (pointerDown && lastUV) {
+        applyBrush({ x0: lastUV[0], y0: lastUV[1], x1: lastUV[0], y1: lastUV[1], mode: brushMode });
+      }
+      if (running) {
+        const Du = ratio * Dv;
+        const dt = Math.min(1.0, 0.24 / Math.max(Du, Dv));  // explicit-Euler stability guard
+        for (let s = 0; s < stepsPerFrame; s++) simStep(dt, Du);
+      }
       render();
     }
     frameId = requestAnimationFrame(loop);
@@ -124,11 +322,33 @@
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Brush</div>
+        <div class="applet-shell-btn-row">
+          <button class="applet-shell-btn gs-brush active" data-mode="0">Seed</button>
+          <button class="applet-shell-btn gs-brush"        data-mode="1">Cut</button>
+          <button class="applet-shell-btn" id="gs-shade">Shaded</button>
+        </div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Fine</span>
+          <input type="range" id="gs-brush-size" min="0.005" max="0.08" step="0.001" value="0.02">
+          <span class="applet-shell-side">Broad</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Resolution</div>
         <div class="applet-shell-btn-row">
           <button class="applet-shell-btn gs-res active" data-n="128">128</button>
           <button class="applet-shell-btn gs-res"        data-n="256">256</button>
           <button class="applet-shell-btn gs-res"        data-n="512">512</button>
+          <button class="applet-shell-btn gs-res"        data-n="1024">1024</button>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Speed (steps/frame)</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Slow</span>
+          <input type="range" id="gs-speed" min="1" max="32" step="1" value="8">
+          <span class="applet-shell-side">Fast</span>
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
@@ -160,30 +380,40 @@
     onOpen: function ({ canvas: c, S }) {
       canvas = c;
       canvas.style.cursor = 'crosshair';
-      ctx = canvas.getContext('2d');
-      ctx.imageSmoothingEnabled = false;
+      canvas.style.touchAction = 'none';
 
-      offCanvas = document.createElement('canvas');
-      offCanvas.width  = N;
-      offCanvas.height = N;
-      offCtx  = offCanvas.getContext('2d');
-      imgData = offCtx.createImageData(N, N);
-      imgBuf  = imgData.data;
+      if (!gl) {
+        if (!initGL()) {
+          const msg = document.createElement('div');
+          msg.style.cssText = 'padding:24px;color:var(--text-bright);font-size:15px;';
+          msg.textContent = 'WebGL2 with float render targets is not available in this browser.';
+          canvas.parentNode.replaceChild(msg, canvas);
+          return;
+        }
+      }
 
-      initState();
-
-      let painting = false;
-      function canvasCoords(e) {
+      function uvCoords(e) {
         const rect = canvas.getBoundingClientRect();
         return [
-          Math.floor((e.clientX - rect.left) / rect.width  * N),
-          Math.floor((e.clientY - rect.top)  / rect.height * N),
+          (e.clientX - rect.left) / rect.width,
+          1.0 - (e.clientY - rect.top) / rect.height,
         ];
       }
-      canvas.addEventListener('mousedown', function(e) { painting = true; const [cx, cy] = canvasCoords(e); seedAt(cx, cy); });
-      canvas.addEventListener('mousemove', function(e) { if (!painting) return; const [cx, cy] = canvasCoords(e); seedAt(cx, cy); });
-      canvas.addEventListener('mouseup',    function() { painting = false; });
-      canvas.addEventListener('mouseleave', function() { painting = false; });
+      canvas.addEventListener('pointerdown', function (e) {
+        canvas.setPointerCapture(e.pointerId);
+        pointerDown = true;
+        lastUV = uvCoords(e);
+        brushQueue.push({ x0: lastUV[0], y0: lastUV[1], x1: lastUV[0], y1: lastUV[1], mode: brushMode });
+      });
+      canvas.addEventListener('pointermove', function (e) {
+        if (!pointerDown) return;
+        const uv = uvCoords(e);
+        brushQueue.push({ x0: lastUV[0], y0: lastUV[1], x1: uv[0], y1: uv[1], mode: brushMode });
+        lastUV = uv;
+      });
+      const up = function () { pointerDown = false; lastUV = null; };
+      canvas.addEventListener('pointerup', up);
+      canvas.addEventListener('pointercancel', up);
 
       running = true;
       const pb = document.getElementById('gs-pause-btn');
@@ -193,15 +423,14 @@
 
     onClose: function () {
       running = false;
+      pointerDown = false;
       if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
       const pb = document.getElementById('gs-pause-btn');
       if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
     },
 
     onResize: function ({ canvas: c, S }) {
-      canvas = c;
-      ctx = canvas.getContext('2d');
-      ctx.imageSmoothingEnabled = false;
+      canvas = c;   // shell has reset canvas.width/height; render() picks it up
     },
   });
 
@@ -225,6 +454,24 @@
   });
   document.getElementById('gs-dratio').addEventListener('input', function() {
     ratio = parseFloat(this.value);
+  });
+  document.getElementById('gs-speed').addEventListener('input', function() {
+    stepsPerFrame = parseInt(this.value);
+  });
+  document.getElementById('gs-brush-size').addEventListener('input', function() {
+    brushRadius = parseFloat(this.value);
+  });
+  document.getElementById('gs-shade').addEventListener('click', function() {
+    shading = !shading;
+    this.classList.toggle('active', shading);
+  });
+
+  document.querySelectorAll('.gs-brush').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.gs-brush').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      brushMode = parseInt(this.dataset.mode);
+    });
   });
 
   document.querySelectorAll('.gs-res').forEach(btn => {

@@ -1,0 +1,211 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyCE.cosmology.analysis package &mdash; pyCE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab018f0f" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyCE.cosmology.analysis.aps module" href="pyCE.cosmology.analysis.aps.html" />
+    <link rel="prev" title="pyCE.cosmology package" href="pyCE.cosmology.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyCE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#your-first-configurational-entropy">Your first configurational entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_instantons.html">Instantons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_instantons.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_instantons.html#solving-a-bounce">Solving a bounce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_bosonstars.html">Boson Stars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_bosonstars.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_bosonstars.html#solving-a-star">Solving a star</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_bosonstars.html#the-mass-curve">The mass curve</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_oscillons.html">Oscillons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_oscillons.html#the-setup">The setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_oscillons.html#running-a-simulation">Running a simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_polytropes.html">Polytropes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_polytropes.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_polytropes.html#solving-a-polytrope">Solving a polytrope</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_cosmology.html">The Cosmic Microwave Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_cosmology.html#loading-a-spectrum">Loading a spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_cosmology.html#from-spectrum-to-entropy">From spectrum to entropy</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyCE.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyCE.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.instantons.html">pyCE.instantons module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.instantons.html#pyCE.instantons.instanton"><code class="docutils literal notranslate"><span class="pre">instanton</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.bosonstars.html">pyCE.bosonstars module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.bosonstars.html#pyCE.bosonstars.BosonStar"><code class="docutils literal notranslate"><span class="pre">BosonStar</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.bosonstars.html#pyCE.bosonstars.BosonStar.extract_physical_features"><code class="docutils literal notranslate"><span class="pre">BosonStar.extract_physical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.bosonstars.html#pyCE.bosonstars.BosonStar.generate_profile"><code class="docutils literal notranslate"><span class="pre">BosonStar.generate_profile()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.oscillons.html">pyCE.oscillons module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon"><code class="docutils literal notranslate"><span class="pre">oscillon</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.energy"><code class="docutils literal notranslate"><span class="pre">oscillon.energy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.initialize_field"><code class="docutils literal notranslate"><span class="pre">oscillon.initialize_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.radialFT"><code class="docutils literal notranslate"><span class="pre">oscillon.radialFT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.simulate_oscillon"><code class="docutils literal notranslate"><span class="pre">oscillon.simulate_oscillon()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.stress_energy_tensor"><code class="docutils literal notranslate"><span class="pre">oscillon.stress_energy_tensor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.polytropes.html">pyCE.polytropes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.polytropes.html#pyCE.polytropes.polytrope"><code class="docutils literal notranslate"><span class="pre">polytrope</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="pyCE.cosmology.html">pyCE.cosmology package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pyCE.cosmology.html#submodules">Submodules</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pyCE.cosmology.analysis package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.cosmology.analysis.aps.html">pyCE.cosmology.analysis.aps module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.cosmology.analysis.mps.html">pyCE.cosmology.analysis.mps module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.cosmology.data.html">pyCE.cosmology.data package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.cosmology.data.html#pyCE.cosmology.data.read_power_spectrum"><code class="docutils literal notranslate"><span class="pre">read_power_spectrum()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.math.html">pyCE.math module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.fourier_factor"><code class="docutils literal notranslate"><span class="pre">fourier_factor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.normalize"><code class="docutils literal notranslate"><span class="pre">normalize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.radialFT"><code class="docutils literal notranslate"><span class="pre">radialFT()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.radialFT_mat"><code class="docutils literal notranslate"><span class="pre">radialFT_mat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.radial_integrate"><code class="docutils literal notranslate"><span class="pre">radial_integrate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.sphere_solid_angle"><code class="docutils literal notranslate"><span class="pre">sphere_solid_angle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyCE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pyCE.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="pyCE.cosmology.html">pyCE.cosmology package</a></li>
+      <li class="breadcrumb-item active">pyCE.cosmology.analysis package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/pyCE.cosmology.analysis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyCE.cosmology.analysis">
+<span id="pyce-cosmology-analysis-package"></span><h1>pyCE.cosmology.analysis package<a class="headerlink" href="#module-pyCE.cosmology.analysis" title="Link to this heading"></a></h1>
+<p>Information-theoretic measures for power spectra.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<p>aps : discrete measures for angular power spectra C_ell
+mps : continuum measures for matter power spectra P(k)</p>
+</section>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyCE.cosmology.analysis.aps.html">pyCE.cosmology.analysis.aps module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyCE.cosmology.analysis.mps.html">pyCE.cosmology.analysis.mps module</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyCE.cosmology.html" class="btn btn-neutral float-left" title="pyCE.cosmology package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyCE.cosmology.analysis.aps.html" class="btn btn-neutral float-right" title="pyCE.cosmology.analysis.aps module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

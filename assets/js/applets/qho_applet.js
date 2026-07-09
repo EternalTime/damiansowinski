@@ -356,11 +356,8 @@
 
   function render() {
     if (!canvas) return;
-    ctx.fillStyle = BG;
-    ctx.fillRect(0, 0, S, S);
-
     const L = getLayout();
-    drawParabola(L);
+    drawStaticLayer(L);
 
     if (drawMode) {
       drawDrawModeOverlay(L);
@@ -370,8 +367,26 @@
     }
   }
 
+  /* ── Static layer: background + parabola, cached until layout changes ── */
+  let staticLayer = null, staticKey = '';
+
+  function drawStaticLayer(L) {
+    const key = S + '|' + L.p2x + '|' + L.y2top + '|' + L.p2w + '|' + L.p2h;
+    if (staticKey !== key) {
+      if (!staticLayer) staticLayer = document.createElement('canvas');
+      staticLayer.width  = S;
+      staticLayer.height = S;
+      const sctx = staticLayer.getContext('2d');
+      sctx.fillStyle = BG;
+      sctx.fillRect(0, 0, S, S);
+      drawParabola(sctx, L);
+      staticKey = key;
+    }
+    ctx.drawImage(staticLayer, 0, 0);
+  }
+
   /* ── Parabolic well  V(x) = x²/2  drawn on the prob-density panel ── */
-  function drawParabola(L) {
+  function drawParabola(c, L) {
     const x0 = L.p2x, y0 = L.y2top, w = L.p2w, h = L.p2h;
     const wallW = Math.max(1, Math.round(S * 0.008));
     const step  = Math.round(S * 0.04);
@@ -397,36 +412,36 @@
     }
 
     // Hatch below the parabola, clipped to canvas bottom but not to panel top
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(parabolaPath[0].px, parabolaPath[0].py);
-    for (let k = 1; k <= NP; k++) ctx.lineTo(parabolaPath[k].px, parabolaPath[k].py);
-    ctx.lineTo(x0 + w, yBottom);
-    ctx.lineTo(x0,     yBottom);
-    ctx.closePath();
-    ctx.clip();
+    c.save();
+    c.beginPath();
+    c.moveTo(parabolaPath[0].px, parabolaPath[0].py);
+    for (let k = 1; k <= NP; k++) c.lineTo(parabolaPath[k].px, parabolaPath[k].py);
+    c.lineTo(x0 + w, yBottom);
+    c.lineTo(x0,     yBottom);
+    c.closePath();
+    c.clip();
 
     // Hatch lines tall enough to cover the full canvas height
-    ctx.strokeStyle = _rgba('--text-dim', 0.30);
-    ctx.lineWidth   = wallW;
+    c.strokeStyle = _rgba('--text-dim', 0.30);
+    c.lineWidth   = wallW;
     for (let d = -S; d <= w + S; d += step) {
-      ctx.beginPath();
-      ctx.moveTo(x0 + d,      0);
-      ctx.lineTo(x0 + d - S,  S);
-      ctx.stroke();
+      c.beginPath();
+      c.moveTo(x0 + d,      0);
+      c.lineTo(x0 + d - S,  S);
+      c.stroke();
     }
-    ctx.restore();
+    c.restore();
 
     // Parabola outline
-    ctx.save();
-    ctx.strokeStyle = _rgba('--text-dim', 0.35);
-    ctx.lineWidth   = wallW;
-    ctx.lineCap     = 'round';
-    ctx.beginPath();
-    ctx.moveTo(parabolaPath[0].px, parabolaPath[0].py);
-    for (let k = 1; k <= NP; k++) ctx.lineTo(parabolaPath[k].px, parabolaPath[k].py);
-    ctx.stroke();
-    ctx.restore();
+    c.save();
+    c.strokeStyle = _rgba('--text-dim', 0.35);
+    c.lineWidth   = wallW;
+    c.lineCap     = 'round';
+    c.beginPath();
+    c.moveTo(parabolaPath[0].px, parabolaPath[0].py);
+    for (let k = 1; k <= NP; k++) c.lineTo(parabolaPath[k].px, parabolaPath[k].py);
+    c.stroke();
+    c.restore();
   }
 
   /* ── Draw-mode overlay ── */
@@ -477,27 +492,33 @@
     ctx.restore();
   }
 
-  /* ── Glow stroke helper ── */
+  /* ── Glow stroke helper (wide low-alpha understrokes, no shadowBlur) ── */
   function strokeGlow(buildPath, glowColor, glowColorDim, mainColor) {
     ctx.save();
-    ctx.shadowColor  = glowColor;
-    ctx.shadowBlur   = 10;
-    ctx.strokeStyle  = glowColorDim;
-    ctx.lineWidth    = 2.5;
-    ctx.globalAlpha  = 0.5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = glowColorDim;
+    ctx.lineWidth   = 9;
+    ctx.globalAlpha = 0.25;
     buildPath();
     ctx.stroke();
-    ctx.restore();
-
-    ctx.save();
-    ctx.shadowColor  = glowColor;
-    ctx.shadowBlur   = 18;
-    ctx.strokeStyle  = mainColor;
-    ctx.lineWidth    = 1.8;
+    ctx.strokeStyle = glowColor;
+    ctx.lineWidth   = 4.5;
+    ctx.globalAlpha = 0.35;
+    buildPath();
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = mainColor;
+    ctx.lineWidth   = 1.8;
     buildPath();
     ctx.stroke();
     ctx.restore();
   }
+
+  /* Per-frame scratch buffers (allocated once) */
+  const _reScratch   = new Float32Array(NX + 1);
+  const _imScratch   = new Float32Array(NX + 1);
+  const _probScratch = new Float32Array(NX + 1);
+  let _probGrad = null, _probGradKey = '';
 
   /* ── Wavefunction plot: Re(ψ) teal, Im(ψ) pink ── */
   function drawWavefunctionPlot(x0, y0, w, h) {
@@ -507,8 +528,8 @@
     function toY(v)  { return y0 + h * (1 - (v + PSI_YMAX) / (2 * PSI_YMAX)); }
     function toX(xp) { return x0 + (xp + XMAX) / (2 * XMAX) * w; }
 
-    const reArr = new Float32Array(NX + 1);
-    const imArr = new Float32Array(NX + 1);
+    const reArr = _reScratch;
+    const imArr = _imScratch;
     for (let k = 0; k <= NX; k++) {
       const xp = -XMAX + 2 * XMAX * k / NX;
       const { re, im } = evalPsi(xp, t);
@@ -531,7 +552,7 @@
     function toY(v)  { return y0 + h * (1 - (v - PDF_YMIN) / (PDF_YMAX - PDF_YMIN)); }
     function toX(xp) { return x0 + (xp + XMAX) / (2 * XMAX) * w; }
 
-    const prob = new Float32Array(NX + 1);
+    const prob = _probScratch;
     for (let k = 0; k <= NX; k++) {
       const xp = -XMAX + 2 * XMAX * k / NX;
       const { re, im } = evalPsi(xp, t);
@@ -544,11 +565,15 @@
     for (let k = 0; k <= NX; k++) ctx.lineTo(toX(-XMAX + 2*XMAX*k/NX), toY(prob[k]));
     ctx.lineTo(toX(XMAX), y0 + h);
     ctx.closePath();
-    const grad = ctx.createLinearGradient(x0, y0, x0, y0 + h);
-    grad.addColorStop(0,   _rgba('--cyan', 0.45));
-    grad.addColorStop(0.6, _rgba('--cyan', 0.15));
-    grad.addColorStop(1,   _rgba('--cyan', 0.03));
-    ctx.fillStyle = grad;
+    const gKey = x0 + '|' + y0 + '|' + h;
+    if (_probGradKey !== gKey) {
+      _probGrad = ctx.createLinearGradient(x0, y0, x0, y0 + h);
+      _probGrad.addColorStop(0,   _rgba('--cyan', 0.45));
+      _probGrad.addColorStop(0.6, _rgba('--cyan', 0.15));
+      _probGrad.addColorStop(1,   _rgba('--cyan', 0.03));
+      _probGradKey = gKey;
+    }
+    ctx.fillStyle = _probGrad;
     ctx.fill();
     ctx.restore();
 

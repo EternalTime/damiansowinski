@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyCoop &mdash; pyCoop 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3fce5bdb" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            pyCoop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_dynamics.html">The Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_observables.html">The Observables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_viz.html">Visualization</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pycoop.html">pycoop package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">pyCoop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pyCoop</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pycoop">
+<h1>pyCoop<a class="headerlink" href="#pycoop" title="Link to this heading"></a></h1>
+<p>What does it take for a crowd to agree? Strip the question to its
+skeleton: <span class="math notranslate nohighlight">\(N\)</span> players on a graph, each carrying a continuous
+<em>action</em> in <span class="math notranslate nohighlight">\([-1, 1]\)</span> and a binary <em>opinion</em> — a thing they are
+doing and a thing they believe, with no guarantee the two line up.
+Actions drift toward opinions; every so often a player compares their
+action against their neighborhood’s, and if they are committed to a side
+yet poorly coordinated with the crowd, they change their mind. The group
+wins when every action lands on the same side. From these spare rules
+comes a zoo of outcomes — clean consensus, <em>fraught</em> standoffs where
+every player is locally content while the group as a whole has failed,
+<em>obdurate</em> jams pinned on a lone holdout — all governed by a single
+timescale and a pair of thresholds.</p>
+<p>pyCoop implements this model on arbitrary graphs. The dynamics are the
+exact embedded chain of the continuous-time model — actions drift toward
+opinions, opinions flip when a player is committed but poorly
+coordinated — with the inter-event clock exposed as a switch, so the
+exponential law and a fixed-step variant can be compared head to head.
+The observables
+quantify what a state <em>is</em> — its agreement, its fraughtness, its
+obdurateness — and the visualization tools turn trajectories into pictures
+and film.</p>
+<p>If you’re new here, start with <a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a>, then work through
+the guides in order — the dynamics first, then the observables that
+classify what the dynamics produce, then the tools for looking at it all.</p>
+<section id="guide">
+<h2>Guide<a class="headerlink" href="#guide" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_dynamics.html">The Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_observables.html">The Observables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_viz.html">Visualization</a></li>
+</ul>
+</div>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pycoop.html">pycoop package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/pycoop.graph.html">pycoop.graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycoop.dynamics.html">pycoop.dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycoop.observables.html">pycoop.observables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycoop.viz.html">pycoop.viz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>Conrad, M. and Tabor, W. (2024). Intermediate flexibility in cooperation
+games prevents free riding, polarization, and societal disintegration.
+<em>Collective Intelligence</em>, 3(4). doi:10.1177/26339137241303908</p>
+<p>Tabor, W., Smith, G., and Dankowicz, H. (2024). Escape from fraught
+states in a coordination game. <em>Royal Society Open Science</em>,
+11(2):231314.</p>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

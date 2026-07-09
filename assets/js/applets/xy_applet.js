@@ -9,6 +9,7 @@
   let stepsPerFrame = 5;
 
   let spins = null;
+  let cosS = null, sinS = null, wrapT = null;
   let canvasEl, ctx;
   let W = 1, H = 1;
   let running = false, frameId = null;
@@ -18,6 +19,10 @@
   function reset() {
     spins = new Float32Array(L * L);
     for (let i = 0; i < L * L; i++) spins[i] = Math.random() * 2 * Math.PI;
+    cosS  = new Float32Array(L * L);
+    sinS  = new Float32Array(L * L);
+    wrapT = new Int32Array(L + 2);
+    for (let i = -1; i <= L; i++) wrapT[i + 1] = ((i % L) + L) % L;
   }
 
   function sweep() {
@@ -78,52 +83,61 @@
   ];
   const NSTOPS = PALETTE.length - 1;
 
-  function angleToRGB(th) {
-    const TWO_PI = 2 * Math.PI;
-    const u = ((th % TWO_PI) + TWO_PI) % TWO_PI / TWO_PI;
-    const seg = u * NSTOPS;
-    const i = Math.floor(seg);
-    const t = seg - i;
-    const c0 = PALETTE[i], c1 = PALETTE[i + 1];
-    return [
-      Math.round(c0[0] + t * (c1[0] - c0[0])),
-      Math.round(c0[1] + t * (c1[1] - c0[1])),
-      Math.round(c0[2] + t * (c1[2] - c0[2])),
-    ];
-  }
+  /* Angle → color LUT (replaces per-pixel angleToRGB allocation) */
+  const ALUT_SIZE = 1024;               // power of two
+  const alut = new Uint8Array(ALUT_SIZE * 3);
+  (function buildALUT() {
+    for (let i = 0; i < ALUT_SIZE; i++) {
+      const seg = (i / ALUT_SIZE) * NSTOPS;
+      const s = Math.floor(seg), t = seg - s;
+      const c0 = PALETTE[s], c1 = PALETTE[Math.min(s + 1, NSTOPS)];
+      alut[i * 3]     = Math.round(c0[0] + t * (c1[0] - c0[0]));
+      alut[i * 3 + 1] = Math.round(c0[1] + t * (c1[1] - c0[1]));
+      alut[i * 3 + 2] = Math.round(c0[2] + t * (c1[2] - c0[2]));
+    }
+  })();
+  const INV_TWO_PI = 1 / (2 * Math.PI);
+
+  let imgData = null, pix = null;
 
   function render() {
     const cellW = W / L, cellH = H / L;
     const arrowLen = Math.min(cellW, cellH) * 0.38;
-    const imgData = ctx.createImageData(W, H);
-    const pix = imgData.data;
+    if (!imgData || imgData.width !== W || imgData.height !== H) {
+      imgData = ctx.createImageData(W, H);
+      pix = imgData.data;
+      for (let i = 3; i < pix.length; i += 4) pix[i] = 255;
+    }
+    const NN = L * L;
+    for (let i = 0; i < NN; i++) { cosS[i] = Math.cos(spins[i]); sinS[i] = Math.sin(spins[i]); }
+    let off = 0;
     for (let py = 0; py < H; py++) {
-      for (let px = 0; px < W; px++) {
-        const gx = px / cellW - 0.5, gy = py / cellH - 0.5;
-        const ix = Math.floor(gx), iy = Math.floor(gy);
-        const tx = gx - ix, ty = gy - iy;
-        const th00 = spins[idx(ix,   iy  )];
-        const th10 = spins[idx(ix+1, iy  )];
-        const th01 = spins[idx(ix,   iy+1)];
-        const th11 = spins[idx(ix+1, iy+1)];
-        const bx = Math.cos(th00)*(1-tx)*(1-ty) + Math.cos(th10)*tx*(1-ty)
-                 + Math.cos(th01)*(1-tx)*ty      + Math.cos(th11)*tx*ty;
-        const by = Math.sin(th00)*(1-tx)*(1-ty) + Math.sin(th10)*tx*(1-ty)
-                 + Math.sin(th01)*(1-tx)*ty      + Math.sin(th11)*tx*ty;
-        const [r, g, b] = angleToRGB(Math.atan2(by, bx));
-        const off = (py * W + px) * 4;
-        pix[off] = r; pix[off+1] = g; pix[off+2] = b; pix[off+3] = 255;
+      const gy = py / cellH - 0.5;
+      const iy = Math.floor(gy), ty = gy - iy;
+      const r0 = wrapT[iy + 1] * L, r1 = wrapT[iy + 2] * L;
+      for (let px = 0; px < W; px++, off += 4) {
+        const gx = px / cellW - 0.5;
+        const ix = Math.floor(gx), tx = gx - ix;
+        const c0 = wrapT[ix + 1], c1 = wrapT[ix + 2];
+        const w00 = (1-tx)*(1-ty), w10 = tx*(1-ty), w01 = (1-tx)*ty, w11 = tx*ty;
+        const bx = cosS[r0+c0]*w00 + cosS[r0+c1]*w10 + cosS[r1+c0]*w01 + cosS[r1+c1]*w11;
+        const by = sinS[r0+c0]*w00 + sinS[r0+c1]*w10 + sinS[r1+c0]*w01 + sinS[r1+c1]*w11;
+        let u = Math.atan2(by, bx) * INV_TWO_PI;
+        if (u < 0) u += 1;
+        const li = ((u * ALUT_SIZE) | 0) % ALUT_SIZE * 3;
+        pix[off] = alut[li]; pix[off+1] = alut[li+1]; pix[off+2] = alut[li+2];
       }
     }
     ctx.putImageData(imgData, 0, 0);
     const vr = Math.min(cellW, cellH) * 0.42;
+    const vPos = _c('--pink-dark'), vNeg = _c('--teal-light');
     for (let y = 0; y < L; y++) {
       for (let x = 0; x < L; x++) {
         const v = vorticityAt(x, y);
         if (v === 0) continue;
         ctx.beginPath();
         ctx.arc((x + 1) * cellW, (y + 1) * cellH, vr, 0, 2 * Math.PI);
-        ctx.fillStyle = v > 0 ? _c('--pink-dark') : _c('--teal-light');
+        ctx.fillStyle = v > 0 ? vPos : vNeg;
         ctx.fill();
       }
     }
@@ -133,9 +147,10 @@
     ctx.lineCap = 'round';
     for (let y = 0; y < L; y++) {
       for (let x = 0; x < L; x++) {
-        const th = spins[y * L + x];
+        const k = y * L + x;
+        const th = spins[k];
         const cx = (x + 0.5) * cellW, cy = (y + 0.5) * cellH;
-        const cosTh = Math.cos(th), sinTh = Math.sin(th);
+        const cosTh = cosS[k], sinTh = sinS[k];
         const ex = cx + cosTh * arrowLen, ey = cy + sinTh * arrowLen;
         const sx = cx - cosTh * arrowLen, sy = cy - sinTh * arrowLen;
         ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(ex, ey); ctx.stroke();

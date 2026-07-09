@@ -199,11 +199,31 @@ function drawSim() {
   const tx = x => offX + x * scale, ty = y => offY + y * scale;
   simCtx.fillStyle = _c('--blue-mid');
   simCtx.fillRect(0, 0, W, H);
+  /* Neon: resources and foragers as white-hot cores with additive colored halos
+     (soft radial-gradient halos; object counts are small, so per-draw gradients are fine) */
+  function halo(x, y, rad, rgbaMid) {
+    const g = simCtx.createRadialGradient(x, y, 0, x, y, rad);
+    g.addColorStop(0, rgbaMid);
+    g.addColorStop(1, rgbaMid.replace(/[\d.]+\)$/, '0)'));
+    simCtx.beginPath(); simCtx.arc(x, y, rad, 0, 2 * Math.PI);
+    simCtx.fillStyle = g; simCtx.fill();
+  }
+  simCtx.save();
+  simCtx.globalCompositeOperation = 'lighter';
+  const resGlow = _rgba('--green-dark', 0.5);
+  for (const r of resources) halo(tx(r.x), ty(r.y), 9, resGlow);
+  const agGlow = _rgba('--pink-dark', 0.55);
+  for (const a of agents) {
+    const hf = Math.max(0, a.s / S_MAX);
+    const agR = scale * 1.2 * (0.35 + 0.65 * hf);
+    halo(tx(a.x), ty(a.y), agR * 2.6, agGlow);
+  }
+  simCtx.restore();
   for (const r of resources) {
     simCtx.beginPath(); simCtx.arc(tx(r.x), ty(r.y), 3.5, 0, 2 * Math.PI);
     simCtx.fillStyle = _c('--green-light'); simCtx.fill();
     simCtx.beginPath(); simCtx.arc(tx(r.x), ty(r.y), 1.8, 0, 2 * Math.PI);
-    simCtx.fillStyle = _c('--green-dark'); simCtx.fill();
+    simCtx.fillStyle = _c('--white'); simCtx.fill();
   }
   for (const a of agents) {
     const ax = tx(a.x), ay = ty(a.y);
@@ -213,7 +233,8 @@ function drawSim() {
     simCtx.fillStyle = _rgba('--blue-light', 0.12); simCtx.fill();
     simCtx.beginPath(); simCtx.arc(ax, ay, agR, 0, 2 * Math.PI);
     simCtx.fillStyle = _c('--pink-light'); simCtx.fill();
-    simCtx.strokeStyle = _c('--teal-dark'); simCtx.lineWidth = 2.5; simCtx.stroke();
+    simCtx.beginPath(); simCtx.arc(ax, ay, agR * 0.55, 0, 2 * Math.PI);
+    simCtx.fillStyle = _c('--white'); simCtx.fill();
     simCtx.beginPath();
     simCtx.moveTo(ax, ay);
     simCtx.lineTo(ax + Math.cos(a.theta) * agR * 1.5, ay + Math.sin(a.theta) * agR * 1.5);
@@ -251,18 +272,32 @@ function clearAccum() {
   if (accumCtx) accumCtx.clearRect(0, 0, accumCanvas.width, accumCanvas.height);
 }
 
+/* Cached blob sprite (rebuilt only when the canvas width changes) */
+let blobSprite = null, blobSpriteW = 0;
+function buildBlobSprite(W) {
+  const r = W * 0.03;
+  const size = Math.ceil(2 * r) + 2;
+  blobSprite = document.createElement('canvas');
+  blobSprite.width = blobSprite.height = size;
+  const sctx = blobSprite.getContext('2d');
+  const c = size / 2;
+  const grad = sctx.createRadialGradient(c, c, 0, c, c, r);
+  grad.addColorStop(0,   `rgba(${_GLR},${_GLG},${_GLB},1)`);
+  grad.addColorStop(0.5, `rgba(${_GLR},${_GLG},${_GLB},0.4)`);
+  grad.addColorStop(1,   `rgba(${_GLR},${_GLG},${_GLB},0)`);
+  sctx.fillStyle = grad;
+  sctx.beginPath(); sctx.arc(c, c, r, 0, 2 * Math.PI); sctx.fill();
+  blobSpriteW = W;
+}
+
 function addBlob(nr, na, alphaMul = 1) {
   const W=accumCanvas.width, H=accumCanvas.height;
   const [cx, cy] = phaseToPixel(nr, na, W, H);
-  const r = W * 0.03, a = BLOB_A * alphaMul;
-  const grad = accumCtx.createRadialGradient(cx, cy, 0, cx, cy, r);
-  grad.addColorStop(0,   `rgba(${_GLR},${_GLG},${_GLB},${a})`);
-  grad.addColorStop(0.5, `rgba(${_GLR},${_GLG},${_GLB},${a * 0.4})`);
-  grad.addColorStop(1,   `rgba(${_GLR},${_GLG},${_GLB},0)`);
+  if (blobSpriteW !== W) buildBlobSprite(W);
   accumCtx.save();
   accumCtx.globalCompositeOperation = 'lighter';
-  accumCtx.fillStyle = grad;
-  accumCtx.beginPath(); accumCtx.arc(cx, cy, r, 0, 2 * Math.PI); accumCtx.fill();
+  accumCtx.globalAlpha = BLOB_A * alphaMul;
+  accumCtx.drawImage(blobSprite, cx - blobSprite.width / 2, cy - blobSprite.height / 2);
   accumCtx.restore();
 }
 

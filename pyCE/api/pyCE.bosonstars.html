@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyCE.bosonstars module &mdash; pyCE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab018f0f" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyCE.oscillons module" href="pyCE.oscillons.html" />
+    <link rel="prev" title="pyCE.instantons module" href="pyCE.instantons.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyCE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#your-first-configurational-entropy">Your first configurational entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_instantons.html">Instantons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_instantons.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_instantons.html#solving-a-bounce">Solving a bounce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_bosonstars.html">Boson Stars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_bosonstars.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_bosonstars.html#solving-a-star">Solving a star</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_bosonstars.html#the-mass-curve">The mass curve</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_oscillons.html">Oscillons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_oscillons.html#the-setup">The setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_oscillons.html#running-a-simulation">Running a simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_polytropes.html">Polytropes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_polytropes.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_polytropes.html#solving-a-polytrope">Solving a polytrope</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_cosmology.html">The Cosmic Microwave Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide_cosmology.html#loading-a-spectrum">Loading a spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide_cosmology.html#from-spectrum-to-entropy">From spectrum to entropy</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyCE.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyCE.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.instantons.html">pyCE.instantons module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.instantons.html#pyCE.instantons.instanton"><code class="docutils literal notranslate"><span class="pre">instanton</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyCE.bosonstars module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyCE.bosonstars.BosonStar"><code class="docutils literal notranslate"><span class="pre">BosonStar</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyCE.bosonstars.BosonStar.extract_physical_features"><code class="docutils literal notranslate"><span class="pre">BosonStar.extract_physical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyCE.bosonstars.BosonStar.generate_profile"><code class="docutils literal notranslate"><span class="pre">BosonStar.generate_profile()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.oscillons.html">pyCE.oscillons module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon"><code class="docutils literal notranslate"><span class="pre">oscillon</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.energy"><code class="docutils literal notranslate"><span class="pre">oscillon.energy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.initialize_field"><code class="docutils literal notranslate"><span class="pre">oscillon.initialize_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.radialFT"><code class="docutils literal notranslate"><span class="pre">oscillon.radialFT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.simulate_oscillon"><code class="docutils literal notranslate"><span class="pre">oscillon.simulate_oscillon()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.oscillons.html#pyCE.oscillons.oscillon.stress_energy_tensor"><code class="docutils literal notranslate"><span class="pre">oscillon.stress_energy_tensor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.polytropes.html">pyCE.polytropes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.polytropes.html#pyCE.polytropes.polytrope"><code class="docutils literal notranslate"><span class="pre">polytrope</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.cosmology.html">pyCE.cosmology package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.cosmology.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.cosmology.analysis.html">pyCE.cosmology.analysis package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.cosmology.analysis.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.cosmology.analysis.aps.html">pyCE.cosmology.analysis.aps module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.cosmology.analysis.mps.html">pyCE.cosmology.analysis.mps module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.cosmology.data.html">pyCE.cosmology.data package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyCE.cosmology.data.html#pyCE.cosmology.data.read_power_spectrum"><code class="docutils literal notranslate"><span class="pre">read_power_spectrum()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyCE.math.html">pyCE.math module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.fourier_factor"><code class="docutils literal notranslate"><span class="pre">fourier_factor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.normalize"><code class="docutils literal notranslate"><span class="pre">normalize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.radialFT"><code class="docutils literal notranslate"><span class="pre">radialFT()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.radialFT_mat"><code class="docutils literal notranslate"><span class="pre">radialFT_mat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.radial_integrate"><code class="docutils literal notranslate"><span class="pre">radial_integrate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyCE.math.html#pyCE.math.sphere_solid_angle"><code class="docutils literal notranslate"><span class="pre">sphere_solid_angle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyCE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pyCE.html">API Reference</a></li>
+      <li class="breadcrumb-item active">pyCE.bosonstars module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/pyCE.bosonstars.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyCE.bosonstars">
+<span id="pyce-bosonstars-module"></span><h1>pyCE.bosonstars module<a class="headerlink" href="#module-pyCE.bosonstars" title="Link to this heading"></a></h1>
+<p>Generation and configurational-entropy analysis of boson stars.</p>
+<p>Solves for spherically symmetric, ground-state solutions of the
+Einstein-Klein-Gordon system for a complex scalar field with the harmonic
+ansatz phi(r, t) = phi(r) e^(-i omega t) and the potential:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">V</span><span class="p">(</span><span class="o">|</span><span class="n">phi</span><span class="o">|</span><span class="p">)</span> <span class="o">=</span> <span class="o">|</span><span class="n">phi</span><span class="o">|**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">lamb</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">|</span><span class="n">phi</span><span class="o">|**</span><span class="mi">4</span>
+</pre></div>
+</div>
+<p>In the standard 3+1 metric ansatz, ds^2 = -alpha(r)^2 dt^2 + a(r)^2 dr^2
++ r^2 dOmega^2, the field and metric functions obey a coupled ODE system in
+r with a frequency eigenvalue omega: only a discrete set of central lapse
+values yields a profile that decays into flat space, and the nodeless member
+of that set is the ground state. The solver finds it by bisection shooting
+on the central lapse, integrating outward with RK4.</p>
+<p>For reviews see Schunck &amp; Mielke (gr-qc/0410040) and Liebling &amp; Palenzuela
+(arXiv:1202.5809). From the solution, the class computes the ADM mass, the
+effective radius, and the configurational entropy of the energy density.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyCE.bosonstars.BosonStar">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyCE.bosonstars.</span></span><span class="sig-name descname"><span class="pre">BosonStar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phi0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lamb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/bosonstars.html#BosonStar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.bosonstars.BosonStar" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Ground-state boson star and its configurational entropy.</p>
+<p>Instantiation does all the work: it shoots for the central lapse,
+integrates the Einstein-Klein-Gordon system outward, and extracts the
+physical features and the configurational entropy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phi0</strong> (<em>float</em>) – Core value of the scalar field.</p></li>
+<li><p><strong>lamb</strong> (<em>float, optional</em>) – Quartic self-interaction strength (default 0, the mini boson star).</p></li>
+<li><p><strong>alpha_range</strong> (<em>[float, float], optional</em>) – Initial bracket for the central lapse used by the shooting method
+(default [0, 1]). The supplied list is copied, never modified.</p></li>
+<li><p><strong>dr</strong> (<em>float, optional</em>) – Radial step size (default .01). For small phi0 the gradients are
+gentle but the star is large; for large phi0 the reverse — lower
+<cite>dr</cite> if the shooting method stalls.</p></li>
+<li><p><strong>r_max</strong> (<em>float, optional</em>) – Maximum integration radius (default 50). Too small and the shot
+converges to a profile that is not yet the ground state; too large
+and the integration stops at <cite>phi_tol</cite> before reaching the tail.</p></li>
+<li><p><strong>phi_tol</strong> (<em>float, optional</em>) – Field amplitude at which the tail is declared converged
+(default 1e-6).</p></li>
+<li><p><strong>plot_progress</strong> (<em>bool, optional</em>) – Plot each shooting iterate live (default False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid.</p></li>
+<li><p><strong>Phi</strong> (<em>phi</em><em>,</em>) – Scalar field profile and its radial derivative.</p></li>
+<li><p><strong>alpha</strong> (<em>a</em><em>,</em>) – Radial metric function and lapse, with the lapse rescaled so
+alpha -&gt; 1 at the outer edge (asymptotic flatness).</p></li>
+<li><p><strong>omega</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Frequency eigenvalue of the harmonic ansatz; omega &lt; 1 signals a
+gravitationally bound configuration.</p></li>
+<li><p><strong>rho</strong> (<em>ndarray</em>) – Energy density.</p></li>
+<li><p><strong>mass</strong> (<em>ndarray</em>) – Misner-Sharp mass within radius r, m(r) = (r/2)(1 - 1/a**2).</p></li>
+<li><p><strong>M</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total (ADM) mass, mass[-1].</p></li>
+<li><p><strong>R</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Effective radius: the first moment of r over the proper energy
+distribution.</p></li>
+<li><p><strong>k</strong> (<em>denFT</em><em>,</em>) – Radial Fourier transform of rho and its k-grid.</p></li>
+<li><p><strong>mf</strong> (<em>ndarray</em>) – Modal fraction <code class="docutils literal notranslate"><span class="pre">|denFT|**2</span> <span class="pre">/</span> <span class="pre">max|denFT|**2</span></code>.</p></li>
+<li><p><strong>Sc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Configurational entropy, -Integral[ mf * ln(mf) ] over k-space
+with the d = 3 radial measure.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.bosonstars</span><span class="w"> </span><span class="kn">import</span> <span class="n">BosonStar</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">star</span> <span class="o">=</span> <span class="n">BosonStar</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">star</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">star</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">star</span><span class="o">.</span><span class="n">omega</span>
+<span class="go">(0.5326, 6.004, 0.9367)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyCE.bosonstars.BosonStar.extract_physical_features">
+<span class="sig-name descname"><span class="pre">extract_physical_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/bosonstars.html#BosonStar.extract_physical_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.bosonstars.BosonStar.extract_physical_features" title="Link to this definition"></a></dt>
+<dd><p>Energy density, mass function, ADM mass, and effective radius.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyCE.bosonstars.BosonStar.generate_profile">
+<span class="sig-name descname"><span class="pre">generate_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phi0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_tol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/bosonstars.html#BosonStar.generate_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.bosonstars.BosonStar.generate_profile" title="Link to this definition"></a></dt>
+<dd><p>Bisection shooting on the central lapse.</p>
+<p>Each iterate integrates outward from the midpoint of the current
+bracket. A shot whose field diverges upward without crossing zero
+sat too high in the bracket; anything else (a crossing, or downward
+divergence) sat too low. The bracket halves each pass, and the loop
+ends when the tail amplitude drops below <cite>phi_tol</cite> or the bracket
+is exhausted at machine precision.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyCE.instantons.html" class="btn btn-neutral float-left" title="pyCE.instantons module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyCE.oscillons.html" class="btn btn-neutral float-right" title="pyCE.oscillons module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyLEAFS &mdash; pyLEAFS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9b3e4fe7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            pyLEAFS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">The model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_core.html">The core and its seams</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyLEAFS.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">pyLEAFS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pyLEAFS</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pyleafs">
+<h1>pyLEAFS<a class="headerlink" href="#pyleafs" title="Link to this heading"></a></h1>
+<p>An organism that must eat to live is, whether it knows it or not, in the
+business of information. To harvest energy from a structured environment it has
+to find that energy, and to find it reliably it has to build something that
+tells it where the energy is: a sensor. LEAFS — the Layered Environment with
+Agents Foraging Simulator — is a model for studying that pressure directly.
+Agents forage a replenishing field of resources; energy is the only currency;
+and the central question is how the demand for energy shapes the sensors and
+information-processing behavior the agents come to rely on.</p>
+<p>The model is built in layers. At the bottom is a <em>resource layer</em>: a stochastic
+field of energy quanta, born and decaying as a Poisson point process, tuned by a
+single homogeneity parameter <span class="math notranslate nohighlight">\(\Xi\)</span> that slides the world from sparse and
+patchy to dense and uniform. Above it sit <em>thermodynamic and signalling layers</em>
+— metabolism, and later pheromone and chemical fields — through which agents
+spend and sense energy. At the top is the <em>agent layer</em>: bodies that move,
+metabolize, reproduce, and (in later versions) carry evolvable neural
+controllers and sensor arrays. Each layer is an addition to the one below, and
+the code is organized so that the layers stay separable.</p>
+<p>This is the base. The first version implements the bottom of the stack: a
+single-species <em>greedy</em> forager on the resource field, with no neural
+controller, no genome, and no evolution. It reproduces the dynamics of the
+<code class="docutils literal notranslate"><span class="pre">forager</span></code> web applet and the resource-gathering model of the papers below. The
+neuroevolution, the heterogeneous environments, the predators, and the
+information-theoretic measures are layers still to be added; the core
+(<a class="reference internal" href="guide_core.html"><span class="doc">The core and its seams</span></a>) is structured to receive them.</p>
+<p>The science behind the model is developed in three papers, preserved in the
+project’s <code class="docutils literal notranslate"><span class="pre">Papers/</span></code> directory:</p>
+<ul class="simple">
+<li><p>Sowinski, Carroll-Nellenback, Markwick, Pinero, Gleiser, Kolchinsky, Ghoshal,
+Frank, <em>Semantic Information in a Model of Resource Gathering Agents</em>, PRX Life
+<strong>1</strong>, 023003 (2023). The semantic-information analysis of the forager.</p></li>
+<li><p>Sowinski, <em>Energy Harvesting, Information Architectures, and the Development of
+Senses</em> (notes). The theoretical foundation: the homogeneity parameter, the
+equations of motion, sensors framed as metabolism-modulating behaviors.</p></li>
+<li><p>Sowinski, <em>Behavioral Convergence in the Neuroevolution of Foraging Recurrent
+Neural Nets driven by Environmental Homogeneity</em> (preprint). The
+neuroevolution layer that later versions of pyLEAFS will implement.</p></li>
+</ul>
+<p>If you are new here, start with <a class="reference internal" href="getting_started.html"><span class="doc">Getting started</span></a>, then read
+<a class="reference internal" href="theory.html"><span class="doc">The model</span></a> for the model the code implements and <a class="reference internal" href="guide_core.html"><span class="doc">The core and its seams</span></a> for the
+architecture and how new layers attach. The original MATLAB classes are
+preserved in the repository’s <code class="docutils literal notranslate"><span class="pre">matlab/</span></code> directory.</p>
+<section id="guide">
+<h2>Guide<a class="headerlink" href="#guide" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">The model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_core.html">The core and its seams</a></li>
+</ul>
+</div>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyLEAFS.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/pyLEAFS.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyLEAFS.grid.html">pyLEAFS.grid module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyLEAFS.fields.html">pyLEAFS.fields module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyLEAFS.spatialhash.html">pyLEAFS.spatialhash module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyLEAFS.population.html">pyLEAFS.population module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyLEAFS.simulation.html">pyLEAFS.simulation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyLEAFS.viewer.html">pyLEAFS.viewer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyLEAFS.palette.html">pyLEAFS.palette module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

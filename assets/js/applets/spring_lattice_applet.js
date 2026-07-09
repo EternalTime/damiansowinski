@@ -63,6 +63,40 @@
       }
     }
     dragIdx = -1;
+    buildNeighbors();
+  }
+
+  /* ── Precomputed neighbor tables + persistent accel buffers ── */
+  let ax, ay, nbrStart, nbrIdx, nbrRest;
+
+  function buildNeighbors() {
+    const n2 = Nx * Ny;
+    const squareDirs = [[1,0],[-1,0],[0,1],[0,-1]];
+    const triEven    = [[1,0],[-1,0],[0,1],[-1,1],[0,-1],[-1,-1]];
+    const triOdd     = [[1,0],[-1,0],[0,1],[1,1],[0,-1],[1,-1]];
+    nbrStart = new Int32Array(n2 + 1);
+    const idxTmp = [], restTmp = [];
+    for (let j = 0; j < Ny; j++) {
+      for (let i = 0; i < Nx; i++) {
+        const a = j * Nx + i;
+        const dirs = (latticeType === 'triangular')
+          ? (j % 2 === 0 ? triEven : triOdd)
+          : squareDirs;
+        for (let d = 0; d < dirs.length; d++) {
+          const ni = i + dirs[d][0], nj = j + dirs[d][1];
+          if (ni < 0 || ni >= Nx || nj < 0 || nj >= Ny) continue;
+          const b = nj * Nx + ni;
+          const rdx = rx[b] - rx[a], rdy = ry[b] - ry[a];
+          idxTmp.push(b);
+          restTmp.push(Math.sqrt(rdx*rdx + rdy*rdy));
+        }
+        nbrStart[a + 1] = idxTmp.length;
+      }
+    }
+    nbrIdx  = Int32Array.from(idxTmp);
+    nbrRest = Float64Array.from(restTmp);
+    ax = new Float64Array(n2);
+    ay = new Float64Array(n2);
   }
 
   /* ── Physics ── */
@@ -71,30 +105,21 @@
 
   function stepOnce(dt) {
     const n2 = Nx * Ny;
-    const ax = new Float64Array(n2);
-    const ay = new Float64Array(n2);
+    ax.fill(0);
+    ay.fill(0);
+    const kOverM = springK / massM;
 
-    const squareDirs = [[1,0],[-1,0],[0,1],[0,-1]];
-
-    for (let j = 0; j < Ny; j++) {
-      for (let i = 0; i < Nx; i++) {
-        const a = j * Nx + i;
-        const dirs = (latticeType === 'triangular')
-          ? [[1,0],[-1,0], ...(j%2===0 ? [[0,1],[-1,1],[0,-1],[-1,-1]] : [[0,1],[1,1],[0,-1],[1,-1]])]
-          : squareDirs;
-        for (let d = 0; d < dirs.length; d++) {
-          const ni = i + dirs[d][0], nj = j + dirs[d][1];
-          if (ni < 0 || ni >= Nx || nj < 0 || nj >= Ny) continue;
-          const b = nj * Nx + ni;
-          const rdx = rx[b]-rx[a], rdy = ry[b]-ry[a];
-          const restLen = Math.sqrt(rdx*rdx + rdy*rdy);
-          const cdx = px[b]-px[a], cdy = py[b]-py[a];
-          const curLen = Math.sqrt(cdx*cdx + cdy*cdy);
-          if (curLen < 1e-9) continue;
-          const f = (springK / massM) * (curLen - restLen) / curLen;
-          ax[a] += f * cdx;
-          ay[a] += f * cdy;
-        }
+    for (let a = 0; a < n2; a++) {
+      const s0 = nbrStart[a], s1 = nbrStart[a + 1];
+      const pax = px[a], pay = py[a];
+      for (let s = s0; s < s1; s++) {
+        const b = nbrIdx[s];
+        const cdx = px[b] - pax, cdy = py[b] - pay;
+        const curLen = Math.sqrt(cdx*cdx + cdy*cdy);
+        if (curLen < 1e-9) continue;
+        const f = kOverM * (curLen - nbrRest[s]) / curLen;
+        ax[a] += f * cdx;
+        ay[a] += f * cdy;
       }
     }
 
@@ -160,6 +185,55 @@
     }
   }
 
+  /* ── Neon mass dots: white-hot core sprite + soft additive halo,
+     pre-baked so ~400 dots stay cheap ── */
+  let _dotSprite = null, _dotHalo = null, _dotSpriteR = -1;
+
+  function buildDotSprites(dotR) {
+    _dotSpriteR = dotR;
+    const [wr, wg, wb] = _rgb('--white');
+    _dotSprite = document.createElement('canvas');
+    const bs = Math.ceil(2 * dotR) + 2;
+    _dotSprite.width = _dotSprite.height = bs;
+    const bctx = _dotSprite.getContext('2d');
+    const bc = bs / 2;
+    const bg = bctx.createRadialGradient(bc, bc, 0, bc, bc, dotR);
+    bg.addColorStop(0,   `rgba(${wr},${wg},${wb},1)`);
+    bg.addColorStop(0.6, `rgba(${wr},${wg},${wb},0.9)`);
+    bg.addColorStop(1,   `rgba(${wr},${wg},${wb},0)`);
+    bctx.beginPath(); bctx.arc(bc, bc, dotR, 0, Math.PI * 2);
+    bctx.fillStyle = bg; bctx.fill();
+    const hR = dotR * 3;
+    _dotHalo = document.createElement('canvas');
+    const hs = Math.ceil(2 * hR) + 2;
+    _dotHalo.width = _dotHalo.height = hs;
+    const hctx2 = _dotHalo.getContext('2d');
+    const hc = hs / 2;
+    const hg = hctx2.createRadialGradient(hc, hc, 0, hc, hc, hR);
+    hg.addColorStop(0, `rgba(${wr},${wg},${wb},0.35)`);
+    hg.addColorStop(1, `rgba(${wr},${wg},${wb},0)`);
+    hctx2.beginPath(); hctx2.arc(hc, hc, hR, 0, Math.PI * 2);
+    hctx2.fillStyle = hg; hctx2.fill();
+  }
+
+  function drawNeonDots(dotR) {
+    if (_dotSpriteR !== dotR) buildDotSprites(dotR);
+    const hHalf = _dotHalo.width / 2, bHalf = _dotSprite.width / 2;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    for (let j = 1; j < Ny - 1; j++)
+      for (let i = 1; i < Nx - 1; i++) {
+        const idx = j * Nx + i;
+        ctx.drawImage(_dotHalo, px[idx] - hHalf, py[idx] - hHalf);
+      }
+    ctx.restore();
+    for (let j = 1; j < Ny - 1; j++)
+      for (let i = 1; i < Nx - 1; i++) {
+        const idx = j * Nx + i;
+        ctx.drawImage(_dotSprite, px[idx] - bHalf, py[idx] - bHalf);
+      }
+  }
+
   function renderTile() {
     let maxDiv = 0.001;
     for (let j=1; j<Ny-1; j++)
@@ -194,13 +268,7 @@
         }
     }
 
-    const dotR = Math.max(1.5, spacing*0.08);
-    ctx.fillStyle = _rgba('--white', 0.75);
-    for (let j=1; j<Ny-1; j++)
-      for (let i=1; i<Nx-1; i++) {
-        const idx = j*Nx+i;
-        ctx.beginPath(); ctx.arc(px[idx], py[idx], dotR, 0, Math.PI*2); ctx.fill();
-      }
+    drawNeonDots(Math.max(1.5, spacing*0.08));
   }
 
   function renderNetwork() {
@@ -256,13 +324,7 @@
       }
     }
 
-    const dotR=Math.max(2,spacing*0.1);
-    ctx.fillStyle=_rgba('--white',0.85);
-    for (let j=1; j<Ny-1; j++)
-      for (let i=1; i<Nx-1; i++) {
-        const idx=j*Nx+i;
-        ctx.beginPath(); ctx.arc(px[idx],py[idx],dotR,0,Math.PI*2); ctx.fill();
-      }
+    drawNeonDots(Math.max(2, spacing*0.1));
   }
 
   /* ── Loop ── */

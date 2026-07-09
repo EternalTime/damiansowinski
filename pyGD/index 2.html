@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyGD &mdash; pyGD 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            pyGD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_dynamics.html">Kuramoto Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_yokai.html">The Yokai</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">The Model</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyGD.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">pyGD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pyGD</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pygd">
+<h1>pyGD<a class="headerlink" href="#pygd" title="Link to this heading"></a></h1>
+<p>pyGD runs the Kuramoto model of coupled phase oscillators and lets you
+interfere with it. The oscillators live on the nodes of a graph, each pulled
+toward the phases of its neighbors; turn up the coupling and they synchronize.
+On top of them lives an agent — the <em>Yokai</em> — that hops from node to node,
+reads the local mean field, and kicks each phase it visits in the direction
+that opposes synchrony.</p>
+<p>The library ships two dynamics and one agent. <a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.Kuramoto" title="pyGD.dynamics.Kuramoto"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kuramoto</span></code></a>
+is the oscillator environment; <a class="reference internal" href="api/pyGD.agents.html#pyGD.agents.Yokai" title="pyGD.agents.Yokai"><code class="xref py py-class docutils literal notranslate"><span class="pre">Yokai</span></code></a> is the agent that
+drives it out of step; <a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.KuramotoCG" title="pyGD.dynamics.KuramotoCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">KuramotoCG</span></code></a> is the coarse-grained
+continuum limit, the stochastic dynamics you reach when the agent is integrated
+out. Graphs come from <code class="xref py py-mod docutils literal notranslate"><span class="pre">networkx</span></code>; the dynamics only ever see the sparse
+adjacency matrix, so any graph networkx can build is a graph pyGD can run.</p>
+<p>The model and the information-theoretic reading of the agent are in Sowinski,
+Frank &amp; Ghoshal, <em>Phys. Rev. Research</em> <strong>6</strong>, 043188 (2024), linked from the
+project page. If you’re new here, start with <a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a>, then work
+through whichever guide matches your problem. The library ports a set of
+MATLAB classes, whose interface it keeps.</p>
+<section id="guide">
+<h2>Guide<a class="headerlink" href="#guide" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_dynamics.html">Kuramoto Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_yokai.html">The Yokai</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">The Model</a></li>
+</ul>
+</div>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyGD.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/pyGD.html#vertical-slice">Vertical slice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyGD.dynamics.html">pyGD.dynamics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyGD.agents.html">pyGD.agents module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

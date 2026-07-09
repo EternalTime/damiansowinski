@@ -185,7 +185,7 @@
       const col = dopplerColor(doppler(dz, b));
       m.material.color.setHex(col);
       m.material.emissive.setHex(col);
-      m.material.emissiveIntensity = 0.15;
+      m.material.emissiveIntensity = 0.85;   // neon: self-lit Doppler colors
 
       /* Aberration: shifts apparent position toward forward (-Z) at high beta */
       const [adx, ady, adz] = aberrate(dx, dy, dz, b);

@@ -39,6 +39,7 @@ let orbit = { dragging: false, lastX: 0, lastY: 0, theta: 0.6 + Math.PI, phi: 1.
 
 let running = false, frameId = null;
 let needsSolve = true;
+let needsDraw  = true;
 let zCenter = 0, H_def = H0; // updated each solve
 
 // ── Palette for stress coloring ───────────────────────────────────────────────
@@ -258,8 +259,15 @@ function solveLinear() {
     constrained.set(nd*2, 0.0);
   }
 
-  // Build reduced system via penalty method for simplicity
-  const penalty = 1e14 * E;
+  // Build reduced system via penalty method for simplicity.
+  // Penalty is relative to the stiffness scale: a huge absolute penalty
+  // (e.g. 1e14·E) pushes K's own entries below double-precision roundoff.
+  let maxDiag = 0;
+  for (let i = 0; i < ndof; i++) {
+    const d = Math.abs(Kg[i*ndof + i]);
+    if (d > maxDiag) maxDiag = d;
+  }
+  const penalty = 1e7 * (maxDiag || E);
   const f = new Float64Array(ndof);
 
   for (const [dof, val] of constrained) {
@@ -268,8 +276,11 @@ function solveLinear() {
   }
 
   // Solve with Cholesky (dense, simple — mesh is small)
-  u = choleskysolve(Kg, f, ndof);
-  computeStress();
+  const sol = choleskysolve(Kg, f, ndof);
+  if (sol) {
+    u = sol;
+    computeStress();
+  }
 }
 
 function solve() {
@@ -283,13 +294,20 @@ function solve() {
 
 // ── Dense Cholesky solve ──────────────────────────────────────────────────────
 function choleskysolve(A, b, n) {
-  // In-place Cholesky decomposition (A is modified to L)
+  // In-place Cholesky decomposition (A is modified to L).
+  // Returns null if A is not positive-definite — clamping the pivot
+  // instead would silently fabricate a wrong solution.
   const L = new Float64Array(n*n);
   for (let i=0;i<n;i++){
     for (let j=0;j<=i;j++){
       let s = A[i*n+j];
       for (let k=0;k<j;k++) s -= L[i*n+k]*L[j*n+k];
-      L[i*n+j] = (i===j) ? Math.sqrt(Math.max(s,1e-30)) : s/L[j*n+j];
+      if (i===j) {
+        if (s <= 0 || !isFinite(s)) return null;
+        L[i*n+j] = Math.sqrt(s);
+      } else {
+        L[i*n+j] = s/L[j*n+j];
+      }
     }
   }
   // Forward substitution Ly = b
@@ -419,7 +437,7 @@ function assembleFint(uCurr) {
 function solveNonlinear() {
   const ndof = nNodes * 2;
   const nrn = NR + 1;
-  const penalty = 1e10 * E;
+  const penalty = 1e7 * E;   // relative-scale penalty; 1e10·E erodes tangent conditioning
   const MAX_ITER = 20;
   const TOL = 1e-8;
 
@@ -466,8 +484,9 @@ function solveNonlinear() {
       for (let i=0;i<ndof;i++) KT[i*ndof+j] = (fp[i]-fint[i])/eps_fd;
     }
 
-    // Solve KT * du = -R
+    // Solve KT * du = -R (stop iterating if the tangent has gone indefinite)
     const du = choleskysolve(KT, R.map(v=>-v), ndof);
+    if (!du) break;
     for (let i=0;i<ndof;i++) uCurr[i] += du[i];
   }
 
@@ -886,6 +905,7 @@ function updateCamera() {
     radius * Math.sin(phi) * Math.sin(theta)
   );
   camera.lookAt(0, 0, 0);
+  needsDraw = true;
   const el = document.getElementById('fem-cam-info');
   if (el) el.textContent = 'θ=' + theta.toFixed(2) + ' φ=' + phi.toFixed(2);
 }
@@ -895,6 +915,7 @@ function resizeRenderer() {
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
+  needsDraw = true;
 }
 
 function setupOrbit() {
@@ -926,8 +947,12 @@ function loop() {
         updateScene();
       }
       needsSolve = false;
+      needsDraw  = true;
     }
-    renderer.render(scene, camera);
+    if (needsDraw) {
+      renderer.render(scene, camera);
+      needsDraw = false;
+    }
   }
   frameId = requestAnimationFrame(loop);
 }

@@ -38,6 +38,7 @@ google_analytics: "G-XR8KFTKTC1"
 header_pages:
   - about.markdown
   - applets.markdown
+  - code.markdown
   - notes.markdown
   - press.markdown
   - publications.markdown

@@ -1,0 +1,231 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instantons &mdash; pyCE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ab018f0f" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Boson Stars" href="guide_bosonstars.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyCE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#your-first-configurational-entropy">Your first configurational entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Instantons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solving-a-bounce">Solving a bounce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_bosonstars.html">Boson Stars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_bosonstars.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_bosonstars.html#solving-a-star">Solving a star</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_bosonstars.html#the-mass-curve">The mass curve</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_oscillons.html">Oscillons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_oscillons.html#the-setup">The setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_oscillons.html#running-a-simulation">Running a simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_polytropes.html">Polytropes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_polytropes.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_polytropes.html#solving-a-polytrope">Solving a polytrope</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_cosmology.html">The Cosmic Microwave Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_cosmology.html#loading-a-spectrum">Loading a spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cosmology.html#from-spectrum-to-entropy">From spectrum to entropy</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/modules.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/pyCE.html">pyCE package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyCE.html#contents">Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.cosmology.html">pyCE.cosmology package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.bosonstars.html">pyCE.bosonstars module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.instantons.html">pyCE.instantons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.math.html">pyCE.math module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.oscillons.html">pyCE.oscillons module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.polytropes.html">pyCE.polytropes module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyCE.html#module-pyCE">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.html#modules">Modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyCE.html#pyCE.docs"><code class="docutils literal notranslate"><span class="pre">docs()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyCE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Instantons</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/guide_instantons.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="instantons">
+<h1>Instantons<a class="headerlink" href="#instantons" title="Link to this heading"></a></h1>
+<p>In 1977 Sidney Coleman worked out the fate of the false vacuum: a metastable
+state decays by nucleating bubbles of true vacuum, and the bubble that
+controls the decay rate — the bounce — is an O(d)-symmetric solution of the
+Euclidean equations of motion. The <a class="reference internal" href="source/pyCE.instantons.html#module-pyCE.instantons" title="pyCE.instantons"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.instantons</span></code></a> module finds these
+bounces and asks an information-theoretic question of them: how is the energy
+of a bounce organized across scales, and how does that organization respond
+as the potential is deformed?</p>
+<section id="the-model">
+<h2>The model<a class="headerlink" href="#the-model" title="Link to this heading"></a></h2>
+<p>The field lives in the asymmetric double-well potential</p>
+<div class="math notranslate nohighlight">
+\[V(B) = \frac{1}{2}B^2 - \frac{\alpha}{3}B^3 + \frac{1}{4}B^4,
+\qquad \alpha = \frac{3}{\sqrt{2}}\,(1+g),\]</div>
+<p>where the asymmetry factor <span class="math notranslate nohighlight">\(g\)</span> controls how far the two vacua are split
+— at <span class="math notranslate nohighlight">\(g=0\)</span> they are degenerate, and the bubble wall becomes thin. The
+bounce satisfies</p>
+<div class="math notranslate nohighlight">
+\[B'' + \frac{d}{r}B' = V'(B),\]</div>
+<p>with <span class="math notranslate nohighlight">\(B'(0)=0\)</span> and <span class="math notranslate nohighlight">\(B\to 0\)</span> as <span class="math notranslate nohighlight">\(r\to\infty\)</span>. This is a
+boundary value problem with an unstable answer: start the field a little too
+high at the origin and it overshoots, a little too low and it rolls back into
+the false vacuum. The module turns this instability into an algorithm — the
+shooting method — bisecting on the core value <span class="math notranslate nohighlight">\(B(0)\)</span> until the profile
+decays cleanly into the false vacuum.</p>
+</section>
+<section id="solving-a-bounce">
+<h2>Solving a bounce<a class="headerlink" href="#solving-a-bounce" title="Link to this heading"></a></h2>
+<p>Everything happens at instantiation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.instantons</span><span class="w"> </span><span class="kn">import</span> <span class="n">instanton</span>
+
+<span class="n">inst</span> <span class="o">=</span> <span class="n">instanton</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>   <span class="c1"># g = 0.2, d = 3, up to 3000 radial steps</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">inst</span><span class="o">.</span><span class="n">B</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$r$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$B(r)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The solve takes a few seconds — each bisection step integrates the profile
+out with RK4, and overshooting runs are allowed to diverge before being
+discarded. Don’t be alarmed by overflow warnings during the solve; diverging
+is precisely how a failed shot announces itself.</p>
+<p>Once the object exists, the physics is sitting on its attributes: the profile
+and its derivative (<code class="docutils literal notranslate"><span class="pre">inst.B</span></code>, <code class="docutils literal notranslate"><span class="pre">inst.DB</span></code>), the potential, gradient, and
+total energy densities (<code class="docutils literal notranslate"><span class="pre">inst.PEdens</span></code>, <code class="docutils literal notranslate"><span class="pre">inst.GEdens</span></code>, <code class="docutils literal notranslate"><span class="pre">inst.rho</span></code>), the
+Euclidean action <code class="docutils literal notranslate"><span class="pre">inst.Se</span></code>, and the configurational entropy <code class="docutils literal notranslate"><span class="pre">inst.Sc</span></code>,
+computed from the modal fraction of the energy-density power spectrum
+(<code class="docutils literal notranslate"><span class="pre">inst.mf</span></code> on the grid <code class="docutils literal notranslate"><span class="pre">inst.k</span></code>).</p>
+<p>Try sweeping the asymmetry:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">gs</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">Scs</span> <span class="o">=</span> <span class="p">[</span><span class="n">instanton</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span><span class="o">.</span><span class="n">Sc</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">gs</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gs</span><span class="p">,</span> <span class="n">Scs</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$g$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$S_c$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Convince yourself of the trend before you plot it: as <span class="math notranslate nohighlight">\(g\)</span> grows the
+bounce localizes, its power spectrum spreads, and the configurational entropy
+responds. For the relationship between <span class="math notranslate nohighlight">\(S_c\)</span> and the Euclidean action —
+and what it suggests about decay rates — see Gleiser &amp; Sowinski, <em>Phys. Rev.
+D</em> <strong>98</strong>, 056026 (2018).</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="guide_bosonstars.html" class="btn btn-neutral float-right" title="Boson Stars" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

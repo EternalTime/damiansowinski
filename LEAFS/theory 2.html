@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The model &mdash; pyLEAFS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9b3e4fe7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The core and its seams" href="guide_core.html" />
+    <link rel="prev" title="Getting started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyLEAFS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-resource-field">The resource field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#homogeneity">Homogeneity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-agent">The agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#population-dynamics">Population dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#semantic-information">Semantic information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#roadmap-of-layers">Roadmap of layers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_core.html">The core and its seams</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyLEAFS.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyLEAFS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/theory.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-model">
+<h1>The model<a class="headerlink" href="#the-model" title="Link to this heading"></a></h1>
+<p>This page describes the model that pyLEAFS v1 implements: a replenishing
+resource field and a single greedy forager living on it. It is the base of the
+layered architecture; sections marked <em>(later layer)</em> name the extensions that
+attach to it and are not yet implemented. The notation follows the papers listed
+on the <a class="reference internal" href="index.html"><span class="doc">pyLEAFS</span></a>.</p>
+<section id="the-resource-field">
+<h2>The resource field<a class="headerlink" href="#the-resource-field" title="Link to this heading"></a></h2>
+<p>Resources are energy quanta scattered through a <span class="math notranslate nohighlight">\(D\)</span>-dimensional toroidal
+box and treated as a Poisson point process. Within each region of the grid, one
+timestep of duration <span class="math notranslate nohighlight">\(dt\)</span> births and kills resources stochastically:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}k_\mathrm{grow}  &amp;\sim \mathrm{Poisson}\!\left(\frac{\Gamma\,L^{D}\,dt}{\epsilon}\right) \\
+k_\mathrm{decay} &amp;\sim \mathrm{Binomial}\!\left(N,\; 1 - e^{-\gamma\,dt}\right)\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Gamma\)</span> is the energy influx per unit volume, <span class="math notranslate nohighlight">\(\gamma\)</span> the
+resource decay rate, <span class="math notranslate nohighlight">\(\epsilon\)</span> the energy carried by one resource, and
+<span class="math notranslate nohighlight">\(L\)</span> the region side length. Births place a resource uniformly in the
+region; deaths remove uniformly chosen ones. Birth and death counts for every
+region are drawn in two vectorized calls per step, and the grow/decay order is
+randomized per region to avoid bias — the <code class="docutils literal notranslate"><span class="pre">ResourceField</span></code> is the
+struct-of-arrays descendant of the MATLAB <code class="docutils literal notranslate"><span class="pre">Region</span></code>/<code class="docutils literal notranslate"><span class="pre">Environment</span></code> pair.</p>
+<p>In the absence of agents the field relaxes to an equilibrium count per region</p>
+<div class="math notranslate nohighlight">
+\[N_\mathrm{eq} = \frac{\Gamma\,L^{D}}{\epsilon\,\gamma},\]</div>
+<p>which <code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code> exposes as <code class="docutils literal notranslate"><span class="pre">N_eq</span></code>.</p>
+</section>
+<section id="homogeneity">
+<h2>Homogeneity<a class="headerlink" href="#homogeneity" title="Link to this heading"></a></h2>
+<p>Rather than set <span class="math notranslate nohighlight">\(\epsilon\)</span> directly, the model is parameterized by a single
+dimensionless <strong>homogeneity</strong> <span class="math notranslate nohighlight">\(\Xi\)</span>, the ratio of the agent length scale
+<span class="math notranslate nohighlight">\(\ell_A\)</span> to the mean resource spacing <span class="math notranslate nohighlight">\(\ell_E\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\Xi = \frac{\ell_A}{\ell_E},
+\qquad
+\ell_E = \left(\frac{\epsilon}{\Gamma\,\tau_E}\right)^{1/D},
+\qquad
+\tau_E = 1/\gamma .\]</div>
+<p>With the agent length scale set by the collection radius
+(<span class="math notranslate nohighlight">\(\ell_A = r_\mathrm{col}\)</span> in the 2d applet), inverting for the energy per
+resource gives the relation the <code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code> factory uses:</p>
+<div class="math notranslate nohighlight">
+\[\epsilon = \frac{\Gamma}{\,(\Xi / r_\mathrm{col})^{D}\,\gamma\,}.\]</div>
+<p>Small <span class="math notranslate nohighlight">\(\Xi\)</span> is a <em>heterogeneous</em> world — few, energy-rich resources,
+widely spaced. Large <span class="math notranslate nohighlight">\(\Xi\)</span> is a <em>homogeneous</em> world — many, lean
+resources, densely packed. The homogeneity is the central control variable of
+the whole research program: the semantic-information threshold, the foraging
+phenotypes, and the punctuated evolutionary dynamics are all studied as
+functions of <span class="math notranslate nohighlight">\(\Xi\)</span>.</p>
+</section>
+<section id="the-agent">
+<h2>The agent<a class="headerlink" href="#the-agent" title="Link to this heading"></a></h2>
+<p>An agent is a body with a position <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, a unit heading
+<span class="math notranslate nohighlight">\(\hat{\mathbf{n}}\)</span>, and a fuel reserve <span class="math notranslate nohighlight">\(s\)</span>. Each timestep it senses,
+steers, moves, harvests, and metabolizes.</p>
+<p><strong>Sensing and steering.</strong> The v1 controller is <em>greedy</em>: the agent looks for the
+nearest resource within a sensing radius <span class="math notranslate nohighlight">\(R_\mathrm{sense}\)</span> and turns to
+face it. If nothing is in range, its heading diffuses,</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{n}} \leftarrow R\!\left(\frac{\sigma}{\sqrt{\tau_A}}\sqrt{dt}\;\xi\right)\hat{\mathbf{n}},
+\qquad \xi \sim \mathcal{N}(0, 1),\]</div>
+<p>a rotation by Gaussian angular noise of strength <span class="math notranslate nohighlight">\(\sigma/\sqrt{\tau_A}\)</span>
+(realized in 2d as a heading-angle perturbation, in 3d as a renormalized
+tangential kick). This greedy rule is the perfect-fidelity limit of the
+sensor model; replacing it with a learned controller is a <em>(later layer)</em>.</p>
+<p><strong>Motion.</strong> The agent advances ballistically and wraps on the torus:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x} \leftarrow \big(\mathbf{x} + v\,\hat{\mathbf{n}}\,dt\big) \bmod \mathbf{extent},\]</div>
+<p>with <span class="math notranslate nohighlight">\(v\)</span> the translational speed.</p>
+<p><strong>Harvesting and metabolism.</strong> Every resource within the collection radius
+<span class="math notranslate nohighlight">\(r_\mathrm{col}\)</span> is consumed, each returning energy <span class="math notranslate nohighlight">\(\epsilon\)</span>. Fuel
+follows</p>
+<div class="math notranslate nohighlight">
+\[\frac{ds}{dt} = -\mu_0 + h,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu_0\)</span> is the basal metabolic rate and <span class="math notranslate nohighlight">\(h\)</span> the harvest rate,
+capped at <span class="math notranslate nohighlight">\(s \le s_\mathrm{max}\)</span>. In the present version metabolism is a
+single basal term; the <em>(later layer)</em> in which sensors and actions modulate
+<span class="math notranslate nohighlight">\(\mu_0\)</span> — sensors as behaviors that cost energy — is the subject of the
+energy-harvesting notes.</p>
+<p><strong>Reproduction and death.</strong> When fuel reaches the threshold
+<span class="math notranslate nohighlight">\(s_\mathrm{rep} = 0.8\,s_\mathrm{max}\)</span> the agent <em>buds</em>: it spawns a
+daughter a short distance away and the two split the fuel equally. An agent dies
+when <span class="math notranslate nohighlight">\(s \le 0\)</span>. In v1 the daughter is an exact clone; mutation of a genome
+is a <em>(later layer)</em>.</p>
+</section>
+<section id="population-dynamics">
+<h2>Population dynamics<a class="headerlink" href="#population-dynamics" title="Link to this heading"></a></h2>
+<p>With agents drawing down the field, the resource and agent counts trace a
+predator–prey-like relation. Two carrying capacities frame it:</p>
+<div class="math notranslate nohighlight">
+\[N_R^{\max} = \frac{\Gamma\,\tau_E\,V}{\epsilon}, \qquad
+N_A^{\max} = \frac{\Gamma\,V}{\mu_0},\]</div>
+<p>with <span class="math notranslate nohighlight">\(V\)</span> the domain volume. <span class="math notranslate nohighlight">\(N_R^{\max}\)</span> is the no-agent resource
+equilibrium and varies with <span class="math notranslate nohighlight">\(\Xi\)</span>; <span class="math notranslate nohighlight">\(N_A^{\max}\)</span> is the agent
+carrying capacity and is independent of it. At equilibrium the two normalized
+counts lie on a line,</p>
+<div class="math notranslate nohighlight">
+\[\frac{N_R}{N_R^{\max}} + \frac{N_A}{N_A^{\max}} = 1,\]</div>
+<p>the diagonal of the phase plane. Starting from the empty-agent corner, a seeded
+population overshoots, grazes the field down, and settles into a sustained
+oscillation about this line rather than going extinct — the behavior the v1
+test suite pins. Plotting the trajectory in the
+<span class="math notranslate nohighlight">\((N_R/N_R^{\max},\,N_A/N_A^{\max})\)</span> plane, and detecting the transition
+onto the equilibrium line, is the first of the <em>(later)</em> observables.</p>
+</section>
+<section id="semantic-information">
+<h2>Semantic information<a class="headerlink" href="#semantic-information" title="Link to this heading"></a></h2>
+<p>The reason the model is built around energy and sensing is to measure the
+<em>information</em> an agent needs to stay alive. Following the Kolchinsky–Wolpert
+framework, the <strong>semantic information</strong> is the share of the agent–environment
+mutual information that is actually necessary for viability (the expected
+lifetime). Scrambling the sensor past a critical noise level
+<span class="math notranslate nohighlight">\(\eta_c\)</span> collapses viability; below it, noise barely matters. The threshold
+depends only on the agent’s geometry,</p>
+<div class="math notranslate nohighlight">
+\[\sin(\pi\,\eta_c) = \frac{r}{R},\]</div>
+<p>with <span class="math notranslate nohighlight">\(r\)</span> the collection radius and <span class="math notranslate nohighlight">\(R\)</span> the sensing radius. Computing
+the mutual information, transfer entropy, and the viability curve from logged
+trajectories is a planned analysis <em>(later layer)</em>; v1 provides the dynamics
+they are measured on.</p>
+</section>
+<section id="roadmap-of-layers">
+<h2>Roadmap of layers<a class="headerlink" href="#roadmap-of-layers" title="Link to this heading"></a></h2>
+<p>The pieces above marked <em>(later layer)</em> attach to the v1 core through the
+extension seams described in <a class="reference internal" href="guide_core.html"><span class="doc">The core and its seams</span></a>:</p>
+<ul class="simple">
+<li><p>a <strong>pheromone field</strong> (reaction–diffusion) as a second entry in the field
+list;</p></li>
+<li><p><strong>predators and trophic levels</strong> as additional populations in the step loop;</p></li>
+<li><p>a <strong>heterogeneous environment</strong> with spatially varying <span class="math notranslate nohighlight">\(\Gamma\)</span>;</p></li>
+<li><p><strong>neuroevolution</strong>: an evolvable recurrent controller and sensor array
+replacing the greedy rule, with mutation and selection;</p></li>
+<li><p>a <strong>chemoton / internal metabolism</strong> replacing the single basal term;</p></li>
+<li><p><strong>information-theoretic observables</strong>: semantic information, mutual
+information, transfer entropy.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="guide_core.html" class="btn btn-neutral float-right" title="The core and its seams" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

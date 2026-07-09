@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuramoto Dynamics &mdash; pyGD 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Yokai" href="guide_yokai.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyGD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Kuramoto Dynamics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#driving-the-class">Driving the class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-synchronization-transition">The synchronization transition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-coarse-grained-limit">The coarse-grained limit</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_yokai.html">The Yokai</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">The Model</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyGD.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyGD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Kuramoto Dynamics</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/guide_dynamics.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kuramoto-dynamics">
+<h1>Kuramoto Dynamics<a class="headerlink" href="#kuramoto-dynamics" title="Link to this heading"></a></h1>
+<p>A Kuramoto oscillator is a single phase <span class="math notranslate nohighlight">\(\theta_i\)</span> turning on a circle at
+its own natural frequency <span class="math notranslate nohighlight">\(\omega_i\)</span>. Couple a population of them on a
+graph and let each feel a pull toward the phases of its neighbors, and above a
+critical coupling they abandon their private frequencies and turn as one. pyGD
+gives you that population as a class you drive one step at a time.</p>
+<section id="driving-the-class">
+<h2>Driving the class<a class="headerlink" href="#driving-the-class" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.Kuramoto" title="pyGD.dynamics.Kuramoto"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kuramoto</span></code></a> ports the original MATLAB class. It takes a
+coupling <code class="docutils literal notranslate"><span class="pre">sigma</span></code>, a <code class="xref py py-mod docutils literal notranslate"><span class="pre">networkx</span></code> graph, and a vector of natural
+frequencies; it pulls the adjacency out once as a sparse matrix and steps the
+phases with an explicit Euler update. <code class="docutils literal notranslate"><span class="pre">evolve</span></code> advances one step, <code class="docutils literal notranslate"><span class="pre">run</span></code>
+advances many, and <code class="docutils literal notranslate"><span class="pre">update_order_parameter</span></code> refreshes the collective
+quantities you measure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyGD</span><span class="w"> </span><span class="kn">import</span> <span class="n">Kuramoto</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">erdos_renyi_graph</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">omegas</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">())</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">Kuramoto</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="n">G</span><span class="p">,</span> <span class="n">omegas</span><span class="o">=</span><span class="n">omegas</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>                 <span class="c1"># transient, unmeasured</span>
+<span class="n">r_hist</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r_hist</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The order parameter carries the story. Writing <span class="math notranslate nohighlight">\(Z = r\,e^{i\phi}\)</span> for the
+population average of <span class="math notranslate nohighlight">\(e^{i\theta}\)</span>, the magnitude <span class="math notranslate nohighlight">\(r\)</span> measures how
+tightly the phases bunch and <span class="math notranslate nohighlight">\(\phi\)</span> gives the mean phase they bunch
+around. Both live on the object as <code class="docutils literal notranslate"><span class="pre">env.r</span></code>, <code class="docutils literal notranslate"><span class="pre">env.phi</span></code>, and <code class="docutils literal notranslate"><span class="pre">env.Z</span></code> once
+<code class="docutils literal notranslate"><span class="pre">update_order_parameter</span></code> has run.</p>
+</section>
+<section id="the-synchronization-transition">
+<h2>The synchronization transition<a class="headerlink" href="#the-synchronization-transition" title="Link to this heading"></a></h2>
+<p>The single number worth plotting first is <span class="math notranslate nohighlight">\(r\)</span> as a function of coupling.
+Below a critical <span class="math notranslate nohighlight">\(\sigma_c\)</span> the oscillators ignore each other and
+<span class="math notranslate nohighlight">\(r\)</span> sits near zero; above it, an extensive fraction locks and <span class="math notranslate nohighlight">\(r\)</span>
+climbs toward one. Sweep the coupling and watch the knee appear:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyGD</span><span class="w"> </span><span class="kn">import</span> <span class="n">Kuramoto</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">erdos_renyi_graph</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+
+<span class="n">curve</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="n">sigmas</span><span class="p">:</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">omegas</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">())</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">Kuramoto</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">curve</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Plot <code class="docutils literal notranslate"><span class="pre">curve</span></code> against <code class="docutils literal notranslate"><span class="pre">sigmas</span></code> and you have the shape every figure in the
+paper is built on. Convince yourself the knee moves when you change the graph’s
+density — a sparser graph needs stronger coupling to lock.</p>
+</section>
+<section id="the-coarse-grained-limit">
+<h2>The coarse-grained limit<a class="headerlink" href="#the-coarse-grained-limit" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.KuramotoCG" title="pyGD.dynamics.KuramotoCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">KuramotoCG</span></code></a> is the same environment with the agent
+folded in. Rather than simulate a demon hopping and kicking, it adds two terms
+the demon leaves behind in the continuum limit — a degree-weighted shift of the
+natural frequencies and a Wiener fluctuation whose amplitude grows with node
+degree, so that hubs sit in hotter baths than leaves. The two agent parameters
+survive only through their product <code class="docutils literal notranslate"><span class="pre">ab</span></code> <span class="math notranslate nohighlight">\(= \alpha\beta\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyGD</span><span class="w"> </span><span class="kn">import</span> <span class="n">KuramotoCG</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">KuramotoCG</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="n">G</span><span class="p">,</span> <span class="n">omegas</span><span class="o">=</span><span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">()),</span>
+                 <span class="n">ab</span><span class="o">=</span><span class="mf">0.08</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The two dynamics are kept as independent classes, exactly as the MATLAB has
+them; the derivation that turns one into the other is sketched in
+<a class="reference internal" href="theory.html"><span class="doc">The Model</span></a> and given in full in the paper. To watch the demon itself rather
+than its shadow, go to <a class="reference internal" href="guide_yokai.html"><span class="doc">The Yokai</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="guide_yokai.html" class="btn btn-neutral float-right" title="The Yokai" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

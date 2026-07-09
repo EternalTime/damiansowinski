@@ -143,6 +143,8 @@
   }
 
   /* ── Render ── */
+  const _rhoScratch = new Float32Array(N);
+
   function render() {
     if (!canvas || !ctx) return;
     ctx.fillStyle = _c('--bg-void');
@@ -154,54 +156,35 @@
     const midY   = simH * 0.5;
     const phiScale = plotH * 0.5 / 2.0;
 
-    const rho = new Float32Array(N);
+    const rho = _rhoScratch;
     let rhoTotal = 0.0;
     for (let i = 0; i < N; i++) { rho[i] = energyDensity(i, a); rhoTotal += rho[i]; }
     const rhoScale = (plotH * 0.005) / (rhoTotal / N);
 
-    /* ρ glow */
-    ctx.save();
-    ctx.shadowColor = _c('--pink-light'); ctx.shadowBlur = 10;
-    ctx.strokeStyle = _c('--pink-dark');  ctx.lineWidth  = 1.5; ctx.globalAlpha = 0.5;
-    ctx.beginPath();
-    for (let i = 0; i < N; i++) {
-      const x = (i / N) * simW, y = simH - padY - rho[i] * rhoScale;
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    /* Glow via wide low-alpha understrokes (no shadowBlur) */
+    function tracePath(buf, base, scale) {
+      ctx.beginPath();
+      for (let i = 0; i < N; i++) {
+        const x = (i / N) * simW, y = base - buf[i] * scale;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
     }
-    ctx.stroke(); ctx.restore();
 
-    /* ρ main */
-    ctx.save();
-    ctx.shadowColor = _c('--pink-light'); ctx.shadowBlur = 18;
-    ctx.strokeStyle = _c('--pink-light'); ctx.lineWidth  = 1.5;
-    ctx.beginPath();
-    for (let i = 0; i < N; i++) {
-      const x = (i / N) * simW, y = simH - padY - rho[i] * rhoScale;
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    function strokeGlow(buf, base, scale, dimCol, mainCol) {
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = dimCol;  ctx.lineWidth = 8;   ctx.globalAlpha = 0.25;
+      tracePath(buf, base, scale); ctx.stroke();
+      ctx.strokeStyle = mainCol; ctx.lineWidth = 4;   ctx.globalAlpha = 0.35;
+      tracePath(buf, base, scale); ctx.stroke();
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = mainCol; ctx.lineWidth = 1.5;
+      tracePath(buf, base, scale); ctx.stroke();
+      ctx.restore();
     }
-    ctx.stroke(); ctx.restore();
 
-    /* φ glow */
-    ctx.save();
-    ctx.shadowColor = _c('--teal-light'); ctx.shadowBlur = 10;
-    ctx.strokeStyle = _c('--teal-dark');  ctx.lineWidth  = 1.5; ctx.globalAlpha = 0.5;
-    ctx.beginPath();
-    for (let i = 0; i < N; i++) {
-      const x = (i / N) * simW, y = midY - phi[i] * phiScale;
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    }
-    ctx.stroke(); ctx.restore();
-
-    /* φ main */
-    ctx.save();
-    ctx.shadowColor = _c('--teal-light'); ctx.shadowBlur = 18;
-    ctx.strokeStyle = _c('--teal-light'); ctx.lineWidth  = 1.5;
-    ctx.beginPath();
-    for (let i = 0; i < N; i++) {
-      const x = (i / N) * simW, y = midY - phi[i] * phiScale;
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    }
-    ctx.stroke(); ctx.restore();
+    strokeGlow(rho, simH - padY, rhoScale, _c('--pink-dark'), _c('--pink-light'));
+    strokeGlow(phi, midY,        phiScale, _c('--teal-dark'), _c('--teal-light'));
 
     /* axis lines at φ=0 and φ=1 */
     ctx.save();

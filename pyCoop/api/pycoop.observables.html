@@ -1,0 +1,232 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pycoop.observables &mdash; pyCoop 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3fce5bdb" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pycoop.viz" href="pycoop.viz.html" />
+    <link rel="prev" title="pycoop.dynamics" href="pycoop.dynamics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyCoop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_dynamics.html">The Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_observables.html">The Observables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_viz.html">Visualization</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pycoop.html">pycoop package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pycoop.graph.html">pycoop.graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycoop.dynamics.html">pycoop.dynamics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pycoop.observables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.local_mean"><code class="docutils literal notranslate"><span class="pre">local_mean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.agreement"><code class="docutils literal notranslate"><span class="pre">agreement()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.friend_enemy_weights"><code class="docutils literal notranslate"><span class="pre">friend_enemy_weights()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.alignment_asymmetry"><code class="docutils literal notranslate"><span class="pre">alignment_asymmetry()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.is_consensus"><code class="docutils literal notranslate"><span class="pre">is_consensus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.is_fraught"><code class="docutils literal notranslate"><span class="pre">is_fraught()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.is_obdurate"><code class="docutils literal notranslate"><span class="pre">is_obdurate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.classify"><code class="docutils literal notranslate"><span class="pre">classify()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.mean_action"><code class="docutils literal notranslate"><span class="pre">mean_action()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.mean_opinion"><code class="docutils literal notranslate"><span class="pre">mean_opinion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.classify_trajectory"><code class="docutils literal notranslate"><span class="pre">classify_trajectory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.state_fractions"><code class="docutils literal notranslate"><span class="pre">state_fractions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.observables.alpha_estimate"><code class="docutils literal notranslate"><span class="pre">alpha_estimate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pycoop.viz.html">pycoop.viz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyCoop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pycoop.html">pycoop package</a></li>
+      <li class="breadcrumb-item active">pycoop.observables</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pycoop.observables">
+<span id="pycoop-observables"></span><h1>pycoop.observables<a class="headerlink" href="#module-pycoop.observables" title="Link to this heading"></a></h1>
+<p>Observables on states and trajectories.</p>
+<p>State functions take (A, sigma) with A a zero-diagonal symmetric
+adjacency; the self-weighting enters through 1/(d_i + 1).  Definitions
+follow the main text of Conrad &amp; Tabor (2024): friends/enemies are
+statements about ACTIONS (sign of sigma_j), not opinions, and
+fraughtness is the non-Pareto-optimal Nash
+condition (crowd split, no single player can improve their own
+agreement by switching sides).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.local_mean">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">local_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#local_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.local_mean" title="Link to this definition"></a></dt>
+<dd><p>sigma_bar_i = (sigma_i + sum_j A_ij sigma_j) / (d_i + 1).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.agreement">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">agreement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#agreement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.agreement" title="Link to this definition"></a></dt>
+<dd><p>a_i = abs(sigma_bar_i) in [0, 1].</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.friend_enemy_weights">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">friend_enemy_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#friend_enemy_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.friend_enemy_weights" title="Link to this definition"></a></dt>
+<dd><p>(F, E): summed abs(sigma_j) over neighbors sharing / opposing
+player i’s action sign.  Assumes sigma_i != 0 for all i.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.alignment_asymmetry">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">alignment_asymmetry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#alignment_asymmetry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.alignment_asymmetry" title="Link to this definition"></a></dt>
+<dd><p>y_i = F_i - E_i; y_i &gt;= 0 means no local incentive to defect.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.is_consensus">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">is_consensus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#is_consensus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.is_consensus" title="Link to this definition"></a></dt>
+<dd><p>In a consensus orthant: all actions share one sign, none zero.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.is_fraught">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">is_fraught</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#is_fraught"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.is_fraught" title="Link to this definition"></a></dt>
+<dd><p>No zeros, non-consensus, and every y_i &gt;= 0: split but locally
+content – a non-Pareto-optimal Nash equilibrium.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.is_obdurate">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">is_obdurate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#is_obdurate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.is_obdurate" title="Link to this definition"></a></dt>
+<dd><p>No zeros, non-consensus, not fraught: some player could improve
+their agreement by switching sides (some y_i &lt; 0) but is unwilling.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.classify">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">classify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#classify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.classify" title="Link to this definition"></a></dt>
+<dd><p>One of ‘consensus’ | ‘fraught’ | ‘obdurate’ | ‘indeterminate’
+(the last only when some sigma_i == 0 off consensus).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.mean_action">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">mean_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#mean_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.mean_action" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.mean_opinion">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">mean_opinion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#mean_opinion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.mean_opinion" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.classify_trajectory">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">classify_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#classify_trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.classify_trajectory" title="Link to this definition"></a></dt>
+<dd><p>Per-event classification of a Trajectory; list of length K+1.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.state_fractions">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">state_fractions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#state_fractions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.state_fractions" title="Link to this definition"></a></dt>
+<dd><p>Time-weighted fraction of the run spent in each class, evaluated
+at event states and weighted by the following interval (the state
+can change class mid-interval only by an action crossing 0 or a
+wall, so this is exact up to those crossings).  Returns a dict.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycoop.observables.alpha_estimate">
+<span class="sig-prename descclassname"><span class="pre">pycoop.observables.</span></span><span class="sig-name descname"><span class="pre">alpha_estimate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/observables.html#alpha_estimate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.observables.alpha_estimate" title="Link to this definition"></a></dt>
+<dd><p>Time-weighted fraction of players past the position threshold,
+abs(sigma_i) &gt; l, restricted to intervals where the global window
+is open, abs(mean(sigma)) &lt; u.  On K_N this estimates the
+active-window slope alpha = 1 - 2l/(T+2); on other graphs it is a
+heuristic global proxy.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pycoop.dynamics.html" class="btn btn-neutral float-left" title="pycoop.dynamics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pycoop.viz.html" class="btn btn-neutral float-right" title="pycoop.viz" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

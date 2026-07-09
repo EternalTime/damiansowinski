@@ -21,13 +21,14 @@
   let h              = 0;
   let stagger        = false;
 
-  const expTable = new Float64Array(25);
+  /* exp(-dE/T) factorized: dE = 2*(m + h*s) with m = J*sum*s ∈ [-6, 6] */
+  const expJ = new Float64Array(13);
+  let expHp = 1, expHm = 1;
 
   function buildExpTable() {
-    const maxdE = lattice === 'triangle' ? 12 : 8;
-    for (let dE = -maxdE; dE <= maxdE; dE += 4) {
-      expTable[dE + 12] = Math.exp(-dE / T);
-    }
+    for (let m = -6; m <= 6; m++) expJ[m + 6] = Math.exp(-2 * m / T);
+    expHp = Math.exp(-2 * h / T);
+    expHm = Math.exp( 2 * h / T);
   }
 
   function hotStart() {
@@ -53,39 +54,29 @@
         const cX = (row % 2 === 0) ? cR : cL;
         sum += spins[rU + cX] + spins[rD + cX];
       }
-      const dE = 2 * (J * sum + h) * s;
-      if (dE <= 0 || Math.random() < Math.exp(-dE / T)) spins[i] = -s;
+      const m  = J * sum * s;
+      const dE = 2 * (m + h * s);
+      if (dE <= 0 || Math.random() < expJ[m + 6] * (s === 1 ? expHp : expHm)) spins[i] = -s;
     }
   }
 
   /* ── Rendering ── */
-  let canvas, ctx, imgData, buf;
-  let rowStarts = new Int32Array(N + 1);
-  let colStarts = new Int32Array(N + 1);
+  let canvas, ctx, off, offCtx, imgData, buf;
 
   function render() {
+    let q = 0, k = 0;
     for (let row = 0; row < N; row++) {
-      const y0 = rowStarts[row], y1 = rowStarts[row + 1];
-      for (let col = 0; col < N; col++) {
-        const raw  = spins[row * N + col];
+      for (let col = 0; col < N; col++, k++, q += 4) {
+        const raw  = spins[k];
         const disp = stagger ? raw * (((row + col) & 1) ? -1 : 1) : raw;
         const up   = disp === 1;
-        const r = up ? _TLR : _PDR;
-        const g = up ? _TLG : _PDG;
-        const b = up ? _TLB : _PDB;
-        const x0 = colStarts[col], x1 = colStarts[col + 1];
-        for (let py = y0; py < y1; py++) {
-          for (let px = x0; px < x1; px++) {
-            const idx    = (py * canvas.width + px) * 4;
-            buf[idx]     = r;
-            buf[idx + 1] = g;
-            buf[idx + 2] = b;
-            buf[idx + 3] = 255;
-          }
-        }
+        buf[q]     = up ? _TLR : _PDR;
+        buf[q + 1] = up ? _TLG : _PDG;
+        buf[q + 2] = up ? _TLB : _PDB;
       }
     }
-    ctx.putImageData(imgData, 0, 0);
+    offCtx.putImageData(imgData, 0, 0);
+    ctx.drawImage(off, 0, 0, canvas.width, canvas.height);
   }
 
   function loop() {
@@ -101,13 +92,16 @@
     ctx    = canvas.getContext('2d');
     canvas.width  = S;
     canvas.height = S;
-    for (let i = 0; i <= N; i++) {
-      rowStarts[i] = Math.round(S * i / N);
-      colStarts[i] = Math.round(S * i / N);
+    ctx.imageSmoothingEnabled = false;
+    if (!off) {
+      off        = document.createElement('canvas');
+      off.width  = N;
+      off.height = N;
+      offCtx     = off.getContext('2d');
+      imgData    = offCtx.createImageData(N, N);
+      buf        = imgData.data;
+      for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
     }
-    imgData = ctx.createImageData(S, S);
-    buf     = imgData.data;
-    for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
   }
 
   /* ── Shell wiring ── */
@@ -190,13 +184,7 @@
       if (!canvas) return;
       canvas.width  = S;
       canvas.height = S;
-      for (let i = 0; i <= N; i++) {
-        rowStarts[i] = Math.round(S * i / N);
-        colStarts[i] = Math.round(S * i / N);
-      }
-      imgData = ctx.createImageData(S, S);
-      buf     = imgData.data;
-      for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+      ctx.imageSmoothingEnabled = false;
     },
   });
 

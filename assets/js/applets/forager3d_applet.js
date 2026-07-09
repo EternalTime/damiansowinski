@@ -485,13 +485,17 @@ let arrowBuf  = null;   // line segments: x0,y0,z0, x1,y1,z1 per arrow
 let cubeBuf   = null;   // 12 edges × 2 verts × 3 floats
 
 function initGL(canvas) {
-  gl = canvas.getContext('webgl', { antialias: true, alpha: false });
+  const opts = { antialias: true, alpha: false };
+  gl = canvas.getContext('webgl2', opts);
+  isGL2 = !!gl;
+  if (!gl) gl = canvas.getContext('webgl', opts);
   if (!gl) { console.error('WebGL not supported'); return; }
   progSphere = makeProgram(VS_SPHERE, FS_SPHERE);
   progArrow  = makeProgram(VS_LINE,   FS_LINE);
   progCube   = makeProgram(VS_LINE,   FS_LINE);
   progSense  = makeProgram(VS_SENSE,  FS_SENSE);
   progAgent  = makeProgram(VS_AGENT,  FS_AGENT);
+  cacheLocations();
   sphereBuf     = gl.createBuffer();
   arrowBuf      = gl.createBuffer();
   cubeBuf       = gl.createBuffer();
@@ -521,6 +525,65 @@ function buildCube() {
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
 }
 
+/* Cached uniform/attrib locations + instancing (WebGL2 native, WebGL1 via extension) */
+let loc = null, extInst = null, isGL2 = false;
+
+function vertexDivisor(attribLoc, d) {
+  if (isGL2) gl.vertexAttribDivisor(attribLoc, d);
+  else if (extInst) extInst.vertexAttribDivisorANGLE(attribLoc, d);
+}
+
+function drawInstanced(mode, first, count, instances) {
+  if (isGL2) gl.drawArraysInstanced(mode, first, count, instances);
+  else if (extInst) extInst.drawArraysInstancedANGLE(mode, first, count, instances);
+}
+
+function canInstance() { return isGL2 || !!extInst; }
+
+function cacheLocations() {
+  extInst = isGL2 ? null : gl.getExtension('ANGLE_instanced_arrays');
+  loc = {
+    cube: {
+      uMVP:   gl.getUniformLocation(progCube, 'uMVP'),
+      uColor: gl.getUniformLocation(progCube, 'uColor'),
+      aPos:   gl.getAttribLocation(progCube, 'aPos'),
+    },
+    sphere: {
+      uMVP:       gl.getUniformLocation(progSphere, 'uMVP'),
+      uViewport:  gl.getUniformLocation(progSphere, 'uViewport'),
+      uNear:      gl.getUniformLocation(progSphere, 'uNear'),
+      uFar:       gl.getUniformLocation(progSphere, 'uFar'),
+      aOffset:     gl.getAttribLocation(progSphere, 'aOffset'),
+      aSize:       gl.getAttribLocation(progSphere, 'aSize'),
+      aColor:      gl.getAttribLocation(progSphere, 'aColor'),
+      aColorInner: gl.getAttribLocation(progSphere, 'aColorInner'),
+    },
+    agent: {
+      uMVP:       gl.getUniformLocation(progAgent, 'uMVP'),
+      uEye:       gl.getUniformLocation(progAgent, 'uEye'),
+      uColorFace: gl.getUniformLocation(progAgent, 'uColorFace'),
+      uColorRim:  gl.getUniformLocation(progAgent, 'uColorRim'),
+      uNear:      gl.getUniformLocation(progAgent, 'uNear'),
+      uFar:       gl.getUniformLocation(progAgent, 'uFar'),
+      aPos:       gl.getAttribLocation(progAgent, 'aPos'),
+      aCenter:    gl.getAttribLocation(progAgent, 'aCenter'),
+      aRadius:    gl.getAttribLocation(progAgent, 'aRadius'),
+    },
+    arrow: {
+      uMVP:   gl.getUniformLocation(progArrow, 'uMVP'),
+      uColor: gl.getUniformLocation(progArrow, 'uColor'),
+      aPos:   gl.getAttribLocation(progArrow, 'aPos'),
+    },
+    sense: {
+      uMVP:    gl.getUniformLocation(progSense, 'uMVP'),
+      uColor:  gl.getUniformLocation(progSense, 'uColor'),
+      aPos:    gl.getAttribLocation(progSense, 'aPos'),
+      aCenter: gl.getAttribLocation(progSense, 'aCenter'),
+      aRadius: gl.getAttribLocation(progSense, 'aRadius'),
+    },
+  };
+}
+
 function getMVP() {
   const W = simCanvas3.width, H = simCanvas3.height;
   const cx = DOMAIN/2, cy = DOMAIN/2, cz = DOMAIN/2;
@@ -545,10 +608,10 @@ function drawScene() {
 
   /* ── Cube wireframe ── */
   gl.useProgram(progCube);
-  gl.uniformMatrix4fv(gl.getUniformLocation(progCube, 'uMVP'), false, mvp);
-  gl.uniform3f(gl.getUniformLocation(progCube, 'uColor'), ...C.blueMid);
+  gl.uniformMatrix4fv(loc.cube.uMVP, false, mvp);
+  gl.uniform3f(loc.cube.uColor, ...C.blueMid);
   gl.bindBuffer(gl.ARRAY_BUFFER, cubeBuf);
-  const aPosCube = gl.getAttribLocation(progCube, 'aPos');
+  const aPosCube = loc.cube.aPos;
   gl.enableVertexAttribArray(aPosCube);
   gl.vertexAttribPointer(aPosCube, 3, gl.FLOAT, false, 0, 0);
   gl.drawArrays(gl.LINES, 0, 24);
@@ -557,14 +620,14 @@ function drawScene() {
   const stride = 10 * 4;
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
   gl.useProgram(progSphere);
-  gl.uniformMatrix4fv(gl.getUniformLocation(progSphere, 'uMVP'), false, mvp);
-  gl.uniform2f(gl.getUniformLocation(progSphere, 'uViewport'), W, H);
-  gl.uniform1f(gl.getUniformLocation(progSphere, 'uNear'), orbit.dist * 0.3);
-  gl.uniform1f(gl.getUniformLocation(progSphere, 'uFar'),  orbit.dist * 1.5);
-  const aPosS      = gl.getAttribLocation(progSphere, 'aOffset');
-  const aSizeS     = gl.getAttribLocation(progSphere, 'aSize');
-  const aColS      = gl.getAttribLocation(progSphere, 'aColor');
-  const aColInnerS = gl.getAttribLocation(progSphere, 'aColorInner');
+  gl.uniformMatrix4fv(loc.sphere.uMVP, false, mvp);
+  gl.uniform2f(loc.sphere.uViewport, W, H);
+  gl.uniform1f(loc.sphere.uNear, orbit.dist * 0.3);
+  gl.uniform1f(loc.sphere.uFar,  orbit.dist * 1.5);
+  const aPosS      = loc.sphere.aOffset;
+  const aSizeS     = loc.sphere.aSize;
+  const aColS      = loc.sphere.aColor;
+  const aColInnerS = loc.sphere.aColorInner;
 
   /* Resources */
   const rData = new Float32Array(resources.length * 10);
@@ -585,7 +648,6 @@ function drawScene() {
 
   /* ── Agents: instanced icosphere meshes + arrow lines ── */
   if (agents.length > 0) {
-    const extA = gl.getExtension('ANGLE_instanced_arrays');
     const AGENT_BASE_R = R_COL * 1.2;
     const agInstData = new Float32Array(agents.length * 4);
     const arrowVerts  = new Float32Array(agents.length * 6);
@@ -606,21 +668,21 @@ function drawScene() {
 
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.useProgram(progAgent);
-    gl.uniformMatrix4fv(gl.getUniformLocation(progAgent, 'uMVP'), false, mvp);
-    gl.uniform3fv(gl.getUniformLocation(progAgent, 'uEye'), eye);
-    gl.uniform3f(gl.getUniformLocation(progAgent, 'uColorFace'), ...C.pinkLight);
-    gl.uniform3f(gl.getUniformLocation(progAgent, 'uColorRim'),  ...C.blueMid);
-    gl.uniform1f(gl.getUniformLocation(progAgent, 'uNear'), orbit.dist * 0.3);
-    gl.uniform1f(gl.getUniformLocation(progAgent, 'uFar'),  orbit.dist * 1.5);
+    gl.uniformMatrix4fv(loc.agent.uMVP, false, mvp);
+    gl.uniform3fv(loc.agent.uEye, eye);
+    gl.uniform3f(loc.agent.uColorFace, ...C.pinkLight);
+    gl.uniform3f(loc.agent.uColorRim,  ...C.blueMid);
+    gl.uniform1f(loc.agent.uNear, orbit.dist * 0.3);
+    gl.uniform1f(loc.agent.uFar,  orbit.dist * 1.5);
 
-    const aPosAg  = gl.getAttribLocation(progAgent, 'aPos');
-    const aCenAg  = gl.getAttribLocation(progAgent, 'aCenter');
-    const aRadAg  = gl.getAttribLocation(progAgent, 'aRadius');
+    const aPosAg  = loc.agent.aPos;
+    const aCenAg  = loc.agent.aCenter;
+    const aRadAg  = loc.agent.aRadius;
 
     gl.bindBuffer(gl.ARRAY_BUFFER, sphereUnitBuf);
     gl.enableVertexAttribArray(aPosAg);
     gl.vertexAttribPointer(aPosAg, 3, gl.FLOAT, false, 0, 0);
-    if (extA) extA.vertexAttribDivisorANGLE(aPosAg, 0);
+    vertexDivisor(aPosAg, 0);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, agentInstBuf);
     gl.bufferData(gl.ARRAY_BUFFER, agInstData, gl.DYNAMIC_DRAW);
@@ -629,22 +691,22 @@ function drawScene() {
     gl.enableVertexAttribArray(aRadAg);
     gl.vertexAttribPointer(aRadAg, 1, gl.FLOAT, false, 16, 12);
 
-    if (extA) {
-      extA.vertexAttribDivisorANGLE(aCenAg, 1);
-      extA.vertexAttribDivisorANGLE(aRadAg, 1);
-      extA.drawArraysInstancedANGLE(gl.TRIANGLES, 0, sphereUnitCount, agents.length);
-      extA.vertexAttribDivisorANGLE(aCenAg, 0);
-      extA.vertexAttribDivisorANGLE(aRadAg, 0);
+    if (canInstance()) {
+      vertexDivisor(aCenAg, 1);
+      vertexDivisor(aRadAg, 1);
+      drawInstanced(gl.TRIANGLES, 0, sphereUnitCount, agents.length);
+      vertexDivisor(aCenAg, 0);
+      vertexDivisor(aRadAg, 0);
     }
 
     /* Arrow lines */
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
     gl.useProgram(progArrow);
-    gl.uniformMatrix4fv(gl.getUniformLocation(progArrow, 'uMVP'), false, mvp);
-    gl.uniform3f(gl.getUniformLocation(progArrow, 'uColor'), ...C.tealLight);
+    gl.uniformMatrix4fv(loc.arrow.uMVP, false, mvp);
+    gl.uniform3f(loc.arrow.uColor, ...C.tealLight);
     gl.bindBuffer(gl.ARRAY_BUFFER, arrowBuf);
     gl.bufferData(gl.ARRAY_BUFFER, arrowVerts, gl.DYNAMIC_DRAW);
-    const aPosA = gl.getAttribLocation(progArrow, 'aPos');
+    const aPosA = loc.arrow.aPos;
     gl.enableVertexAttribArray(aPosA);
     gl.vertexAttribPointer(aPosA, 3, gl.FLOAT, false, 0, 0);
     gl.drawArrays(gl.LINES, 0, agents.length * 2);
@@ -664,18 +726,17 @@ function drawScene() {
       senseData[i*4+3] = R_sense;
     }
     gl.useProgram(progSense);
-    gl.uniformMatrix4fv(gl.getUniformLocation(progSense, 'uMVP'), false, mvp);
-    gl.uniform3f(gl.getUniformLocation(progSense, 'uColor'), ...C.blueLight);
+    gl.uniformMatrix4fv(loc.sense.uMVP, false, mvp);
+    gl.uniform3f(loc.sense.uColor, ...C.blueLight);
 
-    const aPosU = gl.getAttribLocation(progSense, 'aPos');
-    const aCen  = gl.getAttribLocation(progSense, 'aCenter');
-    const aRad  = gl.getAttribLocation(progSense, 'aRadius');
+    const aPosU = loc.sense.aPos;
+    const aCen  = loc.sense.aCenter;
+    const aRad  = loc.sense.aRadius;
 
-    const ext = gl.getExtension('ANGLE_instanced_arrays');
     gl.bindBuffer(gl.ARRAY_BUFFER, sphereUnitBuf);
     gl.enableVertexAttribArray(aPosU);
     gl.vertexAttribPointer(aPosU, 3, gl.FLOAT, false, 0, 0);
-    if (ext) ext.vertexAttribDivisorANGLE(aPosU, 0);
+    vertexDivisor(aPosU, 0);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, senseCenterBuf);
     gl.bufferData(gl.ARRAY_BUFFER, senseData, gl.DYNAMIC_DRAW);
@@ -684,12 +745,12 @@ function drawScene() {
     gl.enableVertexAttribArray(aRad);
     gl.vertexAttribPointer(aRad, 1, gl.FLOAT, false, 16, 12);
 
-    if (ext) {
-      ext.vertexAttribDivisorANGLE(aCen, 1);
-      ext.vertexAttribDivisorANGLE(aRad, 1);
-      ext.drawArraysInstancedANGLE(gl.TRIANGLES, 0, sphereUnitCount, agents.length);
-      ext.vertexAttribDivisorANGLE(aCen, 0);
-      ext.vertexAttribDivisorANGLE(aRad, 0);
+    if (canInstance()) {
+      vertexDivisor(aCen, 1);
+      vertexDivisor(aRad, 1);
+      drawInstanced(gl.TRIANGLES, 0, sphereUnitCount, agents.length);
+      vertexDivisor(aCen, 0);
+      vertexDivisor(aRad, 0);
     }
   }
   gl.depthMask(true);
