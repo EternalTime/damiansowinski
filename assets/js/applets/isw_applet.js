@@ -344,11 +344,8 @@
 
   function render() {
     if (!canvas) return;
-    ctx.fillStyle = BG;
-    ctx.fillRect(0, 0, S, S);
-
     const L = getLayout();
-    drawWell(L, L.y2top + L.plotH);
+    drawStaticLayer(L, L.y2top + L.plotH);
 
     if (drawMode) {
       drawDrawModeOverlay(L);
@@ -394,8 +391,8 @@
     ctx.restore();
   }
 
-  /* ── Well + crosshatch ── */
-  function drawWell(L, yFloor) {
+  /* ── Well + crosshatch (drawn into a cached static layer) ── */
+  function drawWell(c, L, yFloor) {
     const wallW  = Math.max(1, Math.round(S * 0.008));
     const xLeft  = L.mL;
     const xRight = L.mL + L.plotW;
@@ -404,36 +401,53 @@
 
     function hatchRect(rx, ry, rw, rh) {
       if (rw <= 0 || rh <= 0) return;
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(rx, ry, rw, rh);
-      ctx.clip();
-      ctx.strokeStyle = _rgba('--text-dim', 0.30);
-      ctx.lineWidth   = wallW;
+      c.save();
+      c.beginPath();
+      c.rect(rx, ry, rw, rh);
+      c.clip();
+      c.strokeStyle = _rgba('--text-dim', 0.30);
+      c.lineWidth   = wallW;
       for (let d = -rh; d <= rw + rh; d += step) {
-        ctx.beginPath();
-        ctx.moveTo(rx + d,      ry);
-        ctx.lineTo(rx + d - rh, ry + rh);
-        ctx.stroke();
+        c.beginPath();
+        c.moveTo(rx + d,      ry);
+        c.lineTo(rx + d - rh, ry + rh);
+        c.stroke();
       }
-      ctx.restore();
+      c.restore();
     }
 
     hatchRect(0, 0, xLeft, S);
     hatchRect(xRight, 0, S - xRight, S);
     hatchRect(xLeft, yFloor, xRight - xLeft, S - yFloor);
 
-    ctx.save();
-    ctx.strokeStyle = _rgba('--text-dim', 0.35);
-    ctx.lineWidth   = wallW;
-    ctx.lineCap     = 'square';
-    ctx.beginPath();
-    ctx.moveTo(xLeft,  yTop);
-    ctx.lineTo(xLeft,  yFloor);
-    ctx.lineTo(xRight, yFloor);
-    ctx.lineTo(xRight, yTop);
-    ctx.stroke();
-    ctx.restore();
+    c.save();
+    c.strokeStyle = _rgba('--text-dim', 0.35);
+    c.lineWidth   = wallW;
+    c.lineCap     = 'square';
+    c.beginPath();
+    c.moveTo(xLeft,  yTop);
+    c.lineTo(xLeft,  yFloor);
+    c.lineTo(xRight, yFloor);
+    c.lineTo(xRight, yTop);
+    c.stroke();
+    c.restore();
+  }
+
+  let staticLayer = null, staticKey = '';
+
+  function drawStaticLayer(L, yFloor) {
+    const key = S + '|' + L.mL + '|' + L.plotW + '|' + yFloor;
+    if (staticKey !== key) {
+      if (!staticLayer) staticLayer = document.createElement('canvas');
+      staticLayer.width  = S;
+      staticLayer.height = S;
+      const sctx = staticLayer.getContext('2d');
+      sctx.fillStyle = BG;
+      sctx.fillRect(0, 0, S, S);
+      drawWell(sctx, L, yFloor);
+      staticKey = key;
+    }
+    ctx.drawImage(staticLayer, 0, 0);
   }
 
   /* ── Dashed x-axis ── */
@@ -449,27 +463,33 @@
     ctx.restore();
   }
 
-  /* ── Glow stroke helper ── */
+  /* ── Glow stroke helper (wide low-alpha understrokes, no shadowBlur) ── */
   function strokeGlow(buildPath, glowColor, glowColorDim, mainColor) {
     ctx.save();
-    ctx.shadowColor  = glowColor;
-    ctx.shadowBlur   = 10;
-    ctx.strokeStyle  = glowColorDim;
-    ctx.lineWidth    = 2.5;
-    ctx.globalAlpha  = 0.5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = glowColorDim;
+    ctx.lineWidth   = 9;
+    ctx.globalAlpha = 0.25;
     buildPath();
     ctx.stroke();
-    ctx.restore();
-
-    ctx.save();
-    ctx.shadowColor  = glowColor;
-    ctx.shadowBlur   = 18;
-    ctx.strokeStyle  = mainColor;
-    ctx.lineWidth    = 1.8;
+    ctx.strokeStyle = glowColor;
+    ctx.lineWidth   = 4.5;
+    ctx.globalAlpha = 0.35;
+    buildPath();
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = mainColor;
+    ctx.lineWidth   = 1.8;
     buildPath();
     ctx.stroke();
     ctx.restore();
   }
+
+  /* Per-frame scratch buffers (allocated once) */
+  const _reScratch   = new Float32Array(NX + 1);
+  const _imScratch   = new Float32Array(NX + 1);
+  const _probScratch = new Float32Array(NX + 1);
+  let _probGrad = null, _probGradKey = '';
 
   function drawWavefunctionPlot(x0, y0, w, h) {
     const YMAX = 1.84;
@@ -479,8 +499,8 @@
     function toY(v) { return y0 + h * (1 - (v + YMAX) / (2 * YMAX)); }
     function toX(f) { return x0 + f * w; }
 
-    const reArr = new Float32Array(NX + 1);
-    const imArr = new Float32Array(NX + 1);
+    const reArr = _reScratch;
+    const imArr = _imScratch;
     for (let k = 0; k <= NX; k++) {
       const xf = k / NX;
       const { re, im } = evalPsi(xf, t);
@@ -503,7 +523,7 @@
     function toY(v) { return y0 + h * (1 - v / YMAX); }
     function toX(f) { return x0 + f * w; }
 
-    const prob = new Float32Array(NX + 1);
+    const prob = _probScratch;
     for (let k = 0; k <= NX; k++) {
       const xf = k / NX;
       const { re, im } = evalPsi(xf, t);
@@ -516,11 +536,15 @@
     for (let k = 0; k <= NX; k++) ctx.lineTo(toX(k/NX), toY(prob[k]));
     ctx.lineTo(toX(1), y0 + h);
     ctx.closePath();
-    const grad = ctx.createLinearGradient(x0, y0, x0, y0 + h);
-    grad.addColorStop(0,   _rgba('--cyan', 0.45));
-    grad.addColorStop(0.6, _rgba('--cyan', 0.15));
-    grad.addColorStop(1,   _rgba('--cyan', 0.03));
-    ctx.fillStyle = grad;
+    const gKey = x0 + '|' + y0 + '|' + h;
+    if (_probGradKey !== gKey) {
+      _probGrad = ctx.createLinearGradient(x0, y0, x0, y0 + h);
+      _probGrad.addColorStop(0,   _rgba('--cyan', 0.45));
+      _probGrad.addColorStop(0.6, _rgba('--cyan', 0.15));
+      _probGrad.addColorStop(1,   _rgba('--cyan', 0.03));
+      _probGradKey = gKey;
+    }
+    ctx.fillStyle = _probGrad;
     ctx.fill();
     ctx.restore();
 

@@ -6,6 +6,7 @@
 
   const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
   const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+  const [_PLR, _PLG, _PLB] = _rgb('--pink-light');
 
   /* ── Vicsek parameters ── */
   const R   = 25;
@@ -35,21 +36,68 @@
     }
   }
 
+  /* ── Shared per-step scratch (no per-step allocation) ── */
+  const cosT  = new Float32Array(MAX);
+  const sinT  = new Float32Array(MAX);
+  const newTh = new Float32Array(MAX);
+
+  /* ── Cell list for metric neighbor search ── */
+  let cellHead = null;
+  const cellNext = new Int32Array(MAX);
+  let nCX = 0, nCY = 0, _cw = 1, _ch = 1;
+
+  function buildCells() {
+    nCX = Math.max(1, Math.floor(W / R));
+    nCY = Math.max(1, Math.floor(H / R));
+    _cw = W / nCX;
+    _ch = H / nCY;
+    if (!cellHead || cellHead.length < nCX * nCY) cellHead = new Int32Array(nCX * nCY);
+    cellHead.fill(-1, 0, nCX * nCY);
+    for (let i = 0; i < N; i++) {
+      const cx = Math.min((px[i] / _cw) | 0, nCX - 1);
+      const cy = Math.min((py[i] / _ch) | 0, nCY - 1);
+      const c  = cy * nCX + cx;
+      cellNext[i] = cellHead[c];
+      cellHead[c] = i;
+    }
+  }
+
   /* ── Metric step (original Vicsek) ── */
   function stepMetric() {
     const R2 = R * R;
     const halfEtaPi = eta * Math.PI;
-    const newTh = new Float32Array(N);
+    for (let i = 0; i < N; i++) { cosT[i] = Math.cos(th[i]); sinT[i] = Math.sin(th[i]); }
+    const useCells = Math.floor(W / R) >= 3 && Math.floor(H / R) >= 3;
+    if (useCells) buildCells();
     for (let i = 0; i < N; i++) {
       let sx = 0, sy = 0;
       const xi = px[i], yi = py[i];
-      for (let j = 0; j < N; j++) {
-        let dx = px[j] - xi, dy = py[j] - yi;
-        if (dx >  W / 2) dx -= W;
-        if (dx < -W / 2) dx += W;
-        if (dy >  H / 2) dy -= H;
-        if (dy < -H / 2) dy += H;
-        if (dx * dx + dy * dy <= R2) { sx += Math.cos(th[j]); sy += Math.sin(th[j]); }
+      if (useCells) {
+        const cx = Math.min((xi / _cw) | 0, nCX - 1);
+        const cy = Math.min((yi / _ch) | 0, nCY - 1);
+        for (let dcy = -1; dcy <= 1; dcy++) {
+          const cyw = (cy + dcy + nCY) % nCY;
+          for (let dcx = -1; dcx <= 1; dcx++) {
+            const cxw = (cx + dcx + nCX) % nCX;
+            for (let j = cellHead[cyw * nCX + cxw]; j !== -1; j = cellNext[j]) {
+              let dx = px[j] - xi, dy = py[j] - yi;
+              if (dx >  W / 2) dx -= W;
+              if (dx < -W / 2) dx += W;
+              if (dy >  H / 2) dy -= H;
+              if (dy < -H / 2) dy += H;
+              if (dx * dx + dy * dy <= R2) { sx += cosT[j]; sy += sinT[j]; }
+            }
+          }
+        }
+      } else {
+        for (let j = 0; j < N; j++) {
+          let dx = px[j] - xi, dy = py[j] - yi;
+          if (dx >  W / 2) dx -= W;
+          if (dx < -W / 2) dx += W;
+          if (dy >  H / 2) dy -= H;
+          if (dy < -H / 2) dy += H;
+          if (dx * dx + dy * dy <= R2) { sx += cosT[j]; sy += sinT[j]; }
+        }
       }
       newTh[i] = Math.atan2(sy, sx) + (Math.random() - 0.5) * 2 * halfEtaPi;
     }
@@ -65,7 +113,7 @@
   const _idx   = new Int32Array(MAX);
   function stepTopological() {
     const halfEtaPi = eta * Math.PI;
-    const newTh = new Float32Array(N);
+    for (let i = 0; i < N; i++) { cosT[i] = Math.cos(th[i]); sinT[i] = Math.sin(th[i]); }
     const k = Math.min(kNN, N - 1);
     for (let i = 0; i < N; i++) {
       const xi = px[i], yi = py[i];
@@ -93,7 +141,7 @@
       let sx = 0, sy = 0;
       for (let m = 0; m < k; m++) {
         const j = _idx[m];
-        sx += Math.cos(th[j]); sy += Math.sin(th[j]);
+        sx += cosT[j]; sy += sinT[j];
       }
       newTh[i] = Math.atan2(sy, sx) + (Math.random() - 0.5) * 2 * halfEtaPi;
     }
@@ -112,9 +160,54 @@
   const BODY = 7;
   const WING = 3.5;
 
+  /* ── Neon look: bright white boids whose additive halo color carries the
+     heading information (teal-light→pink-light by direction). ── */
+  const N_HUES = 32;
+  let _halos = null, _white = null;
+  const _hueScratch = new Int32Array(MAX);
+
+  function buildBoidStyles() {
+    _white = _c('--white');
+    _halos = new Array(N_HUES);
+    const hR = BODY * 1.7;
+    for (let s = 0; s < N_HUES; s++) {
+      const t = s / (N_HUES - 1);
+      const lr = Math.round(_TLR + t * (_PLR - _TLR));
+      const lg = Math.round(_TLG + t * (_PLG - _TLG));
+      const lb = Math.round(_TLB + t * (_PLB - _TLB));
+      const c = document.createElement('canvas');
+      c.width = c.height = Math.ceil(2 * hR) + 2;
+      const hctx = c.getContext('2d');
+      const cc = c.width / 2;
+      const gg = hctx.createRadialGradient(cc, cc, 0, cc, cc, hR);
+      gg.addColorStop(0.0, `rgba(${lr},${lg},${lb},0.6)`);
+      gg.addColorStop(0.4, `rgba(${lr},${lg},${lb},0.22)`);
+      gg.addColorStop(1.0, `rgba(${lr},${lg},${lb},0)`);
+      hctx.beginPath(); hctx.arc(cc, cc, hR, 0, Math.PI * 2);
+      hctx.fillStyle = gg; hctx.fill();
+      _halos[s] = c;
+    }
+  }
+
   function render() {
     ctx.fillStyle = _c('--black');
     ctx.fillRect(0, 0, W, H);
+    if (!_halos) buildBoidStyles();
+    for (let i = 0; i < N; i++) {
+      const t = (Math.sin(th[i]) + 1) * 0.5;
+      _hueScratch[i] = (t * (N_HUES - 1) + 0.5) | 0;
+    }
+    /* glow pass */
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    const gHalf = _halos[0].width / 2;
+    for (let i = 0; i < N; i++) {
+      ctx.drawImage(_halos[_hueScratch[i]], px[i] - gHalf, py[i] - gHalf);
+    }
+    ctx.restore();
+    /* body pass: bright white boids, one batched path */
+    ctx.fillStyle = _white;
+    ctx.beginPath();
     for (let i = 0; i < N; i++) {
       const x = px[i], y = py[i], a = th[i];
       const cos = Math.cos(a), sin = Math.sin(a);
@@ -123,18 +216,12 @@
       const b1Y  = y - sin * (BODY*0.5) + cos * WING;
       const b2X  = x - cos * (BODY*0.5) + sin * WING;
       const b2Y  = y - sin * (BODY*0.5) - cos * WING;
-      const t = (Math.sin(a) + 1) * 0.5;
-      const r = Math.round(_TLR + t * (_PDR - _TLR));
-      const g = Math.round(_TLG + t * (_PDG - _TLG));
-      const b = Math.round(_TLB + t * (_PDB - _TLB));
-      ctx.beginPath();
       ctx.moveTo(tipX, tipY);
       ctx.lineTo(b1X, b1Y);
       ctx.lineTo(b2X, b2Y);
       ctx.closePath();
-      ctx.fillStyle = `rgb(${r},${g},${b})`;
-      ctx.fill();
     }
+    ctx.fill();
   }
 
   function loop() {

@@ -46,6 +46,9 @@
 
   const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
   const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+  const [_PLR, _PLG, _PLB] = _rgb('--pink-light');
+  const [_TDR, _TDG, _TDB] = _rgb('--teal-dark');
+  const [_AMR, _AMG, _AMB] = _rgb('--amber');
 
   /* ── Simulation parameters ── */
   let N   = 500;   // small particles
@@ -308,50 +311,115 @@
     if (trail.length > TRAIL_MAX * 2) trail.splice(0, 2);
   }
 
+  /* ── Neon sprites (chain/three-body aesthetic): white-hot core through
+     the light palette color, additive halo in the dark color ── */
+  const N_SPRITES  = 32;
+  const GLOW_SCALE = 2.6;
+  let sprites = null, glowSprites = null, spriteRs = -1;
+  let bigSprite = null, bigGlow = null, bigSpriteR = -1;
+  const _siScratch = new Int32Array(600);   // matches bm-nslider max
+
+  function buildOrb(rad, lr, lg, lb) {
+    const c = document.createElement('canvas');
+    c.width = c.height = Math.ceil(2 * rad) + 2;
+    const sctx = c.getContext('2d');
+    const cc = c.width / 2;
+    const grad = sctx.createRadialGradient(cc, cc, 0, cc, cc, rad);
+    grad.addColorStop(0.0,  `rgba(255,255,255,1.0)`);
+    grad.addColorStop(0.35, `rgba(255,255,255,0.95)`);
+    grad.addColorStop(0.65, `rgba(${lr},${lg},${lb},0.9)`);
+    grad.addColorStop(1.0,  `rgba(${lr},${lg},${lb},0)`);
+    sctx.beginPath(); sctx.arc(cc, cc, rad, 0, Math.PI * 2);
+    sctx.fillStyle = grad; sctx.fill();
+    return c;
+  }
+
+  function buildHalo(rad, dr, dg, db, peak) {
+    const gR = rad * GLOW_SCALE;
+    const c = document.createElement('canvas');
+    c.width = c.height = Math.ceil(2 * gR) + 2;
+    const gctx = c.getContext('2d');
+    const cc = c.width / 2;
+    const gg = gctx.createRadialGradient(cc, cc, 0, cc, cc, gR);
+    gg.addColorStop(0.0, `rgba(${dr},${dg},${db},${peak})`);
+    gg.addColorStop(0.4, `rgba(${dr},${dg},${db},${peak * 0.36})`);
+    gg.addColorStop(1.0, `rgba(${dr},${dg},${db},0)`);
+    gctx.beginPath(); gctx.arc(cc, cc, gR, 0, Math.PI * 2);
+    gctx.fillStyle = gg; gctx.fill();
+    return c;
+  }
+
+  function buildSprites() {
+    sprites     = new Array(N_SPRITES);
+    glowSprites = new Array(N_SPRITES);
+    spriteRs = rs;
+    for (let s = 0; s < N_SPRITES; s++) {
+      const hot = s / (N_SPRITES - 1);
+      const lr = Math.round(_TLR + (_PLR - _TLR) * hot);
+      const lg = Math.round(_TLG + (_PLG - _TLG) * hot);
+      const lb = Math.round(_TLB + (_PLB - _TLB) * hot);
+      const dr = Math.round(_TDR + (_PDR - _TDR) * hot);
+      const dg = Math.round(_TDG + (_PDG - _TDG) * hot);
+      const db = Math.round(_TDB + (_PDB - _TDB) * hot);
+      sprites[s]     = buildOrb(rs, lr, lg, lb);
+      glowSprites[s] = buildHalo(rs, dr, dg, db, 0.55);
+    }
+  }
+
   /* ── Render ── */
   function render() {
     ctx.fillStyle = _c('--black');
     ctx.fillRect(0, 0, L, L);
 
-    /* Trail */
+    /* Trail — amber neon */
     if (trail.length >= 4) {
+      ctx.save();
+      ctx.shadowColor = _rgba('--amber', 0.8);
+      ctx.shadowBlur  = 8;
       ctx.beginPath();
       ctx.moveTo(trail[0], trail[1]);
       for (let i = 2; i < trail.length; i += 2) ctx.lineTo(trail[i], trail[i+1]);
       ctx.strokeStyle = _rgba('--amber', 0.45);
       ctx.lineWidth = 1.5;
       ctx.stroke();
+      ctx.restore();
     }
 
-    /* Small particles — colour by speed */
+    /* Small particles — colour by speed, glow pass then body pass */
     let meanSpd = 0;
     for (let i = 0; i < N; i++) meanSpd += Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
     meanSpd /= Math.max(N, 1);
     const spdRef = Math.max(meanSpd * 2, 0.001);
 
+    if (spriteRs !== rs) buildSprites();
     for (let i = 0; i < N; i++) {
       const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
       const hot = Math.min(spd / spdRef, 1);
-      const r = Math.round(_TLR + (_PDR - _TLR) * hot);
-      const g = Math.round(_TLG + (_PDG - _TLG) * hot);
-      const b = Math.round(_TLB + (_PDB - _TLB) * hot);
-      ctx.beginPath();
-      ctx.arc(px[i], py[i], rs, 0, Math.PI * 2);
-      ctx.fillStyle = `rgb(${r},${g},${b})`;
-      ctx.fill();
+      _siScratch[i] = (hot * (N_SPRITES - 1) + 0.5) | 0;
+    }
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    const gHalf = glowSprites[0].width / 2;
+    for (let i = 0; i < N; i++) {
+      ctx.drawImage(glowSprites[_siScratch[i]], px[i] - gHalf, py[i] - gHalf);
+    }
+    ctx.restore();
+    const bHalf = sprites[0].width / 2;
+    for (let i = 0; i < N; i++) {
+      ctx.drawImage(sprites[_siScratch[i]], px[i] - bHalf, py[i] - bHalf);
     }
 
-    /* Big particle — brushed steel */
-    const grad = ctx.createRadialGradient(bx - Rb*0.35, by - Rb*0.35, Rb*0.05, bx, by, Rb);
-    grad.addColorStop(0.0,  'rgba(255,255,255,0.95)');
-    grad.addColorStop(0.15, 'rgba(210,220,230,1.0)');
-    grad.addColorStop(0.45, 'rgba(140,158,175,1.0)');
-    grad.addColorStop(0.75, 'rgba(75,90,105,1.0)');
-    grad.addColorStop(1.0,  'rgba(30,40,50,1.0)');
-    ctx.beginPath();
-    ctx.arc(bx, by, Rb, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
-    ctx.fill();
+    /* Big particle — white-hot orb with amber halo */
+    if (bigSpriteR !== Rb) {
+      bigSprite  = buildOrb(Rb, _AMR, _AMG, _AMB);
+      bigGlow    = buildHalo(Rb, _AMR, _AMG, _AMB, 0.45);
+      bigSpriteR = Rb;
+    }
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.drawImage(bigGlow, bx - bigGlow.width / 2, by - bigGlow.width / 2);
+    ctx.restore();
+    ctx.drawImage(bigSprite, bx - bigSprite.width / 2, by - bigSprite.width / 2);
   }
 
   /* ── Histogram (Maxwell–Boltzmann of small particles) ── */
@@ -403,25 +471,39 @@
     const pw = W - PL - PR, ph = H - PT - PB;
     const bw = pw / N_BINS;
     hctx.clearRect(0, 0, W, H);
+    /* Bars: light-palette gradient (matches particle bodies) with a soft
+       dark-palette glow underneath (matches their halos) */
+    hctx.save();
+    hctx.shadowBlur = 6;
     for (let b = 0; b < N_BINS; b++) {
       const bh = Math.min(smoothBins[b] / ymax, 1) * ph;
       const v   = (b + 0.5) * dv;
       const hot = Math.min(v / (Math.sqrt(Teff) * 2), 1);
-      const r   = Math.round(_TLR + (_PDR - _TLR) * hot);
-      const g   = Math.round(_TLG + (_PDG - _TLG) * hot);
-      const bb  = Math.round(_TLB + (_PDB - _TLB) * hot);
-      hctx.fillStyle = `rgba(${r},${g},${bb},0.75)`;
+      const lr  = Math.round(_TLR + (_PLR - _TLR) * hot);
+      const lg  = Math.round(_TLG + (_PLG - _TLG) * hot);
+      const lb  = Math.round(_TLB + (_PLB - _TLB) * hot);
+      const dr  = Math.round(_TDR + (_PDR - _TDR) * hot);
+      const dg  = Math.round(_TDG + (_PDG - _TDG) * hot);
+      const db  = Math.round(_TDB + (_PDB - _TDB) * hot);
+      hctx.shadowColor = `rgb(${dr},${dg},${db})`;
+      hctx.fillStyle   = `rgba(${lr},${lg},${lb},0.75)`;
       hctx.fillRect(PL + b * bw, PT + ph - bh, bw - 1, bh);
     }
-    hctx.beginPath();
-    hctx.strokeStyle = _c('--pink-dark');
+    hctx.restore();
+    /* MB curve: neon stroke — dark glow under light line, like the rods */
+    hctx.save();
+    hctx.shadowColor = _c('--pink-dark');
+    hctx.shadowBlur  = 10;
+    hctx.strokeStyle = _c('--pink-light');
     hctx.lineWidth   = 1.5;
+    hctx.beginPath();
     for (let b = 0; b < N_BINS; b++) {
       const x = PL + (b + 0.5) * bw;
       const y = PT + ph - Math.min(mb[b] / ymax, 1) * ph;
       b === 0 ? hctx.moveTo(x, y) : hctx.lineTo(x, y);
     }
     hctx.stroke();
+    hctx.restore();
   }
 
   /* ── Loop ── */
@@ -541,6 +623,19 @@
       pb.classList.toggle('active', !running);
     }
   };
+
+  document.getElementById('bm-rslider').addEventListener('input', function () {
+    const newRs = parseInt(this.value);
+    if (newRs === rs) return;
+    const msOld = ms;
+    rs = newRs;
+    ms = rs * rs;
+    /* rescale speeds so per-particle KE (temperature) is preserved */
+    if (vx && msOld > 0) {
+      const sc = Math.sqrt(msOld / ms);
+      for (let i = 0; i < N; i++) { vx[i] *= sc; vy[i] *= sc; }
+    }
+  });
 
   document.getElementById('bm-tslider').addEventListener('input', function () {
     T = parseFloat(this.value);

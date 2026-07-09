@@ -5,6 +5,8 @@
 
   const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
   const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+  const [_PLR, _PLG, _PLB] = _rgb('--pink-light');
+  const [_TDR, _TDG, _TDB] = _rgb('--teal-dark');
 
   /* ── Simulation parameters ── */
   const N_EACH   = 50;
@@ -158,6 +160,61 @@
     return count > 0 ? ke / (2*count) : 0;
   }
 
+  /* Pre-rendered particle sprites, bucketed by temperature.
+     Chain/three-body aesthetic: white-hot core fading through the LIGHT
+     palette color (teal-light→pink-light), with an additive halo in the
+     DARK palette color (teal-dark→pink-dark) — no directional shading. */
+  const N_SPRITES  = 32;
+  const GLOW_SCALE = 2.6;             // halo radius in units of R
+  let sprites = null, glowSprites = null, spriteR = -1;
+
+  function buildSprites() {
+    sprites     = new Array(N_SPRITES);
+    glowSprites = new Array(N_SPRITES);
+    spriteR = R;
+    for (let s = 0; s < N_SPRITES; s++) {
+      const hot = s / (N_SPRITES - 1);
+      const lr = Math.round(_TLR + (_PLR - _TLR) * hot);
+      const lg = Math.round(_TLG + (_PLG - _TLG) * hot);
+      const lb = Math.round(_TLB + (_PLB - _TLB) * hot);
+      const dr = Math.round(_TDR + (_PDR - _TDR) * hot);
+      const dg = Math.round(_TDG + (_PDG - _TDG) * hot);
+      const db = Math.round(_TDB + (_PDB - _TDB) * hot);
+      /* body: bright white core → light color → transparent edge */
+      const c = document.createElement('canvas');
+      c.width = c.height = 2 * R + 2;
+      const sctx = c.getContext('2d');
+      const cx = R + 1, cy = R + 1;
+      const grad = sctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+      grad.addColorStop(0.0,  `rgba(255,255,255,1.0)`);
+      grad.addColorStop(0.35, `rgba(255,255,255,0.95)`);
+      grad.addColorStop(0.65, `rgba(${lr},${lg},${lb},0.9)`);
+      grad.addColorStop(1.0,  `rgba(${lr},${lg},${lb},0)`);
+      sctx.beginPath();
+      sctx.arc(cx, cy, R, 0, Math.PI * 2);
+      sctx.fillStyle = grad;
+      sctx.fill();
+      sprites[s] = c;
+      /* halo: dark palette color, drawn with 'lighter' so overlaps add */
+      const gR = R * GLOW_SCALE;
+      const gc = document.createElement('canvas');
+      gc.width = gc.height = Math.ceil(2 * gR) + 2;
+      const gctx = gc.getContext('2d');
+      const gcx = gc.width / 2, gcy = gc.height / 2;
+      const gg = gctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, gR);
+      gg.addColorStop(0.0, `rgba(${dr},${dg},${db},0.55)`);
+      gg.addColorStop(0.4, `rgba(${dr},${dg},${db},0.20)`);
+      gg.addColorStop(1.0, `rgba(${dr},${dg},${db},0)`);
+      gctx.beginPath();
+      gctx.arc(gcx, gcy, gR, 0, Math.PI * 2);
+      gctx.fillStyle = gg;
+      gctx.fill();
+      glowSprites[s] = gc;
+    }
+  }
+
+  const _siScratch = new Int32Array(2 * N_EACH);
+
   /* ── Render ── */
   function render() {
     ctx.fillStyle = _c('--black');
@@ -169,37 +226,44 @@
     const gapBot  = doorCY + gapHalf;
     const wallW   = R;
 
-    ctx.fillStyle = _c('--teal-light');
+    /* Neon wall: glowing teal bars */
+    ctx.save();
+    ctx.shadowColor = _c('--teal-light');
+    ctx.shadowBlur  = 14;
+    ctx.fillStyle   = _c('--teal-light');
     if (gapTop > 0)  ctx.fillRect(midX - wallW*0.5, 0,      wallW, gapTop);
     if (gapBot < BH) ctx.fillRect(midX - wallW*0.5, gapBot, wallW, BH - gapBot);
 
     if (doorFrac === 0) {
-      ctx.fillStyle = _c('--pink-mid');
+      ctx.shadowColor = _c('--pink-mid');
+      ctx.shadowBlur  = 10;
+      ctx.fillStyle   = _c('--pink-mid');
       ctx.fillRect(midX - wallW*0.5, doorCY - 1, wallW, 2);
     }
+    ctx.restore();
 
     let meanSpd = 0;
     for (let i = 0; i < N; i++) meanSpd += Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
     meanSpd /= N;
     const spdRef = Math.max(meanSpd * 2, 0.001);
-    const LX = -0.45, LY = -0.45;
 
+    if (spriteR !== R) buildSprites();
+    const _si = _siScratch;
     for (let i = 0; i < N; i++) {
       const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
       const hot = Math.min(spd / spdRef, 1);
-      const r = Math.round(_TLR + (_PDR - _TLR) * hot);
-      const g = Math.round(_TLG + (_PDG - _TLG) * hot);
-      const b = Math.round(_TLB + (_PDB - _TLB) * hot);
-      const hx = px[i] + LX*R*0.45, hy = py[i] + LY*R*0.45;
-      const grad = ctx.createRadialGradient(hx, hy, 0, px[i], py[i], R);
-      grad.addColorStop(0.0,  `rgba(255,255,255,0.85)`);
-      grad.addColorStop(0.25, `rgba(${r},${g},${b},1.0)`);
-      grad.addColorStop(0.75, `rgba(${Math.round(r*0.45)},${Math.round(g*0.45)},${Math.round(b*0.45)},1.0)`);
-      grad.addColorStop(1.0,  `rgba(${Math.round(r*0.25)},${Math.round(g*0.25)},${Math.round(b*0.25)},1.0)`);
-      ctx.beginPath();
-      ctx.arc(px[i], py[i], R, 0, Math.PI*2);
-      ctx.fillStyle = grad;
-      ctx.fill();
+      _si[i] = (hot * (N_SPRITES - 1) + 0.5) | 0;
+    }
+    /* glow pass (additive), then body pass */
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    const gHalf = glowSprites[0].width / 2;
+    for (let i = 0; i < N; i++) {
+      ctx.drawImage(glowSprites[_si[i]], px[i] - gHalf, py[i] - gHalf);
+    }
+    ctx.restore();
+    for (let i = 0; i < N; i++) {
+      ctx.drawImage(sprites[_si[i]], px[i] - R - 1, py[i] - R - 1);
     }
 
     /* ── Temperature readout on canvas ── */
@@ -216,21 +280,23 @@
       }
       spd = count > 0 ? spd/count : 0;
       const hot = Math.min(spd / spdRef, 1);
-      const r = Math.round(_TLR + (_PDR-_TLR)*hot);
-      const g = Math.round(_TLG + (_PDG-_TLG)*hot);
-      const b = Math.round(_TLB + (_PDB-_TLB)*hot);
+      const r = Math.round(_TLR + (_PLR-_TLR)*hot);
+      const g = Math.round(_TLG + (_PLG-_TLG)*hot);
+      const b = Math.round(_TLB + (_PLB-_TLB)*hot);
       return `rgb(${r},${g},${b})`;
     }
     const fs = Math.max(12, Math.round(BH * 0.055));
     ctx.save();
     ctx.font = `${fs}px 'EB Garamond', Georgia, serif`;
     ctx.textBaseline = 'top';
+    ctx.shadowBlur = 12;
     const pad = fs * 0.5;
     const ty  = pad;
     ctx.textAlign = 'center';
-    ctx.fillStyle = sideColor(0);
+    const cL = sideColor(0), cR = sideColor(1);
+    ctx.fillStyle = cL; ctx.shadowColor = cL;
     ctx.fillText('T = ' + (TL/norm).toFixed(2), midX * 0.5, ty);
-    ctx.fillStyle = sideColor(1);
+    ctx.fillStyle = cR; ctx.shadowColor = cR;
     ctx.fillText('T = ' + (TR/norm).toFixed(2), midX + midX * 0.5, ty);
     ctx.restore();
 
@@ -241,6 +307,8 @@
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.globalAlpha = 0.55;
+      ctx.shadowColor = _c('--pink-light');
+      ctx.shadowBlur  = 18;
       ctx.strokeStyle = _c('--pink-dark');
       ctx.lineWidth = 3;
       ctx.strokeText('HIRED', BW/2, BH/2);

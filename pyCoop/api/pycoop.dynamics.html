@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pycoop.dynamics &mdash; pyCoop 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3fce5bdb" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pycoop.observables" href="pycoop.observables.html" />
+    <link rel="prev" title="pycoop.graph" href="pycoop.graph.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyCoop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_dynamics.html">The Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_observables.html">The Observables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_viz.html">Visualization</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pycoop.html">pycoop package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pycoop.graph.html">pycoop.graph</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pycoop.dynamics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.dynamics.Game"><code class="docutils literal notranslate"><span class="pre">Game</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Game.local_mean"><code class="docutils literal notranslate"><span class="pre">Game.local_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Game.run"><code class="docutils literal notranslate"><span class="pre">Game.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pycoop.dynamics.Trajectory"><code class="docutils literal notranslate"><span class="pre">Trajectory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.t"><code class="docutils literal notranslate"><span class="pre">Trajectory.t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.sigma"><code class="docutils literal notranslate"><span class="pre">Trajectory.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.q"><code class="docutils literal notranslate"><span class="pre">Trajectory.q</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.player"><code class="docutils literal notranslate"><span class="pre">Trajectory.player</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.flipped"><code class="docutils literal notranslate"><span class="pre">Trajectory.flipped</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.A"><code class="docutils literal notranslate"><span class="pre">Trajectory.A</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.params"><code class="docutils literal notranslate"><span class="pre">Trajectory.params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.absorbed"><code class="docutils literal notranslate"><span class="pre">Trajectory.absorbed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.meta"><code class="docutils literal notranslate"><span class="pre">Trajectory.meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.n"><code class="docutils literal notranslate"><span class="pre">Trajectory.n</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.steps"><code class="docutils literal notranslate"><span class="pre">Trajectory.steps</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.t_end"><code class="docutils literal notranslate"><span class="pre">Trajectory.t_end</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.state"><code class="docutils literal notranslate"><span class="pre">Trajectory.state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.final_state"><code class="docutils literal notranslate"><span class="pre">Trajectory.final_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.flip_times"><code class="docutils literal notranslate"><span class="pre">Trajectory.flip_times()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycoop.dynamics.Trajectory.durations"><code class="docutils literal notranslate"><span class="pre">Trajectory.durations()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pycoop.observables.html">pycoop.observables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycoop.viz.html">pycoop.viz</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyCoop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pycoop.html">pycoop package</a></li>
+      <li class="breadcrumb-item active">pycoop.dynamics</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pycoop.dynamics">
+<span id="pycoop-dynamics"></span><h1>pycoop.dynamics<a class="headerlink" href="#module-pycoop.dynamics" title="Link to this heading"></a></h1>
+<p>The discrete APEM dynamics: the update sequence.</p>
+<p>State: actions sigma_i in [-1, 1] (continuous), opinions q_i in {-1, +1}.
+On step k draw tau ~ Exp[mean T/N] (rate N/T) and j ~ Uniform{0..N-1};
+every action drifts sigma_i -&gt; clip(sigma_i + q_i * tau, -1, 1); then
+player j’s opinion flips, q_j -&gt; -q_j, iff</p>
+<blockquote>
+<div><p>-u &lt; sigma_bar_j &lt; u   and   abs(sigma_j) &gt; l,</p>
+</div></blockquote>
+<p>where sigma_bar_j = (sigma_j + sum_k A_jk sigma_k) / (d_j + 1) is the
+local mean action.  T is the only dimensionless timescale; u and l are
+the agreement (flexibility) and position thresholds (a_theta and
+s_theta of Conrad &amp; Tabor 2024).</p>
+<p>The inter-event law is pluggable: “exp” recovers the paper (exact
+embedded chain); a float h gives the fixed-step variant (a <em>different</em>
+model – the robustness knob for the criticality program); a callable
+rng -&gt; tau gives anything else.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycoop.dynamics.Game">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pycoop.dynamics.</span></span><span class="sig-name descname"><span class="pre">Game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_law</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'exp'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/dynamics.html#Game"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.dynamics.Game" title="Link to this definition"></a></dt>
+<dd><p>APEM on an arbitrary graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> (<a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/graph.html#networkx.Graph" title="(in NetworkX v3.6.1)"><em>networkx.Graph</em></a><em> or </em><em>adjacency array</em><em> (</em><em>no self-loops</em><em>)</em>)</p></li>
+<li><p><strong>u</strong> (<em>agreement threshold</em><em> (</em><em>flip requires abs</em><em>(</em><em>sigma_bar_j</em><em>) </em><em>&lt; u</em><em>)</em>)</p></li>
+<li><p><strong>l</strong> (<em>position threshold</em><em> (</em><em>flip requires abs</em><em>(</em><em>sigma_j</em><em>) </em><em>&gt; l</em><em>)</em>)</p></li>
+<li><p><strong>T</strong> (<em>timescale; inter-event tau ~ Exp with mean T/N by default</em>)</p></li>
+<li><p><strong>step_law</strong> (<em>&quot;exp&quot;</em><em> (</em><em>default</em><em>)</em><em>, </em><em>a positive float h for fixed steps</em><em>,</em>) – or a callable rng -&gt; tau.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycoop.dynamics.Game.local_mean">
+<span class="sig-name descname"><span class="pre">local_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/dynamics.html#Game.local_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.dynamics.Game.local_mean" title="Link to this definition"></a></dt>
+<dd><p>sigma_bar (all players, or just player j).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycoop.dynamics.Game.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_when_absorbed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/dynamics.html#Game.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.dynamics.Game.run" title="Link to this definition"></a></dt>
+<dd><p>Run the update sequence; returns a Trajectory.</p>
+<p>sigma0 defaults to Uniform[-1, 1]^n, q0 to Uniform{-1, +1}^n.
+Stops at max_steps, at max_time (event time), or on absorption.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pycoop.dynamics.</span></span><span class="sig-name descname"><span class="pre">Trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flipped</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absorbed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/dynamics.html#Trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.dynamics.Trajectory" title="Link to this definition"></a></dt>
+<dd><p>Full event record of a run.</p>
+<p>Arrays are indexed so that row k of <code class="docutils literal notranslate"><span class="pre">t</span></code>/<code class="docutils literal notranslate"><span class="pre">sigma</span></code>/<code class="docutils literal notranslate"><span class="pre">q</span></code> is the state
+<em>after</em> event k (row 0 is the initial state); <code class="docutils literal notranslate"><span class="pre">player[k]</span></code> and
+<code class="docutils literal notranslate"><span class="pre">flipped[k]</span></code> describe event k+1’s actor.  Positions are exact at
+event times; between events each sigma_i moves linearly toward q_i
+(clipped at +/-1).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.t">
+<span class="sig-name descname"><span class="pre">t</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.t" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.sigma">
+<span class="sig-name descname"><span class="pre">sigma</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.sigma" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.q">
+<span class="sig-name descname"><span class="pre">q</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.q" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.player">
+<span class="sig-name descname"><span class="pre">player</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.player" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.flipped">
+<span class="sig-name descname"><span class="pre">flipped</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.flipped" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.A">
+<span class="sig-name descname"><span class="pre">A</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.A" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.params">
+<span class="sig-name descname"><span class="pre">params</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.params" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.absorbed">
+<span class="sig-name descname"><span class="pre">absorbed</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.absorbed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.meta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.n">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.n" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.steps">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">steps</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.steps" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.t_end">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">t_end</span></span><a class="headerlink" href="#pycoop.dynamics.Trajectory.t_end" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.state">
+<span class="sig-name descname"><span class="pre">state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/dynamics.html#Trajectory.state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.dynamics.Trajectory.state" title="Link to this definition"></a></dt>
+<dd><p>(sigma, q) after event k.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.final_state">
+<span class="sig-name descname"><span class="pre">final_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/dynamics.html#Trajectory.final_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.dynamics.Trajectory.final_state" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.flip_times">
+<span class="sig-name descname"><span class="pre">flip_times</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/dynamics.html#Trajectory.flip_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.dynamics.Trajectory.flip_times" title="Link to this definition"></a></dt>
+<dd><p>Times of actual opinion flips.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycoop.dynamics.Trajectory.durations">
+<span class="sig-name descname"><span class="pre">durations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycoop/dynamics.html#Trajectory.durations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycoop.dynamics.Trajectory.durations" title="Link to this definition"></a></dt>
+<dd><p>Interval lengths between consecutive events, shape (K,).</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pycoop.graph.html" class="btn btn-neutral float-left" title="pycoop.graph" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pycoop.observables.html" class="btn btn-neutral float-right" title="pycoop.observables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

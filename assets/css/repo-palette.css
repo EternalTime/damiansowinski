@@ -1,0 +1,30 @@
+/* ============================================================
+   REPO PALETTE
+   Each library's visual identity, sourced from its own Sphinx
+   docs/_static/custom.css. Used to color the terminal panels on
+   the Code page. --{repo}-accent is the on-dark panel color;
+   --{repo}-primary is the docs header/brand color.
+
+   Add a repo: append a block with its brand colors below.
+   ============================================================ */
+:root {
+  /* pyCE — Dartmouth green */
+  --pyce-primary:    #00693e;
+  --pyce-accent:     #8fc7a8;
+
+  /* pyCA (CellularAutomata) — Berkeley blue / California gold */
+  --pyca-primary:    #003262;
+  --pyca-accent:     #fdb515;
+
+  /* pyGD — stock RTD theme blue (no custom docs css) */
+  --pygd-primary:    #2980b9;
+  --pygd-accent:     #2980b9;
+
+  /* pyCoop — navy / royal blue */
+  --pycoop-primary:  #000e2f;
+  --pycoop-accent:   #013ecd;
+
+  /* pyLEAFS — Rochester blue / ForagerPink */
+  --pyleafs-primary: #003b71;
+  --pyleafs-accent:  #997c81;
+}

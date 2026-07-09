@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyGD.agents module &mdash; pyGD 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="License" href="../license.html" />
+    <link rel="prev" title="pyGD.dynamics module" href="pyGD.dynamics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyGD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_dynamics.html">Kuramoto Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_yokai.html">The Yokai</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">The Model</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyGD.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyGD.html#vertical-slice">Vertical slice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGD.dynamics.html">pyGD.dynamics module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyGD.agents module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyGD.agents.Yokai"><code class="docutils literal notranslate"><span class="pre">Yokai</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyGD.agents.Yokai.speed"><code class="docutils literal notranslate"><span class="pre">Yokai.speed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyGD.agents.Yokai.loc"><code class="docutils literal notranslate"><span class="pre">Yokai.loc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyGD.agents.Yokai.T"><code class="docutils literal notranslate"><span class="pre">Yokai.T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyGD.agents.Yokai.evolve"><code class="docutils literal notranslate"><span class="pre">Yokai.evolve()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyGD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pyGD.html">API Reference</a></li>
+      <li class="breadcrumb-item active">pyGD.agents module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/pyGD.agents.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pyGD.agents">
+<span id="pygd-agents-module"></span><h1>pyGD.agents module<a class="headerlink" href="#module-pyGD.agents" title="Link to this heading"></a></h1>
+<p>Agents that act on graph dynamics.</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#pyGD.agents.Yokai" title="pyGD.agents.Yokai"><code class="xref py py-class docutils literal notranslate"><span class="pre">Yokai</span></code></a></dt><dd><p>The mobile feedback-control agent of Sowinski, Frank &amp; Ghoshal, PRR 6,
+043188 (2024). It hops node-to-node on the graph, estimates the local mean
+field at each node it visits, and kicks that oscillator’s phase to oppose
+local synchrony – a Maxwell’s-demon-style desynchronizer. Ported from
+<code class="docutils literal notranslate"><span class="pre">Yokai.m</span></code>; <code class="docutils literal notranslate"><span class="pre">evolve</span></code> mutates the passed environment in place, matching
+the MATLAB handle-class semantics.</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyGD.agents.Yokai">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyGD.agents.</span></span><span class="sig-name descname"><span class="pre">Yokai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyGD/agents.html#Yokai"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyGD.agents.Yokai" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A localized, mobile perturbation living on a Kuramoto environment.</p>
+<p>Ported from <code class="docutils literal notranslate"><span class="pre">Yokai.m</span></code>. Per environment step the agent performs <code class="docutils literal notranslate"><span class="pre">speed</span></code>
+sub-steps; in each it estimates the neighborhood mean-field angle at its
+current node, kicks the node’s phase by <code class="docutils literal notranslate"><span class="pre">+/-</span> <span class="pre">strength</span></code> (opposing the sign
+of <code class="docutils literal notranslate"><span class="pre">sin(theta_loc</span> <span class="pre">-</span> <span class="pre">phi_est)</span></code>), then hops to a uniformly random neighbor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strength</strong> (<em>float</em>) – Kick magnitude (alpha), applied with sign <code class="docutils literal notranslate"><span class="pre">sign(sin(theta</span> <span class="pre">-</span> <span class="pre">phi_est))</span></code>.</p></li>
+<li><p><strong>beta</strong> (<em>float</em>) – Hop-speed parameter; <code class="docutils literal notranslate"><span class="pre">speed</span> <span class="pre">=</span> <span class="pre">max(1,</span> <span class="pre">ceil(beta</span> <span class="pre">*</span> <span class="pre">env.N))</span></code> sub-steps
+per environment step.</p></li>
+<li><p><strong>env</strong> (<a class="reference internal" href="pyGD.dynamics.html#pyGD.dynamics.Kuramoto" title="pyGD.dynamics.Kuramoto"><em>Kuramoto</em></a>) – The environment the agent lives on (used here to size <code class="docutils literal notranslate"><span class="pre">speed</span></code> and to
+pick the initial location).</p></li>
+<li><p><strong>noise</strong> (<em>float</em><em>, </em><em>optional</em>) – Sensor noise (eta) in [0, 1]. When &gt; 0 the mean-field estimate is
+perturbed by <code class="docutils literal notranslate"><span class="pre">noise</span> <span class="pre">*</span> <span class="pre">(2*U</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">*</span> <span class="pre">pi</span></code>. Default 0.</p></li>
+<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) – Random source; defaults to <code class="docutils literal notranslate"><span class="pre">numpy.random.default_rng()</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyGD.agents.Yokai.speed">
+<span class="sig-name descname"><span class="pre">speed</span></span><a class="headerlink" href="#pyGD.agents.Yokai.speed" title="Link to this definition"></a></dt>
+<dd><p>Number of sub-steps per environment step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyGD.agents.Yokai.loc">
+<span class="sig-name descname"><span class="pre">loc</span></span><a class="headerlink" href="#pyGD.agents.Yokai.loc" title="Link to this definition"></a></dt>
+<dd><p>Current node index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyGD.agents.Yokai.T">
+<span class="sig-name descname"><span class="pre">T</span></span><a class="headerlink" href="#pyGD.agents.Yokai.T" title="Link to this definition"></a></dt>
+<dd><p>Accumulated agent time (incremented by <code class="docutils literal notranslate"><span class="pre">env.dt</span></code> each <a class="reference internal" href="#pyGD.agents.Yokai.evolve" title="pyGD.agents.Yokai.evolve"><code class="xref py py-meth docutils literal notranslate"><span class="pre">evolve()</span></code></a>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span><span class="o">,</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyGD.dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Kuramoto</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">erdos_renyi_graph</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">env</span> <span class="o">=</span> <span class="n">Kuramoto</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yok</span> <span class="o">=</span> <span class="n">Yokai</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">yok</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">yok</span><span class="o">.</span><span class="n">loc</span> <span class="o">&lt;</span> <span class="n">env</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyGD.agents.Yokai.evolve">
+<span class="sig-name descname"><span class="pre">evolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyGD/agents.html#Yokai.evolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyGD.agents.Yokai.evolve" title="Link to this definition"></a></dt>
+<dd><p>Advance the agent over one environment step, mutating <code class="docutils literal notranslate"><span class="pre">env</span></code>.</p>
+<p>Performs <code class="docutils literal notranslate"><span class="pre">speed</span></code> measure-kick-hop sub-steps on <code class="docutils literal notranslate"><span class="pre">env.thetas</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyGD.dynamics.html" class="btn btn-neutral float-left" title="pyGD.dynamics module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

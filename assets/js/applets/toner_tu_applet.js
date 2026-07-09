@@ -34,6 +34,17 @@
 
   function idx(i, j) { return ((i + N) % N) * N + ((j + N) % N); }
 
+  /* Precomputed wrapped neighbor offsets (avoids per-cell modulo) */
+  const rowOff = new Int32Array(N), rowUp = new Int32Array(N), rowDn = new Int32Array(N);
+  const colE = new Int32Array(N), colW = new Int32Array(N);
+  for (let i = 0; i < N; i++) {
+    rowOff[i] = i * N;
+    rowUp[i]  = ((i - 1 + N) % N) * N;
+    rowDn[i]  = ((i + 1) % N) * N;
+    colE[i]   = (i + 1) % N;
+    colW[i]   = (i - 1 + N) % N;
+  }
+
   function init() {
     for (let k = 0; k < N * N; k++) {
       rho[k] = 1.0 + 0.1 * (Math.random() - 0.5);
@@ -48,15 +59,17 @@
     const dr2 = DR * DR;
     const noiseMag = eta * Math.sqrt(DT);
     for (let i = 0; i < N; i++) {
+      const r0 = rowOff[i], rU = rowUp[i], rD = rowDn[i];
       for (let j = 0; j < N; j++) {
-        const k = idx(i, j);
+        const jE = colE[j], jW = colW[j];
+        const k = r0 + j;
         const r = rho[k], wx = vx[k], wy = vy[k];
-        const rE=rho[idx(i,j+1)],rW=rho[idx(i,j-1)],rN=rho[idx(i-1,j)],rS=rho[idx(i+1,j)];
-        const wE=vx[idx(i,j+1)],wW=vx[idx(i,j-1)],wN=vx[idx(i-1,j)],wS=vx[idx(i+1,j)];
-        const hE=vy[idx(i,j+1)],hW=vy[idx(i,j-1)],hN=vy[idx(i-1,j)],hS=vy[idx(i+1,j)];
-        const rNE=rho[idx(i-1,j+1)],rNW=rho[idx(i-1,j-1)],rSE=rho[idx(i+1,j+1)],rSW=rho[idx(i+1,j-1)];
-        const wNE=vx[idx(i-1,j+1)],wNW=vx[idx(i-1,j-1)],wSE=vx[idx(i+1,j+1)],wSW=vx[idx(i+1,j-1)];
-        const hNE=vy[idx(i-1,j+1)],hNW=vy[idx(i-1,j-1)],hSE=vy[idx(i+1,j+1)],hSW=vy[idx(i+1,j-1)];
+        const rE=rho[r0+jE],rW=rho[r0+jW],rN=rho[rU+j],rS=rho[rD+j];
+        const wE=vx[r0+jE],wW=vx[r0+jW],wN=vx[rU+j],wS=vx[rD+j];
+        const hE=vy[r0+jE],hW=vy[r0+jW],hN=vy[rU+j],hS=vy[rD+j];
+        const rNE=rho[rU+jE],rNW=rho[rU+jW],rSE=rho[rD+jE],rSW=rho[rD+jW];
+        const wNE=vx[rU+jE],wNW=vx[rU+jW],wSE=vx[rD+jE],wSW=vx[rD+jW];
+        const hNE=vy[rU+jE],hNW=vy[rU+jW],hSE=vy[rD+jE],hSW=vy[rD+jW];
         const lap_r  = ((2/3)*(rE+rW+rN+rS)+(1/6)*(rNE+rNW+rSE+rSW)-(10/3)*r) /dr2;
         const lap_wx = ((2/3)*(wE+wW+wN+wS)+(1/6)*(wNE+wNW+wSE+wSW)-(10/3)*wx)/dr2;
         const lap_wy = ((2/3)*(hE+hW+hN+hS)+(1/6)*(hNE+hNW+hSE+hSW)-(10/3)*wy)/dr2;
@@ -66,7 +79,7 @@
         const advy = wx*(hE-hW)/(2*DR) + wy*(hS-hN)/(2*DR);
         const v2 = wx*wx + wy*wy;
         const coeff = alpha - beta * v2;
-        rho2[k] = Math.max(0.01, r + DT*(-lam*r*div_v + D_rho*lap_r));
+        rho2[k] = Math.max(0.01, r + DT*(-(r*div_v + wx*drdx + wy*drdy) + D_rho*lap_r));
         vx2[k]  = wx + DT*(coeff*wx - lam*advx - drdx + D_v*lap_wx) + noiseMag*randn();
         vy2[k]  = wy + DT*(coeff*wy - lam*advy - drdy + D_v*lap_wy) + noiseMag*randn();
       }
@@ -100,24 +113,16 @@
     return Math.round(Math.max(0,Math.min(2,r))/2*(LUT_SIZE-1))*3;
   }
 
-  let canvas, ctx, imgData, buf;
+  let canvas, ctx, off, offCtx, imgData, buf;
 
   function render() {
-    const W = canvas.width, H = canvas.height;
-    for (let i = 0; i < N; i++) {
-      const y0=Math.round(H*i/N), y1=Math.round(H*(i+1)/N);
-      for (let j = 0; j < N; j++) {
-        const x0=Math.round(W*j/N), x1=Math.round(W*(j+1)/N);
-        const li=rhoToLUT(rho[i*N+j]);
-        const r=lut[li], g=lut[li+1], b=lut[li+2];
-        for (let py=y0; py<y1; py++)
-          for (let px=x0; px<x1; px++) {
-            const base=(py*W+px)*4;
-            buf[base]=r; buf[base+1]=g; buf[base+2]=b; buf[base+3]=255;
-          }
-      }
+    let q = 0;
+    for (let k = 0; k < N * N; k++, q += 4) {
+      const li = rhoToLUT(rho[k]);
+      buf[q] = lut[li]; buf[q+1] = lut[li+1]; buf[q+2] = lut[li+2];
     }
-    ctx.putImageData(imgData, 0, 0);
+    offCtx.putImageData(imgData, 0, 0);
+    ctx.drawImage(off, 0, 0, canvas.width, canvas.height);
   }
 
   let _frameCount = 0;
@@ -192,9 +197,16 @@
       ctx    = canvas.getContext('2d');
       canvas.width  = S;
       canvas.height = S;
-      imgData = ctx.createImageData(S, S);
-      buf     = imgData.data;
-      for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+      ctx.imageSmoothingEnabled = true;
+      if (!off) {
+        off        = document.createElement('canvas');
+        off.width  = N;
+        off.height = N;
+        offCtx     = off.getContext('2d');
+        imgData    = offCtx.createImageData(N, N);
+        buf        = imgData.data;
+        for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+      }
       init();
       running = true;
       const pb = document.getElementById('tt-pause-btn');
@@ -213,9 +225,7 @@
       canvas = c;
       canvas.width  = S;
       canvas.height = S;
-      imgData = ctx.createImageData(S, S);
-      buf     = imgData.data;
-      for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
+      ctx.imageSmoothingEnabled = true;
     },
   });
 
@@ -235,9 +245,15 @@
     eta = parseFloat(this.value);
     document.getElementById('tt-noise-val').textContent = eta.toFixed(2);
   });
+  /* Keep steady-state speed √(α/β) pinned to the v₀ slider */
+  function updateBeta() {
+    if (alpha > 0 && v0 > 0) beta = alpha / (v0 * v0);
+  }
+
   document.getElementById('tt-alpha').addEventListener('input', function () {
     alpha = parseFloat(this.value);
     document.getElementById('tt-alpha-val').textContent = alpha.toFixed(2);
+    updateBeta();
   });
   document.getElementById('tt-lambda').addEventListener('input', function () {
     lam = parseFloat(this.value);
@@ -246,6 +262,8 @@
   document.getElementById('tt-speed').addEventListener('input', function () {
     v0 = parseFloat(this.value);
     document.getElementById('tt-speed-val').textContent = v0.toFixed(2);
+    updateBeta();
   });
+  updateBeta();
 
 })();

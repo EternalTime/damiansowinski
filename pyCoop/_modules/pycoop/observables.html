@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pycoop.observables &mdash; pyCoop 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=3fce5bdb" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            pyCoop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_dynamics.html">The Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_observables.html">The Observables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_viz.html">Visualization</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/pycoop.html">pycoop package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyCoop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pycoop.observables</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pycoop.observables</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Observables on states and trajectories.</span>
+
+<span class="sd">State functions take (A, sigma) with A a zero-diagonal symmetric</span>
+<span class="sd">adjacency; the self-weighting enters through 1/(d_i + 1).  Definitions</span>
+<span class="sd">follow the main text of Conrad &amp; Tabor (2024): friends/enemies are</span>
+<span class="sd">statements about ACTIONS (sign of sigma_j), not opinions, and</span>
+<span class="sd">fraughtness is the non-Pareto-optimal Nash</span>
+<span class="sd">condition (crowd split, no single player can improve their own</span>
+<span class="sd">agreement by switching sides).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;local_mean&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;agreement&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;friend_enemy_weights&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;alignment_asymmetry&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;is_consensus&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;is_fraught&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;is_obdurate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;classify&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mean_action&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mean_opinion&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;classify_trajectory&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;state_fractions&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;alpha_estimate&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1"># ---------------------------- state functions ---------------------------- #</span>
+
+<div class="viewcode-block" id="local_mean">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.local_mean">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">local_mean</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;sigma_bar_i = (sigma_i + sum_j A_ij sigma_j) / (d_i + 1).&quot;&quot;&quot;</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">+</span> <span class="n">A</span> <span class="o">@</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="agreement">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.agreement">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">agreement</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;a_i = abs(sigma_bar_i) in [0, 1].&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">local_mean</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="friend_enemy_weights">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.friend_enemy_weights">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">friend_enemy_weights</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;(F, E): summed abs(sigma_j) over neighbors sharing / opposing</span>
+<span class="sd">    player i&#39;s action sign.  Assumes sigma_i != 0 for all i.&quot;&quot;&quot;</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+    <span class="n">same</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">absw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span> <span class="o">*</span> <span class="n">same</span><span class="p">)</span> <span class="o">@</span> <span class="n">absw</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span> <span class="o">*</span> <span class="o">~</span><span class="n">same</span><span class="p">)</span> <span class="o">@</span> <span class="n">absw</span>
+    <span class="k">return</span> <span class="n">F</span><span class="p">,</span> <span class="n">E</span></div>
+
+
+
+<div class="viewcode-block" id="alignment_asymmetry">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.alignment_asymmetry">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">alignment_asymmetry</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;y_i = F_i - E_i; y_i &gt;= 0 means no local incentive to defect.&quot;&quot;&quot;</span>
+    <span class="n">F</span><span class="p">,</span> <span class="n">E</span> <span class="o">=</span> <span class="n">friend_enemy_weights</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">F</span> <span class="o">-</span> <span class="n">E</span></div>
+
+
+
+<div class="viewcode-block" id="is_consensus">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.is_consensus">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_consensus</span><span class="p">(</span><span class="n">sigma</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;In a consensus orthant: all actions share one sign, none zero.&quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="is_fraught">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.is_fraught">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_fraught</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;No zeros, non-consensus, and every y_i &gt;= 0: split but locally</span>
+<span class="sd">    content -- a non-Pareto-optimal Nash equilibrium.&quot;&quot;&quot;</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">sigma</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_consensus</span><span class="p">(</span><span class="n">sigma</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">alignment_asymmetry</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="is_obdurate">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.is_obdurate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_obdurate</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;No zeros, non-consensus, not fraught: some player could improve</span>
+<span class="sd">    their agreement by switching sides (some y_i &lt; 0) but is unwilling.&quot;&quot;&quot;</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">sigma</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_consensus</span><span class="p">(</span><span class="n">sigma</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">alignment_asymmetry</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="classify">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.classify">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">classify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;One of &#39;consensus&#39; | &#39;fraught&#39; | &#39;obdurate&#39; | &#39;indeterminate&#39;</span>
+<span class="sd">    (the last only when some sigma_i == 0 off consensus).&quot;&quot;&quot;</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_consensus</span><span class="p">(</span><span class="n">sigma</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;consensus&quot;</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">sigma</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;indeterminate&quot;</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">alignment_asymmetry</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;fraught&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;obdurate&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="mean_action">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.mean_action">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mean_action</span><span class="p">(</span><span class="n">sigma</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sigma</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="mean_opinion">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.mean_opinion">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mean_opinion</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">q</span><span class="p">))</span></div>
+
+
+
+<span class="c1"># -------------------------- trajectory functions -------------------------- #</span>
+
+<div class="viewcode-block" id="classify_trajectory">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.classify_trajectory">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">classify_trajectory</span><span class="p">(</span><span class="n">traj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Per-event classification of a Trajectory; list of length K+1.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">classify</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">traj</span><span class="o">.</span><span class="n">sigma</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="state_fractions">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.state_fractions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">state_fractions</span><span class="p">(</span><span class="n">traj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Time-weighted fraction of the run spent in each class, evaluated</span>
+<span class="sd">    at event states and weighted by the following interval (the state</span>
+<span class="sd">    can change class mid-interval only by an action crossing 0 or a</span>
+<span class="sd">    wall, so this is exact up to those crossings).  Returns a dict.&quot;&quot;&quot;</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">classify_trajectory</span><span class="p">(</span><span class="n">traj</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">durations</span><span class="p">()</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">labels</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">labels</span> <span class="k">else</span> <span class="n">classify</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="n">traj</span><span class="o">.</span><span class="n">sigma</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">lab</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;consensus&quot;</span><span class="p">,</span> <span class="s2">&quot;fraught&quot;</span><span class="p">,</span> <span class="s2">&quot;obdurate&quot;</span><span class="p">,</span> <span class="s2">&quot;indeterminate&quot;</span><span class="p">):</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">dt</span><span class="p">[[</span><span class="n">l</span> <span class="o">==</span> <span class="n">lab</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">lab</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+
+<div class="viewcode-block" id="alpha_estimate">
+<a class="viewcode-back" href="../../api/pycoop.observables.html#pycoop.observables.alpha_estimate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">alpha_estimate</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Time-weighted fraction of players past the position threshold,</span>
+<span class="sd">    abs(sigma_i) &gt; l, restricted to intervals where the global window</span>
+<span class="sd">    is open, abs(mean(sigma)) &lt; u.  On K_N this estimates the</span>
+<span class="sd">    active-window slope alpha = 1 - 2l/(T+2); on other graphs it is a</span>
+<span class="sd">    heuristic global proxy.&quot;&quot;&quot;</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;l&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">l</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">l</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">u</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">u</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">durations</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">dt</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;trajectory has no steps&quot;</span><span class="p">)</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">sigma</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">open_win</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sig</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">u</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">open_win</span>
+    <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">frac</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">((</span><span class="n">frac</span> <span class="o">*</span> <span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">w</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -96,6 +96,7 @@ const BRUSH_R = 4;          // brush radius in grid cells
 
 /* ── Running flag ── */
 let running = false, frameId = null;
+let needsRender = true;
 
 /* ── Noise helper (simple value noise for textures) ── */
 function valueNoise(x, y, seed) {
@@ -184,14 +185,22 @@ function samplePher(x, y) {
   return pheromone[iy * GW + ix];
 }
 
-/* ── Pheromone gradient at (x,y) via central differences ── */
-function pherGrad(x, y) {
-  const ix = Math.round(x), iy = Math.round(y);
-  const xp = Math.min(GW-1, ix+1), xm = Math.max(0, ix-1);
-  const yp = Math.min(GH-1, iy+1), ym = Math.max(0, iy-1);
-  const gx = (samplePher(xp, iy) - samplePher(xm, iy)) * 0.5;
-  const gy = (samplePher(ix, yp) - samplePher(ix, ym)) * 0.5;
-  return [gx, gy];
+/* ── Forward pheromone sensing: three sensors ahead of the ant ──
+   A local gradient points *across* a trail; forward sensors give the
+   directional preference needed to follow it. Deposits land behind the
+   sensors, so returning ants no longer chase their own fresh pheromone. */
+const SENSE_D   = 3.0;   // sensor distance (cells)
+const SENSE_ANG = 0.6;   // sensor angular offset (rad)
+
+function senseVec(a) {
+  let sx = 0, sy = 0;
+  for (let s = -1; s <= 1; s++) {
+    const ang = a.angle + s * SENSE_ANG;
+    const cx = Math.cos(ang), cy = Math.sin(ang);
+    const v = samplePher(a.x + cx * SENSE_D, a.y + cy * SENSE_D) / 255;
+    sx += v * cx; sy += v * cy;
+  }
+  return [sx, sy];
 }
 
 /* ── Nest gradient at (x,y) ── */
@@ -228,8 +237,8 @@ function stepAnt(a) {
   const dx = nestX - a.x, dy = nestY - a.y;
   const dNest = Math.sqrt(dx*dx + dy*dy);
 
-  // Compute combined gradient bias
-  const [pgx, pgy] = pherGrad(a.x, a.y);
+  // Compute combined steering bias (forward pheromone sensing + nest field)
+  const [pgx, pgy] = senseVec(a);
   const [ngx, ngy] = nestGrad(a.x, a.y);
 
   let biasX, biasY;
@@ -320,6 +329,27 @@ function buildLUTs() {
   }
 }
 
+/* Pre-baked ant halo sprites: teal-dark (returning) / pink-dark (searching) */
+let _antHaloT = null, _antHaloP = null;
+function buildAntHalos() {
+  const build = (name) => {
+    const [r, g, b] = _rgb(name);
+    const hR = 7;
+    const c = document.createElement('canvas');
+    c.width = c.height = 2 * hR + 2;
+    const hctx = c.getContext('2d');
+    const cc = c.width / 2;
+    const gg = hctx.createRadialGradient(cc, cc, 0, cc, cc, hR);
+    gg.addColorStop(0, `rgba(${r},${g},${b},0.5)`);
+    gg.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    hctx.beginPath(); hctx.arc(cc, cc, hR, 0, Math.PI * 2);
+    hctx.fillStyle = gg; hctx.fill();
+    return c;
+  };
+  _antHaloT = build('--teal-dark');
+  _antHaloP = build('--pink-dark');
+}
+
 /* ── Render ── */
 function render() {
   if (!canvas || !ctx) return;
@@ -392,7 +422,17 @@ function render() {
   ctx.imageSmoothingEnabled = false;
   ctx.drawImage(offscreen, 0, 0, S, S);
 
-  // Draw ants in screen space
+  // Draw ants in screen space — neon: additive state-colored halos under the bodies
+  if (!_antHaloT) buildAntHalos();
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+  const ahHalf = _antHaloT.width / 2;
+  for (let i = 0; i < ants.length; i++) {
+    const a = ants[i];
+    ctx.drawImage(a.state === 'return' ? _antHaloT : _antHaloP,
+                  a.x * scaleX - ahHalf, a.y * scaleY - ahHalf);
+  }
+  ctx.restore();
   for (let i = 0; i < ants.length; i++) {
     const a = ants[i];
     const sx = a.x * scaleX, sy = a.y * scaleY;
@@ -442,8 +482,9 @@ function render() {
 function loop() {
   if (running) {
     for (let i = 0; i < stepsPerFrame; i++) simStep();
+    needsRender = true;
   }
-  render();
+  if (needsRender) { render(); needsRender = false; }
   frameId = requestAnimationFrame(loop);
 }
 
@@ -470,6 +511,7 @@ function paintAt(gx, gy) {
       }
     }
   }
+  needsRender = true;
 }
 
 function onPointerDown(e) {
@@ -487,6 +529,7 @@ function onPointerDown(e) {
     buildNestTex();
     spawnAnts();
     setInteractMode('none');
+    needsRender = true;
     return;
   }
   paintAt(gx, gy);
@@ -578,7 +621,7 @@ const shell = new AppletShell({
       <div class="applet-shell-ctrl-title">Diffusion</div>
       <div class="applet-shell-slider-row">
         <span class="applet-shell-side">Sharp</span>
-        <input type="range" id="ants-sl-diff" min="0.02" max="0.4" step="0.01" value="0.15">
+        <input type="range" id="ants-sl-diff" min="0.02" max="0.25" step="0.01" value="0.15">
         <span class="applet-shell-side">Spread</span>
         <span class="applet-shell-val" id="ants-sl-diff-val">0.15</span>
       </div>
@@ -615,6 +658,7 @@ const shell = new AppletShell({
     initSim();
     attachEvents();
     running = false;
+    needsRender = true;
     const btn = document.getElementById('ants-btn-run');
     if (btn) { btn.textContent = 'Run'; btn.classList.remove('active'); }
     if (!frameId) loop();
@@ -630,6 +674,7 @@ const shell = new AppletShell({
   onResize: function ({ canvas: c, S: s }) {
     canvas = c; S = s;
     ctx = canvas.getContext('2d');
+    needsRender = true;
   },
 });
 
@@ -641,11 +686,13 @@ window.antsResetColony = function () {
   spawnAnts();
   pheromone.fill(0);
   totalFood = 0;
+  needsRender = true;
 };
 
 window.antsReset = function () {
   initSim();
   running = false;
+  needsRender = true;
   setInteractMode('none');
   const btn = document.getElementById('ants-btn-run');
   if (btn) { btn.textContent = 'Run'; btn.classList.remove('active'); }
@@ -669,6 +716,7 @@ document.getElementById('ants-sl-n').addEventListener('input', function () {
   N_ANTS = parseInt(this.value);
   document.getElementById('ants-sl-n-val').textContent = N_ANTS;
   spawnAnts();
+  needsRender = true;
 });
 document.getElementById('ants-sl-evap').addEventListener('input', function () {
   EVAP_RATE = parseFloat(this.value);

@@ -52,7 +52,7 @@ Reference
 .. toctree::
    :maxdepth: 2
 
-   source/modules
+   api/pyCE
    license
 
 References

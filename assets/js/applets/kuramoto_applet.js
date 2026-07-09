@@ -79,7 +79,24 @@ const HIST_ALPHA = 0.12;
 let hctx;
 
 let renderer, scene, camera;
-let nodeMeshes = [], edgeLines = null, edgeMeshes = [];
+let nodeMeshes = [], nodeGlows = [], edgeLines = null, edgeMeshes = [];
+
+/* Soft radial sprite texture for node glow (as in the three-body applet) */
+let _glowTexture = null;
+function glowTexture() {
+  if (_glowTexture) return _glowTexture;
+  const c = document.createElement('canvas');
+  c.width = c.height = 64;
+  const g = c.getContext('2d');
+  const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  grad.addColorStop(0,   'rgba(255,255,255,1)');
+  grad.addColorStop(0.4, 'rgba(255,255,255,0.45)');
+  grad.addColorStop(1,   'rgba(255,255,255,0)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 64, 64);
+  _glowTexture = new THREE.CanvasTexture(c);
+  return _glowTexture;
+}
 let simCanvas;
 
 let orbit = { dragging: false, lastX: 0, lastY: 0, theta: 0.4, phi: 1.1, radius: 9.0 };
@@ -140,29 +157,37 @@ function buildGraph(idx) {
   return pos;
 }
 
+let _relaxForce = null;   // flat, reused across relax frames
+
 function relaxStep(pos, edges, t, idealEdge, nodeDeg) {
   const n = pos.length, stepSz = 0.12 * (1 - t);
-  const force = Array.from({length: n}, () => [0,0,0]);
+  if (!_relaxForce || _relaxForce.length < 3 * n) _relaxForce = new Float64Array(3 * n);
+  const force = _relaxForce;
+  force.fill(0, 0, 3 * n);
   const baseRepulse = idealEdge * idealEdge * 0.5;
   for (let i = 0; i < n; i++) {
+    const i3 = 3 * i;
     for (let j = i+1; j < n; j++) {
+      const j3 = 3 * j;
       const dx = pos[i][0]-pos[j][0], dy = pos[i][1]-pos[j][1], dz = pos[i][2]-pos[j][2];
       const d = Math.sqrt(dx*dx+dy*dy+dz*dz) + 1e-6;
       const charge = nodeDeg ? (nodeDeg[i]+nodeDeg[j])*0.5 : 1.0;
-      const f = baseRepulse * charge / (d*d);
-      force[i][0]+=f*dx/d; force[i][1]+=f*dy/d; force[i][2]+=f*dz/d;
-      force[j][0]-=f*dx/d; force[j][1]-=f*dy/d; force[j][2]-=f*dz/d;
+      const f = baseRepulse * charge / (d*d*d);
+      force[i3]+=f*dx; force[i3+1]+=f*dy; force[i3+2]+=f*dz;
+      force[j3]-=f*dx; force[j3+1]-=f*dy; force[j3+2]-=f*dz;
     }
   }
   for (const [a, b] of edges) {
+    const a3 = 3 * a, b3 = 3 * b;
     const dx = pos[b][0]-pos[a][0], dy = pos[b][1]-pos[a][1], dz = pos[b][2]-pos[a][2];
     const d = Math.sqrt(dx*dx+dy*dy+dz*dz) + 1e-6;
-    const f = (d - idealEdge) * 0.3;
-    force[a][0]+=f*dx/d; force[a][1]+=f*dy/d; force[a][2]+=f*dz/d;
-    force[b][0]-=f*dx/d; force[b][1]-=f*dy/d; force[b][2]-=f*dz/d;
+    const f = (d - idealEdge) * 0.3 / d;
+    force[a3]+=f*dx; force[a3+1]+=f*dy; force[a3+2]+=f*dz;
+    force[b3]-=f*dx; force[b3+1]-=f*dy; force[b3+2]-=f*dz;
   }
   for (let i = 0; i < n; i++) {
-    pos[i][0]+=stepSz*force[i][0]; pos[i][1]+=stepSz*force[i][1]; pos[i][2]+=stepSz*force[i][2];
+    const i3 = 3 * i;
+    pos[i][0]+=stepSz*force[i3]; pos[i][1]+=stepSz*force[i3+1]; pos[i][2]+=stepSz*force[i3+2];
   }
 }
 
@@ -182,9 +207,12 @@ function initOmegas() {
   }
 }
 
+let _newPhases = null;   // reused scratch
+
 function step(dt) {
   const TWO_PI = 2 * Math.PI, KoverN = K / N;
-  const newPhases = new Float64Array(N);
+  if (!_newPhases || _newPhases.length < N) _newPhases = new Float64Array(N);
+  const newPhases = _newPhases;
   for (let i = 0; i < N; i++) {
     let coupling = 0;
     const nb = nbrs[i];
@@ -211,7 +239,7 @@ function initThree(pos) {
     });
   }
   scene = new THREE.Scene();
-  nodeMeshes = []; edgeLines = null; edgeMeshes = [];
+  nodeMeshes = []; nodeGlows = []; edgeLines = null; edgeMeshes = [];
   scene.add(new THREE.AmbientLight(0xffffff, 0.4));
   const dLight = new THREE.DirectionalLight(0xffffff, 0.8);
   dLight.position.set(5, 8, 6); scene.add(dLight);
@@ -224,10 +252,16 @@ function initThree(pos) {
     const t = maxDeg > minDeg ? (deg[i]-minDeg)/(maxDeg-minDeg) : 0.5;
     const r = rMin + t * (rMax - rMin);
     const geo = new THREE.SphereGeometry(r, 16, 12);
-    const mat = new THREE.MeshPhongMaterial({ color: angleToColor(phases[i]), emissive: angleToColor(phases[i]), emissiveIntensity: 0.45, shininess: 60 });
+    /* Neon: bright white node; the phase color lives in the glow sprite */
+    const mat = new THREE.MeshPhongMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 1.0, shininess: 80 });
     const mesh = new THREE.Mesh(geo, mat);
     mesh.position.set(pos[i][0], pos[i][1], pos[i][2]);
     scene.add(mesh); nodeMeshes.push(mesh);
+    const glowMat = new THREE.SpriteMaterial({ map: glowTexture(), color: angleToColor(phases[i]), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
+    const glow = new THREE.Sprite(glowMat);
+    glow.scale.set(r * 5, r * 5, 1);
+    glow.position.set(pos[i][0], pos[i][1], pos[i][2]);
+    scene.add(glow); nodeGlows.push(glow);
   }
   if (layout.edgeStyle === 'cylinder') {
     const cylGeo = new THREE.CylinderGeometry(layout.edgeRadius, layout.edgeRadius, 1, 6, 1);
@@ -323,7 +357,10 @@ function loop(now) {
     const dtSub = dtReal/STEPS;
     if (relaxIter < RELAX_FRAMES) {
       relaxStep(nodePos, GRAPHS[gIdx].edges, relaxIter/RELAX_FRAMES, GRAPHS[gIdx].layout.idealEdge, nodeDeg);
-      for (let i = 0; i < N; i++) nodeMeshes[i].position.set(nodePos[i][0], nodePos[i][1], nodePos[i][2]);
+      for (let i = 0; i < N; i++) {
+        nodeMeshes[i].position.set(nodePos[i][0], nodePos[i][1], nodePos[i][2]);
+        nodeGlows[i].position.set(nodePos[i][0], nodePos[i][1], nodePos[i][2]);
+      }
       if (edgeLines) {
         const posAttr = edgeLines.geometry.attributes.position;
         let vi = 0;
@@ -339,9 +376,7 @@ function loop(now) {
     }
     for (let s = 0; s < STEPS; s++) step(dtSub);
     for (let i = 0; i < N; i++) {
-      const col = angleToColor(phases[i]);
-      nodeMeshes[i].material.color.copy(col);
-      nodeMeshes[i].material.emissive.copy(col);
+      nodeGlows[i].material.color.copy(angleToColor(phases[i]));
     }
     if (edgeLines) {
       const colAttr = edgeLines.geometry.attributes.color;

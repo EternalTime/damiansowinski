@@ -151,6 +151,10 @@ function step() {
 }
 
 /* ── Render ── */
+let _probBuf = null;
+let _fillGrad = null, _fillGradKey = '';
+let qtStatic = null, qtStaticKey = '';
+
 function render() {
   if (!canvas||!ctx) return;
   ctx.fillStyle = _c('--bg-void');
@@ -165,7 +169,8 @@ function render() {
   const yBarTop = groundY - plotH*(barrierH/BARRIER_MAX);
   const barrierPixH = groundY - yBarTop;
 
-  const prob = new Float32Array(NX);
+  if (!_probBuf || _probBuf.length !== NX) _probBuf = new Float32Array(NX);
+  const prob = _probBuf;
   for (let i=0;i<NX;i++) prob[i]=psiRe[i]*psiRe[i]+psiIm[i]*psiIm[i];
 
   function toX(i)  { return ((xArr[i]-XDISP_MIN)/XDISP_SPAN)*simW; }
@@ -174,61 +179,83 @@ function render() {
   const iDisp0=Math.ceil((XDISP_MIN-XMIN)/DX);
   const iDisp1=Math.floor((XDISP_MAX-XMIN)/DX);
 
-  /* |ψ|² fill */
-  const grad=ctx.createLinearGradient(0,groundY-plotH,0,groundY);
-  grad.addColorStop(0,   'rgba(42,190,217,0.85)');
-  grad.addColorStop(0.6, 'rgba(42,190,217,0.55)');
-  grad.addColorStop(1,   'rgba(42,190,217,0.20)');
+  /* |ψ|² fill (gradient cached until geometry changes) */
+  const fgKey = groundY + '|' + plotH;
+  if (_fillGradKey !== fgKey) {
+    _fillGrad=ctx.createLinearGradient(0,groundY-plotH,0,groundY);
+    _fillGrad.addColorStop(0,   'rgba(42,190,217,0.85)');
+    _fillGrad.addColorStop(0.6, 'rgba(42,190,217,0.55)');
+    _fillGrad.addColorStop(1,   'rgba(42,190,217,0.20)');
+    _fillGradKey = fgKey;
+  }
+  const grad=_fillGrad;
   ctx.save();
   ctx.beginPath(); ctx.moveTo(toX(iDisp0),groundY);
   for (let i=iDisp0;i<=iDisp1;i++) ctx.lineTo(toX(i),toY2(prob[i]));
   ctx.lineTo(toX(iDisp1),groundY); ctx.closePath();
   ctx.fillStyle=grad; ctx.fill(); ctx.restore();
 
-  /* |ψ|² outline */
+  /* |ψ|² outline — wide low-alpha understroke (no shadowBlur) */
   ctx.save();
-  ctx.strokeStyle=_c('--cyan'); ctx.lineWidth=1.5;
-  ctx.shadowColor=_c('--cyan'); ctx.shadowBlur=10;
+  ctx.lineCap='round';
+  ctx.strokeStyle=_c('--cyan'); ctx.lineWidth=5; ctx.globalAlpha=0.3;
+  ctx.beginPath();
+  for (let i=iDisp0;i<=iDisp1;i++){const px=toX(i),py=toY2(prob[i]);i===iDisp0?ctx.moveTo(px,py):ctx.lineTo(px,py);}
+  ctx.stroke();
+  ctx.globalAlpha=1; ctx.lineWidth=1.5;
   ctx.beginPath();
   for (let i=iDisp0;i<=iDisp1;i++){const px=toX(i),py=toY2(prob[i]);i===iDisp0?ctx.moveTo(px,py):ctx.lineTo(px,py);}
   ctx.stroke(); ctx.restore();
 
-  /* incident energy line */
-  const E0=K0*K0/(2*MASS);
-  const yE0=groundY-plotH*(E0/BARRIER_MAX);
-  if (yE0>=groundY-plotH&&yE0<=groundY) {
-    ctx.save(); ctx.setLineDash([4,6]);
-    ctx.strokeStyle='rgba(255,109,162,0.55)'; ctx.lineWidth=2.5;
-    ctx.beginPath(); ctx.moveTo(0,yE0); ctx.lineTo(simW,yE0); ctx.stroke(); ctx.restore();
-  }
+  /* Static overlay: energy line + hatching + barrier outline + zero line,
+     cached in a transparent layer until size/barrier/energy change */
+  const sKey = simW+'|'+simH+'|'+barrierW+'|'+barrierH+'|'+K0;
+  if (qtStaticKey !== sKey) {
+    if (!qtStatic) qtStatic = document.createElement('canvas');
+    qtStatic.width  = simW;
+    qtStatic.height = simH;
+    const sc = qtStatic.getContext('2d');
 
-  /* barrier crosshatch */
-  const hatchColor='rgba(100,130,150,0.30)';
-  const hatchLW=Math.max(1,Math.round(simW*0.003));
-  const hatchStep=Math.round(simW*0.035);
-  function hatch(rx,ry,rw,rh) {
-    if (rw<=0||rh<=0) return;
-    ctx.save(); ctx.beginPath(); ctx.rect(rx,ry,rw,rh); ctx.clip();
-    ctx.strokeStyle=hatchColor; ctx.lineWidth=hatchLW;
-    for (let d=-simH;d<=simW+simH;d+=hatchStep){
-      ctx.beginPath();ctx.moveTo(d,groundY);ctx.lineTo(d-simH,groundY+simH);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(d,groundY);ctx.lineTo(d+simH,groundY-simH);ctx.stroke();
+    /* incident energy line */
+    const E0=K0*K0/(2*MASS);
+    const yE0=groundY-plotH*(E0/BARRIER_MAX);
+    if (yE0>=groundY-plotH&&yE0<=groundY) {
+      sc.save(); sc.setLineDash([4,6]);
+      sc.strokeStyle='rgba(255,109,162,0.55)'; sc.lineWidth=2.5;
+      sc.beginPath(); sc.moveTo(0,yE0); sc.lineTo(simW,yE0); sc.stroke(); sc.restore();
     }
-    ctx.restore();
-  }
-  ctx.save(); ctx.globalAlpha=0.7;
-  hatch(0,groundY,simW,simH-groundY);
-  hatch(xBarL,yBarTop,xBarR-xBarL,barrierPixH);
-  ctx.strokeStyle='rgba(100,130,150,0.65)'; ctx.lineWidth=hatchLW*1.5;
-  ctx.beginPath();
-  ctx.moveTo(xBarL,groundY);ctx.lineTo(xBarL,yBarTop);
-  ctx.lineTo(xBarR,yBarTop);ctx.lineTo(xBarR,groundY);
-  ctx.stroke(); ctx.restore();
 
-  /* zero line */
-  ctx.save(); ctx.setLineDash([4,5]);
-  ctx.strokeStyle='rgba(168,192,208,0.28)'; ctx.lineWidth=1;
-  ctx.beginPath(); ctx.moveTo(0,y1top+plotH/2); ctx.lineTo(simW,y1top+plotH/2); ctx.stroke(); ctx.restore();
+    /* barrier crosshatch */
+    const hatchColor='rgba(100,130,150,0.30)';
+    const hatchLW=Math.max(1,Math.round(simW*0.003));
+    const hatchStep=Math.round(simW*0.035);
+    function hatch(rx,ry,rw,rh) {
+      if (rw<=0||rh<=0) return;
+      sc.save(); sc.beginPath(); sc.rect(rx,ry,rw,rh); sc.clip();
+      sc.strokeStyle=hatchColor; sc.lineWidth=hatchLW;
+      for (let d=-simH;d<=simW+simH;d+=hatchStep){
+        sc.beginPath();sc.moveTo(d,groundY);sc.lineTo(d-simH,groundY+simH);sc.stroke();
+        sc.beginPath();sc.moveTo(d,groundY);sc.lineTo(d+simH,groundY-simH);sc.stroke();
+      }
+      sc.restore();
+    }
+    sc.save(); sc.globalAlpha=0.7;
+    hatch(0,groundY,simW,simH-groundY);
+    hatch(xBarL,yBarTop,xBarR-xBarL,barrierPixH);
+    sc.strokeStyle='rgba(100,130,150,0.65)'; sc.lineWidth=hatchLW*1.5;
+    sc.beginPath();
+    sc.moveTo(xBarL,groundY);sc.lineTo(xBarL,yBarTop);
+    sc.lineTo(xBarR,yBarTop);sc.lineTo(xBarR,groundY);
+    sc.stroke(); sc.restore();
+
+    /* zero line */
+    sc.save(); sc.setLineDash([4,5]);
+    sc.strokeStyle='rgba(168,192,208,0.28)'; sc.lineWidth=1;
+    sc.beginPath(); sc.moveTo(0,y1top+plotH/2); sc.lineTo(simW,y1top+plotH/2); sc.stroke(); sc.restore();
+
+    qtStaticKey = sKey;
+  }
+  ctx.drawImage(qtStatic, 0, 0);
 
   /* ±|ψ| envelope */
   ctx.save(); ctx.strokeStyle='rgba(42,190,217,0.5)'; ctx.lineWidth=2.5;
@@ -239,12 +266,14 @@ function render() {
   for (let i=iDisp0;i<=iDisp1;i++){const px=toX(i),py=toY1(-Math.sqrt(prob[i]));i===iDisp0?ctx.moveTo(px,py):ctx.lineTo(px,py);}
   ctx.stroke(); ctx.restore();
 
-  /* Im(ψ) pink, Re(ψ) teal — double-pass glow */
+  /* Im(ψ) pink, Re(ψ) teal — wide low-alpha understrokes (no shadowBlur) */
   function strokeGlow(buildPath,glowCol,dimCol,mainCol) {
-    ctx.save(); ctx.shadowColor=glowCol; ctx.shadowBlur=10;
-    ctx.strokeStyle=dimCol; ctx.lineWidth=2.5; ctx.globalAlpha=0.5;
-    buildPath(); ctx.stroke(); ctx.restore();
-    ctx.save(); ctx.shadowColor=glowCol; ctx.shadowBlur=18;
+    ctx.save(); ctx.lineCap='round';
+    ctx.strokeStyle=dimCol; ctx.lineWidth=9; ctx.globalAlpha=0.25;
+    buildPath(); ctx.stroke();
+    ctx.strokeStyle=glowCol; ctx.lineWidth=4.5; ctx.globalAlpha=0.35;
+    buildPath(); ctx.stroke();
+    ctx.globalAlpha=1;
     ctx.strokeStyle=mainCol; ctx.lineWidth=1.8;
     buildPath(); ctx.stroke(); ctx.restore();
   }

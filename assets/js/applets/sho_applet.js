@@ -341,74 +341,109 @@
     const baseAlpha = Math.max(0.08, Math.min(0.5, 0.5 / Math.sqrt(nM)));
     const blobR = Math.max(1.25, Math.min(2, W * 0.011));
 
+    if (blobSpriteR !== blobR) buildBlobSprites(blobR);
+    const half = blobSprites[0].width / 2;
+
     const nFrames = phaseHist.length;
     for (let fi = 0; fi < nFrames; fi++) {
       const frame = phaseHist[fi];
       const ageFrac = (fi + 1) / nFrames;   // 0→oldest approaching 0 alpha, 1→newest
       const alpha = baseAlpha * ageFrac * ageFrac;  // quadratic fade
+      phaseCtx.globalAlpha = Math.min(1, alpha * 2.5);
 
       for (let mi = 0; mi < frame.length; mi++) {
         const { x, p } = frame[mi];
         const bx = cx + (x / maxX) * (pw / 2);
         const by = cy - (p / maxP) * (ph / 2);
-
-        // Color: teal for single mass, gradient teal→pink for lattice
-        let r, g, b;
-        if (nM === 1) {
-          r = _TLR; g = _TLG; b = _TLB;
-        } else {
-          const t = mi / Math.max(nM - 1, 1);
-          r = Math.round(_TLR + (_PLR - _TLR) * t);
-          g = Math.round(_TLG + (_PLG - _TLG) * t);
-          b = Math.round(_TLB + (_PLB - _TLB) * t);
-        }
-
-        // Inner bright core + soft outer glow
-        const grd = phaseCtx.createRadialGradient(bx, by, 0, bx, by, blobR * 3);
-        grd.addColorStop(0,    `rgba(${r},${g},${b},${Math.min(1, alpha * 2.5)})`);
-        grd.addColorStop(0.35, `rgba(${r},${g},${b},${alpha})`);
-        grd.addColorStop(1,    `rgba(${r},${g},${b},0)`);
-        phaseCtx.beginPath();
-        phaseCtx.arc(bx, by, blobR * 3, 0, Math.PI * 2);
-        phaseCtx.fillStyle = grd;
-        phaseCtx.fill();
+        const t  = nM === 1 ? 0 : mi / Math.max(nM - 1, 1);
+        const ci = (t * (N_BLOB_C - 1) + 0.5) | 0;
+        phaseCtx.drawImage(blobSprites[ci], bx - half, by - half);
       }
+    }
+    phaseCtx.globalAlpha = 1;
+  }
+
+  /* Cached phase-blob sprites: color buckets teal→pink, rebuilt when radius changes */
+  const N_BLOB_C = 16;
+  let blobSprites = null, blobSpriteR = -1;
+
+  function buildBlobSprites(blobR) {
+    blobSprites = new Array(N_BLOB_C);
+    blobSpriteR = blobR;
+    const R3 = blobR * 3;
+    const size = Math.ceil(2 * R3) + 2;
+    for (let ci = 0; ci < N_BLOB_C; ci++) {
+      const t = ci / (N_BLOB_C - 1);
+      const r = Math.round(_TLR + (_PLR - _TLR) * t);
+      const g = Math.round(_TLG + (_PLG - _TLG) * t);
+      const b = Math.round(_TLB + (_PLB - _TLB) * t);
+      const cnv = document.createElement('canvas');
+      cnv.width = cnv.height = size;
+      const c2 = cnv.getContext('2d');
+      const cc = size / 2;
+      const grd = c2.createRadialGradient(cc, cc, 0, cc, cc, R3);
+      grd.addColorStop(0,    `rgba(${r},${g},${b},1)`);
+      grd.addColorStop(0.35, `rgba(${r},${g},${b},0.4)`);
+      grd.addColorStop(1,    `rgba(${r},${g},${b},0)`);
+      c2.beginPath(); c2.arc(cc, cc, R3, 0, Math.PI * 2);
+      c2.fillStyle = grd; c2.fill();
+      blobSprites[ci] = cnv;
     }
   }
 
-  /* ── Draw 3-D shaded ball ── */
-  function drawBall(ctx, x, y, r, colorRGB) {
-    const [cr, cg, cb] = colorRGB;
-    // Shadow
+  /* ── Draw 3-D shaded ball (sprite-cached by radius+color) ── */
+  const _ballCache = new Map();
+  let _panelGrd = null, _panelKey = '';
+
+  function buildBallSprite(r, cr, cg, cb) {
+    /* Neon orb: white-hot core → given (light) color → transparent edge */
+    const pad  = 1;
+    const size = Math.ceil(2 * r) + 2 * pad;
+    const cx = r + pad, cy = r + pad;
+    const cnv = document.createElement('canvas');
+    cnv.width = cnv.height = size;
+    const ctx = cnv.getContext('2d');
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    grad.addColorStop(0.0,  `rgba(255,255,255,1.0)`);
+    grad.addColorStop(0.35, `rgba(255,255,255,0.95)`);
+    grad.addColorStop(0.65, `rgba(${cr},${cg},${cb},0.9)`);
+    grad.addColorStop(1.0,  `rgba(${cr},${cg},${cb},0)`);
     ctx.beginPath();
-    ctx.arc(x + r * 0.12, y + r * 0.12, r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0,0,0,0.35)';
-    ctx.fill();
-    // Main sphere gradient
-    const grad = ctx.createRadialGradient(
-      x - r * 0.35, y - r * 0.35, r * 0.05,
-      x, y, r
-    );
-    grad.addColorStop(0.0,  `rgba(255,255,255,0.90)`);
-    grad.addColorStop(0.18, `rgba(${Math.min(255,cr+80)},${Math.min(255,cg+80)},${Math.min(255,cb+80)},1.0)`);
-    grad.addColorStop(0.50, `rgba(${cr},${cg},${cb},1.0)`);
-    grad.addColorStop(0.80, `rgba(${Math.round(cr*0.45)},${Math.round(cg*0.45)},${Math.round(cb*0.45)},1.0)`);
-    grad.addColorStop(1.0,  `rgba(${Math.round(cr*0.15)},${Math.round(cg*0.15)},${Math.round(cb*0.15)},1.0)`);
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.fillStyle = grad;
     ctx.fill();
-    // Specular highlight
-    const spec = ctx.createRadialGradient(
-      x - r * 0.32, y - r * 0.32, 0,
-      x - r * 0.32, y - r * 0.32, r * 0.45
-    );
-    spec.addColorStop(0,   'rgba(255,255,255,0.70)');
-    spec.addColorStop(1,   'rgba(255,255,255,0)');
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = spec;
-    ctx.fill();
+    /* Additive halo: darkened color, larger radius */
+    const dr = Math.round(cr * 0.55), dg = Math.round(cg * 0.55), db = Math.round(cb * 0.55);
+    const gR = r * 2.4;
+    const gcnv = document.createElement('canvas');
+    gcnv.width = gcnv.height = Math.ceil(2 * gR) + 2;
+    const gctx = gcnv.getContext('2d');
+    const gcx = gcnv.width / 2, gcy = gcnv.height / 2;
+    const gg = gctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, gR);
+    gg.addColorStop(0.0, `rgba(${dr},${dg},${db},0.55)`);
+    gg.addColorStop(0.4, `rgba(${dr},${dg},${db},0.20)`);
+    gg.addColorStop(1.0, `rgba(${dr},${dg},${db},0)`);
+    gctx.beginPath();
+    gctx.arc(gcx, gcy, gR, 0, Math.PI * 2);
+    gctx.fillStyle = gg;
+    gctx.fill();
+    return { canvas: cnv, cx, cy, glow: gcnv, gcx, gcy };
+  }
+
+  function drawBall(ctx, x, y, r, colorRGB) {
+    const [cr, cg, cb] = colorRGB;
+    const key = ((r * 4 + 0.5) | 0) + '|' + cr + ',' + cg + ',' + cb;
+    let spr = _ballCache.get(key);
+    if (!spr) {
+      if (_ballCache.size > 64) _ballCache.clear();
+      spr = buildBallSprite(r, cr, cg, cb);
+      _ballCache.set(key, spr);
+    }
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.drawImage(spr.glow, x - spr.gcx, y - spr.gcy);
+    ctx.restore();
+    ctx.drawImage(spr.canvas, x - spr.cx, y - spr.cy);
   }
 
   /* ── Draw spring (zigzag) ── */
@@ -485,14 +520,18 @@
 
     ctx.save();
 
-    // Pink glowing background panel
+    // Pink glowing background panel (gradient cached until geometry changes)
     const panelH = S * 0.10;
     const panelW = maxLen * 2 + S * 0.08;
-    const grdBg  = ctx.createRadialGradient(cx, cy, 0, cx, cy, panelW * 0.55);
-    grdBg.addColorStop(0,   _rgba('--pink-dark', 0.18));
-    grdBg.addColorStop(0.6, _rgba('--pink-dark', 0.07));
-    grdBg.addColorStop(1,   _rgba('--pink-dark', 0));
-    ctx.fillStyle = grdBg;
+    const pKey = cx + '|' + cy + '|' + panelW;
+    if (_panelKey !== pKey) {
+      _panelGrd = ctx.createRadialGradient(cx, cy, 0, cx, cy, panelW * 0.55);
+      _panelGrd.addColorStop(0,   _rgba('--pink-dark', 0.18));
+      _panelGrd.addColorStop(0.6, _rgba('--pink-dark', 0.07));
+      _panelGrd.addColorStop(1,   _rgba('--pink-dark', 0));
+      _panelKey = pKey;
+    }
+    ctx.fillStyle = _panelGrd;
     ctx.fillRect(cx - panelW / 2, cy - panelH / 2, panelW, panelH);
 
     // Arrow shaft with glow

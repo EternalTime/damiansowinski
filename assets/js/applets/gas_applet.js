@@ -44,6 +44,8 @@
 
   const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
   const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+  const [_PLR, _PLG, _PLB] = _rgb('--pink-light');
+  const [_TDR, _TDG, _TDB] = _rgb('--teal-dark');
 
   /* ── Simulation state ── */
   let N  = 100;
@@ -57,7 +59,7 @@
 
   let wallX      = 0;
   let wallTarget = 0;
-  const WALL_SPEED = 0.4;
+  const WALL_SPEED = 0.06;   // per substep → wall velocity ≈ 0.5, subsonic at T=1 (quasi-static)
   let gravity = 0;
 
   let cellW, nCellsX, nCellsY;
@@ -158,8 +160,7 @@
     for (let i = 0; i < N; i++) {
       if (px[i] - R < wallX) {
         px[i] = wallX + R;
-        vx[i] = 2 * v_wall - vx[i];
-        if (vx[i] < v_wall) vx[i] = v_wall + 1e-4;  // ensure moving away from wall
+        if (vx[i] < v_wall) vx[i] = 2 * v_wall - vx[i];  // reflect only if approaching
       }
       if (px[i] + R > L) { px[i] = L - R; vx[i] = -Math.abs(vx[i]); }
       if (py[i] - R < 0) { py[i] = R;     vy[i] =  Math.abs(vy[i]); }
@@ -187,37 +188,91 @@
     }
   }
 
+  /* Pre-rendered particle sprites, bucketed by temperature.
+     Neon aesthetic: white-hot core through the light palette color,
+     additive halo in the paired dark color. */
+  const N_SPRITES  = 32;
+  const GLOW_SCALE = 2.6;
+  let sprites = null, glowSprites = null, spriteR = -1;
+  const _siScratch = new Int32Array(300);   // matches gas-nslider max
+
+  function buildSprites() {
+    sprites     = new Array(N_SPRITES);
+    glowSprites = new Array(N_SPRITES);
+    spriteR = R;
+    for (let s = 0; s < N_SPRITES; s++) {
+      const hot = s / (N_SPRITES - 1);
+      const lr = Math.round(_TLR + (_PLR - _TLR) * hot);
+      const lg = Math.round(_TLG + (_PLG - _TLG) * hot);
+      const lb = Math.round(_TLB + (_PLB - _TLB) * hot);
+      const dr = Math.round(_TDR + (_PDR - _TDR) * hot);
+      const dg = Math.round(_TDG + (_PDG - _TDG) * hot);
+      const db = Math.round(_TDB + (_PDB - _TDB) * hot);
+      /* body: white core → light color → transparent edge */
+      const c = document.createElement('canvas');
+      c.width = c.height = 2 * R + 2;
+      const sctx = c.getContext('2d');
+      const cx = R + 1, cy = R + 1;
+      const grad = sctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+      grad.addColorStop(0.00, `rgba(255,255,255,1.0)`);
+      grad.addColorStop(0.35, `rgba(255,255,255,0.95)`);
+      grad.addColorStop(0.65, `rgba(${lr},${lg},${lb},0.9)`);
+      grad.addColorStop(1.00, `rgba(${lr},${lg},${lb},0)`);
+      sctx.beginPath();
+      sctx.arc(cx, cy, R, 0, Math.PI * 2);
+      sctx.fillStyle = grad;
+      sctx.fill();
+      sprites[s] = c;
+      /* halo */
+      const gR = R * GLOW_SCALE;
+      const gc = document.createElement('canvas');
+      gc.width = gc.height = Math.ceil(2 * gR) + 2;
+      const gctx = gc.getContext('2d');
+      const gcx = gc.width / 2, gcy = gc.height / 2;
+      const gg = gctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, gR);
+      gg.addColorStop(0.0, `rgba(${dr},${dg},${db},0.55)`);
+      gg.addColorStop(0.4, `rgba(${dr},${dg},${db},0.20)`);
+      gg.addColorStop(1.0, `rgba(${dr},${dg},${db},0)`);
+      gctx.beginPath();
+      gctx.arc(gcx, gcy, gR, 0, Math.PI * 2);
+      gctx.fillStyle = gg;
+      gctx.fill();
+      glowSprites[s] = gc;
+    }
+  }
+
   function render() {
     ctx.fillStyle = _c('--black');
     ctx.fillRect(0, 0, L, L);
     if (wallX > 0) {
       ctx.fillStyle = _rgba('--teal-light', 0.25);
       ctx.fillRect(0, 0, wallX, L);
+      ctx.save();
+      ctx.shadowColor = _c('--teal-light');
+      ctx.shadowBlur  = 14;
       ctx.fillStyle = _c('--teal-light');
       ctx.fillRect(wallX - 2, 0, 3, L);
+      ctx.restore();
     }
     let meanSpd = 0;
     for (let i = 0; i < N; i++) meanSpd += Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
     meanSpd /= N;
     const spdRef = Math.max(meanSpd * 2, 0.001);
-    const LX = -0.45, LY = -0.45;
+    if (spriteR !== R) buildSprites();
     for (let i = 0; i < N; i++) {
       const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
       const hot = Math.min(spd / spdRef, 1);
-      const r = Math.round(_TLR + (_PDR - _TLR) * hot);
-      const g = Math.round(_TLG + (_PDG - _TLG) * hot);
-      const b = Math.round(_TLB + (_PDB - _TLB) * hot);
-      const hx = px[i] + LX * R * 0.45;
-      const hy = py[i] + LY * R * 0.45;
-      const grad = ctx.createRadialGradient(hx, hy, 0, px[i], py[i], R);
-      grad.addColorStop(0.00, `rgba(255,255,255,0.85)`);
-      grad.addColorStop(0.25, `rgba(${r},${g},${b},1.0)`);
-      grad.addColorStop(0.75, `rgba(${Math.round(r*0.45)},${Math.round(g*0.45)},${Math.round(b*0.45)},1.0)`);
-      grad.addColorStop(1.00, `rgba(${Math.round(r*0.25)},${Math.round(g*0.25)},${Math.round(b*0.25)},1.0)`);
-      ctx.beginPath();
-      ctx.arc(px[i], py[i], R, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
-      ctx.fill();
+      _siScratch[i] = (hot * (N_SPRITES - 1) + 0.5) | 0;
+    }
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    const gHalf = glowSprites[0].width / 2;
+    for (let i = 0; i < N; i++) {
+      ctx.drawImage(glowSprites[_siScratch[i]], px[i] - gHalf, py[i] - gHalf);
+    }
+    ctx.restore();
+    for (let i = 0; i < N; i++) {
+      ctx.drawImage(sprites[_siScratch[i]], px[i] - R - 1, py[i] - R - 1);
     }
   }
 
@@ -260,25 +315,37 @@
     const pw = W - PL - PR, ph = H - PT - PB;
     const bw = pw / N_BINS;
     hctx.clearRect(0, 0, W, H);
+    /* Bars: light-palette gradient with dark-palette glow (matches particles) */
+    hctx.save();
+    hctx.shadowBlur = 6;
     for (let b = 0; b < N_BINS; b++) {
       const bh  = Math.min(smoothBins[b] / ymax, 1) * ph;
       const v   = (b + 0.5) * dv;
       const hot = Math.min(v / (Math.sqrt(T) * 2), 1);
-      const r   = Math.round(_TLR + (_PDR - _TLR) * hot);
-      const g   = Math.round(_TLG + (_PDG - _TLG) * hot);
-      const bb  = Math.round(_TLB + (_PDB - _TLB) * hot);
-      hctx.fillStyle = `rgba(${r},${g},${bb},0.75)`;
+      const lr  = Math.round(_TLR + (_PLR - _TLR) * hot);
+      const lg  = Math.round(_TLG + (_PLG - _TLG) * hot);
+      const lb  = Math.round(_TLB + (_PLB - _TLB) * hot);
+      const dr  = Math.round(_TDR + (_PDR - _TDR) * hot);
+      const dg  = Math.round(_TDG + (_PDG - _TDG) * hot);
+      const db  = Math.round(_TDB + (_PDB - _TDB) * hot);
+      hctx.shadowColor = `rgb(${dr},${dg},${db})`;
+      hctx.fillStyle   = `rgba(${lr},${lg},${lb},0.75)`;
       hctx.fillRect(PL + b * bw, PT + ph - bh, bw - 1, bh);
     }
-    hctx.beginPath();
-    hctx.strokeStyle = _c('--pink-dark');
+    hctx.restore();
+    hctx.save();
+    hctx.shadowColor = _c('--pink-dark');
+    hctx.shadowBlur  = 10;
+    hctx.strokeStyle = _c('--pink-light');
     hctx.lineWidth   = 1.5;
+    hctx.beginPath();
     for (let b = 0; b < N_BINS; b++) {
       const x = PL + (b + 0.5) * bw;
       const y = PT + ph - Math.min(mb[b] / ymax, 1) * ph;
       b === 0 ? hctx.moveTo(x, y) : hctx.lineTo(x, y);
     }
     hctx.stroke();
+    hctx.restore();
   }
 
   const DT_BASE = 0.5, SUBSTEPS = 4;
@@ -418,8 +485,14 @@
     gravity = parseFloat(this.value) * 0.12;
   });
 
+  /* Max piston position keeping packing fraction ≤ 0.5 */
+  function maxWallX() {
+    const boxWmin = (N * Math.PI * R * R / 0.5) / L;
+    return Math.max(0, L - boxWmin);
+  }
+
   document.getElementById('gas-piston').addEventListener('input', function () {
-    wallTarget = parseFloat(this.value) * L * 0.60;
+    wallTarget = Math.min(parseFloat(this.value) * L * 0.60, maxWallX());
   });
 
 })();

@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pycoop.dynamics &mdash; pyCoop 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=3fce5bdb" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            pyCoop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_dynamics.html">The Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_observables.html">The Observables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_viz.html">Visualization</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/pycoop.html">pycoop package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyCoop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pycoop.dynamics</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pycoop.dynamics</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;The discrete APEM dynamics: the update sequence.</span>
+
+<span class="sd">State: actions sigma_i in [-1, 1] (continuous), opinions q_i in {-1, +1}.</span>
+<span class="sd">On step k draw tau ~ Exp[mean T/N] (rate N/T) and j ~ Uniform{0..N-1};</span>
+<span class="sd">every action drifts sigma_i -&gt; clip(sigma_i + q_i * tau, -1, 1); then</span>
+<span class="sd">player j&#39;s opinion flips, q_j -&gt; -q_j, iff</span>
+
+<span class="sd">    -u &lt; sigma_bar_j &lt; u   and   abs(sigma_j) &gt; l,</span>
+
+<span class="sd">where sigma_bar_j = (sigma_j + sum_k A_jk sigma_k) / (d_j + 1) is the</span>
+<span class="sd">local mean action.  T is the only dimensionless timescale; u and l are</span>
+<span class="sd">the agreement (flexibility) and position thresholds (a_theta and</span>
+<span class="sd">s_theta of Conrad &amp; Tabor 2024).</span>
+
+<span class="sd">The inter-event law is pluggable: &quot;exp&quot; recovers the paper (exact</span>
+<span class="sd">embedded chain); a float h gives the fixed-step variant (a *different*</span>
+<span class="sd">model -- the robustness knob for the criticality program); a callable</span>
+<span class="sd">rng -&gt; tau gives anything else.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">adjacency</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Game&quot;</span><span class="p">,</span> <span class="s2">&quot;Trajectory&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Trajectory">
+<a class="viewcode-back" href="../../api/pycoop.dynamics.html#pycoop.dynamics.Trajectory">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Trajectory</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Full event record of a run.</span>
+
+<span class="sd">    Arrays are indexed so that row k of ``t``/``sigma``/``q`` is the state</span>
+<span class="sd">    *after* event k (row 0 is the initial state); ``player[k]`` and</span>
+<span class="sd">    ``flipped[k]`` describe event k+1&#39;s actor.  Positions are exact at</span>
+<span class="sd">    event times; between events each sigma_i moves linearly toward q_i</span>
+<span class="sd">    (clipped at +/-1).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>          <span class="c1"># (K+1,) event times, t[0] = 0</span>
+    <span class="n">sigma</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>      <span class="c1"># (K+1, n) actions after each event</span>
+    <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>          <span class="c1"># (K+1, n) opinions after each event</span>
+    <span class="n">player</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>     <span class="c1"># (K,) who fired</span>
+    <span class="n">flipped</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>    <span class="c1"># (K,) bool, did they flip</span>
+    <span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>          <span class="c1"># adjacency used</span>
+    <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span>           <span class="c1"># u, l, T, step law, seed info</span>
+    <span class="n">absorbed</span><span class="p">:</span> <span class="nb">bool</span>         <span class="c1"># reached a flip-proof corner fixed point</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">steps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<div class="viewcode-block" id="Trajectory.state">
+<a class="viewcode-back" href="../../api/pycoop.dynamics.html#pycoop.dynamics.Trajectory.state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;(sigma, q) after event k.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">[</span><span class="n">k</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Trajectory.final_state">
+<a class="viewcode-back" href="../../api/pycoop.dynamics.html#pycoop.dynamics.Trajectory.final_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">final_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Trajectory.flip_times">
+<a class="viewcode-back" href="../../api/pycoop.dynamics.html#pycoop.dynamics.Trajectory.flip_times">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">flip_times</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Times of actual opinion flips.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="bp">self</span><span class="o">.</span><span class="n">flipped</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Trajectory.durations">
+<a class="viewcode-back" href="../../api/pycoop.dynamics.html#pycoop.dynamics.Trajectory.durations">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">durations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Interval lengths between consecutive events, shape (K,).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Game">
+<a class="viewcode-back" href="../../api/pycoop.dynamics.html#pycoop.dynamics.Game">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Game</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;APEM on an arbitrary graph.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    G : networkx.Graph or adjacency array (no self-loops)</span>
+<span class="sd">    u : agreement threshold (flip requires abs(sigma_bar_j) &lt; u)</span>
+<span class="sd">    l : position threshold (flip requires abs(sigma_j) &gt; l)</span>
+<span class="sd">    T : timescale; inter-event tau ~ Exp with mean T/N by default</span>
+<span class="sd">    step_law : &quot;exp&quot; (default), a positive float h for fixed steps,</span>
+<span class="sd">        or a callable rng -&gt; tau.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">step_law</span><span class="o">=</span><span class="s2">&quot;exp&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">adjacency</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">u</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;need 0 &lt;= l &lt; u &lt;= 1 (Delta = u - l &gt; 0)&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">T</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;T must be positive&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_law</span> <span class="o">=</span> <span class="n">step_law</span>
+
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_make_tau</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_law</span> <span class="o">==</span> <span class="s2">&quot;exp&quot;</span><span class="p">:</span>
+            <span class="n">mean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span>
+            <span class="k">return</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_law</span><span class="p">):</span>
+            <span class="k">return</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_law</span><span class="p">(</span><span class="n">rng</span><span class="p">))</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_law</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;fixed step must be positive&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">h</span>
+
+<div class="viewcode-block" id="Game.local_mean">
+<a class="viewcode-back" href="../../api/pycoop.dynamics.html#pycoop.dynamics.Game.local_mean">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">local_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;sigma_bar (all players, or just player j).&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">@</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deg</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">sigma</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">@</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deg</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_absorbed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Flip-proof corner fixed point: every action pinned at its</span>
+<span class="sd">        opinion&#39;s wall and every agreement window shut (|sigma_bar| &gt;= u).</span>
+<span class="sd">        At corners |sigma_j| = 1 &gt; l always, so the position condition</span>
+<span class="sd">        is moot; consensus is the special case sigma = q = +/-1^n.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">sigma</span> <span class="o">==</span> <span class="n">q</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_mean</span><span class="p">(</span><span class="n">sigma</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">))</span>
+
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+
+<div class="viewcode-block" id="Game.run">
+<a class="viewcode-back" href="../../api/pycoop.dynamics.html#pycoop.dynamics.Game.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">sigma0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">q0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_steps</span><span class="o">=</span><span class="mi">100_000</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">stop_when_absorbed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the update sequence; returns a Trajectory.</span>
+
+<span class="sd">        sigma0 defaults to Uniform[-1, 1]^n, q0 to Uniform{-1, +1}^n.</span>
+<span class="sd">        Stops at max_steps, at max_time (event time), or on absorption.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sigma0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">sigma</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;sigma0 must be n values in [-1, 1]&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">q0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">q</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;q0 must be n values in {-1, +1}&quot;</span><span class="p">)</span>
+
+        <span class="n">draw_tau</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_tau</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+
+        <span class="n">ts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+        <span class="n">sigmas</span> <span class="o">=</span> <span class="p">[</span><span class="n">sigma</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
+        <span class="n">qs</span> <span class="o">=</span> <span class="p">[</span><span class="n">q</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
+        <span class="n">players</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">flips</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">absorbed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_absorbed</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span> <span class="ow">and</span> <span class="n">stop_when_absorbed</span>
+
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">absorbed</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">players</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">max_steps</span><span class="p">:</span>
+            <span class="n">tau</span> <span class="o">=</span> <span class="n">draw_tau</span><span class="p">()</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+            <span class="n">t</span> <span class="o">+=</span> <span class="n">tau</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">sigma</span> <span class="o">+</span> <span class="n">q</span> <span class="o">*</span> <span class="n">tau</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+
+            <span class="n">sbar_j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_mean</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+            <span class="n">do_flip</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">&lt;</span> <span class="n">sbar_j</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">sigma</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">do_flip</span><span class="p">:</span>
+                <span class="n">q</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">q</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+            <span class="n">ts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+            <span class="n">sigmas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sigma</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+            <span class="n">qs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+            <span class="n">players</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="n">flips</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">do_flip</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">stop_when_absorbed</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_absorbed</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+                <span class="n">absorbed</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">max_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">max_time</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">Trajectory</span><span class="p">(</span>
+            <span class="n">t</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ts</span><span class="p">),</span>
+            <span class="n">sigma</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigmas</span><span class="p">),</span>
+            <span class="n">q</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">qs</span><span class="p">),</span>
+            <span class="n">player</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">players</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+            <span class="n">flipped</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">flips</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">),</span>
+            <span class="n">A</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;u&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">,</span>
+                <span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">,</span>
+                <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                <span class="s2">&quot;step_law&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="s2">&quot;exp&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_law</span> <span class="o">==</span> <span class="s2">&quot;exp&quot;</span>
+                    <span class="k">else</span> <span class="s2">&quot;callable&quot;</span> <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_law</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_law</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">absorbed</span><span class="o">=</span><span class="n">absorbed</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

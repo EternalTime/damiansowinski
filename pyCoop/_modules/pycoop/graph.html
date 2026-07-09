@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pycoop.graph &mdash; pyCoop 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=3fce5bdb" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            pyCoop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_dynamics.html">The Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_observables.html">The Observables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_viz.html">Visualization</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/pycoop.html">pycoop package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyCoop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pycoop.graph</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pycoop.graph</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Graph construction and adjacency utilities.</span>
+
+<span class="sd">Graphs are simple, undirected, and carry NO self-loops; the self-weighting</span>
+<span class="sd">in the local mean action is handled by the 1/(d_i + 1) prefactor in the</span>
+<span class="sd">dynamics/observables.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;adjacency&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;as_graph&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;erg_connected&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;complete&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cycle&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;star&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;paw&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="adjacency">
+<a class="viewcode-back" href="../../api/pycoop.graph.html#pycoop.graph.adjacency">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">adjacency</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Symmetric adjacency matrix (float, zero diagonal) from a networkx</span>
+<span class="sd">    graph or an array-like.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">):</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">to_numpy_array</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">A</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;adjacency must be square&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;adjacency must be symmetric (undirected graph)&quot;</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span></div>
+
+
+
+<div class="viewcode-block" id="as_graph">
+<a class="viewcode-back" href="../../api/pycoop.graph.html#pycoop.graph.as_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">as_graph</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a networkx Graph from a graph or adjacency array.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">G</span>
+    <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">from_numpy_array</span><span class="p">(</span><span class="n">adjacency</span><span class="p">(</span><span class="n">G</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="erg_connected">
+<a class="viewcode-back" href="../../api/pycoop.graph.html#pycoop.graph.erg_connected">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">erg_connected</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p_edge</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_tries</span><span class="o">=</span><span class="mi">100_000</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Erdos-Renyi-Gilbert G(n, p), resampled until connected -- the</span>
+<span class="sd">    topology generator used in Conrad &amp; Tabor (2024).&quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_tries</span><span class="p">):</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">erdos_renyi_graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p_edge</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">nx</span><span class="o">.</span><span class="n">is_connected</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">G</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;no connected G(</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">p_edge</span><span class="si">}</span><span class="s2">) found in </span><span class="si">{</span><span class="n">max_tries</span><span class="si">}</span><span class="s2"> tries&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="complete">
+<a class="viewcode-back" href="../../api/pycoop.graph.html#pycoop.graph.complete">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">complete</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;K_n.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">complete_graph</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="path">
+<a class="viewcode-back" href="../../api/pycoop.graph.html#pycoop.graph.path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">path</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Path on n nodes: 0-1-...-(n-1).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">path_graph</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="cycle">
+<a class="viewcode-back" href="../../api/pycoop.graph.html#pycoop.graph.cycle">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">cycle</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cycle on n nodes.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">cycle_graph</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="star">
+<a class="viewcode-back" href="../../api/pycoop.graph.html#pycoop.graph.star">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">star</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Star with center 0 and n-1 leaves (n nodes total).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">star_graph</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="paw">
+<a class="viewcode-back" href="../../api/pycoop.graph.html#pycoop.graph.paw">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">paw</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The paw: triangle {0, 1, 2} with pendant 3 hanging off hub 2.</span>
+
+<span class="sd">    Nodes 0, 1 are the free vertices, 2 the hub, 3 the pendant --</span>
+<span class="sd">    the smallest graph admitting fraught states.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">G</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

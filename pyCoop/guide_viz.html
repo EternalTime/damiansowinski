@@ -1,0 +1,186 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualization &mdash; pyCoop 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3fce5bdb" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pycoop package" href="api/pycoop.html" />
+    <link rel="prev" title="The Observables" href="guide_observables.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyCoop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_dynamics.html">The Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_observables.html">The Observables</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Visualization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#snapshots">Snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#traces">Traces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#animation">Animation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scrubbing">Scrubbing</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pycoop.html">pycoop package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyCoop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Visualization</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="visualization">
+<h1>Visualization<a class="headerlink" href="#visualization" title="Link to this heading"></a></h1>
+<p>A cooperation game is a story — players drifting, wavering inside the
+change-of-heart bands, flipping, and finally locking in — and stories are
+easier to follow when you can see them. pyCoop draws states, traces, and
+films, all from the same trajectory object.</p>
+<section id="snapshots">
+<h2>Snapshots<a class="headerlink" href="#snapshots" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.snapshot" title="pycoop.viz.snapshot"><code class="xref py py-func docutils literal notranslate"><span class="pre">snapshot()</span></code></a> draws a single state on the graph. Actions
+color the nodes over a diverging map from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(+1\)</span>;
+opinions set the node border — dark for <span class="math notranslate nohighlight">\(+1\)</span>, light for
+<span class="math notranslate nohighlight">\(-1\)</span> — so a node whose fill and border disagree is a player acting
+against their belief:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="kn">import</span> <span class="n">viz</span>
+
+<span class="n">game</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">Game</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">paw</span><span class="p">(),</span> <span class="n">u</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">traj</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">rng</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="n">viz</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">paw</span><span class="p">(),</span> <span class="o">*</span><span class="n">traj</span><span class="o">.</span><span class="n">final_state</span><span class="p">(),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The layout is a seeded spring layout by default; pass <code class="docutils literal notranslate"><span class="pre">pos</span></code> to pin your
+own coordinates, and reuse the returned <code class="docutils literal notranslate"><span class="pre">pos</span></code> across frames so the
+graph doesn’t wander between figures.</p>
+</section>
+<section id="traces">
+<h2>Traces<a class="headerlink" href="#traces" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.traces" title="pycoop.viz.traces"><code class="xref py py-func docutils literal notranslate"><span class="pre">traces()</span></code></a> plots every player’s action against time.
+The shaded bands are the change-of-heart regions <span class="math notranslate nohighlight">\(l &lt; |\sigma| &lt; u\)</span>
+— the only territory where opinions can flip — and each flip is marked
+with a cross at the moment it fired:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">viz</span><span class="o">.</span><span class="n">traces</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Positions are exact at event times, and between events each action moves
+linearly toward its opinion, so what you see is the true piecewise-ballistic
+flow of the model, not an interpolation artifact.</p>
+</section>
+<section id="animation">
+<h2>Animation<a class="headerlink" href="#animation" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.animate" title="pycoop.viz.animate"><code class="xref py py-func docutils literal notranslate"><span class="pre">animate()</span></code></a> turns a trajectory into a
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation" title="(in Matplotlib v3.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FuncAnimation</span></code></a> — the graph with its node
+colors evolving event by event:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">viz</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;run.mp4&quot;</span><span class="p">)</span>                    <span class="c1"># needs ffmpeg</span>
+<span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;run.gif&quot;</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;pillow&quot;</span><span class="p">)</span>   <span class="c1"># no ffmpeg required</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">stride</span></code> to thin long runs; a 100,000-event trajectory does not need
+100,000 frames to tell its story. Keep a reference to the animation alive
+until it is saved or shown — matplotlib garbage-collects abandoned
+animations mid-render.</p>
+</section>
+<section id="scrubbing">
+<h2>Scrubbing<a class="headerlink" href="#scrubbing" title="Link to this heading"></a></h2>
+<p>In a notebook, <a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.scrub" title="pycoop.viz.scrub"><code class="xref py py-func docutils literal notranslate"><span class="pre">scrub()</span></code></a> gives you a slider over events,
+with the graph snapshot on the left and the traces on the right, a dashed
+line marking where in the run you’re standing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">viz</span><span class="o">.</span><span class="n">scrub</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This requires ipywidgets (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">ipywidgets</span></code>). It is the fastest
+way to find the moment a run commits — drag until the flips stop, and
+you’re looking at the instant the last window shut.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="guide_observables.html" class="btn btn-neutral float-left" title="The Observables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/pycoop.html" class="btn btn-neutral float-right" title="pycoop package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

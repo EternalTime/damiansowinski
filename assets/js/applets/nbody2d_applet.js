@@ -316,7 +316,9 @@ function allocNode(x0, y0, x1, y1) {
   return i;
 }
 
-function insertParticle(node, ix, iy, im) {
+const MAX_TREE_DEPTH = 48;   // guards against unbounded recursion for near-coincident particles
+
+function insertParticle(node, ix, iy, im, depth) {
   if (nd_mass[node] === 0) {
     nd_cx[node] = ix; nd_cy[node] = iy; nd_mass[node] = im;
     return;
@@ -327,20 +329,28 @@ function insertParticle(node, ix, iy, im) {
   const hasChildren = nd_child[base] !== -1 || nd_child[base+1] !== -1 ||
                       nd_child[base+2] !== -1 || nd_child[base+3] !== -1;
   if (!hasChildren) {
+    if (depth >= MAX_TREE_DEPTH || nodeCount + 4 > MAX_NODES) {
+      // Depth/pool limit reached: merge into this leaf's COM instead of subdividing
+      const tm = nd_mass[node] + im;
+      nd_cx[node] = (nd_cx[node] * nd_mass[node] + ix * im) / tm;
+      nd_cy[node] = (nd_cy[node] * nd_mass[node] + iy * im) / tm;
+      nd_mass[node] = tm;
+      return;
+    }
     const ex = nd_cx[node], ey = nd_cy[node], em = nd_mass[node];
     nd_child[base]   = allocNode(nd_x0[node], nd_y0[node], mx,          my);
     nd_child[base+1] = allocNode(mx,          nd_y0[node], nd_x1[node], my);
     nd_child[base+2] = allocNode(nd_x0[node], my,          mx,          nd_y1[node]);
     nd_child[base+3] = allocNode(mx,          my,          nd_x1[node], nd_y1[node]);
     const eq = (ex < mx ? 0 : 1) + (ey < my ? 0 : 2);
-    insertParticle(nd_child[base + eq], ex, ey, em);
+    insertParticle(nd_child[base + eq], ex, ey, em, depth + 1);
   }
   const totalMass = nd_mass[node] + im;
   nd_cx[node] = (nd_cx[node] * nd_mass[node] + ix * im) / totalMass;
   nd_cy[node] = (nd_cy[node] * nd_mass[node] + iy * im) / totalMass;
   nd_mass[node] = totalMass;
   const q = (ix < mx ? 0 : 1) + (iy < my ? 0 : 2);
-  insertParticle(nd_child[base + q], ix, iy, im);
+  insertParticle(nd_child[base + q], ix, iy, im, depth + 1);
 }
 
 function buildTree() {
@@ -354,11 +364,11 @@ function buildTree() {
   const pad = 0.001;
   const s = Math.max(x1 - x0, y1 - y0) + pad;
   allocNode(x0 - pad, y0 - pad, x0 - pad + s, y0 - pad + s);
-  for (let i = 0; i < N; i++) insertParticle(0, px[i], py[i], 1.0);
+  for (let i = 0; i < N; i++) insertParticle(0, px[i], py[i], 1.0, 0);
 }
 
 // ── Tree walk (iterative) ─────────────────────────────────────────────────────
-const _stack = new Int32Array(128);
+const _stack = new Int32Array(4096);
 
 function accelFromTree(i) {
   const xi = px[i], yi = py[i];
@@ -371,7 +381,6 @@ function accelFromTree(i) {
     const dx = nd_cx[node] - xi;
     const dy = nd_cy[node] - yi;
     const r2 = dx*dx + dy*dy;
-    if (r2 < eps2) continue;
     const base = node * 4;
     const isLeaf = nd_child[base] === -1 && nd_child[base+1] === -1 &&
                    nd_child[base+2] === -1 && nd_child[base+3] === -1;
@@ -380,20 +389,25 @@ function accelFromTree(i) {
         // hard-core repulsion: constant magnitude 1/(N*ε²), pointing away
         const r = Math.sqrt(r2);
         if (r > 0) { const mag = 1.0 / (N * eps2 * r); fx -= mag * dx; fy -= mag * dy; }
+        // r === 0 is the particle itself — no self-force
       } else {
         const inv = G * nd_mass[node] / r2;
         fx += inv * dx; fy += inv * dy;
       }
     } else {
       const s = nd_x1[node] - nd_x0[node];
-      if (s / Math.sqrt(r2) < theta) {
+      if (r2 > 0 && s / Math.sqrt(r2) < theta) {
         const inv = G * nd_mass[node] / r2;
         fx += inv * dx; fy += inv * dy;
-      } else {
+      } else if (top + 4 <= _stack.length) {
         for (let c = 0; c < 4; c++) {
           const ch = nd_child[base + c];
           if (ch !== -1 && nd_mass[ch] > 0) _stack[top++] = ch;
         }
+      } else if (r2 > 0) {
+        // Stack full (pathological tree): fall back to the node's monopole
+        const inv = G * nd_mass[node] / r2;
+        fx += inv * dx; fy += inv * dy;
       }
     }
   }
@@ -418,9 +432,9 @@ function init() {
     const rx = Math.cos(angle), ry = Math.sin(angle);
     // tangential direction (y, -x) relative to displacement from centre
     const tx = (py[i] - 0.5), ty = -(px[i] - 0.5);
-    const tn2 = tx*tx + ty*ty || 1;
-    const wx = (1 - spinFrac) * rx + spinFrac * tx/tn2;
-    const wy = (1 - spinFrac) * ry + spinFrac * ty/tn2;
+    const tn = Math.sqrt(tx*tx + ty*ty) || 1;
+    const wx = (1 - spinFrac) * rx + spinFrac * tx/tn;
+    const wy = (1 - spinFrac) * ry + spinFrac * ty/tn;
     const wn = Math.sqrt(wx*wx + wy*wy) || 1;
     vx[i] = v0 * wx/wn;
     vy[i] = v0 * wy/wn;
@@ -511,10 +525,13 @@ const FS = `
     vec2  d = gl_PointCoord - 0.5;
     float r = dot(d, d);
     if (r > 0.25) discard;
-    float core  = clamp(1.0 - 4.0 * sqrt(r), 0.0, 1.0);
+    float rr    = 2.0 * sqrt(r);                       // 0 center -> 1 edge
+    float core  = clamp(1.0 - rr, 0.0, 1.0);
     vec3  col   = mix(uColSlow, uColFast, vSpeed);
+    /* neon: white-hot center fading through the speed color */
+    vec3  neon  = mix(vec3(1.0), col, smoothstep(0.0, 0.55, rr));
     float alpha = core * 0.9 + 0.08;
-    gl_FragColor = vec4(col, alpha);
+    gl_FragColor = vec4(neon, alpha);
   }
 `;
 

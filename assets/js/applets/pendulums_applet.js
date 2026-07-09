@@ -177,6 +177,8 @@
     const n = trailCount;
     if (n === 0) return;
     const ps = pivotScreen(), pz = zoom();
+    const tealL = _c('--teal-light'), tealD = _c('--teal-dark');
+    const pinkL = _c('--pink-light'), pinkD = _c('--pink-dark');
     trailCtx.save();
     trailCtx.lineCap = 'butt';
     trailCtx.lineWidth = 6;
@@ -187,11 +189,11 @@
       const alpha = Math.pow((i + 1) / n, 2) * 0.5;
       const j = dp_trailJoints(entry, ps, pz);
       trailCtx.globalAlpha = alpha;
-      trailCtx.strokeStyle = _c('--teal-light');
-      trailCtx.shadowColor = _c('--teal-dark');
+      trailCtx.strokeStyle = tealL;
+      trailCtx.shadowColor = tealD;
       trailCtx.beginPath(); trailCtx.moveTo(j[0].x, j[0].y); trailCtx.lineTo(j[1].x, j[1].y); trailCtx.stroke();
-      trailCtx.strokeStyle = _c('--pink-light');
-      trailCtx.shadowColor = _c('--pink-dark');
+      trailCtx.strokeStyle = pinkL;
+      trailCtx.shadowColor = pinkD;
       trailCtx.beginPath(); trailCtx.moveTo(j[1].x, j[1].y); trailCtx.lineTo(j[2].x, j[2].y); trailCtx.stroke();
     }
     trailCtx.restore();
@@ -472,11 +474,32 @@
     }
   }
 
+  /* Snapshot buffers for NaN bailout */
+  const _chSnapTh = new Float64Array(CH_N);
+  const _chSnapW  = new Float64Array(CH_N);
+
   function ch_stepPhysics() {
     const dt = DT / CH_SUBSTEPS;
     if (!ch_grabbing || ch_grabRod < 0) {
-      // Free evolution: full N-body RK4
-      for (let i = 0; i < CH_SUBSTEPS; i++) ch_rk4step(dt);
+      // Free evolution: adaptive substepping — the tip rod can spin fast at
+      // low damping, and RK4 goes unstable once max|ω|·dt gets too large.
+      let wMax = 0;
+      for (let i = 0; i < CH_N; i++) { const a = Math.abs(ch_w[i]); if (a > wMax) wMax = a; }
+      const nSub = Math.max(CH_SUBSTEPS, Math.min(32, Math.ceil(wMax * DT / 0.15)));
+      const dtF = DT / nSub;
+      _chSnapTh.set(ch_th);
+      _chSnapW.set(ch_w);
+      for (let i = 0; i < nSub; i++) ch_rk4step(dtF);
+      // NaN bailout: restore the pre-frame state with damped velocities
+      // rather than letting the chain vanish.
+      let bad = false;
+      for (let i = 0; i < CH_N; i++) {
+        if (!isFinite(ch_th[i]) || !isFinite(ch_w[i])) { bad = true; break; }
+      }
+      if (bad) {
+        ch_th.set(_chSnapTh);
+        for (let i = 0; i < CH_N; i++) ch_w[i] = _chSnapW[i] * 0.5;
+      }
     } else {
       const k = ch_grabRod;
       for (let i = 0; i < CH_SUBSTEPS; i++) {
@@ -489,9 +512,13 @@
         // FABRIK to pull joint k+1 (tip of inner chain) back to cursor
         ch_applyGrabConstraint();
 
-        // Velocity correction: finite difference from position change
+        // Velocity correction: finite difference from position change.
+        // Unwrap Δθ (wrapAngle keeps it in [-π,π]) so a rod crossing ±π
+        // doesn't inject a 2π/dt spike, and cap |ω| against FABRIK snaps.
+        const W_MAX = 3 * Math.sqrt(CH_G / ch_l);
         for (let j = 0; j <= k; j++) {
-          ch_w[j] = (ch_th[j] - thBefore[j]) / dt;
+          const w = wrapAngle(ch_th[j] - thBefore[j]) / dt;
+          ch_w[j] = Math.max(-W_MAX, Math.min(W_MAX, w));
         }
 
         // Outer chain k+1..N-1: integrate as independent sub-chain

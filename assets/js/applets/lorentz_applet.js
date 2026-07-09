@@ -113,13 +113,16 @@
     ctx.fillStyle = _rgba('--gold', 0.0);
     ctx.fill();
 
-    // Light cone lines
+    // Light cone lines — gold neon
+    ctx.shadowColor = _rgba('--gold', 0.9);
+    ctx.shadowBlur  = 8;
     ctx.strokeStyle = _rgba('--gold', 1.0);
     ctx.lineWidth = 1;
     ctx.setLineDash([4, 6]);
     diagLine(-1.5, -1.5,  1.5,  1.5);
     diagLine( 1.5, -1.5, -1.5,  1.5);
     ctx.setLineDash([]);
+    ctx.shadowBlur = 0;
     ctx.restore();
 
     // ── Draw one frame's grid + worldline ──
@@ -161,11 +164,14 @@
 
       ctx.globalAlpha = 1.0;
 
-      // Worldline: x' = 0, i.e. the ct' axis — thicker, lighter colour
+      // Worldline: x' = 0, i.e. the ct' axis — neon: dark glow under light line
+      ctx.shadowColor = gridColor;
+      ctx.shadowBlur  = 12;
       ctx.strokeStyle = lineColor;
       ctx.lineWidth = 3;
       diagLine(-reach * ect.x, -reach * ect.y,
                 reach * ect.x,  reach * ect.y);
+      ctx.shadowBlur = 0;
 
       ctx.restore();
     }

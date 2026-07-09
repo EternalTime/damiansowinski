@@ -860,6 +860,7 @@
         // This way new fields need no change to the placeholder logic.
         var header = [
           '<div class="mfs-header">',
+            '<button id="mfs-print-btn" title="Print / Save as PDF">print</button>',
             '<div class="mfs-label">metric</div>',
             '<div class="mfs-title">' + data.name + '</div>',
           '</div>'
@@ -1070,6 +1071,10 @@
                  '</div></div>';
         }
 
+        // Stash pre-typeset (raw LaTeX) body + name for the print/PDF handler
+        window._mfsPrintBody = body;
+        window._mfsPrintName = data.name;
+
         contentPanel.innerHTML = header + body;
 
         // Force column reflow after MathJax typesetting
@@ -1210,6 +1215,19 @@
       font-size: 40px; font-weight: 600;
       letter-spacing: 0.05em; margin: 2px 0 6px;
       color: var(--cyan);
+    }
+    #mfs-content-panel #mfs-print-btn {
+      float: right; margin-top: 4px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--cyan); background: transparent;
+      border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
+      padding: 3px 12px; cursor: pointer;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    #mfs-content-panel #mfs-print-btn:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan);
     }
     #mfs-content-panel .mfs-coord-select {
       width: 100%; background: rgba(0,26,26,0.9);
@@ -1427,6 +1445,114 @@
       });
     })();
   </script>
+
+  <script>
+    /* ── MFS print / Save-as-PDF ── */
+    (function() {
+      document.addEventListener('click', function(e) {
+        var btn = e.target.closest('#mfs-print-btn');
+        if (!btn) return;
+
+        var bodyHTML   = window._mfsPrintBody || '';
+        var metricName = window._mfsPrintName || '';
+        if (!bodyHTML) return;
+
+        var today = new Date().toLocaleDateString('en-US', {
+          month: 'long', day: 'numeric', year: 'numeric'
+        });
+
+        var old = document.getElementById('mfs-print-root');
+        if (old) old.parentNode.removeChild(old);
+
+        var root = document.createElement('div');
+        root.id = 'mfs-print-root';
+        root.innerHTML =
+          '<table class="mfs-print-table"><thead><tr><td>' +
+            '<div class="mfs-print-header">' +
+              '<div class="pl"><div>My Favorite Spacetimes</div><div>DamianSowinski.com</div></div>' +
+              '<div class="pc">' + metricName + '</div>' +
+              '<div class="pr"><div>Date Downloaded:</div><div>' + today + '</div></div>' +
+            '</div>' +
+          '</td></tr></thead>' +
+          '<tfoot><tr><td>' +
+            '<div class="mfs-print-footer">Downloaded from DamianSowinski.com on ' + today + '</div>' +
+          '</td></tr></tfoot>' +
+          '<tbody><tr><td class="mfs-print-body">' + bodyHTML + '</td></tr></tbody></table>';
+
+        document.body.appendChild(root);
+
+        // Typeset the fresh (raw LaTeX) copy, then print
+        var pb = root.querySelector('.mfs-print-body');
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([pb]).then(function() { window.print(); });
+        } else {
+          window.print();
+        }
+      });
+    })();
+  </script>
+
+  <style>
+    #mfs-print-root { display: none; }
+
+    @media print {
+      @page { margin: 1.6cm 2cm; }
+
+      html, body { background: #fff !important; }
+
+      body > *:not(#mfs-print-root) { display: none !important; }
+      #mfs-print-root { display: block !important; }
+
+      /* EB Garamond for text, but NOT MathJax internals (would break glyphs) */
+      #mfs-print-root { font-family: 'EB Garamond', serif !important; }
+
+      #mfs-print-root, #mfs-print-root * {
+        color: #000 !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        opacity: 1 !important;
+      }
+
+      .mfs-print-table { width: 100%; border-collapse: collapse; }
+      .mfs-print-table thead { display: table-header-group; }  /* repeat per page */
+      .mfs-print-table tfoot { display: table-footer-group; }  /* repeat per page */
+      .mfs-print-table thead td, .mfs-print-table tfoot td { padding: 0; }
+
+      .mfs-print-header {
+        display: flex; justify-content: space-between; align-items: center;
+        border-bottom: 1px solid #000 !important;
+        padding-bottom: 6px; margin-bottom: 12px; font-size: 11pt;
+      }
+      .mfs-print-header .pl { text-align: left; }
+      .mfs-print-header .pr { text-align: right; }
+      .mfs-print-header .pc {
+        font-size: 17pt; font-weight: bold; text-align: center; padding: 0 12px;
+      }
+
+      .mfs-print-footer {
+        border-top: 1px solid #000 !important;
+        padding-top: 6px; margin-top: 12px;
+        font-size: 9pt; font-style: italic; text-align: center;
+      }
+
+      .mfs-print-body .mfs-section { padding: 4px 0; border: none !important; }
+      .mfs-print-body .mfs-section-label {
+        text-transform: uppercase; letter-spacing: 0.08em;
+        font-size: 10pt; font-weight: bold; margin: 10px 0 4px;
+      }
+      .mfs-print-body .mfs-component { font-size: 12pt; line-height: 1.5; break-inside: avoid; }
+      .mfs-print-body [id^="mfs-comp-"] { column-count: 1 !important; }
+      .mfs-print-body .mfs-idx-widget { display: none !important; }  /* interactive toggle, not printable */
+      .mfs-print-body .mfs-coord-select {
+        border: 1px solid #000 !important; font-size: 11pt;
+        -webkit-appearance: none; appearance: none;
+      }
+      .mfs-print-body .mfs-table { font-size: 10pt; }
+      .mfs-print-body .mfs-table th,
+      .mfs-print-body .mfs-table td { border: 1px solid #000 !important; }
+    }
+  </style>
 
 </body>
 </html>
