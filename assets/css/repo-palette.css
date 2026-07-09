@@ -1,30 +1,37 @@
 /* ============================================================
    REPO PALETTE
    Each library's visual identity, sourced from its own Sphinx
-   docs/_static/custom.css. Used to color the terminal panels on
-   the Code page. --{repo}-accent is the on-dark panel color;
-   --{repo}-primary is the docs header/brand color.
+   docs/_static/custom.css. Used to color the panels on the Code
+   page: --{repo}-primary is the docs masthead (upper) color used
+   behind the title; --{repo}-nav is the sidebar (lower) color used
+   for the left spine; --{repo}-accent is a lighter tone kept for
+   reference.
 
    Add a repo: append a block with its brand colors below.
    ============================================================ */
 :root {
-  /* pyCE — Dartmouth green */
+  /* pyCE — Dartmouth green (masthead / nav) */
   --pyce-primary:    #00693e;
+  --pyce-nav:        #122b1e;
   --pyce-accent:     #8fc7a8;
 
-  /* pyCA (CellularAutomata) — Berkeley blue / California gold */
-  --pyca-primary:    #003262;
+  /* pyCA (CellularAutomata) — Berkeley: Founder's Rock masthead / dark-navy nav / California gold */
+  --pyca-primary:    #3b7ea1;
+  --pyca-nav:        #07223f;
   --pyca-accent:     #fdb515;
 
-  /* pyGD — stock RTD theme blue (no custom docs css) */
+  /* pyGD — stock RTD theme: bright-blue masthead / dark-gray nav */
   --pygd-primary:    #2980b9;
+  --pygd-nav:        #343131;
   --pygd-accent:     #2980b9;
 
-  /* pyCoop — navy / royal blue */
-  --pycoop-primary:  #000e2f;
+  /* pyCoop — UConn: Royal masthead / navy nav */
+  --pycoop-primary:  #013ecd;
+  --pycoop-nav:      #000e2f;
   --pycoop-accent:   #013ecd;
 
-  /* pyLEAFS — Rochester blue / ForagerPink */
+  /* pyLEAFS — Rochester blue masthead / sky-blue nav / ForagerPink */
   --pyleafs-primary: #003b71;
+  --pyleafs-nav:     #436776;
   --pyleafs-accent:  #997c81;
 }

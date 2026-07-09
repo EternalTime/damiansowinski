@@ -13,153 +13,118 @@ title: Code
 </h1>
 
 <div>
-Open-source libraries behind the physics. Each window pulls live metadata from
-GitHub; the buttons open the docs and the source in a new tab.
+Open-source libraries behind the physics. Each panel pulls its description and
+last-updated date from GitHub; the buttons open the docs and the source in a
+new tab.
 </div><br>
 
 <style>
-.code-terminals {
-  display: flex;
-  flex-direction: column;
-  gap: 34px;
-  margin-top: 20px;
+@font-face {
+  font-family: 'LatoDocs';
+  src: url('{{ "/pyCE/_static/css/fonts/lato-normal.woff2" | relative_url }}') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
 }
-.term {
-  --accent: var(--cyan);
-  border: 2px solid var(--accent);
-  border-radius: 10px;
+@font-face {
+  font-family: 'LatoDocs';
+  src: url('{{ "/pyCE/_static/css/fonts/lato-bold.woff2" | relative_url }}') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'RobotoSlabDocs';
+  src: url('{{ "/pyCE/_static/css/fonts/Roboto-Slab-Regular.woff2" | relative_url }}') format('woff2');
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'RobotoSlabDocs';
+  src: url('{{ "/pyCE/_static/css/fonts/Roboto-Slab-Bold.woff2" | relative_url }}') format('woff2');
+  font-weight: 700; font-display: swap;
+}
+.doc-cards { display: flex; flex-direction: column; gap: 22px; margin-top: 20px; }
+.doc-card {
+  --upper: var(--blue);
+  --lower: var(--blue-mid);
+  display: flex;
+  background: var(--white);
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
   overflow: hidden;
-  background: var(--bg-void);
-  box-shadow: 0 0 18px rgba(0,0,0,0.55), 0 0 22px var(--accent);
-  font-family: 'Source Code Pro', monospace;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.18);
 }
-.term-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: var(--bg-panel);
-  border-bottom: 1px solid var(--accent);
-}
-.term-dot {
-  width: 12px; height: 12px;
-  border-radius: 50%;
-  display: inline-block;
-}
-.term-dot.r { background: var(--red); }
-.term-dot.y { background: var(--amber); }
-.term-dot.g { background: var(--green-light); }
-.term-title {
-  margin-left: 8px;
-  color: var(--accent);
-  font-size: 0.9em;
-  letter-spacing: 0.03em;
-}
-.term-body {
-  padding: 16px 18px 18px;
-  color: var(--text-light);
-  font-size: 0.92em;
-  line-height: 1.55;
-  min-height: 96px;
-}
-.term-prompt { color: var(--accent); }
-.term-cmd    { color: var(--text-bright); }
-.term-out    { color: var(--text-dim); white-space: pre-wrap; }
-.term-key    { color: var(--accent); }
-.term-caret::after {
-  content: "▊";
-  color: var(--accent);
-  animation: term-blink 1s steps(1) infinite;
-}
-@keyframes term-blink { 50% { opacity: 0; } }
-.term-btns {
-  display: flex;
-  gap: 12px;
-  padding: 0 18px 18px;
-}
-.term-btns a {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 0.86em;
+.doc-spine { flex: 0 0 14px; background: var(--lower); }
+.doc-body { flex: 1; min-width: 0; font-family: 'LatoDocs', 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+.doc-header { background: var(--upper); padding: 12px 20px; }
+.doc-title { font-family: 'RobotoSlabDocs', 'Roboto Slab', Georgia, serif; font-size: 1.3em; font-weight: 700; color: var(--white); line-height: 1.2; margin: 0; }
+.doc-content { padding: 14px 20px 16px; }
+.doc-desc { color: var(--text-body); font-size: 0.98em; line-height: 1.5; margin-bottom: 10px; }
+.doc-updated { color: var(--text-muted); font-size: 0.8em; margin-bottom: 14px; }
+.doc-btns { display: flex; gap: 10px; }
+.doc-btns a {
   text-decoration: none;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  padding: 6px 14px;
-  background: transparent;
+  font-family: 'LatoDocs', 'Lato', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85em;
+  color: var(--upper);
+  border: 1px solid var(--upper);
+  border-radius: 5px;
+  padding: 5px 14px;
   transition: background 0.15s, color 0.15s;
 }
-.term-btns a:hover {
-  background: var(--accent);
-  color: var(--bg-void);
-}
+.doc-btns a:hover { background: var(--upper); color: var(--white); }
 </style>
 
-<div class="code-terminals" id="code-terminals"></div>
+<div class="doc-cards" id="doc-cards"></div>
 
 <script>
 (function () {
   const GH_USER = 'EternalTime';
+  // label = the display name you control (not pulled from the repo).
   const REPOS = [
-    { repo: 'pyCE',             docs: '/pyCE/',   accent: '--pyce-accent',   prompt: 'damian@cosmos:~/pyCE$' },
-    { repo: 'CellularAutomata', docs: '/pyCA/',   accent: '--pyca-accent',   prompt: 'damian@lattice:~/pyCA$' },
-    { repo: 'pyGD',             docs: '/pyGD/',   accent: '--pygd-accent',   prompt: 'damian@sync:~/pyGD$' },
-    { repo: 'pyCoop',           docs: '/pyCoop/', accent: '--pycoop-accent', prompt: 'damian@game:~/pyCoop$' },
-    { repo: 'pyLEAFS',          docs: '/LEAFS/',  accent: '--pyleafs-accent', prompt: 'damian@canopy:~/pyLEAFS$', gh: 'LEAFS' }
+    { repo: 'pyCE',             label: 'Configurational Entropy', docs: '/pyCE/',   upper: '--pyce-primary',   lower: '--pyce-nav' },
+    { repo: 'CellularAutomata', label: 'Cellular Automata',       docs: '/pyCA/',   upper: '--pyca-primary',   lower: '--pyca-nav' },
+    { repo: 'pyGD',             label: 'Graph Dynamics',          docs: '/pyGD/',   upper: '--pygd-primary',   lower: '--pygd-nav' },
+    { repo: 'pyCoop',           label: 'Cooperation Games',       docs: '/pyCoop/', upper: '--pycoop-primary', lower: '--pycoop-nav' },
+    { repo: 'pyLEAFS',          label: 'Foraging Simulator',      docs: '/LEAFS/',  upper: '--pyleafs-primary', lower: '--pyleafs-nav', gh: 'LEAFS' }
   ];
 
-  const container = document.getElementById('code-terminals');
+  const container = document.getElementById('doc-cards');
 
   function fmtDate(iso) {
-    if (!iso) return 'unknown';
+    if (!iso) return '';
     const d = new Date(iso);
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-  }
-
-  function typeOut(el, lines, done) {
-    let li = 0;
-    (function tick() {
-      if (li >= lines.length) { el.classList.remove('term-caret'); if (done) done(); return; }
-      el.insertAdjacentHTML('beforeend', '<span class="term-out">' + lines[li] + '</span>\n');
-      li++;
-      setTimeout(tick, 180);
-    })();
+    return 'Updated ' + d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   }
 
   REPOS.forEach(function (cfg) {
     const gh = cfg.gh || cfg.repo;
     const card = document.createElement('div');
-    card.className = 'term';
-    card.style.setProperty('--accent', 'var(' + cfg.accent + ')');
+    card.className = 'doc-card';
+    card.style.setProperty('--upper', 'var(' + cfg.upper + ')');
+    card.style.setProperty('--lower', 'var(' + cfg.lower + ')');
     card.innerHTML =
-      '<div class="term-bar">' +
-        '<span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>' +
-        '<span class="term-title">' + cfg.repo + '</span>' +
-      '</div>' +
-      '<div class="term-body">' +
-        '<span class="term-prompt">' + cfg.prompt + '</span> ' +
-        '<span class="term-cmd">cat info</span>\n' +
-        '<span class="term-feed term-caret"></span>' +
-      '</div>' +
-      '<div class="term-btns">' +
-        '<a href="' + cfg.docs + '" target="_blank" rel="noopener">./docs</a>' +
-        '<a href="https://github.com/' + GH_USER + '/' + gh + '" target="_blank" rel="noopener">git remote</a>' +
+      '<div class="doc-spine"></div>' +
+      '<div class="doc-body">' +
+        '<div class="doc-header"><div class="doc-title"></div></div>' +
+        '<div class="doc-content">' +
+          '<div class="doc-desc" data-desc>Loading…</div>' +
+          '<div class="doc-updated" data-updated></div>' +
+          '<div class="doc-btns">' +
+            '<a href="' + cfg.docs + '" target="_blank" rel="noopener">Docs</a>' +
+            '<a href="https://github.com/' + GH_USER + '/' + gh + '" target="_blank" rel="noopener">GitHub</a>' +
+          '</div>' +
+        '</div>' +
       '</div>';
+    card.querySelector('.doc-title').textContent = cfg.label;
     container.appendChild(card);
 
-    const feed = card.querySelector('.term-feed');
+    const desc = card.querySelector('[data-desc]');
+    const updated = card.querySelector('[data-updated]');
     fetch('https://api.github.com/repos/' + GH_USER + '/' + gh)
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (d) {
-        const lines = [
-          '<span class="term-key">description</span> : ' + (d.description || '—'),
-          '<span class="term-key">language</span>    : ' + (d.language || '—'),
-          '<span class="term-key">updated</span>     : ' + fmtDate(d.pushed_at)
-        ];
-        typeOut(feed, lines);
+        desc.textContent = d.description || '—';
+        updated.textContent = fmtDate(d.pushed_at);
       })
       .catch(function () {
-        feed.classList.remove('term-caret');
-        feed.innerHTML = '<span class="term-out" style="color:var(--red)">could not reach github — see ./docs or git remote below.</span>';
+        desc.textContent = 'Could not reach GitHub — see the Docs or GitHub links below.';
       });
   });
 })();
