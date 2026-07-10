@@ -3,6 +3,20 @@
   const _c   = n => _cs.getPropertyValue(n).trim();
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
 
+  /* ── Inject CSS: histogram sections share the leftover panel space ── */
+  (function () {
+    if (document.getElementById('tt-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'tt-styles';
+    s.textContent = `
+      #tt-ctrl-panel { display:flex; flex-direction:column; overflow:hidden; }
+      .tt-hist-section { flex:1; min-height:0; display:flex; flex-direction:column; padding:6px 12px 8px; border-top:1px solid var(--border-dark); }
+      .tt-hist-section .applet-shell-ctrl-title { flex-shrink:0; margin-bottom:4px; }
+      .tt-hist-section canvas { flex:1; min-height:0; display:block; width:100%; }
+    `;
+    document.head.appendChild(s);
+  })();
+
   const N  = 128;
   const DT = 0.05;
   const DR = 1.0;
@@ -128,17 +142,95 @@
   let _frameCount = 0;
   let running = false, frameId = null;
 
+  /* \u2500\u2500 |v| and \u03c1 histograms (control panel) \u2500\u2500 */
+  let hctx = null, rctx = null;
+  const N_BINS = 30;
+  let smoothBins    = new Float64Array(N_BINS);
+  let smoothRhoBins = new Float64Array(N_BINS);
+  const HIST_ALPHA = 0.15;
+  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
+  const [_PLR, _PLG, _PLB] = _rgb('--pink-light');
+  const [_TDR, _TDG, _TDB] = _rgb('--teal-dark');
+  const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+
+  function renderHistogram() {
+    const hc = document.getElementById('tt-hist-canvas');
+    if (!hc || !hctx) return;
+    const W = hc.clientWidth || 200, H = hc.clientHeight || 120;
+    if (hc.width !== W || hc.height !== H) { hc.width = W; hc.height = H; }
+    const vMaxPlot = Math.max(0.2, 2.5 * v0);
+    const dv = vMaxPlot / N_BINS;
+    const raw = new Float64Array(N_BINS);
+    for (let k = 0; k < N * N; k++) {
+      const spd = Math.sqrt(vx[k]*vx[k] + vy[k]*vy[k]);
+      const b = (spd / dv) | 0;
+      if (b < N_BINS) raw[b]++;   // out-of-range values fall in unprinted tail bins
+    }
+    for (let b = 0; b < N_BINS; b++) raw[b] /= (N * N);
+    for (let b = 0; b < N_BINS; b++) smoothBins[b] += HIST_ALPHA * (raw[b] - smoothBins[b]);
+    let ymax = 1e-9;
+    for (let b = 0; b < N_BINS; b++) if (smoothBins[b] > ymax) ymax = smoothBins[b];
+    ymax *= 1.1;
+    const PL = 4, PR = 4, PT = 6, PB = 4;
+    const pw = W - PL - PR, ph = H - PT - PB, bw = pw / N_BINS;
+    hctx.clearRect(0, 0, W, H);
+    hctx.save();
+    hctx.shadowBlur = 6;
+    for (let b = 0; b < N_BINS; b++) {
+      const bh = Math.min(smoothBins[b] / ymax, 1) * ph;
+      const hot = Math.min((b + 0.5) / N_BINS * vMaxPlot / Math.max(v0, 1e-3) * 0.5, 1);
+      const lr = Math.round(_TLR + (_PLR - _TLR) * hot);
+      const lg = Math.round(_TLG + (_PLG - _TLG) * hot);
+      const lb = Math.round(_TLB + (_PLB - _TLB) * hot);
+      const dr = Math.round(_TDR + (_PDR - _TDR) * hot);
+      const dg = Math.round(_TDG + (_PDG - _TDG) * hot);
+      const db = Math.round(_TDB + (_PDB - _TDB) * hot);
+      hctx.shadowColor = `rgb(${dr},${dg},${db})`;
+      hctx.fillStyle   = `rgba(${lr},${lg},${lb},0.75)`;
+      hctx.fillRect(PL + b * bw, PT + ph - bh, bw - 1, bh);
+    }
+    hctx.restore();
+  }
+
+  /* ρ histogram — bars colored with the same LUT as the density field */
+  function renderRhoHistogram() {
+    const hc = document.getElementById('tt-rho-canvas');
+    if (!hc || !rctx) return;
+    const W = hc.clientWidth || 200, H = hc.clientHeight || 120;
+    if (hc.width !== W || hc.height !== H) { hc.width = W; hc.height = H; }
+    const RHO_MAX = 2.5;
+    const dr_ = RHO_MAX / N_BINS;
+    const raw = new Float64Array(N_BINS);
+    for (let k = 0; k < N * N; k++) {
+      const b = (rho[k] / dr_) | 0;
+      if (b < N_BINS) raw[b]++;   // out-of-range values fall in unprinted tail bins
+    }
+    for (let b = 0; b < N_BINS; b++) raw[b] /= (N * N);
+    for (let b = 0; b < N_BINS; b++) smoothRhoBins[b] += HIST_ALPHA * (raw[b] - smoothRhoBins[b]);
+    let ymax = 1e-9;
+    for (let b = 0; b < N_BINS; b++) if (smoothRhoBins[b] > ymax) ymax = smoothRhoBins[b];
+    ymax *= 1.1;
+    const PL = 4, PR = 4, PT = 6, PB = 4;
+    const pw = W - PL - PR, ph = H - PT - PB, bw = pw / N_BINS;
+    rctx.clearRect(0, 0, W, H);
+    rctx.save();
+    rctx.shadowBlur = 6;
+    for (let b = 0; b < N_BINS; b++) {
+      const bh = Math.min(smoothRhoBins[b] / ymax, 1) * ph;
+      const li = rhoToLUT((b + 0.5) * dr_);
+      const r = lut[li], g = lut[li+1], bb = lut[li+2];
+      rctx.shadowColor = `rgb(${Math.round(r*0.55)},${Math.round(g*0.55)},${Math.round(bb*0.55)})`;
+      rctx.fillStyle   = `rgba(${r},${g},${bb},0.8)`;
+      rctx.fillRect(PL + b * bw, PT + ph - bh, bw - 1, bh);
+    }
+    rctx.restore();
+  }
+
   function loop() {
     if (running) {
       for (let s = 0; s < 3; s++) step();
       render();
-      if (++_frameCount % 20 === 0) {
-        let sumR = 0, sumV2 = 0;
-        for (let k = 0; k < N*N; k++) { sumR += rho[k]; sumV2 += vx[k]*vx[k]+vy[k]*vy[k]; }
-        const nn = N * N;
-        const el = document.getElementById('tt-stat');
-        if (el) el.textContent = '\u27e8\u03c1\u27e9 = '+(sumR/nn).toFixed(3)+'   \u27e8|v|\u27e9 = '+Math.sqrt(sumV2/nn).toFixed(3);
-      }
+      if (++_frameCount % 3 === 0) { renderHistogram(); renderRhoHistogram(); }
     }
     frameId = requestAnimationFrame(loop);
   }
@@ -159,7 +251,6 @@
           <span class="applet-shell-side">Low</span>
           <input type="range" id="tt-noise" min="0.0" max="1.0" step="0.01" value="0.2">
           <span class="applet-shell-side">High</span>
-          <span class="applet-shell-val" id="tt-noise-val">0.20</span>
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
@@ -168,7 +259,6 @@
           <span class="applet-shell-side">Disordered</span>
           <input type="range" id="tt-alpha" min="-1.0" max="1.0" step="0.05" value="0.3">
           <span class="applet-shell-side">Ordered</span>
-          <span class="applet-shell-val" id="tt-alpha-val">0.30</span>
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
@@ -177,7 +267,6 @@
           <span class="applet-shell-side">0</span>
           <input type="range" id="tt-lambda" min="0.0" max="2.0" step="0.05" value="0.5">
           <span class="applet-shell-side">2</span>
-          <span class="applet-shell-val" id="tt-lambda-val">0.50</span>
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
@@ -186,10 +275,16 @@
           <span class="applet-shell-side">Slow</span>
           <input type="range" id="tt-speed" min="0.1" max="2.0" step="0.05" value="0.5">
           <span class="applet-shell-side">Fast</span>
-          <span class="applet-shell-val" id="tt-speed-val">0.50</span>
         </div>
       </div>
-      <div class="applet-shell-ctrl-section" id="tt-stat" style="font-size:13px;color:var(--text-dim);letter-spacing:0.5px;"></div>
+      <div class="tt-hist-section">
+        <div class="applet-shell-ctrl-title">Speed distribution |v|</div>
+        <canvas id="tt-hist-canvas"></canvas>
+      </div>
+      <div class="tt-hist-section">
+        <div class="applet-shell-ctrl-title">Density distribution &rho;</div>
+        <canvas id="tt-rho-canvas"></canvas>
+      </div>
     `,
 
     onOpen: function ({ canvas: c, S }) {
@@ -207,6 +302,10 @@
         buf        = imgData.data;
         for (let i = 3; i < buf.length; i += 4) buf[i] = 255;
       }
+      hctx = document.getElementById('tt-hist-canvas').getContext('2d');
+      rctx = document.getElementById('tt-rho-canvas').getContext('2d');
+      smoothBins.fill(0);
+      smoothRhoBins.fill(0);
       init();
       running = true;
       const pb = document.getElementById('tt-pause-btn');
@@ -241,27 +340,23 @@
     }
   };
 
-  document.getElementById('tt-noise').addEventListener('input', function () {
-    eta = parseFloat(this.value);
-    document.getElementById('tt-noise-val').textContent = eta.toFixed(2);
-  });
   /* Keep steady-state speed √(α/β) pinned to the v₀ slider */
   function updateBeta() {
     if (alpha > 0 && v0 > 0) beta = alpha / (v0 * v0);
   }
 
+  document.getElementById('tt-noise').addEventListener('input', function () {
+    eta = parseFloat(this.value);
+  });
   document.getElementById('tt-alpha').addEventListener('input', function () {
     alpha = parseFloat(this.value);
-    document.getElementById('tt-alpha-val').textContent = alpha.toFixed(2);
     updateBeta();
   });
   document.getElementById('tt-lambda').addEventListener('input', function () {
     lam = parseFloat(this.value);
-    document.getElementById('tt-lambda-val').textContent = lam.toFixed(2);
   });
   document.getElementById('tt-speed').addEventListener('input', function () {
     v0 = parseFloat(this.value);
-    document.getElementById('tt-speed-val').textContent = v0.toFixed(2);
     updateBeta();
   });
   updateBeta();

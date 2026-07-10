@@ -337,8 +337,21 @@
     qCtx.setLineDash([]);
     qCtx.fillStyle = _rgba('--text-mid', 0.9);
     qCtx.font = `${fs}px 'EB Garamond', Georgia, serif`;
-    qCtx.textAlign = 'center'; qCtx.textBaseline = 'top';
-    qCtx.fillText('ω_d', PL + pw / 2, PT + ph + Math.round(fs * 0.35));
+    /* x-axis label: ω with a true subscript d (canvas has no TeX) */
+    qCtx.textBaseline = 'top';
+    const subFs = Math.round(fs * 0.68);
+    const yLab  = PT + ph + Math.round(fs * 0.35);
+    qCtx.font = `${fs}px 'EB Garamond', Georgia, serif`;
+    const wOmega = qCtx.measureText('ω').width;
+    qCtx.font = `${subFs}px 'EB Garamond', Georgia, serif`;
+    const wSub = qCtx.measureText('d').width;
+    const xLab = PL + pw / 2 - (wOmega + wSub + 1) / 2;
+    qCtx.textAlign = 'left';
+    qCtx.font = `${fs}px 'EB Garamond', Georgia, serif`;
+    qCtx.fillText('ω', xLab, yLab);
+    qCtx.font = `${subFs}px 'EB Garamond', Georgia, serif`;
+    qCtx.fillText('d', xLab + wOmega + 1, yLab + Math.round(fs * 0.42));
+    qCtx.font = `${fs}px 'EB Garamond', Georgia, serif`;
     qCtx.save();
     qCtx.translate(Math.round(fs * 0.9), PT + ph / 2); qCtx.rotate(-Math.PI / 2);
     qCtx.textAlign = 'center';
@@ -409,7 +422,7 @@
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'sho',
-    title: 'SHO &mdash; Damped &amp; Driven',
+    title: 'Driven Oscillator',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="shoReset()">Reset</button><button class="applet-shell-header-btn" id="sho-pause-btn" onclick="shoTogglePause()">Pause</button>`,

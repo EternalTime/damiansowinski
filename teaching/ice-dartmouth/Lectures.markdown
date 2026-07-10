@@ -4,7 +4,7 @@ title: Lecture series
 permalink: /teaching/ice-dartmouth/Lectures/
 nav_exclude: true
 ---
-<a href="{{ '/teaching/' | relative_url }}" style="float: right;">← Back to Teaching</a>
+<a href="{{ '/teaching/' | relative_url }}" data-page-index="-1" style="float: right;">← Back to Teaching</a>
 <div style="font-size: 1.5em;"><strong>From Epistemology to Information</strong></div>
 
 ---
