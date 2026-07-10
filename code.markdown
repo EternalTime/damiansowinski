@@ -100,7 +100,8 @@ Feel free to fork any project and make it your own.
     { repo: 'CellularAutomata', label: 'Cellular Automata',       docs: '/pyCA/',   upper: '--pyca-primary',   lower: '--pyca-nav' },
     { repo: 'pyGD',             label: 'Graph Dynamics',          docs: '/pyGD/',   upper: '--pygd-primary',   lower: '--pygd-nav' },
     { repo: 'pyCoop',           label: 'Cooperation Games',       docs: '/pyCoop/', upper: '--pycoop-primary', lower: '--pycoop-nav' },
-    { repo: 'pyLEAFS',          label: 'Foraging Simulator',      docs: '/LEAFS/',  upper: '--pyleafs-primary', lower: '--pyleafs-nav', gh: 'LEAFS' }
+    { repo: 'pyLEAFS',          label: 'Foraging Simulator',      docs: '/LEAFS/',  upper: '--pyleafs-primary', lower: '--pyleafs-nav', gh: 'LEAFS' },
+    { repo: 'pyEDW',            label: 'Exo-Daisy World',         docs: '/pyEDW/',  upper: '--pyedw-primary',   lower: '--pyedw-nav' }
   ];
 
   const container = document.getElementById('doc-cards');

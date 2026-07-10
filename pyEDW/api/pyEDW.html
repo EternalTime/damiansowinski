@@ -1,0 +1,731 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API reference &mdash; pyEDW 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bbe758d8" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="License" href="../license.html" />
+    <link rel="prev" title="Theory" href="../theory.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyEDW
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_model.html">Guide: the model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_metrics.html">Guide: metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyEDW.model">pyEDW.model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.model.Parameters"><code class="docutils literal notranslate"><span class="pre">Parameters</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.f"><code class="docutils literal notranslate"><span class="pre">Parameters.f</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.A_G"><code class="docutils literal notranslate"><span class="pre">Parameters.A_G</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.A_B"><code class="docutils literal notranslate"><span class="pre">Parameters.A_B</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.A_W"><code class="docutils literal notranslate"><span class="pre">Parameters.A_W</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.T_opt"><code class="docutils literal notranslate"><span class="pre">Parameters.T_opt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.Q"><code class="docutils literal notranslate"><span class="pre">Parameters.Q</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.gamma_G"><code class="docutils literal notranslate"><span class="pre">Parameters.gamma_G</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.gamma_D"><code class="docutils literal notranslate"><span class="pre">Parameters.gamma_D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.tau_S"><code class="docutils literal notranslate"><span class="pre">Parameters.tau_S</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.tau_E"><code class="docutils literal notranslate"><span class="pre">Parameters.tau_E</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.dT"><code class="docutils literal notranslate"><span class="pre">Parameters.dT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.delta"><code class="docutils literal notranslate"><span class="pre">Parameters.delta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.lam"><code class="docutils literal notranslate"><span class="pre">Parameters.lam</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.to_theta"><code class="docutils literal notranslate"><span class="pre">Parameters.to_theta()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.with_bandwidth"><code class="docutils literal notranslate"><span class="pre">Parameters.with_bandwidth()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.Parameters.with_lambda"><code class="docutils literal notranslate"><span class="pre">Parameters.with_lambda()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.model.ExoDaisyWorld"><code class="docutils literal notranslate"><span class="pre">ExoDaisyWorld</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.evolve"><code class="docutils literal notranslate"><span class="pre">ExoDaisyWorld.evolve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.run"><code class="docutils literal notranslate"><span class="pre">ExoDaisyWorld.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.ensemble"><code class="docutils literal notranslate"><span class="pre">ExoDaisyWorld.ensemble()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyEDW.metrics">pyEDW.metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#entropy-table">Entropy table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.metrics.entropy_table"><code class="docutils literal notranslate"><span class="pre">entropy_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.metrics.entropy_table_env"><code class="docutils literal notranslate"><span class="pre">entropy_table_env()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.metrics.viability"><code class="docutils literal notranslate"><span class="pre">viability()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.metrics.efficacy"><code class="docutils literal notranslate"><span class="pre">efficacy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.metrics.mutual_information"><code class="docutils literal notranslate"><span class="pre">mutual_information()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.metrics.intra_environment_information"><code class="docutils literal notranslate"><span class="pre">intra_environment_information()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.metrics.delta_I"><code class="docutils literal notranslate"><span class="pre">delta_I()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.metrics.cooperation"><code class="docutils literal notranslate"><span class="pre">cooperation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyEDW.figures">pyEDW.figures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.figures.albedo"><code class="docutils literal notranslate"><span class="pre">albedo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.figures.ensemble_scatter"><code class="docutils literal notranslate"><span class="pre">ensemble_scatter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.figures.corner"><code class="docutils literal notranslate"><span class="pre">corner()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.figures.cooperation_vs_deltaI"><code class="docutils literal notranslate"><span class="pre">cooperation_vs_deltaI()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDW.figures.information_vs_viability"><code class="docutils literal notranslate"><span class="pre">information_vs_viability()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyEDW</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/pyEDW.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<section id="module-pyEDW.model">
+<span id="pyedw-model"></span><h2>pyEDW.model<a class="headerlink" href="#module-pyEDW.model" title="Link to this heading"></a></h2>
+<p>The Exo-Daisy World model and its stochastic integrator.</p>
+<p>This module ports <code class="docutils literal notranslate"><span class="pre">updateExoDaisyWorld.m</span></code> (the single time step) and
+<code class="docutils literal notranslate"><span class="pre">eDW_BHsim.m</span></code> / <code class="docutils literal notranslate"><span class="pre">exoDaisyWorld.m</span></code> (the ensemble drivers) to Python. The
+dynamics are the dimensionless system of Appendix B of Sowinski, Ghoshal &amp;
+Frank, <em>Planet. Sci. J.</em> <strong>6</strong>, 176 (2025):</p>
+<ul class="simple">
+<li><p>Eq. (B8)  <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">f_B</span> <span class="pre">/</span> <span class="pre">dt</span> <span class="pre">=</span> <span class="pre">w(T_B</span> <span class="pre">-</span> <span class="pre">1)(f</span> <span class="pre">-</span> <span class="pre">f_B</span> <span class="pre">-</span> <span class="pre">f_W)</span> <span class="pre">f_B</span> <span class="pre">-</span> <span class="pre">(gamma_D/gamma_G)</span> <span class="pre">f_B</span></code></p></li>
+<li><p>Eq. (B9)  <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">f_W</span> <span class="pre">/</span> <span class="pre">dt</span> <span class="pre">=</span> <span class="pre">w(T_W</span> <span class="pre">-</span> <span class="pre">1)(f</span> <span class="pre">-</span> <span class="pre">f_B</span> <span class="pre">-</span> <span class="pre">f_W)</span> <span class="pre">f_W</span> <span class="pre">-</span> <span class="pre">(gamma_D/gamma_G)</span> <span class="pre">f_W</span></code></p></li>
+<li><p>Eq. (B10) <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">T</span>&#160;&#160; <span class="pre">/</span> <span class="pre">dt</span> <span class="pre">=</span> <span class="pre">(1/gamma_G</span> <span class="pre">tau_E)[(1</span> <span class="pre">-</span> <span class="pre">(dA_B</span> <span class="pre">f_B</span> <span class="pre">+</span> <span class="pre">dA_W</span> <span class="pre">f_W)/(1-A_G))</span> <span class="pre">L</span> <span class="pre">-</span> <span class="pre">T^4]</span></code></p></li>
+<li><p>Eq. (B11) <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">L</span>&#160;&#160; <span class="pre">/</span> <span class="pre">dt</span> <span class="pre">=</span> <span class="pre">(1/gamma_G</span> <span class="pre">tau_S)(1</span> <span class="pre">+</span> <span class="pre">lambda</span> <span class="pre">-</span> <span class="pre">L)</span> <span class="pre">+</span> <span class="pre">sqrt(2/gamma_G</span> <span class="pre">tau_S)</span> <span class="pre">delta</span> <span class="pre">(1+lambda)</span> <span class="pre">eta</span></code></p></li>
+</ul>
+<p>with growth window <code class="docutils literal notranslate"><span class="pre">w(x)</span> <span class="pre">=</span> <span class="pre">exp(-alpha</span> <span class="pre">x^4)</span></code> (Eq. B7), scaled daisy
+temperatures <code class="docutils literal notranslate"><span class="pre">T_alpha^4</span> <span class="pre">=</span> <span class="pre">T^4</span> <span class="pre">+</span> <span class="pre">Q</span> <span class="pre">dA_B</span> <span class="pre">f_B</span> <span class="pre">+</span> <span class="pre">Q</span> <span class="pre">dA_W</span> <span class="pre">f_W</span> <span class="pre">-</span> <span class="pre">Q</span> <span class="pre">dA_alpha</span></code> (Eq.
+B12), and <code class="docutils literal notranslate"><span class="pre">dA_alpha</span> <span class="pre">=</span> <span class="pre">A_alpha</span> <span class="pre">-</span> <span class="pre">A_G</span></code>. Temperatures are in units of the
+optimal temperature <code class="docutils literal notranslate"><span class="pre">T_opt</span></code> and luminosity in units of <code class="docutils literal notranslate"><span class="pre">L_opt</span></code>.</p>
+<p>The noise is a single scalar Wiener process entering only the luminosity, so
+the SDE is scalar-driven and the strong-order-1 stochastic Runge-Kutta scheme
+of A. Roberts (2012) applies. <a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameters</span></code></a> packs the physical constants
+into the dimensionless <code class="docutils literal notranslate"><span class="pre">theta</span></code> vector consumed by the integrator, whose
+layout mirrors the MATLAB comment block exactly:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>idx</p></th>
+<th class="head"><p>theta component</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>f</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>1 - A_G</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>A_B - A_G</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>A_W - A_G</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Q</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>gamma_D / gamma_G</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>1 / (gamma_G tau_E)</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>1 / (gamma_G tau_S)</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>8 (T_opt / Delta T)^4</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>delta</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>lambda</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyEDW.model.</span></span><span class="sig-name descname"><span class="pre">Parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.88</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_G</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A_W</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T_opt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_G</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau_S</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau_E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dT</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/model.html#Parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.model.Parameters" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Physical parameters of Exo-Daisy World.</p>
+<p>All temperatures are expressed in units of the optimal temperature
+<code class="docutils literal notranslate"><span class="pre">T_opt</span></code> and luminosities in units of <code class="docutils literal notranslate"><span class="pre">L_opt</span></code> once dimensionalized; the
+fields below are the dimensional constants of Table 1, from which
+<a class="reference internal" href="#pyEDW.model.Parameters.to_theta" title="pyEDW.model.Parameters.to_theta"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_theta()</span></code></a> builds the dimensionless <code class="docutils literal notranslate"><span class="pre">theta</span></code> vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> (<em>float</em>) – Habitable land fraction.</p></li>
+<li><p><strong>A_G</strong> (<em>float</em>) – Ground, black-daisy, and white-daisy albedos (<code class="docutils literal notranslate"><span class="pre">A_B</span> <span class="pre">&lt;</span> <span class="pre">A_G</span> <span class="pre">&lt;</span> <span class="pre">A_W</span></code>).</p></li>
+<li><p><strong>A_B</strong> (<em>float</em>) – Ground, black-daisy, and white-daisy albedos (<code class="docutils literal notranslate"><span class="pre">A_B</span> <span class="pre">&lt;</span> <span class="pre">A_G</span> <span class="pre">&lt;</span> <span class="pre">A_W</span></code>).</p></li>
+<li><p><strong>A_W</strong> (<em>float</em>) – Ground, black-daisy, and white-daisy albedos (<code class="docutils literal notranslate"><span class="pre">A_B</span> <span class="pre">&lt;</span> <span class="pre">A_G</span> <span class="pre">&lt;</span> <span class="pre">A_W</span></code>).</p></li>
+<li><p><strong>T_opt</strong> (<em>float</em>) – Optimal growth temperature (sets the temperature scale).</p></li>
+<li><p><strong>Q</strong> (<em>float</em>) – Temperature-shift heat constant coupling daisy albedo to local
+temperature.</p></li>
+<li><p><strong>gamma_G</strong> (<em>float</em>) – Maximal growth rate and daisy decay rate.</p></li>
+<li><p><strong>gamma_D</strong> (<em>float</em>) – Maximal growth rate and daisy decay rate.</p></li>
+<li><p><strong>tau_S</strong> (<em>float</em>) – Stellar-fluctuation and environmental (thermal) timescales, in units
+of <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">/</span> <span class="pre">gamma_G</span></code>.</p></li>
+<li><p><strong>tau_E</strong> (<em>float</em>) – Stellar-fluctuation and environmental (thermal) timescales, in units
+of <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">/</span> <span class="pre">gamma_G</span></code>.</p></li>
+<li><p><strong>dT</strong> (<em>float</em>) – Growth-rate bandwidth <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">T</span></code> (range of bearable temperatures).</p></li>
+<li><p><strong>delta</strong> (<em>float</em>) – Relative amplitude of the stellar-luminosity fluctuations.</p></li>
+<li><p><strong>lam</strong> (<em>float</em>) – Luminosity offset <code class="docutils literal notranslate"><span class="pre">lambda</span></code>; the mean luminosity is
+<code class="docutils literal notranslate"><span class="pre">&lt;L&gt;</span> <span class="pre">=</span> <span class="pre">(1</span> <span class="pre">+</span> <span class="pre">lambda)</span> <span class="pre">L_opt</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.f">
+<span class="sig-name descname"><span class="pre">f</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.88</span></span><a class="headerlink" href="#pyEDW.model.Parameters.f" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.A_G">
+<span class="sig-name descname"><span class="pre">A_G</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.3</span></span><a class="headerlink" href="#pyEDW.model.Parameters.A_G" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.A_B">
+<span class="sig-name descname"><span class="pre">A_B</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></span><a class="headerlink" href="#pyEDW.model.Parameters.A_B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.A_W">
+<span class="sig-name descname"><span class="pre">A_W</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.6</span></span><a class="headerlink" href="#pyEDW.model.Parameters.A_W" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.T_opt">
+<span class="sig-name descname"><span class="pre">T_opt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">300.0</span></span><a class="headerlink" href="#pyEDW.model.Parameters.T_opt" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.Q">
+<span class="sig-name descname"><span class="pre">Q</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></span><a class="headerlink" href="#pyEDW.model.Parameters.Q" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.gamma_G">
+<span class="sig-name descname"><span class="pre">gamma_G</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#pyEDW.model.Parameters.gamma_G" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.gamma_D">
+<span class="sig-name descname"><span class="pre">gamma_D</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.2</span></span><a class="headerlink" href="#pyEDW.model.Parameters.gamma_D" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.tau_S">
+<span class="sig-name descname"><span class="pre">tau_S</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3.0</span></span><a class="headerlink" href="#pyEDW.model.Parameters.tau_S" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.tau_E">
+<span class="sig-name descname"><span class="pre">tau_E</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5.0</span></span><a class="headerlink" href="#pyEDW.model.Parameters.tau_E" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.dT">
+<span class="sig-name descname"><span class="pre">dT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30.0</span></span><a class="headerlink" href="#pyEDW.model.Parameters.dT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.delta">
+<span class="sig-name descname"><span class="pre">delta</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.05</span></span><a class="headerlink" href="#pyEDW.model.Parameters.delta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.lam">
+<span class="sig-name descname"><span class="pre">lam</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#pyEDW.model.Parameters.lam" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.to_theta">
+<span class="sig-name descname"><span class="pre">to_theta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/model.html#Parameters.to_theta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.model.Parameters.to_theta" title="Link to this definition"></a></dt>
+<dd><p>Return the 11-element dimensionless <code class="docutils literal notranslate"><span class="pre">theta</span></code> vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">theta</span></code> in the layout documented in the module docstring,
+matching <code class="docutils literal notranslate"><span class="pre">eDW_BHsim.m</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.with_bandwidth">
+<span class="sig-name descname"><span class="pre">with_bandwidth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/model.html#Parameters.with_bandwidth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.model.Parameters.with_bandwidth" title="Link to this definition"></a></dt>
+<dd><p>Return a copy with a new growth-rate bandwidth <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">T</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDW.model.Parameters.with_lambda">
+<span class="sig-name descname"><span class="pre">with_lambda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lam</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/model.html#Parameters.with_lambda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.model.Parameters.with_lambda" title="Link to this definition"></a></dt>
+<dd><p>Return a copy with a new luminosity offset <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyEDW.model.ExoDaisyWorld">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyEDW.model.</span></span><span class="sig-name descname"><span class="pre">ExoDaisyWorld</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/model.html#ExoDaisyWorld"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.model.ExoDaisyWorld" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The coupled agent+environment stochastic Daisy World.</p>
+<p>Wraps the compiled integrator behind a small stateful interface that keeps
+the MATLAB usage: build with <a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameters</span></code></a>, advance with
+<a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.evolve" title="pyEDW.model.ExoDaisyWorld.evolve"><code class="xref py py-meth docutils literal notranslate"><span class="pre">evolve()</span></code></a> (one step) or <a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.run" title="pyEDW.model.ExoDaisyWorld.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a> (many), and reach for the static
+<a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ensemble()</span></code></a> to sweep a luminosity axis in parallel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><em>Parameters</em></a>) – Physical parameters.</p></li>
+<li><p><strong>x0</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Initial <code class="docutils literal notranslate"><span class="pre">[f_B,</span> <span class="pre">f_W,</span> <span class="pre">T,</span> <span class="pre">L]</span></code>. Defaults to a small equal daisy seed at
+the equilibrium temperature <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">=</span> <span class="pre">L**0.25</span></code> for <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">lambda</span></code>.</p></li>
+<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) – Integration time step (default <code class="docutils literal notranslate"><span class="pre">0.1</span></code>, as in the MATLAB).</p></li>
+<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) – Used only to seed NumPy’s global state for the compiled loops (Numba’s
+random stream). Pass an integer-seeded generator for repeatability.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDW.model.ExoDaisyWorld.evolve">
+<span class="sig-name descname"><span class="pre">evolve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/model.html#ExoDaisyWorld.evolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.model.ExoDaisyWorld.evolve" title="Link to this definition"></a></dt>
+<dd><p>Advance the state by one SRK1 step and return it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDW.model.ExoDaisyWorld.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nsteps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/model.html#ExoDaisyWorld.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.model.ExoDaisyWorld.run" title="Link to this definition"></a></dt>
+<dd><p>Integrate <code class="docutils literal notranslate"><span class="pre">nsteps</span></code> steps from the current state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nsteps</strong> (<em>int</em>) – Number of SRK1 steps.</p></li>
+<li><p><strong>record</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, return the full <code class="docutils literal notranslate"><span class="pre">(nsteps</span> <span class="pre">+</span> <span class="pre">1,</span> <span class="pre">4)</span></code> trajectory including
+the current state; otherwise advance in place and return the
+<code class="docutils literal notranslate"><span class="pre">(4,)</span></code> endpoint.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Endpoint or trajectory, per <code class="docutils literal notranslate"><span class="pre">record</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDW.model.ExoDaisyWorld.ensemble">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ensemble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsteps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_free</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/model.html#ExoDaisyWorld.ensemble"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.model.ExoDaisyWorld.ensemble" title="Link to this definition"></a></dt>
+<dd><p>Parallel endpoint ensemble over a luminosity axis.</p>
+<p>Ports <code class="docutils literal notranslate"><span class="pre">eDW_BHsim.m</span></code> (biotic) and the agent-free driver of
+<code class="docutils literal notranslate"><span class="pre">exoDaisyWorld.m</span></code>. For each luminosity, <code class="docutils literal notranslate"><span class="pre">N</span></code> independent instances
+are integrated for <code class="docutils literal notranslate"><span class="pre">nsteps</span></code> steps from freshly sampled initial
+conditions and their endpoints recorded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><em>Parameters</em></a>) – Physical parameters; <code class="docutils literal notranslate"><span class="pre">params.lam</span></code> is overridden per luminosity so
+that <code class="docutils literal notranslate"><span class="pre">&lt;L&gt;</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">lambda</span></code> tracks the axis.</p></li>
+<li><p><strong>Ls</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Mean luminosities. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">linspace(-0.7,</span> <span class="pre">1.4,</span> <span class="pre">400)</span></code>.</p></li>
+<li><p><strong>nsteps</strong> (<em>int</em><em>, </em><em>optional</em>) – Steps per instance (default 2000; the agent-free run used 200).</p></li>
+<li><p><strong>N</strong> (<em>int</em><em>, </em><em>optional</em>) – Instances per luminosity (default 500).</p></li>
+<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) – Time step (default 0.1).</p></li>
+<li><p><strong>agent_free</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, seed both daisy fractions at zero (environment only).</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seeds NumPy’s global RNG before the parallel loop.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Endpoints of shape <code class="docutils literal notranslate"><span class="pre">(len(Ls),</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyEDW.metrics">
+<span id="pyedw-metrics"></span><h2>pyEDW.metrics<a class="headerlink" href="#module-pyEDW.metrics" title="Link to this heading"></a></h2>
+<p>Viability and the information architecture of Exo-Daisy World.</p>
+<p>This module ports the entropy pipeline of <code class="docutils literal notranslate"><span class="pre">Daisy_World_Paper_Figures.m</span></code>
+(lines 307-392) and the measure assembly of <code class="docutils literal notranslate"><span class="pre">makeFIG4.m</span></code> / <code class="docutils literal notranslate"><span class="pre">makeFig5.m</span></code>.
+Given an endpoint ensemble <code class="docutils literal notranslate"><span class="pre">data</span></code> of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code> – the output
+of <a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyEDW.model.ExoDaisyWorld.ensemble()</span></code></a> – it estimates, at each
+luminosity, the joint distribution <code class="docutils literal notranslate"><span class="pre">p_AE(f_B,</span> <span class="pre">f_W,</span> <span class="pre">T,</span> <span class="pre">L)</span></code> by histogramming
+and reads off the Shannon information measures of Section 4.</p>
+<p>Binning follows the paper’s square-root rule: with <code class="docutils literal notranslate"><span class="pre">n</span></code> living instances the
+number of bins is <code class="docutils literal notranslate"><span class="pre">N_bins</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">ceil(sqrt(n))</span></code> and each variable is split by
+<code class="docutils literal notranslate"><span class="pre">N_bins</span> <span class="pre">-</span> <span class="pre">1</span></code> equally spaced interior edges spanning its observed range, so a
+value lands in bin <code class="docutils literal notranslate"><span class="pre">sum(v</span> <span class="pre">&gt;</span> <span class="pre">edges)</span></code> (0-indexed) – exactly the MATLAB
+<code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">sum(v</span> <span class="pre">&gt;</span> <span class="pre">x)</span></code> up to the index base.</p>
+<section id="entropy-table">
+<h3>Entropy table<a class="headerlink" href="#entropy-table" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="#pyEDW.metrics.entropy_table" title="pyEDW.metrics.entropy_table"><code class="xref py py-func docutils literal notranslate"><span class="pre">entropy_table()</span></code></a> returns, per luminosity, a 16-column array <code class="docutils literal notranslate"><span class="pre">H</span></code> whose
+columns are the entropies of every marginal of <code class="docutils literal notranslate"><span class="pre">p_AE</span></code> needed downstream
+(agent dof <code class="docutils literal notranslate"><span class="pre">a_1</span> <span class="pre">=</span> <span class="pre">f_B</span></code>, <code class="docutils literal notranslate"><span class="pre">a_2</span> <span class="pre">=</span> <span class="pre">f_W</span></code>; environment dof <code class="docutils literal notranslate"><span class="pre">e_1</span> <span class="pre">=</span> <span class="pre">T</span></code>,
+<code class="docutils literal notranslate"><span class="pre">e_2</span> <span class="pre">=</span> <span class="pre">L</span></code>):</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>col</p></th>
+<th class="head"><p>entropy</p></th>
+<th class="head"><p>col</p></th>
+<th class="head"><p>entropy</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>H[a1]</p></td>
+<td><p>8</p></td>
+<td><p>H[a1 e1]</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>H[a2]</p></td>
+<td><p>9</p></td>
+<td><p>H[a1 a2]</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>H[e1]</p></td>
+<td><p>10</p></td>
+<td><p>H[a2 e1 e2]</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>H[e2]</p></td>
+<td><p>11</p></td>
+<td><p>H[a1 e1 e2]</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>H[e1 e2]</p></td>
+<td><p>12</p></td>
+<td><p>H[a1 a2 e2]</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>H[a2 e2]</p></td>
+<td><p>13</p></td>
+<td><p>H[a1 a2 e1]</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>H[a2 e1]</p></td>
+<td><p>14</p></td>
+<td><p>H[a1 a2 e1 e2]</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>H[a1 e2]</p></td>
+<td><p>15</p></td>
+<td><p>N_bins</p></td>
+</tr>
+</tbody>
+</table>
+<p>The information measures are then</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">I(A:E)</span>&#160; <span class="pre">=</span> <span class="pre">H[e1</span> <span class="pre">e2]</span> <span class="pre">+</span> <span class="pre">H[a1</span> <span class="pre">a2]</span> <span class="pre">-</span> <span class="pre">H[a1</span> <span class="pre">a2</span> <span class="pre">e1</span> <span class="pre">e2]</span></code>          (<a class="reference internal" href="#pyEDW.metrics.mutual_information" title="pyEDW.metrics.mutual_information"><code class="xref py py-func docutils literal notranslate"><span class="pre">mutual_information()</span></code></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dI</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">=</span> <span class="pre">I(e1:e2)</span> <span class="pre">-</span> <span class="pre">I0(e1:e2)</span></code>                          (<a class="reference internal" href="#pyEDW.metrics.delta_I" title="pyEDW.metrics.delta_I"><code class="xref py py-func docutils literal notranslate"><span class="pre">delta_I()</span></code></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C(a1:a2||E)</span> <span class="pre">=</span> <span class="pre">H[a1]</span> <span class="pre">+</span> <span class="pre">H[a2]</span> <span class="pre">+</span> <span class="pre">H[e1</span> <span class="pre">e2]</span> <span class="pre">+</span> <span class="pre">H[a1</span> <span class="pre">a2</span> <span class="pre">e1</span> <span class="pre">e2]</span></code>
+``           - H[a1 a2] - H[a1 e1 e2] - H[a2 e1 e2]``       (<a class="reference internal" href="#pyEDW.metrics.cooperation" title="pyEDW.metrics.cooperation"><code class="xref py py-func docutils literal notranslate"><span class="pre">cooperation()</span></code></a>)</p></li>
+</ul>
+<p>Reference: Sowinski, Ghoshal &amp; Frank, <em>Planet. Sci. J.</em> <strong>6</strong>, 176 (2025),
+Section 4 and Appendix B.3.</p>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.metrics.entropy_table">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.metrics.</span></span><span class="sig-name descname"><span class="pre">entropy_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/metrics.html#entropy_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.metrics.entropy_table" title="Link to this definition"></a></dt>
+<dd><p>Per-luminosity entropy table for a biotic endpoint ensemble.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>numpy.ndarray</em>) – Ensemble endpoints of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code> with the last axis
+<code class="docutils literal notranslate"><span class="pre">[f_B,</span> <span class="pre">f_W,</span> <span class="pre">T,</span> <span class="pre">L]</span></code> (from
+<a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyEDW.model.ExoDaisyWorld.ensemble()</span></code></a>).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array <code class="docutils literal notranslate"><span class="pre">H</span></code> of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">16)</span></code>; see the module docstring for the
+column layout. Luminosities with fewer than two living instances
+(<code class="docutils literal notranslate"><span class="pre">f_B</span> <span class="pre">f_W</span> <span class="pre">&gt;</span> <span class="pre">1e-7</span></code>) are left as <code class="docutils literal notranslate"><span class="pre">NaN</span></code> except the bin count.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.metrics.entropy_table_env">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.metrics.</span></span><span class="sig-name descname"><span class="pre">entropy_table_env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_env</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/metrics.html#entropy_table_env"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.metrics.entropy_table_env" title="Link to this definition"></a></dt>
+<dd><p>Environment-only entropy table for the agent-free ensemble.</p>
+<p>Ports the <code class="docutils literal notranslate"><span class="pre">data_entropyE</span></code> block: with the biome removed, only <code class="docutils literal notranslate"><span class="pre">(T,</span> <span class="pre">L)</span></code>
+vary. The bin count is fixed by the full instance count <code class="docutils literal notranslate"><span class="pre">N</span></code> (not a living
+subset), matching <code class="docutils literal notranslate"><span class="pre">Nbins</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">ceil(sqrt(N))</span></code> in the MATLAB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_env</strong> (<em>numpy.ndarray</em>) – Agent-free endpoints of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">4)</span></code> with columns <code class="docutils literal notranslate"><span class="pre">[H[e1],</span> <span class="pre">H[e2],</span> <span class="pre">H[e1</span> <span class="pre">e2],</span>
+<span class="pre">N_bins]</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.metrics.viability">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.metrics.</span></span><span class="sig-name descname"><span class="pre">viability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/metrics.html#viability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.metrics.viability" title="Link to this definition"></a></dt>
+<dd><p>Viability <code class="docutils literal notranslate"><span class="pre">V</span> <span class="pre">=</span> <span class="pre">E^A[(f_B</span> <span class="pre">+</span> <span class="pre">f_W)/f]</span></code> per luminosity (Eq. 9).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>numpy.ndarray</em>) – Ensemble endpoints <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p></li>
+<li><p><strong>f</strong> (<em>float</em>) – Habitable land fraction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">V</span></code> of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,)</span></code>, the ensemble-mean occupied fraction of the
+habitable area (<code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">V</span> <span class="pre">&lt;=</span> <span class="pre">1</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.metrics.efficacy">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.metrics.</span></span><span class="sig-name descname"><span class="pre">efficacy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/metrics.html#efficacy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.metrics.efficacy" title="Link to this definition"></a></dt>
+<dd><p>Thermoregulatory efficacy <code class="docutils literal notranslate"><span class="pre">E</span> <span class="pre">=</span> <span class="pre">&lt;T&gt;</span> <span class="pre">-</span> <span class="pre">1</span></code> per luminosity.</p>
+<p>The mean planetary temperature’s deviation from the optimum (in units of
+<code class="docutils literal notranslate"><span class="pre">T_opt</span></code>); zero means the biome holds the surface exactly at <code class="docutils literal notranslate"><span class="pre">T_opt</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.metrics.mutual_information">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.metrics.</span></span><span class="sig-name descname"><span class="pre">mutual_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/metrics.html#mutual_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.metrics.mutual_information" title="Link to this definition"></a></dt>
+<dd><p>Agent-environment mutual information <code class="docutils literal notranslate"><span class="pre">I(A:E)</span></code> (bits).</p>
+<p><code class="docutils literal notranslate"><span class="pre">I(A:E)</span> <span class="pre">=</span> <span class="pre">H[e1</span> <span class="pre">e2]</span> <span class="pre">+</span> <span class="pre">H[a1</span> <span class="pre">a2]</span> <span class="pre">-</span> <span class="pre">H[a1</span> <span class="pre">a2</span> <span class="pre">e1</span> <span class="pre">e2]</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.metrics.intra_environment_information">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.metrics.</span></span><span class="sig-name descname"><span class="pre">intra_environment_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/metrics.html#intra_environment_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.metrics.intra_environment_information" title="Link to this definition"></a></dt>
+<dd><p>Intra-environment correlation <code class="docutils literal notranslate"><span class="pre">I(e1:e2)</span> <span class="pre">=</span> <span class="pre">H[e1]</span> <span class="pre">+</span> <span class="pre">H[e2]</span> <span class="pre">-</span> <span class="pre">H[e1</span> <span class="pre">e2]</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.metrics.delta_I">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.metrics.</span></span><span class="sig-name descname"><span class="pre">delta_I</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H_env</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/metrics.html#delta_I"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.metrics.delta_I" title="Link to this definition"></a></dt>
+<dd><p>Agent-induced change in intra-environment correlation, <code class="docutils literal notranslate"><span class="pre">dI</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dI</span> <span class="pre">=</span> <span class="pre">I(e1:e2)</span> <span class="pre">-</span> <span class="pre">I0(e1:e2)</span></code> (Eq. 12): the intra-environment mutual
+information with the biome present minus its agent-free value. Positive
+means the biome strengthens the temperature-luminosity correlation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>H</strong> (<em>numpy.ndarray</em>) – Biotic entropy table, shape <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">16)</span></code> from <a class="reference internal" href="#pyEDW.metrics.entropy_table" title="pyEDW.metrics.entropy_table"><code class="xref py py-func docutils literal notranslate"><span class="pre">entropy_table()</span></code></a>.</p></li>
+<li><p><strong>H_env</strong> (<em>numpy.ndarray</em>) – Agent-free table, shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">4)</span></code> from <a class="reference internal" href="#pyEDW.metrics.entropy_table_env" title="pyEDW.metrics.entropy_table_env"><code class="xref py py-func docutils literal notranslate"><span class="pre">entropy_table_env()</span></code></a>,
+broadcast against <code class="docutils literal notranslate"><span class="pre">H</span></code> along the luminosity axis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">dI</span></code> in bits.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.metrics.cooperation">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.metrics.</span></span><span class="sig-name descname"><span class="pre">cooperation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/metrics.html#cooperation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.metrics.cooperation" title="Link to this definition"></a></dt>
+<dd><p>Intra-agent cooperation given the environment, <code class="docutils literal notranslate"><span class="pre">C(a1:a2||E)</span></code> (Eq. 14).</p>
+<p>The interaction information</p>
+<p><code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">=</span> <span class="pre">H[a1]</span> <span class="pre">+</span> <span class="pre">H[a2]</span> <span class="pre">+</span> <span class="pre">H[e1</span> <span class="pre">e2]</span> <span class="pre">+</span> <span class="pre">H[a1</span> <span class="pre">a2</span> <span class="pre">e1</span> <span class="pre">e2]</span></code>
+``  - H[a1 a2] - H[a1 e1 e2] - H[a2 e1 e2]``,</p>
+<p>equal to <code class="docutils literal notranslate"><span class="pre">I(a1:a2)</span> <span class="pre">-</span> <span class="pre">I(a1:a2</span> <span class="pre">|</span> <span class="pre">E)</span></code>. Negative values indicate a synergistic
+effect where the environment enhances the correlation between the two daisy
+species.</p>
+</dd></dl>
+
+</section>
+<section id="module-pyEDW.figures">
+<span id="pyedw-figures"></span><h2>pyEDW.figures<a class="headerlink" href="#module-pyEDW.figures" title="Link to this heading"></a></h2>
+<p>Plotting helpers that regenerate the figures of the eDW paper.</p>
+<p>These port the visual content of <code class="docutils literal notranslate"><span class="pre">makeFIG1.m</span></code> – <code class="docutils literal notranslate"><span class="pre">makeFig5.m</span></code>. Each
+function takes an endpoint ensemble (and, where needed, a precomputed entropy
+table) and returns a Matplotlib <code class="docutils literal notranslate"><span class="pre">(fig,</span> <span class="pre">axes)</span></code> pair, so the caller controls
+saving and styling. Colors follow the paper: white daisies in pink, black
+daisies in blue, temperature in green.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pyEDW.figures.ensemble_scatter" title="pyEDW.figures.ensemble_scatter"><code class="xref py py-func docutils literal notranslate"><span class="pre">ensemble_scatter()</span></code></a>   – Fig. 1: daisy fractions, albedo, and
+temperature scattered over luminosity for one growth-rate bandwidth.</p></li>
+<li><p><a class="reference internal" href="#pyEDW.figures.corner" title="pyEDW.figures.corner"><code class="xref py py-func docutils literal notranslate"><span class="pre">corner()</span></code></a>             – Fig. 2: pairwise joint distribution of the four
+dof at a single luminosity.</p></li>
+<li><p><a class="reference internal" href="#pyEDW.figures.cooperation_vs_deltaI" title="pyEDW.figures.cooperation_vs_deltaI"><code class="xref py py-func docutils literal notranslate"><span class="pre">cooperation_vs_deltaI()</span></code></a> – Fig. 4: cooperation against the
+agent-induced correlation change, split by viability.</p></li>
+<li><p><a class="reference internal" href="#pyEDW.figures.information_vs_viability" title="pyEDW.figures.information_vs_viability"><code class="xref py py-func docutils literal notranslate"><span class="pre">information_vs_viability()</span></code></a> – Fig. 5: I(A:E) against viability.</p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.figures.albedo">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.figures.</span></span><span class="sig-name descname"><span class="pre">albedo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/figures.html#albedo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.figures.albedo" title="Link to this definition"></a></dt>
+<dd><p>Planetary albedo per instance, <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">=</span> <span class="pre">A_G</span> <span class="pre">+</span> <span class="pre">dA_B</span> <span class="pre">f_B</span> <span class="pre">+</span> <span class="pre">dA_W</span> <span class="pre">f_W</span></code> (Eq. 2).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.figures.ensemble_scatter">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.figures.</span></span><span class="sig-name descname"><span class="pre">ensemble_scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/figures.html#ensemble_scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.figures.ensemble_scatter" title="Link to this definition"></a></dt>
+<dd><p>Fig. 1: one bandwidth column – fractions, albedo, temperature vs L.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>numpy.ndarray</em>) – Endpoint ensemble <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p></li>
+<li><p><strong>params</strong> (<a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><em>pyEDW.model.Parameters</em></a>) – Parameters used to generate <code class="docutils literal notranslate"><span class="pre">data</span></code> (for albedo and <code class="docutils literal notranslate"><span class="pre">T_opt</span></code> lines).</p></li>
+<li><p><strong>Ls</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Luminosity axis; defaults to <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">linspace(-0.7,</span> <span class="pre">1.4,</span> <span class="pre">n_lum)</span></code>.</p></li>
+<li><p><strong>s</strong> (<em>float</em>) – Scatter marker size and opacity.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Scatter marker size and opacity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Figure and its three stacked axes (fractions, albedo, temperature).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(matplotlib.figure.Figure, numpy.ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.figures.corner">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.figures.</span></span><span class="sig-name descname"><span class="pre">corner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ll</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('$f_B$',</span> <span class="pre">'$f_W$',</span> <span class="pre">'$T$',</span> <span class="pre">'$L$')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/figures.html#corner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.figures.corner" title="Link to this definition"></a></dt>
+<dd><p>Fig. 2: corner plot of the four dof at luminosity index <code class="docutils literal notranslate"><span class="pre">ll</span></code>.</p>
+<p>Diagonal panels show the marginal histograms; lower-triangle panels show
+the pairwise joint densities, revealing the intra-agent (<code class="docutils literal notranslate"><span class="pre">f_B</span></code> vs
+<code class="docutils literal notranslate"><span class="pre">f_W</span></code>) and intra-environment (<code class="docutils literal notranslate"><span class="pre">T</span></code> vs <code class="docutils literal notranslate"><span class="pre">L</span></code>) correlations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Figure and its <code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">x</span> <span class="pre">4</span></code> axis grid.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(matplotlib.figure.Figure, numpy.ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.figures.cooperation_vs_deltaI">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.figures.</span></span><span class="sig-name descname"><span class="pre">cooperation_vs_deltaI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viability</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_hi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_lo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/figures.html#cooperation_vs_deltaI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.figures.cooperation_vs_deltaI" title="Link to this definition"></a></dt>
+<dd><p>Fig. 4: cooperation <code class="docutils literal notranslate"><span class="pre">C(a1:a2||E)</span></code> vs correlation change <code class="docutils literal notranslate"><span class="pre">dI</span></code>.</p>
+<p>Points are pooled over luminosity (and, if 2-D, bandwidth) and split into
+high- and low-viability clouds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>H</strong> (<em>numpy.ndarray</em>) – Entropy table of shape <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">16)</span></code> from <a class="reference internal" href="#module-pyEDW.metrics" title="pyEDW.metrics"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyEDW.metrics()</span></code></a>.</p></li>
+<li><p><strong>viability</strong> (<em>numpy.ndarray</em>) – Viability broadcastable to <code class="docutils literal notranslate"><span class="pre">H[...,</span> <span class="pre">0]</span></code>.</p></li>
+<li><p><strong>v_hi</strong> (<em>float</em>) – Viability thresholds for the two clouds.</p></li>
+<li><p><strong>v_lo</strong> (<em>float</em>) – Viability thresholds for the two clouds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(matplotlib.figure.Figure, matplotlib.axes.Axes)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyEDW.figures.information_vs_viability">
+<span class="sig-prename descclassname"><span class="pre">pyEDW.figures.</span></span><span class="sig-name descname"><span class="pre">information_vs_viability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viability</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/figures.html#information_vs_viability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.figures.information_vs_viability" title="Link to this definition"></a></dt>
+<dd><p>Fig. 5: agent-environment information <code class="docutils literal notranslate"><span class="pre">I(A:E)</span></code> vs viability <code class="docutils literal notranslate"><span class="pre">V</span></code>.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../theory.html" class="btn btn-neutral float-left" title="Theory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian R. Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
