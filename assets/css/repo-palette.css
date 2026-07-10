@@ -34,4 +34,9 @@
   --pyleafs-primary: #003b71;
   --pyleafs-nav:     #436776;
   --pyleafs-accent:  #997c81;
+
+  /* pyEDW — biome green masthead / black nav / ForagerPink accent (paper Figs 1-3) */
+  --pyedw-primary:   #006600;
+  --pyedw-nav:       #000000;
+  --pyedw-accent:    #f5a9b8;
 }

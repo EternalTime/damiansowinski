@@ -5,6 +5,7 @@
   const _c   = n => _cs.getPropertyValue(n).trim();
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
   const _rgba = (n, a) => { const [r,g,b] = _rgb(n); return `rgba(${r},${g},${b},${a})`; };
+  const _col  = n => { const [r,g,b] = _rgb(n); return new THREE.Color(r/255, g/255, b/255); };
 
   /* ── Inject CSS ── */
   (function () {
@@ -12,1006 +13,459 @@
     const s = document.createElement('style');
     s.id = 'sho-styles';
     s.textContent = `
-      #sho-ctrl-panel {
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-      }
-      #sho-scrollable {
-        flex: 1;
-        overflow-y: auto;
-        min-height: 0;
-      }
-      #sho-phase-section {
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 6px 10px 8px;
-        border-top: 1px solid var(--border-dark);
-      }
-      #sho-phase-section .applet-shell-ctrl-title {
-        align-self: flex-start;
-        margin-bottom: 4px;
-      }
-      #sho-phase-canvas {
-        display: block;
-      }
+      #sho-ctrl-panel { display:flex; flex-direction:column; overflow:hidden; }
+      #sho-qplot-section { flex:1; min-height:0; display:flex; flex-direction:column; padding:6px 12px 10px; }
+      #sho-qplot { flex:1; min-height:0; width:100%; display:block; }
     `;
     document.head.appendChild(s);
   })();
 
-  /* ── Palette ── */
-  const TEAL_DARK  = _c('--teal-dark');
-  const TEAL_LIGHT = _c('--teal-light');
-  const CYAN       = _c('--cyan');
-  const PINK_LIGHT = _c('--pink-light');
-  const PINK_DARK  = _c('--pink-dark');
-  const BG         = _c('--bg-canvas');
-
-  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
-  const [_PLR, _PLG, _PLB] = _rgb('--pink-light');
-
   /* ── Parameters ── */
-  let mass    = 1.0;
-  let kspring = 1.0;
-  let damping    = 0.0;
-  let driveAmp   = 0.0;
-  let driveFreq  = 1.0;  // Hz
-  let simSpeed   = 1.0;  // multiplier on DT
-  let numMasses  = 6;
-  let bcMode     = 'clamped';   // 'clamped' | 'clamped-open' | 'open'
-  let mode       = '1mass';     // '1mass' | 'lattice'
+  let omega0 = 1.0;    // natural frequency √(k/m)
+  let gammaD = 0.0;    // damping coefficient
+  let driveW = 0.0;    // driving frequency (0 = wall at rest)
 
-  /* ── Simulation state ── */
-  let S = 500;           // canvas side length
-  let canvas, ctx, phaseCvs, phaseCtx;
+  /* ── State ── */
+  let pos = 0, vel = 0, simTime = 0;
   let running = false, frameId = null;
-  let simTime = 0;
 
-  /* Single mass */
-  let pos = 0, vel = 0;
+  /* ── World geometry: wall at x = -HALF, mass equilibrium at x = 0 ── */
+  const HALF     = 4;      // spring rest length (wall face → mass center)
+  const X_MAX    = 3;      // max |displacement| in world units
+  const DRIVE_A  = 0.1;    // wall vibration amplitude (small: 1/40 of rest length)
+  const BALL_R   = 0.45;
 
-  /* Lattice */
-  let lPos, lVel;        // Float64Arrays, length numMasses
-
-  /* Drag state */
-  let dragging     = false;
-  let dragIndex    = -1;   // -1 = single mass, else lattice index
-  let dragStartX   = 0;
-  let dragStartPos = 0;
-
-  /* Phase plot history: ring buffer of {x, p} per mass, last 100 frames */
-  const PHASE_HIST = 100;
-  let phaseHist = [];    // array of arrays: phaseHist[frame][massIdx] = {x, p}
-  let phaseMaxX = null;  // set on drag release; null → use default limits
-
-  /* ── Geometry helpers ── */
-  function eqX() { return S / 2; }
-
-  // Ball radius scales with mass (single mass mode)
-  function massRadius() {
-    const base = S * 0.038;
-    return Math.max(8, Math.min(28, base * Math.pow(mass / 1.0, 0.35)));
+  function wallXNow() {
+    return -HALF + (driveW > 0 ? DRIVE_A * Math.sin(driveW * simTime) : 0);
   }
+  function springRad() { return Math.max(0.02, Math.min(0.10, 0.05 * Math.pow(omega0, 0.9))); }
 
-  /* ── Lattice geometry ──
-     The wall body is wallW px wide. Its inner face is the spring anchor point.
-     Left  inner face: WALL_INNER_L  (= left canvas margin + wallW)
-     Right inner face: WALL_INNER_R  (= right canvas margin - wallW ... but body extends right)
-
-     We define everything in terms of the two inner-face x positions so there
-     is a single source of truth used by drawWallAt, the springs, and latticeEqX. */
-
-  // Wall: a thick block flush against each canvas edge.
-  // WALL_PX is the wall thickness in pixels; the inner face is where springs attach.
-  const WALL_PX = 0.06;   // fraction of S
-  function wallPx()        { return Math.round(S * WALL_PX); }
-  function wallInnerLeft()  { return wallPx(); }
-  function wallInnerRight() { return S - wallPx(); }
-
-  // Geometry: all spring segments (wall-to-end-mass and inter-mass) have the
-  // same rest length g (gap between surfaces).  With N masses of radius r:
-  //   (N+1)*g + 2*r*N = R - L   →   g = (R - L - 2*r*N) / (N+1)
-  // Center-to-center pitch p = g + 2*r.
-  // Wall-face to first-mass-center = g + r.
-
-  // Ball radius: power-law in mass so that 2r/g = 2*A*mass^B (N-independent).
-  // Constraints: 2r/g = 0.10 at mass=0.01, 2r/g = 0.50 at mass=10.
-  //   (10/0.01)^B = 0.5/0.1 = 5  →  B = log(5)/log(1000) = 0.2322
-  //   A = 0.05 / 0.01^B = 0.1457
-  // Self-consistent solution (g depends on r):
-  //   r = A*m^B * (R-L) / (N+1 + 2*N*A*m^B)
-  function latticeMassRadius() {
-    const span = wallInnerRight() - wallInnerLeft();
-    const N    = numMasses;
-    const A    = 0.1457;
-    const B    = 0.2322;
-    const am   = A * Math.pow(mass, B);
-    return Math.max(3, am * span / (N + 1 + 2 * N * am));
-  }
-
-  // Gap (spring rest length in pixels) and pitch (center-to-center).
-  function latticeGap() {
-    const r = latticeMassRadius();
-    return (wallInnerRight() - wallInnerLeft() - 2 * r * numMasses) / (numMasses + 1);
-  }
-  function latticePitch() {
-    return latticeGap() + 2 * latticeMassRadius();
-  }
-
-  // Equilibrium canvas-x of mass i.
-  function latticeEqX(i) {
-    const r = latticeMassRadius();
-    const g = latticeGap();
-    return wallInnerLeft() + (g + r) + i * (g + 2 * r);
-  }
-  // Canvas-x of mass i given its current displacement lPos[i].
-  function latticeMassX(i, comShift) {
-    return latticeEqX(i) + (lPos[i] - (comShift || 0)) * latticeDispScale();
-  }
-  // 1 physical displacement unit = this many canvas pixels.
-  // Set to half the pitch so unit displacement = half a center-to-center spacing.
-  function latticeDispScale() {
-    return latticePitch() * 0.5;
-  }
-
-  /* Convert physical displacement → canvas x (single mass) */
-  function dispToCanvasX(disp) {
-    const scale = S * 0.38;
-    return eqX() + disp * scale;
-  }
-
-  /* Spring line thickness scales with k */
-  function springLineWidth() {
-    return Math.max(0.8, Math.min(5, 1.0 * Math.pow(kspring, 0.45)));
-  }
-
-  /* ── Physics ── */
-  const DT = 0.075;   // seconds per frame (≈60 fps target)
-  const SUBSTEPS = 8;
+  /* ── Physics: base-excited damped oscillator
+     ẍ = -ω₀²(x - x_w) - γ ẋ,   x_w = A sin(ω_d t) ── */
+  const DT = 0.05, SUBSTEPS = 8;
   const dt = DT / SUBSTEPS;
 
-  function stepSingle() {
-    const omega2 = kspring / mass;
-    const t = simTime;
-    // Driving force: F_drive = driveAmp * cos(2π * driveFreq * t)
-    const Fd = driveAmp * Math.cos(2 * Math.PI * driveFreq * t);
-    // Symplectic Euler with damping
+  function step() {
     for (let s = 0; s < SUBSTEPS; s++) {
-      const a = -omega2 * pos - (damping / mass) * vel + Fd / mass;
+      const xw = driveW > 0 ? DRIVE_A * Math.sin(driveW * simTime) : 0;
+      const a  = -omega0 * omega0 * (pos - xw) - gammaD * vel;
       vel += a * dt;
       pos += vel * dt;
+      simTime += dt;
     }
-  }
-
-  function stepLattice() {
-    const N    = numMasses;
-    const dscl = latticeDispScale();
-    // Minimum separation in physical units: 2 * ball_radius / dscl
-    // We recompute each step since mass/N can change between frames.
-    const rPx  = latticeMassRadius();
-    const minSep = (2 * rPx) / dscl;   // physical units
-
-    for (let s = 0; s < SUBSTEPS; s++) {
-      // ── Spring + damping forces ──
-      const acc = new Float64Array(N);
-      for (let i = 0; i < N; i++) {
-        let F = 0;
-        if (i < N - 1) {
-          F += kspring * (lPos[i+1] - lPos[i]);
-        } else {
-          if (bcMode === 'clamped') F += kspring * (0 - lPos[i]);
-        }
-        if (i > 0) {
-          F -= kspring * (lPos[i] - lPos[i-1]);
-        } else {
-          if (bcMode === 'clamped' || bcMode === 'clamped-open') {
-            F -= kspring * lPos[i];
-          }
-        }
-        acc[i] = F / mass - (damping / mass) * lVel[i];
-      }
-
-      // ── Integrate ──
-      for (let i = 0; i < N; i++) {
-        lVel[i] += acc[i] * dt;
-        lPos[i] += lVel[i] * dt;
-      }
-
-      // ── Hard-core collisions: adjacent pairs ──
-      // lPos[i] is displacement from equilibrium, so actual separation in
-      // physical units between mass i and mass i+1 is eqSep + (lPos[j]-lPos[i]),
-      // where eqSep = pitch / dispScale (center-to-center at equilibrium).
-      const eqSep = latticePitch() / dscl;
-      for (let pass = 0; pass < 2; pass++) {
-        const i0 = pass === 0 ? 0 : N - 2;
-        const di = pass === 0 ? 1 : -1;
-        for (let ii = 0; ii < N - 1; ii++) {
-          const i = i0 + ii * di;
-          const j = i + 1;
-          const sep = eqSep + (lPos[j] - lPos[i]);
-          if (sep < minSep) {
-            const overlap = minSep - sep;
-            lPos[i] -= overlap * 0.5;
-            lPos[j] += overlap * 0.5;
-            const vi = lVel[i], vj = lVel[j];
-            if (vi > vj) {
-              lVel[i] = vj;
-              lVel[j] = vi;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /* ── Init ── */
-  function initSingle() {
-    pos = 0; vel = 0; simTime = 0;
-    phaseHist = []; phaseMaxX = null;
-  }
-
-  function initLattice() {
-    lPos = new Float64Array(numMasses);
-    lVel = new Float64Array(numMasses);
-    simTime = 0;
-    phaseHist = []; phaseMaxX = null;
+    if (pos > X_MAX) { pos = X_MAX; if (vel > 0) vel = 0; }
+    const xwMin = wallXNow() + BALL_R + 0.15;
+    if (pos < xwMin) { pos = xwMin; if (vel < 0) vel = 0; }
   }
 
   function init() {
-    if (mode === '1mass') initSingle();
-    else initLattice();
+    pos = 0; vel = 0; simTime = 0;
+    resetMeasurement(true);
   }
 
-  /* ── Phase plot ── */
-  function recordPhase() {
-    const frame = [];
-    if (mode === '1mass') {
-      const p = mass * vel;
-      frame.push({ x: pos, p });
+  /* ── three.js scene ── */
+  let simCanvas, renderer, scene, camera;
+  let massMesh = null, massGlow = null, springMesh = null, wallMesh = null;
+  const LOOK = new (function(){ this.x = -0.5; })();
+  const orbit = { dragging: false, lastX: 0, lastY: 0, theta: Math.PI / 2, phi: 1.30, radius: 8 };
+
+  let _glowTexture = null;
+  function glowTexture() {
+    if (_glowTexture) return _glowTexture;
+    const c = document.createElement('canvas');
+    c.width = c.height = 64;
+    const g = c.getContext('2d');
+    const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grad.addColorStop(0,   'rgba(255,255,255,1)');
+    grad.addColorStop(0.4, 'rgba(255,255,255,0.45)');
+    grad.addColorStop(1,   'rgba(255,255,255,0)');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 64, 64);
+    _glowTexture = new THREE.CanvasTexture(c);
+    return _glowTexture;
+  }
+
+  function clearScene() {
+    if (!scene) return;
+    scene.traverse(obj => {
+      if (obj.geometry) obj.geometry.dispose();
+      if (obj.material) obj.material.dispose();
+    });
+    while (scene.children.length) scene.remove(scene.children[0]);
+    massMesh = massGlow = springMesh = wallMesh = null;
+  }
+
+  function buildScene() {
+    clearScene();
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const dl = new THREE.DirectionalLight(0xffffff, 0.7);
+    dl.position.set(4, 7, 5);
+    scene.add(dl);
+
+    /* Wall: glowing teal bar (vibrates when driven) */
+    const tealL = _col('--teal-light');
+    const wallMat = new THREE.MeshPhongMaterial({ color: tealL, emissive: tealL, emissiveIntensity: 0.85 });
+    wallMesh = new THREE.Mesh(new THREE.BoxGeometry(0.25, 2.6, 2.6), wallMat);
+    wallMesh.position.set(-HALF - 0.125, 0, 0);
+    scene.add(wallMesh);
+
+    /* Mass: white-hot sphere + additive teal halo */
+    const mat = new THREE.MeshPhongMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 1.0, shininess: 80 });
+    massMesh = new THREE.Mesh(new THREE.SphereGeometry(BALL_R, 24, 18), mat);
+    massMesh.position.set(0, 0, 0);
+    scene.add(massMesh);
+    const glowMat = new THREE.SpriteMaterial({ map: glowTexture(), color: _col('--teal-light'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
+    massGlow = new THREE.Sprite(glowMat);
+    massGlow.scale.set(BALL_R * 5.5, BALL_R * 5.5, 1);
+    massGlow.position.copy(massMesh.position);
+    scene.add(massGlow);
+
+    /* Spring: neon cylinder (width ∝ ω₀), recolored by extension each frame */
+    const sr = springRad();
+    const sprMat = new THREE.MeshPhongMaterial({ color: _col('--teal-dark'), emissive: _col('--teal-dark'), emissiveIntensity: 0.8 });
+    springMesh = new THREE.Mesh(new THREE.CylinderGeometry(sr, sr, 1, 8, 1), sprMat);
+    springMesh.rotation.z = Math.PI / 2;
+    scene.add(springMesh);
+
+    updateScene();
+  }
+
+  let _cTealD, _cTealL, _cPinkD, _cPinkL, _cMid, _spring = null;
+  function springColor(ext, scale) {
+    if (!_cTealD) {
+      _cTealD = _col('--teal-dark');  _cTealL = _col('--teal-light');
+      _cPinkD = _col('--pink-dark');  _cPinkL = _col('--pink-light');
+      _cMid   = _cTealD.clone().lerp(_cPinkD, 0.5);
+      _spring = new THREE.Color();
+    }
+    const t = Math.max(0, Math.min(1, Math.abs(ext) / scale));
+    const dark  = ext >= 0 ? _cTealD : _cPinkD;
+    const light = ext >= 0 ? _cTealL : _cPinkL;
+    if (t < 0.5) _spring.copy(_cMid).lerp(dark, t / 0.5);
+    else         _spring.copy(dark).lerp(light, (t - 0.5) / 0.5);
+    return _spring;
+  }
+
+  function updateScene() {
+    const xw = wallXNow();
+    wallMesh.position.x = xw - 0.125;
+    massMesh.position.x = pos;
+    massGlow.position.x = pos;
+    /* spring spans wall face → mass center */
+    const xa = xw, xb = pos;
+    const len = Math.max(Math.abs(xb - xa), 1e-4);
+    springMesh.scale.y = len;
+    springMesh.position.x = (xa + xb) / 2;
+    /* extension relative to rest length HALF */
+    const col = springColor((xb - xa) - HALF, 1.5);
+    springMesh.material.color.copy(col);
+    springMesh.material.emissive.copy(col);
+  }
+
+  function initThree() {
+    if (!renderer) {
+      renderer = new THREE.WebGLRenderer({ canvas: simCanvas, antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setClearColor(_col('--bg-void'), 1);
+      camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+      scene = new THREE.Scene();
+      setupPointerControls();
+      updateCamera();
+    }
+    buildScene();
+    resizeRenderer();
+  }
+
+  function updateCamera() {
+    const { theta, phi, radius } = orbit;
+    camera.position.set(LOOK.x + radius*Math.sin(phi)*Math.cos(theta), radius*Math.cos(phi), radius*Math.sin(phi)*Math.sin(theta));
+    camera.lookAt(LOOK.x, 0, 0);
+  }
+
+  function resizeRenderer() {
+    if (!renderer) return;
+    const w = simCanvas.clientWidth || simCanvas.width, h = simCanvas.clientHeight || simCanvas.height;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+
+  /* ── Pointer: drag the mass if hit, otherwise orbit; wheel zooms (down = in) ── */
+  let draggingMass = false;
+  const _ray = { caster: null, ndc: null, plane: null, hit: null };
+
+  function rayFromEvent(e) {
+    if (!_ray.caster) {
+      _ray.caster = new THREE.Raycaster();
+      _ray.ndc    = new THREE.Vector2();
+      _ray.plane  = new THREE.Plane();
+      _ray.hit    = new THREE.Vector3();
+    }
+    const rect = simCanvas.getBoundingClientRect();
+    _ray.ndc.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    _ray.ndc.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    _ray.caster.setFromCamera(_ray.ndc, camera);
+    return _ray.caster;
+  }
+
+  function setupPointerControls() {
+    simCanvas.addEventListener('pointerdown', e => {
+      const caster = rayFromEvent(e);
+      const hits = massMesh ? caster.intersectObject(massMesh) : [];
+      if (hits.length > 0) {
+        draggingMass = true;
+        vel = 0;
+        resetMeasurement(false);
+      } else {
+        orbit.dragging = true;
+        orbit.lastX = e.clientX; orbit.lastY = e.clientY;
+      }
+      simCanvas.setPointerCapture(e.pointerId);
+    });
+    simCanvas.addEventListener('pointermove', e => {
+      if (draggingMass) {
+        const caster = rayFromEvent(e);
+        const n = camera.getWorldDirection(new THREE.Vector3());
+        _ray.plane.setFromNormalAndCoplanarPoint(n, new THREE.Vector3(LOOK.x, 0, 0));
+        if (caster.ray.intersectPlane(_ray.plane, _ray.hit)) {
+          pos = Math.max(wallXNow() + BALL_R + 0.3, Math.min(X_MAX, _ray.hit.x));
+          vel = 0;
+          if (!running) { updateScene(); renderer.render(scene, camera); }
+        }
+      } else if (orbit.dragging) {
+        orbit.theta -= (e.clientX - orbit.lastX) * 0.008;
+        orbit.phi = Math.max(0.15, Math.min(Math.PI - 0.15, orbit.phi + (e.clientY - orbit.lastY) * 0.008));
+        orbit.lastX = e.clientX; orbit.lastY = e.clientY;
+        updateCamera();
+        if (!running) renderer.render(scene, camera);
+      }
+    });
+    const release = () => { draggingMass = false; orbit.dragging = false; };
+    simCanvas.addEventListener('pointerup', release);
+    simCanvas.addEventListener('pointercancel', release);
+    simCanvas.addEventListener('wheel', e => {
+      e.preventDefault();
+      /* scroll down = zoom in */
+      orbit.radius = Math.max(3, Math.min(22, orbit.radius - e.deltaY * 0.01));
+      updateCamera();
+      if (!running) renderer.render(scene, camera);
+    }, { passive: false });
+  }
+
+  /* ── Resonance-response plot: gain G(ω_d) = X_steady / A ──
+     Theory curve for the current ω₀, γ (its peak ≈ Q = ω₀/γ) plus live
+     measured dots: after each change the sim settles, then max|x| is
+     measured over a few drive periods and plotted at the current ω_d. */
+  let qCanvas, qCtx;
+  const W_PLOT_MAX = 4;                  // matches the drive slider range
+  const measured = new Map();            // round(ω·20) → measured gain
+  const T_SETTLE = 12, T_MEAS_MIN = 8;   // sim-time seconds
+  let measClock = 0, measuring = false, measAmp = 0;
+
+  function resetMeasurement(clearAll) {
+    if (clearAll) measured.clear();
+    measClock = 0; measAmp = 0; measuring = false;
+  }
+
+  function updateMeasurement() {
+    if (driveW <= 0 || draggingMass) return;
+    measClock += DT;
+    if (!measuring) {
+      if (measClock >= T_SETTLE) { measuring = true; measAmp = 0; measClock = 0; }
     } else {
-      for (let i = 0; i < numMasses; i++) {
-        frame.push({ x: lPos[i], p: mass * lVel[i] });
+      if (Math.abs(pos) > measAmp) measAmp = Math.abs(pos);
+      const T_MEAS = Math.max(T_MEAS_MIN, 3 * 2 * Math.PI / driveW);
+      if (measClock >= T_MEAS) {
+        measured.set(Math.round(driveW * 20), measAmp / DRIVE_A);
+        measAmp = 0; measClock = 0;   // keep re-measuring, updating the dot
       }
     }
-    phaseHist.push(frame);
-    if (phaseHist.length > PHASE_HIST) phaseHist.shift();
   }
 
-  function resizePhaseCanvas() {
-    if (!phaseCvs) return;
-    const ctrl = document.getElementById('sho-ctrl-panel');
-    const side = ctrl ? Math.floor(ctrl.offsetWidth * 0.85) : 180;
-    phaseCvs.width  = side;
-    phaseCvs.height = side;
+  function gainTheory(w) {
+    const d = omega0 * omega0 - w * w;
+    const den = Math.sqrt(d * d + gammaD * gammaD * w * w);
+    return den > 1e-9 ? (omega0 * omega0) / den : 1e9;
   }
 
-  function renderPhase() {
-    const W = phaseCvs.width  || 120;
-    const H = phaseCvs.height || 120;
-
-    // Solid background matching control panel
-    phaseCtx.fillStyle = _c('--bg-dark');
-    phaseCtx.fillRect(0, 0, W, H);
-
-    const nM = (mode === '1mass') ? 1 : numMasses;
-
-    // Axis limits: use drag amplitude if set, otherwise sensible defaults.
-    let maxX, maxP;
-    if (phaseMaxX !== null) {
-      maxX = phaseMaxX;
-    } else if (mode === '1mass') {
-      maxX = 1.0;
-    } else {
-      maxX = latticePitch() / latticeDispScale() * 0.5;
+  function resizeQCanvas() {
+    if (!qCanvas) return;
+    const sect = qCanvas.closest('#sho-qplot-section');
+    if (!sect) return;
+    const w = sect.clientWidth - 24, h = sect.clientHeight - 30;
+    if (w > 0 && h > 0 && (qCanvas.width !== w || qCanvas.height !== h)) {
+      qCanvas.width = w; qCanvas.height = h;
     }
-    maxP = Math.sqrt(kspring * mass) * maxX;
+  }
 
-    const shellFs = parseFloat(getComputedStyle(document.getElementById('sho-overlay') || document.documentElement).getPropertyValue('--shell-fs') || '1');
-    const fontSize = Math.round(16 * shellFs);
-    const PL = fontSize * 3.8, PR = 8, PT = 10, PB = fontSize * 1.8;
+  function renderQPlot() {
+    if (!qCtx) return;
+    resizeQCanvas();
+    const W = qCanvas.width, H = qCanvas.height;
+    if (W === 0 || H === 0) return;
+    qCtx.fillStyle = _c('--bg-dark');
+    qCtx.fillRect(0, 0, W, H);
+    const PL = 26, PR = 8, PT = 8, PB = 18;
     const pw = W - PL - PR, ph = H - PT - PB;
-    const cx = PL + pw / 2, cy = PT + ph / 2;
 
-    // Axes
-    phaseCtx.strokeStyle = _rgba('--text-dim', 0.60);
-    phaseCtx.lineWidth = 1;
-    phaseCtx.beginPath();
-    phaseCtx.moveTo(PL, cy); phaseCtx.lineTo(PL + pw, cy);
-    phaseCtx.moveTo(cx, PT); phaseCtx.lineTo(cx, PT + ph);
-    phaseCtx.stroke();
-
-    // Axis labels
-    phaseCtx.fillStyle = _c('--text-dim');
-    phaseCtx.font = `${fontSize}px 'EB Garamond', Georgia, serif`;
-    phaseCtx.textAlign = 'center';
-    phaseCtx.textBaseline = 'bottom';
-    phaseCtx.fillText('Position', PL + pw / 2, H);
-    phaseCtx.save();
-    phaseCtx.textBaseline = 'top';
-    phaseCtx.translate(0, PT + ph / 2);
-    phaseCtx.rotate(-Math.PI / 2);
-    phaseCtx.fillText('Momentum', 0, 1);
-    phaseCtx.restore();
-
-    if (phaseHist.length === 0) return;
-
-    // Alpha scale with number of masses — newest frame fully opaque
-    const baseAlpha = Math.max(0.08, Math.min(0.5, 0.5 / Math.sqrt(nM)));
-    const blobR = Math.max(1.25, Math.min(2, W * 0.011));
-
-    if (blobSpriteR !== blobR) buildBlobSprites(blobR);
-    const half = blobSprites[0].width / 2;
-
-    const nFrames = phaseHist.length;
-    for (let fi = 0; fi < nFrames; fi++) {
-      const frame = phaseHist[fi];
-      const ageFrac = (fi + 1) / nFrames;   // 0→oldest approaching 0 alpha, 1→newest
-      const alpha = baseAlpha * ageFrac * ageFrac;  // quadratic fade
-      phaseCtx.globalAlpha = Math.min(1, alpha * 2.5);
-
-      for (let mi = 0; mi < frame.length; mi++) {
-        const { x, p } = frame[mi];
-        const bx = cx + (x / maxX) * (pw / 2);
-        const by = cy - (p / maxP) * (ph / 2);
-        const t  = nM === 1 ? 0 : mi / Math.max(nM - 1, 1);
-        const ci = (t * (N_BLOB_C - 1) + 0.5) | 0;
-        phaseCtx.drawImage(blobSprites[ci], bx - half, by - half);
-      }
+    /* y-scale from theory peak (capped) and any measured overshoot */
+    let gMax = 1;
+    for (let s = 0; s <= 100; s++) {
+      const g = gainTheory((s / 100) * W_PLOT_MAX);
+      if (g > gMax) gMax = g;
     }
-    phaseCtx.globalAlpha = 1;
+    for (const g of measured.values()) if (g > gMax) gMax = g;
+    gMax = Math.min(40, gMax) * 1.15;
+
+    const toX = w => PL + (w / W_PLOT_MAX) * pw;
+    const toY = g => PT + ph * (1 - Math.min(g, gMax) / gMax);
+
+    /* axes */
+    qCtx.strokeStyle = _rgba('--text-dim', 0.35);
+    qCtx.lineWidth = 1;
+    qCtx.beginPath();
+    qCtx.moveTo(PL, PT); qCtx.lineTo(PL, PT + ph); qCtx.lineTo(PL + pw, PT + ph);
+    qCtx.stroke();
+    /* G = 1 reference */
+    qCtx.setLineDash([3, 5]);
+    qCtx.beginPath();
+    qCtx.moveTo(PL, toY(1)); qCtx.lineTo(PL + pw, toY(1));
+    qCtx.stroke();
+    qCtx.setLineDash([]);
+    qCtx.fillStyle = _rgba('--text-dim', 0.6);
+    qCtx.font = `11px 'EB Garamond', Georgia, serif`;
+    qCtx.textAlign = 'center'; qCtx.textBaseline = 'top';
+    qCtx.fillText('ω_d', PL + pw / 2, PT + ph + 4);
+    qCtx.save();
+    qCtx.translate(10, PT + ph / 2); qCtx.rotate(-Math.PI / 2);
+    qCtx.textBaseline = 'middle';
+    qCtx.fillText('gain', 0, 0);
+    qCtx.restore();
+    if (gammaD > 0.005) {
+      qCtx.textAlign = 'right';
+      qCtx.fillStyle = _rgba('--teal-light', 0.8);
+      qCtx.fillText('Q ≈ ' + (omega0 / gammaD).toFixed(1), W - 10, PT + 2);
+    }
+
+    /* theory curve — neon */
+    qCtx.save();
+    qCtx.shadowColor = _c('--teal-dark');
+    qCtx.shadowBlur  = 10;
+    qCtx.strokeStyle = _c('--teal-light');
+    qCtx.lineWidth   = 1.6;
+    qCtx.beginPath();
+    for (let s = 0; s <= 140; s++) {
+      const w = (s / 140) * W_PLOT_MAX;
+      const x = toX(w), y = toY(gainTheory(w));
+      s === 0 ? qCtx.moveTo(x, y) : qCtx.lineTo(x, y);
+    }
+    qCtx.stroke();
+    qCtx.restore();
+
+    /* current drive frequency marker */
+    if (driveW > 0) {
+      qCtx.save();
+      qCtx.setLineDash([4, 5]);
+      qCtx.strokeStyle = _rgba('--pink-light', 0.5);
+      qCtx.beginPath();
+      qCtx.moveTo(toX(driveW), PT); qCtx.lineTo(toX(driveW), PT + ph);
+      qCtx.stroke();
+      qCtx.restore();
+    }
+
+    /* measured dots — glowing pink */
+    qCtx.save();
+    qCtx.shadowColor = _c('--pink-dark');
+    qCtx.shadowBlur  = 8;
+    qCtx.fillStyle   = _c('--pink-light');
+    for (const [key, g] of measured) {
+      const w = key / 20;
+      qCtx.beginPath();
+      qCtx.arc(toX(w), toY(g), 2.6, 0, Math.PI * 2);
+      qCtx.fill();
+    }
+    qCtx.restore();
   }
 
-  /* Cached phase-blob sprites: color buckets teal→pink, rebuilt when radius changes */
-  const N_BLOB_C = 16;
-  let blobSprites = null, blobSpriteR = -1;
-
-  function buildBlobSprites(blobR) {
-    blobSprites = new Array(N_BLOB_C);
-    blobSpriteR = blobR;
-    const R3 = blobR * 3;
-    const size = Math.ceil(2 * R3) + 2;
-    for (let ci = 0; ci < N_BLOB_C; ci++) {
-      const t = ci / (N_BLOB_C - 1);
-      const r = Math.round(_TLR + (_PLR - _TLR) * t);
-      const g = Math.round(_TLG + (_PLG - _TLG) * t);
-      const b = Math.round(_TLB + (_PLB - _TLB) * t);
-      const cnv = document.createElement('canvas');
-      cnv.width = cnv.height = size;
-      const c2 = cnv.getContext('2d');
-      const cc = size / 2;
-      const grd = c2.createRadialGradient(cc, cc, 0, cc, cc, R3);
-      grd.addColorStop(0,    `rgba(${r},${g},${b},1)`);
-      grd.addColorStop(0.35, `rgba(${r},${g},${b},0.4)`);
-      grd.addColorStop(1,    `rgba(${r},${g},${b},0)`);
-      c2.beginPath(); c2.arc(cc, cc, R3, 0, Math.PI * 2);
-      c2.fillStyle = grd; c2.fill();
-      blobSprites[ci] = cnv;
-    }
-  }
-
-  /* ── Draw 3-D shaded ball (sprite-cached by radius+color) ── */
-  const _ballCache = new Map();
-  let _panelGrd = null, _panelKey = '';
-
-  function buildBallSprite(r, cr, cg, cb) {
-    /* Neon orb: white-hot core → given (light) color → transparent edge */
-    const pad  = 1;
-    const size = Math.ceil(2 * r) + 2 * pad;
-    const cx = r + pad, cy = r + pad;
-    const cnv = document.createElement('canvas');
-    cnv.width = cnv.height = size;
-    const ctx = cnv.getContext('2d');
-    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-    grad.addColorStop(0.0,  `rgba(255,255,255,1.0)`);
-    grad.addColorStop(0.35, `rgba(255,255,255,0.95)`);
-    grad.addColorStop(0.65, `rgba(${cr},${cg},${cb},0.9)`);
-    grad.addColorStop(1.0,  `rgba(${cr},${cg},${cb},0)`);
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
-    ctx.fill();
-    /* Additive halo: darkened color, larger radius */
-    const dr = Math.round(cr * 0.55), dg = Math.round(cg * 0.55), db = Math.round(cb * 0.55);
-    const gR = r * 2.4;
-    const gcnv = document.createElement('canvas');
-    gcnv.width = gcnv.height = Math.ceil(2 * gR) + 2;
-    const gctx = gcnv.getContext('2d');
-    const gcx = gcnv.width / 2, gcy = gcnv.height / 2;
-    const gg = gctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, gR);
-    gg.addColorStop(0.0, `rgba(${dr},${dg},${db},0.55)`);
-    gg.addColorStop(0.4, `rgba(${dr},${dg},${db},0.20)`);
-    gg.addColorStop(1.0, `rgba(${dr},${dg},${db},0)`);
-    gctx.beginPath();
-    gctx.arc(gcx, gcy, gR, 0, Math.PI * 2);
-    gctx.fillStyle = gg;
-    gctx.fill();
-    return { canvas: cnv, cx, cy, glow: gcnv, gcx, gcy };
-  }
-
-  function drawBall(ctx, x, y, r, colorRGB) {
-    const [cr, cg, cb] = colorRGB;
-    const key = ((r * 4 + 0.5) | 0) + '|' + cr + ',' + cg + ',' + cb;
-    let spr = _ballCache.get(key);
-    if (!spr) {
-      if (_ballCache.size > 64) _ballCache.clear();
-      spr = buildBallSprite(r, cr, cg, cb);
-      _ballCache.set(key, spr);
-    }
-    ctx.save();
-    ctx.globalCompositeOperation = 'lighter';
-    ctx.drawImage(spr.glow, x - spr.gcx, y - spr.gcy);
-    ctx.restore();
-    ctx.drawImage(spr.canvas, x - spr.cx, y - spr.cy);
-  }
-
-  /* ── Draw spring (zigzag) ── */
-  function drawSpring(ctx, x1, y, x2, coils, color) {
-    const len = x2 - x1;
-    if (Math.abs(len) < 1) return;
-    const n   = Math.max(4, coils * 2);
-    const amp = Math.min(5, S * 0.009);
-    ctx.beginPath();
-    ctx.moveTo(x1, y);
-    for (let i = 1; i < n; i++) {
-      const tx = x1 + (i / n) * len;
-      const ty = y + (i % 2 === 0 ? -amp : amp);
-      ctx.lineTo(tx, ty);
-    }
-    ctx.lineTo(x2, y);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = springLineWidth();
-    ctx.stroke();
-  }
-
-  /* ── Draw wall ──
-     x is always the inner face (the face touching the spring).
-     side='left'  → wall body extends leftward  from x (toward canvas left edge)
-     side='right' → wall body extends rightward from x (toward canvas right edge) */
-  // innerFaceX: the x coordinate of the wall face that touches the springs.
-  // side='left'  → body is to the LEFT  of innerFaceX (wx = 0)
-  // side='right' → body is to the RIGHT of innerFaceX (wx = innerFaceX, extends to S)
-  function drawWallAt(innerFaceX, side) {
-    const cy    = S / 2;
-    const wallH = S * 0.30;
-    const wx    = side === 'left' ? 0 : innerFaceX;
-    const ww    = side === 'left' ? innerFaceX : S - innerFaceX;
-    ctx.fillStyle = 'rgba(255,255,255,0.10)';
-    ctx.fillRect(wx, cy - wallH / 2, ww, wallH);
-    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-    ctx.lineWidth = 1;
-    for (let yy = cy - wallH / 2; yy < cy + wallH / 2; yy += 8) {
-      ctx.beginPath();
-      ctx.moveTo(wx, yy); ctx.lineTo(wx + Math.min(ww, 12), yy + 6);
-      ctx.stroke();
-    }
-    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(innerFaceX, cy - wallH / 2);
-    ctx.lineTo(innerFaceX, cy + wallH / 2);
-    ctx.stroke();
-  }
-
-  /* ── Driving force arrow ── */
-  function renderDriveArrow() {
-    if (driveAmp === 0) return;
-
-    const cy      = S / 4;          // vertical centre: upper quarter of canvas
-    const cx      = S / 2;
-    const maxLen  = S * 0.32;       // fixed: slider max (4) maps to this length
-    const AMP_MAX = 4.0;            // must match slider max
-
-    // Instantaneous force value
-    const F    = driveAmp * Math.cos(2 * Math.PI * driveFreq * simTime);
-    const frac = F / AMP_MAX;       // in [-1, 1] relative to slider max
-    const len  = frac * maxLen;     // signed canvas length
-    if (Math.abs(len) < 1) return;
-
-    const dir   = Math.sign(len);
-    const absL  = Math.abs(len);
-    const headL = Math.min(absL * 0.28, S * 0.045);
-    const headW = headL * 0.65;
-    const arrowW = 3;
-
-    const x1 = cx;
-    const x2 = cx + len;
-
-    ctx.save();
-
-    // Pink glowing background panel (gradient cached until geometry changes)
-    const panelH = S * 0.10;
-    const panelW = maxLen * 2 + S * 0.08;
-    const pKey = cx + '|' + cy + '|' + panelW;
-    if (_panelKey !== pKey) {
-      _panelGrd = ctx.createRadialGradient(cx, cy, 0, cx, cy, panelW * 0.55);
-      _panelGrd.addColorStop(0,   _rgba('--pink-dark', 0.18));
-      _panelGrd.addColorStop(0.6, _rgba('--pink-dark', 0.07));
-      _panelGrd.addColorStop(1,   _rgba('--pink-dark', 0));
-      _panelKey = pKey;
-    }
-    ctx.fillStyle = _panelGrd;
-    ctx.fillRect(cx - panelW / 2, cy - panelH / 2, panelW, panelH);
-
-    // Arrow shaft with glow
-    ctx.shadowColor = PINK_DARK;
-    ctx.shadowBlur  = 14;
-    ctx.strokeStyle = PINK_LIGHT;
-    ctx.lineWidth   = arrowW;
-    ctx.lineCap     = 'round';
-    ctx.beginPath();
-    ctx.moveTo(x1, cy);
-    ctx.lineTo(x2 - dir * headL, cy);
-    ctx.stroke();
-
-    // Arrowhead
-    ctx.fillStyle = PINK_LIGHT;
-    ctx.beginPath();
-    ctx.moveTo(x2, cy);
-    ctx.lineTo(x2 - dir * headL, cy - headW);
-    ctx.lineTo(x2 - dir * headL, cy + headW);
-    ctx.closePath();
-    ctx.fill();
-
-    // Small origin dot
-    ctx.beginPath();
-    ctx.arc(cx, cy, 3, 0, Math.PI * 2);
-    ctx.fillStyle = PINK_LIGHT;
-    ctx.fill();
-
-    ctx.restore();
-  }
-
-  /* ── Render single mass ── */
-  function renderSingle() {
-    ctx.fillStyle = BG;
-    ctx.fillRect(0, 0, S, S);
-
-    const cy    = S / 2;
-    const r     = massRadius();
-    const wallX = wallInnerLeft();
-    const mx    = dispToCanvasX(pos);
-
-    drawWallAt(wallX, 'left');
-
-    // Equilibrium marker
-    ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = _rgba('--teal-light', 0.18);
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(eqX(), cy - r * 2);
-    ctx.lineTo(eqX(), cy + r * 2);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Spring from wall face to left edge of ball
-    drawSpring(ctx, wallX, cy, mx - r, 8, TEAL_DARK);
-
-    // Mass ball (teal)
-    drawBall(ctx, mx, cy, r, _rgb('--teal-light'));
-
-    renderDriveArrow();
-  }
-
-  /* ── Render lattice ── */
-  function renderLattice() {
-    ctx.fillStyle = BG;
-    ctx.fillRect(0, 0, S, S);
-
-    const cy = S / 2;
-    const N  = numMasses;
-    const r  = latticeMassRadius();
-
-    // COM shift for open BC
-    let comShift = 0;
-    if (bcMode === 'open') {
-      let tot = 0;
-      for (let i = 0; i < N; i++) tot += lPos[i];
-      comShift = tot / N;
-    }
-
-    const L  = wallInnerLeft();
-    const R  = wallInnerRight();
-
-    // Canvas x positions of all masses (clamped so balls stay within existing walls)
-    const mx = [];
-    const hasLeftWall  = (bcMode === 'clamped' || bcMode === 'clamped-open');
-    const hasRightWall = (bcMode === 'clamped');
-    for (let i = 0; i < N; i++) {
-      let x = latticeMassX(i, comShift);
-      if (hasLeftWall)  x = Math.max(L + r, x);
-      if (hasRightWall) x = Math.min(R - r, x);
-      mx.push(x);
-    }
-    const nCoils = Math.max(2, Math.round(8 - N / 4));
-
-    // Walls
-    if (bcMode === 'clamped' || bcMode === 'clamped-open') drawWallAt(L, 'left');
-    if (bcMode === 'clamped')                               drawWallAt(R, 'right');
-
-    // Springs drawn surface-to-surface; wall springs go wall-face to ball surface.
-    // All spring segments have the same rest length g at equilibrium.
-    if (bcMode === 'clamped' || bcMode === 'clamped-open') {
-      drawSpring(ctx, L, cy, mx[0] - r, nCoils, TEAL_DARK);
-    }
-    if (bcMode === 'clamped') {
-      drawSpring(ctx, mx[N-1] + r, cy, R, nCoils, TEAL_DARK);
-    }
-    for (let i = 0; i < N - 1; i++) {
-      drawSpring(ctx, mx[i] + r, cy, mx[i+1] - r, nCoils, TEAL_DARK);
-    }
-
-    // Masses: teal → pink
-    for (let i = 0; i < N; i++) {
-      const t  = N > 1 ? i / (N - 1) : 0;
-      const cr = Math.round(_TLR + (_PLR - _TLR) * t);
-      const cg = Math.round(_TLG + (_PLG - _TLG) * t);
-      const cb = Math.round(_TLB + (_PLB - _TLB) * t);
-      drawBall(ctx, mx[i], cy, r, [cr, cg, cb]);
-    }
-  }
-
-  /* ── Main render ── */
-  let phaseSkipCount = 0;
-  const PHASE_SKIP = 10;   // ← redraw phase plot every Nth frame; change this line
-  function render() {
-    if (mode === '1mass') renderSingle();
-    else renderLattice();
-    recordPhase();                          // always record
-    if (++phaseSkipCount >= PHASE_SKIP) {
-      phaseSkipCount = 0;
-      renderPhase();                        // redraw every Nth frame
-    }
-  }
-
-  /* ── Animation loop ── */
-  function showBreakStamp() {
-    const stamp = document.getElementById('sho-break-stamp');
-    if (!stamp) return;
-    stamp.style.display = 'block';
-    setTimeout(() => { stamp.style.display = 'none'; }, 500);
-  }
-
-  function checkBounds() {
-    if (mode !== 'lattice') return;
-    const L = wallInnerLeft();
-    const R = wallInnerRight();
-    const dscl = latticeDispScale();
-    for (let i = 0; i < numMasses; i++) {
-      const px = latticeEqX(i) + lPos[i] * dscl;
-      if (px < L || px > R) {
-        initLattice();
-        dragging  = false;
-        dragIndex = -1;
-        showBreakStamp();
-        return;
-      }
-    }
-  }
-
-  let speedAccum = 0;
+  /* ── Loop ── */
+  let plotSkip = 0;
   function loop() {
-    if (running && !dragging) {
-      speedAccum += simSpeed;
-      while (speedAccum >= 1) {
-        speedAccum -= 1;
-        if (mode === '1mass') stepSingle();
-        else stepLattice();
-        simTime += DT;
-      }
-      checkBounds();
+    if (running) {
+      if (!draggingMass) step();
+      else simTime += DT;              // wall keeps vibrating while mass is held
+      updateMeasurement();
+      updateScene();
+      renderer.render(scene, camera);
+      if (++plotSkip >= 3) { plotSkip = 0; renderQPlot(); }
     }
-    render();
     frameId = requestAnimationFrame(loop);
   }
 
-  /* ── Mouse / touch drag ── */
-  function canvasCoords(evt) {
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width  / rect.width;
-    const scaleY = canvas.height / rect.height;
-    let clientX, clientY;
-    if (evt.touches) {
-      clientX = evt.touches[0].clientX;
-      clientY = evt.touches[0].clientY;
-    } else {
-      clientX = evt.clientX;
-      clientY = evt.clientY;
-    }
-    return {
-      x: (clientX - rect.left)  * scaleX,
-      y: (clientY - rect.top)   * scaleY,
-    };
-  }
-
-  function hitTestSingle(cx_) {
-    const r  = massRadius();
-    const mx = dispToCanvasX(pos);
-    return Math.abs(cx_ - mx) <= r * 1.3;
-  }
-
-  function hitTestLattice(cx_) {
-    const r  = latticeMassRadius();
-    const N  = numMasses;
-    let comShift = 0;
-    if (bcMode === 'open') {
-      let tot = 0;
-      for (let i = 0; i < N; i++) tot += lPos[i];
-      comShift = tot / N;
-    }
-    for (let i = 0; i < N; i++) {
-      if (Math.abs(cx_ - latticeMassX(i, comShift)) <= Math.max(r * 1.5, 8)) return i;
-    }
-    return -1;
-  }
-
-  /* ── Static equilibrium during drag ──
-     With mass dragIndex pinned at displacement d, and the rest free under
-     the same spring network, the equilibrium displacements are piecewise
-     linear (tent function) between the fixed boundary points.
-
-     Segment left of dragIndex: fixed boundary at i=-1 (wall, disp=0) and
-       i=dragIndex (disp=d).  Free masses 0..dragIndex-1 interpolate linearly.
-     Segment right of dragIndex: fixed boundary at i=dragIndex (disp=d) and
-       i=N (wall, disp=0).  Free masses dragIndex+1..N-1 interpolate linearly.
-
-     For 'clamped-open' the right wall is free, so the right segment just
-     stays at d (flat, no restoring force from the right).
-     For 'open' both ends are free; the whole chain translates rigidly to d.
-  */
-  function applyDragEquilibrium(dragIdx, d) {
-    const N = numMasses;
-    if (bcMode === 'open') {
-      // No wall anchors — rigid body translation
-      for (let i = 0; i < N; i++) lPos[i] = d;
-      return;
-    }
-    // Left segment: wall at virtual index -1 (value 0) → dragIdx (value d)
-    const leftSpan = dragIdx + 1;   // number of gaps from wall to dragged mass
-    for (let i = 0; i < dragIdx; i++) {
-      lPos[i] = d * (i + 1) / leftSpan;
-    }
-    lPos[dragIdx] = d;
-    // Right segment
-    if (bcMode === 'clamped') {
-      // wall at virtual index N (value 0)
-      const rightSpan = N - dragIdx;  // gaps from dragged mass to right wall
-      for (let i = dragIdx + 1; i < N; i++) {
-        lPos[i] = d * (N - i) / rightSpan;
-      }
-    } else {
-      // clamped-open: right end is free → flat
-      for (let i = dragIdx + 1; i < N; i++) lPos[i] = d;
-    }
-  }
-
-  function onPointerDown(evt) {
-    const { x } = canvasCoords(evt);
-    if (mode === '1mass') {
-      if (hitTestSingle(x)) {
-        dragging   = true;
-        dragIndex  = -1;
-        dragStartX = x;
-        dragStartPos = pos;
-        vel = 0;
-        evt.preventDefault();
-      }
-    } else {
-      const idx = hitTestLattice(x);
-      if (idx >= 0) {
-        dragging   = true;
-        dragIndex  = idx;
-        dragStartX = x;
-        dragStartPos = lPos[idx];
-        // Zero all velocities so release starts cleanly
-        for (let i = 0; i < numMasses; i++) lVel[i] = 0;
-        evt.preventDefault();
-      }
-    }
-  }
-
-  function onPointerMove(evt) {
-    if (!dragging) return;
-    const { x } = canvasCoords(evt);
-    const dx = x - dragStartX;
-    if (mode === '1mass') {
-      const scale = S * 0.38;
-      pos = dragStartPos + dx / scale;
-      vel = 0;
-    } else {
-      const newDisp = dragStartPos + dx / latticeDispScale();
-      applyDragEquilibrium(dragIndex, newDisp);
-      for (let i = 0; i < numMasses; i++) lVel[i] = 0;
-    }
-    if (!running) render();
-    evt.preventDefault();
-  }
-
-  function onPointerUp(evt) {
-    if (dragging) {
-      // Record the drag amplitude as the phase plot x-axis limit.
-      if (mode === '1mass') {
-        phaseMaxX = Math.max(Math.abs(pos), 1e-6);
-      } else {
-        let maxD = 0;
-        for (let i = 0; i < numMasses; i++) maxD = Math.max(maxD, Math.abs(lPos[i]));
-        phaseMaxX = Math.max(maxD, 1e-6);
-      }
-      phaseHist = [];
-    }
-    dragging = false;
-  }
-
-  function attachDragListeners() {
-    canvas.addEventListener('mousedown',  onPointerDown);
-    canvas.addEventListener('mousemove',  onPointerMove);
-    canvas.addEventListener('mouseup',    onPointerUp);
-    canvas.addEventListener('mouseleave', onPointerUp);
-    canvas.addEventListener('touchstart', onPointerDown, { passive: false });
-    canvas.addEventListener('touchmove',  onPointerMove, { passive: false });
-    canvas.addEventListener('touchend',   onPointerUp);
-  }
-
-  /* ── Mode switching UI ── */
-  function setMode(m) {
-    mode = m;
-    init();
-
-    const driveEl   = document.getElementById('sho-drive-controls');
-    const latticeEl = document.getElementById('sho-lattice-controls');
-    const btn1      = document.getElementById('sho-btn-1mass');
-    const btnL      = document.getElementById('sho-btn-lattice');
-
-    if (m === '1mass') {
-      driveEl.style.display   = 'flex';
-      latticeEl.style.display = 'none';
-      btn1.classList.add('active');
-      btnL.classList.remove('active');
-    } else {
-      driveEl.style.display   = 'none';
-      latticeEl.style.display = 'flex';
-      btn1.classList.remove('active');
-      btnL.classList.add('active');
-    }
-  }
-
-  function setBCMode(bc) {
-    bcMode = bc;
-    initLattice();
-    ['clamped','clamped-open','open'].forEach(id => {
-      const el = document.getElementById('sho-bc-' + id);
-      if (el) el.classList.toggle('active', id === bc);
-    });
-  }
-
-  /* ── Shell ── */
+  /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'sho',
-    title: 'Simple Harmonic Oscillator &mdash; 1D',
+    title: 'SHO &mdash; Damped &amp; Driven',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="shoReset()">Reset</button><button class="applet-shell-header-btn" id="sho-pause-btn" onclick="shoTogglePause()">Pause</button>`,
 
-
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title" style="margin-top:6px;">Speed</div>
+        <div class="applet-shell-ctrl-title">Natural frequency &omega;&#8320;</div>
         <div class="applet-shell-slider-row">
-          <span class="applet-shell-side">Slow</span>
-          <input type="range" id="sho-speed" min="0.1" max="5" step="0.1" value="1.0">
+          <span class="applet-shell-side">Low</span>
+          <input type="range" id="sho-omega0" min="0.2" max="4" step="0.05" value="1.0">
+          <span class="applet-shell-side">High</span>
+          <span class="applet-shell-val" id="sho-omega0-val">1.00</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Damping &gamma;</div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">None</span>
+          <input type="range" id="sho-damping" min="0" max="2" step="0.01" value="0">
+          <span class="applet-shell-side">Heavy</span>
+          <span class="applet-shell-val" id="sho-damping-val">0.00</span>
+        </div>
+      </div>
+      <div class="applet-shell-ctrl-section">
+        <div class="applet-shell-ctrl-title">Driving frequency &omega;<sub>d</sub></div>
+        <div class="applet-shell-slider-row">
+          <span class="applet-shell-side">Off</span>
+          <input type="range" id="sho-drive" min="0" max="4" step="0.05" value="0">
           <span class="applet-shell-side">Fast</span>
+          <span class="applet-shell-val" id="sho-drive-val">Off</span>
         </div>
       </div>
-
-      <div id="sho-scrollable">
-
-        <div class="applet-shell-ctrl-section">
-          <div class="applet-shell-ctrl-title">Mass</div>
-          <div class="applet-shell-slider-row">
-            <span class="applet-shell-side">Low mass</span>
-            <input type="range" id="sho-mass" min="0.01" max="10" step="0.01" value="1.0">
-            <span class="applet-shell-side">High mass</span>
-          </div>
-        </div>
-
-        <div class="applet-shell-ctrl-section">
-          <div class="applet-shell-ctrl-title">Spring</div>
-          <div class="applet-shell-slider-row">
-            <span class="applet-shell-side">Low stiffness</span>
-            <input type="range" id="sho-kspring" min="0.01" max="10" step="0.01" value="1.0">
-            <span class="applet-shell-side">High stiffness</span>
-          </div>
-        </div>
-
-        <div class="applet-shell-ctrl-section">
-          <div class="applet-shell-ctrl-title">Damping</div>
-          <div class="applet-shell-slider-row">
-            <span class="applet-shell-side">None</span>
-            <input type="range" id="sho-damping" min="0" max="5" step="0.01" value="0">
-            <span class="applet-shell-side">Damped</span>
-          </div>
-        </div>
-
-        <div class="applet-shell-ctrl-section">
-          <div class="applet-shell-btn-row">
-            <button class="applet-shell-btn active" id="sho-btn-1mass"   onclick="shoSet1Mass()">1 mass</button>
-            <button class="applet-shell-btn"         id="sho-btn-lattice" onclick="shoSetLattice()">1-D lattice</button>
-          </div>
-        </div>
-
-        <div id="sho-drive-controls" class="applet-shell-ctrl-section">
-          <div class="applet-shell-ctrl-title">Driving force</div>
-          <div class="applet-shell-slider-row">
-            <span class="applet-shell-side">Off</span>
-            <input type="range" id="sho-drive-amp" min="0" max="4" step="0.01" value="0">
-            <span class="applet-shell-side">Strong</span>
-          </div>
-          <div class="applet-shell-slider-row">
-            <span class="applet-shell-side">0.1 Hz</span>
-            <input type="range" id="sho-drive-freq" min="0.1" max="10" step="0.1" value="1.0">
-            <span class="applet-shell-side">10 Hz</span>
-          </div>
-        </div>
-
-        <div id="sho-lattice-controls" class="applet-shell-ctrl-section">
-          <div class="applet-shell-ctrl-title">Boundary conditions</div>
-          <div class="applet-shell-btn-row">
-            <button class="applet-shell-btn active" id="sho-bc-clamped"      onclick="shoBCClamped()">Clamped</button>
-            <button class="applet-shell-btn"         id="sho-bc-clamped-open" onclick="shoBCClampedOpen()">Clamped-Open</button>
-            <button class="applet-shell-btn"         id="sho-bc-open"         onclick="shoBCOpen()">Open</button>
-          </div>
-          <div class="applet-shell-ctrl-title" style="margin-top:8px;">Masses</div>
-          <div class="applet-shell-slider-row">
-            <span class="applet-shell-side">2</span>
-            <input type="range" id="sho-nmasses" min="2" max="20" step="1" value="6">
-            <span class="applet-shell-side">20</span>
-          </div>
-        </div>
-
-      </div>
-
-      <div id="sho-phase-section">
-        <div class="applet-shell-ctrl-title">Phase space</div>
-        <canvas id="sho-phase-canvas"></canvas>
+      <div id="sho-qplot-section">
+        <div class="applet-shell-ctrl-title">Resonance response</div>
+        <canvas id="sho-qplot"></canvas>
       </div>
     `,
 
-    onOpen: function ({ canvas: c, S: s }) {
-      canvas = c;
-      ctx    = canvas.getContext('2d');
-      S      = s;
-      phaseCvs = document.getElementById('sho-phase-canvas');
-      phaseCtx = phaseCvs.getContext('2d');
-      setTimeout(resizePhaseCanvas, 80);
-
-      // Inject stamp into sim panel if not already present
-      const simPanel = document.getElementById('sho-sim-panel');
-      if (simPanel && !document.getElementById('sho-break-stamp')) {
-        const stamp = document.createElement('div');
-        stamp.id = 'sho-break-stamp';
-        stamp.textContent = "DON'T BREAK ME";
-        simPanel.appendChild(stamp);
-      }
-
-      // Set initial mode display
-      setMode('1mass');
-
-      // Sync slider values
-      mass    = parseFloat(document.getElementById('sho-mass').value);
-      kspring = parseFloat(document.getElementById('sho-kspring').value);
-      damping   = parseFloat(document.getElementById('sho-damping').value);
-      driveAmp  = parseFloat(document.getElementById('sho-drive-amp').value);
-      driveFreq = parseFloat(document.getElementById('sho-drive-freq').value);
-      numMasses = parseInt(document.getElementById('sho-nmasses').value);
-      simSpeed  = parseFloat(document.getElementById('sho-speed').value);
-
+    onOpen: function ({ canvas: c }) {
+      simCanvas = c;
       init();
-      attachDragListeners();
-      running = true;
       const pb = document.getElementById('sho-pause-btn');
       if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
-      if (!frameId) frameId = requestAnimationFrame(loop);
+      function start() {
+        setTimeout(() => {
+          qCanvas = document.getElementById('sho-qplot');
+          qCtx    = qCanvas.getContext('2d');
+          initThree();
+          renderQPlot();
+          running = true;
+          if (!frameId) frameId = requestAnimationFrame(loop);
+        }, 80);
+      }
+      if (window.THREE) {
+        start();
+      } else {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+        s.onload = start;
+        document.head.appendChild(s);
+      }
     },
 
     onClose: function () {
@@ -1021,25 +475,18 @@
       if (pb) { pb.textContent = 'Pause'; pb.classList.remove('active'); }
     },
 
-    onResize: function ({ canvas: c, S: s }) {
-      canvas = c;
-      ctx    = canvas.getContext('2d');
-      S      = s;
-      resizePhaseCanvas();
+    onResize: function () {
+      resizeRenderer();
+      if (renderer && !running) renderer.render(scene, camera);
     },
   });
 
-  /* ── Global entry points ── */
   window.shoOpen  = () => shell.open();
   window.shoClose = () => shell.close();
 
   window.shoReset = function () {
-    simTime = 0;
     init();
-    phaseHist = [];
-    if (phaseCtx) {
-      phaseCtx.clearRect(0, 0, phaseCvs.width, phaseCvs.height);
-    }
+    if (scene) { updateScene(); if (!running) renderer.render(scene, camera); }
   };
 
   window.shoTogglePause = function () {
@@ -1051,41 +498,25 @@
     }
   };
 
-  window.shoSet1Mass   = () => setMode('1mass');
-  window.shoSetLattice = () => setMode('lattice');
-
-  window.shoBCClamped      = () => setBCMode('clamped');
-  window.shoBCClampedOpen  = () => setBCMode('clamped-open');
-  window.shoBCOpen         = () => setBCMode('open');
-
-  /* ── Slider listeners ── */
-  document.getElementById('sho-mass').addEventListener('input', function () {
-    mass = parseFloat(this.value);
+  /* ── Sliders ── */
+  document.getElementById('sho-omega0').addEventListener('input', function () {
+    omega0 = parseFloat(this.value);
+    document.getElementById('sho-omega0-val').textContent = omega0.toFixed(2);
+    resetMeasurement(true);       // theory curve changed — old dots invalid
+    if (scene) buildScene();      // spring width follows ω₀
+    renderQPlot();
   });
-
-  document.getElementById('sho-kspring').addEventListener('input', function () {
-    kspring = parseFloat(this.value);
-  });
-
   document.getElementById('sho-damping').addEventListener('input', function () {
-    damping = parseFloat(this.value);
+    gammaD = parseFloat(this.value);
+    document.getElementById('sho-damping-val').textContent = gammaD.toFixed(2);
+    resetMeasurement(true);       // theory curve changed — old dots invalid
+    renderQPlot();
   });
-
-  document.getElementById('sho-drive-amp').addEventListener('input', function () {
-    driveAmp = parseFloat(this.value);
-  });
-
-  document.getElementById('sho-drive-freq').addEventListener('input', function () {
-    driveFreq = parseFloat(this.value);
-  });
-
-  document.getElementById('sho-nmasses').addEventListener('input', function () {
-    numMasses = parseInt(this.value);
-    initLattice();
-  });
-
-  document.getElementById('sho-speed').addEventListener('input', function () {
-    simSpeed = parseFloat(this.value);
+  document.getElementById('sho-drive').addEventListener('input', function () {
+    driveW = parseFloat(this.value);
+    document.getElementById('sho-drive-val').textContent = driveW > 0 ? driveW.toFixed(2) : 'Off';
+    resetMeasurement(false);      // keep dots from other frequencies
+    renderQPlot();
   });
 
 })();
