@@ -305,7 +305,10 @@
     if (W === 0 || H === 0) return;
     qCtx.fillStyle = _c('--bg-dark');
     qCtx.fillRect(0, 0, W, H);
-    const PL = 26, PR = 8, PT = 8, PB = 18;
+    /* readable font + real margins around the plot area */
+    const fs = Math.max(14, Math.round(H * 0.075));
+    const PL = Math.round(fs * 2.2), PR = Math.round(fs * 1.2);
+    const PT = Math.round(fs * 1.6), PB = Math.round(fs * 2.0);
     const pw = W - PL - PR, ph = H - PT - PB;
 
     /* y-scale from theory peak (capped) and any measured overshoot */
@@ -332,19 +335,21 @@
     qCtx.moveTo(PL, toY(1)); qCtx.lineTo(PL + pw, toY(1));
     qCtx.stroke();
     qCtx.setLineDash([]);
-    qCtx.fillStyle = _rgba('--text-dim', 0.6);
-    qCtx.font = `11px 'EB Garamond', Georgia, serif`;
+    qCtx.fillStyle = _rgba('--text-mid', 0.9);
+    qCtx.font = `${fs}px 'EB Garamond', Georgia, serif`;
     qCtx.textAlign = 'center'; qCtx.textBaseline = 'top';
-    qCtx.fillText('ω_d', PL + pw / 2, PT + ph + 4);
+    qCtx.fillText('ω_d', PL + pw / 2, PT + ph + Math.round(fs * 0.35));
     qCtx.save();
-    qCtx.translate(10, PT + ph / 2); qCtx.rotate(-Math.PI / 2);
+    qCtx.translate(Math.round(fs * 0.9), PT + ph / 2); qCtx.rotate(-Math.PI / 2);
+    qCtx.textAlign = 'center';
     qCtx.textBaseline = 'middle';
     qCtx.fillText('gain', 0, 0);
     qCtx.restore();
     if (gammaD > 0.005) {
       qCtx.textAlign = 'right';
-      qCtx.fillStyle = _rgba('--teal-light', 0.8);
-      qCtx.fillText('Q ≈ ' + (omega0 / gammaD).toFixed(1), W - 10, PT + 2);
+      qCtx.textBaseline = 'top';
+      qCtx.fillStyle = _rgba('--teal-light', 0.9);
+      qCtx.fillText('Q ≈ ' + (omega0 / gammaD).toFixed(1), W - PR, Math.round(fs * 0.25));
     }
 
     /* theory curve — neon */
