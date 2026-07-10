@@ -96,12 +96,12 @@ Feel free to fork any project and make it your own.
   const GH_USER = 'EternalTime';
   // label = the display name you control (not pulled from the repo).
   const REPOS = [
-    { repo: 'pyCE',             label: 'Configurational Entropy', docs: '/pyCE/',   upper: '--pyce-primary',   lower: '--pyce-nav' },
     { repo: 'CellularAutomata', label: 'Cellular Automata',       docs: '/pyCA/',   upper: '--pyca-primary',   lower: '--pyca-nav' },
-    { repo: 'pyGD',             label: 'Graph Dynamics',          docs: '/pyGD/',   upper: '--pygd-primary',   lower: '--pygd-nav' },
+    { repo: 'pyCE',             label: 'Configurational Entropy', docs: '/pyCE/',   upper: '--pyce-primary',   lower: '--pyce-nav' },
     { repo: 'pyCoop',           label: 'Cooperation Games',       docs: '/pyCoop/', upper: '--pycoop-primary', lower: '--pycoop-nav' },
+    { repo: 'pyEDW',            label: 'Exo-Daisy World',         docs: '/pyEDW/',  upper: '--pyedw-primary',   lower: '--pyedw-nav' },
     { repo: 'pyLEAFS',          label: 'Foraging Simulator',      docs: '/LEAFS/',  upper: '--pyleafs-primary', lower: '--pyleafs-nav', gh: 'LEAFS' },
-    { repo: 'pyEDW',            label: 'Exo-Daisy World',         docs: '/pyEDW/',  upper: '--pyedw-primary',   lower: '--pyedw-nav' }
+    { repo: 'pyGD',             label: 'Graph Dynamics',          docs: '/pyGD/',   upper: '--pygd-primary',   lower: '--pygd-nav' }
   ];
 
   const container = document.getElementById('doc-cards');
