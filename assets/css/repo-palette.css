@@ -20,15 +20,15 @@
   --pyca-nav:        #07223f;
   --pyca-accent:     #fdb515;
 
-  /* pyGD — stock RTD theme: bright-blue masthead / dark-gray nav */
-  --pygd-primary:    #2980b9;
-  --pygd-nav:        #343131;
-  --pygd-accent:     #2980b9;
+  /* pyGD — Crimson Red masthead / black nav / light-gray accent */
+  --pygd-primary:    #8b0037;
+  --pygd-nav:        #000000;
+  --pygd-accent:     #e6e6e6;
 
-  /* pyCoop — UConn: Royal masthead / navy nav */
+  /* pyCoop — UConn: Royal masthead / navy nav / gray accent */
   --pycoop-primary:  #013ecd;
   --pycoop-nav:      #000e2f;
-  --pycoop-accent:   #013ecd;
+  --pycoop-accent:   #7c878e;
 
   /* pyLEAFS — Rochester blue masthead / sky-blue nav / ForagerPink */
   --pyleafs-primary: #003b71;

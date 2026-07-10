@@ -30,12 +30,13 @@
     color: #404040;
 }
 
-/* Royal Blue accent for links (replaces the RTD #2980B9). */
-a,
-a:visited {
+/* Royal Blue accent for content links (replaces the RTD #2980B9).
+   Scoped to .rst-content so it does not override the sidebar menu text. */
+.rst-content a,
+.rst-content a:visited {
     color: #013ECD;
 }
 
-a:hover {
+.rst-content a:hover {
     color: #000E2F;
 }
