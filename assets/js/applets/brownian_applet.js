@@ -445,8 +445,8 @@
     const raw  = new Float64Array(N_BINS);
     for (let i = 0; i < N; i++) {
       const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
-      const b   = Math.min((spd / dv) | 0, N_BINS - 1);
-      raw[b]++;
+      const b   = (spd / dv) | 0;
+      if (b < N_BINS) raw[b]++;   // out-of-range values fall in unprinted tail bins
     }
     let tot = 0;
     for (let b = 0; b < N_BINS; b++) tot += raw[b];

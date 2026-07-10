@@ -1015,13 +1015,13 @@ const shell = new AppletShell({
     needsSolve = true;
 
     // stress buttons
-    const labels = ['von Mises','σ_r','σ_z','σ_θ','τ_rz'];
+    const labels = ['von Mises','σ<sub>r</sub>','σ<sub>z</sub>','σ<sub>θ</sub>','τ<sub>rz</sub>'];
     const row = document.getElementById('fem-stress-btns');
     row.innerHTML = '';
     labels.forEach((lb, i) => {
       const btn = document.createElement('button');
       btn.className = 'applet-shell-btn' + (i===0 ? ' active' : '');
-      btn.textContent = lb;
+      btn.innerHTML = lb;
       btn.addEventListener('click', () => {
         stressComponent = i;
         document.querySelectorAll('#fem-stress-btns .applet-shell-btn').forEach((b,j) => b.classList.toggle('active', j===i));

@@ -4,7 +4,7 @@ title: PHYS141
 permalink: /teaching/university-of-rochester/PHYS141/
 nav_exclude: true
 ---
-<a href="{{ '/teaching/' | relative_url }}" style="float: right;">← Back to Teaching</a>
+<a href="{{ '/teaching/' | relative_url }}" data-page-index="-1" style="float: right;">← Back to Teaching</a>
 <div style="font-size: 1.5em;"><strong>Physics 141: Honors Classical Mechanics</strong></div>
 <br>
 <div> 

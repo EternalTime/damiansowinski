@@ -64,7 +64,7 @@ We can use explore unknown worlds obeying strange rules, limited solely by our i
 
 <h2 class="gradient-text2" style="font-size: 1.5em;">Continuum &amp; Classical Mechanics</h2>
 <button class="applet-launch-btn" onclick="slOpen(); this.blur()">Spring Lattice</button>
-<button class="applet-launch-btn" onclick="shoOpen(); this.blur()">SHO</button>
+<button class="applet-launch-btn" onclick="shoOpen(); this.blur()">Driven Oscillator</button>
 <button class="applet-launch-btn" onclick="coOpen(); this.blur()">Coupled Oscillators</button>
 <span class="wip-wrap"><button class="applet-launch-btn" onclick="pendOpen(); this.blur()">Pendulums</button><span class="wip-label">Under Construction</span></span>
 <span class="wip-wrap"><button class="applet-launch-btn" onclick="femOpen(); this.blur()">Elastic Cylinder</button><span class="wip-label">Under Construction</span></span>
