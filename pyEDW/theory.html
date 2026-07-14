@@ -115,6 +115,17 @@ luminosity in units of <span class="math notranslate nohighlight">\(L_{opt}\)</s
 <a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld" title="pyEDW.model.ExoDaisyWorld"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExoDaisyWorld</span></code></a> use the strong-order-1 stochastic
 Runge–Kutta scheme of A. Roberts (2012); the step is a line-for-line port of
 <code class="docutils literal notranslate"><span class="pre">updateExoDaisyWorld.m</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each species grows at <em>its own</em> temperature: <span class="math notranslate nohighlight">\(f_B\)</span> is driven by
+<span class="math notranslate nohighlight">\(w(T_B - 1)\)</span> and <span class="math notranslate nohighlight">\(f_W\)</span> by <span class="math notranslate nohighlight">\(w(T_W - 1)\)</span>, as in Eq. (1) of
+the paper. The published appendix (Eqs. B1–B2 and B8–B9) prints these two
+subscripts the other way round, which is a typographical slip: feeding each
+species the <em>other’s</em> temperature drives the black daisies extinct at every
+luminosity, since they would then flourish only where the planet is already
+too hot for them. pyEDW follows Eq. (1) and the original MATLAB, and
+reproduces Fig. 1 — black daisies dominant at low luminosity, white at high.</p>
+</div>
 </section>
 <section id="rein-control">
 <h2>Rein control<a class="headerlink" href="#rein-control" title="Link to this heading"></a></h2>
@@ -143,6 +154,10 @@ synergy mediated by the environment.</p></li>
 </ul>
 <p>We estimate every entropy by histogramming, with the square-root binning rule
 <span class="math notranslate nohighlight">\(N_{bins} = 1 + \lceil\sqrt{n}\rceil\)</span> — the same rule used in Appendix B.3.</p>
+<p>Everything on this page is compressed from <a class="reference external" href="https://damiansowinski.com/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf">Exo-Daisy World: Revisiting Gaia
+Theory through an Informational Architecture Perspective</a>
+(Sowinski, Ghoshal &amp; Frank, <em>Planet. Sci. J.</em> <strong>6</strong>, 176, 2025), which is where
+the derivations live.</p>
 </section>
 </section>
 

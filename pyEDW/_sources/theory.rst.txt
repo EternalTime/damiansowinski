@@ -40,6 +40,17 @@ The luminosity is the only noisy dof, an Ornstein--Uhlenbeck process with mean
 Runge--Kutta scheme of A. Roberts (2012); the step is a line-for-line port of
 ``updateExoDaisyWorld.m``.
 
+.. note::
+
+   Each species grows at *its own* temperature: :math:`f_B` is driven by
+   :math:`w(T_B - 1)` and :math:`f_W` by :math:`w(T_W - 1)`, as in Eq. (1) of
+   the paper. The published appendix (Eqs. B1--B2 and B8--B9) prints these two
+   subscripts the other way round, which is a typographical slip: feeding each
+   species the *other's* temperature drives the black daisies extinct at every
+   luminosity, since they would then flourish only where the planet is already
+   too hot for them. pyEDW follows Eq. (1) and the original MATLAB, and
+   reproduces Fig. 1 — black daisies dominant at low luminosity, white at high.
+
 Rein control
 ------------
 
@@ -69,3 +80,9 @@ measures estimated from the joint distribution :math:`p_{AE}` (Section 4):
 
 We estimate every entropy by histogramming, with the square-root binning rule
 :math:`N_{bins} = 1 + \lceil\sqrt{n}\rceil` — the same rule used in Appendix B.3.
+
+Everything on this page is compressed from `Exo-Daisy World: Revisiting Gaia
+Theory through an Informational Architecture Perspective
+<https://damiansowinski.com/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf>`_
+(Sowinski, Ghoshal & Frank, *Planet. Sci. J.* **6**, 176, 2025), which is where
+the derivations live.
