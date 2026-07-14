@@ -29,6 +29,7 @@ Guide
    :maxdepth: 1
 
    getting_started
+   applet
    guide_model
    guide_metrics
    theory
