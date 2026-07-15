@@ -25,7 +25,7 @@ motion, and the stochastic Runge--Kutta step, ported line for line from
 Brighten the star and the black daisies, which warm the ground beneath them,
 give way to white ones, which cool it. The shifting mix raises the planetary
 albedo and reins the surface temperature back toward :math:`T_{opt}` — this is
-the Gaian feedback the model was built to exhibit. In the plot, the green track
+the Gaian feedback\ :footcite:`lovelock1974` the model was built to exhibit. In the plot, the green track
 pulls away from the bare-planet Stefan--Boltzmann curve exactly where the biome
 is alive; drive the luminosity far enough in either direction and the biome
 collapses, the track snapping back onto the curve of a dead world.
@@ -37,11 +37,17 @@ a sliver; widen it and the biome clings on across the whole range.
 Move the luminosity slowly and you will find the model is bistable — an
 established biome survives at luminosities where a freshly seeded one dies out,
 because a large standing population can hold the temperature where it needs it
-while a sparse one cannot. This is why the ensembles in the paper, which sample
-a broad range of initial daisy fractions, show life across a much wider band of
-luminosities than a single small seeding would suggest. One liberty is taken
+while a sparse one cannot. This is why the ensembles in the
+paper\ :footcite:`sowinski2025exo`, which sample a broad range of initial
+daisy fractions, show life across a much wider band of luminosities than a
+single small seeding would suggest. One liberty is taken
 here: since the growth terms are multiplicative in :math:`f_B` and :math:`f_W`,
 zero is an absorbing state, and a biome that collapsed could never return. The
 applet therefore keeps a dormant seed bank of :math:`10^{-4}` — too small to
 draw or to perturb a living biome, but enough to recolonize a planet that
 becomes habitable again.
+
+References
+^^^^^^^^^^
+
+.. footbibliography::
