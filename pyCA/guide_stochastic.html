@@ -46,11 +46,13 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_eca.html">Elementary Cellular Automata</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Thermal and Stochastic Automata</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-ising-cellular-automaton">The Ising cellular automaton</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#noisy-rules">Noisy rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#asynchronous-updating">Asynchronous updating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="guide_life.html">Two-Dimensional Automata</a></li>
@@ -100,7 +102,8 @@ independently chooses (with probability <cite>stochfrac</cite>) whether to behav
 Ising spin in contact with a heat bath or as an obedient cell of the
 underlying rule. The thermal cells look at their local Ising energy —
 aligned neighbors mean low energy, frustrated neighbors mean high — and flip
-with the heat-bath probability <span class="math notranslate nohighlight">\(1/(1 + e^{-2E_i/T})\)</span>. Frustrated
+with the heat-bath<a class="footnote-reference brackets" href="#footcite-glauber1963" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> probability
+<span class="math notranslate nohighlight">\(1/(1 + e^{-2E_i/T})\)</span>. Frustrated
 cells flip eagerly; aligned cells hold fast, absolutely so as
 <span class="math notranslate nohighlight">\(T \to 0\)</span>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ICA</span>
@@ -120,7 +123,8 @@ enough to collide? That question is not rhetorical — map it out.</p>
 <p><a class="reference internal" href="api/pyCA.stochastic.html#pyCA.stochastic.NoisyECA" title="pyCA.stochastic.NoisyECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.stochastic.NoisyECA</span></code></a> applies the rule everywhere, then flips
 each output bit independently with probability <cite>noise</cite> — the
 epsilon-perturbed automata. Small noise turns sharp class boundaries into
-genuine phase transitions: a Class II texture can survive small epsilon and
+genuine phase transitions<a class="footnote-reference brackets" href="#footcite-grinstein1985" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>:
+a Class II texture can survive small epsilon and
 dissolve at large, with a critical point in between.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoisyECA</span>
 
@@ -136,7 +140,8 @@ is a fair coin.</p>
 <h2>Asynchronous updating<a class="headerlink" href="#asynchronous-updating" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="api/pyCA.stochastic.html#pyCA.stochastic.AsyncECA" title="pyCA.stochastic.AsyncECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.stochastic.AsyncECA</span></code></a> never corrupts the rule — it corrupts the
 clock. Each step, each cell updates with probability <cite>update_fraction</cite> and
-otherwise holds its value. Synchrony is a strong assumption, and some
+otherwise holds its value. Synchrony is a strong
+assumption<a class="footnote-reference brackets" href="#footcite-schonfisch1999" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, and some
 celebrated CA behaviors lean on it harder than you might expect:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncECA</span>
 
@@ -147,6 +152,25 @@ celebrated CA behaviors lean on it harder than you might expect:</p>
 <p>Run rule 110 at a few update fractions and watch what survives. The gliders
 that carry rule 110’s computation are creatures of the synchronous clock;
 how gracefully they degrade is best seen with your own eyes.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id4">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-glauber1963" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Roy J. Glauber. Time-dependent statistics of the ising model. <em>Journal of Mathematical Physics</em>, 4(2):294–307, 1963. URL: <a class="reference external" href="https://doi.org/10.1063/1.1703954">https://doi.org/10.1063/1.1703954</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-grinstein1985" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>G. Grinstein, C. Jayaprakash, and Yu He. Statistical mechanics of probabilistic cellular automata. <em>Physical Review Letters</em>, 55(23):2527–2530, 1985. URL: <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.55.2527">https://doi.org/10.1103/PhysRevLett.55.2527</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-schonfisch1999" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Birgitt Schönfisch and André de Roos. Synchronous and asynchronous updating in cellular automata. <em>BioSystems</em>, 51(3):123–143, 1999. URL: <a class="reference external" href="https://doi.org/10.1016/S0303-2647(99)00025-8">https://doi.org/10.1016/S0303-2647(99)00025-8</a>.</p>
+</aside>
+</aside>
+</div>
 </section>
 </section>
 

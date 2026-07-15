@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Thermal and Stochastic Automata" href="guide_stochastic.html" />
-    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+    <link rel="prev" title="Applet" href="applet.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,9 +46,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Elementary Cellular Automata</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#driving-the-class">Driving the class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-four-classes">The four classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="guide_stochastic.html">Thermal and Stochastic Automata</a></li>
@@ -91,7 +93,8 @@
 updating simultaneously from its own value and its two nearest neighbors’.
 That is the entire specification — three binary inputs, one binary output —
 yet the 256 possible update tables exhaust an astonishing range of behavior.
-Stephen Wolfram’s numbering scheme names each table by a single byte: bit
+Stephen Wolfram’s numbering scheme<a class="footnote-reference brackets" href="#footcite-wolfram1983" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> names each
+table by a single byte: bit
 <span class="math notranslate nohighlight">\(n\)</span> of the rule number is the output for the neighborhood whose
 (left, center, right) values, read as a binary number, equal <span class="math notranslate nohighlight">\(n\)</span>.
 Rule 90, for instance, is 01011010 in binary — work through the eight
@@ -118,14 +121,15 @@ meet themselves coming around.</p>
 </section>
 <section id="the-four-classes">
 <h2>The four classes<a class="headerlink" href="#the-four-classes" title="Link to this heading"></a></h2>
-<p>Wolfram’s classification sorts the rules by what they do to almost any
+<p>Wolfram’s classification<a class="footnote-reference brackets" href="#footcite-wolfram1984" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> sorts the rules by what
+they do to almost any
 initial condition. Class I rules freeze into uniformity (rule 0, rule 255).
 Class II rules settle into stripes or simple periodic textures (rule 204,
 the identity, is the laziest member). Class III rules churn out apparent
 randomness forever — rule 30 is the archetype. Class IV rules live on the
 boundary, supporting localized structures that move and collide — rule 110,
-famously, is Turing complete: Matthew Cook proved in the 1990s that those
-colliding gliders can simulate any computation.</p>
+famously, is Turing complete: Matthew Cook proved<a class="footnote-reference brackets" href="#footcite-cook2004" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> in
+the 1990s that those colliding gliders can simulate any computation.</p>
 <p>Survey them yourself:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span>
@@ -147,13 +151,32 @@ suggests, and deciding where a rule belongs is a better teacher than being
 told. Then come back with <a class="reference internal" href="guide_measures.html"><span class="doc">Information Measures</span></a> and classify them by number
 instead.</p>
 </section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id4">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-wolfram1983" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Stephen Wolfram. Statistical mechanics of cellular automata. <em>Reviews of Modern Physics</em>, 55(3):601–644, 1983. URL: <a class="reference external" href="https://doi.org/10.1103/RevModPhys.55.601">https://doi.org/10.1103/RevModPhys.55.601</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-wolfram1984" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Stephen Wolfram. Universality and complexity in cellular automata. <em>Physica D: Nonlinear Phenomena</em>, 10(1):1–35, 1984. URL: <a class="reference external" href="https://doi.org/10.1016/0167-2789(84)90245-8">https://doi.org/10.1016/0167-2789(84)90245-8</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-cook2004" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Matthew Cook. Universality in elementary cellular automata. <em>Complex Systems</em>, 15(1):1–40, 2004. URL: <a class="reference external" href="https://doi.org/10.25088/ComplexSystems.15.1.1">https://doi.org/10.25088/ComplexSystems.15.1.1</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="applet.html" class="btn btn-neutral float-left" title="Applet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="guide_stochastic.html" class="btn btn-neutral float-right" title="Thermal and Stochastic Automata" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

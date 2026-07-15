@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Applet &mdash; pyCA 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=021128a6" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Elementary Cellular Automata" href="guide_eca.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyCA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Applet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide_eca.html">Elementary Cellular Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_stochastic.html">Thermal and Stochastic Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_life.html">Two-Dimensional Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_measures.html">Information Measures</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyCA.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyCA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Applet</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/applet.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="applet">
+<h1>Applet<a class="headerlink" href="#applet" title="Link to this heading"></a></h1>
+<link rel="stylesheet" href="_static/ca_applet.css">
+<div id="ca-app"></div>
+<script src="_static/ca_applet.js"></script><p>The library, running live in your browser. The update rules are the same
+ones pyCA applies in Python — the lookup-table step of <code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.ECA</span></code>,
+the flipped outputs of <code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.NoisyECA</span></code>, the broken clock of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.AsyncECA</span></code>, the heat-bath flips of <code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.ICA</span></code>, and the
+outer-totalistic B/S counts of <code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.CA2D</span></code> — ported line for line
+from the modules they document. Nothing is precomputed: the spacetime
+diagram scrolling past is the history of an automaton being run as you
+watch.</p>
+<p>The applet is yours to take apart. It ships with the library as
+<a class="reference external" href="https://github.com/EternalTime/CellularAutomata/blob/main/docs/_static/ca_applet.js">docs/_static/ca_applet.js</a>:
+plain JavaScript with no build step and no dependencies, of which the first
+half is the library itself — the rules and the measures, function for
+function — and the rest is scenery.</p>
+<p>The square panel plots the normalized Lempel–Ziv
+complexity<a class="footnote-reference brackets" href="#footcite-lempel1976" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> of
+<a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.lz_complexity" title="pyCA.measures.lz_complexity"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCA.measures.lz_complexity()</span></code></a> against
+<a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.entropy_rate" title="pyCA.measures.entropy_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCA.measures.entropy_rate()</span></code></a> with <span class="math notranslate nohighlight">\(k = 2\)</span>, computed on the
+current state at every step, on equal axes. Both axes
+estimate the entropy rate — <span class="math notranslate nohighlight">\(h_2\)</span> sees only pair correlations,
+<span class="math notranslate nohighlight">\(C_{LZ}\)</span> regularity at every length — so the diagonal is the
+reference, and the plot locates a rule on Wolfram’s spectrum at a glance.
+A frozen rule pins both measures to zero. A chaotic rule like 30 rides
+the top right corner — each new cell is a fresh coin flip even knowing
+its neighbor. A structured rule is the interesting case: rule 110 sags
+below the diagonal, the gap being exactly the structure longer than two
+cells that only the parse can see — the particles and the periodic
+background they travel through.</p>
+<p>The stochastic variants put a dial on that distinction. Feed rule 110 a
+little noise and watch <span class="math notranslate nohighlight">\(h_2\)</span> climb toward the coin-flip ceiling as
+the correlations are eaten; slow the asynchronous clock and watch structure
+survive surprisingly far. The Ising automaton stages the competition
+directly — at low temperature the heat bath <em>orders</em> the lattice and both
+meters fall; at high temperature it randomizes, and the rule fights to keep
+<span class="math notranslate nohighlight">\(h_2\)</span> down. For the two-dimensional family, type neighbor counts into
+the B and S boxes — Life is B3/S23, and the meters read its thin ash of
+still lifes and gliders as low entropy over a mostly empty lattice.</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id2">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-lempel1976" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Abraham Lempel and Jacob Ziv. On the complexity of finite sequences. <em>IEEE Transactions on Information Theory</em>, 22(1):75–81, 1976. URL: <a class="reference external" href="https://doi.org/10.1109/TIT.1976.1055501">https://doi.org/10.1109/TIT.1976.1055501</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="guide_eca.html" class="btn btn-neutral float-right" title="Elementary Cellular Automata" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

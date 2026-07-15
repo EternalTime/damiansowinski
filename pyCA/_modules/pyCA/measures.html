@@ -8,7 +8,7 @@
   <title>pyCA.measures &mdash; pyCA 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=fda51166" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=021128a6" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -42,6 +42,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../guide_eca.html">Elementary Cellular Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../guide_stochastic.html">Thermal and Stochastic Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../guide_life.html">Two-Dimensional Automata</a></li>
@@ -190,6 +191,53 @@
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span></div>
 
 
+<div class="viewcode-block" id="lz_complexity">
+<a class="viewcode-back" href="../../api/pyCA.measures.html#pyCA.measures.lz_complexity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lz_complexity</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalized Lempel--Ziv (LZ76) complexity, dimensionless.</span>
+
+<span class="sd">    Parses each row into the phrases of Lempel and Ziv&#39;s 1976 exhaustive</span>
+<span class="sd">    history — each phrase the shortest word not yet producible by copying</span>
+<span class="sd">    from what came before — using the Kaspar--Schuster scanning algorithm,</span>
+<span class="sd">    and normalizes the phrase count by n/log2(n), the asymptotic count for</span>
+<span class="sd">    an iid fair-coin string. A random row therefore reads near 1 and a</span>
+<span class="sd">    structured one falls below. The mean over rows is returned.</span>
+
+<span class="sd">    Two cautions. Unlike the block measures, the parse is sequential and</span>
+<span class="sd">    does not wrap: rows are read left to right. And the normalized count</span>
+<span class="sd">    converges to the entropy rate from above *slowly* — at n ~ 1000 a fair</span>
+<span class="sd">    coin still reads ~1.05 — so compare rows of equal length, not values</span>
+<span class="sd">    across lengths.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : array_like of 0s and 1s</span>
+<span class="sd">        A state (1d) or spacetime history (2d, time along axis 0).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Mean over rows of c(n) log2(n) / n, where c(n) is the LZ76</span>
+<span class="sd">        phrase count.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A. Lempel and J. Ziv, &quot;On the complexity of finite sequences,&quot;</span>
+<span class="sd">    IEEE Trans. Inf. Theory 22, 75 (1976).</span>
+<span class="sd">    https://doi.org/10.1109/TIT.1976.1055501</span>
+
+<span class="sd">    F. Kaspar and H. G. Schuster, &quot;Easily calculable measure for the</span>
+<span class="sd">    complexity of spatiotemporal patterns,&quot; Phys. Rev. A 36, 842 (1987).</span>
+<span class="sd">    https://doi.org/10.1103/PhysRevA.36.842</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">_as_rows</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">rows</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;rows must hold at least 2 cells&#39;</span><span class="p">)</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">_lz76_phrases</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">*</span><span class="n">norm</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">]))</span></div>
+
+
 <span class="c1">#---------------------------------------------------------------- internals</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_as_rows</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -200,6 +248,37 @@
     <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">data</span>
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;data must be a 1d state or 2d spacetime history&#39;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_lz76_phrases</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Phrase count of the LZ76 exhaustive history (Kaspar &amp; Schuster 1987).</span>
+
+<span class="sd">    The scan tries to reproduce the sequence from position l onward by</span>
+<span class="sd">    copying from any earlier starting point i; when every i &lt; l fails, a</span>
+<span class="sd">    new phrase of length k_max is closed and the scan restarts beyond it.</span>
+<span class="sd">    The final, possibly reproducible, tail counts as one phrase.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="n">k_max</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span> <span class="o">+</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+            <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">l</span> <span class="o">+</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="n">k_max</span><span class="p">:</span>
+                <span class="n">k_max</span> <span class="o">=</span> <span class="n">k</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">l</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">l</span> <span class="o">+=</span> <span class="n">k_max</span>
+                <span class="k">if</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">k_max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">c</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_block_distribution</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="n">_as_rows</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>

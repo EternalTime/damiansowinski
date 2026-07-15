@@ -141,14 +141,24 @@
   /* ── Color ramp ── */
   function lerpCh(a, b, t) { return Math.round(a + t * (b - a)); }
 
-  function paletteColor(signed, scale) {
+  /* Neutral midpoint between the two dark hues — used by the network view so
+     tension and compression meet in a shared color at zero strain. The tile
+     view keeps the original bg-void midpoint. */
+  const _MDR = Math.round((_TDR + _PDR) / 2);
+  const _MDG = Math.round((_TDG + _PDG) / 2);
+  const _MDB = Math.round((_TDB + _PDB) / 2);
+
+  function paletteColor(signed, scale, smoothMid) {
+    const mR = smoothMid ? _MDR : _BVR;
+    const mG = smoothMid ? _MDG : _BVG;
+    const mB = smoothMid ? _MDB : _BVB;
     const t = Math.max(0, Math.min(1, Math.abs(signed) / scale));
     let r, g, b;
     if (signed >= 0) {
-      if (t < 0.5) { const s=t/0.5;      r=lerpCh(_BVR,_TDR,s); g=lerpCh(_BVG,_TDG,s); b=lerpCh(_BVB,_TDB,s); }
+      if (t < 0.5) { const s=t/0.5;      r=lerpCh(mR,_TDR,s); g=lerpCh(mG,_TDG,s); b=lerpCh(mB,_TDB,s); }
       else         { const s=(t-0.5)/0.5; r=lerpCh(_TDR,_TLR,s); g=lerpCh(_TDG,_TLG,s); b=lerpCh(_TDB,_TLB,s); }
     } else {
-      if (t < 0.5) { const s=t/0.5;      r=lerpCh(_BVR,_PDR,s); g=lerpCh(_BVG,_PDG,s); b=lerpCh(_BVB,_PDB,s); }
+      if (t < 0.5) { const s=t/0.5;      r=lerpCh(mR,_PDR,s); g=lerpCh(mG,_PDG,s); b=lerpCh(mB,_PDB,s); }
       else         { const s=(t-0.5)/0.5; r=lerpCh(_PDR,_PLR,s); g=lerpCh(_PDG,_PLG,s); b=lerpCh(_PDB,_PLB,s); }
     }
     return `rgb(${r},${g},${b})`;
@@ -298,25 +308,25 @@
 
         if (i<Nx-2) {
           const b=j*Nx+(i+1);
-          ctx.strokeStyle=paletteColor(springExt(a,b),scale);
+          ctx.strokeStyle=paletteColor(springExt(a,b),scale,true);
           ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(px[b],py[b]); ctx.stroke();
         }
         if (j<Ny-2) {
           if (latticeType==='square') {
             const b=(j+1)*Nx+i;
-            ctx.strokeStyle=paletteColor(springExt(a,b),scale);
+            ctx.strokeStyle=paletteColor(springExt(a,b),scale,true);
             ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(px[b],py[b]); ctx.stroke();
           } else {
             const di0=(j%2===0)?0:1, di1=(j%2===0)?-1:0;
             const ni0=i+di0, ni1=i+di1;
             if (ni0>=1&&ni0<=Nx-2) {
               const b=(j+1)*Nx+ni0;
-              ctx.strokeStyle=paletteColor(springExt(a,b),scale);
+              ctx.strokeStyle=paletteColor(springExt(a,b),scale,true);
               ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(px[b],py[b]); ctx.stroke();
             }
             if (ni1>=1&&ni1<=Nx-2) {
               const b=(j+1)*Nx+ni1;
-              ctx.strokeStyle=paletteColor(springExt(a,b),scale);
+              ctx.strokeStyle=paletteColor(springExt(a,b),scale,true);
               ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(px[b],py[b]); ctx.stroke();
             }
           }
