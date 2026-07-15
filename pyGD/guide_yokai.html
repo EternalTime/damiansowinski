@@ -46,11 +46,13 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_dynamics.html">Kuramoto Dynamics</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The Yokai</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#driving-the-agent">Driving the agent</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#strength-and-speed-enter-together">Strength and speed enter together</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#blinding-the-sensor">Blinding the sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">The Model</a></li>
@@ -89,9 +91,10 @@
 <p>The Yokai is a mobile agent that lives on a <a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.Kuramoto" title="pyGD.dynamics.Kuramoto"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kuramoto</span></code></a>
 environment and works to keep it out of step. It occupies one node at a time,
 estimates the local mean-field angle, kicks its phase to oppose the local
-alignment, then hops to a neighbor and does it again. It is a Maxwell’s demon
-rebuilt for phase space — it must measure the field before it acts — and since
-Kuramoto was Japanese, the demon that haunts his model is a yokai.</p>
+alignment, then hops to a neighbor and does it again. It is a Maxwell’s
+demon<a class="footnote-reference brackets" href="#footcite-maxwell1871" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> rebuilt for phase space — it must measure the
+field before it acts — and since Kuramoto was Japanese, the demon that haunts
+his model is a yokai.</p>
 <section id="driving-the-agent">
 <h2>Driving the agent<a class="headerlink" href="#driving-the-agent" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="api/pyGD.agents.html#pyGD.agents.Yokai" title="pyGD.agents.Yokai"><code class="xref py py-class docutils literal notranslate"><span class="pre">Yokai</span></code></a> lives on a <a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.Kuramoto" title="pyGD.dynamics.Kuramoto"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kuramoto</span></code></a>
@@ -161,7 +164,23 @@ blind:</p>
 <p>Sweep <code class="docutils literal notranslate"><span class="pre">noise</span></code> from 0 to 1 and measure how much desynchronization survives.
 Whether the agent’s information is worth anything — whether corrupting it costs
 the agent its grip — turns out to depend on the graph, and that dependence is
-the paper’s central result. The theory page states it; the paper proves it.</p>
+the paper’s central result. The theory page states it; the paper proves
+it<a class="footnote-reference brackets" href="#footcite-sowinski2024information" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id3">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-maxwell1871" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>James Clerk Maxwell. <em>Theory of Heat</em>. Longmans, Green, and Co., London, 1871. URL: <a class="reference external" href="https://archive.org/details/theoryheat04maxwgoog">https://archive.org/details/theoryheat04maxwgoog</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-sowinski2024information" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Damian R Sowinski, Adam Frank, and Gourab Ghoshal. Information-theoretic description of a feedback-control Kuramoto model. <em>Physical Review Research</em>, 6(4):043188, 2024. URL: <a class="reference external" href="https://damiansowinski.com/assets/docs/papers/Kuramoto_Sowinski_2024.pdf">https://damiansowinski.com/assets/docs/papers/Kuramoto_Sowinski_2024.pdf</a>.</p>
+</aside>
+</aside>
+</div>
 </section>
 </section>
 
