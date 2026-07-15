@@ -46,6 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_eca.html">Elementary Cellular Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_stochastic.html">Thermal and Stochastic Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_life.html">Two-Dimensional Automata</a></li>
@@ -53,7 +54,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#block-entropy">Block entropy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#entropy-rate">Entropy rate</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mutual-information">Mutual information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lempelziv-complexity">Lempel–Ziv complexity</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#a-classification-experiment">A classification experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
 </ul>
@@ -100,7 +103,8 @@ spacetime history (time along axis 0).</p>
 <section id="block-entropy">
 <h2>Block entropy<a class="headerlink" href="#block-entropy" title="Link to this heading"></a></h2>
 <p>Slide a window of length <span class="math notranslate nohighlight">\(k\)</span> along each row, histogram the
-<span class="math notranslate nohighlight">\(2^k\)</span> possible words, and take the Shannon entropy of the result —
+<span class="math notranslate nohighlight">\(2^k\)</span> possible words, and take the Shannon
+entropy<a class="footnote-reference brackets" href="#footcite-shannon1948" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> of the result —
 that is <span class="math notranslate nohighlight">\(H_k\)</span>, the block entropy. For a frozen lattice it vanishes;
 for fair coin flips it equals <span class="math notranslate nohighlight">\(k\)</span>; everything interesting lies
 between, and the <em>gap</em> below <span class="math notranslate nohighlight">\(k\)</span> measures the structure the automaton
@@ -150,6 +154,32 @@ units:</p>
 </pre></div>
 </div>
 </section>
+<section id="lempelziv-complexity">
+<h2>Lempel–Ziv complexity<a class="headerlink" href="#lempelziv-complexity" title="Link to this heading"></a></h2>
+<p>The block measures see nothing longer than <span class="math notranslate nohighlight">\(k\)</span> cells.
+<a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.lz_complexity" title="pyCA.measures.lz_complexity"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCA.measures.lz_complexity()</span></code></a> has no such horizon: it parses each row
+into the phrases of Lempel and Ziv’s 1976 exhaustive
+history<a class="footnote-reference brackets" href="#footcite-lempel1976" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> — each phrase
+the shortest word that cannot be produced by copying from what came before
+— and counts them with the scanning algorithm of Kaspar and
+Schuster<a class="footnote-reference brackets" href="#footcite-kaspar1987" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. A row with structure at <em>any</em> length reuses its past and
+parses into few phrases; only genuine novelty forces new ones. The count is
+normalized by <span class="math notranslate nohighlight">\(n/\log_2 n\)</span>, its asymptotic value for fair coin flips,
+so a random row reads near 1 and a frozen one near 0:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span><span class="p">,</span> <span class="n">measures</span>
+
+<span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">110</span><span class="p">):</span>
+    <span class="n">ca</span> <span class="o">=</span> <span class="n">ECA</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">ca</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">measures</span><span class="o">.</span><span class="n">lz_complexity</span><span class="p">(</span><span class="n">ca</span><span class="o">.</span><span class="n">state</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Two cautions. The parse is sequential, not circular, so rows are read left
+to right. And the normalized count converges to the entropy rate from
+above slowly — at <span class="math notranslate nohighlight">\(n \sim 1000\)</span> a fair coin still reads about 1.05 —
+so compare rows of equal length rather than values across lengths.</p>
+</section>
 <section id="a-classification-experiment">
 <h2>A classification experiment<a class="headerlink" href="#a-classification-experiment" title="Link to this heading"></a></h2>
 <p>Wolfram’s four classes were assigned by eye. Assign them by number instead:
@@ -159,6 +189,25 @@ plane. Class I collapses to the origin, Class III crowds the high-rate
 edge, and Class IV — the computing class — lives where the entropy rate is
 moderate but the mutual information refuses to die. There is a lot of
 unexplored territory in that plane; keep a journal of what you find in it.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id4">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-shannon1948" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Claude E. Shannon. A mathematical theory of communication. <em>Bell System Technical Journal</em>, 27(3):379–423, 1948. URL: <a class="reference external" href="https://doi.org/10.1002/j.1538-7305.1948.tb01338.x">https://doi.org/10.1002/j.1538-7305.1948.tb01338.x</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-lempel1976" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Abraham Lempel and Jacob Ziv. On the complexity of finite sequences. <em>IEEE Transactions on Information Theory</em>, 22(1):75–81, 1976. URL: <a class="reference external" href="https://doi.org/10.1109/TIT.1976.1055501">https://doi.org/10.1109/TIT.1976.1055501</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-kaspar1987" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>F. Kaspar and H. G. Schuster. Easily calculable measure for the complexity of spatiotemporal patterns. <em>Physical Review A</em>, 36(2):842–848, 1987. URL: <a class="reference external" href="https://doi.org/10.1103/PhysRevA.36.842">https://doi.org/10.1103/PhysRevA.36.842</a>.</p>
+</aside>
+</aside>
+</div>
 </section>
 </section>
 

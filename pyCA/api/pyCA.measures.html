@@ -45,6 +45,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide_eca.html">Elementary Cellular Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide_stochastic.html">Thermal and Stochastic Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide_life.html">Two-Dimensional Automata</a></li>
@@ -60,6 +61,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pyCA.measures module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pyCA.measures.block_entropy"><code class="docutils literal notranslate"><span class="pre">block_entropy()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pyCA.measures.entropy_rate"><code class="docutils literal notranslate"><span class="pre">entropy_rate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyCA.measures.lz_complexity"><code class="docutils literal notranslate"><span class="pre">lz_complexity()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pyCA.measures.mutual_information"><code class="docutils literal notranslate"><span class="pre">mutual_information()</span></code></a></li>
 </ul>
 </li>
@@ -153,6 +155,42 @@ returns H_1 itself, the rate estimate with no conditioning.</p></li>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyCA.measures.lz_complexity">
+<span class="sig-prename descclassname"><span class="pre">pyCA.measures.</span></span><span class="sig-name descname"><span class="pre">lz_complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCA/measures.html#lz_complexity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCA.measures.lz_complexity" title="Link to this definition"></a></dt>
+<dd><p>Normalized Lempel–Ziv (LZ76) complexity, dimensionless.</p>
+<p>Parses each row into the phrases of Lempel and Ziv’s 1976 exhaustive
+history — each phrase the shortest word not yet producible by copying
+from what came before — using the Kaspar–Schuster scanning algorithm,
+and normalizes the phrase count by n/log2(n), the asymptotic count for
+an iid fair-coin string. A random row therefore reads near 1 and a
+structured one falls below. The mean over rows is returned.</p>
+<p>Two cautions. Unlike the block measures, the parse is sequential and
+does not wrap: rows are read left to right. And the normalized count
+converges to the entropy rate from above <em>slowly</em> — at n ~ 1000 a fair
+coin still reads ~1.05 — so compare rows of equal length, not values
+across lengths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) – A state (1d) or spacetime history (2d, time along axis 0).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mean over rows of c(n) log2(n) / n, where c(n) is the LZ76
+phrase count.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>A. Lempel and J. Ziv, “On the complexity of finite sequences,”
+IEEE Trans. Inf. Theory 22, 75 (1976).
+<a class="reference external" href="https://doi.org/10.1109/TIT.1976.1055501">https://doi.org/10.1109/TIT.1976.1055501</a></p>
+<p>F. Kaspar and H. G. Schuster, “Easily calculable measure for the
+complexity of spatiotemporal patterns,” Phys. Rev. A 36, 842 (1987).
+<a class="reference external" href="https://doi.org/10.1103/PhysRevA.36.842">https://doi.org/10.1103/PhysRevA.36.842</a></p>
 </dd></dl>
 
 <dl class="py function">

@@ -25,9 +25,9 @@
    */
 
   /* ── Grid parameters ── */
-  const NXY     = 9;    // transverse half-extent (x and y)
-  const NZ_F    = 40;   // planes ahead  (negative z)
-  const NZ_B    = 6;    // planes behind (positive z)
+  const NXY     = 14;   // transverse half-extent (x and y)
+  const NZ_F    = 60;   // planes ahead  (negative z)
+  const NZ_B    = 8;    // planes behind (positive z)
   const SPACING = 3.0;  // rest-frame lattice spacing
 
   const PERIOD_XY = (2*NXY + 1) * SPACING;
@@ -40,7 +40,8 @@
   let offsetX = 0.0, offsetY = 0.0;  // camera translation within one cell, in [-SPACING/2, SPACING/2]
   let running = false, frameId = null;
   let renderer, scene, camera;
-  let meshes = [];
+  let cells = [], posArr = null, colArr = null;
+  let pointsGeo = null, glowPoints = null, corePoints = null;
 
   /* free-look */
   let yaw = 0, pitch = 0;
@@ -118,55 +119,75 @@
     camera = new THREE.PerspectiveCamera(70, 1, 0.1, 800);
     camera.position.set(0, 0, 0);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.45));
-    const sun = new THREE.DirectionalLight(0xffffff, 0.8);
-    sun.position.set(0.5, 1, -1);   // from slightly forward
-    scene.add(sun);
+    /* Kuramoto-style glowing spheres, but as two THREE.Points layers sharing
+       one geometry (additive Doppler-colored halos + white-hot cores) — the
+       ~17k lattice sites render in 2 draw calls instead of 17k meshes. */
+    cells = [];
+    for (let ix = -NXY; ix <= NXY; ix++)
+      for (let iy = -NXY; iy <= NXY; iy++)
+        for (let iz = -NZ_F; iz <= NZ_B; iz++) cells.push(ix, iy, iz);
+    const M = cells.length / 3;
+    posArr = new Float32Array(M * 3);
+    colArr = new Float32Array(M * 3);
 
-    const geo = new THREE.SphereGeometry(SPACING * 0.015, 7, 5);
-    meshes = [];
+    pointsGeo = new THREE.BufferGeometry();
+    pointsGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3).setUsage(THREE.DynamicDrawUsage));
+    pointsGeo.setAttribute('color',    new THREE.BufferAttribute(colArr, 3).setUsage(THREE.DynamicDrawUsage));
 
-    for (let ix = -NXY; ix <= NXY; ix++) {
-      for (let iy = -NXY; iy <= NXY; iy++) {
-        for (let iz = -NZ_F; iz <= NZ_B; iz++) {
-          const mat  = new THREE.MeshPhongMaterial({ color: 0xffffff });
-          const mesh = new THREE.Mesh(geo, mat);
-          mesh.userData.ix = ix;
-          mesh.userData.iy = iy;
-          mesh.userData.iz = iz;
-          scene.add(mesh);
-          meshes.push(mesh);
-        }
-      }
-    }
+    const glowMat = new THREE.PointsMaterial({
+      map: glowTexture(), size: SPACING * 0.17, vertexColors: true,
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      sizeAttenuation: true,
+    });
+    const coreMat = new THREE.PointsMaterial({
+      map: glowTexture(), size: SPACING * 0.10, color: 0xffffff,
+      transparent: true, depthWrite: false, sizeAttenuation: true,
+    });
+    glowPoints = new THREE.Points(pointsGeo, glowMat);
+    corePoints = new THREE.Points(pointsGeo, coreMat);
+    scene.add(glowPoints);
+    scene.add(corePoints);
 
     travelZ = 0;
     yaw = 0; pitch = 0;
     placeAll();
   }
 
-  /* ── Place all spheres for current state ── */
+  /* Soft radial sprite texture (as in the Kuramoto applet) */
+  let _glowTexture = null;
+  function glowTexture() {
+    if (_glowTexture) return _glowTexture;
+    const c = document.createElement('canvas');
+    c.width = c.height = 64;
+    const g = c.getContext('2d');
+    const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grad.addColorStop(0,   'rgba(255,255,255,1)');
+    grad.addColorStop(0.4, 'rgba(255,255,255,0.45)');
+    grad.addColorStop(1,   'rgba(255,255,255,0)');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 64, 64);
+    _glowTexture = new THREE.CanvasTexture(c);
+    return _glowTexture;
+  }
+
+  /* ── Place all lattice points for current state ── */
   function placeAll() {
     const b = beta;
     const g = gamma(b);
+    const Z_MIN = -NZ_F * SPACING;
+    const M = cells.length / 3;
+    let count = 0;
 
-    const cosY = Math.cos(yaw), sinY = Math.sin(yaw);
-    const cosP = Math.cos(pitch), sinP = Math.sin(pitch);
-
-    for (let i = 0; i < meshes.length; i++) {
-      const m = meshes[i];
-
+    for (let i = 0; i < M; i++) {
       /* Rest-frame position of this lattice slot relative to camera.
        * travelZ increases as camera moves in -Z, so lattice shifts in +Z relative to camera. */
-      let rx = m.userData.ix * SPACING + OFF - offsetX;
-      let ry = m.userData.iy * SPACING + OFF - offsetY;
-      let rz = m.userData.iz * SPACING + OFF + travelZ;
+      let rx = cells[i*3]     * SPACING + OFF - offsetX;
+      let ry = cells[i*3 + 1] * SPACING + OFF - offsetY;
+      let rz = cells[i*3 + 2] * SPACING + OFF + travelZ;
 
       /* Periodic tiling: wrap x,y symmetrically, wrap z into forward-biased window */
       rx -= PERIOD_XY * Math.round(rx / PERIOD_XY);
       ry -= PERIOD_XY * Math.round(ry / PERIOD_XY);
-      /* Z window: [-NZ_F*SPACING, NZ_B*SPACING) */
-      const Z_MIN = -NZ_F * SPACING;
       rz -= PERIOD_Z * Math.floor((rz - Z_MIN) / PERIOD_Z);
 
       /* Lorentz contraction along Z */
@@ -175,24 +196,30 @@
       const oz = rz / g;   // rz<0 ahead, contraction pulls forward spheres closer
 
       const dist = Math.sqrt(ox*ox + oy*oy + oz*oz);
-      if (dist < 0.01) { m.visible = false; continue; }
-      m.visible = true;
+      if (dist < 0.01) continue;
 
       /* Unit direction in world frame */
       const dx = ox/dist, dy = oy/dist, dz = oz/dist;
 
       /* Doppler (uses world-frame dz; dz<0 = ahead = blueshift) */
       const col = dopplerColor(doppler(dz, b));
-      m.material.color.setHex(col);
-      m.material.emissive.setHex(col);
-      m.material.emissiveIntensity = 0.85;   // neon: self-lit Doppler colors
 
       /* Aberration: shifts apparent position toward forward (-Z) at high beta */
       const [adx, ady, adz] = aberrate(dx, dy, dz, b);
 
-      /* Place mesh along aberrated direction at contracted distance */
-      m.position.set(adx*dist, ady*dist, adz*dist);
+      const p3 = count * 3;
+      posArr[p3]     = adx * dist;
+      posArr[p3 + 1] = ady * dist;
+      posArr[p3 + 2] = adz * dist;
+      colArr[p3]     = ((col >> 16) & 255) / 255;
+      colArr[p3 + 1] = ((col >>  8) & 255) / 255;
+      colArr[p3 + 2] = ( col        & 255) / 255;
+      count++;
     }
+
+    pointsGeo.setDrawRange(0, count);
+    pointsGeo.attributes.position.needsUpdate = true;
+    pointsGeo.attributes.color.needsUpdate    = true;
 
     /* Camera orientation: yaw around Y, pitch around local X */
     camera.rotation.order = 'YXZ';

@@ -44,6 +44,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_eca.html">Elementary Cellular Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_stochastic.html">Thermal and Stochastic Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_life.html">Two-Dimensional Automata</a></li>
@@ -83,12 +84,13 @@
 <h1>pyCA<a class="headerlink" href="#pyca" title="Link to this heading"></a></h1>
 <p>In the 1940s at Los Alamos, Stanislaw Ulam was growing crystal patterns on a
 lattice while John von Neumann hunted for a machine that could build a copy
-of itself; Ulam suggested the lattice, and the cellular automaton was born.
-John Conway made the subject a household game in 1970 when Martin Gardner’s
-column unveiled the Game of Life, and Stephen Wolfram made it a science in
-the 1980s by numbering the 256 elementary rules and sorting their behaviors
-into classes — frozen, periodic, chaotic, and the strange fourth class that
-computes. The lesson of that lineage is the lesson of this library: a rule
+of itself<a class="footnote-reference brackets" href="#footcite-vonneumann1966" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>; Ulam suggested the lattice, and the
+cellular automaton was born. John Conway made the subject a household game
+in 1970 when Martin Gardner’s column<a class="footnote-reference brackets" href="#footcite-gardner1970" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> unveiled the
+Game of Life, and Stephen Wolfram made it a science in the 1980s by
+numbering the 256 elementary rules<a class="footnote-reference brackets" href="#footcite-wolfram1983" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> and sorting
+their behaviors into classes<a class="footnote-reference brackets" href="#footcite-wolfram1984" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> — frozen, periodic,
+chaotic, and the strange fourth class that computes. The lesson of that lineage is the lesson of this library: a rule
 you can write on one line can produce a history you cannot compress at all.</p>
 <p>pyCA builds those histories and measures them. The automata span the
 deterministic elementary rules, an Ising variant where a rule competes with
@@ -104,6 +106,7 @@ preserved in the repository’s <code class="docutils literal notranslate"><span
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_eca.html">Elementary Cellular Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_stochastic.html">Thermal and Stochastic Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_life.html">Two-Dimensional Automata</a></li>
@@ -137,6 +140,29 @@ preserved in the repository’s <code class="docutils literal notranslate"><span
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id5">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-vonneumann1966" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>John von Neumann. <em>Theory of Self-Reproducing Automata</em>. University of Illinois Press, 1966. URL: <a class="reference external" href="https://cba.mit.edu/events/03.11.ASE/docs/VonNeumann.pdf">https://cba.mit.edu/events/03.11.ASE/docs/VonNeumann.pdf</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-gardner1970" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Martin Gardner. Mathematical games: the fantastic combinations of john conway’s new solitaire game “life”. <em>Scientific American</em>, 223(4):120–123, 1970. URL: <a class="reference external" href="https://doi.org/10.1038/scientificamerican1070-120">https://doi.org/10.1038/scientificamerican1070-120</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-wolfram1983" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Stephen Wolfram. Statistical mechanics of cellular automata. <em>Reviews of Modern Physics</em>, 55(3):601–644, 1983. URL: <a class="reference external" href="https://doi.org/10.1103/RevModPhys.55.601">https://doi.org/10.1103/RevModPhys.55.601</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-wolfram1984" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Stephen Wolfram. Universality and complexity in cellular automata. <em>Physica D: Nonlinear Phenomena</em>, 10(1):1–35, 1984. URL: <a class="reference external" href="https://doi.org/10.1016/0167-2789(84)90245-8">https://doi.org/10.1016/0167-2789(84)90245-8</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
 </section>
 
 

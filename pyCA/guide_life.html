@@ -45,12 +45,14 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_eca.html">Elementary Cellular Automata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_stochastic.html">Thermal and Stochastic Automata</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Two-Dimensional Automata</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#b-s-notation">B/S notation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-from-a-known-pattern">Building from a known pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#beyond-life">Beyond Life</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="guide_measures.html">Information Measures</a></li>
@@ -87,13 +89,15 @@
              
   <section id="two-dimensional-automata">
 <h1>Two-Dimensional Automata<a class="headerlink" href="#two-dimensional-automata" title="Link to this heading"></a></h1>
-<p>In 1970 Martin Gardner devoted his Scientific American column to a game John
+<p>In 1970 Martin Gardner devoted his Scientific American
+column<a class="footnote-reference brackets" href="#footcite-gardner1970" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> to a game John
 Conway had been playing on a Go board, and the mail that followed was — by
 Gardner’s own account — the largest response any column of his ever drew.
 The Game of Life needs one sentence: a dead cell with exactly three live
 neighbors is born, a live cell with two or three survives, and everything
 else dies. From that sentence come gliders, oscillators, guns, and — as
-Conway conjectured and others proved — universal computation.</p>
+Conway conjectured<a class="footnote-reference brackets" href="#footcite-gardner1971" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> and others
+proved<a class="footnote-reference brackets" href="#footcite-berlekamp2004" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> — universal computation.</p>
 <section id="b-s-notation">
 <h2>B/S notation<a class="headerlink" href="#b-s-notation" title="Link to this heading"></a></h2>
 <p>Life is one member of the outer-totalistic family: rules that update a cell
@@ -147,6 +151,25 @@ every pattern has a photographic negative with identical dynamics.</p>
 rules die, which saturate, and which hover? The measures in
 <a class="reference internal" href="guide_measures.html"><span class="doc">Information Measures</span></a> apply to 2d histories row by row — quantify what your
 eyes report.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id4">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-gardner1970" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Martin Gardner. Mathematical games: the fantastic combinations of john conway’s new solitaire game “life”. <em>Scientific American</em>, 223(4):120–123, 1970. URL: <a class="reference external" href="https://doi.org/10.1038/scientificamerican1070-120">https://doi.org/10.1038/scientificamerican1070-120</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-gardner1971" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Martin Gardner. Mathematical games: on cellular automata, self-reproduction, the garden of eden and the game “life”. <em>Scientific American</em>, 224(2):112–117, 1971. URL: <a class="reference external" href="https://doi.org/10.1038/scientificamerican0271-112">https://doi.org/10.1038/scientificamerican0271-112</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-berlekamp2004" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Elwyn R. Berlekamp, John H. Conway, and Richard K. Guy. <em>Winning Ways for Your Mathematical Plays, Volume 4</em>. A K Peters, 2nd edition, 2004. URL: <a class="reference external" href="https://doi.org/10.1201/9780429487309">https://doi.org/10.1201/9780429487309</a>.</p>
+</aside>
+</aside>
+</div>
 </section>
 </section>
 
