@@ -51,7 +51,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stepping-and-running">Stepping and running</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ensembles">Ensembles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reproducing-the-original-runs">Reproducing the original runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reproducing-the-original-runs">Reproducing the original runs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="guide_metrics.html">Guide: metrics</a></li>
@@ -90,8 +93,9 @@
 <h1>Guide: the model<a class="headerlink" href="#guide-the-model" title="Link to this heading"></a></h1>
 <p><a class="reference internal" href="api/pyEDW.html#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameters</span></code></a> holds the physical constants of Table 1 and
 builds the dimensionless <code class="docutils literal notranslate"><span class="pre">theta</span></code> vector consumed by the integrator.
-<a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld" title="pyEDW.model.ExoDaisyWorld"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExoDaisyWorld</span></code></a> wraps the compiled SRK1 step behind a small
-stateful interface that keeps the MATLAB usage.</p>
+<a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld" title="pyEDW.model.ExoDaisyWorld"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExoDaisyWorld</span></code></a> wraps the compiled SRK1
+step<a class="footnote-reference brackets" href="#footcite-roberts2012" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> behind a small stateful interface that keeps the
+MATLAB usage.</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyEDW</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameters</span>
@@ -139,6 +143,17 @@ with <code class="docutils literal notranslate"><span class="pre">seed</span> <s
 <p>The original MATLAB drivers and figure scripts ship under <code class="docutils literal notranslate"><span class="pre">pyEDW/matlab/</span></code> for
 reference, and <code class="docutils literal notranslate"><span class="pre">validate_against_matlab.py</span></code> checks a Python ensemble against a
 saved <code class="docutils literal notranslate"><span class="pre">data_*.mat</span></code>.</p>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<div class="docutils container" id="id2">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-roberts2012" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Anthony J Roberts. <a class="reference external" href="https://arxiv.org/abs/1210.0933">Modify the improved Euler scheme to integrate stochastic differential equations</a>. <em>arXiv preprint arXiv:1210.0933</em>, 2012.</p>
+</aside>
+</aside>
+</div>
+</section>
 </section>
 </section>
 

@@ -52,7 +52,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Theory</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-dimensionless-model">The dimensionless model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rein-control">Rein control</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-information-architecture">The information architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-information-architecture">The information architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -89,8 +92,8 @@
 <h1>Theory<a class="headerlink" href="#theory" title="Link to this heading"></a></h1>
 <section id="the-dimensionless-model">
 <h2>The dimensionless model<a class="headerlink" href="#the-dimensionless-model" title="Link to this heading"></a></h2>
-<p>Watson &amp; Lovelock’s 1983 Daisy World was deterministic — a planet held in
-thermal equilibrium at every instant. Here we keep the daisies but break that
+<p>Watson &amp; Lovelock’s 1983 Daisy World<a class="footnote-reference brackets" href="#footcite-watson1983" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> was
+deterministic — a planet held in thermal equilibrium at every instant. Here we keep the daisies but break that
 constraint: the star flickers, the temperature lags, and the model becomes a
 four-degree-of-freedom stochastic differential equation for the black- and
 white-daisy fractions <span class="math notranslate nohighlight">\(f_B, f_W\)</span> (the biotic <em>agent</em>) coupled to the
@@ -110,11 +113,12 @@ luminosity in units of <span class="math notranslate nohighlight">\(L_{opt}\)</s
 <div class="math notranslate nohighlight">
 \[T_\alpha^4 = T^4 + Q\,\delta A_B f_B + Q\,\delta A_W f_W - Q\,\delta A_\alpha,
 \qquad \delta A_\alpha = A_\alpha - A_G.\]</div>
-<p>The luminosity is the only noisy dof, an Ornstein–Uhlenbeck process with mean
-<span class="math notranslate nohighlight">\(1+\lambda\)</span>, so the driving Wiener process is scalar. This is what lets
+<p>The luminosity is the only noisy dof, an Ornstein–Uhlenbeck
+process<a class="footnote-reference brackets" href="#footcite-uhlenbeck1930" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> with mean <span class="math notranslate nohighlight">\(1+\lambda\)</span>, so the driving
+Wiener process is scalar. This is what lets
 <a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld" title="pyEDW.model.ExoDaisyWorld"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExoDaisyWorld</span></code></a> use the strong-order-1 stochastic
-Runge–Kutta scheme of A. Roberts (2012); the step is a line-for-line port of
-<code class="docutils literal notranslate"><span class="pre">updateExoDaisyWorld.m</span></code>.</p>
+Runge–Kutta scheme of A. Roberts (2012)<a class="footnote-reference brackets" href="#footcite-roberts2012" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>; the step is
+a line-for-line port of <code class="docutils literal notranslate"><span class="pre">updateExoDaisyWorld.m</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Each species grows at <em>its own</em> temperature: <span class="math notranslate nohighlight">\(f_B\)</span> is driven by
@@ -139,8 +143,10 @@ mechanism.</p>
 <section id="the-information-architecture">
 <h2>The information architecture<a class="headerlink" href="#the-information-architecture" title="Link to this heading"></a></h2>
 <p>We partition the system into agent <span class="math notranslate nohighlight">\(a = (f_B, f_W)\)</span> and environment
-<span class="math notranslate nohighlight">\(e = (T, L)\)</span>, and read the coevolution off a corpus of information
-measures estimated from the joint distribution <span class="math notranslate nohighlight">\(p_{AE}\)</span> (Section 4):</p>
+<span class="math notranslate nohighlight">\(e = (T, L)\)</span>, in the spirit of the semantic-information program of
+Kolchinsky &amp; Wolpert<a class="footnote-reference brackets" href="#footcite-kolchinsky2018" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>, and read the coevolution off
+a corpus of information measures estimated from the joint distribution
+<span class="math notranslate nohighlight">\(p_{AE}\)</span> (Section 4):</p>
 <ul class="simple">
 <li><p><strong>Viability</strong> <span class="math notranslate nohighlight">\(V = \mathbb{E}^A[(f_B+f_W)/f]\)</span> (Eq. 9), the expected
 occupied fraction of the habitable area.</p></li>
@@ -156,8 +162,35 @@ synergy mediated by the environment.</p></li>
 <span class="math notranslate nohighlight">\(N_{bins} = 1 + \lceil\sqrt{n}\rceil\)</span> — the same rule used in Appendix B.3.</p>
 <p>Everything on this page is compressed from <a class="reference external" href="https://damiansowinski.com/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf">Exo-Daisy World: Revisiting Gaia
 Theory through an Informational Architecture Perspective</a>
-(Sowinski, Ghoshal &amp; Frank, <em>Planet. Sci. J.</em> <strong>6</strong>, 176, 2025), which is where
-the derivations live.</p>
+(Sowinski, Ghoshal &amp; Frank, <em>Planet. Sci. J.</em> <strong>6</strong>, 176,
+2025)<a class="footnote-reference brackets" href="#footcite-sowinski2025exo" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>, which is where the derivations live.</p>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<div class="docutils container" id="id6">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-watson1983" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Andrew J Watson and James E Lovelock. <a class="reference external" href="https://doi.org/10.1111/j.1600-0889.1983.tb00031.x">Biological homeostasis of the global environment: the parable of Daisyworld</a>. <em>Tellus B: Chemical and Physical Meteorology</em>, 35(4):284–289, 1983.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-uhlenbeck1930" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>George E Uhlenbeck and Leonard S Ornstein. <a class="reference external" href="https://doi.org/10.1103/PhysRev.36.823">On the theory of the Brownian motion</a>. <em>Physical Review</em>, 36(5):823–841, 1930.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-roberts2012" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Anthony J Roberts. <a class="reference external" href="https://arxiv.org/abs/1210.0933">Modify the improved Euler scheme to integrate stochastic differential equations</a>. <em>arXiv preprint arXiv:1210.0933</em>, 2012.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-kolchinsky2018" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Artemy Kolchinsky and David H Wolpert. <a class="reference external" href="https://doi.org/10.1098/rsfs.2018.0041">Semantic information, autonomous agency and non-equilibrium statistical physics</a>. <em>Interface Focus</em>, 8(6):20180041, 2018.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-sowinski2025exo" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>Damian R Sowinski, Gourab Ghoshal, and Adam Frank. <a class="reference external" href="https://damiansowinski.com/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf">Exo-daisy world: revisiting Gaia theory through an informational architecture perspective</a>. <em>The Planetary Science Journal</em>, 6(7):176, 2025.</p>
+</aside>
+</aside>
+</div>
+</section>
 </section>
 </section>
 

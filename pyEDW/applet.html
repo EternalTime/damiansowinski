@@ -46,7 +46,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Applet</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Applet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="guide_model.html">Guide: the model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_metrics.html">Guide: metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
@@ -99,7 +102,7 @@ motion, and the stochastic Runge–Kutta step, ported line for line from
 <p>Brighten the star and the black daisies, which warm the ground beneath them,
 give way to white ones, which cool it. The shifting mix raises the planetary
 albedo and reins the surface temperature back toward <span class="math notranslate nohighlight">\(T_{opt}\)</span> — this is
-the Gaian feedback the model was built to exhibit. In the plot, the green track
+the Gaian feedback<a class="footnote-reference brackets" href="#footcite-lovelock1974" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> the model was built to exhibit. In the plot, the green track
 pulls away from the bare-planet Stefan–Boltzmann curve exactly where the biome
 is alive; drive the luminosity far enough in either direction and the biome
 collapses, the track snapping back onto the curve of a dead world.</p>
@@ -109,14 +112,30 @@ a sliver; widen it and the biome clings on across the whole range.</p>
 <p>Move the luminosity slowly and you will find the model is bistable — an
 established biome survives at luminosities where a freshly seeded one dies out,
 because a large standing population can hold the temperature where it needs it
-while a sparse one cannot. This is why the ensembles in the paper, which sample
-a broad range of initial daisy fractions, show life across a much wider band of
-luminosities than a single small seeding would suggest. One liberty is taken
+while a sparse one cannot. This is why the ensembles in the
+paper<a class="footnote-reference brackets" href="#footcite-sowinski2025exo" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, which sample a broad range of initial
+daisy fractions, show life across a much wider band of luminosities than a
+single small seeding would suggest. One liberty is taken
 here: since the growth terms are multiplicative in <span class="math notranslate nohighlight">\(f_B\)</span> and <span class="math notranslate nohighlight">\(f_W\)</span>,
 zero is an absorbing state, and a biome that collapsed could never return. The
 applet therefore keeps a dormant seed bank of <span class="math notranslate nohighlight">\(10^{-4}\)</span> — too small to
 draw or to perturb a living biome, but enough to recolonize a planet that
 becomes habitable again.</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id3">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-lovelock1974" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>James E Lovelock and Lynn Margulis. <a class="reference external" href="https://doi.org/10.1111/j.2153-3490.1974.tb01946.x">Atmospheric homeostasis by and for the biosphere: the Gaia hypothesis</a>. <em>Tellus</em>, 26(1–2):2–10, 1974.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-sowinski2025exo" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Damian R Sowinski, Gourab Ghoshal, and Adam Frank. <a class="reference external" href="https://damiansowinski.com/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf">Exo-daisy world: revisiting Gaia theory through an informational architecture perspective</a>. <em>The Planetary Science Journal</em>, 6(7):176, 2025.</p>
+</aside>
+</aside>
+</div>
+</section>
 </section>
 
 

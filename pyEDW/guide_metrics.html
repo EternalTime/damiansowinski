@@ -51,7 +51,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Guide: metrics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#entropy-table">Entropy table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#derived-measures">Derived measures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#interpreting-the-signs">Interpreting the signs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interpreting-the-signs">Interpreting the signs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
@@ -88,9 +91,10 @@
   <section id="guide-metrics">
 <h1>Guide: metrics<a class="headerlink" href="#guide-metrics" title="Link to this heading"></a></h1>
 <p><a class="reference internal" href="api/pyEDW.html#module-pyEDW.metrics" title="pyEDW.metrics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyEDW.metrics</span></code></a> turns an endpoint ensemble into viability and the
-information measures of Section 4. The pipeline is: histogram the joint
-distribution <span class="math notranslate nohighlight">\(p_{AE}(f_B, f_W, T, L)\)</span> at each luminosity, tabulate the
-entropies of every marginal, then combine them.</p>
+information measures of Section 4 of the paper<a class="footnote-reference brackets" href="#footcite-sowinski2025exo" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.
+The pipeline is: histogram the joint distribution
+<span class="math notranslate nohighlight">\(p_{AE}(f_B, f_W, T, L)\)</span> at each luminosity, tabulate the Shannon
+entropies<a class="footnote-reference brackets" href="#footcite-shannon1948" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> of every marginal, then combine them.</p>
 <section id="entropy-table">
 <h2>Entropy table<a class="headerlink" href="#entropy-table" title="Link to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyEDW</span><span class="w"> </span><span class="kn">import</span> <span class="n">metrics</span>
@@ -128,6 +132,21 @@ full bandwidth <span class="math notranslate nohighlight">\(\times\)</span> lumi
 temperature–luminosity correlation; <span class="math notranslate nohighlight">\(\Delta I &lt; 0\)</span> means it loosens it.
 Negative <span class="math notranslate nohighlight">\(C(a_1{:}a_2\|E)\)</span> indicates the environment synergistically
 enhances the correlation between the two daisy species.</p>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<div class="docutils container" id="id3">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-sowinski2025exo" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Damian R Sowinski, Gourab Ghoshal, and Adam Frank. <a class="reference external" href="https://damiansowinski.com/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf">Exo-daisy world: revisiting Gaia theory through an informational architecture perspective</a>. <em>The Planetary Science Journal</em>, 6(7):176, 2025.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-shannon1948" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Claude E. Shannon. <a class="reference external" href="https://doi.org/10.1002/j.1538-7305.1948.tb01338.x">A mathematical theory of communication</a>. <em>Bell System Technical Journal</em>, 27(3):379–423, 1948.</p>
+</aside>
+</aside>
+</div>
+</section>
 </section>
 </section>
 
