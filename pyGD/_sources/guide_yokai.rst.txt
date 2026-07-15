@@ -4,9 +4,10 @@ The Yokai
 The Yokai is a mobile agent that lives on a :class:`~pyGD.dynamics.Kuramoto`
 environment and works to keep it out of step. It occupies one node at a time,
 estimates the local mean-field angle, kicks its phase to oppose the local
-alignment, then hops to a neighbor and does it again. It is a Maxwell's demon
-rebuilt for phase space — it must measure the field before it acts — and since
-Kuramoto was Japanese, the demon that haunts his model is a yokai.
+alignment, then hops to a neighbor and does it again. It is a Maxwell's
+demon\ :footcite:`maxwell1871` rebuilt for phase space — it must measure the
+field before it acts — and since Kuramoto was Japanese, the demon that haunts
+his model is a yokai.
 
 Driving the agent
 ^^^^^^^^^^^^^^^^^
@@ -80,4 +81,10 @@ blind::
 Sweep ``noise`` from 0 to 1 and measure how much desynchronization survives.
 Whether the agent's information is worth anything — whether corrupting it costs
 the agent its grip — turns out to depend on the graph, and that dependence is
-the paper's central result. The theory page states it; the paper proves it.
+the paper's central result. The theory page states it; the paper proves
+it\ :footcite:`sowinski2024information`.
+
+References
+^^^^^^^^^^
+
+.. footbibliography::

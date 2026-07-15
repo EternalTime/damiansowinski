@@ -4,13 +4,14 @@ The Model
 This page is a compact reference for the equations pyGD integrates. The full
 development — the information-theoretic reading, the viability measure, and the
 semantic threshold — is in Sowinski, Frank & Ghoshal, *Phys. Rev. Research*
-**6**, 043188 (2024), linked from the project page.
+**6**, 043188 (2024)\ :footcite:`sowinski2024information`.
 
 The environment
 ---------------
 
-The environment is a population of :math:`N` phase oscillators on the nodes of a
-graph with adjacency matrix :math:`A`. Each oscillator turns at its own natural
+The environment is a population of :math:`N` Kuramoto phase
+oscillators\ :footcite:`kuramoto1975` on the nodes of a graph with adjacency
+matrix :math:`A`. Each oscillator turns at its own natural
 frequency :math:`\omega_i` and is pulled toward its neighbors,
 
 .. math::
@@ -31,7 +32,7 @@ Synchronization is read off the global order parameter
 whose magnitude :math:`r` measures phase coherence — near 0 for scattered
 phases, near 1 for a locked population. Above a critical coupling
 :math:`\sigma_c` an extensive fraction of the oscillators locks and :math:`r`
-becomes nonzero.
+becomes nonzero\ :footcite:`strogatz2000`.
 
 The agent
 ---------
@@ -72,3 +73,8 @@ The continuum model reproduces the agent-based order parameter closely but not
 exactly — it slightly underestimates the synchronization — and pyGD keeps the
 two as independent classes for that reason. The derivation of the drift and
 diffusion coefficients is given in Appendix B of the paper.
+
+References
+^^^^^^^^^^
+
+.. footbibliography::

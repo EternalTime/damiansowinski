@@ -46,12 +46,16 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_dynamics.html">Kuramoto Dynamics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide_yokai.html">The Yokai</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-environment">The environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-agent">The agent</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-coarse-grained-limit">The coarse-grained limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-coarse-grained-limit">The coarse-grained limit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -89,11 +93,12 @@
 <p>This page is a compact reference for the equations pyGD integrates. The full
 development — the information-theoretic reading, the viability measure, and the
 semantic threshold — is in Sowinski, Frank &amp; Ghoshal, <em>Phys. Rev. Research</em>
-<strong>6</strong>, 043188 (2024), linked from the project page.</p>
+<strong>6</strong>, 043188 (2024)<a class="footnote-reference brackets" href="#footcite-sowinski2024information" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <section id="the-environment">
 <h2>The environment<a class="headerlink" href="#the-environment" title="Link to this heading"></a></h2>
-<p>The environment is a population of <span class="math notranslate nohighlight">\(N\)</span> phase oscillators on the nodes of a
-graph with adjacency matrix <span class="math notranslate nohighlight">\(A\)</span>. Each oscillator turns at its own natural
+<p>The environment is a population of <span class="math notranslate nohighlight">\(N\)</span> Kuramoto phase
+oscillators<a class="footnote-reference brackets" href="#footcite-kuramoto1975" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> on the nodes of a graph with adjacency
+matrix <span class="math notranslate nohighlight">\(A\)</span>. Each oscillator turns at its own natural
 frequency <span class="math notranslate nohighlight">\(\omega_i\)</span> and is pulled toward its neighbors,</p>
 <div class="math notranslate nohighlight">
 \[\frac{d\theta_i}{dt} = \omega_i + \sigma \sum_{j} A_{ij}\,\sin(\theta_j - \theta_i),\]</div>
@@ -107,7 +112,7 @@ timestep <code class="docutils literal notranslate"><span class="pre">dt</span><
 <p>whose magnitude <span class="math notranslate nohighlight">\(r\)</span> measures phase coherence — near 0 for scattered
 phases, near 1 for a locked population. Above a critical coupling
 <span class="math notranslate nohighlight">\(\sigma_c\)</span> an extensive fraction of the oscillators locks and <span class="math notranslate nohighlight">\(r\)</span>
-becomes nonzero.</p>
+becomes nonzero<a class="footnote-reference brackets" href="#footcite-strogatz2000" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
 </section>
 <section id="the-agent">
 <h2>The agent<a class="headerlink" href="#the-agent" title="Link to this heading"></a></h2>
@@ -139,6 +144,25 @@ that hubs fluctuate more than leaves. This is what
 exactly — it slightly underestimates the synchronization — and pyGD keeps the
 two as independent classes for that reason. The derivation of the drift and
 diffusion coefficients is given in Appendix B of the paper.</p>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<div class="docutils container" id="id4">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-sowinski2024information" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Damian R Sowinski, Adam Frank, and Gourab Ghoshal. Information-theoretic description of a feedback-control Kuramoto model. <em>Physical Review Research</em>, 6(4):043188, 2024. URL: <a class="reference external" href="https://damiansowinski.com/assets/docs/papers/Kuramoto_Sowinski_2024.pdf">https://damiansowinski.com/assets/docs/papers/Kuramoto_Sowinski_2024.pdf</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-kuramoto1975" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Yoshiki Kuramoto. Self-entrainment of a population of coupled non-linear oscillators. In Huzihiro Araki, editor, <em>International Symposium on Mathematical Problems in Theoretical Physics</em>, volume 39 of Lecture Notes in Physics, pages 420–422. Springer, 1975. URL: <a class="reference external" href="https://doi.org/10.1007/BFb0013365">https://doi.org/10.1007/BFb0013365</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-strogatz2000" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Steven H Strogatz. From Kuramoto to Crawford: exploring the onset of synchronization in populations of coupled oscillators. <em>Physica D: Nonlinear Phenomena</em>, 143(1–4):1–20, 2000. URL: <a class="reference external" href="https://doi.org/10.1016/S0167-2789(00)00094-4">https://doi.org/10.1016/S0167-2789(00)00094-4</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
 </section>
 </section>
 
