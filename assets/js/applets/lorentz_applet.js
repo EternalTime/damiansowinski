@@ -183,7 +183,7 @@
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'ltz',
-    title: 'Lorentz Transformation &mdash; Worldlines',
+    title: 'Lorentz Transformation',
     gap:   0,
 
     ctrlHTML: `

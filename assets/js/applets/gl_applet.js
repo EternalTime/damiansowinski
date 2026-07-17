@@ -42,6 +42,7 @@
 
   let T = 0.025, gamma = 1.0;
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
 
   let _spare = null;
   function randn() {
@@ -224,11 +225,26 @@
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'gl',
-    title: 'Ginzburg&ndash;Landau &mdash; Langevin Dynamics',
+    title: 'Ginzburg&ndash;Landau',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="glReset()">Initialise</button><button class="applet-shell-header-btn" id="gl-pause-btn" onclick="glTogglePause()">Pause</button>`,
 
+
+    docs: {
+      whatis: `Every phase transition, Lev Landau argued in 1937, tells the same story: near the transition the microscopic details of a system matter far less than the symmetry it breaks, and everything worth knowing is carried by an order parameter — a coarse-grained field $\\phi(x)$ measuring the local degree of order [landau1937]. In 1950 he and Vitaly Ginzburg gave the idea its canonical form in their theory of superconductivity [ginzburg1950], and the resulting free energy has since become the hydrogen atom of field theories:
+$$F[\\phi] = \\int d^2x \\, \\Big[ \\tfrac{1}{2}(\\nabla \\phi)^2 - \\tfrac{1}{2}\\phi^2 + \\tfrac{1}{4}\\phi^4 \\Big].$$
+The potential is a double well: two degenerate minima at $\\phi = \\pm 1$, each a broken-symmetry phase, separated by a hump at $\\phi = 0$. Gradients are penalized, so the field wants to be uniform; the wells force it to choose a side.¶The field evolves here under Langevin dynamics — inertia, friction, and thermal noise [langevin1908]:
+$$\\ddot{\\phi} = \\nabla^2 \\phi + \\phi - \\phi^3 - \\gamma \\dot{\\phi} + \\xi,$$
+where the noise strength is tied to the damping through the fluctuation–dissipation relation, $\\langle \\xi(t)\\,\\xi(t') \\rangle = 2\\gamma k_B T \\, \\delta(t-t')$. Friction drains energy while the noise injects it, and the two conspire to drive the field toward the Boltzmann distribution at temperature $T$.¶Start from small random fluctuations — a quench from high temperature — and the symmetric state $\\phi = 0$ sits unstably on the hump: fluctuations grow, and the system decomposes into domains of the two phases separated by thin walls. The walls then move under their own curvature, small domains evaporating into large ones, with the characteristic size coarsening as $L(t) \\sim t^{1/2}$ [allen1979, hohenberg1977]. The same defect-forming quench, run in a cosmological setting, is the Kibble mechanism [kibble1976]: the early universe, too, had no time to choose its vacuum uniformly.`,
+
+      howto: `The canvas shows the field on a $256 \\times 256$ periodic lattice, colored by $\\phi$: pink for one well, teal for the other, cyan along the walls where $\\phi \\approx 0$. The panel below the sliders histograms the field values, each bar colored by its $\\phi$, with the double-well potential drawn on top; watch the single peak on the hump split in two as the field falls into the wells.¶Temperature sets the thermal noise. Cold, the domains are clean and the histogram peaks are sharp; at the top of the range fluctuations rattle the domains and blur the peaks. Damping $\\gamma$ interpolates between ringing, wave-like dynamics at low $\\gamma$ — quenches launch visible ripples — and overdamped relaxation at high $\\gamma$.¶Initialise re-seeds the field with small random fluctuations, quenching the system afresh; Pause freezes the dynamics.`,
+
+      references: ['landau1937', 'ginzburg1950', 'langevin1908', 'allen1979', 'hohenberg1977', 'kibble1976'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">

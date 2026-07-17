@@ -72,6 +72,7 @@
   let canvas, ctx;
   let S = 500;
   let running  = false;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
   let frameId  = null;
   let simTime  = 0;
   let simSpeed = 0.5;
@@ -697,11 +698,23 @@
   /* ── Shell ── */
   const shell = new AppletShell({
     id:    'qho',
-    title: 'Quantum Harmonic Oscillator &mdash; 1D',
+    title: 'Quantum Harmonic Oscillator',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="qhoReset()">Reset</button><button class="applet-shell-header-btn" id="qho-pause-btn" onclick="qhoTogglePause()">Resume</button>`,
 
+    docs: {
+      whatis: `The harmonic oscillator is physics' universal first approximation: near the bottom of any smooth well, every potential is a parabola. Quantize it,
+$$V(x) = \\tfrac{1}{2} m \\omega^2 x^2 \\;\\; \\Longrightarrow \\;\\; E_n = \\hbar \\omega \\left( n + \\tfrac{1}{2} \\right),$$
+and two signatures appear that no classical spring possesses: a zero-point energy $\\tfrac{1}{2}\\hbar\\omega$ that persists at absolute rest, and a ladder of levels spaced exactly evenly. The eigenfunctions are Gaussians dressed with Hermite polynomials, spreading wider and wavier up the ladder.¶The even spacing has a remarkable consequence: every phase factor $e^{-i E_n t/\\hbar}$ completes its cycle on a common schedule, so any superposition whatsoever repeats exactly with the classical period $2\\pi/\\omega$. There is no true dispersion here, and the well-chosen superposition can behave almost classically. Schrödinger found the perfect one in 1926: the coherent state, a displaced copy of the ground-state Gaussian that oscillates back and forth forever without spreading at all, its center tracing the classical trajectory [schrodinger1926b]. Glauber later showed that laser light is exactly such a state of the electromagnetic field, founding quantum optics [glauber1963coherent].¶Squeezing is the other trick worth knowing. Narrow the Gaussian below the ground state's natural width and position uncertainty drops below the vacuum level, paid for by extra momentum uncertainty; left to evolve, the squeezed state breathes, its width oscillating at $2\\omega$. Caves showed such states could beat the quantum noise limit of an interferometer [caves1981], and squeezed light is now injected into gravitational-wave detectors for precisely that purpose.`,
+
+      howto: `The upper plot shows the wavefunction, real part in teal and imaginary in pink; the lower plot shows the probability density $|\\Psi|^2$ sitting inside the hatched parabolic well. The applet opens paused: press Resume to set the phases turning, at the rate set by the speed slider.¶The mixer gives one row per eigenstate $\\psi_0$ through $\\psi_{14}$: each slider sets an amplitude $|c_n|$, each dial a phase, with the whole superposition renormalized automatically. Try the ground state alone (nothing moves), then add $\\psi_1$ and watch the density slosh at exactly the classical frequency; phases only shift where in the cycle it starts.¶Coherent loads the displaced Gaussian — watch $|\\Psi|^2$ swing rigidly, without any change of shape — and Squeezed loads the narrowed one, which breathes at twice the frequency instead. Draw PDF lets you sketch a target density on the lower plot for the applet to decompose into the fifteen-state basis. Reset returns to the ground state.`,
+
+      references: ['schrodinger1926b', 'glauber1963coherent', 'caves1981'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section" style="flex-shrink:0;">

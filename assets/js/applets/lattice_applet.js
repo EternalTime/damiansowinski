@@ -39,6 +39,7 @@
   let beta = 0.0;
   let offsetX = 0.0, offsetY = 0.0;  // camera translation within one cell, in [-SPACING/2, SPACING/2]
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
   let renderer, scene, camera;
   let cells = [], posArr = null, colArr = null;
   let pointsGeo = null, glowPoints = null, corePoints = null;
@@ -287,6 +288,22 @@
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="ltReset()">Reset</button><button class="applet-shell-header-btn" id="lt-pause-btn" onclick="ltTogglePause()">Pause</button>`,
 
+    docs: {
+      whatis: `When George Gamow wanted to teach relativity, he shrank the speed of light. His Mr Tompkins dozes off during a physics lecture and dreams of a city where $c$ is barely faster than a bicycle, so that every ride through town becomes an experiment in special relativity [gamow1940]. This applet is that dream made interactive: an infinite cubic lattice of glowing spheres, and a slider that carries you from rest to $0.999c$ through it.¶Three effects govern what you see, all consequences of Einstein's 1905 kinematics [einstein1905sr] and all controlled by the Lorentz factor
+$$\\gamma = \\frac{1}{\\sqrt{1 - \\beta^2}}, \\qquad \\beta = \\frac{v}{c}.$$
+Lengths along the direction of motion contract, $L = L_0 / \\gamma$, squeezing the lattice planes together. Light arriving from angle $\\theta$ to your motion is Doppler shifted,
+$$\\frac{f_{obs}}{f_{em}} = \\sqrt{\\frac{1 + \\beta\\cos\\theta}{1 - \\beta\\cos\\theta}},$$
+blueshifting the view ahead (rendered teal) and reddening the view behind (pink). And the directions themselves are aberrated,
+$$\\cos\\theta_{obs} = \\frac{\\cos\\theta_{em} + \\beta}{1 + \\beta\\cos\\theta_{em}},$$
+crowding the sky toward your direction of motion until, near $c$, most of the lattice appears bunched into a luminous tunnel ahead.¶For half a century after 1905, textbooks drew fast-moving objects as simply flattened. Anton Lampa in 1924, and independently Roger Penrose and James Terrell in 1959, noticed what nearly everyone had missed: an observer never sees the contraction plainly, because aberration and light-travel delays conspire to rotate and warp the image instead [lampa1924, penrose1959, terrell1959]. Weisskopf's account of the affair made visual relativity a subject in its own right [weisskopf1960]. What your eyes report at high $\\beta$ is not a squashed lattice but a tunneled, color-shifted one: contraction, aberration, and Doppler shift acting as inseparable parts of a single Lorentz transformation of the light field.`,
+
+      howto: `Velocity sets $\\beta$ up to $0.999c$, with the readout below reporting $\\gamma$ and the contraction factor. At rest you sit at the body-center of one cubic cell. As $\\beta$ grows the lattice streams past: planes ahead crush together and shift teal, planes behind redden to pink, and the forward tunnel gradually swallows the sky.¶Drag the view to look around; aberration is most striking looking sideways at high $\\beta$, where the lattice bows visibly forward. Position within cell nudges you transversely off-center, changing the symmetry of the tunnel. Reset returns you to rest at the cell center; Pause freezes everything, streaming and view alike.`,
+
+      references: ['gamow1940', 'einstein1905sr', 'lampa1924', 'penrose1959', 'terrell1959', 'weisskopf1960'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; if (running) lastTime = null; },
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">

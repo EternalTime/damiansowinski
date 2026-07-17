@@ -32,6 +32,7 @@
   /* ── State ── */
   let lPos = null, lVel = null;
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
 
   /* ── World geometry: chain along x between two walls ── */
   const SPAN = 8;                                  // wall inner face to wall inner face
@@ -456,6 +457,19 @@
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="coReset()">Reset</button><button class="applet-shell-header-btn" id="co-pause-btn" onclick="coTogglePause()">Pause</button>`,
+
+    docs: {
+      whatis: `Pull one mass aside and release it, and its motion does not stay put: it leaks along the chain, sloshing from mass to mass until, some time later, the disturbance returns. A chain of masses joined by springs between two walls is the simplest system where oscillators must negotiate, and it is the bridge between one particle and a continuum.¶The negotiation was settled by Daniel Bernoulli in 1753: however complicated the motion looks, it is a superposition of normal modes, collective patterns in which every mass oscillates at one shared frequency [bernoulli1753]. For $N$ equal masses $m$ and springs $k$, mode $n$ is a standing sine wave across the chain with frequency
+$$\\omega_n = 2\\sqrt{\\frac{k}{m}} \\, \\sin\\!\\left( \\frac{n \\pi}{2(N+1)} \\right), \\qquad n = 1, \\dots, N.$$
+Two masses give the classic beat phenomenon — energy sloshing wholly from one to the other and back — while fifteen begin to resemble a vibrating string, the mode frequencies crowding toward a maximum cutoff. This is how sound lives in a crystal.¶Two departures from the textbook keep things interesting here. The masses are hard spheres: displace them violently enough and neighbors collide, exchanging velocities in a way no linear theory contains: the same door to nonlinearity that Fermi, Pasta, and Ulam opened in 1955 when they asked how such a chain shares energy among its modes and got an answer that founded nonlinear science [fermi1955]. And the phase-space panel plots every mass as a point in the $(x, p)$ plane; a single undamped mass traces an ellipse, while the full chain weaves through its projections.`,
+
+      howto: `Each mass glows with its own hue from teal to pink along the chain; springs tint teal when stretched, pink when compressed, with thickness following $k$ and ball size following $m$. Drag a mass to displace it (it pins while held), drag empty space to orbit, and scroll to zoom.¶Masses sets the chain length from a single oscillator to fifteen. Spring constant and Mass set $\\omega_0 = \\sqrt{k/m}$ for the whole chain, and Damping drains energy from every mass. Displace one end mass gently to launch a traveling pulse, or displace the middle one to watch symmetric modes only.¶The Phase space panel traces recent $(x, p)$ history for every mass, colored by chain position and fading with age: ellipses for clean modes, spirals under damping, and scribbles once collisions set in. Reset zeroes the chain; Pause freezes it.`,
+
+      references: ['bernoulli1753', 'fermi1955'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">

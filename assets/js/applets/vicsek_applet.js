@@ -25,6 +25,7 @@
   let canvasEl, ctx;
   let W = 1, H = 1;
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
 
   function reset() {
     const sl = document.getElementById('vicsek-count');
@@ -239,11 +240,24 @@
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'vicsek',
-    title: 'Vicsek Model &mdash; Flocking Dynamics',
+    title: 'Vicsek Model',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="vicsekReset()">Reset</button><button class="applet-shell-header-btn" id="vicsek-pause-btn" onclick="vicsekTogglePause()">Pause</button>`,
 
+
+    docs: {
+      whatis: `A flock of starlings wheeling at dusk has no leader, no plan, no bird aware of more than its handful of neighbors; and yet the whole turns as one. How does order on the scale of thousands emerge from rules on the scale of one? Tamás Vicsek and his collaborators posed the question in its barest form in 1995 [vicsek1995], stripping a bird down to a point moving at fixed speed $v_0$, carrying only a heading. At each tick every particle looks within a radius $R$, averages the directions of its neighbors, adds a dash of noise, and steps:
+$$\\theta_i(t+1) = \\langle \\theta_j \\rangle_{|r_{ij}| < R} + \\eta \\, \\xi_i.$$
+That is the entire model: the XY model set loose to move, alignment carried from place to place by the motion it produces.¶Turn the noise down and a disordered swarm spontaneously picks a common direction; turn it up and the consensus shatters. This is a genuine phase transition to collective motion, with the flock-averaged velocity as its order parameter, and its most remarkable feature is that it survives in two dimensions at all. The Mermin–Wagner theorem forbids exactly this kind of ordering in the equilibrium XY model, but a flock is not in equilibrium — it burns energy to move — and motion itself carries alignment information faster than fluctuations can destroy it. Whether the transition is continuous or abrupt turns out to hinge on subtle details of the noise, a question that took the better part of a decade to settle [gregoire2004].¶Real starlings, it turns out, do not use a fixed radius at all. Tracking whole flocks, Ballerini and collaborators found each bird attends to a fixed number of neighbors — roughly seven — no matter how near or far [ballerini2008]. This topological rule keeps the flock cohesive under predator attack, where a metric rule would let it tear apart. Both rules live in this applet.`,
+
+      howto: `Each boid is a white dart trailing a halo colored by its heading; the domain is periodic, so a flock leaving one edge returns on the opposite one.¶Interaction switches the neighborhood rule. Metric averages over everyone within a fixed radius; sparse regions leave a boid nearly alone. Topological averages over the $k$ nearest neighbors regardless of distance, exposing the Neighbours slider; set it near seven for the starling value.¶Noise $\\eta$ is the control parameter: sweep it up from zero and watch an ordered flock melt into a directionless swarm at the transition. Boids sets the population, Speed sets $v_0$. Reset scatters the flock with random headings; Pause freezes it.`,
+
+      references: ['vicsek1995', 'gregoire2004', 'ballerini2008'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">

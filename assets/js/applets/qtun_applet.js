@@ -44,6 +44,7 @@ let frameSkipCount = 0;
 let barrierH = 60.0;
 let barrierW = 0.8;
 let running  = false;
+let wasRunning = false;   // sim state stashed while the docs panel is open
 
 let psiRe, psiIm;
 let p0 = 1.0, phiR = 0.0, phiT = 0.0;
@@ -347,6 +348,18 @@ const shell = new AppletShell({
 
   headerBtns: `<button class="applet-shell-header-btn" onclick="qtunReset()">Reset</button><button class="applet-shell-header-btn" id="qtun-pause-btn" onclick="qtunPause()">Pause</button>`,
 
+  docs: {
+    whatis: `Roll a ball at a hill without enough energy and it comes back. Every time, without exception: that is classical mechanics' promise. Quantum matter breaks it, because a particle is also a wave, and a wave confronted with a barrier it cannot classically cross does not stop dead: its amplitude decays exponentially inside the wall, and if the wall is thin enough, a little amplitude survives to the far side and walks away.¶The transmitted fraction is exquisitely sensitive to the barrier. For a rectangular barrier of height $V_0$ and width $w$, a particle of energy $E < V_0$ tunnels with probability
+$$T \\sim e^{-2 \\kappa w}, \\qquad \\kappa = \\frac{\\sqrt{2 m (V_0 - E)}}{\\hbar},$$
+falling by orders of magnitude for modest thickening. That exponential is why the effect stayed hidden until 1928, when Gamow, and independently Gurney and Condon, recognized it as the secret of alpha decay: the enormous range of nuclear lifetimes, from microseconds to billions of years, is this exponential read in reverse [gamow1928, gurney1928]. The same formula now drives the scanning tunneling microscope, which images single atoms by holding a needle a few atomic diameters from a surface and measuring the tunneling current [binnig1982].¶The applet fires a Gaussian wave packet with mean energy $E_0 = \\hbar^2 k_0^2 / 2m$ at the barrier and integrates the time-dependent Schrödinger equation with a split-operator spectral method, the kinetic step applied exactly in Fourier space and the potential step exactly in position space [feit1982]. Watch for the two quantum surprises: substantial transmission when $V_0 > E_0$ (tunneling), and substantial reflection when $V_0 < E_0$, where a classical particle would sail over untouched.`,
+
+    howto: `The upper trace is the wavefunction: real part in teal, imaginary in pink, both swinging inside the cyan $\\pm|\\psi|$ envelope; their rapid oscillation carries the momentum. The filled cyan curve below is the probability density $|\\psi|^2$, and the hatched block is the barrier, drawn to scale on the energy axis; the dashed pink line marks the packet's energy $E_0$, so you can see at a glance whether the barrier is classically passable. Absorbing boundaries quietly remove the packet as it leaves the stage.¶Fire launches the packet. While it flies, the barrier sliders lock; once the probability has drained off-screen, Fire re-arms automatically. Barrier Height spans from well below $E_0$ to far above it — cross the dashed line to move from over-barrier scattering to genuine tunneling — and Barrier Width shows the exponential: at fixed height, each notch thicker visibly starves the transmitted packet.¶Speed sets integration steps per frame (slowing to watch the interference fringes form between the incident and reflected waves is worth it). Pause freezes mid-flight; Reset re-arms everything.`,
+
+    references: ['gamow1928', 'gurney1928', 'binnig1982', 'feit1982'],
+  },
+
+  onDocsOpen:  function () { wasRunning = running; running = false; },
+  onDocsClose: function () { running = wasRunning; },
 
   ctrlHTML: `
     <div class="applet-shell-ctrl-section">

@@ -26,18 +26,21 @@ title: Applets
 Computational physics is awesome. 
 It's the art of telling a computer how to simulate phenomena we see in the world. 
 But it's not limited to just those phenomena we know about. 
-We can use explore unknown worlds obeying strange rules, limited solely by our imaginations. 
+We can use explore unknown worlds obeying strange rules, limited solely by our imaginations.
+Feel free to explore the applets below and see what you can discover.
+They've been organized loosley into categories, but many of them overlap in interesting ways.
+Each has a brief description of the physics and history behind it, just press the "What is this?" button in the applet window to learn more.
 </div><br>
 
 ---
 
 <h2 class="gradient-text2" style="font-size: 1.5em;">Statistical Physics</h2>
-<button class="applet-launch-btn" onclick="isingOpen(); this.blur()">Ising Model</button>
-<button class="applet-launch-btn" onclick="xyOpen(); this.blur()">XY Model</button>
-<button class="applet-launch-btn" onclick="glOpen(); this.blur()">Ginzburg&ndash;Landau</button>
 <button class="applet-launch-btn" onclick="bmOpen(); this.blur()">Brownian Motion</button>
-<span class="wip-wrap"><button class="applet-launch-btn" onclick="gasOpen(); this.blur()">Hard Spheres</button><span class="wip-label">Under Construction</span></span>
+<button class="applet-launch-btn" onclick="glOpen(); this.blur()">Ginzburg&ndash;Landau</button>
+<button class="applet-launch-btn" onclick="gasOpen(); this.blur()">Hard Spheres</button>
+<button class="applet-launch-btn" onclick="isingOpen(); this.blur()">Ising Model</button>
 <button class="applet-launch-btn" onclick="demonOpen(); this.blur()">Maxwell's Demon</button>
+<button class="applet-launch-btn" onclick="xyOpen(); this.blur()">XY Model</button>
 
 ---
 
@@ -47,29 +50,29 @@ We can use explore unknown worlds obeying strange rules, limited solely by our i
 ---
 
 <h2 class="gradient-text2" style="font-size: 1.5em;">Ecological Physics</h2>
-<button class="applet-launch-btn" onclick="vicsekOpen(); this.blur()">Vicsek Model</button>
-<span class="wip-wrap"><button class="applet-launch-btn" onclick="ttOpen(); this.blur()">Toner&ndash;Tu Model</button><span class="wip-label">Under Construction</span></span>
+<span class="wip-wrap"><button class="applet-launch-btn" onclick="antsOpen(); this.blur()">Ant Colony</button><span class="wip-label">Under Construction</span></span>
 <button class="applet-launch-btn" onclick="faOpen(); this.blur()">Forager</button>
 <button class="applet-launch-btn" onclick="fa3Open(); this.blur()">Forager 3D</button>
-<span class="wip-wrap"><button class="applet-launch-btn" onclick="antsOpen(); this.blur()">Ant Colony</button><span class="wip-label">Under Construction</span></span>
 <button class="applet-launch-btn" onclick="kmOpen(); this.blur()">Kuramoto Model</button>
+<button class="applet-launch-btn" onclick="ttOpen(); this.blur()">Toner&ndash;Tu Model</button>
+<button class="applet-launch-btn" onclick="vicsekOpen(); this.blur()">Vicsek Model</button>
 
 ---
 
 <h2 class="gradient-text2" style="font-size: 1.5em;">Special Relativity</h2>
-<button class="applet-launch-btn" onclick="ltOpen(); this.blur()">Relativistic Lattice</button>
 <button class="applet-launch-btn" onclick="ltzOpen(); this.blur()">Lorentz Transformation</button>
+<button class="applet-launch-btn" onclick="ltOpen(); this.blur()">Relativistic Lattice</button>
 
 ---
 
 <h2 class="gradient-text2" style="font-size: 1.5em;">Continuum &amp; Classical Mechanics</h2>
-<button class="applet-launch-btn" onclick="slOpen(); this.blur()">Spring Lattice</button>
-<button class="applet-launch-btn" onclick="shoOpen(); this.blur()">Driven Oscillator</button>
 <button class="applet-launch-btn" onclick="coOpen(); this.blur()">Coupled Oscillators</button>
-<span class="wip-wrap"><button class="applet-launch-btn" onclick="pendOpen(); this.blur()">Pendulums</button><span class="wip-label">Under Construction</span></span>
+<button class="applet-launch-btn" onclick="shoOpen(); this.blur()">Driven Oscillator</button>
 <span class="wip-wrap"><button class="applet-launch-btn" onclick="femOpen(); this.blur()">Elastic Cylinder</button><span class="wip-label">Under Construction</span></span>
-<button class="applet-launch-btn" onclick="tbOpen(); this.blur()">Three-Body Problem</button>
 <span class="wip-wrap"><button class="applet-launch-btn" onclick="nbOpen(); this.blur()">N-Body Gravity</button><span class="wip-label">Under Construction</span></span>
+<span class="wip-wrap"><button class="applet-launch-btn" onclick="pendOpen(); this.blur()">Pendulums</button><span class="wip-label">Under Construction</span></span>
+<button class="applet-launch-btn" onclick="slOpen(); this.blur()">Spring Lattice</button>
+<button class="applet-launch-btn" onclick="tbOpen(); this.blur()">Three-Body Problem</button>
 
 ---
 

@@ -28,6 +28,7 @@
   /* ── State ── */
   let pos = 0, vel = 0, simTime = 0;
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
 
   /* ── World geometry: wall at x = -HALF, mass equilibrium at x = 0 ── */
   const HALF     = 4;      // spring rest length (wall face → mass center)
@@ -426,6 +427,21 @@
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="shoReset()">Reset</button><button class="applet-shell-header-btn" id="sho-pause-btn" onclick="shoTogglePause()">Pause</button>`,
+
+    docs: {
+      whatis: `Push a child on a swing at random moments and little happens; push in time with the swing and small efforts pile into large motion. That piling-up is resonance, and the machine that explains it is the driven, damped harmonic oscillator, the single most reused model in physics. Its spring obeys Hooke's law of 1678, ut tensio sic vis, "as the extension, so the force" [hooke1678], while the timekeeping regularity of small oscillations traces back to Galileo's pendulum observations [galileo1638].¶Here a mass on a spring hangs from a wall that can be vibrated at frequency $\\omega_d$ with a small amplitude $A$, so the equation of motion is
+$$\\ddot{x} = -\\omega_0^2 \\left( x - A\\sin(\\omega_d t) \\right) - \\gamma \\dot{x},$$
+with natural frequency $\\omega_0 = \\sqrt{k/m}$ and damping rate $\\gamma$. After transients die away the mass settles into steady oscillation at the driving frequency, with amplitude $X = G \\cdot A$ set by the gain
+$$G(\\omega_d) = \\frac{\\omega_0^2}{\\sqrt{(\\omega_0^2 - \\omega_d^2)^2 + \\gamma^2 \\omega_d^2}}.$$
+Drive slowly and the mass simply follows the wall ($G \\to 1$); drive fast and it cannot keep up ($G \\to 0$); drive near $\\omega_0$ and the response peaks at a height of roughly the quality factor $Q = \\omega_0 / \\gamma$ [rayleigh1877]. With no damping at all the peak is unbounded: the oscillator swallows energy every cycle with nothing to spend it on.¶The same curve governs a wine glass ringing at an opera singer's note, the tuning of a radio circuit, and the seismic isolation of gravitational-wave detectors; learn its shape once and you will find it everywhere.`,
+
+      howto: `The teal wall vibrates when the drive is on; the spring stretches between wall and mass, tinting teal when extended and pink when compressed, with its thickness following $\\omega_0$. Drag the mass to displace it by hand, drag empty space to orbit the camera, and scroll to zoom.¶The plot at the bottom shows the theoretical gain curve $G(\\omega_d)$ for the current $\\omega_0$ and $\\gamma$ (teal), the current drive frequency (dashed pink line), and measured dots: hold a drive frequency steady and, after the transients settle, the applet records the actual steady-state amplitude ratio and plots it. Step $\\omega_d$ across the range to trace the resonance curve point by point, then change the damping and watch the peak collapse to $Q \\approx \\omega_0/\\gamma$.¶Natural frequency and Damping reshape the curve and clear the dots (they belong to the old oscillator); Driving frequency moves along it. Reset re-centers the mass at rest; Pause freezes the dynamics.`,
+
+      references: ['hooke1678', 'galileo1638', 'rayleigh1877'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">

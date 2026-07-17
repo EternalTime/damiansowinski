@@ -12,6 +12,7 @@
   let brushMode = 0;            // 0 = seed, 1 = cut
   let brushRadius = 0.02;       // in uv units
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
 
   /* ── WebGL state ── */
   let canvas, gl;
@@ -304,11 +305,24 @@
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'gs',
-    title: 'Gray&ndash;Scott &mdash; Reaction&ndash;Diffusion',
+    title: 'Gray&ndash;Scott',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="gsReset()">Reset</button><button class="applet-shell-header-btn" id="gs-pause-btn" onclick="gsTogglePause()">Pause</button>`,
 
+
+    docs: {
+      whatis: `Two years before his death, Alan Turing published his only paper on biology, asking how a uniform ball of cells decides where its head should go [turing1952]. His answer was chemical: two substances reacting and diffusing at different rates can shatter uniformity on their own, no blueprint required. Diffusion — the great smoother of gradients — becomes, when paired with the right reactions, an engine of pattern.¶The Gray–Scott system is the workhorse of Turing's idea, distilled from Peter Gray and Stephen Scott's studies of autocatalysis in stirred tank reactors [gray1983]. A fuel $U$ is fed in everywhere at rate $f$, while a catalyst $V$ consumes it autocatalytically, $U + 2V \\to 3V$, and is removed at rate $f + k$:
+$$\\frac{\\partial u}{\\partial t} = D_u \\nabla^2 u - u v^2 + f(1-u), \\qquad \\frac{\\partial v}{\\partial t} = D_v \\nabla^2 v + u v^2 - (f+k)\\,v.$$
+The fuel diffuses faster than the catalyst ($D_u > D_v$), and this is precisely the Turing condition: a local flare of $V$ starves its own center faster than diffusion can resupply it, while the flanks stay fed, so a spot grows at its rim, splits, and walks.¶John Pearson mapped the $(f, k)$ plane in 1993 and found a bestiary [pearson1993]: self-replicating spots that divide like cells, labyrinthine mazes, worms that wriggle without settling, coral-like growth fronts, breathing holes. Each preset here parks you in one province of that map; small excursions in $f$ and $k$ cross the borders between patterns as sharply as any phase transition.`,
+
+      howto: `The canvas shows the catalyst field $v$ through the palette ramp, near-black where $v = 0$ rising through teal and cyan into pink; Shaded adds relief lighting that turns the chemistry into terrain. Paint with the pointer: Seed deposits a splash of catalyst, Cut erases it, and the brush slider sets the stroke width. The domain is periodic, and the whole computation runs on the GPU.¶Presets place $(f, k)$ in five provinces of Pearson's map — Coral, Worms, Maze, Holes, Mitosis — and the Feed, Kill, and Diffusion Ratio sliders let you wander off-road between them.¶Resolution re-grids the field and clears it. Speed sets simulation steps per frame. Reset wipes the dish back to pure fuel, where nothing happens until you Seed; Pause freezes the chemistry, though you can still paint while paused.`,
+
+      references: ['turing1952', 'gray1983', 'pearson1993'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">

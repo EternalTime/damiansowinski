@@ -13,6 +13,7 @@
   let canvasEl, ctx;
   let W = 1, H = 1;
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
 
   function idx(x, y) { return ((y + L) % L) * L + ((x + L) % L); }
 
@@ -74,11 +75,11 @@
     ];
   }
   const PALETTE = [
-    mute(_rgb('--teal-dark'),  0.45),
-    mute(_rgb('--teal-light'), 0.45),
-    mute(_rgb('--cyan'),       0.45),
-    mute(_rgb('--pink-dark'),  0.45),
-    mute(_rgb('--pink-light'), 0.45),
+    mute(_rgb('--teal-dark'),  0.0),
+    mute(_rgb('--teal-light'), 0.0),
+    mute(_rgb('--cyan'),       0.0),
+    mute(_rgb('--pink-dark'),  0.0),
+    mute(_rgb('--pink-light'), 0.0),
     mute(_rgb('--teal-dark'),  0.0),
   ];
   const NSTOPS = PALETTE.length - 1;
@@ -130,7 +131,10 @@
     }
     ctx.putImageData(imgData, 0, 0);
     const vr = Math.min(cellW, cellH) * 0.42;
-    const vPos = _c('--pink-dark'), vNeg = _c('--teal-light');
+    const vPosRGB = mute(_rgb('--pink-dark'), 0.45), vNegRGB = mute(_rgb('--teal-light'), 0.45);
+    const vPos = 'rgb(' + vPosRGB.join(',') + ')', vNeg = 'rgb(' + vNegRGB.join(',') + ')';
+    ctx.strokeStyle = _c('--black');
+    ctx.lineWidth = Math.max(1.5, vr * 0.25);
     for (let y = 0; y < L; y++) {
       for (let x = 0; x < L; x++) {
         const v = vorticityAt(x, y);
@@ -139,6 +143,7 @@
         ctx.arc((x + 1) * cellW, (y + 1) * cellH, vr, 0, 2 * Math.PI);
         ctx.fillStyle = v > 0 ? vPos : vNeg;
         ctx.fill();
+        ctx.stroke();
       }
     }
     const lw = Math.max(1.2, cellW * 0.13);
@@ -175,11 +180,26 @@
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'xy',
-    title: 'XY Model &mdash; Glauber Dynamics',
+    title: 'XY Model',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="xyReset()">Reset</button><button class="applet-shell-header-btn" id="xy-pause-btn" onclick="xyTogglePause()">Pause</button>`,
 
+
+    docs: {
+      whatis: `Continuous symmetries are fragile things in two dimensions. Mermin and Wagner proved as much in 1966, with a theorem carrying the air of a final word: no two-dimensional system with a continuous symmetry can order at any finite temperature [mermin1966]. The XY model is the simplest system in the theorem's crosshairs. It frees the Ising spin from its axis, so that each site of an $L \\times L$ lattice carries a unit vector free to point in any direction in the plane — an angle $\\theta_i \\in [0, 2\\pi)$ — with neighbors preferring to align:
+$$E = -J \\sum_{\\langle ij \\rangle} \\cos(\\theta_i - \\theta_j).$$
+Rotating every spin by the same angle costs nothing, so long-wavelength spin waves are cheap to excite, and it is exactly these that destroy spontaneous magnetization. By the logic that served so well for the Ising model, nothing should happen here at all. And yet something does, among the most subtle transitions in statistical physics.¶The resolution came in the early 1970s from Vadim Berezinskii and, independently, from Michael Kosterlitz and David Thouless [berezinskii1971, kosterlitz1973]. The key actors are not spin waves but vortices: point defects around which the spin direction winds by a full $\\pm 2\\pi$. At low temperature, vortices and antivortices bind into tight pairs whose far fields cancel, and the spins settle into quasi-long-range order: correlations decaying not exponentially but as a power law, as if the system were critical at every temperature. Above
+$$k_B T_{BKT} \\approx 0.893\\,J$$
+the pairs unbind [kosterlitz1974, hasenbusch2005], free vortices proliferate into a neutral plasma, and order — even the quasi kind — dissolves. This topological phase transition, invisible to any local order parameter, earned Kosterlitz and Thouless the 2016 Nobel Prize.¶The simulation evolves by single-spin updates: a random site is offered a fresh random angle, and the move is accepted with probability $\\min(1, e^{-\\Delta E/k_B T})$, driving the lattice toward the Boltzmann distribution.`,
+
+      howto: `The canvas paints the local spin direction through the palette's color wheel (the field is smoothly interpolated between sites), with black arrows showing the individual spins. The circulation around each plaquette is monitored: pink dots mark vortices ($+2\\pi$ winding), teal dots mark antivortices ($-2\\pi$). Opposite charges attract: watch bound pairs orbit and annihilate.¶Temperature sweeps across the transition at $T_{BKT} \\approx 0.89\\,J/k_B$: run cold to see spin waves ripple over a nearly ordered lattice with only fleeting bound pairs, then heat past the transition to watch free vortices proliferate into a plasma. Quench from hot to cold and vortex–antivortex pairs will hunt each other down and annihilate as the lattice coarsens.¶Grid Size $L$ sets the lattice from $16^2$ to $96^2$ sites (changing it resets the spins), and Speed sets sweeps per frame. Reset re-randomizes the lattice; Pause freezes the dynamics for a closer look.`,
+
+      references: ['mermin1966', 'berezinskii1971', 'kosterlitz1973', 'kosterlitz1974', 'hasenbusch2005'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section">

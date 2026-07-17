@@ -68,6 +68,7 @@ function nRMax() { return nEqResources(); }
 let resources = [], agents = [], simTime = 0;
 let phaseTrail = [];
 let running = false, frameId = null, initialized = false, extinct = false;
+let wasRunning = false;   // sim state stashed while the docs panel is open
 
 function initResources() {
   resources = [];
@@ -427,10 +428,28 @@ function resizePhaseCanvas() {
 /* ── Shell wiring ── */
 const shell = new AppletShell({
   id:    'fa',
-  title: 'Forager &mdash; Active Energy Harvesting',
+  title: 'Forager',
   gap:   0,
 
   headerBtns: `<button class="applet-shell-header-btn" id="fa-btn-reset">Reset</button><button class="applet-shell-header-btn" id="fa-btn-run">Run</button>`,
+
+  docs: {
+    whatis: `What must a creature know about its world in order to survive in it? This applet is a laboratory for that question — a population of simple foragers living on a renewing field of resources, drawn from my own work on the information an agent needs to gather to keep from starving [sowinski2023semantic, sowinski2026beh]. Each forager carries an internal fuel $s$ that drains at a basal metabolic rate $\\mu_0$ and refills by $\\epsilon$ each time it collects a resource:
+$$\\frac{ds}{dt} = -\\mu_0 + \\epsilon \\sum_{\\text{collected}} \\delta(t - t_c).$$
+Cross a reproduction threshold $s \\ge S_{\\text{rep}}$ and the forager divides, splitting its fuel with a daughter; hit $s \\le 0$ and it dies. Nothing optimizes anything: the population's fate is decided entirely by whether foraging outpaces metabolism.¶Each forager runs and tumbles, the search strategy of a swimming bacterium [berg1972]: it moves ballistically toward the nearest resource within its sensing radius, and when it senses nothing it reorients randomly, the tumble rate $\\sigma$ tuning the walk from straight-line ballistic to aimlessly diffusive. Whether such a search succeeds depends on how the resources are laid out, and that is set by the single most important knob here, the homogeneity $\\Xi$, the ratio of the forager's own size to the mean spacing between resources. Small $\\Xi$ is a desert of far-flung oases; large $\\Xi$ is a uniform pasture.¶The resources themselves live and die — replenished by an energy influx $\\Gamma$, decaying at rate $\\tau_E^{-1}$ — so foragers and resources are locked in a predator–prey embrace. The phase plane tells the tale: resources on one axis, foragers on the other, both against their carrying capacities. A healthy ecosystem settles onto the line $N_R/N_R^{\\max} + N_A/N_A^{\\max} = 1$, the two populations trading off; too sparse a world, and the trajectory spirals into the corner where the foragers wink out.`,
+
+    howto: `The main panel is the arena: green points are resources, pink darts are foragers, each haloed by its fuel level and trailing a heading line, with a faint disk marking its sensing radius. The phase plane below plots the two populations (resources horizontal, foragers vertical) on log axes, its recent trajectory glowing and fading; the dashed line is the equilibrium trade-off. If the foragers die out, an EXTINCTION stamp falls across the arena.¶Homogeneity $\\Xi$ is the master control — slide it toward Sparse to thin the resources toward a desert and watch the phase trajectory drift toward extinction, or toward Dense for an easy pasture. Sense Radius sets how far a forager sees, Velocity how fast it moves, and Tumble slides its search from ballistic to diffusive. Speed sets simulation steps per frame.¶Reset re-seeds the world and clears the phase trail; Run toggles the dynamics.`,
+
+    references: ['sowinski2023semantic', 'sowinski2026beh', 'berg1972'],
+  },
+
+  onDocsOpen:  function () { wasRunning = running; running = false; },
+  onDocsClose: function () {
+    running = wasRunning;
+    const btn = document.getElementById('fa-btn-run');
+    if (btn) { btn.textContent = running ? 'Pause' : 'Run'; btn.classList.toggle('active', running); }
+    if (running && !frameId) frameId = requestAnimationFrame(loop);
+  },
 
   ctrlHTML: `
     <div id="fa-ctrl-inner">

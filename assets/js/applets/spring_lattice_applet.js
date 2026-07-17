@@ -24,6 +24,7 @@
   let spacing = 1.0;
   let px, py, vx, vy, rx, ry;
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
   let canvas, ctx, S;
   let dragIdx = -1, simPanel = null;
 
@@ -377,6 +378,18 @@
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="slReset()">Reset</button><button class="applet-shell-header-btn" id="sl-pause-btn" onclick="slTogglePause()">Pause</button>`,
 
+    docs: {
+      whatis: `Look closely enough and every solid is a lattice of springs. The atoms of a crystal sit in a regular array, each tethered to its neighbors by interatomic forces that, for small displacements, are as good as Hookean [hooke1678]; sound, heat capacity, and elasticity all live in the vibrations of that network. Navier and Cauchy built the first theories of elasticity in the 1820s from exactly this picture, and Born and von Kármán made lattice vibrations quantitative in 1912, founding what became phonon physics [born1912].¶Each interior mass $m$ here is connected to its neighbors by springs of stiffness $k$ and natural length $a$, with the boundary pinned. Displace a mass and the restoring forces launch waves that cross the lattice at speed
+$$c = a \\sqrt{\\frac{k}{m}},$$
+reflecting from the pinned edges and interfering on the way back. Damping bleeds the motion away; without it the lattice rings indefinitely.¶The geometry of the network matters. The square lattice is anisotropic: waves and stiffness differ along the axes and the diagonals, and with no diagonal braces it shears far too easily. The triangular lattice, with six bonds per site, is the minimal two-dimensional network that behaves like an isotropic elastic solid at long wavelengths: the same rigidity in every direction, and a well-defined resistance to both compression and shear. Switching between them is a lesson in how continuum elasticity remembers its microscopic scaffolding.`,
+
+      howto: `Grab any interior mass and drag; release and the disturbance propagates. In the Tile view each site's cell is colored by the local divergence of the displacement field — teal for local expansion, pink for compression — so sound waves appear as traveling color fronts. The Network view draws the springs themselves, each colored by its own stretch or compression.¶Lattice switches square versus triangular connectivity, and Resolution sets the grid from $20^2$ up to $80^2$ (both re-initialize the lattice). Spring constant and Mass set the wave speed $c = a\\sqrt{k/m}$: stiffen the springs and watch the fronts quicken. Damping controls how long the ringing persists; set it to zero and drag hard for standing-wave chaos, or high to watch deformations relax quasi-statically.¶Reset returns every mass to its rest position; Pause freezes the lattice mid-wave.`,
+
+      references: ['hooke1678', 'born1912'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div id="sl-ctrl-fixed">
