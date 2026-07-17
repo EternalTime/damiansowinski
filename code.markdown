@@ -82,12 +82,12 @@ source.
 
   // label = display name you control; neon = a site palette.css variable.
   const REPOS = [
-    { repo: 'pyCE',             label: 'Configurational Entropy', docs: '/pyCE/' },
     { repo: 'CellularAutomata', label: 'Cellular Automata',       docs: '/pyCA/' },
-    { repo: 'pyGD',             label: 'Graph Dynamics',          docs: '/pyGD/' },
+    { repo: 'pyCE',             label: 'Configurational Entropy', docs: '/pyCE/' },
     { repo: 'pyCoop',           label: 'Cooperation Games',       docs: '/pyCoop/' },
+    { repo: 'pyEDW',            label: 'Exo-Daisy World',         docs: '/pyEDW/' },
     { repo: 'pyLEAFS',          label: 'Foraging Simulator',      docs: '/LEAFS/', gh: 'LEAFS' },
-    { repo: 'pyEDW',            label: 'Exo-Daisy World',         docs: '/pyEDW/' }
+    { repo: 'pyGD',             label: 'Graph Dynamics',          docs: '/pyGD/' }
   ];
 
   const btnWrap = document.getElementById('repo-buttons');

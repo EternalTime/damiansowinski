@@ -55,6 +55,7 @@
 
   let px, py, vx, vy;
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
   let canvas, ctx, hctx;
 
   let wallX      = 0;
@@ -377,11 +378,24 @@
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'gas',
-    title: 'Hard-Sphere Gas &mdash; 2D',
+    title: 'Hard-Sphere Gas',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="gasReset()">Reset</button><button class="applet-shell-header-btn" id="gas-pause-btn" onclick="gasTogglePause()">Pause</button>`,
 
+
+    docs: {
+      whatis: `In 1738 Daniel Bernoulli proposed, in his Hydrodynamica, that a gas is a swarm of tiny bodies in ceaseless motion, and that pressure is nothing but their drumming on the container walls [bernoulli1738]. The idea lay dormant for over a century — heat was supposed to be a fluid called caloric, not motion — until James Clerk Maxwell derived the equilibrium velocity distribution of such a swarm in 1860 [maxwell1860], and Ludwig Boltzmann showed in 1872 that collisions alone drive any initial distribution toward it [boltzmann1872]. In two dimensions the speed distribution reads
+$$P(v) = \\frac{m v}{k_B T} \\, e^{-m v^2 / 2 k_B T},$$
+kinetic theory's first quantitative triumph.¶The hard-sphere gas strips the picture to its bones: disks that fly freely and collide elastically, nothing else. No attractions, no internal structure, no adjustable potential. Remarkably, this bare minimum suffices for equilibration, for pressure, for the Maxwell–Boltzmann distribution; as Alder and Wainwright discovered in 1957, in one of the first molecular dynamics simulations ever run, it even suffices for a freezing transition at high density [alder1957]. Entropy alone can crystallize a gas.¶The walls make the thermodynamics tangible. Push the piston inward and the moving wall returns each particle slightly faster than it arrived: microscopic work heating the gas, compression made mechanical. Switch on gravity and the box becomes a miniature atmosphere, its density thinning barometrically with height.`,
+
+      howto: `Disks are colored by speed, teal for slow through pink for fast. The teal wall on the left is the piston face; the panel below histograms the speeds against the two-dimensional Maxwell–Boltzmann distribution (pink curve) at the slider temperature.¶Temperature rescales all velocities immediately. Piston drives the wall in — capped so the packing fraction stays below one half — and the histogram drifts hot as the gas is compressed. Gravity pulls the disks down into a barometric profile.¶Particles and Radius take effect on Reset, which re-grids the gas with fresh Maxwell–Boltzmann velocities and withdraws the piston. Crank Radius and Particles high, compress, and look for crystalline patches: Alder and Wainwright's transition, live. Pause freezes the dynamics.`,
+
+      references: ['bernoulli1738', 'maxwell1860', 'boltzmann1872', 'alder1957'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div id="gas-scrollable">

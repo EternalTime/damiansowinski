@@ -38,6 +38,7 @@ const BASE_RADIUS = 6.0;
 let orbit = { dragging: false, lastX: 0, lastY: 0, theta: 0.6 + Math.PI, phi: 1.1, radius: BASE_RADIUS };
 
 let running = false, frameId = null;
+let wasRunning = false;   // sim state stashed while the docs panel is open
 let needsSolve = true;
 let needsDraw  = true;
 let zCenter = 0, H_def = H0; // updated each solve
@@ -960,11 +961,25 @@ function loop() {
 // ── Shell wiring ──────────────────────────────────────────────────────────────
 const shell = new AppletShell({
   id:    'fem',
-  title: 'Axisymmetric FEM &mdash; Elastic Cylinder',
+  title: 'Elastic Cylinder',
   gap:   0,
 
   headerBtns: `<button class="applet-shell-header-btn" onclick="femReset()">Reset</button><button class="applet-shell-header-btn" id="fem-pause-btn" onclick="femTogglePause()">Pause</button>`,
 
+  docs: {
+    whatis: `How does a computer bend a solid? Not by tracking atoms — a centimeter of rubber holds more atoms than any machine can store — but by carving the body into finite elements, small patches over which the displacement field is assumed simple, and demanding the whole patchwork minimize the elastic energy. Courant introduced the variational idea in 1943 [courant1943]; Turner, Clough, Martin, and Topp turned it into an engineering method while analyzing aircraft wings in 1956 [turner1956], and the finite element method has since become the workhorse of structural analysis, from bridges to biological tissue [sowinski2021poroelasticity].¶The body here is a solid cylinder, squeezed or stretched by a prescribed displacement of its top face. Its material is linear and isotropic, characterized by two numbers: Young's modulus $E$, the stiffness against uniaxial stretch, and Poisson's ratio $\\nu$, the fraction of sideways bulge per unit of axial squeeze,
+$$\\nu = -\\frac{\\varepsilon_{r}}{\\varepsilon_{z}}.$$
+Because the load and the body share an axis of symmetry, the full 3D problem collapses to a 2D mesh in the $(r, z)$ plane: an axisymmetric formulation that the applet solves with quadrilateral elements and a banded Cholesky factorization at interactive rates. The rendered 3D cylinder is that 2D solution revolved through $2\\pi$.¶The interesting physics hides at the edges of the $\\nu$ slider. As $\\nu \\to 1/2$ the material becomes incompressible, like rubber or living tissue, and naive finite elements lock, spuriously stiffening because the elements cannot bulge without changing volume. The applet uses selective reduced integration, integrating the volumetric part of the stiffness on fewer quadrature points, which is the classical cure. Negative $\\nu$ is stranger still: auxetic materials, engineered foams that grow thinner when compressed sideways-on, live at the left end of the slider.`,
+
+    howto: `The cylinder you orbit is the 2D axisymmetric solution revolved through $2\\pi$; the platens above and below visualize the loading. Loading prescribes the displacement of the top face, from 75% compression to 75% extension, and both faces slide frictionlessly on their platens, so the load is pure uniaxial stress and the radius responds only through the Poisson effect, thickening under compression and thinning under tension. Drag to orbit; the readout reports the camera angles.¶Stress Component selects which field paints the surface. $\\sigma_z$ is the axial normal stress, the force per unit area transmitted across horizontal cross-sections and the dominant component here. $\\sigma_r$ is the radial normal stress, pushing shells of material against their neighbors, and $\\sigma_\\theta$ is the hoop stress, acting along the circular rings around the axis (the component that bursts pipes and sausage casings). $\\tau_{rz}$ is the shear stress on those same planes, the tendency of horizontal layers to slide over one another. Von Mises combines all of them into a single scalar,
+$$\\sigma_{vM} = \\sqrt{ \\tfrac{1}{2}\\left[ (\\sigma_r - \\sigma_z)^2 + (\\sigma_z - \\sigma_\\theta)^2 + (\\sigma_\\theta - \\sigma_r)^2 \\right] + 3\\tau_{rz}^2 },$$
+the measure of shape-distorting stress that engineers compare against the yield strength to predict where a part fails first.¶Two things to keep in mind when reading the colors. Each map is normalized to its own minimum (teal) and maximum (pink) over the body, so the colors show where a component varies and by how much relative to itself, not its absolute size. And for this frictionless loading the exact solution is homogeneous — $\\sigma_z$ uniform, the other components zero — so a perfectly solid color is the right answer for $\\sigma_z$, while the patterns that surface in the near-zero components are the finite-element discretization made visible, growing near the incompressible limit where the elements strain against volumetric locking.¶Young's Modulus rescales all stress magnitudes at fixed displacement ($\\sigma_z = E \\, \\varepsilon_z$), and Poisson Ratio spans auxetic ($\\nu < 0$, thinning under compression) through incompressible ($\\nu \\to 0.499$, where the volume-preserving bulge is strongest). Reset restores the unloaded default material. Every slider change triggers a fresh solve: what you see is always the equilibrium, not a relaxation toward it.`,
+
+    references: ['courant1943', 'turner1956', 'sowinski2021poroelasticity'],
+  },
+
+  onDocsOpen:  function () { wasRunning = running; running = false; },
+  onDocsClose: function () { running = wasRunning; },
 
   ctrlHTML: `
     <div class="applet-shell-ctrl-section">

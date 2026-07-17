@@ -141,6 +141,7 @@
 
   let _frameCount = 0;
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
 
   /* \u2500\u2500 |v| and \u03c1 histograms (control panel) \u2500\u2500 */
   let hctx = null, rctx = null;
@@ -238,7 +239,7 @@
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'tt',
-    title: 'Toner&ndash;Tu &mdash; Active Fluid',
+    title: 'Toner&ndash;Tu',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="ttReset()">Initialise</button><button class="applet-shell-header-btn" id="tt-pause-btn" onclick="ttTogglePause()">Pause</button>`,

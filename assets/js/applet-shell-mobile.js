@@ -71,6 +71,17 @@
   pointer-events: none;
 }
 
+/* ── Docs panel (header stays on top; docs covers sim + ctrl) ── */
+.asm-panel.asm-header { z-index: 915; }
+.asm-panel.asm-docs {
+  background: var(--bg-void);   /* match the sim canvas, not the ctrl panel */
+  border-color: var(--amber);
+  box-shadow: 0 -4px 20px rgba(var(--amber-rgb), 0.4);
+  z-index: 912;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* ── Header inner ── */
 .asm-header-inner {
   display: flex;
@@ -96,6 +107,12 @@
   gap: calc(6px * var(--shell-fs, 1));
   flex-shrink: 0;
 }
+.applet-shell-hdr-extra {
+  display: flex;
+  align-items: center;
+  gap: calc(6px * var(--shell-fs, 1));
+}
+.applet-shell-hdr-extra:empty { display: none; }
 .asm-close-btn, .applet-shell-header-btn {
   background: none;
   border: 1px solid var(--border-mid);
@@ -301,12 +318,25 @@
 #${id}-asm-ctrl.asm-open        { transform: translateY(0); }
 #${id}-asm-ctrl.asm-landscape   { transform: translateX(110vw); }
 #${id}-asm-ctrl.asm-landscape.asm-open { transform: translateX(0); }
+
+/* Docs mode — applet-specific header buttons hidden */
+#${id}-asm-overlay.${id}-docs .applet-shell-hdr-extra { display: none; }
+
+/* Docs — slides out of the ctrl panel, covers sim + ctrl */
+#${id}-asm-docs {
+  top: var(--${id}-asm-hdr-h);
+  left: 0; right: 0; bottom: 0;
+  transform: translateY(110vh);
+}
+#${id}-asm-docs.asm-open        { transform: translateY(0); }
+#${id}-asm-docs.asm-landscape   { transform: translateX(110vw); }
+#${id}-asm-docs.asm-landscape.asm-open { transform: translateX(0); }
     `;
     document.head.appendChild(s);
   }
 
   /* ── HTML scaffold ──────────────────────────────────────────────────────── */
-  function buildScaffold(id, title, ctrlHTML, headerBtns) {
+  function buildScaffold(id, title, ctrlHTML, headerBtns, docsHTML) {
     const div = document.createElement('div');
     div.innerHTML = `
 <div id="${id}-asm-overlay">
@@ -315,7 +345,8 @@
     <div class="asm-header-inner">
       <h2>${title}</h2>
       <div class="asm-header-actions">
-        ${headerBtns || ''}
+        <span class="applet-shell-hdr-extra">${headerBtns || ''}</span>
+        <button class="applet-shell-header-btn" id="${id}-asm-docs-btn" data-asm-docs="${id}">What is this?</button>
         <button class="asm-close-btn" data-asm-close="${id}">Close</button>
       </div>
     </div>
@@ -327,6 +358,10 @@
 
   <div id="${id}-asm-ctrl" class="asm-panel asm-ctrl">
     ${ctrlHTML}
+  </div>
+
+  <div id="${id}-asm-docs" class="asm-panel asm-docs">
+    ${docsHTML || ''}
   </div>
 
 </div>
@@ -368,6 +403,8 @@
     /* Swap positioning for landscape vs portrait */
     const simEl  = document.getElementById(id + '-asm-sim');
     const ctrlEl = document.getElementById(id + '-asm-ctrl');
+    const docsEl = document.getElementById(id + '-asm-docs');
+    if (docsEl) docsEl.classList.toggle('asm-landscape', landscape);
     if (landscape) {
       simEl.style.right   = '';
       simEl.style.width   = S + 'px';
@@ -397,17 +434,30 @@
     const onOpen   = cfg.onOpen   || function () {};
     const onClose  = cfg.onClose  || function () {};
     const onResize = cfg.onResize || null;
+    const onDocsOpen  = cfg.onDocsOpen  || function () {};
+    const onDocsClose = cfg.onDocsClose || function () {};
     const ctrlHTML   = cfg.ctrlHTML   || '';
     const headerBtns = cfg.headerBtns || '';
+    const docsHTML   = cfg.docsHTML   || '';
+    const docsSpec   = cfg.docs       || null;
+
+    let docsOpen     = false;
+    let docsRendered = false;
 
     injectSharedStyles();
     injectAppletStyles(id);
 
-    const scaffold = buildScaffold(id, title, ctrlHTML, headerBtns);
+    const scaffold = buildScaffold(id, title, ctrlHTML, headerBtns, docsHTML);
     document.body.appendChild(scaffold);
 
     scaffold.querySelector('[data-asm-close]').addEventListener('click', function () {
       self.close();
+    });
+
+    scaffold.querySelector('[data-asm-docs]').addEventListener('click', function () {
+      if (docsOpen) self.closeDocs();
+      else          self.openDocs();
+      this.blur();
     });
 
     const panelIds = [
@@ -463,6 +513,7 @@
       },
 
       close: function () {
+        if (docsOpen) self.closeDocs(true);
         onClose();
 
         document.body.style.overflow = '';
@@ -479,6 +530,33 @@
             document.getElementById(pid).classList.remove('asm-closing');
           });
         }, 450);
+      },
+
+      openDocs: function () {
+        if (docsOpen) return;
+        docsOpen = true;
+        if (!docsRendered && docsSpec && window.AppletDocs) {
+          window.AppletDocs.render(document.getElementById(id + '-asm-docs'), docsSpec, id);
+          docsRendered = true;
+        }
+        document.getElementById(id + '-asm-overlay').classList.add(id + '-docs');
+        document.getElementById(id + '-asm-docs').classList.add('asm-open');
+        document.getElementById(id + '-asm-docs-btn').textContent = 'Back to Applet';
+        onDocsOpen();
+      },
+
+      // skipHook — used when the whole applet is closing; the applet's
+      // onClose already stops the sim, so don't fire onDocsClose (resume).
+      closeDocs: function (skipHook) {
+        if (!docsOpen) return;
+        docsOpen = false;
+        document.getElementById(id + '-asm-overlay').classList.remove(id + '-docs');
+        const dp = document.getElementById(id + '-asm-docs');
+        dp.classList.remove('asm-open');
+        dp.classList.add('asm-closing');
+        setTimeout(function () { dp.classList.remove('asm-closing'); }, 450);
+        document.getElementById(id + '-asm-docs-btn').textContent = 'What is this?';
+        if (!skipHook) onDocsClose();
       },
     };
 

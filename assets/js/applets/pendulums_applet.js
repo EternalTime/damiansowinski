@@ -22,6 +22,7 @@
   let canvas, ctx;
   let S = 500, W = 500, H = 500;
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
 
   /* ── Mode ── */
   let currentMode = 'double';
@@ -904,6 +905,19 @@
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="pendReset()">Reset</button><button class="applet-shell-header-btn" id="pend-pause-btn" onclick="pendTogglePause()">Pause</button>`,
+
+    docs: {
+      whatis: `How much machinery does chaos require? Two rods and two hinges. A single pendulum is the icon of regularity — Galileo set the science of timekeeping on its isochronous swing [galileo1638] — but hang a second pendulum from the first and predictability collapses. The double pendulum's equations follow from a two-line Lagrangian, yet its motion at high energy is chaotic in the full technical sense: two starts differing by less than a pixel diverge exponentially, and after a few swings share nothing but their energy [shinbrot1992].¶The equations of motion couple the two angles through a configuration-dependent mass matrix,
+$$M(\\theta) \\, \\ddot{\\theta} = f(\\theta, \\dot{\\theta}),$$
+which the applet inverts and integrates with fourth-order Runge–Kutta at every step; nothing is approximated beyond the timestep. At small energies the system is tame, decomposable into two nearly independent normal modes. Pumped past the inverted regions, it becomes the canonical demonstration that determinism and predictability are different things: the insight Poincaré first extracted from celestial mechanics [poincare1890].¶Chain mode replaces the two rods with fifteen, a discrete approximation to a hanging rope or a whip. The same Lagrangian machinery applies, with a $15 \\times 15$ mass matrix solved each substep, and the tip can be cracked to speeds far exceeding anything the hand imparted: energy fed at the pivot concentrates in the ever-lighter tail of the chain.`,
+
+      howto: `Double mode: grab either rod and drag to set its angle (the sim pins it while held), release to launch, and watch the glowing tip lay down a fading trail. Length ratio and Mass ratio redistribute the total length and mass between the two rods; Dissipation drains energy. For clean chaos, lift both rods near the top and release. Scroll to zoom about the pivot.¶Chain mode: grab any rod of the fifteen — the chain above your grip follows the cursor while the tail whips freely below — and try dragging quickly then releasing to crack the whip. Damping keeps the tail's spin finite; at the lowest values the integrator adaptively substeps to keep up.¶Reset returns the current mode to its gentle initial swing; Pause freezes the motion and clears the trail. The Wave mode button is a placeholder for an upcoming standing-wave demonstration.`,
+
+      references: ['galileo1638', 'poincare1890', 'shinbrot1992'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div id="pend-scrollable">

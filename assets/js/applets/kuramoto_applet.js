@@ -348,6 +348,7 @@ function renderHistogram() {
 }
 
 let running = false, frameId = null;
+let wasRunning = false;   // sim state stashed while the docs panel is open
 
 function loop(now) {
   if (running) {
@@ -431,11 +432,25 @@ function switchGraph(idx) {
 /* ── Shell wiring ── */
 const shell = new AppletShell({
   id:    'km',
-  title: 'Kuramoto Model &mdash; Synchronisation',
+  title: 'Kuramoto Model',
   gap:   0,
 
   headerBtns: `<button class="applet-shell-header-btn" onclick="kmRandomiseFreqs()">Reset</button><button class="applet-shell-header-btn" id="km-pause-btn" onclick="kmTogglePause()">Pause</button>`,
 
+  docs: {
+    whatis: `Fireflies along the riverbanks of Southeast Asia flash by the thousands in perfect unison; crickets entrain their chirps, pacemaker cells fire together, and audiences discover mid-applause that they are clapping in rhythm. Synchronization is one of nature's most persistent tricks, and the puzzle is that it emerges among oscillators that are not identical: every firefly keeps slightly different time. Arthur Winfree, then still a graduate student, gave the puzzle its modern form in 1967 as a population of coupled oscillators, each with its own natural frequency [winfree1967].¶In 1975 Yoshiki Kuramoto found the version that could be solved [kuramoto1975]. Each oscillator is stripped to a single phase $\\theta_i$, advancing at its own natural frequency $\\omega_i$ — drawn here from a Gaussian of width $\\sigma$ — and nudged by its neighbors through the gentlest possible coupling:
+$$\\dot{\\theta}_i = \\omega_i + \\frac{K}{N} \\sum_{j \\in \\partial i} \\sin(\\theta_j - \\theta_i).$$
+The degree of synchrony is measured by the order parameter
+$$r \\, e^{i\\psi} = \\frac{1}{N} \\sum_j e^{i\\theta_j},$$
+the centroid of the phases on the unit circle: $r = 0$ for incoherence, $r = 1$ for lockstep. For all-to-all coupling Kuramoto showed the transition is sharp: below a critical coupling $K_c$ set by the frequency spread, the oscillators drift independently; above it, a synchronized cluster nucleates and recruits the stragglers [strogatz2000].¶Off the complete graph, the story acquires geography. On a ring, coherence must propagate neighbor to neighbor; scale-free hubs entrain their spokes and act as nucleation centers; small-world shortcuts let synchrony leapfrog across the network. The interplay of topology, control, and synchronization remains an active research frontier; my own work reads a feedback-controlled Kuramoto model through an information-theoretic lens [sowinski2024information].`,
+
+    howto: `Each node is an oscillator whose glow is its phase, running around the palette color wheel; edges tint with the phases of their endpoints, so a locked graph breathes in a single color. Drag to orbit the graph, scroll to zoom. The panel below histograms the phases: flat when incoherent, a single traveling peak when synchronized.¶Graph selects the topology — Full, Ring, Scale-free (node size tracks degree), Small-world, Random — each with its own coupling range. Coupling sets $K$: sweep it up from zero to cross the synchronization transition, then back down to melt the locked state. Frequency Spread sets $\\sigma$ and re-draws every $\\omega_i$; the wider the spread, the stronger the coupling needed to herd it.¶Reset re-draws all phases and frequencies; Pause freezes the dynamics.`,
+
+    references: ['winfree1967', 'kuramoto1975', 'strogatz2000', 'sowinski2024information'],
+  },
+
+  onDocsOpen:  function () { wasRunning = running; running = false; },
+  onDocsClose: function () { running = wasRunning; if (running) lastTime = null; },
 
   ctrlHTML: `
     <div class="applet-shell-ctrl-section">

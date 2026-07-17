@@ -68,6 +68,7 @@
   let ms;   // mass of small particle
 
   let running = false, frameId = null;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
   let canvas, ctx, hctx;
   let gravity = 0;
 
@@ -534,11 +535,24 @@
   /* ── Shell wiring ── */
   const shell = new AppletShell({
     id:    'bm',
-    title: 'Brownian Motion &mdash; Hard Spheres',
+    title: 'Brownian Motion',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="bmReset()">Reset</button><button class="applet-shell-header-btn" id="bm-pause-btn" onclick="bmTogglePause()">Pause</button>`,
 
+
+    docs: {
+      whatis: `What jitters a speck of pollen in perfectly still water? The botanist Robert Brown found the question under his microscope in 1827: the fine particles within his pollen grains danced endlessly, erratically, and no stilling of the water could quiet them [brown1828]. He checked other pollens, then powdered rock; the dance was universal. Something was kicking the particles, and it was not life.¶The answer waited nearly eighty years. In 1905 Albert Einstein showed that the jitter is the visible signature of invisible molecules: each grain is bombarded from all sides, and the momentary imbalance of those blows drives a random walk whose mean-squared displacement grows linearly in time [einstein1905],
+$$\\langle x^2 \\rangle = 2 D t,$$
+with the diffusion constant $D$ set by the temperature and the fluid's drag. Smoluchowski reached the same law independently [smoluchowski1906], and Langevin compressed the argument into a single stochastic equation [langevin1908]. When Jean Perrin measured the displacements of emulsion droplets and extracted Avogadro's number from the data, atoms stopped being a hypothesis; the measurement earned him the 1926 Nobel Prize [perrin1909].¶The simulation is the argument made visible: a bath of hundreds of small hard disks in thermal motion, and one heavy amber intruder. Every collision is resolved exactly — momentum and energy conserved, contact times backtracked — and no randomness is injected anywhere after the initial conditions. The intruder's wandering trail is pure deterministic mechanics; the stochasticity of Brownian motion is an illusion of scale. By equipartition the big particle carries the same average kinetic energy as any bath particle, so its greater mass slows its wander, but nothing can bring it to rest.`,
+
+      howto: `The amber orb is the Brownian particle, trailing its recent path; the bath disks are colored by speed, teal for slow through pink for fast. The panel below histograms the bath speeds against the two-dimensional Maxwell–Boltzmann distribution (pink curve), $P(v) \\propto v \\, e^{-m v^2 / 2 k_B T}$.¶Temperature rescales all velocities on the fly. Small Radius resizes the bath disks while preserving each particle's kinetic energy. Gravity turns the box into a sedimentation cell: the bath settles into a barometric density profile while the heavy particle sinks through it, precisely the experiment Perrin ran. Watch the histogram fall out of agreement with the equilibrium curve during the collapse.¶Particles takes effect on Reset, which re-grids the bath with fresh Maxwell–Boltzmann velocities and clears the trail. Pause freezes the dynamics.`,
+
+      references: ['brown1828', 'einstein1905', 'smoluchowski1906', 'langevin1908', 'perrin1909'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div id="bm-sliders">

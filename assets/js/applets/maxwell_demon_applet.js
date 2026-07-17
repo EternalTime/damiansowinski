@@ -368,6 +368,16 @@
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="demonReset()">Restart</button>`,
 
+    docs: {
+      whatis: `'A being whose faculties are so sharpened that he can follow every molecule in its course': such is the creature James Clerk Maxwell dreamt up in an 1867 letter to his friend Peter Guthrie Tait [maxwell1871]. Stationed at a tiny door between two chambers of gas, the being — Thomson soon dubbed it a demon, over Maxwell's objection — lets fast molecules pass one way and slow molecules the other. Without performing any work it builds a temperature difference, and the second law of thermodynamics quietly collapses.¶The exorcism took a century. In 1929 Leo Szilard reduced the paradox to its atom: a demon operating on a single molecule, whose one-bit measurement is worth exactly $k_B T \\ln 2$ of extractable work [szilard1929]. Rolf Landauer located the hidden price in 1961: erasing a bit of memory unavoidably dissipates at least $k_B T \\ln 2$ of heat [landauer1961]. Charles Bennett closed the loop in 1982: the demon may measure for free, but its memory fills, and erasing it to keep sorting pays back every joule the sorting gained [bennett1982]. The second law survives because information is physical.¶Here the position is vacant, and you are invited to interview. Two chambers of hard disks begin in equilibrium at the same temperature, and the door between them is yours. No work is ever done on a particle — the door only blocks or admits — yet under your timing the temperatures drift apart, purchased entirely with the information in your eyes.`,
+
+      howto: `Each chamber's temperature is displayed at the top in units of the initial temperature; particles are colored by speed, teal for slow through pink for fast.¶Open Door parts the central wall; Close Door seals it. Sort pink particles into one chamber and teal into the other by timing the door around each approach. When the two temperatures differ by half the initial temperature, the stamp appears: consider yourself HIRED.¶Restart re-equilibrates both chambers and closes the door. For a second interview, try running your sort in reverse to erase the gradient you built.`,
+
+      references: ['maxwell1871', 'szilard1929', 'landauer1961', 'bennett1982'],
+    },
+
+    onDocsOpen:  function () { running = false; },
+    onDocsClose: function () { running = true; },
 
     ctrlHTML: `
       <div id="demon-door-wrap">

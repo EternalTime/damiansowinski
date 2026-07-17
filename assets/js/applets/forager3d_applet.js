@@ -108,6 +108,7 @@ function nEqResources() { return nRMax(); }
 let resources = [], agents = [], simTime = 0;
 let phaseTrail = [];
 let running = false, frameId = null, initialized = false, extinct = false;
+let wasRunning = false;   // sim state stashed while the docs panel is open
 
 /* ── Spatial grid (3D) ── */
 let grid = null, gridNC = 0, gridCS = 0;
@@ -989,10 +990,28 @@ function attachOrbitControls(canvas) {
 /* ── AppletShell wiring ── */
 const shell = new AppletShell({
   id:    'fa3',
-  title: 'Forager 3D &mdash; Active Energy Harvesting',
+  title: 'Forager 3D',
   gap:   0,
 
   headerBtns: `<button class="applet-shell-header-btn" id="fa3-btn-reset">Reset</button><button class="applet-shell-header-btn" id="fa3-btn-run">Run</button>`,
+
+  docs: {
+    whatis: `Lift the forager off the plane and set it loose in a volume. The rules are unchanged from the two-dimensional world — foragers run and tumble through a renewing cloud of resources, burning fuel at a basal rate $\\mu_0$ and refuelling by $\\epsilon$ per catch, dividing at $s \\ge S_{\\text{rep}}$ and dying at $s \\le 0$ [sowinski2023semantic, sowinski2026beh]:
+$$\\frac{ds}{dt} = -\\mu_0 + \\epsilon \\sum_{\\text{collected}} \\delta(t - t_c).$$
+But the third dimension changes the geometry of survival. Space is emptier in three dimensions — volume grows as the cube of distance, not the square — so a forager sensing out to a fixed radius sweeps a far smaller fraction of its world, and the same homogeneity $\\Xi$ that supports a thriving population on the plane can leave a spatial forager starving.¶The homogeneity $\\Xi$ is again the ratio of the forager's own size to the mean spacing between resources, now measured across three dimensions, and it is the parameter around which my current work turns: in the neuroevolution of recurrent-neural-network foragers, the environment's homogeneity turns out to drive behavioral speciation, splitting an evolving population into distinct foraging strategies [sowinski2026beh]. This applet hard-wires the simplest such strategy — greedy pursuit of the nearest sensed resource, run-and-tumble in the dark [berg1972] — so you can feel, before any learning enters, how the bare geometry of a three-dimensional world rewards or punishes it.¶As before, foragers and resources form a predator–prey pair, and the phase plane reads out their populations against their carrying capacities. Healthy coexistence rides the trade-off line $N_R/N_R^{\\max} + N_A/N_A^{\\max} = 1$; starve the world and the trajectory spirals into extinction.`,
+
+    howto: `The arena is now a three-dimensional box you can inspect: drag to orbit, scroll to zoom. Green points are resources, pink foragers are shaded and sized by fuel, with depth cueing near from far. The phase plane below plots resources against foragers on log axes, its recent trajectory glowing and fading, with the dashed equilibrium trade-off; an EXTINCTION stamp falls if the foragers die out.¶Homogeneity $\\Xi$ is the master control, and it bites harder here than in two dimensions — nudge it toward Sparse and the emptier three-dimensional space starves the foragers well before the planar model would. Sense Radius, Velocity, and Tumble shape each forager's search; Speed sets steps per frame.¶Reset re-seeds the world and clears the phase trail; Run toggles the dynamics.`,
+
+    references: ['sowinski2023semantic', 'sowinski2026beh', 'berg1972'],
+  },
+
+  onDocsOpen:  function () { wasRunning = running; running = false; },
+  onDocsClose: function () {
+    running = wasRunning;
+    const btn = document.getElementById('fa3-btn-run');
+    if (btn) { btn.textContent = running ? 'Pause' : 'Run'; btn.classList.toggle('active', running); }
+    if (running && !frameId) frameId = requestAnimationFrame(loop3);
+  },
 
   ctrlHTML: `
     <div id="fa3-ctrl-inner">

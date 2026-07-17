@@ -69,6 +69,7 @@
   let canvas, ctx;
   let S = 500;
   let running  = false;
+  let wasRunning = false;   // sim state stashed while the docs panel is open
   let frameId  = null;
   let simTime  = 0;
   let simSpeed = 0.05;
@@ -669,11 +670,27 @@
   /* ── Shell ── */
   const shell = new AppletShell({
     id:    'isw',
-    title: 'Infinite Square Well &mdash; Quantum Mechanics',
+    title: 'Infinite Square Well',
     gap:   0,
 
     headerBtns: `<button class="applet-shell-header-btn" onclick="iswReset()">Reset</button><button class="applet-shell-header-btn" id="isw-pause-btn" onclick="iswTogglePause()">Resume</button>`,
 
+    docs: {
+      whatis: `Every quantum mechanics course starts in the same box: a single particle confined between impenetrable walls. The infinite square well is where Schrödinger's equation [schrodinger1926] first shows its teeth, because confinement alone quantizes the energy. Only standing waves that vanish at both walls fit inside a well of width $L$,
+$$\\psi_n(x) = \\sqrt{\\frac{2}{L}} \\, \\sin\\!\\left( \\frac{n \\pi x}{L} \\right), \\qquad E_n = \\frac{n^2 \\pi^2 \\hbar^2}{2 m L^2},$$
+a discrete ladder of states climbing as $n^2$.¶A single stationary state is aptly named: its phase rotates, but $|\\psi_n|^2$ never moves. All quantum motion lives in superposition,
+$$\\Psi(x, t) = \\sum_n c_n \\, \\psi_n(x) \\, e^{-i E_n t / \\hbar},$$
+where each coefficient $c_n$ is a complex number carrying an amplitude and a phase, and each phase rotates at its own rate $E_n / \\hbar$. The components continually drift in and out of step, and their interference makes the probability density $|\\Psi|^2$ — the quantity Born taught us to read as where the particle is likely to be found [born1926] — slosh, breathe, and scatter across the well.¶Because $E_n = n^2 E_1$ exactly, every phase is an integer multiple of the slowest one, and the entire wavefunction reassembles itself perfectly after the revival time
+$$T_{rev} = \\frac{4 m L^2}{\\pi \\hbar}.$$
+Watch long enough and an initially localized packet disperses into apparent chaos, then gathers itself back out of the noise; at rational fractions of $T_{rev}$ it forms ghostly multiple copies of itself, the fractional revivals [robinett2004]. No classical particle in a box does anything of the kind.`,
+
+      howto: `The upper plot shows the wavefunction itself, real part in teal and imaginary part in pink; the lower plot shows the probability density $|\\Psi|^2$. The hatched regions are the forbidden exterior of the well. The applet opens paused: press Resume to start the phases turning, with the speed slider setting the clock rate.¶The heart of the panel is the eigenstate mixer: thirty rows, one per basis state $\\psi_n$. Each row's slider sets the amplitude $|c_n|$ and its dial sets the phase, draggable in a circle; the superposition is renormalized automatically, so only ratios matter. Build states by hand: equal amplitudes on $n = 1, 2$ give the classic sloshing two-state beat, and changing the phases alone reshapes the same amplitudes into entirely different densities.¶Presets offer a Dirac delta (all thirty states in phase, as position-localized as this basis allows) and a Triangle density. Draw PDF is the inverse problem: sketch any probability density directly on the lower plot with the pointer, and the applet decomposes it into the thirty-state basis, handing you the coefficients. Reset returns to the ground state.`,
+
+      references: ['schrodinger1926', 'born1926', 'robinett2004'],
+    },
+
+    onDocsOpen:  function () { wasRunning = running; running = false; },
+    onDocsClose: function () { running = wasRunning; },
 
     ctrlHTML: `
       <div class="applet-shell-ctrl-section" style="flex-shrink:0;">

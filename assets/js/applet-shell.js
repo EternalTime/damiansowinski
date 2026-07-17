@@ -85,6 +85,30 @@
   pointer-events: none;
 }
 
+/* ── Docs panel (header stays on top; docs slides beneath it) ── */
+.applet-shell-panel.applet-shell-header { z-index: 915; }
+.applet-shell-docs-clip {
+  position: fixed;
+  z-index: 912;
+  pointer-events: none;
+  /* clip at the top edge only — glow may spill on the other three sides */
+  clip-path: inset(0px -80px -80px -80px);
+}
+.applet-shell-docs-clip .applet-shell-panel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.applet-shell-panel.applet-shell-docs {
+  background: var(--bg-void);   /* match the sim canvas, not the ctrl panel */
+  border-color: var(--amber);
+  box-shadow: 0 12px 35px rgba(var(--amber-rgb), 0.45),
+              0 -8px 20px rgba(var(--amber-rgb), 0.25);
+  overflow-y: auto;
+}
+
 /* ── Header ── */
 .applet-shell-header-inner {
   display: flex;
@@ -106,6 +130,12 @@
   align-items: center;
   gap: calc(6px * var(--shell-fs, 1));
 }
+.applet-shell-hdr-extra {
+  display: flex;
+  align-items: center;
+  gap: calc(6px * var(--shell-fs, 1));
+}
+.applet-shell-hdr-extra:empty { display: none; }
 .applet-shell-close-btn,
 .applet-shell-header-btn {
   background: none;
@@ -325,6 +355,33 @@
   overflow-y: auto;
 }
 #${id}-ctrl-panel.applet-shell-open { transform: translateX(0); }
+
+/* Docs panel — slides down from under the header */
+#${id}-docs-clip {
+  left:   calc(var(--${id}-left) + 0.05 * var(--${id}-W));
+  top:    var(--${id}-top-body);
+  width:  calc(0.9 * var(--${id}-W));
+  height: var(--${id}-H-body);
+}
+#${id}-docs-panel {
+  transform: translateY(calc(-100% - 80px));
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+#${id}-docs-panel.applet-shell-open { transform: translateY(0); }
+
+/* Docs mode — applet-specific header buttons hidden */
+#${id}-overlay.${id}-docs .applet-shell-hdr-extra { display: none; }
+
+/* Docs mode — sim slides left, ctrl slides right, both frozen */
+#${id}-overlay.${id}-docs #${id}-sim-panel.applet-shell-open {
+  transform: translateX(calc(0.05 * var(--${id}-W) - var(--${id}-W-sim)));
+}
+#${id}-overlay.${id}-docs #${id}-ctrl-panel.applet-shell-open {
+  transform: translateX(calc(0.95 * var(--${id}-W) - var(--${id}-W-sim)));
+}
+#${id}-overlay.${id}-docs #${id}-sim-panel,
+#${id}-overlay.${id}-docs #${id}-ctrl-panel { pointer-events: none; }
     `;
     document.head.appendChild(s);
   }
@@ -388,12 +445,30 @@
   overflow-y: hidden;
 }
 #${id}-ctrl-panel.applet-shell-open { transform: translateY(0); }
+
+/* Docs panel — slides down from under the header, covers sim + ctrl */
+#${id}-docs-clip {
+  left:   var(--${id}-left);
+  top:    var(--${id}-top-sim);
+  width:  var(--${id}-W);
+  height: calc(var(--${id}-H-sim) + var(--${id}-H-ctrl));
+}
+#${id}-docs-panel {
+  transform: translateY(calc(-100% - 80px));
+  border-radius: 0;
+}
+#${id}-docs-panel.applet-shell-open { transform: translateY(0); }
+
+/* Docs mode — freeze sim and ctrl, hide applet-specific header buttons */
+#${id}-overlay.${id}-docs #${id}-sim-panel,
+#${id}-overlay.${id}-docs #${id}-ctrl-panel { pointer-events: none; }
+#${id}-overlay.${id}-docs .applet-shell-hdr-extra { display: none; }
     `;
     document.head.appendChild(s);
   }
 
   /* ── HTML scaffold ──────────────────────────────────────────────────────── */
-  function buildScaffold(id, title, ctrlHTML, headerBtns) {
+  function buildScaffold(id, title, ctrlHTML, headerBtns, docsHTML) {
     const div = document.createElement('div');
     div.innerHTML = `
 <div id="${id}-overlay">
@@ -402,7 +477,8 @@
     <div class="applet-shell-header-inner">
       <h2>${title}</h2>
       <div class="applet-shell-header-actions">
-        ${headerBtns || ''}
+        <span class="applet-shell-hdr-extra">${headerBtns || ''}</span>
+        <button class="applet-shell-header-btn" id="${id}-docs-btn" data-shell-docs="${id}">What is this?</button>
         <button class="applet-shell-close-btn" data-shell-close="${id}">Close</button>
       </div>
     </div>
@@ -414,6 +490,12 @@
 
   <div id="${id}-ctrl-panel" class="applet-shell-panel applet-shell-ctrl">
     ${ctrlHTML}
+  </div>
+
+  <div id="${id}-docs-clip" class="applet-shell-docs-clip">
+    <div id="${id}-docs-panel" class="applet-shell-panel applet-shell-docs">
+      ${docsHTML || ''}
+    </div>
   </div>
 
 </div>
@@ -500,8 +582,15 @@
     const onOpen      = cfg.onOpen   || function () {};
     const onClose     = cfg.onClose  || function () {};
     const onResize    = cfg.onResize || null;
+    const onDocsOpen  = cfg.onDocsOpen  || function () {};
+    const onDocsClose = cfg.onDocsClose || function () {};
     const ctrlHTML    = cfg.ctrlHTML    || '';
     const headerBtns  = cfg.headerBtns  || '';
+    const docsHTML    = cfg.docsHTML    || '';
+    const docsSpec    = cfg.docs        || null;
+
+    let docsOpen     = false;
+    let docsRendered = false;
 
     // Inject styles
     injectSharedStyles();
@@ -509,12 +598,19 @@
     else injectAppletStyles(id);
 
     // Build and insert HTML scaffold
-    const scaffold = buildScaffold(id, title, ctrlHTML, headerBtns);
+    const scaffold = buildScaffold(id, title, ctrlHTML, headerBtns, docsHTML);
     document.body.appendChild(scaffold);
 
     // Wire up close button
     scaffold.querySelector('[data-shell-close]').addEventListener('click', function () {
       self.close();
+    });
+
+    // Wire up docs toggle button
+    scaffold.querySelector('[data-shell-docs]').addEventListener('click', function () {
+      if (docsOpen) self.closeDocs();
+      else          self.openDocs();
+      this.blur();
     });
 
     const panelIds = [id + '-header', id + '-sim-panel', id + '-ctrl-panel'];
@@ -547,6 +643,7 @@
       },
 
       close: function () {
+        if (docsOpen) self.closeDocs(true);
         onClose();
 
         panelIds.forEach(function (pid) {
@@ -561,6 +658,33 @@
             document.getElementById(pid).classList.remove('applet-shell-closing');
           });
         }, 550);
+      },
+
+      openDocs: function () {
+        if (docsOpen) return;
+        docsOpen = true;
+        if (!docsRendered && docsSpec && window.AppletDocs) {
+          window.AppletDocs.render(document.getElementById(id + '-docs-panel'), docsSpec, id);
+          docsRendered = true;
+        }
+        document.getElementById(id + '-overlay').classList.add(id + '-docs');
+        document.getElementById(id + '-docs-panel').classList.add('applet-shell-open');
+        document.getElementById(id + '-docs-btn').textContent = 'Back to Applet';
+        onDocsOpen();
+      },
+
+      // skipHook — used when the whole applet is closing; the applet's
+      // onClose already stops the sim, so don't fire onDocsClose (resume).
+      closeDocs: function (skipHook) {
+        if (!docsOpen) return;
+        docsOpen = false;
+        document.getElementById(id + '-overlay').classList.remove(id + '-docs');
+        const dp = document.getElementById(id + '-docs-panel');
+        dp.classList.remove('applet-shell-open');
+        dp.classList.add('applet-shell-closing');
+        setTimeout(function () { dp.classList.remove('applet-shell-closing'); }, 550);
+        document.getElementById(id + '-docs-btn').textContent = 'What is this?';
+        if (!skipHook) onDocsClose();
       },
     };
 
@@ -578,5 +702,233 @@
 
   window.AppletShellDesktop = AppletShell;
   window.AppletShell = AppletShell;
+
+  /* ═══════════════════════════ AppletDocs ═══════════════════════════════
+     Shared docs-panel renderer, used by both the desktop and mobile shells.
+
+     Spec (per applet, passed as cfg.docs):
+       {
+         whatis:     '…¶…',        // paragraphs split on ¶; $…$ / $$…$$ math
+         howto:      '…¶…',
+         references: ['bibkey', …] // keys into /assets/data/references.bib
+       }
+     [bibkey] in prose renders as a superscript [n] linking to the entry.
+     Bib parsing/formatting mirrors the MFS site (_layouts/mfs.html).
+  ═══════════════════════════════════════════════════════════════════════ */
+
+  const BIB_URL = '/assets/data/references.bib';
+  const DOCS_STYLE_ID = 'applet-docs-styles';
+  let _bibCache = null;
+
+  function injectDocsStyles() {
+    if (document.getElementById(DOCS_STYLE_ID)) return;
+    const s = document.createElement('style');
+    s.id = DOCS_STYLE_ID;
+    s.textContent = `
+.adoc-section {
+  padding: calc(14px * var(--shell-fs, 1)) calc(20px * var(--shell-fs, 1)) calc(10px * var(--shell-fs, 1));
+  border-bottom: 1px solid rgba(var(--amber-rgb), 0.18);
+}
+.adoc-section:last-child { border-bottom: none; }
+.adoc-label {
+  font-size: calc(14px * var(--shell-fs, 1));
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(var(--amber-rgb), 0.65);
+  margin-bottom: calc(8px * var(--shell-fs, 1));
+}
+.adoc-body p {
+  font-size: calc(17px * var(--shell-fs, 1));
+  line-height: 1.65;
+  color: var(--text-bright);
+  margin: 0 0 0.9em;
+}
+.adoc-body p:last-child { margin-bottom: 0; }
+.adoc-math {
+  margin: 0.4em 0 1em;
+  text-align: center;
+  color: var(--text-bright);
+  overflow-x: auto;
+}
+.adoc-figure {
+  margin: 0.6em 0 1.1em;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: calc(24px * var(--shell-fs, 1));
+  flex-wrap: wrap;
+}
+.adoc-figure figure { margin: 0; text-align: center; }
+.adoc-figure figcaption {
+  font-size: calc(14px * var(--shell-fs, 1));
+  color: rgba(var(--amber-rgb), 0.65);
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+a.adoc-cite, a.adoc-cite:link, a.adoc-cite:visited { color: var(--amber) !important; text-decoration: none; }
+a.adoc-cite:hover { color: var(--amber) !important; text-decoration: underline; }
+.adoc-reference {
+  font-size: calc(15px * var(--shell-fs, 1));
+  color: rgba(var(--amber-rgb), 0.55);
+  line-height: 1.6;
+  margin-bottom: calc(10px * var(--shell-fs, 1));
+  word-break: break-word;
+}
+.adoc-ref-num     { color: var(--amber); margin-right: 0.3em; font-size: 0.85em; }
+.adoc-ref-author  { color: rgba(var(--amber-rgb), 0.85); }
+.adoc-ref-year    { color: rgba(var(--amber-rgb), 0.45); }
+.adoc-ref-title   { font-style: italic; color: rgba(var(--amber-rgb), 0.75); }
+.adoc-ref-journal { color: rgba(var(--amber-rgb), 0.55); }
+.adoc-ref-volume  { color: rgba(var(--amber-rgb), 0.45); }
+a.adoc-ref-link {
+  color: rgba(var(--amber-rgb), 0.75) !important;
+  text-decoration: underline !important;
+  text-decoration-color: rgba(var(--amber-rgb), 0.3) !important;
+  transition: color 0.15s, text-shadow 0.15s;
+}
+a.adoc-ref-link:hover {
+  color: var(--amber) !important;
+  text-decoration-color: var(--amber) !important;
+  text-shadow: 0 0 8px rgba(var(--amber-rgb), 0.8), 0 0 20px rgba(var(--amber-rgb), 0.5);
+}
+    `;
+    document.head.appendChild(s);
+  }
+
+  function fetchBib(cb) {
+    if (_bibCache) { cb(_bibCache); return; }
+    fetch(BIB_URL)
+      .then(function (r) { return r.text(); })
+      .then(function (text) {
+        _bibCache = {};
+        const entries = text.split(/(?=@\w+\s*\{)/);
+        entries.forEach(function (entry) {
+          entry = entry.trim();
+          if (!entry) return;
+          const keyMatch = entry.match(/^@\w+\s*\{\s*([\w:]+)\s*,/);
+          if (keyMatch) _bibCache[keyMatch[1]] = entry;
+        });
+        cb(_bibCache);
+      })
+      .catch(function (e) { console.error('Failed to load references.bib', e); cb({}); });
+  }
+
+  function unlatex(str) {
+    return str
+      .replace(/\\["]([aeiouAEIOUy])/g, function (_, c) {
+        return { a:'ä',e:'ë',i:'ï',o:'ö',u:'ü',A:'Ä',E:'Ë',I:'Ï',O:'Ö',U:'Ü',y:'ÿ' }[c] || c;
+      })
+      .replace(/\\'([aeiouAEIOUy])/g, function (_, c) {
+        return { a:'á',e:'é',i:'í',o:'ó',u:'ú',A:'Á',E:'É',I:'Í',O:'Ó',U:'Ú',y:'ý' }[c] || c;
+      })
+      .replace(/\\`([aeiouAEIOU])/g, function (_, c) {
+        return { a:'à',e:'è',i:'ì',o:'ò',u:'ù',A:'À',E:'È',I:'Ì',O:'Ò',U:'Ù' }[c] || c;
+      })
+      .replace(/\\\^([aeiouAEIOU])/g, function (_, c) {
+        return { a:'â',e:'ê',i:'î',o:'ô',u:'û',A:'Â',E:'Ê',I:'Î',O:'Ô',U:'Û' }[c] || c;
+      })
+      .replace(/\\~([nNaAoO])/g, function (_, c) {
+        return { n:'ñ',N:'Ñ',a:'ã',A:'Ã',o:'õ',O:'Õ' }[c] || c;
+      })
+      .replace(/\\c\{?([cCsS])\}?/g, function (_, c) {
+        return { c:'ç',C:'Ç',s:'ş',S:'Ş' }[c] || c;
+      })
+      .replace(/\\ss\b/g, 'ß')
+      .replace(/\{([^}]*)\}/g, '$1')
+      .trim();
+  }
+
+  function parseBibtex(entry) {
+    const typeKey = entry.match(/^@(\w+)\s*\{\s*([\w:]+)\s*,/);
+    const type = typeKey ? typeKey[1].toLowerCase() : 'misc';
+    const fields = {};
+    const fieldRe = /(\w+)\s*=\s*(?:\{([^}]*(?:\{[^}]*\}[^}]*)*)\}|"([^"]*)")/g;
+    let m;
+    while ((m = fieldRe.exec(entry)) !== null) {
+      fields[m[1].toLowerCase()] = unlatex(m[2] !== undefined ? m[2] : m[3]);
+    }
+    return { type: type, fields: fields };
+  }
+
+  function formatBibtex(entry) {
+    const p = parseBibtex(entry);
+    const f = p.fields;
+    const author  = f.author  || '';
+    const title   = f.title   || '';
+    const year    = f.year    || '';
+    const journal = f.journal || f.booktitle || f.publisher || '';
+    const volume  = f.volume  || '';
+    const pages   = f.pages   || '';
+    const url     = f.url     || '';
+    let html = '';
+    if (author)  html += '<span class="adoc-ref-author">' + author + '</span> ';
+    if (year)    html += '<span class="adoc-ref-year">(' + year + ')</span>. ';
+    if (title)   html += url
+      ? '<span class="adoc-ref-title"><a class="adoc-ref-link" href="' + url + '" target="_blank" rel="noopener">' + title + '</a></span>. '
+      : '<span class="adoc-ref-title">' + title + '</span>. ';
+    if (journal) html += '<span class="adoc-ref-journal">' + journal + '</span>';
+    if (volume)  html += ' <span class="adoc-ref-volume">' + volume + '</span>';
+    if (pages)   html += ', ' + pages;
+    return html || entry;
+  }
+
+  function renderParagraphs(txt, refs, id, figures) {
+    return txt.split('¶').map(function (p) {
+      // Figure block: a paragraph of the form "FIG::name" pulls raw SVG/HTML
+      // from the spec's figures map and renders it centered.
+      if (p.trim().indexOf('FIG::') === 0) {
+        const name = p.trim().slice(5).trim();
+        const fig  = figures && figures[name];
+        if (!fig) return '';
+        return '<div class="adoc-figure">' + fig + '</div>';
+      }
+      const parts = p.trim().split(/(\$\$[\s\S]*?\$\$)/g);
+      return parts.map(function (part) {
+        if (/^\$\$[\s\S]*\$\$$/.test(part)) {
+          return '<div class="adoc-math">' + part + '</div>';
+        }
+        if (!part.trim()) return '';
+        const text = part.replace(/\s*\[([^\]]+)\]/g, function (match, inner) {
+          const keys = inner.split(',').map(function (k) { return k.trim(); });
+          const sups = keys.map(function (key) {
+            const idx = refs.indexOf(key);
+            if (idx === -1) return '';
+            return '<a class="adoc-cite" href="#' + id + '-ref-' + key + '">[' + (idx + 1) + ']</a>';
+          }).filter(Boolean).join('');
+          return sups ? '<sup>' + sups + '</sup>' : match;  // non-bibkey brackets pass through
+        });
+        return '<p>' + text + '</p>';
+      }).join('');
+    }).join('');
+  }
+
+  function renderDocs(panel, spec, id) {
+    injectDocsStyles();
+    fetchBib(function (bib) {
+      const refs = spec.references || [];
+      let html = '';
+      if (spec.whatis) {
+        html += '<div class="adoc-section"><div class="adoc-label">What is this?</div>' +
+                '<div class="adoc-body">' + renderParagraphs(spec.whatis, refs, id, spec.figures) + '</div></div>';
+      }
+      if (spec.howto) {
+        html += '<div class="adoc-section"><div class="adoc-label">How to use</div>' +
+                '<div class="adoc-body">' + renderParagraphs(spec.howto, refs, id, spec.figures) + '</div></div>';
+      }
+      if (refs.length) {
+        html += '<div class="adoc-section"><div class="adoc-label">References</div>' +
+          refs.map(function (key, i) {
+            const entry = bib[key];
+            if (!entry) return '<div class="adoc-reference" id="' + id + '-ref-' + key + '">' + key + '</div>';
+            return '<div class="adoc-reference" id="' + id + '-ref-' + key + '">' +
+                   '<span class="adoc-ref-num">[' + (i + 1) + ']</span> ' + formatBibtex(entry) + '</div>';
+          }).join('') + '</div>';
+      }
+      panel.innerHTML = html;
+      if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([panel]);
+    });
+  }
+
+  window.AppletDocs = { render: renderDocs };
 
 })();

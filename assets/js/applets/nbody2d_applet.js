@@ -295,6 +295,7 @@ let uColSlow, uColFast;
 let followCoM = false;
 
 let running = false, frameId = null;
+let wasRunning = false;   // sim state stashed while the docs panel is open
 
 // ── Barnes-Hut quadtree (flat node pool) ─────────────────────────────────────
 const MAX_NODES = 1 << 20;
@@ -645,10 +646,23 @@ function loop() {
 // ── Shell wiring ──────────────────────────────────────────────────────────────
 const shell = new AppletShell({
   id:     'nb',
-  title:  'N-Body Gravity &mdash; Barnes&ndash;Hut',
+  title:  'N-Body Gravity',
   gap:    0,
 
   headerBtns: `<button class="applet-shell-header-btn" onclick="nbReset()">Reset</button><button class="applet-shell-header-btn active" id="nb-pause-btn" onclick="nbTogglePause()">Resume</button>`,
+
+  docs: {
+    whatis: `Erik Holmberg simulated colliding galaxies before the computer existed: in 1941 he arranged seventy-four light bulbs on a table and used photocells to measure their combined brightness, exploiting the fact that light and gravity share the same inverse-square law [holmberg1941]. This applet runs his experiment with ten thousand bodies in a genuinely two-dimensional universe, every one gravitating toward every other,
+$$\\ddot{\\mathbf{r}}_i = \\sum_{j \\neq i} \\frac{G m_j \\, (\\mathbf{r}_j - \\mathbf{r}_i)}{|\\mathbf{r}_j - \\mathbf{r}_i|^2},$$
+a force falling off as $1/r$ rather than $1/r^2$: the solution of Poisson's equation in two dimensions, where the potential is logarithmic and no body can ever fully escape. Below a small separation $\\epsilon$ the attraction hands over to a constant hard-core repulsion, so close encounters scatter instead of diverging. Summing all pairs directly would cost $N^2$ operations per step; the applet instead uses the Barnes–Hut algorithm [barnes1986], sorting bodies into a quadtree and treating any distant clump whose angular size falls below an opening angle $\\theta$ as a single point at its center of mass, cutting the cost to $N \\log N$. Time is advanced with a leapfrog integrator, whose symmetry keeps energy from drifting over long runs.¶Left alone, the disk of bodies collapses, scatters, and organizes: clumps form, merge, and slingshot members outward. Initial Spin trades random motion for ordered rotation, and with enough of it the collapse flattens into a spinning disk with spiral arms: Holmberg's galaxies again. Expansion adds a uniform stretch of space at rate $\\lambda$ each step, a toy Hubble flow: gravity and expansion then compete, and the collapse becomes cosmological structure formation in miniature, filaments and voids condensing out of near-uniformity.¶The two panels quantify what the eye sees, using the same statistics cosmologists apply to galaxy surveys [peebles1980]: the two-point correlation function $\\xi(r)$, the excess probability of finding a neighbor at distance $r$ over a random scatter, and the power spectrum $P(k)$, its Fourier-space twin, measuring clustering strength scale by scale.`,
+
+    howto: `The simulation opens paused so you can set the stage; press Resume. Bodies are colored by speed relative to the center of mass, teal for slow through pink for fast.¶Initial Spin (applied on Reset) sets the fraction of ordered rotation in the initial disk: zero collapses radially, full spin orbits stably, and intermediate values fragment into merging clumps. Expand toggles the uniform stretch, with the $\\lambda$ slider setting its rate; Follow CoM keeps the view centered as the system drifts. Tree $\\theta$ trades accuracy for speed in the Barnes–Hut opening criterion: at 0.2 the force is nearly exact, at 1.2 distant clumps are coarsely lumped and the frame rate climbs.¶Watch $\\xi(r)$ and $P(k)$ evolve as structure forms: both start flat for the near-uniform disk and grow as gravity builds correlations, the peak of $P(k)$ marching to smaller $k$ as clumps merge into ever-larger structures. Reset re-scatters the disk with the current spin.`,
+
+    references: ['holmberg1941', 'barnes1986', 'peebles1980'],
+  },
+
+  onDocsOpen:  function () { wasRunning = running; running = false; },
+  onDocsClose: function () { running = wasRunning; },
 
   ctrlHTML: `
     <div class="applet-shell-ctrl-section" style="flex:0 0 auto;">

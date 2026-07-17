@@ -29,6 +29,7 @@ const BASE_RADIUS = 7.0;
 let orbit = { dragging: false, lastX: 0, lastY: 0, theta: 0.4, phi: 1.1, radius: BASE_RADIUS, tx: 0, ty: 0, tz: 0 };
 
 let running = false, frameId = null;
+let wasRunning = false;   // sim state stashed while the docs panel is open
 
 // ── Palette ───────────────────────────────────────────────────────────────────
 // Three body colors: teal, pink, amber
@@ -450,6 +451,18 @@ const shell = new AppletShell({
 
   headerBtns: `<button class="applet-shell-header-btn" onclick="tbReset()">Reset</button><button class="applet-shell-header-btn" id="tb-pause-btn" onclick="tbTogglePause()">Pause</button>`,
 
+  docs: {
+    whatis: `Newton solved the two-body problem in the Principia — two masses orbit their common center on conic sections, forever [newton1687] — and the third body has been making trouble ever since. Each pair attracts by the inverse-square law,
+$$\\ddot{\\mathbf{r}}_i = \\sum_{j \\neq i} \\frac{G m_j \\, (\\mathbf{r}_j - \\mathbf{r}_i)}{|\\mathbf{r}_j - \\mathbf{r}_i|^3},$$
+and with three bodies those eighteen coupled equations admit no general closed-form solution. Euler and Lagrange found the special cases that do close: Lagrange's 1772 equilateral configuration rotates rigidly forever, and survives in the Trojan asteroids camped at Jupiter's triangular points [lagrange1772]. Poincaré, prodded by a prize question about the stability of the solar system, proved in 1890 that the general problem harbors motion of unimaginable intricacy: the discovery of chaos, a century before the name [poincare1890].¶Yet the chaos is threaded with unlikely islands of order. Moore found numerically in 1993 that three equal masses can chase each other around a figure-eight [moore1993], and Chenciner and Montgomery proved its existence rigorously in 2000 [chenciner2000], igniting a hunt for "choreographies" that has catalogued hundreds of periodic orbits since. The Broucke–Hénon family is an older lineage of periodic solutions from the numerical searches of the 1970s.¶The applet integrates the exact equations with fourth-order Runge–Kutta (softened at vanishing separations) in the center-of-mass frame. The Chaotic preset is exactly what it says: three bodies flung together with generic initial conditions, ejections and close binaries forming and dissolving on no schedule at all.`,
+
+    howto: `The three bodies are teal, pink, and amber, each trailing a speed-brightened path; drag to orbit the camera and scroll to zoom (zooming steers gently toward the cursor). Preset selects Figure-8, Lagrange's rotating triangle, a Broucke–Hénon periodic orbit, or the generic Chaotic tumble.¶Mass Ratios sets $m_1/m_2$ and $m_2/m_3$, renormalized to fixed total mass; the choreographed presets exist only at equal masses, so nudging either slider away from 1 is a controlled experiment in orbital fragility. Watch the figure-eight unravel at a percent-level perturbation.¶Speed sets integration steps per frame. Reset restores the current preset and re-centers the camera; Pause freezes the integration.`,
+
+    references: ['newton1687', 'lagrange1772', 'poincare1890', 'moore1993', 'chenciner2000'],
+  },
+
+  onDocsOpen:  function () { wasRunning = running; running = false; },
+  onDocsClose: function () { running = wasRunning; },
 
   ctrlHTML: `
     <div class="applet-shell-ctrl-section">
