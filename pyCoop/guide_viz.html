@@ -9,6 +9,7 @@
   <title>Visualization &mdash; pyCoop 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=a9c784c8" />
 
   
@@ -17,6 +18,8 @@
       <script src="_static/documentation_options.js?v=01f34227"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -127,7 +130,7 @@ flow of the model, not an interpolation artifact.</p>
 <section id="animation">
 <h2>Animation<a class="headerlink" href="#animation" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.animate" title="pycoop.viz.animate"><code class="xref py py-func docutils literal notranslate"><span class="pre">animate()</span></code></a> turns a trajectory into a
-<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation" title="(in Matplotlib v3.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FuncAnimation</span></code></a> — the graph with its node
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation" title="(in Matplotlib v3.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FuncAnimation</span></code></a> — the graph with its node
 colors evolving event by event:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">viz</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
 <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;run.mp4&quot;</span><span class="p">)</span>                    <span class="c1"># needs ffmpeg</span>
