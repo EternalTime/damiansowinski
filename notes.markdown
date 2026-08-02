@@ -34,6 +34,7 @@ If you find any mistakes, please let me know.
   <li><a href="{{ '/assets/docs/notes/Understanding_the_CMB.pdf' | relative_url }}" target="_blank" rel="noopener">The Cosmic Microwave Background</a></li>
   <li><a href="{{ '/assets/docs/notes/Expansion_of_the_Universe.pdf' | relative_url }}" target="_blank" rel="noopener">Expansion of FLRW Universes</a></li>
   <li><a href="{{ '/assets/docs/notes/Weak_Field_of_a_Moving_Mass.pdf' | relative_url }}" target="_blank" rel="noopener">Weak Field of a Moving Mass</a></li>
+  <li><a href="{{ 'assets/docs/notes/Teleportation.pdf' | relative_url }}" target="_blank" rel="noopener">The Trials and Tribulations of Teleportation</a></li>
 </ul>
 
 <h2 class="gradient-text2" style="font-size: 1.5em;">Mathematics</h2>
