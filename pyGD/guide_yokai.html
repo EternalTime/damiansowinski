@@ -19,7 +19,7 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=8b21d8d7"></script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guide_dynamics.html">Kuramoto Dynamics</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The Yokai</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#driving-the-agent">Driving the agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#where-the-agent-has-authority">Where the agent has authority</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#strength-and-speed-enter-together">Strength and speed enter together</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#blinding-the-sensor">Blinding the sensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
@@ -62,7 +63,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/pyGD.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License &amp; Contact</a></li>
 </ul>
 
         </div>
@@ -110,22 +111,83 @@ step drives the agent through <code class="docutils literal notranslate"><span c
 <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyGD</span><span class="w"> </span><span class="kn">import</span> <span class="n">Kuramoto</span><span class="p">,</span> <span class="n">Yokai</span>
 
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">erdos_renyi_graph</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">omegas</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">())</span>
+<span class="n">omegas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">())</span>
 
-<span class="n">env</span> <span class="o">=</span> <span class="n">Kuramoto</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="n">G</span><span class="p">,</span> <span class="n">omegas</span><span class="o">=</span><span class="n">omegas</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
-<span class="n">yok</span> <span class="o">=</span> <span class="n">Yokai</span><span class="p">(</span><span class="n">strength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.16</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">Kuramoto</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="n">G</span><span class="p">,</span> <span class="n">omegas</span><span class="o">=</span><span class="n">omegas</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">yok</span> <span class="o">=</span> <span class="n">Yokai</span><span class="p">(</span><span class="n">strength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.16</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">600</span><span class="p">):</span>
     <span class="n">yok</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>      <span class="c1"># the agent kicks and hops</span>
     <span class="n">env</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>         <span class="c1"># the oscillators relax back toward each other</span>
 <span class="n">env</span><span class="o">.</span><span class="n">update_order_parameter</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>             <span class="c1"># 0.024 against 0.954 without the agent</span>
 </pre></div>
 </div>
 <p>The order of the two calls is the whole contest: the agent scatters phases, the
-coupling gathers them, and <code class="docutils literal notranslate"><span class="pre">r</span></code> settles wherever the two forces balance.</p>
+coupling gathers them, and <code class="docutils literal notranslate"><span class="pre">r</span></code> settles wherever the two forces balance. Drop
+the <code class="docutils literal notranslate"><span class="pre">yok.evolve(env)</span></code> line and the same environment locks at <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">0.954</span></code>,
+so at this coupling the agent is winning the contest outright.</p>
+</section>
+<section id="where-the-agent-has-authority">
+<h2>Where the agent has authority<a class="headerlink" href="#where-the-agent-has-authority" title="Link to this heading"></a></h2>
+<p>That balance is a real contest, not a foregone conclusion. The agent injects
+phase at a rate set by <code class="docutils literal notranslate"><span class="pre">strength</span> <span class="pre">*</span> <span class="pre">speed</span> <span class="pre">/</span> <span class="pre">dt</span></code>; the coupling pulls back at a
+rate set by <code class="docutils literal notranslate"><span class="pre">sigma</span></code> times the mean degree. Raise <code class="docutils literal notranslate"><span class="pre">sigma</span></code> at fixed agent
+settings and the agent loses its grip. Sweeping <code class="docutils literal notranslate"><span class="pre">sigma</span></code> on the graph above at
+<code class="docutils literal notranslate"><span class="pre">strength=0.5,</span> <span class="pre">beta=0.16</span></code>, each row a single 600-step run at this page’s own
+seeding (environment <code class="docutils literal notranslate"><span class="pre">default_rng(0)</span></code>, agent <code class="docutils literal notranslate"><span class="pre">default_rng(1)</span></code>) rather than
+a seed average, so any row reproduces exactly:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">sigma</span></code></p></th>
+<th class="head"><p>agent-free <code class="docutils literal notranslate"><span class="pre">r</span></code></p></th>
+<th class="head"><p>with agent <code class="docutils literal notranslate"><span class="pre">r</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.3</p></td>
+<td><p>0.849</p></td>
+<td><p>0.027</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.5</p></td>
+<td><p>0.954</p></td>
+<td><p>0.024</p></td>
+</tr>
+<tr class="row-even"><td><p>0.8</p></td>
+<td><p>0.984</p></td>
+<td><p>0.916</p></td>
+</tr>
+<tr class="row-odd"><td><p>1.0</p></td>
+<td><p>0.990</p></td>
+<td><p>0.955</p></td>
+</tr>
+<tr class="row-even"><td><p>1.5</p></td>
+<td><p>0.996</p></td>
+<td><p>0.983</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">0.5</span></code> row is exactly the run printed above. Losing grip is not a
+gradual decline: the agent holds <code class="docutils literal notranslate"><span class="pre">r</span></code> below about 0.1 for every <code class="docutils literal notranslate"><span class="pre">sigma</span></code> up
+to 0.5, mostly between 0.01 and 0.03 but rising to 0.099 at <code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">0.45</span></code>,
+and then fails between 0.5 and 0.8, where <code class="docutils literal notranslate"><span class="pre">r</span></code> jumps from 0.024 to 0.916.</p>
+<p>By <code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">1.5</span></code> a single agent kicking one node at a time simply cannot keep
+up with 500 oscillators pulling on each other: it removes only one to two
+percent of the order parameter, a gap of 0.012 to 0.019 across four seed pairs.
+That is small but perfectly reproducible rather than lost in noise, since the
+agent-free run locks at 0.9955 for every seed and leaves no run-to-run scatter
+for the effect to hide in. If you want a visible effect at higher coupling,
+raise <code class="docutils literal notranslate"><span class="pre">beta</span></code> (more hops per step) rather than expecting the default agent to
+scale.</p>
+<p>That last row also sits right on the integrator’s limit. This graph has
+<span class="math notranslate nohighlight">\(\lambda_{\max}(L) = 21.36\)</span>, so the explicit Euler step crosses its
+stability bound at <code class="docutils literal notranslate"><span class="pre">sigma</span></code> = 1.50 and the <code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">1.5</span></code> row has no safety
+margin left. The printed value is unaffected, though: refining <code class="docutils literal notranslate"><span class="pre">dt</span></code> 8x gives
+0.995549 either way, identical to six decimals. What is exhausted is the
+margin, not the accuracy, so it is pushing <code class="docutils literal notranslate"><span class="pre">sigma</span></code> higher here, or running
+the same <code class="docutils literal notranslate"><span class="pre">sigma</span></code> on a graph with a larger <span class="math notranslate nohighlight">\(\lambda_{\max}\)</span>, that would
+start to degrade the number. See <a class="reference internal" href="guide_dynamics.html"><span class="doc">Kuramoto Dynamics</span></a> for the rule.</p>
 </section>
 <section id="strength-and-speed-enter-together">
 <h2>Strength and speed enter together<a class="headerlink" href="#strength-and-speed-enter-together" title="Link to this heading"></a></h2>
@@ -135,9 +197,8 @@ the network size). A remarkable degeneracy hides in them: a weak, fast agent and
 a strong, slow one behave identically as long as the product
 <span class="math notranslate nohighlight">\(\alpha\beta\)</span> matches. You can watch the two collapse onto each other:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">final_r</span><span class="p">(</span><span class="n">strength</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">env</span> <span class="o">=</span> <span class="n">Kuramoto</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
-    <span class="n">yok</span> <span class="o">=</span> <span class="n">Yokai</span><span class="p">(</span><span class="n">strength</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">Kuramoto</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>
+    <span class="n">yok</span> <span class="o">=</span> <span class="n">Yokai</span><span class="p">(</span><span class="n">strength</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">600</span><span class="p">):</span>
         <span class="n">yok</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
         <span class="n">env</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
@@ -145,14 +206,17 @@ a strong, slow one behave identically as long as the product
     <span class="k">return</span> <span class="n">env</span><span class="o">.</span><span class="n">r</span>
 
 <span class="c1"># same product alpha*beta = 0.08, different factors</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">final_r</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">final_r</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_r</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">))</span>   <span class="c1"># 0.024</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_r</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">))</span>   <span class="c1"># 0.035</span>
 </pre></div>
 </div>
-<p>The two lines should land close together, and both should sit below the
-agent-free order parameter. That single product is exactly the <code class="docutils literal notranslate"><span class="pre">ab</span></code> you hand
-to <a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.KuramotoCG" title="pyGD.dynamics.KuramotoCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">KuramotoCG</span></code></a> — the coarse-grained dynamics remembers
-the agent only through it.</p>
+<p>Both land near 0.02–0.04, far below the agent-free 0.954, and much closer to
+each other than either is to the agent-free value. That single product is
+exactly the <code class="docutils literal notranslate"><span class="pre">ab</span></code> you hand to <a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.KuramotoCG" title="pyGD.dynamics.KuramotoCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">KuramotoCG</span></code></a> — the
+coarse-grained dynamics remembers the agent only through it. Run the
+comparison at a coupling where the agent still has authority: once <code class="docutils literal notranslate"><span class="pre">sigma</span></code> is
+high enough that neither agent moves <code class="docutils literal notranslate"><span class="pre">r</span></code>, the two numbers agree only because
+both are doing nothing.</p>
 </section>
 <section id="blinding-the-sensor">
 <h2>Blinding the sensor<a class="headerlink" href="#blinding-the-sensor" title="Link to this heading"></a></h2>
@@ -160,12 +224,22 @@ the agent only through it.</p>
 are worth by corrupting them. The <code class="docutils literal notranslate"><span class="pre">noise</span></code> parameter (<span class="math notranslate nohighlight">\(\eta\)</span>, from 0 to
 1) blurs the agent’s read of the local mean field; at <span class="math notranslate nohighlight">\(\eta = 1\)</span> it kicks
 blind:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">Kuramoto</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">Kuramoto</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">yok</span> <span class="o">=</span> <span class="n">Yokai</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Sweep <code class="docutils literal notranslate"><span class="pre">noise</span></code> from 0 to 1 and measure how much desynchronization survives.
-Whether the agent’s information is worth anything — whether corrupting it costs
+Averaged over eight runs on the graph above, seeded as the pair just shown and
+then continued (environment <code class="docutils literal notranslate"><span class="pre">default_rng(k)</span></code>, agent <code class="docutils literal notranslate"><span class="pre">default_rng(k+1)</span></code>, for
+odd <code class="docutils literal notranslate"><span class="pre">k</span></code> from 5 to 19), <code class="docutils literal notranslate"><span class="pre">r</span></code> runs 0.06, 0.05, 0.39, 0.88, 0.91 as
+<span class="math notranslate nohighlight">\(\eta\)</span> takes 0, 0.25, 0.5, 0.75, 1. Read the middle entry as a marker
+rather than a value: <span class="math notranslate nohighlight">\(\eta = 0.5\)</span> is the transition itself, where five of
+the eight runs land below 0.2 and the other three above 0.78, none of them near
+their own average. The mean there is a mixing ratio and moves with the seeds
+you pick. Either side of it the outcome is sharp. The agent keeps its grip
+while its measurement is roughly right, then loses it entirely once the read is
+worthless — and the kicks never changed size, only their aim.</p>
+<p>Whether the agent’s information is worth anything — whether corrupting it costs
 the agent its grip — turns out to depend on the graph, and that dependence is
 the paper’s central result. The theory page states it; the paper proves
 it<a class="footnote-reference brackets" href="#footcite-sowinski2024information" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
