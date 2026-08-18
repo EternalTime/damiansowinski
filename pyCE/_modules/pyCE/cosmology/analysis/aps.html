@@ -8,6 +8,8 @@
   <title>pyCE.cosmology.analysis.aps &mdash; pyCE  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=ab018f0f" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
@@ -15,6 +17,8 @@
       <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
       <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -40,8 +44,99 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../getting_started.html#your-first-configurational-entropy">Your first configurational entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guide_instantons.html">Instantons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_instantons.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_instantons.html#solving-a-bounce">Solving a bounce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guide_bosonstars.html">Boson Stars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_bosonstars.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_bosonstars.html#solving-a-star">Solving a star</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_bosonstars.html#the-mass-curve">The mass curve</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guide_oscillons.html">Oscillons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_oscillons.html#the-setup">The setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_oscillons.html#running-a-simulation">Running a simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guide_polytropes.html">Polytropes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_polytropes.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_polytropes.html#solving-a-polytrope">Solving a polytrope</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guide_cosmology.html">The Cosmic Microwave Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_cosmology.html#loading-a-spectrum">Loading a spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../guide_cosmology.html#from-spectrum-to-entropy">From spectrum to entropy</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyCE.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/pyCE.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/pyCE.instantons.html">pyCE.instantons module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.instantons.html#pyCE.instantons.instanton"><code class="docutils literal notranslate"><span class="pre">instanton</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/pyCE.bosonstars.html">pyCE.bosonstars module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.bosonstars.html#pyCE.bosonstars.BosonStar"><code class="docutils literal notranslate"><span class="pre">BosonStar</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.bosonstars.html#pyCE.bosonstars.BosonStar.extract_physical_features"><code class="docutils literal notranslate"><span class="pre">BosonStar.extract_physical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.bosonstars.html#pyCE.bosonstars.BosonStar.generate_profile"><code class="docutils literal notranslate"><span class="pre">BosonStar.generate_profile()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/pyCE.oscillons.html">pyCE.oscillons module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon"><code class="docutils literal notranslate"><span class="pre">oscillon</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.energy"><code class="docutils literal notranslate"><span class="pre">oscillon.energy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.initialize_field"><code class="docutils literal notranslate"><span class="pre">oscillon.initialize_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.radialFT"><code class="docutils literal notranslate"><span class="pre">oscillon.radialFT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.simulate_oscillon"><code class="docutils literal notranslate"><span class="pre">oscillon.simulate_oscillon()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.stress_energy_tensor"><code class="docutils literal notranslate"><span class="pre">oscillon.stress_energy_tensor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/pyCE.polytropes.html">pyCE.polytropes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.polytropes.html#pyCE.polytropes.polytrope"><code class="docutils literal notranslate"><span class="pre">polytrope</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/pyCE.cosmology.html">pyCE.cosmology package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.cosmology.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.cosmology.analysis.html">pyCE.cosmology.analysis package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.cosmology.analysis.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.cosmology.analysis.aps.html">pyCE.cosmology.analysis.aps module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.cosmology.analysis.mps.html">pyCE.cosmology.analysis.mps module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.cosmology.data.html">pyCE.cosmology.data package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/pyCE.cosmology.data.html#pyCE.cosmology.data.read_power_spectrum"><code class="docutils literal notranslate"><span class="pre">read_power_spectrum()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/pyCE.math.html">pyCE.math module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.math.html#pyCE.math.fourier_factor"><code class="docutils literal notranslate"><span class="pre">fourier_factor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.math.html#pyCE.math.normalize"><code class="docutils literal notranslate"><span class="pre">normalize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.math.html#pyCE.math.radialFT"><code class="docutils literal notranslate"><span class="pre">radialFT()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.math.html#pyCE.math.radialFT_mat"><code class="docutils literal notranslate"><span class="pre">radialFT_mat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.math.html#pyCE.math.radial_integrate"><code class="docutils literal notranslate"><span class="pre">radial_integrate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/pyCE.math.html#pyCE.math.sphere_solid_angle"><code class="docutils literal notranslate"><span class="pre">sphere_solid_angle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../license.html">License &amp; Contact</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../license.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../license.html#citing">Citing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../license.html#contact">Contact</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -69,10 +164,11 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pyCE.cosmology.analysis.aps</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Information-theoretic analysis of angular power spectra.</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Information-theoretic analysis of angular power spectra.</span>
 
-<span class="sd">Tools for CMB angular power spectra C_ell: forming the modal fraction (the</span>
-<span class="sd">normalized distribution over multipoles, including the 2*ell+1 degeneracy),</span>
+<span class="sd">Tools for CMB angular power spectra :math:`C_\ell`: forming the modal fraction</span>
+<span class="sd">(the normalized distribution over multipoles, including the :math:`2\ell+1`</span>
+<span class="sd">degeneracy),</span>
 <span class="sd">Shannon entropy and Kullback-Leibler divergence of such distributions, and a</span>
 <span class="sd">nonparametric (shrinkage) fit of a noisy spectrum to an orthogonal basis</span>
 <span class="sd">following Aghamousa, Arjunwadkar &amp; Souradeep (arXiv:1107.0516).</span>
@@ -84,7 +180,7 @@
 <span class="c1">#----------------------------------------------------------------------FUNCTIONS</span>
 
 <div class="viewcode-block" id="norm">
-<a class="viewcode-back" href="../../../../source/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.norm">[docs]</a>
+<a class="viewcode-back" href="../../../../api/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.norm">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">norm</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;L1-normalize an array (NaN-safe).</span>
 
@@ -101,12 +197,13 @@
 
 
 <div class="viewcode-block" id="modal_fraction">
-<a class="viewcode-back" href="../../../../source/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.modal_fraction">[docs]</a>
+<a class="viewcode-back" href="../../../../api/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.modal_fraction">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">modal_fraction</span><span class="p">(</span><span class="n">ell</span><span class="p">,</span><span class="n">Cl</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Modal fraction of an angular power spectrum.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Modal fraction of an angular power spectrum.</span>
 
-<span class="sd">    Weights each multipole by its 2*ell+1 degenerate m-modes and normalizes,</span>
-<span class="sd">    giving the fraction of the total power carried by each ell. Negative</span>
+<span class="sd">    Weights each multipole by its :math:`2\ell+1` degenerate m-modes and</span>
+<span class="sd">    normalizes, giving the fraction of the total power carried by each ell.</span>
+<span class="sd">    Negative</span>
 <span class="sd">    entries (unphysical, e.g. noise-dominated estimates) are set to NaN.</span>
 
 <span class="sd">    Parameters</span>
@@ -114,7 +211,8 @@
 <span class="sd">    ell : ndarray</span>
 <span class="sd">        Multipole moments.</span>
 <span class="sd">    Cl : ndarray</span>
-<span class="sd">        Angular power spectrum C_ell. Modified in place where negative.</span>
+<span class="sd">        Angular power spectrum :math:`C_\ell`. Modified in place where</span>
+<span class="sd">        negative.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -127,9 +225,9 @@
 
 
 <div class="viewcode-block" id="KL_divergence">
-<a class="viewcode-back" href="../../../../source/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.KL_divergence">[docs]</a>
+<a class="viewcode-back" href="../../../../api/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.KL_divergence">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">KL_divergence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Kullback-Leibler divergence D(p || q) in bits.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Kullback-Leibler divergence :math:`D(p \| q)` in bits.</span>
 
 <span class="sd">    Note that the divergence is not symmetric in its arguments.</span>
 
@@ -144,7 +242,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    float</span>
-<span class="sd">        sum_i p_i * log2(p_i / q_i) over finite entries.</span>
+<span class="sd">        :math:`\sum_i p_i \, \log_2(p_i / q_i)` over finite entries.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">q</span><span class="p">[</span><span class="n">q</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="n">pq</span> <span class="o">=</span> <span class="n">p</span><span class="o">/</span><span class="n">q</span>
@@ -152,9 +250,9 @@
 
 
 <div class="viewcode-block" id="entropy">
-<a class="viewcode-back" href="../../../../source/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.entropy">[docs]</a>
+<a class="viewcode-back" href="../../../../api/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.entropy">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">entropy</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shannon entropy of a modal fraction, in bits.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Shannon entropy of a modal fraction, in bits.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -165,7 +263,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    float</span>
-<span class="sd">        -sum_i p_i * log2(p_i) over finite entries.</span>
+<span class="sd">        :math:`-\sum_i p_i \, \log_2(p_i)` over finite entries.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">p</span><span class="p">[</span><span class="n">p</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">))</span></div>
@@ -174,11 +272,11 @@
 <span class="c1">#----------------------------------------------------------------NONPARAMETRIC FITTING</span>
 
 <div class="viewcode-block" id="basis_cos">
-<a class="viewcode-back" href="../../../../source/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.basis_cos">[docs]</a>
+<a class="viewcode-back" href="../../../../api/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.basis_cos">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">basis_cos</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;j-th orthonormal cosine basis function on [0, 1].</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;j-th orthonormal cosine basis function on [0, 1].</span>
 
-<span class="sd">    Returns 1 for j = 0 and sqrt(2)*cos(j*pi*x) otherwise.</span>
+<span class="sd">    Returns 1 for j = 0 and :math:`\sqrt{2} \cos(j \pi x)` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -187,7 +285,7 @@
 
 
 <div class="viewcode-block" id="basis_leg">
-<a class="viewcode-back" href="../../../../source/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.basis_leg">[docs]</a>
+<a class="viewcode-back" href="../../../../api/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.basis_leg">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">basis_leg</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;j-th orthonormal Legendre polynomial rescaled to [0, 1].&quot;&quot;&quot;</span>
     <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -196,9 +294,9 @@
 
 
 <div class="viewcode-block" id="npf_makeU">
-<a class="viewcode-back" href="../../../../source/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.npf_makeU">[docs]</a>
+<a class="viewcode-back" href="../../../../api/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.npf_makeU">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">npf_makeU</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">basis</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Orthogonal design matrix for a nonparametric fit.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Orthogonal design matrix for a nonparametric fit.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -211,7 +309,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray, shape (len(x), len(x))</span>
 <span class="sd">        Column i holds basis(i, x)/sqrt(N), so that U is (approximately)</span>
-<span class="sd">        orthogonal: U^T U ~ identity.</span>
+<span class="sd">        orthogonal: :math:`U^T U \sim \mathrm{identity}`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">])</span>
@@ -221,9 +319,9 @@
 
 
 <div class="viewcode-block" id="nonparametric_fit">
-<a class="viewcode-back" href="../../../../source/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.nonparametric_fit">[docs]</a>
+<a class="viewcode-back" href="../../../../api/pyCE.cosmology.analysis.aps.html#pyCE.cosmology.analysis.aps.nonparametric_fit">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">nonparametric_fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">error</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">lType</span> <span class="o">=</span> <span class="s1">&#39;NSS&#39;</span><span class="p">,</span><span class="n">JRange</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">]):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Nonparametric shrinkage fit of noisy data to an orthogonal basis.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Nonparametric shrinkage fit of noisy data to an orthogonal basis.</span>
 
 <span class="sd">    Expands the data in the basis U, shrinks the coefficient vector, and</span>
 <span class="sd">    selects the amount of shrinkage by minimizing an unbiased estimate of</span>
@@ -243,7 +341,7 @@
 <span class="sd">    lType : str</span>
 <span class="sd">        Shrinkage scheme: &#39;NSS&#39; keeps the first j coefficients (Nested</span>
 <span class="sd">        Subset Selection); &#39;Fractional&#39; applies monotone fractional</span>
-<span class="sd">        weights 2**-i.</span>
+<span class="sd">        weights :math:`2^{-i}`.</span>
 <span class="sd">    JRange : list of int</span>
 <span class="sd">        [minJ, maxJ], the range of shrinkage parameters scanned.</span>
 

@@ -8,6 +8,8 @@
   <title>pyCE.oscillons &mdash; pyCE  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ab018f0f" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -15,6 +17,8 @@
       <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -40,8 +44,99 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started.html#your-first-configurational-entropy">Your first configurational entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_instantons.html">Instantons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_instantons.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_instantons.html#solving-a-bounce">Solving a bounce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_bosonstars.html">Boson Stars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_bosonstars.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_bosonstars.html#solving-a-star">Solving a star</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_bosonstars.html#the-mass-curve">The mass curve</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_oscillons.html">Oscillons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_oscillons.html#the-setup">The setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_oscillons.html#running-a-simulation">Running a simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_polytropes.html">Polytropes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_polytropes.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_polytropes.html#solving-a-polytrope">Solving a polytrope</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide_cosmology.html">The Cosmic Microwave Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_cosmology.html#loading-a-spectrum">Loading a spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide_cosmology.html#from-spectrum-to-entropy">From spectrum to entropy</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/pyCE.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/pyCE.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/pyCE.instantons.html">pyCE.instantons module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.instantons.html#pyCE.instantons.instanton"><code class="docutils literal notranslate"><span class="pre">instanton</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/pyCE.bosonstars.html">pyCE.bosonstars module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.bosonstars.html#pyCE.bosonstars.BosonStar"><code class="docutils literal notranslate"><span class="pre">BosonStar</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.bosonstars.html#pyCE.bosonstars.BosonStar.extract_physical_features"><code class="docutils literal notranslate"><span class="pre">BosonStar.extract_physical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.bosonstars.html#pyCE.bosonstars.BosonStar.generate_profile"><code class="docutils literal notranslate"><span class="pre">BosonStar.generate_profile()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/pyCE.oscillons.html">pyCE.oscillons module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon"><code class="docutils literal notranslate"><span class="pre">oscillon</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.energy"><code class="docutils literal notranslate"><span class="pre">oscillon.energy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.initialize_field"><code class="docutils literal notranslate"><span class="pre">oscillon.initialize_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.radialFT"><code class="docutils literal notranslate"><span class="pre">oscillon.radialFT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.simulate_oscillon"><code class="docutils literal notranslate"><span class="pre">oscillon.simulate_oscillon()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.stress_energy_tensor"><code class="docutils literal notranslate"><span class="pre">oscillon.stress_energy_tensor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/pyCE.polytropes.html">pyCE.polytropes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.polytropes.html#pyCE.polytropes.polytrope"><code class="docutils literal notranslate"><span class="pre">polytrope</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/pyCE.cosmology.html">pyCE.cosmology package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.cosmology.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.cosmology.analysis.html">pyCE.cosmology.analysis package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.cosmology.analysis.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.cosmology.analysis.aps.html">pyCE.cosmology.analysis.aps module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.cosmology.analysis.mps.html">pyCE.cosmology.analysis.mps module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.cosmology.data.html">pyCE.cosmology.data package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyCE.cosmology.data.html#pyCE.cosmology.data.read_power_spectrum"><code class="docutils literal notranslate"><span class="pre">read_power_spectrum()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/pyCE.math.html">pyCE.math module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.math.html#pyCE.math.fourier_factor"><code class="docutils literal notranslate"><span class="pre">fourier_factor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.math.html#pyCE.math.normalize"><code class="docutils literal notranslate"><span class="pre">normalize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.math.html#pyCE.math.radialFT"><code class="docutils literal notranslate"><span class="pre">radialFT()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.math.html#pyCE.math.radialFT_mat"><code class="docutils literal notranslate"><span class="pre">radialFT_mat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.math.html#pyCE.math.radial_integrate"><code class="docutils literal notranslate"><span class="pre">radial_integrate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/pyCE.math.html#pyCE.math.sphere_solid_angle"><code class="docutils literal notranslate"><span class="pre">sphere_solid_angle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License &amp; Contact</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#citing">Citing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#contact">Contact</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -74,11 +169,15 @@
 <span class="sd">Evolves a spherically symmetric real scalar field in the asymmetric</span>
 <span class="sd">double-well (Kolb &amp; Turner) potential</span>
 
-<span class="sd">    V(phi) = (1/2) phi**2 - (alpha/3) phi**3 + (1/4) phi**4,</span>
+<span class="sd">.. math::</span>
 
-<span class="sd">with alpha = (3/sqrt(2)) * (1 + asymmetry_factor). The field is evolved as</span>
-<span class="sd">the first-order system (phi, Phi, Pi), where Phi is the radial gradient and</span>
-<span class="sd">Pi the generalized momentum, on a radial grid in monotonically increasingly</span>
+<span class="sd">    V(\phi) = \frac{1}{2} \phi^2 - \frac{\alpha}{3} \phi^3</span>
+<span class="sd">              + \frac{1}{4} \phi^4 ,</span>
+
+<span class="sd">with :math:`\alpha = (3/\sqrt{2}) (1 + \mathrm{asymmetry\_factor})`. The</span>
+<span class="sd">field is evolved as the first-order system :math:`(\phi, \Phi, \Pi)`, where</span>
+<span class="sd">:math:`\Phi` is the radial gradient and :math:`\Pi` the generalized momentum,</span>
+<span class="sd">on a radial grid in monotonically increasingly</span>
 <span class="sd">boosted (MIB) coordinates: an outer region of the grid is smoothly boosted</span>
 <span class="sd">outward so that outgoing radiation is carried off the lattice instead of</span>
 <span class="sd">reflecting back onto the oscillon, mimicking an infinite domain. Time</span>
@@ -91,7 +190,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sphere_solid_angle</span><span class="p">,</span><span class="n">radial_integrate</span><span class="p">,</span><span class="n">radialFT_mat</span>
 
 <div class="viewcode-block" id="oscillon">
-<a class="viewcode-back" href="../../source/pyCE.oscillons.html#pyCE.oscillons.oscillon">[docs]</a>
+<a class="viewcode-back" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">oscillon</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Oscillon environment class</span>
 
@@ -183,26 +282,28 @@
 
 
 <div class="viewcode-block" id="oscillon.initialize_field">
-<a class="viewcode-back" href="../../source/pyCE.oscillons.html#pyCE.oscillons.oscillon.initialize_field">[docs]</a>
+<a class="viewcode-back" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.initialize_field">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initialize_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">field_type</span> <span class="o">=</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build the initial field vector (phi, Phi, Pi).</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Build the initial field vector :math:`(\phi, \Phi, \Pi)`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        field_type : str</span>
 <span class="sd">            Initial profile shape. Currently only &#39;gaussian&#39; is implemented:</span>
-<span class="sd">            a Gaussian of radius ``params[0]`` (note radius = sqrt(2)*sigma)</span>
-<span class="sd">            with amplitude at the true-vacuum field value</span>
-<span class="sd">            A = (alpha + sqrt(alpha**2 - 4))/2.</span>
+<span class="sd">            a Gaussian of radius ``params[0]`` (note</span>
+<span class="sd">            :math:`\mathrm{radius} = \sqrt{2} \sigma`) with amplitude at the</span>
+<span class="sd">            true-vacuum field value</span>
+<span class="sd">            :math:`A = (\alpha + \sqrt{\alpha^2 - 4})/2`.</span>
 <span class="sd">        *params</span>
 <span class="sd">            Shape parameters; for &#39;gaussian&#39;, the radius r0.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray, shape (3, N)</span>
-<span class="sd">            Stacked initial data [phi, Phi, Pi]. Pi is initialized to</span>
-<span class="sd">            -f*Phi, i.e. the time derivative of phi is zero in the boosted</span>
-<span class="sd">            coordinates. Returns 0 if `field_type` is not recognized.</span>
+<span class="sd">            Stacked initial data [phi, Phi, Pi]. :math:`\Pi` is initialized</span>
+<span class="sd">            to :math:`-f \Phi`, i.e. the time derivative of :math:`\phi` is</span>
+<span class="sd">            zero in the boosted coordinates. Returns 0 if `field_type` is not</span>
+<span class="sd">            recognized.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">field_type</span> <span class="o">==</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">:</span>
             <span class="n">r0</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -221,7 +322,8 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_define_boost_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">radius_MIB</span><span class="p">,</span><span class="n">delta_MIB</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set up the MIB shift profile f(r) and its derivative df/dr.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Set up the MIB shift profile :math:`f(r)` and its derivative</span>
+<span class="sd">        :math:`df/dr`.</span>
 
 <span class="sd">        f is a smoothed step (tanh of width delta_MIB centered on</span>
 <span class="sd">        radius_MIB) rising from 0 in the interior to ~1 in the outer region,</span>
@@ -235,25 +337,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">d_boost</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">phi</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;K&amp;T potential V(phi) = phi**2/2 - alpha*phi**3/3 + phi**4/4.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;K&amp;T potential</span>
+<span class="sd">        :math:`V(\phi) = \phi^2/2 - \alpha \phi^3/3 + \phi^4/4`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">phi2</span> <span class="o">=</span> <span class="n">phi</span><span class="o">**</span><span class="mi">2</span>
         <span class="n">phi3</span> <span class="o">=</span> <span class="n">phi2</span><span class="o">*</span><span class="n">phi</span>
         <span class="n">phi4</span> <span class="o">=</span> <span class="n">phi2</span><span class="o">*</span><span class="n">phi2</span>
         <span class="k">return</span> <span class="mf">.5</span><span class="o">*</span><span class="n">phi2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="o">*</span><span class="n">phi3</span><span class="o">/</span><span class="mf">3.</span> <span class="o">+</span> <span class="mf">.25</span><span class="o">*</span><span class="n">phi4</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_gradient_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">phi</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Potential gradient V&#39;(phi) = phi - alpha*phi**2 + phi**3.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Potential gradient</span>
+<span class="sd">        :math:`V&#39;(\phi) = \phi - \alpha \phi^2 + \phi^3`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">phi2</span> <span class="o">=</span> <span class="n">phi</span><span class="o">**</span><span class="mi">2</span>
         <span class="n">phi3</span> <span class="o">=</span> <span class="n">phi2</span><span class="o">*</span><span class="n">phi</span>
         <span class="k">return</span> <span class="n">phi</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="o">*</span><span class="n">phi2</span> <span class="o">+</span> <span class="n">phi3</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_timestep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fields</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance the field vector by one step of iterated Crank-Nicolson.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Advance the field vector by one step of iterated Crank-Nicolson.</span>
 
 <span class="sd">        A predictor half-step (plus dissipation) seeds the iteration; each</span>
 <span class="sd">        pass re-evaluates the RHS at the running average and reapplies the</span>
-<span class="sd">        boundary conditions (regularity of Phi at the origin via a one-sided</span>
-<span class="sd">        stencil, Phi(0) = 0, even Pi at the origin, and zero-gradient outer</span>
+<span class="sd">        boundary conditions (regularity of :math:`\Phi` at the origin via a</span>
+<span class="sd">        one-sided stencil, :math:`\Phi(0) = 0`, even :math:`\Pi` at the</span>
+<span class="sd">        origin, and zero-gradient outer</span>
 <span class="sd">        boundary). Iteration stops when successive iterates differ by less</span>
 <span class="sd">        than `tol` in the L2 norm. The grid quantities are then advanced by</span>
 <span class="sd">        `_timestep_update`.</span>
@@ -279,10 +386,11 @@
         <span class="k">return</span> <span class="n">fields_new</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_simulation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the time-dependent grid quantities.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Initialize the time-dependent grid quantities.</span>
 
-<span class="sd">        r~ (the boosted radial coordinate), the metric-like factors</span>
-<span class="sd">        a (initially 1) and b = f/a, and d(r~^d) (the volume-element</span>
+<span class="sd">        :math:`\tilde{r}` (the boosted radial coordinate), the metric-like</span>
+<span class="sd">        factors a (initially 1) and :math:`b = f/a`, and</span>
+<span class="sd">        :math:`d(\tilde{r}^d)` (the volume-element</span>
 <span class="sd">        differences used by the flux-conservative derivative in `_F`,</span>
 <span class="sd">        with one-sided stencils at the origin and outer edge).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -297,10 +405,11 @@
                             <span class="s1">&#39;valid&#39;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_timestep_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance the MIB grid quantities by dt.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Advance the MIB grid quantities by dt.</span>
 
-<span class="sd">        The boosted radius moves as dr~/dt = f and the factor a grows as</span>
-<span class="sd">        da/dt = df/dr; b and the volume elements are recomputed to match.</span>
+<span class="sd">        The boosted radius moves as :math:`d\tilde{r}/dt = f` and the factor</span>
+<span class="sd">        a grows as :math:`da/dt = df/dr`; b and the volume elements are</span>
+<span class="sd">        recomputed to match.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rt</span>        <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rt</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rtd</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rt</span><span class="o">**</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -313,20 +422,21 @@
                             <span class="s1">&#39;valid&#39;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_F</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fields</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Right-hand side of the first-order MIB evolution system.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Right-hand side of the first-order MIB evolution system.</span>
 
-<span class="sd">        With fields = (phi, Phi, Pi), a the MIB factor, and b = f/a:</span>
+<span class="sd">        With fields = :math:`(\phi, \Phi, \Pi)`, a the MIB factor, and</span>
+<span class="sd">        :math:`b = f/a`:</span>
 
-<span class="sd">        - d(phi)/dt = Pi/a + b*Phi</span>
-<span class="sd">        - d(Phi)/dt = the radial derivative of d(phi)/dt (centered</span>
-<span class="sd">          differences in the bulk, one-sided stencils at the boundaries,</span>
-<span class="sd">          and a regularity-preserving extrapolation at the first interior</span>
-<span class="sd">          point)</span>
-<span class="sd">        - d(Pi)/dt  = the flux-conservative radial derivative of the</span>
-<span class="sd">          momentum flux (b*Pi + Phi/a) * r~^(d-1), divided by the volume</span>
-<span class="sd">          element, minus a*V&#39;(phi), with the geometric source term</span>
-<span class="sd">          -(d-1)*(f/r~)*Pi; the origin and outer edge are patched with</span>
-<span class="sd">          one-sided extrapolation stencils.</span>
+<span class="sd">        - :math:`d(\phi)/dt = \Pi/a + b \Phi`</span>
+<span class="sd">        - :math:`d(\Phi)/dt` = the radial derivative of :math:`d(\phi)/dt`</span>
+<span class="sd">          (centered differences in the bulk, one-sided stencils at the</span>
+<span class="sd">          boundaries, and a regularity-preserving extrapolation at the first</span>
+<span class="sd">          interior point)</span>
+<span class="sd">        - :math:`d(\Pi)/dt` = the flux-conservative radial derivative of the</span>
+<span class="sd">          momentum flux :math:`(b \Pi + \Phi/a) \, \tilde{r}^{d-1}`, divided</span>
+<span class="sd">          by the volume element, minus :math:`a V&#39;(\phi)`, with the geometric</span>
+<span class="sd">          source term :math:`-(d-1) (f/\tilde{r}) \Pi`; the origin and outer</span>
+<span class="sd">          edge are patched with one-sided extrapolation stencils.</span>
 
 <span class="sd">        Commented-out stencils record alternatives that did not converge.</span>
 
@@ -400,7 +510,7 @@
         <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_dissipation_factor</span><span class="o">*</span><span class="n">dF</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_courant_factor</span><span class="o">**</span><span class="mi">4</span>
 
 <div class="viewcode-block" id="oscillon.stress_energy_tensor">
-<a class="viewcode-back" href="../../source/pyCE.oscillons.html#pyCE.oscillons.oscillon.stress_energy_tensor">[docs]</a>
+<a class="viewcode-back" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.stress_energy_tensor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">stress_energy_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fields</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Components of the stress-energy in the MIB coordinates.</span>
 
@@ -422,7 +532,7 @@
 
 
 <div class="viewcode-block" id="oscillon.energy">
-<a class="viewcode-back" href="../../source/pyCE.oscillons.html#pyCE.oscillons.oscillon.energy">[docs]</a>
+<a class="viewcode-back" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Energy inside radius_cap and the flux through its surface.</span>
 
@@ -446,7 +556,7 @@
 
 
 <div class="viewcode-block" id="oscillon.simulate_oscillon">
-<a class="viewcode-back" href="../../source/pyCE.oscillons.html#pyCE.oscillons.oscillon.simulate_oscillon">[docs]</a>
+<a class="viewcode-back" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.simulate_oscillon">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">simulate_oscillon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fields</span><span class="p">,</span>
                             <span class="n">plot_profile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
                             <span class="n">plot_energy_density</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -500,7 +610,9 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_plot_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fields</span><span class="p">,</span><span class="n">num_fields</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Live semilog plot of |phi|, |Phi|, |Pi| against r.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Live semilog plot of :math:`|\phi|`, :math:`|\Phi|`,</span>
+<span class="sd">        :math:`|\Pi|` against r.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="c1">#[0:50]</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
@@ -516,7 +628,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">.0000000000001</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_plot_energy_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Live semilog plot of the energy density rho(r).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Live semilog plot of the energy density :math:`\rho(r)`.&quot;&quot;&quot;</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -530,7 +642,9 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">.0000000000001</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_plot_energy_shells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Live semilog plot of the energy per radial shell, rho * a * r~^(d-1).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Live semilog plot of the energy per radial shell,</span>
+<span class="sd">        :math:`\rho \, a \, \tilde{r}^{d-1}`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_rtd</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -544,7 +658,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">.0000000000001</span><span class="p">)</span>
 
 <div class="viewcode-block" id="oscillon.radialFT">
-<a class="viewcode-back" href="../../source/pyCE.oscillons.html#pyCE.oscillons.oscillon.radialFT">[docs]</a>
+<a class="viewcode-back" href="../../api/pyCE.oscillons.html#pyCE.oscillons.oscillon.radialFT">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">radialFT</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Radial Fourier transform of y on the interior grid (r &lt; radius_cap).</span>
 

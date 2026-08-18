@@ -20,6 +20,7 @@
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -134,8 +135,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License &amp; Contact</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#citing">Citing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -171,12 +176,13 @@
 <p>Continuum (integral) analogues of the discrete measures in
 <a class="reference internal" href="pyCE.cosmology.analysis.aps.html#module-pyCE.cosmology.analysis.aps" title="pyCE.cosmology.analysis.aps"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.cosmology.analysis.aps</span></code></a>: modal fractions, differential Shannon
 entropy, and Kullback-Leibler divergence for power spectra defined on a
-continuous wavenumber grid, with the d-dimensional Jacobian factor x**(d-1)
-included in the measure. All integrals use the trapezoidal rule.</p>
+continuous wavenumber grid, with the d-dimensional Jacobian factor
+<span class="math notranslate nohighlight">\(x^{d-1}\)</span> included in the measure. All integrals use the trapezoidal
+rule.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyCE.cosmology.analysis.mps.KL_divergence">
 <span class="sig-prename descclassname"><span class="pre">pyCE.cosmology.analysis.mps.</span></span><span class="sig-name descname"><span class="pre">KL_divergence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/cosmology/analysis/mps.html#KL_divergence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.cosmology.analysis.mps.KL_divergence" title="Link to this definition"></a></dt>
-<dd><p>Kullback-Leibler divergence D(p || q) in bits.</p>
+<dd><p>Kullback-Leibler divergence <span class="math notranslate nohighlight">\(D(p \| q)\)</span> in bits.</p>
 <p>Note that the divergence is not symmetric in its arguments. Only modes
 with xmin &lt;= x &lt;= xmax where both p and q are positive contribute.</p>
 <dl class="field-list simple">
@@ -188,7 +194,7 @@ with xmin &lt;= x &lt;= xmax where both p and q are positive contribute.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Integral[ p * log2(p/q) dx ] over the valid range.</p>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(\int p \, \log_2(p/q) \, dx\)</span> over the valid range.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
@@ -208,7 +214,7 @@ with xmin &lt;= x &lt;= xmax where both p and q are positive contribute.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>-Integral[ p * log2(p) dx ].</p>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(-\int p \, \log_2(p) \, dx\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
@@ -222,7 +228,7 @@ with xmin &lt;= x &lt;= xmax where both p and q are positive contribute.</p>
 <dd><p>Modal fraction of a power spectrum over a restricted k-range.</p>
 <p>Restricts to the modes with xmin &lt;= x &lt;= xmax and y &gt; 0, normalizes the
 spectrum there with the d-dimensional measure, and attaches the Jacobian
-factor x**(d-1) so the result is a probability density in x.</p>
+factor <span class="math notranslate nohighlight">\(x^{d-1}\)</span> so the result is a probability density in x.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -255,7 +261,7 @@ factor x**(d-1) so the result is a probability density in x.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>y divided by Integral[ y * x**(d-1) dx ].</p>
+<dd class="field-even"><p>y divided by <span class="math notranslate nohighlight">\(\int y \, x^{d-1} \, dx\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ndarray</p>

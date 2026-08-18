@@ -8,6 +8,7 @@
   <title>pyCE.bosonstars &mdash; pyCE  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ab018f0f" />
 
   
@@ -16,6 +17,8 @@
       <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -128,8 +131,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License &amp; Contact</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#citing">Citing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#contact">Contact</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -157,18 +164,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pyCE.bosonstars</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Generation and configurational-entropy analysis of boson stars.</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Generation and configurational-entropy analysis of boson stars.</span>
 
 <span class="sd">Solves for spherically symmetric, ground-state solutions of the</span>
 <span class="sd">Einstein-Klein-Gordon system for a complex scalar field with the harmonic</span>
-<span class="sd">ansatz phi(r, t) = phi(r) e^(-i omega t) and the potential::</span>
+<span class="sd">ansatz :math:`\phi(r, t) = \phi(r) e^{-i \omega t}` and the potential</span>
 
-<span class="sd">    V(|phi|) = |phi|**2 + (lamb/2)|phi|**4</span>
+<span class="sd">.. math::</span>
 
-<span class="sd">In the standard 3+1 metric ansatz, ds^2 = -alpha(r)^2 dt^2 + a(r)^2 dr^2</span>
-<span class="sd">+ r^2 dOmega^2, the field and metric functions obey a coupled ODE system in</span>
-<span class="sd">r with a frequency eigenvalue omega: only a discrete set of central lapse</span>
-<span class="sd">values yields a profile that decays into flat space, and the nodeless member</span>
+<span class="sd">    V(|\phi|) = |\phi|^2 + \frac{\lambda}{2} |\phi|^4</span>
+
+<span class="sd">In the standard 3+1 metric ansatz,</span>
+<span class="sd">:math:`ds^2 = -\alpha(r)^2 dt^2 + a(r)^2 dr^2 + r^2 d\Omega^2`, the field and</span>
+<span class="sd">metric functions obey a coupled ODE system in r with a frequency eigenvalue</span>
+<span class="sd">:math:`\omega`: only a discrete set of central lapse values yields a profile</span>
+<span class="sd">that decays into flat space, and the nodeless member</span>
 <span class="sd">of that set is the ground state. The solver finds it by bisection shooting</span>
 <span class="sd">on the central lapse, integrating outward with RK4.</span>
 
@@ -183,7 +193,7 @@
 <div class="viewcode-block" id="BosonStar">
 <a class="viewcode-back" href="../../api/pyCE.bosonstars.html#pyCE.bosonstars.BosonStar">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BosonStar</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ground-state boson star and its configurational entropy.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Ground-state boson star and its configurational entropy.</span>
 
 <span class="sd">    Instantiation does all the work: it shoots for the central lapse,</span>
 <span class="sd">    integrates the Einstein-Klein-Gordon system outward, and extracts the</span>
@@ -199,9 +209,10 @@
 <span class="sd">        Initial bracket for the central lapse used by the shooting method</span>
 <span class="sd">        (default [0, 1]). The supplied list is copied, never modified.</span>
 <span class="sd">    dr : float, optional</span>
-<span class="sd">        Radial step size (default .01). For small phi0 the gradients are</span>
-<span class="sd">        gentle but the star is large; for large phi0 the reverse — lower</span>
-<span class="sd">        `dr` if the shooting method stalls.</span>
+<span class="sd">        Radial step size (default .01). For small :math:`\phi_0` the</span>
+<span class="sd">        gradients are gentle but the star is large; for large</span>
+<span class="sd">        :math:`\phi_0` the reverse — lower `dr` if the shooting method</span>
+<span class="sd">        stalls.</span>
 <span class="sd">    r_max : float, optional</span>
 <span class="sd">        Maximum integration radius (default 50). Too small and the shot</span>
 <span class="sd">        converges to a profile that is not yet the ground state; too large</span>
@@ -220,14 +231,15 @@
 <span class="sd">        Scalar field profile and its radial derivative.</span>
 <span class="sd">    a, alpha : ndarray</span>
 <span class="sd">        Radial metric function and lapse, with the lapse rescaled so</span>
-<span class="sd">        alpha -&gt; 1 at the outer edge (asymptotic flatness).</span>
+<span class="sd">        :math:`\alpha \to 1` at the outer edge (asymptotic flatness).</span>
 <span class="sd">    omega : float</span>
-<span class="sd">        Frequency eigenvalue of the harmonic ansatz; omega &lt; 1 signals a</span>
-<span class="sd">        gravitationally bound configuration.</span>
+<span class="sd">        Frequency eigenvalue of the harmonic ansatz; :math:`\omega &lt; 1`</span>
+<span class="sd">        signals a gravitationally bound configuration.</span>
 <span class="sd">    rho : ndarray</span>
 <span class="sd">        Energy density.</span>
 <span class="sd">    mass : ndarray</span>
-<span class="sd">        Misner-Sharp mass within radius r, m(r) = (r/2)(1 - 1/a**2).</span>
+<span class="sd">        Misner-Sharp mass within radius r,</span>
+<span class="sd">        :math:`m(r) = (r/2)(1 - 1/a^2)`.</span>
 <span class="sd">    M : float</span>
 <span class="sd">        Total (ADM) mass, mass[-1].</span>
 <span class="sd">    R : float</span>
@@ -238,8 +250,8 @@
 <span class="sd">    mf : ndarray</span>
 <span class="sd">        Modal fraction ``|denFT|**2 / max|denFT|**2``.</span>
 <span class="sd">    Sc : float</span>
-<span class="sd">        Configurational entropy, -Integral[ mf * ln(mf) ] over k-space</span>
-<span class="sd">        with the d = 3 radial measure.</span>
+<span class="sd">        Configurational entropy, :math:`-\int \mathrm{mf} \, \ln(\mathrm{mf})`</span>
+<span class="sd">        over k-space with the d = 3 radial measure.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -332,12 +344,12 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_entropy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configurational entropy of the energy-density power spectrum.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Configurational entropy of the energy-density power spectrum.</span>
 
 <span class="sd">        Fourier transforms rho, normalizes the power spectrum by its peak</span>
-<span class="sd">        to form the modal fraction mf, and integrates -mf*ln(mf) over</span>
-<span class="sd">        k-space. The machine epsilon inside the log regularizes mf = 0</span>
-<span class="sd">        modes.</span>
+<span class="sd">        to form the modal fraction mf, and integrates</span>
+<span class="sd">        :math:`-\mathrm{mf} \ln(\mathrm{mf})` over k-space. The machine</span>
+<span class="sd">        epsilon inside the log regularizes mf = 0 modes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">denFT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">radialFT</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denFT</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
@@ -346,7 +358,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mf</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">mf</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_RK4_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_max</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the Einstein-Klein-Gordon system outward with RK4.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Integrate the Einstein-Klein-Gordon system outward with RK4.</span>
 
 <span class="sd">        The unknowns are (a, alpha, phi, Phi); the right-hand sides below</span>
 <span class="sd">        are the standard polar-areal-gauge equations with the harmonic</span>
@@ -354,8 +366,8 @@
 <span class="sd">        Integration stops at `r_max` or when any unknown leaves a</span>
 <span class="sd">        generous bounding box (a diverging shot announcing itself). On</span>
 <span class="sd">        exit, the lapse is rescaled by its asymptotic value so that</span>
-<span class="sd">        alpha -&gt; 1 at the edge, and that rescaling factor is the</span>
-<span class="sd">        frequency eigenvalue omega.</span>
+<span class="sd">        :math:`\alpha \to 1` at the edge, and that rescaling factor is the</span>
+<span class="sd">        frequency eigenvalue :math:`\omega`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">c</span> <span class="o">=</span> <span class="mf">0.16666666666666666666667</span>
 

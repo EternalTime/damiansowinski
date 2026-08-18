@@ -135,8 +135,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License &amp; Contact</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#citing">Citing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -169,12 +173,13 @@
 <p>Simulation of oscillons in d spatial dimensions.</p>
 <p>Evolves a spherically symmetric real scalar field in the asymmetric
 double-well (Kolb &amp; Turner) potential</p>
-<blockquote>
-<div><p>V(phi) = (1/2) phi**2 - (alpha/3) phi**3 + (1/4) phi**4,</p>
-</div></blockquote>
-<p>with alpha = (3/sqrt(2)) * (1 + asymmetry_factor). The field is evolved as
-the first-order system (phi, Phi, Pi), where Phi is the radial gradient and
-Pi the generalized momentum, on a radial grid in monotonically increasingly
+<div class="math notranslate nohighlight">
+\[V(\phi) = \frac{1}{2} \phi^2 - \frac{\alpha}{3} \phi^3
+          + \frac{1}{4} \phi^4 ,\]</div>
+<p>with <span class="math notranslate nohighlight">\(\alpha = (3/\sqrt{2}) (1 + \mathrm{asymmetry\_factor})\)</span>. The
+field is evolved as the first-order system <span class="math notranslate nohighlight">\((\phi, \Phi, \Pi)\)</span>, where
+<span class="math notranslate nohighlight">\(\Phi\)</span> is the radial gradient and <span class="math notranslate nohighlight">\(\Pi\)</span> the generalized momentum,
+on a radial grid in monotonically increasingly
 boosted (MIB) coordinates: an outer region of the grid is smoothly boosted
 outward so that outgoing radiation is carried off the lattice instead of
 reflecting back onto the oscillon, mimicking an infinite domain. Time
@@ -248,21 +253,23 @@ and Turner parametrization.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyCE.oscillons.oscillon.initialize_field">
 <span class="sig-name descname"><span class="pre">initialize_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gaussian'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/oscillons.html#oscillon.initialize_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.oscillons.oscillon.initialize_field" title="Link to this definition"></a></dt>
-<dd><p>Build the initial field vector (phi, Phi, Pi).</p>
+<dd><p>Build the initial field vector <span class="math notranslate nohighlight">\((\phi, \Phi, \Pi)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>field_type</strong> (<em>str</em>) – Initial profile shape. Currently only ‘gaussian’ is implemented:
-a Gaussian of radius <code class="docutils literal notranslate"><span class="pre">params[0]</span></code> (note radius = sqrt(2)*sigma)
-with amplitude at the true-vacuum field value
-A = (alpha + sqrt(alpha**2 - 4))/2.</p></li>
+a Gaussian of radius <code class="docutils literal notranslate"><span class="pre">params[0]</span></code> (note
+<span class="math notranslate nohighlight">\(\mathrm{radius} = \sqrt{2} \sigma\)</span>) with amplitude at the
+true-vacuum field value
+<span class="math notranslate nohighlight">\(A = (\alpha + \sqrt{\alpha^2 - 4})/2\)</span>.</p></li>
 <li><p><strong>*params</strong> – Shape parameters; for ‘gaussian’, the radius r0.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Stacked initial data [phi, Phi, Pi]. Pi is initialized to
--f*Phi, i.e. the time derivative of phi is zero in the boosted
-coordinates. Returns 0 if <cite>field_type</cite> is not recognized.</p>
+<dd class="field-even"><p>Stacked initial data [phi, Phi, Pi]. <span class="math notranslate nohighlight">\(\Pi\)</span> is initialized
+to <span class="math notranslate nohighlight">\(-f \Phi\)</span>, i.e. the time derivative of <span class="math notranslate nohighlight">\(\phi\)</span> is
+zero in the boosted coordinates. Returns 0 if <cite>field_type</cite> is not
+recognized.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ndarray, shape (3, N)</p>

@@ -20,10 +20,11 @@
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="License" href="../license.html" />
+    <link rel="next" title="License &amp; Contact" href="../license.html" />
     <link rel="prev" title="pyCE.cosmology.data package" href="pyCE.cosmology.data.html" /> 
 </head>
 
@@ -134,8 +135,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License &amp; Contact</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#citing">Citing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -166,26 +171,21 @@
   <section id="module-pyCE.math">
 <span id="pyce-math-module"></span><h1>pyCE.math module<a class="headerlink" href="#module-pyCE.math" title="Link to this heading"></a></h1>
 <p>Radial Fourier analysis in d spatial dimensions.</p>
-<p>Helper routines shared by the physics modules of pyCE. A function f(r) that
-depends only on the radial coordinate in d spatial dimensions has a Fourier
-transform that is itself radial in k-space; the angular integrals can be done
-analytically, reducing the d-dimensional transform to a one-dimensional
-integral against a Bessel kernel,</p>
-<blockquote>
-<div><dl class="simple">
-<dt>ft(k) = sqrt(pi) * 2**(d/2-2) * k**(1-d/2)</dt><dd><ul class="simple">
-<li><p>Integral[ f(r) * J_{d/2-1}(k r) * r**(d/2) dr ].</p></li>
-</ul>
-</dd>
-</dl>
-</div></blockquote>
+<p>Helper routines shared by the physics modules of pyCE. A function <span class="math notranslate nohighlight">\(f(r)\)</span>
+that depends only on the radial coordinate in d spatial dimensions has a
+Fourier transform that is itself radial in k-space; the angular integrals can
+be done analytically, reducing the d-dimensional transform to a
+one-dimensional integral against a Bessel kernel,</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{ft}(k) = \sqrt{\pi} \, 2^{d/2-2} \, k^{1-d/2}
+        \int f(r) \, J_{d/2-1}(k r) \, r^{d/2} \, dr .\]</div>
 <p>This module provides that transform (as a function and as a precomputed
 matrix), together with d-dimensional radial integration and normalization
 utilities.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyCE.math.fourier_factor">
 <span class="sig-prename descclassname"><span class="pre">pyCE.math.</span></span><span class="sig-name descname"><span class="pre">fourier_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/math.html#fourier_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.math.fourier_factor" title="Link to this definition"></a></dt>
-<dd><p>Symmetric Fourier normalization constant, (2*pi)**(-d/2).</p>
+<dd><p>Symmetric Fourier normalization constant, <span class="math notranslate nohighlight">\((2\pi)^{-d/2}\)</span>.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -202,7 +202,7 @@ utilities.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>d</strong> (<em>int</em>) – Number of spatial dimensions.</p></li>
-<li><p><strong>f</strong> (<em>ndarray</em>) – Field values f(r) sampled on the radial grid <cite>r</cite>.</p></li>
+<li><p><strong>f</strong> (<em>ndarray</em>) – Field values <span class="math notranslate nohighlight">\(f(r)\)</span> sampled on the radial grid <cite>r</cite>.</p></li>
 <li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid. Assumed to start near 0 and be (close to) uniform.</p></li>
 </ul>
 </dd>
@@ -219,13 +219,13 @@ fundamental mode of the box and extends to 5x the usual band limit.</p></li>
 <p class="rubric">Notes</p>
 <p>For d &gt; 1 the angular integrals are done analytically, leaving the
 one-dimensional Bessel integral quoted in the module docstring, which is
-evaluated with the trapezoidal rule. The kernel k**(1-d/2) is singular at
-k = 0, so ft[0] is instead obtained by extrapolating ft[1:8] with a
-seventh-order one-sided finite-difference (interpolation) stencil. For
-d = 1 the transform reduces to a plain cosine transform.</p>
+evaluated with the trapezoidal rule. The kernel <span class="math notranslate nohighlight">\(k^{1-d/2}\)</span> is
+singular at k = 0, so ft[0] is instead obtained by extrapolating ft[1:8]
+with a seventh-order one-sided finite-difference (interpolation) stencil.
+For d = 1 the transform reduces to a plain cosine transform.</p>
 <p>The result is rescaled by a constant so that Plancherel’s theorem,
-||f||^2 = ||ft||^2 (with the d-dimensional radial measure), holds exactly
-on the discrete grids.</p>
+<span class="math notranslate nohighlight">\(\|f\|^2 = \|\mathrm{ft}\|^2\)</span> (with the d-dimensional radial
+measure), holds exactly on the discrete grids.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -261,8 +261,9 @@ k = 0 row implements the same seven-point extrapolation used in
 <dt class="sig sig-object py" id="pyCE.math.radial_integrate">
 <span class="sig-prename descclassname"><span class="pre">pyCE.math.</span></span><span class="sig-name descname"><span class="pre">radial_integrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/math.html#radial_integrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.math.radial_integrate" title="Link to this definition"></a></dt>
 <dd><p>Integrate a radial function over all of d-dimensional space.</p>
-<p>Computes Omega_d * Integral[ y(r) * r**(d-1) dr ] with the trapezoidal
-rule, where Omega_d is the solid angle from <a class="reference internal" href="#pyCE.math.sphere_solid_angle" title="pyCE.math.sphere_solid_angle"><code class="xref py py-func docutils literal notranslate"><span class="pre">sphere_solid_angle()</span></code></a>.</p>
+<p>Computes <span class="math notranslate nohighlight">\(\Omega_d \int y(r) \, r^{d-1} \, dr\)</span> with the trapezoidal
+rule, where <span class="math notranslate nohighlight">\(\Omega_d\)</span> is the solid angle from
+<a class="reference internal" href="#pyCE.math.sphere_solid_angle" title="pyCE.math.sphere_solid_angle"><code class="xref py py-func docutils literal notranslate"><span class="pre">sphere_solid_angle()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -283,8 +284,9 @@ rule, where Omega_d is the solid angle from <a class="reference internal" href="
 <dl class="py function">
 <dt class="sig sig-object py" id="pyCE.math.sphere_solid_angle">
 <span class="sig-prename descclassname"><span class="pre">pyCE.math.</span></span><span class="sig-name descname"><span class="pre">sphere_solid_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/math.html#sphere_solid_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.math.sphere_solid_angle" title="Link to this definition"></a></dt>
-<dd><p>Total solid angle of the unit (d-1)-sphere, 2*pi**(d/2)/Gamma(d/2).</p>
-<p>E.g. 2 for d = 1, 2*pi for d = 2, 4*pi for d = 3.</p>
+<dd><p>Total solid angle of the unit (d-1)-sphere,
+<span class="math notranslate nohighlight">\(2\pi^{d/2}/\Gamma(d/2)\)</span>.</p>
+<p>E.g. 2 for d = 1, <span class="math notranslate nohighlight">\(2\pi\)</span> for d = 2, <span class="math notranslate nohighlight">\(4\pi\)</span> for d = 3.</p>
 </dd></dl>
 
 </section>
@@ -294,7 +296,7 @@ rule, where Omega_d is the solid angle from <a class="reference internal" href="
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="pyCE.cosmology.data.html" class="btn btn-neutral float-left" title="pyCE.cosmology.data package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../license.html" class="btn btn-neutral float-right" title="License &amp; Contact" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
