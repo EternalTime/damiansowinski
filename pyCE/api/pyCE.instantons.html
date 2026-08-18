@@ -20,6 +20,7 @@
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -134,8 +135,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License &amp; Contact</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#citing">Citing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -168,17 +173,16 @@
 <p>Generation and configurational-entropy analysis of instantons.</p>
 <p>Solves for the O(d)-symmetric bounce (“bubble”) profile of a real scalar
 field in the asymmetric double-well potential</p>
-<blockquote>
-<div><p>V(B) = (1/2) B**2 - (alpha/3) B**3 + (1/4) B**4,</p>
-</div></blockquote>
-<p>with asymmetry parametrized by alpha = (3/sqrt(2)) * (1 + g). The bounce
-satisfies the Euclidean equation of motion</p>
-<blockquote>
-<div><p>B’’ + (d/r) B’ = V’(B) = B - alpha B**2 + B**3,</p>
-</div></blockquote>
-<p>with B’(0) = 0 and B -&gt; 0 (the false vacuum) as r -&gt; infinity, and is found
-by a shooting method: bisect on the core value B(0) until the profile decays
-into the false vacuum instead of over- or under-shooting.</p>
+<div class="math notranslate nohighlight">
+\[V(B) = \frac{1}{2} B^2 - \frac{\alpha}{3} B^3 + \frac{1}{4} B^4 ,\]</div>
+<p>with asymmetry parametrized by <span class="math notranslate nohighlight">\(\alpha = (3/\sqrt{2}) (1 + g)\)</span>. The
+bounce satisfies the Euclidean equation of motion</p>
+<div class="math notranslate nohighlight">
+\[B'' + \frac{d}{r} B' = V'(B) = B - \alpha B^2 + B^3 ,\]</div>
+<p>with <span class="math notranslate nohighlight">\(B'(0) = 0\)</span> and <span class="math notranslate nohighlight">\(B \to 0\)</span> (the false vacuum) as
+<span class="math notranslate nohighlight">\(r \to \infty\)</span>, and is found by a shooting method: bisect on the core
+value <span class="math notranslate nohighlight">\(B(0)\)</span> until the profile decays into the false vacuum instead of
+over- or under-shooting.</p>
 <p>From the profile, the class computes the energy densities, the Euclidean
 action, and the configurational entropy of the energy-density power spectrum.</p>
 <dl class="py class">
@@ -192,8 +196,9 @@ configurational entropy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>asymmetry_factor</strong> (<em>float</em>) – Asymmetry g of the potential; alpha = (3/sqrt(2)) * (1 + g).
-g = 0 corresponds to the degenerate (thin-wall) limit.</p></li>
+<li><p><strong>asymmetry_factor</strong> (<em>float</em>) – Asymmetry <span class="math notranslate nohighlight">\(g\)</span> of the potential;
+<span class="math notranslate nohighlight">\(\alpha = (3/\sqrt{2}) (1 + g)\)</span>. <span class="math notranslate nohighlight">\(g = 0\)</span> corresponds to
+the degenerate (thin-wall) limit.</p></li>
 <li><p><strong>dimension</strong> (<em>int</em>) – Number of SPATIAL dimensions d.</p></li>
 <li><p><strong>N</strong> (<em>int</em>) – Maximum number of radial integration steps (grid spacing dr = 0.01).</p></li>
 </ul>
@@ -201,8 +206,8 @@ g = 0 corresponds to the degenerate (thin-wall) limit.</p></li>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid on which the bounce was accepted.</p></li>
-<li><p><strong>DB</strong> (<em>B</em><em>,</em>) – Bounce profile B(r) and its radial derivative B’(r).</p></li>
-<li><p><strong>B0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Core value B(0) found by the shooting method.</p></li>
+<li><p><strong>DB</strong> (<em>B</em><em>,</em>) – Bounce profile <span class="math notranslate nohighlight">\(B(r)\)</span> and its radial derivative <span class="math notranslate nohighlight">\(B'(r)\)</span>.</p></li>
+<li><p><strong>B0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Core value <span class="math notranslate nohighlight">\(B(0)\)</span> found by the shooting method.</p></li>
 <li><p><strong>Bmax</strong> (<em>Bmin</em><em>,</em>) – Initial bracket for the shooting method.</p></li>
 <li><p><strong>rho</strong> (<em>PEdens</em><em>, </em><em>GEdens</em><em>,</em>) – Potential, gradient, and total energy densities.</p></li>
 <li><p><strong>E</strong> (<em>PE</em><em>, </em><em>GE</em><em>,</em>) – Radially integrated potential, gradient, and total energies.</p></li>
@@ -210,8 +215,8 @@ g = 0 corresponds to the degenerate (thin-wall) limit.</p></li>
 bounce interpretation of the static d-dimensional profile).</p></li>
 <li><p><strong>k</strong> (<em>denFT</em><em>,</em>) – Radial Fourier transform of rho and its k-grid.</p></li>
 <li><p><strong>mf</strong> (<em>ndarray</em>) – Modal fraction <code class="docutils literal notranslate"><span class="pre">|denFT|**2</span> <span class="pre">/</span> <span class="pre">max|denFT|**2</span></code>.</p></li>
-<li><p><strong>Sc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Configurational entropy, -Integral[ mf * ln(mf) ] over k-space
-with the d-dimensional radial measure.</p></li>
+<li><p><strong>Sc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Configurational entropy, <span class="math notranslate nohighlight">\(-\int \mathrm{mf} \, \ln(\mathrm{mf})\)</span>
+over k-space with the d-dimensional radial measure.</p></li>
 </ul>
 </dd>
 </dl>
