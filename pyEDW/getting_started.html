@@ -53,6 +53,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#a-single-planet">A single planet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#an-ensemble-over-luminosity">An ensemble over luminosity</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reading-the-information-architecture">Reading the information architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-tests">Running the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
@@ -62,7 +64,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/pyEDW.html">API reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License &amp; Contact</a></li>
 </ul>
 
         </div>
@@ -97,6 +99,7 @@
 <span class="nb">cd</span><span class="w"> </span>pyEDW
 python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
 <span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
@@ -152,6 +155,29 @@ bare planet, the reference used for the agent-induced correlation change
 </div>
 <p>See <a class="reference internal" href="guide_metrics.html"><span class="doc">Guide: metrics</span></a> for what each measure means and <a class="reference internal" href="theory.html"><span class="doc">Theory</span></a> for the
 equations behind them.</p>
+</section>
+<section id="running-the-tests">
+<h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Link to this heading"></a></h2>
+<p>The test suite needs <code class="docutils literal notranslate"><span class="pre">pytest</span></code>, which ships in the <code class="docutils literal notranslate"><span class="pre">test</span></code> extra. From the
+clone, with the environment created above activated:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[test]&quot;</span>
+pytest
+</pre></div>
+</div>
+</section>
+<section id="building-the-documentation">
+<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading"></a></h2>
+<p>This site is built with Sphinx from <code class="docutils literal notranslate"><span class="pre">docs/</span></code>. The <code class="docutils literal notranslate"><span class="pre">docs</span></code> extra pulls in
+Sphinx, the Read the Docs theme, and <code class="docutils literal notranslate"><span class="pre">sphinxcontrib-bibtex</span></code> for the
+bibliography:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[docs]&quot;</span>
+<span class="nb">cd</span><span class="w"> </span>docs
+make<span class="w"> </span>html
+</pre></div>
+</div>
+<p>The rendered HTML lands in <code class="docutils literal notranslate"><span class="pre">docs/_build/html</span></code>.</p>
 </section>
 </section>
 
