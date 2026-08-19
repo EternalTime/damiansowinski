@@ -64,7 +64,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/pyEDW.html">API reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License &amp; Contact</a></li>
 </ul>
 
         </div>
@@ -95,9 +95,9 @@
 <h1>Guide: metrics<a class="headerlink" href="#guide-metrics" title="Link to this heading"></a></h1>
 <p><a class="reference internal" href="api/pyEDW.html#module-pyEDW.metrics" title="pyEDW.metrics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyEDW.metrics</span></code></a> turns an endpoint ensemble into viability and the
 information measures of Section 4 of the paper<a class="footnote-reference brackets" href="#footcite-sowinski2025exo" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.
-The pipeline is: histogram the joint distribution
-<span class="math notranslate nohighlight">\(p_{AE}(f_B, f_W, T, L)\)</span> at each luminosity, tabulate the Shannon
-entropies<a class="footnote-reference brackets" href="#footcite-shannon1948" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> of every marginal, then combine them.</p>
+At each luminosity it histograms the joint distribution
+<span class="math notranslate nohighlight">\(p_{AE}(f_B, f_W, T, L)\)</span>, tabulates the Shannon
+entropies<a class="footnote-reference brackets" href="#footcite-shannon1948" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> of every marginal, and combines them.</p>
 <section id="entropy-table">
 <h2>Entropy table<a class="headerlink" href="#entropy-table" title="Link to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyEDW</span><span class="w"> </span><span class="kn">import</span> <span class="n">metrics</span>
@@ -107,12 +107,11 @@ entropies<a class="footnote-reference brackets" href="#footcite-shannon1948" id=
 </pre></div>
 </div>
 <p>Each row of <code class="docutils literal notranslate"><span class="pre">H</span></code> holds the fifteen marginal entropies of <span class="math notranslate nohighlight">\(p_{AE}\)</span> plus
-the bin count. The column layout is documented in the module and referenced by
-name (<code class="docutils literal notranslate"><span class="pre">metrics.H_A1A2E1E2</span></code> and friends) so the derived measures read like
-their equations. Binning uses the square-root rule
-<span class="math notranslate nohighlight">\(N_{bins} = 1 + \lceil\sqrt{n}\rceil\)</span> over the living instances
-(<span class="math notranslate nohighlight">\(f_B f_W &gt; 10^{-7}\)</span>); luminosities with fewer than two living instances
-are <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+the bin count, with columns named in the module (<code class="docutils literal notranslate"><span class="pre">metrics.H_A1A2E1E2</span></code> and
+friends) so the derived measures read like their equations. Binning uses the
+square-root rule <span class="math notranslate nohighlight">\(N_{bins} = 1 + \lceil\sqrt{n}\rceil\)</span> over the living
+instances (<span class="math notranslate nohighlight">\(f_B f_W &gt; 10^{-7}\)</span>); luminosities with fewer than two living
+instances are <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
 </section>
 <section id="derived-measures">
 <h2>Derived measures<a class="headerlink" href="#derived-measures" title="Link to this heading"></a></h2>
@@ -125,16 +124,16 @@ are <code class="docutils literal notranslate"><span class="pre">NaN</span></cod
 </div>
 <p>All return one value per luminosity. <a class="reference internal" href="api/pyEDW.html#pyEDW.metrics.mutual_information" title="pyEDW.metrics.mutual_information"><code class="xref py py-func docutils literal notranslate"><span class="pre">mutual_information()</span></code></a>,
 <a class="reference internal" href="api/pyEDW.html#pyEDW.metrics.cooperation" title="pyEDW.metrics.cooperation"><code class="xref py py-func docutils literal notranslate"><span class="pre">cooperation()</span></code></a>, and
-<a class="reference internal" href="api/pyEDW.html#pyEDW.metrics.intra_environment_information" title="pyEDW.metrics.intra_environment_information"><code class="xref py py-func docutils literal notranslate"><span class="pre">intra_environment_information()</span></code></a> also accept a 2-D table of
-shape <code class="docutils literal notranslate"><span class="pre">(n_bandwidth,</span> <span class="pre">n_lum,</span> <span class="pre">16)</span></code> and broadcast over the leading axis, so a
-full bandwidth <span class="math notranslate nohighlight">\(\times\)</span> luminosity sweep is a single call.</p>
+<a class="reference internal" href="api/pyEDW.html#pyEDW.metrics.intra_environment_information" title="pyEDW.metrics.intra_environment_information"><code class="xref py py-func docutils literal notranslate"><span class="pre">intra_environment_information()</span></code></a> also take a 2-D table of
+shape <code class="docutils literal notranslate"><span class="pre">(n_bandwidth,</span> <span class="pre">n_lum,</span> <span class="pre">16)</span></code> and broadcast over the leading axis, so a full
+bandwidth <span class="math notranslate nohighlight">\(\times\)</span> luminosity sweep is a single call.</p>
 </section>
 <section id="interpreting-the-signs">
 <h2>Interpreting the signs<a class="headerlink" href="#interpreting-the-signs" title="Link to this heading"></a></h2>
 <p><span class="math notranslate nohighlight">\(I(A{:}E) \ge 0\)</span> always. <span class="math notranslate nohighlight">\(\Delta I &gt; 0\)</span> means the biome tightens the
 temperature–luminosity correlation; <span class="math notranslate nohighlight">\(\Delta I &lt; 0\)</span> means it loosens it.
-Negative <span class="math notranslate nohighlight">\(C(a_1{:}a_2\|E)\)</span> indicates the environment synergistically
-enhances the correlation between the two daisy species.</p>
+Negative <span class="math notranslate nohighlight">\(C(a_1{:}a_2\|E)\)</span> means the environment synergistically enhances
+the correlation between the two daisy species.</p>
 <section id="references">
 <h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
 <div class="docutils container" id="id3">

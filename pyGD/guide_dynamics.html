@@ -94,18 +94,15 @@
 <h1>Kuramoto Dynamics<a class="headerlink" href="#kuramoto-dynamics" title="Link to this heading"></a></h1>
 <p>A Kuramoto oscillator<a class="footnote-reference brackets" href="#footcite-kuramoto1975" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> is a single phase
 <span class="math notranslate nohighlight">\(\theta_i\)</span> turning on a circle at its own natural frequency
-<span class="math notranslate nohighlight">\(\omega_i\)</span>. Couple a population of them on a
-graph and let each feel a pull toward the phases of its neighbors, and above a
-critical coupling they abandon their private frequencies and turn as one. pyGD
-gives you that population as a class you drive one step at a time.</p>
+<span class="math notranslate nohighlight">\(\omega_i\)</span>. Couple a population of them on a graph and above a critical
+coupling they abandon their private frequencies and turn as one.</p>
 <section id="driving-the-class">
 <h2>Driving the class<a class="headerlink" href="#driving-the-class" title="Link to this heading"></a></h2>
-<p><a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.Kuramoto" title="pyGD.dynamics.Kuramoto"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kuramoto</span></code></a> ports the original MATLAB class. It takes a
-coupling <code class="docutils literal notranslate"><span class="pre">sigma</span></code>, a <code class="xref py py-mod docutils literal notranslate"><span class="pre">networkx</span></code> graph, and a vector of natural
-frequencies; it pulls the adjacency out once as a sparse matrix and steps the
-phases with an explicit Euler update. <code class="docutils literal notranslate"><span class="pre">evolve</span></code> advances one step, <code class="docutils literal notranslate"><span class="pre">run</span></code>
-advances many, and <code class="docutils literal notranslate"><span class="pre">update_order_parameter</span></code> refreshes the collective
-quantities you measure:</p>
+<p><a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.Kuramoto" title="pyGD.dynamics.Kuramoto"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kuramoto</span></code></a> takes a coupling <code class="docutils literal notranslate"><span class="pre">sigma</span></code>, a <code class="xref py py-mod docutils literal notranslate"><span class="pre">networkx</span></code>
+graph, and a vector of natural frequencies; it pulls the adjacency out once as
+a sparse matrix and steps the phases with an explicit Euler update. <code class="docutils literal notranslate"><span class="pre">evolve</span></code>
+advances one step, <code class="docutils literal notranslate"><span class="pre">run</span></code> advances many, and <code class="docutils literal notranslate"><span class="pre">update_order_parameter</span></code>
+refreshes the collective quantities:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyGD</span><span class="w"> </span><span class="kn">import</span> <span class="n">Kuramoto</span>
@@ -120,6 +117,11 @@ quantities you measure:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">r_hist</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>         <span class="c1"># 0.9958</span>
 </pre></div>
 </div>
+<p>Writing <span class="math notranslate nohighlight">\(Z = r\,e^{i\phi}\)</span> for the population average of
+<span class="math notranslate nohighlight">\(e^{i\theta}\)</span>, the magnitude <span class="math notranslate nohighlight">\(r\)</span> measures how tightly the phases
+bunch and <span class="math notranslate nohighlight">\(\phi\)</span> the mean phase they bunch around. Both live on the
+object as <code class="docutils literal notranslate"><span class="pre">env.r</span></code>, <code class="docutils literal notranslate"><span class="pre">env.phi</span></code>, and <code class="docutils literal notranslate"><span class="pre">env.Z</span></code> once <code class="docutils literal notranslate"><span class="pre">update_order_parameter</span></code>
+has run.</p>
 </section>
 <section id="how-far-you-can-push-the-coupling">
 <h2>How far you can push the coupling<a class="headerlink" href="#how-far-you-can-push-the-coupling" title="Link to this heading"></a></h2>
@@ -130,21 +132,21 @@ so the step is stable only while</p>
 <div class="math notranslate nohighlight">
 \[dt\,\sigma\,\lambda_{\max}(L) \lesssim 2,\]</div>
 <p>where <span class="math notranslate nohighlight">\(\lambda_{\max}(L)\)</span> is the largest Laplacian eigenvalue. Past that
-the stiffest modes overshoot every step and <code class="docutils literal notranslate"><span class="pre">r</span></code> starts to <em>fall</em> as you raise
-the coupling, a numerical artifact that looks exactly like physics.</p>
+the stiffest modes overshoot every step and <code class="docutils literal notranslate"><span class="pre">r</span></code> <em>falls</em> as you raise the
+coupling, an artifact that looks exactly like physics.</p>
 <p>The maximum degree is only a proxy for that eigenvalue:
 <span class="math notranslate nohighlight">\(k_{\max} + 1 \le \lambda_{\max}(L) \le 2 k_{\max}\)</span>. On an Erdős–Rényi
 graph <span class="math notranslate nohighlight">\(\lambda_{\max}\)</span> sits near the lower end, but on a near-regular or
-bipartite graph it approaches <span class="math notranslate nohighlight">\(2 k_{\max}\)</span>, where a rule written in terms
-of <span class="math notranslate nohighlight">\(k_{\max}\)</span> alone is optimistic by up to a factor of two. Compute the
+bipartite graph it approaches <span class="math notranslate nohighlight">\(2 k_{\max}\)</span>, where a rule written in
+<span class="math notranslate nohighlight">\(k_{\max}\)</span> alone is optimistic by up to a factor of two. Compute the
 eigenvalue when the margin matters:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lam_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">laplacian_matrix</span><span class="p">(</span><span class="n">G</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>The numbers below come from <code class="docutils literal notranslate"><span class="pre">nx.erdos_renyi_graph(500,</span> <span class="pre">0.02,</span> <span class="pre">seed=0)</span></code> with
 <code class="docutils literal notranslate"><span class="pre">omegas</span> <span class="pre">=</span> <span class="pre">np.random.default_rng(0).standard_normal(500)</span></code> and the environment
-seeded <code class="docutils literal notranslate"><span class="pre">np.random.default_rng(0)</span></code>, a different and sparser graph from this
-page’s running example above. It has <span class="math notranslate nohighlight">\(k_{\max} = 19\)</span> but
+seeded <code class="docutils literal notranslate"><span class="pre">np.random.default_rng(0)</span></code>, a sparser graph than this page’s running
+example. It has <span class="math notranslate nohighlight">\(k_{\max} = 19\)</span> but
 <span class="math notranslate nohighlight">\(\lambda_{\max}(L) = 21.89\)</span>, so the bound is crossed at
 <span class="math notranslate nohighlight">\(\sigma = 1.46\)</span> rather than the <span class="math notranslate nohighlight">\(\sigma = 1.68\)</span> you get by putting
 <span class="math notranslate nohighlight">\(k_{\max}\)</span> itself in place of the eigenvalue. Each row is 600 steps at
@@ -178,26 +180,21 @@ steps and the last 800 fine ones:</p>
 </tbody>
 </table>
 <p>The bound is a warning threshold, not a cliff. <code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">1.5</span></code> already sits
-just past it at 2.05 and the error is still only 0.0006; the error becomes
-visible just after the crossing and then grows fast, reaching 0.056 by
-<code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">2.0</span></code>.</p>
-<p>That last row is the trap: <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">0.94</span></code> looks like a plausible partially-locked
+just past it at 2.05 and the error is still only 0.0006; it becomes visible
+just after the crossing and then grows fast, reaching 0.056 by <code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">2.0</span></code>.
+That last row is the trap: <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">0.94</span></code> looks like a plausible partially-locked
 state, but the true answer is 0.997 and the missing 0.06 is integration error.
-If you need a larger <code class="docutils literal notranslate"><span class="pre">sigma</span></code>, shrink <code class="docutils literal notranslate"><span class="pre">dt</span></code> to match — and remember that
-<code class="docutils literal notranslate"><span class="pre">Yokai</span></code>’s <code class="docutils literal notranslate"><span class="pre">speed</span></code> is defined per environment step, so halving <code class="docutils literal notranslate"><span class="pre">dt</span></code> also
-doubles how fast the agent hops in physical time.</p>
-<p>The order parameter carries the story. Writing <span class="math notranslate nohighlight">\(Z = r\,e^{i\phi}\)</span> for the
-population average of <span class="math notranslate nohighlight">\(e^{i\theta}\)</span>, the magnitude <span class="math notranslate nohighlight">\(r\)</span> measures how
-tightly the phases bunch and <span class="math notranslate nohighlight">\(\phi\)</span> gives the mean phase they bunch
-around. Both live on the object as <code class="docutils literal notranslate"><span class="pre">env.r</span></code>, <code class="docutils literal notranslate"><span class="pre">env.phi</span></code>, and <code class="docutils literal notranslate"><span class="pre">env.Z</span></code> once
-<code class="docutils literal notranslate"><span class="pre">update_order_parameter</span></code> has run.</p>
+If you need a larger <code class="docutils literal notranslate"><span class="pre">sigma</span></code>, shrink <code class="docutils literal notranslate"><span class="pre">dt</span></code> to match, and remember that
+<code class="docutils literal notranslate"><span class="pre">Yokai</span></code>’s <code class="docutils literal notranslate"><span class="pre">speed</span></code> is per environment step, so halving <code class="docutils literal notranslate"><span class="pre">dt</span></code> also doubles
+how fast the agent hops in physical time.</p>
 </section>
 <section id="the-synchronization-transition">
 <h2>The synchronization transition<a class="headerlink" href="#the-synchronization-transition" title="Link to this heading"></a></h2>
-<p>The single number worth plotting first is <span class="math notranslate nohighlight">\(r\)</span> as a function of coupling.
-Below a critical <span class="math notranslate nohighlight">\(\sigma_c\)</span> the oscillators ignore each other and
-<span class="math notranslate nohighlight">\(r\)</span> sits near zero; above it, an extensive fraction locks and <span class="math notranslate nohighlight">\(r\)</span>
-climbs toward one<a class="footnote-reference brackets" href="#footcite-strogatz2000" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#footcite-acebron2005" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. Sweep the coupling and watch the knee appear:</p>
+<p>The single number worth plotting first is <span class="math notranslate nohighlight">\(r\)</span> against coupling. Below a
+critical <span class="math notranslate nohighlight">\(\sigma_c\)</span> the oscillators ignore each other and <span class="math notranslate nohighlight">\(r\)</span> sits
+near zero; above it, an extensive fraction locks and <span class="math notranslate nohighlight">\(r\)</span> climbs toward
+one<a class="footnote-reference brackets" href="#footcite-strogatz2000" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#footcite-acebron2005" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. Sweep the coupling and watch the
+knee appear:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyGD</span><span class="w"> </span><span class="kn">import</span> <span class="n">Kuramoto</span>
@@ -216,16 +213,16 @@ climbs toward one<a class="footnote-reference brackets" href="#footcite-strogatz
 </div>
 <p>Plot <code class="docutils literal notranslate"><span class="pre">curve</span></code> against <code class="docutils literal notranslate"><span class="pre">sigmas</span></code> and you have the shape every figure in the
 paper<a class="footnote-reference brackets" href="#footcite-sowinski2024information" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> is built on. Convince yourself the
-knee moves when you change the graph’s density — a sparser graph needs stronger
-coupling to lock<a class="footnote-reference brackets" href="#footcite-rodrigues2016" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
+knee moves with the graph’s density: a sparser graph needs stronger coupling to
+lock<a class="footnote-reference brackets" href="#footcite-rodrigues2016" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
 </section>
 <section id="the-coarse-grained-limit">
 <h2>The coarse-grained limit<a class="headerlink" href="#the-coarse-grained-limit" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.KuramotoCG" title="pyGD.dynamics.KuramotoCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">KuramotoCG</span></code></a> is the same environment with the agent
-folded in. Rather than simulate a demon hopping and kicking, it adds two terms
-the demon leaves behind in the continuum limit — a degree-weighted shift of the
-natural frequencies and a Wiener fluctuation whose amplitude grows with node
-degree, so that hubs sit in hotter baths than leaves. The two agent parameters
+folded in. Rather than simulate a demon hopping and kicking, it adds the two
+terms the demon leaves behind in the continuum limit - a degree-weighted shift
+of the natural frequencies and a Wiener fluctuation whose amplitude grows with
+degree - so hubs sit in hotter baths than leaves. The agent’s two parameters
 survive only through their product <code class="docutils literal notranslate"><span class="pre">ab</span></code> <span class="math notranslate nohighlight">\(= \alpha\beta\)</span>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyGD</span><span class="w"> </span><span class="kn">import</span> <span class="n">KuramotoCG</span>
 
@@ -236,10 +233,10 @@ survive only through their product <code class="docutils literal notranslate"><s
 <span class="nb">print</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>The two dynamics are kept as independent classes, exactly as the MATLAB has
-them; the derivation that turns one into the other is sketched in
-<a class="reference internal" href="theory.html"><span class="doc">The Model</span></a> and given in full in the paper. To watch the demon itself rather
-than its shadow, go to <a class="reference internal" href="guide_yokai.html"><span class="doc">The Yokai</span></a>.</p>
+<p>The two dynamics stay independent classes, exactly as the MATLAB has them; the
+derivation that turns one into the other is sketched in <a class="reference internal" href="theory.html"><span class="doc">The Model</span></a> and given
+in full in the paper. To watch the demon rather than its shadow, go to
+<a class="reference internal" href="guide_yokai.html"><span class="doc">The Yokai</span></a>.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>

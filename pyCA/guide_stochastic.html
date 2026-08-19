@@ -63,8 +63,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/pyCA.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License &amp; Contact</a></li>
 </ul>
 
         </div>
@@ -93,22 +92,20 @@
              
   <section id="thermal-and-stochastic-automata">
 <h1>Thermal and Stochastic Automata<a class="headerlink" href="#thermal-and-stochastic-automata" title="Link to this heading"></a></h1>
-<p>A deterministic rule is an idealization — real systems shake. The three
-classes in this guide corrupt the elementary automata in three physically
-distinct ways, and each reduces exactly to the clean
-<a class="reference internal" href="api/pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a> in the appropriate limit. The tests in the repository
-hold them to that promise.</p>
+<p>A deterministic rule is an idealization; real systems shake. The three
+classes here corrupt the elementary automata in physically distinct ways,
+and each reduces exactly to the clean <a class="reference internal" href="api/pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a> in the
+appropriate limit. The tests hold them to it.</p>
 <section id="the-ising-cellular-automaton">
 <h2>The Ising cellular automaton<a class="headerlink" href="#the-ising-cellular-automaton" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="api/pyCA.ica.html#pyCA.ica.ICA" title="pyCA.ica.ICA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.ica.ICA</span></code></a> makes the lattice a hybrid: each step, every cell
 independently chooses (with probability <cite>stochfrac</cite>) whether to behave as an
 Ising spin in contact with a heat bath or as an obedient cell of the
-underlying rule. The thermal cells look at their local Ising energy —
-aligned neighbors mean low energy, frustrated neighbors mean high — and flip
-with the heat-bath<a class="footnote-reference brackets" href="#footcite-glauber1963" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> probability
-<span class="math notranslate nohighlight">\(1/(1 + e^{-2E_i/T})\)</span>. Frustrated
-cells flip eagerly; aligned cells hold fast, absolutely so as
-<span class="math notranslate nohighlight">\(T \to 0\)</span>.</p>
+underlying rule. A thermal cell reads its local Ising energy - aligned
+neighbors mean low energy, frustrated neighbors mean high - and flips with
+the heat-bath<a class="footnote-reference brackets" href="#footcite-glauber1963" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> probability
+<span class="math notranslate nohighlight">\(1/(1 + e^{-2E_i/T})\)</span>. Frustration makes it flip eagerly; alignment
+makes it hold fast, absolutely so as <span class="math notranslate nohighlight">\(T \to 0\)</span>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ICA</span>
 
 <span class="n">ica</span> <span class="o">=</span> <span class="n">ICA</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">stochfrac</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
@@ -118,17 +115,17 @@ cells flip eagerly; aligned cells hold fast, absolutely so as
 </div>
 <p>Sweep the temperature at fixed <cite>stochfrac</cite> and watch the energy respond;
 then sweep <cite>stochfrac</cite> at fixed temperature and watch rule 110’s gliders
-fight the noise. At what noise level do the gliders stop surviving long
-enough to collide? That question is not rhetorical — map it out.</p>
+fight the noise. At what noise level do they stop surviving long enough to
+collide? Map it out.</p>
 </section>
 <section id="noisy-rules">
 <h2>Noisy rules<a class="headerlink" href="#noisy-rules" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="api/pyCA.stochastic.html#pyCA.stochastic.NoisyECA" title="pyCA.stochastic.NoisyECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.stochastic.NoisyECA</span></code></a> applies the rule everywhere, then flips
-each output bit independently with probability <cite>noise</cite> — the
+each output bit independently with probability <cite>noise</cite>: the
 epsilon-perturbed automata. Small noise turns sharp class boundaries into
-genuine phase transitions<a class="footnote-reference brackets" href="#footcite-grinstein1985" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>:
-a Class II texture can survive small epsilon and
-dissolve at large, with a critical point in between.</p>
+genuine phase transitions<a class="footnote-reference brackets" href="#footcite-grinstein1985" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>; a Class II texture can
+survive small epsilon and dissolve at large, with a critical point in
+between.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoisyECA</span>
 
 <span class="n">noisy</span> <span class="o">=</span> <span class="n">NoisyECA</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.005</span><span class="p">)</span>
@@ -141,20 +138,19 @@ is a fair coin.</p>
 </section>
 <section id="asynchronous-updating">
 <h2>Asynchronous updating<a class="headerlink" href="#asynchronous-updating" title="Link to this heading"></a></h2>
-<p><a class="reference internal" href="api/pyCA.stochastic.html#pyCA.stochastic.AsyncECA" title="pyCA.stochastic.AsyncECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.stochastic.AsyncECA</span></code></a> never corrupts the rule — it corrupts the
-clock. Each step, each cell updates with probability <cite>update_fraction</cite> and
+<p><a class="reference internal" href="api/pyCA.stochastic.html#pyCA.stochastic.AsyncECA" title="pyCA.stochastic.AsyncECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.stochastic.AsyncECA</span></code></a> never corrupts the rule, only the clock.
+Each step, each cell updates with probability <cite>update_fraction</cite> and
 otherwise holds its value. Synchrony is a strong
-assumption<a class="footnote-reference brackets" href="#footcite-schonfisch1999" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, and some
-celebrated CA behaviors lean on it harder than you might expect:</p>
+assumption<a class="footnote-reference brackets" href="#footcite-schonfisch1999" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, and some celebrated CA behaviors
+lean on it harder than you might expect:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncECA</span>
 
 <span class="n">lazy</span> <span class="o">=</span> <span class="n">AsyncECA</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">update_fraction</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">lazy</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Run rule 110 at a few update fractions and watch what survives. The gliders
-that carry rule 110’s computation are creatures of the synchronous clock;
-how gracefully they degrade is best seen with your own eyes.</p>
+<p>Run rule 110 at a few update fractions and watch what survives; the gliders
+that carry rule 110’s computation are creatures of the synchronous clock.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>

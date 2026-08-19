@@ -60,7 +60,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">The model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="guide_core.html">The core and its seams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_core.html">Architecture</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/pyLEAFS.html">API Reference</a></li>
@@ -104,9 +104,9 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </pre></div>
 </div>
 <p>pyLEAFS requires Python 3.8+ (tested on 3.8 through 3.14); numpy and matplotlib
-are installed automatically. The virtual environment is what makes <code class="docutils literal notranslate"><span class="pre">pip</span></code>
-available and keeps the install out of a system Python that may refuse it;
-activate it in every new terminal before running any of the commands below.</p>
+are installed automatically. Activate the virtual environment in every new
+terminal: it makes <code class="docutils literal notranslate"><span class="pre">pip</span></code> available and keeps the install out of a system
+Python that may refuse it.</p>
 </section>
 <section id="building-these-docs">
 <h2>Building these docs<a class="headerlink" href="#building-these-docs" title="Link to this heading"></a></h2>
@@ -119,9 +119,8 @@ make<span class="w"> </span>-C<span class="w"> </span>docs<span class="w"> </spa
 </section>
 <section id="a-first-simulation">
 <h2>A first simulation<a class="headerlink" href="#a-first-simulation" title="Link to this heading"></a></h2>
-<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code> factory builds the v1 world — one
-resource field, one greedy-forager population — with the parameters of the
-<code class="docutils literal notranslate"><span class="pre">forager</span></code> applet:</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code> builds the v1 world - one resource field,
+one greedy-forager population - with the parameters of the <code class="docutils literal notranslate"><span class="pre">forager</span></code> applet:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyLEAFS</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simulation</span>
 
 <span class="n">sim</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -135,7 +134,7 @@ resource field, one greedy-forager population — with the parameters of the
 </section>
 <section id="watching-it-live">
 <h2>Watching it live<a class="headerlink" href="#watching-it-live" title="Link to this heading"></a></h2>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">Viewer</span></code> opens an interactive matplotlib window:</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Viewer</span></code> opens an interactive matplotlib window:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyLEAFS</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simulation</span><span class="p">,</span> <span class="n">Viewer</span>
 
 <span class="n">Viewer</span><span class="p">(</span><span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
@@ -162,9 +161,9 @@ there. The viewer targets two-dimensional worlds.</p>
 </section>
 <section id="the-homogeneity-knob">
 <h2>The homogeneity knob<a class="headerlink" href="#the-homogeneity-knob" title="Link to this heading"></a></h2>
-<p>The environment is controlled by a single dimensionless parameter, the
-homogeneity <span class="math notranslate nohighlight">\(\Xi\)</span>. It sets how patchy or uniform the resource field is by
-fixing the energy per resource:</p>
+<p>A single dimensionless parameter controls the environment. The homogeneity
+<span class="math notranslate nohighlight">\(\Xi\)</span> fixes the energy per resource, and with it how patchy or uniform
+the field is:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sparse</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Xi</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>   <span class="c1"># patchy: few, rich resources</span>
 <span class="n">dense</span>  <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Xi</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>   <span class="c1"># uniform: many, lean resources</span>
 
@@ -173,11 +172,11 @@ fixing the energy per resource:</p>
 </pre></div>
 </div>
 <p>Larger <span class="math notranslate nohighlight">\(\Xi\)</span> means a more homogeneous world with more, lower-energy
-resources. See <a class="reference internal" href="theory.html"><span class="doc">The model</span></a> for the definition and its role in the model.</p>
+resources. See <a class="reference internal" href="theory.html"><span class="doc">The model</span></a> for the definition and its role.</p>
 </section>
 <section id="two-or-three-dimensions">
 <h2>Two or three dimensions<a class="headerlink" href="#two-or-three-dimensions" title="Link to this heading"></a></h2>
-<p>The core is dimension-agnostic. The length of the grid <code class="docutils literal notranslate"><span class="pre">shape</span></code> selects the
+<p>The core is dimension-agnostic, and the length of the grid <code class="docutils literal notranslate"><span class="pre">shape</span></code> selects the
 dimension:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">flat</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>      <span class="c1"># 2d</span>
 <span class="n">solid</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1"># 3d</span>
@@ -185,13 +184,13 @@ dimension:</p>
 <span class="n">solid</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">Viewer</span></code> renders 2d worlds; 3d runs are headless for now.</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Viewer</span></code> renders 2d worlds; 3d runs are headless for now.</p>
 </section>
 <section id="reproducibility">
 <h2>Reproducibility<a class="headerlink" href="#reproducibility" title="Link to this heading"></a></h2>
-<p>Every stochastic part of the simulation draws from a single
-<code class="docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code> threaded through from the seed. Two runs built with
-the same <code class="docutils literal notranslate"><span class="pre">seed</span></code> produce identical histories:</p>
+<p>One <code class="docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code>, threaded through from the seed, feeds every
+stochastic part of the simulation, so two runs with the same <code class="docutils literal notranslate"><span class="pre">seed</span></code> produce
+identical histories:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">7</span><span class="p">);</span> <span class="n">a</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">stop_on_extinction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">7</span><span class="p">);</span> <span class="n">b</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">stop_on_extinction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">a</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span>

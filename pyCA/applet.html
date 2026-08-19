@@ -60,8 +60,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/pyCA.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License &amp; Contact</a></li>
 </ul>
 
         </div>
@@ -93,40 +92,40 @@
 <link rel="stylesheet" href="_static/ca_applet.css">
 <div id="ca-app"></div>
 <script src="_static/ca_applet.js"></script><p>The library, running live in your browser. The update rules are the same
-ones pyCA applies in Python — the lookup-table step of <code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.ECA</span></code>,
-the flipped outputs of <code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.NoisyECA</span></code>, the broken clock of
-<code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.AsyncECA</span></code>, the heat-bath flips of <code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.ICA</span></code>, and the
-outer-totalistic B/S counts of <code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.CA2D</span></code> — ported line for line
-from the modules they document. Nothing is precomputed: the spacetime
-diagram scrolling past is the history of an automaton being run as you
-watch.</p>
+ones pyCA applies in Python - the lookup-table step of
+<a class="reference internal" href="api/pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>, the flipped outputs of
+<a class="reference internal" href="api/pyCA.stochastic.html#pyCA.stochastic.NoisyECA" title="pyCA.stochastic.NoisyECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.stochastic.NoisyECA</span></code></a>, the broken clock of
+<a class="reference internal" href="api/pyCA.stochastic.html#pyCA.stochastic.AsyncECA" title="pyCA.stochastic.AsyncECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.stochastic.AsyncECA</span></code></a>, the heat-bath flips of
+<a class="reference internal" href="api/pyCA.ica.html#pyCA.ica.ICA" title="pyCA.ica.ICA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.ica.ICA</span></code></a>, and the outer-totalistic B/S counts of
+<a class="reference internal" href="api/pyCA.ca2d.html#pyCA.ca2d.CA2D" title="pyCA.ca2d.CA2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.ca2d.CA2D</span></code></a> - ported line for line from the modules they
+document. Nothing is precomputed: the spacetime diagram scrolling past is
+the history of an automaton being run as you watch.</p>
 <p>The applet is yours to take apart. It ships with the library as
 <a class="reference external" href="https://github.com/EternalTime/CellularAutomata/blob/main/docs/_static/ca_applet.js">docs/_static/ca_applet.js</a>:
 plain JavaScript with no build step and no dependencies, of which the first
-half is the library itself — the rules and the measures, function for
-function — and the rest is scenery.</p>
+half is the library itself - the rules and the measures, function for
+function - and the rest is scenery.</p>
 <p>The square panel plots the normalized Lempel–Ziv
 complexity<a class="footnote-reference brackets" href="#footcite-lempel1976" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> of
 <a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.lz_complexity" title="pyCA.measures.lz_complexity"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCA.measures.lz_complexity()</span></code></a> against
 <a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.entropy_rate" title="pyCA.measures.entropy_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCA.measures.entropy_rate()</span></code></a> with <span class="math notranslate nohighlight">\(k = 2\)</span>, computed on the
-current state at every step, on equal axes. Both axes
-estimate the entropy rate — <span class="math notranslate nohighlight">\(h_2\)</span> sees only pair correlations,
-<span class="math notranslate nohighlight">\(C_{LZ}\)</span> regularity at every length — so the diagonal is the
-reference, and the plot locates a rule on Wolfram’s spectrum at a glance.
-A frozen rule pins both measures to zero. A chaotic rule like 30 rides
-the top right corner — each new cell is a fresh coin flip even knowing
-its neighbor. A structured rule is the interesting case: rule 110 sags
-below the diagonal, the gap being exactly the structure longer than two
-cells that only the parse can see — the particles and the periodic
-background they travel through.</p>
+current state at every step, on equal axes. Both axes estimate the entropy
+rate - <span class="math notranslate nohighlight">\(h_2\)</span> sees only pair correlations, <span class="math notranslate nohighlight">\(C_{LZ}\)</span> regularity at
+every length - so the diagonal is the reference, and the plot locates a rule
+on Wolfram’s spectrum at a glance. A frozen rule pins both measures to zero.
+A chaotic rule like 30 rides the top right corner, since each new cell is a
+fresh coin flip even knowing its neighbor. A structured rule is the
+interesting case: rule 110 sags below the diagonal, the gap being exactly
+the structure longer than two cells that only the parse can see, the
+particles and the periodic background they travel through.</p>
 <p>The stochastic variants put a dial on that distinction. Feed rule 110 a
 little noise and watch <span class="math notranslate nohighlight">\(h_2\)</span> climb toward the coin-flip ceiling as
 the correlations are eaten; slow the asynchronous clock and watch structure
 survive surprisingly far. The Ising automaton stages the competition
-directly — at low temperature the heat bath <em>orders</em> the lattice and both
+directly: at low temperature the heat bath <em>orders</em> the lattice and both
 meters fall; at high temperature it randomizes, and the rule fights to keep
 <span class="math notranslate nohighlight">\(h_2\)</span> down. For the two-dimensional family, type neighbor counts into
-the B and S boxes — Life is B3/S23, and the meters read its thin ash of
+the B and S boxes. Life is B3/S23, and the meters read its thin ash of
 still lifes and gliders as low entropy over a mostly empty lattice.</p>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
