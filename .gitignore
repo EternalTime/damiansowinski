@@ -7,6 +7,10 @@ My Website
 .claude
 LocalOnly
 /CLAUDE.md
+/AGENTS.md
+/SUMMARY.md
+/TASKS.md
+/INSTRUCTIONS.md
 
 # Cloud-sync (iCloud/Dropbox) conflict copies, e.g. "index 2.html", "_static 3/"
 * [0-9]
