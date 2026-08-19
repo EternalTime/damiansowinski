@@ -65,8 +65,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/pyCA.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License &amp; Contact</a></li>
 </ul>
 
         </div>
@@ -96,22 +95,20 @@
   <section id="information-measures">
 <h1>Information Measures<a class="headerlink" href="#information-measures" title="Link to this heading"></a></h1>
 <p>Describe a spacetime diagram cell by cell and you have described it
-completely — and learned almost nothing. The complete description is mostly
-data with very little information. The measures in
-<a class="reference internal" href="api/pyCA.measures.html#module-pyCA.measures" title="pyCA.measures"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCA.measures</span></code></a> compress the data into the few numbers that matter:
-how unpredictable is a cell, how far do correlations reach, how many new
-bits does each cell carry once its neighbors are known. All entropies are
-in bits, and every function accepts either a single state or a full
-spacetime history (time along axis 0).</p>
+completely. Though complete, that description is mostly data with very
+little information. The measures in <a class="reference internal" href="api/pyCA.measures.html#module-pyCA.measures" title="pyCA.measures"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCA.measures</span></code></a> compress the data
+into the few numbers that matter: how unpredictable is a cell, how far do
+correlations reach, how many new bits does each cell carry once its
+neighbors are known. All entropies are in bits, and every function accepts
+either a single state or a full spacetime history (time along axis 0).</p>
 <section id="block-entropy">
 <h2>Block entropy<a class="headerlink" href="#block-entropy" title="Link to this heading"></a></h2>
 <p>Slide a window of length <span class="math notranslate nohighlight">\(k\)</span> along each row, histogram the
 <span class="math notranslate nohighlight">\(2^k\)</span> possible words, and take the Shannon
-entropy<a class="footnote-reference brackets" href="#footcite-shannon1948" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> of the result —
-that is <span class="math notranslate nohighlight">\(H_k\)</span>, the block entropy. For a frozen lattice it vanishes;
-for fair coin flips it equals <span class="math notranslate nohighlight">\(k\)</span>; everything interesting lies
-between, and the <em>gap</em> below <span class="math notranslate nohighlight">\(k\)</span> measures the structure the automaton
-has built.</p>
+entropy<a class="footnote-reference brackets" href="#footcite-shannon1948" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> of the result: that is <span class="math notranslate nohighlight">\(H_k\)</span>, the
+block entropy. For a frozen lattice it vanishes; for fair coin flips it
+equals <span class="math notranslate nohighlight">\(k\)</span>; everything interesting lies between, and the <em>gap</em> below
+<span class="math notranslate nohighlight">\(k\)</span> measures the structure the automaton has built.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span><span class="p">,</span> <span class="n">measures</span>
 
 <span class="n">ca</span> <span class="o">=</span> <span class="n">ECA</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">512</span><span class="p">)</span>
@@ -122,27 +119,27 @@ has built.</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">measures</span><span class="o">.</span><span class="n">block_entropy</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><span class="math notranslate nohighlight">\(H_k\)</span> never decreases with <span class="math notranslate nohighlight">\(k\)</span> — prove this to yourself from
-the definition before trusting the code, which is tested for it.</p>
+<p><span class="math notranslate nohighlight">\(H_k\)</span> never decreases with <span class="math notranslate nohighlight">\(k\)</span>; prove this to yourself from the
+definition before trusting the code, which is tested for it.</p>
 </section>
 <section id="entropy-rate">
 <h2>Entropy rate<a class="headerlink" href="#entropy-rate" title="Link to this heading"></a></h2>
 <p>The increments <span class="math notranslate nohighlight">\(h_k = H_k - H_{k-1}\)</span> converge from above to the
 entropy rate: the number of genuinely new bits per cell once a cell’s
-context is known. The entropy rate is the honest measure of randomness —
-rule 90’s spacetime diagram looks busy, but knowing two cells pins the
-third, and the rate reveals the redundancy.</p>
+context is known. It is the honest measure of randomness: rule 90’s diagram
+looks busy, but knowing two cells pins the third, and the rate exposes the
+redundancy.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">measures</span><span class="o">.</span><span class="n">entropy_rate</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>One practical warning: estimating <span class="math notranslate nohighlight">\(H_k\)</span> needs enough samples to
-populate <span class="math notranslate nohighlight">\(2^k\)</span> bins. Keep <span class="math notranslate nohighlight">\(2^k\)</span> comfortably below the number of
-cells in your history or the estimate biases low.</p>
+<p>Estimating <span class="math notranslate nohighlight">\(H_k\)</span> needs enough samples to populate <span class="math notranslate nohighlight">\(2^k\)</span> bins;
+keep <span class="math notranslate nohighlight">\(2^k\)</span> comfortably below the number of cells in your history or
+the estimate biases low.</p>
 </section>
 <section id="mutual-information">
 <h2>Mutual information<a class="headerlink" href="#mutual-information" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.mutual_information" title="pyCA.measures.mutual_information"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCA.measures.mutual_information()</span></code></a> asks how much knowing one cell
-tells you about a cell <cite>distance</cite> sites away — <span class="math notranslate nohighlight">\(I(X;Y) = H(X) + H(Y)
+tells you about a cell <cite>distance</cite> sites away, <span class="math notranslate nohighlight">\(I(X;Y) = H(X) + H(Y)
 - H(X,Y)\)</span>, pooled over every pair at that separation. Zero means
 independence; the maximum, <span class="math notranslate nohighlight">\(H(X)\)</span>, means determination. Plotted
 against distance it is a correlation function with information-theoretic
@@ -162,13 +159,13 @@ units:</p>
 <p>The block measures see nothing longer than <span class="math notranslate nohighlight">\(k\)</span> cells.
 <a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.lz_complexity" title="pyCA.measures.lz_complexity"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCA.measures.lz_complexity()</span></code></a> has no such horizon: it parses each row
 into the phrases of Lempel and Ziv’s 1976 exhaustive
-history<a class="footnote-reference brackets" href="#footcite-lempel1976" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> — each phrase
-the shortest word that cannot be produced by copying from what came before
-— and counts them with the scanning algorithm of Kaspar and
-Schuster<a class="footnote-reference brackets" href="#footcite-kaspar1987" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. A row with structure at <em>any</em> length reuses its past and
-parses into few phrases; only genuine novelty forces new ones. The count is
-normalized by <span class="math notranslate nohighlight">\(n/\log_2 n\)</span>, its asymptotic value for fair coin flips,
-so a random row reads near 1 and a frozen one near 0:</p>
+history<a class="footnote-reference brackets" href="#footcite-lempel1976" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> - each phrase the shortest word that cannot
+be produced by copying from what came before - and counts them with the
+scanning algorithm of Kaspar and Schuster<a class="footnote-reference brackets" href="#footcite-kaspar1987" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. A row
+with structure at <em>any</em> length reuses its past and parses into few phrases;
+only genuine novelty forces new ones. The count is normalized by
+<span class="math notranslate nohighlight">\(n/\log_2 n\)</span>, its asymptotic value for fair coin flips, so a random
+row reads near 1 and a frozen one near 0:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span><span class="p">,</span> <span class="n">measures</span>
 
@@ -179,17 +176,17 @@ so a random row reads near 1 and a frozen one near 0:</p>
 </pre></div>
 </div>
 <p>Two cautions. The parse is sequential, not circular, so rows are read left
-to right. And the normalized count converges to the entropy rate from
-above slowly — at <span class="math notranslate nohighlight">\(n \sim 1000\)</span> a fair coin still reads about 1.05 —
-so compare rows of equal length rather than values across lengths.</p>
+to right. And the normalized count converges to the entropy rate from above
+slowly - at <span class="math notranslate nohighlight">\(n \sim 1000\)</span> a fair coin still reads about 1.05 - so
+compare rows of equal length rather than values across lengths.</p>
 </section>
 <section id="a-classification-experiment">
 <h2>A classification experiment<a class="headerlink" href="#a-classification-experiment" title="Link to this heading"></a></h2>
 <p>Wolfram’s four classes were assigned by eye. Assign them by number instead:
 for each rule in a sample, run a random initial condition, discard the
 transient, and place the rule on the (entropy rate, mutual information)
-plane. Class I collapses to the origin, Class III crowds the high-rate
-edge, and Class IV — the computing class — lives where the entropy rate is
+plane. Class I collapses to the origin, Class III crowds the high-rate edge,
+and Class IV - the computing class - lives where the entropy rate is
 moderate but the mutual information refuses to die. There is a lot of
 unexplored territory in that plane; keep a journal of what you find in it.</p>
 </section>

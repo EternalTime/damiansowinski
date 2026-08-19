@@ -61,7 +61,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/pycoop.html">pycoop package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License &amp; Contact</a></li>
 </ul>
 
         </div>
@@ -90,49 +90,48 @@
              
   <section id="the-dynamics">
 <h1>The Dynamics<a class="headerlink" href="#the-dynamics" title="Link to this heading"></a></h1>
-<p>A cooperation game is a piecewise-deterministic random process —
-ballistic drift punctuated by randomly clocked decisions. Nothing
-decision-relevant happens between events: positions are a deterministic
-function of the elapsed time and the headings, and only the flip rule
-reads the state, and only at decision instants. So the model collapses
-losslessly to an embedded chain in which one uniformly random player
-acts at each exponentially spaced event, and pyCoop implements that
-chain directly — no event queue, no lost information. The model is the
+<p>A cooperation game is a piecewise-deterministic random process: ballistic
+drift punctuated by randomly clocked decisions. Positions between events
+are a deterministic function of the elapsed time and the headings, and the
+flip rule reads the state only at decision instants, so the model
+collapses losslessly to an embedded chain in which one uniformly random
+player acts at each exponentially spaced event. pyCoop implements that
+chain directly, with no event queue and nothing lost. The model is the
 Agreement-Position Emigration model of Conrad and Tabor (2024); the
-notation here follows the socio-physics recasting of it.</p>
+notation follows the socio-physics recasting of it, and the papers carry
+the analysis.</p>
 <section id="the-update-sequence">
 <h2>The update sequence<a class="headerlink" href="#the-update-sequence" title="Link to this heading"></a></h2>
 <p>Let there be <span class="math notranslate nohighlight">\(N\)</span> agents on a connected graph with adjacency matrix
-<span class="math notranslate nohighlight">\(A_{ij}\)</span>, without self-loops. Each agent carries two degrees of
-freedom — a continuous <em>action</em> <span class="math notranslate nohighlight">\(\sigma_i \in [-1, 1]\)</span> and a binary
-<em>opinion</em> <span class="math notranslate nohighlight">\(q_i \in \{-1, +1\}\)</span>. The picture to hold in your head is
-a person who both believes something and is currently doing something
-about it, and the two need not agree.</p>
+<span class="math notranslate nohighlight">\(A_{ij}\)</span>, without self-loops. Each carries two degrees of freedom, a
+continuous <em>action</em> <span class="math notranslate nohighlight">\(\sigma_i \in [-1, 1]\)</span> and a binary <em>opinion</em>
+<span class="math notranslate nohighlight">\(q_i \in \{-1, +1\}\)</span>: a person who believes something and is doing
+something about it, with no guarantee that the two agree.</p>
 <p>On each step draw two random variables,</p>
 <div class="math notranslate nohighlight">
 \[\tau \sim \mathrm{Exp}\!\left[\tfrac{N}{T}\right],
 \qquad
 j \sim \mathcal{U}_N,\]</div>
-<p>the first setting how long we wait, the second picking who gets to act.
-Every action drifts toward its opinion and is clipped at the walls,</p>
+<p>the first setting how long we wait, the second who gets to act. Every
+action drifts toward its opinion and is clipped at the walls,</p>
 <div class="math notranslate nohighlight">
 \[\sigma_i \mapsto \min(\max(\sigma_i + q_i\,\tau,\, -1),\, 1),\]</div>
 <p>and then player <span class="math notranslate nohighlight">\(j\)</span> alone compares their action to their
 neighborhood’s. The <em>local mean action</em></p>
 <div class="math notranslate nohighlight">
 \[\bar\sigma_j = \frac{1}{d_j + 1}\Big(\sigma_j + \sum_k A_{jk}\,\sigma_k\Big)\]</div>
-<p>counts the player alongside their neighbors — an agent listens to the
-crowd but also weighs themselves, which is why the prefactor is
+<p>counts the player alongside their neighbors, since an agent listens to the
+crowd but weighs themselves too, which is why the prefactor is
 <span class="math notranslate nohighlight">\(1/(d_j+1)\)</span> rather than <span class="math notranslate nohighlight">\(1/d_j\)</span>. The opinion flips,
 <span class="math notranslate nohighlight">\(q_j \mapsto -q_j\)</span>, iff</p>
 <div class="math notranslate nohighlight">
 \[-u &lt; \bar\sigma_j &lt; u
 \quad\text{and}\quad
 |\sigma_j| &gt; l.\]</div>
-<p>The first condition says the neighborhood is not yet committed; the second
-says this particular player has drifted far enough out to reconsider.
-<span class="math notranslate nohighlight">\(T\)</span> is the only dimensionless timescale in the problem, and the pair
-<span class="math notranslate nohighlight">\((l, u)\)</span> — with <span class="math notranslate nohighlight">\(\Delta = u - l &gt; 0\)</span> — carve out the
+<p>The first condition says the neighborhood is not yet committed, the second
+that this player has drifted far enough out to reconsider. <span class="math notranslate nohighlight">\(T\)</span> is
+the only dimensionless timescale in the problem, and the pair
+<span class="math notranslate nohighlight">\((l, u)\)</span> - with <span class="math notranslate nohighlight">\(\Delta = u - l &gt; 0\)</span> - carves out the
 change-of-heart regions <span class="math notranslate nohighlight">\([-u, -l] \cup [l, u]\)</span> where flips can fire.</p>
 </section>
 <section id="running-a-game">
@@ -144,38 +143,37 @@ change-of-heart regions <span class="math notranslate nohighlight">\([-u, -l] \c
 <span class="n">traj</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">rng</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="mi">200_000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">run</span></code> accepts initial conditions (<code class="docutils literal notranslate"><span class="pre">sigma0</span></code>, <code class="docutils literal notranslate"><span class="pre">q0</span></code>; both default to
+<p><code class="docutils literal notranslate"><span class="pre">run</span></code> takes initial conditions (<code class="docutils literal notranslate"><span class="pre">sigma0</span></code>, <code class="docutils literal notranslate"><span class="pre">q0</span></code>; both default to
 uniform draws), a step budget, a time budget (<code class="docutils literal notranslate"><span class="pre">max_time</span></code>), and a seed.
-It halts early when the state is <em>absorbed</em> — every action pinned at its
-opinion’s wall with every agreement window shut, so no flip can ever fire
-again. Consensus is the absorbing corner where all the signs agree;
-the other absorbing corners are where fraught and obdurate states live.</p>
+It halts early once the state is <em>absorbed</em>: every action pinned at its
+opinion’s wall, every agreement window shut, no flip able to fire again.
+Consensus is the absorbing corner where all the signs agree; the others
+hold the fraught and obdurate states.</p>
 </section>
 <section id="the-trajectory">
 <h2>The trajectory<a class="headerlink" href="#the-trajectory" title="Link to this heading"></a></h2>
-<p>Everything the run did comes back in a <a class="reference internal" href="api/pycoop.dynamics.html#pycoop.dynamics.Trajectory" title="pycoop.dynamics.Trajectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trajectory</span></code></a>
-— event times, the full action and opinion arrays after every event, who
-fired, and whether they flipped. The randomness of the whole model is the
-iid sequence <span class="math notranslate nohighlight">\((\tau_k, j_k)\)</span>, so the trajectory <em>is</em> the run; every
-observable in the next guide is computed from it after the fact, and
-nothing is baked into the simulator.</p>
+<p>Everything the run did comes back in a
+<a class="reference internal" href="api/pycoop.dynamics.html#pycoop.dynamics.Trajectory" title="pycoop.dynamics.Trajectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trajectory</span></code></a>: event times, the action and opinion
+arrays after every event, who fired, and whether they flipped. All the
+randomness sits in the iid sequence <span class="math notranslate nohighlight">\((\tau_k, j_k)\)</span>, so the
+trajectory <em>is</em> the run, and every observable in the next guide is
+computed from it after the fact rather than baked into the simulator.</p>
 </section>
 <section id="the-clock-as-a-knob">
 <h2>The clock as a knob<a class="headerlink" href="#the-clock-as-a-knob" title="Link to this heading"></a></h2>
-<p>The exponential clock is exact, but it is not sacred. Pass a float and
-every wait becomes a fixed step <span class="math notranslate nohighlight">\(h\)</span>; pass a callable and the waits
-follow any law you like:</p>
+<p>The exponential clock is exact, but not sacred. Pass a float and every
+wait becomes a fixed step <span class="math notranslate nohighlight">\(h\)</span>; pass a callable and the waits follow
+any law you like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">game</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">Game</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span> <span class="n">u</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">step_law</span><span class="o">=</span><span class="mf">0.03125</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The fixed-step variant is a genuinely different model — positions live on
-a lattice of spacing <span class="math notranslate nohighlight">\(h\)</span>, and step-size dispersion enters only
-through the resolution near the thresholds. Whether that matters is an
-empirical question, and it bears directly on whether the model’s critical
-behavior is a property of the dynamics or an artifact of the clock. If the
-phenomenology is invariant to the clock law, then the timescale is
-effectively a non-parameter — which is exactly the kind of thing worth
-checking rather than assuming.</p>
+<p>The fixed-step variant is a genuinely different model, with positions
+living on a lattice of spacing <span class="math notranslate nohighlight">\(h\)</span> and step-size dispersion entering
+only through the resolution near the thresholds. Whether that matters is
+an empirical question, and it bears on whether the model’s critical
+behavior belongs to the dynamics or to the clock. If the phenomenology is
+invariant to the clock law, the timescale is effectively a non-parameter,
+which is worth checking rather than assuming.</p>
 </section>
 </section>
 

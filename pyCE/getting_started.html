@@ -168,10 +168,9 @@
              
   <section id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
-<p>In this guide you will install pyCE and compute your first configurational
-entropy. Why a whole page for an install? Because the library leans on the
-scientific Python stack — numpy, scipy, matplotlib, and astropy — and a clean
-environment now will save you headaches later.</p>
+<p>Here you will install pyCE and compute your first configurational entropy. The
+library leans on the scientific Python stack - numpy, scipy, matplotlib, and
+astropy - so a clean environment now saves you headaches later.</p>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <p>pyCE requires Python 3.10 or newer. Clone the repository and install it into a
@@ -183,9 +182,8 @@ virtual environment:</p>
 <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag installs in editable mode — changes you make to the source are
-picked up immediately, with no reinstall required. Check that everything
-works:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag installs in editable mode: changes you make to the source are
+picked up immediately, with no reinstall. Check that the install works:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pyCE</span>
 </pre></div>
 </div>
@@ -193,8 +191,8 @@ works:</p>
 </section>
 <section id="your-first-configurational-entropy">
 <h2>Your first configurational entropy<a class="headerlink" href="#your-first-configurational-entropy" title="Link to this heading"></a></h2>
-<p>Let’s compute the configurational entropy of the most familiar localized
-profile there is — a Gaussian in three spatial dimensions:</p>
+<p>Let’s compute the configurational entropy of a Gaussian in three spatial
+dimensions, the most familiar localized profile there is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">radialFT</span><span class="p">,</span> <span class="n">radial_integrate</span>
 
@@ -209,11 +207,11 @@ profile there is — a Gaussian in three spatial dimensions:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">Sc</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Three lines of physics: transform, normalize, integrate. Every guide in this
-documentation is a variation on that theme, with the field profile coming from
-a shooting method, a lattice simulation, a stellar model, or a satellite.</p>
-<p>Before moving on, convince yourself that the transform can be trusted.
-Plancherel’s theorem holds on the discrete grids by construction:</p>
+<p>Transform, normalize, integrate. Every guide in this documentation is a
+variation on that theme, with the field profile coming from a shooting
+method, a lattice simulation, a stellar model, or a satellite.</p>
+<p>Convince yourself that the transform can be trusted. Plancherel’s theorem holds
+on the discrete grids by construction:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">radial_integrate</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ft</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
       <span class="o">/</span> <span class="n">radial_integrate</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">f</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 </pre></div>

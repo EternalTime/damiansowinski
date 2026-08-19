@@ -86,21 +86,20 @@
 <p>pyGD runs the Kuramoto model of coupled phase oscillators and lets you
 interfere with it. The oscillators live on the nodes of a graph, each pulled
 toward the phases of its neighbors; turn up the coupling and they synchronize.
-On top of them lives an agent — the <em>Yokai</em> — that hops from node to node,
-reads the local mean field, and kicks each phase it visits in the direction
-that opposes synchrony.</p>
-<p>The library ships two dynamics and one agent. <a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.Kuramoto" title="pyGD.dynamics.Kuramoto"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kuramoto</span></code></a>
-is the oscillator environment; <a class="reference internal" href="api/pyGD.agents.html#pyGD.agents.Yokai" title="pyGD.agents.Yokai"><code class="xref py py-class docutils literal notranslate"><span class="pre">Yokai</span></code></a> is the agent that
-drives it out of step; <a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.KuramotoCG" title="pyGD.dynamics.KuramotoCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">KuramotoCG</span></code></a> is the coarse-grained
-continuum limit, the stochastic dynamics you reach when the agent is integrated
-out. Graphs come from <code class="xref py py-mod docutils literal notranslate"><span class="pre">networkx</span></code>; the dynamics only ever see the sparse
-adjacency matrix, so any graph networkx can build is a graph pyGD can run.</p>
+On top of them lives an agent - the <em>Yokai</em> - that hops from node to node,
+reads the local mean field, and kicks each phase it visits against the
+alignment it finds there.</p>
+<p><a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.Kuramoto" title="pyGD.dynamics.Kuramoto"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kuramoto</span></code></a> is the environment;
+<a class="reference internal" href="api/pyGD.agents.html#pyGD.agents.Yokai" title="pyGD.agents.Yokai"><code class="xref py py-class docutils literal notranslate"><span class="pre">Yokai</span></code></a> is the agent that drives it out of step;
+<a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.KuramotoCG" title="pyGD.dynamics.KuramotoCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">KuramotoCG</span></code></a> is the continuum limit you reach when the
+agent is integrated out. Graphs come from <code class="xref py py-mod docutils literal notranslate"><span class="pre">networkx</span></code>, and the dynamics
+only ever see the sparse adjacency matrix. The library ports a set of MATLAB
+classes, whose interface it keeps.</p>
 <p>The model and the information-theoretic reading of the agent are in Sowinski,
-Frank &amp; Ghoshal, <em>Phys. Rev. Research</em> <strong>6</strong>, 043188
-(2024)<a class="footnote-reference brackets" href="#footcite-sowinski2024information" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. If you’re new here, start with <a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a>, take the
-model for a spin in the <a class="reference internal" href="applet.html"><span class="doc">Applet</span></a>, then work through whichever guide
-matches your problem. The library ports a set of
-MATLAB classes, whose interface it keeps.</p>
+Frank &amp; Ghoshal, <em>Phys. Rev. Research</em> <strong>6</strong>,
+043188 (2024)<a class="footnote-reference brackets" href="#footcite-sowinski2024information" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Start with
+<a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a>, take the model for a spin in the <a class="reference internal" href="applet.html"><span class="doc">Applet</span></a>, then
+read whichever guide matches your problem.</p>
 <section id="guide">
 <h2>Guide<a class="headerlink" href="#guide" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">

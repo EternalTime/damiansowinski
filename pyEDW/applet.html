@@ -59,7 +59,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/pyEDW.html">API reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License &amp; Contact</a></li>
 </ul>
 
         </div>
@@ -91,39 +91,39 @@
 <link rel="stylesheet" href="_static/edw_applet.css">
 <div id="edw-app"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="_static/edw_applet.js"></script><p>Exo-Daisy World, running live in your browser. The physics is the same one
-pyEDW integrates in Python: the dimensionless equations of motion of
-<a class="reference internal" href="theory.html"><span class="doc">Theory</span></a>, stepped with the same strong-order-1 stochastic Runge–Kutta
-scheme. Nothing is precomputed — the daisies are the state of a stochastic
-differential equation being solved as you watch. Drag the planet to spin it.</p>
+<script src="_static/edw_applet.js"></script><p>Exo-Daisy World, running live in your browser. The physics is the one pyEDW
+integrates in Python: the dimensionless equations of motion of <a class="reference internal" href="theory.html"><span class="doc">Theory</span></a>,
+stepped with the same strong-order-1 stochastic Runge–Kutta scheme. Nothing is
+precomputed; the daisies are the state of a stochastic differential equation
+being solved as you watch. Drag the planet to spin it.</p>
 <p>The applet is yours to take apart. It ships with the library as
 <a class="reference external" href="https://github.com/EternalTime/pyEDW/blob/main/docs/_static/edw_applet.js">docs/_static/edw_applet.js</a>:
-535 lines with no build step and no dependency beyond three.js, of which the
-first hundred or so are the model itself — the growth window, the equations of
-motion, and the stochastic Runge–Kutta step, ported line for line from
+535 lines with no build step and no dependency beyond three.js. The first
+hundred or so are the model itself - the growth window, the equations of
+motion, and the stochastic Runge–Kutta step - ported line for line from
 <a class="reference internal" href="api/pyEDW.html#module-pyEDW.model" title="pyEDW.model"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyEDW.model</span></code></a>. The rest is scenery.</p>
 <p>Brighten the star and the black daisies, which warm the ground beneath them,
 give way to white ones, which cool it. The shifting mix raises the planetary
-albedo and reins the surface temperature back toward <span class="math notranslate nohighlight">\(T_{opt}\)</span> — this is
-the Gaian feedback<a class="footnote-reference brackets" href="#footcite-lovelock1974" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> the model was built to exhibit. In the plot, the green track
-pulls away from the bare-planet Stefan–Boltzmann curve exactly where the biome
-is alive; drive the luminosity far enough in either direction and the biome
-collapses, the track snapping back onto the curve of a dead world.</p>
+albedo and reins the surface temperature back toward <span class="math notranslate nohighlight">\(T_{opt}\)</span>. This is
+the Gaian feedback<a class="footnote-reference brackets" href="#footcite-lovelock1974" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> the model was built to exhibit. In
+the plot, the green track pulls away from the bare-planet Stefan–Boltzmann
+curve exactly where the biome is alive; drive the luminosity far enough in
+either direction and the biome collapses, the track snapping back onto the
+curve of a dead world.</p>
 <p>The growth bandwidth <span class="math notranslate nohighlight">\(\Delta T / T_{opt}\)</span> sets how fussy the daisies are
 about temperature. Narrow it and the habitable band of luminosities shrinks to
 a sliver; widen it and the biome clings on across the whole range.</p>
-<p>Move the luminosity slowly and you will find the model is bistable — an
+<p>Move the luminosity slowly and you will find the model is bistable: an
 established biome survives at luminosities where a freshly seeded one dies out,
 because a large standing population can hold the temperature where it needs it
 while a sparse one cannot. This is why the ensembles in the
-paper<a class="footnote-reference brackets" href="#footcite-sowinski2025exo" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, which sample a broad range of initial
-daisy fractions, show life across a much wider band of luminosities than a
-single small seeding would suggest. One liberty is taken
-here: since the growth terms are multiplicative in <span class="math notranslate nohighlight">\(f_B\)</span> and <span class="math notranslate nohighlight">\(f_W\)</span>,
-zero is an absorbing state, and a biome that collapsed could never return. The
-applet therefore keeps a dormant seed bank of <span class="math notranslate nohighlight">\(10^{-4}\)</span> — too small to
-draw or to perturb a living biome, but enough to recolonize a planet that
-becomes habitable again.</p>
+paper<a class="footnote-reference brackets" href="#footcite-sowinski2025exo" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, which sample a broad range of initial daisy
+fractions, show life across a much wider band of luminosities than a single
+small seeding would suggest. We take one liberty here. Since the growth terms
+are multiplicative in <span class="math notranslate nohighlight">\(f_B\)</span> and <span class="math notranslate nohighlight">\(f_W\)</span>, zero is an absorbing state,
+and a biome that collapsed could never return; the applet keeps a dormant seed
+bank of <span class="math notranslate nohighlight">\(10^{-4}\)</span>, too small to draw or to perturb a living biome, but
+enough to recolonize a planet that becomes habitable again.</p>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
 <div class="docutils container" id="id3">

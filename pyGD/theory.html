@@ -94,8 +94,8 @@
   <section id="the-model">
 <h1>The Model<a class="headerlink" href="#the-model" title="Link to this heading"></a></h1>
 <p>This page is a compact reference for the equations pyGD integrates. The full
-development — the information-theoretic reading, the viability measure, and the
-semantic threshold — is in Sowinski, Frank &amp; Ghoshal, <em>Phys. Rev. Research</em>
+development - the information-theoretic reading, the viability measure, and the
+semantic threshold - is in Sowinski, Frank &amp; Ghoshal, <em>Phys. Rev. Research</em>
 <strong>6</strong>, 043188 (2024)<a class="footnote-reference brackets" href="#footcite-sowinski2024information" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <section id="the-environment">
 <h2>The environment<a class="headerlink" href="#the-environment" title="Link to this heading"></a></h2>
@@ -112,7 +112,7 @@ timestep <code class="docutils literal notranslate"><span class="pre">dt</span><
 <p>Synchronization is read off the global order parameter</p>
 <div class="math notranslate nohighlight">
 \[Z = r\,e^{i\phi} = \frac{1}{N}\sum_j e^{i\theta_j},\]</div>
-<p>whose magnitude <span class="math notranslate nohighlight">\(r\)</span> measures phase coherence — near 0 for scattered
+<p>whose magnitude <span class="math notranslate nohighlight">\(r\)</span> measures phase coherence: near 0 for scattered
 phases, near 1 for a locked population. Above a critical coupling
 <span class="math notranslate nohighlight">\(\sigma_c\)</span> an extensive fraction of the oscillators locks and <span class="math notranslate nohighlight">\(r\)</span>
 becomes nonzero<a class="footnote-reference brackets" href="#footcite-strogatz2000" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
@@ -144,9 +144,9 @@ frequency; the third is a heat bath whose temperature scales with degree, so
 that hubs fluctuate more than leaves. This is what
 <a class="reference internal" href="api/pyGD.dynamics.html#pyGD.dynamics.KuramotoCG" title="pyGD.dynamics.KuramotoCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">KuramotoCG</span></code></a> integrates, with <code class="docutils literal notranslate"><span class="pre">ab</span></code> <span class="math notranslate nohighlight">\(= \alpha\beta\)</span>.</p>
 <p>The continuum model reproduces the agent-based order parameter closely but not
-exactly — it slightly underestimates the synchronization — and pyGD keeps the
-two as independent classes for that reason. The derivation of the drift and
-diffusion coefficients is given in Appendix B of the paper.</p>
+exactly - it slightly underestimates the synchronization - and pyGD keeps the
+two as independent classes for that reason. Appendix B of the paper derives the
+drift and diffusion coefficients.</p>
 <section id="references">
 <h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
 <div class="docutils container" id="id4">
