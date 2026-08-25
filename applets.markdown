@@ -46,6 +46,7 @@ Each has a brief description of the physics and history behind it, just press th
 
 <h2 class="gradient-text2" style="font-size: 1.5em;">Pattern Formation</h2>
 <button class="applet-launch-btn" onclick="gsOpen(); this.blur()">Gray&ndash;Scott</button>
+<button class="applet-launch-btn" onclick="leniaOpen(); this.blur()">Lenia</button>
 
 ---
 
