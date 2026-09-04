@@ -13,11 +13,13 @@ permalink: /about/
   A Nerd and his three housemates
 </h1>
 
-I am a researcher currently at the <a href="https://www.pas.rochester.edu/">University of Rochester's Department of Physics and Astronomy</a>. I was born in Poland, grew up in Berlin and California.
+I am an affiliate of the <a href="https://www.seti.org/">S.E.T.I. Institute</a>, and a visiting researcher at the <a href="https://www.pas.rochester.edu/">University of Rochester's Department of Physics and Astronomy</a>.
+I was born in Poland, grew up in Berlin and California.
 I earned my B.A. in physics at the <a href="https://physics.berkeley.edu/">University of California, Berkeley</a>, and my theoretical physics Ph.D. in the lovely woods of New England from <a href="https://physics.dartmouth.edu/">Dartmouth College</a>. 
 At Cal I worked on neutrino detection for the <a href="https://en.wikipedia.org/wiki/Kamioka_Liquid_Scintillator_Antineutrino_Detector">KamLAND project</a>.
 After undergrad I taught in N.Y.C. and researched low mass kinda-stars known as <a href="https://en.wikipedia.org/wiki/Brown_dwarf">brown dwarfs</a> at the reknowned <a href="https://www.amnh.org/research/hayden-planetarium">Hayden Planetarium</a> located in the <a href="https://www.amnh.org/"> American Museum of Natural History</a>. 
-For my Ph.D. I started off in <a href="https://en.wikipedia.org/wiki/Lambda-CDM_model#:~:text=Inflation%20is%20a%20simple%20model,also%20determined%20by%20matching%20observations.">Cosmology</a>, but slowly found myself thinking about the nature of knowledge and how mushy brains come to know things about the world. 
+For my Ph.D. I started off in <a href="https://en.wikipedia.org/wiki/Lambda-CDM_model#:~:text=Inflation%20is%20a%20simple%20model,also%20determined%20by%20matching%20observations.">Cosmology</a>, attending the prestigeous <a href="https://www.houches-school-physics.com/">Les Houches School of Physics</a> summer program in the French Alps.
+I slowly found my thoughts shifting from the very large to the subjective, about the nature of knowledge and how mushy brains come to know things about the world. 
 What exactly is information, how is it instantiated in the physical world, and how does it have causal power?
 My thesis was on the behavior of information theoretic measures to the formation of <a href="https://en.wikipedia.org/wiki/Soliton">solitons</a> and <a href="https://en.wikipedia.org/wiki/Critical_phenomena">phase transitions.</a> 
 
@@ -25,6 +27,7 @@ Since completing my doctorate I've been a research scientist in multiple fields:
 During my time at the <a href="https://centerforsleepandconsciousness.psychiatry.wisc.edu/people/"> Wisconsin Center for Sleep and Consciousness</a> I worked on <a href="https://www.iit.wiki/home">Integrated Information Theory</a>, one of the leading theories of how subjective experience emerges in matter.
 At the <a href="https://cim.dartmouth.edu/">Dartmouth-Hitchcock Medical Center</a> I worked on a novel imaging modality known as <a href="https://www.mayoclinic.org/tests-procedures/magnetic-resonance-elastography/about/pac-20385177">magentic resonance elastography</a>. 
 I was a fellow at the <a href="https://www.ice.dartmouth.edu/">Institute for Cross-Disciplinary Engagement</a>, giving me a multi-faceted perspective on the scientific endeavor.
+At the University of Rochester I developed the viability based approach to semantic information theory, applying it to complex systems ranging from the <a href="https://en.wikipedia.org/wiki/Kuramoto_model">Kuramoto model</a> of firefly synchronization to an exoplanet variant of Lovelock's famous <a href="">Daisyworld</a>. 
 None of these adventures would have been possible without the awesome power of mathematics coupled to creativity!
 
 <img class="about-img about-img-right about-img-35" src="{{ '/assets/images/Ursy.png' | relative_url }}" alt="Ursus">
