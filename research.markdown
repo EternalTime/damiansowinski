@@ -51,7 +51,7 @@ Why don't you try it:
 <script src="{{ '/assets/js/applet-shell.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/applet-shell-mobile.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/applets/maxwell_demon_applet.js' | relative_url }}" defer></script>
-<button class="applet-launch-btn" onclick="demonOpen()">Maxwell's Demon</button>
+<button class="applet-launch-btn" onclick="demonOpen(); this.blur()">Maxwell's Demon</button>
 
 Were you hired?
 
