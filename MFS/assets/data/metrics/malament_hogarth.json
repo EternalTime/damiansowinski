@@ -1,6 +1,7 @@
 {
   "id": "malament_hogarth",
   "name": "Malament–Hogarth Super-Turing Spacetimes",
+  "short_name": "Malament–Hogarth",
   "description": "A spacetime construction containing a worldline of infinite proper length that lies within the past of a single event reachable in finite proper time. It provides a relativistic model for hypercomputation that could complete infinite tasks.",
   "tags": [
     "causal structure",

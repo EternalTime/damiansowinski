@@ -1,6 +1,7 @@
 {
   "id": "interior_schwarzschild",
   "name": "Schwarzschild's stellar interior metric",
+  "short_name": "Schwarzschild – Interior",
   "description": "The unique static, spherically symmetric solution for a uniform-density incompressible perfect fluid ball of radius $R$ and Schwarzschild radius $r_s$.",
   "tags": [
     "perfect fluid",

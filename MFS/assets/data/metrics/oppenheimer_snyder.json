@@ -1,6 +1,7 @@
 {
   "id": "oppenheimer_snyder",
   "name": "Oppenheimer-Snyder Gravitational Collapse",
+  "short_name": "Oppenheimer-Snyder",
   "description": "The first dynamical model of gravitational collapse, matching a collapsing homogeneous dust sphere to an exterior Schwarzschild vacuum. It showed how a star can form a black hole in finite proper time.",
   "tags": [
     "dust",

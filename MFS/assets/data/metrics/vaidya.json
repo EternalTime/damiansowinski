@@ -1,6 +1,7 @@
 {
   "id": "vaidya",
   "name": "Vaidya Radiating Star",
+  "short_name": "Vaidya",
   "description": "A non-static solution describing the spacetime of a radiating or accreting spherical mass with outgoing or ingoing null dust. It models radiating stars and the evaporation or growth of black holes.",
   "tags": [
     "null dust",

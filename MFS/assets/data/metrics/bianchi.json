@@ -1,6 +1,7 @@
 {
   "id": "bianchi",
   "name": "Bianchi Anisotropic Cosmologies",
+  "short_name": "Bianchi",
   "description": "A family of spatially homogeneous but generally anisotropic cosmologies classified by the symmetry group of their spatial slices. They generalize FLRW models to study anisotropy in the early universe.",
   "tags": [
     "cosmology",

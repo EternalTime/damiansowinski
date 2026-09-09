@@ -1,6 +1,7 @@
 {
   "id": "kerr_newman",
   "name": "Kerr-Newman Charged Rotating Black Hole",
+  "short_name": "Kerr-Newman",
   "description": "The most general stationary black hole solution, carrying mass, angular momentum, and electric charge. It unifies the Kerr and Reissner-Nordström metrics into a single electrovacuum spacetime.",
   "tags": [
     "electrovacuum",

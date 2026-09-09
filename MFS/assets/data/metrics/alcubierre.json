@@ -1,6 +1,7 @@
 {
   "id": "alcubierre",
   "name": "Alcubierre Warp Drive",
+  "short_name": "Alcubierre",
   "description": "A warp-bubble metric that contracts space ahead of a ship and expands it behind, allowing effective faster-than-light travel without locally exceeding light speed. It requires negative energy density (exotic matter) to sustain the bubble.",
   "tags": [
     "warp drive",

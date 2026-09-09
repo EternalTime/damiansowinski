@@ -1,6 +1,7 @@
 {
   "id": "stockum_dust",
   "name": "Lanczos–van Stockum Rotating Dust-filled Universe",
+  "short_name": "Lanczos–van Stockum",
   "description": "An exact solution to the Einstein field equations describing an infinite rotating cylinder of pressureless dust, exhibiting closed timelike curves beyond a critical radius.",
   "tags": [
     "dust",

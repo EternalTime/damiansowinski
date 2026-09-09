@@ -16,7 +16,8 @@
       "Einstein equations",
       "four-dimensional",
       "causality violation"
-    ]
+    ],
+    "version": "1c743bde160c4242"
   },
   {
     "id": "anti_de_sitter",
@@ -39,7 +40,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "9cab25a885712a5f"
   },
   {
     "id": "bertotti_robinson",
@@ -59,7 +61,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "abd9bf7232bcb153"
   },
   {
     "id": "bianchi",
@@ -78,7 +81,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "18cb2d3042fca577"
   },
   {
     "id": "cosmic_string",
@@ -99,7 +103,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "ba6b7a1038657266"
   },
   {
     "id": "de_sitter",
@@ -123,7 +128,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "f2f029cd161d6972"
   },
   {
     "id": "ellis_bronnikov",
@@ -145,7 +151,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "4f149ed2967adc6e"
   },
   {
     "id": "frw",
@@ -165,7 +172,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "097642cf094e1d2b"
   },
   {
     "id": "godel",
@@ -186,7 +194,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "6c626debc92ed2f4"
   },
   {
     "id": "kasner",
@@ -207,7 +216,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "8e0d71aaae3692c4"
   },
   {
     "id": "kerr",
@@ -237,7 +247,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "faf0a48c12bb8efa"
   },
   {
     "id": "kerr_newman",
@@ -270,7 +281,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "4e247b442c43ce94"
   },
   {
     "id": "stockum_dust",
@@ -291,7 +303,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "7fdd482e1a8bf4fb"
   },
   {
     "id": "malament_hogarth",
@@ -305,7 +318,8 @@
       "idealized model",
       "Lorentzian",
       "four-dimensional"
-    ]
+    ],
+    "version": "77b1e9a3fc521d2c"
   },
   {
     "id": "minkowski",
@@ -323,7 +337,8 @@
       "Lorentzian",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "c8d9c80da4463cdb"
   },
   {
     "id": "mixmaster",
@@ -348,7 +363,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "dad65b838ba3e84c"
   },
   {
     "id": "morris_thorne",
@@ -369,7 +385,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "63f8a2427614660d"
   },
   {
     "id": "oppenheimer_snyder",
@@ -393,7 +410,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "50c08b4df3ffe6ac"
   },
   {
     "id": "pp_wave",
@@ -411,7 +429,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "64d279f53340d0bf"
   },
   {
     "id": "rn_metric",
@@ -440,7 +459,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "987a181ddddeff3c"
   },
   {
     "id": "schwarzschild",
@@ -468,7 +488,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "e6b6dc9f65404a88"
   },
   {
     "id": "interior_schwarzschild",
@@ -488,7 +509,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "41346300f4b693f3"
   },
   {
     "id": "taub_nut",
@@ -508,7 +530,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "504d44b09ea03a9f"
   },
   {
     "id": "tolman_bondi",
@@ -530,7 +553,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "969aa3dfe9dc987e"
   },
   {
     "id": "tov",
@@ -553,7 +577,8 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "ce1fe68fa4916ea9"
   },
   {
     "id": "vaidya",
@@ -575,6 +600,7 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model"
-    ]
+    ],
+    "version": "3e515b483ac0be0d"
   }
 ]

@@ -1,6 +1,7 @@
 {
   "id": "tolman_bondi",
   "name": "Tolman-Bondi Inhomogeneous Dust Universe",
+  "short_name": "Tolman-Bondi",
   "description": "A spherically symmetric but inhomogeneous dust solution generalizing FLRW to position-dependent density and expansion. It is widely used to model voids, structure formation, and inhomogeneous cosmologies.",
   "tags": [
     "dust",

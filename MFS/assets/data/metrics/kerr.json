@@ -1,6 +1,7 @@
 {
   "id": "kerr",
   "name": "Kerr Rotating Black Hole",
+  "short_name": "Kerr",
   "description": "The exact vacuum solution for a rotating, uncharged black hole, characterized by mass and angular momentum. It features an ergosphere, frame dragging, and a ring singularity, and describes essentially all astrophysical black holes.",
   "tags": [
     "vacuum",
