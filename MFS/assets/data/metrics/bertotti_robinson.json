@@ -1,6 +1,7 @@
 {
   "id": "bertotti_robinson",
   "name": "Bertotti-Robinson Electrovacuum",
+  "short_name": "Bertotti-Robinson",
   "description": "A conformally flat electrovacuum solution with uniform electromagnetic field, geometrically the product of two 2-spaces (AdS₂ × S²). It appears as the near-horizon limit of an extremal Reissner-Nordström black hole.",
   "tags": [
     "electrovacuum",

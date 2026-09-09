@@ -1,6 +1,7 @@
 {
   "id": "de_sitter",
   "name": "de Sitter",
+  "short_name": "de Sitter",
   "description": "The maximally symmetric vacuum solution with constant positive curvature, driven by a positive cosmological constant. It models an exponentially expanding empty universe and describes both inflation and the far future of our cosmos.",
   "tags": [
     "vacuum",

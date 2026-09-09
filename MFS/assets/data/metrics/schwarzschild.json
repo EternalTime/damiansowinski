@@ -1,6 +1,7 @@
 {
   "id": "schwarzschild",
   "name": "Schwarzschild Black Hole",
+  "short_name": "Schwarzschild – Exterior",
   "description": "The unique spherically symmetric vacuum solution of the Einstein field equations, describing the spacetime outside a static, uncharged, non-rotating mass.",
   "tags": [
     "vacuum",

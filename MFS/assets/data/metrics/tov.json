@@ -1,6 +1,7 @@
 {
   "id": "tov",
   "name": "Tolman-Oppenheimer-Volkoff Relativistic Star",
+  "short_name": "Tolman-Oppenheimer-Volkoff",
   "description": "The hydrostatic equilibrium equations for a static, spherically symmetric relativistic star of perfect fluid. They set the maximum mass of neutron stars before collapse to a black hole.",
   "tags": [
     "perfect fluid",

@@ -1,6 +1,7 @@
 {
   "id": "anti_de_sitter",
   "name": "Anti-de Sitter",
+  "short_name": "Anti-de Sitter",
   "description": "The maximally symmetric vacuum solution with constant negative curvature, arising from a negative cosmological constant. Its conformal boundary underpins the AdS/CFT correspondence in theoretical physics.",
   "tags": [
     "vacuum",
