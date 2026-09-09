@@ -29,7 +29,7 @@
   "coordinates": [
     {
       "id": "cartesian",
-      "name": "Cartesian-like",
+      "name": "Cartesian",
       "coords": [
         "t",
         "x",
