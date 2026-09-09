@@ -389,6 +389,28 @@
     "version": "63f8a2427614660d"
   },
   {
+    "id": "natario",
+    "name": "Natário",
+    "tags": [
+      "warp drive",
+      "faster-than-light",
+      "exotic matter",
+      "negative energy",
+      "energy condition violation",
+      "horizon",
+      "causal structure",
+      "causality violation",
+      "time-dependent",
+      "dynamical",
+      "non-vacuum",
+      "idealized model",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional"
+    ],
+    "version": "c7daf1793aa4f3f3"
+  },
+  {
     "id": "oppenheimer_snyder",
     "name": "Oppenheimer-Snyder",
     "tags": [
