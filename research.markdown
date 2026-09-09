@@ -95,6 +95,10 @@ I'm interested in models that live at this awkward boundary between automoton an
 Understanding how complexity, computation, and control intertwine to create behavioral autonomy will get us one very large step closer to understanding its emergence in the physical substrate.
 <br>
 
+
+AI poses the same problem to us as biology emerging from chemistry.
+The current generation of LLMs have already passed the Turing test.
+That type of complex, life-like behavior parallels the complex, life-like motions of the chemoton.
  ---
  
 <br>
