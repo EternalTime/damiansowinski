@@ -27,8 +27,9 @@ Any other file name is read, so a metric whose `id` does not match its file name
 ## What the command writes
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.
+Its `name` is the metric's `short_name`, which is what the search list shows, not the long `name` the page titles the spacetime with.
 
-`MFS/assets/data/references.json` is the whole of `assets/data/references.bib` parsed into JSON, so a reader can pull every reference the collection cites in one fetch instead of walking all 26 metrics.
+`MFS/assets/data/references.json` is the whole of `assets/data/references.bib` parsed into JSON, so a reader can pull every reference the collection cites in one fetch instead of walking every metric file.
 The `.bib` file stays where it is and stays the one place a reference is written; the publications page still reads it.
 
 ## The version stamps
