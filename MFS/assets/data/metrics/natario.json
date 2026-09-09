@@ -1,0 +1,33 @@
+{
+  "id": "natario",
+  "name": "Natário Warp Drive",
+  "short_name": "Natário",
+  "description": "A warp bubble metric in which space flows around a stationary ship instead of expanding behind it and contracting ahead, so that volume elements are carried along unchanged. It shows that the expansion of space is inessential to warp travel, and that the requirement of negative energy density survives its removal.",
+  "tags": [
+    "warp drive",
+    "faster-than-light",
+    "exotic matter",
+    "negative energy",
+    "energy condition violation",
+    "horizon",
+    "causal structure",
+    "causality violation",
+    "time-dependent",
+    "dynamical",
+    "non-vacuum",
+    "idealized model",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional"
+  ],
+  "history": "The Alcubierre warp drive comes with a story attached, and the story is the part that gets remembered: space contracts in front of the ship, expands behind it, and the ship rides the wave from here to there [alcubierre1994]. José Natário asked whether the expansion does any of the work. It does not. In 2002 he published a warp drive whose volume elements are neither stretched nor squeezed anywhere in the spacetime, and which carries a ship exactly as Alcubierre's does [natario2002]. The contraction and expansion turned out to be a marginal consequence of one particular choice; make a different choice and they go away, while the drive keeps working.¶The picture that replaces them is the prettier one. Hold a stone fixed in a river and watch the water: the flow parts ahead of it, slides around the sides, and closes up behind, and no parcel of water is compressed on the way past. That is the Natário drive. Space flows around a ship that sits still in it, and the flow is arranged so that volumes are carried along untouched. Alcubierre's treadmill of stretched and squeezed space can be dismantled without disturbing anything the drive actually needs.¶What it does need is what Alcubierre needed. Francisco Lobo and Matt Visser examined both drives in 2004 and found the classical energy conditions violated with no perturbative approximation doing the damage, and violated still when the bubble is made to crawl; slowness buys nothing, and the negative energy stored in the warp field has to be a sizable fraction of the mass of the ship it carries [lobo2004]. Jessica Santiago, Sebastian Schuster and Matt Visser sharpened this in 2022 into a claim about the whole family. Any warp drive a physicist would call physically reasonable violates the null energy condition, and so violates the weak, strong and dominant conditions along with it; move to modified gravity and the violation returns as a violation of the purely geometric null convergence condition [santiago2022].¶A second obstruction has nothing to do with matter. Natário worked out the global and optical structure of his spacetime alongside the geometry [natario2002], and once a warp bubble is pushed past light speed it acquires horizons. The consequence is awkward for anyone hoping to fly one: an observer inside the ship can neither create the bubble on demand nor control it, so the apparatus would have to be laid down along the route in advance [alcubierre2017].¶The drive has also been drawn. Brandon Mattingly and colleagues plotted curvature invariants for the Alcubierre and Natário spacetimes in 2021, which is a way of looking at a geometry with no coordinate system standing in front of it, and the plots show a safe harbor at the center where the crew rides flat, with the shape function drawing out the bubble wall around them. At constant velocity the Natário drive leaves no wake; the wake appears once the bubble accelerates [mattingly2021].¶What Natário settled is not whether anyone can travel this way. It is which part of the story we were entitled to believe. The expansion of space was scenery, and taking it down leaves the warp drive standing where it stood, with the same debt in negative energy still unpaid.",
+  "references": [
+    "alcubierre1994",
+    "natario2002",
+    "lobo2004",
+    "alcubierre2017",
+    "mattingly2021",
+    "santiago2022"
+  ],
+  "coordinates": []
+}
