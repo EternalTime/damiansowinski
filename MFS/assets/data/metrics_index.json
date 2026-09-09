@@ -17,7 +17,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "1c743bde160c4242"
+    "version": "d2c5c2925b4a3691"
   },
   {
     "id": "anti_de_sitter",
@@ -41,7 +41,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9cab25a885712a5f"
+    "version": "ae3d3ba5e67a6c9b"
   },
   {
     "id": "bertotti_robinson",
@@ -62,7 +62,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "abd9bf7232bcb153"
+    "version": "f0013da4576dee1f"
   },
   {
     "id": "bianchi",
@@ -82,7 +82,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "18cb2d3042fca577"
+    "version": "4d9b4608a34617da"
   },
   {
     "id": "cosmic_string",
@@ -104,7 +104,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ba6b7a1038657266"
+    "version": "35b004b2d7b20195"
   },
   {
     "id": "de_sitter",
@@ -129,7 +129,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f2f029cd161d6972"
+    "version": "12dcfb00dd77714a"
   },
   {
     "id": "ellis_bronnikov",
@@ -152,7 +152,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4f149ed2967adc6e"
+    "version": "0ccd59a253b80ba9"
   },
   {
     "id": "frw",
@@ -173,7 +173,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "097642cf094e1d2b"
+    "version": "4e03a80390da4b8c"
   },
   {
     "id": "godel",
@@ -195,7 +195,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6c626debc92ed2f4"
+    "version": "248bce7f333ef78f"
   },
   {
     "id": "kasner",
@@ -248,7 +248,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "faf0a48c12bb8efa"
+    "version": "513c9cc5a8100cec"
   },
   {
     "id": "kerr_newman",
@@ -282,11 +282,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4e247b442c43ce94"
+    "version": "2833691bdaca1c2c"
   },
   {
     "id": "stockum_dust",
-    "name": "Lanczos–van Stockum",
+    "name": "Lanczos-van Stockum",
     "tags": [
       "dust",
       "rotating",
@@ -304,11 +304,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7fdd482e1a8bf4fb"
+    "version": "c75ebfc48dcc03e9"
   },
   {
     "id": "malament_hogarth",
-    "name": "Malament–Hogarth",
+    "name": "Malament-Hogarth",
     "tags": [
       "causal structure",
       "hypercomputation",
@@ -319,7 +319,7 @@
       "Lorentzian",
       "four-dimensional"
     ],
-    "version": "77b1e9a3fc521d2c"
+    "version": "5b237e7558ee0407"
   },
   {
     "id": "minkowski",
@@ -338,7 +338,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c8d9c80da4463cdb"
+    "version": "97ee5a48efaaf238"
   },
   {
     "id": "mixmaster",
@@ -364,7 +364,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dad65b838ba3e84c"
+    "version": "c247010b27a76467"
   },
   {
     "id": "morris_thorne",
@@ -411,7 +411,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "50c08b4df3ffe6ac"
+    "version": "068117c8ab748b35"
   },
   {
     "id": "pp_wave",
@@ -430,7 +430,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "64d279f53340d0bf"
+    "version": "38330a2566b053b0"
   },
   {
     "id": "rn_metric",
@@ -460,11 +460,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "987a181ddddeff3c"
+    "version": "36e9157757f80313"
   },
   {
     "id": "schwarzschild",
-    "name": "Schwarzschild – Exterior",
+    "name": "Schwarzschild Exterior",
     "tags": [
       "vacuum",
       "vacuum solution",
@@ -489,11 +489,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e6b6dc9f65404a88"
+    "version": "132e86e871a751d0"
   },
   {
     "id": "interior_schwarzschild",
-    "name": "Schwarzschild – Interior",
+    "name": "Schwarzschild Interior",
     "tags": [
       "perfect fluid",
       "static",
@@ -510,7 +510,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "41346300f4b693f3"
+    "version": "9cb7712808288ae5"
   },
   {
     "id": "taub_nut",
@@ -531,7 +531,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "504d44b09ea03a9f"
+    "version": "a7a2c7ca80636539"
   },
   {
     "id": "tolman_bondi",
@@ -554,7 +554,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "969aa3dfe9dc987e"
+    "version": "eb76d600cafc9d01"
   },
   {
     "id": "tov",
@@ -578,7 +578,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ce1fe68fa4916ea9"
+    "version": "3f910117a2ef3f4e"
   },
   {
     "id": "vaidya",
@@ -601,6 +601,6 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3e515b483ac0be0d"
+    "version": "30010de43332ff5f"
   }
 ]
