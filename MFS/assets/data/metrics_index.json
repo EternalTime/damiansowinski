@@ -330,6 +330,28 @@
     "version": "c75ebfc48dcc03e9"
   },
   {
+    "id": "lentz",
+    "name": "Lentz",
+    "tags": [
+      "warp drive",
+      "faster-than-light",
+      "soliton",
+      "positive energy",
+      "plasma",
+      "electromagnetic field",
+      "energy condition violation",
+      "non-vacuum",
+      "time-dependent",
+      "dynamical",
+      "idealized model",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "causality violation"
+    ],
+    "version": "f772a03d3b7ff9ea"
+  },
+  {
     "id": "malament_hogarth",
     "name": "Malament-Hogarth",
     "tags": [

@@ -1,0 +1,35 @@
+{
+  "id": "lentz",
+  "name": "Lentz Positive-Energy Warp Drive",
+  "short_name": "Lentz",
+  "description": "A superluminal soliton whose energy density is positive everywhere for the observers riding with it, sourced by a conducting plasma and electromagnetic fields. Later work showed that other observers still see the energy conditions fail.",
+  "tags": [
+    "warp drive",
+    "faster-than-light",
+    "soliton",
+    "positive energy",
+    "plasma",
+    "electromagnetic field",
+    "energy condition violation",
+    "non-vacuum",
+    "time-dependent",
+    "dynamical",
+    "idealized model",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "causality violation"
+  ],
+  "history": "Every warp drive from 1994 onward arrived with the same bill attached: negative energy density, exotic matter, the sort of source particle physics has no classical example of [alcubierre1994]. Erik Lentz, then at Göttingen, went looking for the line in the derivation where that bill actually gets written, and found a choice nobody had thought to question. A warp geometry is fixed by its shift vector, the field that says how space flows past the ship, and every construction to that point had tied the components of that vector together in one of two ways. Alcubierre used a linear relation, which produces the celebrated toroid of negative energy density around the bubble; Natário used an expansionless elliptic one, which forces the energy density into a negative square of the extrinsic curvature [natario2002]. Parabolic and hyperbolic relations were sitting there, unexplored. Lentz took the hyperbolic one, a wave equation on each spatial slice, and the sign flipped [lentz2021].¶What comes out is a soliton you can build in pieces. Each cell of hyperbolic source carries positive energy density on its own and keeps it positive in the company of neighbours of the same size and orientation, so bigger solutions get assembled from them like bricks. There is a central region of mild tidal forces where proper time keeps step with coordinate time far away, so a passenger ages at the rate the rest of the universe does and stays put with respect to the soliton. Then the good part: the stress-energy the geometry demands takes the form of a conducting plasma together with classical electromagnetic fields, which is familiar matter. It is not cheap. For a soliton a hundred metres in radius with a metre of source thickness, running at the speed of light, Lentz put the mass equivalent at a few tenths of a solar mass, which he called immense, and which sits at the same order as the older estimate for an Alcubierre bubble of those dimensions [pfenning1997].¶Three papers landed in the same window and were read together. Alexey Bobrick and Gianni Martire gave a general framework for the whole family [bobrick2021]; Shaun Fell and Lavinia Heisenberg found a geometric reading of the energy that yielded superluminal solitons with positive semi-definite energy, four orders of magnitude below a solar mass [fell2021]. Then Jessica Santiago, Sebastian Schuster and Matt Visser pointed at something elementary and awkward in all three. The positive energy density each paper reports is what one family of observers measures, the co-moving Eulerian ones. The weak energy condition asks every timelike observer, and for a stress-energy of this shape an observer moving quickly enough, while still below light speed, measures the density as negative. They went further: generic warp drives violate the null energy condition, which drags the weak, strong and dominant conditions down with it [santiago2022].¶That reads as a refutation, and it is one, but look at what it did to the question. Before Lentz the argument was whether familiar matter could source a warp geometry at all. After him it was about which particular condition has to give, and where, and that is a question with answers. One arrived in 2024, when Jared Fuchs and collaborators wrapped an Alcubierre-like shift distribution around a stable matter shell of positive ADM mass and got a constant-velocity warp drive satisfying all of the energy conditions [fuchs2024]. Subluminal, so nobody outruns light with it. But a warp bubble that ordinary matter pays for, which is the thing the hyperbolic soliton set out to find.",
+  "references": [
+    "alcubierre1994",
+    "natario2002",
+    "lentz2021",
+    "pfenning1997",
+    "bobrick2021",
+    "fell2021",
+    "santiago2022",
+    "fuchs2024"
+  ],
+  "coordinates": []
+}
