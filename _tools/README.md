@@ -24,6 +24,18 @@ A cloud-sync conflict copy dropped into the metrics folder, named like `kerr 2.j
 Those are the same names `.gitignore` already keeps out of the repository.
 Any other file name is read, so a metric whose `id` does not match its file name still stops the command.
 
+## Dashes in the prose
+
+The prose fields carry no dashes as punctuation.
+That covers `name`, `short_name`, `description`, `history`, `convention` and every other field written in sentences, including prose set between dollar signs.
+Where a sentence wants a break, write a full stop, a semicolon, a comma or a pair of commas; an em dash, an en dash and a plain dash are all out.
+If a sentence only reads with the break in it, rewrite the sentence rather than leave a stump.
+
+A hyphen stays only where it is part of a spelling.
+That means a pair of names, such as Reissner-Nordstrom, Kerr-Newman or Lanczos-van Stockum, and an established term, such as anti-de Sitter, pp-wave or Taub-NUT.
+An ordinary English compound is rewritten so that the hyphen is not needed.
+Minus signs inside the LaTeX fields are mathematics and are left alone.
+
 ## What the command writes
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.
