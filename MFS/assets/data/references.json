@@ -1,5 +1,5 @@
 {
-  "version": "549f5824b82e5257",
+  "version": "c56ac860d12ff8a6",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -1174,6 +1174,50 @@
         "year": "2021",
         "doi": "10.1088/1361-6382/abe692",
         "url": "https://arxiv.org/abs/2006.07125"
+      }
+    },
+    "alcubierre2017": {
+      "type": "incollection",
+      "fields": {
+        "title": "Warp drive basics",
+        "author": "Alcubierre, Miguel and Lobo, Francisco S. N.",
+        "booktitle": "Wormholes, Warp Drives and Energy Conditions",
+        "series": "Fundamental Theories of Physics",
+        "volume": "189",
+        "editor": "Lobo, Francisco S. N.",
+        "publisher": "Springer",
+        "pages": "257--279",
+        "year": "2017",
+        "doi": "10.1007/978-3-319-55182-1_11",
+        "url": "https://arxiv.org/abs/2103.05610"
+      }
+    },
+    "mattingly2021": {
+      "type": "article",
+      "fields": {
+        "title": "Curvature invariants for the Alcubierre and Nat\\'ario warp drives",
+        "author": "Mattingly, Brandon and Kar, Abinash and Gorban, Matthew and Julius, William and Watson, Cooper K. and Ali, MD and Baas, Andrew and Elmore, Caleb and Lee, Jeffrey S. and Shakerin, Bahram and Davis, Eric W. and Cleaver, Gerald B.",
+        "journal": "Universe",
+        "volume": "7",
+        "number": "2",
+        "pages": "21",
+        "year": "2021",
+        "doi": "10.3390/universe7020021",
+        "url": "https://arxiv.org/abs/2010.13693"
+      }
+    },
+    "santiago2022": {
+      "type": "article",
+      "fields": {
+        "title": "Generic warp drives violate the null energy condition",
+        "author": "Santiago, Jessica and Schuster, Sebastian and Visser, Matt",
+        "journal": "Physical Review D",
+        "volume": "105",
+        "number": "6",
+        "pages": "064038",
+        "year": "2022",
+        "doi": "10.1103/PhysRevD.105.064038",
+        "url": "https://arxiv.org/abs/2105.03079"
       }
     },
     "hogarth1992": {
