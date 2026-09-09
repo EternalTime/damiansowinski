@@ -7,15 +7,42 @@
 import copy
 import json
 import tempfile
+import unicodedata
 import unittest
 from pathlib import Path
 from unittest import mock
 
 import build_mfs_data as build
 
+# The dashes the prose is not allowed to carry: U+2010 to U+2015, which are the
+# hyphen, the non breaking hyphen, the figure dash, the en dash, the em dash and
+# the horizontal bar, together with U+2212, the minus sign. The ASCII hyphen at
+# U+002D is deliberately absent, because it spells Reissner-Nordstrom, Kerr-Newman,
+# Lanczos-van Stockum, anti-de Sitter and pp-wave, where it is part of the name.
+# _tools/README.md carries the rule this stands for.
+DASHES = "\u2010\u2011\u2012\u2013\u2014\u2015\u2212"
+
+# The fields written in sentences. The LaTeX and structural fields are mathematics
+# and are left out on purpose, since a minus sign belongs in them.
+PROSE_FIELDS = ("name", "short_name", "sort_name", "description", "history", "convention")
+
 
 def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def prose(metric):
+    """Yield every sentence carrying field of a metric, each with the name of its place."""
+    for field in PROSE_FIELDS:
+        if metric.get(field):
+            yield field, metric[field]
+    for position, system in enumerate(metric.get("coordinates") or []):
+        where = f"coordinates[{system.get('id') or position}]"
+        if system.get("name"):
+            yield f"{where}.name", system["name"]
+        for parameter in system.get("parameters") or []:
+            if parameter.get("description"):
+                yield f"{where}.parameters[{parameter.get('symbol')}].description", parameter["description"]
 
 
 class PublishedFilesAreCurrent(unittest.TestCase):
@@ -91,6 +118,23 @@ class Stamps(unittest.TestCase):
     def test_stamps_are_distinct(self):
         stamps = [build.content_version(m) for m in build.load_metrics()]
         self.assertEqual(len(set(stamps)), len(stamps))
+
+
+class Prose(unittest.TestCase):
+    def test_no_metric_on_disk_carries_a_dash_in_its_prose(self):
+        read_fields = 0
+        for metric in build.load_metrics():
+            for field, value in prose(metric):
+                read_fields += 1
+                for character in value:
+                    if character in DASHES:
+                        self.fail(
+                            f"{metric['id']}.json: {field} carries "
+                            f"U+{ord(character):04X} {unicodedata.name(character)}. "
+                            "Write a full stop, a semicolon or a comma instead, "
+                            "or rewrite the sentence so it does not want the break."
+                        )
+        self.assertTrue(read_fields, "no prose was read, so nothing was checked")
 
 
 class Bibliography(unittest.TestCase):

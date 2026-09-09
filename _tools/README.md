@@ -36,6 +36,8 @@ That means a pair of names, such as Reissner-Nordstrom, Kerr-Newman or Lanczos-v
 An ordinary English compound is rewritten so that the hyphen is not needed.
 Minus signs inside the LaTeX fields are mathematics and are left alone.
 
+The tests hold this rule over every metric file on disk, so a new spacetime carrying one of these dashes in its prose fails before it is published, named along with the field and the character that tripped it.
+
 ## What the command writes
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.
