@@ -1,6 +1,7 @@
 {
   "id": "minkowski",
   "name": "Minkowski Flat Spacetime",
+  "short_name": "Minkowski",
   "description": "The flat spacetime of special relativity. No curvature, no gravity.",
   "tags": [
     "flat",

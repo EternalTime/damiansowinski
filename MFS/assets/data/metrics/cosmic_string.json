@@ -1,6 +1,8 @@
 {
   "id": "cosmic_string",
   "name": "Vilenkin-Gott Cosmic String",
+  "short_name": "Vilenkin-Gott",
+  "sort_name": "Cosmic String",
   "description": "The conical spacetime around an infinitely thin, straight topological defect, locally flat but with an angular deficit set by the string's tension. It produces no local gravity yet causes global lensing and double-image effects.",
   "tags": [
     "topological defect",

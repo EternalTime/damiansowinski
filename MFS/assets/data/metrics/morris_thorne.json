@@ -1,6 +1,7 @@
 {
   "id": "morris_thorne",
   "name": "Morris-Thorne Traversable Wormhole",
+  "short_name": "Morris-Thorne",
   "description": "A static, spherically symmetric traversable wormhole engineered to have no horizon and tolerable tidal forces. Keeping its throat open requires exotic matter that violates the energy conditions.",
   "tags": [
     "wormhole",

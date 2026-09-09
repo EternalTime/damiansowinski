@@ -1,6 +1,7 @@
 {
   "id": "taub_nut",
   "name": "Taub-Newman-Unti-Tamburino Vacuum Spacetime",
+  "short_name": "Taub-Newman-Unti-Tamburino",
   "description": "A vacuum solution with unusual topology and a \"gravitomagnetic\" NUT parameter, often called a counterexample to many GR conjectures. It exhibits closed timelike curves and a non-trivial fibered structure.",
   "tags": [
     "vacuum",

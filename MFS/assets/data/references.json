@@ -1,0 +1,2534 @@
+{
+  "version": "549f5824b82e5257",
+  "entries": {
+    "minkowski1908": {
+      "type": "article",
+      "fields": {
+        "title": "Die Grundgleichungen f\\\"ur die elektromagnetischen Vorg\\\"ange in bewegten K\\\"orpern",
+        "author": "Minkowski, Hermann",
+        "journal": "Nachrichten von der Gesellschaft der Wissenschaften zu G\\\"ottingen",
+        "pages": "53--111",
+        "year": "1908",
+        "url": "https://en.wikisource.org/wiki/Translation:The_Fundamental_Equations_for_Electromagnetic_Processes_in_Moving_Bodies"
+      }
+    },
+    "minkowski1909": {
+      "type": "article",
+      "fields": {
+        "title": "Raum und Zeit",
+        "author": "Minkowski, Hermann",
+        "journal": "Physikalische Zeitschrift",
+        "volume": "10",
+        "pages": "75--88",
+        "year": "1909",
+        "url": "https://en.wikisource.org/wiki/Translation:Space_and_Time"
+      }
+    },
+    "einstein1905sr": {
+      "type": "article",
+      "fields": {
+        "title": "Zur Elektrodynamik bewegter K\\\"orper",
+        "author": "Einstein, Albert",
+        "journal": "Annalen der Physik",
+        "volume": "17",
+        "pages": "891--921",
+        "year": "1905",
+        "url": "https://doi.org/10.1002/andp.19053221004"
+      }
+    },
+    "lampa1924": {
+      "type": "article",
+      "fields": {
+        "title": "Wie erscheint nach der Relativit\\\"atstheorie ein bewegter Stab einem ruhenden Beobachter?",
+        "author": "Lampa, Anton",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "27",
+        "pages": "138--148",
+        "year": "1924",
+        "url": "https://doi.org/10.1007/BF01328021"
+      }
+    },
+    "gamow1940": {
+      "type": "book",
+      "fields": {
+        "title": "Mr Tompkins in Wonderland",
+        "author": "Gamow, George",
+        "publisher": "Cambridge University Press",
+        "year": "1940"
+      }
+    },
+    "penrose1959": {
+      "type": "article",
+      "fields": {
+        "title": "The apparent shape of a relativistically moving sphere",
+        "author": "Penrose, Roger",
+        "journal": "Mathematical Proceedings of the Cambridge Philosophical Society",
+        "volume": "55",
+        "pages": "137--139",
+        "year": "1959",
+        "url": "https://doi.org/10.1017/S0305004100033776"
+      }
+    },
+    "terrell1959": {
+      "type": "article",
+      "fields": {
+        "title": "Invisibility of the Lorentz Contraction",
+        "author": "Terrell, James",
+        "journal": "Physical Review",
+        "volume": "116",
+        "pages": "1041--1045",
+        "year": "1959",
+        "url": "https://doi.org/10.1103/PhysRev.116.1041"
+      }
+    },
+    "weisskopf1960": {
+      "type": "article",
+      "fields": {
+        "title": "The Visual Appearance of Rapidly Moving Objects",
+        "author": "Weisskopf, Victor F.",
+        "journal": "Physics Today",
+        "volume": "13",
+        "pages": "24--27",
+        "year": "1960",
+        "url": "https://doi.org/10.1063/1.3057105"
+      }
+    },
+    "slipher1913": {
+      "type": "article",
+      "fields": {
+        "title": "The Radial Velocity of the Andromeda Nebula",
+        "author": "Slipher, Vesto M.",
+        "journal": "Lowell Observatory Bulletin",
+        "volume": "1",
+        "pages": "56--57",
+        "year": "1913",
+        "url": "https://ui.adsabs.harvard.edu/scan/manifest/1914PA.....22...19S"
+      }
+    },
+    "schwarzschild1916": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber das Gravitationsfeld eines Massenpunktes nach der Einsteinschen Theorie",
+        "author": "Schwarzschild, Karl",
+        "journal": "Sitzungsberichte der K\\\"oniglich Preussischen Akademie der Wissenschaften",
+        "pages": "189--196",
+        "year": "1916",
+        "url": "https://arxiv.org/abs/physics/9905030"
+      }
+    },
+    "schwarzschild1916b": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber das Gravitationsfeld einer Kugel aus inkompressibler Fl\\\"ussigkeit nach der Einsteinschen Theorie",
+        "author": "Schwarzschild, Karl",
+        "journal": "Sitzungsberichte der K\\\"oniglich Preussischen Akademie der Wissenschaften",
+        "pages": "424--434",
+        "year": "1916",
+        "url": "https://arxiv.org/pdf/physics/9912033"
+      }
+    },
+    "reissner1916": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber die Eigengravitation des elektrischen Feldes nach der Einsteinschen Theorie",
+        "author": "Reissner, Hans",
+        "journal": "Annalen der Physik",
+        "volume": "355",
+        "number": "9",
+        "pages": "106--120",
+        "year": "1916",
+        "url": "https://onlinelibrary.wiley.com/doi/10.1002/andp.19163550905"
+      }
+    },
+    "droste1917": {
+      "type": "article",
+      "fields": {
+        "title": "The field of a single centre in Einstein's theory of gravitation, and the motion of a particle in that field",
+        "author": "Droste, Johannes",
+        "journal": "Proceedings of the Royal Netherlands Academy of Arts and Science",
+        "volume": "19",
+        "pages": "197--215",
+        "year": "1917",
+        "url": "https://www.sjcrothers.plasmaresources.com/Droste.pdf"
+      }
+    },
+    "hilbert1917": {
+      "type": "article",
+      "fields": {
+        "title": "Die Grundlagen der Physik (Zweite Mitteilung)",
+        "author": "Hilbert, David",
+        "journal": "Nachrichten von der Gesellschaft der Wissenschaften zu G\\\"ottingen",
+        "pages": "53--76",
+        "year": "1917",
+        "url": "https://sites.pitt.edu/~jdnorton/teaching/Einstein_graduate/2590_Einstein_2015/pdfs/Hilbert_1917_fragment.pdf"
+      }
+    },
+    "wirtz1918": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber die Bewegungen der Nebelflecke",
+        "author": "Wirtz, Carl Wilhelm",
+        "journal": "Astronomische Nachrichten",
+        "volume": "206",
+        "pages": "109--116",
+        "year": "1918",
+        "url": "https://ia600607.us.archive.org/view_archive.php?archive=/8/items/crossref-pre-1923-scholarly-works/10.1002%252Fasna.19162032304.zip&file=10.1002%252Fasna.19182061302.pdf"
+      }
+    },
+    "nordstrom1918": {
+      "type": "article",
+      "fields": {
+        "title": "On the Energy of the Gravitational Field in Einstein's Theory",
+        "author": "Nordstr\\\"om, Gunnar",
+        "journal": "Verhandlungen der Koninklijke Akademie van Wetenschappen te Amsterdam",
+        "volume": "26",
+        "pages": "1201--1208",
+        "year": "1918",
+        "url": "https://dwc.knaw.nl/DL/publications/PU00012316.pdf#page=2.00"
+      }
+    },
+    "friedmann1922": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber die Kr\\\"ummung des Raumes",
+        "author": "Friedmann, Alexander",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "10",
+        "pages": "377--386",
+        "year": "1922",
+        "url": "https://www.lorentz.leidenuniv.nl/Friedmann/On_the_geometry_of_curved_space/translation_Friedmann_1922.pdf"
+      }
+    },
+    "wirtz1922": {
+      "type": "article",
+      "fields": {
+        "title": "Einiges zur Statistik der Radialbewegungen von Spiralnebeln und Kugelsternh\\\"aufen",
+        "author": "Wirtz, Carl Wilhelm",
+        "journal": "Astronomische Nachrichten",
+        "volume": "215",
+        "pages": "349--354",
+        "year": "1922",
+        "url": "https://onlinelibrary.wiley.com/doi/10.1002/asna.19212151703"
+      }
+    },
+    "birkhoff1923": {
+      "type": "book",
+      "fields": {
+        "title": "Relativity and Modern Physics",
+        "author": "Birkhoff, George David",
+        "year": "1923",
+        "publisher": "Harvard University Press",
+        "url": "https://babel.hathitrust.org/cgi/pt?id=mdp.39015017186456&seq=5"
+      }
+    },
+    "lanczos1924": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber eine station\\\"are Kosmologie im Sinne der Einsteinschen Gravitationstheorie",
+        "author": "Lanczos, Kornel",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "21",
+        "pages": "73--110",
+        "year": "1924",
+        "url": "https://link.springer.com/article/10.1007/BF01328251"
+      }
+    },
+    "eddington1924": {
+      "type": "article",
+      "fields": {
+        "title": "A comparison of Whitehead's and Einstein's formulae",
+        "author": "Eddington, Arthur Stanley",
+        "journal": "Nature",
+        "volume": "113",
+        "pages": "192",
+        "year": "1924",
+        "url": "https://www.nature.com/articles/113192a0"
+      }
+    },
+    "lemaitre1927": {
+      "type": "article",
+      "fields": {
+        "title": "Un univers homog\\`ene de masse constante et de rayon croissant rendant compte de la vitesse radiale des n{\\'e}buleuses extra-galactiques",
+        "author": "Lema\\^itre, Georges",
+        "journal": "Annales de la Soci\\'et\\'e Scientifique de Bruxelles",
+        "volume": "47",
+        "pages": "49--59",
+        "year": "1927",
+        "url": "https://ui.adsabs.harvard.edu/scan/manifest/1927ASSB...47...49L"
+      }
+    },
+    "lemaitre1933": {
+      "type": "article",
+      "fields": {
+        "title": "L'univers en expansion",
+        "author": "Lema\\^itre, Georges",
+        "journal": "Annales de la Soci\\'et\\'e Scientifique de Bruxelles",
+        "volume": "53",
+        "pages": "51--85",
+        "year": "1933",
+        "url": "https://archives.uclouvain.be/ark:/33176/dli000000eXt8#?c=0&m=0&s=0&cv=0"
+      }
+    },
+    "robertson1935": {
+      "type": "article",
+      "fields": {
+        "title": "Kinematics and world structure",
+        "author": "Robertson, Howard Percy",
+        "journal": "Astrophysical Journal",
+        "volume": "82",
+        "pages": "284--301",
+        "year": "1935",
+        "url": "https://articles.adsabs.harvard.edu/pdf/1935ApJ....82..284R"
+      }
+    },
+    "vanstockum1937": {
+      "type": "article",
+      "fields": {
+        "title": "The Gravitational Field of a Distribution of Particles Rotating about an Axis of Symmetry",
+        "author": "van Stockum, Willem Jacob",
+        "journal": "Proceedings of the Royal Society of Edinburgh",
+        "volume": "57",
+        "pages": "135--154",
+        "year": "1937",
+        "url": "https://www.cambridge.org/core/journals/proceedings-of-the-royal-society-of-edinburgh/article/abs/ixthe-gravitational-field-of-a-distribution-of-particles-rotating-about-an-axis-of-symmetry/40E39372658C7031B0C4316A36154F46"
+      }
+    },
+    "walker1937": {
+      "type": "article",
+      "fields": {
+        "title": "On Milne's theory of world-structure",
+        "author": "Walker, Arthur Geoffrey",
+        "journal": "Proceedings of the London Mathematical Society",
+        "volume": "42",
+        "pages": "90--127",
+        "year": "1937",
+        "url": "https://londmathsoc.onlinelibrary.wiley.com/doi/10.1112/plms/s2-42.1.90"
+      }
+    },
+    "godel1949": {
+      "type": "article",
+      "fields": {
+        "title": "An Example of a New Type of Cosmological Solutions of {Einstein}'s Field Equations of Gravitation",
+        "author": "G\\\"odel, Kurt",
+        "journal": "Reviews of Modern Physics",
+        "volume": "21",
+        "pages": "447--450",
+        "year": "1949",
+        "url": "https://kurtgoedel.de/cms-83FO/wp-content/uploads/2016/10/Goedel.pdf"
+      }
+    },
+    "finkelstein1958": {
+      "type": "article",
+      "fields": {
+        "title": "Past-future asymmetry of the gravitational field of a point particle",
+        "author": "Finkelstein, David",
+        "journal": "Physical Review",
+        "volume": "110",
+        "pages": "965--967",
+        "year": "1958",
+        "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.110.965"
+      }
+    },
+    "buchdahl1959": {
+      "type": "article",
+      "fields": {
+        "title": "General Relativistic Fluid Spheres",
+        "author": "Buchdahl, Hans A.",
+        "journal": "Physical Review",
+        "volume": "116",
+        "pages": "1027--1034",
+        "year": "1959",
+        "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.116.1027"
+      }
+    },
+    "kruskal1960": {
+      "type": "article",
+      "fields": {
+        "title": "Maximal extension of Schwarzschild metric",
+        "author": "Kruskal, Martin D",
+        "journal": "Physical Review",
+        "volume": "119",
+        "pages": "1743--1745",
+        "year": "1960",
+        "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.119.1743"
+      }
+    },
+    "szekeres1960": {
+      "type": "article",
+      "fields": {
+        "title": "On the singularities of a Riemannian manifold",
+        "author": "Szekeres, George",
+        "journal": "Publicationes Mathematicae Debrecen",
+        "volume": "7",
+        "pages": "285--301",
+        "year": "1960",
+        "url": "https://publi.math.unideb.hu/paper/2798/download/10_5486_PMD_1960_7_1-4_26.pdf"
+      }
+    },
+    "rindler1966": {
+      "type": "article",
+      "fields": {
+        "title": "Kruskal Space and the Uniformly Accelerated Frame",
+        "author": "Rindler, Wolfgang",
+        "journal": "American Journal of Physics",
+        "volume": "34",
+        "pages": "1174--1178",
+        "year": "1966",
+        "url": "https://pubs.aip.org/aapt/ajp/article-abstract/34/12/1174/1047622/Kruskal-Space-and-the-Uniformly-Accelerated-Frame?redirectedFrom=fulltext"
+      }
+    },
+    "misner1973": {
+      "type": "book",
+      "fields": {
+        "title": "Gravitation",
+        "author": "Misner, Charles W and Thorne, Kip S and Wheeler, John Archibald",
+        "year": "1973",
+        "publisher": "W. H. Freeman",
+        "url": "https://press.princeton.edu/books/hardcover/9780691177793/gravitation?srsltid=AfmBOoqDvJhIsKXM48y2Yr-vsNBSPqBMEI4RCplggdIVS00x7GElskCM"
+      }
+    },
+    "bronnikov1973": {
+      "type": "article",
+      "fields": {
+        "title": "Scalar-tensor theory and scalar charge",
+        "author": "Bronnikov, Kirill A.",
+        "journal": "Acta Physica Polonica B",
+        "volume": "4",
+        "pages": "251--266",
+        "year": "1973",
+        "url": "https://s3.cern.ch/inspire-prod-files-1/1a28c080a733a1b776867157a30efd12"
+      }
+    },
+    "ellis1973": {
+      "type": "article",
+      "fields": {
+        "title": "Ether flow through a drainhole: A particle model in general relativity",
+        "author": "Ellis, Homer G",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "14",
+        "pages": "104--118",
+        "year": "1973",
+        "url": "https://euclid.colorado.edu/~ellis/RelativityPapers/EtFlThDrPaMoGeRe.pdf"
+      }
+    },
+    "davies1975": {
+      "type": "article",
+      "fields": {
+        "title": "Scalar production in Schwarzschild and Rindler metrics",
+        "author": "Davies, P C W",
+        "journal": "Journal of Physics A: Mathematical and General",
+        "volume": "8",
+        "pages": "609--616",
+        "year": "1975",
+        "url": "https://iopscience.iop.org/article/10.1088/0305-4470/8/4/022"
+      }
+    },
+    "unruh1976": {
+      "type": "article",
+      "fields": {
+        "title": "Notes on black-hole evaporation",
+        "author": "Unruh, William G",
+        "journal": "Physical Review D",
+        "volume": "14",
+        "pages": "870--892",
+        "year": "1976",
+        "url": "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.14.870"
+      }
+    },
+    "wald1984": {
+      "type": "book",
+      "fields": {
+        "title": "General Relativity",
+        "author": "Wald, Robert M",
+        "year": "1984",
+        "publisher": "University of Chicago Press",
+        "url": "https://icourse.club/uploads/files/b10bbb171326589762e3f2784ba527888988f8f5.pdf"
+      }
+    },
+    "morris1988": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes in spacetime and their use for interstellar travel: A tool for teaching general relativity",
+        "author": "Morris, Michael S and Thorne, Kip S",
+        "journal": "American Journal of Physics",
+        "volume": "56",
+        "pages": "395--412",
+        "year": "1988",
+        "url": "https://www.pas.rochester.edu/~tim/introframe/AmJPhysBlackHoles.pdf"
+      }
+    },
+    "visser1995": {
+      "type": "book",
+      "fields": {
+        "title": "Lorentzian Wormholes: From Einstein to Hawking",
+        "author": "Visser, Matt",
+        "year": "1995",
+        "publisher": "AIP Press",
+        "url": "https://link.springer.com/book/9781563966538"
+      }
+    },
+    "noreika2021minkowski": {
+      "type": "misc",
+      "fields": {
+        "title": "Hermann Minkowski's Spacetime: The Theory that Einstein Overlooked",
+        "author": "Noreika, David",
+        "year": "2021",
+        "journal": "Galileo Unbound",
+        "url": "https://galileo-unbound.blog/2021/04/24/hermann-minkowskis-spacetime-the-theory-that-einstein-overlooked/"
+      }
+    },
+    "gleiser2013information": {
+      "type": "article",
+      "fields": {
+        "title": "Information-entropic stability bound for compact objects: Application to Q-balls and the Chandrasekhar limit of polytropes",
+        "author": "Gleiser, Marcelo and Sowinski, Damian",
+        "journal": "Physics Letters B",
+        "volume": "727",
+        "number": "1-3",
+        "pages": "272--275",
+        "year": "2013",
+        "publisher": "Elsevier",
+        "url": "/assets/docs/papers/Polytropes_Gleiser_2013.pdf"
+      }
+    },
+    "gleiser2015information": {
+      "type": "article",
+      "fields": {
+        "title": "Information-entropic signature of the critical point",
+        "author": "Gleiser, Marcelo and Sowinski, Damian",
+        "journal": "Physics Letters B",
+        "volume": "747",
+        "pages": "125--128",
+        "year": "2015",
+        "publisher": "Elsevier",
+        "url": "/assets/docs/papers/Critical_Gleiser_2018.pdf"
+      }
+    },
+    "sowinski2016complexity": {
+      "type": "article",
+      "fields": {
+        "title": "Complexity and Stability for Epistemic Agents: The Foundations and Phenomenology of Configurational Entropy",
+        "author": "Sowinski, Damian Radoslaw",
+        "journal": "Ph.D. Thesis",
+        "year": "2016",
+        "url": "/assets/docs/papers/myThesis.pdf"
+      }
+    },
+    "sowinski2017information": {
+      "type": "article",
+      "fields": {
+        "title": "Information dynamics at a phase transition",
+        "author": "Sowinski, Damian and Gleiser, Marcelo",
+        "journal": "Journal of Statistical Physics",
+        "volume": "167",
+        "number": "5",
+        "pages": "1221--1232",
+        "year": "2017",
+        "publisher": "Springer",
+        "url": "/assets/docs/papers/PhaseDynamics_Sowinski_2017.pdf"
+      }
+    },
+    "sowinski2018instantons": {
+      "type": "article",
+      "fields": {
+        "title": "Configurational information approach to instantons and false vacuum decay in D-dimensional spacetime",
+        "author": "Sowinski, Damian and Gleiser, Marcelo",
+        "journal": "Physical Review D",
+        "volume": "98",
+        "number": "5",
+        "pages": "056026",
+        "year": "2018",
+        "publisher": "APS",
+        "url": "/assets/docs/papers/Instantons_Sowinski_2018.pdf"
+      }
+    },
+    "gleiser2018oscillons": {
+      "type": "article",
+      "fields": {
+        "title": "Configurational entropy as a lifetime predictor and pattern discriminator for oscillons",
+        "author": "Gleiser, Marcelo and Stephens, Michelle and Sowinski, Damian",
+        "journal": "Physical Review D",
+        "volume": "97",
+        "number": "9",
+        "pages": "096007",
+        "year": "2018",
+        "publisher": "APS",
+        "url": "/assets/docs/papers/Oscillons_Gleiser_2018.pdf"
+      }
+    },
+    "gleiser2018mapmaking": {
+      "type": "incollection",
+      "fields": {
+        "author": "Gleiser, Marcelo and Sowinski, Damian",
+        "title": "How We Make Sense of the World: Information, Map-Making, and The Scientific Narrative",
+        "booktitle": "The Map and the Territory: Exploring the Foundations of Science, Thought and Reality",
+        "publisher": "Springer",
+        "year": "2018",
+        "editor": "Wuppuluri, Shyam and Doria, Francisco Antonio",
+        "pages": "141--163",
+        "url": "/assets/docs/papers/MapMaking_Sowinski_2018.pdf"
+      }
+    },
+    "sowinski2021poroelasticity": {
+      "type": "article",
+      "fields": {
+        "title": "Poroelasticity as a model of soft tissue structure: Hydraulic permeability reconstruction for magnetic resonance elastography in silico",
+        "author": "Sowinski, Damian R and McGarry, Matthew DJ and Van Houten, Elijah EW and Gordon-Wylie, Scott and Weaver, John B and Paulsen, Keith D",
+        "journal": "Frontiers in Physics",
+        "volume": "8",
+        "pages": "617582",
+        "year": "2021",
+        "publisher": "Frontiers Media SA",
+        "url": "/assets/docs/papers/Poro_Sowinski_2020.pdf"
+      }
+    },
+    "mcgarry2021heterogenous": {
+      "type": "article",
+      "fields": {
+        "title": "A heterogenous, time harmonic, nearly incompressible transverse isotropic finite element brain simulation platform for MR elastography",
+        "author": "McGarry, Matthew and Houten, Elijah Van and Guertler, Charlotte and Okamoto, Ruth and Smith, Daniel and Sowinski, Damian and Johnson, Curtis and Bayly, Philip and Weaver, John and Paulsen, Keith",
+        "journal": "Physics in Medicine \\& Biology",
+        "volume": "66",
+        "number": "5",
+        "pages": "055029",
+        "year": "2021",
+        "publisher": "IOP Publishing",
+        "url": "/assets/docs/papers/NITI_McGarry_2021.pdf"
+      }
+    },
+    "sowinski2022consensus": {
+      "type": "article",
+      "fields": {
+        "title": "The consensus problem in polities of agents with dissimilar cognitive architectures",
+        "author": "Sowinski, Damian R and Carroll-Nellenback, Jonathan and DeSilva, Jeremy and Frank, Adam and Ghoshal, Gourab and Gleiser, Marcelo",
+        "journal": "Entropy",
+        "volume": "24",
+        "number": "10",
+        "pages": "1378",
+        "year": "2022",
+        "publisher": "MDPI",
+        "url": "/assets/docs/papers/Consensus_Sowinski_2022.pdf"
+      }
+    },
+    "mcgarry2022mapping": {
+      "type": "article",
+      "fields": {
+        "title": "Mapping heterogenous anisotropic tissue mechanical properties with transverse isotropic nonlinear inversion MR elastography",
+        "author": "McGarry, Matthew and Van Houten, Elijah and Sowinski, Damian and Jyoti, Dhrubo and Smith, Daniel R and Caban-Rivera, Diego A and McIlvain, Grace and Bayly, Philip and Johnson, Curtis L and Weaver, John and others",
+        "journal": "Medical Image Analysis",
+        "volume": "78",
+        "year": "2022",
+        "publisher": "Elsevier",
+        "url": "/assets/docs/papers/Transverse_McGarry_2022.pdf"
+      }
+    },
+    "hannum2022correlated": {
+      "type": "article",
+      "fields": {
+        "title": "Correlated noise in brain magnetic resonance elastography",
+        "author": "Hannum, Ariel J and McIlvain, Grace and Sowinski, Damian and McGarry, Matthew DJ and Johnson, Curtis L",
+        "journal": "Magnetic Resonance in Medicine",
+        "volume": "87",
+        "number": "3",
+        "pages": "1313--1328",
+        "year": "2022",
+        "publisher": "Wiley Online Library",
+        "url": "/assets/docs/papers/Noise_Hannum_2021.pdf"
+      }
+    },
+    "jyoti2022quantifying": {
+      "type": "article",
+      "fields": {
+        "title": "Quantifying stability of parameter estimates for in vivo nearly incompressible transversely-isotropic brain MR elastography",
+        "author": "Jyoti, Dhrubo and McGarry, Matthew and Van Houten, Elijah and Sowinski, Damian and Bayly, Philip V and Johnson, Curtis L and Paulsen, Keith",
+        "journal": "Biomedical Physics and Engineering Express",
+        "volume": "8",
+        "number": "3",
+        "pages": "035015",
+        "year": "2022",
+        "publisher": "IOP Publishing",
+        "url": "/assets/docs/papers/Stability_Jyoti_2021.pdf"
+      }
+    },
+    "bowen2022visual": {
+      "type": "article",
+      "fields": {
+        "title": "Visual stream connectivity predicts assessments of image quality",
+        "author": "Bowen, Elijah FW and Rodriguez, Antonio M and Sowinski, Damian R and Granger, Richard",
+        "journal": "Journal of Vision",
+        "volume": "22",
+        "number": "11",
+        "pages": "4--4",
+        "year": "2022",
+        "publisher": "The Association for Research in Vision and Ophthalmology",
+        "url": "/assets/docs/papers/Vision_Bowen_2021.pdf"
+      }
+    },
+    "sowinski2023semantic": {
+      "type": "article",
+      "fields": {
+        "title": "Semantic information in a model of resource gathering agents",
+        "author": "Sowinski, Damian R and Carroll-Nellenback, Jonathan and Markwick, Robert N and Pinero, Jordi and Gleiser, Marcelo and Kolchinsky, Artemy and Ghoshal, Gourab and Frank, Adam",
+        "journal": "PRX Life",
+        "volume": "1",
+        "number": "2",
+        "pages": "023003",
+        "year": "2023",
+        "publisher": "APS",
+        "url": "/assets/docs/papers/Foraging_Sowinski_2023.pdf"
+      }
+    },
+    "sowinski2024information": {
+      "type": "article",
+      "fields": {
+        "title": "Information-theoretic description of a feedback-control Kuramoto model",
+        "author": "Sowinski, Damian R and Frank, Adam and Ghoshal, Gourab",
+        "journal": "Physical Review Research",
+        "volume": "6",
+        "number": "4",
+        "pages": "043188",
+        "year": "2024",
+        "publisher": "APS",
+        "url": "/assets/docs/papers/Kuramoto_Sowinski_2024.pdf"
+      }
+    },
+    "sowinski2025configurational": {
+      "type": "article",
+      "fields": {
+        "title": "Configurational information measures, phase transitions, and an upper bound on complexity",
+        "author": "Sowinski, Damian R and Kelty, Sean and Ghoshal, Gourab",
+        "journal": "arXiv preprint arXiv:2503.02980",
+        "year": "2025",
+        "url": "/assets/docs/papers/Ising_Sowinski_2025.pdf"
+      }
+    },
+    "quillen2025notions": {
+      "type": "article",
+      "fields": {
+        "title": "Notions of adiabatic drift in the quantized Harper model",
+        "author": "Quillen, Alice C and Skerrett, Nathan and Sowinski, Damian R and Miakhel, Abobakar Sediq",
+        "journal": "Physical Review A",
+        "volume": "112",
+        "number": "4",
+        "pages": "042226",
+        "year": "2025",
+        "publisher": "APS",
+        "url": "/assets/docs/papers/Harper_Alice_2025.pdf"
+      }
+    },
+    "mcgarry2025vivo": {
+      "type": "article",
+      "fields": {
+        "title": "In vivo magnetic resonance imaging of the interstitial pressure gradients (pgMRI) using a pulsatile poroelastic computational model",
+        "author": "McGarry, Matthew and Sowinski, Damian and Tan, Likun and Weaver, John and Zwanenburg, Jacobus JM and Paulsen, Keith",
+        "journal": "Interface Focus",
+        "volume": "15",
+        "number": "1",
+        "year": "2025",
+        "publisher": "The Royal Society",
+        "url": "/assets/docs/papers/Pressure_McGarry_2025.pdf"
+      }
+    },
+    "sowinski2025causal": {
+      "type": "inproceedings",
+      "fields": {
+        "title": "Causal Leverage Density: A Universal Framework for Semantic Information",
+        "author": "Sowinski, Damian R and Holler, Silvia and Wong, Mike and Segal, Gary and Parkinson, David and Vidal, Cl\\'ement and Henderson Cleaves, James and Sinhadc, Pritvik and Prabhu, Anirudh and Bartlett, Stuart",
+        "booktitle": "Artificial Life Conference Proceedings 37",
+        "volume": "2025",
+        "number": "1",
+        "pages": "43",
+        "year": "2025",
+        "organization": "MIT Press",
+        "url": "/assets/docs/papers/CLD_Sowinski_2025.pdf"
+      }
+    },
+    "sowinski2025exo": {
+      "type": "article",
+      "fields": {
+        "title": "Exo-Daisy World: Revisiting Gaia theory through an informational architecture perspective",
+        "author": "Sowinski, Damian R and Ghoshal, Gourab and Frank, Adam",
+        "journal": "The Planetary Science Journal",
+        "volume": "6",
+        "number": "7",
+        "pages": "176",
+        "year": "2025",
+        "publisher": "The American Astronomical Society",
+        "url": "/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf"
+      }
+    },
+    "pinero2026information": {
+      "type": "article",
+      "fields": {
+        "title": "Information bounds production in replicator systems",
+        "author": "Pi\\~nero, Jordi and Sowinski, Damian R and Ghoshal, Gourab and Frank, Adam and Kolchinsky, Artemy",
+        "journal": "Communications Physics",
+        "year": "2026",
+        "publisher": "Nature Publishing Group UK London",
+        "url": "/assets/docs/papers/Replicators_Pinero_2026.pdf"
+      }
+    },
+    "sowinski2026beh": {
+      "type": "article",
+      "fields": {
+        "title": "Behavioral Speciation in the Neuroevolution of Recurrent Neural Net Foragers driven by Environmental Homogeneity",
+        "author": "Sowinski, Damian R",
+        "journal": "Working paper",
+        "year": "2026",
+        "url": "/assets/docs/papers/RNNs_Sowinski_2026.pdf"
+      }
+    },
+    "bartlett2026ref": {
+      "type": "article",
+      "fields": {
+        "title": "Reflections of Life: Distinguishing Living from Nonliving Worlds with Complexity Metrics",
+        "author": "Bartlett, Stuart and San, Xianlei and Fan, Siteng and Segal, Gary and Sowinski, Damian R. and Yung, Yuk L.",
+        "journal": "The Astronomical Journal",
+        "volume": "172",
+        "number": "1",
+        "pages": "16",
+        "year": "2026",
+        "month": "jun",
+        "publisher": "American Astronomical Society",
+        "doi": "10.3847/1538-3881/ae6b7b",
+        "url": "/assets/docs/papers/Reflections_Bartlett_2026.pdf",
+        "issn": "1538-3881"
+      }
+    },
+    "vidal2026technosignatures": {
+      "type": "article",
+      "fields": {
+        "title": "The Search for Technosignatures: A Review of Possibilities",
+        "author": "Vidal, Cl\\'ement and Fields, Benji L. and Sowinski, Damian R. and Bartlett, Stuart and Terrile, Richard J. and Ellery, Alex and Bibas, Daliah and Mastrogiovanni, Armando M. and D\\\"obler, Niklas and Singla, Manika and DeMarines, Julia and Fisher, Theresa and Uno, Yuri and Turner, Jake D. and Sneed, Evan L. and Huggahalli, Advait and Li, Megan Grace and Li, Zhuofu (Chester) and Huston, Macy and Saide, Ramiro",
+        "journal": "arXiv preprint arXiv:2605.21093",
+        "year": "2026",
+        "doi": "10.48550/arXiv.2605.21093",
+        "url": "/assets/docs/papers/Technosignature_Vidal_2026.pdf"
+      }
+    },
+    "einstein1917": {
+      "type": "article",
+      "fields": {
+        "title": "Kosmologische Betrachtungen zur allgemeinen Relativit\\\"atstheorie",
+        "author": "Einstein, Albert",
+        "journal": "Sitzungsberichte der K\\\"oniglich Preussischen Akademie der Wissenschaften",
+        "pages": "142--152",
+        "year": "1917",
+        "url": "https://ui.adsabs.harvard.edu/abs/1917SPAW.......142E/abstract"
+      }
+    },
+    "desitter1917": {
+      "type": "article",
+      "fields": {
+        "title": "On Einstein's theory of gravitation and its astronomical consequences. Third paper",
+        "author": "de Sitter, Willem",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "78",
+        "number": "1",
+        "pages": "3--28",
+        "year": "1917",
+        "doi": "10.1093/mnras/78.1.3",
+        "url": "https://academic.oup.com/mnras/article/78/1/3/1239878"
+      }
+    },
+    "lemaitre1925": {
+      "type": "article",
+      "fields": {
+        "title": "Note on de Sitter's universe",
+        "author": "Lema\\^itre, Georges",
+        "journal": "Journal of Mathematics and Physics",
+        "volume": "4",
+        "pages": "188--192",
+        "year": "1925",
+        "doi": "10.1002/sapm192541188",
+        "url": "https://onlinelibrary.wiley.com/doi/10.1002/sapm192541188"
+      }
+    },
+    "robertson1928": {
+      "type": "article",
+      "fields": {
+        "title": "On relativistic cosmology",
+        "author": "Robertson, Howard P.",
+        "journal": "Philosophical Magazine",
+        "volume": "5",
+        "number": "31",
+        "pages": "835--848",
+        "year": "1928",
+        "doi": "10.1080/14786440508564528",
+        "url": "https://www.tandfonline.com/doi/abs/10.1080/14786440508564528"
+      }
+    },
+    "maldacena1998": {
+      "type": "article",
+      "fields": {
+        "title": "The large $N$ limit of superconformal field theories and supergravity",
+        "author": "Maldacena, Juan",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "2",
+        "number": "2",
+        "pages": "231--252",
+        "year": "1998",
+        "doi": "10.4310/ATMP.1998.v2.n2.a1",
+        "url": "https://arxiv.org/abs/hep-th/9711200"
+      }
+    },
+    "gubser1998": {
+      "type": "article",
+      "fields": {
+        "title": "Gauge theory correlators from non-critical string theory",
+        "author": "Gubser, Steven S. and Klebanov, Igor R. and Polyakov, Alexander M.",
+        "journal": "Physics Letters B",
+        "volume": "428",
+        "number": "1--2",
+        "pages": "105--114",
+        "year": "1998",
+        "doi": "10.1016/S0370-2693(98)00377-3",
+        "url": "https://arxiv.org/abs/hep-th/9802109"
+      }
+    },
+    "witten1998": {
+      "type": "article",
+      "fields": {
+        "title": "Anti-de Sitter space and holography",
+        "author": "Witten, Edward",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "2",
+        "number": "2",
+        "pages": "253--291",
+        "year": "1998",
+        "doi": "10.4310/ATMP.1998.v2.n2.a2",
+        "url": "https://arxiv.org/abs/hep-th/9802150"
+      }
+    },
+    "thooft1993": {
+      "type": "incollection",
+      "fields": {
+        "title": "Dimensional reduction in quantum gravity",
+        "author": "'t Hooft, Gerard",
+        "booktitle": "Salamfestschrift: A Collection of Talks",
+        "series": "World Scientific Series in 20th Century Physics",
+        "volume": "4",
+        "editor": "Ali, A. and Ellis, J. and Randjbar-Daemi, S.",
+        "publisher": "World Scientific",
+        "year": "1993",
+        "url": "https://arxiv.org/abs/gr-qc/9310026"
+      }
+    },
+    "susskind1995": {
+      "type": "article",
+      "fields": {
+        "title": "The world as a hologram",
+        "author": "Susskind, Leonard",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "36",
+        "number": "11",
+        "pages": "6377--6396",
+        "year": "1995",
+        "doi": "10.1063/1.531249",
+        "url": "https://arxiv.org/abs/hep-th/9409089"
+      }
+    },
+    "kerr1963": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational field of a spinning mass as an example of algebraically special metrics",
+        "author": "Kerr, Roy P.",
+        "journal": "Physical Review Letters",
+        "volume": "11",
+        "number": "5",
+        "pages": "237--238",
+        "year": "1963",
+        "doi": "10.1103/PhysRevLett.11.237",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.11.237"
+      }
+    },
+    "boyer1967": {
+      "type": "article",
+      "fields": {
+        "title": "Maximal analytic extension of the Kerr metric",
+        "author": "Boyer, Robert H. and Lindquist, Richard W.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "8",
+        "number": "2",
+        "pages": "265--281",
+        "year": "1967",
+        "doi": "10.1063/1.1705193",
+        "url": "https://pubs.aip.org/aip/jmp/article/8/2/265/233738"
+      }
+    },
+    "carter1968": {
+      "type": "article",
+      "fields": {
+        "title": "Global structure of the Kerr family of gravitational fields",
+        "author": "Carter, Brandon",
+        "journal": "Physical Review",
+        "volume": "174",
+        "number": "5",
+        "pages": "1559--1571",
+        "year": "1968",
+        "doi": "10.1103/PhysRev.174.1559",
+        "url": "https://link.aps.org/doi/10.1103/PhysRev.174.1559"
+      }
+    },
+    "penrose1969": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse: the role of general relativity",
+        "author": "Penrose, Roger",
+        "journal": "La Rivista del Nuovo Cimento",
+        "volume": "1",
+        "pages": "252--276",
+        "year": "1969",
+        "url": "https://ui.adsabs.harvard.edu/abs/1969NCimR...1..252P/abstract"
+      }
+    },
+    "newman1965janis": {
+      "type": "article",
+      "fields": {
+        "title": "Note on the Kerr spinning-particle metric",
+        "author": "Newman, Ezra T. and Janis, Allen I.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "6",
+        "number": "6",
+        "pages": "915--917",
+        "year": "1965",
+        "doi": "10.1063/1.1704350",
+        "url": "https://pubs.aip.org/aip/jmp/article/6/6/915/232727"
+      }
+    },
+    "newman1965kn": {
+      "type": "article",
+      "fields": {
+        "title": "Metric of a rotating, charged mass",
+        "author": "Newman, Ezra T. and Couch, E. and Chinnapared, K. and Exton, A. and Prakash, A. and Torrence, R.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "6",
+        "number": "6",
+        "pages": "918--919",
+        "year": "1965",
+        "doi": "10.1063/1.1704351",
+        "url": "https://pubs.aip.org/aip/jmp/article/6/6/918/232734"
+      }
+    },
+    "taub1951": {
+      "type": "article",
+      "fields": {
+        "title": "Empty space-times admitting a three parameter group of motions",
+        "author": "Taub, Abraham H.",
+        "journal": "Annals of Mathematics",
+        "volume": "53",
+        "number": "3",
+        "pages": "472--490",
+        "year": "1951",
+        "doi": "10.2307/1969567",
+        "url": "https://www.jstor.org/stable/1969567"
+      }
+    },
+    "nut1963": {
+      "type": "article",
+      "fields": {
+        "title": "Empty-space generalization of the Schwarzschild metric",
+        "author": "Newman, Ezra and Tamburino, Louis and Unti, Theodore",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "4",
+        "number": "7",
+        "pages": "915--923",
+        "year": "1963",
+        "doi": "10.1063/1.1704018",
+        "url": "https://pubs.aip.org/aip/jmp/article/4/7/915/230250"
+      }
+    },
+    "misner1963": {
+      "type": "article",
+      "fields": {
+        "title": "The flatter regions of Newman, Unti, and Tamburino's generalized Schwarzschild space",
+        "author": "Misner, Charles W.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "4",
+        "number": "7",
+        "pages": "924--937",
+        "year": "1963",
+        "doi": "10.1063/1.1704019",
+        "url": "https://pubs.aip.org/aip/jmp/article/4/7/924/230241"
+      }
+    },
+    "bertotti1959": {
+      "type": "article",
+      "fields": {
+        "title": "Uniform electromagnetic field in the theory of general relativity",
+        "author": "Bertotti, Bruno",
+        "journal": "Physical Review",
+        "volume": "116",
+        "number": "5",
+        "pages": "1331--1333",
+        "year": "1959",
+        "doi": "10.1103/PhysRev.116.1331",
+        "url": "https://link.aps.org/doi/10.1103/PhysRev.116.1331"
+      }
+    },
+    "robinson1959": {
+      "type": "article",
+      "fields": {
+        "title": "A solution of the Maxwell-Einstein equations",
+        "author": "Robinson, Ivor",
+        "journal": "Bulletin de l'Acad\\'emie Polonaise des Sciences, S\\'erie des Sciences Math\\'ematiques, Astronomiques et Physiques",
+        "volume": "7",
+        "number": "6",
+        "pages": "351--352",
+        "year": "1959"
+      }
+    },
+    "alcubierre1994": {
+      "type": "article",
+      "fields": {
+        "title": "The warp drive: hyper-fast travel within general relativity",
+        "author": "Alcubierre, Miguel",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "11",
+        "number": "5",
+        "pages": "L73--L77",
+        "year": "1994",
+        "doi": "10.1088/0264-9381/11/5/001",
+        "url": "https://arxiv.org/abs/gr-qc/0009013"
+      }
+    },
+    "pfenning1997": {
+      "type": "article",
+      "fields": {
+        "title": "The unphysical nature of `warp drive'",
+        "author": "Pfenning, Michael J. and Ford, Larry H.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "14",
+        "number": "7",
+        "pages": "1743--1751",
+        "year": "1997",
+        "doi": "10.1088/0264-9381/14/7/011",
+        "url": "https://arxiv.org/abs/gr-qc/9702026"
+      }
+    },
+    "vandenbroeck1999": {
+      "type": "article",
+      "fields": {
+        "title": "A `warp drive' with more reasonable total energy requirements",
+        "author": "Van Den Broeck, Chris",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "16",
+        "number": "12",
+        "pages": "3973--3979",
+        "year": "1999",
+        "doi": "10.1088/0264-9381/16/12/314",
+        "url": "https://arxiv.org/abs/gr-qc/9905084"
+      }
+    },
+    "natario2002": {
+      "type": "article",
+      "fields": {
+        "title": "Warp drive with zero expansion",
+        "author": "Nat\\'ario, Jos\\'e",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "19",
+        "number": "6",
+        "pages": "1157--1165",
+        "year": "2002",
+        "doi": "10.1088/0264-9381/19/6/308",
+        "url": "https://arxiv.org/abs/gr-qc/0110086"
+      }
+    },
+    "lobo2004": {
+      "type": "article",
+      "fields": {
+        "title": "Fundamental limitations on `warp drive' spacetimes",
+        "author": "Lobo, Francisco S. N. and Visser, Matt",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "21",
+        "number": "24",
+        "pages": "5871--5892",
+        "year": "2004",
+        "doi": "10.1088/0264-9381/21/24/011",
+        "url": "https://arxiv.org/abs/gr-qc/0406083"
+      }
+    },
+    "bobrick2021": {
+      "type": "article",
+      "fields": {
+        "title": "Introducing physical warp drives",
+        "author": "Bobrick, Alexey and Martire, Gianni",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "38",
+        "number": "10",
+        "pages": "105009",
+        "year": "2021",
+        "doi": "10.1088/1361-6382/abdf6e",
+        "url": "https://arxiv.org/abs/2102.06824"
+      }
+    },
+    "lentz2021": {
+      "type": "article",
+      "fields": {
+        "title": "Breaking the warp barrier: hyper-fast solitons in Einstein-Maxwell-plasma theory",
+        "author": "Lentz, Erik W.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "38",
+        "number": "7",
+        "pages": "075015",
+        "year": "2021",
+        "doi": "10.1088/1361-6382/abe692",
+        "url": "https://arxiv.org/abs/2006.07125"
+      }
+    },
+    "hogarth1992": {
+      "type": "article",
+      "fields": {
+        "title": "Does general relativity allow an observer to view an eternity in a finite time?",
+        "author": "Hogarth, Mark L.",
+        "journal": "Foundations of Physics Letters",
+        "volume": "5",
+        "number": "2",
+        "pages": "173--181",
+        "year": "1992",
+        "doi": "10.1007/BF00682813",
+        "url": "https://link.springer.com/article/10.1007/BF00682813"
+      }
+    },
+    "earman1993": {
+      "type": "article",
+      "fields": {
+        "title": "Forever is a day: supertasks in Pitowsky and Malament-Hogarth spacetimes",
+        "author": "Earman, John and Norton, John D.",
+        "journal": "Philosophy of Science",
+        "volume": "60",
+        "number": "1",
+        "pages": "22--42",
+        "year": "1993",
+        "url": "https://www.cambridge.org/core/journals/philosophy-of-science/article/abs/forever-is-a-day-supertasks-in-pitowsky-and-malamenthogarth-spacetimes/AD62CAFBCE764122E05CDA1B9C3C191F"
+      }
+    },
+    "etesi2002": {
+      "type": "article",
+      "fields": {
+        "title": "Non-Turing computations via Malament-Hogarth space-times",
+        "author": "Etesi, G\\'abor and N\\'emeti, Istv\\'an",
+        "journal": "International Journal of Theoretical Physics",
+        "volume": "41",
+        "number": "2",
+        "pages": "341--370",
+        "year": "2002",
+        "doi": "10.1023/A:1014019225365",
+        "url": "https://arxiv.org/abs/gr-qc/0104023"
+      }
+    },
+    "tolman1934": {
+      "type": "article",
+      "fields": {
+        "title": "Effect of inhomogeneity on cosmological models",
+        "author": "Tolman, Richard C.",
+        "journal": "Proceedings of the National Academy of Sciences",
+        "volume": "20",
+        "number": "3",
+        "pages": "169--176",
+        "year": "1934",
+        "doi": "10.1073/pnas.20.3.169",
+        "url": "https://www.pnas.org/doi/10.1073/pnas.20.3.169"
+      }
+    },
+    "bondi1947": {
+      "type": "article",
+      "fields": {
+        "title": "Spherically symmetrical models in general relativity",
+        "author": "Bondi, Hermann",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "107",
+        "number": "5-6",
+        "pages": "410--425",
+        "year": "1947",
+        "doi": "10.1093/mnras/107.5-6.410",
+        "url": "https://academic.oup.com/mnras/article/107/5-6/410/2601230"
+      }
+    },
+    "chandrasekhar1931": {
+      "type": "article",
+      "fields": {
+        "title": "The maximum mass of ideal white dwarfs",
+        "author": "Chandrasekhar, Subrahmanyan",
+        "journal": "Astrophysical Journal",
+        "volume": "74",
+        "pages": "81--82",
+        "year": "1931",
+        "doi": "10.1086/143324",
+        "url": "https://ui.adsabs.harvard.edu/abs/1931ApJ....74...81C"
+      }
+    },
+    "tolman1939": {
+      "type": "article",
+      "fields": {
+        "title": "Static solutions of Einstein's field equations for spheres of fluid",
+        "author": "Tolman, Richard C.",
+        "journal": "Physical Review",
+        "volume": "55",
+        "number": "4",
+        "pages": "364--373",
+        "year": "1939",
+        "doi": "10.1103/PhysRev.55.364",
+        "url": "https://link.aps.org/doi/10.1103/PhysRev.55.364"
+      }
+    },
+    "oppenheimer1939": {
+      "type": "article",
+      "fields": {
+        "title": "On massive neutron cores",
+        "author": "Oppenheimer, J. Robert and Volkoff, George M.",
+        "journal": "Physical Review",
+        "volume": "55",
+        "number": "4",
+        "pages": "374--381",
+        "year": "1939",
+        "doi": "10.1103/PhysRev.55.374",
+        "url": "https://link.aps.org/doi/10.1103/PhysRev.55.374"
+      }
+    },
+    "lane1870": {
+      "type": "article",
+      "fields": {
+        "title": "On the theoretical temperature of the Sun, under the hypothesis of a gaseous mass maintaining its volume by its internal heat, and depending on the laws of gases as known to terrestrial experiment",
+        "author": "Lane, Jonathan Homer",
+        "journal": "American Journal of Science",
+        "series": "2",
+        "volume": "50",
+        "number": "148",
+        "pages": "57--74",
+        "year": "1870",
+        "doi": "10.2475/ajs.s2-50.148.57",
+        "url": "https://ajsonline.org/article/62347"
+      }
+    },
+    "phillips1999": {
+      "type": "book",
+      "fields": {
+        "title": "The Physics of Stars",
+        "author": "Phillips, A. C.",
+        "edition": "2nd",
+        "series": "Manchester Physics Series",
+        "publisher": "Wiley",
+        "year": "1999",
+        "isbn": "978-0-471-98798-7",
+        "url": "https://www.wiley.com/en-us/The+Physics+of+Stars,+2nd+Edition-p-9780471987987"
+      }
+    },
+    "kibble1976": {
+      "type": "article",
+      "fields": {
+        "title": "Topology of cosmic domains and strings",
+        "author": "Kibble, Thomas W. B.",
+        "journal": "Journal of Physics A: Mathematical and General",
+        "volume": "9",
+        "number": "8",
+        "pages": "1387--1398",
+        "year": "1976",
+        "doi": "10.1088/0305-4470/9/8/029",
+        "url": "https://ui.adsabs.harvard.edu/abs/1976JPhA....9.1387K"
+      }
+    },
+    "vilenkin1981": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational field of vacuum domain walls and strings",
+        "author": "Vilenkin, Alexander",
+        "journal": "Physical Review D",
+        "volume": "23",
+        "number": "4",
+        "pages": "852--857",
+        "year": "1981",
+        "doi": "10.1103/PhysRevD.23.852",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.23.852"
+      }
+    },
+    "gott1985": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational lensing effects of vacuum strings: exact solutions",
+        "author": "Gott, J. Richard",
+        "journal": "Astrophysical Journal",
+        "volume": "288",
+        "pages": "422--427",
+        "year": "1985",
+        "doi": "10.1086/162808",
+        "url": "https://ui.adsabs.harvard.edu/abs/1985ApJ...288..422G"
+      }
+    },
+    "brandenberger1986": {
+      "type": "article",
+      "fields": {
+        "title": "Fluctuations from cosmic strings and the microwave background",
+        "author": "Brandenberger, Robert H. and Turok, Neil",
+        "journal": "Physical Review D",
+        "volume": "33",
+        "number": "8",
+        "pages": "2182--2188",
+        "year": "1986",
+        "doi": "10.1103/PhysRevD.33.2182",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.33.2182"
+      }
+    },
+    "brandenberger1994": {
+      "type": "article",
+      "fields": {
+        "title": "Topological defects and structure formation",
+        "author": "Brandenberger, Robert H.",
+        "journal": "International Journal of Modern Physics A",
+        "volume": "9",
+        "number": "13",
+        "pages": "2117--2189",
+        "year": "1994",
+        "doi": "10.1142/S0217751X9400090X",
+        "url": "https://www.worldscientific.com/doi/abs/10.1142/S0217751X9400090X"
+      }
+    },
+    "vaidya1951": {
+      "type": "article",
+      "fields": {
+        "title": "The gravitational field of a radiating star",
+        "author": "Vaidya, Prahalad Chunilal",
+        "journal": "Proceedings of the Indian Academy of Sciences, Section A",
+        "volume": "33",
+        "pages": "264--276",
+        "year": "1951",
+        "doi": "10.1007/BF03173260",
+        "url": "https://link.springer.com/article/10.1007/BF03173260"
+      }
+    },
+    "lindquist1965": {
+      "type": "article",
+      "fields": {
+        "title": "Vaidya's radiating Schwarzschild metric",
+        "author": "Lindquist, Richard W. and Schwartz, R. A. and Misner, Charles W.",
+        "journal": "Physical Review",
+        "volume": "137",
+        "number": "5B",
+        "pages": "B1364--B1368",
+        "year": "1965",
+        "doi": "10.1103/PhysRev.137.B1364",
+        "url": "https://link.aps.org/doi/10.1103/PhysRev.137.B1364"
+      }
+    },
+    "papapetrou1985": {
+      "type": "incollection",
+      "fields": {
+        "title": "Formation of a singularity and causality",
+        "author": "Papapetrou, Achilles",
+        "booktitle": "A Random Walk in Relativity and Cosmology",
+        "editor": "Dadhich, N. and Krishna Rao, J. and Narlikar, J. V. and Vishveshwara, C. V.",
+        "pages": "184--191",
+        "publisher": "Wiley Eastern",
+        "address": "New Delhi",
+        "year": "1985"
+      }
+    },
+    "oppenheimersnyder1939": {
+      "type": "article",
+      "fields": {
+        "title": "On continued gravitational contraction",
+        "author": "Oppenheimer, J. Robert and Snyder, Hartland",
+        "journal": "Physical Review",
+        "volume": "56",
+        "number": "5",
+        "pages": "455--459",
+        "year": "1939",
+        "doi": "10.1103/PhysRev.56.455",
+        "url": "https://link.aps.org/doi/10.1103/PhysRev.56.455"
+      }
+    },
+    "penrose1965": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse and space-time singularities",
+        "author": "Penrose, Roger",
+        "journal": "Physical Review Letters",
+        "volume": "14",
+        "number": "3",
+        "pages": "57--59",
+        "year": "1965",
+        "doi": "10.1103/PhysRevLett.14.57",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.14.57"
+      }
+    },
+    "de2026": {
+      "type": "article",
+      "fields": {
+        "title": "Disappearance of a massive star in the Andromeda Galaxy due to formation of a black hole",
+        "author": "De, Kishalay and others",
+        "journal": "Science",
+        "volume": "391",
+        "number": "6786",
+        "pages": "689--693",
+        "year": "2026",
+        "doi": "10.1126/science.adt4853",
+        "url": "https://www.science.org/doi/10.1126/science.adt4853"
+      }
+    },
+    "beasor2026": {
+      "type": "article",
+      "fields": {
+        "title": "The fate of the failed supernova candidate M31-2014-DS1",
+        "author": "Beasor, Emma R. and others",
+        "journal": "arXiv preprint arXiv:2601.05317",
+        "year": "2026",
+        "url": "https://arxiv.org/abs/2601.05317"
+      }
+    },
+    "bianchi1898": {
+      "type": "article",
+      "fields": {
+        "title": "Sugli spazi a tre dimensioni che ammettono un gruppo continuo di movimenti",
+        "author": "Bianchi, Luigi",
+        "journal": "Memorie di Matematica e di Fisica della Societ\\`a Italiana delle Scienze, Serie Terza",
+        "volume": "11",
+        "pages": "267--352",
+        "year": "1898",
+        "note": "English translation in Gen. Relativ. Gravit. 33, 2171 (2001)",
+        "url": "https://link.springer.com/article/10.1023/A:1015357132699"
+      }
+    },
+    "ellismaccallum1969": {
+      "type": "article",
+      "fields": {
+        "title": "A class of homogeneous cosmological models",
+        "author": "Ellis, George F. R. and MacCallum, Malcolm A. H.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "12",
+        "number": "2",
+        "pages": "108--141",
+        "year": "1969",
+        "doi": "10.1007/BF01645908",
+        "url": "https://link.springer.com/article/10.1007/BF01645908"
+      }
+    },
+    "misner1969": {
+      "type": "article",
+      "fields": {
+        "title": "Mixmaster universe",
+        "author": "Misner, Charles W.",
+        "journal": "Physical Review Letters",
+        "volume": "22",
+        "number": "20",
+        "pages": "1071--1074",
+        "year": "1969",
+        "doi": "10.1103/PhysRevLett.22.1071",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.22.1071"
+      }
+    },
+    "bkl1970": {
+      "type": "article",
+      "fields": {
+        "title": "Oscillatory approach to a singular point in the relativistic cosmology",
+        "author": "Belinskii, Vladimir A. and Khalatnikov, Isaak M. and Lifshitz, Evgeny M.",
+        "journal": "Advances in Physics",
+        "volume": "19",
+        "number": "80",
+        "pages": "525--573",
+        "year": "1970",
+        "doi": "10.1080/00018737000101171",
+        "url": "https://www.tandfonline.com/doi/abs/10.1080/00018737000101171"
+      }
+    },
+    "vonneumann1966": {
+      "type": "book",
+      "fields": {
+        "title": "Theory of Self-Reproducing Automata",
+        "author": "von Neumann, John",
+        "editor": "Burks, Arthur W.",
+        "year": "1966",
+        "publisher": "University of Illinois Press",
+        "url": "https://cba.mit.edu/events/03.11.ASE/docs/VonNeumann.pdf"
+      }
+    },
+    "gardner1970": {
+      "type": "article",
+      "fields": {
+        "title": "Mathematical Games: The fantastic combinations of John Conway's new solitaire game ``life''",
+        "author": "Gardner, Martin",
+        "journal": "Scientific American",
+        "volume": "223",
+        "number": "4",
+        "pages": "120--123",
+        "year": "1970",
+        "url": "https://doi.org/10.1038/scientificamerican1070-120"
+      }
+    },
+    "gardner1971": {
+      "type": "article",
+      "fields": {
+        "title": "Mathematical Games: On cellular automata, self-reproduction, the Garden of Eden and the game ``life''",
+        "author": "Gardner, Martin",
+        "journal": "Scientific American",
+        "volume": "224",
+        "number": "2",
+        "pages": "112--117",
+        "year": "1971",
+        "url": "https://doi.org/10.1038/scientificamerican0271-112"
+      }
+    },
+    "wolfram1983": {
+      "type": "article",
+      "fields": {
+        "title": "Statistical mechanics of cellular automata",
+        "author": "Wolfram, Stephen",
+        "journal": "Reviews of Modern Physics",
+        "volume": "55",
+        "number": "3",
+        "pages": "601--644",
+        "year": "1983",
+        "url": "https://doi.org/10.1103/RevModPhys.55.601"
+      }
+    },
+    "wolfram1984": {
+      "type": "article",
+      "fields": {
+        "title": "Universality and complexity in cellular automata",
+        "author": "Wolfram, Stephen",
+        "journal": "Physica D: Nonlinear Phenomena",
+        "volume": "10",
+        "number": "1",
+        "pages": "1--35",
+        "year": "1984",
+        "url": "https://doi.org/10.1016/0167-2789(84)90245-8"
+      }
+    },
+    "cook2004": {
+      "type": "article",
+      "fields": {
+        "title": "Universality in Elementary Cellular Automata",
+        "author": "Cook, Matthew",
+        "journal": "Complex Systems",
+        "volume": "15",
+        "number": "1",
+        "pages": "1--40",
+        "year": "2004",
+        "url": "https://doi.org/10.25088/ComplexSystems.15.1.1"
+      }
+    },
+    "berlekamp2004": {
+      "type": "book",
+      "fields": {
+        "title": "Winning Ways for Your Mathematical Plays, Volume 4",
+        "author": "Berlekamp, Elwyn R. and Conway, John H. and Guy, Richard K.",
+        "edition": "2nd",
+        "year": "2004",
+        "publisher": "A K Peters",
+        "url": "https://doi.org/10.1201/9780429487309"
+      }
+    },
+    "schrodinger1926": {
+      "type": "article",
+      "fields": {
+        "title": "Quantisierung als Eigenwertproblem (Erste Mitteilung)",
+        "author": "Schr\\\"odinger, Erwin",
+        "journal": "Annalen der Physik",
+        "volume": "79",
+        "pages": "361--376",
+        "year": "1926",
+        "url": "https://doi.org/10.1002/andp.19263840404"
+      }
+    },
+    "schrodinger1926b": {
+      "type": "article",
+      "fields": {
+        "title": "Der stetige \\\"Ubergang von der Mikro- zur Makromechanik",
+        "author": "Schr\\\"odinger, Erwin",
+        "journal": "Die Naturwissenschaften",
+        "volume": "14",
+        "pages": "664--666",
+        "year": "1926",
+        "url": "https://doi.org/10.1007/BF01507634"
+      }
+    },
+    "born1926": {
+      "type": "article",
+      "fields": {
+        "title": "Zur Quantenmechanik der Sto{\\ss}vorg\\\"ange",
+        "author": "Born, Max",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "37",
+        "pages": "863--867",
+        "year": "1926",
+        "url": "https://doi.org/10.1007/BF01397477"
+      }
+    },
+    "gamow1928": {
+      "type": "article",
+      "fields": {
+        "title": "Zur Quantentheorie des Atomkernes",
+        "author": "Gamow, George",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "51",
+        "pages": "204--212",
+        "year": "1928",
+        "url": "https://doi.org/10.1007/BF01343196"
+      }
+    },
+    "gurney1928": {
+      "type": "article",
+      "fields": {
+        "title": "Wave Mechanics and Radioactive Disintegration",
+        "author": "Gurney, Ronald W. and Condon, Edward U.",
+        "journal": "Nature",
+        "volume": "122",
+        "pages": "439",
+        "year": "1928",
+        "url": "https://doi.org/10.1038/122439a0"
+      }
+    },
+    "glauber1963coherent": {
+      "type": "article",
+      "fields": {
+        "title": "Coherent and Incoherent States of the Radiation Field",
+        "author": "Glauber, Roy J.",
+        "journal": "Physical Review",
+        "volume": "131",
+        "pages": "2766--2788",
+        "year": "1963",
+        "url": "https://doi.org/10.1103/PhysRev.131.2766"
+      }
+    },
+    "caves1981": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum-mechanical noise in an interferometer",
+        "author": "Caves, Carlton M.",
+        "journal": "Physical Review D",
+        "volume": "23",
+        "pages": "1693--1708",
+        "year": "1981",
+        "url": "https://doi.org/10.1103/PhysRevD.23.1693"
+      }
+    },
+    "binnig1982": {
+      "type": "article",
+      "fields": {
+        "title": "Surface Studies by Scanning Tunneling Microscopy",
+        "author": "Binnig, Gerd and Rohrer, Heinrich and Gerber, Christoph and Weibel, Edmund",
+        "journal": "Physical Review Letters",
+        "volume": "49",
+        "pages": "57--61",
+        "year": "1982",
+        "url": "https://doi.org/10.1103/PhysRevLett.49.57"
+      }
+    },
+    "feit1982": {
+      "type": "article",
+      "fields": {
+        "title": "Solution of the Schr\\\"odinger equation by a spectral method",
+        "author": "Feit, M. D. and Fleck, J. A. and Steiger, A.",
+        "journal": "Journal of Computational Physics",
+        "volume": "47",
+        "pages": "412--433",
+        "year": "1982",
+        "url": "https://doi.org/10.1016/0021-9991(82)90091-2"
+      }
+    },
+    "robinett2004": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum wave packet revivals",
+        "author": "Robinett, R. W.",
+        "journal": "Physics Reports",
+        "volume": "392",
+        "pages": "1--119",
+        "year": "2004",
+        "url": "https://doi.org/10.1016/j.physrep.2003.11.002"
+      }
+    },
+    "glauber1963": {
+      "type": "article",
+      "fields": {
+        "title": "Time-Dependent Statistics of the Ising Model",
+        "author": "Glauber, Roy J.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "4",
+        "number": "2",
+        "pages": "294--307",
+        "year": "1963",
+        "url": "https://doi.org/10.1063/1.1703954"
+      }
+    },
+    "grinstein1985": {
+      "type": "article",
+      "fields": {
+        "title": "Statistical Mechanics of Probabilistic Cellular Automata",
+        "author": "Grinstein, G. and Jayaprakash, C. and He, Yu",
+        "journal": "Physical Review Letters",
+        "volume": "55",
+        "number": "23",
+        "pages": "2527--2530",
+        "year": "1985",
+        "url": "https://doi.org/10.1103/PhysRevLett.55.2527"
+      }
+    },
+    "schonfisch1999": {
+      "type": "article",
+      "fields": {
+        "title": "Synchronous and asynchronous updating in cellular automata",
+        "author": "Sch\\\"onfisch, Birgitt and de Roos, Andr\\'e",
+        "journal": "BioSystems",
+        "volume": "51",
+        "number": "3",
+        "pages": "123--143",
+        "year": "1999",
+        "url": "https://doi.org/10.1016/S0303-2647(99)00025-8"
+      }
+    },
+    "shannon1948": {
+      "type": "article",
+      "fields": {
+        "title": "A Mathematical Theory of Communication",
+        "author": "Shannon, Claude E.",
+        "journal": "Bell System Technical Journal",
+        "volume": "27",
+        "number": "3",
+        "pages": "379--423",
+        "year": "1948",
+        "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+      }
+    },
+    "lempel1976": {
+      "type": "article",
+      "fields": {
+        "title": "On the Complexity of Finite Sequences",
+        "author": "Lempel, Abraham and Ziv, Jacob",
+        "journal": "IEEE Transactions on Information Theory",
+        "volume": "22",
+        "number": "1",
+        "pages": "75--81",
+        "year": "1976",
+        "url": "https://doi.org/10.1109/TIT.1976.1055501"
+      }
+    },
+    "kaspar1987": {
+      "type": "article",
+      "fields": {
+        "title": "Easily calculable measure for the complexity of spatiotemporal patterns",
+        "author": "Kaspar, F. and Schuster, H. G.",
+        "journal": "Physical Review A",
+        "volume": "36",
+        "number": "2",
+        "pages": "842--848",
+        "year": "1987",
+        "url": "https://doi.org/10.1103/PhysRevA.36.842"
+      }
+    },
+    "lenz1920": {
+      "type": "article",
+      "fields": {
+        "title": "Beitrag zum Verst\\\"andnis der magnetischen Erscheinungen in festen K\\\"orpern",
+        "author": "Lenz, Wilhelm",
+        "journal": "Physikalische Zeitschrift",
+        "volume": "21",
+        "pages": "613--615",
+        "year": "1920"
+      }
+    },
+    "ising1925": {
+      "type": "article",
+      "fields": {
+        "title": "Beitrag zur Theorie des Ferromagnetismus",
+        "author": "Ising, Ernst",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "31",
+        "pages": "253--258",
+        "year": "1925",
+        "url": "https://doi.org/10.1007/BF02980577"
+      }
+    },
+    "peierls1936": {
+      "type": "article",
+      "fields": {
+        "title": "On Ising's model of ferromagnetism",
+        "author": "Peierls, Rudolf",
+        "journal": "Mathematical Proceedings of the Cambridge Philosophical Society",
+        "volume": "32",
+        "pages": "477--481",
+        "year": "1936",
+        "url": "https://doi.org/10.1017/S0305004100019174"
+      }
+    },
+    "kramers1941": {
+      "type": "article",
+      "fields": {
+        "title": "Statistics of the Two-Dimensional Ferromagnet. Part I",
+        "author": "Kramers, H. A. and Wannier, G. H.",
+        "journal": "Physical Review",
+        "volume": "60",
+        "pages": "252--262",
+        "year": "1941",
+        "url": "https://doi.org/10.1103/PhysRev.60.252"
+      }
+    },
+    "onsager1944": {
+      "type": "article",
+      "fields": {
+        "title": "Crystal Statistics. I. A Two-Dimensional Model with an Order-Disorder Transition",
+        "author": "Onsager, Lars",
+        "journal": "Physical Review",
+        "volume": "65",
+        "pages": "117--149",
+        "year": "1944",
+        "url": "https://doi.org/10.1103/PhysRev.65.117"
+      }
+    },
+    "wannier1950": {
+      "type": "article",
+      "fields": {
+        "title": "Antiferromagnetism. The Triangular Ising Net",
+        "author": "Wannier, Gregory H.",
+        "journal": "Physical Review",
+        "volume": "79",
+        "pages": "357--364",
+        "year": "1950",
+        "url": "https://doi.org/10.1103/PhysRev.79.357"
+      }
+    },
+    "bernoulli1738": {
+      "type": "book",
+      "fields": {
+        "title": "Hydrodynamica, sive de viribus et motibus fluidorum commentarii",
+        "author": "Bernoulli, Daniel",
+        "publisher": "Johann Reinhold Dulsecker, Strasbourg",
+        "year": "1738"
+      }
+    },
+    "brown1828": {
+      "type": "article",
+      "fields": {
+        "title": "A brief account of microscopical observations made in the months of June, July and August 1827, on the particles contained in the pollen of plants",
+        "author": "Brown, Robert",
+        "journal": "The Philosophical Magazine",
+        "volume": "4",
+        "pages": "161--173",
+        "year": "1828",
+        "url": "https://doi.org/10.1080/14786442808674769"
+      }
+    },
+    "maxwell1860": {
+      "type": "article",
+      "fields": {
+        "title": "Illustrations of the dynamical theory of gases. Part I. On the motions and collisions of perfectly elastic spheres",
+        "author": "Maxwell, James Clerk",
+        "journal": "The Philosophical Magazine",
+        "volume": "19",
+        "pages": "19--32",
+        "year": "1860",
+        "url": "https://doi.org/10.1080/14786446008642818"
+      }
+    },
+    "maxwell1871": {
+      "type": "book",
+      "fields": {
+        "title": "Theory of Heat",
+        "author": "Maxwell, James Clerk",
+        "publisher": "Longmans, Green, and Co., London",
+        "year": "1871",
+        "url": "https://archive.org/details/theoryofheat00maxwrich"
+      }
+    },
+    "boltzmann1872": {
+      "type": "article",
+      "fields": {
+        "title": "Weitere Studien \\\"uber das W\\\"armegleichgewicht unter Gasmolek\\\"ulen",
+        "author": "Boltzmann, Ludwig",
+        "journal": "Sitzungsberichte der Kaiserlichen Akademie der Wissenschaften in Wien",
+        "volume": "66",
+        "pages": "275--370",
+        "year": "1872"
+      }
+    },
+    "einstein1905": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber die von der molekularkinetischen Theorie der W\\\"arme geforderte Bewegung von in ruhenden Fl\\\"ussigkeiten suspendierten Teilchen",
+        "author": "Einstein, Albert",
+        "journal": "Annalen der Physik",
+        "volume": "17",
+        "pages": "549--560",
+        "year": "1905",
+        "url": "https://doi.org/10.1002/andp.19053220806"
+      }
+    },
+    "smoluchowski1906": {
+      "type": "article",
+      "fields": {
+        "title": "Zur kinetischen Theorie der Brownschen Molekularbewegung und der Suspensionen",
+        "author": "von Smoluchowski, Marian",
+        "journal": "Annalen der Physik",
+        "volume": "21",
+        "pages": "756--780",
+        "year": "1906",
+        "url": "https://doi.org/10.1002/andp.19063261405"
+      }
+    },
+    "perrin1909": {
+      "type": "article",
+      "fields": {
+        "title": "Mouvement brownien et r\\'ealit\\'e mol\\'eculaire",
+        "author": "Perrin, Jean",
+        "journal": "Annales de Chimie et de Physique",
+        "volume": "18",
+        "pages": "5--114",
+        "year": "1909",
+        "url": "https://archive.org/details/brownianmovement00perrrich"
+      }
+    },
+    "szilard1929": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber die Entropieverminderung in einem thermodynamischen System bei Eingriffen intelligenter Wesen",
+        "author": "Szilard, Leo",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "53",
+        "pages": "840--856",
+        "year": "1929",
+        "url": "https://doi.org/10.1007/BF01341281"
+      }
+    },
+    "berg1972": {
+      "type": "article",
+      "fields": {
+        "title": "Chemotaxis in Escherichia coli analysed by three-dimensional tracking",
+        "author": "Berg, Howard C. and Brown, Douglas A.",
+        "journal": "Nature",
+        "volume": "239",
+        "pages": "500--504",
+        "year": "1972",
+        "url": "https://doi.org/10.1038/239500a0"
+      }
+    },
+    "viswanathan1999": {
+      "type": "article",
+      "fields": {
+        "title": "Optimizing the success of random searches",
+        "author": "Viswanathan, G. M. and Buldyrev, Sergey V. and Havlin, Shlomo and da Luz, M. G. E. and Raposo, E. P. and Stanley, H. E.",
+        "journal": "Nature",
+        "volume": "401",
+        "pages": "911--914",
+        "year": "1999",
+        "url": "https://doi.org/10.1038/44831"
+      }
+    },
+    "galileo1638": {
+      "type": "book",
+      "fields": {
+        "title": "Discorsi e dimostrazioni matematiche intorno a due nuove scienze",
+        "author": "Galilei, Galileo",
+        "publisher": "Lodewijk Elzevir, Leiden",
+        "year": "1638"
+      }
+    },
+    "hooke1678": {
+      "type": "book",
+      "fields": {
+        "title": "Lectures de Potentia Restitutiva, or of Spring, Explaining the Power of Springing Bodies",
+        "author": "Hooke, Robert",
+        "publisher": "John Martyn, London",
+        "year": "1678"
+      }
+    },
+    "newton1687": {
+      "type": "book",
+      "fields": {
+        "title": "Philosophiae Naturalis Principia Mathematica",
+        "author": "Newton, Isaac",
+        "publisher": "Royal Society, London",
+        "year": "1687"
+      }
+    },
+    "bernoulli1753": {
+      "type": "article",
+      "fields": {
+        "title": "R\\'eflexions et \\'eclaircissemens sur les nouvelles vibrations des cordes expos\\'ees dans les m\\'emoires de l'Acad\\'emie",
+        "author": "Bernoulli, Daniel",
+        "journal": "M\\'emoires de l'Acad\\'emie Royale des Sciences et Belles-Lettres de Berlin",
+        "volume": "9",
+        "pages": "147--172",
+        "year": "1753"
+      }
+    },
+    "lagrange1772": {
+      "type": "article",
+      "fields": {
+        "title": "Essai sur le probl\\`eme des trois corps",
+        "author": "Lagrange, Joseph-Louis",
+        "journal": "Prix de l'Acad\\'emie Royale des Sciences de Paris",
+        "volume": "9",
+        "year": "1772"
+      }
+    },
+    "rayleigh1877": {
+      "type": "book",
+      "fields": {
+        "title": "The Theory of Sound",
+        "author": "Rayleigh, Lord (John William Strutt)",
+        "publisher": "Macmillan, London",
+        "year": "1877"
+      }
+    },
+    "poincare1890": {
+      "type": "article",
+      "fields": {
+        "title": "Sur le probl\\`eme des trois corps et les \\'equations de la dynamique",
+        "author": "Poincar\\'e, Henri",
+        "journal": "Acta Mathematica",
+        "volume": "13",
+        "pages": "1--270",
+        "year": "1890",
+        "url": "https://doi.org/10.1007/BF02392506"
+      }
+    },
+    "born1912": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber Schwingungen in Raumgittern",
+        "author": "Born, Max and von K\\'arm\\'an, Theodore",
+        "journal": "Physikalische Zeitschrift",
+        "volume": "13",
+        "pages": "297--309",
+        "year": "1912"
+      }
+    },
+    "holmberg1941": {
+      "type": "article",
+      "fields": {
+        "title": "On the Clustering Tendencies among the Nebulae. II. A Study of Encounters between Laboratory Models of Stellar Systems by a New Integration Procedure",
+        "author": "Holmberg, Erik",
+        "journal": "The Astrophysical Journal",
+        "volume": "94",
+        "pages": "385--395",
+        "year": "1941",
+        "url": "https://doi.org/10.1086/144344"
+      }
+    },
+    "courant1943": {
+      "type": "article",
+      "fields": {
+        "title": "Variational methods for the solution of problems of equilibrium and vibrations",
+        "author": "Courant, Richard",
+        "journal": "Bulletin of the American Mathematical Society",
+        "volume": "49",
+        "pages": "1--23",
+        "year": "1943",
+        "url": "https://doi.org/10.1090/S0002-9904-1943-07818-4"
+      }
+    },
+    "fermi1955": {
+      "type": "article",
+      "fields": {
+        "title": "Studies of Nonlinear Problems. I",
+        "author": "Fermi, Enrico and Pasta, John and Ulam, Stanislaw",
+        "journal": "Los Alamos Scientific Laboratory Report LA-1940",
+        "year": "1955",
+        "url": "https://doi.org/10.2172/4376203"
+      }
+    },
+    "turner1956": {
+      "type": "article",
+      "fields": {
+        "title": "Stiffness and Deflection Analysis of Complex Structures",
+        "author": "Turner, M. J. and Clough, R. W. and Martin, H. C. and Topp, L. J.",
+        "journal": "Journal of the Aeronautical Sciences",
+        "volume": "23",
+        "pages": "805--823",
+        "year": "1956",
+        "url": "https://doi.org/10.2514/8.3664"
+      }
+    },
+    "peebles1980": {
+      "type": "book",
+      "fields": {
+        "title": "The Large-Scale Structure of the Universe",
+        "author": "Peebles, Phillip James Edwin",
+        "publisher": "Princeton University Press",
+        "year": "1980",
+        "url": "https://doi.org/10.1515/9780691206714"
+      }
+    },
+    "barnes1986": {
+      "type": "article",
+      "fields": {
+        "title": "A hierarchical O(N log N) force-calculation algorithm",
+        "author": "Barnes, Josh and Hut, Piet",
+        "journal": "Nature",
+        "volume": "324",
+        "pages": "446--449",
+        "year": "1986",
+        "url": "https://doi.org/10.1038/324446a0"
+      }
+    },
+    "shinbrot1992": {
+      "type": "article",
+      "fields": {
+        "title": "Chaos in a double pendulum",
+        "author": "Shinbrot, Troy and Grebogi, Celso and Wisdom, Jack and Yorke, James A.",
+        "journal": "American Journal of Physics",
+        "volume": "60",
+        "pages": "491--499",
+        "year": "1992",
+        "url": "https://doi.org/10.1119/1.16860"
+      }
+    },
+    "moore1993": {
+      "type": "article",
+      "fields": {
+        "title": "Braids in classical dynamics",
+        "author": "Moore, Cristopher",
+        "journal": "Physical Review Letters",
+        "volume": "70",
+        "pages": "3675--3679",
+        "year": "1993",
+        "url": "https://doi.org/10.1103/PhysRevLett.70.3675"
+      }
+    },
+    "chenciner2000": {
+      "type": "article",
+      "fields": {
+        "title": "A remarkable periodic solution of the three-body problem in the case of equal masses",
+        "author": "Chenciner, Alain and Montgomery, Richard",
+        "journal": "Annals of Mathematics",
+        "volume": "152",
+        "pages": "881--901",
+        "year": "2000",
+        "url": "https://doi.org/10.2307/2661357"
+      }
+    },
+    "turing1952": {
+      "type": "article",
+      "fields": {
+        "title": "The Chemical Basis of Morphogenesis",
+        "author": "Turing, Alan M.",
+        "journal": "Philosophical Transactions of the Royal Society of London B",
+        "volume": "237",
+        "pages": "37--72",
+        "year": "1952",
+        "url": "https://doi.org/10.1098/rstb.1952.0012"
+      }
+    },
+    "gray1983": {
+      "type": "article",
+      "fields": {
+        "title": "Autocatalytic reactions in the isothermal, continuous stirred tank reactor: Isolas and other forms of multistability",
+        "author": "Gray, Peter and Scott, Stephen K.",
+        "journal": "Chemical Engineering Science",
+        "volume": "38",
+        "pages": "29--43",
+        "year": "1983",
+        "url": "https://doi.org/10.1016/0009-2509(83)80132-8"
+      }
+    },
+    "pearson1993": {
+      "type": "article",
+      "fields": {
+        "title": "Complex Patterns in a Simple System",
+        "author": "Pearson, John E.",
+        "journal": "Science",
+        "volume": "261",
+        "pages": "189--192",
+        "year": "1993",
+        "url": "https://doi.org/10.1126/science.261.5118.189"
+      }
+    },
+    "alder1957": {
+      "type": "article",
+      "fields": {
+        "title": "Phase Transition for a Hard Sphere System",
+        "author": "Alder, B. J. and Wainwright, T. E.",
+        "journal": "The Journal of Chemical Physics",
+        "volume": "27",
+        "pages": "1208--1209",
+        "year": "1957",
+        "url": "https://doi.org/10.1063/1.1743957"
+      }
+    },
+    "landauer1961": {
+      "type": "article",
+      "fields": {
+        "title": "Irreversibility and Heat Generation in the Computing Process",
+        "author": "Landauer, Rolf",
+        "journal": "IBM Journal of Research and Development",
+        "volume": "5",
+        "pages": "183--191",
+        "year": "1961",
+        "url": "https://doi.org/10.1147/rd.53.0183"
+      }
+    },
+    "bennett1982": {
+      "type": "article",
+      "fields": {
+        "title": "The Thermodynamics of Computation---a Review",
+        "author": "Bennett, Charles H.",
+        "journal": "International Journal of Theoretical Physics",
+        "volume": "21",
+        "pages": "905--940",
+        "year": "1982",
+        "url": "https://doi.org/10.1007/BF02084158"
+      }
+    },
+    "vicsek1995": {
+      "type": "article",
+      "fields": {
+        "title": "Novel Type of Phase Transition in a System of Self-Driven Particles",
+        "author": "Vicsek, Tam\\'as and Czir\\'ok, Andr\\'as and Ben-Jacob, Eshel and Cohen, Inon and Shochet, Ofer",
+        "journal": "Physical Review Letters",
+        "volume": "75",
+        "pages": "1226--1229",
+        "year": "1995",
+        "url": "https://doi.org/10.1103/PhysRevLett.75.1226"
+      }
+    },
+    "gregoire2004": {
+      "type": "article",
+      "fields": {
+        "title": "Onset of Collective and Cohesive Motion",
+        "author": "Gr\\'egoire, Guillaume and Chat\\'e, Hugues",
+        "journal": "Physical Review Letters",
+        "volume": "92",
+        "pages": "025702",
+        "year": "2004",
+        "url": "https://doi.org/10.1103/PhysRevLett.92.025702"
+      }
+    },
+    "ballerini2008": {
+      "type": "article",
+      "fields": {
+        "title": "Interaction ruling animal collective behavior depends on topological rather than metric distance: Evidence from a field study",
+        "author": "Ballerini, M. and Cabibbo, N. and Candelier, R. and Cavagna, A. and Cisbani, E. and Giardina, I. and Lecomte, V. and Orlandi, A. and Parisi, G. and Procaccini, A. and Viale, M. and Zdravkovic, V.",
+        "journal": "Proceedings of the National Academy of Sciences",
+        "volume": "105",
+        "pages": "1232--1237",
+        "year": "2008",
+        "url": "https://doi.org/10.1073/pnas.0711437105"
+      }
+    },
+    "toner1995": {
+      "type": "article",
+      "fields": {
+        "title": "Long-Range Order in a Two-Dimensional Dynamical XY Model: How Birds Fly Together",
+        "author": "Toner, John and Tu, Yuhai",
+        "journal": "Physical Review Letters",
+        "volume": "75",
+        "pages": "4326--4329",
+        "year": "1995",
+        "url": "https://doi.org/10.1103/PhysRevLett.75.4326"
+      }
+    },
+    "toner1998": {
+      "type": "article",
+      "fields": {
+        "title": "Flocks, herds, and schools: A quantitative theory of flocking",
+        "author": "Toner, John and Tu, Yuhai",
+        "journal": "Physical Review E",
+        "volume": "58",
+        "pages": "4828--4858",
+        "year": "1998",
+        "url": "https://doi.org/10.1103/PhysRevE.58.4828"
+      }
+    },
+    "marchetti2013": {
+      "type": "article",
+      "fields": {
+        "title": "Hydrodynamics of soft active matter",
+        "author": "Marchetti, M. C. and Joanny, J. F. and Ramaswamy, S. and Liverpool, T. B. and Prost, J. and Rao, Madan and Simha, R. Aditi",
+        "journal": "Reviews of Modern Physics",
+        "volume": "85",
+        "pages": "1143--1189",
+        "year": "2013",
+        "url": "https://doi.org/10.1103/RevModPhys.85.1143"
+      }
+    },
+    "winfree1967": {
+      "type": "article",
+      "fields": {
+        "title": "Biological rhythms and the behavior of populations of coupled oscillators",
+        "author": "Winfree, Arthur T.",
+        "journal": "Journal of Theoretical Biology",
+        "volume": "16",
+        "pages": "15--42",
+        "year": "1967",
+        "url": "https://doi.org/10.1016/0022-5193(67)90051-3"
+      }
+    },
+    "kuramoto1975": {
+      "type": "inproceedings",
+      "fields": {
+        "title": "Self-entrainment of a population of coupled non-linear oscillators",
+        "author": "Kuramoto, Yoshiki",
+        "booktitle": "International Symposium on Mathematical Problems in Theoretical Physics",
+        "pages": "420--422",
+        "year": "1975",
+        "publisher": "Springer",
+        "url": "https://doi.org/10.1007/BFb0013365"
+      }
+    },
+    "strogatz2000": {
+      "type": "article",
+      "fields": {
+        "title": "From Kuramoto to Crawford: exploring the onset of synchronization in populations of coupled oscillators",
+        "author": "Strogatz, Steven H.",
+        "journal": "Physica D: Nonlinear Phenomena",
+        "volume": "143",
+        "pages": "1--20",
+        "year": "2000",
+        "url": "https://doi.org/10.1016/S0167-2789(00)00094-4"
+      }
+    },
+    "langevin1908": {
+      "type": "article",
+      "fields": {
+        "title": "Sur la th\\'eorie du mouvement brownien",
+        "author": "Langevin, Paul",
+        "journal": "Comptes Rendus de l'Acad\\'emie des Sciences (Paris)",
+        "volume": "146",
+        "pages": "530--533",
+        "year": "1908",
+        "url": "https://doi.org/10.1119/1.18725"
+      }
+    },
+    "landau1937": {
+      "type": "article",
+      "fields": {
+        "title": "On the Theory of Phase Transitions",
+        "author": "Landau, Lev D.",
+        "journal": "Zhurnal Eksperimental'noi i Teoreticheskoi Fiziki",
+        "volume": "7",
+        "pages": "19--32",
+        "year": "1937",
+        "url": "https://doi.org/10.1016/B978-0-08-010586-4.50034-1"
+      }
+    },
+    "ginzburg1950": {
+      "type": "article",
+      "fields": {
+        "title": "On the Theory of Superconductivity",
+        "author": "Ginzburg, Vitaly L. and Landau, Lev D.",
+        "journal": "Zhurnal Eksperimental'noi i Teoreticheskoi Fiziki",
+        "volume": "20",
+        "pages": "1064--1082",
+        "year": "1950",
+        "url": "https://doi.org/10.1016/B978-0-08-010586-4.50078-X"
+      }
+    },
+    "hohenberg1977": {
+      "type": "article",
+      "fields": {
+        "title": "Theory of dynamic critical phenomena",
+        "author": "Hohenberg, P. C. and Halperin, B. I.",
+        "journal": "Reviews of Modern Physics",
+        "volume": "49",
+        "pages": "435--479",
+        "year": "1977",
+        "url": "https://doi.org/10.1103/RevModPhys.49.435"
+      }
+    },
+    "allen1979": {
+      "type": "article",
+      "fields": {
+        "title": "A microscopic theory for antiphase boundary motion and its application to antiphase domain coarsening",
+        "author": "Allen, Samuel M. and Cahn, John W.",
+        "journal": "Acta Metallurgica",
+        "volume": "27",
+        "pages": "1085--1095",
+        "year": "1979",
+        "url": "https://doi.org/10.1016/0001-6160(79)90196-2"
+      }
+    },
+    "mermin1966": {
+      "type": "article",
+      "fields": {
+        "title": "Absence of Ferromagnetism or Antiferromagnetism in One- or Two-Dimensional Isotropic Heisenberg Models",
+        "author": "Mermin, N. D. and Wagner, H.",
+        "journal": "Physical Review Letters",
+        "volume": "17",
+        "pages": "1133--1136",
+        "year": "1966",
+        "url": "https://doi.org/10.1103/PhysRevLett.17.1133"
+      }
+    },
+    "berezinskii1971": {
+      "type": "article",
+      "fields": {
+        "title": "Destruction of Long-range Order in One-dimensional and Two-dimensional Systems having a Continuous Symmetry Group I. Classical Systems",
+        "author": "Berezinskii, V. L.",
+        "journal": "Soviet Physics JETP",
+        "volume": "32",
+        "pages": "493--500",
+        "year": "1971",
+        "url": "http://jetp.ras.ru/cgi-bin/e/index/e/32/3/p493?a=list"
+      }
+    },
+    "kosterlitz1973": {
+      "type": "article",
+      "fields": {
+        "title": "Ordering, metastability and phase transitions in two-dimensional systems",
+        "author": "Kosterlitz, J. M. and Thouless, D. J.",
+        "journal": "Journal of Physics C: Solid State Physics",
+        "volume": "6",
+        "pages": "1181--1203",
+        "year": "1973",
+        "url": "https://doi.org/10.1088/0022-3719/6/7/010"
+      }
+    },
+    "kosterlitz1974": {
+      "type": "article",
+      "fields": {
+        "title": "The critical properties of the two-dimensional xy model",
+        "author": "Kosterlitz, J. M.",
+        "journal": "Journal of Physics C: Solid State Physics",
+        "volume": "7",
+        "pages": "1046--1060",
+        "year": "1974",
+        "url": "https://doi.org/10.1088/0022-3719/7/6/005"
+      }
+    },
+    "hasenbusch2005": {
+      "type": "article",
+      "fields": {
+        "title": "The two-dimensional XY model at the transition temperature: a high-precision Monte Carlo study",
+        "author": "Hasenbusch, Martin",
+        "journal": "Journal of Physics A: Mathematical and General",
+        "volume": "38",
+        "pages": "5869--5883",
+        "year": "2005",
+        "url": "https://doi.org/10.1088/0305-4470/38/26/003"
+      }
+    },
+    "rafler2011": {
+      "type": "article",
+      "fields": {
+        "title": "Generalization of Conway's ``Game of Life'' to a continuous domain -- SmoothLife",
+        "author": "Rafler, Stephan",
+        "journal": "arXiv preprint arXiv:1111.1567",
+        "year": "2011",
+        "url": "https://arxiv.org/abs/1111.1567"
+      }
+    },
+    "chan2019": {
+      "type": "article",
+      "fields": {
+        "title": "Lenia: Biology of Artificial Life",
+        "author": "Chan, Bert Wang-Chak",
+        "journal": "Complex Systems",
+        "volume": "28",
+        "number": "3",
+        "pages": "251--286",
+        "year": "2019",
+        "url": "https://doi.org/10.25088/ComplexSystems.28.3.251"
+      }
+    },
+    "chan2020": {
+      "type": "inproceedings",
+      "fields": {
+        "title": "Lenia and Expanded Universe",
+        "author": "Chan, Bert Wang-Chak",
+        "booktitle": "Proceedings of the ALIFE 2020 Conference",
+        "pages": "221--229",
+        "year": "2020",
+        "url": "https://doi.org/10.1162/isal_a_00297"
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "id": "frw",
   "name": "Friedmann-Lemaître-Robertson-Walker Expanding Universe",
+  "short_name": "Friedmann-Lemaître-Robertson-Walker",
   "description": "The Friedmann-Lemaître-Robertson-Walker metric describing a homogeneous, isotropic expanding universe.",
   "tags": [
     "cosmology",

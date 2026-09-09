@@ -1,6 +1,7 @@
 {
   "id": "ellis_bronnikov",
   "name": "Ellis-Bronnikov Traversable Wormhole",
+  "short_name": "Ellis-Bronnikov",
   "description": "A static, spherically symmetric traversable wormhole with zero redshift function, also known as the drainhole metric.",
   "tags": [
     "wormhole",

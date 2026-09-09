@@ -1,6 +1,7 @@
 {
   "id": "godel",
   "name": "Gödel Rotating Universe",
+  "short_name": "Gödel",
   "description": "An exact solution of Einstein's field equations describing a rotating dust universe with closed timelike curves.",
   "tags": [
     "dust",
