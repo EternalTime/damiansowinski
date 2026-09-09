@@ -17,6 +17,13 @@ That rewrites `MFS/assets/data/metrics_index.json` and `MFS/assets/data/referenc
 The index is never edited by hand, so it cannot disagree with the folder.
 Commit the new metric file together with whatever the command rewrote.
 
+Every key a metric cites has to be an entry in `assets/data/references.bib`.
+The command refuses to write anything if one is not, naming the metric file and the key it could not find, so a mistyped citation is caught here rather than published as a reference the reader cannot resolve.
+
+A cloud-sync conflict copy dropped into the metrics folder, named like `kerr 2.json`, is passed over rather than read.
+Those are the same names `.gitignore` already keeps out of the repository.
+Any other file name is read, so a metric whose `id` does not match its file name still stops the command.
+
 ## What the command writes
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.

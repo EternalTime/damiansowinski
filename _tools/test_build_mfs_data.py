@@ -53,10 +53,24 @@ class Index(unittest.TestCase):
         with self.assertRaises(build.DataError):
             self.load_one("x.json", {"id": "y", "name": "X", "short_name": "X", "tags": ["t"]})
 
+    def test_a_cloud_sync_conflict_copy_is_passed_over(self):
+        good = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"]}
+        stale = dict(good, name="An older X")
+        loaded = self.load_folder({"x.json": good, "x 2.json": stale})
+        self.assertEqual([m["id"] for m in loaded], ["x"])
+        self.assertEqual(loaded[0]["name"], "X")
+
+    def test_a_normally_named_file_with_a_wrong_id_still_fails(self):
+        with self.assertRaises(build.DataError):
+            self.load_folder({"x2.json": {"id": "y", "name": "X", "short_name": "X", "tags": ["t"]}})
+
     def load_one(self, filename, metric):
+        return self.load_folder({filename: metric})
+
+    def load_folder(self, files):
         with tempfile.TemporaryDirectory() as folder:
-            path = Path(folder) / filename
-            path.write_text(json.dumps(metric), encoding="utf-8")
+            for filename, metric in files.items():
+                (Path(folder) / filename).write_text(json.dumps(metric), encoding="utf-8")
             with mock.patch.object(build, "METRICS_DIR", Path(folder)):
                 return build.load_metrics()
 
@@ -114,6 +128,33 @@ class Bibliography(unittest.TestCase):
     def test_a_repeated_key_is_refused(self):
         with self.assertRaises(build.DataError):
             build.parse_bibtex("@article{a, year = {1} }\n@article{a, year = {2} }")
+
+    def test_a_field_left_without_a_value_is_refused_by_name(self):
+        with self.assertRaises(build.DataError) as raised:
+            build.parse_bibtex("@misc{lonely, url =\n}")
+        self.assertIn("lonely", str(raised.exception))
+
+
+class Citations(unittest.TestCase):
+    def test_the_collection_as_it_stands_resolves(self):
+        entries = build.build_references()["entries"]
+        self.assertIsNone(build.check_citations(build.load_metrics(), entries))
+
+    def test_a_citation_the_bibliography_has_no_entry_for_is_refused(self):
+        metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "references": ["ghost"]}
+        with self.assertRaises(build.DataError) as raised:
+            build.check_citations([metric], {"kerr1963": {}})
+        self.assertIn("x.json", str(raised.exception))
+        self.assertIn("ghost", str(raised.exception))
+
+    def test_a_dangling_citation_leaves_both_published_files_alone(self):
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        broken = build.load_metrics()
+        broken[0] = dict(broken[0], references=["no_such_key"])
+        with mock.patch.object(build, "load_metrics", return_value=broken):
+            self.assertEqual(build.main([]), 2)
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
 
 
 if __name__ == "__main__":

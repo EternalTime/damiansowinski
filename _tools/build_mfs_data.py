@@ -49,9 +49,14 @@ def sort_key(metric):
     return folded.casefold()
 
 
+CONFLICT_COPY = re.compile(r" \d+$")
+
+
 def load_metrics():
     metrics = []
     for path in sorted(METRICS_DIR.glob("*.json")):
+        if CONFLICT_COPY.search(path.stem):
+            continue
         try:
             metric = json.loads(path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as exc:
@@ -112,6 +117,8 @@ def parse_bibtex(text):
             if not field:
                 break
             after = field.end()
+            if after >= len(body):
+                raise DataError(f"the entry {key!r} ends with a field that has no value")
             if body[after] == "{":
                 value, position = read_braced(body, after)
             elif body[after] == '"':
@@ -133,6 +140,16 @@ def build_references():
     return {"version": content_version(entries), "entries": entries}
 
 
+def check_citations(metrics, entries):
+    """Refuse to publish a citation the reader cannot resolve in the bibliography."""
+    for metric in metrics:
+        for key in metric.get("references", []):
+            if key not in entries:
+                raise DataError(
+                    f"{metric['id']}.json cites {key!r}, which the bibliography has no entry for"
+                )
+
+
 def serialise(value):
     return json.dumps(value, indent=2, ensure_ascii=False) + "\n"
 
@@ -143,9 +160,12 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     try:
+        references = build_references()
+        metrics = load_metrics()
+        check_citations(metrics, references["entries"])
         outputs = {
-            INDEX_FILE: serialise(build_index(load_metrics())),
-            REFERENCES_FILE: serialise(build_references()),
+            INDEX_FILE: serialise(build_index(metrics)),
+            REFERENCES_FILE: serialise(references),
         }
     except DataError as exc:
         print(f"error: {exc}", file=sys.stderr)
