@@ -285,6 +285,29 @@
     "version": "4e247b442c43ce94"
   },
   {
+    "id": "krasnikov",
+    "name": "Krasnikov",
+    "tags": [
+      "faster-than-light",
+      "warp drive",
+      "exotic matter",
+      "negative energy",
+      "energy condition violation",
+      "closed timelike curves",
+      "causal structure",
+      "time-dependent",
+      "dynamical",
+      "non-vacuum",
+      "axisymmetric",
+      "idealized model",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "causality violation"
+    ],
+    "version": "a4fb4c4fb1c5eb89"
+  },
+  {
     "id": "stockum_dust",
     "name": "Lanczos–van Stockum",
     "tags": [
