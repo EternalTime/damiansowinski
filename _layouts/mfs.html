@@ -55,19 +55,19 @@
     width:280px;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
     box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
-    padding:1em; display:flex; flex-direction:column;">
-  <div id="mfs-coffee-scroll" style="min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:0.7em;">
+    padding:1em; display:flex; flex-direction:column; align-items:center; gap:0.7em;">
+  <div id="mfs-coffee-scroll" style="align-self:stretch;min-height:0;overflow-y:auto;">
     <p id="mfs-coffee-text" style="margin:0;font-family:'Source Code Pro',monospace;font-size:0.72em;line-height:1.5;
       color:var(--teal-light);letter-spacing:0.02em;text-align:left;">
       Please let me know if you would like any other spacetimes added to the collection, or if (gasp) you see an error somewhere.
       General relativity calculations are best fueled by coffee, so if you find this site useful lend me a hand in the endless struggle of keeping myself caffeinated.
     </p>
-    <!-- MFS_BUY_ME_A_COFFEE_URL: the one place the Buy Me a Coffee address lives -->
-    <a id="mfs-coffee-link" href="https://buymeacoffee.com/owlsnestcreations" target="_blank" rel="noopener noreferrer" style="display:block;width:170px;max-width:100%;flex-shrink:0;">
-      <img src="{{ '/assets/images/buy-me-a-coffee-black-button.png' | relative_url }}" alt="Buy me a coffee"
-        style="display:block;width:100%;height:auto;">
-    </a>
   </div>
+  <!-- MFS_BUY_ME_A_COFFEE_URL: the one place the Buy Me a Coffee address lives -->
+  <a id="mfs-coffee-link" href="https://buymeacoffee.com/owlsnestcreations" target="_blank" rel="noopener noreferrer" style="display:block;width:170px;max-width:100%;flex-shrink:0;">
+    <img src="{{ '/assets/images/buy-me-a-coffee-black-button.png' | relative_url }}" alt="Buy me a coffee"
+      style="display:block;width:100%;height:auto;">
+  </a>
   </div>
 
   <script>
