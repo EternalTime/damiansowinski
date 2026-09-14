@@ -51,6 +51,12 @@
   <div id="mfs-search-results" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;"></div>
   </div>
 
+<!-- Buy Me a Coffee panel. Sits flush against the bottom edge of #mfs-search-panel with no gap
+     between them, which is deliberate: the two borders are meant to meet. Its top, width and
+     max height come from syncPanel() in the panel animation script below, never from here, and
+     its height is left to its content so the panel stays as small as its contents need.
+     #mfs-coffee-scroll takes the overflow when the viewport is short, so only the copy scrolls
+     and the button below it stays visible as a non-scrolling bottom row. -->
 <div id="mfs-coffee-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
     width:280px;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
@@ -536,7 +542,10 @@
   </script>
 
   <script>
-    /* ── MFS search panel animation: slide in from off-screen left ── */
+    /* ── MFS left panel animation: slide search and coffee panels in from off-screen left ── */
+    /* Both panels move as one, on this single animation. The exit transition calls the
+       window._mfsSlideOutLeft(duration) exposed at the bottom rather than animating either panel
+       itself, so they can never drift apart in one direction and not the other. */
     (function() {
       var el     = document.getElementById('mfs-search-panel');
       var coffee = document.getElementById('mfs-coffee-panel');
@@ -564,6 +573,9 @@
         el.style.height = PANEL_H + 'px';
         coffee.style.top       = (PANEL_TOP + PANEL_H) + 'px';
         coffee.style.width     = PANEL_W + 'px';
+        // No height: the panel is content sized. The clamp only stops it running past the
+        // bottom of a short viewport, where a fixed, overflow:hidden panel would put the
+        // button out of reach; past that point #mfs-coffee-scroll scrolls the copy instead.
         coffee.style.maxHeight = Math.max(0, window.innerHeight - PANEL_TOP - PANEL_H - BOTTOM_GAP) + 'px';
       }
       syncPanel();
