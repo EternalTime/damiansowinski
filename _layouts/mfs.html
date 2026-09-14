@@ -51,6 +51,18 @@
   <div id="mfs-search-results" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;"></div>
   </div>
 
+<div id="mfs-coffee-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
+    width:280px;
+    background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
+    box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
+    padding:1em; display:flex; align-items:center;">
+  <!-- MFS_BUY_ME_A_COFFEE_URL: the one place the Buy Me a Coffee address lives -->
+  <a id="mfs-coffee-link" target="_blank" rel="noopener noreferrer" style="display:block;width:100%;">
+    <img src="{{ '/assets/images/buy-me-a-coffee-violet-button.png' | relative_url }}" alt="Buy me a coffee"
+      style="display:block;width:100%;height:auto;">
+  </a>
+  </div>
+
   <script>
     /* ── MFS search: simple filter over metric index ── */
     (function() {
@@ -519,39 +531,61 @@
   <script>
     /* ── MFS search panel animation: slide in from off-screen left ── */
     (function() {
-      var el = document.getElementById('mfs-search-panel');
+      var el     = document.getElementById('mfs-search-panel');
+      var coffee = document.getElementById('mfs-coffee-panel');
       if (!el) return;
 
       var PANEL_TOP   = 150;   // px from top of viewport — adjust once content is added
       var PANEL_LEFT  = 0;     // flush with left edge of window
       var PANEL_W     = 280;
       var PANEL_H     = 320;
+      var COFFEE_H    = 106;
       var SLIDE_DELAY = 800;   // ms after flicker-in starts
       var SLIDE_DUR   = 500;   // ms for the slide
 
+      var panels = coffee ? [el, coffee] : [el];
+
       // Set fixed size and top; start off-screen left
       el.style.top    = PANEL_TOP + 'px';
-      el.style.left   = (-PANEL_W - 20) + 'px';
       el.style.width  = PANEL_W + 'px';
       el.style.height = PANEL_H + 'px';
+      panels.forEach(function(p) { p.style.left = (-PANEL_W - 20) + 'px'; });
 
       function syncPanel() {
         el.style.top    = PANEL_TOP + 'px';
         el.style.width  = PANEL_W + 'px';
         el.style.height = PANEL_H + 'px';
+        if (coffee) {
+          coffee.style.top    = (PANEL_TOP + PANEL_H) + 'px';
+          coffee.style.width  = PANEL_W + 'px';
+          coffee.style.height = COFFEE_H + 'px';
+        }
       }
+      syncPanel();
       window._mfsSyncPanel = syncPanel;
       window.addEventListener('resize', syncPanel);
 
       // Slide in after delay
       setTimeout(function() {
-        el.style.transition = 'left ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        el.style.left       = PANEL_LEFT + 'px';
+        panels.forEach(function(p) {
+          p.style.transition = 'left ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+          p.style.left       = PANEL_LEFT + 'px';
+        });
         setTimeout(function() {
-          el.style.pointerEvents = 'all';
-          el.style.transition    = '';
+          panels.forEach(function(p) {
+            p.style.pointerEvents = 'all';
+            p.style.transition    = '';
+          });
         }, SLIDE_DUR);
       }, SLIDE_DELAY);
+
+      // Exposed so the exit transition moves both panels as one
+      window._mfsSlideOutLeft = function(duration) {
+        panels.forEach(function(p) {
+          p.style.transition = 'left ' + duration + 'ms cubic-bezier(0.55, 0.06, 0.68, 0.19)';
+          p.style.left       = (-PANEL_W - 20) + 'px';
+        });
+      };
 
     })();
   </script>
@@ -1429,13 +1463,8 @@
           window._mfsTrackEl(exitEl,  1);
         }
 
-        // slide search panel back out to the left
-        var searchPanel = document.getElementById('mfs-search-panel');
-        if (searchPanel) {
-          var panelW = searchPanel.offsetWidth;
-          searchPanel.style.transition = 'left ' + (RAMP_MS * 0.6 / 1000) + 's cubic-bezier(0.55, 0.06, 0.68, 0.19)';
-          searchPanel.style.left = (-panelW - 20) + 'px';
-        }
+        // slide search and coffee panels back out to the left, together
+        if (window._mfsSlideOutLeft) window._mfsSlideOutLeft(RAMP_MS * 0.6);
         // slide content panel back out to the right
         if (window._mfsSlideOutRight) window._mfsSlideOutRight(RAMP_MS * 0.6);
 
