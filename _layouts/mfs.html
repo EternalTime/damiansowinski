@@ -55,17 +55,19 @@
     width:280px;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
     box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
-    padding:1em; display:flex; flex-direction:column; align-items:center; gap:0.7em;">
-  <p id="mfs-coffee-text" style="margin:0;font-family:'Source Code Pro',monospace;font-size:0.72em;line-height:1.5;
-    color:var(--teal-light);letter-spacing:0.02em;text-align:left;">
-    Please let me know if you would like any other spacetimes added to the collection, or if (gasp) you see an error somewhere.
-    General relativity calculations are best fueled by coffee, so if you find this site useful lend me a hand in the endless struggle of keeping myself caffeinated.
-  </p>
-  <!-- MFS_BUY_ME_A_COFFEE_URL: the one place the Buy Me a Coffee address lives -->
-  <a id="mfs-coffee-link" href="https://buymeacoffee.com/owlsnestcreations" target="_blank" rel="noopener noreferrer" style="display:block;width:170px;max-width:100%;">
-    <img src="{{ '/assets/images/buy-me-a-coffee-black-button.png' | relative_url }}" alt="Buy me a coffee"
-      style="display:block;width:100%;height:auto;">
-  </a>
+    padding:1em; display:flex; flex-direction:column;">
+  <div id="mfs-coffee-scroll" style="min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:0.7em;">
+    <p id="mfs-coffee-text" style="margin:0;font-family:'Source Code Pro',monospace;font-size:0.72em;line-height:1.5;
+      color:var(--teal-light);letter-spacing:0.02em;text-align:left;">
+      Please let me know if you would like any other spacetimes added to the collection, or if (gasp) you see an error somewhere.
+      General relativity calculations are best fueled by coffee, so if you find this site useful lend me a hand in the endless struggle of keeping myself caffeinated.
+    </p>
+    <!-- MFS_BUY_ME_A_COFFEE_URL: the one place the Buy Me a Coffee address lives -->
+    <a id="mfs-coffee-link" href="https://buymeacoffee.com/owlsnestcreations" target="_blank" rel="noopener noreferrer" style="display:block;width:170px;max-width:100%;flex-shrink:0;">
+      <img src="{{ '/assets/images/buy-me-a-coffee-black-button.png' | relative_url }}" alt="Buy me a coffee"
+        style="display:block;width:100%;height:auto;">
+    </a>
+  </div>
   </div>
 
   <script>
@@ -544,10 +546,11 @@
       var PANEL_LEFT  = 0;     // flush with left edge of window
       var PANEL_W     = 280;
       var PANEL_H     = 320;
+      var BOTTOM_GAP  = 20;    // same bottom clearance the content panel leaves
       var SLIDE_DELAY = 800;   // ms after flicker-in starts
       var SLIDE_DUR   = 500;   // ms for the slide
 
-      var panels = coffee ? [el, coffee] : [el];
+      var panels = [el, coffee];
 
       // Set fixed size and top; start off-screen left
       el.style.top    = PANEL_TOP + 'px';
@@ -559,10 +562,9 @@
         el.style.top    = PANEL_TOP + 'px';
         el.style.width  = PANEL_W + 'px';
         el.style.height = PANEL_H + 'px';
-        if (coffee) {
-          coffee.style.top   = (PANEL_TOP + PANEL_H) + 'px';
-          coffee.style.width = PANEL_W + 'px';
-        }
+        coffee.style.top       = (PANEL_TOP + PANEL_H) + 'px';
+        coffee.style.width     = PANEL_W + 'px';
+        coffee.style.maxHeight = Math.max(0, window.innerHeight - PANEL_TOP - PANEL_H - BOTTOM_GAP) + 'px';
       }
       syncPanel();
       window._mfsSyncPanel = syncPanel;
