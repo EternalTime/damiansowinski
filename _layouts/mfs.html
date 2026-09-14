@@ -55,10 +55,15 @@
     width:280px;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
     box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
-    padding:1em; display:flex; align-items:center;">
+    padding:1em; display:flex; flex-direction:column; align-items:center; gap:0.7em;">
+  <p id="mfs-coffee-text" style="margin:0;font-family:'Source Code Pro',monospace;font-size:0.72em;line-height:1.5;
+    color:var(--teal-light);letter-spacing:0.02em;text-align:left;">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
   <!-- MFS_BUY_ME_A_COFFEE_URL: the one place the Buy Me a Coffee address lives -->
-  <a id="mfs-coffee-link" target="_blank" rel="noopener noreferrer" style="display:block;width:100%;">
-    <img src="{{ '/assets/images/buy-me-a-coffee-violet-button.png' | relative_url }}" alt="Buy me a coffee"
+  <a id="mfs-coffee-link" href="https://buymeacoffee.com/owlsnestcreations" target="_blank" rel="noopener noreferrer" style="display:block;width:170px;max-width:100%;">
+    <img src="{{ '/assets/images/buy-me-a-coffee-black-button.png' | relative_url }}" alt="Buy me a coffee"
       style="display:block;width:100%;height:auto;">
   </a>
   </div>
@@ -539,7 +544,6 @@
       var PANEL_LEFT  = 0;     // flush with left edge of window
       var PANEL_W     = 280;
       var PANEL_H     = 320;
-      var COFFEE_H    = 106;
       var SLIDE_DELAY = 800;   // ms after flicker-in starts
       var SLIDE_DUR   = 500;   // ms for the slide
 
@@ -556,9 +560,8 @@
         el.style.width  = PANEL_W + 'px';
         el.style.height = PANEL_H + 'px';
         if (coffee) {
-          coffee.style.top    = (PANEL_TOP + PANEL_H) + 'px';
-          coffee.style.width  = PANEL_W + 'px';
-          coffee.style.height = COFFEE_H + 'px';
+          coffee.style.top   = (PANEL_TOP + PANEL_H) + 'px';
+          coffee.style.width = PANEL_W + 'px';
         }
       }
       syncPanel();
