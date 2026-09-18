@@ -160,6 +160,19 @@ DIMENSIONS = {
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
+    # The exterior keeps G and a mass per unit length explicit, so that the deficit is
+    # the dimensionless 4G mu/c^2 the entry prints; delta is the deficit angle itself,
+    # which the entry declares and states rather than uses. The interior is written with
+    # a dimensionless polar angle chi, so its one length is the radius of the cap.
+    ("cosmic_string", "conical"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L",
+        "\\mu": "M/L", "G": "L**3/(M*T**2)", "\\delta": "1",
+    },
+    ("cosmic_string", "interior_cap"): {
+        "t": "T", "\\chi": "1", "\\phi": "1", "z": "L",
+        "\\ell": "L", "\\chi_0": "1", "\\rho": "M/L**3", "\\mu": "M/L",
+        "G": "L**3/(M*T**2)",
+    },
     # The static patch carries the cosmological constant itself, a curvature; the flat
     # slicing carries the Hubble rate instead, a frequency, with 3H^2/c^2 = Lambda.
     ("de_sitter", "static_spherical"): {
