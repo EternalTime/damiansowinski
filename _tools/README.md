@@ -82,6 +82,10 @@ sympy is not installed system wide, and the virtual environment does not belong 
 
 The whole collection takes about a quarter of an hour. `--system <metric_id>/<system_id>` checks one system and takes seconds, which is what to use while editing a single entry.
 `--budget <seconds>` changes how long sympy may spend on one tensor.
+Kerr is the exception to the seconds, and so far it is the exception to the check.
+Its metric is not diagonal and its components are rational functions with $(r^2+a^2\cos^2\theta)$ to a high power underneath, and `norm` calls sympy's general `simplify` on every one of them.
+Its Christoffel symbols come out in about forty seconds; its Riemann tensor has run for over ninety minutes of processor time without finishing, and its Kretschmann scalar is further out again, so raising `--budget` does not rescue it.
+`_tools/derivations/kerr.md` Step 17 records what was checked in place of a full pass, and names the change to `norm` that would bring Kerr inside the budget.
 `--dimensions-only` runs the dimensional pass alone, which takes about a second over the whole collection, so there is no reason not to run it on every edit.
 
 Neither pass exits clean on the collection as it stands.
@@ -125,6 +129,7 @@ So is declaring a dimension for a parameter the system does not have, or leaving
 
 A dimension is written in $L$, $T$ and $M$.
 Most entries never name a mass, because they fold it into a length such as $r_s = 2GM/c^2$ and quote that; Vaidya keeps $G$ and $m(u)$ explicit, so it declares $[G] = L^3M^{-1}T^{-2}$ and $[m] = M$ and its components balance through the length $Gm/c^2$.
+Kerr does the same with a constant $M$, and adds the one declaration a reader cannot guess: its spin parameter $a = J/(Mc)$ is a length, not a dimensionless number, which is what makes $r^2 + a^2\cos^2\theta$ an area.
 
 Some of what the table has to decide is a choice the entry leaves open.
 FRW can be read with a dimensionless comoving $r$ and a scale factor carrying the length, or with $r$ a length, $a$ dimensionless and $k$ a curvature; the line element balances either way, and only the published Riemann tensor picks the second.

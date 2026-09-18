@@ -192,6 +192,13 @@ DIMENSIONS = {
     ("kasner", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "p_1": "1", "p_2": "1", "p_3": "1",
     },
+    # The other entry that keeps G and a mass explicit rather than folding them into a
+    # length. The spin per unit mass a = J/(Mc) is a length, which is what makes
+    # r^2 + a^2cos^2(theta) and r^2 - 2GMr/c^2 + a^2 areas.
+    ("kerr", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1",
+        "M": "M", "a": "L", "G": "L**3/(M*T**2)",
+    },
     ("minkowski", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L"},
     ("minkowski", "spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1"},
     ("minkowski", "double_null"): {"u": "T", "v": "T", "y": "L", "z": "L"},
