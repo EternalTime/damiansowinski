@@ -84,6 +84,11 @@ The whole collection takes about a quarter of an hour. `--system <metric_id>/<sy
 `--budget <seconds>` changes how long sympy may spend on one tensor.
 `--dimensions-only` runs the dimensional pass alone, which takes about a second over the whole collection, so there is no reason not to run it on every edit.
 
+Neither pass exits clean on the collection as it stands.
+The sympy pass reports the disagreements `derivations/audit-2026-09-18.md` counts, and the dimensional pass reports seven terms, in `frw` and in `stockum_dust`.
+Both print what failed on stderr and print the single line saying nothing failed on stdout, so a run piped through `2>&1 | tail` can look clean when it is not.
+Read the exit code, and run the script before and after a change so that a failure you did not cause is not mistaken for one you did.
+
 `derivations/audit-2026-09-18.md` groups and counts the disagreements the collection carried when the dimensional pass was added, and says which of them are the checker's fault rather than the physics'.
 It is a dated snapshot of 433, of which the 320 that were a Weyl block copied from the entry's own Riemann block have since been corrected, leaving 113.
 `derivations/weyl.md` is the working behind those corrections, and is the thing to read before touching any `weyl_tensor`: a Weyl tensor equals Riemann only in a vacuum, it can be nonzero in a slot where Riemann vanishes, and two of the entries that publish one are conformally flat and so publish nothing.
@@ -123,6 +128,11 @@ Most entries never name a mass, because they fold it into a length such as $r_s 
 Some of what the table has to decide is a choice the entry leaves open.
 FRW can be read with a dimensionless comoving $r$ and a scale factor carrying the length, or with $r$ a length, $a$ dimensionless and $k$ a curvature; the line element balances either way, and only the published Riemann tensor picks the second.
 Where that happens, the table carries a comment saying which reading the entry's own values obey.
+
+A parameter may be a function rather than a constant.
+`a = a(t)` declares a function of one coordinate, which answers to a dot and to a prime, and `H = H(u,x,y)` declares a function of several, which answers to `\partial`: a published `\partial_x H`, `\partial_x^2 H` or `\partial_x\partial_y H` is read as that first or second partial derivative, which is as far as any curvature tensor reaches.
+Every such derivative is taken with respect to the chart coordinate, exactly as the dot and the prime are, so one along a time carries a factor of $1/c$ and one along a length does not.
+`_tools/derivations/pp_wave.md` is the worked example, and its Step 15 is where that factor earns its keep.
 
 An entry whose parameters are not free needs a second line, in `PARAMETER_RELATIONS`.
 Kasner prints three exponents bound by $\sum_i p_i = \sum_i p_i^2 = 1$ and claims its values only on the surface those two equations cut out; its Ricci tensor is zero there and nowhere else.

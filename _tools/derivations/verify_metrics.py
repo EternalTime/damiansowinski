@@ -174,6 +174,15 @@ DIMENSIONS = {
     ("minkowski", "double_null"): {"u": "T", "v": "T", "y": "L", "z": "L"},
     ("minkowski", "spherical_null"): {"u": "T", "v": "T", "\\theta": "1", "\\phi": "1"},
     ("minkowski", "rindler"): {"T": "T", "X": "L", "Y": "L", "Z": "L", "a": "L/T**2"},
+    # u is the retarded time and v the affine parameter along the rays, which is a
+    # length, so the wave profile H is dimensionless and the amplitudes of the exact
+    # plane wave, multiplying x^2, are curvatures.
+    ("pp_wave", "brinkmann"): {
+        "u": "T", "v": "L", "x": "L", "y": "L", "H": "1",
+    },
+    ("pp_wave", "exact_plane_wave"): {
+        "u": "T", "v": "L", "x": "L", "y": "L", "A": "1/L**2", "B": "1/L**2",
+    },
     ("rn_metric", "spherical"): {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L",
     },
@@ -332,6 +341,41 @@ def expand_braced_call(text, command, replacement):
         text = f"{text[:found.start()]}{replacement}({body}){text[closing + 1:]}"
 
 
+PARTIAL = re.compile(
+    r"\\partial_\s*\{?\s*(?:\\([A-Za-z]+)|([A-Za-z]))\s*\}?\s*(?:\^\s*\{?\s*(\d+)\s*\}?)?\s*")
+PARTIAL_TARGET = re.compile(r"\\?([A-Za-z]+)")
+
+
+def expand_partials(text):
+    """A run of \\partial factors into the one name the reader declares for it.
+
+    \\partial_x^2 H becomes H_partial_x_x and \\partial_x\\partial_y H becomes
+    H_partial_x_y, so a published partial derivative is a single token by the time the
+    parser sees it. The run binds to the one function name that follows it.
+    """
+    out = []
+    position = 0
+    while True:
+        found = PARTIAL.search(text, position)
+        if not found:
+            out.append(text[position:])
+            return "".join(out)
+        out.append(text[position:found.start()])
+        variables = []
+        at = found.start()
+        while True:
+            factor = PARTIAL.match(text, at)
+            if factor is None:
+                break
+            variables += [factor.group(1) or factor.group(2)] * int(factor.group(3) or 1)
+            at = factor.end()
+        target = PARTIAL_TARGET.match(text, at)
+        if target is None:
+            raise LatexError(f"the \\partial in {text!r} names no function")
+        out.append(f" {target.group(1)}_partial_{'_'.join(variables)} ")
+        position = target.end()
+
+
 def expand_superscript_braces(text):
     """^{body} into **(body), so that ^{-1} and e^{-r^2} survive the parser."""
     out = []
@@ -404,28 +448,46 @@ class Reader:
     def _plain(name):
         return name.replace("\\", "").strip()
 
+    def _partial_name(self, plain, names):
+        return plain + "_partial_" + "_".join(self._plain(name) for name in names)
+
     def _declare_parameter(self, declaration):
-        """`a` is a constant; `a = a(t)` is a function of the coordinate it names.
+        """`a` is a constant; `a = a(t)` is a function of the coordinates it names.
 
         For the second kind the printed rate is a derivative with respect to the chart
         coordinate, which is c times the named one when that one is a time, so the rate
-        carries the matching power of c.
+        carries the matching power of c. Every first and second partial derivative is
+        declared under the name \\partial expands to, and a function of one coordinate
+        answers to a dot and to a prime besides.
         """
         plain = self._plain(declaration.split("=")[0])
         self.parameter_names.append(plain)
-        argument = re.search(r"\(\s*(\\?[A-Za-z]+)\s*\)", declaration)
+        argument = re.search(r"\(([^()]*)\)", declaration)
         if argument is None:
             self.parameters[plain] = sp.Symbol(plain, real=True)
             return
-        name = argument.group(1)
-        if name not in self.symbol:
-            raise LatexError(f"parameter {declaration!r} varies with {name!r}, which is not a coordinate")
-        variable = self.symbol[name]
-        function = sp.Function(plain, real=True)(variable)
-        scale = self.c if name in self.time_coords else sp.Integer(1)
+        names = [name.strip() for name in argument.group(1).split(",")]
+        unknown = [name for name in names if name not in self.symbol]
+        if unknown:
+            raise LatexError(f"parameter {declaration!r} varies with {unknown}, "
+                             f"which are not coordinates of this system")
+        function = sp.Function(plain, real=True)(*(self.symbol[name] for name in names))
         self.parameters[plain] = function
-        first = sp.Derivative(function, variable) / scale
-        second = sp.Derivative(function, variable, 2) / scale ** 2
+        scale = {name: self.c if name in self.time_coords else sp.Integer(1) for name in names}
+        for first in names:
+            self.parameters[self._partial_name(plain, [first])] = (
+                sp.Derivative(function, self.symbol[first]) / scale[first])
+            for second in names:
+                # One object for both spellings, since the mixed partials commute.
+                pair = sorted([first, second], key=self.coords.index)
+                self.parameters[self._partial_name(plain, [first, second])] = (
+                    sp.Derivative(function, *(self.symbol[name] for name in pair))
+                    / (scale[first] * scale[second]))
+        if len(names) > 1:
+            return
+        variable = self.symbol[names[0]]
+        first = sp.Derivative(function, variable) / scale[names[0]]
+        second = sp.Derivative(function, variable, 2) / scale[names[0]] ** 2
         # Both spellings appear: a dot in the comoving chart, a prime in the conformal one.
         for suffix, value in (("_dot", first), ("_prime", first),
                               ("_ddot", second), ("_pprime", second)):
@@ -441,6 +503,7 @@ class Reader:
         for name in sorted(self.primed, key=len, reverse=True):
             text = re.sub(re.escape(name) + r"''", f" {name}_pprime ", text)
             text = re.sub(re.escape(name) + r"'", f" {name}_prime ", text)
+        text = expand_partials(text)
         text = expand_fractions(text)
         text = expand_braced_call(text, "sqrt", "sqrt")
         text = expand_braced_call(text, "ddot", "DDOT")
