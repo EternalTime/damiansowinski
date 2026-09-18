@@ -450,6 +450,24 @@
                   "r"
                 ],
                 "value": "-\\dfrac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\sin^2\\theta"
               }
             ]
           }
@@ -940,6 +958,42 @@
               {
                 "indices": [
                   "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{1}{3}\\dfrac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{3}\\dfrac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{3}\\dfrac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{3}\\dfrac{\\ell^2}{(r^2+\\ell^2)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
                   "\\phi",
                   "\\theta",
                   "\\phi"
@@ -954,6 +1008,60 @@
                   "\\theta"
                 ],
                 "value": "-\\dfrac{2}{3}\\ell^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{3}\\dfrac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{3}\\dfrac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{3}\\dfrac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{3}\\dfrac{\\ell^2}{(r^2+\\ell^2)}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{3}\\ell^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2}{3}\\ell^2\\sin^2\\theta"
               }
             ]
           }
@@ -961,7 +1069,7 @@
       },
       "geodesics": [
         "\\ddot{t} = 0",
-        "\\ddot{r} = -r\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2",
+        "\\ddot{r} = r\\dot{\\theta}^2 + r\\sin^2\\theta\\,\\dot{\\phi}^2",
         "\\ddot{\\theta} = -\\dfrac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
         "\\ddot{\\phi} = -\\dfrac{2r}{r^2+\\ell^2}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
       ]
