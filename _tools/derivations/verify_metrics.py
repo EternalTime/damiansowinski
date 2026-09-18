@@ -204,6 +204,18 @@ DIMENSIONS = {
     ("minkowski", "double_null"): {"u": "T", "v": "T", "y": "L", "z": "L"},
     ("minkowski", "spherical_null"): {"u": "T", "v": "T", "\\theta": "1", "\\phi": "1"},
     ("minkowski", "rindler"): {"T": "T", "X": "L", "Y": "L", "Z": "L", "a": "L/T**2"},
+    # The redshift function sits inside an exponential and so is dimensionless, and the
+    # shape function is a length beside r, which is what leaves 1 - b/r dimensionless.
+    # In the proper distance chart l is the radial coordinate and the areal radius r is
+    # a declared function of it rather than a coordinate.
+    ("morris_thorne", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1",
+        "\\Phi": "1", "b": "L", "b_0": "L",
+    },
+    ("morris_thorne", "proper_radial"): {
+        "t": "T", "l": "L", "\\theta": "1", "\\phi": "1",
+        "\\Phi": "1", "r": "L", "b_0": "L",
+    },
     # u is the retarded time and v the affine parameter along the rays, which is a
     # length, so the wave profile H is dimensionless and the amplitudes of the exact
     # plane wave, multiplying x^2, are curvatures.
