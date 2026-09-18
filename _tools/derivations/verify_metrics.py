@@ -160,6 +160,14 @@ DIMENSIONS = {
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
+    # The static patch carries the cosmological constant itself, a curvature; the flat
+    # slicing carries the Hubble rate instead, a frequency, with 3H^2/c^2 = Lambda.
+    ("de_sitter", "static_spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
+    },
+    ("de_sitter", "flat_slicing"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "H": "1/T",
+    },
     ("ellis_bronnikov", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L",
     },
