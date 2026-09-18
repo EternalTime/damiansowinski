@@ -1,5 +1,5 @@
 {
-  "version": "0658303191dbcfa5",
+  "version": "05f58a04aadd992f",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -2669,6 +2669,62 @@
         "pages": "221--229",
         "year": "2020",
         "url": "https://doi.org/10.1162/isal_a_00297"
+      }
+    },
+    "kasner1921flat": {
+      "type": "article",
+      "fields": {
+        "title": "The impossibility of Einstein fields immersed in flat space of five dimensions",
+        "author": "Kasner, Edward",
+        "journal": "American Journal of Mathematics",
+        "volume": "43",
+        "number": "2",
+        "pages": "126--129",
+        "year": "1921",
+        "doi": "10.2307/2370245",
+        "url": "https://www.jstor.org/stable/2370245"
+      }
+    },
+    "kasner1921": {
+      "type": "article",
+      "fields": {
+        "title": "Geometrical theorems on Einstein's cosmological equations",
+        "author": "Kasner, Edward",
+        "journal": "American Journal of Mathematics",
+        "volume": "43",
+        "number": "4",
+        "pages": "217--221",
+        "year": "1921",
+        "doi": "10.2307/2370192",
+        "url": "https://www.jstor.org/stable/2370192"
+      }
+    },
+    "lifshitz1963": {
+      "type": "article",
+      "fields": {
+        "title": "Investigations in relativistic cosmology",
+        "author": "Lifshitz, Evgeny M. and Khalatnikov, Isaak M.",
+        "journal": "Advances in Physics",
+        "volume": "12",
+        "number": "46",
+        "pages": "185--249",
+        "year": "1963",
+        "doi": "10.1080/00018736300101283",
+        "url": "https://www.tandfonline.com/doi/abs/10.1080/00018736300101283"
+      }
+    },
+    "khalatnikov1970": {
+      "type": "article",
+      "fields": {
+        "title": "General cosmological solution of the gravitational equations with a singularity in time",
+        "author": "Khalatnikov, Isaak M. and Lifshitz, Evgeny M.",
+        "journal": "Physical Review Letters",
+        "volume": "24",
+        "number": "2",
+        "pages": "76--79",
+        "year": "1970",
+        "doi": "10.1103/PhysRevLett.24.76",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.24.76"
       }
     }
   }
