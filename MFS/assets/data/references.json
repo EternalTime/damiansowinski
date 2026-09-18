@@ -1,5 +1,5 @@
 {
-  "version": "3930dc355f60a579",
+  "version": "8b61285fddde0e37",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -3073,6 +3073,115 @@
         "year": "2003",
         "doi": "10.1103/PhysRevLett.91.231101",
         "url": "https://link.aps.org/doi/10.1103/PhysRevLett.91.231101"
+      }
+    },
+    "sagan1985": {
+      "type": "book",
+      "fields": {
+        "title": "Contact",
+        "author": "Sagan, Carl",
+        "year": "1985",
+        "publisher": "Simon and Schuster"
+      }
+    },
+    "thorne1994": {
+      "type": "book",
+      "fields": {
+        "title": "Black Holes and Time Warps: Einstein's Outrageous Legacy",
+        "author": "Thorne, Kip S.",
+        "year": "1994",
+        "publisher": "W. W. Norton"
+      }
+    },
+    "einstein1935": {
+      "type": "article",
+      "fields": {
+        "title": "The Particle Problem in the General Theory of Relativity",
+        "author": "Einstein, Albert and Rosen, Nathan",
+        "journal": "Physical Review",
+        "volume": "48",
+        "pages": "73--77",
+        "year": "1935",
+        "doi": "10.1103/PhysRev.48.73",
+        "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.48.73"
+      }
+    },
+    "fuller1962": {
+      "type": "article",
+      "fields": {
+        "title": "Causality and Multiply Connected Space-Time",
+        "author": "Fuller, Robert W. and Wheeler, John A.",
+        "journal": "Physical Review",
+        "volume": "128",
+        "pages": "919--929",
+        "year": "1962",
+        "doi": "10.1103/PhysRev.128.919",
+        "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.128.919"
+      }
+    },
+    "morris1988prl": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes, Time Machines, and the Weak Energy Condition",
+        "author": "Morris, Michael S and Thorne, Kip S and Yurtsever, Ulvi",
+        "journal": "Physical Review Letters",
+        "volume": "61",
+        "pages": "1446--1449",
+        "year": "1988",
+        "doi": "10.1103/PhysRevLett.61.1446",
+        "url": "https://authors.library.caltech.edu/9262/1/MORprl88.pdf"
+      }
+    },
+    "echeverria1991": {
+      "type": "article",
+      "fields": {
+        "title": "Billiard balls in wormhole spacetimes with closed timelike curves: Classical theory",
+        "author": "Echeverria, Fernando and Klinkhammer, Gunnar and Thorne, Kip S",
+        "journal": "Physical Review D",
+        "volume": "44",
+        "pages": "1077--1099",
+        "year": "1991",
+        "doi": "10.1103/PhysRevD.44.1077",
+        "url": "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.44.1077"
+      }
+    },
+    "kim1991": {
+      "type": "article",
+      "fields": {
+        "title": "Do vacuum fluctuations prevent the creation of closed timelike curves?",
+        "author": "Kim, Sung-Won and Thorne, Kip S",
+        "journal": "Physical Review D",
+        "volume": "43",
+        "pages": "3929--3947",
+        "year": "1991",
+        "doi": "10.1103/PhysRevD.43.3929",
+        "url": "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.43.3929"
+      }
+    },
+    "hawking1992": {
+      "type": "article",
+      "fields": {
+        "title": "Chronology protection conjecture",
+        "author": "Hawking, S. W.",
+        "journal": "Physical Review D",
+        "volume": "46",
+        "pages": "603--611",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.46.603",
+        "url": "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.46.603"
+      }
+    },
+    "friedman1993": {
+      "type": "article",
+      "fields": {
+        "title": "Topological censorship",
+        "author": "Friedman, John L. and Schleich, Kristin and Witt, Donald M.",
+        "journal": "Physical Review Letters",
+        "volume": "71",
+        "pages": "1486--1489",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.71.1486",
+        "url": "https://arxiv.org/abs/gr-qc/9305017"
       }
     }
   }
