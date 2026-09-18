@@ -17,6 +17,8 @@
     "four-dimensional",
     "idealized model"
   ],
+  "signature": "(-,+,+,+)",
+  "convention": "Coordinates are $(u, v, x, y)$ with $u$ the retarded time labelling the wave fronts and carrying dimensions of time, $v$ an affine parameter along the null rays and carrying a length, and $x$ and $y$ the two transverse lengths. The profile $H$ is an arbitrary dimensionless function of $u$, $x$ and $y$; that $v$ is absent from it is what leaves $\\partial_v$ covariantly constant and null, which is the parallel ray the family is named for. Components are printed in the chart $x^0 = cu$, so a printed partial derivative is taken with respect to that chart coordinate, $\\partial_u H = c^{-1}\\partial H/\\partial u$, and a prime on an amplitude is the same derivative; the transverse $\\partial_x$ and $\\partial_y$ need no such factor. The dots in the geodesic equations are derivatives of that same chart with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$, which is what makes every term of every equation carry the dimensions of its left hand side. The Ricci tensor is contracted on the middle index, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, which is the standard contraction and the one every published Ricci and Einstein component here is in. The Brinkmann chart publishes an arbitrary profile, so its Ricci and Einstein tensors are not assumed to vanish: the one surviving component of each is $R_{uu} = G_{uu} = -\\dfrac{1}{2}\\left(\\partial_x^2 H + \\partial_y^2 H\\right)$, and the field equations reduce to the single condition that $H$ be harmonic in the transverse plane, $\\partial_x^2 H + \\partial_y^2 H = 0$, at every moment of retarded time. The exact plane wave chart is the subcase whose profile is quadratic in $x$ and $y$, $H = A(u)(x^2 - y^2) + 2B(u)xy$, which is the general quadratic solution of that condition and so is a vacuum for any amplitudes. The Weyl tensor carries the trace free part of the transverse Hessian of $H$ and is of Petrov type N, the algebraically special type of pure radiation, so it vanishes only where those second derivatives are isotropic, $\\partial_x^2 H = \\partial_y^2 H$ and $\\partial_x\\partial_y H = 0$, and is nonzero for every other profile. Both the Ricci scalar and the Kretschmann scalar vanish identically, for every profile and whether or not the spacetime is a vacuum, because raising a $u$ index turns it into a $v$ index and no curvature component of this family carries one, so every full contraction meets a zero.",
   "history": "H. W. Brinkmann was not looking for a gravitational wave. In 1925, asking which Einstein spaces map conformally onto one another, he was handed a family carrying a null vector field parallel to itself everywhere [brinkmann1925]. He did not call them waves. Nobody did for thirty six years, until Kundt and Ehlers named them the plane-fronted waves with parallel rays [kundt1961, ehlerskundt1962]. Physics was busy with something more basic: Eddington sorted the plane waves into three kinds in 1922 and found two of them travelling at no fixed speed at all, mere sinuosities in the coordinate system whose only relevant speed, he wrote, was the speed of thought [eddington1922]. The remedy, to follow the curvature and not the potentials, he left to somebody else.¶Einstein nearly talked the waves out of existence. In 1936 he and Nathan Rosen sent Physical Review the interesting result, as he put it to Max Born, that gravitational waves do not exist. John Tate sent it to a referee, who returned a long list of objections. Einstein, unused to being refereed, pulled it: he saw no reason, he wrote, to address the in any case erroneous comments of the journal's anonymous expert, and he never published there again. Rosen's replacement, Leopold Infeld, read it through with a friendly local relativist; the singularity that had killed the wave sat on a coordinate axis. It ran in 1937 in the Journal of the Franklin Institute, conclusion reversed, thanking Professor Robertson for his friendly help [einstein1937]. Robertson was the referee, which Einstein appears never to have learned [kennefick2005].¶The whole argument had been conducted on paper, and on paper it could not be ended.¶Felix Pirani ended it by asking what an instrument would see. In 1956 he showed that the relative acceleration of two freely falling particles is fixed by the Riemann tensor through the equation of geodesic deviation, which cares nothing for coordinates [pirani1956]. Eddington's remedy, a third of a century late. At Chapel Hill in January 1957 Bondi asked from the floor whether it could be made into an absorber of gravitational energy. Pirani had put in no absorption term, only a spring. Feynman supplied the friction: let one mass carry a stick running past touching a second, the wave slides them against each other, the rubbing makes heat, and heat is energy [feynman2011]. He had hesitated to say it, having missed the session on gravitational waves entirely.¶Bondi came a skeptic and left converted, with a version of the argument in Nature within months [bondi1957]. In 1959, with Pirani and Ivor Robinson, he gave the exact plane waves, the most symmetric of Brinkmann's family, their full treatment [bondipirani1959]. Then Penrose found the sting: plane waves are geodesically complete and about as well behaved as a spacetime gets, yet they focus light so relentlessly that no spacelike surface in one can carry Cauchy data for the whole of it [penrose1965plane]. The tamest member of the family is the one that will not let you predict.¶Joseph Weber, also in that audience, went home to Maryland and built the first antenna out of aluminum [weber1960]. His own detections did not survive scrutiny; the enterprise did. Hulse and Taylor's binary pulsar was losing orbital period at exactly the radiated rate [hulse1975, taylor1979], and on 14 September 2015 two detectors caught the same fifth of a second of chirp [abbott2016]. LIGO is Feynman's stick at scale, with hanging mirrors for the rubbing masses and a laser where the friction was, and what sweeps through it is, to any accuracy the instrument can tell, one of Brinkmann's metrics.",
   "references": [
     "brinkmann1925",
@@ -35,5 +37,1802 @@
     "taylor1979",
     "abbott2016"
   ],
-  "coordinates": []
+  "coordinates": [
+    {
+      "id": "brinkmann",
+      "name": "Brinkmann",
+      "coords": [
+        "u",
+        "v",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "H = H(u,x,y)",
+          "description": "Wave profile, an arbitrary function of the retarded time and of the two transverse coordinates, dimensionless in this chart; the spacetime is a vacuum exactly where it is harmonic in the transverse plane, $\\partial_x^2 H + \\partial_y^2 H = 0$"
+        }
+      ],
+      "line_element": "ds^2 = H\\,c^2du^2 - 2c\\,du\\,dv + dx^2 + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "H"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_u H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_y H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_y H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_y H"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_u H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_y H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_y H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_y H"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x^2 H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x^2 H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_y^2 H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_y^2 H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x^2 H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x^2 H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_y^2 H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_y^2 H"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x^2 H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x^2 H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_y^2 H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_y^2 H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x^2 H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x^2 H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_y^2 H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_y^2 H"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{1}{2}\\left(\\partial_x^2 H + \\partial_y^2 H\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\left(\\partial_x^2 H + \\partial_y^2 H\\right)"
+              }
+            ]
+          },
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\left(\\partial_x^2 H + \\partial_y^2 H\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{1}{2}\\left(\\partial_x^2 H + \\partial_y^2 H\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\left(\\partial_x^2 H + \\partial_y^2 H\\right)"
+              }
+            ]
+          },
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\left(\\partial_x^2 H + \\partial_y^2 H\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_x^2 H - \\partial_y^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_y^2 H - \\partial_x^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_y^2 H - \\partial_x^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_x^2 H - \\partial_y^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_x^2 H - \\partial_y^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_y^2 H - \\partial_x^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_y^2 H - \\partial_x^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_x^2 H - \\partial_y^2 H\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_y^2 H - \\partial_x^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_x^2 H - \\partial_y^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_x^2 H - \\partial_y^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_y^2 H - \\partial_x^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_x^2 H - \\partial_y^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_y^2 H - \\partial_x^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_y^2 H - \\partial_x^2 H\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\partial_x\\partial_y H"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4}\\left(\\partial_x^2 H - \\partial_y^2 H\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} - \\dfrac{1}{2}\\partial_u H\\,\\dot{u}^2 - \\partial_x H\\,\\dot{u}\\dot{x} - \\partial_y H\\,\\dot{u}\\dot{y} = 0",
+        "\\ddot{x} - \\dfrac{1}{2}\\partial_x H\\,\\dot{u}^2 = 0",
+        "\\ddot{y} - \\dfrac{1}{2}\\partial_y H\\,\\dot{u}^2 = 0"
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "-H"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "exact_plane_wave",
+      "name": "Exact Plane Wave",
+      "coords": [
+        "u",
+        "v",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "A = A(u)",
+          "description": "Amplitude of the plus polarisation, a curvature carrying $1/L^2$; the profile is $H = A(x^2 - y^2) + 2Bxy$, the general quadratic solution of $\\partial_x^2 H + \\partial_y^2 H = 0$"
+        },
+        {
+          "symbol": "B = B(u)",
+          "description": "Amplitude of the cross polarisation, carrying the same $1/L^2$; constant amplitudes give a homogeneous wave, and amplitudes vanishing outside an interval of $u$ give a sandwich wave with flat regions before and after it"
+        }
+      ],
+      "line_element": "ds^2 = \\left(A\\left(x^2 - y^2\\right) + 2Bxy\\right)c^2du^2 - 2c\\,du\\,dv + dx^2 + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "A\\left(x^2 - y^2\\right) + 2Bxy"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2}\\left(A'\\left(x^2 - y^2\\right) + 2B'xy\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\left(Ax + By\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "Ay - Bx"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\left(Ax + By\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "Ay - Bx"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(Ax + By\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "Ay - Bx"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2}\\left(A'\\left(x^2 - y^2\\right) + 2B'xy\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "Ax + By"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "Bx - Ay"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "Ax + By"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "Bx - Ay"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(Ax + By\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "Ay - Bx"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "A"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "A"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "A"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-A"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-B"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "A"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} - \\dfrac{1}{2}\\left(A'\\left(x^2 - y^2\\right) + 2B'xy\\right)\\dot{u}^2 - 2\\left(Ax + By\\right)\\dot{u}\\dot{x} + 2\\left(Ay - Bx\\right)\\dot{u}\\dot{y} = 0",
+        "\\ddot{x} - \\left(Ax + By\\right)\\dot{u}^2 = 0",
+        "\\ddot{y} + \\left(Ay - Bx\\right)\\dot{u}^2 = 0"
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "-\\left(A\\left(x^2 - y^2\\right) + 2Bxy\\right)"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ]
+    }
+  ]
 }
