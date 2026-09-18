@@ -1,5 +1,5 @@
 {
-  "version": "4b52b3663cceec2c",
+  "version": "47dd4175c9e4b0dd",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -1521,7 +1521,7 @@
         "pages": "2117--2189",
         "year": "1994",
         "doi": "10.1142/S0217751X9400090X",
-        "url": "https://www.worldscientific.com/doi/abs/10.1142/S0217751X9400090X"
+        "url": "https://arxiv.org/abs/astro-ph/9310041"
       }
     },
     "vaidya1951": {
@@ -3174,6 +3174,117 @@
         "year": "1993",
         "doi": "10.1103/PhysRevLett.71.1486",
         "url": "https://arxiv.org/abs/gr-qc/9305017"
+      }
+    },
+    "deser1984": {
+      "type": "article",
+      "fields": {
+        "title": "Three-dimensional Einstein gravity: Dynamics of flat space",
+        "author": "Deser, Stanley and Jackiw, Roman and 't Hooft, Gerard",
+        "journal": "Annals of Physics",
+        "volume": "152",
+        "number": "1",
+        "pages": "220--235",
+        "year": "1984",
+        "doi": "10.1016/0003-4916(84)90085-X",
+        "url": "https://doi.org/10.1016/0003-4916(84)90085-X"
+      }
+    },
+    "gott1991": {
+      "type": "article",
+      "fields": {
+        "title": "Closed timelike curves produced by pairs of moving cosmic strings: Exact solutions",
+        "author": "Gott, J. Richard",
+        "journal": "Physical Review Letters",
+        "volume": "66",
+        "number": "9",
+        "pages": "1126--1129",
+        "year": "1991",
+        "doi": "10.1103/PhysRevLett.66.1126",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.66.1126"
+      }
+    },
+    "ori1991": {
+      "type": "article",
+      "fields": {
+        "title": "Rapidly moving cosmic strings and chronology protection",
+        "author": "Ori, Amos",
+        "journal": "Physical Review D",
+        "volume": "44",
+        "number": "8",
+        "pages": "R2214--R2215",
+        "year": "1991",
+        "doi": "10.1103/PhysRevD.44.R2214",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.44.R2214"
+      }
+    },
+    "cutler1992": {
+      "type": "article",
+      "fields": {
+        "title": "Global structure of Gott's two-string spacetime",
+        "author": "Cutler, Curt",
+        "journal": "Physical Review D",
+        "volume": "45",
+        "number": "2",
+        "pages": "487--494",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.45.487",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.45.487"
+      }
+    },
+    "carroll1992": {
+      "type": "article",
+      "fields": {
+        "title": "An obstacle to building a time machine",
+        "author": "Carroll, Sean M. and Farhi, Edward and Guth, Alan H.",
+        "journal": "Physical Review Letters",
+        "volume": "68",
+        "number": "3",
+        "pages": "263--266",
+        "year": "1992",
+        "doi": "10.1103/PhysRevLett.68.263",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.68.263"
+      }
+    },
+    "deser1992": {
+      "type": "article",
+      "fields": {
+        "title": "Physical cosmic strings do not generate closed timelike curves",
+        "author": "Deser, Stanley and Jackiw, Roman and 't Hooft, Gerard",
+        "journal": "Physical Review Letters",
+        "volume": "68",
+        "number": "3",
+        "pages": "267--269",
+        "year": "1992",
+        "doi": "10.1103/PhysRevLett.68.267",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.68.267"
+      }
+    },
+    "thooft1992": {
+      "type": "article",
+      "fields": {
+        "title": "Causality in (2+1)-dimensional gravity",
+        "author": "'t Hooft, Gerard",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "9",
+        "number": "5",
+        "pages": "1335--1348",
+        "year": "1992",
+        "doi": "10.1088/0264-9381/9/5/015",
+        "url": "https://doi.org/10.1088/0264-9381/9/5/015"
+      }
+    },
+    "visser2003": {
+      "type": "incollection",
+      "fields": {
+        "title": "The quantum physics of chronology protection",
+        "author": "Visser, Matt",
+        "booktitle": "The Future of Theoretical Physics and Cosmology: Celebrating Stephen Hawking's 60th Birthday",
+        "editor": "Gibbons, Gary W. and Shellard, E. Paul S. and Rankin, Stuart J.",
+        "pages": "161--176",
+        "publisher": "Cambridge University Press",
+        "year": "2003",
+        "url": "https://arxiv.org/abs/gr-qc/0204022"
       }
     }
   }
