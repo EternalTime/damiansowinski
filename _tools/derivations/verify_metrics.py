@@ -141,6 +141,12 @@ BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 # declared T is the one the chart multiplies by c; the rest are their own chart
 # coordinates. A system absent from this table is UNCHECKED.
 DIMENSIONS = {
+    # Both parameters are dimensionless: v_s is the bubble velocity in units of c, so that
+    # c v_s f is the shift, and f is the shape function. The solution names no length of its
+    # own, because the scale f varies on is left to f.
+    ("alcubierre", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "v_s": "1", "f": "1",
+    },
     # The one length of the solution is the anti-de Sitter radius, which the entry calls
     # L and the dimensional pass calls L as well; the two never meet in one expression.
     ("anti_de_sitter", "static_global"): {
