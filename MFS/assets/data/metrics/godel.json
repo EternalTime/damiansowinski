@@ -858,21 +858,21 @@
                   "t",
                   "t"
                 ],
-                "value": "-2\\omega^4"
+                "value": "6\\omega^4"
               },
               {
                 "indices": [
                   "t",
                   "y"
                 ],
-                "value": "-8\\omega^4\\cosh x"
+                "value": "-4e^{-x}\\omega^4"
               },
               {
                 "indices": [
                   "y",
                   "t"
                 ],
-                "value": "4e^{-x}\\omega^4"
+                "value": "-4e^{-x}\\omega^4"
               },
               {
                 "indices": [
@@ -886,7 +886,7 @@
                   "y",
                   "y"
                 ],
-                "value": "4(2 + e^{-2x})\\omega^4"
+                "value": "4e^{-2x}\\omega^4"
               },
               {
                 "indices": [

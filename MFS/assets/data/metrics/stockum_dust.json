@@ -1255,28 +1255,7 @@
                   "t",
                   "t"
                 ],
-                "value": "-\\dfrac{4e^{r^2/R^2}(r-R)(r+R)}{R^4}"
-              },
-              {
-                "indices": [
-                  "t",
-                  "\\phi"
-                ],
-                "value": "-\\dfrac{4e^{r^2/R^2} r^2(r-R)(r+R)}{R^5}"
-              },
-              {
-                "indices": [
-                  "\\phi",
-                  "t"
-                ],
-                "value": "\\dfrac{4e^{r^2/R^2}}{R^3}"
-              },
-              {
-                "indices": [
-                  "\\phi",
-                  "\\phi"
-                ],
-                "value": "\\dfrac{4e^{r^2/R^2} r^2}{R^4}"
+                "value": "\\dfrac{4e^{r^2/R^2}}{R^2}"
               }
             ]
           }
