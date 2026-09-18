@@ -235,6 +235,18 @@ DIMENSIONS = {
         "t": "T", "l": "L", "\\theta": "1", "\\phi": "1",
         "\\Phi": "1", "r": "L", "b_0": "L",
     },
+    # The collapse is two charts. Inside, the comoving polar angle chi is dimensionless
+    # and the scale factor carries the length, so an areal radius is a sin(chi) and a dot
+    # on a is dimensionless; chi_0 marks the surface and a_m is the scale factor at
+    # release, both declared because the entry states the matching in them. Outside it is
+    # Schwarzschild, whose one length is r_s = 2GM/c^2 = a_m sin^3(chi_0).
+    ("oppenheimer_snyder", "interior_comoving"): {
+        "\\tau": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1",
+        "a": "L", "\\chi_0": "1", "a_m": "L",
+    },
+    ("oppenheimer_snyder", "exterior_schwarzschild"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
     # u is the retarded time and v the affine parameter along the rays, which is a
     # length, so the wave profile H is dimensionless and the amplitudes of the exact
     # plane wave, multiplying x^2, are curvatures.
