@@ -1301,7 +1301,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2}{R^3}"
+                "value": "\\dfrac{e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1310,7 +1310,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "-\\dfrac{e^{r^2/R^2} r^2}{R^3}"
+                "value": "-\\dfrac{e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1319,7 +1319,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\dfrac{r^2+R^2}{R^4}"
+                "value": "-\\dfrac{R^2+3r^2}{3R^4}"
               },
               {
                 "indices": [
@@ -1328,7 +1328,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{r^2+R^2}{R^4}"
+                "value": "\\dfrac{R^2+3r^2}{3R^4}"
               },
               {
                 "indices": [
@@ -1337,7 +1337,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{r^4+4r^2 R^2}{R^5}"
+                "value": "\\dfrac{r^2(2R^2+r^2)}{R^5}"
               },
               {
                 "indices": [
@@ -1346,7 +1346,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{r^4+4r^2 R^2}{R^5}"
+                "value": "-\\dfrac{r^2(2R^2+r^2)}{R^5}"
               },
               {
                 "indices": [
@@ -1355,7 +1355,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2(r-R)(r+R)}{R^4}"
+                "value": "-\\dfrac{e^{r^2/R^2} r^2(R^2-r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1364,7 +1364,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2(R^2-r^2)}{R^4}"
+                "value": "\\dfrac{e^{r^2/R^2} r^2(R^2-r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1373,7 +1373,7 @@
                   "t",
                   "z"
                 ],
-                "value": "\\dfrac{r^2}{R^4}"
+                "value": "\\dfrac{2R^2+3r^2}{3R^4}"
               },
               {
                 "indices": [
@@ -1382,7 +1382,7 @@
                   "\\phi",
                   "z"
                 ],
-                "value": "\\dfrac{r^4}{R^5}"
+                "value": "\\dfrac{r^2(2R^2+r^2)}{R^5}"
               },
               {
                 "indices": [
@@ -1391,7 +1391,7 @@
                   "z",
                   "t"
                 ],
-                "value": "-\\dfrac{r^2}{R^4}"
+                "value": "-\\dfrac{2R^2+3r^2}{3R^4}"
               },
               {
                 "indices": [
@@ -1400,7 +1400,7 @@
                   "z",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{r^4}{R^5}"
+                "value": "-\\dfrac{r^2(2R^2+r^2)}{R^5}"
               },
               {
                 "indices": [
@@ -1409,7 +1409,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\dfrac{e^{r^2/R^2}}{R^2}"
+                "value": "-\\dfrac{e^{r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1418,7 +1418,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2}}{R^2}"
+                "value": "\\dfrac{e^{r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1427,7 +1427,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2e^{r^2/R^2} r^2}{R^3}"
+                "value": "\\dfrac{4e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1436,7 +1436,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2} r^2}{R^3}"
+                "value": "-\\dfrac{4e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1445,7 +1445,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2} r^2}{R^3}"
+                "value": "-\\dfrac{4e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1454,7 +1454,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{2e^{r^2/R^2} r^2}{R^3}"
+                "value": "\\dfrac{4e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1463,7 +1463,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2(3r^2+2R^2)}{R^4}"
+                "value": "\\dfrac{e^{r^2/R^2} r^2(2R^2+7r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1472,7 +1472,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{e^{r^2/R^2} r^2(3r^2+2R^2)}{R^4}"
+                "value": "-\\dfrac{e^{r^2/R^2} r^2(2R^2+7r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1481,7 +1481,7 @@
                   "r",
                   "z"
                 ],
-                "value": "\\dfrac{1}{R^2}"
+                "value": "-\\dfrac{1}{3R^2}"
               },
               {
                 "indices": [
@@ -1490,7 +1490,7 @@
                   "z",
                   "r"
                 ],
-                "value": "-\\dfrac{1}{R^2}"
+                "value": "\\dfrac{1}{3R^2}"
               },
               {
                 "indices": [
@@ -1499,7 +1499,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{e^{r^2/R^2}}{R^2}"
+                "value": "-\\dfrac{e^{r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1508,7 +1508,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2}}{R^2}"
+                "value": "\\dfrac{e^{r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1535,7 +1535,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{r^2+2R^2}{R^4}"
+                "value": "-\\dfrac{2R^2+3r^2}{3R^4}"
               },
               {
                 "indices": [
@@ -1544,7 +1544,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\dfrac{r^2+2R^2}{R^4}"
+                "value": "\\dfrac{2R^2+3r^2}{3R^4}"
               },
               {
                 "indices": [
@@ -1553,7 +1553,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{e^{r^2/R^2} r^2}{R^3}"
+                "value": "-\\dfrac{e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1562,7 +1562,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2}{R^3}"
+                "value": "\\dfrac{e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1580,7 +1580,7 @@
                   "\\phi",
                   "z"
                 ],
-                "value": "\\dfrac{R^2-r^2}{R^4}"
+                "value": "-\\dfrac{R^2+3r^2}{3R^4}"
               },
               {
                 "indices": [
@@ -1598,7 +1598,16 @@
                   "z",
                   "\\phi"
                 ],
-                "value": "\\dfrac{(r-R)(r+R)}{R^4}"
+                "value": "\\dfrac{R^2+3r^2}{3R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2e^{r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1607,7 +1616,16 @@
                   "\\phi",
                   "z"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2}{R^3}"
+                "value": "\\dfrac{5e^{r^2/R^2} r^2}{3R^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2e^{r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1616,7 +1634,7 @@
                   "z",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{e^{r^2/R^2} r^2}{R^3}"
+                "value": "-\\dfrac{5e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1625,7 +1643,7 @@
                   "r",
                   "z"
                 ],
-                "value": "-\\dfrac{1}{R^2}"
+                "value": "\\dfrac{1}{3R^2}"
               },
               {
                 "indices": [
@@ -1634,7 +1652,7 @@
                   "z",
                   "r"
                 ],
-                "value": "\\dfrac{1}{R^2}"
+                "value": "-\\dfrac{1}{3R^2}"
               },
               {
                 "indices": [
@@ -1643,7 +1661,7 @@
                   "t",
                   "z"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2}{R^3}"
+                "value": "\\dfrac{5e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1652,7 +1670,7 @@
                   "\\phi",
                   "z"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2(2r^2-R^2)}{R^4}"
+                "value": "\\dfrac{e^{r^2/R^2} r^2(R^2+8r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1661,7 +1679,7 @@
                   "z",
                   "t"
                 ],
-                "value": "-\\dfrac{e^{r^2/R^2} r^2}{R^3}"
+                "value": "-\\dfrac{5e^{r^2/R^2} r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1670,7 +1688,7 @@
                   "z",
                   "\\phi"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2(R^2-2r^2)}{R^4}"
+                "value": "-\\dfrac{e^{r^2/R^2} r^2(R^2+8r^2)}{3R^4}"
               }
             ]
           },
@@ -1684,7 +1702,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{1}{R^2}"
+                "value": "\\dfrac{1}{3R^2}"
               },
               {
                 "indices": [
@@ -1693,7 +1711,7 @@
                   "r",
                   "t"
                 ],
-                "value": "-\\dfrac{1}{R^2}"
+                "value": "-\\dfrac{1}{3R^2}"
               },
               {
                 "indices": [
@@ -1702,7 +1720,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2r^2}{R^3}"
+                "value": "-\\dfrac{4r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1711,7 +1729,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\dfrac{2r^2}{R^3}"
+                "value": "\\dfrac{4r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1720,7 +1738,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2}{R^2}"
+                "value": "\\dfrac{e^{r^2/R^2} r^2}{3R^2}"
               },
               {
                 "indices": [
@@ -1729,7 +1747,16 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "-\\dfrac{e^{r^2/R^2} r^2}{R^2}"
+                "value": "-\\dfrac{e^{r^2/R^2} r^2}{3R^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2}{3R^2}"
               },
               {
                 "indices": [
@@ -1738,7 +1765,16 @@
                   "\\phi",
                   "z"
                 ],
-                "value": "-\\dfrac{r^2}{R^3}"
+                "value": "-\\dfrac{5r^2}{3R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{3R^2}"
               },
               {
                 "indices": [
@@ -1747,7 +1783,7 @@
                   "z",
                   "\\phi"
                 ],
-                "value": "\\dfrac{r^2}{R^3}"
+                "value": "\\dfrac{5r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1756,7 +1792,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\dfrac{1}{R^2}"
+                "value": "-\\dfrac{1}{3R^2}"
               },
               {
                 "indices": [
@@ -1765,7 +1801,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{1}{R^2}"
+                "value": "\\dfrac{1}{3R^2}"
               },
               {
                 "indices": [
@@ -1774,7 +1810,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2r^2}{R^3}"
+                "value": "\\dfrac{4r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1783,7 +1819,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{2r^2}{R^3}"
+                "value": "-\\dfrac{4r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1792,7 +1828,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\dfrac{2r^2}{R^3}"
+                "value": "-\\dfrac{4r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1801,7 +1837,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{2r^2}{R^3}"
+                "value": "\\dfrac{4r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1810,7 +1846,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{3r^4+2r^2 R^2}{R^4}"
+                "value": "\\dfrac{r^2(2R^2+7r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1819,7 +1855,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{3r^4+2r^2 R^2}{R^4}"
+                "value": "-\\dfrac{r^2(2R^2+7r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1828,7 +1864,7 @@
                   "r",
                   "z"
                 ],
-                "value": "\\dfrac{e^{-r^2/R^2}}{R^2}"
+                "value": "-\\dfrac{e^{-r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1837,7 +1873,7 @@
                   "z",
                   "r"
                 ],
-                "value": "-\\dfrac{e^{-r^2/R^2}}{R^2}"
+                "value": "\\dfrac{e^{-r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1846,7 +1882,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{e^{r^2/R^2} r^2}{R^2}"
+                "value": "-\\dfrac{e^{r^2/R^2} r^2}{3R^2}"
               },
               {
                 "indices": [
@@ -1855,7 +1891,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "\\dfrac{e^{r^2/R^2} r^2}{R^2}"
+                "value": "\\dfrac{e^{r^2/R^2} r^2}{3R^2}"
               },
               {
                 "indices": [
@@ -1864,7 +1900,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{2r^2}{R^3}"
+                "value": "\\dfrac{4r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1873,7 +1909,7 @@
                   "r",
                   "t"
                 ],
-                "value": "-\\dfrac{2r^2}{R^3}"
+                "value": "-\\dfrac{4r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1882,7 +1918,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{3r^4+2r^2 R^2}{R^4}"
+                "value": "-\\dfrac{r^2(2R^2+7r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1891,7 +1927,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\dfrac{3r^4+2r^2 R^2}{R^4}"
+                "value": "\\dfrac{r^2(2R^2+7r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1900,7 +1936,7 @@
                   "t",
                   "z"
                 ],
-                "value": "-\\dfrac{r^2}{R^3}"
+                "value": "-\\dfrac{5r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1909,7 +1945,7 @@
                   "\\phi",
                   "z"
                 ],
-                "value": "\\dfrac{r^2(R^2-2r^2)}{R^4}"
+                "value": "-\\dfrac{r^2(R^2+8r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1918,7 +1954,7 @@
                   "z",
                   "t"
                 ],
-                "value": "\\dfrac{r^2}{R^3}"
+                "value": "\\dfrac{5r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1927,7 +1963,16 @@
                   "z",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2r^4-r^2 R^2}{R^4}"
+                "value": "\\dfrac{r^2(R^2+8r^2)}{3R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{3R^2}"
               },
               {
                 "indices": [
@@ -1936,7 +1981,16 @@
                   "\\phi",
                   "z"
                 ],
-                "value": "\\dfrac{r^2}{R^3}"
+                "value": "\\dfrac{5r^2}{3R^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{3R^2}"
               },
               {
                 "indices": [
@@ -1945,7 +1999,7 @@
                   "z",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{r^2}{R^3}"
+                "value": "-\\dfrac{5r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1954,7 +2008,7 @@
                   "r",
                   "z"
                 ],
-                "value": "-\\dfrac{e^{-r^2/R^2}}{R^2}"
+                "value": "\\dfrac{e^{-r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1963,7 +2017,7 @@
                   "z",
                   "r"
                 ],
-                "value": "\\dfrac{e^{-r^2/R^2}}{R^2}"
+                "value": "-\\dfrac{e^{-r^2/R^2}}{3R^2}"
               },
               {
                 "indices": [
@@ -1972,7 +2026,7 @@
                   "t",
                   "z"
                 ],
-                "value": "\\dfrac{r^2}{R^3}"
+                "value": "\\dfrac{5r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1981,7 +2035,7 @@
                   "\\phi",
                   "z"
                 ],
-                "value": "\\dfrac{2r^4-r^2 R^2}{R^4}"
+                "value": "\\dfrac{r^2(R^2+8r^2)}{3R^4}"
               },
               {
                 "indices": [
@@ -1990,7 +2044,7 @@
                   "z",
                   "t"
                 ],
-                "value": "-\\dfrac{r^2}{R^3}"
+                "value": "-\\dfrac{5r^2}{3R^3}"
               },
               {
                 "indices": [
@@ -1999,7 +2053,7 @@
                   "z",
                   "\\phi"
                 ],
-                "value": "\\dfrac{r^2(R^2-2r^2)}{R^4}"
+                "value": "-\\dfrac{r^2(R^2+8r^2)}{3R^4}"
               }
             ]
           }

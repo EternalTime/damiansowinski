@@ -912,7 +912,7 @@
                   "t",
                   "y"
                 ],
-                "value": "\\dfrac{e^x}{2}"
+                "value": "\\dfrac{e^x}{6}"
               },
               {
                 "indices": [
@@ -921,7 +921,7 @@
                   "y",
                   "t"
                 ],
-                "value": "-\\dfrac{e^x}{2}"
+                "value": "-\\dfrac{e^x}{6}"
               },
               {
                 "indices": [
@@ -930,7 +930,7 @@
                   "t",
                   "x"
                 ],
-                "value": "-\\dfrac{1}{2}"
+                "value": "-\\dfrac{1}{6}"
               },
               {
                 "indices": [
@@ -939,66 +939,12 @@
                   "x",
                   "t"
                 ],
-                "value": "\\dfrac{1}{2}"
+                "value": "\\dfrac{1}{6}"
               },
               {
                 "indices": [
                   "t",
                   "x",
-                  "x",
-                  "y"
-                ],
-                "value": "e^x"
-              },
-              {
-                "indices": [
-                  "t",
-                  "x",
-                  "y",
-                  "x"
-                ],
-                "value": "-e^x"
-              },
-              {
-                "indices": [
-                  "t",
-                  "y",
-                  "t",
-                  "y"
-                ],
-                "value": "\\dfrac{e^{2x}}{4}"
-              },
-              {
-                "indices": [
-                  "t",
-                  "y",
-                  "y",
-                  "t"
-                ],
-                "value": "-\\dfrac{e^{2x}}{4}"
-              },
-              {
-                "indices": [
-                  "x",
-                  "t",
-                  "t",
-                  "x"
-                ],
-                "value": "-\\dfrac{1}{2}"
-              },
-              {
-                "indices": [
-                  "x",
-                  "t",
-                  "x",
-                  "t"
-                ],
-                "value": "\\dfrac{1}{2}"
-              },
-              {
-                "indices": [
-                  "x",
-                  "t",
                   "x",
                   "y"
                 ],
@@ -1006,8 +952,8 @@
               },
               {
                 "indices": [
-                  "x",
                   "t",
+                  "x",
                   "y",
                   "x"
                 ],
@@ -1015,93 +961,309 @@
               },
               {
                 "indices": [
-                  "x",
+                  "t",
                   "y",
                   "t",
-                  "x"
+                  "y"
                 ],
-                "value": "-\\dfrac{e^x}{2}"
+                "value": "\\dfrac{e^{2x}}{12}"
               },
               {
                 "indices": [
-                  "x",
+                  "t",
                   "y",
-                  "x",
+                  "y",
                   "t"
+                ],
+                "value": "-\\dfrac{e^{2x}}{12}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y",
+                  "z"
                 ],
                 "value": "\\dfrac{e^x}{2}"
               },
               {
                 "indices": [
-                  "x",
-                  "y",
-                  "x",
-                  "y"
-                ],
-                "value": "\\dfrac{3e^{2x}}{4}"
-              },
-              {
-                "indices": [
-                  "x",
-                  "y",
-                  "y",
-                  "x"
-                ],
-                "value": "-\\dfrac{3e^{2x}}{4}"
-              },
-              {
-                "indices": [
-                  "y",
                   "t",
-                  "t",
-                  "y"
-                ],
-                "value": "-\\dfrac{1}{2}"
-              },
-              {
-                "indices": [
-                  "y",
-                  "t",
-                  "y",
+                  "z",
+                  "z",
                   "t"
                 ],
-                "value": "\\dfrac{1}{2}"
+                "value": "-\\dfrac{1}{3}"
               },
               {
                 "indices": [
-                  "y",
-                  "x",
-                  "x",
-                  "y"
-                ],
-                "value": "-\\dfrac{1}{2}"
-              },
-              {
-                "indices": [
-                  "y",
-                  "x",
-                  "y",
-                  "x"
-                ],
-                "value": "\\dfrac{1}{2}"
-              },
-              {
-                "indices": [
-                  "y",
-                  "y",
                   "t",
+                  "z",
+                  "z",
                   "y"
                 ],
                 "value": "-\\dfrac{e^x}{2}"
               },
               {
                 "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^x}{6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{e^{2x}}{3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{e^{2x}}{3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^x}{6}"
+              },
+              {
+                "indices": [
                   "y",
                   "y",
                   "y",
                   "t"
                 ],
-                "value": "\\dfrac{e^x}{2}"
+                "value": "\\dfrac{e^x}{6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{e^x}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^x}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{e^x}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{5e^{2x}}{12}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^x}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{5e^{2x}}{12}"
               }
             ]
           },
@@ -1115,7 +1277,7 @@
                   "t",
                   "x"
                 ],
-                "value": "\\dfrac{1}{4\\omega^2}"
+                "value": "\\dfrac{1}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1124,7 +1286,7 @@
                   "x",
                   "t"
                 ],
-                "value": "-\\dfrac{1}{4\\omega^2}"
+                "value": "-\\dfrac{1}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1133,7 +1295,7 @@
                   "x",
                   "y"
                 ],
-                "value": "-\\dfrac{e^x}{4\\omega^2}"
+                "value": "-\\dfrac{e^x}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1142,7 +1304,7 @@
                   "y",
                   "x"
                 ],
-                "value": "\\dfrac{e^x}{4\\omega^2}"
+                "value": "\\dfrac{e^x}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1151,7 +1313,7 @@
                   "t",
                   "y"
                 ],
-                "value": "\\dfrac{e^{2x}}{8\\omega^2}"
+                "value": "\\dfrac{e^{2x}}{24\\omega^2}"
               },
               {
                 "indices": [
@@ -1160,7 +1322,43 @@
                   "y",
                   "t"
                 ],
-                "value": "-\\dfrac{e^{2x}}{8\\omega^2}"
+                "value": "-\\dfrac{e^{2x}}{24\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^x}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{e^x}{6\\omega^2}"
               },
               {
                 "indices": [
@@ -1169,7 +1367,7 @@
                   "t",
                   "x"
                 ],
-                "value": "-\\dfrac{1}{4\\omega^2}"
+                "value": "-\\dfrac{1}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1178,7 +1376,7 @@
                   "x",
                   "t"
                 ],
-                "value": "\\dfrac{1}{4\\omega^2}"
+                "value": "\\dfrac{1}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1187,7 +1385,7 @@
                   "x",
                   "y"
                 ],
-                "value": "\\dfrac{e^x}{4\\omega^2}"
+                "value": "\\dfrac{e^x}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1196,7 +1394,7 @@
                   "y",
                   "x"
                 ],
-                "value": "-\\dfrac{e^x}{4\\omega^2}"
+                "value": "-\\dfrac{e^x}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1205,7 +1403,7 @@
                   "t",
                   "x"
                 ],
-                "value": "-\\dfrac{e^x}{4\\omega^2}"
+                "value": "-\\dfrac{e^x}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1214,7 +1412,7 @@
                   "x",
                   "t"
                 ],
-                "value": "\\dfrac{e^x}{4\\omega^2}"
+                "value": "\\dfrac{e^x}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1223,7 +1421,7 @@
                   "x",
                   "y"
                 ],
-                "value": "\\dfrac{3e^{2x}}{8\\omega^2}"
+                "value": "\\dfrac{e^{2x}}{6\\omega^2}"
               },
               {
                 "indices": [
@@ -1232,7 +1430,25 @@
                   "y",
                   "x"
                 ],
-                "value": "-\\dfrac{3e^{2x}}{8\\omega^2}"
+                "value": "-\\dfrac{e^{2x}}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{12\\omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1241,7 +1457,7 @@
                   "t",
                   "y"
                 ],
-                "value": "-\\dfrac{e^{2x}}{8\\omega^2}"
+                "value": "-\\dfrac{e^{2x}}{24\\omega^2}"
               },
               {
                 "indices": [
@@ -1250,7 +1466,7 @@
                   "y",
                   "t"
                 ],
-                "value": "\\dfrac{e^{2x}}{8\\omega^2}"
+                "value": "\\dfrac{e^{2x}}{24\\omega^2}"
               },
               {
                 "indices": [
@@ -1259,7 +1475,7 @@
                   "t",
                   "x"
                 ],
-                "value": "\\dfrac{e^x}{4\\omega^2}"
+                "value": "\\dfrac{e^x}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1268,7 +1484,7 @@
                   "x",
                   "t"
                 ],
-                "value": "-\\dfrac{e^x}{4\\omega^2}"
+                "value": "-\\dfrac{e^x}{12\\omega^2}"
               },
               {
                 "indices": [
@@ -1277,7 +1493,7 @@
                   "x",
                   "y"
                 ],
-                "value": "-\\dfrac{3e^{2x}}{8\\omega^2}"
+                "value": "-\\dfrac{e^{2x}}{6\\omega^2}"
               },
               {
                 "indices": [
@@ -1286,7 +1502,133 @@
                   "y",
                   "x"
                 ],
-                "value": "\\dfrac{3e^{2x}}{8\\omega^2}"
+                "value": "\\dfrac{e^{2x}}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^x}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{5e^{2x}}{24\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{e^x}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{5e^{2x}}{24\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{e^x}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^x}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{12\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{12\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{e^x}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{5e^{2x}}{24\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^x}{6\\omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{5e^{2x}}{24\\omega^2}"
               }
             ]
           }
