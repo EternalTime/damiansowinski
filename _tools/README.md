@@ -141,9 +141,14 @@ FRW can be read with a dimensionless comoving $r$ and a scale factor carrying th
 Where that happens, the table carries a comment saying which reading the entry's own values obey.
 
 A parameter may be a function rather than a constant.
-`a = a(t)` declares a function of one coordinate, which answers to a dot and to a prime, and `H = H(u,x,y)` declares a function of several, which answers to `\partial`: a published `\partial_x H`, `\partial_x^2 H` or `\partial_x\partial_y H` is read as that first or second partial derivative, which is as far as any curvature tensor reaches.
+`a = a(t)` declares a function of one coordinate, which answers to a dot and to a prime, and `H = H(u,x,y)` declares a function of several, which answers to `\partial`: a published `\partial_x H`, `\partial_x^2 H` or `\partial_x\partial_y H` is read as that first or second partial derivative.
 Every such derivative is taken with respect to the chart coordinate, exactly as the dot and the prime are, so one along a time carries a factor of $1/c$ and one along a length does not.
 `_tools/derivations/pp_wave.md` is the worked example, and its Step 15 is where that factor earns its keep.
+
+The second derivative is as far as the reader goes, and that is far enough only while the line element carries its functions undifferentiated.
+Tolman-Bondi is the entry where it is not: its $g_{rr}$ is built from $\partial_r R$, so a curvature, which is two derivatives of the metric, reaches $\partial_r\partial_t^2R$.
+Seventy of that entry's one hundred and seventy three published expressions name it and come back `UNCHECKED` for want of a declaration, the seventy being both Riemann variants in the $t,r$ plane, the $tt$ and $rr$ slots of every Ricci variant, the $\theta\theta$ and $\phi\phi$ slots of every Einstein variant, both scalars and the whole of the Weyl tensor.
+`_tools/derivations/tolman_bondi.md` Step 18 names the five line third loop in `_declare_parameter` that would close it, and records the separate run, with that loop patched in from outside the repository, in which the script's own `check_system` checked all one hundred and seventy three and disagreed with none.
 
 The prime works only on a function whose name is not a LaTeX command.
 The reader turns a prime into a name suffix before it turns `\Phi` into a name, so `b'` reads as the derivative of `b` while `\Phi'` leaves a stray backslash and is rejected as unhandled LaTeX.
