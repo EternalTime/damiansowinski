@@ -82,9 +82,9 @@ The whole collection takes about ten minutes. `--system <metric_id>/<system_id>`
 
 Nothing is ever passed in silence. A value that cannot be parsed, a system with no time coordinate declaration, or a tensor sympy cannot finish in the budget is reported as `UNCHECKED` with the reason, separately from the disagreements.
 
-## The two conventions the checker encodes
+## The three conventions the checker encodes
 
-Both are things the files do consistently rather than things they write down, so they are recorded here and in the script's header.
+All three are things the files do consistently rather than things they write down, so they are recorded here and in the script's header.
 
 The chart is $x^0 = cT$.
 A coordinate carrying dimensions of time is not itself the chart coordinate; $c$ times it is, and every published component is a component in that chart even though the index is printed with the bare name.
@@ -96,8 +96,20 @@ That is the opposite sign from the commoner $R^\alpha{}_{\mu\alpha\nu}$, and it 
 Contracting each published Riemann tensor both ways reproduces the published Ricci in every slot this way and not the other, in Ellis-Bronnikov, Reissner-Nordstrom and Godel alike.
 The Weyl tensor is the exception and is built from $R^\alpha{}_{\mu\alpha\nu}$, because it is defined by removing the traces of Riemann and those traces do not care what the file calls Ricci.
 
+The dots in a geodesic equation are velocities of that same chart, so a dot on a time coordinate means $d(cT)/d\lambda$ and not $dT/d\lambda$, even though it is printed on the bare letter.
+It has to be that one, because the equation is $\ddot x^\mu + \Gamma^\mu{}_{\nu\rho}\dot x^\nu\dot x^\rho = 0$ with the same printed $\Gamma$ the entry lists, and those are chart symbols.
+The reading is checkable without sympy: on it every term of every equation carries the dimensions of its left hand side, and on the other reading a term mixing a time velocity with a space velocity comes out wrong by one factor of $c$.
+A geodesic equation is the only thing an entry publishes that adds a time derivative to a space derivative, so it is the only place the mistake can hide, and `_tools/derivations/kasner.md` Step 17 works the check through term by term.
+
 ## Adding a spacetime, as far as the checker is concerned
 
 Telling a time coordinate from a length needs the dimensions of the parameters, which live in prose, so the script cannot read it off the file.
 `TIME_COORDINATES` in `verify_metrics.py` declares it per system instead.
 A new coordinate system that is not listed there is reported `UNCHECKED` rather than guessed at, so adding a spacetime means adding its line, and forgetting to is visible rather than silent.
+
+An entry whose parameters are not free needs a second line, in `PARAMETER_RELATIONS`.
+Kasner prints three exponents bound by $\sum_i p_i = \sum_i p_i^2 = 1$ and claims its values only on the surface those two equations cut out; its Ricci tensor is zero there and nowhere else.
+Checked against free symbols it would report seventy four disagreements that are not disagreements.
+The table carries a rational parametrisation of the surface instead, and every constrained parameter is replaced by its parametrised value on both sides of each comparison, so the identity checked is the one the entry asserts.
+That is exact rather than a sample, because a rational parametrisation covers a dense subset of an irreducible variety.
+`_tools/derivations/kasner.md` derives the parametrisation the Kasner entry uses and why the constraints are the field equations.

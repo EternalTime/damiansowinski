@@ -67,6 +67,23 @@ against it rather than against the textbook contraction.
 The Weyl tensor is the exception, because it is defined by removing the traces of
 Riemann, and those traces do not care which contraction the file names Ricci. It is
 built here from R^a_{mu a nu} regardless.
+
+
+Constrained parameters
+----------------------
+
+Some entries carry parameters that are not free. Kasner prints three exponents bound
+by sum p_i = sum p_i^2 = 1, and claims its values only on the surface those two
+equations cut out: the Ricci tensor it publishes as zero is not zero for arbitrary
+exponents. Checking such an entry against free symbols would test a stronger claim
+than it makes and report a disagreement that is not one.
+
+PARAMETER_RELATIONS below carries, per system, a rational parametrisation of that
+surface. Every constrained parameter is replaced by its parametrised value on both
+sides of each comparison, so what is checked is an identity along the surface. That is
+exact rather than a sample: a rational parametrisation of an irreducible variety
+covers a dense subset of it, so an identity in the parameter is an identity on the
+whole surface. The parametrising symbol must not be a name the system already uses.
 """
 
 import argparse
@@ -97,6 +114,7 @@ TIME_COORDINATES = {
     ("frw", "conformal_spherical"): set(),
     ("godel", "cartesian"): set(),
     ("interior_schwarzschild", "spherical"): set(),
+    ("kasner", "cartesian"): {"t"},
     ("minkowski", "cartesian"): {"t"},
     ("minkowski", "spherical"): {"t"},
     ("minkowski", "double_null"): {"u", "v"},
@@ -107,6 +125,19 @@ TIME_COORDINATES = {
     ("schwarzschild", "eddington_finkelstein_outgoing"): set(),
     ("schwarzschild", "eddington_finkelstein_ingoing"): set(),
     ("stockum_dust", "cylindrical"): set(),
+}
+
+# A rational parametrisation of the surface an entry's constrained parameters live on,
+# written as {parameter name: expression in a fresh symbol}. See the header.
+PARAMETER_RELATIONS = {
+    # The Kasner circle, where the plane sum p_i = 1 cuts the sphere sum p_i^2 = 1.
+    # Every point of it is reached, and the exponent ordering p_1 <= p_2 <= p_3 holds
+    # on u >= 1, which is the range Belinskii, Khalatnikov and Lifshitz bounce within.
+    ("kasner", "cartesian"): {
+        "p_1": "-u/(1 + u + u**2)",
+        "p_2": "(1 + u)/(1 + u + u**2)",
+        "p_3": "u*(1 + u)/(1 + u + u**2)",
+    },
 }
 
 GREEK = [
@@ -226,7 +257,7 @@ class Reader:
     typo in a published value becomes an error here rather than a silent new symbol.
     """
 
-    def __init__(self, coords, parameters, time_coords=frozenset()):
+    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None):
         self.coords = list(coords)
         self.time_coords = set(time_coords)
         self.symbol = {}
@@ -261,6 +292,15 @@ class Reader:
             split_symbols_custom(lambda name, _=None: name not in self.known),
             implicit_multiplication,
         )
+        self.relations = {}
+        for name, value in (relations or {}).items():
+            if name not in self.parameters:
+                raise LatexError(f"a relation is declared for {name!r}, which is not a parameter")
+            self.relations[self.parameters[name]] = sp.sympify(value)
+
+    def surface(self, expression):
+        """The expression on the surface the entry's constrained parameters live on."""
+        return expression.subs(self.relations)
 
     @staticmethod
     def _plain(name):
@@ -638,30 +678,33 @@ def compare_block(report, reader, where, published, computed, variance, coords, 
             continue
         seen.add(tuple(index))
         try:
-            value = reader(entry["value"])
+            value = reader.surface(reader(entry["value"]))
         except LatexError as error:
             report.skip(f"{where} {names}", str(error))
             continue
-        expected = _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords)
+        expected = reader.surface(
+            _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords))
         if norm(sp.expand(sp.together(value - expected))) != 0:
             report.disagree(where, f"{names} published as {entry['value']} "
                                    f"({norm(value)}), sympy says {norm(expected)}")
     for index in _indices(len(coords), rank):
         if tuple(index) in seen:
             continue
-        if norm(_at(computed, index)) != 0:
-            names = [coords[i] for i in index]
-            weighted = _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords)
+        names = [coords[i] for i in index]
+        weighted = reader.surface(
+            _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords))
+        if norm(weighted) != 0:
             report.disagree(where, f"{names} is missing, sympy says {norm(weighted)}")
 
 
 def compare_scalar(report, reader, where, published, computed):
     text = published.split("=", 1)[1] if "=" in published else published
     try:
-        value = reader(text)
+        value = reader.surface(reader(text))
     except LatexError as error:
         report.skip(where, str(error))
         return
+    computed = reader.surface(computed)
     if norm(sp.expand(sp.together(value - computed))) != 0:
         report.disagree(where, f"published as {published.strip()}, sympy says {norm(computed)}")
 
@@ -677,7 +720,7 @@ def compare_geodesics(report, reader, where, published, gamma, coords, time_coor
     for equation in published:
         left, _, right = equation.partition("=")
         try:
-            residual = sp.expand(reader(left) - reader(right))
+            residual = reader.surface(sp.expand(reader(left) - reader(right)))
         except LatexError as error:
             report.skip(f"{where} {equation!r}", str(error))
             continue
@@ -687,12 +730,12 @@ def compare_geodesics(report, reader, where, published, gamma, coords, time_coor
             continue
         name = carried[0]
         mu = coords.index(name)
-        expected = reader.ddot[name] + sum(
+        expected = reader.surface(reader.ddot[name] + sum(
             gamma[mu][nu][rho]
             * c ** variance_weight("ull", coords, [mu, nu, rho], time_coords)
             * reader.dot[coords[nu]] * reader.dot[coords[rho]]
             for nu in range(len(coords)) for rho in range(len(coords))
-        )
+        ))
         if norm(residual - expected) != 0 and norm(residual + expected) != 0:
             report.disagree(where, f"{name} equation {equation!r} is not the geodesic equation, "
                                    f"sympy makes the residual {norm(expected)}")
@@ -717,8 +760,9 @@ def check_system(report, metric_id, entry, seconds):
         return
 
     parameters = [p["symbol"] for p in entry.get("parameters", [])]
+    relations = PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
     try:
-        reader = Reader(coords, parameters, declaration)
+        reader = Reader(coords, parameters, declaration, relations)
     except LatexError as error:
         report.skip(where, f"parameters unreadable: {error}")
         return
