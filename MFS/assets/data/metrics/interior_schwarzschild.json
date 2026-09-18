@@ -989,7 +989,7 @@
             "t",
             "t"
           ],
-          "value": "-\\dfrac{4}{\\left(3\\sqrt{1-\\frac{r_s}{R^3}r^2}-\\sqrt{1-\\frac{r_s}{R}}\\right)^2}"
+          "value": "-\\dfrac{4}{\\left(3\\sqrt{1 - \\frac{r_s}{R}} - \\sqrt{1 - \\frac{r^2 r_s}{R^3}}\\right)^2}"
         },
         {
           "indices": [
