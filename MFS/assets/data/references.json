@@ -1,5 +1,5 @@
 {
-  "version": "5a7d13b02d482dbf",
+  "version": "233cd4e8a673e167",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -2740,14 +2740,17 @@
         "url": "https://doi.org/10.1007/BF01208647"
       }
     },
-    "eddington1923": {
-      "type": "book",
+    "eddington1922": {
+      "type": "article",
       "fields": {
-        "title": "The Mathematical Theory of Relativity",
+        "title": "The propagation of gravitational waves",
         "author": "Eddington, A. S.",
-        "year": "1923",
-        "publisher": "Cambridge University Press",
-        "url": "https://archive.org/details/mathematicaltheo00eddiuoft"
+        "journal": "Proceedings of the Royal Society of London A",
+        "volume": "102",
+        "pages": "268--282",
+        "year": "1922",
+        "doi": "10.1098/rspa.1922.0085",
+        "url": "https://doi.org/10.1098/rspa.1922.0085"
       }
     },
     "kundt1961": {
@@ -2846,7 +2849,7 @@
         "title": "An expanded version of the remarks by R. P. Feynman on the reality of gravitational waves",
         "author": "Feynman, R. P.",
         "booktitle": "The Role of Gravitation in Physics: Report from the 1957 Chapel Hill Conference",
-        "editor": "DeWitt, C\\'ecile M. and Rickles, Dean",
+        "editor": "Rickles, Dean and DeWitt, C\\'ecile M.",
         "year": "2011",
         "publisher": "Max Planck Research Library for the History and Development of Knowledge",
         "address": "Berlin",
@@ -2904,6 +2907,19 @@
         "year": "2016",
         "doi": "10.1103/PhysRevLett.116.061102",
         "url": "https://doi.org/10.1103/PhysRevLett.116.061102"
+      }
+    },
+    "penrose1965plane": {
+      "type": "article",
+      "fields": {
+        "title": "A remarkable property of plane waves in general relativity",
+        "author": "Penrose, Roger",
+        "journal": "Reviews of Modern Physics",
+        "volume": "37",
+        "pages": "215--220",
+        "year": "1965",
+        "doi": "10.1103/RevModPhys.37.215",
+        "url": "https://doi.org/10.1103/RevModPhys.37.215"
       }
     }
   }
