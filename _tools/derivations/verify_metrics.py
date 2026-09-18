@@ -235,6 +235,15 @@ DIMENSIONS = {
         "t": "T", "l": "L", "\\theta": "1", "\\phi": "1",
         "\\Phi": "1", "r": "L", "b_0": "L",
     },
+    # The slices are flat space and the whole of the geometry is the flow field carried on them,
+    # so its components are velocities and the chart components of the metric are powers of V/c.
+    ("natario", "cartesian_flow"): {
+        "t": "T", "x": "L", "y": "L", "z": "L",
+        "u": "L/T", "v": "L/T", "w": "L/T",
+    },
+    ("natario", "plane_flow"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "u": "L/T",
+    },
     # The collapse is two charts. Inside, the comoving polar angle chi is dimensionless
     # and the scale factor carries the length, so an areal radius is a sin(chi) and a dot
     # on a is dimensionless; chi_0 marks the surface and a_m is the scale factor at
