@@ -4,7 +4,8 @@ This is the working behind the two null coordinate systems in `MFS/assets/data/m
 Every number the entry prints is derived here, in order, from the transformation down to the geodesic equations.
 Nothing is left as an exercise and nothing is asserted that is not computed.
 
-The companion script `_tools/derivations/verify_minkowski_null.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+That script checks every coordinate system in the collection the same way, not only these two.
 
 ---
 
@@ -23,10 +24,19 @@ The Ricci tensor is the contraction $R_{\nu\sigma} = R^\mu{}_{\nu\mu\sigma}$.
 
 Factors of $c$ are kept explicit.
 The coordinates $u$ and $v$ carry dimensions of time, exactly as $t$ does, since they are built as $t \pm (\text{length})/c$.
-The components $g_{\mu\nu}$ printed in both new systems are therefore the coefficients of the line element in the chart the entry names, so that $g_{uv}$ multiplies $du\,dv$ and carries a $c^2$.
-The Cartesian and Spherical entries in the same file quote $g_{tt} = -1$ against a line element $-c^2dt^2$, which is the same metric written in the chart whose time coordinate is $ct$ rather than $t$.
-The two null systems do not follow that, because their coordinates are $u$ and $v$ and not $cu$ and $cv$, and because the Christoffel symbols and the geodesic equations below are all taken in the chart the `coords` field actually names.
-Reading a null entry, the rule is simply that the matrix $g_{\mu\nu}$ is what sits in front of $dx^\mu dx^\nu$ in the line element printed directly above it.
+
+The chart, here and everywhere else in the collection, is the one whose time coordinate is $x^0 = cT$.
+The Cartesian and Spherical entries in the same file quote $g_{tt} = -1$ against a line element $-c^2dt^2$, which is that chart; so does Schwarzschild, quoting $g_{tt} = -(1-r_s/r)$ against a time term $-(1-r_s/r)c^2dt^2$.
+The two null systems follow it too, which is what the factors of $c$ below are doing.
+Since $u$ and $v$ are times, the chart coordinates are $cu$ and $cv$, and every component printed against an index $u$ or $v$ is a component in that chart even though the index is written with the bare letter.
+
+Because the rescaling is linear with constant coefficients, the rule is arithmetic: a component in the chart is the component taken with the bare coordinate, multiplied by $c$ once for every upper $u$ or $v$ index and divided by $c$ once for every lower one.
+The Christoffel symbols obey the same rule as the tensors, since the inhomogeneous term in their transformation law carries a second derivative of the coordinate change, which vanishes for a linear one.
+This is why, below, $\Gamma^u{}_{\theta\theta}$ carries a $c$ and $\Gamma^\theta{}_{u\theta}$ carries a $1/c$, while $\Gamma^\theta{}_{\phi\phi}$ and $\Gamma^\phi{}_{\theta\phi}$, which have no null index at all, carry none.
+The line element itself is written in $du$ and $dv$ throughout, so it is unchanged by any of this; it is only the printed components that sit in the $cu, cv$ chart.
+
+Steps 4 to 7 and Steps 14 to 18 below work in the bare $(u,v)$ chart, because that is where the transformation from Cartesian naturally lands.
+Step 18a and Step 22a then carry the results into the chart the entry prints.
 
 The starting point in both parts is the Cartesian line element the same file publishes,
 
@@ -143,6 +153,18 @@ $$g^{y\alpha}g_{\alpha y} = g^{yy}g_{yy} = 1, \qquad g^{z\alpha}g_{\alpha z} = g
 
 and every remaining mixed component, such as $g^{u\alpha}g_{\alpha y}$, vanishes because the only nonzero $g^{u\alpha}$ is $g^{uv}$ and $g_{vy} = 0$.
 The product is the identity.
+
+## Step 7a. The same metric in the chart the entry prints
+
+Steps 4 to 7 worked with the bare $u$ and $v$, which are times.
+The entry prints the chart of Step 1, whose coordinates are $cu$ and $cv$, so each lower null index divides by $c$ and each upper one multiplies by it.
+Only $g_{uv}$ and $g^{uv}$ carry null indices at all, and each carries two:
+
+$$g_{uv} = g_{vu} = \frac{1}{c^2}\left(-\frac{c^2}{2}\right) = -\frac{1}{2}, \qquad g^{uv} = g^{vu} = c^2\left(-\frac{2}{c^2}\right) = -2.$$
+
+The components $g_{yy} = g_{zz} = 1$ have no null index and are unchanged, and the product is still the identity, since each factor of $c$ introduced on the inverse is cancelled by the one removed from the metric.
+These four numbers are what the entry prints.
+Read directly, they say that in the chart the entry uses, the flat metric in double null coordinates carries no $c$ at all, which is the point of using that chart.
 
 ## Step 8. Every Christoffel symbol
 
@@ -316,6 +338,19 @@ $$g^{\phi\alpha}g_{\alpha\phi} = g^{\phi\phi}g_{\phi\phi} = \frac{4}{c^2(v-u)^2\
 Every off block component vanishes, because the only nonzero $g^{u\alpha}$ is $g^{uv}$ and $g_{v\theta} = g_{v\phi} = 0$, the only nonzero $g^{\theta\alpha}$ is $g^{\theta\theta}$ and $g_{\theta u} = g_{\theta v} = g_{\theta\phi} = 0$, and likewise for $v$ and $\phi$.
 The product is the identity.
 
+## Step 17a. The same metric in the chart the entry prints
+
+As in Step 7a, the entry prints components in the chart whose null coordinates are $cu$ and $cv$.
+The two components carrying null indices carry two apiece,
+
+$$g_{uv} = g_{vu} = -\frac{1}{2}, \qquad g^{uv} = g^{vu} = -2,$$
+
+while $g_{\theta\theta}$, $g_{\phi\phi}$ and their inverses carry none, so they are printed exactly as Steps 16 and 17 computed them,
+
+$$g_{\theta\theta} = \frac{c^2(v-u)^2}{4}, \qquad g_{\phi\phi} = \frac{c^2(v-u)^2\sin^2\theta}{4}.$$
+
+The factor $c^2(v-u)^2/4$ is just $r^2$ written out, and $r$ is a length however the null coordinates are scaled, which is why no $c$ moves here.
+
 ## Step 18. The derivatives of the metric
 
 There are only five nonvanishing first derivatives of the metric in this chart, and the whole of the connection is built from them.
@@ -406,7 +441,8 @@ $$\Gamma^\phi_{\phi u} = -\frac{1}{v-u}, \qquad \Gamma^\phi_{\phi v} = \frac{1}{
 The case $\nu = \rho = \phi$ gives $\tfrac{1}{2}g^{\phi\phi}\left(\partial_\phi g_{\phi\phi} + \partial_\phi g_{\phi\phi} - \partial_\phi g_{\phi\phi}\right) = 0$.
 Every other $\Gamma^\phi_{\nu\rho}$ is zero.
 
-Steps 19 to 21 give fifteen nonzero symbols in total, which is the list the entry prints under `ull`.
+Steps 19 to 21 give fifteen nonzero symbols in total, in the bare $(u,v)$ chart.
+Step 22a carries them into the chart the entry prints under `ull`.
 
 ## Step 22. The same symbols with the first index lowered
 
@@ -431,11 +467,41 @@ $$\Gamma_{\phi u\phi} = \Gamma_{\phi\phi u} = \frac{c^2(v-u)^2\sin^2\theta}{4}\l
 
 $$\Gamma_{\phi\theta\phi} = \Gamma_{\phi\phi\theta} = \frac{c^2(v-u)^2\sin^2\theta}{4}\cot\theta = \frac{c^2(v-u)^2\sin\theta\cos\theta}{4}.$$
 
-These fifteen are the list the entry prints under `lll`.
+These fifteen are the lowered symbols in the bare chart; Step 22a carries them over too.
+
+## Step 22a. Both lists in the chart the entry prints
+
+By Step 1 the printed symbols are those of the chart whose null coordinates are $cu$ and $cv$, so each symbol is multiplied by $c$ once for every upper $u$ or $v$ index and divided by $c$ once for every lower one.
+For $\Gamma^\mu{}_{\nu\rho}$ that means the four with an upper null index gain a $c$, the eight with one lower null index lose one, and the three purely angular symbols are untouched:
+
+$$\Gamma^u_{\theta\theta} = \frac{c(v-u)}{2}, \qquad \Gamma^u_{\phi\phi} = \frac{c(v-u)\sin^2\theta}{2}, \qquad \Gamma^v_{\theta\theta} = -\frac{c(v-u)}{2}, \qquad \Gamma^v_{\phi\phi} = -\frac{c(v-u)\sin^2\theta}{2},$$
+
+$$\Gamma^\theta_{u\theta} = \Gamma^\theta_{\theta u} = -\frac{1}{c(v-u)}, \qquad \Gamma^\theta_{v\theta} = \Gamma^\theta_{\theta v} = \frac{1}{c(v-u)},$$
+
+$$\Gamma^\phi_{u\phi} = \Gamma^\phi_{\phi u} = -\frac{1}{c(v-u)}, \qquad \Gamma^\phi_{v\phi} = \Gamma^\phi_{\phi v} = \frac{1}{c(v-u)},$$
+
+$$\Gamma^\theta_{\phi\phi} = -\sin\theta\cos\theta, \qquad \Gamma^\phi_{\theta\phi} = \Gamma^\phi_{\phi\theta} = \cot\theta.$$
+
+For $\Gamma_{\mu\nu\rho}$ every index is lower, so each symbol simply loses one factor of $c$ for each null index it carries.
+The twelve with exactly one lose a single $c$, and the three with none keep what Step 22 gave them:
+
+$$\Gamma_{u\theta\theta} = \frac{c(v-u)}{4}, \qquad \Gamma_{u\phi\phi} = \frac{c(v-u)\sin^2\theta}{4}, \qquad \Gamma_{v\theta\theta} = -\frac{c(v-u)}{4}, \qquad \Gamma_{v\phi\phi} = -\frac{c(v-u)\sin^2\theta}{4},$$
+
+$$\Gamma_{\theta u\theta} = \Gamma_{\theta\theta u} = -\frac{c(v-u)}{4}, \qquad \Gamma_{\theta v\theta} = \Gamma_{\theta\theta v} = \frac{c(v-u)}{4},$$
+
+$$\Gamma_{\phi u\phi} = \Gamma_{\phi\phi u} = -\frac{c(v-u)\sin^2\theta}{4}, \qquad \Gamma_{\phi v\phi} = \Gamma_{\phi\phi v} = \frac{c(v-u)\sin^2\theta}{4},$$
+
+$$\Gamma_{\theta\phi\phi} = -\frac{c^2(v-u)^2\sin\theta\cos\theta}{4}, \qquad \Gamma_{\phi\theta\phi} = \Gamma_{\phi\phi\theta} = \frac{c^2(v-u)^2\sin\theta\cos\theta}{4}.$$
+
+These two lists of fifteen are what the entry prints under `ull` and `lll`.
+The lowering identity survives the change of chart, as it must: $\Gamma_{u\theta\theta} = g_{uv}\Gamma^v_{\theta\theta} = \left(-\tfrac{1}{2}\right)\left(-\tfrac{c(v-u)}{2}\right) = \tfrac{c(v-u)}{4}$, using the $g_{uv}$ of Step 17a rather than the one of Step 16.
 
 ## Step 23. The shape of the connection
 
 Before computing the curvature it pays to name the pattern, because it is what makes the cancellations visible.
+This step and the four after it use the bare chart symbols of Steps 19 to 21 rather than the printed ones of Step 22a, because the pattern is cleaner without the factors of $c$ and the conclusion is that every curvature component vanishes.
+That conclusion is the same in either chart: rescaling a coordinate multiplies a component by a nonzero power of $c$, which cannot turn a zero into anything else.
+
 Let $a,b,e,f$ run over the two null indices $\{u,v\}$ and let $i,j,k,l,m$ run over the two angular indices $\{\theta,\phi\}$.
 Write $w = v-u$, and attach to each null index the sign
 
@@ -657,38 +723,40 @@ This is the flat spacetime it started as, written in a chart where the metric is
 
 ## Step 28. The geodesic equations
 
-Take $\ddot x^\mu = -\Gamma^\mu_{\nu\rho}\dot x^\nu \dot x^\rho$ with the fifteen symbols of Steps 19 to 21, and remember that the sum over $\nu$ and $\rho$ runs over both orderings, which is what turns each pair of equal mixed symbols into a factor of two.
+Take $\ddot x^\mu = -\Gamma^\mu_{\nu\rho}\dot x^\nu \dot x^\rho$ with the fifteen symbols of Step 22a, and remember that the sum over $\nu$ and $\rho$ runs over both orderings, which is what turns each pair of equal mixed symbols into a factor of two.
+The equations are taken in the same chart as those symbols, so $\dot u$ and $\dot v$ are the rates of the chart coordinates $cu$ and $cv$ along the curve, matching the indices the symbols are printed with.
 
 For $\mu = u$, the only contributions are $\Gamma^u_{\theta\theta}$ and $\Gamma^u_{\phi\phi}$:
 
-$$\ddot u = -\frac{v-u}{2}\dot\theta^2 - \frac{(v-u)\sin^2\theta}{2}\dot\phi^2.$$
+$$\ddot u = -\frac{c(v-u)}{2}\dot\theta^2 - \frac{c(v-u)\sin^2\theta}{2}\dot\phi^2.$$
 
 For $\mu = v$, the same two symbols with the opposite sign:
 
-$$\ddot v = \frac{v-u}{2}\dot\theta^2 + \frac{(v-u)\sin^2\theta}{2}\dot\phi^2.$$
+$$\ddot v = \frac{c(v-u)}{2}\dot\theta^2 + \frac{c(v-u)\sin^2\theta}{2}\dot\phi^2.$$
 
 For $\mu = \theta$, the contributions are $\Gamma^\theta_{u\theta}$ and $\Gamma^\theta_{\theta u}$ together, $\Gamma^\theta_{v\theta}$ and $\Gamma^\theta_{\theta v}$ together, and $\Gamma^\theta_{\phi\phi}$:
 
-$$\ddot\theta = \frac{2}{v-u}\dot u\dot\theta - \frac{2}{v-u}\dot v\dot\theta + \sin\theta\cos\theta\,\dot\phi^2 = -\frac{2\left(\dot v - \dot u\right)}{v-u}\dot\theta + \sin\theta\cos\theta\,\dot\phi^2.$$
+$$\ddot\theta = \frac{2}{c(v-u)}\dot u\dot\theta - \frac{2}{c(v-u)}\dot v\dot\theta + \sin\theta\cos\theta\,\dot\phi^2 = -\frac{2\left(\dot v - \dot u\right)}{c(v-u)}\dot\theta + \sin\theta\cos\theta\,\dot\phi^2.$$
 
 For $\mu = \phi$, the contributions are the four mixed symbols $\Gamma^\phi_{u\phi}$, $\Gamma^\phi_{\phi u}$, $\Gamma^\phi_{v\phi}$, $\Gamma^\phi_{\phi v}$ and the pair $\Gamma^\phi_{\theta\phi}$, $\Gamma^\phi_{\phi\theta}$:
 
-$$\ddot\phi = -\frac{2\left(\dot v - \dot u\right)}{v-u}\dot\phi - 2\cot\theta\,\dot\theta\dot\phi.$$
+$$\ddot\phi = -\frac{2\left(\dot v - \dot u\right)}{c(v-u)}\dot\phi - 2\cot\theta\,\dot\theta\dot\phi.$$
 
 These four are what the entry prints.
 
 ## Step 29. Consistency with the Spherical entry
 
 The same file gives the spherical geodesics as $\ddot t = 0$, $\ddot r = r\dot\theta^2 + r\sin^2\theta\,\dot\phi^2$, and the two angular equations with $-\tfrac{2}{r}\dot r$ in front.
-Since $u = t - r/c$, differentiating twice gives $\ddot u = \ddot t - \ddot r/c$, so
+Those are printed in the same chart, so the $t$ they are written with is the chart coordinate $ct$, and the null chart coordinates are $cu = ct - r$ and $cv = ct + r$.
+Differentiating $cu = ct - r$ twice along the curve gives $\ddot u = \ddot t - \ddot r$ with every dot now a chart rate, so
 
-$$\ddot u = 0 - \frac{1}{c}\left(r\dot\theta^2 + r\sin^2\theta\,\dot\phi^2\right) = -\frac{r}{c}\dot\theta^2 - \frac{r\sin^2\theta}{c}\dot\phi^2,$$
+$$\ddot u = 0 - \left(r\dot\theta^2 + r\sin^2\theta\,\dot\phi^2\right) = -r\dot\theta^2 - r\sin^2\theta\,\dot\phi^2,$$
 
-and $r/c = (v-u)/2$ turns that into the $\ddot u$ equation of Step 28 exactly.
-The same step with $v = t + r/c$ gives the $\ddot v$ equation.
-For the angles, $\dot r = \tfrac{c}{2}\left(\dot v - \dot u\right)$ and $r = \tfrac{c}{2}(v-u)$ give
+and $r = c(v-u)/2$ turns that into the $\ddot u$ equation of Step 28 exactly.
+The same step with $cv = ct + r$ gives the $\ddot v$ equation.
+For the angles, $\dot r = \tfrac{1}{2}\left(\dot v - \dot u\right)$ and $r = \tfrac{c}{2}(v-u)$ give
 
-$$\frac{2\dot r}{r} = \frac{2 \cdot \tfrac{c}{2}\left(\dot v - \dot u\right)}{\tfrac{c}{2}(v-u)} = \frac{2\left(\dot v - \dot u\right)}{v-u},$$
+$$\frac{2\dot r}{r} = \frac{2 \cdot \tfrac{1}{2}\left(\dot v - \dot u\right)}{\tfrac{c}{2}(v-u)} = \frac{2\left(\dot v - \dot u\right)}{c(v-u)},$$
 
 which is the coefficient standing in front of $\dot\theta$ and $\dot\phi$ in Step 28.
 The two coordinate systems describe the same geodesics, as they must.
@@ -697,12 +765,15 @@ The two coordinate systems describe the same geodesics, as they must.
 
 ## What the machine checks
 
-`_tools/derivations/verify_minkowski_null.py` rebuilds both metrics from the Cartesian line element that `minkowski.json` itself publishes, using the transformations of Steps 2 and 11, and then computes the inverse metric, both Christoffel variants, Riemann, Ricci, the Ricci scalar, Kretschmann, Einstein and Weyl in sympy.
-It reads every value the two entries print, translates the LaTeX back into an expression and asserts equality, and it also asserts that no component the entries leave out is nonzero, which catches an omission as well as a wrong number.
-It parses the published line elements into quadratic forms and checks them against the transformation, and it checks each geodesic equation against $\ddot x^\mu = -\Gamma^\mu_{\nu\rho}\dot x^\nu\dot x^\rho$ built from the symbols it computed.
+`_tools/derivations/verify_metrics.py` builds the metric of every published coordinate system from the line element the file itself prints, and then computes the inverse metric, both Christoffel variants, Riemann, Ricci, the Ricci scalar, Kretschmann, Einstein and Weyl in sympy.
+It reads every value each entry prints, translates the LaTeX back into an expression and asserts equality, and it also asserts that no component an entry leaves out is nonzero, which catches an omission as well as a wrong number.
+It weights each component into the $x^0 = cT$ chart of Step 1 before comparing, which is the arithmetic of Steps 7a, 17a and 22a done by machine, and it checks each geodesic equation against $\ddot x^\mu + \Gamma^\mu_{\nu\rho}\dot x^\nu\dot x^\rho = 0$ built from the symbols it computed.
+Anything it cannot parse, or cannot finish simplifying inside its time budget, it reports as UNCHECKED and names, rather than passing it in silence.
 It exits non-zero and names what disagreed.
 
-It needs sympy:
+It needs sympy, in a virtual environment outside the repository:
 
-    python3 -m venv .venv && .venv/bin/pip install sympy
-    .venv/bin/python _tools/derivations/verify_minkowski_null.py
+    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
+    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
+
+Both of the systems derived above pass it. Pass `--system minkowski/spherical_null` to check just one.

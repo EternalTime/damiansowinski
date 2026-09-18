@@ -515,14 +515,14 @@
             "u",
             "v"
           ],
-          "value": "-\\dfrac{c^2}{2}"
+          "value": "-\\dfrac{1}{2}"
         },
         {
           "indices": [
             "v",
             "u"
           ],
-          "value": "-\\dfrac{c^2}{2}"
+          "value": "-\\dfrac{1}{2}"
         },
         {
           "indices": [
@@ -626,14 +626,14 @@
             "u",
             "v"
           ],
-          "value": "-\\dfrac{2}{c^2}"
+          "value": "-2"
         },
         {
           "indices": [
             "v",
             "u"
           ],
-          "value": "-\\dfrac{2}{c^2}"
+          "value": "-2"
         },
         {
           "indices": [
@@ -674,14 +674,14 @@
             "u",
             "v"
           ],
-          "value": "-\\dfrac{c^2}{2}"
+          "value": "-\\dfrac{1}{2}"
         },
         {
           "indices": [
             "v",
             "u"
           ],
-          "value": "-\\dfrac{c^2}{2}"
+          "value": "-\\dfrac{1}{2}"
         },
         {
           "indices": [
@@ -710,7 +710,7 @@
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\dfrac{v-u}{2}"
+                "value": "\\dfrac{c(v-u)}{2}"
               },
               {
                 "indices": [
@@ -718,7 +718,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{(v-u)\\sin^2\\theta}{2}"
+                "value": "\\dfrac{c(v-u)\\sin^2\\theta}{2}"
               },
               {
                 "indices": [
@@ -726,7 +726,7 @@
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{v-u}{2}"
+                "value": "-\\dfrac{c(v-u)}{2}"
               },
               {
                 "indices": [
@@ -734,7 +734,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{(v-u)\\sin^2\\theta}{2}"
+                "value": "-\\dfrac{c(v-u)\\sin^2\\theta}{2}"
               },
               {
                 "indices": [
@@ -742,7 +742,7 @@
                   "u",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{1}{v-u}"
+                "value": "-\\dfrac{1}{c(v-u)}"
               },
               {
                 "indices": [
@@ -750,7 +750,7 @@
                   "\\theta",
                   "u"
                 ],
-                "value": "-\\dfrac{1}{v-u}"
+                "value": "-\\dfrac{1}{c(v-u)}"
               },
               {
                 "indices": [
@@ -758,7 +758,7 @@
                   "v",
                   "\\theta"
                 ],
-                "value": "\\dfrac{1}{v-u}"
+                "value": "\\dfrac{1}{c(v-u)}"
               },
               {
                 "indices": [
@@ -766,7 +766,7 @@
                   "\\theta",
                   "v"
                 ],
-                "value": "\\dfrac{1}{v-u}"
+                "value": "\\dfrac{1}{c(v-u)}"
               },
               {
                 "indices": [
@@ -782,7 +782,7 @@
                   "u",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{1}{v-u}"
+                "value": "-\\dfrac{1}{c(v-u)}"
               },
               {
                 "indices": [
@@ -790,7 +790,7 @@
                   "\\phi",
                   "u"
                 ],
-                "value": "-\\dfrac{1}{v-u}"
+                "value": "-\\dfrac{1}{c(v-u)}"
               },
               {
                 "indices": [
@@ -798,7 +798,7 @@
                   "v",
                   "\\phi"
                 ],
-                "value": "\\dfrac{1}{v-u}"
+                "value": "\\dfrac{1}{c(v-u)}"
               },
               {
                 "indices": [
@@ -806,7 +806,7 @@
                   "\\phi",
                   "v"
                 ],
-                "value": "\\dfrac{1}{v-u}"
+                "value": "\\dfrac{1}{c(v-u)}"
               },
               {
                 "indices": [
@@ -835,7 +835,7 @@
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\dfrac{c^2(v-u)}{4}"
+                "value": "\\dfrac{c(v-u)}{4}"
               },
               {
                 "indices": [
@@ -843,7 +843,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{c^2(v-u)\\sin^2\\theta}{4}"
+                "value": "\\dfrac{c(v-u)\\sin^2\\theta}{4}"
               },
               {
                 "indices": [
@@ -851,7 +851,7 @@
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{c^2(v-u)}{4}"
+                "value": "-\\dfrac{c(v-u)}{4}"
               },
               {
                 "indices": [
@@ -859,7 +859,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{c^2(v-u)\\sin^2\\theta}{4}"
+                "value": "-\\dfrac{c(v-u)\\sin^2\\theta}{4}"
               },
               {
                 "indices": [
@@ -867,7 +867,7 @@
                   "u",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{c^2(v-u)}{4}"
+                "value": "-\\dfrac{c(v-u)}{4}"
               },
               {
                 "indices": [
@@ -875,7 +875,7 @@
                   "\\theta",
                   "u"
                 ],
-                "value": "-\\dfrac{c^2(v-u)}{4}"
+                "value": "-\\dfrac{c(v-u)}{4}"
               },
               {
                 "indices": [
@@ -883,7 +883,7 @@
                   "v",
                   "\\theta"
                 ],
-                "value": "\\dfrac{c^2(v-u)}{4}"
+                "value": "\\dfrac{c(v-u)}{4}"
               },
               {
                 "indices": [
@@ -891,7 +891,7 @@
                   "\\theta",
                   "v"
                 ],
-                "value": "\\dfrac{c^2(v-u)}{4}"
+                "value": "\\dfrac{c(v-u)}{4}"
               },
               {
                 "indices": [
@@ -907,7 +907,7 @@
                   "u",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{c^2(v-u)\\sin^2\\theta}{4}"
+                "value": "-\\dfrac{c(v-u)\\sin^2\\theta}{4}"
               },
               {
                 "indices": [
@@ -915,7 +915,7 @@
                   "\\phi",
                   "u"
                 ],
-                "value": "-\\dfrac{c^2(v-u)\\sin^2\\theta}{4}"
+                "value": "-\\dfrac{c(v-u)\\sin^2\\theta}{4}"
               },
               {
                 "indices": [
@@ -923,7 +923,7 @@
                   "v",
                   "\\phi"
                 ],
-                "value": "\\dfrac{c^2(v-u)\\sin^2\\theta}{4}"
+                "value": "\\dfrac{c(v-u)\\sin^2\\theta}{4}"
               },
               {
                 "indices": [
@@ -931,7 +931,7 @@
                   "\\phi",
                   "v"
                 ],
-                "value": "\\dfrac{c^2(v-u)\\sin^2\\theta}{4}"
+                "value": "\\dfrac{c(v-u)\\sin^2\\theta}{4}"
               },
               {
                 "indices": [
@@ -1016,10 +1016,10 @@
         }
       },
       "geodesics": [
-        "\\ddot{u} = -\\dfrac{v-u}{2}\\dot{\\theta}^2 - \\dfrac{(v-u)\\sin^2\\theta}{2}\\dot{\\phi}^2",
-        "\\ddot{v} = \\dfrac{v-u}{2}\\dot{\\theta}^2 + \\dfrac{(v-u)\\sin^2\\theta}{2}\\dot{\\phi}^2",
-        "\\ddot{\\theta} = -\\dfrac{2(\\dot{v}-\\dot{u})}{v-u}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
-        "\\ddot{\\phi} = -\\dfrac{2(\\dot{v}-\\dot{u})}{v-u}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
+        "\\ddot{u} = -\\dfrac{c(v-u)}{2}\\dot{\\theta}^2 - \\dfrac{c(v-u)\\sin^2\\theta}{2}\\dot{\\phi}^2",
+        "\\ddot{v} = \\dfrac{c(v-u)}{2}\\dot{\\theta}^2 + \\dfrac{c(v-u)\\sin^2\\theta}{2}\\dot{\\phi}^2",
+        "\\ddot{\\theta} = -\\dfrac{2(\\dot{v}-\\dot{u})}{c(v-u)}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
+        "\\ddot{\\phi} = -\\dfrac{2(\\dot{v}-\\dot{u})}{c(v-u)}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
       ],
       "inverse_metric_components": [
         {
@@ -1027,14 +1027,14 @@
             "u",
             "v"
           ],
-          "value": "-\\dfrac{2}{c^2}"
+          "value": "-2"
         },
         {
           "indices": [
             "v",
             "u"
           ],
-          "value": "-\\dfrac{2}{c^2}"
+          "value": "-2"
         },
         {
           "indices": [
