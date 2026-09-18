@@ -1,5 +1,5 @@
 {
-  "version": "233cd4e8a673e167",
+  "version": "263bb7962946f5df",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -2750,7 +2750,7 @@
         "pages": "268--282",
         "year": "1922",
         "doi": "10.1098/rspa.1922.0085",
-        "url": "https://doi.org/10.1098/rspa.1922.0085"
+        "url": "https://archive.org/details/dli.ernet.534417"
       }
     },
     "kundt1961": {
@@ -2775,7 +2775,8 @@
         "editor": "Witten, Louis",
         "publisher": "John Wiley and Sons",
         "address": "New York",
-        "year": "1962"
+        "year": "1962",
+        "url": "https://inspirehep.net/literature/45501"
       }
     },
     "einstein1937": {
@@ -2840,7 +2841,7 @@
         "pages": "519--533",
         "year": "1959",
         "doi": "10.1098/rspa.1959.0124",
-        "url": "https://doi.org/10.1098/rspa.1959.0124"
+        "url": "https://inspirehep.net/literature/8571"
       }
     },
     "feynman2011": {
@@ -2880,7 +2881,7 @@
         "pages": "L51--L53",
         "year": "1975",
         "doi": "10.1086/181708",
-        "url": "https://doi.org/10.1086/181708"
+        "url": "https://inspirehep.net/literature/95587"
       }
     },
     "taylor1979": {
