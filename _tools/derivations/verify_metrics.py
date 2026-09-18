@@ -141,6 +141,14 @@ BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 # declared T is the one the chart multiplies by c; the rest are their own chart
 # coordinates. A system absent from this table is UNCHECKED.
 DIMENSIONS = {
+    # The one length of the solution is the anti-de Sitter radius, which the entry calls
+    # L and the dimensional pass calls L as well; the two never meet in one expression.
+    ("anti_de_sitter", "static_global"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "L": "L",
+    },
+    ("anti_de_sitter", "poincare"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "L": "L",
+    },
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
