@@ -137,8 +137,9 @@ DEFAULT_BUDGET_SECONDS = 120
 
 LENGTH = sp.Symbol("L", positive=True)
 TIME = sp.Symbol("T", positive=True)
+MASS = sp.Symbol("M", positive=True)
 AFFINE = sp.Symbol("lambda", positive=True)
-BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "1": sp.Integer(1)}
+BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 
 # The dimension of every coordinate and every parameter, per system. A coordinate
 # declared T is the one the chart multiplies by c; the rest are their own chart
@@ -187,6 +188,16 @@ DIMENSIONS = {
     },
     ("stockum_dust", "cylindrical"): {
         "t": "L", "r": "L", "\\phi": "1", "z": "L", "R": "L",
+    },
+    # The one entry that keeps G and a mass explicit rather than folding them into a
+    # length like r_s, and so the only one whose declarations need a mass at all.
+    ("vaidya", "eddington_finkelstein_outgoing"): {
+        "u": "T", "r": "L", "\\theta": "1", "\\phi": "1",
+        "G": "L**3/(M*T**2)", "m": "M",
+    },
+    ("vaidya", "eddington_finkelstein_ingoing"): {
+        "v": "T", "r": "L", "\\theta": "1", "\\phi": "1",
+        "G": "L**3/(M*T**2)", "m": "M",
     },
 }
 

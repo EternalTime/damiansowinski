@@ -115,6 +115,9 @@ A coordinate declared as a time is exactly a coordinate the chart multiplies by 
 A new coordinate system that is not listed there is reported `UNCHECKED` rather than guessed at, so adding a spacetime means adding its line, and forgetting to is visible rather than silent.
 So is declaring a dimension for a parameter the system does not have, or leaving one out.
 
+A dimension is written in $L$, $T$ and $M$.
+Most entries never name a mass, because they fold it into a length such as $r_s = 2GM/c^2$ and quote that; Vaidya keeps $G$ and $m(u)$ explicit, so it declares $[G] = L^3M^{-1}T^{-2}$ and $[m] = M$ and its components balance through the length $Gm/c^2$.
+
 Some of what the table has to decide is a choice the entry leaves open.
 FRW can be read with a dimensionless comoving $r$ and a scale factor carrying the length, or with $r$ a length, $a$ dimensionless and $k$ a curvature; the line element balances either way, and only the published Riemann tensor picks the second.
 Where that happens, the table carries a comment saying which reading the entry's own values obey.
