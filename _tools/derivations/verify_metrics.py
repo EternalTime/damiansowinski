@@ -218,6 +218,14 @@ DIMENSIONS = {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1",
         "M": "M", "a": "L", "G": "L**3/(M*T**2)",
     },
+    # Kerr with the charge folded into a length beside the spin, as Reissner-Nordstrom
+    # folds it: r_Q^2 = GQ^2/(4 pi epsilon_0 c^4) is an area, which is what lets it sit
+    # in Delta beside r^2 and a^2. The charge itself never appears, so no dimension for
+    # it is needed, and the mass stays a mass with G beside it as it does for Kerr.
+    ("kerr_newman", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1",
+        "M": "M", "a": "L", "G": "L**3/(M*T**2)", "r_Q": "L",
+    },
     # The one parameter is the dimensionless shape function of the tube, and the chart is
     # cylindrical about the axis the tube is laid along, so r is the distance from that axis
     # rather than an areal radius. The solution names no length of its own: the radius of the
