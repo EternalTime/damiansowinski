@@ -149,6 +149,14 @@ DIMENSIONS = {
     ("anti_de_sitter", "poincare"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "L": "L",
     },
+    # b is the one length of the solution, the common radius of the two factors, and
+    # neither r nor x is an areal radius: both run along the AdS_2 factor.
+    ("bertotti_robinson", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "b": "L",
+    },
+    ("bertotti_robinson", "poincare"): {
+        "t": "T", "x": "L", "\\theta": "1", "\\phi": "1", "b": "L",
+    },
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
