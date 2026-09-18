@@ -21,7 +21,7 @@
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "Coordinates $(t, x, y, z)$ all range over $\\mathbb{R}$. The parameter $\\omega$ is the angular velocity of the dust. The Ricci tensor is the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, on which the published values are $R_{\\mu\\nu} = 2\\omega^2u_\\mu u_\\nu$ with $u^\\mu$ the four velocity of the dust. Units with $G = c = 1$ are used throughout.",
+  "convention": "Coordinates $(t, x, y, z)$ all range over $\\mathbb{R}$. The parameter $\\omega$ is the angular velocity of the dust. The Ricci tensor is the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, on which the published values are $R_{\\mu\\nu} = 2\\omega^2u_\\mu u_\\nu$ with $u^\\mu$ the four velocity of the dust. Units with $G = c = 1$ are used throughout, and the chart coordinate is $x^0 = ct$, which those units make the printed $t$. The argument of $e^x$ forces $x$ to be dimensionless and the metric forces $t$, $y$ and $z$ to be dimensionless with it, so the one length of the solution is $1/\\omega$. The geodesic equations are $\\ddot{x}^\\mu + \\Gamma^\\mu{}_{\\nu\\rho}\\dot{x}^\\nu\\dot{x}^\\rho = 0$ with the same $\\Gamma$ printed above them, and the dots are derivatives of those chart coordinates with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$ and every term of every equation carries the dimensions of its left hand side.",
   "history": "Kurt Gödel presented his rotating universe in 1949 as a contribution to a volume honoring Einstein's seventieth birthday: a gift, as it were, that unsettled the honoree [godel1949]. The solution describes a universe filled with pressureless dust in uniform rotation, homogeneous in space and time, with no expansion. Gödel built on the Lanczos-van Stockum solution: by introducing a negative cosmological constant tuned to the dust density, he caused the light cones to tip as one moves away from the rotation axis, until at a critical radius they become tangent to a closed null curve. Beyond that radius, closed timelike curves exist through every event, trajectories that loop back to their own past.¶A traveler following such a curve would return to the same event they departed from, having aged normally along the way. Einstein was troubled. He had hoped that general relativity would enforce some analog of absolute cosmic time; Gödel's solution demonstrated that the field equations permit no such thing in general.¶The Gödel universe is not a serious model of the cosmos we inhabit, since it does not expand and we observe expansion, but it remains one of the most important exact solutions in the theory. It is the solution that put the causal structure of spacetime on trial, and the field equations declined to convict.",
   "references": [
     "godel1949"
@@ -1633,7 +1633,13 @@
             ]
           }
         }
-      }
+      },
+      "geodesics": [
+        "\\ddot{t} + 2\\dot{t}\\dot{x} + e^x\\dot{x}\\dot{y} = 0",
+        "\\ddot{x} + e^x\\dot{t}\\dot{y} + \\dfrac{e^{2x}}{2}\\dot{y}^2 = 0",
+        "\\ddot{y} - 2e^{-x}\\dot{t}\\dot{x} = 0",
+        "\\ddot{z} = 0"
+      ]
     }
   ]
 }
