@@ -83,19 +83,15 @@ The signature is (-,+,+,+) and the Riemann tensor is
 
 which is what the published Riemann components are in.
 
-The collection contracts the Ricci tensor as R_{mu nu} = R^a_{mu nu a}, on the last
-lower index rather than the first. That is the opposite sign from the commoner
-R^a_{mu a nu}, and it carries through to the Einstein tensor and the Ricci scalar, so
-the published FRW scalar is -6(addot/a + adot^2/a^2 + k/a^2) where a textbook using
-the other contraction would print +6(...). The convention is not written down in the
-files, but it is what they consistently do: contracting each published Riemann tensor
-both ways reproduces the published Ricci in every slot this way and not the other, in
-Ellis-Bronnikov, Reissner-Nordstrom and Godel alike. The script therefore checks
-against it rather than against the textbook contraction.
+The Ricci tensor is the standard contraction R_{mu nu} = R^a_{mu a nu}, on the first
+lower index, which is the one the signature (-,+,+,+) asks for: it makes the Einstein
+tensor of ordinary matter positive where the energy density is, so FRW publishes
+G_{tt} = 3(adot^2 + k)/a^2 and the scalar +6(addot/a + adot^2/a^2 + k/a^2). The
+collection once contracted on the last index instead, which is minus this, and the
+change of convention was settled on 2026-09-18.
 
-The Weyl tensor is the exception, because it is defined by removing the traces of
-Riemann, and those traces do not care which contraction the file names Ricci. It is
-built here from R^a_{mu a nu} regardless.
+The Weyl tensor is built from the same contraction, as it always was, because it is
+defined by removing the traces of Riemann and those traces are Riemann's own.
 
 
 Constrained parameters
@@ -145,6 +141,9 @@ BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 # declared T is the one the chart multiplies by c; the rest are their own chart
 # coordinates. A system absent from this table is UNCHECKED.
 DIMENSIONS = {
+    ("bianchi", "type_i_cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
+    },
     ("ellis_bronnikov", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L",
     },
@@ -839,13 +838,8 @@ class Geometry:
             return out
         return self._timed("riemann_llll", build)
 
-    def ricci_trace_ll(self):
-        """R^a_{mu a nu}, the contraction whose traces are Riemann's own.
-
-        This is the one the Weyl tensor is built from, because Weyl is defined by
-        removing the traces of Riemann, and those traces do not care what the file
-        chooses to call the Ricci tensor.
-        """
+    def ricci_ll(self):
+        """R_{mu nu} = R^a_{mu a nu}, the standard contraction on the first lower index."""
         def build():
             riemann = self.riemann_ulll()
             out = self._zeros(2)
@@ -855,13 +849,6 @@ class Geometry:
                     out[nu][sigma] = value
                     out[sigma][nu] = value
             return out
-        return self._timed("ricci_trace_ll", build)
-
-    def ricci_ll(self):
-        """R_{mu nu} = R^a_{mu nu a}, which is the contraction the collection publishes."""
-        def build():
-            trace = self.ricci_trace_ll()
-            return [[norm(-trace[a][b]) for b in range(self.n)] for a in range(self.n)]
         return self._timed("ricci_ll", build)
 
     def ricci_scalar(self):
@@ -908,10 +895,8 @@ class Geometry:
         def build():
             n = self.n
             riemann = self.riemann_llll()
-            ricci = self.ricci_trace_ll()
-            scalar = norm(sum(
-                self.ginv[a, b] * ricci[a][b] for a in range(n) for b in range(n)
-            ))
+            ricci = self.ricci_ll()
+            scalar = self.ricci_scalar()
             out = self._zeros(4)
             for a in range(n):
                 for b in range(n):

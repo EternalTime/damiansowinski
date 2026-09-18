@@ -31,7 +31,7 @@ The Ricci tensor is the standard contraction,
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
 settled for the collection on 18 September 2026.
-Some entries written earlier contract on the last lower index instead, which is the same tensor with the opposite sign, and `verify_metrics.py` as it stands still checks against that older reading; Step 11 shows that for a spacetime with matter in it the choice is not a matter of taste, because only the standard contraction gives an expanding universe a positive energy density.
+The collection contracted on the last lower index before that, which is the same tensor with the opposite sign, and every entry and `verify_metrics.py` have since been brought over; Step 11 shows that for a spacetime with matter in it the choice is not a matter of taste, because only the standard contraction gives an expanding universe a positive energy density.
 
 Factors of $c$ and $G$ are kept explicit.
 The chart, here and everywhere else in the collection, is the one whose time coordinate is $x^0 = ct$.
@@ -581,7 +581,6 @@ Two notes for whoever lands that declaration.
 The reader in `verify_metrics.py` gives a declared function of a time coordinate a prime and a dot that both mean $d/d(ct)$, dividing the bare derivative by $c$, which is the convention of Step 1 and is why no published component of this entry carries an explicit $c$.
 The parser reaches a name like `a_1` through its prime spelling only, since its dot spelling accepts letters alone, so the published components are written with primes throughout.
 
-The checker as it stands contracts the Ricci tensor on the last lower index, the older convention.
-Against that reading this entry reports twenty five disagreements, which are the four components of each of the three Ricci variants, the same for the three Einstein variants, and the Ricci scalar, every one of them a pure sign.
-They are not errors in this entry: it is written with the standard contraction the captain settled on 18 September 2026, and it was verified against a copy of the checker carrying that contraction, where it agrees with sympy in every published value and every omitted one.
-When the checker is brought onto the standard contraction, this entry needs no change.
+The checker contracted the Ricci tensor on the last lower index when this entry landed, the older convention, and against that reading the entry reported twenty five disagreements: the four components of each of the three Ricci variants, the same for the three Einstein variants, and the Ricci scalar, every one of them a pure sign.
+None was an error in this entry, which is written with the standard contraction the captain settled on 18 September 2026.
+The checker was brought onto that contraction in the pass that flipped the older entries, and all twenty five went to zero with nothing here changed.

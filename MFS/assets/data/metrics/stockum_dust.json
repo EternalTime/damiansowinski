@@ -21,7 +21,7 @@
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "Cylindrical coordinates $(t, r, \\phi, z)$ are used. The parameter $R$ sets the scale of the dust cylinder; $r = R$ is the critical radius at which closed null curves first appear. The metric function $e^{-r^2/R^2}$ appears in the $g_{rr}$ and $g_{zz}$ components. The $g_{t\\phi}$ term off the diagonal encodes the frame dragging due to rotation. Units with $G = c = 1$ are used throughout.",
+  "convention": "Cylindrical coordinates $(t, r, \\phi, z)$ are used. The parameter $R$ sets the scale of the dust cylinder; $r = R$ is the critical radius at which closed null curves first appear. The metric function $e^{-r^2/R^2}$ appears in the $g_{rr}$ and $g_{zz}$ components. The $g_{t\\phi}$ term off the diagonal encodes the frame dragging due to rotation. The Ricci tensor is the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, on which the Einstein tensor is $G_{\\mu\\nu} = 8\\pi\\rho\\,u_\\mu u_\\nu$ for the comoving dust, of positive density $\\rho = \\dfrac{e^{r^2/R^2}}{2\\pi R^2}$. Units with $G = c = 1$ are used throughout.",
   "history": "Cornelius Lanczos wrote down the rotating dust cylinder in 1924, not long after Einstein's field equations had settled into their final form [lanczos1924]. He was not hunting for physical models. The solution describes an infinite cylinder of pressureless dust in rigid rotation, a geometry with no reasonable astrophysical realization, but exact solutions were scarce, and one took what one could get. It was largely set aside, its sting unnoticed.¶Willem Jacob van Stockum returned to it in 1937 and worked it through carefully, mapping the causal structure of the spacetime [vanstockum1937]. What he found was buried in the geometry all along: at $r = R$, where $R$ is the cylinder radius, a closed null curve first appears. Beyond that radius the spacetime harbors closed timelike curves, trajectories that loop back to their own past. A particle following such a curve would return to the event it started from, having never left the forward flow of its own proper time. The Lanczos-van Stockum spacetime was, by more than a decade, the first exact solution of general relativity known to contain them, predating Gödel's rotating universe of 1949.¶The solution remains a theoretical laboratory rather than a physical proposal, but as a precise arena for questions about causality, cosmic censorship, and the permissiveness of Einstein's equations, it has lost none of its bite [misner1973].",
   "references": [
     "lanczos1924",
@@ -1062,42 +1062,42 @@
                   "t",
                   "t"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2}}{R^2}"
+                "value": "\\dfrac{2e^{r^2/R^2}}{R^2}"
               },
               {
                 "indices": [
                   "t",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2} r^2}{R^3}"
+                "value": "\\dfrac{2e^{r^2/R^2} r^2}{R^3}"
               },
               {
                 "indices": [
                   "\\phi",
                   "t"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2} r^2}{R^3}"
+                "value": "\\dfrac{2e^{r^2/R^2} r^2}{R^3}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\dfrac{2}{R^2}"
+                "value": "\\dfrac{2}{R^2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2} r^2(r^2+R^2)}{R^4}"
+                "value": "\\dfrac{2e^{r^2/R^2} r^2(r^2+R^2)}{R^4}"
               },
               {
                 "indices": [
                   "z",
                   "z"
                 ],
-                "value": "-\\dfrac{2}{R^2}"
+                "value": "\\dfrac{2}{R^2}"
               }
             ]
           },
@@ -1109,35 +1109,35 @@
                   "t",
                   "t"
                 ],
-                "value": "\\dfrac{2e^{r^2/R^2}}{R^2}"
+                "value": "-\\dfrac{2e^{r^2/R^2}}{R^2}"
               },
               {
                 "indices": [
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{4e^{r^2/R^2} r^2}{R^3}"
+                "value": "-\\dfrac{4e^{r^2/R^2} r^2}{R^3}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2}}{R^2}"
+                "value": "\\dfrac{2e^{r^2/R^2}}{R^2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2}}{R^2}"
+                "value": "\\dfrac{2e^{r^2/R^2}}{R^2}"
               },
               {
                 "indices": [
                   "z",
                   "z"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2}}{R^2}"
+                "value": "\\dfrac{2e^{r^2/R^2}}{R^2}"
               }
             ]
           },
@@ -1149,87 +1149,54 @@
                   "t",
                   "t"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2}(r^2+R^2)}{R^4}"
+                "value": "\\dfrac{2e^{r^2/R^2}(r^2+R^2)}{R^4}"
               },
               {
                 "indices": [
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2e^{r^2/R^2}}{R^3}"
+                "value": "-\\dfrac{2e^{r^2/R^2}}{R^3}"
               },
               {
                 "indices": [
                   "\\phi",
                   "t"
                 ],
-                "value": "\\dfrac{2e^{r^2/R^2}}{R^3}"
+                "value": "-\\dfrac{2e^{r^2/R^2}}{R^3}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\dfrac{2e^{2r^2/R^2}}{R^2}"
+                "value": "\\dfrac{2e^{2r^2/R^2}}{R^2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2e^{r^2/R^2}}{r^2 R^2}"
+                "value": "\\dfrac{2e^{r^2/R^2}}{r^2 R^2}"
               },
               {
                 "indices": [
                   "z",
                   "z"
                 ],
-                "value": "-\\dfrac{2e^{2r^2/R^2}}{R^2}"
+                "value": "\\dfrac{2e^{2r^2/R^2}}{R^2}"
               }
             ]
           }
         }
       },
-      "ricci_scalar": "-\\dfrac{4e^{r^2/R^2}}{R^2}",
+      "ricci_scalar": "\\dfrac{4e^{r^2/R^2}}{R^2}",
       "kretschmann": "-\\dfrac{16e^{2r^2/R^2}(r^2-2R^2)}{R^6}",
       "einstein_tensor": {
         "default": "ll",
         "variants": {
           "ll": {
             "note": "G_{ab}",
-            "nonzero": [
-              {
-                "indices": [
-                  "t",
-                  "t"
-                ],
-                "value": "-\\dfrac{4e^{r^2/R^2}}{R^2}"
-              },
-              {
-                "indices": [
-                  "t",
-                  "\\phi"
-                ],
-                "value": "-\\dfrac{4e^{r^2/R^2} r^2}{R^3}"
-              },
-              {
-                "indices": [
-                  "\\phi",
-                  "t"
-                ],
-                "value": "-\\dfrac{4e^{r^2/R^2} r^2}{R^3}"
-              },
-              {
-                "indices": [
-                  "\\phi",
-                  "\\phi"
-                ],
-                "value": "-\\dfrac{4e^{r^2/R^2} r^4}{R^4}"
-              }
-            ]
-          },
-          "ul": {
-            "note": "G^a{}_b",
             "nonzero": [
               {
                 "indices": [
@@ -1244,6 +1211,39 @@
                   "\\phi"
                 ],
                 "value": "\\dfrac{4e^{r^2/R^2} r^2}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{4e^{r^2/R^2} r^2}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4e^{r^2/R^2} r^4}{R^4}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^a{}_b",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4e^{r^2/R^2}}{R^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4e^{r^2/R^2} r^2}{R^3}"
               }
             ]
           },
@@ -1255,28 +1255,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\dfrac{4e^{r^2/R^2}(r-R)(r+R)}{R^4}"
+                "value": "-\\dfrac{4e^{r^2/R^2}(r-R)(r+R)}{R^4}"
               },
               {
                 "indices": [
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{4e^{r^2/R^2} r^2(r-R)(r+R)}{R^5}"
+                "value": "-\\dfrac{4e^{r^2/R^2} r^2(r-R)(r+R)}{R^5}"
               },
               {
                 "indices": [
                   "\\phi",
                   "t"
                 ],
-                "value": "-\\dfrac{4e^{r^2/R^2}}{R^3}"
+                "value": "\\dfrac{4e^{r^2/R^2}}{R^3}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{4e^{r^2/R^2} r^2}{R^4}"
+                "value": "\\dfrac{4e^{r^2/R^2} r^2}{R^4}"
               }
             ]
           }

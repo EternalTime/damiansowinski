@@ -20,7 +20,7 @@
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "The coordinate $r$ is the areal radius, $r \\in [0, R]$, where $R$ is the stellar radius. The parameter $r_s = 2GM/c^2$ is the Schwarzschild radius of the star. The solution assumes a uniform (incompressible) perfect fluid and matches the exterior Schwarzschild metric at $r = R$. The interior is conformally flat, so its Weyl tensor vanishes identically, and the exterior it matches onto is not. Units with $c = 1$ are used throughout.",
+  "convention": "The coordinate $r$ is the areal radius, $r \\in [0, R]$, where $R$ is the stellar radius. The parameter $r_s = 2GM/c^2$ is the Schwarzschild radius of the star. The solution assumes a uniform (incompressible) perfect fluid and matches the exterior Schwarzschild metric at $r = R$. The interior is conformally flat, so its Weyl tensor vanishes identically, and the exterior it matches onto is not. The Ricci tensor is the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, on which the Einstein tensor is that of a fluid of positive density, $G^t{}_t = -\\dfrac{3r_s}{R^3} = -8\\pi G\\rho$. Units with $c = 1$ are used throughout.",
   "history": "Karl Schwarzschild's second paper on general relativity was also his last. Submitted to the Prussian Academy in February 1916, just months after his exterior solution, and while he was still serving on the Eastern Front, it gave the interior geometry of a static, spherically symmetric star composed of an incompressible perfect fluid of uniform density [schwarzschild1916b]. Schwarzschild would die in May of that year from an illness contracted at the front.¶Schwarzschild read his own exterior solution through an unusual coordinate. His original radial coordinate was defined so that the surface $r = r_s$ mapped to the coordinate origin, so the singularity appeared to him to sit there. The coordinate singularity we now associate with the Schwarzschild radius was, in his frame, sitting at the center of the geometry. Droste rederived the exterior solution in 1916 using the full coordinate range, making the structure of the solution considerably clearer [droste1917], though his paper was not published until 1917, almost certainly after Schwarzschild's death.¶The interior solution carries a sharp physical result: the central pressure of the star diverges as the stellar radius $R$ approaches $\\frac{9}{8}r_s$ from above. Since the solution assumes an incompressible fluid, with a fixed equation of state, this sets an absolute compactness limit for this particular matter model. Buchdahl later generalized the bound in 1959 to arbitrary equations of state, showing that no static, spherically symmetric star can have $R < \\frac{9}{4}GM/c^2$ [buchdahl1959]. The interior Schwarzschild metric remains a standard pedagogical example, one of the few exact solutions with matter that can be worked through by hand, illustrating gravitational redshift, hydrostatic equilibrium in GR, and the junction conditions connecting interior to exterior geometry.",
   "references": [
     "schwarzschild1916b",
@@ -765,28 +765,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}"
+                "value": "-\\frac{3 r_s\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "r_s\\!\\left(\\frac{2}{-R^3 + r^2 r_s} + \\frac{1}{-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}}\\right)"
+                "value": "-r_s\\!\\left(\\frac{2}{-R^3 + r^2 r_s} + \\frac{1}{-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}}\\right)"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\frac{r^2 r_s}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
+                "value": "-\\frac{r^2 r_s}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\frac{r^2 r_s \\sin^2\\theta}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
+                "value": "-\\frac{r^2 r_s \\sin^2\\theta}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
               }
             ]
           },
@@ -798,28 +798,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(R^3 - r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
+                "value": "-\\frac{3 r_s\\!\\left(R^3 - r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(-r^2 r_s + R\\!\\left(-5R^2 + 6R r_s + \\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
+                "value": "-\\frac{3 r_s\\!\\left(-r^2 r_s + R\\!\\left(-5R^2 + 6R r_s + \\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\frac{r_s}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
+                "value": "-\\frac{r_s}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\frac{r_s}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
+                "value": "-\\frac{r_s}{R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
               }
             ]
           },
@@ -831,34 +831,34 @@
                   "t",
                   "t"
                 ],
-                "value": "-\\frac{12 r_s\\!\\left(R^3 - r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{R^3\\!\\left(8R^3 + r^2 r_s - 9R^2 r_s\\right)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}"
+                "value": "\\frac{12 r_s\\!\\left(R^3 - r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{R^3\\!\\left(8R^3 + r^2 r_s - 9R^2 r_s\\right)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\frac{r_s\\!\\left(\\frac{r^2 r_s}{R^3} - 1\\right)}{R^3}\\!\\left(2 + \\frac{1}{1 - 3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}}}\\right)"
+                "value": "-\\frac{r_s\\!\\left(\\frac{r^2 r_s}{R^3} - 1\\right)}{R^3}\\!\\left(2 + \\frac{1}{1 - 3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}}}\\right)"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\frac{r_s}{r^2 R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
+                "value": "-\\frac{r_s}{r^2 R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\frac{r_s \\csc^2\\theta}{r^2 R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
+                "value": "-\\frac{r_s \\csc^2\\theta}{r^2 R^3}\\!\\left(\\frac{1}{3R\\sqrt{\\frac{R-r_s}{R^3-r^2 r_s}} - 1} - 2\\right)"
               }
             ]
           }
         }
       },
-      "ricci_scalar": "\\frac{6 r_s\\!\\left(9\\sqrt{R^5(R-r_s)} + 9 r_s\\sqrt{R^4 - r^2 R r_s} - 11\\sqrt{R^6 - r^2 R^3 r_s} + r^2 r_s\\!\\left(2\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 9\\sqrt{1 - \\frac{r_s}{R}}\\right)\\right)}{R^3\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)}",
+      "ricci_scalar": "-\\frac{6 r_s\\!\\left(9\\sqrt{R^5(R-r_s)} + 9 r_s\\sqrt{R^4 - r^2 R r_s} - 11\\sqrt{R^6 - r^2 R^3 r_s} + r^2 r_s\\!\\left(2\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 9\\sqrt{1 - \\frac{r_s}{R}}\\right)\\right)}{R^3\\!\\left(R^3 - r^2 r_s - 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)}",
       "kretschmann": "\\frac{12 r_s^2\\!\\left(81R^4(R-r_s)^2 - 9R^2(R-r_s)(R^3-r^2 r_s) + 6R\\sqrt{R-r_s}\\,(R^3-r^2 r_s)^{3/2} + 2(R^3-r^2 r_s)^2\\right)}{R^{12}\\!\\left(8 + \\frac{(r^2 - 9R^2)r_s}{R^3}\\right)^{\\!2}}",
       "einstein_tensor": {
         "default": "ll",
@@ -871,28 +871,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(-10R^3 + r^2 r_s + 9R^2 r_s + 6R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}"
+                "value": "-\\frac{3 r_s\\!\\left(-10R^3 + r^2 r_s + 9R^2 r_s + 6R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{4R^6}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{(R^3 - r^2 r_s)(8R^3 + r^2 r_s - 9R^2 r_s)}"
+                "value": "-\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{(R^3 - r^2 r_s)(8R^3 + r^2 r_s - 9R^2 r_s)}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\frac{3 r^2 r_s\\!\\left(-R^3 + r^2 r_s + R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{R^3\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}"
+                "value": "-\\frac{3 r^2 r_s\\!\\left(-R^3 + r^2 r_s + R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{R^3\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\frac{3 r^2 r_s\\!\\left(-R^3 + r^2 r_s + R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{R^3\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}"
+                "value": "-\\frac{3 r^2 r_s\\!\\left(-R^3 + r^2 r_s + R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\sin^2\\theta}{R^3\\!\\left(-R^3 + r^2 r_s + 3R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}"
               }
             ]
           },
@@ -904,28 +904,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\frac{3 r_s}{R^3}"
+                "value": "-\\frac{3 r_s}{R^3}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
+                "value": "-\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
+                "value": "-\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
+                "value": "-\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^6 + r^2 R^3 r_s - 9R^5 r_s}"
               }
             ]
           },
@@ -937,28 +937,28 @@
                   "t",
                   "t"
                 ],
-                "value": "-\\frac{12 r_s}{R^3\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}"
+                "value": "\\frac{12 r_s}{R^3\\!\\left(\\sqrt{1 - \\frac{r^2 r_s}{R^3}} - 3\\sqrt{1 - \\frac{r_s}{R}}\\right)^{\\!2}}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\frac{3 r_s(-R^3 + r^2 r_s)\\!\\left(-2R^3 - r^2 r_s + 3R^2 r_s + 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^9 + r^2 R^6 r_s - 9R^8 r_s}"
+                "value": "-\\frac{3 r_s(-R^3 + r^2 r_s)\\!\\left(-2R^3 - r^2 r_s + 3R^2 r_s + 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{8R^9 + r^2 R^6 r_s - 9R^8 r_s}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{r^2 R^3\\!\\left(8R^3 + r^2 r_s - 9R^2 r_s\\right)}"
+                "value": "-\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)}{r^2 R^3\\!\\left(8R^3 + r^2 r_s - 9R^2 r_s\\right)}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\csc^2\\theta}{r^2 R^3\\!\\left(8R^3 + r^2 r_s - 9R^2 r_s\\right)}"
+                "value": "-\\frac{3 r_s\\!\\left(2R^3 + r^2 r_s - 3R^2 r_s - 2R\\sqrt{(R-r_s)(R^3-r^2 r_s)}\\right)\\csc^2\\theta}{r^2 R^3\\!\\left(8R^3 + r^2 r_s - 9R^2 r_s\\right)}"
               }
             ]
           }

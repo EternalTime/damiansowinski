@@ -22,7 +22,7 @@
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "The time coordinate is $ct$. The coordinate $r$ is the proper radial distance, $r \\in (-\\infty,\\infty)$, with the wormhole throat at $r = 0$. The parameter $\\ell > 0$ is the throat radius.",
+  "convention": "The time coordinate is $ct$. The coordinate $r$ is the proper radial distance, $r \\in (-\\infty,\\infty)$, with the wormhole throat at $r = 0$. The parameter $\\ell > 0$ is the throat radius. The Ricci tensor is the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, on which $G_{tt} = -\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}$ is negative, which is the negative energy density the throat needs to stay open.",
   "history": "In 1973 the same geometry surfaced twice, on two sides of an iron curtain, in two papers that knew nothing of each other. Homer Ellis, working at the University of Colorado, wrote down what he called a \"drainhole\", a solution to the Einstein equations coupled to a massless phantom scalar field, characterized by a throat connecting two asymptotically flat regions [ellis1973]. Kirill Bronnikov, working independently in the Soviet Union, found the same solution the same year by a different route [bronnikov1973]. Neither author was thinking primarily about traversability; that framing would come fifteen years later.¶What Ellis and Bronnikov had found was remarkable on its own terms. The metric is geodesically complete: there is no singularity anywhere, and the two asymptotically flat ends are joined by a smooth throat of radius $\\ell$. The price is a phantom scalar field, a matter source whose kinetic term carries the wrong sign and violates the null energy condition. This was the first clear instance of what Morris and Thorne would later identify as the exotic matter requirement [morris1988]: the wormhole geometry is geometrically clean but physically costly.¶The solution sat quietly in the literature until the late 1980s, when the traversable wormhole program brought it renewed attention [visser1995]. It is now a standard example in graduate GR, simple enough to work with by hand, sharp enough to expose the essential tension between wormhole geometry and the energy conditions: the geometry asks for a bridge, and the field equations send the bill in exotic matter.",
   "references": [
     "ellis1973",
@@ -466,7 +466,7 @@
                   "r",
                   "r"
                 ],
-                "value": "2\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "-2\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               }
             ]
           },
@@ -478,7 +478,7 @@
                   "r",
                   "r"
                 ],
-                "value": "2\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "-2\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               }
             ]
           },
@@ -490,13 +490,13 @@
                   "r",
                   "r"
                 ],
-                "value": "2\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "-2\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               }
             ]
           }
         }
       },
-      "ricci_scalar": "R = 2\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}",
+      "ricci_scalar": "R = -2\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}",
       "kretschmann": "K = 12\\dfrac{\\ell^4}{(r^2+\\ell^2)^4}",
       "einstein_tensor": {
         "default": "ll",
@@ -509,28 +509,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "-\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "-\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{\\ell^2}{(r^2+\\ell^2)^3}"
+                "value": "\\dfrac{\\ell^2}{(r^2+\\ell^2)^3}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\ell^2\\csc^2\\theta}{(r^2+\\ell^2)^3}"
+                "value": "\\dfrac{\\ell^2\\csc^2\\theta}{(r^2+\\ell^2)^3}"
               }
             ]
           },
@@ -542,28 +542,28 @@
                   "t",
                   "t"
                 ],
-                "value": "-\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "-\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               }
             ]
           },
@@ -575,28 +575,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "-\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
+                "value": "-\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{\\ell^2}{r^2+\\ell^2}"
+                "value": "\\dfrac{\\ell^2}{r^2+\\ell^2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
+                "value": "\\dfrac{\\ell^2}{r^2+\\ell^2}\\sin^2\\theta"
               }
             ]
           }

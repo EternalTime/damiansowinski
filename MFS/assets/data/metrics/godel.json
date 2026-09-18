@@ -21,7 +21,7 @@
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "Coordinates $(t, x, y, z)$ all range over $\\mathbb{R}$. The parameter $\\omega$ is the angular velocity of the dust. Units with $G = c = 1$ are used throughout.",
+  "convention": "Coordinates $(t, x, y, z)$ all range over $\\mathbb{R}$. The parameter $\\omega$ is the angular velocity of the dust. The Ricci tensor is the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, on which the published values are $R_{\\mu\\nu} = 2\\omega^2u_\\mu u_\\nu$ with $u^\\mu$ the four velocity of the dust. Units with $G = c = 1$ are used throughout.",
   "history": "Kurt Gödel presented his rotating universe in 1949 as a contribution to a volume honoring Einstein's seventieth birthday: a gift, as it were, that unsettled the honoree [godel1949]. The solution describes a universe filled with pressureless dust in uniform rotation, homogeneous in space and time, with no expansion. Gödel built on the Lanczos-van Stockum solution: by introducing a negative cosmological constant tuned to the dust density, he caused the light cones to tip as one moves away from the rotation axis, until at a critical radius they become tangent to a closed null curve. Beyond that radius, closed timelike curves exist through every event, trajectories that loop back to their own past.¶A traveler following such a curve would return to the same event they departed from, having aged normally along the way. Einstein was troubled. He had hoped that general relativity would enforce some analog of absolute cosmic time; Gödel's solution demonstrated that the field equations permit no such thing in general.¶The Gödel universe is not a serious model of the cosmos we inhabit, since it does not expand and we observe expansion, but it remains one of the most important exact solutions in the theory. It is the solution that put the causal structure of spacetime on trial, and the field equations declined to convict.",
   "references": [
     "godel1949"
@@ -700,28 +700,28 @@
                   "t",
                   "t"
                 ],
-                "value": "-1"
+                "value": "1"
               },
               {
                 "indices": [
                   "t",
                   "y"
                 ],
-                "value": "-e^x"
+                "value": "e^x"
               },
               {
                 "indices": [
                   "y",
                   "t"
                 ],
-                "value": "-e^x"
+                "value": "e^x"
               },
               {
                 "indices": [
                   "y",
                   "y"
                 ],
-                "value": "-e^{2x}"
+                "value": "e^{2x}"
               }
             ]
           },
@@ -733,14 +733,14 @@
                   "t",
                   "t"
                 ],
-                "value": "2\\omega^2"
+                "value": "-2\\omega^2"
               },
               {
                 "indices": [
                   "t",
                   "y"
                 ],
-                "value": "2e^x\\omega^2"
+                "value": "-2e^x\\omega^2"
               }
             ]
           },
@@ -752,13 +752,13 @@
                   "t",
                   "t"
                 ],
-                "value": "-4\\omega^4"
+                "value": "4\\omega^4"
               }
             ]
           }
         }
       },
-      "ricci_scalar": "R = 2\\omega^2",
+      "ricci_scalar": "R = -2\\omega^2",
       "kretschmann": "K = 12\\omega^4",
       "einstein_tensor": {
         "default": "ll",
@@ -771,42 +771,42 @@
                   "t",
                   "t"
                 ],
-                "value": "-\\dfrac{1}{2}"
+                "value": "\\dfrac{1}{2}"
               },
               {
                 "indices": [
                   "t",
                   "y"
                 ],
-                "value": "-\\dfrac{e^x}{2}"
+                "value": "\\dfrac{e^x}{2}"
               },
               {
                 "indices": [
                   "y",
                   "t"
                 ],
-                "value": "-\\dfrac{e^x}{2}"
+                "value": "\\dfrac{e^x}{2}"
               },
               {
                 "indices": [
                   "x",
                   "x"
                 ],
-                "value": "-\\dfrac{1}{2}"
+                "value": "\\dfrac{1}{2}"
               },
               {
                 "indices": [
                   "y",
                   "y"
                 ],
-                "value": "-\\dfrac{3e^{2x}}{4}"
+                "value": "\\dfrac{3e^{2x}}{4}"
               },
               {
                 "indices": [
                   "z",
                   "z"
                 ],
-                "value": "-\\dfrac{1}{2}"
+                "value": "\\dfrac{1}{2}"
               }
             ]
           },
@@ -818,35 +818,35 @@
                   "t",
                   "t"
                 ],
-                "value": "\\omega^2"
+                "value": "-\\omega^2"
               },
               {
                 "indices": [
                   "t",
                   "y"
                 ],
-                "value": "2e^x\\omega^2"
+                "value": "-2e^x\\omega^2"
               },
               {
                 "indices": [
                   "x",
                   "x"
                 ],
-                "value": "-\\omega^2"
+                "value": "\\omega^2"
               },
               {
                 "indices": [
                   "y",
                   "y"
                 ],
-                "value": "-\\omega^2"
+                "value": "\\omega^2"
               },
               {
                 "indices": [
                   "z",
                   "z"
                 ],
-                "value": "-\\omega^2"
+                "value": "\\omega^2"
               }
             ]
           },
@@ -858,42 +858,42 @@
                   "t",
                   "t"
                 ],
-                "value": "2\\omega^4"
+                "value": "-2\\omega^4"
               },
               {
                 "indices": [
                   "t",
                   "y"
                 ],
-                "value": "8\\omega^4\\cosh x"
+                "value": "-8\\omega^4\\cosh x"
               },
               {
                 "indices": [
                   "y",
                   "t"
                 ],
-                "value": "-4e^{-x}\\omega^4"
+                "value": "4e^{-x}\\omega^4"
               },
               {
                 "indices": [
                   "x",
                   "x"
                 ],
-                "value": "-2\\omega^4"
+                "value": "2\\omega^4"
               },
               {
                 "indices": [
                   "y",
                   "y"
                 ],
-                "value": "4(-2 - e^{-2x})\\omega^4"
+                "value": "4(2 + e^{-2x})\\omega^4"
               },
               {
                 "indices": [
                   "z",
                   "z"
                 ],
-                "value": "-2\\omega^4"
+                "value": "2\\omega^4"
               }
             ]
           }

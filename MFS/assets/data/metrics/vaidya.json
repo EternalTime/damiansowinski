@@ -22,7 +22,7 @@
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "Coordinates are $(u, r, \\theta, \\phi)$ in the outgoing chart and $(v, r, \\theta, \\phi)$ in the ingoing one, with $u$ the retarded time and $v$ the advanced time, both carrying dimensions of time, and $r$ the areal radius, so that a sphere of coordinate radius $r$ has area $4\\pi r^2$. Factors of $G$ and $c$ are kept explicit; the mass function $m$ depends on the null time alone, and holding it constant returns Schwarzschild with $r_s = 2Gm/c^2$. Components are printed in the chart $x^0 = cu$, or $x^0 = cv$, so a dot is a derivative with respect to that chart coordinate: $\\dot{m} = c^{-1}dm/du$ is a mass per unit length, and the dots in the geodesic equations are $d(cu)/d\\lambda$ and the like, which is what makes every term of an equation carry the dimensions of its left hand side. The luminosity the star radiates to infinity is $L = -c^2 dm/du = -c^3\\dot{m}$. The Ricci tensor is contracted on the last lower index, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\nu\\alpha}$, as everywhere in this collection, which is the opposite sign from the commoner contraction and makes the field equations read $G_{\\mu\\nu} = -8\\pi G\\,T_{\\mu\\nu}/c^4$. This spacetime is not a vacuum: its stress energy is pure radiation, $T_{\\mu\\nu} = -\\dfrac{c^2\\dot{m}}{4\\pi r^2}k_\\mu k_\\nu$ in the outgoing chart and $T_{\\mu\\nu} = +\\dfrac{c^2\\dot{m}}{4\\pi r^2}k_\\mu k_\\nu$ in the ingoing one, with $k_\\mu = -\\partial_\\mu(cu)$ or $k_\\mu = -\\partial_\\mu(cv)$ the null one form the radiation travels along, so the Ricci and Einstein tensors vanish only where $\\dot{m}$ does.",
+  "convention": "Coordinates are $(u, r, \\theta, \\phi)$ in the outgoing chart and $(v, r, \\theta, \\phi)$ in the ingoing one, with $u$ the retarded time and $v$ the advanced time, both carrying dimensions of time, and $r$ the areal radius, so that a sphere of coordinate radius $r$ has area $4\\pi r^2$. Factors of $G$ and $c$ are kept explicit; the mass function $m$ depends on the null time alone, and holding it constant returns Schwarzschild with $r_s = 2Gm/c^2$. Components are printed in the chart $x^0 = cu$, or $x^0 = cv$, so a dot is a derivative with respect to that chart coordinate: $\\dot{m} = c^{-1}dm/du$ is a mass per unit length, and the dots in the geodesic equations are $d(cu)/d\\lambda$ and the like, which is what makes every term of an equation carry the dimensions of its left hand side. The luminosity the star radiates to infinity is $L = -c^2 dm/du = -c^3\\dot{m}$. The Ricci tensor is the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, as everywhere in this collection, so the field equations read $G_{\\mu\\nu} = 8\\pi G\\,T_{\\mu\\nu}/c^4$. This spacetime is not a vacuum: its stress energy is pure radiation, $T_{\\mu\\nu} = -\\dfrac{c^2\\dot{m}}{4\\pi r^2}k_\\mu k_\\nu$ in the outgoing chart and $T_{\\mu\\nu} = +\\dfrac{c^2\\dot{m}}{4\\pi r^2}k_\\mu k_\\nu$ in the ingoing one, with $k_\\mu = -\\partial_\\mu(cu)$ or $k_\\mu = -\\partial_\\mu(cv)$ the null one form the radiation travels along, so the Ricci and Einstein tensors vanish only where $\\dot{m}$ does.",
   "history": "Schwarzschild's solution describes the empty space outside a static star, but a star that shines is not surrounded by empty space; it is surrounded by the energy it is pouring out. In 1951 the Indian physicist Prahalad Chunilal Vaidya found the metric for exactly this situation: the gravitational field outside a radiating spherical mass [vaidya1951]. The trick is disarmingly simple in hindsight. Take the Schwarzschild solution and let the mass $M$, instead of being constant, become a function $m(u)$ of retarded time, the time labelling outgoing light fronts, so that as radiation streams away to infinity the mass the metric reports steadily decreases. By Birkhoff's theorem a truly empty spherical exterior must be static Schwarzschild; Vaidya's is not empty, and so it need not be static.¶What fills it is null dust: a flux of pure radiation, energy streaming along light rays with no rest mass of its own. The solution comes in two faces, an outgoing version for a star losing energy and an ingoing version for one accreting it. In 1965 Richard Lindquist, R. A. Schwartz, and Charles Misner clarified what the dependence on time means physically, showing that $-dm/du$ is precisely the power the star radiates, tied by redshift and Doppler factors to the luminosity a moving observer would actually measure [lindquist1965].¶Because it is the simplest dynamical black hole spacetime with matter in it, the Vaidya metric became a standard laboratory. Letting the mass decrease models, crudely, the evaporation of a black hole; letting it grow models accretion. Most consequentially, it became a testing ground for cosmic censorship, the conjecture that gravitational collapse always hides its singularities behind horizons. Achilles Papapetrou showed that the collapse of ingoing null dust can instead produce a naked singularity, visible to the outside universe, one of the first concrete counterexamples to the conjecture [papapetrou1985]. A metric built to describe a shining star turned out to be one of the sharpest probes of when general relativity keeps its singularities decently out of sight.",
   "references": [
     "vaidya1951",
@@ -952,7 +952,7 @@
                   "u",
                   "u"
                 ],
-                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           },
@@ -964,7 +964,7 @@
                   "r",
                   "u"
                 ],
-                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           },
@@ -976,7 +976,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           }
@@ -995,7 +995,7 @@
                   "u",
                   "u"
                 ],
-                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           },
@@ -1007,7 +1007,7 @@
                   "r",
                   "u"
                 ],
-                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           },
@@ -1019,7 +1019,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           }
@@ -2564,7 +2564,7 @@
                   "v",
                   "v"
                 ],
-                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           },
@@ -2576,7 +2576,7 @@
                   "r",
                   "v"
                 ],
-                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           },
@@ -2588,7 +2588,7 @@
                   "r",
                   "r"
                 ],
-                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           }
@@ -2607,7 +2607,7 @@
                   "v",
                   "v"
                 ],
-                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           },
@@ -2619,7 +2619,7 @@
                   "r",
                   "v"
                 ],
-                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           },
@@ -2631,7 +2631,7 @@
                   "r",
                   "r"
                 ],
-                "value": "-\\dfrac{2G\\dot{m}}{c^2 r^2}"
+                "value": "\\dfrac{2G\\dot{m}}{c^2 r^2}"
               }
             ]
           }

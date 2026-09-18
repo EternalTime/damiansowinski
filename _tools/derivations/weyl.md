@@ -20,22 +20,16 @@ $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sig
 
 which is what the published Riemann components are in.
 
-The collection contracts the Ricci tensor on the last lower index,
+The Ricci tensor is the standard contraction on the first lower index,
 
-$$R_{\mu\nu} = R^\alpha{}_{\mu\nu\alpha},$$
+$$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-which is the opposite sign from the commoner $R^\alpha{}_{\mu\alpha\nu}$.
-Every published `ricci_tensor`, `einstein_tensor` and `ricci_scalar` in the collection is on that convention.
+which is the one the signature asks for and the one every published `ricci_tensor`, `einstein_tensor` and `ricci_scalar` in the collection is in.
 
-The Weyl tensor is the one exception, and the reason is worth stating carefully because it is where a sign can be lost.
-Weyl is defined by subtracting from Riemann the parts of Riemann that its own traces carry.
-Those traces are a property of the Riemann tensor and do not care which of the two contractions the collection has chosen to name Ricci.
-So throughout this document the trace that appears in the Weyl formula is written
-
-$$\widetilde{R}_{\mu\nu} \equiv R^\alpha{}_{\mu\alpha\nu} = -R_{\mu\nu}, \qquad \widetilde{R} \equiv g^{\mu\nu}\widetilde{R}_{\mu\nu} = -R,$$
-
-with $R_{\mu\nu}$ and $R$ the published ones.
-Getting this backwards flips the sign of every trace term and therefore of the whole correction.
+The Weyl tensor wants exactly that trace, because Weyl is defined by subtracting from Riemann the parts of Riemann that its own traces carry, and those traces are a property of the Riemann tensor.
+So the $R_{\mu\nu}$ and $R$ appearing in the Weyl formula below are the published ones, with no sign to keep track of.
+The collection contracted on the last index before 18 September 2026, which is minus this, and the document that reads oddest if that is forgotten is this one: on the older convention the trace in the Weyl formula was the negative of the published Ricci, and every value below was already written for the trace rather than for the published tensor.
+The values are therefore unchanged by the move; only the sign relating them to the published Ricci has gone away.
 
 The chart is $x^0 = cT$, as everywhere else in the collection.
 Of the five entries here, only `frw/comoving_spherical` declares a coordinate that carries dimensions of time, and its Weyl tensor is zero, so no factor of $c$ survives anywhere in this document.
@@ -47,18 +41,18 @@ In the other four the chart does not rescale the time coordinate at all, Godel's
 
 In $n$ dimensions the Weyl tensor is
 
-$$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \frac{1}{n-2}\left(g_{\mu\rho}\widetilde{R}_{\sigma\nu} - g_{\mu\sigma}\widetilde{R}_{\rho\nu} - g_{\nu\rho}\widetilde{R}_{\sigma\mu} + g_{\nu\sigma}\widetilde{R}_{\rho\mu}\right) + \frac{\widetilde{R}}{(n-1)(n-2)}\left(g_{\mu\rho}g_{\sigma\nu} - g_{\mu\sigma}g_{\rho\nu}\right),$$
+$$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \frac{1}{n-2}\left(g_{\mu\rho}R_{\sigma\nu} - g_{\mu\sigma}R_{\rho\nu} - g_{\nu\rho}R_{\sigma\mu} + g_{\nu\sigma}R_{\rho\mu}\right) + \frac{R}{(n-1)(n-2)}\left(g_{\mu\rho}g_{\sigma\nu} - g_{\mu\sigma}g_{\rho\nu}\right),$$
 
 and in the four dimensions every entry here has, the two denominators are $2$ and $6$:
 
-$$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \tfrac{1}{2}\left(g_{\mu\rho}\widetilde{R}_{\sigma\nu} - g_{\mu\sigma}\widetilde{R}_{\rho\nu} - g_{\nu\rho}\widetilde{R}_{\sigma\mu} + g_{\nu\sigma}\widetilde{R}_{\rho\mu}\right) + \tfrac{1}{6}\widetilde{R}\left(g_{\mu\rho}g_{\sigma\nu} - g_{\mu\sigma}g_{\rho\nu}\right).$$
+$$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \tfrac{1}{2}\left(g_{\mu\rho}R_{\sigma\nu} - g_{\mu\sigma}R_{\rho\nu} - g_{\nu\rho}R_{\sigma\mu} + g_{\nu\sigma}R_{\rho\mu}\right) + \tfrac{1}{6}R\left(g_{\mu\rho}g_{\sigma\nu} - g_{\mu\sigma}g_{\rho\nu}\right).$$
 
-This is the formula `verify_metrics.py` uses, in `Geometry.weyl_llll`, with $\widetilde{R}_{\mu\nu}$ supplied by `ricci_trace_ll`.
+This is the formula `verify_metrics.py` uses, in `Geometry.weyl_llll`, with $R_{\mu\nu}$ supplied by `ricci_ll`.
 
 Three consequences are used repeatedly below.
 
 **The correction is not small.**
-$C = R$ holds only when $\widetilde{R}_{\mu\nu} = 0$, that is, only in a Ricci flat spacetime.
+$C = R$ holds only when $R_{\mu\nu} = 0$, that is, only in a Ricci flat spacetime.
 Of the five entries here, not one is Ricci flat: FRW and the interior Schwarzschild solution are filled with a fluid, Godel and Lanczos-van Stockum with rotating dust, and Reissner-Nordstrom with an electromagnetic field.
 The Schwarzschild entry is one where $C = R$ genuinely holds, because it is a vacuum, and copying that relation into an entry which is not a vacuum is exactly the mistake being corrected here.
 
@@ -206,13 +200,13 @@ which is the published value.
 Setting $r_q = 0$ gives $-r_s/r^3$, which is what the Schwarzschild entry publishes for the same component, as it must, since Schwarzschild is Ricci flat and there $C = R$.
 
 The same answer falls out of the trace removal directly, which is the shorter check.
-Reissner-Nordstrom has $R = 0$, so the whole $\widetilde{R}$ term of Step 2 drops, and with $\widetilde{R}_{\mu\nu} = -R_{\mu\nu}$ the entry's own published Ricci gives
+Reissner-Nordstrom has $R = 0$, so the whole $R$ term of Step 2 drops, and the entry's own published Ricci gives
 
-$$\widetilde{R}_{tt} = \frac{r_q^2\Delta}{r^6}, \qquad \widetilde{R}_{rr} = -\frac{r_q^2}{r^2\Delta}.$$
+$$R_{tt} = \frac{r_q^2\Delta}{r^6}, \qquad R_{rr} = -\frac{r_q^2}{r^2\Delta}.$$
 
 Since $g_{tr} = 0$, only two of the four correction terms survive, and both come to the same thing:
 
-$$g_{tt}\widetilde{R}_{rr} = \left(-\frac{\Delta}{r^2}\right)\left(-\frac{r_q^2}{r^2\Delta}\right) = \frac{r_q^2}{r^4}, \qquad g_{rr}\widetilde{R}_{tt} = \frac{r^2}{\Delta}\cdot\frac{r_q^2\Delta}{r^6} = \frac{r_q^2}{r^4}.$$
+$$g_{tt}R_{rr} = \left(-\frac{\Delta}{r^2}\right)\left(-\frac{r_q^2}{r^2\Delta}\right) = \frac{r_q^2}{r^4}, \qquad g_{rr}R_{tt} = \frac{r^2}{\Delta}\cdot\frac{r_q^2\Delta}{r^6} = \frac{r_q^2}{r^4}.$$
 
 So the correction is $\tfrac{1}{2}\left(2r_q^2/r^4\right) = r_q^2/r^4$, and
 
@@ -223,12 +217,12 @@ The published Riemann component is the entry's own, so this is a check on the en
 This also says which 16 components the copy got right by luck.
 The correction in the $t\theta t\theta$, $t\phi t\phi$, $r\theta r\theta$ and $r\phi r\phi$ classes is a difference of two equal terms and vanishes, for instance
 
-$$\tfrac{1}{2}\left(g_{tt}\widetilde{R}_{\theta\theta} + g_{\theta\theta}\widetilde{R}_{tt}\right) = \tfrac{1}{2}\left(-\frac{\Delta}{r^2}\cdot\frac{r_q^2}{r^2} + r^2\cdot\frac{r_q^2\Delta}{r^6}\right) = 0,$$
+$$\tfrac{1}{2}\left(g_{tt}R_{\theta\theta} + g_{\theta\theta}R_{tt}\right) = \tfrac{1}{2}\left(-\frac{\Delta}{r^2}\cdot\frac{r_q^2}{r^2} + r^2\cdot\frac{r_q^2\Delta}{r^6}\right) = 0,$$
 
 so in those 16 slots Weyl and Riemann agree and the copy was harmless.
 In the other two classes it does not vanish: the $trtr$ class is off by $r_q^2/r^4$, as above, and the $\theta\phi\theta\phi$ class by
 
-$$\tfrac{1}{2}\left(g_{\theta\theta}\widetilde{R}_{\phi\phi} + g_{\phi\phi}\widetilde{R}_{\theta\theta}\right) = r_q^2\sin^2\theta,$$
+$$\tfrac{1}{2}\left(g_{\theta\theta}R_{\phi\phi} + g_{\phi\phi}R_{\theta\theta}\right) = r_q^2\sin^2\theta,$$
 
 which turns the entry's $R_{\theta\phi\theta\phi} = \left(rr_s - r_q^2\right)\sin^2\theta$ into $C_{\theta\phi\theta\phi} = \left(rr_s - 2r_q^2\right)\sin^2\theta$.
 Those two classes are the 8 corrected components of each variant.
@@ -257,26 +251,26 @@ with the entry's published metric, inverse metric and Ricci tensor
 
 $$g_{tt} = -\frac{1}{2\omega^2}, \quad g_{ty} = -\frac{e^x}{2\omega^2}, \quad g_{xx} = g_{zz} = \frac{1}{2\omega^2}, \quad g_{yy} = -\frac{e^{2x}}{4\omega^2},$$
 
-$$R_{tt} = -1, \quad R_{ty} = -e^x, \quad R_{yy} = -e^{2x}, \quad R = 2\omega^2.$$
+$$R_{tt} = 1, \quad R_{ty} = e^x, \quad R_{yy} = e^{2x}, \quad R = -2\omega^2,$$
 
-So the traces the Weyl formula wants are $\widetilde{R}_{tt} = 1$, $\widetilde{R}_{ty} = e^x$, $\widetilde{R}_{yy} = e^{2x}$ and $\widetilde{R} = -2\omega^2$, and every other component of $\widetilde{R}_{\mu\nu}$ is zero.
+and every other component of $R_{\mu\nu}$ is zero.
 It is rank one, as the Ricci tensor of dust has to be: with the dust four velocity $u^\mu = \sqrt{2}\,\omega\,\delta^\mu_t$, which is a unit vector because $g_{tt} = -\dfrac{1}{2\omega^2}$, its covariant form is $u_\mu = -\dfrac{1}{\sqrt{2}\,\omega}\left(1,0,e^x,0\right)$ and
 
-$$\widetilde{R}_{\mu\nu} = 2\omega^2u_\mu u_\nu,$$
+$$R_{\mu\nu} = 2\omega^2u_\mu u_\nu,$$
 
-which reproduces all three components and, contracted with $u^\mu u^\nu = -1$, gives $\widetilde{R} = -2\omega^2$ as well.
-In particular $\widetilde{R}_{xx} = \widetilde{R}_{zz} = 0$, which is what makes the two worked components below so short.
+which reproduces all three components and, contracted with $u^\mu u^\nu = -1$, gives $R = -2\omega^2$ as well.
+In particular $R_{xx} = R_{zz} = 0$, which is what makes the two worked components below so short.
 
 **The published component of the audit.**
 Take $\mu\nu\rho\sigma = txtx$.
 The correction term is
 
-$$\tfrac{1}{2}\left(g_{tt}\widetilde{R}_{xx} - g_{tx}\widetilde{R}_{tx} - g_{xt}\widetilde{R}_{xt} + g_{xx}\widetilde{R}_{tt}\right) = \tfrac{1}{2}\left(0 - 0 - 0 + \frac{1}{2\omega^2}\cdot 1\right) = \frac{1}{4\omega^2},$$
+$$\tfrac{1}{2}\left(g_{tt}R_{xx} - g_{tx}R_{tx} - g_{xt}R_{xt} + g_{xx}R_{tt}\right) = \tfrac{1}{2}\left(0 - 0 - 0 + \frac{1}{2\omega^2}\cdot 1\right) = \frac{1}{4\omega^2},$$
 
-since $\widetilde{R}_{xx} = 0$ and $g_{tx} = 0$.
+since $R_{xx} = 0$ and $g_{tx} = 0$.
 The trace term is
 
-$$\tfrac{1}{6}\widetilde{R}\left(g_{tt}g_{xx} - g_{tx}g_{xt}\right) = \tfrac{1}{6}\left(-2\omega^2\right)\left(-\frac{1}{2\omega^2}\cdot\frac{1}{2\omega^2}\right) = \frac{1}{12\omega^2}.$$
+$$\tfrac{1}{6}R\left(g_{tt}g_{xx} - g_{tx}g_{xt}\right) = \tfrac{1}{6}\left(-2\omega^2\right)\left(-\frac{1}{2\omega^2}\cdot\frac{1}{2\omega^2}\right) = \frac{1}{12\omega^2}.$$
 
 The entry's own Riemann tensor has $R_{txtx} = \dfrac{1}{4\omega^2}$, so
 
@@ -288,9 +282,9 @@ The correction happens to cancel the Riemann term exactly here, so the whole of 
 **A component the copy did not publish at all.**
 Take $tztz$.
 The entry's Riemann tensor has no $R_{tztz}$, and correctly so: it is zero.
-But $\widetilde{R}_{zz} = 0$ and $g_{tz} = 0$ give the same correction as before,
+But $R_{zz} = 0$ and $g_{tz} = 0$ give the same correction as before,
 
-$$\tfrac{1}{2}g_{zz}\widetilde{R}_{tt} = \frac{1}{4\omega^2}, \qquad \tfrac{1}{6}\widetilde{R}\,g_{tt}g_{zz} = \frac{1}{12\omega^2},$$
+$$\tfrac{1}{2}g_{zz}R_{tt} = \frac{1}{4\omega^2}, \qquad \tfrac{1}{6}R\,g_{tt}g_{zz} = \frac{1}{12\omega^2},$$
 
 so
 
@@ -326,22 +320,21 @@ The block is dimensionally uniform: with $x$, $y$, $z$ and $t$ all dimensionless
 
 $$ds^2 = -dt^2 - \frac{2r^2}{R}\,dt\,d\phi + e^{-r^2/R^2}dr^2 + r^2\left(1-\frac{r^2}{R^2}\right)d\phi^2 + e^{-r^2/R^2}dz^2,$$
 
-the rigidly rotating dust cylinder, with the entry's published traces
+the rigidly rotating dust cylinder, with the entry's published Ricci tensor
 
-$$R_{tt} = -\frac{2E}{R^2}, \quad R_{t\phi} = -\frac{2Er^2}{R^3}, \quad R_{rr} = R_{zz} = -\frac{2}{R^2}, \quad R_{\phi\phi} = -\frac{2Er^2\left(r^2+R^2\right)}{R^4}, \quad R = -\frac{4E}{R^2},$$
+$$R_{tt} = \frac{2E}{R^2}, \quad R_{t\phi} = \frac{2Er^2}{R^3}, \quad R_{rr} = R_{zz} = \frac{2}{R^2}, \quad R_{\phi\phi} = \frac{2Er^2\left(r^2+R^2\right)}{R^4}, \quad R = \frac{4E}{R^2},$$
 
 writing $E \equiv e^{r^2/R^2}$ throughout.
-As always $\widetilde{R}_{\mu\nu} = -R_{\mu\nu}$ and $\widetilde{R} = 4E/R^2$.
 
 **A worked component.**
 Take $trtr$, where $g_{tr} = 0$, $g_{tt} = -1$ and $g_{rr} = 1/E$.
 The correction is
 
-$$\tfrac{1}{2}\left(g_{tt}\widetilde{R}_{rr} + g_{rr}\widetilde{R}_{tt}\right) = \tfrac{1}{2}\left(\left(-1\right)\frac{2}{R^2} + \frac{1}{E}\cdot\frac{2E}{R^2}\right) = \tfrac{1}{2}\left(-\frac{2}{R^2} + \frac{2}{R^2}\right) = 0,$$
+$$\tfrac{1}{2}\left(g_{tt}R_{rr} + g_{rr}R_{tt}\right) = \tfrac{1}{2}\left(\left(-1\right)\frac{2}{R^2} + \frac{1}{E}\cdot\frac{2E}{R^2}\right) = \tfrac{1}{2}\left(-\frac{2}{R^2} + \frac{2}{R^2}\right) = 0,$$
 
 and the trace term is
 
-$$\tfrac{1}{6}\widetilde{R}\,g_{tt}g_{rr} = \tfrac{1}{6}\cdot\frac{4E}{R^2}\cdot\left(-1\right)\cdot\frac{1}{E} = -\frac{2}{3R^2}.$$
+$$\tfrac{1}{6}R\,g_{tt}g_{rr} = \tfrac{1}{6}\cdot\frac{4E}{R^2}\cdot\left(-1\right)\cdot\frac{1}{E} = -\frac{2}{3R^2}.$$
 
 The entry's Riemann tensor has $R_{trtr} = \dfrac{1}{R^2}$, so
 
@@ -352,7 +345,7 @@ Here the correction term vanishes on its own and the Ricci scalar term does all 
 
 As in Godel, the axial direction is where components went missing: $R_{tztz} = 0$ while
 
-$$C_{tztz} = 0 - \tfrac{1}{2}\left(g_{tt}\widetilde{R}_{zz} + g_{zz}\widetilde{R}_{tt}\right) + \tfrac{1}{6}\widetilde{R}g_{tt}g_{zz} = -\tfrac{1}{2}\left(-\frac{2}{R^2} + \frac{2}{R^2}\right) - \frac{2}{3R^2} = -\frac{2}{3R^2},$$
+$$C_{tztz} = 0 - \tfrac{1}{2}\left(g_{tt}R_{zz} + g_{zz}R_{tt}\right) + \tfrac{1}{6}Rg_{tt}g_{zz} = -\tfrac{1}{2}\left(-\frac{2}{R^2} + \frac{2}{R^2}\right) - \frac{2}{3R^2} = -\frac{2}{3R^2},$$
 
 which the copy did not publish.
 That one class is the whole of what was missing here, four components in the lowered block and two in the mixed one; the other 36 and 38 were published and wrong.
