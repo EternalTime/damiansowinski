@@ -1,5 +1,5 @@
 {
-  "version": "8b61285fddde0e37",
+  "version": "4b52b3663cceec2c",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -3081,16 +3081,8 @@
         "title": "Contact",
         "author": "Sagan, Carl",
         "year": "1985",
-        "publisher": "Simon and Schuster"
-      }
-    },
-    "thorne1994": {
-      "type": "book",
-      "fields": {
-        "title": "Black Holes and Time Warps: Einstein's Outrageous Legacy",
-        "author": "Thorne, Kip S.",
-        "year": "1994",
-        "publisher": "W. W. Norton"
+        "publisher": "Simon and Schuster",
+        "url": "https://archive.org/details/contactnovel00saga"
       }
     },
     "einstein1935": {
@@ -3129,7 +3121,7 @@
         "pages": "1446--1449",
         "year": "1988",
         "doi": "10.1103/PhysRevLett.61.1446",
-        "url": "https://authors.library.caltech.edu/9262/1/MORprl88.pdf"
+        "url": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.61.1446"
       }
     },
     "echeverria1991": {
