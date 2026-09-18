@@ -1,5 +1,5 @@
 {
-  "version": "7785c7652419a5a0",
+  "version": "3930dc355f60a579",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -1668,7 +1668,7 @@
         "pages": "525--573",
         "year": "1970",
         "doi": "10.1080/00018737000101171",
-        "url": "https://www.tandfonline.com/doi/abs/10.1080/00018737000101171"
+        "url": "https://inspirehep.net/literature/61185"
       }
     },
     "vonneumann1966": {
@@ -2710,7 +2710,7 @@
         "pages": "185--249",
         "year": "1963",
         "doi": "10.1080/00018736300101283",
-        "url": "https://www.tandfonline.com/doi/abs/10.1080/00018736300101283"
+        "url": "https://inspirehep.net/literature/8888"
       }
     },
     "khalatnikov1970": {
@@ -2933,7 +2933,7 @@
         "pages": "431",
         "year": "1968",
         "doi": "10.1086/149448",
-        "url": "https://ui.adsabs.harvard.edu/abs/1968ApJ...151..431M"
+        "url": "https://inspirehep.net/literature/51183"
       }
     },
     "doroshkevich1971": {
@@ -2974,7 +2974,7 @@
         "pages": "1--49",
         "year": "1982",
         "doi": "10.1016/0370-1573(82)90171-5",
-        "url": "https://www.sciencedirect.com/science/article/pii/0370157382901715"
+        "url": "https://inspirehep.net/literature/175535"
       }
     },
     "demaret1985": {
@@ -2988,7 +2988,7 @@
         "pages": "27--30",
         "year": "1985",
         "doi": "10.1016/0370-2693(85)90024-3",
-        "url": "https://www.sciencedirect.com/science/article/pii/0370269385900243"
+        "url": "https://inspirehep.net/literature/227794"
       }
     },
     "francisco1988": {
@@ -3058,7 +3058,7 @@
         "pages": "R145--R200",
         "year": "2003",
         "doi": "10.1088/0264-9381/20/9/201",
-        "url": "https://iopscience.iop.org/article/10.1088/0264-9381/20/9/201"
+        "url": "https://arxiv.org/abs/hep-th/0212256"
       }
     },
     "motter2003": {
