@@ -218,6 +218,13 @@ DIMENSIONS = {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1",
         "M": "M", "a": "L", "G": "L**3/(M*T**2)",
     },
+    # The one parameter is the dimensionless shape function of the tube, and the chart is
+    # cylindrical about the axis the tube is laid along, so r is the distance from that axis
+    # rather than an areal radius. The solution names no length of its own: the radius of the
+    # tube and the thickness of its wall are both left to k.
+    ("krasnikov", "cylindrical"): {
+        "t": "T", "x": "L", "r": "L", "\\phi": "1", "k": "1",
+    },
     ("minkowski", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L"},
     ("minkowski", "spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1"},
     ("minkowski", "double_null"): {"u": "T", "v": "T", "y": "L", "z": "L"},
