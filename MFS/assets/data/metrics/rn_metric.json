@@ -986,7 +986,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{r r_s - 3r_q^2}{r^2(r^2 - r r_s + r_q^2)}"
+                "value": "\\dfrac{r r_s - 2r_q^2}{r^2(r^2 - r r_s + r_q^2)}"
               },
               {
                 "indices": [
@@ -995,7 +995,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{3r_q^2 - r r_s}{r^2(r^2 - r r_s + r_q^2)}"
+                "value": "\\dfrac{2r_q^2 - r r_s}{r^2(r^2 - r r_s + r_q^2)}"
               },
               {
                 "indices": [
@@ -1040,7 +1040,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{(r^2 - r r_s + r_q^2)(r r_s - 3r_q^2)}{r^6}"
+                "value": "\\dfrac{(r^2 - r r_s + r_q^2)(r r_s - 2r_q^2)}{r^6}"
               },
               {
                 "indices": [
@@ -1049,7 +1049,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{(r^2 - r r_s + r_q^2)(3r_q^2 - r r_s)}{r^6}"
+                "value": "\\dfrac{(r^2 - r r_s + r_q^2)(2r_q^2 - r r_s)}{r^6}"
               },
               {
                 "indices": [
@@ -1130,7 +1130,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "\\dfrac{(r r_s - r_q^2)\\sin^2\\theta}{r^2}"
+                "value": "\\dfrac{(r r_s - 2r_q^2)\\sin^2\\theta}{r^2}"
               },
               {
                 "indices": [
@@ -1139,7 +1139,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "\\dfrac{(r_q^2 - r r_s)\\sin^2\\theta}{r^2}"
+                "value": "\\dfrac{(2r_q^2 - r r_s)\\sin^2\\theta}{r^2}"
               },
               {
                 "indices": [
@@ -1184,7 +1184,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "\\dfrac{r_q^2 - r r_s}{r^2}"
+                "value": "\\dfrac{2r_q^2 - r r_s}{r^2}"
               },
               {
                 "indices": [
@@ -1193,7 +1193,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "\\dfrac{r r_s - r_q^2}{r^2}"
+                "value": "\\dfrac{r r_s - 2r_q^2}{r^2}"
               }
             ]
           },
@@ -1207,7 +1207,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{3r_q^2 - r r_s}{r^4}"
+                "value": "\\dfrac{2r_q^2 - r r_s}{r^4}"
               },
               {
                 "indices": [
@@ -1216,7 +1216,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{r r_s - 3r_q^2}{r^4}"
+                "value": "\\dfrac{r r_s - 2r_q^2}{r^4}"
               },
               {
                 "indices": [
@@ -1261,7 +1261,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{r r_s - 3r_q^2}{r^4}"
+                "value": "\\dfrac{r r_s - 2r_q^2}{r^4}"
               },
               {
                 "indices": [
@@ -1270,7 +1270,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{3r_q^2 - r r_s}{r^4}"
+                "value": "\\dfrac{2r_q^2 - r r_s}{r^4}"
               },
               {
                 "indices": [
@@ -1351,7 +1351,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "(r r_s - r_q^2)\\sin^2\\theta"
+                "value": "(r r_s - 2r_q^2)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -1360,7 +1360,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "(r_q^2 - r r_s)\\sin^2\\theta"
+                "value": "(2r_q^2 - r r_s)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -1405,7 +1405,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "(r_q^2 - r r_s)\\sin^2\\theta"
+                "value": "(2r_q^2 - r r_s)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -1414,7 +1414,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "(r r_s - r_q^2)\\sin^2\\theta"
+                "value": "(r r_s - 2r_q^2)\\sin^2\\theta"
               }
             ]
           }
