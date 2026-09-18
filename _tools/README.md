@@ -20,6 +20,11 @@ Commit the new metric file together with whatever the command rewrote.
 Every key a metric cites has to be an entry in `assets/data/references.bib`.
 The command refuses to write anything if one is not, naming the metric file and the key it could not find, so a mistyped citation is caught here rather than published as a reference the reader cannot resolve.
 
+Write a component value so that putting a minus sign in front of the whole string negates it.
+The page groups a tensor's components by value and merges a value with its negation, printing `R^t{}_{\theta t\theta} = -R^t{}_{\theta\theta t} = \dots` on one line, and it recognises the negation by that leading minus alone.
+So a value that is a bare sum wants collecting over a common denominator or wrapping in `\left(\right)` first, and its opposite wants writing as that string with a `-` in front rather than with the signs distributed through it.
+Morris-Thorne is the worked example: its twenty four Riemann components print on six lines fully lowered and its twenty four Weyl components on six, and written the other way each would take twenty four.
+
 A cloud-sync conflict copy dropped into the metrics folder, named like `kerr 2.json`, is passed over rather than read.
 Those are the same names `.gitignore` already keeps out of the repository.
 Any other file name is read, so a metric whose `id` does not match its file name still stops the command.
@@ -139,6 +144,10 @@ A parameter may be a function rather than a constant.
 `a = a(t)` declares a function of one coordinate, which answers to a dot and to a prime, and `H = H(u,x,y)` declares a function of several, which answers to `\partial`: a published `\partial_x H`, `\partial_x^2 H` or `\partial_x\partial_y H` is read as that first or second partial derivative, which is as far as any curvature tensor reaches.
 Every such derivative is taken with respect to the chart coordinate, exactly as the dot and the prime are, so one along a time carries a factor of $1/c$ and one along a length does not.
 `_tools/derivations/pp_wave.md` is the worked example, and its Step 15 is where that factor earns its keep.
+
+The prime works only on a function whose name is not a LaTeX command.
+The reader turns a prime into a name suffix before it turns `\Phi` into a name, so `b'` reads as the derivative of `b` while `\Phi'` leaves a stray backslash and is rejected as unhandled LaTeX.
+`\partial` works on either kind of name, so an entry with a Greek named function writes every derivative that way; `_tools/derivations/morris_thorne.md` Step 17 says so of its own `\Phi` and `b`.
 
 An entry whose parameters are not free needs a second line, in `PARAMETER_RELATIONS`.
 Kasner prints three exponents bound by $\sum_i p_i = \sum_i p_i^2 = 1$ and claims its values only on the surface those two equations cut out; its Ricci tensor is zero there and nowhere else.
