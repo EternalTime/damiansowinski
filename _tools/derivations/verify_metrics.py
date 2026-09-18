@@ -8,6 +8,9 @@ tensor and the Weyl tensor. Every value the file publishes is compared against w
 sympy got, and every component the file leaves out is required to vanish, so an
 omission is caught as well as a wrong number.
 
+Every published expression is also checked for dimensional consistency, which needs no
+sympy algebra and so runs in a moment over the whole collection. See below.
+
 Nothing passes silently. A system whose values cannot be parsed, or whose declaration
 is missing, or a tensor sympy cannot finish inside the time budget, is reported as
 UNCHECKED with the reason. The script exits non-zero if anything disagreed.
@@ -17,6 +20,7 @@ UNCHECKED with the reason. The script exits non-zero if anything disagreed.
 
 Pass --system <metric_id>/<system_id> to check one system, repeatable.
 Pass --budget <seconds> to change the per tensor time budget, which defaults to 120.
+Pass --dimensions-only to run the dimensional pass alone and skip the sympy algebra.
 
 
 The chart convention
@@ -37,10 +41,35 @@ and the Christoffel symbols follow the same rule as the tensors, since the
 inhomogeneous term in their transformation law carries a second derivative of the
 coordinate change and so vanishes for a linear one.
 
-TIME_COORDINATES below declares, per system, which coordinates carry dimensions of
-time. It is the one thing the script cannot read off the file, because telling a time
-from a length needs the dimensions of the parameters as well, and those are prose. A
-system that is not declared there is reported UNCHECKED rather than guessed at.
+DIMENSIONS below declares, per system, the dimension of every coordinate and every
+parameter. It is the one thing the script cannot read off the file, because telling a
+time from a length needs the dimensions of the parameters as well, and those are prose.
+A system that is not declared there is reported UNCHECKED rather than guessed at. A
+coordinate declared as a time is a coordinate the chart multiplies by c; every other
+coordinate is already its own chart coordinate.
+
+
+The dimensional pass
+--------------------
+
+Every published expression has a dimension its left hand side fixes, and every term of
+it has to carry that same dimension. With x^0 = cT the chart coordinates are the ones
+DIMENSIONS declares, except that a time is multiplied by c and so becomes a length, and
+then
+
+    [g_{mu nu}] = L^2 / ([x^mu][x^nu]),
+
+with an upper index contributing [x^mu]/L and a lower one L/[x^mu], on top of the
+dimension the field carries when every coordinate is a length: 1 for the metric, 1/L
+for either Christoffel variant, 1/L^2 for Riemann, Ricci, Einstein, Weyl and the Ricci
+scalar, and 1/L^4 for Kretschmann. A geodesic equation is measured against its own
+second derivative, so its terms carry [x^mu] over the affine parameter squared, and the
+dots in it are chart velocities like everywhere else.
+
+An argument of exp, log or a trigonometric function has to be dimensionless, which is
+what pins Godel's coordinates down. A power whose exponent is not a number contributes
+only the dimension of its numeric part, because such a power is read with its base in a
+fixed unit; the Kasner entry says so of its own t^{2p_i} in as many words.
 
 
 The curvature conventions
@@ -106,26 +135,79 @@ METRICS_DIR = ROOT / "MFS" / "assets" / "data" / "metrics"
 
 DEFAULT_BUDGET_SECONDS = 120
 
-# The coordinates each system writes as a time, so that the chart coordinate is c
-# times what the index is printed as. A system absent from this table is UNCHECKED.
-TIME_COORDINATES = {
-    ("ellis_bronnikov", "spherical"): {"t"},
-    ("frw", "comoving_spherical"): {"t"},
-    ("frw", "conformal_spherical"): set(),
-    ("godel", "cartesian"): set(),
-    ("interior_schwarzschild", "spherical"): set(),
-    ("kasner", "cartesian"): {"t"},
-    ("minkowski", "cartesian"): {"t"},
-    ("minkowski", "spherical"): {"t"},
-    ("minkowski", "double_null"): {"u", "v"},
-    ("minkowski", "spherical_null"): {"u", "v"},
-    ("minkowski", "rindler"): {"T"},
-    ("rn_metric", "spherical"): set(),
-    ("schwarzschild", "spherical"): {"t"},
-    ("schwarzschild", "eddington_finkelstein_outgoing"): set(),
-    ("schwarzschild", "eddington_finkelstein_ingoing"): set(),
-    ("stockum_dust", "cylindrical"): set(),
+LENGTH = sp.Symbol("L", positive=True)
+TIME = sp.Symbol("T", positive=True)
+AFFINE = sp.Symbol("lambda", positive=True)
+BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "1": sp.Integer(1)}
+
+# The dimension of every coordinate and every parameter, per system. A coordinate
+# declared T is the one the chart multiplies by c; the rest are their own chart
+# coordinates. A system absent from this table is UNCHECKED.
+DIMENSIONS = {
+    ("ellis_bronnikov", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L",
+    },
+    # r is the comoving distance the entry calls it and a(t) is dimensionless, which is
+    # the normalisation its published curvature obeys; k is then a curvature, carrying
+    # 1/L^2, and the values -1, 0 and +1 the entry lists for it are in units of the
+    # curvature radius.
+    ("frw", "comoving_spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1", "k": "1/L**2",
+    },
+    ("frw", "conformal_spherical"): {
+        "\\eta": "L", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1", "k": "1/L**2",
+    },
+    # e^x forces x dimensionless, and with it the other three coordinates, so the whole
+    # length of the Godel solution sits in 1/omega.
+    ("godel", "cartesian"): {
+        "t": "1", "x": "1", "y": "1", "z": "1", "\\omega": "1/L",
+    },
+    ("interior_schwarzschild", "spherical"): {
+        "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "R": "L",
+    },
+    ("kasner", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "p_1": "1", "p_2": "1", "p_3": "1",
+    },
+    ("minkowski", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L"},
+    ("minkowski", "spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1"},
+    ("minkowski", "double_null"): {"u": "T", "v": "T", "y": "L", "z": "L"},
+    ("minkowski", "spherical_null"): {"u": "T", "v": "T", "\\theta": "1", "\\phi": "1"},
+    ("minkowski", "rindler"): {"T": "T", "X": "L", "Y": "L", "Z": "L", "a": "L/T**2"},
+    ("rn_metric", "spherical"): {
+        "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L",
+    },
+    ("schwarzschild", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("schwarzschild", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("schwarzschild", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("stockum_dust", "cylindrical"): {
+        "t": "L", "r": "L", "\\phi": "1", "z": "L", "R": "L",
+    },
 }
+
+# What a field carries when every coordinate is a length; the indices supply the rest.
+FIELD_DIMENSIONS = {
+    "metric_components": sp.Integer(1),
+    "inverse_metric_components": sp.Integer(1),
+    "christoffel": 1 / LENGTH,
+    "riemann": 1 / LENGTH ** 2,
+    "ricci_tensor": 1 / LENGTH ** 2,
+    "ricci_scalar": 1 / LENGTH ** 2,
+    "einstein_tensor": 1 / LENGTH ** 2,
+    "kretschmann": 1 / LENGTH ** 4,
+    "weyl_tensor": 1 / LENGTH ** 2,
+}
+
+
+def time_coordinates(declared, coords):
+    """The coordinates the chart multiplies by c, which are exactly the times."""
+    return {name for name in coords
+            if sp.sympify(declared[name], locals=BASE_DIMENSIONS) == TIME}
 
 # A rational parametrisation of the surface an entry's constrained parameters live on,
 # written as {parameter name: expression in a fresh symbol}. See the header.
@@ -172,6 +254,10 @@ def norm(expression):
 
 
 class LatexError(Exception):
+    pass
+
+
+class DimensionError(Exception):
     pass
 
 
@@ -272,6 +358,7 @@ class Reader:
             self.ddot[name] = sp.Symbol(plain + "_ddot")
         self.c = sp.Symbol("c", positive=True)
         self.parameters = {}
+        self.parameter_names = []
         self.primed = set()
         for declaration in parameters:
             self._declare_parameter(declaration)
@@ -314,6 +401,7 @@ class Reader:
         carries the matching power of c.
         """
         plain = self._plain(declaration.split("=")[0])
+        self.parameter_names.append(plain)
         argument = re.search(r"\(\s*(\\?[A-Za-z]+)\s*\)", declaration)
         if argument is None:
             self.parameters[plain] = sp.Symbol(plain, real=True)
@@ -383,6 +471,173 @@ class Reader:
         if unknown:
             raise LatexError(f"{latex!r} produced undeclared symbols {sorted(map(str, unknown))}")
         return expression
+
+
+class Dimensions:
+    """What every symbol of a system carries, and the dimension of an expression in them.
+
+    The declared dimension of a coordinate is the one its own letter carries; the chart
+    coordinate is c times it when it is a time, so a chart coordinate is never a time.
+    Differentials in a line element are written on the bare letter and carry the bare
+    dimension, while the dots in a geodesic equation are chart velocities and carry the
+    chart dimension over the affine parameter.
+    """
+
+    def __init__(self, reader, declared):
+        declared = {Reader._plain(name): value for name, value in declared.items()}
+        wanted = [Reader._plain(name) for name in reader.coords] + reader.parameter_names
+        missing = [name for name in wanted if name not in declared]
+        if missing:
+            raise DimensionError(f"no declared dimension for {missing}")
+        extra = [name for name in declared if name not in wanted]
+        if extra:
+            raise DimensionError(
+                f"a dimension is declared for {extra}, which the system does not use")
+        self.of_symbol = {reader.c: LENGTH / TIME}
+        self.of_function = {}
+        self.chart = {}
+        for name in reader.coords:
+            bare = sp.sympify(declared[Reader._plain(name)], locals=BASE_DIMENSIONS)
+            self.chart[name] = LENGTH if bare == TIME else bare
+            self.of_symbol[reader.symbol[name]] = bare
+            self.of_symbol[reader.differential[name]] = bare
+            self.of_symbol[reader.dot[name]] = self.chart[name] / AFFINE
+            self.of_symbol[reader.ddot[name]] = self.chart[name] / AFFINE ** 2
+        for name in reader.parameter_names:
+            value = reader.parameters[name]
+            dimension = sp.sympify(declared[name], locals=BASE_DIMENSIONS)
+            if value.is_Symbol:
+                self.of_symbol[value] = dimension
+            else:
+                self.of_function[name] = dimension
+
+    def __call__(self, expression):
+        if expression.is_Number or isinstance(expression, sp.NumberSymbol):
+            return sp.Integer(1)
+        if expression.is_Symbol:
+            if expression in self.of_symbol:
+                return self.of_symbol[expression]
+            raise DimensionError(f"{expression} has no declared dimension")
+        if isinstance(expression, sp.core.function.AppliedUndef):
+            name = expression.func.__name__
+            if name in self.of_function:
+                return self.of_function[name]
+            raise DimensionError(f"{name} has no declared dimension")
+        if expression.is_Add:
+            first = self(expression.args[0])
+            for term in expression.args[1:]:
+                other = self(term)
+                if other != first:
+                    raise DimensionError(
+                        f"{expression} adds {term}, which carries {other}, "
+                        f"to {expression.args[0]}, which carries {first}")
+            return first
+        if expression.is_Mul:
+            out = sp.Integer(1)
+            for factor in expression.args:
+                out *= self(factor)
+            return out
+        if expression.is_Pow:
+            base, exponent = expression.args
+            if self(exponent) != 1:
+                raise DimensionError(f"the exponent of {expression} carries {self(exponent)}")
+            # A symbolic exponent is read with its base in a fixed unit, as Kasner says
+            # of its t^{2p_i}, so only the numeric part of the exponent counts.
+            numeric, _ = exponent.as_coeff_Add()
+            return self(base) ** numeric
+        if isinstance(expression, sp.Derivative):
+            out = self(expression.expr)
+            for variable, order in expression.variable_count:
+                out /= self(variable) ** order
+            return out
+        if isinstance(expression, sp.Function):
+            for argument in expression.args:
+                if self(argument) != 1:
+                    raise DimensionError(
+                        f"{expression} takes {argument}, which carries {self(argument)}")
+            return sp.Integer(1)
+        raise DimensionError(f"cannot take the dimension of {expression}")
+
+    def index_weight(self, variance, coords, index):
+        """An upper index carries [x^mu]/L and a lower one L/[x^mu]."""
+        out = sp.Integer(1)
+        for slot, position in zip(variance, index):
+            scale = self.chart[coords[position]] / LENGTH
+            out *= scale if slot == "u" else 1 / scale
+        return out
+
+
+def check_dimensions(report, reader, dimensions, where, entry, coords):
+    """Every published expression against the dimension its left hand side fixes."""
+
+    def term_by_term(label, expression, expected):
+        for term in sp.Add.make_args(expression):
+            if term == 0:
+                continue
+            try:
+                carried = dimensions(term)
+            except DimensionError as error:
+                report.dimension(label, str(error))
+                continue
+            if carried != expected:
+                report.dimension(label, f"the term {term} carries {carried}, not {expected}")
+
+    def read(label, latex):
+        try:
+            return reader(latex)
+        except LatexError as error:
+            report.skip(label, str(error))
+            return None
+
+    _, _, right = entry["line_element"].partition("=")
+    form = read(f"{where}.line_element", right)
+    if form is not None:
+        term_by_term(f"{where}.line_element", sp.expand(form), LENGTH ** 2)
+
+    for field, variance, published in published_blocks(entry):
+        base = FIELD_DIMENSIONS[field]
+        for component in published:
+            names = component["indices"]
+            if any(name not in coords for name in names) or len(names) != len(variance):
+                continue
+            label = f"{where}.{field}.{variance} {names}"
+            value = read(label, component["value"])
+            if value is None:
+                continue
+            index = [coords.index(name) for name in names]
+            term_by_term(label, sp.expand(value),
+                         base * dimensions.index_weight(variance, coords, index))
+
+    for field in ("ricci_scalar", "kretschmann"):
+        if field not in entry:
+            continue
+        label = f"{where}.{field}"
+        text = entry[field].split("=", 1)[1] if "=" in entry[field] else entry[field]
+        value = read(label, text)
+        if value is not None:
+            term_by_term(label, sp.expand(value), FIELD_DIMENSIONS[field])
+
+    for equation in entry.get("geodesics", []):
+        label = f"{where}.geodesics"
+        left, _, right = equation.partition("=")
+        residual = read(f"{label} {equation!r}", left + "-(" + (right or "0") + ")")
+        if residual is None:
+            continue
+        carried = [name for name in coords if residual.has(reader.ddot[name])]
+        if len(carried) != 1:
+            continue
+        expected = dimensions.chart[carried[0]] / AFFINE ** 2
+        term_by_term(f"{label} {equation!r}", sp.expand(residual), expected)
+
+
+def published_blocks(entry):
+    """Every published tensor block of an entry, as (field, variance, components)."""
+    for field in ("metric_components", "inverse_metric_components"):
+        if field in entry:
+            yield field, "uu" if field.startswith("inverse") else "ll", entry[field]
+    for field in ("christoffel", "riemann", "ricci_tensor", "einstein_tensor", "weyl_tensor"):
+        for variance, block in entry.get(field, {}).get("variants", {}).items():
+            yield field, variance, block["nonzero"]
 
 
 def metric_from_line_element(reader, line_element, coords):
@@ -634,12 +889,16 @@ def _put(tensor, index, value):
 class Report:
     def __init__(self):
         self.disagreements = []
+        self.dimensional = []
         self.unchecked = []
         self.checked_systems = 0
         self.systems = 0
 
     def disagree(self, where, message):
         self.disagreements.append(f"{where}: {message}")
+
+    def dimension(self, where, message):
+        self.dimensional.append(f"{where}: {message}")
 
     def skip(self, where, reason):
         self.unchecked.append(f"{where}: {reason}")
@@ -745,19 +1004,20 @@ VECTOR_VARIANTS = {"ll": (0, "ll"), "ul": ((0,), "ul"), "uu": ((0, 1), "uu")}
 RANK4_VARIANTS = {"llll": (None, "llll"), "ulll": ((0,), "ulll")}
 
 
-def check_system(report, metric_id, entry, seconds):
+def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     where = f"{metric_id}/{entry['id']}"
     coords = entry["coords"]
     report.systems += 1
 
-    declaration = TIME_COORDINATES.get((metric_id, entry["id"]))
-    if declaration is None:
-        report.skip(where, "no time coordinate declaration in TIME_COORDINATES")
+    declared = DIMENSIONS.get((metric_id, entry["id"]))
+    if declared is None:
+        report.skip(where, "no dimension declaration in DIMENSIONS")
         return
-    unknown = declaration - set(coords)
+    unknown = [name for name in coords if name not in declared]
     if unknown:
-        report.skip(where, f"time coordinate declaration names {sorted(unknown)}, not in {coords}")
+        report.skip(where, f"no declared dimension for the coordinates {unknown}")
         return
+    declaration = time_coordinates(declared, coords)
 
     parameters = [p["symbol"] for p in entry.get("parameters", [])]
     relations = PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
@@ -767,6 +1027,16 @@ def check_system(report, metric_id, entry, seconds):
         report.skip(where, f"parameters unreadable: {error}")
         return
     c = reader.c
+    try:
+        dimensions = Dimensions(reader, declared)
+    except DimensionError as error:
+        report.skip(where, f"dimensions undeclared: {error}")
+        return
+    check_dimensions(report, reader, dimensions, where, entry, coords)
+    if dimensions_only:
+        report.checked_systems += 1
+        print(f"  {where}")
+        return
     try:
         g = metric_from_line_element(reader, entry["line_element"], coords)
     except LatexError as error:
@@ -863,11 +1133,14 @@ def main():
                         help="check only <metric_id>/<system_id>, repeatable")
     parser.add_argument("--budget", type=float, default=DEFAULT_BUDGET_SECONDS,
                         help="seconds sympy may spend on one tensor")
+    parser.add_argument("--dimensions-only", action="store_true",
+                        help="run the dimensional pass alone and skip the sympy algebra")
     arguments = parser.parse_args()
 
     report = Report()
     files = 0
-    print("Checking every published coordinate system against sympy, in the x^0 = cT chart.\n")
+    against = "for dimensional balance" if arguments.dimensions_only else "against sympy"
+    print(f"Checking every published coordinate system {against}, in the x^0 = cT chart.\n")
     for path in sorted(METRICS_DIR.glob("*.json")):
         if CONFLICT_COPY.search(path.stem):
             continue
@@ -877,7 +1150,8 @@ def main():
             name = f"{metric['id']}/{entry['id']}"
             if arguments.system and name not in arguments.system:
                 continue
-            check_system(report, metric["id"], entry, arguments.budget)
+            check_system(report, metric["id"], entry, arguments.budget,
+                         arguments.dimensions_only)
 
     print(f"\n{files} metric files, {report.systems} coordinate systems, "
           f"{report.checked_systems} checked.")
@@ -885,12 +1159,19 @@ def main():
         print(f"\n{len(report.unchecked)} UNCHECKED:")
         for line in report.unchecked:
             print(f"  UNCHECKED {line}")
+    if report.dimensional:
+        print(f"\n{len(report.dimensional)} terms whose dimensions do not balance:",
+              file=sys.stderr)
+        for line in report.dimensional:
+            print(f"  {line}", file=sys.stderr)
     if report.disagreements:
         print(f"\n{len(report.disagreements)} disagreements:", file=sys.stderr)
         for line in report.disagreements:
             print(f"  {line}", file=sys.stderr)
+    if report.dimensional or report.disagreements:
         return 1
-    print("\nEvery published value agrees with sympy.")
+    print(f"\nEvery published value balances dimensionally"
+          f"{'' if arguments.dimensions_only else ' and agrees with sympy'}.")
     return 0
 
 

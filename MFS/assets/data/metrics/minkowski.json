@@ -18,7 +18,7 @@
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "Factors of c are kept explicit throughout. Coordinates are (t, x, y, z) with t having dimensions of time.",
+  "convention": "Factors of $c$ are kept explicit throughout. The Cartesian and spherical charts use a time coordinate $t$, the null charts a retarded time $u$ and an advanced time $v$, and the Rindler chart a time $T$; all four carry dimensions of time, and $a$ is a proper acceleration. Components are printed in the chart $x^0 = ct$, so a component whose index is written on one of those letters is a component of that chart rather than of the bare coordinate. The dots in the geodesic equations are derivatives of that same chart with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$ and $\\dot{u}$ means $d(cu)/d\\lambda$, and every term of every equation carries the dimensions of its left hand side.",
   "history": "Hermann Minkowski was Einstein's former mathematics professor at Zürich, and he understood what Einstein had done in 1905 better than Einstein did, at least geometrically. In 1908 he showed that the Lorentz transformations of special relativity are not ad hoc kinematic rules but rotations in a pseudo-Riemannian manifold of four dimensions with metric signature $(-,+,+,+)$ [minkowski1908]. \"Henceforth,\" he declared in his famous Cologne lecture, \"space by itself and time by itself are doomed to fade away into mere shadows, and only a kind of union of the two will preserve an independent reality.\" Einstein initially dismissed the geometric reformulation as superfluous erudition [noreika2021minkowski]. He came to regard it as indispensable only when he began wrestling with general relativity.¶The Rindler coordinates displayed here, introduced by Wolfgang Rindler in 1966, provide the natural reference frame for a uniformly accelerating observer in flat spacetime [rindler1966]. They cover only the right wedge of Minkowski spacetime, bounded by a null surface, the Rindler horizon, that marks the boundary beyond which signals can never reach the accelerating observer. The geometry is locally identical to the limit of the Schwarzschild metric near its horizon, making Rindler spacetime an important toy model in black hole thermodynamics.¶The deep significance of this horizon became clear with the Unruh effect, derived independently by Davies in 1975 and Unruh in 1976 [davies1975, unruh1976]: an observer accelerating through the Minkowski vacuum detects a thermal bath of particles at temperature $T = \\hbar a / 2\\pi c k_B$. This result, that acceleration and temperature are two sides of the same coin, established the connection between horizons and thermodynamics that continues to shape our understanding of quantum gravity.",
   "references": [
     "minkowski1908",
@@ -457,9 +457,9 @@
       },
       "geodesics": [
         "\\ddot{t} = 0",
-        "\\ddot{r} = r\\dot{\\theta}^2 + r\\sin^2\\theta\\,\\dot{\\phi}^2",
-        "\\ddot{\\theta} = -\\dfrac{2}{r}\\dot{r}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
-        "\\ddot{\\phi} = -\\dfrac{2}{r}\\dot{r}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
+        "\\ddot{r} - r\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
       ],
       "inverse_metric_components": [
         {
@@ -1016,10 +1016,10 @@
         }
       },
       "geodesics": [
-        "\\ddot{u} = -\\dfrac{c(v-u)}{2}\\dot{\\theta}^2 - \\dfrac{c(v-u)\\sin^2\\theta}{2}\\dot{\\phi}^2",
-        "\\ddot{v} = \\dfrac{c(v-u)}{2}\\dot{\\theta}^2 + \\dfrac{c(v-u)\\sin^2\\theta}{2}\\dot{\\phi}^2",
-        "\\ddot{\\theta} = -\\dfrac{2(\\dot{v}-\\dot{u})}{c(v-u)}\\dot{\\theta} + \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2",
-        "\\ddot{\\phi} = -\\dfrac{2(\\dot{v}-\\dot{u})}{c(v-u)}\\dot{\\phi} - 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi}"
+        "\\ddot{u} + \\dfrac{c(v-u)}{2}\\dot{\\theta}^2 + \\dfrac{c(v-u)\\sin^2\\theta}{2}\\dot{\\phi}^2 = 0",
+        "\\ddot{v} - \\dfrac{c(v-u)}{2}\\dot{\\theta}^2 - \\dfrac{c(v-u)\\sin^2\\theta}{2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2(\\dot{v}-\\dot{u})}{c(v-u)}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2(\\dot{v}-\\dot{u})}{c(v-u)}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
       ],
       "inverse_metric_components": [
         {
@@ -1080,7 +1080,7 @@
             "T",
             "T"
           ],
-          "value": "-\\dfrac{a^2 X^2}{c^2}"
+          "value": "-\\dfrac{a^2 X^2}{c^4}"
         },
         {
           "indices": [
@@ -1230,8 +1230,8 @@
         }
       },
       "geodesics": [
-        "\\ddot{T} = -\\dfrac{2}{X}\\dot{X}\\dot{T}",
-        "\\ddot{X} = \\dfrac{a^2 X}{c^4}\\dot{T}^2",
+        "\\ddot{T} + \\dfrac{2}{X}\\dot{X}\\dot{T} = 0",
+        "\\ddot{X} + \\dfrac{a^2 X}{c^4}\\dot{T}^2 = 0",
         "\\ddot{Y} = 0",
         "\\ddot{Z} = 0"
       ],
@@ -1241,7 +1241,7 @@
             "T",
             "T"
           ],
-          "value": "-\\dfrac{c^2}{a^2 X^2}"
+          "value": "-\\dfrac{c^4}{a^2 X^2}"
         },
         {
           "indices": [

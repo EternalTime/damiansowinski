@@ -72,19 +72,25 @@ It builds $g_{\mu\nu}$ from the line element each entry prints, computes the inv
 A component the entry omits has to vanish, so a missing symbol is caught as well as a wrong one.
 It names each disagreement by file, system and symbol, and exits non-zero if any remain.
 
+It also checks that every term of every published expression carries the dimensions of its left hand side, which needs no algebra at all.
+That pass names the file, the system, the field and the term it could not balance, and it is what catches a component printed in the bare chart rather than in $x^0 = cT$.
+
 sympy is not installed system wide, and the virtual environment does not belong in the repository:
 
     python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
 
-The whole collection takes about ten minutes. `--system <metric_id>/<system_id>` checks one system and takes seconds, which is what to use while editing a single entry.
+The whole collection takes about a quarter of an hour. `--system <metric_id>/<system_id>` checks one system and takes seconds, which is what to use while editing a single entry.
 `--budget <seconds>` changes how long sympy may spend on one tensor.
+`--dimensions-only` runs the dimensional pass alone, which takes about a second over the whole collection, so there is no reason not to run it on every edit.
+
+`derivations/audit-2026-09-18.md` groups and counts the disagreements the collection carried when the dimensional pass was added, and says which of them are the checker's fault rather than the physics'.
 
 Nothing is ever passed in silence. A value that cannot be parsed, a system with no time coordinate declaration, or a tensor sympy cannot finish in the budget is reported as `UNCHECKED` with the reason, separately from the disagreements.
 
 ## The three conventions the checker encodes
 
-All three are things the files do consistently rather than things they write down, so they are recorded here and in the script's header.
+All three are things the files do consistently, and only the newest of them say so in their own `convention` field, so they are recorded here and in the script's header as well.
 
 The chart is $x^0 = cT$.
 A coordinate carrying dimensions of time is not itself the chart coordinate; $c$ times it is, and every published component is a component in that chart even though the index is printed with the bare name.
@@ -99,13 +105,19 @@ The Weyl tensor is the exception and is built from $R^\alpha{}_{\mu\alpha\nu}$, 
 The dots in a geodesic equation are velocities of that same chart, so a dot on a time coordinate means $d(cT)/d\lambda$ and not $dT/d\lambda$, even though it is printed on the bare letter.
 It has to be that one, because the equation is $\ddot x^\mu + \Gamma^\mu{}_{\nu\rho}\dot x^\nu\dot x^\rho = 0$ with the same printed $\Gamma$ the entry lists, and those are chart symbols.
 The reading is checkable without sympy: on it every term of every equation carries the dimensions of its left hand side, and on the other reading a term mixing a time velocity with a space velocity comes out wrong by one factor of $c$.
-A geodesic equation is the only thing an entry publishes that adds a time derivative to a space derivative, so it is the only place the mistake can hide, and `_tools/derivations/kasner.md` Step 17 works the check through term by term.
+That is what the dimensional pass does, over the geodesics and over every published component alike, and `_tools/derivations/kasner.md` Step 17 works the check through term by term for one entry.
 
 ## Adding a spacetime, as far as the checker is concerned
 
 Telling a time coordinate from a length needs the dimensions of the parameters, which live in prose, so the script cannot read it off the file.
-`TIME_COORDINATES` in `verify_metrics.py` declares it per system instead.
+`DIMENSIONS` in `verify_metrics.py` declares the dimension of every coordinate and every parameter, per system.
+A coordinate declared as a time is exactly a coordinate the chart multiplies by $c$, so that one table answers both which chart a component is in and what each term of it has to carry; there is no second table to keep in step with it.
 A new coordinate system that is not listed there is reported `UNCHECKED` rather than guessed at, so adding a spacetime means adding its line, and forgetting to is visible rather than silent.
+So is declaring a dimension for a parameter the system does not have, or leaving one out.
+
+Some of what the table has to decide is a choice the entry leaves open.
+FRW can be read with a dimensionless comoving $r$ and a scale factor carrying the length, or with $r$ a length, $a$ dimensionless and $k$ a curvature; the line element balances either way, and only the published Riemann tensor picks the second.
+Where that happens, the table carries a comment saying which reading the entry's own values obey.
 
 An entry whose parameters are not free needs a second line, in `PARAMETER_RELATIONS`.
 Kasner prints three exponents bound by $\sum_i p_i = \sum_i p_i^2 = 1$ and claims its values only on the surface those two equations cut out; its Ricci tensor is zero there and nowhere else.
