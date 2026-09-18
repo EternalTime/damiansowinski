@@ -62,3 +62,42 @@ reports whether the published files are still what the folder says they should b
     python3 -m unittest discover -s _tools
 
 runs the tests, which include that check.
+
+## Checking the physics
+
+`build_mfs_data.py` checks the shape of the data. It does not read the mathematics.
+`_tools/derivations/verify_metrics.py` does, for every coordinate system of every metric file.
+
+It builds $g_{\mu\nu}$ from the line element each entry prints, computes the inverse metric, both Christoffel variants, Riemann, Ricci, the Ricci scalar, Kretschmann, Einstein and Weyl in sympy, and compares all of it against every value the entry publishes.
+A component the entry omits has to vanish, so a missing symbol is caught as well as a wrong one.
+It names each disagreement by file, system and symbol, and exits non-zero if any remain.
+
+sympy is not installed system wide, and the virtual environment does not belong in the repository:
+
+    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
+    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
+
+The whole collection takes about ten minutes. `--system <metric_id>/<system_id>` checks one system and takes seconds, which is what to use while editing a single entry.
+`--budget <seconds>` changes how long sympy may spend on one tensor.
+
+Nothing is ever passed in silence. A value that cannot be parsed, a system with no time coordinate declaration, or a tensor sympy cannot finish in the budget is reported as `UNCHECKED` with the reason, separately from the disagreements.
+
+## The two conventions the checker encodes
+
+Both are things the files do consistently rather than things they write down, so they are recorded here and in the script's header.
+
+The chart is $x^0 = cT$.
+A coordinate carrying dimensions of time is not itself the chart coordinate; $c$ times it is, and every published component is a component in that chart even though the index is printed with the bare name.
+Schwarzschild shows it plainly, publishing $g_{tt} = -(1-r_s/r)$ against a line element whose time term is $-(1-r_s/r)c^2dt^2$.
+Because the rescaling is linear, a component in the chart is the one taken with the bare coordinate multiplied by $c$ once per upper time index and divided by $c$ once per lower one.
+
+The Ricci tensor is contracted as $R_{\mu\nu} = R^\alpha{}_{\mu\nu\alpha}$, on the last lower index rather than the first.
+That is the opposite sign from the commoner $R^\alpha{}_{\mu\alpha\nu}$, and it carries through to the Einstein tensor and the Ricci scalar.
+Contracting each published Riemann tensor both ways reproduces the published Ricci in every slot this way and not the other, in Ellis-Bronnikov, Reissner-Nordstrom and Godel alike.
+The Weyl tensor is the exception and is built from $R^\alpha{}_{\mu\alpha\nu}$, because it is defined by removing the traces of Riemann and those traces do not care what the file calls Ricci.
+
+## Adding a spacetime, as far as the checker is concerned
+
+Telling a time coordinate from a length needs the dimensions of the parameters, which live in prose, so the script cannot read it off the file.
+`TIME_COORDINATES` in `verify_metrics.py` declares it per system instead.
+A new coordinate system that is not listed there is reported `UNCHECKED` rather than guessed at, so adding a spacetime means adding its line, and forgetting to is visible rather than silent.
