@@ -285,6 +285,13 @@ DIMENSIONS = {
     ("taub_nut", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L",
     },
+    # The areal radius is a length and the comoving shell label r is a length beside it,
+    # so \partial_r R is dimensionless and the energy function has to be dimensionless
+    # as well, which is what leaves 1 + 2E a pure number. Every published derivative of R
+    # is taken along a chart coordinate, so each order of it carries one inverse length.
+    ("tolman_bondi", "comoving_synchronous"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "R": "L", "E": "1",
+    },
     # The one entry that keeps G and a mass explicit rather than folding them into a
     # length like r_s, and so the only one whose declarations need a mass at all.
     ("vaidya", "eddington_finkelstein_outgoing"): {
