@@ -198,6 +198,11 @@ DIMENSIONS = {
     ("stockum_dust", "cylindrical"): {
         "t": "L", "r": "L", "\\phi": "1", "z": "L", "R": "L",
     },
+    # The mass is folded into the length m = GM/c^2 and the NUT parameter is a length
+    # beside it, so the cross term 2l cos(theta) carries the one length g_{t phi} wants.
+    ("taub_nut", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L",
+    },
     # The one entry that keeps G and a mass explicit rather than folding them into a
     # length like r_s, and so the only one whose declarations need a mass at all.
     ("vaidya", "eddington_finkelstein_outgoing"): {
