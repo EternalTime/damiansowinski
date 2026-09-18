@@ -24,5 +24,24 @@
     "four-dimensional",
     "idealized model"
   ],
+  "history": "Charles Misner wanted the smoothness of the universe earned rather than assumed. The microwave background arrives at one temperature from patches of sky that never exchanged a signal, and by 1968 he had his answer, a program he called chaotic cosmology [misner1968]: let the young universe be as lopsided as it likes, then find the dynamics that grind it smooth. In 1969 he took up the closed anisotropic vacuum of Bianchi type IX and named it the Mixmaster, after the Sunbeam kitchen mixer, expecting it to stir the early universe smooth [misner1969]. Toward the singularity it runs through Kasner epochs, the axis with the one negative exponent running away while the other two crush, until the curvature of the closed slices deals the exponents out again. There is no last bounce, and infinitely many fit into the finite proper time that remains.¶The same oscillation reached Moscow from the other direction, at the cost of seven years of work. Evgeny Lifshitz and Isaak Khalatnikov had argued in 1963 that the general solution of the Einstein equations carries no singularity, the known ones being a penalty of symmetry [lifshitz1963]. Penrose's theorem of 1965 made that position uninhabitable [penrose1965]. With Vladimir Belinskii they went back and in 1970 published retraction and replacement together: a general solution that does reach a singularity, through Mixmaster oscillations [khalatnikov1970, bkl1970]. The replacement was the bolder claim. Near a spacelike singularity the time derivatives drown out the spatial ones, so every point of a generic spacetime collapses on its own private Bianchi IX schedule, set by one number that sheds a unit at each bounce until it drops below one, whereupon the next era opens at its reciprocal.¶Misner's own formulation made it visible: take the volume as the clock and the shape as a point with two coordinates, and Bianchi IX becomes one particle in a potential well shaped like an equilateral triangle with an open channel at each corner. Rescale until the walls hold still and harden into mirrors, and the universe is a billiard ball on a surface of constant negative curvature, the classic mixing system. It sat unpublished in a 1972 Maryland thesis by D. M. Chitre until Misner wrote it up for him twenty two years later, in a volume pointedly titled Deterministic Chaos in General Relativity [misner1994].¶The title was pointed, and the model had by then failed its own purpose: the oscillations do not mix the sky into causal contact [doroshkevich1971], and the horizon problem waited for inflation [guth1981]. John Barrow gave the bounce map a positive Lyapunov exponent in 1982 [barrow1982], but an exponent measures separation per unit of time and relativity supplies no preferred unit: change the clock and other coordinates return zero [francisco1988, berger1991]. Neil Cornish and Janna Levin ended a decade of argument in 1997 by declining to measure time at all: the phase space carries a fractal, and a fractal does not care what clock you hold [cornish1997]. Adilson Motter settled the principle in 2003: positive Lyapunov exponents stay positive under a change of coordinates [motter2003].¶The billiard travels.¶Pure gravity stops bouncing in eleven spacetime dimensions and above [demaret1985], awkwardly, since eleven is where supergravity lives; restore its three form field and the walls come back, the table now the Weyl chamber of the hyperbolic Kac-Moody algebra $E_{10}$ [damour2003]. The appliance Misner named in 1969 is the shape of the singularity in M-theory.",
+  "references": [
+    "misner1968",
+    "misner1969",
+    "lifshitz1963",
+    "penrose1965",
+    "khalatnikov1970",
+    "bkl1970",
+    "misner1994",
+    "doroshkevich1971",
+    "guth1981",
+    "barrow1982",
+    "francisco1988",
+    "berger1991",
+    "cornish1997",
+    "motter2003",
+    "demaret1985",
+    "damour2003"
+  ],
   "coordinates": []
 }
