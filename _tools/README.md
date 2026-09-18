@@ -104,10 +104,11 @@ A coordinate carrying dimensions of time is not itself the chart coordinate; $c$
 Schwarzschild shows it plainly, publishing $g_{tt} = -(1-r_s/r)$ against a line element whose time term is $-(1-r_s/r)c^2dt^2$.
 Because the rescaling is linear, a component in the chart is the one taken with the bare coordinate multiplied by $c$ once per upper time index and divided by $c$ once per lower one.
 
-The Ricci tensor is contracted as $R_{\mu\nu} = R^\alpha{}_{\mu\nu\alpha}$, on the last lower index rather than the first.
-That is the opposite sign from the commoner $R^\alpha{}_{\mu\alpha\nu}$, and it carries through to the Einstein tensor and the Ricci scalar.
-Contracting each published Riemann tensor both ways reproduces the published Ricci in every slot this way and not the other, in Ellis-Bronnikov, Reissner-Nordstrom and Godel alike.
-The Weyl tensor is the exception and is built from $R^\alpha{}_{\mu\alpha\nu}$, because it is defined by removing the traces of Riemann and those traces do not care what the file calls Ricci.
+The Ricci tensor is the standard contraction $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$, on the first lower index, and it carries through to the Einstein tensor and the Ricci scalar.
+That is the contraction the signature $(-,+,+,+)$ asks for, settled by the captain on 18 September 2026: the Ricci tensor should be whatever the metric sign convention has.
+It is what makes ordinary matter come out with a positive energy density, so FRW publishes $G_{tt} = 3(\dot a^2+k)/a^2$ and the interior Schwarzschild solution $G^t{}_t = -3r_s/R^3 = -8\pi G\rho$.
+The collection contracted on the last index before that, which is minus this in every slot, and every entry with a nonzero Ricci tensor was moved over in one pass.
+The Weyl tensor is built from the same contraction and always was, because it is defined by removing the traces of Riemann and those traces are Riemann's own.
 
 The dots in a geodesic equation are velocities of that same chart, so a dot on a time coordinate means $d(cT)/d\lambda$ and not $dT/d\lambda$, even though it is printed on the bare letter.
 It has to be that one, because the equation is $\ddot x^\mu + \Gamma^\mu{}_{\nu\rho}\dot x^\nu\dot x^\rho = 0$ with the same printed $\Gamma$ the entry lists, and those are chart symbols.

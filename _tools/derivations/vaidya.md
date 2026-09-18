@@ -25,13 +25,13 @@ $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sig
 
 which is what the published Riemann components are in.
 
-The collection contracts the Ricci tensor on the last lower index,
+The Ricci tensor is the standard contraction on the first lower index,
 
-$$R_{\mu\nu} = R^\alpha{}_{\mu\nu\alpha},$$
+$$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-which is the opposite sign from the commoner $R^\alpha{}_{\mu\alpha\nu}$.
+which is what the collection publishes everywhere.
 Here the choice matters, because the Ricci tensor does not vanish.
-Everything below is computed with the collection's contraction, the other one is its negative, and Step 10 carries the sign through to the field equations, which on this convention read $G_{\mu\nu} = -8\pi G\,T_{\mu\nu}/c^4$.
+Everything below is computed with it, contracting on the last index instead gives the negative of every Ricci and Einstein component, and Step 10 carries the sign through to the field equations, which on this convention read $G_{\mu\nu} = 8\pi G\,T_{\mu\nu}/c^4$.
 
 Factors of $G$ and $c$ are kept explicit.
 The chart, here and everywhere else in the collection, is the one whose time coordinate is $x^0 = cT$, so here it is $x^0 = cu$ in the outgoing chart and $x^0 = cv$ in the ingoing one.
@@ -274,13 +274,13 @@ Every component with both pairs in the $(0,r)$ plane or both in the $(\theta,\ph
 
 ## Step 8. The Ricci tensor, and where the radiation enters
 
-With the collection's contraction $R_{\mu\nu} = R^\alpha{}_{\mu\nu\alpha}$, the $00$ component is a sum of four terms, of which the first vanishes by the antisymmetry in the last two indices:
+With the contraction $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$, the $00$ component is a sum of four terms, of which the first vanishes by the antisymmetry in the last two indices:
 
-$$R_{00} = R^0{}_{000} + R^r{}_{00r} + R^\theta{}_{00\theta} + R^\phi{}_{00\phi}.$$
+$$R_{00} = R^0{}_{000} + R^r{}_{0r0} + R^\theta{}_{0\theta0} + R^\phi{}_{0\phi0}.$$
 
-Step 6 computed all three of the survivors, and the $\phi$ term equals the $\theta$ term:
+Step 6 computed all three of the survivors with their last two indices the other way about, so each enters with a minus, and the $\phi$ term equals the $\theta$ term:
 
-$$R_{00} = \frac{r_s}{r^3}f + 2\left(-\frac{r_s}{2r^3}f + \frac{\dot{r}_s}{2r^2}\right) = \frac{\dot{r}_s}{r^2} = \frac{2G\dot{m}}{c^2r^2}.$$
+$$R_{00} = -\frac{r_s}{r^3}f - 2\left(-\frac{r_s}{2r^3}f + \frac{\dot{r}_s}{2r^2}\right) = -\frac{\dot{r}_s}{r^2} = -\frac{2G\dot{m}}{c^2r^2}.$$
 
 This is the heart of the entry.
 The three terms carrying $f$ cancel exactly, which is Schwarzschild's vacuum condition surviving inside the radiating solution, and what is left is the single term the time dependence of the mass produced.
@@ -289,23 +289,23 @@ The Ricci tensor is proportional to $\dot{m}$ and to nothing else, so it vanishe
 Every other component vanishes, and the two cancellations are worth showing rather than asserting.
 For $R_{0r}$,
 
-$$R_{0r} = R^0{}_{0r0} + R^r{}_{0rr} + R^\theta{}_{0r\theta} + R^\phi{}_{0r\phi} = \frac{r_s}{r^3} + 0 - \frac{r_s}{2r^3} - \frac{r_s}{2r^3} = 0,$$
+$$R_{0r} = R^0{}_{00r} + R^r{}_{0rr} + R^\theta{}_{0\theta r} + R^\phi{}_{0\phi r} = -\frac{r_s}{r^3} + 0 + \frac{r_s}{2r^3} + \frac{r_s}{2r^3} = 0,$$
 
-where $R^0{}_{0r0} = -R^0{}_{00r} = r_s/r^3$ and $R^r{}_{0rr} = 0$ by the antisymmetry in its last two indices.
-For $R_{\theta\theta}$, the first two terms are minus the Step 6 values of $R^0{}_{\theta 0\theta}$ and $R^r{}_{\theta r\theta}$, and the third is $R^\phi{}_{\theta\theta\phi} = -R_{\theta\phi\theta\phi}/(r^2\sin^2\theta)$:
+where $R^0{}_{00r} = -r_s/r^3$ and $R^r{}_{0rr} = 0$ by the antisymmetry in its last two indices.
+For $R_{\theta\theta}$, the first two terms are the Step 6 values of $R^0{}_{\theta 0\theta}$ and $R^r{}_{\theta r\theta}$ as they stand, and the third is $R^\phi{}_{\theta\phi\theta} = R_{\theta\phi\theta\phi}/(r^2\sin^2\theta)$:
 
-$$R_{\theta\theta} = R^0{}_{\theta\theta 0} + R^r{}_{\theta\theta r} + R^\phi{}_{\theta\theta\phi} = \frac{r_s}{2r} + \frac{r_s}{2r} - \frac{r_s}{r} = 0.$$
+$$R_{\theta\theta} = R^0{}_{\theta 0\theta} + R^r{}_{\theta r\theta} + R^\phi{}_{\theta\phi\theta} = -\frac{r_s}{2r} - \frac{r_s}{2r} + \frac{r_s}{r} = 0.$$
 
 The same cancellation kills $R_{\phi\phi}$, and $R_{rr} = 0$ because every one of its four terms would need a symbol $\Gamma^\mu_{rr}$, which Step 5 found does not exist.
 The components with mixed angular indices vanish by spherical symmetry.
 
 So the entry's `ricci_tensor.ll` block has exactly one entry,
 
-$$R_{uu} = \frac{2G\dot{m}}{c^2r^2},$$
+$$R_{uu} = -\frac{2G\dot{m}}{c^2r^2},$$
 
 and the two raised variants follow from $g^{0\alpha}$ having only the one nonzero entry $g^{0r} = -1$:
 
-$$R^r{}_u = g^{r0}R_{00} = -\frac{2G\dot{m}}{c^2r^2}, \qquad R^{rr} = \left(g^{r0}\right)^2R_{00} = \frac{2G\dot{m}}{c^2r^2},$$
+$$R^r{}_u = g^{r0}R_{00} = \frac{2G\dot{m}}{c^2r^2}, \qquad R^{rr} = \left(g^{r0}\right)^2R_{00} = -\frac{2G\dot{m}}{c^2r^2},$$
 
 with $R^u{}_u = g^{u\alpha}R_{\alpha u} = g^{uu}R_{uu} = 0$ because $g^{uu} = 0$.
 An index raised on a null tensor moves to a different slot rather than staying where it was, which is why the `ul` variant is printed against $[r,u]$ and the `uu` variant against $[r,r]$.
@@ -327,7 +327,7 @@ $$G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = R_{\mu\nu},$$
 
 so the entry publishes
 
-$$G_{uu} = \frac{2G\dot{m}}{c^2r^2}, \qquad G^r{}_u = -\frac{2G\dot{m}}{c^2r^2}, \qquad G^{rr} = \frac{2G\dot{m}}{c^2r^2},$$
+$$G_{uu} = -\frac{2G\dot{m}}{c^2r^2}, \qquad G^r{}_u = \frac{2G\dot{m}}{c^2r^2}, \qquad G^{rr} = -\frac{2G\dot{m}}{c^2r^2},$$
 
 and nothing else in any of the three variants.
 
@@ -352,13 +352,15 @@ for every $\mu$, which is the second use of the missing $\Gamma^\mu_{rr}$ noted 
 
 Since $k_\mu k_\nu$ has the single nonzero component $k_0k_0 = 1$, Step 9 can be rewritten with no loss as
 
-$$G_{\mu\nu} = \frac{2G\dot{m}}{c^2r^2}\,k_\mu k_\nu.$$
+$$G_{\mu\nu} = -\frac{2G\dot{m}}{c^2r^2}\,k_\mu k_\nu.$$
 
 That is the pure radiation form: the Einstein tensor is a scalar times the outer square of one null covector.
 
-The collection's contraction makes the field equations $G_{\mu\nu} = -8\pi G\,T_{\mu\nu}/c^4$, as Step 1 recorded, so
+The standard contraction makes the field equations $G_{\mu\nu} = 8\pi G\,T_{\mu\nu}/c^4$, as Step 1 recorded, so
 
-$$T_{\mu\nu} = -\frac{c^4}{8\pi G}G_{\mu\nu} = -\frac{c^2\dot{m}}{4\pi r^2}\,k_\mu k_\nu = -\frac{c}{4\pi r^2}\frac{dm}{du}k_\mu k_\nu.$$
+$$T_{\mu\nu} = \frac{c^4}{8\pi G}G_{\mu\nu} = -\frac{c^2\dot{m}}{4\pi r^2}\,k_\mu k_\nu = -\frac{c}{4\pi r^2}\frac{dm}{du}k_\mu k_\nu.$$
+
+Both signs moved together, so the stress energy is what it was: it is a measurable thing and cannot depend on which trace of Riemann is named Ricci.
 
 This is null dust: energy streaming along the null geodesics of $k$ with no rest mass, no pressure transverse to the flow and no shear.
 
@@ -385,23 +387,24 @@ That is the reading Lindquist, Schwartz and Misner gave the mass function, quote
 
 ## Step 11. The Weyl tensor
 
-In four dimensions, with $S_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu} = -R_{\mu\nu}$ the trace of the Riemann tensor taken the other way, and $S = g^{\mu\nu}S_{\mu\nu} = 0$ here,
+In four dimensions, with $R = 0$ here,
 
-$$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \tfrac{1}{2}\left(g_{\mu\rho}S_{\sigma\nu} - g_{\mu\sigma}S_{\rho\nu} - g_{\nu\rho}S_{\sigma\mu} + g_{\nu\sigma}S_{\rho\mu}\right).$$
+$$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \tfrac{1}{2}\left(g_{\mu\rho}R_{\sigma\nu} - g_{\mu\sigma}R_{\rho\nu} - g_{\nu\rho}R_{\sigma\mu} + g_{\nu\sigma}R_{\rho\mu}\right).$$
 
-The only nonzero $S_{\mu\nu}$ is $S_{00} = -\dot{r}_s/r^2$, so a correction term survives only when one index of each pair is $0$ and the metric factor multiplying $S_{00}$ is nonzero.
+The trace the formula wants is the published Ricci tensor itself, which is what the standard contraction buys.
+Its only nonzero component is $R_{00} = -\dot{r}_s/r^2$, so a correction term survives only when one index of each pair is $0$ and the metric factor multiplying $R_{00}$ is nonzero.
 
 For the $(0,r)$ plane every candidate correction vanishes:
 
-$$C_{0r0r} = R_{0r0r} - \tfrac{1}{2}\left(g_{00}S_{rr} - g_{0r}S_{0r} - g_{r0}S_{r0} + g_{rr}S_{00}\right) = R_{0r0r} = -\frac{2Gm}{c^2r^3},$$
+$$C_{0r0r} = R_{0r0r} - \tfrac{1}{2}\left(g_{00}R_{rr} - g_{0r}R_{0r} - g_{r0}R_{r0} + g_{rr}R_{00}\right) = R_{0r0r} = -\frac{2Gm}{c^2r^3},$$
 
-since $S_{rr} = S_{0r} = 0$ and $g_{rr} = 0$.
+since $R_{rr} = R_{0r} = 0$ and $g_{rr} = 0$.
 For the mixed plane the last term survives:
 
-$$C_{0\theta 0\theta} = R_{0\theta 0\theta} - \tfrac{1}{2}g_{\theta\theta}S_{00} = R_{0\theta 0\theta} + \frac{\dot{r}_s}{2} = \frac{r_s}{2r}f = \frac{Gm}{c^2r}\left(1-\frac{2Gm}{c^2r}\right),$$
+$$C_{0\theta 0\theta} = R_{0\theta 0\theta} - \tfrac{1}{2}g_{\theta\theta}R_{00} = R_{0\theta 0\theta} + \frac{\dot{r}_s}{2} = \frac{r_s}{2r}f = \frac{Gm}{c^2r}\left(1-\frac{2Gm}{c^2r}\right),$$
 
 and the term in $\dot{m}$ has been removed exactly.
-The remaining independent components, $C_{0\theta r\theta} = R_{0\theta r\theta}$ and $C_{\theta\phi\theta\phi} = R_{\theta\phi\theta\phi}$, are uncorrected, because $g_{\theta 0} = 0$ and $g_{\phi 0} = 0$ leave nothing for $S_{00}$ to multiply.
+The remaining independent components, $C_{0\theta r\theta} = R_{0\theta r\theta}$ and $C_{\theta\phi\theta\phi} = R_{\theta\phi\theta\phi}$, are uncorrected, because $g_{\theta 0} = 0$ and $g_{\phi 0} = 0$ leave nothing for $R_{00}$ to multiply.
 
 So the Weyl tensor is the Riemann tensor of Schwarzschild with $r_s$ read at the retarded time, and it carries no $\dot{m}$ anywhere.
 The radiation lives entirely in the Ricci part of the curvature and the tidal part is Coulomb like, the same algebraically special form Schwarzschild has.
@@ -565,7 +568,7 @@ $\Gamma^v_{vv} = +\dfrac{Gm}{c^2r^2}$, three indices in the reflected slot and n
 
 $\Gamma_{vvv} = \dfrac{G\dot{m}}{c^2r}$, three indices and one $\dot{m}$, so the two sign flips cancel and the value is unchanged.
 
-$R_{vv} = -\dfrac{2G\dot{m}}{c^2r^2}$, two indices and one $\dot{m}$, so the value flips from the outgoing $+\dfrac{2G\dot{m}}{c^2r^2}$.
+$R_{vv} = +\dfrac{2G\dot{m}}{c^2r^2}$, two indices and one $\dot{m}$, so the value flips from the outgoing $-\dfrac{2G\dot{m}}{c^2r^2}$.
 
 The physics the reflection carries is the interesting part.
 The stress energy becomes

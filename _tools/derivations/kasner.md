@@ -25,12 +25,12 @@ $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sig
 
 which is what the published Riemann components are in.
 
-The collection contracts the Ricci tensor on the last lower index,
+The Ricci tensor is the standard contraction on the first lower index,
 
-$$R_{\mu\nu} = R^\alpha{}_{\mu\nu\alpha},$$
+$$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-which is the opposite sign from the commoner $R^\alpha{}_{\mu\alpha\nu}$.
-For this spacetime the choice happens not to matter for anything published, because both contractions vanish together on the constraint surface; Step 8 computes the one the collection uses and Step 9 notes that the other is its negative.
+which is what the collection publishes everywhere.
+For this spacetime the choice does not reach anything published, because the other contraction is the negative of this one and the two vanish together on the constraint surface; Step 8 computes this one and Step 9 says why the entry was untouched when the collection settled on it.
 
 Factors of $c$ are kept explicit.
 The chart, here and everywhere else in the collection, is the one whose time coordinate is $x^0 = cT$.
@@ -211,29 +211,28 @@ That is twenty four nonzero components out of $4^4 = 256$, which is what the ent
 
 ## Step 8. The Ricci tensor, and where the constraints come from
 
-Contract on the last lower index, $R_{\mu\nu} = R^\alpha{}_{\mu\nu\alpha}$.
+Contract on the first lower index, $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$.
 
 For the time slot, only spatial $\alpha$ can contribute, since $R^t{}_{ttt} = 0$ by antisymmetry:
 
-$$R_{tt} = \sum_{i} R^i{}_{tti} = \sum_i \frac{p_i(p_i-1)}{t^2} = \frac{1}{t^2}\left(\sum_i p_i^2 - \sum_i p_i\right),$$
+$$R_{tt} = \sum_{i} R^i{}_{tit} = -\sum_i \frac{p_i(p_i-1)}{t^2} = \frac{1}{t^2}\left(\sum_i p_i - \sum_i p_i^2\right),$$
 
-using Step 6.
+using $R^i{}_{tit} = -R^i{}_{tti}$ and Step 6.
 
 For a spatial slot, take $i = x$ as the representative.
-The contraction runs over $\alpha = t$, which is the Step 6 family, and over the two spatial $\alpha = j \neq x$, which is the Step 7 family:
+The contraction runs over $\alpha = t$, which is the Step 6 family, and over the two spatial $\alpha = j \neq x$, which is the Step 7 family, and both are components those steps computed directly:
 
-$$R_{xx} = R^t{}_{xxt} + \sum_{j \neq x} R^j{}_{xxj} = -\frac{p_1(p_1-1)t^{2p_1-2}}{c^2} - \sum_{j\neq x}\frac{p_1p_j\,t^{2p_1-2}}{c^2},$$
+$$R_{xx} = R^t{}_{xtx} + \sum_{j \neq x} R^j{}_{xjx} = \frac{p_1(p_1-1)t^{2p_1-2}}{c^2} + \sum_{j\neq x}\frac{p_1p_j\,t^{2p_1-2}}{c^2}.$$
 
-where the first term is $-R^t{}_{xtx}$ by antisymmetry.
-Factor out $-p_1 t^{2p_1-2}/c^2$:
+Factor out $p_1 t^{2p_1-2}/c^2$:
 
-$$R_{xx} = -\frac{p_1\,t^{2p_1-2}}{c^2}\Big(p_1 - 1 + p_2 + p_3\Big) = -\frac{p_1\,t^{2p_1-2}}{c^2}\left(\sum_i p_i - 1\right),$$
+$$R_{xx} = \frac{p_1\,t^{2p_1-2}}{c^2}\Big(p_1 - 1 + p_2 + p_3\Big) = \frac{p_1\,t^{2p_1-2}}{c^2}\left(\sum_i p_i - 1\right),$$
 
 and by the same computation on the other two axes,
 
-$$R_{ii} = -\frac{p_i\,t^{2p_i-2}}{c^2}\left(\sum_i p_i - 1\right).$$
+$$R_{ii} = \frac{p_i\,t^{2p_i-2}}{c^2}\left(\sum_i p_i - 1\right).$$
 
-Every off diagonal component vanishes, because a nonzero $R_{\mu\nu}$ would need a nonzero $R^\alpha{}_{\mu\nu\alpha}$, and Steps 6 and 7 leave no Riemann component whose middle two indices are different.
+Every off diagonal component vanishes, because a nonzero $R_{\mu\nu}$ with $\mu \neq \nu$ would need a nonzero $R^\alpha{}_{\mu\alpha\nu}$, and every Riemann component Steps 6 and 7 leave standing repeats its second index in its fourth.
 
 Now impose $R_{\mu\nu} = 0$, which for a vacuum with no cosmological constant is the whole of the field equations.
 A spatial equation reads $p_i\left(\sum_i p_i - 1\right)t^{2p_i-2} = 0$, and $t^{2p_i-2}$ is nowhere zero on $t>0$, so each axis demands $p_i = 0$ or $\sum_i p_i = 1$.
@@ -243,7 +242,7 @@ $$\sum_i p_i = 1.$$
 
 Given that, the time equation reads
 
-$$R_{tt} = \frac{1}{t^2}\left(\sum_i p_i^2 - 1\right) = 0 \iff \sum_i p_i^2 = 1.$$
+$$R_{tt} = \frac{1}{t^2}\left(1 - \sum_i p_i^2\right) = 0 \iff \sum_i p_i^2 = 1.$$
 
 So the two constraints the entry publishes are precisely the vacuum field equations for a diagonal power law metric, one from the spatial trace and one from the time slot.
 On the constraint surface,
@@ -265,9 +264,9 @@ $$G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = 0 - 0 = 0,$$
 in every variant, for the same reason.
 The entry publishes $R = 0$ and three empty lists for the Einstein tensor.
 
-This is where the choice of contraction stops mattering.
-The other convention gives $R^\alpha{}_{\mu\alpha\nu} = -R^\alpha{}_{\mu\nu\alpha}$, by the antisymmetry of Riemann in its last two indices, so the two Ricci tensors differ by an overall sign and vanish together.
-A reader who prefers the textbook contraction reads exactly the same zeros here.
+This is why the convention never reached this entry.
+The two contractions are related by $R^\alpha{}_{\mu\alpha\nu} = -R^\alpha{}_{\mu\nu\alpha}$, by the antisymmetry of Riemann in its last two indices, so they differ by an overall sign and vanish together.
+When the collection moved onto the standard contraction, every entry with a nonzero Ricci tensor had its published values negated and this one had nothing to change.
 
 ---
 
@@ -277,8 +276,8 @@ In four dimensions,
 
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \frac{1}{2}\left(g_{\mu\rho}\mathcal{R}_{\sigma\nu} - g_{\mu\sigma}\mathcal{R}_{\rho\nu} - g_{\nu\rho}\mathcal{R}_{\sigma\mu} + g_{\nu\sigma}\mathcal{R}_{\rho\mu}\right) + \frac{\mathcal{R}}{6}\left(g_{\mu\rho}g_{\sigma\nu} - g_{\mu\sigma}g_{\rho\nu}\right),$$
 
-where $\mathcal{R}_{\mu\nu}$ is the trace of Riemann and $\mathcal{R}$ its scalar.
-By Step 8 both are zero on the constraint surface, whichever of the two contractions is used, so every correction term is zero and
+where $\mathcal{R}_{\mu\nu}$ is the trace of Riemann and $\mathcal{R}$ its scalar, which is the Ricci tensor of Step 8 and its scalar.
+Both are zero on the constraint surface, whichever of the two contractions is used, so every correction term is zero and
 
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma}.$$
 
