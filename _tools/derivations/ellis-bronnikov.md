@@ -21,6 +21,9 @@ Two independent confirmations are carried alongside the algebra.
 Minkowski in spherical coordinates is this spacetime at $\ell = 0$ and settles the geodesic sign on its own, in Step 9.
 Morris-Thorne, whose entry landed the same day, contains this spacetime as the special case $\Phi = 0$, $r(l) = \sqrt{l^2+\ell^2}$, and Step 11 specialises all of it and finds that it reproduces every value this entry publishes, including all twelve of the added ones.
 
+Step 13 was added on 22 September 2026, after the rest, and supplies the one block the entry still did not publish, its inverse metric.
+Every other coordinate system in the collection publishes one, and this was the last line the checker reported `UNCHECKED` for want of anything to check.
+
 ---
 
 ## Step 1. Conventions
@@ -110,8 +113,8 @@ with the inverse
 
 $$g^{tt} = -1, \qquad g^{rr} = 1, \qquad g^{\theta\theta} = \frac{1}{\rho^2}, \qquad g^{\phi\phi} = \frac{1}{\rho^2\sin^2\theta}.$$
 
-The entry does not publish the inverse metric, which is why the checker reports one `UNCHECKED` line against this system.
-That is a separate matter from the three corrections and is left where it stands.
+When the three corrections were made the entry did not publish the inverse metric, and the checker reported one `UNCHECKED` line against this system for it.
+It publishes it now, and Step 13 is where that is done.
 
 Two facts about this metric do most of the work below and are worth stating once.
 
@@ -616,3 +619,45 @@ That moves the comparison in the safe direction rather than the dangerous one: t
 The collection totals of 72 and 59 are the totals of that one tree, and they are not what a sweep run later will report.
 Krasnikov and Kerr-Newman landed while this was being written, and both had been sitting in the folder with an empty `coordinates` list, so the collection went from 39 checkable coordinate systems to 41 underneath this work.
 What carries over from the pair of runs is the difference, which is 13 and is all of it in this entry.
+
+---
+
+## Step 13. The inverse metric
+
+Every other coordinate system in the collection publishes its inverse metric, and the page prints it beside the metric.
+This entry did not, which left the one slot in the collection that the checker reported `UNCHECKED` because there was nothing in it to compare.
+The slot is filled here rather than excused in the checker, because an inverse metric is part of what every entry gives its reader, and because the one thing a checker could say about an empty slot is that it is empty.
+
+The metric of Step 2 is diagonal, so its inverse is diagonal too, with each component the reciprocal of the metric component in the same slot:
+
+$$g^{\mu\nu} = \operatorname{diag}\left(\frac{1}{g_{tt}},\ \frac{1}{g_{rr}},\ \frac{1}{g_{\theta\theta}},\ \frac{1}{g_{\phi\phi}}\right).$$
+
+In the chart $x^0 = ct$ that is
+
+$$g^{tt} = -1, \qquad g^{rr} = 1, \qquad g^{\theta\theta} = \frac{1}{r^2+\ell^2}, \qquad g^{\phi\phi} = \frac{1}{\left(r^2+\ell^2\right)\sin^2\theta},$$
+
+and every off diagonal component vanishes.
+The product $g^{\mu\alpha}g_{\alpha\nu}$ is diagonal with entries $(-1)(-1)$, $1\cdot1$, $\rho^2/\rho^2$ and $\rho^2\sin^2\theta/(\rho^2\sin^2\theta)$, each of them $1$, so it is the identity wherever the metric is defined, which is everywhere off the poles $\sin\theta = 0$, the same coordinate singularity flat spherical coordinates have.
+
+The time component follows the chart rule of Step 1 in the other direction from the metric's.
+With the bare coordinate the time component of the line element is $-c^2$, whose reciprocal is $-1/c^2$, and a component with two upper time indices is multiplied by $c$ twice on the way into the chart, which gives $-1$.
+
+The dimensions balance by the rule of Step 10 with the indices raised.
+An upper index contributes $[x^\mu]/L$, so $g^{tt}$ and $g^{rr}$ are dimensionless, as $-1$ and $1$ are, and $g^{\theta\theta}$ and $g^{\phi\phi}$ carry $1/L^2$, as $1/(r^2+\ell^2)$ does.
+
+The two angular values are written the way the rest of the collection writes them, the $\phi\phi$ one as Taub-NUT writes its own $1/\left((r^2+l^2)\sin^2\theta\right)$, with the sum in parentheses.
+The page sets the inverse metric as a four by four matrix under the metric's own, one value per slot and zero in every slot the entry leaves out, so nothing here is grouped with its negation.
+
+With it published the system reports nothing `UNCHECKED`:
+
+```
+$ python3 _tools/derivations/verify_metrics.py --system ellis_bronnikov/spherical
+
+  ellis_bronnikov/spherical
+
+29 metric files, 1 coordinate systems, 1 checked.
+
+Every published value balances dimensionally and agrees with sympy.
+```
+
+A wrong value in the new block is caught, which was confirmed by publishing $g^{\phi\phi}$ without its $\sin^2\theta$ for one run: the checker reported it as a disagreement against sympy's $1/\left((\ell^2+r^2)\sin^2\theta\right)$ and exited non-zero.

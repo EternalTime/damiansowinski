@@ -554,5 +554,6 @@ That is the opposite of Kasner, whose exponents are bound by two equations and w
 Two things in the reader are new with this entry, and both are general rather than particular to it.
 A parameter may now be declared as a function of several coordinates, as `H = H(u,x,y)`, where before only a function of one coordinate was understood.
 And a partial derivative may be written with $\partial$, as $\partial_x H$ or $\partial_x^2 H$ or $\partial_x\partial_y H$, which the reader expands into the name it has declared for that derivative.
-Every first and second partial derivative of a declared function is declared, which is as far as any curvature tensor reaches, and a function of one coordinate still answers to a dot and to a prime as it did before.
+Every first and second partial derivative of a declared function was declared, which was as far as any curvature tensor in the collection then reached, and a function of one coordinate still answers to a dot and to a prime as it did before.
+Tolman-Bondi later reached a third, and since 22 September 2026 the reader declares a partial derivative of any order when a published value names it; `tolman_bondi.md` Step 18 says why.
 Like the dot and the prime, the $\partial$ is taken with respect to the chart coordinate, so $\partial_u$ carries the $1/c$ of Step 1 and $\partial_x$ does not, and Step 15 is what that convention buys.

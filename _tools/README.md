@@ -97,8 +97,10 @@ It splits a radical into the square roots of the irreducible factors of its radi
 Every radicand in the collection is positive factor by factor on the region its entry describes, and that reading is what lets the interior Schwarzschild radicals cancel.
 An entry whose radicals change sign inside the region it claims would need that looked at again.
 
-Both passes exit clean on the collection as it stands.
-What remains is `UNCHECKED`, which does not set the exit code: the 140 Tolman-Bondi expressions, 70 per pass, that name a third derivative the reader does not declare, and the inverse metric Ellis-Bronnikov does not publish.
+Both passes exit clean on the collection as it stands, and neither leaves anything `UNCHECKED`: since 22 September 2026 every published expression of every system is compared.
+The last to be reached were the seventy Tolman-Bondi expressions that name a third derivative, which the reader now declares, and the inverse metric of Ellis-Bronnikov, which the entry now publishes.
+`UNCHECKED` does not set the exit code, so a new one shows only in the output, and a clean run is one that prints none.
+Every system publishes its inverse metric, because the page prints it beside the metric, so a system without one is reported `UNCHECKED` as missing it rather than excused.
 Both passes print what failed on stderr and print the single line saying nothing failed on stdout, so a run piped through `2>&1 | tail` can look clean when it is not.
 Read the exit code, and run the script before and after a change so that a failure you did not cause is not mistaken for one you did.
 
@@ -145,14 +147,15 @@ FRW can be read with a dimensionless comoving $r$ and a scale factor carrying th
 Where that happens, the table carries a comment saying which reading the entry's own values obey.
 
 A parameter may be a function rather than a constant.
-`a = a(t)` declares a function of one coordinate, which answers to a dot and to a prime, and `H = H(u,x,y)` declares a function of several, which answers to `\partial`: a published `\partial_x H`, `\partial_x^2 H` or `\partial_x\partial_y H` is read as that first or second partial derivative.
+`a = a(t)` declares a function of one coordinate, which answers to a dot and to a prime, and `H = H(u,x,y)` declares a function of several, which answers to `\partial`: a published `\partial_x H`, `\partial_x^2 H` or `\partial_x\partial_y H` is read as that partial derivative, and so is one of any higher order.
 Every such derivative is taken with respect to the chart coordinate, exactly as the dot and the prime are, so one along a time carries a factor of $1/c$ and one along a length does not.
 `_tools/derivations/pp_wave.md` is the worked example, and its Step 15 is where that factor earns its keep.
 
-The second derivative is as far as the reader goes, and that is far enough only while the line element carries its functions undifferentiated.
-Tolman-Bondi is the entry where it is not: its $g_{rr}$ is built from $\partial_r R$, so a curvature, which is two derivatives of the metric, reaches $\partial_r\partial_t^2R$.
-Seventy of that entry's one hundred and seventy three published expressions name it and come back `UNCHECKED` for want of a declaration, the seventy being both Riemann variants in the $t,r$ plane, the $tt$ and $rr$ slots of every Ricci variant, the $\theta\theta$ and $\phi\phi$ slots of every Einstein variant, both scalars and the whole of the Weyl tensor.
-`_tools/derivations/tolman_bondi.md` Step 18 names the five line third loop in `_declare_parameter` that would close it, and records the separate run, with that loop patched in from outside the repository, in which the script's own `check_system` checked all one hundred and seventy three and disagreed with none.
+The reader fixes no highest order.
+A curvature is two derivatives of the metric, so it reaches the second derivative of a function only while the line element carries that function undifferentiated, and Tolman-Bondi is the entry where it does not: its $g_{rr}$ is built from $\partial_r R$, so its curvature reaches $\partial_r\partial_t^2R$.
+`Reader._declare_partials` therefore declares a partial derivative when a published value names one, at whatever order it is written and in whatever order its factors are spelled, since mixed partials commute.
+It still refuses a derivative of anything the system does not declare as a function, or along a coordinate the function is not declared to depend on, so a typo is an error naming the function and the coordinate rather than a new symbol.
+`_tools/derivations/tolman_bondi.md` Step 18 is the worked example, and records that the entry's seventy third derivative expressions came back `UNCHECKED` until 22 September 2026.
 
 The prime works only on a function whose name is not a LaTeX command.
 The reader turns a prime into a name suffix before it turns `\Phi` into a name, so `b'` reads as the derivative of `b` while `\Phi'` leaves a stray backslash and is rejected as unhandled LaTeX.
