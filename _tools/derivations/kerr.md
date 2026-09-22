@@ -605,3 +605,9 @@ What was established instead, and what a later reader should know stands behind 
 
 The honest summary is that the physics is verified and the tool is too slow to say so on its own.
 Making `norm` fall back to a canonical trig reduction before reaching for `simplify` would bring Kerr inside the budget and would speed up the whole collection, and that is the obvious next piece of work on the checker.
+
+**Since 22 September 2026 the script says so on its own.**
+`norm` now reads every expression as a rational function of its generators, reduces $\cos^2\theta$ by $1 - \sin^2\theta$, and keeps every denominator as a product of irreducible factors, so it never takes a polynomial gcd and never calls `simplify` on anything in the collection; its docstring records the alternatives that were measured and why they lost.
+`--system kerr/boyer_lindquist` now finishes in about six and a half seconds at the default budget and reports no disagreement and nothing unchecked, the Kretschmann scalar included.
+The Riemann tensor takes half a second and the Kretschmann scalar about a second and a half.
+The cross checks above were not redone, and did not need to be: the script now reaches their verdict by itself.

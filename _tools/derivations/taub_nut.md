@@ -485,4 +485,5 @@ Verify it at a larger budget instead:
         --system taub_nut/spherical --budget 2400
 
 which reports no disagreements and no dimensional failures, and takes from nine minutes to about half an hour depending on the load.
+Since 22 September 2026 that is no longer necessary: `norm` keeps denominators factored instead of calling `simplify`, and the whole entry checks in about three seconds at the default budget, with nothing unchecked.
 The dimensional pass is unaffected and runs over the whole entry in a moment, as it does everywhere else.

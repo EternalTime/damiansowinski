@@ -738,5 +738,6 @@ The Cartesian chart takes seven and a half minutes and reports no disagreement i
 Its Riemann tensor costs the script 41 seconds and its Weyl tensor 55, which is what the four printed variants are worth; the Kretschmann scalar costs 182, because the script reaches that scalar by raising all four indices of the coordinate Riemann tensor and simplifying each of the 256 components rather than by the frame route of Step 9.
 At the default budget of 120 seconds that one comparison comes back UNCHECKED, with the reason printed, which is the same accounting `_tools/README.md` gives for Kerr on a larger scale.
 The budget is wall clock rather than processor time, so a machine running other work alongside the script can push that step past 400 seconds as well; the number to compare against is the 182 seconds it costs on its own.
+Since 22 September 2026 `norm` keeps denominators factored instead of calling `simplify`, and the Kretschmann scalar is raised one index at a time, so the Cartesian chart takes under a minute at the default budget and reports nothing unchecked; the Kretschmann scalar costs 16 seconds of that.
 The value itself is the one Step 9 derives and checks three further ways.
 The dimensional pass reports nothing for either chart, which is the check of Step 23 run over every term.
