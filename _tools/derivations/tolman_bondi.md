@@ -5,7 +5,7 @@ Every number the entry prints is derived here, in order, from the line element d
 Nothing is left as an exercise and nothing is asserted that is not computed.
 
 The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
-Step 18 says what that comparison covered and the one thing it could not read.
+Step 18 says what that comparison covers, and how the third derivative of Step 6 came to be read by it.
 
 Like FRW and like Bianchi type I, this entry's metric is not a formula.
 Its areal radius $R(r,t)$ and its energy function $E(r)$ are undetermined, and no field equation is imposed on them anywhere in this file.
@@ -223,7 +223,7 @@ $$R^t{}_{rtr} = \frac{\partial_r R\,\partial_r\partial_t^2R}{1+2E}.$$
 The square of the first derivative cancels and a third derivative of $R$ is left standing.
 There is nothing to be done about it.
 The radial metric component already carries one derivative of $R$, and a curvature carries two derivatives of the metric, so the curvature of this line element reaches the third derivative of the function the line element is written with, which is one order past every other entry in the collection.
-Step 18 says what that costs at the checker.
+Step 18 says what that cost at the checker, until the checker learned to read it.
 
 The partner with the indices the other way up is the same expression divided by $g_{rr}$ and multiplied by $g_{tt}$,
 
@@ -600,7 +600,7 @@ The Kretschmann scalar wants $1/L^4$, and each of its four squares delivers it: 
 
 ---
 
-## Step 18. What the entry publishes, the declaration the checker needs, and the one thing it cannot read
+## Step 18. What the entry publishes, the declaration the checker needs, and the third derivative
 
 The one system publishes one hundred and seventy three expressions:
 
@@ -634,11 +634,10 @@ The cost is that a reader meeting the Einstein block sees an anisotropic fluid r
 The index names in a published component have to be the coordinate names exactly as `coords` spells them, so `"\\theta"` and `"\\phi"` and not `"theta"` and `"phi"`.
 Getting it wrong is loud in the sympy pass and silent in the dimensional one, which skips a component whose indices it cannot resolve, so a clean `--dimensions-only` run means nothing until the sympy comparison has confirmed that the index names resolve.
 
-What the checker could not read is the third derivative.
-`Reader._declare_parameter` in `verify_metrics.py` declares, for a parameter that is a function of several coordinates, every first partial derivative and every second one and nothing beyond, and `_tools/README.md` used to say that second derivatives are as far as any curvature tensor reaches.
+The third derivative is where this entry first met the checker's limits.
+When the entry landed, `Reader._declare_parameter` in `verify_metrics.py` declared, for a parameter that is a function of several coordinates, every first partial derivative and every second one and nothing beyond, and `_tools/README.md` said that second derivatives are as far as any curvature tensor reaches.
 That was true of every other entry in the collection and is false here, for the reason Step 6 gives: the radial metric component already carries one derivative of $R$, so a curvature, which is two derivatives of the metric, reaches $\partial_r\partial_t^2R$.
-The README now says so, in the section on adding a spacetime to the checker.
-Seventy of the one hundred and seventy three published expressions name that third derivative, and the script reports each of them `UNCHECKED` rather than passing it in silence, once from the dimensional pass and once from the sympy pass, so a full run on this system prints one hundred and forty such lines for seventy expressions:
+Seventy of the one hundred and seventy three published expressions name that third derivative:
 
 - the four components of each Riemann variant in the plane of $t$ and $r$, eight in all;
 - the $tt$ and $rr$ components of all three Ricci variants, six in all, and the Ricci scalar;
@@ -646,30 +645,20 @@ Seventy of the one hundred and seventy three published expressions name that thi
 - all twenty four components of each Weyl variant, forty eight in all;
 - the Kretschmann scalar.
 
-Everything else, one hundred and three expressions, is compared against sympy in the ordinary way and agrees:
+The script reported each of them `UNCHECKED` rather than passing it in silence, once from the dimensional pass and once from the sympy pass, one hundred and forty lines for seventy expressions, and until 22 September 2026 they were the last expressions in the collection it could not read.
+They were checked in the meantime by a script outside the repository that patched a third loop into `_declare_parameter` and called the script's own `check_system` on this entry, and it disagreed with none of them.
+
+Since 22 September 2026 the reader has no fixed order at all.
+`Reader._declare_partials` declares a partial derivative when a published value names one, at whatever order it is written, provided the function is declared and every coordinate it is differentiated along is one the function is declared to depend on.
+A third loop would have closed this entry and left the next entry one order further on to meet the same wall, while declaring on demand costs nothing for the orders nobody writes and still turns a typo into an error rather than a new symbol: $\partial_\theta R$ is refused with the reason that $R$ is declared a function of $r$ and $t$ only.
+The spelling does not matter either, because mixed partials commute and every spelling of $\partial_r\partial_t^2R$ is read as the one object.
+
+The whole system, all one hundred and seventy three expressions, is now compared against sympy in the ordinary way and agrees:
 
 ```
-/tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py \
+python3 _tools/derivations/verify_metrics.py \
     --system tolman_bondi/comoving_synchronous
 ```
 
-reports no disagreements and no dimensional failures, in about twenty three seconds, and exits zero.
-
-The seventy were then checked separately, in the way Step 17 of `kerr.md` checks what that entry's budget could not reach.
-A script outside the repository imported `verify_metrics` unchanged, wrapped `Reader._declare_parameter` so that it declares the third partial derivatives as well as the first and second, and then called the script's own `check_system` on this entry.
-Everything else was the script: its reader, its metric from the line element, its Christoffel, Riemann, Ricci, Einstein and Weyl, its chart weighting and its component by component comparison, including its requirement that every component the entry does not publish vanish.
-It reported the system checked with nothing unchecked, no dimensional failure and no disagreement, which is all one hundred and seventy three expressions of the entry compared against sympy and agreeing, the seventy included.
-
-The change that would fold that into the script itself is five lines in `_declare_parameter`, a third loop beside the two that are there:
-
-```python
-for third in names:
-    run = sorted([first, second, third], key=self.coords.index)
-    self.parameters[self._partial_name(plain, [first, second, third])] = (
-        sp.Derivative(function, *(self.symbol[name] for name in run))
-        / (scale[first] * scale[second] * scale[third]))
-```
-
-It costs nothing anywhere else, since no other entry publishes a name that would resolve against it, and the docstring above the loops wants a line about the third order at the same time.
-It was left out of this task on purpose, because the task's brief allows one edit to `verify_metrics.py`, the entry's line in `DIMENSIONS`, and several other spacetimes were being added to that same file at the same time.
-That is the obvious next piece of work on the checker, and until it lands this entry is the one place in the collection where the tool stops short of the physics rather than the other way round.
+reports no disagreement, no dimensional failure and nothing `UNCHECKED`, in about two seconds, and exits zero.
+That the seventy are really compared and not merely parsed was confirmed by breaking them: one run doubled the third derivative term of the Kretschmann scalar and the third derivative in one Weyl component, and came back with exactly those two disagreements, and a second run spelled the third derivative $\partial_t\partial_r\partial_t R$ throughout the Weyl block and came back clean.

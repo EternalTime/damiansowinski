@@ -83,6 +83,36 @@
           "value": "(r^2 + \\ell^2)\\sin^2\\theta"
         }
       ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2 + \\ell^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{\\left(r^2 + \\ell^2\\right)\\sin^2\\theta}"
+        }
+      ],
       "christoffel": {
         "default": "ull",
         "variants": {

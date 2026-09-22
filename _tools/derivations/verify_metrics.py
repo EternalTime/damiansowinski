@@ -831,6 +831,8 @@ def expand_braced_call(text, command, replacement):
 PARTIAL = re.compile(
     r"\\partial_\s*\{?\s*(?:\\([A-Za-z]+)|([A-Za-z]))\s*\}?\s*(?:\^\s*\{?\s*(\d+)\s*\}?)?\s*")
 PARTIAL_TARGET = re.compile(r"\\?([A-Za-z]+)")
+# The single token expand_partials writes, split into the function and the coordinates.
+PARTIAL_NAME = re.compile(r"\b([A-Za-z]+)_partial_([A-Za-z]+(?:_[A-Za-z]+)*)\b")
 
 
 def expand_partials(text):
@@ -901,6 +903,7 @@ class Reader:
         self.c = sp.Symbol("c", positive=True)
         self.parameters = {}
         self.parameter_names = []
+        self.functions = {}
         self.primed = set()
         for declaration in parameters:
             self._declare_parameter(declaration)
@@ -935,17 +938,15 @@ class Reader:
     def _plain(name):
         return name.replace("\\", "").strip()
 
-    def _partial_name(self, plain, names):
-        return plain + "_partial_" + "_".join(self._plain(name) for name in names)
-
     def _declare_parameter(self, declaration):
         """`a` is a constant; `a = a(t)` is a function of the coordinates it names.
 
         For the second kind the printed rate is a derivative with respect to the chart
         coordinate, which is c times the named one when that one is a time, so the rate
-        carries the matching power of c. Every first and second partial derivative is
-        declared under the name \\partial expands to, and a function of one coordinate
-        answers to a dot and to a prime besides.
+        carries the matching power of c. A function of one coordinate answers to a dot
+        and to a prime, up to the second derivative, and a function of any number of
+        coordinates answers to \\partial at any order, which _declare_partials resolves
+        when a published value names one.
         """
         plain = self._plain(declaration.split("=")[0])
         self.parameter_names.append(plain)
@@ -960,26 +961,55 @@ class Reader:
                              f"which are not coordinates of this system")
         function = sp.Function(plain, real=True)(*(self.symbol[name] for name in names))
         self.parameters[plain] = function
-        scale = {name: self.c if name in self.time_coords else sp.Integer(1) for name in names}
-        for first in names:
-            self.parameters[self._partial_name(plain, [first])] = (
-                sp.Derivative(function, self.symbol[first]) / scale[first])
-            for second in names:
-                # One object for both spellings, since the mixed partials commute.
-                pair = sorted([first, second], key=self.coords.index)
-                self.parameters[self._partial_name(plain, [first, second])] = (
-                    sp.Derivative(function, *(self.symbol[name] for name in pair))
-                    / (scale[first] * scale[second]))
+        self.functions[plain] = (function, names)
         if len(names) > 1:
             return
         variable = self.symbol[names[0]]
-        first = sp.Derivative(function, variable) / scale[names[0]]
-        second = sp.Derivative(function, variable, 2) / scale[names[0]] ** 2
+        scale = self._scale(names[0])
+        first = sp.Derivative(function, variable) / scale
+        second = sp.Derivative(function, variable, 2) / scale ** 2
         # Both spellings appear: a dot in the comoving chart, a prime in the conformal one.
         for suffix, value in (("_dot", first), ("_prime", first),
                               ("_ddot", second), ("_pprime", second)):
             self.parameters[plain + suffix] = value
         self.primed.add(plain)
+
+    def _scale(self, name):
+        """What a derivative along this coordinate is divided by to be one along the chart."""
+        return self.c if name in self.time_coords else sp.Integer(1)
+
+    def _declare_partials(self, text):
+        """Declare every partial derivative the preprocessed text names, at any order.
+
+        No order is fixed in advance, because the order a curvature reaches depends on
+        the entry: a curvature is two derivatives of the metric, so it reaches the
+        third derivative of a function whose first derivative the line element already
+        carries, as Tolman-Bondi's g_rr carries \\partial_r R. A partial derivative is
+        still only declared for a function the entry declares and along coordinates it
+        declares that function of, so a typo is an error here rather than a new symbol.
+        """
+        for found in PARTIAL_NAME.finditer(text):
+            name = found.group(0)
+            if name in self.local:
+                continue
+            plain, variables = found.group(1), found.group(2).split("_")
+            if plain not in self.functions:
+                raise LatexError(f"{text!r} differentiates {plain}, "
+                                 f"which is not declared as a function of the coordinates")
+            function, arguments = self.functions[plain]
+            by_plain = {self._plain(argument): argument for argument in arguments}
+            stray = [variable for variable in variables if variable not in by_plain]
+            if stray:
+                raise LatexError(f"{text!r} differentiates {plain} along {stray}, "
+                                 f"and it is declared a function of {arguments} only")
+            # One object for every spelling, since mixed partials commute.
+            run = sorted((by_plain[variable] for variable in variables), key=self.coords.index)
+            value = sp.Derivative(function, *(self.symbol[argument] for argument in run))
+            for argument in run:
+                value /= self._scale(argument)
+            self.parameters[name] = value
+            self.local[name] = value
+            self.known.add(name)
 
     def _preprocess(self, latex):
         text = latex
@@ -1022,6 +1052,7 @@ class Reader:
 
     def __call__(self, latex):
         text = self._preprocess(latex)
+        self._declare_partials(text)
         try:
             expression = parse_expr(
                 text, local_dict=dict(self.local), transformations=self.transforms, evaluate=True
@@ -1599,6 +1630,11 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
             "uu", geometry.ginv,
         ))
     else:
+        # Every system in the collection publishes its inverse metric, since the page
+        # prints one beside the metric; Ellis-Bronnikov was the last without one and now
+        # has one too, so this is not a slot the collection leaves empty on purpose. A
+        # system that omits it is missing something the page would show, and saying so
+        # here keeps that visible rather than passing it in silence.
         report.skip(f"{where}.inverse_metric_components", "the entry does not publish one")
     for label, published, variance, matrix in published_metric:
         as_lists = [[matrix[i, j] for j in range(len(coords))] for i in range(len(coords))]
