@@ -119,6 +119,8 @@ import sys
 from pathlib import Path
 
 import sympy as sp
+from sympy.polys.polyerrors import BasePolynomialError
+from sympy.polys.rings import PolyRing
 from sympy.parsing.sympy_parser import (
     implicit_multiplication,
     parse_expr,
@@ -368,10 +370,50 @@ FUNCTIONS = {
 
 
 def norm(expression):
-    """Simplify far enough that a component which vanishes is recognisably zero.
+    """A canonical form of the expression, in which one that vanishes is exactly zero.
 
-    sympy's simplify leaves forms such as sin(2x)tan(x) + cos(2x) - 1 standing, which
-    would otherwise be reported as a curvature component the file forgot to publish.
+    Every tensor is built through this, so it has to be fast as well as exact. What it
+    does, and why, measured on Kerr in Boyer-Lindquist coordinates on 2026-09-22:
+
+    - sympy's general simplify, which this used to call twice, ran Kerr's Riemann
+      tensor for over ninety minutes of processor time without finishing.
+    - sin and cos in terms of symbols, and then sympy's cancel, is exact for the
+      zero test but takes 40s on a single Riemann component, because it multiplies
+      every denominator of a sum together and then takes a gcd of the product.
+    - The same in a field of rational functions, which cancels a gcd after every
+      addition, takes 2 to 9s per component, and 192s for the Kretschmann scalar.
+    - What is here keeps every denominator as a product of irreducible factors, so a
+      common denominator is a maximum over multiplicities and cancelling is trial
+      division by those few factors; no gcd is ever taken. Kerr's Riemann tensor takes
+      0.5s, its Kretschmann scalar 1.4s, and the whole system 17s, including the
+      comparison of every published value. sympy's inv() on the metric was then the
+      slowest step left, which is why Geometry takes the adjugate instead.
+
+    sin and cos are reduced by cos^2 = 1 - sin^2 rather than by a Weierstrass
+    substitution or by rewriting through exp, because both of those raise the degree of
+    every polynomial and neither prints back as anything a reader would recognise. A
+    radical is split into the roots of the irreducible factors of its radicand, which
+    assumes each factor is positive; _factored_root says why that is the right reading
+    for this collection, and it is what lets the interior Schwarzschild radicals, which
+    sympy would never combine unaided, cancel. Anything _canonical has no generators
+    for, which is nothing in the collection as it stands, falls back to simplify.
+    """
+    if isinstance(expression, sp.MatrixBase):
+        return expression.applyfunc(norm)
+    expression = sp.sympify(expression)
+    if expression.is_Number:
+        return expression
+    try:
+        return _canonical(expression)
+    except (BasePolynomialError, NotImplementedError, ZeroDivisionError):
+        return _simplified(expression)
+
+
+def _simplified(expression):
+    """The general simplifier, for the rare expression _canonical has no generators for.
+
+    sympy's simplify leaves forms such as sin(2x)tan(x) + cos(2x) - 1 standing, which is
+    why it is followed by a second pass through expand_trig.
     """
     simplified = sp.simplify(expression)
     if simplified == 0:
@@ -380,6 +422,342 @@ def norm(expression):
     if harder == 0:
         return sp.Integer(0)
     return harder if sp.count_ops(harder) < sp.count_ops(simplified) else simplified
+
+
+# Every function the reader knows that is not sin, cos or exp, in terms of those three.
+_IN_SIN_COS_EXP = {
+    sp.tan: lambda u: sp.sin(u) / sp.cos(u),
+    sp.cot: lambda u: sp.cos(u) / sp.sin(u),
+    sp.sec: lambda u: 1 / sp.cos(u),
+    sp.csc: lambda u: 1 / sp.sin(u),
+    sp.sinh: lambda u: (sp.exp(u) - sp.exp(-u)) / 2,
+    sp.cosh: lambda u: (sp.exp(u) + sp.exp(-u)) / 2,
+    sp.tanh: lambda u: (sp.exp(u) - sp.exp(-u)) / (sp.exp(u) + sp.exp(-u)),
+    sp.coth: lambda u: (sp.exp(u) + sp.exp(-u)) / (sp.exp(u) - sp.exp(-u)),
+}
+
+
+def _canonical(expression):
+    """The expression written as N / (f_1^k_1 ... f_m^k_m), in the one way it can be.
+
+    The expression is read as a rational function of generators: every symbol, every
+    sin(u) and cos(u), every exp(v) and power with a symbolic exponent after it has been
+    split into integer powers of one exp or power per term of the exponent, the square
+    root of every irreducible factor of a radicand, and every other function application.
+    Two kinds of generator are algebraic rather than free: cos(u) wherever sin(u) is also
+    present, since cos^2 = 1 - sin^2, and a square root w of b, since w^2 = b. The
+    numerator N is a polynomial in the generators, and the denominator is kept as a
+    product of powers of irreducible, normalised factors. _Fraction explains how that is
+    kept canonical. A root above the square is left to the general simplifier.
+    """
+    for function, rewrite in _IN_SIN_COS_EXP.items():
+        if expression.has(function):
+            expression = expression.replace(function, rewrite)
+    if any(not atom.args[0].is_Symbol for atom in expression.atoms(sp.sin, sp.cos)):
+        expression = sp.expand_trig(expression)
+    # The reader writes a mixed partial in the order the coordinates are listed and diff
+    # writes it in its own; doit puts both in diff's, so they become one generator.
+    if expression.has(sp.Derivative):
+        expression = expression.replace(lambda x: isinstance(x, sp.Derivative), lambda x: x.doit())
+    # Innermost first, so a radicand is itself in this form before it is factored.
+    expression = expression.replace(
+        lambda x: x.is_Pow and x.exp.is_Rational and not x.exp.is_Integer and not x.base.is_Number,
+        _factored_root)
+
+    generators = set()
+    radicals = {}
+    _collect_generators(expression, generators, radicals)
+    algebraic = []
+    for cosine in [g for g in generators if g.func is sp.cos]:
+        if sp.sin(cosine.args[0]) in generators:
+            algebraic.append((cosine, 1 - sp.sin(cosine.args[0]) ** 2))
+    for base, q in radicals.items():
+        if q != 2:
+            raise NotImplementedError(f"a root of {base} above the square")
+        root = sp.I if base == -1 else sp.sqrt(base)
+        if not (root.is_Pow or root is sp.I):
+            raise NotImplementedError(f"sqrt({base}) does not stay a power")
+        generators.add(root)
+        algebraic.append((root, base))
+    # A radicand that holds another algebraic generator is reduced before that one is,
+    # so the conjugates it leaves behind can still be reduced on the inner one.
+    roots = [root for root, _ in algebraic]
+    algebraic.sort(key=lambda pair: -sum(1 for root in roots if sp.sympify(pair[1]).has(root)))
+
+    ring = PolyRing(sorted(generators, key=sp.default_sort_key), sp.QQ, "lex")
+    index = {symbol: i for i, symbol in enumerate(ring.symbols)}
+    reader = _FractionReader(ring, index)
+    value = reader(expression)
+    relations = [(index[root], reader(base)) for root, base in algebraic]
+    for _ in range(2 * len(relations) + 2):
+        if not any(value.holds(i) for i, _ in relations):
+            break
+        for i, base in relations:
+            if value.holds(i):
+                value = value.reduce(i, base)
+    else:
+        raise NotImplementedError("the algebraic generators do not settle")
+    value = value.cancelled()
+    if not value.numerator:
+        return sp.Integer(0)
+    return value.as_expr()
+
+
+def _factored_root(power):
+    """b^e as the product of f^(k e) over the irreducible factors f^k of b.
+
+    That is an identity only where every factor is positive, and it is what lets
+    sqrt((R - r_s)(R^3 - r^2 r_s)) and R^2 sqrt(1 - r_s/R) sqrt(1 - r^2 r_s/R^3) meet as
+    one product of two generators. Every radicand the collection prints is positive factor
+    by factor on the region its entry describes, the interior of a star or the outside of
+    a horizon, so reading them that way is reading them where the entry is claimed.
+    A factor normalised to the opposite sign of the one the entry means comes out with a
+    factor of i, and so disagrees rather than agreeing by accident.
+    """
+    out = sp.Integer(1)
+    for part, sign in zip(sp.fraction(norm(power.base)), (1, -1)):
+        content, factors = sp.factor_list(part)
+        out *= sp.Pow(content, sign * power.exp)
+        for factor, multiplicity in factors:
+            out *= sp.Pow(factor, sign * multiplicity * power.exp)
+    return out
+
+
+def _exponent_terms(power):
+    """exp(2x + y) as [(exp(x), 2), (exp(y), 1)], and t**(2p - 1) as [(t**p, 2), (t, -1)]."""
+    base, exponent = (sp.E, power.args[0]) if power.func is sp.exp else power.as_base_exp()
+    terms = []
+    for term in sp.Add.make_args(sp.expand(exponent)):
+        coefficient, rest = term.as_coeff_Mul()
+        if not coefficient.is_Rational:
+            coefficient, rest = sp.Integer(1), term
+        if rest == 1:
+            terms.append((base, coefficient))
+        else:
+            terms.append((sp.exp(rest) if base is sp.E else sp.Pow(base, rest), coefficient))
+    return terms
+
+
+def _is_transcendental_power(expression):
+    return expression.func is sp.exp or (expression.is_Pow and not expression.exp.is_Number)
+
+
+def _collect_generators(expression, generators, radicals):
+    """The generators a rational function of the expression is taken in."""
+    if expression.is_Rational:
+        return
+    if expression.is_Add or expression.is_Mul:
+        for argument in expression.args:
+            _collect_generators(argument, generators, radicals)
+    elif expression.is_Pow and expression.exp.is_Integer:
+        _collect_generators(expression.base, generators, radicals)
+    elif expression.is_Pow and expression.exp.is_Rational:
+        base = expression.base
+        radicals[base] = sp.ilcm(radicals.get(base, 1), expression.exp.q)
+        _collect_generators(base, generators, radicals)
+    elif expression is sp.I:
+        radicals[sp.Integer(-1)] = 2
+    elif _is_transcendental_power(expression):
+        for generator, coefficient in _exponent_terms(expression):
+            if not coefficient.is_Integer:
+                raise NotImplementedError(f"{expression} is not an integer power of a generator")
+            generators.add(generator)
+    else:
+        generators.add(expression)
+
+
+class _FractionReader:
+    """An expression, read into a _Fraction over the given ring."""
+
+    def __init__(self, ring, index):
+        self.ring = ring
+        self.index = index
+        self.factored = {}
+
+    def generator(self, symbol):
+        polynomial = self.ring.gens[self.index[symbol]]
+        return _Fraction(self, polynomial, {})
+
+    def constant(self, value):
+        return _Fraction(self, self.ring(value), {})
+
+    def __call__(self, expression):
+        expression = sp.sympify(expression)
+        if expression in self.index:
+            return self.generator(expression)
+        if expression.is_Rational:
+            return self.constant(sp.QQ(expression.p, expression.q))
+        if expression.is_Add:
+            return _Fraction.sum([self(argument) for argument in expression.args], self)
+        if expression.is_Mul:
+            out = self.constant(1)
+            for argument in expression.args:
+                out = out * self(argument)
+            return out
+        if expression.is_Pow and expression.exp.is_Integer:
+            return self(expression.base) ** int(expression.exp)
+        if expression.is_Pow and expression.exp.is_Rational:
+            root = sp.I if expression.base == -1 else sp.sqrt(expression.base)
+            return self.generator(root) ** int(expression.exp * 2)
+        if expression is sp.I:
+            return self.generator(sp.I)
+        if _is_transcendental_power(expression):
+            out = self.constant(1)
+            for generator, coefficient in _exponent_terms(expression):
+                out = out * self(generator) ** int(coefficient)
+            return out
+        raise NotImplementedError(f"{expression} is not a generator")
+
+    def factor(self, polynomial):
+        """(content, {normalised irreducible factor: multiplicity}), memoised."""
+        if polynomial not in self.factored:
+            content, factors = polynomial.factor_list()
+            normalised = {}
+            for factor, multiplicity in factors:
+                scale, factor = _normalised(factor)
+                content *= scale ** multiplicity
+                normalised[factor] = normalised.get(factor, 0) + multiplicity
+            self.factored[polynomial] = (content, normalised)
+        return self.factored[polynomial]
+
+
+def _normalised(polynomial):
+    """(scale, p) with polynomial = scale * p, p primitive with a positive leading term."""
+    content, primitive = polynomial.primitive()
+    if primitive.LC < 0:
+        content, primitive = -content, -primitive
+    return content, primitive
+
+
+class _Fraction:
+    """numerator / prod(factor**multiplicity), the factors irreducible and normalised.
+
+    Keeping the denominator factored is what makes this fast: a common denominator is
+    the maximum multiplicity of each factor, and cancelling is trial division by the
+    few factors there are, so no polynomial gcd is ever taken. Once every factor is free
+    of the algebraic generators and the numerator has been reduced by their relations,
+    removing each factor the numerator is divisible by leaves a form that is unique, and
+    so an expression that vanishes has the numerator zero.
+    """
+
+    def __init__(self, reader, numerator, denominator):
+        self.reader = reader
+        self.numerator = numerator
+        self.denominator = {f: k for f, k in denominator.items() if k}
+
+    @staticmethod
+    def sum(terms, reader):
+        common = {}
+        for term in terms:
+            for factor, multiplicity in term.denominator.items():
+                common[factor] = max(common.get(factor, 0), multiplicity)
+        numerator = reader.ring.zero
+        for term in terms:
+            if not term.numerator:
+                continue
+            cofactor = term.numerator
+            for factor, multiplicity in common.items():
+                missing = multiplicity - term.denominator.get(factor, 0)
+                if missing:
+                    cofactor = cofactor * factor ** missing
+            numerator += cofactor
+        return _Fraction(reader, numerator, common)
+
+    def __add__(self, other):
+        return _Fraction.sum([self, other], self.reader)
+
+    def __sub__(self, other):
+        return self + other * self.reader.constant(-1)
+
+    def __mul__(self, other):
+        denominator = dict(self.denominator)
+        for factor, multiplicity in other.denominator.items():
+            denominator[factor] = denominator.get(factor, 0) + multiplicity
+        return _Fraction(self.reader, self.numerator * other.numerator, denominator)
+
+    def __pow__(self, exponent):
+        if exponent < 0:
+            return self.inverse() ** -exponent
+        return _Fraction(self.reader, self.numerator ** exponent,
+                         {f: k * exponent for f, k in self.denominator.items()})
+
+    def inverse(self):
+        if not self.numerator:
+            raise ZeroDivisionError("the inverse of zero")
+        content, factors = self.reader.factor(self.numerator)
+        numerator = self.reader.ring(1 / content)
+        for factor, multiplicity in self.denominator.items():
+            numerator = numerator * factor ** multiplicity
+        return _Fraction(self.reader, numerator, factors)
+
+    def holds(self, i):
+        """Whether generator i is still anywhere it should not be."""
+        return (self.numerator.degree(i) > 1
+                or any(factor.degree(i) > 0 for factor in self.denominator))
+
+    def reduce(self, i, base):
+        """Fold generator i, w with w^2 = base, out of every denominator factor and down
+        to at most its first power in the numerator."""
+        free = {f: k for f, k in self.denominator.items() if f.degree(i) <= 0}
+        out = _Fraction(self.reader, self.reader.ring.one, free)
+        for factor, multiplicity in self.denominator.items():
+            if factor.degree(i) <= 0:
+                continue
+            folded = _fold(self.reader, factor, i, base)
+            even, odd = _split(folded.numerator, i)
+            unfolded = _Fraction(self.reader, self.reader.ring.one, folded.denominator)
+            if odd:
+                # 1/(A + Bw) = (A - Bw)/(A^2 - B^2 base), and the right side is free of w.
+                square = (_Fraction(self.reader, even ** 2, {})
+                          - _Fraction(self.reader, odd ** 2, {}) * base)
+                conjugate = _Fraction(self.reader, even - odd * self.reader.ring.gens[i], {})
+                reciprocal = unfolded.inverse() * conjugate * square.inverse()
+            else:
+                reciprocal = unfolded.inverse() * _Fraction(self.reader, even, {}).inverse()
+            out = out * reciprocal ** multiplicity
+        numerator = _fold(self.reader, self.numerator, i, base)
+        return out * numerator
+
+    def cancelled(self):
+        numerator = self.numerator
+        denominator = {}
+        for factor, multiplicity in self.denominator.items():
+            while multiplicity and numerator:
+                (quotient,), remainder = numerator.div([factor])
+                if remainder:
+                    break
+                numerator, multiplicity = quotient, multiplicity - 1
+            denominator[factor] = multiplicity
+        return _Fraction(self.reader, numerator, denominator)
+
+    def as_expr(self):
+        denominator = sp.Mul(*(factor.as_expr() ** multiplicity for factor, multiplicity
+                               in sorted(self.denominator.items(), key=lambda item: str(item[0]))))
+        return self.numerator.as_expr() / denominator
+
+
+def _split(polynomial, i):
+    """polynomial = A + B w, for w the generator i, which appears at most linearly."""
+    parts = [{}, {}]
+    for monomial, coefficient in polynomial.terms():
+        k = monomial[i]
+        parts[k][monomial[:i] + (0,) + monomial[i + 1:]] = coefficient
+    ring = polynomial.ring
+    return ring.from_dict(parts[0]), ring.from_dict(parts[1])
+
+
+def _fold(reader, polynomial, i, base):
+    """polynomial with every w^k, w the generator i, replaced by w^(k mod 2) base^(k div 2)."""
+    by_degree = {}
+    for monomial, coefficient in polynomial.terms():
+        free = monomial[:i] + (0,) + monomial[i + 1:]
+        by_degree.setdefault(monomial[i], {})[free] = coefficient
+    terms = []
+    w = reader.ring.gens[i]
+    for k, part in by_degree.items():
+        term = _Fraction(reader, polynomial.ring.from_dict(part) * w ** (k % 2), {})
+        terms.append(term * base ** (k // 2) if k > 1 else term)
+    return _Fraction.sum(terms, reader)
 
 
 class LatexError(Exception):
@@ -852,7 +1230,8 @@ class Geometry:
         self.coords = coords
         self.seconds = seconds
         self.g = norm(g)
-        self.ginv = norm(self.g.inv())
+        # The adjugate over the determinant, which sympy's own inv() takes far longer to reach.
+        self.ginv = norm(self.g.adjugate() / self.g.det())
         self._cache = {}
         self.unavailable = {}
 
@@ -978,17 +1357,8 @@ class Geometry:
     def kretschmann(self):
         def build():
             lower = self.riemann_llll()
-            upper = self._zeros(4)
-            for a in range(self.n):
-                for b in range(self.n):
-                    for cc in range(self.n):
-                        for d in range(self.n):
-                            upper[a][b][cc][d] = norm(sum(
-                                self.ginv[a, p] * self.ginv[b, q] * self.ginv[cc, s] * self.ginv[d, w]
-                                * lower[p][q][s][w]
-                                for p in range(self.n) for q in range(self.n)
-                                for s in range(self.n) for w in range(self.n)
-                            ))
+            # One index at a time, so each component is a sum of n terms rather than n^4.
+            upper = self.raise_indices(lower, 4, (0, 1, 2, 3))
             return norm(sum(
                 lower[a][b][cc][d] * upper[a][b][cc][d]
                 for a in range(self.n) for b in range(self.n)
@@ -1112,7 +1482,7 @@ def compare_block(report, reader, where, published, computed, variance, coords, 
             continue
         expected = reader.surface(
             _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords))
-        if norm(sp.expand(sp.together(value - expected))) != 0:
+        if norm(value - expected) != 0:
             report.disagree(where, f"{names} published as {entry['value']} "
                                    f"({norm(value)}), sympy says {norm(expected)}")
     for index in _indices(len(coords), rank):
@@ -1133,7 +1503,7 @@ def compare_scalar(report, reader, where, published, computed):
         report.skip(where, str(error))
         return
     computed = reader.surface(computed)
-    if norm(sp.expand(sp.together(value - computed))) != 0:
+    if norm(value - computed) != 0:
         report.disagree(where, f"published as {published.strip()}, sympy says {norm(computed)}")
 
 
@@ -1222,7 +1592,6 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     report.checked_systems += 1
     print(f"  {where}")
 
-    metric_variants = {"ll": g, "uu": geometry.ginv}
     published_metric = [(f"{where}.metric_components", entry.get("metric_components"), "ll", g)]
     if "inverse_metric_components" in entry:
         published_metric.append((

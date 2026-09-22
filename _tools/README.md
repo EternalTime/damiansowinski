@@ -85,21 +85,25 @@ sympy is not installed system wide, and the virtual environment does not belong 
     python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
 
-The whole collection takes about a quarter of an hour. `--system <metric_id>/<system_id>` checks one system and takes seconds, which is what to use while editing a single entry.
-`--budget <seconds>` changes how long sympy may spend on one tensor.
-Kerr is the exception to the seconds, and so far it is the exception to the check.
-Its metric is not diagonal and its components are rational functions with $(r^2+a^2\cos^2\theta)$ to a high power underneath, and `norm` calls sympy's general `simplify` on every one of them.
-Its Christoffel symbols come out in about forty seconds; its Riemann tensor has run for over ninety minutes of processor time without finishing, and its Kretschmann scalar is further out again, so raising `--budget` does not rescue it.
-`_tools/derivations/kerr.md` Step 17 records what was checked in place of a full pass, and names the change to `norm` that would bring Kerr inside the budget.
+The whole collection takes about a minute and a half, and `--system <metric_id>/<system_id>` checks one system in seconds, which is what to use while editing a single entry.
+The slowest system is the general flow chart of `natario`, at under a minute; Kerr takes about seven seconds and the interior Schwarzschild solution about two.
+`--budget <seconds>` changes how long sympy may spend on one tensor, and the default of 120 is several times what any tensor in the collection needs.
 `--dimensions-only` runs the dimensional pass alone, which takes about a second over the whole collection, so there is no reason not to run it on every edit.
 
-Neither pass exits clean on the collection as it stands.
-The sympy pass reports the disagreements `derivations/audit-2026-09-18.md` counts, and the dimensional pass reports seven terms, in `frw` and in `stockum_dust`.
-Both print what failed on stderr and print the single line saying nothing failed on stdout, so a run piped through `2>&1 | tail` can look clean when it is not.
+The speed is `norm`, the routine every tensor passes through, which puts an expression into a canonical form so that one that vanishes is exactly zero.
+It reads the expression as a rational function of generators, reduces $\cos^2$ by $1-\sin^2$, and keeps every denominator as a product of irreducible factors, so it never takes a polynomial gcd; its docstring records what else was measured and why it lost.
+Until 22 September 2026 it called sympy's general `simplify` instead, which took the whole collection about forty minutes and never finished Kerr's Riemann tensor at all.
+It splits a radical into the square roots of the irreducible factors of its radicand, which is an identity only where each factor is positive.
+Every radicand in the collection is positive factor by factor on the region its entry describes, and that reading is what lets the interior Schwarzschild radicals cancel.
+An entry whose radicals change sign inside the region it claims would need that looked at again.
+
+Both passes exit clean on the collection as it stands.
+What remains is `UNCHECKED`, which does not set the exit code: the 140 Tolman-Bondi expressions, 70 per pass, that name a third derivative the reader does not declare, and the inverse metric Ellis-Bronnikov does not publish.
+Both passes print what failed on stderr and print the single line saying nothing failed on stdout, so a run piped through `2>&1 | tail` can look clean when it is not.
 Read the exit code, and run the script before and after a change so that a failure you did not cause is not mistaken for one you did.
 
 `derivations/audit-2026-09-18.md` groups and counts the disagreements the collection carried when the dimensional pass was added, and says which of them are the checker's fault rather than the physics'.
-It is a dated snapshot of 433, of which the 320 that were a Weyl block copied from the entry's own Riemann block have since been corrected, leaving 113.
+It is a dated snapshot of 433: the 320 that were a Weyl block copied from the entry's own Riemann block have since been corrected, the 50 nested radicals cancel since the change to `norm`, and the rest were corrected entry by entry, leaving none.
 `derivations/weyl.md` is the working behind those corrections, and is the thing to read before touching any `weyl_tensor`: a Weyl tensor equals Riemann only in a vacuum, it can be nonzero in a slot where Riemann vanishes, and two of the entries that publish one are conformally flat and so publish nothing.
 
 Nothing is ever passed in silence. A value that cannot be parsed, a system with no time coordinate declaration, or a tensor sympy cannot finish in the budget is reported as `UNCHECKED` with the reason, separately from the disagreements.

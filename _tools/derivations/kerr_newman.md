@@ -711,3 +711,7 @@ What was established, and what a later reader should know stands behind the numb
 The honest summary is that the physics is verified and the tool is slower than the physics.
 The fix is the same one `kerr.md` Step 17 names: giving `norm` a canonical trig reduction to fall back on before it reaches for `simplify` would bring both of these entries inside the budget, and collapsing $GM/c^2$ to one symbol before the algebra would bring this one inside it comfortably.
 That is a change to the checker, not to a spacetime, and it belongs to whoever takes the checker on next.
+
+**Since 22 September 2026 the checker has taken it on.**
+`norm` now does the canonical trig reduction `kerr.md` Step 17 describes, with every denominator kept as a product of irreducible factors, and the collapse of $GM/c^2$ turned out not to be needed.
+`--system kerr_newman/boyer_lindquist` finishes in about eleven seconds at the default budget and reports no disagreement and nothing unchecked, the Kretschmann scalar included, which is the verdict the replacement run above reached.

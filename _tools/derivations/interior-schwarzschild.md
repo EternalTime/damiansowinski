@@ -296,3 +296,5 @@ to
 
 The radicals are also now written in the order and the spacing the line element uses, so the two can be compared by eye.
 Nothing else in the entry was touched, and in particular the fifty nested radical disagreements the checker reports are left exactly as they were, because they are agreements the simplifier cannot see rather than errors.
+Since 22 September 2026 the checker sees them: `norm` splits each radical into the square roots of the irreducible factors of its radicand, which is an identity where every factor is positive, as $R$, $R - r_s$ and $R^3 - r^2 r_s$ are everywhere inside the star.
+The fifty are gone, the Einstein tensor and Kretschmann scalar that used to run out of budget now finish, and the whole entry checks in about two seconds with no disagreement and nothing unchecked.
