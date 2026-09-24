@@ -34,6 +34,12 @@ The page groups a tensor's components by value and merges a value with its negat
 So a value that is a bare sum wants collecting over a common denominator or wrapping in `\left(\right)` first, and its opposite wants writing as that string with a `-` in front rather than with the signs distributed through it.
 Morris-Thorne is the worked example: its twenty four Riemann components print on six lines fully lowered and its twenty four Weyl components on six, and written the other way each would take twenty four.
 
+A line too wide for the page scrolls sideways on its own, and nothing else on the page moves.
+A tensor component keeps its first index label in place while the rest of the line scrolls, as the application does; any other formula scrolls whole.
+The print copy cannot scroll, so there a wide line breaks before a top level `+`, `-` or any `=` but its first, and a line holding one piece too wide to break, such as a large fraction or a bracketed sum, is set small enough to fit the paper.
+So a value whose whole length sits inside one `\left(\right)` prints small, which is one more reason to collect it rather than expand it.
+`mathLine` and `printPrepare` in `_layouts/mfs.html` carry the details.
+
 A cloud-sync conflict copy dropped into the metrics folder, named like `kerr 2.json`, is passed over rather than read.
 Those are the same names `.gitignore` already keeps out of the repository.
 Any other file name is read, so a metric whose `id` does not match its file name still stops the command.
