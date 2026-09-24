@@ -56,6 +56,7 @@ The tests hold this rule over every metric file on disk, so a new spacetime carr
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.
 Its `name` is the metric's `short_name`, which is what the search list shows, not the long `name` the page titles the spacetime with.
+An entry also carries `diagrams` when the spacetime has a file in `MFS/assets/data/diagrams/`; the page fetches that file only for an entry that says so.
 
 `MFS/assets/data/references.json` is the whole of `assets/data/references.bib` parsed into JSON, so a reader can pull every reference the collection cites in one fetch instead of walking every metric file.
 The `.bib` file stays where it is and stays the one place a reference is written; the publications page still reads it.
@@ -66,6 +67,7 @@ A metric's `version` is a hash of that metric's content.
 It changes when the content changes and not otherwise, so reformatting a file or republishing the site leaves it alone.
 This is what the iOS application uses to fetch only the spacetimes that actually changed, since GitHub Pages rewrites every file's own tag on every publish.
 `references.json` carries one stamp of its own at the top for the same reason.
+An index entry's `diagrams` is the same kind of hash over that spacetime's diagram file, so the application can fetch a redrawn diagram without fetching its metric again.
 
 ## Checking
 
@@ -76,6 +78,64 @@ reports whether the published files are still what the folder says they should b
     python3 -m unittest discover -s _tools
 
 runs the tests, which include that check.
+
+## Spacetime diagrams
+
+`MFS/assets/data/diagrams/<metric_id>.json` holds the spacetime diagrams of one spacetime: null rays and future light cones on a plane of the time and one spatial coordinate, for each coordinate system that has any.
+The page draws them in a section per coordinate system, after the geodesics, and the application displays the same files.
+Nothing in them is drawn by eye or computed by the page.
+`_tools/derivations/null_rays.py` computes every ray, cone and marker from the system's published `metric_components`, `inverse_metric_components`, `kretschmann` and `domains`, read through the checker's own `Reader`, and its docstring records the method.
+
+It needs more than sympy, and takes about nine minutes for the whole collection, the longest single view being FRW drawn through its observer at about a minute and a half:
+
+    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy numpy scipy contourpy
+    /tmp/mfs-venv/bin/python _tools/derivations/null_rays.py
+    python3 _tools/build_mfs_data.py
+
+`--metric <metric_id>` redraws one spacetime and is repeatable, which is what to use after editing one entry.
+The second command stamps each diagram file's version into the index, as it does for the metrics.
+
+`DIAGRAMS` in `null_rays.py` is the table of every view, one row each: the plane, the parameter values, the coordinates held fixed, the plot range, the orientation rule and any declared input.
+`CAPTIONS` beside it carries each view's caption, which is prose under the rule above, and the tests hold the captions, the labels and the declared inputs to it as they hold the metrics.
+A new view is a row in each, and the script refuses to run while one lacks the other.
+
+### A diagram is tied to what it was drawn from
+
+Every view records the fields it was drawn from and a stamp over them, computed by `diagram_source_version` in `build_mfs_data.py`, the one function both scripts use.
+The fields are the coordinates, the parameter symbols, the metric and its inverse, the Kretschmann scalar and the domains, and the Einstein tensor as well for a view whose input is solved as dust.
+`build_mfs_data.py` recomputes each stamp from the metric file as it stands and refuses, naming the file, the system and the view, when one no longer matches, in `--check` and when writing alike.
+So an edit to any of those fields leaves the collection unpublishable until its diagrams are redrawn, while an edit to a history, a reference or a parameter's description leaves them standing.
+
+### Which way the cones point
+
+Every cone is a future cone, and each row names how its chart is oriented.
+`tau` takes a time function, the chart's $t$ unless the row says otherwise.
+A static chart's $t$ stops being a time beyond a horizon, and there the chart alone cannot say which way is future, so those rows take a family instead.
+`ingoing` makes the ingoing rays future directed toward smaller $r$ everywhere, which agrees with $t$ outside and reads the region inside $r_s$ as the black hole, as the ingoing Eddington-Finkelstein chart does; Schwarzschild's spherical chart, Reissner-Nordstrom, Taub-NUT, Kerr and Kerr-Newman use it.
+`outgoing` does the same with the outgoing rays toward larger $r$, for de Sitter's static chart and the Krasnikov tube.
+`vector` takes the chart's time direction, for Godel, whose published $g^{tt}$ is positive and which has no time function at all.
+
+### Declared inputs
+
+An entry that leaves a function free cannot be drawn without a choice, and every such choice is written in its row and printed beside its diagram.
+FRW's scale factor and Bianchi I's three are dust, solved from each entry's own published $G^i{}_i = 0$.
+Morris-Thorne is drawn as its Ellis-Bronnikov member, $\Phi = 0$ and $b = b_0^2/r$.
+Alcubierre is drawn with his own profile, which the entry names, at $v_s = 2$; Natario with the same profile and his zero expansion field, whose divergence the script checks before using it; the Krasnikov tube with a tube built by a ship at the speed of light.
+Kasner is drawn at the exponents $(-2/7, 3/7, 6/7)$.
+
+### Checking the rays
+
+    /tmp/mfs-venv/bin/python _tools/derivations/null_rays.py --verify
+
+traces rays as the page's files are traced and measures, for every view with a closed form, how far the quantity each family should conserve drifts along a ray, together with the dust solutions and the equality of Natario's and Alcubierre's blocks on the axis.
+It writes nothing and exits non-zero if anything fails; run it after changing the method.
+
+### What is not drawn
+
+Kerr and Kerr-Newman are drawn on the axis only: off it the fixed angle null curves are not light rays, and inside the ergoregion the plane has no null direction at all.
+Their honest radial rays are the principal null congruence, which leaves the plane, and so does every light ray of van Stockum.
+Tolman-Bondi, Vaidya and the proper distance chart of Morris-Thorne leave functions free that no choice has been made for yet, and Oppenheimer-Snyder's collapse needs its two charts drawn together.
+The cosmic string's two charts, Oppenheimer-Snyder's exterior, Natario's plane flow chart, the Brinkmann chart of the pp-wave and Minkowski's double null chart would each only repeat a plane drawn elsewhere, flat or the same as another chart's.
 
 ## Checking the physics
 

@@ -110,6 +110,7 @@
       fetch('{{ "/MFS/assets/data/metrics_index.json" | relative_url }}')
         .then(function(r) { return r.json(); })
         .then(function(index) {
+          window._mfsIndex = index;  // shared with the renderer, which reads the diagram stamps
           renderResults(index, '');
           input.addEventListener('input', function() { renderResults(index, this.value); });
         });
@@ -885,6 +886,290 @@
         ].join('');
       }
 
+      /* ── Spacetime diagrams ──
+         Null rays and future light cones for a coordinate system, read from
+         MFS/assets/data/diagrams/<id>.json. _tools/derivations/null_rays.py computes
+         every curve from the published metric; the page only draws them. A view's
+         points are in the unit square of its box; a mirrored view is the half x = r
+         of a line through the centre, drawn together with its reflection. */
+      var _diagramCache = {};  // id → parsed JSON, or null where the spacetime has none
+      var _nrUid = 0;
+
+      function withIndex(cb) {
+        if (window._mfsIndex) { cb(window._mfsIndex); return; }
+        fetch('{{ "/MFS/assets/data/metrics_index.json" | relative_url }}')
+          .then(function(r) { return r.json(); })
+          .then(function(index) { window._mfsIndex = index; cb(index); })
+          .catch(function(e) { console.error('Failed to load the index', e); cb([]); });
+      }
+
+      // Only a spacetime whose index entry carries a diagrams stamp has a file to fetch.
+      function fetchDiagrams(id, cb) {
+        if (id in _diagramCache) { cb(_diagramCache[id]); return; }
+        withIndex(function(index) {
+          var entry = index.filter(function(e) { return e.id === id; })[0];
+          if (!entry || !entry.diagrams) { _diagramCache[id] = null; cb(null); return; }
+          fetch('{{ "/MFS/assets/data/diagrams/" | relative_url }}' + id + '.json')
+            .then(function(r) { return r.json(); })
+            .then(function(data) { _diagramCache[id] = data; cb(data); })
+            .catch(function(e) {
+              console.error('Failed to load diagrams:', id, e);
+              _diagramCache[id] = null;
+              cb(null);
+            });
+        });
+      }
+
+      function nrEsc(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function nrEl(tag, attrs, inner) {
+        var a = '';
+        for (var k in attrs) a += ' ' + k + '="' + nrEsc(attrs[k]) + '"';
+        return '<' + tag + a + (inner == null ? '/>' : '>' + inner + '</' + tag + '>');
+      }
+
+      function nrZigzag(x1, y1, x2, y2, step, amp) {
+        var dx = x2 - x1, dy = y2 - y1, L = Math.sqrt(dx * dx + dy * dy);
+        var n = Math.max(2, Math.round(L / step)), nx = -dy / L, ny = dx / L;
+        var d = 'M' + x1 + ' ' + y1;
+        for (var i = 1; i <= n; i++) {
+          var s = (i % 2 ? 1 : -1) * (i === n ? 0 : amp);
+          d += ' L' + (x1 + dx * i / n + nx * s).toFixed(2) + ' ' + (y1 + dy * i / n + ny * s).toFixed(2);
+        }
+        return d;
+      }
+
+      function nrNiceStep(span, target) {
+        var raw = span / target, p = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10));
+        var steps = [1, 2, 2.5, 5, 10];
+        for (var i = 0; i < steps.length; i++) if (steps[i] * p >= raw) return steps[i] * p;
+        return 10 * p;
+      }
+
+      function nrFmt(v) {
+        var r = Math.round(v * 1000) / 1000;
+        return String(r === 0 ? 0 : r).replace('-', '−');
+      }
+
+      function nrSvg(view) {
+        var id = 'mfs-nr-' + (_nrUid++);
+        var b = view.box, X0 = view.mirror ? -b[1] : b[0], X1 = b[1], Y0 = b[2], Y1 = b[3];
+        var W = 520, H = W * (Y1 - Y0) / (X1 - X0);
+        var m = { l: 62, r: 16, t: 14, b: 54 };
+        // Each half of a mirrored view is clipped to its own side of the centre, where a ray
+        // traced through r = 0 would otherwise show the few points it runs past the axis.
+        var sides = view.mirror
+          ? [{ sx: W / 2, px: function(u) { return m.l + (0.5 + 0.5 * u[0]) * W; }, swap: false,
+               clip: id + '-right', rect: { x: m.l + W / 2, y: m.t, width: W / 2, height: H } },
+             { sx: -W / 2, px: function(u) { return m.l + (0.5 - 0.5 * u[0]) * W; }, swap: true,
+               clip: id + '-left', rect: { x: m.l, y: m.t, width: W / 2, height: H } }]
+          : [{ sx: W, px: function(u) { return m.l + u[0] * W; }, swap: false,
+               clip: id + '-clip', rect: { x: m.l, y: m.t, width: W, height: H } }];
+        function py(u) { return m.t + (1 - u[1]) * H; }
+        function path(side, pts) {
+          return pts.map(function(q, i) {
+            return (i ? 'L' : 'M') + side.px(q).toFixed(1) + ' ' + py(q).toFixed(1);
+          }).join(' ');
+        }
+        var out = [];
+        out.push('<defs>' +
+          sides.map(function(side) { return nrEl('clipPath', { id: side.clip }, nrEl('rect', side.rect)); }).join('') +
+          nrEl('pattern', { id: id + '-hatch', width: 7, height: 7, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
+            nrEl('rect', { 'class': 'nr-hatch-bg', width: 7, height: 7 }) +
+            nrEl('line', { 'class': 'nr-hatch-line', x1: 0, y1: 0, x2: 0, y2: 7 })) +
+          '</defs>');
+        out.push(nrEl('rect', { 'class': 'nr-bg', x: m.l, y: m.t, width: W, height: H }));
+
+        var sx = nrNiceStep(X1 - X0, 6), sy = nrNiceStep(Y1 - Y0, 6 * (Y1 - Y0) / (X1 - X0));
+        var x, y, X, Y;
+        for (x = Math.ceil(X0 / sx - 1e-9) * sx; x <= X1 + 1e-9; x += sx) {
+          X = m.l + (x - X0) / (X1 - X0) * W;
+          out.push(nrEl('line', { 'class': 'nr-grid', x1: X, y1: m.t, x2: X, y2: m.t + H }));
+          out.push(nrEl('line', { 'class': 'nr-axis', x1: X, y1: m.t + H, x2: X, y2: m.t + H + 5 }));
+          out.push(nrEl('text', { 'class': 'nr-tick', x: X, y: m.t + H + 21, 'text-anchor': 'middle' }, nrFmt(x)));
+        }
+        for (y = Math.ceil(Y0 / sy - 1e-9) * sy; y <= Y1 + 1e-9; y += sy) {
+          Y = m.t + (1 - (y - Y0) / (Y1 - Y0)) * H;
+          out.push(nrEl('line', { 'class': 'nr-grid', x1: m.l, y1: Y, x2: m.l + W, y2: Y }));
+          out.push(nrEl('line', { 'class': 'nr-axis', x1: m.l - 5, y1: Y, x2: m.l, y2: Y }));
+          out.push(nrEl('text', { 'class': 'nr-tick', x: m.l - 9, y: Y + 5, 'text-anchor': 'end' }, nrFmt(y)));
+        }
+        out.push(nrEl('text', { 'class': 'nr-label', x: m.l + W / 2, y: m.t + H + 44, 'text-anchor': 'middle' }, nrEsc(view.xlabel)));
+        out.push(nrEl('text', { 'class': 'nr-label', x: 16, y: m.t + H / 2, 'text-anchor': 'middle',
+          transform: 'rotate(-90 16 ' + (m.t + H / 2) + ')' }, nrEsc(view.ylabel)));
+
+        // Cones at a fixed size on screen, whatever the proportions of the box.
+        var L = 17;
+        sides.forEach(function(side) {
+          var clipped = [];
+          view.hatch.forEach(function(poly) {
+            clipped.push(nrEl('path', { d: path(side, poly) + ' Z', fill: 'url(#' + id + '-hatch)' }));
+          });
+          (view.areal || []).forEach(function(level) {
+            level.lines.forEach(function(line) { clipped.push(nrEl('path', { 'class': 'nr-areal', d: path(side, line) })); });
+          });
+          ['M', 'P'].forEach(function(fam) {
+            var cls = 'nr-ray nr-' + (side.swap ? (fam === 'M' ? 'P' : 'M') : fam);
+            view.rays[fam].forEach(function(line) { clipped.push(nrEl('path', { 'class': cls, d: path(side, line) })); });
+          });
+          view.cones.forEach(function(c) {
+            var cx = side.px(c.at), cy = py(c.at);
+            if (c.kind === 'none') {
+              clipped.push(nrEl('circle', { 'class': 'nr-none', cx: cx.toFixed(1), cy: cy.toFixed(1), r: 2.6 }));
+              return;
+            }
+            function arm(v) {
+              var ax = v[0] * side.sx, ay = -v[1] * H, n = Math.sqrt(ax * ax + ay * ay) || 1;
+              return [ax / n * L, ay / n * L];
+            }
+            var a = arm(c.a), e = arm(c.b);
+            var A = (cx + a[0]).toFixed(1) + ' ' + (cy + a[1]).toFixed(1);
+            var B = (cx + e[0]).toFixed(1) + ' ' + (cy + e[1]).toFixed(1);
+            var O = cx.toFixed(1) + ' ' + cy.toFixed(1);
+            clipped.push(nrEl('path', { 'class': 'nr-cone-fill', d: 'M' + O + ' L' + A + ' L' + B + ' Z' }));
+            clipped.push(nrEl('path', { 'class': 'nr-cone', d: 'M' + A + ' L' + O + ' L' + B }));
+            clipped.push(nrEl('circle', { 'class': 'nr-cone-dot', cx: cx.toFixed(1), cy: cy.toFixed(1), r: 1.7 }));
+          });
+          out.push(nrEl('g', { 'clip-path': 'url(#' + side.clip + ')' }, clipped.join('')));
+        });
+
+        view.markers.forEach(function(mk) {
+          if (mk.kind === 'singular') {
+            mk.edges.forEach(function(edge) {
+              var o = 1.2, segs;
+              if (edge === 'left') segs = view.mirror ? [[m.l + W / 2, m.t, m.l + W / 2, m.t + H]] : [[m.l + o, m.t, m.l + o, m.t + H]];
+              else if (edge === 'right') segs = view.mirror
+                ? [[m.l + o, m.t, m.l + o, m.t + H], [m.l + W - o, m.t, m.l + W - o, m.t + H]]
+                : [[m.l + W - o, m.t, m.l + W - o, m.t + H]];
+              else if (edge === 'bottom') segs = [[m.l, m.t + H - o, m.l + W, m.t + H - o]];
+              else segs = [[m.l, m.t + o, m.l + W, m.t + o]];
+              segs.forEach(function(s) { out.push(nrEl('path', { 'class': 'nr-singular', d: nrZigzag(s[0], s[1], s[2], s[3], 6, 3.2) })); });
+            });
+            return;
+          }
+          if (mk.kind === 'reference') {
+            var ry = py([0, mk.y]);
+            out.push(nrEl('line', { 'class': 'nr-reference', x1: m.l, y1: ry, x2: m.l + W, y2: ry }));
+            out.push(nrEl('text', { 'class': 'nr-reference-label', x: m.l + W - 6, y: ry - 6, 'text-anchor': 'end' }, nrEsc(mk.label)));
+            return;
+          }
+          sides.forEach(function(side) {
+            mk.lines.forEach(function(line) { out.push(nrEl('path', { 'class': 'nr-' + mk.kind, d: path(side, line) })); });
+          });
+        });
+        out.push(nrEl('rect', { 'class': 'nr-frame', x: m.l, y: m.t, width: W, height: H }));
+
+        return nrEl('svg', {
+          'class': 'mfs-nr-svg', viewBox: '0 0 ' + (W + m.l + m.r) + ' ' + (H + m.t + m.b).toFixed(1), role: 'img',
+          'aria-label': 'Null rays and future light cones, ' + view.label,
+          'data-box': JSON.stringify([X0, X1, Y0, Y1]), 'data-margins': JSON.stringify([m.l, m.t, W, H]),
+          'data-xlabel': view.xlabel, 'data-ylabel': view.ylabel
+        }, out.join(''));
+      }
+
+      // Inline math and the punctuation after it stay on one line, so a comma never wraps
+      // alone to the start of the next.
+      function nrProse(text) {
+        return text.replace(/(\$[^$]+\$[,.;:)]+)/g, '<span class="mfs-nr-keep">$1</span>');
+      }
+
+      function nrSwatch(kind) {
+        var inner = {
+          P: '<line class="nr-ray nr-P" x1="2" y1="8" x2="32" y2="8"/>',
+          M: '<line class="nr-ray nr-M" x1="2" y1="8" x2="32" y2="8"/>',
+          cone: '<path class="nr-cone-fill" d="M17 14 L9 3 L25 3 Z"/><path class="nr-cone" d="M9 3 L17 14 L25 3"/><circle class="nr-cone-dot" cx="17" cy="14" r="1.5"/>',
+          none: '<circle class="nr-none" cx="17" cy="8" r="2.6"/>',
+          grr: '<line class="nr-grr" x1="2" y1="8" x2="32" y2="8"/>',
+          g00: '<line class="nr-g00" x1="2" y1="8" x2="32" y2="8"/>',
+          throat: '<line class="nr-throat" x1="2" y1="8" x2="32" y2="8"/>',
+          apparent: '<line class="nr-apparent" x1="2" y1="8" x2="32" y2="8"/>',
+          singular: '<path class="nr-singular" d="' + nrZigzag(2, 8, 32, 8, 5, 3) + '"/>',
+          areal: '<line class="nr-areal" x1="2" y1="8" x2="32" y2="8"/>',
+          reference: '<line class="nr-reference" x1="2" y1="8" x2="32" y2="8"/>',
+          hatch: '<rect class="nr-hatch-swatch" x="2" y="2" width="30" height="12"/>'
+        }[kind];
+        return '<svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner + '</svg>';
+      }
+
+      function nrLegend(view) {
+        var x0 = view.plane[0], x1 = view.plane[1];
+        var items = [['M', view.families[1]], ['P', view.families[0]], ['cone', 'future light cone']];
+        var seen = {};
+        view.markers.forEach(function(mk) { seen[mk.kind] = mk; });
+        if (view.cones.some(function(c) { return c.kind === 'none'; })) items.push(['none', 'no null direction in this plane']);
+        if (seen.grr) items.push(['grr', tex('g^{' + x1 + x1 + '} = 0')]);
+        if (seen.g00) items.push(['g00', tex('g^{' + x0 + x0 + '} = 0')]);
+        if (seen.apparent) items.push(['apparent', tex('|\\nabla R|^2 = 0') + ', with ' + tex('R') + ' the areal radius']);
+        if (seen.throat) items.push(['throat', tex('\\partial_r R = 0') + ', the throat']);
+        if (view.areal) items.push(['areal', 'spheres of fixed areal radius']);
+        if (seen.singular) items.push(['singular', 'Kretschmann scalar diverges']);
+        if (seen.reference) items.push(['reference', 'where the declared input starts']);
+        if (view.hatch.length) items.push(['hatch', 'outside the published domain']);
+        return '<div class="mfs-nr-legend">' + items.map(function(item) {
+          return '<span class="mfs-nr-item">' + nrSwatch(item[0]) + '<span>' + item[1] + '</span></span>';
+        }).join('') + '</div>';
+      }
+
+      function diagramSection(metricId, coordId) {
+        var data = _diagramCache[metricId];
+        var views = data && data.systems[coordId];
+        if (!views || !views.length) return '';
+        var buttons = views.length > 1 ? '<div class="mfs-nr-buttons">' + views.map(function(v, i) {
+          return '<button type="button" class="mfs-nr-btn' + (i ? '' : ' mfs-nr-on') + '">' + nrEsc(v.label) + '</button>';
+        }).join('') + '</div>' : '';
+        return [
+          '<div class="mfs-section mfs-diagram">',
+            '<div class="mfs-section-head">',
+              '<div class="mfs-section-label">spacetime diagram</div>',
+              buttons,
+            '</div>',
+            views.map(function(view, i) {
+              return [
+                '<div class="mfs-nr-view' + (i ? ' mfs-nr-hidden' : '') + '">',
+                  '<div class="mfs-nr-figure">', nrSvg(view), '<div class="mfs-nr-readout"></div></div>',
+                  '<div class="mfs-nr-text">',
+                    '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(p) + '</p>'; }).join(''), '</div>',
+                    nrLegend(view),
+                    '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn at</span> ' + nrProse(view.settings) + '</div>',
+                    view.input ? '<div class="mfs-nr-note"><span class="mfs-nr-k">declared input</span> ' + nrProse(view.input) + '</div>' : '',
+                  '</div>',
+                '</div>'
+              ].join('');
+            }).join(''),
+          '</div>'
+        ].join('');
+      }
+
+      // The view buttons, and the axes' values under the pointer.
+      function wireDiagrams(root) {
+        root.querySelectorAll('.mfs-diagram').forEach(function(section) {
+          var buttons = section.querySelectorAll('.mfs-nr-btn');
+          var views = section.querySelectorAll('.mfs-nr-view');
+          buttons.forEach(function(button, i) {
+            button.addEventListener('click', function() {
+              views.forEach(function(v, j) { v.classList.toggle('mfs-nr-hidden', i !== j); });
+              buttons.forEach(function(b, j) { b.classList.toggle('mfs-nr-on', i === j); });
+            });
+          });
+        });
+        root.querySelectorAll('.mfs-nr-figure').forEach(function(figure) {
+          var svg = figure.querySelector('svg'), readout = figure.querySelector('.mfs-nr-readout');
+          var box = JSON.parse(svg.getAttribute('data-box')), mg = JSON.parse(svg.getAttribute('data-margins'));
+          svg.addEventListener('mousemove', function(ev) {
+            var r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
+            var u = ((ev.clientX - r.left) / r.width * vb.width - mg[0]) / mg[2];
+            var v = 1 - ((ev.clientY - r.top) / r.height * vb.height - mg[1]) / mg[3];
+            if (u < 0 || u > 1 || v < 0 || v > 1) { readout.style.opacity = 0; return; }
+            readout.style.opacity = 1;
+            readout.textContent = svg.getAttribute('data-xlabel') + ' = ' + (box[0] + u * (box[1] - box[0])).toFixed(3) +
+              '    ' + svg.getAttribute('data-ylabel') + ' = ' + (box[2] + v * (box[3] - box[2])).toFixed(3);
+          });
+          svg.addEventListener('mouseleave', function() { readout.style.opacity = 0; });
+        });
+      }
+
       function renderMetric(data, coordIdx) {
         _currentMetric  = data;
         _currentCoordIdx = coordIdx;
@@ -1105,6 +1390,8 @@
             '</div>'
           ].join('') : '',
 
+          (hasCoords && coord.id) ? diagramSection(data.id, coord.id) : '',
+
           (data.references && data.references.length) ? [
             '<div class="mfs-section mfs-references">',
               '<div class="mfs-section-label">references</div>',
@@ -1125,10 +1412,13 @@
         }
 
         // Stash pre-typeset (raw LaTeX) body + name for the print/PDF handler
-        window._mfsPrintBody = body;
+        // The print copy's diagrams get ids of their own, since the screen copy they would
+        // otherwise point into is hidden while printing.
+        window._mfsPrintBody = body.replace(/mfs-nr-(\d+)/g, 'mfs-nrp-$1');
         window._mfsPrintName = data.name;
 
         contentPanel.innerHTML = header + body;
+        wireDiagrams(contentPanel);
 
         // Force column reflow after MathJax typesetting
         function reflowColumns() {
@@ -1230,20 +1520,24 @@
           setTimeout(function() {
             fetchBib(function() {
               fetchMetric(id, function(data) {
-                renderMetric(data, 0);
-                el.scrollTop = 0;
-                el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                el.style.transform  = 'translateX(0)';
-                setTimeout(function() {
-                  el.style.pointerEvents = 'all';
-                  el.style.transition    = '';
-                }, SLIDE_DUR);
+                fetchDiagrams(id, function() {
+                  renderMetric(data, 0);
+                  el.scrollTop = 0;
+                  el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                  el.style.transform  = 'translateX(0)';
+                  setTimeout(function() {
+                    el.style.pointerEvents = 'all';
+                    el.style.transition    = '';
+                  }, SLIDE_DUR);
+                });
               });
             });
           }, SLIDE_DUR);
         } else {
           fetchBib(function() {
-            fetchMetric(id, function(data) { renderMetric(data, 0); });
+            fetchMetric(id, function(data) {
+              fetchDiagrams(id, function() { renderMetric(data, 0); });
+            });
           });
         }
       };
@@ -1393,6 +1687,80 @@
     #mfs-content-panel .mfs-idx-col-toggle .mfs-idx-box:not(.mfs-idx-on):hover {
       border-color: rgba(0,229,255,0.5);
     }
+    /* ── Spacetime diagrams ── */
+    #mfs-content-panel .mfs-nr-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+    #mfs-content-panel .mfs-nr-btn {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 15px; letter-spacing: 0.06em;
+      color: rgba(0,229,255,0.6); background: transparent;
+      border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
+      padding: 3px 12px; cursor: pointer;
+      transition: box-shadow 0.15s, border-color 0.15s, color 0.15s;
+    }
+    #mfs-content-panel .mfs-nr-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+    #mfs-content-panel .mfs-nr-btn.mfs-nr-on {
+      color: var(--cyan); border-color: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan);
+    }
+    #mfs-content-panel .mfs-nr-view {
+      display: flex; flex-wrap: wrap; align-items: flex-start;
+      gap: 12px 32px; margin: 10px 0 6px;
+    }
+    #mfs-content-panel .mfs-nr-hidden { display: none; }
+    #mfs-content-panel .mfs-nr-figure { position: relative; flex: 0 1 620px; min-width: 280px; }
+    #mfs-content-panel .mfs-nr-svg { display: block; width: 100%; height: auto; }
+    #mfs-content-panel .mfs-nr-readout {
+      position: absolute; right: 18px; top: 18px; pointer-events: none;
+      font-family: 'Source Code Pro', monospace; font-size: 13px; white-space: nowrap;
+      color: var(--text-dim); background: rgba(0,0,0,0.8); padding: 1px 6px; border-radius: 3px;
+      opacity: 0; transition: opacity 0.12s;
+    }
+    #mfs-content-panel .mfs-nr-text { flex: 1 1 340px; min-width: 0; }
+    #mfs-content-panel .mfs-nr-caption p {
+      font-family: 'Source Code Pro', monospace; font-size: 19px; line-height: 1.65;
+      color: var(--teal-light); margin: 0 0 0.8em;
+    }
+    #mfs-content-panel .mfs-nr-legend,
+    #mfs-content-panel .mfs-nr-note { font-family: 'Source Code Pro', monospace; }
+    #mfs-content-panel .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 4px 0 12px; }
+    #mfs-content-panel .mfs-nr-item {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 16px; color: var(--text-mid);
+    }
+    #mfs-content-panel .mfs-nr-swatch { flex: none; }
+    .mfs-nr-keep { white-space: nowrap; }
+    #mfs-content-panel .mfs-nr-note {
+      font-size: 16px; line-height: 1.6; color: rgba(0,229,255,0.55); margin: 0 0 6px;
+    }
+    #mfs-content-panel .mfs-nr-k {
+      color: rgba(0,229,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; font-size: 14px;
+      margin-right: 0.4em;
+    }
+    .mfs-nr-svg .nr-bg { fill: rgba(0,0,0,0.55); }
+    .mfs-nr-svg .nr-grid { stroke: rgba(0,229,255,0.07); stroke-width: 1; }
+    .mfs-nr-svg .nr-axis { stroke: rgba(0,229,255,0.45); stroke-width: 1; }
+    .mfs-nr-svg .nr-frame { fill: none; stroke: rgba(0,229,255,0.45); stroke-width: 1.2; }
+    .mfs-nr-svg .nr-tick { fill: var(--text-dim); font-family: 'Source Code Pro', monospace; font-size: 14px; }
+    .mfs-nr-svg .nr-label { fill: var(--text-dim); font-family: 'Source Code Pro', monospace; font-size: 15px; }
+    .mfs-nr-svg .nr-hatch-bg { fill: rgba(10,14,18,0.55); }
+    .mfs-nr-svg .nr-hatch-line { stroke: rgba(168,192,208,0.28); stroke-width: 1.4; }
+    .mfs-nr-swatch .nr-hatch-swatch { fill: rgba(168,192,208,0.12); stroke: rgba(168,192,208,0.35); }
+    .nr-ray { fill: none; stroke-width: 1.25; stroke-linejoin: round; stroke-opacity: 0.8; }
+    .mfs-nr-swatch .nr-ray { stroke-width: 2; stroke-opacity: 1; }
+    .nr-M { stroke: var(--teal-light); }
+    .nr-P { stroke: var(--pink-light); }
+    .nr-areal { fill: none; stroke: rgba(238,242,245,0.34); stroke-width: 1; }
+    .nr-cone-fill { fill: rgba(212,175,55,0.12); stroke: none; }
+    .nr-cone { fill: none; stroke: var(--gold); stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+    .nr-cone-dot { fill: var(--gold); }
+    .nr-none { fill: none; stroke: rgba(168,192,208,0.6); stroke-width: 1.1; }
+    .nr-grr { fill: none; stroke: var(--cyan); stroke-width: 2; stroke-dasharray: 7 5; }
+    .nr-g00 { fill: none; stroke: var(--text-mid); stroke-width: 2; stroke-dasharray: 10 4 2 4; }
+    .nr-throat { fill: none; stroke: var(--amber); stroke-width: 2.6; stroke-dasharray: 2 4; }
+    .nr-apparent { fill: none; stroke: var(--blue-lighter); stroke-width: 2.8; stroke-dasharray: 0.5 5; stroke-linecap: round; }
+    .nr-singular { fill: none; stroke: var(--pink-dark); stroke-width: 1.8; }
+    .nr-reference { stroke: var(--text-dim); stroke-width: 1; stroke-dasharray: 3 5; stroke-opacity: 0.7; }
+    .nr-reference-label { fill: var(--text-dim); font-family: 'Source Code Pro', monospace; font-size: 13px; }
     #mfs-content-panel .mfs-references {
       margin-top: 8px;
     }
@@ -1596,6 +1964,29 @@
         border: 1px solid #000 !important; font-size: 11pt;
         -webkit-appearance: none; appearance: none;
       }
+      /* Every view of a diagram prints, on white, without its buttons. */
+      .mfs-print-body .mfs-nr-buttons, .mfs-print-body .mfs-nr-readout { display: none !important; }
+      .mfs-print-body .mfs-diagram .mfs-section-head { break-after: avoid; }
+      /* A document that ends at the foot of a page would otherwise print one more page
+         holding nothing but the descenders of the repeated footer. */
+      #mfs-print-root { overflow: hidden; }
+      .mfs-print-body .mfs-nr-view { display: block !important; break-inside: avoid; margin: 6px 0 14px; }
+      .mfs-print-body .mfs-nr-figure { max-width: 12cm; }
+      .mfs-print-body .mfs-nr-caption p, .mfs-print-body .mfs-nr-note, .mfs-print-body .mfs-nr-item { font-size: 10pt; }
+      .mfs-print-body .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 4px 0; }
+      .mfs-print-body .mfs-nr-item { display: inline-flex; align-items: center; gap: 5px; }
+      .mfs-print-body .mfs-nr-k { text-transform: uppercase; letter-spacing: 0.08em; font-size: 8pt; margin-right: 0.4em; }
+      .mfs-print-body .nr-bg { fill: #fff; }
+      .mfs-print-body .nr-grid { stroke: #e4e4e4; }
+      .mfs-print-body .nr-axis, .mfs-print-body .nr-frame { stroke: #000; }
+      .mfs-print-body .nr-tick, .mfs-print-body .nr-label, .mfs-print-body .nr-reference-label { fill: #000; }
+      .mfs-print-body .nr-hatch-bg { fill: #fff; }
+      .mfs-print-body .nr-hatch-line { stroke: #bbb; }
+      .mfs-print-body .nr-M { stroke: #168f84; }
+      .mfs-print-body .nr-P { stroke: #d81b60; }
+      .mfs-print-body .nr-cone { stroke: #a8841f; }
+      .mfs-print-body .nr-cone-dot { fill: #a8841f; }
+      .mfs-print-body .nr-areal, .mfs-print-body .nr-reference, .mfs-print-body .nr-g00 { stroke: #666; }
       .mfs-print-body .mfs-table { font-size: 10pt; }
       .mfs-print-body .mfs-table th,
       .mfs-print-body .mfs-table td { border: 1px solid #000 !important; }

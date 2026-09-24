@@ -4,7 +4,9 @@
     python3 -m unittest discover -s _tools
 """
 
+import contextlib
 import copy
+import io
 import json
 import tempfile
 import unicodedata
@@ -45,6 +47,24 @@ def prose(metric):
                 yield f"{where}.parameters[{parameter.get('symbol')}].description", parameter["description"]
 
 
+def diagram_files():
+    return {p.stem: read(p) for p in sorted(build.DIAGRAMS_DIR.glob("*.json"))}
+
+
+def diagram_prose(name, diagram):
+    """Yield every sentence carrying field of a diagram file, each with the name of its place."""
+    for system, views in diagram["systems"].items():
+        for view in views:
+            where = f"diagrams/{name}.json {system}/{view['id']}"
+            yield f"{where}.label", view["label"]
+            for position, family in enumerate(view["families"]):
+                yield f"{where}.families[{position}]", family
+            for position, paragraph in enumerate(view["caption"]):
+                yield f"{where}.caption[{position}]", paragraph
+            if view.get("input"):
+                yield f"{where}.input", view["input"]
+
+
 class PublishedFilesAreCurrent(unittest.TestCase):
     def test_check_mode_passes(self):
         self.assertEqual(build.main(["--check"]), 0)
@@ -66,11 +86,21 @@ class Index(unittest.TestCase):
         )
 
     def test_entry_carries_the_search_fields_and_a_stamp(self):
+        diagrams = diagram_files()
         for entry, metric in zip(self.index, self.metrics):
-            self.assertEqual(set(entry), {"id", "name", "tags", "version"})
+            expected = {"id", "name", "tags", "version"} | ({"diagrams"} if metric["id"] in diagrams else set())
+            self.assertEqual(set(entry), expected)
             self.assertEqual(entry["name"], metric["short_name"])
             self.assertEqual(entry["tags"], metric["tags"])
             self.assertEqual(entry["version"], build.content_version(metric))
+
+    def test_a_spacetime_with_diagrams_carries_their_stamp(self):
+        diagrams = diagram_files()
+        self.assertTrue(diagrams, "no diagram file was found, so nothing was checked")
+        stamped = {e["id"]: e["diagrams"] for e in self.index if "diagrams" in e}
+        self.assertEqual(set(stamped), set(diagrams))
+        for metric_id, diagram in diagrams.items():
+            self.assertEqual(stamped[metric_id], build.content_version(diagram))
 
     def test_a_metric_missing_its_short_name_is_refused(self):
         with self.assertRaises(build.DataError):
@@ -122,19 +152,102 @@ class Stamps(unittest.TestCase):
 
 class Prose(unittest.TestCase):
     def test_no_metric_on_disk_carries_a_dash_in_its_prose(self):
-        read_fields = 0
-        for metric in build.load_metrics():
-            for field, value in prose(metric):
-                read_fields += 1
-                for character in value:
-                    if character in DASHES:
-                        self.fail(
-                            f"{metric['id']}.json: {field} carries "
-                            f"U+{ord(character):04X} {unicodedata.name(character)}. "
-                            "Write a full stop, a semicolon or a comma instead, "
-                            "or rewrite the sentence so it does not want the break."
-                        )
-        self.assertTrue(read_fields, "no prose was read, so nothing was checked")
+        fields = [(f"{m['id']}.json: {field}", value)
+                  for m in build.load_metrics() for field, value in prose(m)]
+        self.assert_no_dashes(fields)
+
+    def test_no_diagram_on_disk_carries_a_dash_in_its_prose(self):
+        fields = [(field, value) for name, diagram in diagram_files().items()
+                  for field, value in diagram_prose(name, diagram)]
+        self.assert_no_dashes(fields)
+
+    def assert_no_dashes(self, fields):
+        self.assertTrue(fields, "no prose was read, so nothing was checked")
+        for where, value in fields:
+            for character in value:
+                if character in DASHES:
+                    self.fail(
+                        f"{where} carries "
+                        f"U+{ord(character):04X} {unicodedata.name(character)}. "
+                        "Write a full stop, a semicolon or a comma instead, "
+                        "or rewrite the sentence so it does not want the break."
+                    )
+
+
+class Diagrams(unittest.TestCase):
+    """A diagram is drawn from what its metric publishes, and stops being published when that changes."""
+
+    def setUp(self):
+        self.metrics = build.load_metrics()
+        self.diagrams = diagram_files()
+        self.assertTrue(self.diagrams, "no diagram file was found, so nothing was checked")
+
+    def test_every_view_was_drawn_from_what_its_metric_publishes(self):
+        by_id = {m["id"]: m for m in self.metrics}
+        views = 0
+        for metric_id, diagram in self.diagrams.items():
+            systems = {s["id"]: s for s in by_id[metric_id]["coordinates"]}
+            for system_id, drawn in diagram["systems"].items():
+                for view in drawn:
+                    views += 1
+                    self.assertEqual(
+                        build.diagram_source_version(systems[system_id], view["source"]["fields"]),
+                        view["source"]["version"], f"{metric_id}/{system_id}/{view['id']}")
+        self.assertEqual(set(build.load_diagrams(self.metrics)), set(self.diagrams))
+        self.assertTrue(views)
+
+    def test_a_changed_component_is_refused_and_leaves_the_files_alone(self):
+        metric_id, system_id, changed = self.metric_with_a_changed_component()
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        for argv in (["--check"], []):
+            stderr = io.StringIO()
+            with mock.patch.object(build, "load_metrics", return_value=changed), \
+                    contextlib.redirect_stderr(stderr):
+                self.assertEqual(build.main(argv), 2)
+            self.assertIn(f"diagrams/{metric_id}.json", stderr.getvalue())
+            self.assertIn(system_id, stderr.getvalue())
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
+
+    def test_a_change_that_draws_nothing_leaves_the_diagrams_standing(self):
+        metric_id = sorted(self.diagrams)[0]
+        changed = copy.deepcopy(self.metrics)
+        for metric in changed:
+            if metric["id"] == metric_id:
+                metric["history"] = metric.get("history", "") + " More."
+                for system in metric["coordinates"]:
+                    for parameter in system.get("parameters", []):
+                        parameter["description"] = parameter.get("description", "") + " Reworded."
+        self.assertIn(metric_id, build.load_diagrams(changed))
+
+    def test_a_diagram_of_a_system_its_metric_lacks_is_refused(self):
+        metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "coordinates": [{"id": "a"}]}
+        diagram = {"metric": "x", "systems": {"b": []}}
+        with self.assertRaises(build.DataError) as raised:
+            self.load_diagram_folder({"x.json": diagram}, [metric])
+        self.assertIn("'b'", str(raised.exception))
+
+    def test_a_diagram_without_a_metric_is_refused(self):
+        with self.assertRaises(build.DataError) as raised:
+            self.load_diagram_folder({"ghost.json": {"metric": "ghost", "systems": {}}}, [])
+        self.assertIn("ghost", str(raised.exception))
+
+    def metric_with_a_changed_component(self):
+        metric_id = sorted(self.diagrams)[0]
+        system_id = next(iter(self.diagrams[metric_id]["systems"]))
+        changed = copy.deepcopy(self.metrics)
+        for metric in changed:
+            if metric["id"] == metric_id:
+                system = next(s for s in metric["coordinates"] if s["id"] == system_id)
+                system["metric_components"][0]["value"] = "2" + system["metric_components"][0]["value"]
+        return metric_id, system_id, changed
+
+    def load_diagram_folder(self, files, metrics):
+        with tempfile.TemporaryDirectory() as folder:
+            for filename, diagram in files.items():
+                (Path(folder) / filename).write_text(json.dumps(diagram), encoding="utf-8")
+            with mock.patch.object(build, "DIAGRAMS_DIR", Path(folder)):
+                return build.load_diagrams(metrics)
 
 
 class Bibliography(unittest.TestCase):

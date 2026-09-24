@@ -17,7 +17,8 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "834789b2cd8b76db"
+    "version": "834789b2cd8b76db",
+    "diagrams": "b6e7bf8cf3328bea"
   },
   {
     "id": "anti_de_sitter",
@@ -41,7 +42,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ca8d4c051463c036"
+    "version": "ca8d4c051463c036",
+    "diagrams": "7923b4e90ad2350c"
   },
   {
     "id": "bertotti_robinson",
@@ -62,7 +64,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8baf370598b8b4b4"
+    "version": "8baf370598b8b4b4",
+    "diagrams": "96402d7bd8b4a762"
   },
   {
     "id": "bianchi",
@@ -82,7 +85,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0191073614268964"
+    "version": "0191073614268964",
+    "diagrams": "6fc639c4f211dcad"
   },
   {
     "id": "cosmic_string",
@@ -129,7 +133,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "50af3c2ef8f452c0"
+    "version": "50af3c2ef8f452c0",
+    "diagrams": "f5d53e176aa6d27b"
   },
   {
     "id": "ellis_bronnikov",
@@ -152,7 +157,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "11f61184e7ff970a"
+    "version": "11f61184e7ff970a",
+    "diagrams": "2d7a92024173c5c5"
   },
   {
     "id": "frw",
@@ -173,7 +179,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1b293ca9a39c0a20"
+    "version": "1b293ca9a39c0a20",
+    "diagrams": "b5f4c482802d95fc"
   },
   {
     "id": "godel",
@@ -195,7 +202,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "33e45359baa4dbc3"
+    "version": "33e45359baa4dbc3",
+    "diagrams": "cfdae2e0ec948ebd"
   },
   {
     "id": "kasner",
@@ -217,7 +225,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "942d70953e804dc6"
+    "version": "942d70953e804dc6",
+    "diagrams": "ad9cb61702d5a0b4"
   },
   {
     "id": "kerr",
@@ -248,7 +257,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "641566a8a1f57bcd"
+    "version": "641566a8a1f57bcd",
+    "diagrams": "e5c3682e9196d8ea"
   },
   {
     "id": "kerr_newman",
@@ -282,7 +292,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4db0c1bd50dee80e"
+    "version": "4db0c1bd50dee80e",
+    "diagrams": "b393a4a9f7152110"
   },
   {
     "id": "krasnikov",
@@ -305,7 +316,8 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "92b7ea9fae1f8781"
+    "version": "92b7ea9fae1f8781",
+    "diagrams": "e3b807509d0712ef"
   },
   {
     "id": "stockum_dust",
@@ -383,7 +395,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "228d233da5f97fb6"
+    "version": "228d233da5f97fb6",
+    "diagrams": "e65f4f160e9afc4e"
   },
   {
     "id": "mixmaster",
@@ -431,7 +444,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "36bafba5e4ecccbf"
+    "version": "36bafba5e4ecccbf",
+    "diagrams": "eff2727569c6a1ea"
   },
   {
     "id": "natario",
@@ -453,7 +467,8 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "ed66e5d545f23dfa"
+    "version": "ed66e5d545f23dfa",
+    "diagrams": "e840a3a140e4be19"
   },
   {
     "id": "oppenheimer_snyder",
@@ -497,7 +512,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b30e21f916a5160a"
+    "version": "b30e21f916a5160a",
+    "diagrams": "453ee09caa8560a0"
   },
   {
     "id": "rn_metric",
@@ -527,7 +543,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "98314e236173d60d"
+    "version": "98314e236173d60d",
+    "diagrams": "7c91fdd8ddf4b9b9"
   },
   {
     "id": "schwarzschild",
@@ -556,7 +573,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "132e86e871a751d0"
+    "version": "132e86e871a751d0",
+    "diagrams": "7585a4befa86c815"
   },
   {
     "id": "interior_schwarzschild",
@@ -577,7 +595,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "31cc97350e4f1540"
+    "version": "31cc97350e4f1540",
+    "diagrams": "b6b37f655f29c5dd"
   },
   {
     "id": "taub_nut",
@@ -598,7 +617,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6bc42b8d7b461067"
+    "version": "6bc42b8d7b461067",
+    "diagrams": "1503b2af0fda6aeb"
   },
   {
     "id": "tolman_bondi",
