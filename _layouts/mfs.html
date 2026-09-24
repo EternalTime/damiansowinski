@@ -817,12 +817,58 @@
         });
 
         return groups.map(function(g) {
-          var lhs = g.items.map(function(entry) {
+          var labels = g.items.map(function(entry) {
             var label = upperLabel + makeIdxStr(entry.c, conv);
             return entry.negated ? '-' + label : label;
-          }).join(' = ');
-          return '<div class="mfs-component">' + tex(lhs + ' = ' + g.value) + '</div>';
+          });
+          return mathLine(labels.slice(1).concat([g.value]).join(' = '), labels[0]);
         }).join('');
+      }
+
+      /* One line of mathematics, which never wraps. A line too wide for the panel scrolls
+         sideways inside its own .mfs-line-scroll and nothing around it moves, the headings
+         least of all; the application does the same. A tensor component is given its first
+         index label as `head`, which is set outside the scroller and stays where it is while
+         the rest of the line moves under the reader's finger. That is the captain's rule for
+         the application, and only the first label stays because a chain of four equalities
+         pinned in full would leave nothing to scroll into. The rest starts with an empty
+         atom so that its equals sign takes the space it takes after a label, and a line
+         that fits is set exactly as it was when it was one piece. Every other formula has
+         no label to keep and scrolls whole. The print copy is built from this same markup,
+         and printPrepare() below turns a line too wide for the paper into several. */
+      function mathLine(latex, head) {
+        return '<div class="mfs-component mfs-line">' +
+          (head ? '<div class="mfs-line-head">' + tex(head) + '</div>' : '') +
+          '<div class="mfs-line-scroll"><div class="mfs-line-body">' +
+            tex(head ? '{} = ' + latex : latex) +
+          '</div></div></div>';
+      }
+
+      /* A scroller with more of its line beyond an edge fades out at that edge, which is
+         the only sign it gives: no bar, arrow or button. The classes are kept by the line's
+         own scrolling and by a ResizeObserver, which sees the line change width when
+         MathJax sets it, when the window changes size and when the index toggles swap a
+         tensor's lines. Each rendered spacetime gets a fresh observer, so the lines of the
+         one before are let go. */
+      var _lineObserver = null;
+      function markEdges(scroller) {
+        var room = scroller.scrollWidth - scroller.clientWidth;
+        scroller.classList.toggle('mfs-more-left', room > 1 && scroller.scrollLeft > 1);
+        scroller.classList.toggle('mfs-more-right', room > 1 && scroller.scrollLeft < room - 1);
+      }
+      function wireLines(root) {
+        if (!_lineObserver && window.ResizeObserver) {
+          _lineObserver = new ResizeObserver(function(entries) {
+            entries.forEach(function(e) { markEdges(e.target.closest('.mfs-line-scroll')); });
+          });
+        }
+        root.querySelectorAll('.mfs-line-scroll').forEach(function(scroller) {
+          scroller.addEventListener('scroll', function() { markEdges(scroller); }, { passive: true });
+          if (_lineObserver) {
+            _lineObserver.observe(scroller);
+            _lineObserver.observe(scroller.firstChild);
+          }
+        });
       }
 
       function buildMetricMatrix(components, coords, label) {
@@ -839,7 +885,7 @@
           if (i >= 0 && j >= 0) grid[i][j] = c.value;
         });
         var rows = grid.map(function(row) { return row.join(' & '); }).join(' \\\\ ');
-        return '<div class="mfs-component">' + tex(label + ' = \\begin{bmatrix}' + rows + '\\end{bmatrix}') + '</div>';
+        return mathLine(label + ' = \\begin{bmatrix}' + rows + '\\end{bmatrix}');
       }
 
       function renderScalar(str) {
@@ -847,7 +893,7 @@
         if (/=\s*0\s*$/.test(str.trim())) {
           return '<span class="mfs-zero">vanishing</span>';
         }
-        return '<div class="mfs-component">' + tex(str) + '</div>';
+        return mathLine(str);
       }
 
 
@@ -1245,12 +1291,12 @@
                 if (p.trim().indexOf('TABLE::') === 0) {
                   var rows = p.trim().slice(7).split(';;').map(function(r) { return r.trim(); })
                                 .filter(function(r) { return r.length; });
-                  return '<table class="mfs-table">' + rows.map(function(row, ri) {
+                  return '<div class="mfs-table-scroll"><table class="mfs-table">' + rows.map(function(row, ri) {
                     var tag = ri === 0 ? 'th' : 'td';
                     return '<tr>' + row.split('|').map(function(c) {
                       return '<' + tag + '>' + c.trim() + '</' + tag + '>';
                     }).join('') + '</tr>';
-                  }).join('') + '</table>';
+                  }).join('') + '</table></div>';
                 }
                 // Split on $$...$$ display math blocks
                 var parts = p.trim().split(/(\$\$[\s\S]*?\$\$)/g);
@@ -1296,7 +1342,7 @@
           (coord.line_element ? [
             '<div class="mfs-section">',
               '<div class="mfs-section-label">line element</div>',
-              '<div class="mfs-component">' + tex(coord.line_element) + '</div>',
+              mathLine(coord.line_element),
             '</div>'
           ].join('') : ''),
 
@@ -1412,7 +1458,7 @@
             '<div class="mfs-section">',
               '<div class="mfs-section-label">Geodesics</div>',
               (Array.isArray(coord.geodesics) ? coord.geodesics : (coord.geodesics.massive || [])).map(function(eq) {
-                return '<div class="mfs-component">' + tex(eq) + '</div>';
+                return mathLine(eq);
               }).join(''),
             '</div>'
           ].join('') : '',
@@ -1446,6 +1492,9 @@
 
         contentPanel.innerHTML = header + body;
         wireDiagrams(contentPanel);
+        if (_lineObserver) _lineObserver.disconnect();
+        _lineObserver = null;
+        wireLines(contentPanel);
 
         // Force column reflow after MathJax typesetting
         function reflowColumns() {
@@ -1516,6 +1565,7 @@
               var compEl = document.getElementById('mfs-comp-' + tensorId);
               if (compEl) {
                 compEl.innerHTML = renderComponents(meta.variants[canonical].nonzero, meta.label, canonical);
+                wireLines(compEl);
                 if (window.MathJax && MathJax.typesetPromise) {
                   MathJax.typesetPromise([compEl]).then(reflowColumns);
                 } else {
@@ -1573,7 +1623,9 @@
   </script>
 
   <style>
-    #mfs-content-panel { overflow-y: auto; font-size: 21px !important; }
+    /* The panel scrolls down and never across: whatever is too wide scrolls inside itself,
+       as a line of mathematics does, so nothing can carry the headings sideways. */
+    #mfs-content-panel { overflow-y: auto; overflow-x: hidden; font-size: 21px !important; }
     /* The header reaches up through the panel's 1em of padding and sticks at the panel's
        edge, not below the padding, where the text scrolling under it would show above it. */
     #mfs-content-panel .mfs-header {
@@ -1631,8 +1683,9 @@
       line-height: 1.6; font-style: italic;
       letter-spacing: 0.03em; padding: 1.2em 0;
     }
+    #mfs-content-panel .mfs-table-scroll { overflow-x: auto; margin: 1em 0; }
     #mfs-content-panel .mfs-table {
-      border-collapse: collapse; margin: 1em 0; width: 100%;
+      border-collapse: collapse; width: 100%;
       font-size: 19px; color: var(--teal-light);
     }
     #mfs-content-panel .mfs-table th,
@@ -1651,6 +1704,32 @@
     #mfs-content-panel .mfs-component {
       font-size: 27px; color: var(--teal-light);
       line-height: 1.8; padding: 1px 0;
+    }
+    /* A line of mathematics, as mathLine() builds it: the label that stays, then the
+       scroller holding the rest. A trackpad or a finger scrolls a line directly, and a
+       wheel with shift held. The end of a line stops there rather than passing on to the
+       page, where a trackpad would read it as a swipe back to the previous page. Where a
+       platform draws scrollbars at all times, as Windows and a Mac with a mouse do, the bar
+       is a thin faint one, since it is the only way across for a wheel without shift; where
+       it draws them only while scrolling, as a Mac with a trackpad and a phone do, nothing
+       shows at rest except the fade at the edge the line continues past. */
+    #mfs-content-panel .mfs-line { display: flex; align-items: baseline; }
+    #mfs-content-panel .mfs-line-head { flex: none; }
+    #mfs-content-panel .mfs-line-scroll {
+      flex: 1 1 auto; min-width: 0;
+      overflow-x: auto; overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: thin; scrollbar-color: rgba(0,229,255,0.25) transparent;
+    }
+    #mfs-content-panel .mfs-line-body { width: max-content; white-space: nowrap; }
+    #mfs-content-panel .mfs-more-left  { --mfs-fade-l: 1.5em; }
+    #mfs-content-panel .mfs-more-right { --mfs-fade-r: 1.5em; }
+    #mfs-content-panel .mfs-more-left,
+    #mfs-content-panel .mfs-more-right {
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--mfs-fade-l, 0px),
+                                          #000 calc(100% - var(--mfs-fade-r, 0px)), transparent);
+              mask-image: linear-gradient(to right, transparent, #000 var(--mfs-fade-l, 0px),
+                                          #000 calc(100% - var(--mfs-fade-r, 0px)), transparent);
     }
     #mfs-content-panel .mfs-domains {
       display: flex; flex-wrap: wrap; gap: 0.4em 1.5em;
@@ -1737,7 +1816,7 @@
       gap: 12px 32px; margin: 10px 0 6px;
     }
     #mfs-content-panel .mfs-nr-hidden { display: none; }
-    #mfs-content-panel .mfs-nr-figure { flex: 0 1 620px; min-width: 280px; }
+    #mfs-content-panel .mfs-nr-figure { flex: 0 1 620px; min-width: min(280px, 100%); }
     /* The labels are sized in units of the figure's width, which is what the drawing scales
        with: a font size of n here is n units of the SVG's 598 unit wide viewBox. The print
        copy's figures take this too. */
@@ -1908,6 +1987,51 @@
   <script>
     /* ── MFS print / Save-as-PDF ── */
     (function() {
+      /* Paper cannot scroll, so the print copy shows the whole of every line. A line too
+         wide for the page breaks before a + or a - at the top level of its formula, or
+         before any = but its first, as a displayed equation is broken by hand, and its
+         continuation lines are indented under its first. Once MathJax has set the copy,
+         this gathers the top level of each formula into runs that each start at such an
+         operator and never break inside, and the browser breaks between runs only where the
+         paper runs out, so a line that fits still prints as one line. A single run too wide
+         for the page on its own, a large fraction or a bracketed sum, cannot be broken, so
+         each line records the width in ems its widest run needs, and the print stylesheet
+         sets that line just small enough for it to fit, whatever the paper.
+         MathJax writes the space in front of each atom as its `space` attribute, 3 before a
+         binary operator and 4 before a relation, and gives the atom after an operator the
+         same space again, so an operator is an mo carrying 3 or 4 that does not itself
+         follow one; the minus in `= -x` follows one and is a sign, not a place to break. */
+      var PRINT_INDENT_EM = 2;  // the continuation indent in the print stylesheet
+      function printPrepare(root) {
+        root.style.cssText = 'display:block;position:absolute;top:0;left:-100000px;visibility:hidden';
+        root.querySelectorAll('.mfs-line').forEach(function(line) {
+          var math = line.querySelector('.mfs-line-body mjx-math');
+          if (!math) return;
+          var runs = [], run = null, seenRelation = false, afterOperator = false;
+          Array.prototype.slice.call(math.children).forEach(function(node) {
+            var space = node.tagName === 'MJX-MO' ? node.getAttribute('space') : null;
+            var operator = !afterOperator && (space === '3' || space === '4');
+            var breakBefore = operator && (space === '3' || seenRelation);
+            if (operator && space === '4') seenRelation = true;
+            afterOperator = operator;
+            if (!run || breakBefore) {
+              if (run) math.insertBefore(document.createTextNode('\u200b'), node);
+              run = document.createElement('span');
+              run.className = 'mfs-print-run';
+              math.insertBefore(run, node);
+              runs.push(run);
+            }
+            run.appendChild(node);
+          });
+          var em = parseFloat(getComputedStyle(line).fontSize);
+          var head = line.querySelector('.mfs-line-head mjx-container');
+          var widest = Math.max.apply(null, runs.map(function(r) { return r.getBoundingClientRect().width; }));
+          var need = ((head ? head.getBoundingClientRect().width : 0) + widest) / em + PRINT_INDENT_EM + 0.5;
+          line.style.setProperty('--mfs-fit', need.toFixed(3));
+        });
+        root.style.cssText = '';
+      }
+
       document.addEventListener('click', function(e) {
         var btn = e.target.closest('#mfs-print-btn');
         if (!btn) return;
@@ -1936,14 +2060,14 @@
           '<tfoot><tr><td>' +
             '<div class="mfs-print-footer">Downloaded from DamianSowinski.com on ' + today + '</div>' +
           '</td></tr></tfoot>' +
-          '<tbody><tr><td class="mfs-print-body">' + bodyHTML + '</td></tr></tbody></table>';
+          '<tbody><tr><td class="mfs-print-body"><div class="mfs-print-page">' + bodyHTML + '</div></td></tr></tbody></table>';
 
         document.body.appendChild(root);
 
         // Typeset the fresh (raw LaTeX) copy, then print
         var pb = root.querySelector('.mfs-print-body');
         if (window.MathJax && MathJax.typesetPromise) {
-          MathJax.typesetPromise([pb]).then(function() { window.print(); });
+          MathJax.typesetPromise([pb]).then(function() { printPrepare(root); window.print(); });
         } else {
           window.print();
         }
@@ -2000,8 +2124,27 @@
         text-transform: uppercase; letter-spacing: 0.08em;
         font-size: 10pt; font-weight: bold; margin: 10px 0 4px;
       }
+      /* A heading stays on the page with the first of what it heads. */
+      .mfs-print-body .mfs-section-label, .mfs-print-body .mfs-section-head { break-after: avoid; }
       .mfs-print-body .mfs-component { font-size: 12pt; line-height: 1.5; break-inside: avoid; }
-      .mfs-print-body [id^="mfs-comp-"] { column-count: 1 !important; }
+      /* The page is the container every line fits itself to, and its size containment is
+         also what stops the widest line stretching the table past the paper, which cut the
+         right side off every page, prose and all. printPrepare() says how a line breaks. */
+      .mfs-print-table { table-layout: fixed; }
+      .mfs-print-page { container-type: inline-size; }
+      .mfs-print-body .mfs-line {
+        display: flex; align-items: baseline;
+        font-size: min(12pt, 100cqw / var(--mfs-fit, 0.001));
+      }
+      .mfs-print-body .mfs-line-head { flex: none; }
+      .mfs-print-body .mfs-line-scroll { flex: 1 1 0; min-width: 0; }
+      .mfs-print-body .mfs-line-body { padding-left: 2em; text-indent: -2em; }
+      .mfs-print-body .mfs-line-body mjx-container,
+      .mfs-print-body .mfs-line-body mjx-math { display: inline; white-space: normal; }
+      .mfs-print-body .mfs-print-run { display: inline-block; white-space: nowrap; text-indent: 0; margin: 2pt 0; }
+      /* One column, and not a one column multicol container, which the browser moved whole
+         to the next page rather than start on the page the tensor before it ended on. */
+      .mfs-print-body [id^="mfs-comp-"] { column-count: auto !important; }
       .mfs-print-body .mfs-idx-widget { display: none !important; }  /* interactive toggle, not printable */
       .mfs-print-body .mfs-coord-select {
         border: 1px solid #000 !important; font-size: 11pt;
