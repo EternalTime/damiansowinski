@@ -220,6 +220,28 @@ class Diagrams(unittest.TestCase):
                         parameter["description"] = parameter.get("description", "") + " Reworded."
         self.assertIn(metric_id, build.load_diagrams(changed))
 
+    def test_every_axis_is_labelled_as_tex_and_ticked_inside_its_box(self):
+        """The page and the application both set these labels as TeX and draw no tick of their own."""
+        views = 0
+        for metric_id, diagram in self.diagrams.items():
+            for system_id, drawn in diagram["systems"].items():
+                for view in drawn:
+                    views += 1
+                    where = f"{metric_id}/{system_id}/{view['id']}"
+                    references = [mk["label"] for mk in view["markers"] if mk["kind"] == "reference"]
+                    for label in [view["xlabel"], view["ylabel"], *references]:
+                        self.assertRegex(label, r"^\$[^$]+\$$", where)
+                    x0, x1, y0, y1 = view["box"]
+                    for axis, lo, hi in (("x", -x1 if view["mirror"] else x0, x1), ("y", y0, y1)):
+                        at = [tick["at"] for tick in view["ticks"][axis]]
+                        self.assertGreaterEqual(len(at), 2, f"{where} {axis}")
+                        self.assertEqual(at, sorted(at), f"{where} {axis}")
+                        self.assertTrue(lo <= at[0] and at[-1] <= hi, f"{where} {axis}")
+                        for tick in view["ticks"][axis]:
+                            self.assertRegex(tick["label"], r"^\$-?\d+(\.\d+)?\$$", where)
+                            self.assertEqual(float(tick["label"][1:-1]), tick["at"], where)
+        self.assertTrue(views)
+
     def test_a_diagram_of_a_system_its_metric_lacks_is_refused(self):
         metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "coordinates": [{"id": "a"}]}
         diagram = {"metric": "x", "systems": {"b": []}}

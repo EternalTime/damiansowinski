@@ -99,6 +99,13 @@ The second command stamps each diagram file's version into the index, as it does
 `CAPTIONS` beside it carries each view's caption, which is prose under the rule above, and the tests hold the captions, the labels and the declared inputs to it as they hold the metrics.
 A new view is a row in each, and the script refuses to run while one lacks the other.
 
+### Labels are TeX
+
+Every label in a view is text with its mathematics in `$...$`, the form a caption takes: the button's name, the two axes, each tick and the line where a dust solution starts.
+An axis names its coordinate and its unit as the entry's line element spells them, `$ct/r_s$` and not `ct / r_s`, so the page sets it with the same MathJax as the metric above it and the application with SwiftMath.
+The script picks each axis's ticks, a step of 1, 2, 2.5 or 5 times a power of ten giving about six across, and writes them into the view as `ticks` with the value `at` in the box's units and the label as TeX, so neither reader chooses its own.
+The page lays the labels over the SVG as HTML rather than drawing them as SVG text, and `_layouts/mfs.html` says why beside the renderer.
+
 ### A diagram is tied to what it was drawn from
 
 Every view records the fields it was drawn from and a stamp over them, computed by `diagram_source_version` in `build_mfs_data.py`, the one function both scripts use.

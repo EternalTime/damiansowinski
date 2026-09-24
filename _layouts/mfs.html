@@ -891,7 +891,17 @@
          MFS/assets/data/diagrams/<id>.json. _tools/derivations/null_rays.py computes
          every curve from the published metric; the page only draws them. A view's
          points are in the unit square of its box; a mirrored view is the half x = r
-         of a line through the centre, drawn together with its reflection. */
+         of a line through the centre, drawn together with its reflection.
+
+         Every label, on an axis, a tick, a reference line or a view's button, is text with
+         its mathematics in $...$, as a caption is, and the page sets it in the same MathJax
+         pass as the line element, so a symbol on an axis is the symbol in the metric. The labels are HTML laid over the SVG rather than SVG text, which MathJax's
+         CHTML output cannot enter: each sits at its point of the drawing in percentages of
+         the figure, and the figure is a size container whose width sets their size, so they
+         scale with the drawing as its own text did and never move a line of it. That costs
+         no second copy of MathJax or its fonts, which MathJax's own SVG output would, and
+         none of the foreignObject rendering Safari still gets wrong. The generator writes
+         the labels and ticks, as TeX, into the file, so the application sets the same ones. */
       var _diagramCache = {};  // id → parsed JSON, or null where the spacetime has none
       var _nrUid = 0;
 
@@ -941,23 +951,41 @@
         return d;
       }
 
-      function nrNiceStep(span, target) {
-        var raw = span / target, p = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10));
-        var steps = [1, 2, 2.5, 5, 10];
-        for (var i = 0; i < steps.length; i++) if (steps[i] * p >= raw) return steps[i] * p;
-        return 10 * p;
+      // A label's words, without its TeX, for a screen reader's name of the drawing.
+      function nrPlain(label) {
+        return label.replace(/\$/g, '').replace(/\\/g, '');
       }
 
-      function nrFmt(v) {
-        var r = Math.round(v * 1000) / 1000;
-        return String(r === 0 ? 0 : r).replace('-', '−');
-      }
-
-      function nrSvg(view) {
-        var id = 'mfs-nr-' + (_nrUid++);
+      // The drawing's frame in the SVG's own units: the plot is W wide, in margins m.
+      function nrFrame(view) {
         var b = view.box, X0 = view.mirror ? -b[1] : b[0], X1 = b[1], Y0 = b[2], Y1 = b[3];
-        var W = 520, H = W * (Y1 - Y0) / (X1 - X0);
-        var m = { l: 62, r: 16, t: 14, b: 54 };
+        var W = 520, H = W * (Y1 - Y0) / (X1 - X0), m = { l: 62, r: 16, t: 14, b: 54 };
+        return { X0: X0, X1: X1, Y0: Y0, Y1: Y1, W: W, H: H, m: m, vw: W + m.l + m.r, vh: H + m.t + m.b,
+                 x: function(v) { return m.l + (v - X0) / (X1 - X0) * W; },
+                 y: function(v) { return m.t + (1 - (v - Y0) / (Y1 - Y0)) * H; } };
+      }
+
+      // Every label of a view, each pinned at its point of the drawing by the edge or
+      // centre its class names, in percentages of the figure the SVG fills.
+      function nrLabels(view, f) {
+        function at(cls, x, y, label) {
+          return '<span class="nr-at ' + cls + '" style="left:' + (100 * x / f.vw).toFixed(3) + '%;top:' +
+            (100 * y / f.vh).toFixed(3) + '%">' + nrEsc(label) + '</span>';
+        }
+        var m = f.m, out = [];
+        view.ticks.x.forEach(function(t) { out.push(at('nr-at-x', f.x(t.at), m.t + f.H + 8, t.label)); });
+        view.ticks.y.forEach(function(t) { out.push(at('nr-at-y', m.l - 9, f.y(t.at), t.label)); });
+        out.push(at('nr-at-xlabel', m.l + f.W / 2, m.t + f.H + 32, view.xlabel));
+        out.push(at('nr-at-ylabel', 20, m.t + f.H / 2, view.ylabel));
+        view.markers.forEach(function(mk) {
+          if (mk.kind === 'reference') out.push(at('nr-at-ref', m.l + f.W - 6, m.t + (1 - mk.y) * f.H - 5, mk.label));
+        });
+        return '<div class="mfs-nr-labels" aria-hidden="true">' + out.join('') + '</div>';
+      }
+
+      function nrSvg(view, f) {
+        var id = 'mfs-nr-' + (_nrUid++);
+        var X0 = f.X0, X1 = f.X1, Y0 = f.Y0, Y1 = f.Y1, W = f.W, H = f.H, m = f.m;
         // Each half of a mirrored view is clipped to its own side of the centre, where a ray
         // traced through r = 0 would otherwise show the few points it runs past the axis.
         var sides = view.mirror
@@ -982,23 +1010,16 @@
           '</defs>');
         out.push(nrEl('rect', { 'class': 'nr-bg', x: m.l, y: m.t, width: W, height: H }));
 
-        var sx = nrNiceStep(X1 - X0, 6), sy = nrNiceStep(Y1 - Y0, 6 * (Y1 - Y0) / (X1 - X0));
-        var x, y, X, Y;
-        for (x = Math.ceil(X0 / sx - 1e-9) * sx; x <= X1 + 1e-9; x += sx) {
-          X = m.l + (x - X0) / (X1 - X0) * W;
+        view.ticks.x.forEach(function(t) {
+          var X = f.x(t.at);
           out.push(nrEl('line', { 'class': 'nr-grid', x1: X, y1: m.t, x2: X, y2: m.t + H }));
           out.push(nrEl('line', { 'class': 'nr-axis', x1: X, y1: m.t + H, x2: X, y2: m.t + H + 5 }));
-          out.push(nrEl('text', { 'class': 'nr-tick', x: X, y: m.t + H + 21, 'text-anchor': 'middle' }, nrFmt(x)));
-        }
-        for (y = Math.ceil(Y0 / sy - 1e-9) * sy; y <= Y1 + 1e-9; y += sy) {
-          Y = m.t + (1 - (y - Y0) / (Y1 - Y0)) * H;
+        });
+        view.ticks.y.forEach(function(t) {
+          var Y = f.y(t.at);
           out.push(nrEl('line', { 'class': 'nr-grid', x1: m.l, y1: Y, x2: m.l + W, y2: Y }));
           out.push(nrEl('line', { 'class': 'nr-axis', x1: m.l - 5, y1: Y, x2: m.l, y2: Y }));
-          out.push(nrEl('text', { 'class': 'nr-tick', x: m.l - 9, y: Y + 5, 'text-anchor': 'end' }, nrFmt(y)));
-        }
-        out.push(nrEl('text', { 'class': 'nr-label', x: m.l + W / 2, y: m.t + H + 44, 'text-anchor': 'middle' }, nrEsc(view.xlabel)));
-        out.push(nrEl('text', { 'class': 'nr-label', x: 16, y: m.t + H / 2, 'text-anchor': 'middle',
-          transform: 'rotate(-90 16 ' + (m.t + H / 2) + ')' }, nrEsc(view.ylabel)));
+        });
 
         // Cones at a fixed size on screen, whatever the proportions of the box.
         var L = 17;
@@ -1052,7 +1073,6 @@
           if (mk.kind === 'reference') {
             var ry = py([0, mk.y]);
             out.push(nrEl('line', { 'class': 'nr-reference', x1: m.l, y1: ry, x2: m.l + W, y2: ry }));
-            out.push(nrEl('text', { 'class': 'nr-reference-label', x: m.l + W - 6, y: ry - 6, 'text-anchor': 'end' }, nrEsc(mk.label)));
             return;
           }
           sides.forEach(function(side) {
@@ -1062,11 +1082,17 @@
         out.push(nrEl('rect', { 'class': 'nr-frame', x: m.l, y: m.t, width: W, height: H }));
 
         return nrEl('svg', {
-          'class': 'mfs-nr-svg', viewBox: '0 0 ' + (W + m.l + m.r) + ' ' + (H + m.t + m.b).toFixed(1), role: 'img',
-          'aria-label': 'Null rays and future light cones, ' + view.label,
-          'data-box': JSON.stringify([X0, X1, Y0, Y1]), 'data-margins': JSON.stringify([m.l, m.t, W, H]),
-          'data-xlabel': view.xlabel, 'data-ylabel': view.ylabel
+          'class': 'mfs-nr-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
+          'aria-label': 'Null rays and future light cones, ' + nrPlain(view.label),
+          'data-box': JSON.stringify([X0, X1, Y0, Y1]), 'data-margins': JSON.stringify([m.l, m.t, W, H])
         }, out.join(''));
+      }
+
+      function nrFigure(view) {
+        var f = nrFrame(view);
+        return '<div class="mfs-nr-figure">' + nrSvg(view, f) + nrLabels(view, f) +
+          '<div class="mfs-nr-readout"><span>' + nrEsc(view.xlabel) + '</span> = <span class="nr-rx"></span>' +
+          '<span class="nr-rgap"></span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></div></div>';
       }
 
       // Inline math and the punctuation after it stay on one line, so a comma never wraps
@@ -1128,7 +1154,7 @@
             views.map(function(view, i) {
               return [
                 '<div class="mfs-nr-view' + (i ? ' mfs-nr-hidden' : '') + '">',
-                  '<div class="mfs-nr-figure">', nrSvg(view), '<div class="mfs-nr-readout"></div></div>',
+                  nrFigure(view),
                   '<div class="mfs-nr-text">',
                     '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(p) + '</p>'; }).join(''), '</div>',
                     nrLegend(view),
@@ -1156,6 +1182,7 @@
         });
         root.querySelectorAll('.mfs-nr-figure').forEach(function(figure) {
           var svg = figure.querySelector('svg'), readout = figure.querySelector('.mfs-nr-readout');
+          var rx = readout.querySelector('.nr-rx'), ry = readout.querySelector('.nr-ry');
           var box = JSON.parse(svg.getAttribute('data-box')), mg = JSON.parse(svg.getAttribute('data-margins'));
           svg.addEventListener('mousemove', function(ev) {
             var r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
@@ -1163,8 +1190,8 @@
             var v = 1 - ((ev.clientY - r.top) / r.height * vb.height - mg[1]) / mg[3];
             if (u < 0 || u > 1 || v < 0 || v > 1) { readout.style.opacity = 0; return; }
             readout.style.opacity = 1;
-            readout.textContent = svg.getAttribute('data-xlabel') + ' = ' + (box[0] + u * (box[1] - box[0])).toFixed(3) +
-              '    ' + svg.getAttribute('data-ylabel') + ' = ' + (box[2] + v * (box[3] - box[2])).toFixed(3);
+            rx.textContent = (box[0] + u * (box[1] - box[0])).toFixed(3).replace('-', '−');
+            ry.textContent = (box[2] + v * (box[3] - box[2])).toFixed(3).replace('-', '−');
           });
           svg.addEventListener('mouseleave', function() { readout.style.opacity = 0; });
         });
@@ -1547,10 +1574,13 @@
 
   <style>
     #mfs-content-panel { overflow-y: auto; font-size: 21px !important; }
+    /* The header reaches up through the panel's 1em of padding and sticks at the panel's
+       edge, not below the padding, where the text scrolling under it would show above it. */
     #mfs-content-panel .mfs-header {
-      padding: 10px 16px 8px;
+      margin-top: -1em;
+      padding: calc(10px + 1em) 16px 8px;
       border-bottom: 1px solid rgba(0,229,255,0.2);
-      position: sticky; top: 0;
+      position: sticky; top: -1em;
       background: rgba(0,0,0,0.95);
       z-index: 1;
     }
@@ -1707,7 +1737,22 @@
       gap: 12px 32px; margin: 10px 0 6px;
     }
     #mfs-content-panel .mfs-nr-hidden { display: none; }
-    #mfs-content-panel .mfs-nr-figure { position: relative; flex: 0 1 620px; min-width: 280px; }
+    #mfs-content-panel .mfs-nr-figure { flex: 0 1 620px; min-width: 280px; }
+    /* The labels are sized in units of the figure's width, which is what the drawing scales
+       with: a font size of n here is n units of the SVG's 598 unit wide viewBox. The print
+       copy's figures take this too. */
+    .mfs-nr-figure { position: relative; container-type: inline-size; }
+    .mfs-nr-labels {
+      position: absolute; inset: 0; pointer-events: none;
+      font-family: 'Source Code Pro', monospace; font-size: calc(100cqw * 14 / 598); line-height: 1;
+      color: var(--text-dim);
+    }
+    .mfs-nr-labels .nr-at { position: absolute; white-space: nowrap; }
+    .mfs-nr-labels .nr-at-x { transform: translate(-50%, 0); }
+    .mfs-nr-labels .nr-at-y { transform: translate(-100%, -50%); }
+    .mfs-nr-labels .nr-at-xlabel { transform: translate(-50%, 0); font-size: calc(100cqw * 15 / 598); }
+    .mfs-nr-labels .nr-at-ylabel { transform: translate(-50%, -50%) rotate(-90deg); font-size: calc(100cqw * 15 / 598); }
+    .mfs-nr-labels .nr-at-ref { transform: translate(-100%, -100%); font-size: calc(100cqw * 13 / 598); }
     #mfs-content-panel .mfs-nr-svg { display: block; width: 100%; height: auto; }
     #mfs-content-panel .mfs-nr-readout {
       position: absolute; right: 18px; top: 18px; pointer-events: none;
@@ -1715,6 +1760,7 @@
       color: var(--text-dim); background: rgba(0,0,0,0.8); padding: 1px 6px; border-radius: 3px;
       opacity: 0; transition: opacity 0.12s;
     }
+    #mfs-content-panel .mfs-nr-readout .nr-rgap { display: inline-block; width: 2em; }
     #mfs-content-panel .mfs-nr-text { flex: 1 1 340px; min-width: 0; }
     #mfs-content-panel .mfs-nr-caption p {
       font-family: 'Source Code Pro', monospace; font-size: 19px; line-height: 1.65;
@@ -1740,8 +1786,6 @@
     .mfs-nr-svg .nr-grid { stroke: rgba(0,229,255,0.07); stroke-width: 1; }
     .mfs-nr-svg .nr-axis { stroke: rgba(0,229,255,0.45); stroke-width: 1; }
     .mfs-nr-svg .nr-frame { fill: none; stroke: rgba(0,229,255,0.45); stroke-width: 1.2; }
-    .mfs-nr-svg .nr-tick { fill: var(--text-dim); font-family: 'Source Code Pro', monospace; font-size: 14px; }
-    .mfs-nr-svg .nr-label { fill: var(--text-dim); font-family: 'Source Code Pro', monospace; font-size: 15px; }
     .mfs-nr-svg .nr-hatch-bg { fill: rgba(10,14,18,0.55); }
     .mfs-nr-svg .nr-hatch-line { stroke: rgba(168,192,208,0.28); stroke-width: 1.4; }
     .mfs-nr-swatch .nr-hatch-swatch { fill: rgba(168,192,208,0.12); stroke: rgba(168,192,208,0.35); }
@@ -1760,7 +1804,6 @@
     .nr-apparent { fill: none; stroke: var(--blue-lighter); stroke-width: 2.8; stroke-dasharray: 0.5 5; stroke-linecap: round; }
     .nr-singular { fill: none; stroke: var(--pink-dark); stroke-width: 1.8; }
     .nr-reference { stroke: var(--text-dim); stroke-width: 1; stroke-dasharray: 3 5; stroke-opacity: 0.7; }
-    .nr-reference-label { fill: var(--text-dim); font-family: 'Source Code Pro', monospace; font-size: 13px; }
     #mfs-content-panel .mfs-references {
       margin-top: 8px;
     }
@@ -1979,7 +2022,6 @@
       .mfs-print-body .nr-bg { fill: #fff; }
       .mfs-print-body .nr-grid { stroke: #e4e4e4; }
       .mfs-print-body .nr-axis, .mfs-print-body .nr-frame { stroke: #000; }
-      .mfs-print-body .nr-tick, .mfs-print-body .nr-label, .mfs-print-body .nr-reference-label { fill: #000; }
       .mfs-print-body .nr-hatch-bg { fill: #fff; }
       .mfs-print-body .nr-hatch-line { stroke: #bbb; }
       .mfs-print-body .nr-M { stroke: #168f84; }
