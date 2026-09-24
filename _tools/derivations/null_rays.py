@@ -91,7 +91,8 @@ Output
 
 Each view records the published fields it was drawn from and their version, as
 build_mfs_data.diagram_source_version computes it; build_mfs_data.py --check fails when
-a metric changes without its diagram being redrawn.
+a metric changes without its diagram being redrawn. It carries its ticks, and every
+label as TeX in $...$, so the page and the application draw and set the same ones.
 """
 
 import argparse
@@ -99,6 +100,8 @@ import json
 import math
 import sys
 from dataclasses import dataclass, field
+from decimal import Decimal
+from fractions import Fraction
 from pathlib import Path
 
 import contourpy
@@ -131,10 +134,11 @@ class Diagram:
     metric: str
     system: str
     view: str                       # unique within the system
-    label: str                      # the view's name on the page
+    label: str                      # the view's name on the page; every label is text with its
+                                    # mathematics in $...$, as a caption is, so it is set as TeX
     plane: tuple                    # (time coordinate, spatial coordinate), as the entry spells them
     box: tuple                      # (Xmin, Xmax, Ymin, Ymax) in the drawn axes
-    xlabel: str
+    xlabel: str                     # the axes, as the line element spells their symbols
     ylabel: str
     params: dict = field(default_factory=dict)      # parameter -> value
     fixed: dict = field(default_factory=dict)       # every other coordinate -> value
@@ -148,7 +152,7 @@ class Diagram:
     areal_contours: tuple = ()
     functions: dict = field(default_factory=dict)   # a declared function -> its expression
     dust: dict = None               # scale factors solved as dust, see DustSolver
-    reference: str = None           # label of the line where a dust solution starts
+    reference: str = None           # label of the line where a dust solution starts, as TeX
     kretschmann: bool = True
     mark_g00: bool = False
     input: str = None               # the declared input, in prose, printed beside the diagram
@@ -192,129 +196,129 @@ BIANCHI_DUST = {"funcs": ["a_1", "a_2", "a_3"], "eqs": [["x", "x"], ["y", "y"], 
 # equal scales on both axes, so light in flat space runs at 45 degrees, and cone
 # lattices so that no cone sits exactly on a line where the chart is singular.
 DIAGRAMS = [
-    Diagram("schwarzschild", "spherical", "radial", "t and r", ("t", "r"), (0, 6, -3, 3),
-            "r / r_s", "ct / r_s", {"r_s": 1}, EQUATOR, orient="ingoing", areal=True),
-    Diagram("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein", "against v - r",
-            ("v", "r"), (0, 6, -3, 3), "r / r_s", "(v - r) / r_s", {"r_s": 1}, EQUATOR,
+    Diagram("schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, orient="ingoing", areal=True),
+    Diagram("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 6, -3, 3), "$r/r_s$", "$(v - r)/r_s$", {"r_s": 1}, EQUATOR,
             to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
-    Diagram("schwarzschild", "eddington_finkelstein_ingoing", "chart", "against v",
-            ("v", "r"), (0, 6, 0, 6), "r / r_s", "v / r_s", {"r_s": 1}, EQUATOR,
+    Diagram("schwarzschild", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 6, 0, 6), "$r/r_s$", "$v/r_s$", {"r_s": 1}, EQUATOR,
             tau="v - r", areal=True),
-    Diagram("schwarzschild", "eddington_finkelstein_outgoing", "finkelstein", "against u + r",
-            ("u", "r"), (0, 6, -3, 3), "r / r_s", "(u + r) / r_s", {"r_s": 1}, EQUATOR,
+    Diagram("schwarzschild", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 6, -3, 3), "$r/r_s$", "$(u + r)/r_s$", {"r_s": 1}, EQUATOR,
             to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
-    Diagram("schwarzschild", "eddington_finkelstein_outgoing", "chart", "against u",
-            ("u", "r"), (0, 6, -6, 0), "r / r_s", "u / r_s", {"r_s": 1}, EQUATOR,
+    Diagram("schwarzschild", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 6, -6, 0), "$r/r_s$", "$u/r_s$", {"r_s": 1}, EQUATOR,
             tau="u + r", areal=True),
-    Diagram("frw", "comoving_spherical", "radial", "t and r", ("t", "r"), (0, 3, 0, 2),
-            "r  [c/H₀]", "ct  [c/H₀]", {"k": 0}, EQUATOR, areal=True, dust=FRW_DUST,
-            reference="a = 1",
+    Diagram("frw", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 3, 0, 2),
+            "$r\\;[c/H_0]$", "$ct\\;[c/H_0]$", {"k": 0}, EQUATOR, areal=True, dust=FRW_DUST,
+            reference="$a = 1$",
             input="Dust: $a(t)$ solved from the entry's own published $G^r{}_r = 0$ with $k = 0$, "
                   "starting from $a = 1$ and $\\dot a = H_0$ at the dashed line."),
     Diagram("frw", "comoving_spherical", "through", "through the observer", ("t", "r"),
-            (0, 1.5, 0, 3), "x  [c/H₀]", "ct  [c/H₀]", {"k": 0}, EQUATOR, mirror=True,
-            families=SIDEWAYS, cones=(4, 8), areal=True, dust=FRW_DUST, reference="a = 1",
+            (0, 1.5, 0, 3), "$x\\;[c/H_0]$", "$ct\\;[c/H_0]$", {"k": 0}, EQUATOR, mirror=True,
+            families=SIDEWAYS, cones=(4, 8), areal=True, dust=FRW_DUST, reference="$a = 1$",
             input="Dust: $a(t)$ solved from the entry's own published $G^r{}_r = 0$ with $k = 0$, "
                   "starting from $a = 1$ and $\\dot a = H_0$ at the dashed line."),
-    Diagram("frw", "conformal_spherical", "radial", "eta and r", ("\\eta", "r"), (0, 3, 0, 3),
-            "r  [c/H₀]", "η  [c/H₀]", {"k": 0}, EQUATOR, tau="eta", areal=True,
-            dust=FRW_DUST, reference="a = 1",
+    Diagram("frw", "conformal_spherical", "radial", "$\\eta$ and $r$", ("\\eta", "r"), (0, 3, 0, 3),
+            "$r\\;[c/H_0]$", "$\\eta\\;[c/H_0]$", {"k": 0}, EQUATOR, tau="eta", areal=True,
+            dust=FRW_DUST, reference="$a = 1$",
             input="Dust, for the markers only: $a(\\eta)$ solved from this chart's own published "
                   "$G^r{}_r = 0$ with $k = 0$, starting from $a = 1$ and $a' = 1$ at the dashed line."),
-    Diagram("ellis_bronnikov", "spherical", "radial", "t and r", ("t", "r"), (-3, 3, -3, 3),
-            "r / ℓ", "ct / ℓ", {"ell": 1}, EQUATOR, families=SIDEWAYS, areal=True,
+    Diagram("ellis_bronnikov", "spherical", "radial", "$t$ and $r$", ("t", "r"), (-3, 3, -3, 3),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, families=SIDEWAYS, areal=True,
             areal_contours=(1.5, 2.0, 3.0)),
-    Diagram("morris_thorne", "spherical", "radial", "t and r", ("t", "r"), (0, 4, -2, 2),
-            "r / b₀", "ct / b₀", {"b_0": 1}, EQUATOR, areal=True,
+    Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
             input="$\\Phi = 0$ and $b = b_0^2/r$, the member of the family that is the "
                   "Ellis-Bronnikov wormhole."),
-    Diagram("minkowski", "spherical", "radial", "t and r", ("t", "r"), (0, 4, -2, 2),
-            "r", "ct", {}, EQUATOR, areal=True),
-    Diagram("minkowski", "spherical_null", "radial", "t and r", ("u", "v"), (0, 4, -2, 2),
-            "(v - u) / 2", "(u + v) / 2", {}, EQUATOR, to_display=NULL_TO_TR, tau="u + v",
+    Diagram("minkowski", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r$", "$ct$", {}, EQUATOR, areal=True),
+    Diagram("minkowski", "spherical_null", "radial", "$t$ and $r$", ("u", "v"), (0, 4, -2, 2),
+            "$(v - u)/2$", "$(u + v)/2$", {}, EQUATOR, to_display=NULL_TO_TR, tau="u + v",
             areal=True),
-    Diagram("minkowski", "cartesian", "tx", "t and x", ("t", "x"), (-2, 2, -2, 2),
-            "x", "ct", {}, {"y": "0", "z": "0"}, families=SIDEWAYS),
-    Diagram("minkowski", "rindler", "tx", "T and X", ("T", "X"), (0, 3, -1.5, 1.5),
-            "X  [c²/a]", "cT  [c²/a]", {"a": 1}, {"Y": "0", "Z": "0"}, tau="T",
+    Diagram("minkowski", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2),
+            "$x$", "$ct$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    Diagram("minkowski", "rindler", "tx", "$T$ and $X$", ("T", "X"), (0, 3, -1.5, 1.5),
+            "$X\\;[c^2/a]$", "$cT\\;[c^2/a]$", {"a": 1}, {"Y": "0", "Z": "0"}, tau="T",
             families=SIDEWAYS),
-    Diagram("de_sitter", "static_spherical", "radial", "t and r", ("t", "r"), (0, 2, -1, 1),
-            "r √(Λ/3)", "ct √(Λ/3)", {"Lambda": 3}, EQUATOR, orient="outgoing",
-            cones=(8, 7), areal=True),
+    Diagram("de_sitter", "static_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
+            "$r\\sqrt{\\Lambda/3}$", "$ct\\sqrt{\\Lambda/3}$", {"Lambda": 3}, EQUATOR,
+            orient="outgoing", cones=(8, 7), areal=True),
     Diagram("de_sitter", "static_spherical", "through", "through the observer", ("t", "r"),
-            (0, 2, -2, 2), "x √(Λ/3)", "ct √(Λ/3)", {"Lambda": 3}, EQUATOR, mirror=True,
-            orient="outgoing", families=SIDEWAYS, cones=(4, 8), areal=True),
-    Diagram("de_sitter", "flat_slicing", "tx", "t and x", ("t", "x"), (-2, 2, -1, 3),
-            "x  [c/H]", "ct  [c/H]", {"H": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
-    Diagram("anti_de_sitter", "static_global", "radial", "t and r", ("t", "r"), (0, 4, -2, 2),
-            "r / L", "ct / L", {"L": 1}, EQUATOR, areal=True),
+            (0, 2, -2, 2), "$x\\sqrt{\\Lambda/3}$", "$ct\\sqrt{\\Lambda/3}$", {"Lambda": 3},
+            EQUATOR, mirror=True, orient="outgoing", families=SIDEWAYS, cones=(4, 8), areal=True),
+    Diagram("de_sitter", "flat_slicing", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -1, 3),
+            "$x\\;[c/H]$", "$ct\\;[c/H]$", {"H": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    Diagram("anti_de_sitter", "static_global", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/L$", "$ct/L$", {"L": 1}, EQUATOR, areal=True),
     Diagram("anti_de_sitter", "static_global", "through", "through the centre", ("t", "r"),
-            (0, 4, -4, 4), "x / L", "ct / L", {"L": 1}, EQUATOR, mirror=True,
+            (0, 4, -4, 4), "$x/L$", "$ct/L$", {"L": 1}, EQUATOR, mirror=True,
             families=SIDEWAYS, cones=(4, 8), areal=True),
-    Diagram("anti_de_sitter", "poincare", "tx", "t and x", ("t", "x"), (-2, 2, -2, 2),
-            "x / L", "ct / L", {"L": 1}, {"y": "0", "z": "1"}, families=SIDEWAYS),
-    Diagram("rn_metric", "spherical", "radial", "t and r", ("t", "r"), (0, 2, -1, 1),
-            "r / r_s", "t / r_s", {"r_s": 1, "r_q": "2/5"}, EQUATOR, orient="ingoing",
+    Diagram("anti_de_sitter", "poincare", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2),
+            "$x/L$", "$ct/L$", {"L": 1}, {"y": "0", "z": "1"}, families=SIDEWAYS),
+    Diagram("rn_metric", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
+            "$r/r_s$", "$t/r_s$", {"r_s": 1, "r_q": "2/5"}, EQUATOR, orient="ingoing",
             areal=True),
-    Diagram("taub_nut", "spherical", "radial", "t and r", ("t", "r"), (0, 6, -3, 3),
-            "r / m", "ct / m", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
-    Diagram("bertotti_robinson", "static", "radial", "t and r", ("t", "r"), (0, 3, -1.5, 1.5),
-            "r / b", "ct / b", {"b": 1}, EQUATOR),
-    Diagram("bertotti_robinson", "poincare", "tx", "t and x", ("t", "x"), (0, 4, -2, 2),
-            "x / b", "ct / b", {"b": 1}, EQUATOR, families=SIDEWAYS),
-    Diagram("interior_schwarzschild", "spherical", "radial", "t and r", ("t", "r"),
-            (0, 1.5, -0.75, 0.75), "r / r_s", "t / r_s", {"r_s": 1, "R": "3/2"}, EQUATOR,
+    Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
+    Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/b$", "$ct/b$", {"b": 1}, EQUATOR),
+    Diagram("bertotti_robinson", "poincare", "tx", "$t$ and $x$", ("t", "x"), (0, 4, -2, 2),
+            "$x/b$", "$ct/b$", {"b": 1}, EQUATOR, families=SIDEWAYS),
+    Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
     Diagram("interior_schwarzschild", "spherical", "through", "through the centre", ("t", "r"),
-            (0, 1.5, -1.5, 1.5), "x / r_s", "t / r_s", {"r_s": 1, "R": "3/2"}, EQUATOR,
+            (0, 1.5, -1.5, 1.5), "$x/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
-    Diagram("kerr", "boyer_lindquist", "radial", "t and r on the axis", ("t", "r"), (0, 4, -2, 2),
-            "r / (GM/c²)", "ct / (GM/c²)", {"G": 1, "M": 1, "a": "9/10"},
+    Diagram("kerr", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$r/(GM/c^2)$", "$ct/(GM/c^2)$", {"G": 1, "M": 1, "a": "9/10"},
             {"theta": "0", "phi": "0"}, orient="ingoing"),
-    Diagram("kerr_newman", "boyer_lindquist", "radial", "t and r on the axis", ("t", "r"),
-            (0, 4, -2, 2), "r / (GM/c²)", "ct / (GM/c²)",
+    Diagram("kerr_newman", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"),
+            (0, 4, -2, 2), "$r/(GM/c^2)$", "$ct/(GM/c^2)$",
             {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "0", "phi": "0"},
             orient="ingoing"),
-    Diagram("kasner", "cartesian", "tx", "t and x", ("t", "x"), (-1, 1, 0, 2), "x", "ct",
+    Diagram("kasner", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-1, 1, 0, 2), "$x$", "$ct$",
             {"p_1": "-2/7", "p_2": "3/7", "p_3": "6/7"}, {"y": "0", "z": "0"},
             families=SIDEWAYS,
             input="Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, a point on the Kasner circle: "
                   "they sum to 1, and so do their squares."),
-    Diagram("kasner", "cartesian", "tz", "t and z", ("t", "z"), (-1, 1, 0, 2), "z", "ct",
+    Diagram("kasner", "cartesian", "tz", "$t$ and $z$", ("t", "z"), (-1, 1, 0, 2), "$z$", "$ct$",
             {"p_1": "-2/7", "p_2": "3/7", "p_3": "6/7"}, {"x": "0", "y": "0"},
             families=SIDEWAYS,
             input="Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, a point on the Kasner circle: "
                   "they sum to 1, and so do their squares."),
-    Diagram("bianchi", "type_i_cartesian", "tx", "t and x", ("t", "x"), (-1, 1, 0, 2),
-            "x  [c/H̄]", "ct  [c/H̄]", {}, {"y": "0", "z": "0"}, families=SIDEWAYS,
-            dust=BIANCHI_DUST, reference="a_i = 1",
+    Diagram("bianchi", "type_i_cartesian", "tx", "$t$ and $x$", ("t", "x"), (-1, 1, 0, 2),
+            "$x\\;[c/\\bar H]$", "$ct\\;[c/\\bar H]$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS,
+            dust=BIANCHI_DUST, reference="$a_i = 1$",
             input="Dust: the three scale factors solved from the entry's own published "
                   "$G^x{}_x = G^y{}_y = G^z{}_z = 0$, starting from $a_i = 1$ with rates "
                   "$(-0.5, 1.5, 2.0)\\,\\bar H$ at the dashed line, $\\bar H$ their mean."),
-    Diagram("godel", "cartesian", "tx", "t and x", ("t", "x"), (-2, 2, -2, 2), "x", "t",
+    Diagram("godel", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$t$",
             {"omega": 1}, {"y": "0", "z": "0"}, orient="vector", families=SIDEWAYS),
-    Diagram("alcubierre", "cartesian", "tx", "t and x on the axis", ("t", "x"), (-3, 3, -2, 2),
-            "x / R", "ct / R", {}, {"y": "0", "z": "0"}, families=SIDEWAYS, cones=(8, 7),
+    Diagram("alcubierre", "cartesian", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-3, 3, -2, 2),
+            "$x/R$", "$ct/R$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS, cones=(8, 7),
             functions={"v_s": "2", "f": _alcubierre_profile()},
             input="$v_s = 2$, and Alcubierre's own profile, which the entry names, "
                   "$f = [\\tanh\\sigma(r_s + R) - \\tanh\\sigma(r_s - R)]/(2\\tanh\\sigma R)$ "
                   "with $R = 1$ and $\\sigma = 4$."),
-    Diagram("natario", "cartesian_flow", "tx", "t and x on the axis", ("t", "x"), (-3, 3, -2, 2),
-            "x / R", "ct / R", {}, {"y": "0", "z": "0"}, families=SIDEWAYS, cones=(8, 7),
+    Diagram("natario", "cartesian_flow", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-3, 3, -2, 2),
+            "$x/R$", "$ct/R$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS, cones=(8, 7),
             functions=_natario_field(),
             input="$v_s = 2$, $n = f/2$ with Alcubierre's profile, and the zero expansion field "
                   "$X = v_s[(2n + \\rho n')\\,e_x - n'\\,x_r\\,(x_r, y, z)/\\rho]$, "
                   "$x_r = x - v_s t$, checked to have no divergence."),
-    Diagram("krasnikov", "cylindrical", "tx", "t and x on the axis", ("t", "x"), (-1, 5, -1, 5),
-            "x", "ct", {}, {"r": "0", "phi": "0"}, orient="outgoing", families=SIDEWAYS,
+    Diagram("krasnikov", "cylindrical", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-1, 5, -1, 5),
+            "$x$", "$ct$", {}, {"r": "0", "phi": "0"}, orient="outgoing", families=SIDEWAYS,
             functions={"k": _KRASNIKOV_TUBE}, kretschmann=False, mark_g00=True,
             input="A tube along $x$ from $0$ to $D = 4$, built by a ship that left $x = 0$ at "
                   "$t = 0$ at the speed of light: $k = 1 - (2 - \\delta)\\,S(\\tfrac{\\rho_0^2 - r^2}"
                   "{2\\rho_0})\\,S(t - x)\\,S(x)\\,S(D - x)$ with $\\delta = 0.2$, $\\rho_0 = 1$ and "
                   "$S$ a step of width $0.15$ built from $\\tanh$."),
-    Diagram("pp_wave", "exact_plane_wave", "tz", "t and z on the axis", ("u", "v"), (-2, 2, -2, 2),
-            "z", "ct", {}, {"x": "0", "y": "0"}, to_display=UV_TO_TZ, tau="u + 2*v",
+    Diagram("pp_wave", "exact_plane_wave", "tz", "$t$ and $z$ on the axis", ("u", "v"), (-2, 2, -2, 2),
+            "$z$", "$ct$", {}, {"x": "0", "y": "0"}, to_display=UV_TO_TZ, tau="u + 2*v",
             families=SIDEWAYS, functions={"A": "exp(-u**2)", "B": "0"},
             input="The amplitudes $A(u)$ and $B(u)$ do not enter on the axis, so any profile gives "
                   "this diagram."),
@@ -1155,6 +1159,35 @@ def key(spec):
     return f"{spec.metric}/{spec.system}/{spec.view}"
 
 
+def ticks(lo, hi, target):
+    """Evenly spaced ticks on [lo, hi], about target of them at a step of 1, 2, 2.5 or 5
+    times a power of ten, each with its label as TeX. Exact, so a tick is never 0.30000004."""
+    lo, hi = Fraction(str(lo)), Fraction(str(hi))
+    raw = (hi - lo) / target
+    power = Fraction(10) ** math.floor(math.log10(raw))
+    while power > raw:
+        power /= 10
+    while power * 10 <= raw:
+        power *= 10
+    step = next(s * power for s in (1, 2, Fraction(5, 2), 5, 10) if s * power >= raw)
+    out, at = [], math.ceil(lo / step) * step
+    while at <= hi:
+        shown = Decimal(at.numerator) / Decimal(at.denominator)
+        out.append({"at": float(at), "label": f"${shown.normalize():f}$"})
+        at += step
+    return out
+
+
+def axes(spec):
+    """The ticks of both axes. A mirrored view's horizontal axis runs from -Xmax to Xmax, and
+    both axes are drawn at one scale, so the vertical axis takes as many ticks per unit."""
+    x0, x1, y0, y1 = spec.box
+    if spec.mirror:
+        x0 = -x1
+    return {"x": ticks(x0, x1, 6), "y": ticks(y0, y1, Fraction(6) * (Fraction(str(y1)) - Fraction(str(y0)))
+                                             / (Fraction(str(x1)) - Fraction(str(x0))))}
+
+
 def settings(spec, entry):
     """The parameter values and fixed coordinates, as LaTeX the page prints."""
     names = {vm.Reader._plain(p["symbol"].split("=")[0]): p["symbol"].split("=")[0].strip()
@@ -1174,7 +1207,7 @@ def draw(spec):
     fields = BASE_FIELDS + (["einstein_tensor"] if spec.dust else [])
     view = {
         "id": spec.view, "label": spec.label, "plane": list(spec.plane), "families": list(spec.families),
-        "xlabel": spec.xlabel, "ylabel": spec.ylabel, "box": list(spec.box),
+        "xlabel": spec.xlabel, "ylabel": spec.ylabel, "ticks": axes(spec), "box": list(spec.box),
         "to_display": [list(map(float, row)) for row in spec.to_display], "mirror": spec.mirror,
         "rays": {name: [rounded(thin(l, 0.0006)) for l in families[i]] for i, name in ((0, "P"), (1, "M"))},
         "cones": plot.cones(), "markers": plot.markers(), "hatch": plot.hatch(),
