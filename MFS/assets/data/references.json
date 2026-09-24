@@ -1,5 +1,5 @@
 {
-  "version": "47dd4175c9e4b0dd",
+  "version": "4d41b824b00d1c74",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -314,7 +314,197 @@
         "volume": "21",
         "pages": "447--450",
         "year": "1949",
+        "doi": "10.1103/RevModPhys.21.447",
         "url": "https://kurtgoedel.de/cms-83FO/wp-content/uploads/2016/10/Goedel.pdf"
+      }
+    },
+    "godel1949idealistic": {
+      "type": "incollection",
+      "fields": {
+        "title": "A Remark About the Relationship Between Relativity Theory and Idealistic Philosophy",
+        "author": "G\\\"odel, Kurt",
+        "booktitle": "Albert Einstein: Philosopher-Scientist",
+        "editor": "Schilpp, Paul Arthur",
+        "series": "The Library of Living Philosophers",
+        "publisher": "The Library of Living Philosophers",
+        "address": "Evanston, Illinois",
+        "pages": "555--562",
+        "year": "1949",
+        "url": "https://archive.org/details/alberteinsteinph0000paul"
+      }
+    },
+    "einstein1949remarks": {
+      "type": "incollection",
+      "fields": {
+        "title": "Remarks Concerning the Essays Brought Together in this Co-operative Volume",
+        "author": "Einstein, Albert",
+        "booktitle": "Albert Einstein: Philosopher-Scientist",
+        "editor": "Schilpp, Paul Arthur",
+        "series": "The Library of Living Philosophers",
+        "publisher": "The Library of Living Philosophers",
+        "address": "Evanston, Illinois",
+        "pages": "663--688",
+        "year": "1949",
+        "url": "https://archive.org/details/alberteinsteinph0000paul"
+      }
+    },
+    "godel1952": {
+      "type": "inproceedings",
+      "fields": {
+        "title": "Rotating Universes in General Relativity Theory",
+        "author": "G\\\"odel, Kurt",
+        "booktitle": "Proceedings of the International Congress of Mathematicians, Cambridge, Massachusetts, 1950, Volume 1",
+        "pages": "175--181",
+        "publisher": "American Mathematical Society",
+        "year": "1952",
+        "url": "https://www.mathunion.org/fileadmin/ICM/Proceedings/ICM1950.1/ICM1950.1.ocr.pdf"
+      }
+    },
+    "kundt1956": {
+      "type": "article",
+      "fields": {
+        "title": "Tr\\\"agheitsbahnen in einem von G\\\"odel angegebenen kosmologischen Modell",
+        "author": "Kundt, Wolfgang",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "145",
+        "pages": "611--620",
+        "year": "1956",
+        "doi": "10.1007/BF01332282",
+        "url": "https://doi.org/10.1007/BF01332282"
+      }
+    },
+    "chandrasekhar1961": {
+      "type": "article",
+      "fields": {
+        "title": "The Geodesics in G\\\"odel's Universe",
+        "author": "Chandrasekhar, Subrahmanyan and Wright, James P.",
+        "journal": "Proceedings of the National Academy of Sciences",
+        "volume": "47",
+        "number": "3",
+        "pages": "341--347",
+        "year": "1961",
+        "doi": "10.1073/pnas.47.3.341",
+        "url": "https://doi.org/10.1073/pnas.47.3.341"
+      }
+    },
+    "stein1970": {
+      "type": "article",
+      "fields": {
+        "title": "On the Paradoxical Time-Structures of G\\\"odel",
+        "author": "Stein, Howard",
+        "journal": "Philosophy of Science",
+        "volume": "37",
+        "number": "4",
+        "pages": "589--601",
+        "year": "1970",
+        "doi": "10.1086/288328",
+        "url": "https://doi.org/10.1086/288328"
+      }
+    },
+    "hawking1973": {
+      "type": "book",
+      "fields": {
+        "title": "The Large Scale Structure of Space-Time",
+        "author": "Hawking, Stephen W. and Ellis, George F. R.",
+        "series": "Cambridge Monographs on Mathematical Physics",
+        "publisher": "Cambridge University Press",
+        "year": "1973",
+        "doi": "10.1017/CBO9780511524646",
+        "url": "https://doi.org/10.1017/CBO9780511524646"
+      }
+    },
+    "stephani2003": {
+      "type": "book",
+      "fields": {
+        "title": "Exact Solutions of {Einstein}'s Field Equations",
+        "author": "Stephani, Hans and Kramer, Dietrich and MacCallum, Malcolm and Hoenselaers, Cornelius and Herlt, Eduard",
+        "edition": "2",
+        "series": "Cambridge Monographs on Mathematical Physics",
+        "publisher": "Cambridge University Press",
+        "year": "2003",
+        "doi": "10.1017/CBO9780511535185",
+        "url": "https://doi.org/10.1017/CBO9780511535185"
+      }
+    },
+    "reboucas1983": {
+      "type": "article",
+      "fields": {
+        "title": "Homogeneity of Riemannian space-times of G\\\"odel type",
+        "author": "Rebou\\c{c}as, Marcelo J. and Tiomno, Jayme",
+        "journal": "Physical Review D",
+        "volume": "28",
+        "number": "6",
+        "pages": "1251--1264",
+        "year": "1983",
+        "doi": "10.1103/PhysRevD.28.1251",
+        "url": "https://doi.org/10.1103/PhysRevD.28.1251"
+      }
+    },
+    "ozsvath2003": {
+      "type": "article",
+      "fields": {
+        "title": "G\\\"odel's trip",
+        "author": "Ozsv\\'ath, Istv\\'an and Sch\\\"ucking, Engelbert",
+        "journal": "American Journal of Physics",
+        "volume": "71",
+        "pages": "801--805",
+        "year": "2003",
+        "doi": "10.1119/1.1574320",
+        "url": "https://doi.org/10.1119/1.1574320"
+      }
+    },
+    "malament1984": {
+      "type": "article",
+      "fields": {
+        "title": "\"Time Travel\" in the G\\\"odel Universe",
+        "author": "Malament, David B.",
+        "journal": "PSA: Proceedings of the Biennial Meeting of the Philosophy of Science Association",
+        "volume": "1984",
+        "number": "2",
+        "pages": "91--100",
+        "year": "1984",
+        "doi": "10.1086/psaprocbienmeetp.1984.2.192497",
+        "url": "https://doi.org/10.1086/psaprocbienmeetp.1984.2.192497"
+      }
+    },
+    "malament1985": {
+      "type": "article",
+      "fields": {
+        "title": "Minimal acceleration requirements for \"time travel\" in G\\\"odel space-time",
+        "author": "Malament, David B.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "26",
+        "number": "4",
+        "pages": "774--777",
+        "year": "1985",
+        "doi": "10.1063/1.526566",
+        "url": "https://doi.org/10.1063/1.526566"
+      }
+    },
+    "manchak2011": {
+      "type": "article",
+      "fields": {
+        "title": "On efficient \"time travel\" in G\\\"odel spacetime",
+        "author": "Manchak, John Byron",
+        "journal": "General Relativity and Gravitation",
+        "volume": "43",
+        "number": "1",
+        "pages": "51--60",
+        "year": "2011",
+        "doi": "10.1007/s10714-010-1068-3",
+        "url": "https://doi.org/10.1007/s10714-010-1068-3"
+      }
+    },
+    "stephenson2008": {
+      "type": "book",
+      "fields": {
+        "title": "Anathem",
+        "author": "Stephenson, Neal",
+        "publisher": "William Morrow",
+        "address": "New York",
+        "isbn": "978-0-06-147409-5",
+        "year": "2008",
+        "url": "https://archive.org/details/anathem00step"
       }
     },
     "finkelstein1958": {
@@ -658,7 +848,7 @@
         "journal": "Journal of Vision",
         "volume": "22",
         "number": "11",
-        "pages": "4--4",
+        "pages": "4",
         "year": "2022",
         "publisher": "The Association for Research in Vision and Ophthalmology",
         "url": "/assets/docs/papers/Vision_Bowen_2021.pdf"

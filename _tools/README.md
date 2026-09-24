@@ -9,6 +9,15 @@ It needs `name` (the long title on the page), `short_name` (the label in the sea
 Add `sort_name` only if the spacetime belongs somewhere else in the alphabetical list than its `short_name` puts it.
 Cite references by their key in `assets/data/references.bib`.
 
+Every entry cites each of its references in its `history`, as `[key]` or `[key1, key2]` at the point the prose leans on it, and lists them in `references` in the order they are first cited.
+The page turns those brackets into numbered links by looking the key up in `references`, so a square bracket in a history is always read as a citation and never printed.
+A reason a reference is there, such as a novel beside the papers, goes in that prose; the `.bib` entries carry no annotations.
+`godel` and `morris_thorne` are worked examples.
+
+`_layouts/mfs.html` and `publications.markdown` do not read `references.json`; each parses `references.bib` in the browser with its own small reader.
+That reader takes a value nested one brace deep, as in `{Einstein}'s` or `Rebou\c{c}as`, and turns the accent commands `\"`, `\'`, `` \` ``, `\^`, `\~`, `\c` and `\ss` and the escape `\&` into characters, and nothing else.
+A value outside that set prints wrongly on the page without any error, so check a new entry's rendered line and not only the build.
+
 Then run one command from the top of the repository:
 
     python3 _tools/build_mfs_data.py
