@@ -702,7 +702,7 @@
 
       function unlatex(str) {
         return str
-          .replace(/\\["']([aeiouAEIOUy])/g, function(_, c) {
+          .replace(/\\"([aeiouAEIOUy])/g, function(_, c) {
             return { a:'ä',e:'ë',i:'ï',o:'ö',u:'ü',A:'Ä',E:'Ë',I:'Ï',O:'Ö',U:'Ü',y:'ÿ' }[c] || c;
           })
           .replace(/\\'([aeiouAEIOUy])/g, function(_, c) {
@@ -721,6 +721,7 @@
             return { c:'ç',C:'Ç',s:'ş',S:'Ş' }[c] || c;
           })
           .replace(/\\ss\b/g, 'ß')
+          .replace(/\\&/g, '&')
           .replace(/\{([^}]*)\}/g, '$1')  // strip remaining braces
           .trim();
       }
@@ -731,7 +732,7 @@
         var type = typeKey ? typeKey[1].toLowerCase() : 'misc';
         // Extract fields: field = {value} or field = "value"
         var fields = {};
-        var fieldRe = /(\w+)\s*=\s*(?:\{([^}]*(?:\{[^}]*\}[^}]*)*)\}|"([^"]*)")/g;
+        var fieldRe = /(\w+)\s*=\s*(?:\{((?:[^{}]|\{[^{}]*\})*)\}|"([^"]*)")/g;
         var m;
         while ((m = fieldRe.exec(entry)) !== null) {
           fields[m[1].toLowerCase()] = unlatex(m[2] !== undefined ? m[2] : m[3]);
@@ -747,7 +748,7 @@
         var year    = f.year    || '';
         var journal = f.journal || f.booktitle || f.publisher || '';
         var volume  = f.volume  || '';
-        var pages   = f.pages   || '';
+        var pages   = (f.pages || '').replace(/--/g, '\u2013');
         var html = '';
         var url = f.url || '';
         if (author)  html += '<span class="mfs-ref-author">' + author + '</span> ';

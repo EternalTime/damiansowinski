@@ -45,7 +45,7 @@ permalink: /publications/
 
   function unlatex(str) {
     return str
-      .replace(/\\["']([aeiouAEIOUy])/g, function(_, c) {
+      .replace(/\\"([aeiouAEIOUy])/g, function(_, c) {
         return { a:'ä',e:'ë',i:'ï',o:'ö',u:'ü',A:'Ä',E:'Ë',I:'Ï',O:'Ö',U:'Ü',y:'ÿ' }[c] || c;
       })
       .replace(/\\'([aeiouAEIOUy])/g, function(_, c) {
@@ -54,6 +54,9 @@ permalink: /publications/
       .replace(/\\`([aeiouAEIOU])/g, function(_, c) {
         return { a:'à',e:'è',i:'ì',o:'ò',u:'ù',A:'À',E:'È',I:'Ì',O:'Ò',U:'Ù' }[c] || c;
       })
+      .replace(/\\\^([aeiouAEIOU])/g, function(_, c) {
+        return { a:'â',e:'ê',i:'î',o:'ô',u:'û',A:'Â',E:'Ê',I:'Î',O:'Ô',U:'Û' }[c] || c;
+      })
       .replace(/\\~([nNaAoO])/g, function(_, c) {
         return { n:'ñ',N:'Ñ',a:'ã',A:'Ã',o:'õ',O:'Õ' }[c] || c;
       })
@@ -61,6 +64,7 @@ permalink: /publications/
         return { c:'ç',C:'Ç',s:'ş',S:'Ş' }[c] || c;
       })
       .replace(/\\ss\b/g, 'ß')
+      .replace(/\\&/g, '&')
       .replace(/\{([^}]*)\}/g, '$1')
       .trim();
   }
@@ -69,7 +73,7 @@ permalink: /publications/
     var typeKey = entry.match(/^@(\w+)\s*\{\s*([\w:]+)\s*,/);
     var type = typeKey ? typeKey[1].toLowerCase() : 'misc';
     var fields = {};
-    var fieldRe = /(\w+)\s*=\s*(?:\{([^}]*(?:\{[^}]*\}[^}]*)*)\}|"([^"]*)")/g;
+    var fieldRe = /(\w+)\s*=\s*(?:\{((?:[^{}]|\{[^{}]*\})*)\}|"([^"]*)")/g;
     var m;
     while ((m = fieldRe.exec(entry)) !== null) {
       fields[m[1].toLowerCase()] = unlatex(m[2] !== undefined ? m[2] : m[3]);
@@ -86,7 +90,7 @@ permalink: /publications/
     var journal = f.journal || f.booktitle || f.publisher || '';
     var volume  = f.volume  || '';
     var number  = f.number  || '';
-    var pages   = f.pages   || '';
+    var pages   = (f.pages || '').replace(/--/g, '\u2013');
     var url     = f.url     || '';
     var html = '';
     if (author)  html += '<span class="pub-author">'  + author  + '</span> ';
