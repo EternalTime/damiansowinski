@@ -5,10 +5,15 @@ Run from anywhere:
 
     python3 _tools/build_mfs_data.py
 
-Reads   MFS/assets/data/metrics/*.json and assets/data/references.bib
+Reads   MFS/assets/data/metrics/*.json, MFS/assets/data/diagrams/*.json and assets/data/references.bib
 Writes  MFS/assets/data/metrics_index.json and MFS/assets/data/references.json
 
 Pass --check to verify the written files are up to date without changing them.
+
+The diagram files are drawn by _tools/derivations/null_rays.py, which needs sympy and
+numpy; this script only reads them. It refuses a diagram drawn from components its metric
+no longer publishes, and stamps each diagram file's version into the index beside the
+metric's own.
 """
 
 import argparse
@@ -24,6 +29,7 @@ METRICS_DIR = ROOT / "MFS" / "assets" / "data" / "metrics"
 INDEX_FILE = ROOT / "MFS" / "assets" / "data" / "metrics_index.json"
 BIB_FILE = ROOT / "assets" / "data" / "references.bib"
 REFERENCES_FILE = ROOT / "MFS" / "assets" / "data" / "references.json"
+DIAGRAMS_DIR = ROOT / "MFS" / "assets" / "data" / "diagrams"
 
 VERSION_LENGTH = 16
 
@@ -74,16 +80,70 @@ def load_metrics():
     return sorted(metrics, key=sort_key)
 
 
-def build_index(metrics):
-    return [
-        {
+def diagram_source(system, fields):
+    """The published fields of a coordinate system that a diagram was drawn from.
+
+    Parameters count by their symbols alone, so rewording a parameter's description
+    leaves every diagram standing.
+    """
+    source = {}
+    for name in fields:
+        if name == "parameters":
+            source[name] = [p["symbol"] for p in system.get("parameters", [])]
+        else:
+            source[name] = system.get(name)
+    return source
+
+
+def diagram_source_version(system, fields):
+    """The stamp a diagram view records of what it was drawn from, and is checked against."""
+    return content_version(diagram_source(system, fields))
+
+
+def load_diagrams(metrics):
+    """Every diagram file, refused if it was drawn from what its metric no longer publishes."""
+    by_id = {m["id"]: m for m in metrics}
+    diagrams = {}
+    for path in sorted(DIAGRAMS_DIR.glob("*.json")):
+        if CONFLICT_COPY.search(path.stem):
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise DataError(f"diagrams/{path.name} is not valid JSON: {exc}") from exc
+        if data.get("metric") != path.stem:
+            raise DataError(f"diagrams/{path.name} carries the metric {data.get('metric')!r}")
+        if path.stem not in by_id:
+            raise DataError(f"diagrams/{path.name} has no metric file to belong to")
+        systems = {s["id"]: s for s in by_id[path.stem].get("coordinates") or []}
+        for system_id, views in data.get("systems", {}).items():
+            if system_id not in systems:
+                raise DataError(f"diagrams/{path.name} draws {system_id!r}, "
+                                f"which {path.stem}.json has no coordinate system for")
+            for view in views:
+                source = view["source"]
+                if diagram_source_version(systems[system_id], source["fields"]) != source["version"]:
+                    raise DataError(
+                        f"diagrams/{path.name}: the {system_id} view {view['id']!r} was drawn from "
+                        f"components {path.stem}.json no longer publishes; redraw it with "
+                        f"_tools/derivations/null_rays.py --metric {path.stem}")
+        diagrams[path.stem] = data
+    return diagrams
+
+
+def build_index(metrics, diagrams=None):
+    index = []
+    for m in metrics:
+        entry = {
             "id": m["id"],
             "name": m["short_name"],
             "tags": m["tags"],
             "version": content_version(m),
         }
-        for m in metrics
-    ]
+        if diagrams and m["id"] in diagrams:
+            entry["diagrams"] = content_version(diagrams[m["id"]])
+        index.append(entry)
+    return index
 
 
 ENTRY_START = re.compile(r"@(\w+)\s*\{\s*([^,\s]+)\s*,", re.MULTILINE)
@@ -163,8 +223,9 @@ def main(argv=None):
         references = build_references()
         metrics = load_metrics()
         check_citations(metrics, references["entries"])
+        diagrams = load_diagrams(metrics)
         outputs = {
-            INDEX_FILE: serialise(build_index(metrics)),
+            INDEX_FILE: serialise(build_index(metrics, diagrams)),
             REFERENCES_FILE: serialise(references),
         }
     except DataError as exc:
@@ -190,7 +251,7 @@ def main(argv=None):
         print("run python3 _tools/build_mfs_data.py", file=sys.stderr)
         return 1
     if args.check:
-        print("index and bibliography are up to date")
+        print("index, bibliography and diagram stamps are up to date")
     return 0
 
 
