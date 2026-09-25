@@ -61,6 +61,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 import sympy as sp
+from scipy.integrate import solve_ivp
 
 import build_mfs_data as build
 import null_rays as nr
@@ -104,6 +105,7 @@ class Projection:
     params: dict = field(default_factory=dict)
     fixed: dict = field(default_factory=dict)
     input: str = None
+    fields: tuple = ()              # published fields read beyond FIELDS
 
 
 FIELDS = ["coords", "parameters", "metric_components", "inverse_metric_components"]
@@ -396,6 +398,20 @@ def stockum(spec, camera=Camera(-90, 30), length=0.2, rings=(4, 6, 6)):
 
 
 CAPTIONS = {
+    ("cosmic_string", "conical", "beam"): [
+        "This is the plane $z = 0$ around the string seen from above, $t$ left out, drawn with $r$ as "
+        "the radius and the angle $(1 - 4G\\mu/c^2)\\phi$, in which the plane is flat and every light "
+        "ray straight. That angle runs short of a full turn by the deficit $\\delta = 8\\pi G\\mu/c^2$, "
+        "so a wedge of $\\delta$ is missing from the plane; $\\phi$ is measured from the direction away "
+        "from the beam, which puts the wedge behind the string, and its two edges, $\\phi = 0$ and "
+        "$\\phi = 2\\pi$, are one line. A beam of parallel light arrives from the left, each ray run "
+        "with the Christoffel symbols $\\Gamma^r{}_{\\phi\\phi}$ and $\\Gamma^\\phi{}_{r\\phi}$.",
+        "Every ray stays straight: one that reaches an edge of the wedge carries on from the same point "
+        "of the other edge, in the same direction relative to it, so the rays that passed above the "
+        "string cross those that passed below. In the two sectors beside the wedge, $\\delta$ across "
+        "together, light from both sides arrives, and an observer there sees a source far to the left "
+        "twice, at equal brightness and $\\delta$ apart.",
+    ],
     ("stockum_dust", "cylindrical", "tipping"): [
         "This is the slice $z = 0$ of $t$, $r$ and $\\phi$, with $t$ up and the proper distance from "
         "the axis, $\\int e^{-r^2/2R^2}dr$, as the radius, so that light moving straight out runs at "
@@ -413,6 +429,9 @@ CAPTIONS = {
 FIGURES = [
     Projection("stockum_dust", "cylindrical", "tipping", "light cones about the axis", stockum,
                {"R": 1}, {"z": "0"}),
+    # The deficit the conformal diagram draws with, 4 G mu/c^2 = 0.1, so delta = 36 degrees.
+    Projection("cosmic_string", "conical", "beam", "light passing the string", lambda spec: string_rays(spec),
+               {"mu": "1/40", "G": 1, "delta": "pi/5"}, {"z": "0"}, fields=("christoffel",)),
 ]
 
 
@@ -426,5 +445,110 @@ def draw(spec):
     view["caption"] = CAPTIONS[(spec.metric, spec.system, spec.view)]
     view["settings"] = nr.settings(spec, sl.entry)
     view["input"] = spec.input
-    view["source"] = {"fields": FIELDS, "version": build.diagram_source_version(sl.entry, FIELDS)}
+    fields = FIELDS + list(spec.fields)
+    view["source"] = {"fields": fields, "version": build.diagram_source_version(sl.entry, fields)}
     return view
+
+
+# ---------------------------------------------------------------- light passing a cosmic string
+
+def string_rays(spec, n=12, half_width=1.8, left=-3.0, right=3.0, height=2.1):
+    """A parallel beam of light passing a cosmic string, on the plane z = 0 seen from above.
+
+    The plane's metric, dr^2 + g_phiphi dphi^2 with g_phiphi = k^2 r^2, is flat, and the angle
+    psi = pi + k (phi - pi) unrolls it isometrically onto the page, with the wedge
+    |psi| < pi (1 - k) around the direction phi = 0, away from the beam, missing: its two edges
+    are phi = 0 and phi = 2 pi, one line. k is read from the published g_phiphi. Each ray is a
+    null geodesic launched in the plane toward +X from X = `left`, integrated in the chart with
+    the published Christoffel symbols, and carried across the edges when phi leaves [0, 2 pi);
+    every stretch of it is checked straight on the page, which is the check that the plane is
+    flat and the unrolling right. The rays are the spatial paths of light rays, t left out,
+    since g_tt = -1 makes a static light ray's path a geodesic of the plane."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
+    k = float(np.sqrt(sl.metric((0.0, 1.0, 0.0))[2, 2]))
+    if not (0 < k < 1 and abs(np.sqrt(sl.metric((0.0, 2.5, 1.0))[2, 2]) / 2.5 - k) < 1e-14):
+        raise SystemExit(f"{key(spec)}: g_phiphi is not k^2 r^2 with 0 < k < 1")
+    _, entry, reader = nr.load(spec.metric, spec.system)
+    gamma = {tuple(c["indices"]): c["value"] for c in entry["christoffel"]["variants"]["ull"]["nonzero"]}
+    r_, ph_ = reader.symbol["r"], reader.symbol["\\phi"]
+    G_r = sp.lambdify(r_, sl.prep(reader(gamma[("r", "\\phi", "\\phi")])), "numpy")
+    G_phi = sp.lambdify(r_, sl.prep(reader(gamma[("\\phi", "r", "\\phi")])), "numpy")
+    wedge = np.pi * (1 - k)
+
+    def page(r, phi):
+        psi = np.pi + k * (phi - np.pi)
+        return np.stack([r * np.cos(psi), r * np.sin(psi)], -1)
+
+    def trace(b):
+        X0 = np.array([left, b])
+        r0, psi0 = np.hypot(*X0), np.arctan2(X0[1], X0[0]) % (2 * np.pi)
+        phi0 = np.pi + (psi0 - np.pi) / k
+        # Unit speed toward +X on the page: dr = cos psi, r dpsi = -sin psi, dphi = dpsi / k.
+        y0 = [r0, phi0, np.cos(psi0), -np.sin(psi0) / (k * r0)]
+
+        def rhs(_, y):
+            r, phi, rd, phid = y
+            return [rd, phid, -G_r(r) * phid ** 2, -2 * G_phi(r) * rd * phid]
+
+        def leave(_, y):
+            X = page(y[0], y[1])
+            return min(X[0] - left + 1e-9, right - X[0], height - abs(X[1]))
+        leave.terminal = True
+        sol = solve_ivp(rhs, (0, 50), y0, events=leave, rtol=1e-12, atol=1e-12, method="DOP853", max_step=0.01)
+        r, phi = sol.y[0], sol.y[1]
+        runs, turns = [], np.floor(phi / (2 * np.pi))
+        for turn in np.unique(turns):
+            keep = turns == turn
+            P = page(r[keep], phi[keep] - 2 * np.pi * turn)
+            A, B = P[0], P[-1]
+            d = (B - A) / np.linalg.norm(B - A)
+            off = np.abs((P - A) @ np.array([-d[1], d[0]])).max()
+            if not off < 1e-8:
+                raise SystemExit(f"{key(spec)}: a ray bends on the flat page, by {off:.1e}")
+            runs.append(P)
+        return runs
+
+    fig = Figure(spec.view, spec.label, Camera(-90, 90))
+    reach = np.hypot(max(abs(left), right), height) * 1.05
+    edge = [np.array([[0, 0], [reach * np.cos(s * wedge), reach * np.sin(s * wedge)]]) for s in (1, -1)]
+    two = np.array([[0, 0], [reach * np.cos(2 * wedge), reach * np.sin(2 * wedge)],
+                    [reach * np.cos(wedge), reach * np.sin(wedge)]])
+    flat = lambda P: np.column_stack([P, np.zeros(len(P))])
+    fig.fill("wedge", clip_box(np.array([[0, 0], edge[0][1], [reach, 0], edge[1][1]]), left, right, height))
+    for sign in (1, -1):
+        fig.fill("double", clip_box(two * np.array([1, sign]), left, right, height))
+    for E in edge:
+        fig.line("edge", flat(clip_segment(E, left, right, height)))
+    for b in np.linspace(-half_width, half_width, n):
+        for P in trace(b):
+            fig.line("above" if b > 0 else "below", flat(P))
+    fig.point("string", np.zeros(3))
+    fig.label(np.array([2.4, 0.0, 0.0]), "$\\delta$", "c")
+    fig.label(np.array([0.0, -0.12, 0.0]), "the string", "t", cls="small", dy=4)
+    fig.legend("line", "above", "light passing above the string")
+    fig.legend("line", "below", "light passing below it")
+    fig.legend("fill", "wedge", f"the missing wedge, $\\delta = {round(np.degrees(2 * wedge))}°$; its two edges are one line")
+    fig.legend("fill", "double", "where light from both sides arrives")
+    return fig.done(pad=0.0), sl
+
+
+def clip_box(P, left, right, height):
+    """A convex polygon cut to the box [left, right] x [-height, height], by Sutherland-Hodgman."""
+    out = np.asarray(P, dtype=float)
+    for axis, bound, keep_below in ((0, right, True), (0, left, False), (1, height, True), (1, -height, False)):
+        inside = (lambda p: p[axis] <= bound) if keep_below else (lambda p: p[axis] >= bound)
+        new = []
+        for i in range(len(out)):
+            a, b = out[i - 1], out[i]
+            if inside(b):
+                if not inside(a):
+                    new.append(a + (b - a) * (bound - a[axis]) / (b[axis] - a[axis]))
+                new.append(b)
+            elif inside(a):
+                new.append(a + (b - a) * (bound - a[axis]) / (b[axis] - a[axis]))
+        out = np.array(new)
+    return out
+
+
+def clip_segment(E, left, right, height):
+    return clip_box(np.vstack([E, E[::-1]]), left, right, height)[:2]

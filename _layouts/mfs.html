@@ -1355,7 +1355,7 @@
           var cls = 'pj-' + L['class'];
           if (L.kind === 'fill') return nrEl('path', { 'class': cls + '-fill', d: cdPath(f, L.points, true) });
           if (L.kind === 'line') return nrEl('path', { 'class': cls, d: cdPath(f, L.points, false) });
-          return nrEl('circle', { 'class': cls, cx: f.x(L.at[0]).toFixed(1), cy: f.y(L.at[1]).toFixed(1), r: 1.6 });
+          return nrEl('circle', { 'class': cls, cx: f.x(L.at[0]).toFixed(1), cy: f.y(L.at[1]).toFixed(1), r: L['class'] === 'cone-apex' ? 1.6 : 4.5 });
         });
         return nrEl('svg', { 'class': 'mfs-cd-svg mfs-pj-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
           'aria-label': 'Light cones in three dimensions, ' + nrPlain(view.label) }, out.join(''));
@@ -2408,6 +2408,13 @@
     .pj-cone { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
     .pj-cone-rim { fill: none; stroke: var(--gold); stroke-width: 1.1; stroke-opacity: 0.8; }
     .pj-cone-apex { fill: var(--gold); }
+    .pj-above, .pj-below { fill: none; stroke-width: 1.4; stroke-linecap: round; }
+    .pj-above { stroke: var(--pink-light); }
+    .pj-below { stroke: var(--teal-light); }
+    .pj-edge { fill: none; stroke: var(--text-dim); stroke-width: 1.4; stroke-dasharray: 6 4; }
+    .pj-wedge-fill { fill: rgba(10,14,18,0.95); stroke: none; }
+    .pj-double-fill { fill: rgba(212,175,55,0.13); stroke: none; }
+    .pj-string { fill: var(--text-bright); stroke: #000; stroke-width: 1; }
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
        diagrams'; the figure, its labels and its lines are these. A label is sized in units
        of the figure's width, n being n units of the SVG's 628 unit wide viewBox. */
@@ -2900,6 +2907,12 @@
       .mfs-print-body .pj-cone-fill { fill: rgba(168,132,31,0.12); }
       .mfs-print-body .pj-cone, .mfs-print-body .pj-cone-rim { stroke: #a8841f; }
       .mfs-print-body .pj-cone-apex { fill: #a8841f; }
+      .mfs-print-body .pj-above { stroke: #d81b60; }
+      .mfs-print-body .pj-below { stroke: #168f84; }
+      .mfs-print-body .pj-edge { stroke: #333; }
+      .mfs-print-body .pj-wedge-fill { fill: #d8d8d8; }
+      .mfs-print-body .pj-double-fill { fill: #f3e9c8; }
+      .mfs-print-body .pj-string { fill: #000; stroke: #fff; }
       /* Every view of the conformal diagram prints too, at most 12cm wide, a tall one still
          held to its screen height, with its lines in the print copy's darker inks. */
       .mfs-print-body .mfs-cd-figure { width: 12cm; }
