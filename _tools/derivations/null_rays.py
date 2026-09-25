@@ -218,6 +218,10 @@ class Diagram:
     inside: bool = False            # rays stop short of the edge of the published domain
     cone: str = None                # what a cone is, where it is not the future light cone
     periodic: tuple = ()            # drawn coordinates whose two ends are one line, never hatched
+    horizon: tuple = None           # (x^0, family, legend): the ray of that family through the
+                                    # outermost zero of g^rr at that x^0, drawn as a horizon
+    jump: tuple = None              # (x^0, legend): where a declared function jumps, drawn
+    singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
 
 
 def _alcubierre_profile():
@@ -419,6 +423,20 @@ DIAGRAMS = [
             (-3 * math.pi / 2, 3 * math.pi / 2, -3 * math.pi / 2, 3 * math.pi / 2), "$r\\phi/R$", "$t/R$",
             {"R": 1}, {"r": "3/2", "z": "0"}, to_display=((0, 1.5), (1, 0)), orient="vector",
             families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    # A shell of null dust falls in along v = 0: flat inside, Schwarzschild outside, as the
+    # conformal diagram declares it. The outgoing chart draws its time reverse.
+    Diagram("vaidya", "eddington_finkelstein_ingoing", "shell", "an imploding shell", ("v", "r"),
+            (0, 4, -2.5, 1.5), "$r/r_s$", "$(cv - r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_IN,
+            tau="v - r", areal=True, functions={"m": "Heaviside(v)/2"}, jump=("0", "the shell, $v = 0$"),
+            horizon=("1/1000", 1, "the event horizon"), singular_runs=True,
+            input="$m(v) = 0$ for $v < 0$ and $M$ for $v > 0$, with $r_s = 2GM/c^2$: a shell of null "
+                  "dust of mass $M$ falling in along $v = 0$."),
+    Diagram("vaidya", "eddington_finkelstein_outgoing", "shell", "an exploding shell", ("u", "r"),
+            (0, 4, -1.5, 2.5), "$r/r_s$", "$(cu + r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_OUT,
+            tau="u + r", areal=True, functions={"m": "Heaviside(-u)/2"}, jump=("0", "the shell, $u = 0$"),
+            horizon=("-1/1000", 0, "the white hole's horizon"), singular_runs=True,
+            input="$m(u) = M$ for $u < 0$ and $0$ for $u > 0$, with $r_s = 2GM/c^2$: a shell of null "
+                  "dust carrying off the whole mass $M$ along $u = 0$."),
 ]
 
 
@@ -827,6 +845,29 @@ CAPTIONS = {
         "each turn. None of the curves drawn here is a null geodesic: the ray moving to $+\\phi$ is "
         "turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and $\\Gamma^r{}_{\\phi\\phi}$, and the ray "
         "moving to $-\\phi$ away from it.",
+    ],
+    ("vaidya", "eddington_finkelstein_ingoing", "shell"): [
+        "This is the plane of $v$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $cv - r$ up "
+        "so that the ingoing rays, $v$ constant, run at 45°. A shell of null dust of mass $M$ falls in "
+        "along $v = 0$: before it $m = 0$ and the metric is flat, and after it $m = M$ and the metric "
+        "is Schwarzschild's in ingoing coordinates, with $g^{rr} = 1 - r_s/r$. The outgoing rays run "
+        "at 45° until the shell reaches them and bend away from $r_s$ after.",
+        "The event horizon is the outgoing ray that reaches $r_s$ just as the shell does and stays "
+        "there. It leaves the centre at $cv = -2r_s$, before the shell arrives, and crosses flat "
+        "space, so an outgoing ray that leaves the centre after that moment ends at $r = 0$ even "
+        "though its first stretch is flat. Behind the shell every future cone inside $r_s$ points to "
+        "smaller $r$, and $r = 0$ is where the Kretschmann scalar $48G^2m^2/c^4r^6$ diverges.",
+    ],
+    ("vaidya", "eddington_finkelstein_outgoing", "shell"): [
+        "This is the plane of $u$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $cu + r$ up "
+        "so that the outgoing rays, $u$ constant, run at 45°. It is the imploding shell run backward "
+        "in time: a shell of null dust carries the whole mass $M$ out along $u = 0$, with "
+        "Schwarzschild's metric in outgoing coordinates before it passes and flat space after.",
+        "Before the shell, the region inside $r_s$ is a white hole: every future cone there points "
+        "to larger $r$, and $r = 0$, where the Kretschmann scalar diverges, lies in its past. Its "
+        "horizon is the ingoing ray that stays at $r_s$ until the shell leaves and then crosses flat "
+        "space to the centre, arriving at $cu = 2r_s$. Every ingoing ray that reaches the centre "
+        "before that moment came out of the white hole, and every one after came in from far away.",
     ],
 }
 
@@ -1503,6 +1544,34 @@ class Plot:
                     out.append(name)
         return out
 
+    def singular_runs(self):
+        """The singular_edges test point by point along each edge: an edge singular all the way
+        is named, and a stretch of one is returned as a line in the unit square."""
+        t = np.linspace(0.005, 0.995, 199)
+        edges = {"left": lambda e: np.stack([np.full_like(t, e), t], -1),
+                 "right": lambda e: np.stack([np.full_like(t, 1 - e), t], -1),
+                 "bottom": lambda e: np.stack([t, np.full_like(t, e)], -1),
+                 "top": lambda e: np.stack([t, np.full_like(t, 1 - e)], -1)}
+        whole, runs = [], []
+        for name, at in edges.items():
+            near, far = (np.abs(self.c.fn["K"](*self.to_chart(self.from_unit(at(e))))) for e in (1e-5, 1e-4))
+            with np.errstate(all="ignore"):
+                hit = (near > 1e8) & (near / far > 50)
+            if hit.all():
+                whole.append(name)
+                continue
+            edge = at(0.0)
+            for run in np.split(np.arange(t.size), np.flatnonzero(np.diff(hit.astype(int))) + 1):
+                if hit[run[0]] and run.size > 2:
+                    runs.append(rounded(edge[[run[0], run[-1]]]))
+        return whole, runs
+
+    def to_display(self, x0, r):
+        return np.asarray(self.A @ np.array([x0, r], dtype=float))
+
+    def to_unit(self, q):
+        return (np.asarray(q, dtype=float) - self.lo) / self.span
+
     def hatch(self):
         """Where a chart point lies outside the entry's published domains, as polygons."""
         domains = parse_domains(self.c)
@@ -1555,9 +1624,25 @@ class Plot:
                 apparent = [l for l in apparent if not same_line(l, throat)]
                 if apparent:
                     out.append({"kind": "apparent", "lines": apparent})
-        edges = self.singular_edges()
-        if edges:
-            out.append({"kind": "singular", "edges": edges})
+        if spec.jump:
+            at, legend = spec.jump
+            ends = [self.to_unit(self.to_display(number(at), r)) for r in (-1e6, 1e6)]
+            line = clip_unit(np.array(ends))
+            if line is not None:
+                out.append({"kind": "shell", "lines": [rounded(line)], "legend": legend})
+        if spec.horizon:
+            at, family, legend = spec.horizon
+            r0 = outer_root(self.c, float(number(at)))
+            line = inside_unit(self.ray_through(self.to_unit(self.to_display(float(number(at)), r0)), family))
+            out.append({"kind": "event", "lines": [rounded(thin(line, 0.0006))], "legend": legend})
+        if spec.singular_runs:
+            edges, runs = self.singular_runs()
+            if edges or runs:
+                out.append({"kind": "singular", "edges": edges, **({"lines": runs} if runs else {})})
+        else:
+            edges = self.singular_edges()
+            if edges:
+                out.append({"kind": "singular", "edges": edges})
         if spec.reference:
             y = (self.c.solver.t_ref - self.lo[1]) / self.span[1]
             out.append({"kind": "reference", "label": spec.reference, "y": round(float(y), 4)})
@@ -1607,16 +1692,48 @@ def thin(points, tol):
     return P[keep]
 
 
-def outer_root(chart):
-    """The outermost zero of g^rr along the drawn radial range, where r_+ sits."""
+def inside_unit(line):
+    """A traced ray cut where it leaves the unit square, the cut made on the square's edge."""
+    L = np.asarray(line, dtype=float)
+    ok = np.all((L >= 0) & (L <= 1), axis=1)
+    idx = np.flatnonzero(ok)
+    a, b = idx[0], idx[-1]
+    out = [L[a:b + 1]]
+    if a > 0:
+        out.insert(0, clip_unit(L[[a - 1, a]])[:1])
+    if b < len(L) - 1:
+        out.append(clip_unit(L[[b, b + 1]])[1:])
+    return np.vstack(out)
+
+
+def clip_unit(line):
+    """The part of a straight segment inside the unit square, or None."""
+    a, b = np.asarray(line, dtype=float)
+    lo, hi = 0.0, 1.0
+    d = b - a
+    for k in range(2):
+        if abs(d[k]) < 1e-15:
+            if not 0 <= a[k] <= 1:
+                return None
+            continue
+        s0, s1 = sorted(((0 - a[k]) / d[k], (1 - a[k]) / d[k]))
+        lo, hi = max(lo, s0), min(hi, s1)
+    return None if lo >= hi else np.array([a + lo * d, a + hi * d])
+
+
+def outer_root(chart, x0=0.0):
+    """The outermost zero of g^rr along the drawn radial range at x^0, where r_+ sits."""
     lo, hi = chart.spec.box[0], chart.spec.box[1]
     if chart.spec.to_display == POLAR:
         lo, hi = 0.0, float(np.hypot(np.max(np.abs(chart.spec.box[:2])), np.max(np.abs(chart.spec.box[2:]))))
     X = np.linspace(lo, hi, 20001)
-    f = chart.fn["girr"](np.zeros_like(X), X)
+    f = chart.fn["girr"](np.full_like(X, x0), X)
     crossings = np.where(np.sign(f[:-1]) * np.sign(f[1:]) < 0)[0]
-    if not crossings.size:
+    zeros = np.flatnonzero(f == 0)
+    if not crossings.size and not zeros.size:
         return None
+    if zeros.size and (not crossings.size or X[zeros[-1]] > X[crossings[-1]]):
+        return float(X[zeros[-1]])
     i = crossings[-1]
     return float(X[i] - f[i] * (X[i + 1] - X[i]) / (f[i + 1] - f[i]))
 
@@ -1874,7 +1991,8 @@ def write(metric_ids=None):
         if metric_id in NOT_DRAWN:
             data["none"] = not_drawn(metric_id)
         path = DIAGRAMS_DIR / f"{metric_id}.json"
-        path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n",
+                        encoding="utf-8")
         print(f"wrote {path.relative_to(build.ROOT)}")
 
 
