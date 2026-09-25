@@ -43,7 +43,8 @@
       "idealized model"
     ],
     "version": "9f16cc13f077a52b",
-    "diagrams": "d194fed4a06c31ec"
+    "diagrams": "d194fed4a06c31ec",
+    "conformal": "a051c4683fb81566"
   },
   {
     "id": "bertotti_robinson",
@@ -65,7 +66,8 @@
       "idealized model"
     ],
     "version": "68a0daac74933f96",
-    "diagrams": "0b4223632df9449e"
+    "diagrams": "0b4223632df9449e",
+    "conformal": "7012a85e3c37f2d6"
   },
   {
     "id": "bianchi",
@@ -112,7 +114,8 @@
       "idealized model"
     ],
     "version": "5d8ffc3bdb129fec",
-    "diagrams": "753dcb7b63367a23"
+    "diagrams": "753dcb7b63367a23",
+    "conformal": "d88e649f9aef7518"
   },
   {
     "id": "ellis_bronnikov",
@@ -136,7 +139,8 @@
       "idealized model"
     ],
     "version": "26c76b677a23ea70",
-    "diagrams": "647c7f974cd77e6b"
+    "diagrams": "647c7f974cd77e6b",
+    "conformal": "08b70f359b46e210"
   },
   {
     "id": "frw",
@@ -158,7 +162,8 @@
       "idealized model"
     ],
     "version": "ba34bf8132473424",
-    "diagrams": "6c6c9adad7ad58d1"
+    "diagrams": "6c6c9adad7ad58d1",
+    "conformal": "d0612c067523fffb"
   },
   {
     "id": "godel",
@@ -236,7 +241,8 @@
       "idealized model"
     ],
     "version": "120c3737636c0b94",
-    "diagrams": "11f485504dd141b2"
+    "diagrams": "11f485504dd141b2",
+    "conformal": "a4e7519dbf03eb7e"
   },
   {
     "id": "kerr_newman",
@@ -271,7 +277,8 @@
       "idealized model"
     ],
     "version": "20450a2ff043b699",
-    "diagrams": "ee329fe7ec5d9117"
+    "diagrams": "ee329fe7ec5d9117",
+    "conformal": "3b31c44db0a73aa5"
   },
   {
     "id": "krasnikov",
@@ -354,7 +361,8 @@
       "Lorentzian",
       "four-dimensional"
     ],
-    "version": "b6a000e6702ef0a1"
+    "version": "b6a000e6702ef0a1",
+    "conformal": "39f2895b956c708a"
   },
   {
     "id": "minkowski",
@@ -374,7 +382,8 @@
       "idealized model"
     ],
     "version": "ac59b6fcd659c201",
-    "diagrams": "8feaff32ce312782"
+    "diagrams": "8feaff32ce312782",
+    "conformal": "cd0618f27000d42b"
   },
   {
     "id": "mixmaster",
@@ -423,7 +432,8 @@
       "idealized model"
     ],
     "version": "8a9e6e5f3658830d",
-    "diagrams": "4131c8dbe36f1c90"
+    "diagrams": "4131c8dbe36f1c90",
+    "conformal": "2452732f2bb2b83b"
   },
   {
     "id": "natario",
@@ -471,7 +481,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1b92954f777c0028"
+    "version": "1b92954f777c0028",
+    "conformal": "960db5c40917b21b"
   },
   {
     "id": "pp_wave",
@@ -522,7 +533,8 @@
       "idealized model"
     ],
     "version": "57233587de15faf3",
-    "diagrams": "0d9aa2c25f36cfcc"
+    "diagrams": "0d9aa2c25f36cfcc",
+    "conformal": "d3263f311d24c1f9"
   },
   {
     "id": "schwarzschild",
@@ -552,7 +564,8 @@
       "idealized model"
     ],
     "version": "5129229fc8f65561",
-    "diagrams": "4d3ff600e6d63c78"
+    "diagrams": "4d3ff600e6d63c78",
+    "conformal": "34234ecbbced3e21"
   },
   {
     "id": "interior_schwarzschild",
@@ -574,7 +587,8 @@
       "idealized model"
     ],
     "version": "82f0226fa2248e04",
-    "diagrams": "9c4e4f5a80fb393d"
+    "diagrams": "9c4e4f5a80fb393d",
+    "conformal": "1b93176640c6e8ba"
   },
   {
     "id": "taub_nut",
@@ -643,7 +657,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7515c50dcff44793"
+    "version": "7515c50dcff44793",
+    "conformal": "f1a654193f51539c"
   },
   {
     "id": "vaidya",
@@ -666,7 +681,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f6642a882a7f8ef8"
+    "version": "f6642a882a7f8ef8",
+    "conformal": "cd3829b78287578d"
   },
   {
     "id": "cosmic_string",
@@ -688,6 +704,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a3b77bf5dff298ee"
+    "version": "a3b77bf5dff298ee",
+    "conformal": "5e96d2285669e796"
   }
 ]

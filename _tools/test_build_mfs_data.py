@@ -78,6 +78,26 @@ def diagram_files():
     return {p.stem: read(p) for p in sorted(build.DIAGRAMS_DIR.glob("*.json"))}
 
 
+def conformal_files():
+    return {p.stem: read(p) for p in sorted(build.CONFORMAL_DIR.glob("*.json"))}
+
+
+def conformal_prose(name, conformal):
+    """Yield every field of a conformal diagram file a reader sees, each with its place."""
+    for view in conformal["views"]:
+        where = f"conformal/{name}.json {view['id']}"
+        yield f"{where}.label", view["label"]
+        for position, paragraph in enumerate(view["caption"]):
+            yield f"{where}.caption[{position}]", paragraph
+        for field in ("restriction", "settings", "input"):
+            if view.get(field):
+                yield f"{where}.{field}", view[field]
+        for position, (_, _, text) in enumerate(view["legend"]):
+            yield f"{where}.legend[{position}]", text
+        for position, label in enumerate(view["labels"]):
+            yield f"{where}.labels[{position}]", label["text"]
+
+
 def diagram_prose(name, diagram):
     """Yield every sentence carrying field of a diagram file, each with the name of its place."""
     for system, views in diagram["systems"].items():
@@ -113,9 +133,10 @@ class Index(unittest.TestCase):
         )
 
     def test_entry_carries_the_search_fields_and_a_stamp(self):
-        diagrams = diagram_files()
+        diagrams, conformal = diagram_files(), conformal_files()
         for entry, metric in zip(self.index, self.metrics):
-            expected = {"id", "name", "tags", "version"} | ({"diagrams"} if metric["id"] in diagrams else set())
+            expected = ({"id", "name", "tags", "version"} | ({"diagrams"} if metric["id"] in diagrams else set())
+                        | ({"conformal"} if metric["id"] in conformal else set()))
             self.assertEqual(set(entry), expected)
             self.assertEqual(entry["name"], metric["short_name"])
             self.assertEqual(entry["tags"], metric["tags"])
@@ -128,6 +149,14 @@ class Index(unittest.TestCase):
         self.assertEqual(set(stamped), set(diagrams))
         for metric_id, diagram in diagrams.items():
             self.assertEqual(stamped[metric_id], build.content_version(diagram))
+
+    def test_a_spacetime_with_a_conformal_diagram_carries_its_stamp(self):
+        conformal = conformal_files()
+        self.assertTrue(conformal, "no conformal diagram file was found, so nothing was checked")
+        stamped = {e["id"]: e["conformal"] for e in self.index if "conformal" in e}
+        self.assertEqual(set(stamped), set(conformal))
+        for metric_id, data in conformal.items():
+            self.assertEqual(stamped[metric_id], build.content_version(data))
 
     def test_a_metric_missing_its_short_name_is_refused(self):
         with self.assertRaises(build.DataError):
@@ -214,6 +243,16 @@ class Prose(unittest.TestCase):
                   for field, value in diagram_prose(name, diagram)]
         self.assert_no_dashes(fields)
 
+    def test_no_conformal_diagram_on_disk_carries_a_dash_in_its_prose(self):
+        fields = [(field, value) for name, data in conformal_files().items()
+                  for field, value in conformal_prose(name, data)]
+        self.assert_no_dashes(fields)
+
+    def test_no_conformal_diagram_spells_a_character_as_an_escape(self):
+        for name, data in conformal_files().items():
+            for field, value in conformal_prose(name, data):
+                self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}", field)
+
     def test_no_metric_on_disk_spells_a_character_as_an_escape(self):
         # A \u escaped twice in the JSON reaches the page as the six characters of the
         # escape, as the î of Lemaître did in the Tolman-Bondi conventions, since neither
@@ -242,6 +281,8 @@ class Prose(unittest.TestCase):
                   for m in build.load_metrics() for field, value in prose(m)]
         fields += [(field, field, value) for name, diagram in diagram_files().items()
                    for field, value in diagram_prose(name, diagram)]
+        fields += [(field, field, value) for name, data in conformal_files().items()
+                   for field, value in conformal_prose(name, data)]
         self.assertTrue(fields, "no prose was read, so nothing was checked")
         for where, field, value in fields:
             for pattern in MACHINERY:
@@ -457,6 +498,126 @@ class Diagrams(unittest.TestCase):
                 (Path(folder) / filename).write_text(json.dumps(diagram), encoding="utf-8")
             with mock.patch.object(build, "DIAGRAMS_DIR", Path(folder)):
                 return build.load_diagrams(metrics)
+
+
+class ConformalDiagrams(unittest.TestCase):
+    """A conformal diagram is of a whole spacetime, drawn from what its metrics publish, and
+    stops being published when any of that changes."""
+
+    SLICES = {"kerr", "kerr_newman", "cosmic_string"}
+
+    def setUp(self):
+        self.metrics = build.load_metrics()
+        self.conformal = conformal_files()
+        self.assertTrue(self.conformal, "no conformal diagram file was found, so nothing was checked")
+
+    def test_every_file_was_drawn_from_what_its_metrics_publish(self):
+        by_id = {m["id"]: m for m in self.metrics}
+        for metric_id, data in self.conformal.items():
+            self.assertTrue(data["source"], metric_id)
+            for source in data["source"]:
+                system = next(s for s in by_id[source["metric"]]["coordinates"] if s["id"] == source["system"])
+                self.assertEqual(build.diagram_source_version(system, source["fields"]), source["version"],
+                                 f"{metric_id} from {source['metric']}/{source['system']}")
+        self.assertEqual(set(build.load_conformal(self.metrics)), set(self.conformal))
+
+    def test_a_changed_component_is_refused_and_leaves_the_files_alone(self):
+        # The interior Schwarzschild star is drawn with schwarzschild.json's exterior, so a
+        # change there must stop it too, and not only schwarzschild's own diagram.
+        changed = copy.deepcopy(self.metrics)
+        for metric in changed:
+            if metric["id"] == "schwarzschild":
+                system = next(s for s in metric["coordinates"] if s["id"] == "spherical")
+                system["metric_components"][0]["value"] = "2" + system["metric_components"][0]["value"]
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        for argv in (["--check"], []):
+            stderr = io.StringIO()
+            with mock.patch.object(build, "load_metrics", return_value=changed), \
+                    mock.patch.object(build, "load_diagrams", return_value={}), \
+                    contextlib.redirect_stderr(stderr):
+                self.assertEqual(build.main(argv), 2)
+            self.assertIn("conformal/", stderr.getvalue())
+            self.assertIn("conformal.py --metric", stderr.getvalue())
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
+        with self.assertRaises(build.DataError) as raised:
+            self.load_folder({"interior_schwarzschild.json": self.conformal["interior_schwarzschild"]}, changed)
+        self.assertIn("schwarzschild.json", str(raised.exception))
+
+    def test_a_change_that_draws_nothing_leaves_the_diagrams_standing(self):
+        changed = copy.deepcopy(self.metrics)
+        for metric in changed:
+            metric["history"] = metric.get("history", "") + " More."
+            for system in metric.get("coordinates") or []:
+                system["domains"] = (system.get("domains") or []) + ["x \\in \\mathbb{R}"]
+                for parameter in system.get("parameters", []):
+                    parameter["description"] = parameter.get("description", "") + " Reworded."
+        self.assertEqual(set(build.load_conformal(changed)), set(self.conformal))
+
+    def test_a_file_without_a_metric_or_a_source_is_refused(self):
+        metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "coordinates": [{"id": "a"}]}
+        with self.assertRaises(build.DataError) as raised:
+            self.load_folder({"ghost.json": {"metric": "ghost", "source": [], "views": []}}, [metric])
+        self.assertIn("ghost", str(raised.exception))
+        with self.assertRaises(build.DataError) as raised:
+            self.load_folder({"x.json": {"metric": "x", "source": [], "views": []}}, [metric])
+        self.assertIn("drawn from", str(raised.exception))
+        source = [{"metric": "x", "system": "b", "fields": ["coords"], "version": "0"}]
+        with self.assertRaises(build.DataError) as raised:
+            self.load_folder({"x.json": {"metric": "x", "source": source, "views": []}}, [metric])
+        self.assertIn("'b'", str(raised.exception))
+
+    def test_every_caption_names_what_is_drawn(self):
+        for metric_id, data in self.conformal.items():
+            for view in data["views"]:
+                self.assertTrue(view["caption"], f"{metric_id} {view['id']}")
+                self.assertTrue(view["caption"][0].startswith("This is the "), f"{metric_id} {view['id']}")
+
+    def test_the_spacetimes_drawn_on_a_slice_say_so_on_the_diagram(self):
+        """A view of a surface that is not the whole spacetime carries its restriction, and the
+        three spacetimes with no faithful picture of the whole carry it on every view."""
+        self.assertLessEqual(self.SLICES, set(self.conformal))
+        for metric_id in self.SLICES:
+            for view in self.conformal[metric_id]["views"]:
+                self.assertTrue(view.get("restriction"), f"{metric_id} {view['id']}")
+                self.assertRegex(view["restriction"], r"only", f"{metric_id} {view['id']}")
+
+    def test_every_text_is_tex_with_its_mathematics_closed(self):
+        for name, data in self.conformal.items():
+            for field, value in conformal_prose(name, data):
+                self.assertTrue(value.strip(), field)
+                self.assertEqual(value.replace("\\$", "").count("$") % 2, 0, field)
+                self.assertEqual(value.count("{"), value.count("}"), field)
+
+    def test_every_view_draws_inside_its_box_and_names_only_what_it_draws(self):
+        kinds = {"fill", "line", "zig", "point"}
+        for name, data in self.conformal.items():
+            ids = [view["id"] for view in data["views"]]
+            self.assertEqual(len(ids), len(set(ids)), name)
+            for view in data["views"]:
+                where = f"{name} {view['id']}"
+                x0, x1, t0, t1 = view["box"]
+                self.assertTrue(x0 < x1 and t0 < t1, where)
+                drawn = {}
+                for layer in view["layers"]:
+                    self.assertIn(layer["kind"], kinds, where)
+                    drawn.setdefault(layer["class"], layer["kind"])
+                    points = [layer["at"]] if layer["kind"] == "point" else layer["points"]
+                    for x, t in points:
+                        self.assertTrue(x0 <= x <= x1 and t0 <= t <= t1, f"{where} {layer['class']} at {x}, {t}")
+                for label in view["labels"]:
+                    x, t = label["at"]
+                    self.assertTrue(x0 <= x <= x1 and t0 <= t <= t1, f"{where} label {label['text']}")
+                self.assertIn("region", drawn, where)
+                for kind, cls, _ in view["legend"]:
+                    self.assertEqual(drawn.get(cls), kind, f"{where} legend {cls}")
+
+    def load_folder(self, files, metrics):
+        with tempfile.TemporaryDirectory() as folder:
+            for filename, data in files.items():
+                (Path(folder) / filename).write_text(json.dumps(data), encoding="utf-8")
+            with mock.patch.object(build, "CONFORMAL_DIR", Path(folder)):
+                return build.load_conformal(metrics)
 
 
 class Bibliography(unittest.TestCase):
