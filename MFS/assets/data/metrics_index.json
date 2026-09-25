@@ -18,7 +18,7 @@
       "causality violation"
     ],
     "version": "834789b2cd8b76db",
-    "diagrams": "0092fb55aca280e5"
+    "diagrams": "02dc8c3db258d63d"
   },
   {
     "id": "anti_de_sitter",
@@ -43,7 +43,7 @@
       "idealized model"
     ],
     "version": "ca8d4c051463c036",
-    "diagrams": "5536c2fb43be2540"
+    "diagrams": "56fbbbce9b34d858"
   },
   {
     "id": "bertotti_robinson",
@@ -65,7 +65,7 @@
       "idealized model"
     ],
     "version": "8baf370598b8b4b4",
-    "diagrams": "28ab88e421c88797"
+    "diagrams": "0b4223632df9449e"
   },
   {
     "id": "bianchi",
@@ -86,7 +86,7 @@
       "idealized model"
     ],
     "version": "0191073614268964",
-    "diagrams": "714c1f9de4ccc6e5"
+    "diagrams": "a4f93ae0b7b19d36"
   },
   {
     "id": "de_sitter",
@@ -112,7 +112,7 @@
       "idealized model"
     ],
     "version": "50af3c2ef8f452c0",
-    "diagrams": "96cef616b014acc6"
+    "diagrams": "f7bf2e91649adb72"
   },
   {
     "id": "ellis_bronnikov",
@@ -136,7 +136,7 @@
       "idealized model"
     ],
     "version": "11f61184e7ff970a",
-    "diagrams": "957f4b22136034d9"
+    "diagrams": "647c7f974cd77e6b"
   },
   {
     "id": "frw",
@@ -158,7 +158,7 @@
       "idealized model"
     ],
     "version": "1b293ca9a39c0a20",
-    "diagrams": "ecd1cc1c70783de3"
+    "diagrams": "6eed175c9d27a6f2"
   },
   {
     "id": "godel",
@@ -181,7 +181,7 @@
       "idealized model"
     ],
     "version": "33e45359baa4dbc3",
-    "diagrams": "a7ca06ba429f85e5"
+    "diagrams": "3635172817a5d4b2"
   },
   {
     "id": "kasner",
@@ -204,7 +204,7 @@
       "idealized model"
     ],
     "version": "942d70953e804dc6",
-    "diagrams": "745b42442f56f978"
+    "diagrams": "6685ba0c323d68f3"
   },
   {
     "id": "kerr",
@@ -236,7 +236,7 @@
       "idealized model"
     ],
     "version": "641566a8a1f57bcd",
-    "diagrams": "cdb649c92c7f1a76"
+    "diagrams": "fe039cacb459b7b7"
   },
   {
     "id": "kerr_newman",
@@ -271,7 +271,7 @@
       "idealized model"
     ],
     "version": "4db0c1bd50dee80e",
-    "diagrams": "bb92d1eb13504adb"
+    "diagrams": "a0c6267c1d6371a5"
   },
   {
     "id": "krasnikov",
@@ -295,7 +295,7 @@
       "causality violation"
     ],
     "version": "92b7ea9fae1f8781",
-    "diagrams": "c20a45fe59d42a2e"
+    "diagrams": "d78e604538b28752"
   },
   {
     "id": "stockum_dust",
@@ -374,7 +374,7 @@
       "idealized model"
     ],
     "version": "228d233da5f97fb6",
-    "diagrams": "e8243b39929faada"
+    "diagrams": "31dbd5ed994a389d"
   },
   {
     "id": "mixmaster",
@@ -423,7 +423,7 @@
       "idealized model"
     ],
     "version": "36bafba5e4ecccbf",
-    "diagrams": "0982ff26a6d77799"
+    "diagrams": "2ae857931c4062cf"
   },
   {
     "id": "natario",
@@ -446,7 +446,7 @@
       "four-dimensional"
     ],
     "version": "ed66e5d545f23dfa",
-    "diagrams": "53799d2c84382e9b"
+    "diagrams": "f101a956a611b7b3"
   },
   {
     "id": "oppenheimer_snyder",
@@ -491,7 +491,7 @@
       "idealized model"
     ],
     "version": "b30e21f916a5160a",
-    "diagrams": "e1ac992c8fd9f7c5"
+    "diagrams": "b9787f483ad1c28e"
   },
   {
     "id": "rn_metric",
@@ -522,7 +522,7 @@
       "idealized model"
     ],
     "version": "98314e236173d60d",
-    "diagrams": "39df0a59d4aa7c7a"
+    "diagrams": "529dd9607d8f0067"
   },
   {
     "id": "schwarzschild",
@@ -552,7 +552,7 @@
       "idealized model"
     ],
     "version": "132e86e871a751d0",
-    "diagrams": "8a4118fc858ac0bd"
+    "diagrams": "228fa4b30fc7fb6c"
   },
   {
     "id": "interior_schwarzschild",
@@ -574,7 +574,7 @@
       "idealized model"
     ],
     "version": "31cc97350e4f1540",
-    "diagrams": "8ea66611b8131aa3"
+    "diagrams": "118577a0ef8d1c39"
   },
   {
     "id": "taub_nut",
@@ -596,7 +596,7 @@
       "idealized model"
     ],
     "version": "6bc42b8d7b461067",
-    "diagrams": "ae64bab6a5e31989"
+    "diagrams": "72febbd72df6fa99"
   },
   {
     "id": "tolman_bondi",

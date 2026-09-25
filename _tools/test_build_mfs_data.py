@@ -205,6 +205,19 @@ class Prose(unittest.TestCase):
                 self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}",
                                     f"{metric['id']}.json: {field} spells a character as an escape")
 
+    def test_every_caption_names_its_plane_and_never_a_block(self):
+        """A reader is told which slice is drawn, in words, and never handed the shorthand."""
+        views = 0
+        for name, diagram in diagram_files().items():
+            for system, drawn in diagram["systems"].items():
+                for view in drawn:
+                    views += 1
+                    where = f"diagrams/{name}.json {system}/{view['id']}"
+                    self.assertTrue(view["caption"][0].startswith("This is the "), where)
+                    for field, value in diagram_prose(name, {"systems": {system: [view]}}):
+                        self.assertNotRegex(value, r"(?i)\bblocks?\b", field)
+        self.assertTrue(views)
+
     def assert_no_dashes(self, fields):
         self.assertTrue(fields, "no prose was read, so nothing was checked")
         for where, value in fields:
