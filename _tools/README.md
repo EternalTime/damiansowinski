@@ -41,6 +41,10 @@ The print copy cannot scroll, so there a wide line breaks before a top level `+`
 So a value whose whole length sits inside one `\left(\right)` prints small, which is one more reason to collect it rather than expand it.
 `mathLine` and `printPrepare` in `_layouts/mfs.html` carry the details.
 
+Nothing in the print copy may follow the last line of its body, not even blank space.
+The repeated footer sits below the body's whole box, and closing space that pushes it past the foot of a page makes Chrome print one more page holding only the header and footer.
+So printed sections are spaced from the section before them and never by a margin underneath, and the print stylesheet's comment beside that rule says why.
+
 A formula inside prose, in a `history`, a `convention` or a caption, is set inline and cannot break, so one wider than its paragraph is given a line of its own that scrolls in the same way, and the prose around it wraps as before.
 `fitProseMath` in `_layouts/mfs.html` measures that again whenever the paragraph changes width.
 

@@ -2189,7 +2189,7 @@
       .mfs-print-table { width: 100%; border-collapse: collapse; }
       .mfs-print-table thead { display: table-header-group; }  /* repeat per page */
       .mfs-print-table tfoot { display: table-footer-group; }  /* repeat per page */
-      .mfs-print-table thead td, .mfs-print-table tfoot td { padding: 0; }
+      .mfs-print-table > * > tr > td { padding: 0; }
 
       .mfs-print-header {
         display: flex; justify-content: space-between; align-items: center;
@@ -2211,7 +2211,19 @@
         font-size: 9pt; font-style: italic; text-align: center;
       }
 
-      .mfs-print-body .mfs-section { padding: 4px 0; border: none !important; }
+      /* Nothing may follow the last line of the body, not even blank space. The repeated
+         footer is laid out below the body row's whole box, closing space included, and when
+         that space alone pushes the footer past the foot of a page Chrome breaks the row
+         there and gives its empty remainder a page of its own, holding nothing but the
+         running header and footer. The 2em mfs.css puts under every section did that to
+         Tolman-Oppenheimer-Volkoff, whose references end within 2em of the foot of its first
+         page, and would do it to any entry ending there. So a section is spaced from the one
+         before it instead, a margin Chrome drops when the section starts a page, and the
+         last section, its last child and the cell all close on the last line. */
+      .mfs-print-body .mfs-section { padding: 4px 0; margin: 0; border: none !important; }
+      .mfs-print-body .mfs-section + .mfs-section { margin-top: 2em; }
+      .mfs-print-body .mfs-section:last-child { padding-bottom: 0; }
+      .mfs-print-body .mfs-section:last-child > :last-child { margin-bottom: 0; }
       .mfs-print-body .mfs-section-label {
         text-transform: uppercase; letter-spacing: 0.08em;
         font-size: 10pt; font-weight: bold; margin: 10px 0 4px;
