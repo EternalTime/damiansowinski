@@ -8,6 +8,7 @@ import contextlib
 import copy
 import io
 import json
+import re
 import tempfile
 import unicodedata
 import unittest
@@ -231,6 +232,87 @@ class Prose(unittest.TestCase):
                     )
 
 
+class HistoryShape(unittest.TestCase):
+    """Every history has at least five paragraphs of three to six sentences each."""
+
+    @staticmethod
+    def metric(history, metric_id="x"):
+        return {"id": metric_id, "name": "X", "short_name": "X", "tags": ["t"], "history": history}
+
+    @staticmethod
+    def paragraph(count, word="Physics"):
+        return " ".join(f"{word} happened {n}." for n in range(count))
+
+    def history(self, *counts):
+        return "¶".join(self.paragraph(count) for count in counts)
+
+    def test_every_history_on_disk_keeps_its_shape(self):
+        metrics = build.load_metrics()
+        self.assertTrue(all(m.get("history") for m in metrics), "a metric has no history")
+        self.assertIsNone(build.check_history_shape(metrics))
+
+    def test_sentences_are_counted_as_a_reader_counts_them(self):
+        cases = {
+            "J. Robert Oppenheimer met D. M. Chitre. They talked.": 2,
+            'He called it "a simple example." Then he moved on.': 2,
+            "The horizons sit at $$r_\\pm = \\frac{r_s}{2}.$$ These coalesce.": 2,
+            "The value $0.378$ is small. So is $1.5\\ell$.": 2,
+            "It is cited [kasner1921]. Relativists still read it.": 2,
+            "Or would it? It would!": 2,
+            "It was 1921. 1922 came next.": 2,
+            "Cartan was there. Élie Cartan, that is.": 2,
+            "A single sentence with no stop at the end": 1,
+        }
+        for text, count in cases.items():
+            self.assertEqual(len(build.sentences(text)), count, text)
+
+    def test_the_rule_holds_at_its_edges(self):
+        self.assertIsNone(build.check_history_shape([self.metric(self.history(3, 6, 3, 6, 3))]))
+
+    def test_a_history_of_four_paragraphs_is_refused(self):
+        with self.assertRaises(build.DataError) as raised:
+            build.check_history_shape([self.metric(self.history(4, 4, 4, 4))])
+        self.assertIn("4 paragraphs", str(raised.exception))
+
+    def test_a_paragraph_too_short_or_too_long_is_refused_by_its_place(self):
+        for counts, place in (((4, 4, 2, 4, 4), 3), ((4, 4, 4, 4, 7), 5)):
+            with self.assertRaises(build.DataError) as raised:
+                build.check_history_shape([self.metric(self.history(*counts))])
+            self.assertIn(f"paragraph {place}", str(raised.exception))
+
+    def test_the_longest_paragraph_may_be_at_most_twice_the_shortest(self):
+        with mock.patch.object(build, "HISTORY_SENTENCES", (1, 10)):
+            self.assertIsNone(build.check_history_shape([self.metric(self.history(2, 4, 3, 4, 2))]))
+            with self.assertRaises(build.DataError) as raised:
+                build.check_history_shape([self.metric(self.history(2, 5, 3, 4, 2))])
+        self.assertIn("more than 2 times", str(raised.exception))
+
+    def test_a_table_is_not_a_paragraph(self):
+        history = self.history(3, 3, 3, 3) + "¶TABLE:: a | b ;; 1 | 2¶" + self.paragraph(3)
+        self.assertEqual(build.history_shape(history), [3, 3, 3, 3, 3])
+        self.assertIsNone(build.check_history_shape([self.metric(history)]))
+
+    def test_every_history_out_of_shape_is_named_at_once(self):
+        with self.assertRaises(build.DataError) as raised:
+            build.check_history_shape([self.metric(self.history(3, 3), "one"),
+                                       self.metric(self.history(4, 4, 4, 4, 4), "fine"),
+                                       self.metric(self.history(9, 3, 3, 3, 3), "two")])
+        self.assertIn("one.json", str(raised.exception))
+        self.assertIn("two.json", str(raised.exception))
+        self.assertNotIn("fine.json", str(raised.exception))
+
+    def test_a_history_out_of_shape_leaves_both_published_files_alone(self):
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        broken = build.load_metrics()
+        broken[0] = dict(broken[0], history=self.history(3, 3, 3))
+        for argv in (["--check"], []):
+            with mock.patch.object(build, "load_metrics", return_value=broken), \
+                    contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(build.main(argv), 2)
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
+
+
 class Diagrams(unittest.TestCase):
     """A diagram is drawn from what its metric publishes, and stops being published when that changes."""
 
@@ -375,6 +457,16 @@ class Citations(unittest.TestCase):
     def test_the_collection_as_it_stands_resolves(self):
         entries = build.build_references()["entries"]
         self.assertIsNone(build.check_citations(build.load_metrics(), entries))
+
+    def test_every_metric_lists_its_references_in_the_order_its_history_first_cites_them(self):
+        """The page numbers a citation by its place in `references`, so [1] is the first one read."""
+        for metric in build.load_metrics():
+            cited = []
+            for bracket in re.findall(r"\[([A-Za-z0-9_, ]+)\]", metric.get("history") or ""):
+                for key in (k.strip() for k in bracket.split(",")):
+                    if key not in cited:
+                        cited.append(key)
+            self.assertEqual(metric.get("references", []), cited, metric["id"])
 
     def test_a_citation_the_bibliography_has_no_entry_for_is_refused(self):
         metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "references": ["ghost"]}
