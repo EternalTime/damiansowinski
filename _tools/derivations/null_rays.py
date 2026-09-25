@@ -220,7 +220,9 @@ class Diagram:
     periodic: tuple = ()            # drawn coordinates whose two ends are one line, never hatched
     horizon: tuple = None           # (x^0, family, legend): the ray of that family through the
                                     # outermost zero of g^rr at that x^0, drawn as a horizon
-    jump: tuple = None              # (x^0, legend): where a declared function jumps, drawn
+    lines: tuple = ()               # (kind, "x0" or "r", value, legend): a line of constant
+                                    # coordinate drawn and named, such as where a declared function jumps
+    surface: str = None             # r at which a star's surface is released from rest; see Surface
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     star: dict = None               # a declared polytrope, {"K": ..., "rho_c": ...}; see StarSolver
 
@@ -256,6 +258,9 @@ _KRASNIKOV_TUBE = ("1 - (2 - 1/5)*(1 + tanh((1 - r**2)/(2*3/20)))/2*(1 + tanh((t
                    "*(1 + tanh(x/(3/20)))/2*(1 + tanh((4 - x)/(3/20)))/2")
 
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
+# The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
+OS_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0], "origin": "reference"}
+
 # The polytrope the conformal diagram declares, and what it makes of the star.
 POLYTROPE = {"K": 100, "rho_c": "1.28e-3"}
 POLYTROPE_INPUT = ("A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
@@ -439,17 +444,31 @@ DIAGRAMS = [
     Diagram("tov", "spherical", "through", "through the centre", ("t", "r"), (0, 16, -16, 16),
             "$x\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, mirror=True, families=SIDEWAYS,
             cones=(4, 8), areal=True, star=POLYTROPE, input=POLYTROPE_INPUT),
+    # The collapse the conformal diagram draws, released from rest at R_0 = 2 r_s, chi_0 = pi/4:
+    # the dust in its own chart, and the vacuum outside it in Schwarzschild's.
+    Diagram("oppenheimer_snyder", "interior_comoving", "through", "through the centre", ("\\tau", "\\chi"),
+            (0, math.pi / 4, 0, math.pi / 2), "$\\chi$", "$c\\tau/a_m$", {"chi_0": "pi/4", "a_m": 1}, EQUATOR,
+            mirror=True, families=SIDEWAYS, cones=(4, 8), tau="tau", areal=True, dust=OS_DUST,
+            lines=(("surface", "r", "pi/4", "the surface of the star, $\\chi = \\chi_0$"),),
+            horizon=({"r": "pi/4", "areal": "sqrt(2)/4"}, 1, "the event horizon"),
+            input="Dust released from rest at $\\tau = 0$ with $a = a_m$, $a(\\tau)$ solved from this "
+                  "spacetime's own $G^\\chi{}_\\chi = 0$, and $\\chi_0 = \\pi/4$, so that the star starts "
+                  "at twice its Schwarzschild radius."),
+    Diagram("oppenheimer_snyder", "exterior_schwarzschild", "radial", "$t$ and $r$", ("t", "r"), (0, 3, 0, 6),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, orient="ingoing", areal=True, surface="2",
+            input="The surface released from rest at $r = 2r_s$ at $t = 0$, the star of the interior "
+                  "coordinates with $\\chi_0 = \\pi/4$."),
     # A shell of null dust falls in along v = 0: flat inside, Schwarzschild outside, as the
     # conformal diagram declares it. The outgoing chart draws its time reverse.
     Diagram("vaidya", "eddington_finkelstein_ingoing", "shell", "an imploding shell", ("v", "r"),
             (0, 4, -2.5, 1.5), "$r/r_s$", "$(cv - r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_IN,
-            tau="v - r", areal=True, functions={"m": "Heaviside(v)/2"}, jump=("0", "the shell, $v = 0$"),
+            tau="v - r", areal=True, functions={"m": "Heaviside(v)/2"}, lines=(("shell", "x0", "0", "the shell, $v = 0$"),),
             horizon=("1/1000", 1, "the event horizon"), singular_runs=True,
             input="$m(v) = 0$ for $v < 0$ and $M$ for $v > 0$, with $r_s = 2GM/c^2$: a shell of null "
                   "dust of mass $M$ falling in along $v = 0$."),
     Diagram("vaidya", "eddington_finkelstein_outgoing", "shell", "an exploding shell", ("u", "r"),
             (0, 4, -1.5, 2.5), "$r/r_s$", "$(cu + r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_OUT,
-            tau="u + r", areal=True, functions={"m": "Heaviside(-u)/2"}, jump=("0", "the shell, $u = 0$"),
+            tau="u + r", areal=True, functions={"m": "Heaviside(-u)/2"}, lines=(("shell", "x0", "0", "the shell, $u = 0$"),),
             horizon=("-1/1000", 0, "the white hole's horizon"), singular_runs=True,
             input="$m(u) = M$ for $u < 0$ and $0$ for $u > 0$, with $r_s = 2GM/c^2$: a shell of null "
                   "dust carrying off the whole mass $M$ along $u = 0$."),
@@ -880,6 +899,29 @@ CAPTIONS = {
         "exact. Rays cross the centre smoothly, where the cones are narrowest and the Kretschmann "
         "scalar is finite, and the surface shows on both sides.",
     ],
+    ("oppenheimer_snyder", "interior_comoving", "through"): [
+        "This is the line through the centre of the collapsing star in the plane $\\theta = \\pi/2$, in "
+        "its own comoving coordinates: $\\chi$ on the right is $\\phi = 0$ and on the left $\\phi = \\pi$, "
+        "and the surface is $\\chi_0 = \\pi/4$ on either side. The star is a closed Friedmann universe "
+        "of dust, $-c^2d\\tau^2 + a^2(d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$, released from rest at "
+        "$\\tau = 0$, and its light rays obey $c\\,d\\tau = \\pm a\\,d\\chi$. As $a$ shrinks the cones open "
+        "out flat, and every ray ends on the crunch at $c\\tau = \\pi a_m/2$, where the Kretschmann "
+        "scalar diverges.",
+        "The event horizon is the outgoing ray that leaves the centre at $c\\tau = 0.75\\,a_m$ and "
+        "reaches the surface as the surface crosses $r_s = a_m\\sin^3\\chi_0$; light that leaves the "
+        "centre after it never gets out. The dotted curve, $|\\nabla R|^2 = 0$ for the areal radius "
+        "$R = a\\sin\\chi$, bounds the trapped spheres: it starts at the surface at the same moment "
+        "and runs inward, reaching the centre only at the crunch.",
+    ],
+    ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): [
+        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ outside the collapsing "
+        "star, where the metric is Schwarzschild's. The surface falls freely from rest at $r = 2r_s$ "
+        "at $t = 0$, along the radial geodesic the Christoffel symbols give, and what lies inside it, "
+        "$r < R(t)$, is the star, which these coordinates do not cover.",
+        "The surface reaches $r_s$ only as $t \\to \\infty$, though its own clock reads a finite time "
+        "there, and each outgoing ray it sends takes longer than the last to climb away. The horizon "
+        "it crosses, and the black hole behind it, lie beyond both sets of coordinates.",
+    ],
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): [
         "This is the plane of $v$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $cv - r$ up "
         "so that the ingoing rays, $v$ constant, run at 45°. A shell of null dust of mass $M$ falls in "
@@ -961,7 +1003,8 @@ class DustSolver:
     that the singularity is t = 0.
     """
 
-    def __init__(self, metric_id, system_id, time_name, funcs, eqs, rates, params=None):
+    def __init__(self, metric_id, system_id, time_name, funcs, eqs, rates, params=None, start=None,
+                 origin="bang"):
         _, entry, reader = load(metric_id, system_id)
         ul = entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
         published = [next(c["value"] for c in ul if c["indices"] == list(ix)) for ix in eqs]
@@ -989,10 +1032,13 @@ class DustSolver:
         def singular(_, y):
             return min(np.min(y[0::2]) - 1e-7, 1e7 - np.max(y[0::2]))
         singular.terminal = True
-        y0 = [v for rate in rates for v in (1.0, float(rate))]
+        y0 = [v for a0, rate in zip(start or [1.0] * n, rates) for v in (float(a0), float(rate))]
         self.back = solve_ivp(rhs, (0, -20), y0, events=singular, rtol=1e-11, atol=1e-13, dense_output=True)
         self.fwd = solve_ivp(rhs, (0, 20), y0, events=singular, rtol=1e-11, atol=1e-13, dense_output=True)
-        self.t_sing = self.back.t_events[0][0]
+        # The chart's time is shifted so that the singularity before the reference instant is
+        # t = 0, or, with origin "reference", left with the reference instant at t = 0, as for
+        # dust released from rest there and collapsing to its singularity after it.
+        self.t_sing = self.back.t_events[0][0] if origin == "bang" else 0.0
         self.t_ref = -self.t_sing       # the reference instant, in time since the singularity
 
     def state(self, t):
@@ -1142,7 +1188,8 @@ def dust_solver(metric_id, system_id, time_name, dust):
     key = (metric_id, system_id, json.dumps(dust, sort_keys=True))
     if key not in _SOLVERS:
         _SOLVERS[key] = DustSolver(metric_id, system_id, time_name, dust["funcs"], dust["eqs"],
-                                   dust["rates"], dust.get("params"))
+                                   dust["rates"], dust.get("params"), dust.get("start"),
+                                   dust.get("origin", "bang"))
     return _SOLVERS[key]
 
 
@@ -1193,6 +1240,8 @@ class Chart:
         self.fn["dtau0"] = self.lambdify(sp.diff(tau, self.x0))
         self.fn["dtaur"] = self.lambdify(sp.diff(tau, self.xr))
 
+        self.prep = prep
+        self.surface = Surface(self, number(spec.surface)) if spec.surface else None
         self.same_as_grr = True
         if spec.areal:
             # R^2 = g_theta theta. Derivatives are taken of R^2 and divided by 2R, so that a
@@ -1244,8 +1293,24 @@ class Chart:
             return self.principal.block(x0, r)
         return self.fn["g00"](x0, r), self.fn["g0r"](x0, r), self.fn["grr"](x0, r)
 
+    def outside(self, x0, r):
+        """Where the chart's published domain leaves off inside a star's surface."""
+        if self.surface is None:
+            return np.zeros(np.broadcast(np.asarray(x0), np.asarray(r)).shape, dtype=bool)
+        with np.errstate(invalid="ignore"):
+            return np.asarray(r) < self.surface(np.asarray(x0, dtype=float))
+
     def null_dirs(self, x0, r):
-        """The directions P and M in (dx^0, dr), and D. NaN where there are none."""
+        """The directions P and M in (dx^0, dr), and D. NaN where there are none, and inside a
+        star's surface, which the chart does not cover."""
+        if self.surface is not None:
+            P, M, D = self._null_dirs(x0, r)
+            gone = self.outside(x0, r)
+            return (np.where(gone[..., None], np.nan, P), np.where(gone[..., None], np.nan, M),
+                    np.where(gone, np.nan, D))
+        return self._null_dirs(x0, r)
+
+    def _null_dirs(self, x0, r):
         g00, g0r, grr = self.block(x0, r)
         scale = np.maximum.reduce([np.abs(g00), np.abs(g0r), np.abs(grr)])
         with np.errstate(all="ignore"):
@@ -1282,6 +1347,64 @@ class Chart:
         if not gi00 * d0 ** 2 + 2 * gi0r * d0 * dr + girr * dr ** 2 < 0:
             return 0, 0
         return np.sign(P[0] * d0 + P[1] * dr), np.sign(M[0] * d0 + M[1] * dr)
+
+
+class Surface:
+    """The surface of a star of dust released from rest, as an exterior chart draws it: the
+    radial timelike geodesic from rest at r0, integrated with the published Christoffel
+    symbols in proper time and checked to keep unit speed and its energy -g_00 dx^0/dtau
+    against the published metric. It starts at x^0 = 0, and R(x^0) is its radius; the chart's
+    domain is what lies outside it, r >= R, and nothing is drawn inside."""
+
+    legend = "the surface of the star, falling freely from rest"
+
+    def __init__(self, chart, r0):
+        entry, reader = chart.entry, chart.reader
+        name_t, name_r = chart.spec.plane
+        gamma = {tuple(c["indices"]): c["value"] for c in entry["christoffel"]["variants"]["ull"]["nonzero"]}
+
+        def published(a, b, c):
+            text = gamma.get((a, b, c))
+            return chart.lambdify(chart.prep(reader(text))) if text else (lambda x0, r: 0.0)
+        Gt_tr, Gr_tt, Gr_rr = published(name_t, name_t, name_r), published(name_r, name_t, name_t), \
+            published(name_r, name_r, name_r)
+        g00, grr = chart.fn["g00"], chart.fn["grr"]
+
+        def one(f, t, r):
+            return float(f(np.array([t]), np.array([r]))[0])
+
+        def rhs(_, y):
+            t, r, td, rd = y
+            return [td, rd, -2 * one(Gt_tr, t, r) * td * rd,
+                    -one(Gr_tt, t, r) * td * td - one(Gr_rr, t, r) * rd * rd]
+
+        t_end = 2 * max(abs(v) for v in chart.spec.box)
+
+        def far(_, y):
+            return y[0] - t_end
+        far.terminal = True
+
+        def close(_, y):
+            return -one(g00, y[0], y[1]) - 1e-10
+        close.terminal = True
+        r0 = float(r0)
+        y0 = [0.0, r0, 1 / np.sqrt(-one(g00, 0.0, r0)), 0.0]
+        sol = solve_ivp(rhs, (0, 1e4), y0, events=(far, close), rtol=1e-12, atol=1e-14, method="DOP853",
+                        max_step=0.01)
+        t, r, td, rd = sol.y
+        speed = np.array([one(g00, a, b) for a, b in zip(t, r)]) * td ** 2 + \
+            np.array([one(grr, a, b) for a, b in zip(t, r)]) * rd ** 2
+        energy = -np.array([one(g00, a, b) for a, b in zip(t, r)]) * td
+        # Against the size of the terms, which grow without bound as the surface nears r_s.
+        speed = np.abs(speed + 1) / (1 + energy * td)
+        if not (speed.max() < 1e-9 and np.ptp(energy) < 1e-9 and np.all(np.diff(t) > 0)):
+            raise SystemExit(f"{key(chart.spec)}: the surface misses unit speed by {speed.max():.1e} "
+                             f"or its energy drifts by {np.ptp(energy):.1e}")
+        self.t, self.r, self.energy = t, r, float(energy[0])
+
+    def __call__(self, x0):
+        x0 = np.asarray(x0, dtype=float)
+        return np.where((x0 >= 0) & (x0 <= self.t[-1]), np.interp(x0, self.t, self.r), np.nan)
 
 
 def _as_lambda(reader, name, rep):
@@ -1667,6 +1790,8 @@ class Plot:
         Z = self.c.fn[name](x0, r).astype(float)
         if keep is not None:
             Z = np.where(keep(x0, r), Z, np.nan)
+        if self.c.surface is not None:
+            Z = np.where(self.c.outside(x0, r), np.nan, Z)
         Z = np.where(np.isfinite(Z), Z, np.nan)
         lines = contourpy.contour_generator(UU, VV, Z, line_type="Separate").lines(0.0)
         return [rounded(thin(l, 0.0008)) for l in lines if len(l) > 3 and not (drop_edge and on_edge(l))]
@@ -1719,6 +1844,18 @@ class Plot:
                     runs.append(rounded(edge[[run[0], run[-1]]]))
         return whole, runs
 
+    def x0_range(self):
+        """The least and greatest x^0 over the drawing's box."""
+        corners = self.to_chart(self.from_unit(np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)))
+        return float(np.min(corners[0])), float(np.max(corners[0]))
+
+    def surface_line(self):
+        """The star's surface through the drawing, in the unit square."""
+        t = np.linspace(*self.x0_range(), 2001)
+        R = self.c.surface(t)
+        keep = np.isfinite(R)
+        return inside_unit(np.array([self.to_unit(self.to_display(a, b)) for a, b in zip(t[keep], R[keep])]))
+
     def to_display(self, x0, r):
         return np.asarray(self.A @ np.array([x0, r], dtype=float))
 
@@ -1728,7 +1865,7 @@ class Plot:
     def hatch(self):
         """Where a chart point lies outside the entry's published domains, as polygons."""
         domains = parse_domains(self.c)
-        if not domains:
+        if not domains and self.c.surface is None:
             return []
         UU, VV, x0, r = self.grid(161)
         outside = np.zeros_like(UU, dtype=bool)
@@ -1739,6 +1876,7 @@ class Plot:
                     outside |= (values < lo) | ((values == lo) & lo_open)
                 if hi is not None:
                     outside |= (values > hi) | ((values == hi) & hi_open)
+        outside |= self.c.outside(x0, r)
         polygons, offsets = contourpy.contour_generator(
             UU, VV, outside.astype(float), fill_type="OuterOffset").filled(0.5, 1.5)
         out = []
@@ -1777,12 +1915,15 @@ class Plot:
                 apparent = [l for l in apparent if not same_line(l, throat)]
                 if apparent:
                     out.append({"kind": "apparent", "lines": apparent})
-        if spec.jump:
-            at, legend = spec.jump
-            ends = [self.to_unit(self.to_display(number(at), r)) for r in (-1e6, 1e6)]
-            line = clip_unit(np.array(ends))
+        for kind, which, at, legend in spec.lines:
+            at = float(number(at))
+            pairs = [(at, v) for v in (-1e6, 1e6)] if which == "x0" else [(v, at) for v in (-1e6, 1e6)]
+            line = clip_unit(np.array([self.to_unit(self.to_display(*pair)) for pair in pairs]))
             if line is not None:
-                out.append({"kind": "shell", "lines": [rounded(line)], "legend": legend})
+                out.append({"kind": kind, "lines": [rounded(line)], "legend": legend})
+        if spec.surface:
+            out.append({"kind": "surface", "lines": [rounded(thin(self.surface_line(), 0.0006))],
+                        "legend": self.c.surface.legend})
         if spec.star:
             R = self.c.solver.R
             line = clip_unit(np.array([self.to_unit(self.to_display(x0, R)) for x0 in (-1e6, 1e6)]))
@@ -1790,8 +1931,16 @@ class Plot:
                         "legend": "the surface of the star, where the pressure falls to zero"})
         if spec.horizon:
             at, family, legend = spec.horizon
-            r0 = outer_root(self.c, float(number(at)))
-            line = inside_unit(self.ray_through(self.to_unit(self.to_display(float(number(at)), r0)), family))
+            if isinstance(at, dict):
+                # The point of the line r = at["r"] where the areal radius is at["areal"].
+                r0 = float(number(at["r"]))
+                area = float(number(at["areal"]))
+                x0 = root_between(lambda t: float(fn["R"](np.array([t]), np.array([r0]))[0]) - area,
+                                  *self.x0_range())
+            else:
+                x0 = float(number(at))
+                r0 = outer_root(self.c, x0)
+            line = inside_unit(self.ray_through(self.to_unit(self.to_display(x0, r0)), family))
             out.append({"kind": "event", "lines": [rounded(thin(line, 0.0006))], "legend": legend})
         if spec.singular_runs:
             edges, runs = self.singular_runs()
@@ -1857,11 +2006,30 @@ def inside_unit(line):
     idx = np.flatnonzero(ok)
     a, b = idx[0], idx[-1]
     out = [L[a:b + 1]]
-    if a > 0:
-        out.insert(0, clip_unit(L[[a - 1, a]])[:1])
-    if b < len(L) - 1:
-        out.append(clip_unit(L[[b, b + 1]])[1:])
+    before = clip_unit(L[[a - 1, a]]) if a > 0 else None
+    after = clip_unit(L[[b, b + 1]]) if b < len(L) - 1 else None
+    if before is not None:
+        out.insert(0, before[:1])
+    if after is not None:
+        out.append(after[1:])
     return np.vstack(out)
+
+
+def root_between(f, lo, hi):
+    """A sign change of f on [lo, hi], by bisection on a grid and then on its bracket."""
+    x = np.linspace(lo, hi, 4001)
+    v = np.array([f(a) for a in x])
+    i = np.flatnonzero(np.sign(v[:-1]) * np.sign(v[1:]) <= 0)
+    if not i.size:
+        raise SystemExit(f"no root between {lo} and {hi}")
+    a, b = x[i[0]], x[i[0] + 1]
+    for _ in range(100):
+        m = 0.5 * (a + b)
+        if np.sign(f(m)) == np.sign(f(a)):
+            a = m
+        else:
+            b = m
+    return 0.5 * (a + b)
 
 
 def clip_unit(line):

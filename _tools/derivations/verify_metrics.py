@@ -927,8 +927,15 @@ class Reader:
         self.parameter_names = []
         self.functions = {}
         self.primed = set()
+        # A parameter spelled with a command and a subscript, as \chi_0 is, is read whole: the
+        # Greek letters are turned into words below, and \chi_0 would otherwise be read as chi
+        # times a stray _0, which is zero.
+        self.spelled = {}
         for declaration in parameters:
             self._declare_parameter(declaration)
+            spelling = declaration.split("=")[0].strip()
+            if re.fullmatch(r"\\[A-Za-z]+_\w+", spelling):
+                self.spelled[spelling] = self._plain(spelling)
         self.allowed = (
             set(self.symbol.values())
             | set(self.differential.values())
@@ -1036,6 +1043,8 @@ class Reader:
     def _preprocess(self, latex):
         text = latex
         text = text.replace("\\left", " ").replace("\\right", " ")
+        for spelling in sorted(self.spelled, key=len, reverse=True):
+            text = text.replace(spelling, f" {self.spelled[spelling]} ")
         text = re.sub(r"\\[,;:!>]", " ", text)
         text = re.sub(r"\\ ", " ", text)
         text = text.replace("\\cdot", "*")
