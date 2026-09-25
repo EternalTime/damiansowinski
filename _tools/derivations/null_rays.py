@@ -227,6 +227,9 @@ class Diagram:
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     star: dict = None               # a declared polytrope, {"K": ..., "rho_c": ...}; see StarSolver
     any_factor: str = None          # a declared conformal factor the drawing holds for every value of
+    crunch: bool = False            # mark where the metric stops being finite as a singular curve,
+                                    # checked on the Kretschmann scalar, and hatch what lies beyond it
+    solves: tuple = ()              # published Einstein components the declared functions must zero
 
 
 def _alcubierre_profile():
@@ -263,6 +266,12 @@ _KRASNIKOV_TUBE = ("1 - (2 - 1/5)*(1 + tanh((1 - r**2)/(2*3/20)))/2*(1 + tanh((t
 # event and growing as 1/rho toward it, so as 1/|ct| along the axis.
 _MH_FACTOR = ("Piecewise((1 + exp(1 - 1/(1 - (t**2 + x**2 + y**2 + z**2)))/sqrt(t**2 + x**2 + y**2 + z**2),"
               " t**2 + x**2 + y**2 + z**2 < 1), (1, True))")
+
+# Marginally bound dust, E = 0, whose density at t = 0 falls as 1 - r^2 to zero at r_b = 1, with
+# 2GM/c^2 = r_b/2 and R(r, 0) = r: M(r) = (5r^3 - 3r^5)/8 inside and 1/4 beyond, and each shell
+# falls as R^(3/2) = r^(3/2) - (3/2) sqrt(2M) t.
+_TB_R = ("Piecewise((r*(1 - 3*sqrt(5 - 3*r**2)*t/4)**Rational(2, 3), r < 1),"
+         " ((r**Rational(3, 2) - 3*t/(2*sqrt(2)))**Rational(2, 3), True))")
 
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
@@ -461,6 +470,15 @@ DIAGRAMS = [
                   "$\\Omega = 1 + e^{1 - 1/(1 - \\rho^2)}/\\rho$ for $\\rho^2 = c^2t^2 + x^2 + y^2 + z^2 < 1$ "
                   "and $\\Omega = 1$ beyond, which grows as $1/|ct|$ along the axis, and checked to give "
                   "the null directions of $\\Omega = 1$."),
+    Diagram("tolman_bondi", "comoving_synchronous", "collapse", "a collapsing cloud", ("t", "r"),
+            (0, 1.5, -0.5, 1.0), "$r/r_b$", "$ct/r_b$", {}, EQUATOR, areal=True,
+            functions={"E": "0", "R": _TB_R}, solves=(("r", "r"),), crunch=True,
+            lines=(("surface", "r", "1", "the surface of the cloud, $r = r_b$"),),
+            marked=(("event", {"r": "11/10", "areal": "1/2"}, 1, "the event horizon"),),
+            input="Marginally bound dust, $E = 0$, its density at $t = 0$ falling as $1 - r^2/r_b^2$ to "
+                  "zero at $r_b$, with $R(r, 0) = r$ and $2GM/c^2 = r_b/2$: each shell falls as "
+                  "$R^{3/2} = r^{3/2} - \\tfrac{3}{2}\\sqrt{2GM(r)/c^2}\\,ct$, checked to solve this "
+                  "spacetime's own $G^r{}_r = 0$."),
     # The collapse the conformal diagram draws, released from rest at R_0 = 2 r_s, chi_0 = pi/4:
     # the dust in its own chart, and the vacuum outside it in Schwarzschild's.
     Diagram("oppenheimer_snyder", "interior_comoving", "through", "through the centre", ("\\tau", "\\chi"),
@@ -951,6 +969,23 @@ CAPTIONS = {
         "The surface reaches $r_s$ only as $t \\to \\infty$, though its own clock reads a finite time "
         "there, and each outgoing ray it sends takes longer than the last to climb away. The horizon "
         "it crosses, and the black hole behind it, lie beyond both sets of coordinates.",
+    ],
+    ("tolman_bondi", "comoving_synchronous", "collapse"): [
+        "This is the plane of $t$ and the comoving $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, through a "
+        "cloud of dust whose density falls from its centre to zero at its surface $r_b$, with vacuum "
+        "outside. Every shell falls on its own clock, $R^{3/2} = r^{3/2} - \\tfrac{3}{2}"
+        "\\sqrt{2GM(r)/c^2}\\,ct$, and reaches $R = 0$ at its own time: the centre first, at "
+        "$ct = 0.60\\,r_b$, and the surface at $0.94\\,r_b$. The singularity, where the Kretschmann "
+        "scalar diverges, is that curve rather than a single instant, and beyond it there is no "
+        "spacetime. The rays obey $c\\,dt = \\pm\\partial_r R\\,dr$, and outside the cloud the same "
+        "coordinates are Lemaître's for Schwarzschild's exterior, carried by observers who fall "
+        "freely from rest at infinity.",
+        "The dotted curve, where $|\\nabla R|^2 = 1 - 2GM(r)/c^2R$ vanishes, bounds the trapped "
+        "spheres. It meets the surface as the surface crosses $r_s = r_b/2$ and runs inward, dipping "
+        "below the moment the centre is crushed, so trapped spheres form in the body of the cloud "
+        "before its centre becomes singular. The event horizon leaves the centre at "
+        "$ct = -0.42\\,r_b$, well before any of this, and outside the cloud it runs along the dotted "
+        "curve, the sphere $R = 2GM/c^2$.",
     ],
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): [
         "This is the plane of $v$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $cv - r$ up "
@@ -1861,6 +1896,36 @@ class Plot:
                     out.append(name)
         return out
 
+    def finite(self, x0, r):
+        """Where the metric on the plane is finite."""
+        with np.errstate(all="ignore"):
+            return np.all([np.isfinite(v) for v in self.c.block(x0, r)], axis=0)
+
+    def crunch_curves(self, n=241):
+        """The curve past which the metric stops being finite, found up each vertical line of the
+        drawing by bisection, and checked to be a curvature singularity: the Kretschmann scalar
+        passes 1e8 and grows fiftyfold between 1e-4 and 1e-5 of the drawing short of it."""
+        points, runs = [], []
+        for u in np.linspace(0.002, 0.998, n):
+            ends = [self.finite(*self.to_chart(self.from_unit(np.array([u, v])))) for v in (0.0, 1.0)]
+            if not (ends[0] and not ends[1]):
+                if points:
+                    runs.append(points)
+                points = []
+                continue
+            lo, hi = 0.0, 1.0
+            for _ in range(60):
+                mid = 0.5 * (lo + hi)
+                lo, hi = (mid, hi) if self.finite(*self.to_chart(self.from_unit(np.array([u, mid])))) else (lo, mid)
+            near, far = (abs(float(self.c.fn["K"](*self.to_chart(self.from_unit(np.array([u, lo - d])))))) for d in (1e-5, 1e-4))
+            if not (near > 1e8 and near / far > 50):
+                raise SystemExit(f"{key(self.c.spec)}: the metric stops being finite at {u, lo} where the "
+                                 f"Kretschmann scalar does not diverge: {far:.1e}, {near:.1e}")
+            points.append([u, lo])
+        if points:
+            runs.append(points)
+        return [rounded(thin(np.array(p), 0.0006)) for p in runs if len(p) > 2]
+
     def singular_runs(self):
         """The singular_edges test point by point along each edge: an edge singular all the way
         is named, and a stretch of one is returned as a line in the unit square."""
@@ -1926,7 +1991,7 @@ class Plot:
     def hatch(self):
         """Where a chart point lies outside the entry's published domains, as polygons."""
         domains = parse_domains(self.c)
-        if not domains and self.c.surface is None:
+        if not domains and self.c.surface is None and not self.c.spec.crunch:
             return []
         UU, VV, x0, r = self.grid(161)
         outside = np.zeros_like(UU, dtype=bool)
@@ -1938,6 +2003,8 @@ class Plot:
                 if hi is not None:
                     outside |= (values > hi) | ((values == hi) & hi_open)
         outside |= self.c.outside(x0, r)
+        if self.c.spec.crunch:
+            outside |= ~self.finite(x0, r)
         polygons, offsets = contourpy.contour_generator(
             UU, VV, outside.astype(float), fill_type="OuterOffset").filled(0.5, 1.5)
         out = []
@@ -1999,7 +2066,11 @@ class Plot:
         for kind, at, family, legend, *toward in spec.marked:
             lines = [inside_unit(line) for line in self.marked(at, family, toward[0] if toward else None)]
             out.append({"kind": kind, "lines": [rounded(thin(line, 0.0006)) for line in lines], "legend": legend})
-        if spec.singular_runs:
+        if spec.crunch:
+            curves = self.crunch_curves()
+            if curves:
+                out.append({"kind": "singular", "edges": [], "lines": curves})
+        elif spec.singular_runs:
             edges, runs = self.singular_runs()
             if edges or runs:
                 out.append({"kind": "singular", "edges": edges, **({"lines": runs} if runs else {})})
@@ -2315,6 +2386,26 @@ def factor_check(spec, chart):
         raise SystemExit(f"{key(spec)}: the null directions change with the conformal factor, by {gap:.1e}")
 
 
+def solves_check(spec, chart):
+    """Declared functions that are a solution: the published Einstein components the row names,
+    mixed, vanish on them at points all over the drawing where the metric is finite."""
+    ul = chart.entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
+    plot = Plot(chart)
+    u = np.random.default_rng(5).uniform(0.01, 0.99, (1500, 2))
+    x0, r = plot.to_chart(plot.from_unit(u))
+    for index in spec.solves:
+        value = chart.lambdify(chart.prep(chart.reader(next(c["value"] for c in ul if c["indices"] == list(index)))))
+        size = chart.lambdify(chart.prep(chart.reader(next(c["value"] for c in ul
+                                                           if c["indices"] == [chart.entry["coords"][0]] * 2))))
+        with np.errstate(all="ignore"):
+            v, scale = value(x0, r), np.abs(size(x0, r))
+        ok = np.isfinite(v) & np.isfinite(scale)
+        miss = float(np.max(np.abs(v[ok]) / (scale[ok] + 1)))
+        if ok.sum() < 500 or not miss < 1e-9:
+            raise SystemExit(f"{key(spec)}: the declared functions miss G^{index[0]}_{index[1]} = 0 by {miss:.1e} "
+                             f"at {ok.sum()} finite points")
+
+
 def star_checks(spec, star):
     """A declared star solves the one field equation its construction did not use, the
     published G^theta_theta = 8 pi p, and is the star its declared input says it is."""
@@ -2331,7 +2422,7 @@ def draw(spec):
     chart = Chart(spec)
     plot = Plot(chart)
     families = plot.rays()
-    fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust or spec.star else [])
+    fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust or spec.star or spec.solves else [])
               + (PRINCIPAL_FIELDS if spec.principal else []))
     if spec.principal:
         principal_checks(chart)
@@ -2339,6 +2430,8 @@ def draw(spec):
         star_checks(spec, chart.solver)
     if spec.any_factor:
         factor_check(spec, chart)
+    if spec.solves:
+        solves_check(spec, chart)
     view = {
         "id": spec.view, "label": spec.label, "plane": list(spec.plane), "families": list(spec.families),
         "xlabel": spec.xlabel, "ylabel": spec.ylabel, "ticks": axes(spec), "box": list(spec.box),
