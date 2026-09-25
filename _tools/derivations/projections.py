@@ -109,6 +109,7 @@ class Projection:
     fixed: dict = field(default_factory=dict)
     input: str = None
     fields: tuple = ()              # published fields read beyond FIELDS
+    functions: dict = field(default_factory=dict)   # a declared function -> its expression
 
 
 FIELDS = ["coords", "parameters", "metric_components", "inverse_metric_components"]
@@ -477,6 +478,61 @@ def ergoregion(spec, camera=Camera(-90, 30)):
     return fig.done(), sl
 
 
+def bubble(spec, camera=Camera(-90, 30), later=0.75):
+    """A warp bubble's light cones, on the slice z = 0 of t, x and y, drawn cartesian with t up,
+    at t = 0, when the declared profile centres the bubble on x = 0, with the centre's world
+    line up to ct = `later`.
+
+    The circle v_s f = 1, where the published g_tt vanishes, is found by bisection along y
+    through the centre at t = 0, and the same circle about x = v_s t at ct = `later` is checked
+    to lie where the published g_tt vanishes there too, which is the check that the world line
+    drawn is the bubble's centre. The centre's world line x = v_s t is checked against the
+    published metric to have g(u, u) = -1 for u = (1, v_s, 0), so that it is timelike and its
+    proper time is t. Cones stand at the centre and at four places around each of the circles
+    r_s = R/2, the circle v_s f = 1 and r_s = 2R, those on the middle circle on the axes and the
+    others turned by 45 degrees from them, oriented by t, which the published g^tt = -1 makes a
+    time function."""
+    sl = Slice(spec.metric, spec.system, ("t", "x", "y"), "cartesian", spec.params, spec.fixed,
+               spec.functions)
+    g_tt = lambda t, x, y: sl.metric((t, x, y))[0, 0]
+    edge = root(lambda y: g_tt(0.0, 0.0, y), 0.5, 1.5)
+    v = float(sl.prep(sl.reader.parameters["v_s"].func(sl.reader.symbol["t"])))
+    ph = np.linspace(0, 2 * np.pi, 13)[:-1]
+    miss = max(abs(g_tt(later, v * later + edge * np.cos(a), edge * np.sin(a))) for a in ph)
+    if not miss < 1e-12:
+        raise SystemExit(f"{key(spec)}: the bubble is not where x = v_s t puts it, by {miss:.1e}")
+    for t in np.linspace(-0.4, later, 9):
+        u = np.array([1.0, v, 0.0])
+        if not abs(u @ sl.metric((t, v * t, 0.0)) @ u + 1) < 1e-12:
+            raise SystemExit(f"{key(spec)}: the centre's clock does not keep t at ct = {t}")
+
+    def ring(t, r, n=240):
+        a = np.linspace(0, 2 * np.pi, n)
+        return np.column_stack([v * t + r * np.cos(a), r * np.sin(a), np.full(n, t)])
+
+    fig = Figure(spec.view, spec.label, camera)
+    for k in range(12):
+        a = k * np.pi / 6
+        fig.line("floor", np.array([[0, 0, 0], [2.5 * np.cos(a), 2.5 * np.sin(a), 0]]))
+    for r in (0.5, 2.0, 2.5):
+        fig.line("floor", ring(0.0, r), closed=True)
+    fig.line("ergo", ring(0.0, edge), closed=True)
+    fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 1.2]]))
+    fig.line("world", np.array([[-0.4 * v, 0, -0.4], [v * later, 0, later]]))
+    cones = [(0.0, 0.0, 0.0)]
+    for r, shift in ((0.5, 0.5), (edge, 0.0), (2.0, 0.5)):
+        cones += [(0.0, r * np.cos((k + shift) * np.pi / 2), r * np.sin((k + shift) * np.pi / 2)) for k in range(4)]
+    drawn = [future_cone(sl, x, 0.3, orient="tau") for x in cones]
+    for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    fig.label(np.array([0, 0, 1.2]), "$t$", "b", dy=-4)
+    fig.label(np.array([v * later, 0, later]), f"$x = {v:g}ct$", "bl", dx=4, dy=-2)
+    fig.legend("cone", "cone", "future light cone")
+    fig.legend("line", "ergo", "$v_sf = 1$, where $g_{tt} = 0$")
+    fig.legend("line", "world", f"the centre of the bubble, $x = {v:g}ct$")
+    return fig.done(), sl
+
+
 CAPTIONS = {
     ("cosmic_string", "conical", "beam"): [
         "This is the plane $z = 0$ around the string seen from above, $t$ left out, drawn with $r$ as "
@@ -515,6 +571,20 @@ CAPTIONS = {
         "horizontal, and the circle $r = 3r_c/2$, run counterclockwise as its arrows point, lies inside "
         "every one of them: a closed timelike curve through each of its events. Every world line of the "
         "dust is equivalent to every other, so the cones tip over in the same way about each one.",
+    ],
+    ("alcubierre", "cartesian", "bubble"): [
+        "This is the slice $z = 0$ of $t$, $x$ and $y$ through a bubble moving at twice the speed of "
+        "light along $x$, with $t$ up, $ct$ and $x$ drawn at one scale, at the moment $t = 0$ when the "
+        "bubble is centred on $x = 0$. Far from the bubble $f = 0$ and the cones stand upright, as "
+        "Minkowski's do. Inside it $f$ is close to 1, and the shift $v_sf$ tips every cone forward along "
+        "$x$ so far that the vertical lies outside it: nothing inside can stay at fixed $x$. The tilt is "
+        "along $x$ everywhere, since the shift points along $x$, and it depends only on the distance "
+        "from the centre, as $f$ does, so the cones tip over in a ball about the centre.",
+        "On the dotted circle $v_sf = 1$, where $g_{tt} = -(1 - v_s^2f^2)$ vanishes, one edge of every "
+        "cone stands vertical. The centre runs along $x = 2ct$, at 63° to the vertical, outside the "
+        "upright cones far from the bubble and through the middle of the cone at the centre, where "
+        "$f = 1$ and the metric gives $ds^2 = -c^2dt^2$: its world line is timelike, and its clock "
+        "keeps $t$.",
     ],
     ("kerr", "boyer_lindquist", "dragging"): [
         "This is the equatorial plane $\\theta = \\pi/2$ with $t$ up and $r$ and $\\phi$ as polar "
@@ -558,6 +628,12 @@ FIGURES = [
     # The deficit the conformal diagram draws with, 4 G mu/c^2 = 0.1, so delta = 36 degrees.
     Projection("cosmic_string", "conical", "beam", "light passing the string", lambda spec: string_rays(spec),
                {"mu": "1/40", "G": 1, "delta": "pi/5"}, {"z": "0"}, fields=("christoffel",)),
+    # Alcubierre's bubble at the speed and with the profile its flat view declares.
+    Projection("alcubierre", "cartesian", "bubble", "the bubble in three dimensions", bubble, {}, {"z": "0"},
+               input="$v_s = 2$, and Alcubierre's own profile, "
+                     "$f = [\\tanh\\sigma(r_s + R) - \\tanh\\sigma(r_s - R)]/(2\\tanh\\sigma R)$ "
+                     "with $R = 1$ and $\\sigma = 4$.",
+               functions={"v_s": "2", "f": nr._alcubierre_profile()}),
     # The equator, where the ergoregion is widest, at the spins and charge the flat views use.
     Projection("kerr", "boyer_lindquist", "dragging", "light cones on the equator", ergoregion,
                {"G": 1, "M": 1, "a": "9/10"}, {"theta": "pi/2"}),
