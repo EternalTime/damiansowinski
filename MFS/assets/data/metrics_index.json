@@ -43,8 +43,8 @@
       "idealized model"
     ],
     "version": "9f16cc13f077a52b",
-    "diagrams": "d194fed4a06c31ec",
-    "conformal": "a051c4683fb81566"
+    "diagrams": "23be9e80f68b43af",
+    "conformal": "f2230e949c7f2cca"
   },
   {
     "id": "bertotti_robinson",
@@ -66,8 +66,8 @@
       "idealized model"
     ],
     "version": "68a0daac74933f96",
-    "diagrams": "0b4223632df9449e",
-    "conformal": "7012a85e3c37f2d6"
+    "diagrams": "135e28c967b368b3",
+    "conformal": "30e11e45b8741f63"
   },
   {
     "id": "bianchi",
@@ -88,7 +88,7 @@
       "idealized model"
     ],
     "version": "5383d3a35a398e0e",
-    "diagrams": "e2bb5cac878e8f8d"
+    "diagrams": "43c8c6213c0ce506"
   },
   {
     "id": "de_sitter",
@@ -114,8 +114,8 @@
       "idealized model"
     ],
     "version": "7a1faba2335a8194",
-    "diagrams": "753dcb7b63367a23",
-    "conformal": "d88e649f9aef7518"
+    "diagrams": "98b8cfd5bac94a8d",
+    "conformal": "957a46dd985ab3cd"
   },
   {
     "id": "ellis_bronnikov",
@@ -139,8 +139,8 @@
       "idealized model"
     ],
     "version": "26c76b677a23ea70",
-    "diagrams": "647c7f974cd77e6b",
-    "conformal": "08b70f359b46e210"
+    "diagrams": "75ebef3369ae8edc",
+    "conformal": "cb68c222d9ac3db6"
   },
   {
     "id": "frw",
@@ -162,8 +162,8 @@
       "idealized model"
     ],
     "version": "ba34bf8132473424",
-    "diagrams": "6c6c9adad7ad58d1",
-    "conformal": "d0612c067523fffb"
+    "diagrams": "fcd93775e7e4477c",
+    "conformal": "e88e86a636276c55"
   },
   {
     "id": "godel",
@@ -186,7 +186,7 @@
       "idealized model"
     ],
     "version": "67e103d664e6b4d7",
-    "diagrams": "e732a7acefd536d5"
+    "diagrams": "9192e620149a4a72"
   },
   {
     "id": "kasner",
@@ -209,7 +209,7 @@
       "idealized model"
     ],
     "version": "f403b7576023723d",
-    "diagrams": "6685ba0c323d68f3"
+    "diagrams": "3a9790a368a1047c"
   },
   {
     "id": "kerr",
@@ -241,8 +241,8 @@
       "idealized model"
     ],
     "version": "af676d1d359dd3ca",
-    "diagrams": "2ec2a683784bedb2",
-    "conformal": "a4e7519dbf03eb7e"
+    "diagrams": "97ad6b4d4a5841ed",
+    "conformal": "d264e9591576e7a3"
   },
   {
     "id": "kerr_newman",
@@ -277,8 +277,8 @@
       "idealized model"
     ],
     "version": "4b71cc7b7992e60d",
-    "diagrams": "2dcef6546ac88e93",
-    "conformal": "3b31c44db0a73aa5"
+    "diagrams": "37b2594b49ca1fb4",
+    "conformal": "b0e5c277f0e91fb7"
   },
   {
     "id": "krasnikov",
@@ -302,7 +302,7 @@
       "causality violation"
     ],
     "version": "95e1753c04fe9f08",
-    "diagrams": "31090c6ffe73615e"
+    "diagrams": "37e31174b944590b"
   },
   {
     "id": "stockum_dust",
@@ -362,7 +362,7 @@
       "four-dimensional"
     ],
     "version": "b6a000e6702ef0a1",
-    "conformal": "39f2895b956c708a"
+    "conformal": "cde1cac7cf5518bf"
   },
   {
     "id": "minkowski",
@@ -382,8 +382,8 @@
       "idealized model"
     ],
     "version": "9965ccaa223840e1",
-    "diagrams": "8feaff32ce312782",
-    "conformal": "cd0618f27000d42b"
+    "diagrams": "74a2f04afbc580af",
+    "conformal": "93e885fc8fe5dc1f"
   },
   {
     "id": "mixmaster",
@@ -432,8 +432,8 @@
       "idealized model"
     ],
     "version": "8a9e6e5f3658830d",
-    "diagrams": "4131c8dbe36f1c90",
-    "conformal": "2452732f2bb2b83b"
+    "diagrams": "b3e098f3fa69a786",
+    "conformal": "7e7019647c111ba0"
   },
   {
     "id": "natario",
@@ -456,7 +456,7 @@
       "four-dimensional"
     ],
     "version": "47e2ccd655f6bde4",
-    "diagrams": "f101a956a611b7b3"
+    "diagrams": "f9bbecde4af1033f"
   },
   {
     "id": "oppenheimer_snyder",
@@ -482,7 +482,7 @@
       "idealized model"
     ],
     "version": "a594cfe02785a7eb",
-    "conformal": "960db5c40917b21b"
+    "conformal": "705427e2a3c91f5b"
   },
   {
     "id": "pp_wave",
@@ -502,7 +502,7 @@
       "idealized model"
     ],
     "version": "d0ecb371ac958e21",
-    "diagrams": "b9787f483ad1c28e"
+    "diagrams": "8480afb9fc557712"
   },
   {
     "id": "rn_metric",
@@ -533,8 +533,8 @@
       "idealized model"
     ],
     "version": "57233587de15faf3",
-    "diagrams": "0d9aa2c25f36cfcc",
-    "conformal": "d3263f311d24c1f9"
+    "diagrams": "fbf4772e78759a72",
+    "conformal": "7fc270632194d9be"
   },
   {
     "id": "schwarzschild",
@@ -564,8 +564,8 @@
       "idealized model"
     ],
     "version": "d40426d103725d8a",
-    "diagrams": "4d3ff600e6d63c78",
-    "conformal": "34234ecbbced3e21"
+    "diagrams": "616546183cee8ce3",
+    "conformal": "20ac047d9b33eddd"
   },
   {
     "id": "interior_schwarzschild",
@@ -588,7 +588,7 @@
     ],
     "version": "82f0226fa2248e04",
     "diagrams": "9c4e4f5a80fb393d",
-    "conformal": "1b93176640c6e8ba"
+    "conformal": "87f9bebc30cdeb41"
   },
   {
     "id": "taub_nut",
@@ -610,7 +610,7 @@
       "idealized model"
     ],
     "version": "d5feea6304cb7c41",
-    "diagrams": "72febbd72df6fa99"
+    "diagrams": "0d1ca4595d385adb"
   },
   {
     "id": "tolman_bondi",
@@ -658,7 +658,7 @@
       "idealized model"
     ],
     "version": "7515c50dcff44793",
-    "conformal": "f1a654193f51539c"
+    "conformal": "703f6926638eb11b"
   },
   {
     "id": "vaidya",
@@ -682,7 +682,7 @@
       "idealized model"
     ],
     "version": "f6642a882a7f8ef8",
-    "conformal": "cd3829b78287578d"
+    "conformal": "a295e124a9018a1d"
   },
   {
     "id": "cosmic_string",
@@ -705,6 +705,6 @@
       "idealized model"
     ],
     "version": "9e17628996c2a6fe",
-    "conformal": "5e96d2285669e796"
+    "conformal": "3932aa9189dc4fac"
   }
 ]

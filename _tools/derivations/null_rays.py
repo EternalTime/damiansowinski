@@ -284,8 +284,9 @@ DIAGRAMS = [
     Diagram("frw", "conformal_spherical", "radial", "$\\eta$ and $r$", ("\\eta", "r"), (0, 3, 0, 3),
             "$r\\;[c/H_0]$", "$\\eta\\;[c/H_0]$", {"k": 0}, EQUATOR, tau="eta", areal=True,
             dust=FRW_DUST, reference="$a = 1$",
-            input="Dust, for the markers only: $a(\\eta)$ solved from the conformal chart's own "
-                  "$G^r{}_r = 0$ with $k = 0$, starting from $a = 1$ and $a' = 1$ at the dashed line."),
+            input="Dust, for the Hubble sphere and the Kretschmann scalar: $a(\\eta)$ solved from the "
+                  "conformal chart's own $G^r{}_r = 0$ with $k = 0$, starting from $a = 1$ and "
+                  "$a' = 1$ at the dashed line."),
     Diagram("ellis_bronnikov", "spherical", "radial", "$t$ and $r$", ("t", "r"), (-3, 3, -3, 3),
             "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, families=SIDEWAYS, areal=True,
             areal_contours=(1.5, 2.0, 3.0)),
@@ -394,7 +395,7 @@ DIAGRAMS = [
             functions=_natario_field(),
             input="$v_s = 2$, $n = f/2$ with Alcubierre's profile, and the zero expansion field "
                   "$X = v_s[(2n + \\rho n')\\,e_x - n'\\,x_r\\,(x_r, y, z)/\\rho]$, "
-                  "$x_r = x - v_s t$, checked to have no divergence."),
+                  "$x_r = x - v_s t$, whose divergence vanishes."),
     Diagram("krasnikov", "cylindrical", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-1, 5, -1, 5),
             "$x$", "$ct$", {}, {"r": "0", "phi": "0"}, orient="outgoing", families=SIDEWAYS,
             functions={"k": _KRASNIKOV_TUBE}, kretschmann=False, mark_g00=True,
@@ -420,12 +421,12 @@ CAPTIONS = {
         "ingoing family piles up against $r_s$ toward $t \\to +\\infty$, and the outgoing family "
         "peels away from it out of $t \\to -\\infty$; the two Eddington-Finkelstein charts carry "
         "them across.",
-        "The domain of this chart stops at $r_s$, and the region inside is hatched. "
-        "Evaluated there, the same components give cones lying on their side, because inside $r_s$ "
-        "it is $r$ that is the time. This chart alone cannot say whether that region is the black "
-        "hole or the white hole; the cones follow the ingoing chart, which makes it the black "
-        "hole, and point to $r = 0$. The Kretschmann scalar $12r_s^2/r^6$ is finite at $r_s$ and "
-        "diverges only at $r = 0$.",
+        "The domain of this chart stops at $r_s$. Evaluated inside it, the same components give "
+        "cones lying on their side, because there it is $r$ that is the time. They cannot say "
+        "whether that region is the black hole or the white hole; the ingoing "
+        "Eddington-Finkelstein chart, which runs smoothly across $r_s$, makes it the black hole, "
+        "and there every cone points to $r = 0$. The Kretschmann scalar $12r_s^2/r^6$ is finite "
+        "at $r_s$ and diverges only at $r = 0$.",
     ],
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"): [
         "This is the plane of $v$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $v - "
@@ -446,8 +447,8 @@ CAPTIONS = {
         "r$ as the vertical axis so that the outgoing rays, $u = $ const, run at 45°. The retarded "
         "chart crosses the other horizon. Inside $r_s$ both edges of every future cone point to "
         "larger $r$: this is the white hole, which nothing from outside can enter.",
-        "It is the time reverse of the ingoing chart, as its $g_{ur} = -1$, against the "
-        "ingoing chart's $g_{vr} = +1$, requires.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing "
+        "chart's $g_{vr}$ is $+1$.",
     ],
     ("schwarzschild", "eddington_finkelstein_outgoing", "chart"): [
         "This is the same plane of $u$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn "
@@ -456,44 +457,43 @@ CAPTIONS = {
         "vertical at $r_s$ and leans toward larger $r$ inside it.",
     ],
     ("frw", "comoving_spherical", "radial"): [
-        "This is the plane of $t$ and the comoving $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, the "
-        "same at every fixed angle by spherical symmetry. The line element leaves $a(t)$ free, so "
-        "here it is solved from its own $G^r{}_r = -2\\ddot a/a - \\dot a^2/a^2 - k/a^2$, set "
-        "to zero, which is pressureless dust. Integrated back from the dashed line it "
-        "reaches $a = 0$ at $H_0t = 2/3$ before it, the Einstein-de Sitter age, and that instant "
-        "is $t = 0$ here.",
-        "The cones are $dt/dr = \\pm a(t)$ and open out toward the bang, where the curvature "
-        "diverges, so every ray leaves $t = 0$ almost flat and reaches only a finite comoving "
-        "distance: the particle horizon. The dotted curve is where $|\\nabla R|^2 = 0$ for the "
-        "areal radius $R = ar$, the Hubble sphere $R = c/H$, the apparent horizon of an observer "
-        "at $r = 0$.",
+        "This is the plane of $t$ and the comoving $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, and "
+        "spherical symmetry makes it the same at every other angle. The line element leaves "
+        "$a(t)$ free, and here it is the scale factor of pressureless dust, solved from "
+        "$G^r{}_r = -2\\ddot a/a - \\dot a^2/a^2 - k/a^2 = 0$. Run back from the dashed line, it "
+        "reaches $a = 0$ a time $2/(3H_0)$ before it, the Einstein-de Sitter age, and $t$ is "
+        "counted from that instant, the big bang.",
+        "The edges of the cones are $dt/dr = \\pm a(t)$, and they open out toward the bang, where "
+        "the curvature diverges, so every ray leaves $t = 0$ almost flat and reaches only a finite "
+        "comoving distance, the particle horizon. The dotted curve, where $|\\nabla R|^2 = 0$ for "
+        "the areal radius $R = ar$, is the Hubble sphere $R = c/H$, which is the apparent horizon "
+        "of an observer at $r = 0$.",
     ],
     ("frw", "comoving_spherical", "through"): [
         "This is the same universe along a line through the observer at $r = 0$, in the plane "
         "$\\theta = \\pi/2$: $x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is "
-        "$\\phi = \\pi$, which spherical symmetry makes exact. The past light cone of an event on "
-        "the observer's world line $x = 0$ flares out as it runs back toward the bang, and the "
-        "Hubble sphere shows on both sides.",
+        "$\\phi = \\pi$, and spherical symmetry makes the two halves mirror images. The past light "
+        "cone of an event on the observer's world line $x = 0$ flares out as it runs back toward "
+        "the bang, and the Hubble sphere lies at the same distance on either side.",
     ],
     ("frw", "conformal_spherical", "radial"): [
         "This is the plane of the conformal time $\\eta$ and $r$ at $\\theta = \\pi/2$ and $\\phi "
         "= 0$. For $k = 0$ the metric on it is $a^2(-d\\eta^2 + dr^2)$; the scale factor "
         "multiplies both terms and drops out of the null condition, so the rays are straight 45° "
         "lines whatever $a(\\eta)$ is.",
-        "The scale factor is still solved, because the apparent horizon and the Kretschmann scalar "
-        "need it. The Hubble sphere then sits at $r = \\eta/2$, half the comoving radius of the "
-        "particle horizon.",
+        "The Hubble sphere and the Kretschmann scalar do depend on $a(\\eta)$, and for dust the "
+        "Hubble sphere sits at $r = \\eta/2$, half the comoving radius of the particle horizon.",
     ],
     ("ellis_bronnikov", "spherical", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, with $r$ running "
         "from one mouth of the wormhole, $r < 0$, through the throat at $r = 0$ to the other "
         "mouth, $r > 0$. The metric on this plane is $-dt^2 + dr^2$, exactly flat, so the rays are "
         "straight 45° lines that pass through the throat without bending.",
-        "The throat is in the size of the spheres. The angular part of the metric is "
+        "The throat is where the spheres are smallest. The angular part of the metric is "
         "$g_{\\theta\\theta} = r^2 + \\ell^2$, so the areal radius $R = \\sqrt{r^2 + \\ell^2}$ "
-        "takes its least value, $\\ell$, at $r = 0$, where the line $\\partial_r R = 0$ marks it. "
-        "The faint vertical lines are the spheres $R = 1.5\\ell$, $2\\ell$ and $3\\ell$, the same "
-        "sizes on both sides. The Kretschmann scalar $12\\ell^4/(r^2 + \\ell^2)^4$ is finite "
+        "takes its least value, $\\ell$, at $r = 0$, where $\\partial_r R = 0$. The faint vertical "
+        "lines are the spheres $R = 1.5\\ell$, $2\\ell$ and $3\\ell$, one of each size on either "
+        "side of the throat. The Kretschmann scalar $12\\ell^4/(r^2 + \\ell^2)^4$ is finite "
         "everywhere.",
     ],
     ("morris_thorne", "spherical", "radial"): [
@@ -504,49 +504,50 @@ CAPTIONS = {
         "rays as in the Ellis-Bronnikov chart.",
         "In this areal chart the cones close toward the throat at $r = b_0$, as they would at a "
         "horizon, because $g_{rr} = (1 - b_0^2/r^2)^{-1}$ diverges there. But $g_{tt} = -1$ stays "
-        "finite, so $\\partial_t$ is timelike right up to the throat: the chart ends at $b_0$, and "
-        "the spacetime carries on. The rays reach the throat in finite $t$ and pass into the other "
-        "mouth, which the Ellis-Bronnikov chart, running through the throat, covers in full. Below $b_0$ the formula gives a "
-        "metric on this plane with no null directions at all.",
+        "finite, so $\\partial_t$ is timelike right up to the throat, and $r = b_0$ is only the "
+        "edge of this chart. The rays reach the throat in finite $t$ and pass into the other "
+        "mouth, which the Ellis-Bronnikov chart, running through the throat, covers in full. "
+        "Below $b_0$ the formula gives a metric on this plane with no null directions at all.",
     ],
     ("minkowski", "spherical", "radial"): [
-        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ in flat spacetime, "
-        "drawn as a check on the method. The metric on it is $-c^2dt^2 + dr^2$, and every ray is "
-        "at 45°. Each ingoing ray meets an outgoing one on the axis $r = 0$.",
+        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ in flat spacetime. "
+        "The metric on it is $-c^2dt^2 + dr^2$, and every ray is at 45°. Each ingoing ray meets "
+        "an outgoing one on the axis $r = 0$.",
     ],
     ("minkowski", "spherical_null", "radial"): [
         "This is the same plane of flat spacetime in the double null chart, $u$ and $v$ at "
-        "$\\theta = \\pi/2$ and $\\phi = 0$, drawn against $(v - u)/2$ and $(u + v)/2$. It checks "
-        "the method where $g_{uu} = g_{vv} = 0$ and only $g_{uv}$ is nonzero. The null condition "
-        "still gives both directions, which are the coordinate lines themselves.",
+        "$\\theta = \\pi/2$ and $\\phi = 0$, drawn against $(v - u)/2$ and $(u + v)/2$. Only "
+        "$g_{uv}$ is nonzero on it, so a null direction has $du\\,dv = 0$, and the light rays are "
+        "the coordinate lines $u = $ const and $v = $ const themselves.",
     ],
     ("minkowski", "cartesian", "tx"): [
-        "This is the plane of $t$ and $x$ at $y = z = 0$ in flat spacetime, drawn as a check on "
-        "the method. The metric on it is $-c^2dt^2 + dx^2$, and every ray is at 45°.",
+        "This is the plane of $t$ and $x$ at $y = z = 0$ in flat spacetime. The metric on it is "
+        "$-c^2dt^2 + dx^2$, and every ray is at 45°.",
     ],
     ("minkowski", "rindler", "tx"): [
         "This is the plane of $T$ and $X$ at $Y = Z = 0$ in the Rindler chart, which covers the "
         "wedge $X > 0$ seen by observers of constant proper acceleration $a$, with $g_{TT} = "
         "-a^2X^2/c^4$. The cones close toward $X = 0$, where $g_{TT}$ vanishes, and a ray takes "
         "infinite $T$ to get there, $cT = \\pm(c^2/a)\\ln X + $ const.",
-        "That line is the Rindler horizon, a horizon for the accelerated observers alone: the "
+        "That line is the Rindler horizon, which only the accelerated observers have. The "
         "spacetime is flat, its Kretschmann scalar is zero, and the rays carry on across $X = 0$ "
         "into the rest of Minkowski spacetime, which the Cartesian chart covers whole.",
     ],
     ("de_sitter", "static_spherical", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ in the static "
-        "chart, the same at every fixed angle by spherical symmetry. The cones close at the "
-        "cosmological horizon $r = \\sqrt{3/\\Lambda}$, where $g^{rr} = 1 - \\Lambda r^2/3$ "
+        "chart, and spherical symmetry makes it the same at every other angle. The cones close at "
+        "the cosmological horizon $r = \\sqrt{3/\\Lambda}$, where $g^{rr} = 1 - \\Lambda r^2/3$ "
         "vanishes, on the far side from the observer at $r = 0$.",
-        "The domain of the static chart is the observer's side. Beyond it $t$ is spacelike, and the "
-        "cones follow the outgoing family toward larger $r$: the region the observer's own light "
-        "reaches.",
+        "The static chart covers only the observer's side of the horizon. Beyond it $t$ is "
+        "spacelike, and the cones point along the outgoing rays to larger $r$, into the region "
+        "the observer's own light goes on to reach.",
     ],
     ("de_sitter", "static_spherical", "through"): [
         "This is the static chart along a line through the observer in the plane $\\theta = "
         "\\pi/2$: $x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, "
-        "which spherical symmetry makes exact. The horizon shows on both sides at $x = "
-        "\\pm\\sqrt{3/\\Lambda}$, and beyond it the cones point away from the observer.",
+        "and spherical symmetry makes the two halves mirror images. The horizon crosses the line "
+        "on both sides, at $x = \\pm\\sqrt{3/\\Lambda}$, and beyond it the cones point away from "
+        "the observer.",
     ],
     ("de_sitter", "flat_slicing", "tx"): [
         "This is the plane of $t$ and $x$ at $y = z = 0$ in the flat slicing, where $ds^2 = "
@@ -559,31 +560,31 @@ CAPTIONS = {
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ in the global "
         "chart. The cones stay open everywhere, since $g^{rr} = 1 + r^2/L^2$ never vanishes. But "
         "$dt/dr = \\pm(1 + r^2/L^2)^{-1}$ falls off fast enough that a ray reaches $r \\to "
-        "\\infty$ in the finite time $\\pi L/2$, and the rays flatten toward the right, where the "
-        "boundary is.",
+        "\\infty$, the conformal boundary, in the finite time $\\pi L/2$, and the rays flatten as "
+        "they near it.",
     ],
     ("anti_de_sitter", "static_global", "through"): [
         "This is the global chart along a line through the centre in the plane $\\theta = \\pi/2$: "
         "$x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. A ray "
-        "crosses the whole space and reaches the boundary on either side in finite time, $\\pi "
-        "L/2$ from the centre, so the rays flatten toward both edges.",
+        "from the centre reaches the boundary on either side in the finite time $\\pi L/2$, and "
+        "the rays flatten as they near it.",
     ],
     ("anti_de_sitter", "poincare", "tx"): [
         "This is the plane of $t$ and $x$ at $y = 0$ and $z = L$ in the Poincaré chart. The metric "
         "on it is $(L^2/z^2)(-c^2dt^2 + dx^2)$, conformal to flat, so the rays are exact 45° "
-        "lines, as they are at every $z$. The boundary that a ray reaches in finite time lies off "
-        "this plane, and in the global chart it is the edge the rays flatten toward.",
+        "lines, as they are at every $z$. The conformal boundary, which a ray reaches in finite "
+        "time, lies off this plane, at $z \\to 0$.",
     ],
     ("rn_metric", "spherical", "radial"): [
-        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, the same at every "
-        "fixed angle by spherical symmetry, drawn for $r_q = 0.4\\,r_s$. There $g^{rr}$ vanishes "
-        "twice, at $r_\\pm = (r_s \\pm \\sqrt{r_s^2 - 4r_q^2})/2$, which is $0.8\\,r_s$ and "
-        "$0.2\\,r_s$, and the cones close at both. Between them $r$ is the time and the cones "
-        "point to smaller $r$. Inside $r_-$, $t$ is a time again.",
-        "The chart alone does not orient the two inner regions; the cones there follow the ingoing "
-        "family, as an ingoing chart carries them through both horizons, which reads the region "
-        "between the horizons as the black hole and not the white hole. The Kretschmann scalar "
-        "diverges at $r = 0$.",
+        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn for "
+        "$r_q = 0.4\\,r_s$, and spherical symmetry makes it the same at every other angle. There "
+        "$g^{rr}$ vanishes twice, at $r_\\pm = (r_s \\pm \\sqrt{r_s^2 - 4r_q^2})/2$, which is "
+        "$0.8\\,r_s$ and $0.2\\,r_s$, and the cones close at both. Between them $r$ is the time "
+        "and the cones point to smaller $r$. Inside $r_-$, $t$ is a time again.",
+        "The chart alone cannot say which way is future in the two inner regions. An ingoing "
+        "chart runs smoothly through both horizons, and taking the future from it makes the "
+        "region between the horizons the black hole. The Kretschmann scalar diverges at "
+        "$r = 0$.",
     ],
     ("taub_nut", "spherical", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn for $l = "
@@ -591,24 +592,24 @@ CAPTIONS = {
         "inside it is the Taub region, where $r$ is the time and the cones, following the ingoing "
         "family, point to smaller $r$.",
         "The twist the NUT parameter brings sits in the cross term $g_{t\\phi}$, which drops out "
-        "of the metric on this plane, and no Christoffel symbol turns these null curves out of it, "
-        "so they are null geodesics, the paths light takes, although the solution is not "
-        "spherically symmetric.",
+        "of the metric on this plane. No Christoffel symbol turns these null curves out of the "
+        "plane either, so they are null geodesics, the paths light takes, even though the "
+        "solution is not spherically symmetric.",
     ],
     ("bertotti_robinson", "static", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, which is the AdS₂ "
         "factor of the product, $-(r^2/b^2)\\,c^2dt^2 + (b^2/r^2)\\,dr^2$. With $dt/dr = \\pm "
-        "b^2/r^2$ the rays take infinite $t$ to reach $r = 0$, where $g^{rr} = r^2/b^2$ vanishes: "
-        "a Poincaré horizon, of the kind that bounds the Poincaré chart of anti-de Sitter space, "
-        "on the left edge. The other factor is the two sphere, of radius $b$ everywhere, and each "
+        "b^2/r^2$ the rays take infinite $t$ to reach $r = 0$, where $g^{rr} = r^2/b^2$ vanishes. "
+        "That is a Poincaré horizon, the kind of edge that bounds the Poincaré chart of anti-de "
+        "Sitter space. The other factor is the two sphere, of radius $b$ everywhere, and each "
         "point of this plane stands for one such sphere.",
     ],
     ("bertotti_robinson", "poincare", "tx"): [
         "This is the plane of $t$ and $x$ at $\\theta = \\pi/2$ and $\\phi = 0$ in the Poincaré "
-        "chart, where the metric is $(b^2/x^2)(-c^2dt^2 + dx^2)$ times a two sphere of radius $b$. "
-        "The first factor is conformal to flat, so the rays are at 45°. Here $x$ runs along the "
-        "AdS₂ factor rather than across space; the boundary is $x \\to 0$ and the Poincaré horizon "
-        "is $x \\to \\infty$.",
+        "chart, where the spacetime is the product of $(b^2/x^2)(-c^2dt^2 + dx^2)$ with a two "
+        "sphere of radius $b$. The first factor is conformal to flat, so the rays are at 45°. "
+        "Here $x$ is a coordinate on the AdS₂ factor, with the boundary at $x \\to 0$ and the "
+        "Poincaré horizon at $x \\to \\infty$.",
     ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ over the whole "
@@ -628,32 +629,32 @@ CAPTIONS = {
         "0.9\\,GM/c^2$. The curves drawn are null, and on the axis they are also null geodesics, "
         "the paths light takes. Off the axis a light ray launched along a curve of fixed $\\theta$ "
         "and $\\phi$ is turned out of the plane by $\\Gamma^\\theta{}_{tt}$, "
-        "$\\Gamma^\\theta{}_{rr}$ and $\\Gamma^\\phi{}_{tr}$, which is why the diagram is drawn on "
-        "the axis. There $g^{rr} = \\Delta/\\Sigma$ vanishes at both roots of $\\Delta$, $r_\\pm = "
-        "GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - a^2}$, and the cones close at both; between them they "
-        "point to smaller $r$, following the ingoing family.",
-        "The domain of the chart begins at $r_+$, the outer zero of $g^{rr}$, and below it the "
-        "drawing is hatched. On the axis the ergosurface touches the horizon, so the plane stays "
-        "Lorentzian, and the Kretschmann scalar stays finite at $r = 0$, because the ring "
-        "singularity lies in the equatorial plane.",
+        "$\\Gamma^\\theta{}_{rr}$ and $\\Gamma^\\phi{}_{tr}$. On the axis $g^{rr} = \\Delta/\\Sigma$ "
+        "vanishes at both roots of $\\Delta$, $r_\\pm = GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - a^2}$, "
+        "and the cones close at both; between them they point to smaller $r$, following the "
+        "ingoing family.",
+        "The domain of the chart begins at $r_+$, the outer zero of $g^{rr}$. On the axis the "
+        "ergosurface touches the horizon, so the metric on the plane stays Lorentzian. The "
+        "Kretschmann scalar stays finite at $r = 0$ on the axis, because the ring singularity "
+        "lies in the equatorial plane.",
     ],
     ("kerr", "boyer_lindquist", "principal"): [
         "This is the equatorial plane $\\theta = \\pi/2$ drawn in $t$ and $r$, with $\\phi$ left "
         "out, for $a = 0.9\\,GM/c^2$. Its rays are Kerr's principal null congruence, the light "
-        "rays that run straight in and straight out: the two null directions of the plane of "
-        "$\\partial_r$ and $(r^2 + a^2)\\,\\partial_t + a\\,\\partial_\\phi$, which are the repeated "
-        "principal null directions of the Weyl tensor. That plane tilts into $\\phi$, so every ray "
-        "turns as it goes, at $d\\phi/dr = \\pm a/\\Delta$ with $\\Delta = r^2 - 2GMr/c^2 + a^2$, "
-        "and the curves are the rays' projections, $d(ct)/dr = \\pm(r^2 + a^2)/\\Delta$. The same "
-        "projections fall at every $\\theta$, and on the axis they are the radial light rays "
-        "themselves.",
+        "rays that run straight in and straight out. At each point they are the two null "
+        "directions of the plane of $\\partial_r$ and $(r^2 + a^2)\\,\\partial_t + "
+        "a\\,\\partial_\\phi$, which are the repeated principal null directions of the Weyl "
+        "tensor. That plane tilts into $\\phi$, so every ray turns as it goes, at $d\\phi/dr = "
+        "\\pm a/\\Delta$ with $\\Delta = r^2 - 2GMr/c^2 + a^2$, and the curves drawn are the rays' "
+        "projections, $d(ct)/dr = \\pm(r^2 + a^2)/\\Delta$. The projections are the same at every "
+        "$\\theta$, and on the axis they are the radial light rays themselves.",
         "The rays are null geodesics, the paths light takes, and each cone is the future cone of "
         "the principal plane, its edges the two principal directions. The dotted line is the "
         "ergosurface, $g_{tt} = 0$, at $r = 2GM/c^2$ on the equator. Between it and $r_+$ nothing, "
         "light included, can keep $\\phi$ fixed, and the plane of $t$ and $r$ at fixed $\\phi$ has "
         "no null direction, while the principal rays, already turning, cross it smoothly. The "
-        "cones close at both horizons, where $\\Delta = 0$, and point to smaller $r$ between them, "
-        "and the ingoing rays end on the ring singularity at $r = 0$, which lies in this plane.",
+        "cones close at both horizons, where $\\Delta = 0$, and point to smaller $r$ between them. "
+        "The ingoing rays end on the ring singularity at $r = 0$, which lies in this plane.",
     ],
     ("kerr", "boyer_lindquist", "above"): [
         "This is the equatorial plane $\\theta = \\pi/2$ seen from above, along the axis from "
@@ -686,19 +687,20 @@ CAPTIONS = {
     ("kerr_newman", "boyer_lindquist", "principal"): [
         "This is the equatorial plane $\\theta = \\pi/2$ drawn in $t$ and $r$, with $\\phi$ left "
         "out, for $a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$. Its rays are the principal null "
-        "congruence, the light rays that run straight in and straight out: the two null directions "
-        "of the plane of $\\partial_r$ and $(r^2 + a^2)\\,\\partial_t + a\\,\\partial_\\phi$, the "
-        "repeated principal null directions of the Weyl tensor, as in Kerr. Every ray turns as it "
-        "goes, at $d\\phi/dr = \\pm a/\\Delta$ with $\\Delta = r^2 - 2GMr/c^2 + a^2 + r_Q^2$, and "
-        "the curves are the rays' projections, $d(ct)/dr = \\pm(r^2 + a^2)/\\Delta$, the same at "
-        "every $\\theta$ and on the axis the radial light rays themselves.",
+        "congruence, the light rays that run straight in and straight out. As in Kerr, they are "
+        "the two null directions of the plane of $\\partial_r$ and $(r^2 + a^2)\\,\\partial_t + "
+        "a\\,\\partial_\\phi$, which are the repeated principal null directions of the Weyl "
+        "tensor. Every ray turns as it goes, at $d\\phi/dr = \\pm a/\\Delta$ with $\\Delta = r^2 - "
+        "2GMr/c^2 + a^2 + r_Q^2$, and the curves drawn are the rays' projections, $d(ct)/dr = "
+        "\\pm(r^2 + a^2)/\\Delta$, which are the same at every $\\theta$ and on the axis are the "
+        "radial light rays themselves.",
         "The rays are null geodesics, the paths light takes, and each cone is the future cone of "
         "the principal plane, its edges the two principal directions. The cones close at both "
         "horizons, $r_\\pm = GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - a^2 - r_Q^2}$, and point to smaller "
-        "$r$ between them. The dotted lines are $g_{tt} = 0$, at $r = GM/c^2 \\pm "
-        "\\sqrt{(GM/c^2)^2 - r_Q^2}$ on the equator, $1.866$ and $0.134\\,GM/c^2$, the outer and "
-        "inner ergosurfaces: between them $\\partial_t$ is spacelike, and inside the inner one it "
-        "is timelike again. The ingoing rays end on the ring singularity at $r = 0$, which lies in "
+        "$r$ between them. The dotted lines are the outer and inner ergosurfaces, where $g_{tt} = "
+        "0$, at $r = GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - r_Q^2}$ on the equator, $1.866$ and "
+        "$0.134\\,GM/c^2$. Between them $\\partial_t$ is spacelike, and inside the inner one it is "
+        "timelike again. The ingoing rays end on the ring singularity at $r = 0$, which lies in "
         "this plane.",
     ],
     ("kerr_newman", "boyer_lindquist", "above"): [
@@ -719,20 +721,20 @@ CAPTIONS = {
     ("kasner", "cartesian", "tx"): [
         "This is the plane of $t$ and $x$ at $y = z = 0$. Along $x$ the scale factor $t^{-2/7}$ "
         "grows toward the singularity, so the cones close up as $t \\to 0$: $dx/dt = \\pm "
-        "t^{2/7}$. The Kretschmann scalar $-16p_1p_2p_3/t^4$ diverges on the bottom edge, which is "
-        "the singularity.",
+        "t^{2/7}$. The Kretschmann scalar $-16p_1p_2p_3/t^4$ diverges at $t = 0$, the "
+        "singularity.",
     ],
     ("kasner", "cartesian", "tz"): [
         "This is the plane of $t$ and $z$ at $x = y = 0$. Along $z$ the scale factor $t^{6/7}$ "
         "goes to zero at the singularity, and the cones open out flat: $dz/dt = \\pm t^{-6/7}$. "
-        "The same singularity closes the cones along $x$, in the plane of $t$ and $x$, and opens "
-        "them along $z$.",
+        "In the plane of $t$ and $x$ the same singularity closes the cones instead, since the "
+        "scale factor there, $t^{-2/7}$, grows as $t \\to 0$.",
     ],
     ("bianchi", "type_i_cartesian", "tx"): [
         "This is the plane of $t$ and $x$ at $y = z = 0$. The singularity comes about $0.378/\\bar "
-        "H$ before the dashed line and is placed at $t = 0$. Next to it the scale factors run as "
-        "powers of $t$ whose exponents lie on the Kasner circle: the dust model is Kasner at its "
-        "singularity.",
+        "H$ before the dashed line, and $t$ is counted from it. Near its singularity the dust "
+        "universe is a Kasner spacetime, its scale factors running as powers of $t$ whose "
+        "exponents lie on the Kasner circle.",
         "So along $x$ the cones close toward $t = 0$, as in Kasner's contracting direction, and "
         "open again later as $a_1$ turns round.",
     ],
@@ -744,9 +746,9 @@ CAPTIONS = {
         "The metric on this plane is $(-dt^2 + dx^2)/2\\omega^2$, so the curves drawn are null and "
         "run at 45°. They are not null geodesics, though. $\\Gamma^y{}_{tx} = -e^{-x}$ is not "
         "zero, so a light ray launched along one of these curves is turned out of the plane into "
-        "$y$. The closed timelike curves the solution is known for circle each world line of the "
-        "dust beyond a critical radius, through $y$ as well as $x$, so they cross this plane "
-        "rather than lie in it.",
+        "$y$. The closed timelike curves of the Gödel universe circle each world line of the dust "
+        "beyond a critical radius, through $y$ as well as $x$, so they cross this plane rather "
+        "than lie in it.",
     ],
     ("alcubierre", "cartesian", "tx"): [
         "This is the plane of $t$ and $x$ on the bubble's axis of motion, $y = z = 0$, for a "
@@ -761,8 +763,8 @@ CAPTIONS = {
     ],
     ("natario", "cartesian_flow", "tx"): [
         "This is the plane of $t$ and $x$ on the axis of motion, $y = z = 0$. There the field "
-        "reduces to $u = 2nv_s = v_s f$, which is Alcubierre's shift exactly, so this is "
-        "Alcubierre's diagram, and the two metrics agree on this plane to rounding.",
+        "reduces to $u = 2nv_s = v_s f$, which is exactly Alcubierre's shift, so on this plane "
+        "the two metrics are the same and so are their light rays.",
         "The drives differ only off the axis, where Natário's flow slides space sideways instead "
         "of compressing it.",
     ],
@@ -771,11 +773,11 @@ CAPTIONS = {
         "= 1$ and the cones are Minkowski's. Inside, $k$ comes close to $\\delta - 1$ and the edge "
         "moving left tips below the horizontal, so a ray going back toward $x = 0$ loses about "
         "$0.8$ in $ct$ for every unit of $x$ it covers. The edge moving right, $c\\,dt = dx$, is "
-        "the same everywhere, and the cones follow it, since $t$ orients the cones outside the "
-        "tube.",
+        "the same everywhere, so it points to the future inside the tube as it does outside, where "
+        "$t$ is a time.",
         "The dash dot line is $g^{tt} = 0$, where $k = 0$ and the surfaces $t = $ const stop being "
-        "spacelike. The expression for the Kretschmann scalar is $0/0$ on the axis, so the drawing "
-        "marks no singular line here; the tube's curvature is concentrated in its thin walls.",
+        "spacelike. On the axis the expression for the Kretschmann scalar is $0/0$; the tube's "
+        "curvature is concentrated in its thin walls.",
     ],
     ("pp_wave", "exact_plane_wave", "tz"): [
         "This is the plane the wave travels in, on its axis $x = y = 0$, drawn with $u = t - z$ "
@@ -784,9 +786,9 @@ CAPTIONS = {
         "are, so the metric on this plane is flat and the rays are at 45°.",
         "Off the axis a light ray is pushed out of the plane, since $\\ddot x = (Ax + By)\\dot "
         "u^2$ and $\\ddot y = -(Ay - Bx)\\dot u^2$: the wave squeezes a beam toward the axis in "
-        "one transverse direction and stretches it in the other. On the axis both accelerations "
-        "vanish, so the null curves drawn there are null geodesics. The squeezing and stretching "
-        "are the wave's effect, and they act across this plane, in $x$ and $y$.",
+        "one transverse direction and stretches it in the other, across this plane in $x$ and "
+        "$y$. On the axis both accelerations vanish, so the null curves drawn there are null "
+        "geodesics.",
     ],
 }
 
