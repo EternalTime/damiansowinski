@@ -1623,18 +1623,23 @@
       /* Set a tensor's components in as many columns as its widest component allows, once
          MathJax has set them. The count is taken again whenever the window changes width,
          so a phone turned from its side to upright does not keep the two columns that only
-         the wider screen had room for. */
+         the wider screen had room for. Every tensor is put in one column before any is
+         measured, and none is given its count until all are, so the panel is laid out once
+         for all five rather than twice for each.
+         A tensor in one column is a plain block, as it is in print. The browser lays a
+         multicol container out whole whenever anything inside it changes, so while one
+         column was a one column container the index toggles, a fade marked at a line's edge
+         or the prose above changing width each laid out the whole Weyl tensor again, which
+         for the Natário warp drive is most of a quarter of a million elements. */
       function reflowColumns() {
         var compIds = ['mfs-comp-christoffel','mfs-comp-riemann','mfs-comp-ricci','mfs-comp-einstein','mfs-comp-weyl'];
-        compIds.forEach(function(id) {
-          var el = document.getElementById(id);
-          if (!el) return;
-          el.style.columnCount = 'auto';
+        var els = compIds.map(function(id) { return document.getElementById(id); }).filter(Boolean);
+        els.forEach(function(el) {
           el.style.columnWidth = '';
-          void el.offsetWidth;
-          // Measure widest component using getBoundingClientRect in single-col mode
-          el.style.columnCount = '1';
-          void el.offsetWidth;
+          el.style.columnCount = '';
+        });
+        // Measure widest component using getBoundingClientRect in single-col mode
+        var counts = els.map(function(el) {
           var maxW = 0;
           el.querySelectorAll('.mfs-component').forEach(function(child) {
             var r = child.getBoundingClientRect();
@@ -1643,9 +1648,9 @@
           if (maxW < 50) maxW = 400; // fallback
           var panelW = el.getBoundingClientRect().width;
           var gap = 24;
-          var count = Math.max(1, Math.floor((panelW + gap) / (maxW + gap)));
-          el.style.columnCount = String(count);
+          return Math.max(1, Math.floor((panelW + gap) / (maxW + gap)));
         });
+        els.forEach(function(el, i) { el.style.columnCount = counts[i] > 1 ? String(counts[i]) : ''; });
       }
       var _reflowPending = false;
       window.addEventListener('resize', function() {
@@ -2723,10 +2728,14 @@
          MathJax writes the space in front of each atom as its `space` attribute, 3 before a
          binary operator and 4 before a relation, and gives the atom after an operator the
          same space again, so an operator is an mo carrying 3 or 4 that does not itself
-         follow one; the minus in `= -x` follows one and is a sign, not a place to break. */
+         follow one; the minus in `= -x` follows one and is a sign, not a place to break.
+         Every line is gathered into runs before any is measured, and none is given its width
+         until all are, so the copy is laid out once rather than once per line, for the reason
+         the comment above markEdges() gives for the screen. */
       var PRINT_INDENT_EM = 2;  // the continuation indent in the print stylesheet
       function printPrepare(root) {
         root.style.cssText = 'display:block;position:absolute;top:0;left:-100000px;visibility:hidden';
+        var gathered = [];
         root.querySelectorAll('.mfs-line').forEach(function(line) {
           var math = line.querySelector('.mfs-line-body mjx-math');
           if (!math) return;
@@ -2746,12 +2755,15 @@
             }
             run.appendChild(node);
           });
-          var em = parseFloat(getComputedStyle(line).fontSize);
-          var head = line.querySelector('.mfs-line-head mjx-container');
-          var widest = Math.max.apply(null, runs.map(function(r) { return r.getBoundingClientRect().width; }));
-          var need = ((head ? head.getBoundingClientRect().width : 0) + widest) / em + PRINT_INDENT_EM + 0.5;
-          line.style.setProperty('--mfs-fit', need.toFixed(3));
+          gathered.push({ line: line, runs: runs });
         });
+        gathered.forEach(function(g) {
+          var em = parseFloat(getComputedStyle(g.line).fontSize);
+          var head = g.line.querySelector('.mfs-line-head mjx-container');
+          var widest = Math.max.apply(null, g.runs.map(function(r) { return r.getBoundingClientRect().width; }));
+          g.need = ((head ? head.getBoundingClientRect().width : 0) + widest) / em + PRINT_INDENT_EM + 0.5;
+        });
+        gathered.forEach(function(g) { g.line.style.setProperty('--mfs-fit', g.need.toFixed(3)); });
         root.style.cssText = '';
       }
 
