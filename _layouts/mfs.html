@@ -878,17 +878,26 @@
          own scrolling and by a ResizeObserver, which sees the line change width when
          MathJax sets it, when the window changes size and when the index toggles swap a
          tensor's lines. Each rendered spacetime gets a fresh observer, so the lines of the
-         one before are let go. */
+         one before are let go. The observer measures every line before it marks any: a mark
+         between two measurements makes the second lay the whole page out again, once per
+         line, which held Kerr-Newman still for five seconds after MathJax had set it and
+         Natario for nearly a minute. */
       var _lineObserver = null;
-      function markEdges(scroller) {
+      function edgesOf(scroller) {
         var room = scroller.scrollWidth - scroller.clientWidth;
-        scroller.classList.toggle('mfs-more-left', room > 1 && scroller.scrollLeft > 1);
-        scroller.classList.toggle('mfs-more-right', room > 1 && scroller.scrollLeft < room - 1);
+        return [room > 1 && scroller.scrollLeft > 1, room > 1 && scroller.scrollLeft < room - 1];
       }
+      function setEdges(scroller, edges) {
+        scroller.classList.toggle('mfs-more-left', edges[0]);
+        scroller.classList.toggle('mfs-more-right', edges[1]);
+      }
+      function markEdges(scroller) { setEdges(scroller, edgesOf(scroller)); }
       function wireLines(root) {
         if (!_lineObserver && window.ResizeObserver) {
           _lineObserver = new ResizeObserver(function(entries) {
-            entries.forEach(function(e) { markEdges(e.target.closest('.mfs-line-scroll')); });
+            var scrollers = entries.map(function(e) { return e.target.closest('.mfs-line-scroll'); });
+            var edges = scrollers.map(edgesOf);
+            scrollers.forEach(function(s, i) { setEdges(s, edges[i]); });
           });
         }
         root.querySelectorAll('.mfs-line-scroll').forEach(function(scroller) {
@@ -909,20 +918,35 @@
          Where nrProse() kept punctuation with the formula, the punctuation scrolls with it.
          Whether a formula fits is measured again whenever its prose changes width, which a
          ResizeObserver sees when MathJax sets it, when the window changes size and when a
-         hidden diagram view is shown. */
+         hidden diagram view is shown. As with the lines, every block is measured before
+         any is marked, so the page is laid out a few times in all rather than a few times
+         for each block. */
       var _proseObserver = null;
-      function fitProseMath(block) {
-        if (!block.clientWidth) return;
-        var boxes = [].map.call(block.querySelectorAll('mjx-container'), function(m) {
-          var keep = m.parentElement;
-          return keep.classList.contains('mfs-nr-keep') ? keep : m;
+      function fitProseMath(blocks) {
+        var sets = blocks.filter(function(block) { return block.clientWidth; }).map(function(block) {
+          return { block: block, boxes: [].map.call(block.querySelectorAll('mjx-container'), function(m) {
+            var keep = m.parentElement;
+            return keep.classList.contains('mfs-nr-keep') ? keep : m;
+          }) };
         });
-        boxes.forEach(function(box) { box.classList.remove('mfs-wide-math', 'mfs-more-left', 'mfs-more-right'); });
-        var widths = boxes.map(function(box) { return box.getBoundingClientRect().width; });
-        boxes.forEach(function(box, i) {
-          if (widths[i] <= block.clientWidth) return;
-          box.classList.add('mfs-wide-math');
-          markEdges(box);
+        sets.forEach(function(s) {
+          s.boxes.forEach(function(box) { box.classList.remove('mfs-wide-math', 'mfs-more-left', 'mfs-more-right'); });
+        });
+        sets.forEach(function(s) {
+          s.room = s.block.clientWidth;
+          s.widths = s.boxes.map(function(box) { return box.getBoundingClientRect().width; });
+        });
+        var wide = [];
+        sets.forEach(function(s) {
+          s.boxes.forEach(function(box, i) {
+            if (s.widths[i] <= s.room) return;
+            box.classList.add('mfs-wide-math');
+            wide.push(box);
+          });
+        });
+        var edges = wide.map(edgesOf);
+        wide.forEach(function(box, i) {
+          setEdges(box, edges[i]);
           if (!box._mfsScrollWired) {
             box._mfsScrollWired = true;
             box.addEventListener('scroll', function() { markEdges(box); }, { passive: true });
@@ -933,7 +957,7 @@
         if (_proseObserver) _proseObserver.disconnect();
         if (!window.ResizeObserver) return;
         _proseObserver = new ResizeObserver(function(entries) {
-          entries.forEach(function(e) { fitProseMath(e.target); });
+          fitProseMath(entries.map(function(e) { return e.target; }));
         });
         root.querySelectorAll('.mfs-history, .mfs-convention, .mfs-nr-caption').forEach(function(block) {
           _proseObserver.observe(block);

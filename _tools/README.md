@@ -47,6 +47,7 @@ So printed sections are spaced from the section before them and never by a margi
 
 A formula inside prose, in a `history`, a `convention` or a caption, is set inline and cannot break, so one wider than its paragraph is given a line of its own that scrolls in the same way, and the prose around it wraps as before.
 `fitProseMath` in `_layouts/mfs.html` measures that again whenever the paragraph changes width.
+Each of these observers measures everything it was handed before it changes any class, because a class changed between two measurements makes the second lay the whole page out again, and once per line that held Kerr-Newman still for seconds and Natario for nearly a minute.
 
 ## The page on a phone
 
