@@ -130,6 +130,11 @@ Every view records the fields it was drawn from and a stamp over them, computed 
 The fields are the coordinates, the parameter symbols, the metric and its inverse, the Kretschmann scalar and the domains, and the Einstein tensor as well for a view whose input is solved as dust.
 `build_mfs_data.py` recomputes each stamp from the metric file as it stands and refuses, naming the file, the system and the view, when one no longer matches, in `--check` and when writing alike.
 So an edit to any of those fields leaves the collection unpublishable until its diagrams are redrawn, while an edit to a history, a reference or a parameter's description leaves them standing.
+A caption opens by naming its plane: the two coordinates drawn and the value of every coordinate held fixed, as "the plane of $t$ and $r$ at $\theta = \pi/2$ and $\phi = 0$".
+It says what the drawing shows, and where the feature a reader comes looking for lies off the plane, it says where that feature is, as the Ellis-Bronnikov caption places the throat in $g_{\theta\theta}$ and the Gödel caption places the closed timelike curves.
+A caption never stops at saying what a diagram leaves out.
+Every curve drawn is a null curve; a caption calls it a null geodesic, the path light takes, only where no Christoffel symbol turns it out of the plane, and says so where one does, as for Gödel and for Kerr off the axis.
+
 
 ### Which way the cones point
 
@@ -152,7 +157,7 @@ Kasner is drawn at the exponents $(-2/7, 3/7, 6/7)$.
 
     /tmp/mfs-venv/bin/python _tools/derivations/null_rays.py --verify
 
-traces rays as the page's files are traced and measures, for every view with a closed form, how far the quantity each family should conserve drifts along a ray, together with the dust solutions and the equality of Natario's and Alcubierre's blocks on the axis.
+traces rays as the page's files are traced and measures, for every view with a closed form, how far the quantity each family should conserve drifts along a ray, together with the dust solutions and the equality of Natario's and Alcubierre's metrics on the plane of their axis.
 It writes nothing and exits non-zero if anything fails; run it after changing the method.
 
 ### What is not drawn
@@ -200,7 +205,7 @@ Both passes print what failed on stderr and print the single line saying nothing
 Read the exit code, and run the script before and after a change so that a failure you did not cause is not mistaken for one you did.
 
 `derivations/audit-2026-09-18.md` groups and counts the disagreements the collection carried when the dimensional pass was added, and says which of them are the checker's fault rather than the physics'.
-It is a dated snapshot of 433: the 320 that were a Weyl block copied from the entry's own Riemann block have since been corrected, the 50 nested radicals cancel since the change to `norm`, and the rest were corrected entry by entry, leaving none.
+It is a dated snapshot of 433: the 320 that were Weyl components copied from the entry's own Riemann components have since been corrected, the 50 nested radicals cancel since the change to `norm`, and the rest were corrected entry by entry, leaving none.
 `derivations/weyl.md` is the working behind those corrections, and is the thing to read before touching any `weyl_tensor`: a Weyl tensor equals Riemann only in a vacuum, it can be nonzero in a slot where Riemann vanishes, and two of the entries that publish one are conformally flat and so publish nothing.
 
 Nothing is ever passed in silence. A value that cannot be parsed, a system with no time coordinate declaration, or a tensor sympy cannot finish in the budget is reported as `UNCHECKED` with the reason, separately from the disagreements.
