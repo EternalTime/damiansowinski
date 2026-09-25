@@ -376,7 +376,7 @@ At the throat the first term vanishes, by the argument of Step 11, and $f' = \le
 
 $$G_{\hat{\mu}\hat{\nu}}k^{\hat{\mu}}k^{\hat{\nu}}\Big|_{r=b_0} = -\frac{1 - \partial_r b(b_0)}{b_0^2} < 0.$$
 
-So an observer riding that light ray measures a negative energy density.
+So an observer crossing the throat radially fast enough measures a negative energy density: with four velocity $\gamma(1, v, 0, 0)$ in the orthonormal frame the density measured is $\gamma^2(\rho c^2 + v^2p_r)$, and as $v \to 1$ that tends to $\gamma^2$ times the negative quantity above.
 The failure is not marginal and it is not tunable: it is forced by the same inequality that makes the thing a wormhole at all, and it holds however $\Phi$ is chosen, since the redshift function leaves no trace at the throat once the no horizon requirement is in force.
 
 This is the local version of a theorem.
