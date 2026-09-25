@@ -48,6 +48,17 @@ So printed sections are spaced from the section before them and never by a margi
 A formula inside prose, in a `history`, a `convention` or a caption, is set inline and cannot break, so one wider than its paragraph is given a line of its own that scrolls in the same way, and the prose around it wraps as before.
 `fitProseMath` in `_layouts/mfs.html` measures that again whenever the paragraph changes width.
 
+## The page on a phone
+
+A screen narrower than 600px, or a touch screen under 500px tall, gets the same panels in one column that the page scrolls through: the title, the list with the coffee panel, then the spacetime.
+That covers every iPhone upright and on its side, and the desktop layout is untouched by it.
+The rules are one `@media screen` block in `_layouts/mfs.html`, after the main stylesheet, and its comment says why each choice was made.
+They are for the screen alone, so the print copy is the same whatever screen it was printed from; a phone printing Kerr differs from a desktop only by MathJax's rounding at three pixels to the point, and did before this layout.
+
+The desktop's panel scripts write their geometry into each panel's own style, so the phone block overrides it with `!important`, and it sets `--mfs-phone` on the root, which is how the scripts tell which layout is in force.
+Anything new on the page has to hold at 390pt upright and 844 by 390 on its side: a line of mathematics, a coordinate domain or a formula in prose scrolls on its own there, and nothing may make the page wider than the screen, even for a frame, since a phone answers that by zooming the whole page out.
+A spacetime diagram is drawn whole, as wide as the panel and never taller than the screen, with its labels scaling with it.
+
 The page prints a spacetime's `signature` and `convention` under the heading "conventions", between the history and the coordinates, which is where the application reads them.
 They belong to the spacetime and not to a chart, so the coordinate selector leaves them standing.
 A `convention` is prose with inline TeX between dollar signs, split into paragraphs at `¶`, and never carries a citation or HTML.
