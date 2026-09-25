@@ -146,7 +146,7 @@ runs the tests, which include that check.
 
 ## Spacetime diagrams
 
-`MFS/assets/data/diagrams/<metric_id>.json` holds the spacetime diagrams of one spacetime: null rays and future light cones on a plane of the time and one spatial coordinate, for each coordinate system that has any, and for Kerr and Kerr-Newman the principal null rays, which leave every such plane.
+`MFS/assets/data/diagrams/<metric_id>.json` holds the spacetime diagrams of one spacetime: null rays and future light cones on a plane of the time and one spatial coordinate, for each coordinate system that has any, for Kerr and Kerr-Newman the principal null rays, which leave every such plane, and figures in three dimensions where no plane carries the causal structure, as "Figures in three dimensions" below describes.
 The page draws them in a section per coordinate system, after the geodesics, and the application displays the same files.
 Nothing in them is drawn by eye or computed by the page.
 `_tools/derivations/null_rays.py` computes every ray, cone and marker from the system's published `metric_components`, `inverse_metric_components`, `kretschmann` and `domains`, and for the principal null rays its `weyl_tensor` and `christoffel` as well, read through the checker's own `Reader`, and its docstring records the method.
@@ -208,6 +208,11 @@ FRW's scale factor and Bianchi I's three are dust, solved from each entry's own 
 Morris-Thorne is drawn as its Ellis-Bronnikov member, $\Phi = 0$ and $b = b_0^2/r$.
 Alcubierre is drawn with his own profile, which the entry names, at $v_s = 2$; Natario with the same profile and his zero expansion field, whose divergence the script checks before using it; the Krasnikov tube with a tube built by a ship at the speed of light.
 Kasner is drawn at the exponents $(-2/7, 3/7, 6/7)$.
+Vaidya is drawn with a shell of null dust of mass $M$, $m$ jumping from $0$ to $M$ at $v = 0$ in the ingoing chart and its time reverse in the outgoing one, the shell the conformal diagram declares.
+The Tolman-Oppenheimer-Volkoff star is the polytrope the conformal diagram declares, solved by the `StarSolver` the two scripts share and checked against the published $G^\theta{}_\theta$, which its construction never uses.
+Tolman-Bondi is drawn for marginally bound dust whose density at $t = 0$ falls as $1 - r^2/r_b^2$, checked to solve the published $G^r{}_r = 0$, and Oppenheimer-Snyder's collapse is released from rest at twice its Schwarzschild radius, as its conformal diagram declares, in both of its charts.
+The Malament-Hogarth toy is drawn for every conformal factor at once, since $\Omega^2$ drops out of the null condition, and checked with a declared factor that grows as $1/|ct|$ along the axis.
+The cosmic string is drawn at the deficit its conformal diagram uses, $4G\mu/c^2 = 0.1$, Gödel at $\omega = 1$, and Kerr and Kerr-Newman's figures at the spins and charge of their flat views.
 
 ### Checking the rays
 
@@ -277,14 +282,15 @@ A coordinate system with neither a flat view nor a figure, in a spacetime that h
 ### What is not drawn
 
 Kerr's and Kerr-Newman's planes of $t$ and $r$ are drawn on the axis only, and off it their principal null rays are drawn instead.
-Off the axis the null curves of fixed $\theta$ and $\phi$ are not null geodesics, since $\Gamma^\theta{}_{tt}$, $\Gamma^\theta{}_{rr}$ and $\Gamma^\phi{}_{tr}$ turn a light ray launched along one out of the plane, and inside the ergoregion the plane has no null direction at all.
-Every null geodesic of van Stockum leaves its plane too, and its Weyl tensor, of type I, gives no congruence to draw them by.
-Tolman-Bondi, Vaidya and the proper distance chart of Morris-Thorne leave functions free that no choice has been made for yet, and Oppenheimer-Snyder's collapse needs its two charts drawn together.
-The Tolman-Oppenheimer-Volkoff star leaves its redshift and mass functions free, and its one closed form member, the star of uniform density, is drawn already as the interior Schwarzschild solution.
-Lentz's soliton exists only as a numerical integral over his rhomboid sources, so no potential of his can be declared in closed form.
-The Mixmaster's scale factors have no closed form to declare, being the chaotic solutions of its own field equations, and the one plane of time and an Euler angle that keeps its light rays, time against $\psi$, would show only $a_3$.
-The Malament-Hogarth toy is Minkowski space times a conformal factor, which changes no null direction, so its diagram would be Minkowski's with one point missing; what it changes is proper time, which a diagram of light rays cannot show.
-The cosmic string's two charts, Oppenheimer-Snyder's exterior, Natario's plane flow chart, the Brinkmann chart of the pp-wave and Minkowski's double null chart would each only repeat a plane drawn elsewhere, flat or the same as another chart's.
+Off the axis the null curves of fixed $\theta$ and $\phi$ are not null geodesics, since $\Gamma^\theta{}_{tt}$, $\Gamma^\theta{}_{rr}$ and $\Gamma^\phi{}_{tr}$ turn a light ray launched along one out of the plane, and inside the ergoregion the plane has no null direction at all, which is why the equator is also drawn in three dimensions.
+van Stockum's plane of $t$ and $r$ is not drawn: every null geodesic leaves it, and its Weyl tensor, of type I, gives no congruence to draw them by, so its cylinders of $t$ and $\phi$ and its figure are drawn instead.
+The proper distance chart of Morris-Thorne leaves its functions free with no choice made for them, while its spherical chart draws the Ellis-Bronnikov member.
+Natário's plane flow chart, the Brinkmann chart of the pp-wave and Minkowski's double null chart would each only repeat a plane drawn elsewhere, flat or the same as another chart's.
+
+Three coordinate systems have nothing drawn and say why on the page, from `NOT_DRAWN` in `null_rays.py`.
+Lentz's soliton exists only as a numerical integral over his rhomboid sources, so no soliton of the class can be written down, and a potential written in its place would draw another soliton of the class.
+The Mixmaster's scale factors reach the singularity through an endless sequence of Kasner epochs, which a drawing of one solution follows only for a handful, and the one plane of time and an Euler angle that keeps its light rays, $t$ against $\psi$, would follow $a_3$ alone.
+Gott's core, the cosmic string's interior, is flat on its plane of $t$ and $\chi$, and acts on light across it, in the cap of $\chi$ and $\phi$.
 
 ## Conformal diagrams
 
@@ -310,7 +316,8 @@ The domains are not among the fields, since no conformal diagram reads one.
 
 `DRAWN` in the script names the seventeen spacetimes that have a diagram, and `NOT_DRAWN` gives each of the others the reason it has none: every event's future is the whole spacetime for Gödel and van Stockum, the diagram is whatever a free function makes it for the warp drives, the Krasnikov tube, Tolman-Bondi and Bianchi, the Mixmaster has no surface that carries its causal structure, and so on.
 A free function does not by itself rule a diagram out: where every choice of it gives the same shape, as for the Tolman-Oppenheimer-Volkoff star and the Morris-Thorne wormhole, the diagram is drawn with a declared choice that moves only the lines inside, and the Malament-Hogarth toy is drawn for every conformal factor at once, since a conformal factor changes no null direction.
-Nothing is published for those, and the script stops if a metric file is in neither table, so a new spacetime needs a decision.
+Each of the twelve gets a file of its own that carries its reason under `none` in place of views, stamped by the coordinates, parameters and metric components of each coordinate system it speaks of, and the page prints the reason under the heading "conformal diagram".
+`build_mfs_data.py` refuses a file with both views and a reason or with neither, a test holds that every spacetime has one or the other, and the script stops if a metric file is in neither table, so a new spacetime needs a decision.
 
 A view of a surface that is not the whole spacetime carries `restriction`, which the page prints in a band across the top of the figure, never in a footnote.
 Kerr and Kerr-Newman are drawn on the symmetry axis and the cosmic string on the half plane of fixed $\phi$ and $z$, and the tests hold those three to carrying a restriction on every view.
