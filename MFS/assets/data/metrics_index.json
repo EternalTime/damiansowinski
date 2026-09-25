@@ -339,7 +339,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "60952fb08a452bdb"
+    "version": "68a45d112954ddea"
   },
   {
     "id": "malament_hogarth",
@@ -354,7 +354,7 @@
       "Lorentzian",
       "four-dimensional"
     ],
-    "version": "5667c270214e7def"
+    "version": "b6a000e6702ef0a1"
   },
   {
     "id": "minkowski",
@@ -400,7 +400,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e7563e6f8238fa15"
+    "version": "284da4f2517b07aa"
   },
   {
     "id": "morris_thorne",
@@ -643,7 +643,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "514beb32e7f0afe2"
+    "version": "7515c50dcff44793"
   },
   {
     "id": "vaidya",

@@ -13,6 +13,8 @@
     "Lorentzian",
     "four-dimensional"
   ],
+  "signature": "(-,+,+,+)",
+  "convention": "Coordinates are $(t, x, y, z)$, the inertial coordinates of Minkowski space, with $t$ carrying dimensions of time and $x$, $y$ and $z$ lengths, and factors of $c$ are kept explicit. The chart is the toy spacetime Earman and Norton used to show that the property can be had at all, the construction they credit to Malament and to Hogarth: take Minkowski space, remove a single event, placed at the origin, and multiply the metric by $\\Omega^2$. The conformal factor $\\Omega$ is a dimensionless function, equal to $1$ outside a compact region $C$ around the removed event and growing without bound as that event is approached, so the chart covers every event but the origin and is Minkowski space wherever $\\Omega = 1$. Components are taken in the chart $x^0 = ct$, where a chart component of the metric carries no dimensions. $\\partial_t$ is the derivative along that chart coordinate, $\\partial_t = c^{-1}\\partial/\\partial t$, so each derivative carries one inverse length per order, and the dots in the geodesic equations are velocities of the same chart, so $\\dot{t}$ means $d(ct)/d\\lambda$. The signature is $(-,+,+,+)$ and the Ricci tensor is the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, which the Ricci scalar and the Einstein tensor follow.¶A conformal factor changes no null direction, so the light cones of this spacetime are Minkowski's, and so is its causal structure, one point short. What the factor changes is the proper time: an observer at rest in the chart ages $d\\tau = \\Omega\\,dt$. Put the computer on the $t$ axis, $x = y = z = 0$, from $t = -T$ up to the missing origin. That worldline has no future endpoint in this spacetime, because its endpoint was removed, and its proper time $\\int_{-T}^{0}\\Omega\\,dt$ is finite in Minkowski space and infinite with the factor as soon as $\\Omega$ grows at least as fast as $1/|t|$ along it. Any event $p$ in the future light cone of the origin, such as $(t, 0, 0, 0)$ with $t > 0$, has the whole of that worldline in its past, since a signal sent from anywhere on it can pass around the missing point, and an observer can reach $p$ in finite proper time along any worldline that keeps away from that point, where $\\Omega$ stays bounded. That is the Malament-Hogarth property, and $p$ is the event at which an eternity of computation has been delivered. It comes at a price: light the computer sends from where the factor is $\\Omega$ reaches an observer at rest outside $C$ with its frequency raised by that same factor, $\\omega_{\\text{received}}/\\omega_{\\text{sent}} = \\Omega$, which grows without bound as the computer nears the missing point. Earman and Norton add that $\\Omega$ can be chosen so that the computer falls freely, by making the $t$ axis an axis of symmetry of $\\Omega$, and the geodesic equations show why: on the axis every $\\partial_x\\Omega$, $\\partial_y\\Omega$ and $\\partial_z\\Omega$ vanishes, the spatial equations are solved by $\\dot{x} = \\dot{y} = \\dot{z} = 0$, and the time equation, $\\ddot{t} + \\left(\\partial_t\\Omega/\\Omega\\right)\\dot{t}^2 = 0$, only fixes the affine parameter.¶The Weyl tensor vanishes identically, as it does for every metric conformal to a flat one, so all of the curvature is Ricci curvature, and the Ricci scalar is $R = -6\\,\\Box\\Omega/\\Omega^3$ with $\\Box = \\partial_x^2 + \\partial_y^2 + \\partial_z^2 - \\partial_t^2$ the flat wave operator of the chart. Nothing in the construction asks that curvature to be the Einstein tensor of anything reasonable. Read through $G_{\\mu\\nu} = 8\\pi Gc^{-4}T_{\\mu\\nu}$, the matter it calls for lives wherever $\\Omega$ varies and is whatever the derivatives of $\\Omega$ make it, and Earman and Norton say so plainly: the toy can be read as a solution by defining its source to be $G_{\\mu\\nu}$, with no guarantee that even the weak energy condition holds. It shows what the property is rather than where it might be found; anti-de Sitter space and the charged and rotating black holes have the property while solving the field equations with honest sources.",
   "history": "Malament-Hogarth is not a metric. It is a property a spacetime may or may not possess, and the spacetimes that possess it are strange enough to deserve a name. A spacetime is Malament-Hogarth if it contains a worldline of infinite proper duration whose entire history lies within the causal past of some single event. Picture a computer that runs forever along that worldline, and an observer who travels to the special event in finite time of their own: every step the computer will ever take has, by the time the observer arrives, already had the chance to send its result ahead. The observer can therefore learn the outcome of an unending computation in a finite span of their own life.¶The idea grew out of work by Itamar Pitowsky in 1990 [pitowsky1990] and was put on firm footing by Mark Hogarth, who in 1992 proved that ordinary spacetimes cannot do this but that some can, anti-de Sitter space among them [hogarth1992]. Pitowsky's version was set in Minkowski spacetime: a mathematician circles ever faster, so that his own clock runs only a finite time while his graduate students check Fermat's conjecture one case after another forever [pitowsky1990, earman1993]. John Earman and John Norton showed that the mathematician's acceleration must grow without bound, so that any real traveler would be crushed [earman1993]. Hogarth told his version as the story of the immortal computer HAL testing every even number against the Goldbach conjecture while the mortal Dave follows a worldline one hour long [hogarth1992].¶The name was fixed a year later by Earman and Norton, who analyzed these supertask geometries and credited the construction to both Hogarth and David Malament [earman1993]. Malament supplied the quick proof that such a spacetime cannot be globally hyperbolic, so that no Cauchy surface determines its whole history [earman1993]. The property is a feature of global causal structure, not of any particular line element: Malament-Hogarth is a category of spacetimes, and its members include some of the best known exact solutions. Earman and Norton noted that in the Gödel universe every event is a Malament-Hogarth event, and that the Reissner-Nordström spacetime of the charged black hole has the property too [earman1993].¶The category is more than a curiosity because it bears on the limits of computation. Gábor Etesi and István Németi showed in 2002 that an observer in a Malament-Hogarth spacetime could, in principle, settle questions no Turing machine can decide, such as the halting problem or the consistency of arithmetic, by reading off the result of an infinite computation [etesi2002]. They also noted that the requisite causal structure is not confined to exotic toy models: the interior of a rotating or charged black hole, past its inner horizon, is Malament-Hogarth. The obstacles to ever building such a device are severe, since the computer must survive an eternity and the observer must cross a horizon where the infalling history of the universe arrives infinitely blueshifted [earman1993], but the conclusion stands as a matter of principle: whether the Church-Turing thesis holds is not a fact of logic alone but depends on the shape of spacetime.¶Pitowsky returned to the question with Oron Shagrir in 2003, describing two communicating computers in such a spacetime that decide the halting problem, and argued that the device does not refute the Church-Turing thesis, though it may be a counterexample to Gandy's thesis [shagrir2003]. P. D. Welch showed in 2008 that these spacetimes reach beyond arithmetic, since every hyperarithmetic question can be settled in some Malament-Hogarth spacetime, but that each spacetime has its own countable bound on what it can decide [welch2008]. John Byron Manchak observed in 2010 that any spacetime with closed timelike curves is Malament-Hogarth, gathered seven physical objections raised against such setups, and built an example that escapes all seven, while saying plainly that he did not think it physically reasonable [manchak2010].",
   "references": [
     "pitowsky1990",
@@ -23,5 +25,3653 @@
     "welch2008",
     "manchak2010"
   ],
-  "coordinates": []
+  "coordinates": [
+    {
+      "id": "cartesian",
+      "name": "Cartesian",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "(t, x, y, z) \\neq (0, 0, 0, 0)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\Omega = \\Omega(t,x,y,z)",
+          "description": "Conformal factor, dimensionless and positive. It is $1$ outside a compact region $C$ around the removed origin, so the spacetime is Minkowski space there, and it grows without bound as the origin is approached; an observer at rest in the chart ages $d\\tau = \\Omega\\,dt$, and growth at least as fast as $1/|t|$ along the $t$ axis is what stretches the finite stretch $-T < t < 0$ into an infinite proper time"
+        }
+      ],
+      "line_element": "ds^2 = \\Omega^2\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\Omega^2"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\Omega^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\Omega^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\Omega^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{\\Omega^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{\\Omega^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{\\Omega^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{\\Omega^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_x\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\partial_z\\Omega}{\\Omega}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\Omega\\,\\partial_t\\Omega"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t"
+                ],
+                "value": "\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\Omega\\,\\partial_x\\Omega"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\Omega\\,\\partial_y\\Omega"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\Omega\\,\\partial_z\\Omega"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\Omega\\,\\partial_z\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\Omega\\,\\partial_z\\Omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\Omega\\,\\partial_z\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\Omega\\,\\partial_z\\Omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\Omega\\,\\partial_z\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "\\Omega\\,\\partial_z\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\Omega\\,\\partial_z\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\Omega\\,\\partial_z\\Omega"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\Omega\\,\\partial_z\\Omega"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_x^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_x^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_x^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_x^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_y^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_y^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_y^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(\\partial_y^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\left(\\Omega\\,\\partial_t\\partial_x\\Omega - 2\\partial_t\\Omega\\,\\partial_x\\Omega\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_t^2\\Omega - \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_x^2\\Omega + \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_x^2\\Omega + \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_x^2\\Omega + \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_x^2\\Omega + \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_y^2\\Omega + \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_y^2\\Omega + \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\left(\\Omega\\left(\\partial_y^2\\Omega + \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\left(\\Omega\\left(\\partial_y^2\\Omega + \\partial_z^2\\Omega\\right) - \\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(3\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_y^2\\Omega - \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_x\\Omega - 2\\Omega\\,\\partial_t\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_x\\Omega - 2\\Omega\\,\\partial_t\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - 3\\partial_x^2\\Omega - \\partial_y^2\\Omega - \\partial_z^2\\Omega\\right) + \\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - 3\\partial_y^2\\Omega - \\partial_z^2\\Omega\\right) + \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_y^2\\Omega - 3\\partial_z^2\\Omega\\right) + \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2}{\\Omega^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega\\left(3\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_y^2\\Omega - \\partial_z^2\\Omega\\right) - 3\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_x\\Omega - 4\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega\\,\\partial_t\\partial_x\\Omega - 4\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_y\\Omega - 4\\partial_t\\Omega\\,\\partial_y\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega\\,\\partial_t\\partial_y\\Omega - 4\\partial_t\\Omega\\,\\partial_y\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_z\\Omega - 4\\partial_t\\Omega\\,\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega\\,\\partial_t\\partial_z\\Omega - 4\\partial_t\\Omega\\,\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - 3\\partial_x^2\\Omega - \\partial_y^2\\Omega - \\partial_z^2\\Omega\\right) + \\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - 3\\partial_y^2\\Omega - \\partial_z^2\\Omega\\right) + \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_y^2\\Omega - 3\\partial_z^2\\Omega\\right) + \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2}{\\Omega^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - \\Omega\\left(3\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_y^2\\Omega - \\partial_z^2\\Omega\\right)}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_x\\Omega - 4\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_x\\Omega - 4\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_y\\Omega - 4\\partial_t\\Omega\\,\\partial_y\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_y\\Omega - 4\\partial_t\\Omega\\,\\partial_y\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_z\\Omega - 4\\partial_t\\Omega\\,\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_z\\Omega - 4\\partial_t\\Omega\\,\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - 3\\partial_x^2\\Omega - \\partial_y^2\\Omega - \\partial_z^2\\Omega\\right) + \\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - 3\\partial_y^2\\Omega - \\partial_z^2\\Omega\\right) + \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_y^2\\Omega - 3\\partial_z^2\\Omega\\right) + \\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2}{\\Omega^6}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{6\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)}{\\Omega^3}",
+      "kretschmann": "K = \\dfrac{2\\left(\\left(3\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_t^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_x^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_y^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_z^2\\Omega\\right)^2\\right) + 16\\left(\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)^2 + \\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)^2 + \\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_x\\Omega - \\Omega\\,\\partial_t\\partial_x\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)^2\\right) + 4\\Omega^2\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)^2}{\\Omega^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_x\\Omega - 2\\Omega\\,\\partial_t\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_x\\Omega - 2\\Omega\\,\\partial_t\\partial_x\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_t\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\partial_t\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_t\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega - \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_z^2\\Omega\\right)}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_y^2\\Omega\\right)}{\\Omega^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega\\right) - 3\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_x\\Omega - 4\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega\\,\\partial_t\\partial_x\\Omega - 4\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_y\\Omega - 4\\partial_t\\Omega\\,\\partial_y\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega\\,\\partial_t\\partial_y\\Omega - 4\\partial_t\\Omega\\,\\partial_y\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_z\\Omega - 4\\partial_t\\Omega\\,\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega\\,\\partial_t\\partial_z\\Omega - 4\\partial_t\\Omega\\,\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega - \\partial_z^2\\Omega\\right)}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_z^2\\Omega\\right)}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_y^2\\Omega\\right)}{\\Omega^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega\\right)}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_x\\Omega - 4\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_x\\Omega - 4\\partial_t\\Omega\\,\\partial_x\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_y\\Omega - 4\\partial_t\\Omega\\,\\partial_y\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_y\\Omega - 4\\partial_t\\Omega\\,\\partial_y\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_z\\Omega - 4\\partial_t\\Omega\\,\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega\\,\\partial_t\\partial_z\\Omega - 4\\partial_t\\Omega\\,\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_t^2\\Omega - \\partial_y^2\\Omega - \\partial_z^2\\Omega\\right)}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_y\\Omega - 2\\Omega\\,\\partial_x\\partial_y\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\partial_x\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_x\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_z^2\\Omega\\right)}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\partial_y\\Omega\\,\\partial_z\\Omega - 2\\Omega\\,\\partial_y\\partial_z\\Omega}{\\Omega^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\left(\\partial_t^2\\Omega - \\partial_x^2\\Omega - \\partial_y^2\\Omega\\right)}{\\Omega^6}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{\\partial_t\\Omega}{\\Omega}\\dot{t}^2 + \\dfrac{2\\partial_x\\Omega}{\\Omega}\\dot{t}\\dot{x} + \\dfrac{2\\partial_y\\Omega}{\\Omega}\\dot{t}\\dot{y} + \\dfrac{2\\partial_z\\Omega}{\\Omega}\\dot{t}\\dot{z} + \\dfrac{\\partial_t\\Omega}{\\Omega}\\dot{x}^2 + \\dfrac{\\partial_t\\Omega}{\\Omega}\\dot{y}^2 + \\dfrac{\\partial_t\\Omega}{\\Omega}\\dot{z}^2 = 0",
+        "\\ddot{x} + \\dfrac{\\partial_x\\Omega}{\\Omega}\\dot{t}^2 + \\dfrac{2\\partial_t\\Omega}{\\Omega}\\dot{t}\\dot{x} + \\dfrac{\\partial_x\\Omega}{\\Omega}\\dot{x}^2 + \\dfrac{2\\partial_y\\Omega}{\\Omega}\\dot{x}\\dot{y} + \\dfrac{2\\partial_z\\Omega}{\\Omega}\\dot{x}\\dot{z} - \\dfrac{\\partial_x\\Omega}{\\Omega}\\dot{y}^2 - \\dfrac{\\partial_x\\Omega}{\\Omega}\\dot{z}^2 = 0",
+        "\\ddot{y} + \\dfrac{\\partial_y\\Omega}{\\Omega}\\dot{t}^2 + \\dfrac{2\\partial_t\\Omega}{\\Omega}\\dot{t}\\dot{y} - \\dfrac{\\partial_y\\Omega}{\\Omega}\\dot{x}^2 + \\dfrac{2\\partial_x\\Omega}{\\Omega}\\dot{x}\\dot{y} + \\dfrac{\\partial_y\\Omega}{\\Omega}\\dot{y}^2 + \\dfrac{2\\partial_z\\Omega}{\\Omega}\\dot{y}\\dot{z} - \\dfrac{\\partial_y\\Omega}{\\Omega}\\dot{z}^2 = 0",
+        "\\ddot{z} + \\dfrac{\\partial_z\\Omega}{\\Omega}\\dot{t}^2 + \\dfrac{2\\partial_t\\Omega}{\\Omega}\\dot{t}\\dot{z} - \\dfrac{\\partial_z\\Omega}{\\Omega}\\dot{x}^2 + \\dfrac{2\\partial_x\\Omega}{\\Omega}\\dot{x}\\dot{z} - \\dfrac{\\partial_z\\Omega}{\\Omega}\\dot{y}^2 + \\dfrac{2\\partial_y\\Omega}{\\Omega}\\dot{y}\\dot{z} + \\dfrac{\\partial_z\\Omega}{\\Omega}\\dot{z}^2 = 0"
+      ]
+    }
+  ]
 }

@@ -200,6 +200,10 @@ Kerr and Kerr-Newman are drawn on the axis only.
 Off it the null curves of fixed $\theta$ and $\phi$ are not null geodesics, since $\Gamma^\theta{}_{tt}$, $\Gamma^\theta{}_{rr}$ and $\Gamma^\phi{}_{tr}$ turn a light ray launched along one out of the plane, and inside the ergoregion the plane has no null direction at all.
 The radial null geodesics they do have are the principal null congruence, which leaves the plane, and every null geodesic of van Stockum leaves its plane too.
 Tolman-Bondi, Vaidya and the proper distance chart of Morris-Thorne leave functions free that no choice has been made for yet, and Oppenheimer-Snyder's collapse needs its two charts drawn together.
+The Tolman-Oppenheimer-Volkoff star leaves its redshift and mass functions free, and its one closed form member, the star of uniform density, is drawn already as the interior Schwarzschild solution.
+Lentz's soliton exists only as a numerical integral over his rhomboid sources, so no potential of his can be declared in closed form.
+The Mixmaster's scale factors have no closed form to declare, being the chaotic solutions of its own field equations, and the one plane of time and an Euler angle that keeps its light rays, time against $\psi$, would show only $a_3$.
+The Malament-Hogarth toy is Minkowski space times a conformal factor, which changes no null direction, so its diagram would be Minkowski's with one point missing; what it changes is proper time, which a diagram of light rays cannot show.
 The cosmic string's two charts, Oppenheimer-Snyder's exterior, Natario's plane flow chart, the Brinkmann chart of the pp-wave and Minkowski's double null chart would each only repeat a plane drawn elsewhere, flat or the same as another chart's.
 
 ## Checking the physics
@@ -219,8 +223,8 @@ sympy is not installed system wide, and the virtual environment does not belong 
     python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
 
-The whole collection takes about a minute and a half, and `--system <metric_id>/<system_id>` checks one system in seconds, which is what to use while editing a single entry.
-The slowest system is the general flow chart of `natario`, at under a minute; Kerr takes about seven seconds and the interior Schwarzschild solution about two.
+The whole collection took 259 seconds on 25 September 2026, and `--system <metric_id>/<system_id>` checks one system in seconds, which is what to use while editing a single entry.
+The slowest systems are the general flow chart of `natario` and the potential flow of `lentz`, each under a minute, then `mixmaster` at about forty seconds; Kerr takes about seven seconds and the interior Schwarzschild solution about two.
 `--budget <seconds>` changes how long sympy may spend on one tensor, and the default of 120 is several times what any tensor in the collection needs.
 `--dimensions-only` runs the dimensional pass alone, which takes about a second over the whole collection, so there is no reason not to run it on every edit.
 
@@ -243,6 +247,18 @@ It is a dated snapshot of 433: the 320 that were Weyl components copied from the
 `derivations/weyl.md` is the working behind those corrections, and is the thing to read before touching any `weyl_tensor`: a Weyl tensor equals Riemann only in a vacuum, it can be nonzero in a slot where Riemann vanishes, and two of the entries that publish one are conformally flat and so publish nothing.
 
 Nothing is ever passed in silence. A value that cannot be parsed, a system with no time coordinate declaration, or a tensor sympy cannot finish in the budget is reported as `UNCHECKED` with the reason, separately from the disagreements.
+
+## Printing a chart by machine
+
+`tov`, `malament_hogarth`, `mixmaster` and `lentz` have their mathematics written by `_tools/derivations/print_charts.py`, which defines each of their charts, computes every tensor with the checker's own `Geometry`, and prints each value through `chart_printer.py` beside it:
+
+    /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py --metric tov
+
+Every printed value is read back through the checker's `Reader` and compared with the value it came from before anything is written, and `verify_metrics.py` then checks the file like any other.
+The script writes only the coordinate system's mathematics, the line element and the domains; the prose, the convention and the description of each parameter stay in the metric file and are carried over, and a parameter with no description stops the script.
+A chart can pass a function that regroups the numerator of each value, which is how TOV's curvature is printed around $(\partial_r\Phi)^2 + \partial_r^2\Phi$ and Bianchi IX's around $a_1^2\cos^2\psi + a_2^2\sin^2\psi$, and a Ricci or Kretschmann scalar can be given in a structured form, which is checked against sympy before it is used.
+`tov.md`, `malament_hogarth.md`, `mixmaster.md` and `lentz.md` in the same folder record why each chart is the one published.
+The other entries were written by hand and are not touched by the script.
 
 ## The three conventions the checker encodes
 

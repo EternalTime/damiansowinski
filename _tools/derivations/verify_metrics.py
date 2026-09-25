@@ -236,6 +236,21 @@ DIMENSIONS = {
     ("krasnikov", "cylindrical"): {
         "t": "T", "x": "L", "r": "L", "\\phi": "1", "k": "1",
     },
+    # The three Euler angles of the three sphere are pure numbers, so the lengths of the
+    # closed universe sit in the three scale factors, as a radius does.
+    ("mixmaster", "euler_angles"): {
+        "t": "T", "\\psi": "1", "\\theta": "1", "\\phi": "1", "a_1": "L", "a_2": "L", "a_3": "L",
+    },
+    # Minkowski's inertial chart with its metric multiplied by the square of a conformal
+    # factor, which multiplies proper time and so has to be a pure number.
+    ("malament_hogarth", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1",
+    },
+    # The shift is the gradient of a potential and a flow in units of c, so the potential is
+    # a length and each first derivative of it a pure number, as Lentz's N_i is with c = 1.
+    ("lentz", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "\\phi": "L",
+    },
     ("minkowski", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L"},
     ("minkowski", "spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1"},
     ("minkowski", "double_null"): {"u": "T", "v": "T", "y": "L", "z": "L"},
@@ -302,6 +317,12 @@ DIMENSIONS = {
     # beside it, so the cross term 2l cos(theta) carries the one length g_{t phi} wants.
     ("taub_nut", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L",
+    },
+    # The mass function is folded into a length, m = GM(r)/c^2, as Oppenheimer and Volkoff
+    # folded it into their u, so 1 - 2m/r is dimensionless and the redshift function, sitting
+    # in an exponential, is dimensionless too.
+    ("tov", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Phi": "1", "m": "L",
     },
     # The areal radius is a length and the comoving shell label r is a length beside it,
     # so \partial_r R is dimensionless and the energy function has to be dimensionless
