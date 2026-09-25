@@ -981,7 +981,16 @@ CAPTIONS = {
 # Why a coordinate system of a spacetime with no view at all has none, as prose a reader is
 # given in place of the diagram. A system of a spacetime drawn elsewhere that has no view is
 # accounted for in _tools/README.md instead.
-NOT_DRAWN = {}
+NOT_DRAWN = {
+    "cosmic_string": {
+        "interior_cap": [
+            "Gott's core has no spacetime diagram of its own. On its plane of $t$ and $\\chi$ the metric "
+            "is $-c^2dt^2 + \\ell^2d\\chi^2$, which is flat, and its light rays are Minkowski's. The core "
+            "acts on light across that plane, in the cap of $\\chi$ and $\\phi$, "
+            "$\\ell^2(d\\chi^2 + \\sin^2\\chi\\,d\\phi^2)$, a piece of a sphere whose total curvature, "
+            "$2\\pi(1 - \\cos\\chi_0) = \\delta$, is the wedge the cone outside it is missing."],
+    },
+}
 
 
 # ---------------------------------------------------------------- reading a chart
