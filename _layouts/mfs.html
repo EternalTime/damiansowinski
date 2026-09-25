@@ -1280,10 +1280,12 @@
         }).join('') + '</div>';
       }
 
+      // The flat views of a coordinate system and then its figures in three dimensions, each
+      // its own button, or, for a system that has neither, the reason in their place.
       function diagramSection(metricId, coordId) {
         var data = _diagramCache[metricId];
-        var views = data && data.systems[coordId];
-        if (!views || !views.length) return '';
+        var views = ((data && data.systems[coordId]) || []).concat((data && data.projections && data.projections[coordId]) || []);
+        if (!views.length) return data && data.none && data.none[coordId] ? noneSection('spacetime diagram', data.none[coordId].text) : '';
         var buttons = views.length > 1 ? '<div class="mfs-nr-buttons">' + views.map(function(v, i) {
           return '<button type="button" class="mfs-nr-btn' + (i ? '' : ' mfs-nr-on') + '">' + nrEsc(v.label) + '</button>';
         }).join('') + '</div>' : '';
@@ -1294,12 +1296,13 @@
               buttons,
             '</div>',
             views.map(function(view, i) {
+              var figure = !!view.layers;
               return [
                 '<div class="mfs-nr-view' + (i ? ' mfs-nr-hidden' : '') + '">',
-                  nrFigure(view),
+                  figure ? pjFigure(view) : nrFigure(view),
                   '<div class="mfs-nr-text">',
-                    '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(p) + '</p>'; }).join(''), '</div>',
-                    nrLegend(view),
+                    '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(figure ? nrEsc(p) : p) + '</p>'; }).join(''), '</div>',
+                    figure ? pjLegend(view) : nrLegend(view),
                     '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn at</span> ' + nrProse(view.settings) + '</div>',
                     view.input ? '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn with</span> ' + nrProse(view.input) + '</div>' : '',
                   '</div>',
@@ -1308,6 +1311,53 @@
             }).join(''),
           '</div>'
         ].join('');
+      }
+
+      // A section whose figure does not exist, with the reason it does not in its place.
+      function noneSection(label, paragraphs) {
+        return [
+          '<div class="mfs-section mfs-diagram mfs-diagram-none">',
+            '<div class="mfs-section-head"><div class="mfs-section-label">' + label + '</div></div>',
+            '<div class="mfs-nr-caption">', paragraphs.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
+          '</div>'
+        ].join('');
+      }
+
+      /* ── Figures in three dimensions ──
+         A slice of one time and two spatial coordinates, drawn from the published metric by
+         _tools/derivations/projections.py and projected once from a fixed point of view, so
+         the file holds polylines, polygons and points of the page's own plane in the order
+         they are painted, farthest first, with TeX labels laid over them as a conformal
+         diagram's are. Nothing is turned here: a figure prints as it is seen, and the
+         application draws the same data. Its frame and labels are the conformal diagram's. */
+      function pjSvg(view, f) {
+        var out = view.layers.map(function(L) {
+          var cls = 'pj-' + L['class'];
+          if (L.kind === 'fill') return nrEl('path', { 'class': cls + '-fill', d: cdPath(f, L.points, true) });
+          if (L.kind === 'line') return nrEl('path', { 'class': cls, d: cdPath(f, L.points, false) });
+          return nrEl('circle', { 'class': cls, cx: f.x(L.at[0]).toFixed(1), cy: f.y(L.at[1]).toFixed(1), r: 1.6 });
+        });
+        return nrEl('svg', { 'class': 'mfs-cd-svg mfs-pj-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
+          'aria-label': 'Light cones in three dimensions, ' + nrPlain(view.label) }, out.join(''));
+      }
+
+      function pjFigure(view) {
+        var f = cdFrame(view), wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
+        return '<div class="mfs-cd-figure mfs-pj-figure" style="max-width:' + wide.toFixed(0) + 'px;--cd-wide:' + wide.toFixed(0) +
+          'px;--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '"><div class="mfs-cd-drawing">' + pjSvg(view, f) + cdLabels(view, f) + '</div></div>';
+      }
+
+      function pjLegend(view) {
+        return '<div class="mfs-nr-legend">' + view.legend.map(function(item) {
+          var cls = 'pj-' + item[1], inner;
+          if (item[0] === 'cone') inner = '<path class="' + cls + '-fill" d="M17 14 L9 3 L25 3 Z"/><path class="' + cls + '" d="M9 3 L17 14 L25 3"/>' +
+            '<ellipse class="' + cls + '-rim" cx="17" cy="3" rx="8" ry="2"/>';
+          else if (item[0] === 'fill') inner = '<rect class="' + cls + '-fill cd-swatch-fill" x="2" y="2" width="30" height="12"/>';
+          else if (item[0] === 'point') inner = '<circle class="' + cls + '" cx="17" cy="8" r="3"/>';
+          else inner = '<line class="' + cls + '" x1="2" y1="8" x2="32" y2="8"/>';
+          return '<span class="mfs-nr-item"><svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner +
+            '</svg><span>' + nrProse(nrEsc(item[2])) + '</span></span>';
+        }).join('') + '</div>';
       }
 
       // The view buttons, and the axes' values under the pointer.
@@ -1471,6 +1521,7 @@
 
       function conformalSection(metricId, coordId) {
         var data = _conformalCache[metricId];
+        if (data && data.none) return noneSection('conformal diagram', data.none);
         if (!data || !data.views || !data.views.length) return '';
         var views = data.views, shown = 0;
         views.some(function(v, i) { if (v.system && v.system === coordId) { shown = i; return true; } return false; });
@@ -2319,6 +2370,17 @@
     .nr-apparent { fill: none; stroke: var(--blue-lighter); stroke-width: 2.8; stroke-dasharray: 0.5 5; stroke-linecap: round; }
     .nr-singular { fill: none; stroke: var(--pink-dark); stroke-width: 1.8; }
     .nr-reference { stroke: var(--text-dim); stroke-width: 1; stroke-dasharray: 3 5; stroke-opacity: 0.7; }
+    /* A figure in three dimensions: the floor it stands on, the axis, the circles it marks,
+       and the cones, filled faintly and painted farthest first. */
+    .mfs-pj-svg { background: rgba(0,0,0,0.55); }
+    .pj-floor { fill: none; stroke: rgba(168,192,208,0.26); stroke-width: 1; }
+    .pj-axis { fill: none; stroke: var(--text-dim); stroke-width: 1.4; stroke-dasharray: 2 4; stroke-linecap: round; }
+    .pj-critical { fill: none; stroke: var(--cyan); stroke-width: 2; stroke-dasharray: 7 5; }
+    .pj-ctc { fill: none; stroke: var(--pink-light); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+    .pj-cone-fill { fill: rgba(212,175,55,0.16); stroke: none; }
+    .pj-cone { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+    .pj-cone-rim { fill: none; stroke: var(--gold); stroke-width: 1.1; stroke-opacity: 0.8; }
+    .pj-cone-apex { fill: var(--gold); }
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
        diagrams'; the figure, its labels and its lines are these. A label is sized in units
        of the figure's width, n being n units of the SVG's 628 unit wide viewBox. */
@@ -2797,6 +2859,14 @@
       .mfs-print-body .nr-cone-dot { fill: #a8841f; }
       .mfs-print-body .nr-areal, .mfs-print-body .nr-reference, .mfs-print-body .nr-g00 { stroke: #666; }
       .mfs-print-body .nr-gtt { stroke: #2a6e2a; }
+      .mfs-print-body .mfs-pj-svg { background: #fff; }
+      .mfs-print-body .pj-floor { stroke: #c8c8c8; }
+      .mfs-print-body .pj-axis { stroke: #666; }
+      .mfs-print-body .pj-critical { stroke: #0a6e82; }
+      .mfs-print-body .pj-ctc { stroke: #c2185b; }
+      .mfs-print-body .pj-cone-fill { fill: rgba(168,132,31,0.12); }
+      .mfs-print-body .pj-cone, .mfs-print-body .pj-cone-rim { stroke: #a8841f; }
+      .mfs-print-body .pj-cone-apex { fill: #a8841f; }
       /* Every view of the conformal diagram prints too, at most 12cm wide, a tall one still
          held to its screen height, with its lines in the print copy's darker inks. */
       .mfs-print-body .mfs-cd-figure { width: 12cm; }
