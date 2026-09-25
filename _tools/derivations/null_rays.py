@@ -890,8 +890,9 @@ CAPTIONS = {
         "geodesics.",
     ],
     ("stockum_dust", "cylindrical", "inside"): [
-        "This is the cylinder of $t$ and $\\phi$ at $r = R/2$ and $z = 0$, cut along $\\phi = \\pm\\pi$ "
-        "and unrolled, with $\\phi$ scaled by $r/R$ across, so the left and right edges are one line. "
+        "This is the cylinder of $t$ and $\\phi$ at $r = R/2$ and $z = 0$, opened along the line "
+        "$\\phi = \\pm\\pi$ and drawn with $r\\phi/R$ across, so that its left and right edges are that "
+        "one line. "
         "The metric on it is $-dt^2 - (2r^2/R)\\,dt\\,d\\phi + r^2(1 - r^2/R^2)\\,d\\phi^2$, the same at "
         "every point, and its light rays are straight: $dt = r(1 - r/R)\\,d\\phi$ moving to $+\\phi$ and "
         "$dt = -r(1 + r/R)\\,d\\phi$ moving to $-\\phi$. The cross term tilts every cone toward $+\\phi$, "
@@ -904,8 +905,8 @@ CAPTIONS = {
         "$t$, lie outside every cone and are spacelike.",
     ],
     ("stockum_dust", "cylindrical", "beyond"): [
-        "This is the cylinder of $t$ and $\\phi$ at $r = 3R/2$ and $z = 0$, unrolled in the same way, "
-        "its left and right edges one line. Beyond $r = R$ the coefficient $g_{\\phi\\phi} = "
+        "This is the cylinder of $t$ and $\\phi$ at $r = 3R/2$ and $z = 0$, opened along "
+        "$\\phi = \\pm\\pi$ in the same way. Beyond $r = R$ the coefficient $g_{\\phi\\phi} = "
         "r^2(1 - r^2/R^2)$ is negative, and the cones have tipped over past the horizontal: along "
         "$dt = r(1 - r/R)\\,d\\phi$ a ray moving to $+\\phi$ goes down in $t$, while a ray moving to "
         "$-\\phi$ climbs steeply, $dt = -r(1 + r/R)\\,d\\phi$. Every horizontal line lies inside the "
@@ -917,9 +918,9 @@ CAPTIONS = {
         "moving to $-\\phi$ away from it.",
     ],
     ("tov", "spherical", "radial"): [
-        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, the same at every fixed "
-        "angle by spherical symmetry, through a star of fluid with a polytrope for its equation of "
-        "state. Its mass and redshift functions come from $G^t{}_t$ and $G^r{}_r$ and its pressure "
+        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ through a star of fluid "
+        "with a polytrope for its equation of state, and spherical symmetry makes it the same at "
+        "every other angle. Its mass and redshift functions come from $G^t{}_t$ and $G^r{}_r$ and its pressure "
         "from $\\partial_r p = -(\\rho c^2 + p)\\,\\partial_r\\Phi$, and beyond its surface, where the "
         "pressure falls to zero, the same coordinates carry on as Schwarzschild's exterior. The "
         "rays obey $c\\,dt = \\pm e^{-\\Phi}(1 - 2m/r)^{-1/2}\\,dr$.",
@@ -930,9 +931,9 @@ CAPTIONS = {
     ],
     ("tov", "spherical", "through"): [
         "This is the line through the centre of the star in the plane $\\theta = \\pi/2$: $x = r$ on the "
-        "right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, which spherical symmetry makes "
-        "exact. Rays cross the centre smoothly, where the cones are narrowest and the Kretschmann "
-        "scalar is finite, and the surface shows on both sides.",
+        "right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, and spherical symmetry makes the "
+        "two halves mirror images. Rays cross the centre smoothly, where the cones are narrowest and "
+        "the Kretschmann scalar is finite, and the surface crosses the line on both sides.",
     ],
     ("malament_hogarth", "cartesian", "tx"): [
         "This is the plane of $t$ and $x$ at $y = z = 0$, through the removed event at the origin. "
@@ -988,8 +989,8 @@ CAPTIONS = {
         "curve, the sphere $R = 2GM/c^2$.",
     ],
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): [
-        "This is the plane of $v$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $cv - r$ up "
-        "so that the ingoing rays, $v$ constant, run at 45°. A shell of null dust of mass $M$ falls in "
+        "This is the plane of $v$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $cv - r$ as "
+        "the vertical axis so that the ingoing rays, $v$ constant, run at 45°. A shell of null dust of mass $M$ falls in "
         "along $v = 0$: before it $m = 0$ and the metric is flat, and after it $m = M$ and the metric "
         "is Schwarzschild's in ingoing coordinates, with $g^{rr} = 1 - r_s/r$. The outgoing rays run "
         "at 45° until the shell reaches them and bend away from $r_s$ after.",
@@ -1000,8 +1001,8 @@ CAPTIONS = {
         "smaller $r$, and $r = 0$ is where the Kretschmann scalar $48G^2m^2/c^4r^6$ diverges.",
     ],
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): [
-        "This is the plane of $u$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $cu + r$ up "
-        "so that the outgoing rays, $u$ constant, run at 45°. It is the imploding shell run backward "
+        "This is the plane of $u$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $cu + r$ as "
+        "the vertical axis so that the outgoing rays, $u$ constant, run at 45°. It is the imploding shell run backward "
         "in time: a shell of null dust carries the whole mass $M$ out along $u = 0$, with "
         "Schwarzschild's metric in outgoing coordinates before it passes and flat space after.",
         "Before the shell, the region inside $r_s$ is a white hole: every future cone there points "
