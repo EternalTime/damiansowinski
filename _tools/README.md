@@ -74,6 +74,19 @@ The tests hold this rule over every metric file on disk, so a new spacetime carr
 A character outside ASCII is written as itself, as the `î` of `Lemaître` is, and never as a JSON `\u` escape with its backslash doubled, since neither the page nor TeX reads such an escape and the reader sees all six characters of it.
 The tests hold that rule over the same fields.
 
+## Whom the prose is for
+
+The prose on the page is for someone who came for a spacetime, and never for whoever builds the collection.
+So it never names the collection's own machinery: no entry, no published block or published chart, no field in the JSON sense, no file, no variant, nothing said to be printed or published, and no metric identifier in backticks.
+And no sentence has the page for its subject: nothing is above or below, no section shows anything, and no history describes anything.
+A sentence whose subject is the collection, an entry, a chart as the collection lists it, a block, a field, a section or the page is rewritten so that its subject is the coordinate, the surface, the parameter, the horizon or the claim, as "Components are taken in the chart $x^0 = ct$" and "No component assumes a field equation" are.
+A coordinate chart in the geometric sense stays, since it is mathematics, and so does a field that is physics.
+The derivation notes follow the same rule, and where one has to say what the page states, it names the thing itself: the metric components, the Christoffel symbols or the Weyl tensor.
+This file is written for whoever builds the collection, and is the one place its words belong.
+
+The tests hold the words that can only ever mean the machinery out of every prose field of every metric and out of every caption, label and declared input of every diagram.
+A history keeps "published" and "printed" for the papers it tells of, and "building block" stays wherever it is written, since neither names the collection.
+
 ## The shape of a history
 
 A history has at least five paragraphs, and every paragraph has three to six sentences, so no paragraph runs to more than twice the length of another.
@@ -135,7 +148,7 @@ It needs more than sympy, and takes about nine minutes for the whole collection,
 The second command stamps each diagram file's version into the index, as it does for the metrics.
 
 `DIAGRAMS` in `null_rays.py` is the table of every view, one row each: the plane, the parameter values, the coordinates held fixed, the plot range, the orientation rule and any declared input.
-`CAPTIONS` beside it carries each view's caption, which is prose under the rule above, and the tests hold the captions, the labels and the declared inputs to it as they hold the metrics.
+`CAPTIONS` beside it carries each view's caption, which is prose, and the tests hold the captions, the labels and the declared inputs to the rules for prose as they hold the metrics.
 A new view is a row in each, and the script refuses to run while one lacks the other.
 
 A caption opens by naming its plane: the two coordinates drawn and the value of every coordinate held fixed, as "the plane of $t$ and $r$ at $\theta = \pi/2$ and $\phi = 0$".

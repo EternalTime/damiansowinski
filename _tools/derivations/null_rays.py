@@ -214,17 +214,17 @@ DIAGRAMS = [
     Diagram("frw", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 3, 0, 2),
             "$r\\;[c/H_0]$", "$ct\\;[c/H_0]$", {"k": 0}, EQUATOR, areal=True, dust=FRW_DUST,
             reference="$a = 1$",
-            input="Dust: $a(t)$ solved from the entry's own published $G^r{}_r = 0$ with $k = 0$, "
+            input="Dust: $a(t)$ solved from this spacetime's own $G^r{}_r = 0$ with $k = 0$, "
                   "starting from $a = 1$ and $\\dot a = H_0$ at the dashed line."),
     Diagram("frw", "comoving_spherical", "through", "through the observer", ("t", "r"),
             (0, 1.5, 0, 3), "$x\\;[c/H_0]$", "$ct\\;[c/H_0]$", {"k": 0}, EQUATOR, mirror=True,
             families=SIDEWAYS, cones=(4, 8), areal=True, dust=FRW_DUST, reference="$a = 1$",
-            input="Dust: $a(t)$ solved from the entry's own published $G^r{}_r = 0$ with $k = 0$, "
+            input="Dust: $a(t)$ solved from this spacetime's own $G^r{}_r = 0$ with $k = 0$, "
                   "starting from $a = 1$ and $\\dot a = H_0$ at the dashed line."),
     Diagram("frw", "conformal_spherical", "radial", "$\\eta$ and $r$", ("\\eta", "r"), (0, 3, 0, 3),
             "$r\\;[c/H_0]$", "$\\eta\\;[c/H_0]$", {"k": 0}, EQUATOR, tau="eta", areal=True,
             dust=FRW_DUST, reference="$a = 1$",
-            input="Dust, for the markers only: $a(\\eta)$ solved from this chart's own published "
+            input="Dust, for the markers only: $a(\\eta)$ solved from the conformal chart's own "
                   "$G^r{}_r = 0$ with $k = 0$, starting from $a = 1$ and $a' = 1$ at the dashed line."),
     Diagram("ellis_bronnikov", "spherical", "radial", "$t$ and $r$", ("t", "r"), (-3, 3, -3, 3),
             "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, families=SIDEWAYS, areal=True,
@@ -294,7 +294,7 @@ DIAGRAMS = [
     Diagram("bianchi", "type_i_cartesian", "tx", "$t$ and $x$", ("t", "x"), (-1, 1, 0, 2),
             "$x\\;[c/\\bar H]$", "$ct\\;[c/\\bar H]$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS,
             dust=BIANCHI_DUST, reference="$a_i = 1$",
-            input="Dust: the three scale factors solved from the entry's own published "
+            input="Dust: the three scale factors solved from this spacetime's own "
                   "$G^x{}_x = G^y{}_y = G^z{}_z = 0$, starting from $a_i = 1$ with rates "
                   "$(-0.5, 1.5, 2.0)\\,\\bar H$ at the dashed line, $\\bar H$ their mean."),
     Diagram("godel", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$t$",
@@ -302,7 +302,7 @@ DIAGRAMS = [
     Diagram("alcubierre", "cartesian", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-3, 3, -2, 2),
             "$x/R$", "$ct/R$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS, cones=(8, 7),
             functions={"v_s": "2", "f": _alcubierre_profile()},
-            input="$v_s = 2$, and Alcubierre's own profile, which the entry names, "
+            input="$v_s = 2$, and Alcubierre's own profile, "
                   "$f = [\\tanh\\sigma(r_s + R) - \\tanh\\sigma(r_s - R)]/(2\\tanh\\sigma R)$ "
                   "with $R = 1$ and $\\sigma = 4$."),
     Diagram("natario", "cartesian_flow", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-3, 3, -2, 2),
@@ -334,9 +334,9 @@ CAPTIONS = {
         "symmetry every fixed angle gives the same picture. Outside $r_s$ the cones narrow toward "
         "the vertical as $r \\to r_s$, because $dt/dr = \\pm(1 - r_s/r)^{-1}$ diverges there. The "
         "ingoing family piles up against $r_s$ toward $t \\to +\\infty$, and the outgoing family "
-        "peels away from it out of $t \\to -\\infty$; the two Eddington-Finkelstein charts of this "
-        "entry carry them across.",
-        "The published domain of this chart stops at $r_s$, and the region inside is hatched. "
+        "peels away from it out of $t \\to -\\infty$; the two Eddington-Finkelstein charts carry "
+        "them across.",
+        "The domain of this chart stops at $r_s$, and the region inside is hatched. "
         "Evaluated there, the same components give cones lying on their side, because inside $r_s$ "
         "it is $r$ that is the time. This chart alone cannot say whether that region is the black "
         "hole or the white hole; the cones follow the ingoing chart, which makes it the black "
@@ -362,7 +362,7 @@ CAPTIONS = {
         "r$ as the vertical axis so that the outgoing rays, $u = $ const, run at 45°. The retarded "
         "chart crosses the other horizon. Inside $r_s$ both edges of every future cone point to "
         "larger $r$: this is the white hole, which nothing from outside can enter.",
-        "It is the time reverse of the ingoing chart, as its published $g_{ur} = -1$, against the "
+        "It is the time reverse of the ingoing chart, as its $g_{ur} = -1$, against the "
         "ingoing chart's $g_{vr} = +1$, requires.",
     ],
     ("schwarzschild", "eddington_finkelstein_outgoing", "chart"): [
@@ -373,9 +373,9 @@ CAPTIONS = {
     ],
     ("frw", "comoving_spherical", "radial"): [
         "This is the plane of $t$ and the comoving $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, the "
-        "same at every fixed angle by spherical symmetry. The entry leaves $a(t)$ free, so here it "
-        "is solved from the entry's own published $G^r{}_r = -2\\ddot a/a - \\dot a^2/a^2 - "
-        "k/a^2$, set to zero, which is pressureless dust. Integrated back from the dashed line it "
+        "same at every fixed angle by spherical symmetry. The line element leaves $a(t)$ free, so "
+        "here it is solved from its own $G^r{}_r = -2\\ddot a/a - \\dot a^2/a^2 - k/a^2$, set "
+        "to zero, which is pressureless dust. Integrated back from the dashed line it "
         "reaches $a = 0$ at $H_0t = 2/3$ before it, the Einstein-de Sitter age, and that instant "
         "is $t = 0$ here.",
         "The cones are $dt/dr = \\pm a(t)$ and open out toward the bang, where the curvature "
@@ -414,15 +414,15 @@ CAPTIONS = {
     ],
     ("morris_thorne", "spherical", "radial"): [
         "This is the plane of $t$ and the areal radius $r$ at $\\theta = \\pi/2$ and $\\phi = 0$. "
-        "The entry leaves $\\Phi(r)$ and $b(r)$ free. With $\\Phi = 0$ and $b = b_0^2/r$ it is the "
+        "The metric leaves $\\Phi(r)$ and $b(r)$ free. With $\\Phi = 0$ and $b = b_0^2/r$ it is the "
         "Ellis-Bronnikov wormhole, with $r^2 = r_{\\rm EB}^2 + \\ell^2$ and $b_0 = \\ell$, and "
         "these rays conserve $t \\mp \\sqrt{r^2 - b_0^2} = t \\mp r_{\\rm EB}$: they are the same "
-        "rays as that entry's.",
+        "rays as in the Ellis-Bronnikov chart.",
         "In this areal chart the cones close toward the throat at $r = b_0$, as they would at a "
         "horizon, because $g_{rr} = (1 - b_0^2/r^2)^{-1}$ diverges there. But $g_{tt} = -1$ stays "
         "finite, so $\\partial_t$ is timelike right up to the throat: the chart ends at $b_0$, and "
         "the spacetime carries on. The rays reach the throat in finite $t$ and pass into the other "
-        "mouth, which the Ellis-Bronnikov entry draws in full. Below $b_0$ the formula gives a "
+        "mouth, which the Ellis-Bronnikov chart, running through the throat, covers in full. Below $b_0$ the formula gives a "
         "metric on this plane with no null directions at all.",
     ],
     ("minkowski", "spherical", "radial"): [
@@ -433,7 +433,7 @@ CAPTIONS = {
     ("minkowski", "spherical_null", "radial"): [
         "This is the same plane of flat spacetime in the double null chart, $u$ and $v$ at "
         "$\\theta = \\pi/2$ and $\\phi = 0$, drawn against $(v - u)/2$ and $(u + v)/2$. It checks "
-        "the method where $g_{uu} = g_{vv} = 0$ and only $g_{uv}$ is published. The null condition "
+        "the method where $g_{uu} = g_{vv} = 0$ and only $g_{uv}$ is nonzero. The null condition "
         "still gives both directions, which are the coordinate lines themselves.",
     ],
     ("minkowski", "cartesian", "tx"): [
@@ -447,15 +447,16 @@ CAPTIONS = {
         "infinite $T$ to get there, $cT = \\pm(c^2/a)\\ln X + $ const.",
         "That line is the Rindler horizon, a horizon for the accelerated observers alone: the "
         "spacetime is flat, its Kretschmann scalar is zero, and the rays carry on across $X = 0$ "
-        "into the rest of Minkowski spacetime, which the Cartesian chart of this entry draws.",
+        "into the rest of Minkowski spacetime, which the Cartesian chart covers whole.",
     ],
     ("de_sitter", "static_spherical", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ in the static "
         "chart, the same at every fixed angle by spherical symmetry. The cones close at the "
         "cosmological horizon $r = \\sqrt{3/\\Lambda}$, where $g^{rr} = 1 - \\Lambda r^2/3$ "
         "vanishes, on the far side from the observer at $r = 0$.",
-        "The published domain is the observer's side. Beyond it $t$ is spacelike, and the cones "
-        "follow the outgoing family toward larger $r$: the region the observer's own light reaches.",
+        "The domain of the static chart is the observer's side. Beyond it $t$ is spacelike, and the "
+        "cones follow the outgoing family toward larger $r$: the region the observer's own light "
+        "reaches.",
     ],
     ("de_sitter", "static_spherical", "through"): [
         "This is the static chart along a line through the observer in the plane $\\theta = "
@@ -486,8 +487,8 @@ CAPTIONS = {
     ("anti_de_sitter", "poincare", "tx"): [
         "This is the plane of $t$ and $x$ at $y = 0$ and $z = L$ in the Poincaré chart. The metric "
         "on it is $(L^2/z^2)(-c^2dt^2 + dx^2)$, conformal to flat, so the rays are exact 45° "
-        "lines, as they are at every $z$. The boundary that a ray reaches in finite time shows in "
-        "the global chart of this entry.",
+        "lines, as they are at every $z$. The boundary that a ray reaches in finite time lies off "
+        "this plane, and in the global chart it is the edge the rays flatten toward.",
     ],
     ("rn_metric", "spherical", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, the same at every "
@@ -526,12 +527,12 @@ CAPTIONS = {
         "is $x \\to \\infty$.",
     ],
     ("interior_schwarzschild", "spherical", "radial"): [
-        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ over the whole of "
-        "the published domain $r \\in [0, R]$, for a star with $R = 1.5\\,r_s$. The cones are "
+        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ over the whole "
+        "domain of the chart, $r \\in [0, R]$, for a star with $R = 1.5\\,r_s$. The cones are "
         "narrowest at the centre, where $|g_{tt}|$ is least and the redshift greatest, and they "
         "stay open. They would close at the centre exactly when $3\\sqrt{1 - r_s/R} = 1$, which is "
-        "Buchdahl's $R = 9r_s/8$. Beyond $R$ the spacetime is Schwarzschild's exterior, which that "
-        "entry draws.",
+        "Buchdahl's $R = 9r_s/8$. Beyond $R$ the spacetime is Schwarzschild's exterior, and the rays "
+        "go on into it as they do in Schwarzschild's own chart.",
     ],
     ("interior_schwarzschild", "spherical", "through"): [
         "This is the line through the centre of the star in the plane $\\theta = \\pi/2$: $x = r$ "
@@ -547,7 +548,7 @@ CAPTIONS = {
         "the axis. There $g^{rr} = \\Delta/\\Sigma$ vanishes at both roots of $\\Delta$, $r_\\pm = "
         "GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - a^2}$, and the cones close at both; between them they "
         "point to smaller $r$, following the ingoing family.",
-        "The published domain begins at $r_+$, the outer zero of $g^{rr}$, and below it the "
+        "The domain of the chart begins at $r_+$, the outer zero of $g^{rr}$, and below it the "
         "drawing is hatched. On the axis the ergosurface touches the horizon, so the plane stays "
         "Lorentzian, and the Kretschmann scalar stays finite at $r = 0$, because the ring "
         "singularity lies in the equatorial plane.",
@@ -559,7 +560,7 @@ CAPTIONS = {
         "one is turned out of the plane, as it is in Kerr. With the charge, $g^{rr}$ vanishes at "
         "$r_\\pm = GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - a^2 - r_Q^2}$, the cones close at both, and "
         "between them they point to smaller $r$.",
-        "The published domain begins at $r_+$, the outer zero of $g^{rr}$. On the axis the "
+        "The domain of the chart begins at $r_+$, the outer zero of $g^{rr}$. On the axis the "
         "Kretschmann scalar stays finite at $r = 0$, because the ring singularity lies in the "
         "equatorial plane.",
     ],
@@ -585,7 +586,7 @@ CAPTIONS = {
     ],
     ("godel", "cartesian", "tx"): [
         "This is the plane of $t$ and $x$ at $y = z = 0$. The Gödel universe has no time function: "
-        "its published $g^{tt} = 2\\omega^2$ is positive, so the surfaces $t = $ const are not "
+        "its $g^{tt} = 2\\omega^2$ is positive, so the surfaces $t = $ const are not "
         "spacelike, and the cones are oriented instead by $\\partial_t$, which is timelike "
         "everywhere.",
         "The metric on this plane is $(-dt^2 + dx^2)/2\\omega^2$, so the curves drawn are null and "
@@ -621,7 +622,7 @@ CAPTIONS = {
         "the same everywhere, and the cones follow it, since $t$ orients the cones outside the "
         "tube.",
         "The dash dot line is $g^{tt} = 0$, where $k = 0$ and the surfaces $t = $ const stop being "
-        "spacelike. The entry writes its Kretschmann scalar as $0/0$ on the axis, so the drawing "
+        "spacelike. The expression for the Kretschmann scalar is $0/0$ on the axis, so the drawing "
         "marks no singular line here; the tube's curvature is concentrated in its thin walls.",
     ],
     ("pp_wave", "exact_plane_wave", "tz"): [

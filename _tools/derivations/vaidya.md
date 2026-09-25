@@ -1,14 +1,13 @@
 # The Vaidya radiating star
 
-This is the working behind the two coordinate systems in `MFS/assets/data/metrics/vaidya.json`.
-Every number the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+We derive every quantity of Vaidya's radiating star in its outgoing and ingoing charts, in order, from the line element down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we have not computed.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares its result with every component, so each component can be checked by hand and by machine independently.
 
-Vaidya is the first entry in the collection that is not a vacuum.
+Vaidya's radiating star is not a vacuum.
 Its Ricci tensor and its Einstein tensor do not vanish, and the single component each of them has is the whole physical content of the solution: a flux of pure radiation streaming along null rays.
-Step 8 is where that component appears, Step 10 reads it as a stress energy tensor, and Step 12 shows why no scalar invariant can see it at all.
+That component appears in Step 8, becomes a stress energy tensor in Step 10, and in Step 12 turns out to be invisible to every scalar invariant.
 
 ---
 
@@ -23,19 +22,19 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+and every Riemann component follows this sign convention.
 
 The Ricci tensor is the standard contraction on the first lower index,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-which is what the collection publishes everywhere.
+and no other contraction is used.
 Here the choice matters, because the Ricci tensor does not vanish.
-Everything below is computed with it, contracting on the last index instead gives the negative of every Ricci and Einstein component, and Step 10 carries the sign through to the field equations, which on this convention read $G_{\mu\nu} = 8\pi G\,T_{\mu\nu}/c^4$.
+We compute everything with it, contracting on the last index instead gives the negative of every Ricci and Einstein component, and the sign carries through to the field equations of Step 10, which on this convention read $G_{\mu\nu} = 8\pi G\,T_{\mu\nu}/c^4$.
 
 Factors of $G$ and $c$ are kept explicit.
-The chart, here and everywhere else in the collection, is the one whose time coordinate is $x^0 = cT$, so here it is $x^0 = cu$ in the outgoing chart and $x^0 = cv$ in the ingoing one.
-The index is printed with the bare letter $u$, but the component printed against it is a component of the chart in which the zeroth coordinate is $cu$ and therefore carries a length.
+The chart is the one whose time coordinate is $x^0 = cT$, so here it is $x^0 = cu$ in the outgoing chart and $x^0 = cv$ in the ingoing one.
+The time index is labelled with the bare letter $u$, but a component with that index is a component of the chart in which the zeroth coordinate is $cu$ and therefore carries a length.
 
 This has one consequence worth stating before any algebra is done.
 A dot is a derivative with respect to the chart coordinate, not with respect to the bare one:
@@ -44,10 +43,10 @@ $$\dot{m} \equiv \frac{dm}{d(cu)} = \frac{1}{c}\frac{dm}{du},$$
 
 so $\dot{m}$ is a mass per unit length rather than a mass per unit time.
 The same reading applies to the dots in the geodesic equations, where $\dot{u}$ means $d(cu)/d\lambda$.
-It is the reading that makes every term of every published equation carry the dimensions of its left hand side, which Step 15 checks term by term.
+It is the reading that makes every term of every equation carry the dimensions of its left hand side, term by term, in the check of Step 15.
 
-Everything from Step 2 to Step 15 is done directly in the chart $x^0 = cu$, so no conversion step is needed at the end: the components computed below are the components the entry prints.
-Where an index is written $0$ it is the chart index the entry prints as $u$.
+Everything from Step 2 to Step 15 is done directly in the chart $x^0 = cu$, so nothing has to be converted at the end: the components computed are the final ones.
+An index written $0$ is the chart index labelled $u$.
 
 ---
 
@@ -71,12 +70,12 @@ $$\dot{r}_s = \frac{dr_s}{d(cu)} = \frac{2G\dot{m}}{c^2},$$
 
 which is dimensionless, since $\dot m$ is a mass per unit length.
 
-Holding $m$ constant returns the outgoing Eddington-Finkelstein chart of the Schwarzschild entry, with $r_s = 2Gm/c^2$.
-Every formula below reduces to that entry's when $\dot{m} = 0$, and every term carrying $\dot m$ is a term Schwarzschild does not have.
-That is the practical form of the remark in the entry's history: Birkhoff's theorem forces an empty spherical exterior to be static, so a spherical exterior that is not static cannot be empty.
+Holding $m$ constant returns the outgoing Eddington-Finkelstein chart of Schwarzschild, with $r_s = 2Gm/c^2$.
+Every formula reduces to Schwarzschild's when $\dot{m} = 0$, and every term carrying $\dot m$ is a term Schwarzschild does not have.
+That is the practical form of Birkhoff's theorem, which forces an empty spherical exterior to be static, so a spherical exterior that is not static cannot be empty.
 
 The chart is $u \in (-\infty,\infty)$, $r \in (0,\infty)$, $\theta \in [0,\pi]$, $\phi \in [0,2\pi)$.
-Unlike the Schwarzschild chart in $(t,r)$, nothing goes wrong at $r = r_s$; Step 3 shows the determinant does not know that surface is there.
+Unlike the Schwarzschild chart in $(t,r)$, nothing goes wrong at $r = r_s$; the determinant of Step 3 does not know that surface is there.
 
 ---
 
@@ -86,7 +85,7 @@ Reading the coefficients off the line element in the order $(x^0, r, \theta, \ph
 
 $$g_{\mu\nu} = \begin{pmatrix} -f & -1 & 0 & 0 \\ -1 & 0 & 0 & 0 \\ 0 & 0 & r^2 & 0 \\ 0 & 0 & 0 & r^2\sin^2\theta \end{pmatrix}.$$
 
-These four are the entry's `metric_components`: $g_{uu} = -\left(1-\dfrac{2Gm}{c^2r}\right)$, $g_{ur} = g_{ru} = -1$, $g_{\theta\theta} = r^2$ and $g_{\phi\phi} = r^2\sin^2\theta$.
+Its nonzero components are $g_{uu} = -\left(1-\dfrac{2Gm}{c^2r}\right)$, $g_{ur} = g_{ru} = -1$, $g_{\theta\theta} = r^2$ and $g_{\phi\phi} = r^2\sin^2\theta$.
 
 The matrix is block diagonal, so its determinant is the product of the determinants of the two blocks,
 
@@ -105,7 +104,7 @@ $$g^{0\alpha}g_{\alpha 0} = g^{0r}g_{r0} = (-1)(-1) = 1, \qquad g^{0\alpha}g_{\a
 
 $$g^{r\alpha}g_{\alpha 0} = g^{r0}g_{00} + g^{rr}g_{r0} = (-1)(-f) + f(-1) = 0, \qquad g^{r\alpha}g_{\alpha r} = g^{r0}g_{0r} = 1.$$
 
-So the entry's `inverse_metric_components` are $g^{ur} = g^{ru} = -1$, $g^{rr} = 1 - \dfrac{2Gm}{c^2r}$, $g^{\theta\theta} = r^{-2}$ and $g^{\phi\phi} = r^{-2}\sin^{-2}\theta$, with $g^{uu} = 0$.
+So the inverse metric has $g^{ur} = g^{ru} = -1$, $g^{rr} = 1 - \dfrac{2Gm}{c^2r}$, $g^{\theta\theta} = r^{-2}$ and $g^{\phi\phi} = r^{-2}\sin^{-2}\theta$, with $g^{uu} = 0$.
 
 That last fact, $g^{00} = 0$, says that the surfaces of constant $u$ are null.
 It is the reason the Ricci scalar vanishes in Step 9 even though the Ricci tensor does not.
@@ -144,7 +143,7 @@ $$\Gamma_{r\phi\phi} = -\tfrac{1}{2}\partial_r g_{\phi\phi} = -r\sin^2\theta, \q
 $$\Gamma_{\theta\phi\phi} = -\tfrac{1}{2}\partial_\theta g_{\phi\phi} = -r^2\cos\theta\sin\theta, \qquad \Gamma_{\phi\theta\phi} = \Gamma_{\phi\phi\theta} = \tfrac{1}{2}\partial_\theta g_{\phi\phi} = r^2\cos\theta\sin\theta.$$
 
 Every other lowered symbol vanishes, because it would need a derivative that is not on the list.
-These thirteen are exactly the entry's `christoffel.lll` block.
+These thirteen are exactly the nonzero Christoffel symbols with every index lowered.
 
 The only symbol carrying $\dot{m}$ is $\Gamma_{000}$.
 That is the whole of the difference from Schwarzschild at this level, and it is where the radiation will come from.
@@ -170,10 +169,10 @@ $$\Gamma^r_{\theta\theta} = f\,\Gamma_{r\theta\theta} = -rf = -r\left(1-\frac{2G
 
 $$\Gamma^\theta_{r\theta} = \Gamma^\theta_{\theta r} = \frac{1}{r}, \qquad \Gamma^\theta_{\phi\phi} = -\cos\theta\sin\theta, \qquad \Gamma^\phi_{r\phi} = \Gamma^\phi_{\phi r} = \frac{1}{r}, \qquad \Gamma^\phi_{\theta\phi} = \Gamma^\phi_{\phi\theta} = \cot\theta.$$
 
-Those fifteen are the entry's `christoffel.ull` block, and there are no others.
+Those fifteen are the nonzero Christoffel symbols with an upper index, and there are no others.
 
-Two features of the list are used again and again below.
-There is no symbol of the form $\Gamma^\mu_{rr}$, for any $\mu$, which Step 14 turns into the statement that the outgoing rays are affinely parametrised geodesics.
+Two features of the list matter again and again.
+There is no symbol of the form $\Gamma^\mu_{rr}$, for any $\mu$, and so the outgoing rays of Step 14 are affinely parametrised geodesics.
 And $\Gamma^r_{00}$ is the only symbol carrying $\dot{m}$, the trace of $\Gamma_{000}$ after the raising.
 
 ---
@@ -185,7 +184,7 @@ Six direct computations from
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho}$$
 
-give everything, and the rest of the published components follow by the symmetries.
+give everything, and the rest of the components follow by the symmetries.
 
 **$R^0{}_{00r}$.**
 The two connection terms are $\Gamma^0_{0\lambda}\Gamma^\lambda_{0r}$, which needs $\Gamma^0_{0r}$ or $\Gamma^0_{0\theta}$ and finds neither, and $\Gamma^0_{r\lambda}\Gamma^\lambda_{00}$, which needs a symbol $\Gamma^0_{r\lambda}$ and finds none.
@@ -242,7 +241,7 @@ Here $\partial_\theta\Gamma^\theta_{\phi\phi} = \sin^2\theta - \cos^2\theta$, th
 
 $$R^\theta{}_{\phi\theta\phi} = \sin^2\theta - \cos^2\theta - f\sin^2\theta + \cos^2\theta = (1-f)\sin^2\theta = \frac{r_s\sin^2\theta}{r} = \frac{2Gm\sin^2\theta}{c^2r}.$$
 
-Each $\phi$ component is its $\theta$ partner times $\sin^2\theta$ where the index pattern calls for it, by spherical symmetry, and the entry's `riemann.ulll` block lists all thirty four nonzero components that the antisymmetry $R^\mu{}_{\nu\rho\sigma} = -R^\mu{}_{\nu\sigma\rho}$ generates from these.
+Each $\phi$ component is its $\theta$ partner times $\sin^2\theta$ where the index pattern calls for it, by spherical symmetry, and the antisymmetry $R^\mu{}_{\nu\rho\sigma} = -R^\mu{}_{\nu\sigma\rho}$ generates from these all thirty four nonzero Riemann components with an upper index.
 
 ---
 
@@ -265,7 +264,7 @@ Their $\phi$ partners are $R_{0\phi 0\phi} = \sin^2\theta\,R_{0\theta 0\theta}$ 
 $$R_{r\theta r\theta} = -R^0{}_{\theta r\theta} = 0,$$
 
 which is the component a static chart would carry and this one does not.
-The pair symmetry $R_{\mu\nu\rho\sigma} = R_{\rho\sigma\mu\nu}$ and the two antisymmetries generate the thirty two components the entry's `riemann.llll` block lists.
+The pair symmetry $R_{\mu\nu\rho\sigma} = R_{\rho\sigma\mu\nu}$ and the two antisymmetries generate all thirty two nonzero Riemann components with every index lowered.
 
 Only one of them, $R_{0\theta0\theta}$ and its $\phi$ copy, carries $\dot{m}$.
 Every component with both pairs in the $(0,r)$ plane or both in the $(\theta,\phi)$ plane is exactly the Schwarzschild value with $r_s$ read at the retarded time.
@@ -278,11 +277,11 @@ With the contraction $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$, the $00$ componen
 
 $$R_{00} = R^0{}_{000} + R^r{}_{0r0} + R^\theta{}_{0\theta0} + R^\phi{}_{0\phi0}.$$
 
-Step 6 computed all three of the survivors with their last two indices the other way about, so each enters with a minus, and the $\phi$ term equals the $\theta$ term:
+All three of the survivors appear in Step 6 with their last two indices the other way about, so each enters with a minus, and the $\phi$ term equals the $\theta$ term:
 
 $$R_{00} = -\frac{r_s}{r^3}f - 2\left(-\frac{r_s}{2r^3}f + \frac{\dot{r}_s}{2r^2}\right) = -\frac{\dot{r}_s}{r^2} = -\frac{2G\dot{m}}{c^2r^2}.$$
 
-This is the heart of the entry.
+This is the heart of the solution.
 The three terms carrying $f$ cancel exactly, which is Schwarzschild's vacuum condition surviving inside the radiating solution, and what is left is the single term the time dependence of the mass produced.
 The Ricci tensor is proportional to $\dot{m}$ and to nothing else, so it vanishes at any retarded time when the star is not radiating and nowhere else.
 
@@ -296,19 +295,19 @@ For $R_{\theta\theta}$, the first two terms are the Step 6 values of $R^0{}_{\th
 
 $$R_{\theta\theta} = R^0{}_{\theta 0\theta} + R^r{}_{\theta r\theta} + R^\phi{}_{\theta\phi\theta} = -\frac{r_s}{2r} - \frac{r_s}{2r} + \frac{r_s}{r} = 0.$$
 
-The same cancellation kills $R_{\phi\phi}$, and $R_{rr} = 0$ because every one of its four terms would need a symbol $\Gamma^\mu_{rr}$, which Step 5 found does not exist.
+The same cancellation kills $R_{\phi\phi}$, and $R_{rr} = 0$ because every one of its four terms would need a symbol $\Gamma^\mu_{rr}$, which by Step 5 does not exist.
 The components with mixed angular indices vanish by spherical symmetry.
 
-So the entry's `ricci_tensor.ll` block has exactly one entry,
+So the Ricci tensor with both indices down has exactly one nonzero component,
 
 $$R_{uu} = -\frac{2G\dot{m}}{c^2r^2},$$
 
-and the two raised variants follow from $g^{0\alpha}$ having only the one nonzero entry $g^{0r} = -1$:
+and the Ricci tensor with one index up and with both up follows from $g^{0\alpha}$ having only the one nonzero component $g^{0r} = -1$:
 
 $$R^r{}_u = g^{r0}R_{00} = \frac{2G\dot{m}}{c^2r^2}, \qquad R^{rr} = \left(g^{r0}\right)^2R_{00} = -\frac{2G\dot{m}}{c^2r^2},$$
 
 with $R^u{}_u = g^{u\alpha}R_{\alpha u} = g^{uu}R_{uu} = 0$ because $g^{uu} = 0$.
-An index raised on a null tensor moves to a different slot rather than staying where it was, which is why the `ul` variant is printed against $[r,u]$ and the `uu` variant against $[r,r]$.
+An index raised on a null tensor moves to a different slot rather than staying where it was, which is why the one nonzero component with one index up sits at $[r,u]$ and the one with both up at $[r,r]$.
 
 ---
 
@@ -325,11 +324,11 @@ With a vanishing scalar the Einstein tensor is the Ricci tensor,
 
 $$G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = R_{\mu\nu},$$
 
-so the entry publishes
+so the Einstein tensor has
 
 $$G_{uu} = -\frac{2G\dot{m}}{c^2r^2}, \qquad G^r{}_u = \frac{2G\dot{m}}{c^2r^2}, \qquad G^{rr} = -\frac{2G\dot{m}}{c^2r^2},$$
 
-and nothing else in any of the three variants.
+and nothing else, whether its indices are down, mixed or up.
 
 ---
 
@@ -350,13 +349,13 @@ $$k^\nu\nabla_\nu k^\mu = \Gamma^\mu_{rr} = 0$$
 
 for every $\mu$, which is the second use of the missing $\Gamma^\mu_{rr}$ noted in Step 5.
 
-Since $k_\mu k_\nu$ has the single nonzero component $k_0k_0 = 1$, Step 9 can be rewritten with no loss as
+Since $k_\mu k_\nu$ has the single nonzero component $k_0k_0 = 1$, the Einstein tensor of Step 9 can be rewritten with no loss as
 
 $$G_{\mu\nu} = -\frac{2G\dot{m}}{c^2r^2}\,k_\mu k_\nu.$$
 
 That is the pure radiation form: the Einstein tensor is a scalar times the outer square of one null covector.
 
-The standard contraction makes the field equations $G_{\mu\nu} = 8\pi G\,T_{\mu\nu}/c^4$, as Step 1 recorded, so
+The standard contraction makes the field equations $G_{\mu\nu} = 8\pi G\,T_{\mu\nu}/c^4$, as in Step 1, so
 
 $$T_{\mu\nu} = \frac{c^4}{8\pi G}G_{\mu\nu} = -\frac{c^2\dot{m}}{4\pi r^2}\,k_\mu k_\nu = -\frac{c}{4\pi r^2}\frac{dm}{du}k_\mu k_\nu.$$
 
@@ -370,7 +369,7 @@ An observer with four velocity $U^\mu$ measures the energy density
 $$T_{\mu\nu}U^\mu U^\nu = -\frac{c^2\dot{m}}{4\pi r^2}\left(k_\mu U^\mu\right)^2,$$
 
 which is nonnegative for every observer if and only if $\dot{m} \le 0$.
-The weak energy condition therefore holds exactly when the star is losing mass, which is why the outgoing chart is the radiating one and the entry's parameter description says $\dot m \le 0$.
+The weak energy condition therefore holds exactly when the star is losing mass, which is why the outgoing chart is the radiating one, with $\dot m \le 0$.
 
 The luminosity follows from the same expression.
 A static observer far from the star has $U^\mu = (1/\sqrt{f},0,0,0)$ in the chart, from $g_{\mu\nu}U^\mu U^\nu = -1$, so $k_\mu U^\mu = -1/\sqrt{f}$ and the energy density that observer measures is
@@ -381,7 +380,7 @@ The radiation crosses the sphere of radius $r$ at the speed of light, so the pow
 
 $$L = -c^3\dot{m} = -c^2\frac{dm}{du}.$$
 
-That is the reading Lindquist, Schwartz and Misner gave the mass function, quoted in the entry's history: the rate at which $m$ falls with retarded time is the luminosity, in units where an energy is $c^2$ times a mass.
+That is the reading Lindquist, Schwartz and Misner gave the mass function: the rate at which $m$ falls with retarded time is the luminosity, in units where an energy is $c^2$ times a mass.
 
 ---
 
@@ -391,7 +390,7 @@ In four dimensions, with $R = 0$ here,
 
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \tfrac{1}{2}\left(g_{\mu\rho}R_{\sigma\nu} - g_{\mu\sigma}R_{\rho\nu} - g_{\nu\rho}R_{\sigma\mu} + g_{\nu\sigma}R_{\rho\mu}\right).$$
 
-The trace the formula wants is the published Ricci tensor itself, which is what the standard contraction buys.
+The trace the formula wants is the Ricci tensor itself, which is what the standard contraction buys.
 Its only nonzero component is $R_{00} = -\dot{r}_s/r^2$, so a correction term survives only when one index of each pair is $0$ and the metric factor multiplying $R_{00}$ is nonzero.
 
 For the $(0,r)$ plane every candidate correction vanishes:
@@ -408,7 +407,7 @@ The remaining independent components, $C_{0\theta r\theta} = R_{0\theta r\theta}
 
 So the Weyl tensor is the Riemann tensor of Schwarzschild with $r_s$ read at the retarded time, and it carries no $\dot{m}$ anywhere.
 The radiation lives entirely in the Ricci part of the curvature and the tidal part is Coulomb like, the same algebraically special form Schwarzschild has.
-The entry's two Weyl variants are exactly its two Riemann variants with every $\dot{m}$ struck out, which is visible by eye in the published file.
+The Weyl tensor, with an upper index and again with every index lowered, is exactly the Riemann tensor in the same index position with every $\dot{m}$ struck out, which is visible by eye component by component.
 
 ---
 
@@ -422,7 +421,7 @@ Each unordered pair $\{\mu,\nu\}$ with $\mu \ne \nu$ contributes the same produc
 $$K = 4\sum_{I,J}R_{IJ}R^{IJ},$$
 
 the sum running over the six pairs $[0r], [0\theta], [0\phi], [r\theta], [r\phi], [\theta\phi]$ in each slot.
-No published component mixes one plane with another, so only four blocks contribute.
+No nonzero component mixes one plane with another, so only four blocks of pairs contribute.
 
 **The $(0,r)$ plane.**
 Raising an index $0$ replaces it by $-1$ times an index $r$, and raising an index $r$ gives $-1$ times an index $0$ plus $f$ times an index $r$.
@@ -442,7 +441,7 @@ $$\sum_{a,b}R_{a\theta b\theta}R^{a\theta b\theta} = \operatorname{tr}\left(MNMN
 
 where the trace is computed from $NM = \dfrac{1}{r^2}\begin{pmatrix} -C & 0 \\ fC - Q & -C\end{pmatrix}$, whose square has $C^2/r^4$ on both diagonal entries.
 
-This is the step that explains Step 11's conclusion arithmetically.
+This trace explains Step 11's conclusion arithmetically.
 $Q$ is the only component carrying $\dot{m}$, and it appears in $MNMN$ only off the diagonal, so it cannot reach the trace.
 The radiation is invisible to this scalar not by cancellation but because the null structure never lets $Q$ multiply anything but itself, and $R_{r\theta r\theta} = 0$ is what it would have needed.
 
@@ -457,7 +456,7 @@ Adding the four blocks and multiplying by the four orderings,
 
 $$K = 4\left(\frac{r_s^2}{r^6} + \frac{r_s^2}{2r^6} + \frac{r_s^2}{2r^6} + \frac{r_s^2}{r^6}\right) = \frac{12r_s^2}{r^6} = \frac{48G^2m^2}{c^4r^6},$$
 
-which is what the entry publishes.
+the Kretschmann scalar of the radiating star.
 
 Three things follow.
 It is the Schwarzschild value with the instantaneous mass, so the curvature blows up as $r \to 0$ whenever the mass function has not already reached zero there, and that singularity is real rather than a defect of the chart.
@@ -496,7 +495,7 @@ Setting $d\theta = d\phi = 0$ and $ds^2 = 0$ in the line element factorises it,
 $$(c\,du)\left[f\,(c\,du) + 2\,dr\right] = 0,$$
 
 so there are two families.
-The first is $u = \text{const}$, whose tangent is exactly the $k^\mu = \partial_r$ of Step 10: these are the outgoing rays the radiation itself travels along, and Step 10 showed $r$ is an affine parameter on them.
+The first is $u = \text{const}$, whose tangent is exactly the $k^\mu = \partial_r$ of Step 10: these are the outgoing rays the radiation itself travels along, and by Step 10 $r$ is an affine parameter on them.
 The second obeys
 
 $$\frac{d(cu)}{dr} = -\frac{2}{f},$$
@@ -511,21 +510,21 @@ $$\vartheta_{\text{in}} = -\frac{f}{r} = -\frac{1}{r}\left(1 - \frac{2Gm(u)}{c^2
 
 which vanishes at $r = 2Gm(u)/c^2$ and is positive inside it.
 Inside that radius both families are expanding, so the spheres there are anti trapped: the retarded solution describes a white hole exterior, or a star shining outward, rather than a black hole.
-Step 16 shows the mirror statement for the advanced chart, where the same surface is the apparent horizon of a black hole.
+In the advanced chart of Step 16 the mirror statement holds, and the same surface is the apparent horizon of a black hole.
 
 The surface moves.
 It sits at $r = 2Gm(u)/c^2$, which changes with retarded time whenever $\dot{m} \ne 0$, so it is a horizon that recedes as the star radiates rather than a null surface fixed once and for all.
 
 ---
 
-## Step 15. Every published equation is dimensionally consistent
+## Step 15. Every equation is dimensionally consistent
 
 The declarations are $[r] = L$, $[u] = T$, $[\theta] = [\phi] = 1$, $[c] = LT^{-1}$, $[G] = L^3M^{-1}T^{-2}$ and $[m] = M$.
 The chart coordinate is $x^0 = cu$, which carries $L$ like the other three, and
 
 $$\left[\frac{Gm}{c^2}\right] = \frac{L^3M^{-1}T^{-2}\cdot M}{L^2T^{-2}} = L, \qquad [\dot{m}] = \frac{M}{L}, \qquad \left[\frac{G\dot{m}}{c^2}\right] = 1.$$
 
-So $r_s$ is a length and $f$ and $\dot{r}_s$ are dimensionless, as Step 2 said.
+So $r_s$ is a length and $f$ and $\dot{r}_s$ are dimensionless, as in Step 2.
 
 The line element: $c^2du^2$ carries $L^2$, the cross term $c\,du\,dr$ carries $LT^{-1}\cdot T\cdot L = L^2$, and $r^2d\theta^2$ carries $L^2$.
 
@@ -557,12 +556,12 @@ It differs from Step 2 in the sign of the cross term alone, which means it is th
 $$cu = -cv, \qquad \text{so} \qquad \frac{\partial}{\partial(cu)} = -\frac{\partial}{\partial(cv)}, \qquad \dot{m} \longmapsto -\dot{m}.$$
 
 Under a reflection of one chart coordinate a tensor component picks up a factor of $-1$ for each index in that slot, upper or lower, and the Christoffel symbols follow the same rule because the transformation is linear.
-So every published value of the ingoing chart is the outgoing one with
+So every component in the ingoing chart is the outgoing one with
 
 $$(-1)^{\#\text{ of } 0 \text{ indices}} \quad\text{and}\quad \dot{m} \to -\dot{m}$$
 
 applied together.
-Three checks against the published file:
+Three checks against the ingoing components:
 
 $\Gamma^v_{vv} = +\dfrac{Gm}{c^2r^2}$, three indices in the reflected slot and no $\dot m$, so the sign flips from the outgoing $-\dfrac{Gm}{c^2r^2}$.
 
@@ -575,26 +574,26 @@ The stress energy becomes
 
 $$T_{\mu\nu} = +\frac{c^2\dot{m}}{4\pi r^2}k_\mu k_\nu, \qquad k_\mu dx^\mu = -d(cv), \qquad k^\mu\partial_\mu = -\partial_r,$$
 
-so the null rays now run inward and the weak energy condition holds when $\dot{m} \ge 0$: the advanced chart is the accreting one, and the entry's parameter description says so.
+so the null rays now run inward and the weak energy condition holds when $\dot{m} \ge 0$: the advanced chart is the accreting one.
 Redoing Step 14 in it, the outgoing family obeys $d(cv)/dr = 2/f$ and, parametrised so that $dr/d\lambda = f$, has expansion
 
 $$\vartheta_{\text{out}} = \frac{2f}{r},$$
 
 which vanishes at $r = 2Gm(v)/c^2$ and is negative inside it, where the ingoing expansion $-2/r$ is negative too.
 The spheres inside that radius are trapped, so the advanced solution is the black hole one, growing as it swallows the dust.
-That is the chart in which collapse is studied, and it is the setting of the naked singularity result the entry's history cites.
+That is the chart in which collapse is studied, and it is the setting of the naked singularity result for the collapse of null dust.
 
 Everything else is unchanged, including the Kretschmann scalar $K = 48G^2m^2/(c^4r^6)$, which is even in the number of reflected indices and free of $\dot{m}$.
 
 ---
 
-## Step 17. What the entry publishes, and what the checker needs
+## Step 17. The components, and what the checker needs
 
-For each of the two charts the entry publishes the line element, the metric and its inverse, both Christoffel variants, both Riemann variants, the three Ricci variants, the Ricci scalar, the Kretschmann scalar, the three Einstein variants, both Weyl variants and the four geodesic equations.
+In each of the two charts we compute the line element, the metric and its inverse, the Christoffel symbols with an upper index and with every index lowered, the Riemann tensor with an upper index and with every index lowered, the Ricci tensor with both indices down, one up and both up, the Ricci scalar, the Kretschmann scalar, the Einstein tensor with both indices down, one up and both up, the Weyl tensor with an upper index and with every index lowered, and the four geodesic equations.
 
-`verify_metrics.py` needed one declaration per chart for it.
-`DIMENSIONS` gained an entry for each, declaring $u$ and $v$ as times, so the checker knows the chart multiplies them by $c$, along with $[G] = L^3M^{-1}T^{-2}$ and $[m] = M$.
-That is the first mass in the table, because every other entry in the collection folds its mass into a length such as $r_s$ and never has to name one, so `BASE_DIMENSIONS` gained $M$ alongside $L$ and $T$.
+`verify_metrics.py` needed one declaration per chart.
+`DIMENSIONS` gained a line for each chart, declaring $u$ and $v$ as times, so the checker knows the chart multiplies them by $c$, along with $[G] = L^3M^{-1}T^{-2}$ and $[m] = M$.
+That is the first mass in the table, because every other metric the checker knows folds its mass into a length such as $r_s$ and never has to name one, so `BASE_DIMENSIONS` gained $M$ alongside $L$ and $T$.
 
-The mass function is declared to the reader as `m = m(u)`, which is the same declaration FRW makes for its scale factor, and it is what tells the checker that $\dot{m}$ means a derivative with respect to the chart coordinate $cu$ rather than with respect to $u$.
-No entry in `PARAMETER_RELATIONS` is needed, because $G$ and $m$ are free: nothing in this solution constrains the mass function, and that is exactly why it models a star whose luminosity is whatever its physics makes it.
+The mass function is declared to the reader as `m = m(u)`, the same declaration as for the scale factor of FRW, and it is what tells the checker that $\dot{m}$ means a derivative with respect to the chart coordinate $cu$ rather than with respect to $u$.
+No line in `PARAMETER_RELATIONS` is needed, because $G$ and $m$ are free: nothing in this solution constrains the mass function, and that is exactly why it models a star whose luminosity is whatever its physics makes it.

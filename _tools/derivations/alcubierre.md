@@ -1,18 +1,17 @@
 # The Alcubierre warp drive
 
-This is the working behind the coordinate system in `MFS/assets/data/metrics/alcubierre.json`.
-Every value the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+We derive every quantity of Alcubierre's warp drive in its Cartesian chart, in order, from the line element down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we have not computed.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares its result with every component, so each component can be checked by hand and by machine independently.
 
-The entry exists for one number.
-The history says that the warp drive needs exotic matter and that the amount of it is the objection, and Steps 10 and 11 are where the mathematics says the same thing: the energy density an Eulerian observer measures is
+The question the warp drive raises comes down to one number.
+The warp drive needs exotic matter, and the amount of it is the objection: the energy density an Eulerian observer measures, derived in Steps 10 and 11, is
 
 $$\rho = -\frac{c^4}{32\pi G}v_s^2\left[\left(\partial_y f\right)^2 + \left(\partial_z f\right)^2\right],$$
 
 minus a sum of squares, negative wherever the wall of the bubble has any transverse structure at all, growing as the square of the speed and as the square of the steepness of the wall.
-Step 11 derives the same expression a second way, from the Hamiltonian constraint, where the negative sign turns out to be structural rather than an accident of the profile.
+The Hamiltonian constraint gives the same expression a second way in Step 11, and there the negative sign is structural rather than an accident of the profile.
 
 ---
 
@@ -27,28 +26,28 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+and every Riemann component follows this sign convention.
 
 The Ricci tensor is the standard contraction,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-settled for the collection on 2026-09-18.
+the convention since 2026-09-18.
 The settlement is not free here.
-This spacetime is not a vacuum anywhere the bubble wall is, so the Ricci tensor, the Ricci scalar and the Einstein tensor all change sign with the choice, and the sign the collection now carries is the one that puts ordinary matter at positive energy density.
-That matters more for this entry than for any other, because the whole question it answers is the sign of an energy density, and the answer would read backwards under the other contraction.
+This spacetime is not a vacuum anywhere the bubble wall is, so the Ricci tensor, the Ricci scalar and the Einstein tensor all change sign with the choice, and the standard contraction is the one that puts ordinary matter at positive energy density.
+That matters more for the warp drive than for any other spacetime, because the whole question it raises is the sign of an energy density, and under the other contraction the answer would come out with the opposite sign.
 
-The chart is the collection's, the one whose zeroth coordinate is
+The chart is the one whose zeroth coordinate is
 
 $$x^0 = ct.$$
 
-The index is printed with the bare letter $t$, but the component printed against it is a component of that chart, and everything from Step 4 onward is computed directly in it.
-A printed $\partial_t$ is the derivative along that chart coordinate,
+The time index is labelled with the bare letter $t$, but a component with that index is a component of that chart, and we compute everything from Step 4 onward directly in it.
+The operator $\partial_t$ is the derivative along that chart coordinate,
 
 $$\partial_t = \frac{1}{c}\frac{\partial}{\partial t},$$
 
 and the prime on $v_s$ is the same derivative, $v_s' = dv_s/d(ct)$.
-Each printed derivative therefore carries one inverse length per order, which is what Step 17 checks.
+Each derivative therefore carries one inverse length per order, the dimension every term is held to in Step 17.
 The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$.
 
 ---
@@ -64,18 +63,18 @@ The first is $v_s(t)$, the velocity of the bubble in units of $c$, so that the c
 Nothing in the solution bounds it; $v_s > 1$ is allowed, and that is the entire point of the construction.
 The second is $f$, the shape function, which is $1$ at the centre of the bubble and $0$ far outside it, so that the wall of the bubble is wherever $f$ falls between the two.
 
-The entry leaves $f$ an arbitrary function of all four coordinates.
+We leave $f$ an arbitrary function of all four coordinates.
 Alcubierre's own choice is the radial profile
 
 $$f(r_s) = \frac{\tanh\left(\sigma(r_s + R)\right) - \tanh\left(\sigma(r_s - R)\right)}{2\tanh(\sigma R)},\qquad r_s = \sqrt{\left(x - x_s(t)\right)^2 + y^2 + z^2},$$
 
-a bubble of radius $R$ whose wall has thickness of order $1/\sigma$, but no component published here needs it.
+a bubble of radius $R$ whose wall has thickness of order $1/\sigma$, but no component of the metric, the connection or the curvature needs it.
 A profile of that kind depends on $t$ and $x$ only through $x - x_s(t)$ and so obeys
 
 $$\partial_t f = -v_s\,\partial_x f$$
 
-in this chart, and that is exactly the one relation the published components may not use, because they are identities for an arbitrary $f$ and the checker tests them as such.
-Keeping $f$ general costs nothing and buys the whole family: every warp drive of this form, Alcubierre's profile among them, reads its curvature off the same table.
+in this chart, and that is exactly the one relation the components may not use, because they are identities for an arbitrary $f$ and the checker tests them as such.
+Keeping $f$ general costs nothing and buys the whole family: every warp drive of this form, Alcubierre's profile among them, has its curvature given by the same expressions.
 
 ---
 
@@ -92,7 +91,6 @@ $$N = 1,\qquad \gamma_{ij} = \delta_{ij},\qquad \beta^i = \left(v_s f, 0, 0\righ
 The shift is dimensionless in this chart, being measured per unit of $x^0$; as a velocity it is $c\,v_s f$.
 
 The lapse is one, the slices of constant $t$ are ordinary flat Euclidean space, and the whole of the geometry sits in a single component of the shift.
-That is the sentence the rest of the document unpacks.
 Space is not curved on any slice; what the warp drive does is slide the slices past each other, and the curvature is entirely in how they are stacked.
 
 Because the metric depends on $v_s$ and $f$ only through their product, it is worth naming that product.
@@ -101,13 +99,13 @@ Write
 $$\beta = v_s f,$$
 
 dimensionless, the shift per unit of $x^0$.
-Every curvature quantity below is a function of $\beta$ and its derivatives alone, so the computation is done once, in $\beta$, and the published components are what it becomes under
+Every curvature quantity is a function of $\beta$ and its derivatives alone, so we do the computation once, in $\beta$, and the components are what it becomes under
 
 $$\partial_i\beta = v_s\,\partial_i f \quad (i = x, y, z),\qquad \partial_t\beta = v_s'f + v_s\,\partial_t f.$$
 
 The second of those is where $v_s'$ enters the geometry, and the only place it does: the bubble's acceleration reaches the curvature only through $\partial_t\beta$.
-This $\beta$ is shorthand for this document alone.
-The published file writes every component out in $v_s$ and $f$, because the checker reads the file symbol by symbol and has no way to be told what an abbreviation means.
+This $\beta$ is shorthand for the derivation alone.
+Every component itself is written out in $v_s$ and $f$, because the checker reads the components symbol by symbol and has no way to be told what an abbreviation means.
 
 ---
 
@@ -132,8 +130,8 @@ Inverting the upper left block by hand,
 
 $$g^{\mu\nu} = \begin{pmatrix} -1 & -\beta & 0 & 0 \\ -\beta & 1 - \beta^2 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1\end{pmatrix},$$
 
-which the entry publishes as $g^{tt} = -1$, $g^{tx} = g^{xt} = -v_s f$ and $g^{xx} = 1 - v_s^2f^2$.
-Note that $g^{tt} = -1$ exactly: the lapse is one, so proper time and coordinate time agree for the observer at rest in the slicing, and that observer is the one Step 10 is about.
+which written out is $g^{tt} = -1$, $g^{tx} = g^{xt} = -v_s f$ and $g^{xx} = 1 - v_s^2f^2$.
+Note that $g^{tt} = -1$ exactly: the lapse is one, so proper time and coordinate time agree for the observer at rest in the slicing, and that observer measures the energy density of Step 10.
 
 ---
 
@@ -166,7 +164,7 @@ $$\Gamma^t{}_{tt} = g^{tt}\Gamma_{ttt} + g^{tx}\Gamma_{xtt} = -\beta\,\partial_t
 $$\Gamma^x{}_{tt} = g^{xt}\Gamma_{ttt} + g^{xx}\Gamma_{xtt} = -\beta^2\partial_t\beta + \left(1 - \beta^2\right)\left(-\partial_t\beta - \beta\,\partial_x\beta\right) = -\partial_t\beta - \beta\,\partial_x\beta + \beta^3\,\partial_x\beta.$$
 
 The first of those is worth a second look.
-$\Gamma^t{}_{tt} = \beta^2\partial_x\beta$ says that coordinate time is not an affine parameter along the world lines of constant $x$, $y$, $z$ once the bubble is moving, and it is the reason the published $\Gamma^t{}_{tt} = v_s^3f^2\partial_x f$ carries three powers of the speed.
+$\Gamma^t{}_{tt} = \beta^2\partial_x\beta$ says that coordinate time is not an affine parameter along the world lines of constant $x$, $y$, $z$ once the bubble is moving, and it is the reason the full expression $\Gamma^t{}_{tt} = v_s^3f^2\partial_x f$ carries three powers of the speed.
 
 The whole upper index list, in $\beta$:
 
@@ -177,7 +175,7 @@ $$\Gamma^x{}_{ty} = -\tfrac{1}{2}\left(1 + \beta^2\right)\partial_y\beta,\qquad 
 $$\Gamma^x{}_{xx} = \beta\,\partial_x\beta,\qquad \Gamma^x{}_{xy} = \tfrac{1}{2}\beta\,\partial_y\beta,\qquad \Gamma^x{}_{xz} = \tfrac{1}{2}\beta\,\partial_z\beta,$$
 $$\Gamma^y{}_{tt} = -\beta\,\partial_y\beta,\qquad \Gamma^y{}_{tx} = \tfrac{1}{2}\partial_y\beta,\qquad \Gamma^z{}_{tt} = -\beta\,\partial_z\beta,\qquad \Gamma^z{}_{tx} = \tfrac{1}{2}\partial_z\beta.$$
 
-Substituting $\beta = v_s f$ turns these eighteen into the thirty the entry publishes with an upper index, since a term in $\partial_t\beta$ splits into one in $v_s'$ and one in $\partial_t f$.
+Substituting $\beta = v_s f$ turns these eighteen into thirty symbols with an upper index, since a term in $\partial_t\beta$ splits into one in $v_s'$ and one in $\partial_t f$.
 Every symbol vanishes where $f$ is constant, which is everywhere except the wall: the interior of the bubble and the space outside it are flat, and the ship floats in a patch of Minkowski space.
 
 ---
@@ -200,7 +198,7 @@ The second cancels the same way, so
 
 $$R^t{}_{xxy} = -\tfrac{1}{2}\partial_x\partial_y\beta,$$
 
-published as $-\tfrac{1}{2}v_s\,\partial_x\partial_y f$.
+or $-\tfrac{1}{2}v_s\,\partial_x\partial_y f$ in full.
 
 The second example is the transverse component, which is the one the energy density comes from:
 
@@ -220,9 +218,9 @@ Lowering the first index has to go through both $g_{xt}$ and $g_{xx}$, and the s
 $$R_{xyxy} = g_{xt}R^t{}_{yxy} + g_{xx}R^x{}_{yxy} = \tfrac{1}{2}\beta\,\partial_y^2\beta - \tfrac{1}{4}\left(\partial_y\beta\right)^2 - \tfrac{1}{2}\beta\,\partial_y^2\beta = -\tfrac{1}{4}\left(\partial_y\beta\right)^2.$$
 
 A perfect square with a minus sign in front of it, left standing after the second derivatives have gone.
-That is the first appearance of the object the whole entry turns on.
+That is the first appearance of the object the whole question of the warp drive turns on.
 
-The published tables carry one hundred and twenty nonzero components with an upper index and one hundred with all four down, each of them this computation with different indices.
+The Riemann tensor has one hundred and twenty nonzero components with an upper index and one hundred with all four down, each of them this computation with different indices.
 
 ---
 
@@ -246,12 +244,12 @@ $$R_{xy} = \tfrac{1}{2}\partial_t\partial_y\beta + \tfrac{1}{2}\beta\,\partial_x
 
 $$R_{tx} = \tfrac{1}{2}\partial_y^2\beta + \tfrac{1}{2}\partial_z^2\beta - \beta\,\partial_t\partial_x\beta - \beta\left(\partial_x\beta\right)^2 + \tfrac{1}{2}\beta\left(\partial_y\beta\right)^2 + \tfrac{1}{2}\beta\left(\partial_z\beta\right)^2 - \beta^2\,\partial_x^2\beta,$$
 
-with $R_{tt}$, $R_{ty}$ and $R_{tz}$ longer still and printed in the entry.
+with $R_{tt}$, $R_{ty}$ and $R_{tz}$ longer still.
 Contracting once more with $g^{\mu\nu}$ of Step 4,
 
 $$R = 2\,\partial_t\partial_x\beta + 2\left(\partial_x\beta\right)^2 + 2\beta\,\partial_x^2\beta + \tfrac{1}{2}\left(\partial_y\beta\right)^2 + \tfrac{1}{2}\left(\partial_z\beta\right)^2,$$
 
-which under $\beta = v_s f$ is the published
+which under $\beta = v_s f$ is
 
 $$R = 2v_s\,\partial_t\partial_x f + 2v_s'\,\partial_x f + 2v_s^2\left(\partial_x f\right)^2 + \tfrac{1}{2}v_s^2\left(\partial_y f\right)^2 + \tfrac{1}{2}v_s^2\left(\partial_z f\right)^2 + 2v_s^2f\,\partial_x^2 f.$$
 
@@ -274,14 +272,14 @@ $$G_{tx} = \tfrac{1}{2}\left(\partial_y^2\beta + \partial_z^2\beta\right) + \tfr
 
 $$G_{xx} = -\tfrac{3}{4}\left[\left(\partial_y\beta\right)^2 + \left(\partial_z\beta\right)^2\right],$$
 
-together with $G_{ty}$, $G_{tz}$, $G_{xy}$, $G_{xz}$, $G_{yy}$, $G_{yz}$ and $G_{zz}$, all printed in the entry in $v_s$ and $f$.
-Three of these are enough for what comes next, and it is worth noticing already that $G_{xx}$ is minus a sum of squares on its own.
+together with $G_{ty}$, $G_{tz}$, $G_{xy}$, $G_{xz}$, $G_{yy}$, $G_{yz}$ and $G_{zz}$, all of them written out in full in $v_s$ and $f$.
+Three of these are enough for the energy density, and $G_{xx}$ is already minus a sum of squares on its own.
 
 ---
 
 ## Step 9. The Eulerian observer
 
-The observer this entry is about is the one at rest in the slicing: the one whose world line is orthogonal to every slice of constant $t$, the Eulerian observer of the $3+1$ split of Step 3.
+The observer who measures the exotic matter is the one at rest in the slicing: the one whose world line is orthogonal to every slice of constant $t$, the Eulerian observer of the $3+1$ split of Step 3.
 Its four velocity is the unit normal to the slices,
 
 $$n_\mu = \left(-1, 0, 0, 0\right),\qquad n^\mu = g^{\mu\nu}n_\nu = \left(1, \beta, 0, 0\right),$$
@@ -301,7 +299,7 @@ Its expansion is
 $$\theta = \nabla_\mu n^\mu = \frac{1}{\sqrt{-g}}\partial_\mu\left(\sqrt{-g}\,n^\mu\right) = \partial_x\beta = v_s\,\partial_x f,$$
 
 using $\det g = -1$ from Step 4.
-For a bubble profile that falls off with distance from the centre, $\partial_x f$ is negative ahead of the ship and positive behind it, so space contracts in front and expands behind: the picture the history describes is this one line of algebra.
+For a bubble profile that falls off with distance from the centre, $\partial_x f$ is negative ahead of the ship and positive behind it, so space contracts in front and expands behind: Alcubierre's picture of the drive is this one line of algebra.
 The congruence is also geodesic, since $n^\mu$ is the unit normal of a unit lapse foliation, which is why the ship rides for free.
 
 ---
@@ -313,7 +311,7 @@ The energy density this observer measures is
 $$\rho = T_{\mu\nu}n^\mu n^\nu = \frac{c^4}{8\pi G}G_{\mu\nu}n^\mu n^\nu = \frac{c^4}{8\pi G}G^{\mu\nu}n_\mu n_\nu = \frac{c^4}{8\pi G}G^{tt},$$
 
 the last step because $n_\mu$ has only a time component and that component is $-1$.
-So the published $G^{tt}$ is the energy density, up to the constant $c^4/8\pi G$, and nothing else in the entry needs to be read to answer the question the warp drive raises.
+So $G^{tt}$ is the energy density, up to the constant $c^4/8\pi G$, and no other component is needed to answer the question the warp drive raises.
 
 Raising both indices with Step 4,
 
@@ -324,14 +322,14 @@ What is left is
 
 $$G^{tt} = -\tfrac{1}{4}\left[\left(\partial_y\beta\right)^2 + \left(\partial_z\beta\right)^2\right] = -\tfrac{1}{4}v_s^2\left[\left(\partial_y f\right)^2 + \left(\partial_z f\right)^2\right],$$
 
-which is what the entry publishes, and therefore
+and therefore
 
 $$\rho = -\frac{c^4}{32\pi G}v_s^2\left[\left(\partial_y f\right)^2 + \left(\partial_z f\right)^2\right].$$
 
-Read it slowly, because every clause of the objection to the warp drive is in it.
+Every clause of the objection to the warp drive is in it.
 
 It is minus a sum of squares, so it is never positive, for any shape function and any speed.
-It is proportional to $v_s^2$, so it does not care which way the bubble goes, it grows as the square of the speed, and it shrinks without ever vanishing as the bubble is slowed: an arbitrarily slow warp bubble still needs exotic matter, which is the Lobo and Visser result the history cites.
+It is proportional to $v_s^2$, so it does not care which way the bubble goes, it grows as the square of the speed, and it shrinks without ever vanishing as the bubble is slowed: an arbitrarily slow warp bubble still needs exotic matter, which is the result of Lobo and Visser.
 It involves only the transverse gradient of $f$, the variation across the direction of travel, so it vanishes only for a bubble with no transverse structure at all, which is to say for no bubble.
 It says nothing about $\partial_t f$, nor about $v_s'$, so it is untouched by how the bubble accelerates: a warp drive that starts gently is exotic in exactly the way one that does not is.
 And the weak energy condition, which asks that $T_{\mu\nu}u^\mu u^\nu \geq 0$ for every timelike $u$, is violated at every point of the wall by the observer who is most at home there.
@@ -364,8 +362,8 @@ The extrinsic curvature needs no new machinery either, since with $n_j = 0$ for 
 
 $$K_{ij} = -\nabla_i n_j = -\left(\partial_i n_j - \Gamma^\lambda{}_{ij}n_\lambda\right) = -\Gamma^t{}_{ij},$$
 
-so the table of Step 5 has it already.
-Reading the three symbols $\Gamma^t{}_{xx} = \partial_x\beta$, $\Gamma^t{}_{xy} = \tfrac{1}{2}\partial_y\beta$ and $\Gamma^t{}_{xz} = \tfrac{1}{2}\partial_z\beta$ off it, and noting that $\Gamma^t{}_{yy}$, $\Gamma^t{}_{yz}$ and $\Gamma^t{}_{zz}$ are all absent from it,
+so the Christoffel symbols of Step 5 give it already.
+Taking the three symbols $\Gamma^t{}_{xx} = \partial_x\beta$, $\Gamma^t{}_{xy} = \tfrac{1}{2}\partial_y\beta$ and $\Gamma^t{}_{xz} = \tfrac{1}{2}\partial_z\beta$ from them, and noting that $\Gamma^t{}_{yy}$, $\Gamma^t{}_{yz}$ and $\Gamma^t{}_{zz}$ all vanish,
 
 $$K_{xx} = -\partial_x\beta,\qquad K_{xy} = -\tfrac{1}{2}\partial_y\beta,\qquad K_{xz} = -\tfrac{1}{2}\partial_z\beta,$$
 
@@ -410,14 +408,13 @@ That is already absurd, and it is the optimistic case.
 The quantum inequalities Pfenning and Ford applied to this geometry force the wall to be thinner than about a hundred Planck lengths, and at $\Delta \sim 10^{-33}$ metres the same formula gives something of order $10^{80}$ joules, ten orders of magnitude beyond the mass energy of the visible universe.
 The $1/\Delta$ is what does the damage: the requirement is not that some exotic matter exist but that an amount of it scaling inversely with the thinness of a wall that quantum field theory insists must be thin.
 
-This is the arithmetic behind the sentence in the entry's history, and it is worth seeing that it follows from one published component and a single integral.
+This is the arithmetic behind the objection to the warp drive, and it follows from one component of the Einstein tensor and a single integral.
 
 ---
 
 ## Step 13. The light cones, and the horizon at $f = 1 - 1/v_s$
 
-Everything so far has been about the source.
-The kinematics is worth one step, because it is where the claim that nothing moves faster than light locally is settled.
+The kinematics, as against the source, settles the claim that nothing moves faster than light locally.
 
 For a photon travelling along the axis, with $dy = dz = 0$, the line element of Step 2 gives $\left(dx - \beta\,dx^0\right)^2 = \left(dx^0\right)^2$, so
 
@@ -455,7 +452,7 @@ in the four dimensional form the checker uses.
 
 The difference is not cosmetic.
 Take the purely transverse slot, the one with no $x$ and no $t$ in it.
-Step 6 found $R_{xyxy} = -\tfrac{1}{4}\left(\partial_y\beta\right)^2$, but drop the $x$ as well and the Riemann component is empty,
+From Step 6, $R_{xyxy} = -\tfrac{1}{4}\left(\partial_y\beta\right)^2$, but drop the $x$ as well and the Riemann component is empty,
 
 $$R_{yzyz} = 0,$$
 
@@ -464,10 +461,10 @@ while the same slot of the Weyl tensor is
 $$C_{yzyz} = \tfrac{1}{3}\left[\partial_t\partial_x\beta + \left(\partial_x\beta\right)^2 + \beta\,\partial_x^2\beta\right] - \tfrac{1}{6}\left[\left(\partial_y\beta\right)^2 + \left(\partial_z\beta\right)^2\right],$$
 
 which is not zero, and which depends on the longitudinal structure of the bubble that $R_{yzyz}$ knows nothing about.
-Thirty six slots of each published Weyl variant are nonzero where the corresponding Riemann slot vanishes, and none of them would exist in a file that had copied one block into the other.
+Thirty six components of the Weyl tensor, with an upper index and again with all four down, are nonzero where the corresponding Riemann component vanishes, and a Weyl tensor copied from the Riemann tensor would have none of them.
 There is no slot the other way round: every nonzero Riemann component of this spacetime leaves a nonzero Weyl component behind.
 
-The entry publishes one hundred and fifty six nonzero components of $C^\mu{}_{\nu\rho\sigma}$ and one hundred and thirty six of $C_{\mu\nu\rho\sigma}$, all of them computed from the formula above.
+The Weyl tensor has one hundred and fifty six nonzero components of $C^\mu{}_{\nu\rho\sigma}$ and one hundred and thirty six of $C_{\mu\nu\rho\sigma}$, all of them computed from the trace free formula.
 
 ---
 
@@ -493,16 +490,16 @@ In these,
 
 $$K = 4A^2 + 2B_y^2 + 2B_z^2 - 2AQ + \tfrac{11}{4}Q^2 - 2H,$$
 
-which is what the entry publishes, written out in $v_s$ and $f$, where $Q = v_s^2\left[\left(\partial_y f\right)^2 + \left(\partial_z f\right)^2\right]$ is the same transverse gradient the energy density of Step 10 is built from.
-The grouped form and the expanded one are the same expression, which is what the checker tests; the grouped one is published because it renders in under half the width and because it shows where the pieces come from.
+which, written out in $v_s$ and $f$, has $Q = v_s^2\left[\left(\partial_y f\right)^2 + \left(\partial_z f\right)^2\right]$, the same transverse gradient the energy density of Step 10 is built from.
+The grouped form and the expanded one are the same expression, which the checker tests; we give the grouped one because it takes under half the width and shows where the pieces come from.
 
-Two things are worth saying about it.
+Two things follow from it.
 
 It is a polynomial, with no denominators anywhere, so wherever the shape function is smooth the curvature invariant is finite.
-The warp drive has no curvature singularity at all: unlike every black hole entry in this collection, there is nowhere the geometry breaks down.
+The warp drive has no curvature singularity at all: unlike every black hole, it has nowhere the geometry breaks down.
 What makes it impossible is entirely the source it demands, never the geometry it produces, and this scalar is where that is visible.
 
-It also vanishes identically wherever $f$ is constant, which is to say everywhere except the wall, confirming from the invariant side what Step 5 said from the connection: the inside of the bubble and the outside are flat pieces of Minkowski space, and all of the curvature lives in the shell between them.
+It also vanishes identically wherever $f$ is constant, which is to say everywhere except the wall, confirming from the invariant side what the connection of Step 5 showed: the inside of the bubble and the outside are flat pieces of Minkowski space, and all of the curvature lives in the shell between them.
 
 ---
 
@@ -517,26 +514,26 @@ Writing them out with $\beta = v_s f$, the two transverse ones are short:
 
 $$\ddot{y} + v_s\,\partial_y f\,\dot{t}\dot{x} - v_s^2f\,\partial_y f\,\dot{t}^2 = 0,\qquad \ddot{z} + v_s\,\partial_z f\,\dot{t}\dot{x} - v_s^2f\,\partial_z f\,\dot{t}^2 = 0,$$
 
-and the $t$ and $x$ equations are the longer ones the entry prints.
+and the $t$ and $x$ equations are longer.
 Each cross term appears once for each ordering of its two indices, which is where the factor of two in $-2v_s^2f\,\partial_xf\,\dot{t}\dot{x}$ comes from.
 
-The equations say the thing Step 9 said: where $f$ is constant every $\Gamma$ vanishes and the equations become $\ddot{x}^\mu = 0$, so an observer inside the bubble, or far outside it, moves in a straight line at constant speed through a flat patch.
+The equations agree with Step 9: where $f$ is constant every $\Gamma$ vanishes and the equations become $\ddot{x}^\mu = 0$, so an observer inside the bubble, or far outside it, moves in a straight line at constant speed through a flat patch.
 Only a world line that crosses the wall feels anything at all.
 
 ---
 
-## Step 17. Every published expression is dimensionally consistent
+## Step 17. Every expression is dimensionally consistent
 
 The chart coordinates are $\left(ct, x, y, z\right)$, all of dimension $L$, and both parameters are dimensionless.
 A metric component then carries
 
 $$[g_{\mu\nu}] = \frac{L^2}{[x^\mu][x^\nu]} = 1,$$
 
-a Christoffel symbol carries $L^{-1}$, a Riemann, Ricci, Einstein or Weyl component carries $L^{-2}$, and $K$ carries $L^{-4}$, each corrected by $[x^\mu]/L = 1$ per index, which is to say not corrected at all: in this chart every index is a length and the bookkeeping is as simple as it gets.
+a Christoffel symbol carries $L^{-1}$, a Riemann, Ricci, Einstein or Weyl component carries $L^{-2}$, and $K$ carries $L^{-4}$, each corrected by $[x^\mu]/L = 1$ per index, which is to say not corrected at all: in this chart every index is a length and the dimensional count is as simple as it gets.
 
 What does the work here is the derivative convention.
-A printed $\partial_i f$ is $\partial f/\partial x^i$ with $f$ dimensionless, so it carries $L^{-1}$; a printed $\partial_t f$ is $c^{-1}\partial f/\partial t$, which carries $T^{-1}\cdot T/L = L^{-1}$ as well; and $v_s'$ is $dv_s/d(ct)$, again $L^{-1}$.
-Every derivative of every order therefore carries one inverse length per order, and a published component is balanced exactly when each of its terms carries as many derivatives as its rank demands.
+The derivative $\partial_i f$ is $\partial f/\partial x^i$ with $f$ dimensionless, so it carries $L^{-1}$; the derivative $\partial_t f$ is $c^{-1}\partial f/\partial t$, which carries $T^{-1}\cdot T/L = L^{-1}$ as well; and $v_s'$ is $dv_s/d(ct)$, again $L^{-1}$.
+Every derivative of every order therefore carries one inverse length per order, and a component is balanced exactly when each of its terms carries as many derivatives as its rank demands.
 
 Four samples.
 
@@ -547,7 +544,7 @@ $\Gamma^t{}_{xy} = \tfrac{1}{2}v_s\,\partial_y f$ carries one derivative and so 
 $G^{tt} = -\tfrac{1}{4}v_s^2\left[\left(\partial_y f\right)^2 + \left(\partial_z f\right)^2\right]$ carries two derivatives and so $L^{-2}$, and the energy density built from it carries $\left(c^4/G\right)L^{-2} = MLT^{-2}\cdot L^{-2} = ML^{-1}T^{-2}$, which is an energy per unit volume.
 That is the check that the factor of $c^4/8\pi G$ in Step 10 is the right one.
 
-The Kretschmann scalar carries four derivatives in every term, grouped as Step 15 publishes it or expanded into its forty two, which is $L^{-4}$.
+The Kretschmann scalar carries four derivatives in every term, grouped as in Step 15 or expanded into its forty two, which is $L^{-4}$.
 
 The geodesic equations are measured against their own second derivatives.
 In the $y$ equation of Step 16, $\ddot{y}$ carries $L/\lambda^2$, and the term $v_s\,\partial_yf\,\dot{t}\dot{x}$ carries
@@ -574,8 +571,8 @@ so
 $$ds^2 = -c^2dt^2 + \left(dx' - v_s\left(f-1\right)c\,dt\right)^2 + dy^2 + dz^2.$$
 
 That is the same line element with the shape function shifted by a constant.
-Since the entry's $f$ is arbitrary, and since $f$ and $f - 1$ have the same derivatives of every order, every component published in this entry is already a component of the bubble frame under $f \to f - 1$.
-Nothing new would be learned by printing the second chart, and the entry does not: it would be six hundred and eighty expressions restating the six hundred and eighty already there.
+Since $f$ is arbitrary, and since $f$ and $f - 1$ have the same derivatives of every order, every component in the Cartesian chart is already a component of the bubble frame under $f \to f - 1$.
+Writing the bubble frame out would teach nothing new: its six hundred and eighty expressions would restate the six hundred and eighty of the Cartesian chart.
 
 The substitution is a good check of the physics, too.
 The energy density of Step 10 depends only on the transverse derivatives of $f$, which are unchanged by it, so the Eulerian observers of the two charts, who are the same observers, measure the same negative density.
@@ -583,24 +580,24 @@ The exotic matter is not an artefact of describing the bubble from the frame it 
 
 ---
 
-## Step 19. What the entry publishes, and the declarations the checker needs
+## Step 19. The components, and the declarations the checker needs
 
-The one system publishes six hundred and eighty expressions: the line element, six metric components and six inverse ones, thirty Christoffel symbols with an upper index and twenty three with all three down, one hundred and twenty Riemann components with an upper index and one hundred with all four down, sixteen Ricci components in each of three variants, the Ricci scalar, the Kretschmann scalar, sixteen Einstein components in each of three variants, one hundred and fifty six Weyl components with an upper index and one hundred and thirty six with all four down, and four geodesic equations.
+Six hundred and eighty expressions describe the spacetime in its Cartesian chart: the line element, six components of the metric and six of the inverse metric, thirty Christoffel symbols with an upper index and twenty three with all three down, one hundred and twenty Riemann components with an upper index and one hundred with all four down, sixteen components of the Ricci tensor with both indices down, sixteen with one up and sixteen with both up, the Ricci scalar, the Kretschmann scalar, sixteen components of the Einstein tensor with both indices down, sixteen with one up and sixteen with both up, one hundred and fifty six Weyl components with an upper index and one hundred and thirty six with all four down, and four geodesic equations.
 
-For the checker to read it, `DIMENSIONS` in `verify_metrics.py` needs one line:
+The checker needs one line in `DIMENSIONS` of `verify_metrics.py`:
 
     ("alcubierre", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "v_s": "1", "f": "1",
     },
 
 The declaration `"t": "T"` is what tells the checker that $t$ is a time and so that the chart coordinate is $ct$; every factor of $c$ in the comparison follows from it, as does the reading of $\partial_t$ and of the prime on $v_s$ as chart derivatives.
-The prime rather than a dot is deliberate, and the next entry that names a function with a subscript will want to know why: the reader in `verify_metrics.py` binds `\dot{...}` and `\partial_x` to a name of letters only, so `\dot{v_s}` is not a rate it can read, while `v_s'` is, and a parameter whose name carries an underscore therefore takes its time derivative as a prime.
+The prime rather than a dot is deliberate: the reader in `verify_metrics.py` binds `\dot{...}` and `\partial_x` to a name of letters only, so `\dot{v_s}` is not a rate it can read, while `v_s'` is, and a parameter whose name carries an underscore therefore takes its time derivative as a prime.
 Declaring both parameters dimensionless is what puts the bubble velocity in units of $c$: the shift is $c\,v_s f$, a velocity, and the $c$ is written out in the line element rather than hidden in $v_s$.
 
-The entry needs no line in `PARAMETER_RELATIONS`, and it is worth being clear about why, since it is the one place this spacetime could have been published with an identity that is not one.
-Alcubierre's own shape function satisfies $\partial_t f = -v_s\,\partial_x f$, and using it would shorten a good many of the published components.
-It would also be false for a bubble whose profile changes shape as it travels, which the entry allows, so no published value uses it.
-The checker compares against a free $f$ of four coordinates and a free $v_s$ of one, which is the claim the entry actually makes.
+Alcubierre's drive needs no line in `PARAMETER_RELATIONS`, and that is the one place an identity that is not one could have entered its components.
+Alcubierre's own shape function satisfies $\partial_t f = -v_s\,\partial_x f$, and using it would shorten a good many of the components.
+It would also be false for a bubble whose profile changes shape as it travels, which a general shape function allows, so no component uses it.
+The checker compares against a free $f$ of four coordinates and a free $v_s$ of one, which is the generality the components actually claim.
 
 Running
 

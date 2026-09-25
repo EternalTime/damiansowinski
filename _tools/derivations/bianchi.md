@@ -1,15 +1,15 @@
 # The Bianchi type I anisotropic cosmology
 
-This is the working behind the type I Cartesian coordinate system in `MFS/assets/data/metrics/bianchi.json`.
-Every number the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+The Bianchi type I anisotropic cosmology is worked here in one coordinate system, the type I Cartesian chart.
+Every component of the metric and of its curvature is derived in order, from the line element down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we do not compute.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and checks every component against its own result, so the algebra is checkable by hand and by machine independently.
 
-Like FRW, this entry's metric is not a formula: its scale factors are undetermined functions, and no field equation is imposed on them anywhere in this file.
+Like FRW, this metric is not a formula: its scale factors are undetermined functions, and no field equation is imposed on them in computing any tensor.
 Unlike FRW there are three of them, and their differences are the whole of the anisotropy.
 That is deliberate: type I is at its most useful with matter in it, so the Ricci and Einstein tensors are computed for arbitrary $a_i(t)$ and the matter is read off them afterwards.
-Step 10 reads off the density and the three principal pressures, and Step 12 empties the spacetime out and recovers the Kasner solution, which the collection publishes as an entry of its own.
+The density and the three principal pressures follow in Step 10, and emptying the spacetime out in Step 12 recovers the Kasner solution, which is a spacetime in its own right.
 
 ---
 
@@ -24,39 +24,39 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+which fixes the sign of every Riemann component.
 
 The Ricci tensor is the standard contraction,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-settled for the collection on 18 September 2026.
-The collection contracted on the last lower index before that, which is the same tensor with the opposite sign, and every entry and `verify_metrics.py` have since been brought over; Step 11 shows that for a spacetime with matter in it the choice is not a matter of taste, because only the standard contraction gives an expanding universe a positive energy density.
+settled on 18 September 2026 for every spacetime alike.
+Before that the Ricci tensor was contracted on the last lower index, which is the same tensor with the opposite sign, and every Ricci and Einstein tensor has since been brought over, in `verify_metrics.py` as well; for a spacetime with matter in it the choice is not a matter of taste, because only the standard contraction gives an expanding universe a positive energy density, which is Step 11.
 
 Factors of $c$ and $G$ are kept explicit.
-The chart, here and everywhere else in the collection, is the one whose time coordinate is $x^0 = ct$.
+The chart, here as for every other spacetime, is the one whose time coordinate is $x^0 = ct$.
 Schwarzschild shows the convention plainly, quoting $g_{tt} = -(1-r_s/r)$ against a line element whose time term is $-(1-r_s/r)c^2dt^2$.
-Since $t$ here is a time, the chart coordinate is $ct$, and every component printed against an index $t$ is a component in that chart even though the index is written with the bare letter.
+Since $t$ here is a time, the chart coordinate is $ct$, and every component written against an index $t$ is a component in that chart even though the index is written with the bare letter.
 
 Because the rescaling $t \to ct$ is linear with constant coefficients, the rule is arithmetic: a component in the chart is the component taken with the bare coordinate, multiplied by $c$ once for every upper $t$ index and divided by $c$ once for every lower one.
 The Christoffel symbols obey the same rule as the tensors, since the inhomogeneous term in their transformation law carries a second derivative of the coordinate change, which vanishes for a linear one.
 A scalar has no index at all and is therefore the same number in both charts.
 
-This entry does the whole computation in the chart from the start, which Kasner and Vaidya do not do: their metric functions are explicit in $t$ and in $u$, and rewriting them in the chart coordinate would bury a power of $c$ inside each one.
+Unlike Kasner and Vaidya, type I is computed in the chart from the start: their metric functions are explicit in $t$ and in $u$, and rewriting them in the chart coordinate would bury a power of $c$ inside each one.
 Here the metric functions are undetermined, so nothing is lost by differentiating with respect to $x^0$ directly, and a prime is defined to mean exactly that:
 
 $$a_i' \equiv \frac{da_i}{d(ct)} = \frac{1}{c}\frac{da_i}{dt}, \qquad a_i'' \equiv \frac{d^2a_i}{d(ct)^2} = \frac{1}{c^2}\frac{d^2a_i}{dt^2}.$$
 
-Every factor of $c$ the chart demands is in those two definitions, and no other factor of $c$ appears in any published component.
-That is not a way of hiding them: the scale factors are dimensionless, so $a_i'$ carries an inverse length and $a_i''$ an inverse length squared, which is what a chart component with those index patterns has to carry, and Step 16 checks every published term against that requirement.
-The relation to the notation a cosmologist uses is $\dot{a}_i/a_i = c\,a_i'/a_i$, so the Hubble rate along the $x$ axis is $c$ times the published rate.
+Every factor of $c$ the chart demands is in those two definitions, and no other factor of $c$ appears in any component.
+That is not a way of hiding them: the scale factors are dimensionless, so $a_i'$ carries an inverse length and $a_i''$ an inverse length squared, which is what a chart component with those index patterns has to carry, and every term is held to that requirement in Step 16.
+The relation to the notation a cosmologist uses is $\dot{a}_i/a_i = c\,a_i'/a_i$, so the Hubble rate along the $x$ axis is $c$ times the rate per unit chart length.
 
-Two abbreviations are used below and never in the published file, which has no way to declare them:
+Two abbreviations shorten the working:
 
 $$H_i \equiv \frac{a_i'}{a_i}, \qquad u_i \equiv \frac{a_i''}{a_i}.$$
 
 $H_i$ is the expansion rate along the $i$ axis measured per unit chart length, and $u_i$ its acceleration.
-Everywhere a formula below carries $H_i$ or $u_i$, the published file carries it written out.
+The checker has no way to declare them, so every component it checks carries $H_i$ and $u_i$ written out.
 
 ---
 
@@ -69,22 +69,22 @@ with $a_1, a_2, a_3$ positive and twice differentiable, and $x$, $y$, $z$ each r
 The Bianchi classification is a statement about the symmetry group of the spatial slices, and type I is the case where that group is the abelian $\mathbb{R}^3$ of translations.
 Concretely: the slices $t = \text{const}$ are ordinary flat three dimensional space, every point of a slice is equivalent to every other, and the only thing that distinguishes one direction from another is how fast the slice is being stretched along it.
 Three functions of time carry all of that, and there is nothing else in the geometry to carry anything.
-The three invariants $(n_1, n_2, n_3)$ of the entry's history table are all zero here, which is the algebraic way of saying the same thing.
+The three invariants $(n_1, n_2, n_3)$ of the Bianchi classification are all zero here, which is the algebraic way of saying the same thing.
 
-A general type I metric carries a full symmetric spatial matrix $g_{ij}(t)$, and the diagonal form published here is the standard restriction of it: it is the case where the principal axes of the expansion do not rotate, so one constant linear change of the comoving coordinates lines them up with $x$, $y$ and $z$ once and for all.
-Everything below is for that case, which is the case the literature means when it says Bianchi I.
+A general type I metric carries a full symmetric spatial matrix $g_{ij}(t)$, and the diagonal form used here is the standard restriction of it: it is the case where the principal axes of the expansion do not rotate, so one constant linear change of the comoving coordinates lines them up with $x$, $y$ and $z$ once and for all.
+Only that case is treated, and it is the case the literature means when it says Bianchi I.
 
 Writing $a_1 = a_2 = a_3$ gives the spatially flat FLRW model, so this line element contains the isotropic universe as the one point where the three functions coincide.
-Everything anisotropic in what follows is carried by their differences.
+Everything anisotropic is carried by their differences.
 
 The chart is written $t \in (0,\infty)$ because the models of interest reach a singularity at a finite time, which is placed at $t = 0$.
-Nothing below depends on that choice; the results hold on any interval where the three scale factors are smooth and positive.
+No result depends on that choice; the results hold on any interval where the three scale factors are smooth and positive.
 
 In the chart $x^0 = ct$ the line element reads
 
 $$ds^2 = -(dx^0)^2 + a_1^2dx^2 + a_2^2dy^2 + a_3^2dz^2,$$
 
-and Steps 3 to 15 work there throughout.
+and every component from Step 3 to Step 15 is computed there.
 
 ---
 
@@ -108,7 +108,7 @@ It runs through the whole of what follows, and a singularity of this spacetime i
 ## Step 4. Every Christoffel symbol
 
 Only the three spatial diagonal components of $g$ depend on anything, and each depends only on $x^0$.
-Throughout this file $\partial_0 = \partial/\partial x^0$ is the derivative the prime denotes, while the index on a component is written $t$, since $t$ is the letter the chart slot $x^0$ is named by in the published file:
+Throughout, $\partial_0 = \partial/\partial x^0$ is the derivative the prime denotes, while the index on a component is written $t$, since $t$ is the letter that names the chart slot $x^0$:
 
 $$\partial_0 g_{ii} = 2a_ia_i', \qquad \text{no sum on } i,$$
 
@@ -134,7 +134,7 @@ $$\Gamma^t{}_{xx} = a_1a_1', \quad \Gamma^t{}_{yy} = a_2a_2', \quad \Gamma^t{}_{
 
 $$\Gamma^x{}_{tx} = \Gamma^x{}_{xt} = \frac{a_1'}{a_1}, \quad \Gamma^y{}_{ty} = \Gamma^y{}_{yt} = \frac{a_2'}{a_2}, \quad \Gamma^z{}_{tz} = \Gamma^z{}_{zt} = \frac{a_3'}{a_3}.$$
 
-This is exactly the entry's `christoffel.ull` block.
+That is every Christoffel symbol with its first index up.
 
 ---
 
@@ -145,7 +145,7 @@ $\Gamma_{\mu\nu\rho} = g_{\mu\alpha}\Gamma^\alpha{}_{\nu\rho}$, and the metric i
 $$\Gamma_{tii} = g_{tt}\Gamma^t{}_{ii} = -a_ia_i', \qquad \Gamma_{iti} = \Gamma_{iit} = g_{ii}\Gamma^i{}_{ti} = a_i^2\frac{a_i'}{a_i} = a_ia_i'.$$
 
 Nine nonzero symbols again, differing from Step 4 only in the time row, where the sign flips.
-This is the entry's `christoffel.lll` block.
+That is every Christoffel symbol with every index lowered.
 
 ---
 
@@ -183,7 +183,7 @@ so again the squares cancel:
 
 $$R^i{}_{tti} = \frac{a_i''}{a_i} = u_i, \qquad R^i{}_{tit} = -u_i.$$
 
-Twelve components in all across the three axes, which is the part of the entry's `riemann.ulll` block carrying a time index.
+Twelve components in all across the three axes, which are the components of the Riemann tensor with its first index up that carry a time index.
 Both members are built from $a_i''$ alone: in a type I universe the curvature of a plane containing the time direction is the acceleration of the scale factor in that direction, and an axis expanding at a constant rate contributes nothing.
 
 ---
@@ -204,7 +204,7 @@ so
 
 $$R^i{}_{jij} = \frac{a_j\,a_i'a_j'}{a_i}, \qquad R^i{}_{jji} = -\frac{a_j\,a_i'a_j'}{a_i}.$$
 
-Twelve more components, four for each of the three coordinate planes, which completes the entry's `riemann.ulll` block at twenty four.
+Twelve more components, four for each of the three coordinate planes, which completes the Riemann tensor with its first index up at twenty four.
 This family is built from the product of two expansion rates and carries no second derivative at all: the curvature of a spatial plane is the shear between the two axes spanning it.
 
 Lowering the first index with the diagonal metric turns the two families into
@@ -212,7 +212,7 @@ Lowering the first index with the diagonal metric turns the two families into
 $$R_{titi} = -a_ia_i'' = -R_{tiit} = -R_{itti} = R_{itit}, \qquad R_{ijij} = a_ia_j\,a_i'a_j' = -R_{ijji},$$
 
 and $R_{ijij} = R_{jiji}$, symmetric under exchanging the two axes as the pair symmetry of Riemann requires.
-That is the entry's `riemann.llll` block, twenty four components again.
+That is the Riemann tensor with every index lowered, twenty four components again.
 
 Six independent numbers describe the whole curvature, $u_1, u_2, u_3$ and $H_1H_2, H_1H_3, H_2H_3$, which is what a diagonal metric in four dimensions with no off diagonal curvature can carry.
 
@@ -242,9 +242,9 @@ Raising indices on a diagonal metric is division:
 
 $$R^t{}_t = -R_{tt} = \sum_i u_i, \qquad R^i{}_i = \frac{R_{ii}}{a_i^2}, \qquad R^{tt} = R_{tt}, \qquad R^{ii} = \frac{R_{ii}}{a_i^4},$$
 
-which are the entry's three Ricci variants.
+which give the Ricci tensor in all three index positions.
 
-The mixed spatial component has a compact form worth recording, because Steps 10 and 12 both use it.
+The mixed spatial component has a compact form, on which the shear of Step 10 and the vacuum solution of Step 12 both rest.
 With $V = a_1a_2a_3$,
 
 $$\frac{1}{V}\frac{d}{d(ct)}\left(V H_i\right) = \frac{1}{V}\left(V'H_i + VH_i'\right) = H_i\sum_k H_k + \left(u_i - H_i^2\right) = u_i + H_i\sum_{j\neq i}H_j = R^i{}_i,$$
@@ -262,7 +262,7 @@ The double sum counts each unordered pair twice, so
 
 $$R = 2\left(\sum_i u_i + \sum_{i<j}H_iH_j\right) = 2\left(\frac{a_1''}{a_1} + \frac{a_2''}{a_2} + \frac{a_3''}{a_3} + \frac{a_1'a_2'}{a_1a_2} + \frac{a_1'a_3'}{a_1a_3} + \frac{a_2'a_3'}{a_2a_3}\right),$$
 
-which is what the entry publishes.
+which holds for any three scale factors.
 
 For the Einstein tensor, $G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu}$.
 In the time slot the second derivatives cancel exactly:
@@ -284,14 +284,14 @@ The fully lowered and doubly raised versions follow by the diagonal rule of Step
 
 $$G_{ii} = a_i^2\,G^i{}_i, \qquad G^{ii} = \frac{G^i{}_i}{a_i^2}, \qquad G^{tt} = G_{tt},$$
 
-which are the entry's three Einstein variants.
+which give the Einstein tensor in all three index positions.
 
 ---
 
 ## Step 10. What the Einstein tensor says: a density and three pressures
 
 Nothing so far has used a field equation.
-Imposing one is what turns the three scale factors from arbitrary functions into a cosmology, and the entry publishes the tensors rather than the solutions precisely so that any matter model can be inserted here.
+Imposing one is what turns the three scale factors from arbitrary functions into a cosmology, and the tensors are kept general rather than solved precisely so that any matter model can be inserted here.
 
 Take a comoving perfect fluid, at rest in these coordinates, whose four velocity in this chart is $u^\mu = (c,0,0,0)$ and whose stress energy tensor is
 
@@ -345,7 +345,7 @@ Second, the three spatial equations are independent, so three unequal scale fact
 The two conventions for the Ricci tensor differ by a sign, since $R^\alpha{}_{\mu\nu\alpha} = -R^\alpha{}_{\mu\alpha\nu}$ by the antisymmetry of Riemann in its last two indices.
 The Einstein tensor, built from Ricci and its trace, flips with it.
 
-For a vacuum solution the choice is invisible, which is why Kasner could publish its zeros under either reading and say so.
+For a vacuum solution the choice is invisible, which is why the zeros of Kasner hold under either reading.
 Here it is not invisible.
 With the standard contraction, Step 9 gives
 
@@ -355,8 +355,8 @@ which for a universe expanding along every axis is a sum of three positive terms
 With the other contraction $G_{tt}$ is the negative of that, and the same expanding universe would be filled with matter of negative energy density.
 The check is not a matter of taste: a diagonal type I model with the right hand side of the field equations fixed to $8\pi G T_{\mu\nu}/c^4$ has a positive density if and only if the Ricci tensor is contracted the standard way.
 
-Everything in this file other than the Ricci tensor, the Ricci scalar and the Einstein tensor is untouched by the convention.
-The Christoffel symbols, the Riemann tensor, the Kretschmann scalar and the geodesic equations do not involve a contraction at all, and the Weyl tensor is defined by removing the traces of Riemann, which are Riemann's own regardless of which sign the file calls Ricci.
+Everything other than the Ricci tensor, the Ricci scalar and the Einstein tensor is untouched by the convention.
+The Christoffel symbols, the Riemann tensor, the Kretschmann scalar and the geodesic equations do not involve a contraction at all, and the Weyl tensor is defined by removing the traces of Riemann, which are Riemann's own regardless of which sign is called Ricci.
 
 ---
 
@@ -397,12 +397,12 @@ So the vacuum type I model is either Minkowski or
 
 $$ds^2 = -c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2 + t^{2p_3}dz^2, \qquad \sum_i p_i = \sum_i p_i^2 = 1,$$
 
-which is the Kasner entry, line for line.
-The two constraints it publishes as assumptions are derived here as the content of the field equations, and the derivation used all four of them: the three spatial equations gave the power law and the sum rule, and the time equation gave the sum of squares.
+which is the Kasner line element, line for line.
+The two constraints that accompany the Kasner metric are derived here as the content of the field equations, and the derivation used all four of them: the three spatial equations gave the power law and the sum rule, and the time equation gave the sum of squares.
 
-The relation between the two entries is therefore exact.
-Type I with a fluid and Kasner are one family read at two settings of the matter, Kasner is the setting where the matter is gone, and everything the Kasner entry publishes can be obtained from this entry by substituting $a_i = t^{p_i}$ and imposing the two constraints.
-Step 14 checks that substitution on the Kretschmann scalar, which is the sharpest of the published invariants.
+The relation between the two spacetimes is therefore exact.
+Type I with a fluid and Kasner are one family read at two settings of the matter, Kasner is the setting where the matter is gone, and every component of Kasner can be obtained from those of type I by substituting $a_i = t^{p_i}$ and imposing the two constraints.
+The substitution is checked in Step 14 on the Kretschmann scalar, the sharpest of the invariants.
 
 ---
 
@@ -412,9 +412,9 @@ In four dimensions,
 
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \frac{1}{2}\left(g_{\mu\rho}R_{\sigma\nu} - g_{\mu\sigma}R_{\rho\nu} - g_{\nu\rho}R_{\sigma\mu} + g_{\nu\sigma}R_{\rho\mu}\right) + \frac{R}{6}\left(g_{\mu\rho}g_{\sigma\nu} - g_{\mu\sigma}g_{\rho\nu}\right),$$
 
-where $R_{\mu\nu}$ here is the trace of Riemann in the standard sense and $R$ its scalar, which by Step 11 is the same tensor the entry publishes.
+where $R_{\mu\nu}$ here is the trace of Riemann in the standard sense and $R$ its scalar, which by Step 11 is the same tensor as the Ricci tensor of Step 8.
 
-Unlike a vacuum entry, there is no shortcut available: the Ricci tensor does not vanish, so Weyl is not Riemann and every component has to be computed.
+Unlike in vacuum, there is no shortcut available: the Ricci tensor does not vanish, so Weyl is not Riemann and every component has to be computed.
 
 Take $C_{txtx}$.
 The surviving terms are the ones whose metric factors are nonzero, namely $g_{tt}$ and $g_{xx}$:
@@ -435,7 +435,7 @@ The whole Weyl tensor is built from those three:
 $$C_{titi} = \frac{a_i^2}{6}E_i = -C_{tiit} = -C_{itti} = C_{itit}, \qquad C_{ijij} = -\frac{a_i^2a_j^2}{6}E_k = -C_{ijji},$$
 
 where in the second family $k$ is the axis that is neither $i$ nor $j$.
-Raising the first index divides by the matching diagonal entry, which gives the entry's `ulll` block:
+Raising the first index divides by the matching diagonal entry, which gives the Weyl tensor with its first index up:
 
 $$C^t{}_{iti} = -\frac{a_i^2}{6}E_i, \qquad C^i{}_{tti} = -\frac{1}{6}E_i, \qquad C^i{}_{jij} = -\frac{a_j^2}{6}E_k.$$
 
@@ -449,15 +449,15 @@ Second, rearranged,
 $$E_i = \left(\sum_k u_k + \sum_{k<l}H_kH_l\right) - 3\left(u_i + H_jH_k\right),$$
 
 so the Weyl tensor vanishes if and only if the three combinations $u_i + H_jH_k$ agree.
-The isotropic case $a_1 = a_2 = a_3$ satisfies that identically, which is the statement that the flat FLRW model is conformally flat, and that is the only place the Weyl tensor of this entry is allowed to be empty.
+The isotropic case $a_1 = a_2 = a_3$ satisfies that identically, which is the statement that the flat FLRW model is conformally flat, and that is the only place the Weyl tensor of this spacetime is allowed to vanish.
 
-Third, in vacuum the Ricci tensor vanishes and $C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma}$, which is the fact the Kasner entry states.
+Third, in vacuum the Ricci tensor vanishes and $C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma}$, which is the fact stated for Kasner.
 It is a fact, not a shortcut, and substituting $a_i = t^{p_i}$ on the Kasner circle shows it component by component.
 There
 
 $$E_i = \frac{6\,p_i(1-p_i)}{c^2t^2}, \qquad \frac{a_i^2}{6}E_i = \frac{p_i(1-p_i)\,t^{2p_i-2}}{c^2},$$
 
-and the right hand side is exactly the $R_{titi}$ that the Kasner entry publishes, so $C_{titi} = R_{titi}$ there as claimed.
+and the right hand side is exactly the $R_{titi}$ of Kasner, so $C_{titi} = R_{titi}$ there as claimed.
 All three $E_i$ vanish together only when every exponent is $0$ or $1$, which on the circle means $(1,0,0)$ up to permutation: the three isolated points where the Kasner metric is flat space in disguise.
 All the curvature of an anisotropic vacuum is tidal, and the Weyl tensor is where it lives.
 
@@ -477,7 +477,7 @@ So
 
 $$K = 4\left[\left(\frac{a_1''}{a_1}\right)^2 + \left(\frac{a_2''}{a_2}\right)^2 + \left(\frac{a_3''}{a_3}\right)^2 + \left(\frac{a_1'a_2'}{a_1a_2}\right)^2 + \left(\frac{a_1'a_3'}{a_1a_3}\right)^2 + \left(\frac{a_2'a_3'}{a_2a_3}\right)^2\right],$$
 
-which is what the entry publishes.
+which holds for every type I model.
 
 Two things follow immediately.
 It is a sum of squares, so $K \geq 0$ for every type I model whatever the matter, and it vanishes only when every $u_i$ and every product $H_iH_j$ vanishes, which is flat space.
@@ -492,7 +492,7 @@ On the Kasner circle that bracket collapses to $-4p_1p_2p_3$, so
 
 $$K = -\frac{16\,p_1p_2p_3}{c^4t^4},$$
 
-which is the Kasner entry's published value, exactly.
+which is the Kretschmann scalar of Kasner, exactly.
 The identity was verified in sympy along the rational parametrisation of the circle that `verify_metrics.py` uses, which covers a dense subset of it and therefore proves it there.
 It also says something: since $K \geq 0$ always, the product $p_1p_2p_3$ cannot be positive on the circle, which is the algebraic shadow of the fact that one Kasner exponent is always negative.
 
@@ -514,7 +514,7 @@ Each spatial equation collects the two orderings of $\Gamma^i{}_{ti}$, which is 
 
 $$\ddot{x} + 2\frac{a_1'}{a_1}\dot{t}\dot{x} = 0, \qquad \ddot{y} + 2\frac{a_2'}{a_2}\dot{t}\dot{y} = 0, \qquad \ddot{z} + 2\frac{a_3'}{a_3}\dot{t}\dot{z} = 0.$$
 
-These four are what the entry publishes.
+These are the four geodesic equations.
 
 Each spatial equation integrates once.
 Since $d/d\lambda = \dot{t}\,d/d(ct)$ acting on a function of the time alone,
@@ -533,7 +533,7 @@ That is why the coordinate $t$ can be called cosmic time at all.
 
 ---
 
-## Step 16. Every published equation is dimensionally consistent
+## Step 16. Every equation is dimensionally consistent
 
 In the chart $x^0 = ct$ every coordinate is a length, since $t$ is a time and the chart carries $ct$.
 The scale factors are dimensionless by declaration, which is what makes the line element balance: $a_i^2dx^2$ carries $L^2$ and so does $c^2dt^2$.
@@ -552,20 +552,20 @@ A geodesic equation is measured against its own second derivative, and the dots 
 In the time equation, $\ddot{t}$ carries $L/\lambda^2$ and $a_1a_1'\dot{x}^2$ carries $(1/L)(L/\lambda)^2 = L/\lambda^2$ as well.
 In a spatial equation, $\ddot{x}$ and $2(a_1'/a_1)\dot{t}\dot{x}$ balance the same way.
 
-The dimensional pass in `verify_metrics.py` does this term by term over every published expression, and this entry passes it with no exceptions.
+The dimensional pass in `verify_metrics.py` does this term by term over every expression, and every term of type I passes it with no exceptions.
 
 ---
 
-## Step 17. What the entry publishes, and the declaration the checker needs
+## Step 17. The components, and the declaration the checker needs
 
-The published system is `bianchi/type_i_cartesian`: the line element, the metric and its inverse, nine Christoffel symbols in each of two variants, twenty four Riemann components in each of two variants, the Ricci tensor in three variants, the Ricci scalar, the Kretschmann scalar, the Einstein tensor in three variants, the Weyl tensor in twenty four components in each of two variants, and the four geodesic equations.
+In the type I Cartesian chart the spacetime has the line element, the metric and its inverse, nine Christoffel symbols in each of two index positions, twenty four Riemann components in each of two index positions, the Ricci tensor in three index positions, the Ricci scalar, the Kretschmann scalar, the Einstein tensor in three index positions, the Weyl tensor in twenty four components in each of two index positions, and the four geodesic equations.
 
-Nothing is empty.
+No tensor vanishes.
 The Ricci tensor, the Ricci scalar and the Einstein tensor are nonzero because no field equation has been imposed, and the Weyl tensor is nonzero because the model is not conformally flat unless the three scale factors conspire as Step 13 describes.
-It is worth saying which blocks a reader should expect to empty out in the two specialisations: the Ricci and Einstein blocks vanish in vacuum, which is Kasner, and the Weyl block vanishes under isotropy, which is flat FLRW.
+The two specialisations each remove a different part of the curvature: the Ricci and Einstein tensors vanish in vacuum, which is Kasner, and the Weyl tensor vanishes under isotropy, which is flat FLRW.
 No setting of the scale factors empties both at once without emptying the spacetime into Minkowski, since a vanishing Ricci tensor and a vanishing Weyl tensor together leave no Riemann tensor at all.
 
-`verify_metrics.py` checks a system only if it is declared in `DIMENSIONS`, and this entry's declaration is
+`verify_metrics.py` checks a system only if it is declared in `DIMENSIONS`, and the declaration for type I is
 
 ```python
 ("bianchi", "type_i_cartesian"): {
@@ -574,13 +574,13 @@ No setting of the scale factors empties both at once without emptying the spacet
 ```
 
 which says that $t$ is the coordinate the chart multiplies by $c$, that the three comoving coordinates are lengths, and that the three scale factors are dimensionless.
-No `PARAMETER_RELATIONS` entry is needed, because unlike Kasner this entry constrains nothing: it claims its values for arbitrary scale factors.
+No `PARAMETER_RELATIONS` line is needed, because unlike Kasner type I constrains nothing: every component holds for arbitrary scale factors.
 
-Two notes for whoever lands that declaration.
+Two facts matter to whoever lands that declaration.
 
-The reader in `verify_metrics.py` gives a declared function of a time coordinate a prime and a dot that both mean $d/d(ct)$, dividing the bare derivative by $c$, which is the convention of Step 1 and is why no published component of this entry carries an explicit $c$.
-The parser reaches a name like `a_1` through its prime spelling only, since its dot spelling accepts letters alone, so the published components are written with primes throughout.
+The reader in `verify_metrics.py` gives a declared function of a time coordinate a prime and a dot that both mean $d/d(ct)$, dividing the bare derivative by $c$, which is the convention of Step 1 and is why no component of type I carries an explicit $c$.
+The parser reaches a name like `a_1` through its prime spelling only, since its dot spelling accepts letters alone, so the components are written with primes throughout.
 
-The checker contracted the Ricci tensor on the last lower index when this entry landed, the older convention, and against that reading the entry reported twenty five disagreements: the four components of each of the three Ricci variants, the same for the three Einstein variants, and the Ricci scalar, every one of them a pure sign.
-None was an error in this entry, which is written with the standard contraction the captain settled on 18 September 2026.
-The checker was brought onto that contraction in the pass that flipped the older entries, and all twenty five went to zero with nothing here changed.
+When type I was first checked, the checker contracted the Ricci tensor on the last lower index, the older convention, and against that reading it reported twenty five disagreements: the four components of the Ricci tensor in each of its three index positions, the same for the Einstein tensor, and the Ricci scalar, every one of them a pure sign.
+None was an error in the components, which are written with the standard contraction the captain settled on 18 September 2026.
+The checker was brought onto that contraction in the pass that flipped the sign of the older Ricci and Einstein tensors, and all twenty five went to zero with no component of type I changed.

@@ -1,29 +1,29 @@
 # Which radical carries the factor of three in the interior Schwarzschild solution
 
-This is the working behind one correction to `MFS/assets/data/metrics/interior_schwarzschild.json`.
-It is narrower than most of the files in this directory, which derive a whole entry.
-The entry published an inverse metric component that does not invert its own metric, and `_tools/derivations/audit-2026-09-18.md` records it as the one disagreement in that entry that is real rather than a limit of the simplifier.
+The interior Schwarzschild inverse metric had one wrong component, and we derive its correction.
+Only that one component is at issue, not the whole spacetime.
+That component did not invert the metric, and of the interior Schwarzschild disagreements listed in `_tools/derivations/audit-2026-09-18.md` it is the one that is real rather than a limit of the simplifier.
 
-The entry's line element carries the time term
+The line element carries the time term
 
 $$-\frac{1}{4}\left(\sqrt{1 - \frac{r^2 r_s}{R^3}} - 3\sqrt{1 - \frac{r_s}{R}}\right)^{\!2}dt^2,$$
 
-and the entry's inverse metric carried
+and the inverse metric carried
 
 $$g^{tt} = -\frac{4}{\left(3\sqrt{1 - \frac{r_s}{R^3}r^2} - \sqrt{1 - \frac{r_s}{R}}\right)^{\!2}}.$$
 
-The factor of three sits on the constant radical in the first and on the radius dependent radical in the second, so one of the two is wrong and the published pair does not satisfy $g^{\mu\alpha}g_{\alpha\nu} = \delta^\mu{}_\nu$.
+The factor of three sits on the constant radical in the first and on the radius dependent radical in the second, so one of the two is wrong and the pair does not satisfy $g^{\mu\alpha}g_{\alpha\nu} = \delta^\mu{}_\nu$.
 
-Nothing below assumes the line element wins.
-Both readings are solutions of the same second order equation, and Step 3 shows that both of them join smoothly to the exterior Schwarzschild solution at $r = R$, which is why the error survived.
-What separates them is the boundary condition at the surface of the star, which Step 6 imposes, and three independent confirmations in Steps 8, 9 and 10 agree with the answer it gives.
+We do not assume the line element wins.
+Both readings are solutions of the same second order equation, and by Step 3 both of them join smoothly to the exterior Schwarzschild solution at $r = R$, which is why the error survived.
+What separates them is the boundary condition at the surface of the star, imposed in Step 6, and three independent confirmations in Steps 8, 9 and 10 agree with the answer it gives.
 
 The conclusion is that the line element is right and the inverse was wrong, and the corrected component is
 
 $$g^{tt} = -\frac{4}{\left(3\sqrt{1 - \frac{r_s}{R}} - \sqrt{1 - \frac{r^2 r_s}{R^3}}\right)^{\!2}}.$$
 
-The other fifty disagreements the checker reports for this entry are the same pair of radicals written as $\sqrt{(R-r_s)(R^3-r^2r_s)}$ where sympy writes $R^2\sqrt{1-r_s/R}\sqrt{1-r^2r_s/R^3}$, which sympy will not merge without being told the factors are positive.
-They are not errors and none of them is touched here.
+The other fifty disagreements the checker reports for the interior Schwarzschild star are the same pair of radicals written as $\sqrt{(R-r_s)(R^3-r^2r_s)}$ where sympy writes $R^2\sqrt{1-r_s/R}\sqrt{1-r^2r_s/R^3}$, which sympy will not merge without being told the factors are positive.
+They are not errors, and the correction leaves every one of them alone.
 
 ---
 
@@ -42,7 +42,7 @@ and the Ricci tensor is the standard contraction on the first lower index,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-which the collection settled on for every entry on 18 September 2026.
+which was settled for every spacetime on 18 September 2026.
 The field equation is $G_{\mu\nu} = \dfrac{8\pi G}{c^4}T_{\mu\nu}$.
 
 The source is a perfect fluid at rest in this chart,
@@ -64,8 +64,8 @@ $$e^{\Phi}_{\ \text{(line element)}} = \tfrac{1}{2}\left(3\sqrt{f_R} - \sqrt{f}\
 \qquad
 e^{\Phi}_{\ \text{(old inverse)}} = \tfrac{1}{2}\left(3\sqrt{f} - \sqrt{f_R}\right).$$
 
-The second is what the published $g^{tt}$ was the reciprocal of, since $-4/(3\sqrt{f}-\sqrt{f_R})^2$ is exactly $1/g_{tt}$ for that second reading.
-The error was therefore a coherent alternative solution and not a slip of a key, which is worth saying because it means it cannot be dismissed by inspection.
+The second is what the old $g^{tt}$ was the reciprocal of, since $-4/(3\sqrt{f}-\sqrt{f_R})^2$ is exactly $1/g_{tt}$ for that second reading.
+The error was therefore a coherent alternative solution and not a slip of a key, so it cannot be dismissed by inspection.
 
 ## Step 3. Why the stellar surface does not choose between them
 
@@ -75,7 +75,7 @@ $$\tfrac{1}{2}\left(3\sqrt{f_R} - \sqrt{f_R}\right) = \sqrt{f_R},$$
 
 so both give $g_{tt}(R) = -(1 - r_s/R)$ and both join continuously to the exterior Schwarzschild solution.
 Moving the factor of three from one radical to the other cannot be seen at a radius where the two radicals are equal.
-Both therefore also give the same $g^{tt}(R) = -1/(1-r_s/R)$, which is why the published inverse looked right wherever it was easiest to check.
+Both therefore also give the same $g^{tt}(R) = -1/(1-r_s/R)$, which is why the old inverse looked right wherever it was easiest to check.
 The surface is silent on the question and the field equations have to be asked instead.
 
 ## Step 4. The ansatz and its Einstein tensor
@@ -108,7 +108,7 @@ The $tt$ equation is the usual mass function, $e^{-2\Lambda} = 1 - 2Gm(r)/(c^2r)
 
 $$e^{-2\Lambda} = 1 - \frac{r^2 r_s}{R^3} = f.$$
 
-This is the radial term the entry publishes and it is not in dispute.
+This is the radial term of the line element and it is not in dispute.
 With it, $e^{-2\Lambda}(-2\Lambda'/r) = f'/r = -2r_s/R^3$ and $(f-1)/r^2 = -r_s/R^3$, so
 
 $$G^t{}_t = -\frac{3r_s}{R^3},\qquad
@@ -155,7 +155,7 @@ $$\frac{8\pi G}{c^4}p = G^r{}_r = -\frac{r_s}{R^3}\cdot\frac{A + 3B\sqrt{f}}{A +
 
 There are two conditions to impose, and they are what a ball of fluid of finite radius means.
 
-1. **The star has an edge.** The fluid occupies $r \le R$ and vacuum lies outside it, so the pressure has to reach zero at the surface: $p(R) = 0$, which by the display above is $A + 3B\sqrt{f_R} = 0$.
+1. **The star has an edge.** The fluid occupies $r \le R$ and vacuum lies outside it, so the pressure has to reach zero at the surface: $p(R) = 0$, which by that expression for the pressure is $A + 3B\sqrt{f_R} = 0$.
 2. **The exterior is Schwarzschild.** The interior joins the vacuum solution of the same mass at $r = R$, so $e^{2\Phi(R)} = 1 - r_s/R$, which is $A + B\sqrt{f_R} = \sqrt{f_R}$.
 
 The first gives $A = -3B\sqrt{f_R}$, and substituting that into the second gives $-2B\sqrt{f_R} = \sqrt{f_R}$, so
@@ -167,7 +167,7 @@ and
 $$e^{\Phi} = \frac{1}{2}\left(3\sqrt{1 - \frac{r_s}{R}} - \sqrt{1 - \frac{r^2 r_s}{R^3}}\right).$$
 
 The factor of three belongs to the constant radical.
-This is the first candidate of Step 2, which is the line element the entry publishes, since the bracket enters $g_{tt}$ squared and $\left(\sqrt{f} - 3\sqrt{f_R}\right)^2 = \left(3\sqrt{f_R} - \sqrt{f}\right)^2$.
+This is the first candidate of Step 2, the one the line element carries, since the bracket enters $g_{tt}$ squared and $\left(\sqrt{f} - 3\sqrt{f_R}\right)^2 = \left(3\sqrt{f_R} - \sqrt{f}\right)^2$.
 
 The second candidate fails condition 1 and fails it badly.
 With $(A,B) = \left(-\tfrac{1}{2}\sqrt{f_R},\,\tfrac{3}{2}\right)$ the numerator at the surface is $A + 3B\sqrt{f_R} = 4\sqrt{f_R}$ while the denominator is $\sqrt{f_R}$, so
@@ -177,7 +177,7 @@ $$G^r{}_r\big|_{r=R} = -\frac{4r_s}{R^3},
 p(R) = -\frac{c^4 r_s}{2\pi GR^3} < 0.$$
 
 It describes a configuration under tension at the surface, held together by something outside itself, which is not a star.
-It satisfies condition 2, as Step 3 already showed, and that is the whole of its resemblance to the solution.
+It satisfies condition 2, by Step 3, and that is the whole of its resemblance to the solution.
 
 ## Step 7. The pressure and density that come with the answer
 
@@ -236,9 +236,9 @@ $$e^{\Phi(0)} = \frac{1}{2}\left(3 - \sqrt{1 - \frac{r_s}{R}}\right),$$
 which never vanishes, runs between $1$ and $3/2$, and exceeds one for every star with $r_s > 0$.
 A clock at the centre of a star runs slow compared with one at infinity, never fast, so the rival has the central redshift the wrong way round and knows nothing of the Buchdahl bound.
 
-## Step 10. Third confirmation: the entry's own connection
+## Step 10. Third confirmation: the stated connection
 
-The rest of the entry was already built on the answer of Step 6, which settles the matter internally as well.
+The stated connection and curvature were already built on the answer of Step 6, which settles the matter internally as well.
 From Step 4, $\Gamma^t{}_{tr} = \Phi' = y'/y$, and with $y = \tfrac{1}{2}\left(3\sqrt{f_R} - \sqrt{f}\right)$ and $y' = rr_s/(2R^3\sqrt{f})$,
 
 $$\Gamma^t{}_{tr} = \frac{rr_s}{R^3\sqrt{f}\left(3\sqrt{f_R}-\sqrt{f}\right)} = \frac{rr_s}{R^3\left(3\sqrt{f_Rf} - f\right)}.$$
@@ -247,9 +247,9 @@ Now $R^3f = R^3 - r^2r_s$ and $R^3\sqrt{f_Rf} = R\sqrt{(R-r_s)(R^3-r^2r_s)}$, so
 
 $$\Gamma^t{}_{tr} = \frac{rr_s}{-R^3 + r^2r_s + 3R\sqrt{(R-r_s)(R^3-r^2r_s)}},$$
 
-which is the published value character for character.
-The rival does not merely give a different number here, it gives the opposite sign, because $\sqrt{f}$ decreases outwards while $\sqrt{f_R}$ is constant: at $r_s/R = 1/2$ and $r/R = 1/2$ the published symbol and the answer of Step 6 both give $0.225364609521$ while the rival gives $-0.381958875866$.
-Every published connection coefficient, every curvature component and the Einstein tensor of this entry are on the same branch, so the old $g^{tt}$ was the single value in the file that was not.
+which is the stated value character for character.
+The rival does not merely give a different number here, it gives the opposite sign, because $\sqrt{f}$ decreases outwards while $\sqrt{f_R}$ is constant: at $r_s/R = 1/2$ and $r/R = 1/2$ the stated symbol and the answer of Step 6 both give $0.225364609521$ while the rival gives $-0.381958875866$.
+Every stated connection coefficient, every curvature component and the Einstein tensor are on the same branch, so the old $g^{tt}$ was the single component that was not.
 
 ## Step 11. The corrected component, and $g^{\mu\alpha}g_{\alpha\nu} = \delta^\mu{}_\nu$
 
@@ -264,7 +264,7 @@ g^{\theta\theta} = \frac{1}{r^2},
 g^{\phi\phi} = \frac{1}{r^2\sin^2\theta}.$$
 
 The last three were already right and are unchanged.
-Multiplying the published inverse block by the published metric block, both read straight out of the JSON file by the checker's own LaTeX reader, gives
+Multiplying the stated inverse metric by the stated metric, both parsed by the checker's own LaTeX reader, gives
 
 $$g^{\mu\alpha}g_{\alpha\nu} = \operatorname{diag}(1,1,1,1) = \delta^\mu{}_\nu$$
 
@@ -282,11 +282,11 @@ For contrast, the old component failed this by a factor that depends on position
 | $1/10$ | $9/10$ | $0.959077055123$ | $1$ |
 | any | $1$ | $1$ | $1$ |
 
-The last row is Step 3 again: the error vanishes at the stellar surface for every mass and every radius, and grows inwards.
+As in Step 3, the error vanishes at the stellar surface for every mass and every radius, and grows inwards.
 
 ## Step 12. What changed
 
-One value in `MFS/assets/data/metrics/interior_schwarzschild.json`, the $tt$ component of `inverse_metric_components`, from
+The $tt$ component of the inverse metric changed from
 
     -\dfrac{4}{\left(3\sqrt{1-\frac{r_s}{R^3}r^2}-\sqrt{1-\frac{r_s}{R}}\right)^2}
 
@@ -295,6 +295,6 @@ to
     -\dfrac{4}{\left(3\sqrt{1 - \frac{r_s}{R}} - \sqrt{1 - \frac{r^2 r_s}{R^3}}\right)^2}
 
 The radicals are also now written in the order and the spacing the line element uses, so the two can be compared by eye.
-Nothing else in the entry was touched, and in particular the fifty nested radical disagreements the checker reports are left exactly as they were, because they are agreements the simplifier cannot see rather than errors.
+No other component changed, and in particular the fifty nested radical disagreements the checker reports are left exactly as they were, because they are agreements the simplifier cannot see rather than errors.
 Since 22 September 2026 the checker sees them: `norm` splits each radical into the square roots of the irreducible factors of its radicand, which is an identity where every factor is positive, as $R$, $R - r_s$ and $R^3 - r^2 r_s$ are everywhere inside the star.
-The fifty are gone, the Einstein tensor and Kretschmann scalar that used to run out of budget now finish, and the whole entry checks in about two seconds with no disagreement and nothing unchecked.
+The fifty are gone, the Einstein tensor and Kretschmann scalar that used to run out of budget now finish, and the whole interior Schwarzschild star checks in about two seconds with no disagreement and nothing unchecked.

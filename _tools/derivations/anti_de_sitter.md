@@ -1,14 +1,14 @@
 # The anti-de Sitter spacetime
 
-This is the working behind the two coordinate systems in `MFS/assets/data/metrics/anti_de_sitter.json`.
-Every number the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+We work anti-de Sitter space in two charts, the global static chart and the Poincaré patch.
+We derive every component in order, from the line element down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we do not compute.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares the result component by component, so the algebra is checkable by hand and by machine independently.
 
 Anti-de Sitter space is the third maximally symmetric solution, alongside Minkowski space and de Sitter space, and the only one of the three with a timelike boundary.
-Almost all of its curvature is settled in one line, Step 6, which writes the Riemann tensor as an antisymmetrised product of metrics; Steps 7 to 10 are that line contracted, traced and stripped of its traces.
-The two steps that are not mere consequences of maximal symmetry are Step 12, where the chart is shown to have no horizon and the boundary is shown to be reachable in finite coordinate time, and Step 13, where the second published chart is built.
+Almost all of its curvature is settled in one line, the Riemann tensor of Step 6 written as an antisymmetrised product of metrics; the Ricci tensor and scalar, the Einstein tensor, the Weyl tensor and the Kretschmann scalar of Steps 7 to 10 are that line contracted, traced and stripped of its traces.
+Two things are not mere consequences of maximal symmetry: in Step 12 the global static chart has no horizon and a boundary reachable in finite coordinate time, and in Step 13 the Poincaré patch is built as a second chart on the same quadric.
 
 ---
 
@@ -23,45 +23,45 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu{}_{\nu\sigma} - \partial_\sigma \Gamma^\mu{}_{\nu\rho} + \Gamma^\mu{}_{\rho\lambda}\Gamma^\lambda{}_{\nu\sigma} - \Gamma^\mu{}_{\sigma\lambda}\Gamma^\lambda{}_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+and the Riemann components follow it.
 
 The Ricci tensor is the standard contraction,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-settled for the collection on 2026-09-18.
-Here the settlement is visible rather than invisible.
+the contraction in use for every spacetime since 2026-09-18.
+For anti-de Sitter space the choice of contraction is visible rather than invisible.
 This spacetime has a nonzero Ricci tensor, and on this contraction it comes out as $R_{\mu\nu} = \Lambda g_{\mu\nu}$ with the sign of $\Lambda$ itself, so a negative cosmological constant gives a Ricci tensor whose $tt$ component is positive and whose spatial components are negative.
-Contracting on the last index instead would print every component of Steps 7, 8 and 9 with the opposite sign and would put a negative $\Lambda$ where a positive one belongs.
+Contracting on the last index instead would give every component of Steps 7, 8 and 9 the opposite sign and would put a negative $\Lambda$ where a positive one belongs.
 
 Factors of $G$ and $c$ are kept explicit.
 The solution has one parameter, the anti-de Sitter radius
 
 $$L, \qquad \Lambda = -\frac{3}{L^2},$$
 
-which is a length, and no mass enters anywhere, so $G$ never appears in a published component: it appears only in the field equations of Step 8, where it multiplies a stress energy tensor that is zero.
+which is a length, and no mass enters anywhere, so $G$ never appears in a component of the metric or the curvature: it appears only in the field equations of Step 8, where it multiplies a stress energy tensor that is zero.
 
-The chart is the collection's, the one whose zeroth coordinate is
+The chart is the one used for every spacetime, whose zeroth coordinate is
 
 $$x^0 = ct.$$
 
-The index is printed with the bare letter $t$, but the component printed against it is a component of that chart.
+The index is written with the bare letter $t$, but the component written against it is a component of that chart.
 Because the rescaling $t \to ct$ is linear with a constant coefficient, a chart component is the component taken with the bare coordinate multiplied by $c$ once per upper time index and divided by $c$ once per lower one, and the Christoffel symbols follow the same rule as the tensors.
-Everything from Step 3 onward is computed directly in the chart, so no conversion is needed at the end, and neither of the two metrics depends on $t$, so no factor of $c$ survives in any published component of either.
+We compute directly in the chart from Step 3 onward, so no conversion is needed at the end, and neither of the two metrics depends on $t$, so no factor of $c$ survives in any component of either.
 
 The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$ and the equations are
 
 $$\ddot{x}^\mu + \Gamma^\mu{}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho = 0$$
 
-with the same printed $\Gamma$.
-Step 14 checks that this is the reading on which every published term balances.
+with the same $\Gamma$.
+This is the reading on which every term balances, as we check in Step 14.
 
 One abbreviation runs through the global chart,
 
 $$f(r) = 1 + \frac{r^2}{L^2} = \frac{L^2 + r^2}{L^2},$$
 
-and it is shorthand for this document only.
-The published file writes every component out in $r$ and $L$, because the checker reads the file symbol by symbol and has no way to be told what an abbreviation means.
+and it is only a shorthand.
+Every component is written out in $r$ and $L$, because the checker reads each one symbol by symbol and has no way to be told what an abbreviation means.
 
 ---
 
@@ -97,15 +97,15 @@ so that
 
 $$ds^2 = -\frac{L^2+r^2}{L^2}c^2dt^2 + \left(1 - \frac{r^2}{L^2+r^2}\right)dr^2 + r^2d\Omega^2 = -f\,c^2dt^2 + \frac{dr^2}{f} + r^2d\Omega^2,$$
 
-which is the published line element.
+which is the line element of the global static chart.
 
 Two things follow immediately from the embedding and are used later.
 The isometry group of the quadric is the group preserving the flat five dimensional form, $SO(3,2)$, which has ten generators, and ten is the maximum a four dimensional spacetime can carry, so this spacetime is maximally symmetric.
 And $(U,V)$ traces a circle as $ct$ runs over $[0, 2\pi L)$, so on the quadric itself $t$ is periodic with period $2\pi L/c$, and since $\partial_t$ is timelike everywhere, every one of those circles is a closed timelike curve.
-Taking $t$ over the whole real line, as the published domain does, is passing to the universal cover, which unwraps that circle and removes every closed timelike curve at once.
+Taking $t$ over the whole real line, as the domain of the coordinates does, is passing to the universal cover, which unwraps that circle and removes every closed timelike curve at once.
 
 De Sitter space is the same construction with one timelike direction fewer, on $-U^2 + X^2 + Y^2 + Z^2 + W^2 = +L^2$, and its static form carries $1 - r^2/L^2$ where this one carries $1 + r^2/L^2$.
-The whole of the difference between the two spacetimes is that sign, and Step 12 is where it is paid out.
+The whole of the difference between the two spacetimes is that sign, and its consequences are paid out in Step 12.
 
 ---
 
@@ -128,7 +128,7 @@ The inverse is the elementwise reciprocal,
 
 $$g^{\mu\nu} = \mathrm{diag}\left(-f^{-1},\ f,\ r^{-2},\ r^{-2}\sin^{-2}\theta\right),$$
 
-which the entry publishes as $g^{tt} = -\left(1 + r^2/L^2\right)^{-1}$, $g^{rr} = 1 + r^2/L^2$, $g^{\theta\theta} = 1/r^2$ and $g^{\phi\phi} = 1/r^2\sin^2\theta$.
+which in components is $g^{tt} = -\left(1 + r^2/L^2\right)^{-1}$, $g^{rr} = 1 + r^2/L^2$, $g^{\theta\theta} = 1/r^2$ and $g^{\phi\phi} = 1/r^2\sin^2\theta$.
 
 ---
 
@@ -153,8 +153,8 @@ and the angular ones are those of the round sphere of radius $r$,
 
 $$\Gamma^\theta{}_{r\theta} = \Gamma^\theta{}_{\theta r} = \Gamma^\phi{}_{r\phi} = \Gamma^\phi{}_{\phi r} = \frac{1}{r}, \qquad \Gamma^\theta{}_{\phi\phi} = -\cos\theta\sin\theta, \qquad \Gamma^\phi{}_{\theta\phi} = \Gamma^\phi{}_{\phi\theta} = \cot\theta.$$
 
-That is thirteen nonzero symbols counting both orderings of each symmetric pair, and it is what the entry publishes under `ull`.
-Setting $L \to \infty$ sends $f \to 1$ and leaves only the four angular symbols, which are flat space in spherical coordinates; that limit is the first check to make on any expression below.
+That is thirteen nonzero symbols counting both orderings of each symmetric pair, and they are all the Christoffel symbols with the first index up.
+Setting $L \to \infty$ sends $f \to 1$ and leaves only the four angular symbols, which are flat space in spherical coordinates; that limit is the first check to make on any later expression.
 
 ---
 
@@ -172,8 +172,8 @@ $$\Gamma_{rrr} = f^{-1}\left(-\frac{r}{L^2+r^2}\right) = -\frac{L^2r}{\left(L^2+
 
 $$\Gamma_{\theta r\theta} = \Gamma_{\theta\theta r} = r, \qquad \Gamma_{\theta\phi\phi} = -r^2\cos\theta\sin\theta, \qquad \Gamma_{\phi r\phi} = \Gamma_{\phi\phi r} = r\sin^2\theta, \qquad \Gamma_{\phi\theta\phi} = \Gamma_{\phi\phi\theta} = r^2\cos\theta\sin\theta.$$
 
-Thirteen again, since lowering an index cannot create or destroy a zero in a diagonal metric, and that is the `lll` block.
-The pair $\Gamma_{ttr} = -r/L^2$ and $\Gamma_{rtt} = +r/L^2$ is worth pausing on: their magnitudes are equal and their signs are opposite, which is the statement that the only thing bending a static worldline here is the growth of $g_{tt}$ with radius.
+Thirteen again, since lowering an index cannot create or destroy a zero in a diagonal metric, and these are all the Christoffel symbols with every index lowered.
+In the pair $\Gamma_{ttr} = -r/L^2$ and $\Gamma_{rtt} = +r/L^2$ the magnitudes are equal and the signs are opposite, which is the statement that the only thing bending a static worldline here is the growth of $g_{tt}$ with radius.
 
 ---
 
@@ -226,7 +226,7 @@ The fully lowered tensor is nonzero on the same planes,
 $$R_{\mu\nu\mu\nu} = R_{\nu\mu\nu\mu} = -\frac{g_{\mu\mu}g_{\nu\nu}}{L^2}, \qquad R_{\mu\nu\nu\mu} = R_{\nu\mu\mu\nu} = +\frac{g_{\mu\mu}g_{\nu\nu}}{L^2},$$
 
 four components for each of the six unordered pairs, twenty four again.
-The entry publishes both blocks in full, and the checker requires every component it does not publish to vanish, which is how the count is held to exactly these.
+Both forms are given in full, and the checker requires every other component to vanish, which holds the count to exactly these.
 
 The six planes of the global chart carry
 
@@ -257,7 +257,7 @@ The mixed and fully raised forms are the same statement with indices moved,
 
 $$R^\mu{}_\nu = \Lambda\,\delta^\mu{}_\nu = -\frac{3}{L^2}\delta^\mu{}_\nu, \qquad R^{\mu\nu} = \Lambda\,g^{\mu\nu},$$
 
-and the mixed block is the one worth reading, because all four of its entries are the same negative constant and no coordinate appears in any of them.
+and the mixed form is the plainest, because all four of its components are the same negative constant and no coordinate appears in any of them.
 That is the clearest form of the statement that this spacetime is the same at every point and in every direction.
 
 The scalar is the trace,
@@ -265,7 +265,7 @@ The scalar is the trace,
 $$R = g^{\mu\nu}R_{\mu\nu} = 4\Lambda = -\frac{12}{L^2},$$
 
 constant and negative.
-De Sitter space, run through the same four lines with $K_0 = +1/L^2$, gives $R = +12/L^2$, and the entry for it says so.
+De Sitter space, run through the same four lines with $K_0 = +1/L^2$, gives $R = +12/L^2$.
 
 ---
 
@@ -273,20 +273,20 @@ De Sitter space, run through the same four lines with $K_0 = +1/L^2$, gives $R =
 
 $$G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = \Lambda g_{\mu\nu} - 2\Lambda g_{\mu\nu} = -\Lambda g_{\mu\nu} = \frac{3}{L^2}g_{\mu\nu}.$$
 
-An entry described as a vacuum publishing a nonzero Einstein tensor looks like a contradiction, and is not.
+A vacuum with a nonzero Einstein tensor looks like a contradiction, and is not.
 The field equations with a cosmological constant are
 
 $$G_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu\nu},$$
 
-and what the line above says is that the left hand side vanishes identically, so $T_{\mu\nu} = 0$: there is no matter anywhere in this spacetime.
+and by the Einstein tensor just computed the left hand side vanishes identically, so $T_{\mu\nu} = 0$: there is no matter anywhere in this spacetime.
 The Einstein tensor is nonzero only because the cosmological term has been kept on the left, where it is geometry, rather than moved to the right and called a vacuum energy.
-Moving it is bookkeeping and changes no physics, but it is worth naming what it would say here: a vacuum energy density of $\Lambda c^4/8\pi G$, which for $\Lambda < 0$ is negative, and negative vacuum energy is what makes this spacetime a box instead of an expansion.
+Moving it is a relabelling and changes no physics, but it is worth naming what it would say here: a vacuum energy density of $\Lambda c^4/8\pi G$, which for $\Lambda < 0$ is negative, and negative vacuum energy is what makes this spacetime a box instead of an expansion.
 
-Component by component the block is minus the Ricci block,
+Component by component the Einstein tensor is minus the Ricci tensor,
 
 $$G_{tt} = -\frac{3\left(L^2+r^2\right)}{L^4}, \qquad G_{rr} = \frac{3}{L^2+r^2}, \qquad G_{\theta\theta} = \frac{3r^2}{L^2}, \qquad G_{\phi\phi} = \frac{3r^2\sin^2\theta}{L^2}, \qquad G^\mu{}_\nu = \frac{3}{L^2}\delta^\mu{}_\nu,$$
 
-and that relation, $G_{\mu\nu} = -R_{\mu\nu}$, holds in any four dimensional Einstein space and is the quickest check on the two published blocks.
+and that relation, $G_{\mu\nu} = -R_{\mu\nu}$, holds in any four dimensional Einstein space and is the quickest check on the two tensors.
 
 ---
 
@@ -311,11 +311,11 @@ identically, in every slot, for either sign of $\Lambda$.
 The reason is worth stating plainly, because it is not the reason a vacuum's Weyl tensor equals its Riemann tensor.
 There the Ricci tensor is zero and so the subtraction removes nothing.
 Here the Ricci tensor is emphatically not zero; what happens instead is that the Riemann tensor of a maximally symmetric space is built out of its own traces and nothing else, so removing the traces removes all of it.
-`_tools/derivations/weyl.md` is the general working behind this distinction, and it names two other entries with empty Weyl blocks, FRW and the interior Schwarzschild solution, which are conformally flat without being maximally symmetric.
-Conformal flatness is what an empty Weyl block means in four dimensions: it is the integrability condition for the metric to be a position dependent multiple of a flat one in some chart.
-Step 13 exhibits that chart.
+The general distinction is worked in `_tools/derivations/weyl.md`, and two other spacetimes have a vanishing Weyl tensor, FRW and the interior Schwarzschild solution, which are conformally flat without being maximally symmetric.
+Conformal flatness is what a vanishing Weyl tensor means in four dimensions: it is the integrability condition for the metric to be a position dependent multiple of a flat one in some chart.
+That chart is the Poincaré patch of Step 13.
 
-The entry publishes empty `ulll` and `llll` blocks, and the checker turns each of them into twenty four assertions, since a component the entry omits is a component it claims is zero.
+The Weyl tensor therefore vanishes both with the first index up and with every index lowered, and the checker turns each of the two into twenty four assertions that a component is zero.
 
 ---
 
@@ -357,7 +357,7 @@ $$\ddot{\phi} + \frac{2}{r}\dot{r}\dot{\phi} + 2\cot\theta\,\dot{\theta}\dot{\ph
 
 The first equation is $\frac{d}{d\lambda}\left(f\dot{t}\right) = 0$ in disguise, which is the conserved energy of the static Killing vector, and the last two are those of any spherically symmetric metric, so motion in a plane stays in that plane.
 
-The sign of the $\dot{t}^2$ term in the radial equation is the one to read.
+The sign of the $\dot{t}^2$ term in the radial equation is the one that matters.
 It is positive, so the coordinate acceleration it produces is inward at every radius, for every worldline with $\dot{t} \neq 0$, and it grows without bound as $r$ grows.
 Schwarzschild's corresponding term falls off as $1/r^2$ and de Sitter's is negative.
 Anti-de Sitter space pulls everything back toward the origin harder the further out it goes, which is Step 12 in one line.
@@ -366,7 +366,7 @@ Anti-de Sitter space pulls everything back toward the origin harder the further 
 
 ## Step 12. No horizon, and a boundary that light can reach
 
-Two facts about this chart are the mirror of de Sitter's, and the entry states both.
+Two facts about this chart are the mirror of de Sitter's.
 
 The first is that
 
@@ -393,7 +393,7 @@ $$\int_0^\infty\frac{dr}{\sqrt{f}} = \infty,$$
 so the boundary is infinitely far away and reached in finite time, which is only possible because the coordinate speed of light $dr/dt = cf$ grows without bound.
 Light leaves the origin, arrives at spatial infinity at $ct = \pi L/2$, and can be reflected back to arrive home at $ct = \pi L$.
 
-The consequence is the one the entry's history is built on.
+The consequence is the one the history of anti-de Sitter space is built on.
 The conformal boundary at $r \to \infty$ is timelike, not null as it is in an asymptotically flat spacetime, so information can enter through it in finite time.
 No spacelike surface is a Cauchy surface: the future of any such surface depends on what comes in from the edge, and anti-de Sitter space is not globally hyperbolic.
 Evolving a field in it is not an initial value problem alone; it is an initial value problem plus a boundary condition at infinity.
@@ -426,7 +426,7 @@ Anti-de Sitter space focuses its own geodesics, and that is the sense in which t
 
 ## Step 13. The Poincaré patch
 
-The second published chart is the one every holography paper is written in,
+The second chart is the one every holography paper is written in,
 
 $$ds^2 = \frac{L^2}{z^2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right), \qquad z \in (0,\infty),$$
 
@@ -437,7 +437,7 @@ Take
 
 $$U = \frac{z^2 + L^2 + x^2 + y^2 - c^2t^2}{2z}, \qquad W = \frac{z^2 - L^2 + x^2 + y^2 - c^2t^2}{2z}, \qquad V = \frac{Lct}{z}, \qquad X = \frac{Lx}{z}, \qquad Y = \frac{Ly}{z},$$
 
-and the constraint $-U^2 - V^2 + X^2 + Y^2 + W^2 = -L^2$ holds identically while the induced metric is the line element above.
+and the constraint $-U^2 - V^2 + X^2 + Y^2 + W^2 = -L^2$ holds identically while the induced metric is the line element of the Poincaré patch.
 Since $U - W = L^2/z$, the chart covers only the half of the quadric where $U > W$, and the null surface $U = W$, which is $z \to \infty$, bounds it.
 That surface is the Poincaré horizon.
 Nothing happens there: the Kretschmann scalar of Step 10 is the same constant $24/L^4$ on it as everywhere else, and the global chart of Step 2 runs straight through it without noticing.
@@ -460,31 +460,31 @@ $$\Gamma^t{}_{tz} = \Gamma^x{}_{xz} = \Gamma^y{}_{yz} = \Gamma^z{}_{zz} = -\frac
 
 together with the symmetric partners of the first three, ten nonzero symbols in all.
 The sign flip between $\Gamma^z{}_{tt}$ and $\Gamma^z{}_{xx}$ is the $\eta_{\nu\rho}$ in the last term, and it is the only place the signature enters.
-Lowering the first index multiplies each by $\pm L^2/z^2$ and gives the ten values the entry publishes under `lll`, all of them $\pm L^2/z^3$.
+Lowering the first index multiplies each by $\pm L^2/z^2$ and gives the ten Christoffel symbols with every index lowered, all of them $\pm L^2/z^3$.
 
-Everything below the connection is Step 6 again, because the spacetime is the same one:
+The curvature is Step 6 again, because the spacetime is the same one:
 
 $$R_{\mu\nu\rho\sigma} = -\frac{1}{L^2}\left(g_{\mu\rho}g_{\nu\sigma} - g_{\mu\sigma}g_{\nu\rho}\right), \qquad R_{\mu\nu} = -\frac{3}{L^2}g_{\mu\nu}, \qquad R = -\frac{12}{L^2}, \qquad K = \frac{24}{L^4}, \qquad C_{\mu\nu\rho\sigma} = 0,$$
 
-so with $g_{tt} = -L^2/z^2$ and $g_{xx} = g_{yy} = g_{zz} = L^2/z^2$ the published components are
+so with $g_{tt} = -L^2/z^2$ and $g_{xx} = g_{yy} = g_{zz} = L^2/z^2$ the components are
 
 $$R^\mu{}_{t\mu t} = \frac{1}{z^2}, \qquad R^\mu{}_{i\mu i} = -\frac{1}{z^2}, \qquad R_{titi} = \frac{L^2}{z^4}, \qquad R_{ijij} = -\frac{L^2}{z^4},$$
 
 $$R_{tt} = \frac{3}{z^2}, \qquad R_{ii} = -\frac{3}{z^2}, \qquad R^\mu{}_\nu = -\frac{3}{L^2}\delta^\mu{}_\nu, \qquad G^\mu{}_\nu = \frac{3}{L^2}\delta^\mu{}_\nu,$$
 
 with $i$ and $j$ distinct spatial indices and no sum anywhere.
-Swapping the last two indices of a Riemann component flips its sign, which doubles each of these into the twenty four the entry publishes in each variance, the same count as the global chart since it depends on the dimension and not on the chart.
+Swapping the last two indices of a Riemann component flips its sign, which doubles each of these into twenty four nonzero components, with the first index up and with every index lowered alike, the same count as the global chart since it depends on the dimension and not on the chart.
 
 The geodesic equations are
 
 $$\ddot{t} - \frac{2}{z}\dot{t}\dot{z} = 0, \qquad \ddot{x} - \frac{2}{z}\dot{x}\dot{z} = 0, \qquad \ddot{y} - \frac{2}{z}\dot{y}\dot{z} = 0, \qquad \ddot{z} - \frac{1}{z}\left(\dot{t}^2 - \dot{x}^2 - \dot{y}^2 + \dot{z}^2\right) = 0,$$
 
 and the first three integrate at once to $\dot{t}, \dot{x}, \dot{y} \propto z^2$, which are the three conserved momenta of the boundary directions.
-A ray of light sent straight out at the boundary has $\dot{x} = \dot{y} = 0$ and $\dot{z} = \pm\dot{t}$, so $dz/d(ct) = \pm 1$, and it covers the whole depth of the patch at unit coordinate speed: it reaches $z = 0$ from any depth in finite coordinate time, which is the same statement Step 12 makes in the global chart.
+A ray of light sent straight out at the boundary has $\dot{x} = \dot{y} = 0$ and $\dot{z} = \pm\dot{t}$, so $dz/d(ct) = \pm 1$, and it covers the whole depth of the patch at unit coordinate speed: it reaches $z = 0$ from any depth in finite coordinate time, which is the statement of Step 12 in the global chart.
 
 ---
 
-## Step 14. Every published expression is dimensionally consistent
+## Step 14. Every expression is dimensionally consistent
 
 The chart coordinates of the global system are $(ct, r, \theta, \phi)$, of dimensions $L$, $L$, $1$, $1$, and those of the Poincaré patch are $(ct, x, y, z)$, all four lengths.
 The one parameter $L$ is a length in both.
@@ -512,17 +512,17 @@ $$\frac{L\cdot L^2}{L^4}\cdot\left(\frac{L}{\lambda}\right)^2 = \frac{L}{\lambda
 
 which matches, and matches only because $\dot{t}$ is $d(ct)/d\lambda$ and not $dt/d\lambda$.
 On the other reading that term would come out one factor of $c$ away from $\ddot{r}$, and the dimensional pass in `verify_metrics.py` would name it.
-It does not, on any expression either system publishes.
+It does not, on any expression of either chart.
 
 ---
 
-## Step 15. What the entry publishes, and what the checker needs
+## Step 15. The components, and what the checker needs
 
-The file carries two coordinate systems.
+There are two coordinate systems, the global static chart and the Poincaré patch.
 
-`static_global` publishes the line element; four $g_{\mu\nu}$ and four $g^{\mu\nu}$; thirteen $\Gamma^\mu{}_{\nu\rho}$ and thirteen $\Gamma_{\mu\nu\rho}$; twenty four $R^\mu{}_{\nu\rho\sigma}$ and twenty four $R_{\mu\nu\rho\sigma}$; four each of $R_{\mu\nu}$, $R^\mu{}_\nu$, $R^{\mu\nu}$, $G_{\mu\nu}$, $G^\mu{}_\nu$ and $G^{\mu\nu}$; $R = -12/L^2$; $K = 24/L^4$; empty $C^\mu{}_{\nu\rho\sigma}$ and $C_{\mu\nu\rho\sigma}$ blocks; and four geodesic equations.
+The global static chart has the line element; four $g_{\mu\nu}$ and four $g^{\mu\nu}$; thirteen $\Gamma^\mu{}_{\nu\rho}$ and thirteen $\Gamma_{\mu\nu\rho}$; twenty four $R^\mu{}_{\nu\rho\sigma}$ and twenty four $R_{\mu\nu\rho\sigma}$; four each of $R_{\mu\nu}$, $R^\mu{}_\nu$, $R^{\mu\nu}$, $G_{\mu\nu}$, $G^\mu{}_\nu$ and $G^{\mu\nu}$; $R = -12/L^2$; $K = 24/L^4$; a vanishing $C^\mu{}_{\nu\rho\sigma}$ and $C_{\mu\nu\rho\sigma}$; and four geodesic equations.
 
-`poincare` publishes the same shape with ten Christoffel symbols in each variance instead of thirteen, its transverse directions being flat coordinates rather than angles.
+The Poincaré patch has the same shape with ten Christoffel symbols in each index position instead of thirteen, its transverse directions being flat coordinates rather than angles.
 
 For `verify_metrics.py` to read them, the two systems need two lines in `DIMENSIONS`,
 
@@ -536,9 +536,9 @@ For `verify_metrics.py` to read them, the two systems need two lines in `DIMENSI
 declaring $t$ a time, which is what tells the script that the chart multiplies it by $c$, and declaring the radius a length.
 The radius being named $L$ is the one thing worth a second look, because the dimensional pass writes its own lengths with the letter $L$ as well.
 The two never meet: the parameter is a symbol of the system's reader and the dimension is a symbol of the dimension table, they live in different expressions, and the pass reports the dimension of the parameter as $L$ because that is what the table was told to give it.
-No entry in `PARAMETER_RELATIONS` is needed, since $L$ is free and every published value is an identity in it.
+No relation in `PARAMETER_RELATIONS` is needed, since $L$ is free and every component is an identity in it.
 
-Both systems are fast, the metrics being diagonal and their entries short:
+Both systems check fast, the metrics being diagonal and their components short:
 
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py \
         --system anti_de_sitter/static_global --system anti_de_sitter/poincare

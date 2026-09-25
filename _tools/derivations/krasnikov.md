@@ -1,13 +1,12 @@
 # The Krasnikov tube
 
-This is the working behind the coordinate system in `MFS/assets/data/metrics/krasnikov.json`.
-Every value the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+Every component and scalar of the Krasnikov tube in its cylindrical chart is derived here, in order, from the line element down to the geodesic equations.
+We compute every result rather than assert it, and leave none as an exercise.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and checks every stated expression against it, so each result is checkable by hand and by machine independently.
 
-The entry exists for one contraction.
-The tube is built to tip one null ray, the one that comes home along the axis, and Step 11 is where the mathematics hands back the bill for tipping it.
+The whole interest of the tube lies in one contraction.
+The tube is built to tip one null ray, the one that comes home along the axis, and the bill for tipping it is the contraction computed in Step 11.
 Writing $w = \ln\left(1 + k\right)$, the Einstein tensor contracted twice with that ray is
 
 $$G_{\mu\nu}\ell_{\text{back}}^\mu\ell_{\text{back}}^\nu = -\frac{\left(1 + k\right)^2}{2r}\,\partial_r\left(r\,\partial_r w\right),$$
@@ -15,7 +14,7 @@ $$G_{\mu\nu}\ell_{\text{back}}^\mu\ell_{\text{back}}^\nu = -\frac{\left(1 + k\ri
 minus the flat Laplacian of $w$ in the transverse plane, against a weight that is positive wherever the metric is not degenerate.
 A Laplacian integrates to zero over a plane on which its argument is regular at the origin and constant far out, so the contraction cannot have one sign unless it vanishes identically, and it vanishes identically only when $k$ does not depend on $r$, which is to say only when there is no tube.
 The null energy condition therefore fails in the wall of every Krasnikov tube of finite radius, for every shape function, and it fails on exactly the ray the construction exists to open.
-Step 10 reads the same fact as an energy density and gets a sum of squares with a minus sign in front of it, which is the same shape the Alcubierre entry arrives at.
+Read as an energy density, as in Step 10, the same fact gives a sum of squares with a minus sign in front of it, which is the same shape Alcubierre's drive arrives at.
 
 ---
 
@@ -30,36 +29,36 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\sigma\tau} = \partial_\sigma\Gamma^\mu{}_{\nu\tau} - \partial_\tau\Gamma^\mu{}_{\nu\sigma} + \Gamma^\mu{}_{\sigma\lambda}\Gamma^\lambda{}_{\nu\tau} - \Gamma^\mu{}_{\tau\lambda}\Gamma^\lambda{}_{\nu\sigma},$$
 
-which is what the published Riemann components are in.
+and every Riemann component is taken in this convention.
 The dummy indices are written $\sigma$ and $\tau$ rather than $\rho$ and $\sigma$ throughout, because $r$ is a coordinate here and $\rho$ is reserved for the energy density.
 
 The Ricci tensor is the standard contraction,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-settled for the collection on 2026-09-18.
+settled on 2026-09-18.
 The settlement is not free here.
-The wall of the tube is not a vacuum, so the Ricci tensor, the Ricci scalar and the Einstein tensor all change sign with the choice, and the sign the collection now carries is the one that puts ordinary matter at positive energy density.
-The entire question this entry answers is the sign of an energy density, so the answer would read backwards under the other contraction.
+The wall of the tube is not a vacuum, so the Ricci tensor, the Ricci scalar and the Einstein tensor all change sign with the choice, and the standard contraction gives the sign that puts ordinary matter at positive energy density.
+The entire question about the tube is the sign of an energy density, so the answer would come out backwards under the other contraction.
 
-The chart is the collection's, the one whose zeroth coordinate is
+The chart is the one whose zeroth coordinate is
 
 $$x^0 = ct.$$
 
-The index is printed with the bare letter $t$, but the component printed against it is a component of that chart, and everything from Step 4 onward is computed directly in it.
-A printed $\partial_t$ is the derivative along that chart coordinate,
+The index is written with the bare letter $t$, but a component carrying it is a component of that chart, and every component from Step 4 onward is computed directly in it.
+The symbol $\partial_t$ is the derivative along that chart coordinate,
 
 $$\partial_t = \frac{1}{c}\frac{\partial}{\partial t},$$
 
-so each printed derivative carries one inverse length per order, which is what Step 16 checks.
+so each derivative carries one inverse length per order, as the dimensional check of Step 16 confirms.
 The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$.
 
 ---
 
-## Step 2. What Krasnikov built, and why the entry is four dimensional
+## Step 2. What Krasnikov built, and why the tube is four dimensional
 
 Krasnikov's problem is not how to go fast.
-It is that the distance to Deneb is fixed by the geometry, and the half of his 1998 paper that fails proves you cannot shorten the outbound leg from inside a globally hyperbolic spacetime.
+It is that the distance to Deneb is fixed by the geometry: Krasnikov proved in 1998 that the outbound leg cannot be shortened from inside a globally hyperbolic spacetime.
 What is left is the way back.
 Nothing forbids modifying the metric in a region the ship has already passed through, and a modification that swings the light cones far enough open lets the return leg run backward through the clock left at home.
 
@@ -72,10 +71,10 @@ The two null directions of this line element are read straight off the two brack
 Setting the first to zero gives $d(ct) = dx$, the outbound ray, which does not move no matter what $k$ does.
 Setting the second to zero gives $d(ct) = -k\,dx$, and that is the whole of the construction: at $k = 1$ it is the ordinary homeward ray, at $k = 0$ it is the spatial direction $-x$, and at $k < 0$ it runs toward decreasing $x$ with $d(ct)$ negative as well.
 
-A two dimensional entry would stop there, and stopping there is exactly what this collection cannot do.
+The construction cannot stop in two dimensions.
 In two dimensions the Einstein tensor vanishes identically for every metric there is, because $R_{\mu\nu} = \tfrac{1}{2}Rg_{\mu\nu}$ is an identity when the Riemann tensor has one independent component.
-So a two dimensional Krasnikov entry could print a line element, a connection, a curvature scalar and a set of tipped cones, and it could print nothing at all about the source, because in two dimensions there is no source to print.
-Since the source is the whole of the physics, and since the history of this spacetime is the history of an argument about how much exotic matter it needs, the entry carries the four dimensional form instead.
+So a two dimensional Krasnikov metric has a line element, a connection, a curvature scalar and a set of tipped cones, and it says nothing at all about the source, because in two dimensions there is no source.
+Since the source is the whole of the physics, and since the history of this spacetime is the history of an argument about how much exotic matter it needs, we take the four dimensional form instead.
 
 That form is Everett and Roman's, and it is the same product with a flat transverse plane appended,
 
@@ -85,7 +84,7 @@ with $k$ now a function of $t$, $x$ and $r$.
 What the fourth dimension adds is not decoration.
 In two dimensions there is no direction for $k$ to fall off in, so the modified region is a slab that fills all of space at the values of $x$ it covers, and it has no wall.
 In four dimensions $k$ returns to $1$ beyond some radius, the modified region becomes a tube of finite cross section, and there is a wall where $k$ turns.
-Every curvature component in this entry is supported on that wall, and every one of them vanishes when $k$ is independent of $r$, which is the two dimensional case dressed in four coordinates.
+Every curvature component of the tube is supported on that wall, and every one of them vanishes when $k$ is independent of $r$, which is the two dimensional case dressed in four coordinates.
 
 ---
 
@@ -100,16 +99,16 @@ $$ds^2 = -c^2dt^2 + \left(1 - k\right)c\,dt\,dx + k\,dx^2 + dr^2 + r^2d\phi^2,$$
 which is the form Everett and Roman print.
 At $k = 1$ the cross term goes and the $dx^2$ term becomes $+dx^2$, leaving Minkowski space in cylindrical coordinates, so the tube is asymptotically flat in every direction and is flat wherever $k$ is constant, whatever that constant is.
 
-The published $k$ is left arbitrary.
+We leave $k$ arbitrary.
 Krasnikov assembles his own out of smoothed step functions: one closes the tube off at a radius, one holds it inside the future light cone of the departure so that nothing is ever built ahead of the ship, and a pair opens it between the start of the journey and its end.
-Nothing below uses any of that, so every component published here is an identity for an arbitrary $k$.
+None of that enters the computation, so every component is an identity for an arbitrary $k$.
 
 One restriction is not optional.
-The determinant computed in Step 4 is $\det g = -\tfrac{1}{4}r^2\left(1 + k\right)^2$, which vanishes at $k = -1$, and $1 + k$ divides every curvature component in the entry.
+The determinant computed in Step 4 is $\det g = -\tfrac{1}{4}r^2\left(1 + k\right)^2$, which vanishes at $k = -1$, and $1 + k$ divides every curvature component of the tube.
 So the solution lives on $k > -1$, and Krasnikov's interior value $k = -1 + \delta$ approaches the boundary of the chart from above as $\delta$ goes to zero.
 That is not a technicality, it is the mechanism.
 The return leg runs along $d(ct) = -k\,dx$, so at $k = -1 + \delta$ a homeward leg of $\Delta x = -D$ takes $\Delta(ct) = -\left(1 - \delta\right)D$, and a round trip that went out at nearly the speed of light costs $\delta D$ in all.
-Making the round trip shorter means making $\delta$ smaller, which means driving the metric toward degeneracy, and Step 12 is where the price of that shows up.
+Making the round trip shorter means making $\delta$ smaller, which means driving the metric toward degeneracy, and the price of that is the energy computed in Step 12.
 The trip time never reaches zero and never goes negative, which is why one tube is not a time machine and two of them, laid along different routes, are.
 
 ---
@@ -120,22 +119,22 @@ Reading the coefficients off the line element in the chart $x^0 = ct$, where the
 
 $$g_{\mu\nu} = \begin{pmatrix} -1 & \tfrac{1}{2}\left(1-k\right) & 0 & 0 \\ \tfrac{1}{2}\left(1-k\right) & k & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & r^2\end{pmatrix}.$$
 
-Two things about this matrix are worth noticing before any derivative is taken.
+Two things about this matrix matter before any derivative is taken.
 The first is that $g_{tt} = -1$ exactly, for every $k$: the lapse of this slicing is one, and the observer sitting at fixed $x$, $r$ and $\phi$ has $t$ for a proper time.
 The second is that $g_{xx} = k$ is negative inside the tube, so $x$ is a timelike coordinate there.
 Neither of those makes the chart bad, and the second is the tipping of the cones stated as a component.
 
-The block is two by two plus a flat transverse plane, so the determinant is
+The metric is a two by two part plus a flat transverse plane, so the determinant is
 
 $$\det g = r^2\left[\left(-1\right)k - \tfrac{1}{4}\left(1-k\right)^2\right] = -\tfrac{1}{4}r^2\left(k^2 + 2k + 1\right) = -\tfrac{1}{4}r^2\left(1 + k\right)^2.$$
 
 It is negative for every $k \ne -1$, as a Lorentzian metric's determinant must be in four dimensions, and it degenerates only at $k = -1$.
-Inverting the two by two block with that determinant,
+Inverting the two by two part with that determinant,
 
 $$g^{\mu\nu} = \begin{pmatrix} -\dfrac{4k}{\left(1+k\right)^2} & \dfrac{2\left(1-k\right)}{\left(1+k\right)^2} & 0 & 0 \\[4pt] \dfrac{2\left(1-k\right)}{\left(1+k\right)^2} & \dfrac{4}{\left(1+k\right)^2} & 0 & 0 \\[4pt] 0 & 0 & 1 & 0 \\[4pt] 0 & 0 & 0 & \dfrac{1}{r^2}\end{pmatrix},$$
 
 which at $k=1$ is $\operatorname{diag}\left(-1, 1, 1, 1/r^2\right)$ as it should be.
-Every one of these six entries is published, and the factor $\left(1+k\right)^{-2}$ in three of them is where the powers of $1 + k$ in the whole entry come from.
+The factor $\left(1+k\right)^{-2}$ in three of these six components is where the powers of $1 + k$ in every later expression come from.
 
 ---
 
@@ -212,7 +211,7 @@ Every symbol that involves $k$ vanishes where $k$ is constant, which is everywhe
 ## Step 7. The Riemann tensor
 
 With the connection in hand the curvature is the definition of Step 1 applied component by component.
-Eight blocks come out nonzero, and the shortest of them is the one that does the most work.
+Eight independent components come out nonzero, and the shortest of them does the most work.
 
 Take $R_{trtr}$, in the plane spanned by the time and the radius.
 Working with the upper index first,
@@ -228,7 +227,7 @@ $$R_{trtr} = \frac{\left(\partial_r k\right)^2}{4\left(1+k\right)^2} = \tfrac{1}
 A perfect square, with the whole $k$ dependence packaged into the logarithm.
 That is the first appearance of $w = \ln\left(1+k\right)$, and from here on it is the variable the geometry is actually written in.
 
-The rest of the independent blocks, in the same variable where they shorten:
+The rest of the independent components, in the same variable where they shorten:
 
 $$R_{txtx} = \frac{\left(1+k\right)\left(\partial_r k\right)^2 - 8\left(1+k\right)\left(\partial_t^2 k + \partial_t\partial_x k\right) + 8\,\partial_t k\left(\partial_t k + \partial_x k\right)}{16\left(1+k\right)},$$
 
@@ -236,11 +235,11 @@ $$R_{txtr} = -\frac{\left(1+k\right)\partial_t\partial_r k - \partial_t k\,\part
 
 $$R_{trxr} = \frac{2\left(1+k\right)^2\partial_r^2 k - \left(1+k\right)\left(\partial_r k\right)^2 - 2\left(\partial_r k\right)^2}{8\left(1+k\right)^2},$$
 
-together with $R_{txxr}$, $R_{xrxr}$ and $R_{x\phi x\phi}$, all printed in the entry.
+together with $R_{txxr}$, $R_{xrxr}$ and $R_{x\phi x\phi}$, computed the same way.
 Four pairings that a metric of this shape might have been expected to curve vanish identically for every $k$: $R_{t\phi t\phi}$, $R_{t\phi r\phi}$, $R_{x\phi r\phi}$ and $R_{r\phi r\phi}$ are all zero.
-They will not stay zero in Step 13, and that is the point of Step 13.
+The Weyl tensor of Step 13 does not vanish in those four slots.
 
-The published tables carry sixty two nonzero components with an upper index and forty eight with all four down, each of them this computation with different indices.
+The Riemann tensor has sixty two nonzero components with an upper index and forty eight with all four down, each of them this computation with different indices.
 Every one of them vanishes when $k$ is constant, which says again that the tube is flat inside and out.
 
 ---
@@ -252,21 +251,20 @@ Contracting on the first lower index as Step 1 says, the two transverse componen
 $$R_{rr} = -\frac{2\left(1+k\right)\partial_r^2 k - \left(\partial_r k\right)^2}{2\left(1+k\right)^2} = -\partial_r^2 w - \tfrac{1}{2}\left(\partial_r w\right)^2,\qquad R_{\phi\phi} = -\frac{r\,\partial_r k}{1+k} = -r\,\partial_r w,$$
 
 using $\partial_r w = \partial_r k/\left(1+k\right)$ and $\partial_r^2 w = \partial_r^2 k/\left(1+k\right) - \left(\partial_r k\right)^2/\left(1+k\right)^2$ to go between the two forms.
-The $\phi\phi$ component is the cleanest statement in the entry that curvature here is the radial gradient of $w$ and nothing else.
+The $\phi\phi$ component says most cleanly that curvature here is the radial gradient of $w$ and nothing else.
 
 The time component is
 
 $$R_{tt} = \frac{\left(1+k\right)\left(\partial_r k\right)^2 - 4\left(1+k\right)\left(\partial_t^2 k + \partial_t\partial_x k\right) + 4\,\partial_t k\left(\partial_t k + \partial_x k\right)}{2\left(1+k\right)^3},$$
 
-with $R_{tx}$, $R_{tr}$, $R_{xx}$ and $R_{xr}$ longer and printed in the entry, in three variants.
+with $R_{tx}$, $R_{tr}$, $R_{xx}$ and $R_{xr}$ longer, and all of them computed with both indices down, with one up and with both up.
 The combinations $\partial_t k + \partial_x k$ and $\partial_t^2 k + \partial_t\partial_x k$ appear together everywhere in this tensor, and they are not an accident: $\partial_t + \partial_x$ is the derivative along the outbound null ray $\ell_{\text{out}}$ of Step 2, and the tensor is organised by it.
 
 Contracting once more with $g^{\mu\nu}$,
 
 $$R = -\frac{4r\left(1+k\right)^2\partial_r^2 k + 4\left(1+k\right)^2\partial_r k - r\left(1+k\right)\left(\partial_r k\right)^2 - 8r\left(1+k\right)\left(\partial_t^2 k + \partial_t\partial_x k\right) + 8r\,\partial_t k\left(\partial_t k + \partial_x k\right)}{2r\left(1+k\right)^3},$$
 
-which is the published scalar.
-It is not sign definite and it is not the thing to look at.
+which is neither sign definite nor the thing to look at.
 Its longitudinal terms can be made either sign by choosing how sharply the tube switches on in $t$ and $x$, which is why the objection to the tube, like the objection to the warp drive, has to be stated as a contraction of the Einstein tensor with a vector rather than as a statement about $R$.
 
 ---
@@ -277,8 +275,8 @@ Subtracting the trace,
 
 $$G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu},$$
 
-gives ten nonzero components, published in all three variants.
-One of them is the entry, and it is worth writing out before the others:
+gives ten nonzero components with both indices down, ten with one raised and ten with both raised.
+One of them carries the physics of the tube, and we write it out before the others:
 
 $$G_{tt} = -\frac{4r\left(1+k\right)\partial_r^2 k + 4\left(1+k\right)\partial_r k - 3r\left(\partial_r k\right)^2}{4r\left(1+k\right)^2}.$$
 
@@ -290,7 +288,7 @@ Using $\partial_r k = \left(1+k\right)\partial_r w$ and $\partial_r^2 k = \left(
 $$G_{tt} = -\left(\partial_r^2 w + \left(\partial_r w\right)^2\right) - \frac{\partial_r w}{r} + \tfrac{3}{4}\left(\partial_r w\right)^2 = -\frac{1}{r}\partial_r\left(r\,\partial_r w\right) - \tfrac{1}{4}\left(\partial_r w\right)^2.$$
 
 The first term is the flat two dimensional Laplacian of $w$ in the transverse plane and the second is minus a square.
-The rest of the tensor is longer and printed in the entry: $G_{tx}$, $G_{tr}$, $G_{xx}$, $G_{xr}$, $G_{rr}$ and $G_{\phi\phi}$.
+The rest of the tensor is longer: $G_{tx}$, $G_{tr}$, $G_{xx}$, $G_{xr}$, $G_{rr}$ and $G_{\phi\phi}$.
 Of those, $G_{tx}$ and $G_{xx}$ are free of derivatives along $t$ and along $x$ as $G_{tt}$ is, and the other four are not.
 
 ---
@@ -325,7 +323,7 @@ The energy per unit length of the tube, integrated over that plane, is therefore
 
 $$\int\rho\,dA = -\frac{c^4}{16 G}\int_0^\infty\left(\partial_r w\right)^2 r\,dr,$$
 
-minus a sum of squares, which is the same shape the Alcubierre entry arrives at by a different route.
+minus a sum of squares, which is the same shape Alcubierre's drive arrives at by a different route.
 It is strictly negative for every $k$ that depends on $r$ at all, and no choice of shape function and no choice of tube depth can turn it positive.
 A tube that dodged the negative energy would have to be one with $\partial_r w = 0$ everywhere, and that is a tube of infinite radius, which is to say the two dimensional case of Step 2 and not a tube.
 
@@ -349,7 +347,7 @@ $$g_{\mu\nu}\ell_{\text{back}}^\mu\ell_{\text{back}}^\nu = -k^2 - k\left(1-k\rig
 The first is the outbound ray, which no tube ever moves.
 The second is the ray the tube was built to tip, the one that comes home.
 
-Contracting the Einstein tensor of Step 9 with each of them gives the two results this entry exists for.
+Contracting the Einstein tensor of Step 9 with each of them gives the two results the whole construction turns on.
 On the outbound ray,
 
 $$G_{\mu\nu}\ell_{\text{out}}^\mu\ell_{\text{out}}^\nu = G_{tt} + 2G_{tx} + G_{xx} = 0$$
@@ -376,7 +374,7 @@ This is Visser, Bassett and Liberati's superluminal censorship for this particul
 
 ## Step 12. How much, and why a fast tube costs more
 
-Step 10 gives the amount as well as the sign.
+The integral of Step 10 gives the amount as well as the sign.
 Take a slice through the middle of a tube of radius $r_0$ whose wall has thickness $\Delta$, with $k = -1+\delta$ inside and $k = 1$ outside.
 Then $w = \ln\left(1+k\right)$ runs from $\ln\delta$ to $\ln 2$ across the wall, so $\partial_r w$ is of order $\ln\left(2/\delta\right)/\Delta$ there, and
 
@@ -401,18 +399,18 @@ The Weyl tensor is Riemann with its traces removed,
 
 $$C_{\mu\nu\sigma\tau} = R_{\mu\nu\sigma\tau} - \frac{1}{2}\left(g_{\mu\sigma}R_{\tau\nu} - g_{\mu\tau}R_{\sigma\nu} - g_{\nu\sigma}R_{\tau\mu} + g_{\nu\tau}R_{\sigma\mu}\right) + \frac{R}{6}\left(g_{\mu\sigma}g_{\tau\nu} - g_{\mu\tau}g_{\sigma\nu}\right)$$
 
-in four dimensions, with the same Ricci tensor as Step 8, which is the same contraction as everywhere else in the collection.
+in four dimensions, with the same Ricci tensor as Step 8, which is the standard contraction.
 This spacetime is not a vacuum anywhere the wall is, so $C$ is not $R$ and copying one into the other would be wrong.
-Step 7 already named four blocks of Riemann that vanish identically, and the quickest check that the subtraction is doing real work is to look at one of them.
+Four components of the Riemann tensor in Step 7 vanish identically, and the quickest check that the subtraction is doing real work is to look at one of them.
 
 $R_{t\phi t\phi} = 0$ for every $k$.
-The correction terms at those indices are not zero, because $g_{tt} = -1$, $g_{\phi\phi} = r^2$ and $R_{\phi\phi} = -r\,\partial_r w$ are all nonzero, and what comes out is
+The correction terms at those indices are not zero, because $g_{tt} = -1$, $g_{\phi\phi} = r^2$ and $R_{\phi\phi} = -r\,\partial_r w$ are all nonzero, and the Weyl component is
 
 $$C_{t\phi t\phi} = \frac{2r^2\left(1+k\right)^2\partial_r^2 k - r\left(1+k\right)^2\partial_r k - 2r^2\left(1+k\right)\left(\partial_r k\right)^2 + 2r^2\left(1+k\right)\left(\partial_t^2 k + \partial_t\partial_x k\right) - 2r^2\,\partial_t k\left(\partial_t k + \partial_x k\right)}{6\left(1+k\right)^3},$$
 
 which is not zero.
-Twenty four of the slots the entry publishes for $C_{\mu\nu\sigma\tau}$ are like that, nonzero where the corresponding Riemann component vanishes, and no slot goes the other way.
-The entry publishes eighty four components with an upper index and seventy two with all four down, and the Weyl tensor is the one tensor in the file that could not have been obtained by reading another block off the page.
+Twenty four components of $C_{\mu\nu\sigma\tau}$ are like that, nonzero where the corresponding Riemann component vanishes, and none goes the other way.
+The Weyl tensor has eighty four nonzero components with an upper index and seventy two with all four down, and it is the one tensor of the tube that cannot be copied from another.
 
 The physical reading is the usual one.
 Riemann is what the matter does plus what the geometry does on its own, Ricci is what the matter does, and Weyl is the rest.
@@ -427,7 +425,7 @@ Contracting Riemann with itself,
 $$K = R_{\mu\nu\sigma\tau}R^{\mu\nu\sigma\tau},$$
 
 gives a polynomial in $k$ and its first and second derivatives over $4r^2\left(1+k\right)^6$.
-The entry prints it with the combination $\partial_t k + \partial_x k$ collected wherever it appears, which is the derivative along the outbound null ray of Step 11 and turns thirty three separate monomials into five terms grouped by their power of $1+k$.
+Collecting the combination $\partial_t k + \partial_x k$ wherever it appears, which is the derivative along the outbound null ray of Step 11, turns thirty three separate monomials into five terms grouped by their power of $1+k$.
 That is a change of writing and not of content, and its shape says two things that matter.
 
 The first is that it is finite wherever the shape function is smooth and $k$ stays above $-1$.
@@ -435,7 +433,7 @@ The tube has no curvature singularity anywhere.
 What stands in the way of building one is the source it demands, not a place where the geometry comes apart, which is exactly the situation the warp drives are in as well.
 
 The second is the power of $1+k$ underneath.
-$K$ carries a curvature squared, so $\left(1+k\right)^{-6}$ against the $\left(1+k\right)^{-3}$ of the Ricci scalar is the expected bookkeeping, and both of them blow up in the same limit $\delta\to 0$ that makes the round trip fast.
+$K$ carries a curvature squared, so $\left(1+k\right)^{-6}$ against the $\left(1+k\right)^{-3}$ of the Ricci scalar is to be expected, and both of them blow up in the same limit $\delta\to 0$ that makes the round trip fast.
 The numerator carries $1+k$ to the fourth power at most, so at fixed derivatives of $k$ the scalar grows like $\left(1+k\right)^{-2}$ as the metric is driven toward degeneracy.
 A tube made fast by taking $\delta$ small is a tube whose wall is strongly curved, and Step 12 charges for the same thing in energy.
 
@@ -447,7 +445,7 @@ With the symbols of Step 6 and the chart dots of Step 1, the equation
 
 $$\ddot{x}^\mu + \Gamma^\mu{}_{\nu\sigma}\dot{x}^\nu\dot{x}^\sigma = 0$$
 
-gives four equations, all printed in the entry.
+gives four equations.
 The two short ones are the transverse pair:
 
 $$\ddot{r} + \tfrac{1}{2}\partial_r k\,\dot{t}\,\dot{x} - \tfrac{1}{2}\partial_r k\,\dot{x}^2 - r\,\dot{\phi}^2 = 0,$$
@@ -458,18 +456,17 @@ The $\phi$ equation is the flat one, so angular momentum about the axis is conse
 The $r$ equation is more interesting than it looks.
 Its two $k$ terms combine into $\tfrac{1}{2}\partial_r k\,\dot{x}\left(\dot{t} - \dot{x}\right)$, which vanishes on the outbound null ray of Step 11, where $\dot{t} = \dot{x}$.
 A ray launched along the axis in the outbound direction feels no radial force from the wall at all, even passing through it, which is the same fact as $G_{\mu\nu}\ell_{\text{out}}^\mu\ell_{\text{out}}^\nu = 0$ seen from the other side.
-A ray coming home has $\dot{t} = -k\dot{x}$, and the combination becomes $-\tfrac{1}{2}\left(1+k\right)\partial_r k\,\dot{x}^2$, in which the factor $1 + k$ that everything else in the entry divides by appears in the numerator instead.
+A ray coming home has $\dot{t} = -k\dot{x}$, and the combination becomes $-\tfrac{1}{2}\left(1+k\right)\partial_r k\,\dot{x}^2$, in which the factor $1 + k$ that every other expression of the tube divides by appears in the numerator instead.
 
 The $t$ and $x$ equations are longer and carry every symbol of Step 6 with a $1+k$ under it.
-The entry prints all four.
 
 ---
 
-## Step 16. Every published expression is dimensionally consistent
+## Step 16. Every expression is dimensionally consistent
 
 The dimensions are declared as $\left[t\right] = T$ and $\left[x\right] = \left[r\right] = L$, with $\phi$ and $k$ dimensionless.
 Since $t$ is a time, the chart coordinate is $ct$ and the chart dimensions are $L$, $L$, $L$ and $1$.
-Every printed derivative is along a chart coordinate, so $\left[\partial_t k\right] = \left[\partial_x k\right] = \left[\partial_r k\right] = L^{-1}$ and every second derivative carries $L^{-2}$.
+Every derivative is along a chart coordinate, so $\left[\partial_t k\right] = \left[\partial_x k\right] = \left[\partial_r k\right] = L^{-1}$ and every second derivative carries $L^{-2}$.
 
 The line element balances term by term: $c^2dt^2$ is $L^2$, the cross term $\left(1-k\right)c\,dt\,dx$ is $\left(L/T\right)\cdot T\cdot L = L^2$, $k\,dx^2$ and $dr^2$ are $L^2$, and $r^2d\phi^2$ is $L^2$ because $\phi$ is a pure number.
 
@@ -486,13 +483,13 @@ Running the dimensional pass alone,
 
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system krasnikov/cylindrical --dimensions-only
 
-reports nothing, over all three hundred and eighty four published expressions.
+reports nothing, over all three hundred and eighty four expressions.
 
 ---
 
 ## Step 17. What the tube is, against the warp drives beside it
 
-Alcubierre's bubble and Natario's are published in this collection alongside this entry, and all three are superluminal geometries bought with negative energy.
+Alcubierre's bubble, Natario's bubble and the Krasnikov tube are all superluminal geometries bought with negative energy.
 The difference is worth stating in components, because it is not a difference of degree.
 
 A warp drive is a shift.
@@ -503,7 +500,7 @@ That is the source of the causal objection Everett and Roman raise, which is not
 The tube is not a shift.
 There is no $\beta$ in it, its $x$ is an ordinary coordinate, and nothing in the geometry transports anybody.
 The ship crosses $x$ under its own power at whatever speed a rocket can manage, and what it leaves behind it is a region where $g_{xx} = k$ has been driven negative, which is to say a region where the light cones have been opened.
-Every component in this entry is a component of a geometry along a path that has already been travelled.
+Every component of the tube is a component of a geometry along a path that has already been travelled.
 The traveller builds the tube, which answers the control objection, and the price of the answer is that the outbound leg is no faster than light and the whole of the saving is on the way home.
 
 The two also fail the energy conditions in different places.
@@ -513,29 +510,29 @@ That asymmetry is the whole content of the construction, written as a contractio
 
 ---
 
-## Step 18. What the entry publishes, and the declarations the checker needs
+## Step 18. The components, and the declarations the checker needs
 
-The one system publishes three hundred and eighty four expressions: the line element, six metric components and six inverse ones, twenty two Christoffel symbols with an upper index and seventeen with all three down, sixty two Riemann components with an upper index and forty eight with all four down, ten Ricci components in each of three variants, the Ricci scalar, the Kretschmann scalar, ten Einstein components in each of three variants, eighty four Weyl components with an upper index and seventy two with all four down, and four geodesic equations.
+In the cylindrical chart there are three hundred and eighty four expressions: the line element, six metric components and six inverse ones, twenty two Christoffel symbols with an upper index and seventeen with all three down, sixty two Riemann components with an upper index and forty eight with all four down, ten Ricci components with both indices down, ten with one up and ten with both up, the Ricci scalar, the Kretschmann scalar, ten Einstein components in each of those three index positions, eighty four Weyl components with an upper index and seventy two with all four down, and four geodesic equations.
 
-Every one of them is a rational function of $k$ and its partial derivatives whose denominator is a power of $1+k$, and each is printed in whichever of the two readings, in $k$ or in $1+k$, is shorter.
-The choice is cosmetic and the two are equal as expressions, but it is worth knowing which one is being read: $\Gamma^t{}_{tt}$ prints as $\left(k-1\right)\partial_t k$ over $\left(1+k\right)^2$ because that is one term, while $G_{tt}$ prints its numerator in powers of $1+k$ because grouping it that way turns five terms into three.
+Every one of them is a rational function of $k$ and its partial derivatives whose denominator is a power of $1+k$, and each is written in whichever of the two forms, in $k$ or in $1+k$, is shorter.
+The choice is cosmetic and the two are equal as expressions: $\Gamma^t{}_{tt}$ is written as $\left(k-1\right)\partial_t k$ over $\left(1+k\right)^2$ because that is one term, while the numerator of $G_{tt}$ is written in powers of $1+k$ because grouping it that way turns five terms into three.
 
-For the checker to read the entry, `DIMENSIONS` in `verify_metrics.py` needs one line:
+For the checker to read the cylindrical chart of the tube, `DIMENSIONS` in `verify_metrics.py` needs one line:
 
     ("krasnikov", "cylindrical"): {
         "t": "T", "x": "L", "r": "L", "\\phi": "1", "k": "1",
     },
 
 The declaration `"t": "T"` is what tells the checker that $t$ is a time and so that the chart coordinate is $ct$; every factor of $c$ in the comparison follows from it, as does the reading of $\partial_t k$ as a chart derivative.
-The declaration `"r": "L"` is the one a reader might guess wrong: $r$ here is the distance from the axis of a cylindrical chart, not an areal radius, and the entry has no spherical coordinate at all.
+The declaration `"r": "L"` is the one a reader might guess wrong: $r$ here is the distance from the axis of a cylindrical chart, not an areal radius, and the chart has no spherical coordinate at all.
 The solution names no length of its own, so there is nothing else in the line.
-The radius of the tube and the thickness of its wall are both hidden inside $k$, which is why $r_0$ and $\Delta$ appear in Step 12 as features of a particular profile and nowhere in the published components.
+The radius of the tube and the thickness of its wall are both hidden inside $k$, which is why $r_0$ and $\Delta$ appear in Step 12 as features of a particular profile and nowhere in the components.
 
-The entry needs no line in `PARAMETER_RELATIONS`, and it is worth saying why, since this is the one place the entry could have been published with an identity that is not one.
-A tube whose switching profile depended on $t$ and $x$ only through $ct - x$ would obey $\partial_t k = -\partial_x k$, and that one relation would kill every term in $\partial_t k + \partial_x k$ in Steps 8 and 14 outright and shorten a good half of the file.
+The tube needs no line in `PARAMETER_RELATIONS`, and the reason matters, since this is the one place an identity that does not hold could have entered the components.
+A tube whose switching profile depended on $t$ and $x$ only through $ct - x$ would obey $\partial_t k = -\partial_x k$, and that one relation would kill every term in $\partial_t k + \partial_x k$ in Steps 8 and 14 outright and shorten a good half of the expressions.
 It is not a relation the construction has.
-Krasnikov's own $k$ carries a separate factor that opens the tube between the start of the journey and its end, which depends on $x$ by itself, and in any case the relation would be false for the arbitrary $k$ the entry allows.
-So no published value uses it, and the checker compares against a free $k$ of three coordinates, which is the claim the entry actually makes.
+Krasnikov's own $k$ carries a separate factor that opens the tube between the start of the journey and its end, which depends on $x$ by itself, and in any case the relation would be false for an arbitrary $k$.
+So no component uses it, and the checker compares against a free $k$ of three coordinates, which is exactly the generality the components claim.
 
 Running
 

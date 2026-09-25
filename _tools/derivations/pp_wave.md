@@ -1,16 +1,16 @@
 # The pp-wave plane gravitational waves
 
-This is the working behind the two coordinate systems in `MFS/assets/data/metrics/pp_wave.json`.
-Every number the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+We work the pp-wave in two charts, the Brinkmann chart with an arbitrary profile and the exact plane wave chart.
+We derive every component in order, from the line element down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we do not compute.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares the result component by component, so the algebra is checkable by hand and by machine independently.
 
-Two things make this entry different from the ones that came before it.
-Its metric carries an arbitrary function rather than a parameter, so the entry publishes a whole family at once and the field equations become a condition on that function rather than a statement that some component vanishes.
-Step 9 is where that condition appears, and it is the one thing about this family worth remembering: a pp-wave is a vacuum exactly where its profile is a harmonic function of the two transverse coordinates.
+Two things set the pp-wave apart from the spacetimes worked before it.
+Its metric carries an arbitrary function rather than a parameter, so the line element describes a whole family at once and the field equations become a condition on that function rather than a statement that some component vanishes.
+That condition appears in Step 9, and it is the one thing about this family worth remembering: a pp-wave is a vacuum exactly where its profile is a harmonic function of the two transverse coordinates.
 And its curvature is invisible to every scalar built from it.
-The Ricci scalar and the Kretschmann scalar are zero for every profile, vacuum or not, while the Weyl tensor is not; Step 12 shows why, and that fact is the whole of the argument the history field tells, in which the waves were nearly reasoned out of existence on paper and were put back by asking what an instrument would measure.
+The Ricci scalar and the Kretschmann scalar are zero for every profile, vacuum or not, while the Weyl tensor is not; the reason is in Step 12, and that fact is the whole of the argument in the history of the pp-wave, in which the waves were nearly reasoned out of existence on paper and were put back by asking what an instrument would measure.
 
 ---
 
@@ -25,39 +25,39 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+and the Riemann components follow it.
 
 The Ricci tensor is contracted on the middle index,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
 which is the standard contraction.
-The choice matters here, because the Brinkmann chart publishes an arbitrary profile and its Ricci tensor does not vanish.
-Contracting on the last lower index instead, $R^\alpha{}_{\mu\nu\alpha}$, gives the negative of everything in Step 9 and Step 10, and Step 10 carries the sign through to the field equations.
-The vacuum condition itself is the statement that one component is zero, so it is the same equation on either convention, which is Step 9's last word on it.
+The choice matters here, because the Brinkmann chart carries an arbitrary profile and its Ricci tensor does not vanish.
+Contracting on the last lower index instead, $R^\alpha{}_{\mu\nu\alpha}$, gives the negative of everything in Step 9 and Step 10, and the sign carries through to the field equations in Step 10.
+The vacuum condition itself is the statement that one component is zero, so it is the same equation on either convention, as at the end of Step 9.
 
 The Weyl tensor is built by removing the traces of Riemann, and those traces are this same contraction, $S_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu} = R_{\mu\nu}$.
-So the trace removed in Step 11 is the Ricci tensor the entry publishes, with no sign to carry between them.
+So the trace removed in Step 11 is the Ricci tensor itself, with no sign to carry between them.
 
-The chart, here and everywhere else in the collection, is the one whose time coordinate is $x^0 = cT$, so here it is $x^0 = cu$.
-The index is printed with the bare letter $u$, but the component printed against it is a component of the chart whose zeroth coordinate is $cu$ and therefore carries a length.
-Throughout this document write
+The chart, here and for every other spacetime, is the one whose time coordinate is $x^0 = cT$, so here it is $x^0 = cu$.
+The index is written with the bare letter $u$, but the component written against it is a component of the chart whose zeroth coordinate is $cu$ and therefore carries a length.
+Throughout, write
 
 $$U \equiv cu$$
 
-for that chart coordinate, so that the published component with an index $u$ is the component computed with an index $U$.
+for that chart coordinate, so that the component written with an index $u$ is the component computed with an index $U$.
 
 This has one consequence worth stating before any algebra is done.
-A printed partial derivative is taken with respect to the chart coordinate, not with respect to the bare one:
+A partial derivative in the components is taken with respect to the chart coordinate, not with respect to the bare one:
 
 $$\partial_u H \equiv \frac{\partial H}{\partial (cu)} = \frac{1}{c}\frac{\partial H}{\partial u},$$
 
-which is the same reading the collection already gives the dot in Vaidya's $\dot{m}$ and the prime in the conformal FRW chart.
+which is the same reading already given to the dot in Vaidya's $\dot{m}$ and the prime in the conformal FRW chart.
 The transverse derivatives $\partial_x$ and $\partial_y$ need no such factor, because $x$ and $y$ are their own chart coordinates.
 The same reading applies to the dots in the geodesic equations, where $\dot{u}$ means $d(cu)/d\lambda$.
-It is the reading that makes every term of every published equation carry the dimensions of its left hand side, which Step 15 checks term by term.
+It is the reading that makes every term of every equation carry the dimensions of its left hand side, and we check it term by term in Step 15.
 
-Everything from Step 2 to Step 15 is done directly in the chart $x^0 = cu$, so no conversion step is needed at the end: the components computed below are the components the entry prints.
+We work directly in the chart $x^0 = cu$ from Step 2 to Step 15, so the components we compute need no conversion at the end.
 
 ---
 
@@ -69,7 +69,7 @@ $$ds^2 = H(u,x,y)\,c^2du^2 - 2c\,du\,dv + dx^2 + dy^2.$$
 
 The coordinate $u$ is the retarded time labelling the wave fronts, $v$ is the coordinate along the rays, and $x$ and $y$ are the two transverse directions.
 The profile $H$ is an arbitrary function of $u$, $x$ and $y$.
-The one thing asked of it is that it does not depend on $v$, and Step 6 shows that this is exactly what makes the rays parallel.
+The one thing asked of it is that it does not depend on $v$, and by Step 6 this is exactly what makes the rays parallel.
 
 In the chart coordinate $U = cu$ the line element is
 
@@ -90,7 +90,7 @@ In the order $(U, v, x, y)$ the line element gives
 
 $$g_{\mu\nu} = \begin{pmatrix} H & -1 & 0 & 0 \\ -1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1\end{pmatrix},$$
 
-which is the metric block the entry publishes as $g_{uu} = H$, $g_{uv} = g_{vu} = -1$ and $g_{xx} = g_{yy} = 1$.
+which gives the metric components $g_{uu} = H$, $g_{uv} = g_{vu} = -1$ and $g_{xx} = g_{yy} = 1$.
 The mixed term of the line element is $-2\,dU\,dv$ and contributes half of its coefficient to each of the two off diagonal slots, which is where the $-1$ comes from.
 
 The determinant is the product of the two blocks,
@@ -110,12 +110,12 @@ so
 
 $$g^{\mu\nu} = \begin{pmatrix} 0 & -1 & 0 & 0 \\ -1 & -H & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1\end{pmatrix},$$
 
-which is the inverse the entry publishes as $g^{uv} = g^{vu} = -1$, $g^{vv} = -H$ and $g^{xx} = g^{yy} = 1$, with $g^{uu} = 0$ absent because it vanishes.
+which gives the inverse metric components $g^{uv} = g^{vu} = -1$, $g^{vv} = -H$ and $g^{xx} = g^{yy} = 1$, together with $g^{uu} = 0$.
 The check is immediate: $g^{U\alpha}g_{\alpha U} = (-1)(-1) = 1$, $g^{U\alpha}g_{\alpha v} = (-1)\cdot 0 = 0$, and $g^{v\alpha}g_{\alpha v} = (-1)(-1) + (-H)\cdot 0 = 1$.
 
-Two facts from this matrix are used over and over below and are worth naming now.
+Two facts from this matrix recur throughout and are worth naming now.
 The first is that $g^{UU} = 0$, so an upper $U$ index can never be produced from a lower one: $g^{\mu U}$ is nonzero only for $\mu = v$.
-The second is that $H$ appears in the inverse in one slot only, $g^{vv}$, and every tensor computed below turns out to have no $v$ index at all, so that slot never gets used.
+The second is that $H$ appears in the inverse in one slot only, $g^{vv}$, and every tensor computed from it turns out to have no $v$ index at all, so that slot never gets used.
 
 ---
 
@@ -126,7 +126,7 @@ So the only nonvanishing first derivatives of the metric are
 
 $$\partial_U g_{UU} = \partial_u H, \qquad \partial_x g_{UU} = \partial_x H, \qquad \partial_y g_{UU} = \partial_y H,$$
 
-where the first is a derivative with respect to $U = cu$ and is printed $\partial_u H$ by the convention of Step 1.
+where the first is a derivative with respect to $U = cu$ and is written $\partial_u H$ by the convention of Step 1.
 
 A symbol is therefore nonzero only if two of its three indices are the $U$ and $U$ of $g_{UU}$, the remaining one naming the direction differentiated in.
 There are two ways to place them.
@@ -148,7 +148,7 @@ $$\Gamma_{\mu UU} = \tfrac{1}{2}\left(2\,\partial_U g_{\mu U} - \partial_\mu g_{
 since $g_{\mu U}$ is constant for every $\mu$.
 This gives $\Gamma_{xUU} = -\tfrac{1}{2}\partial_x H$ and $\Gamma_{yUU} = -\tfrac{1}{2}\partial_y H$, while $\Gamma_{vUU} = -\tfrac{1}{2}\partial_v H = 0$ and $\Gamma_{UUU}$ is the one already found.
 
-Those seven are the whole of the lowered block the entry publishes:
+Those seven are the whole of the Christoffel symbols with every index lowered:
 
 $$\Gamma_{uuu} = \tfrac{1}{2}\partial_u H, \qquad \Gamma_{uux} = \Gamma_{uxu} = \tfrac{1}{2}\partial_x H, \qquad \Gamma_{uuy} = \Gamma_{uyu} = \tfrac{1}{2}\partial_y H,$$
 
@@ -169,7 +169,7 @@ So
 $$\Gamma^u{}_{\nu\rho} = 0$$
 
 identically, for every profile.
-No Christoffel symbol in this chart carries an upper $u$ index, which is why the entry's published block has none.
+No Christoffel symbol in this chart carries an upper $u$ index.
 
 **The $v$ row.**
 $g^{v\alpha}$ is nonzero for $\alpha = U$ and $\alpha = v$, so $\Gamma^v{}_{\nu\rho} = -\Gamma_{U\nu\rho} - H\Gamma_{v\nu\rho} = -\Gamma_{U\nu\rho}$, the second term dropping because every lowered symbol with a first index $v$ vanishes.
@@ -182,8 +182,8 @@ $g^{xx} = g^{yy} = 1$, so $\Gamma^x{}_{\nu\rho} = \Gamma_{x\nu\rho}$ and $\Gamma
 
 $$\Gamma^x{}_{uu} = -\tfrac{1}{2}\partial_x H, \qquad \Gamma^y{}_{uu} = -\tfrac{1}{2}\partial_y H.$$
 
-Those seven are the published `ull` block.
-It is worth noticing that a symbol with an upper $v$ index and a symbol with an upper transverse index carry the same $-\tfrac{1}{2}\partial_a H$: the first moves a ray along itself, the second bends a transverse direction, and they are the same number because the wave shears the transverse plane and pushes along the ray by the same amount.
+Those seven are the whole of the Christoffel symbols with the first index up.
+A symbol with an upper $v$ index and a symbol with an upper transverse index carry the same $-\tfrac{1}{2}\partial_a H$: the first moves a ray along itself, the second bends a transverse direction, and they are the same number because the wave shears the transverse plane and pushes along the ray by the same amount.
 
 ---
 
@@ -207,14 +207,14 @@ This is the defining property of the family and the reason for its name.
 A covariantly constant null vector field means the rays, the curves with $u$, $x$ and $y$ held constant, are null geodesics with $v$ an affine parameter, and that they are parallel to one another everywhere rather than only at a point; the wave fronts they are orthogonal to are then flat planes, since the transverse metric $dx^2 + dy^2$ is the flat one for every $u$.
 Plane fronted waves with parallel rays is what pp abbreviates.
 
-The step where it was used is Step 4: $H$ has no $v$ in it, so $g_{\mu\nu}$ has no $v$ in it, so no derivative of the metric can produce the $\Gamma_{v\nu\rho}$ that would have spoiled the $U$ row.
+The profile's independence of the ray coordinate enters at Step 4: $H$ has no $v$ in it, so $g_{\mu\nu}$ has no $v$ in it, so no derivative of the metric can produce the $\Gamma_{v\nu\rho}$ that would have spoiled the $U$ row.
 
 ---
 
 ## Step 7. The Riemann tensor, and why it is linear in the profile
 
-The quadratic terms of the Riemann tensor cancel identically here, which is what makes every curvature component below a single second derivative of $H$ rather than a sum of squares.
-The argument is a bookkeeping one over the seven symbols of Step 5.
+The quadratic terms of the Riemann tensor cancel identically here, which is what makes every curvature component a single second derivative of $H$ rather than a sum of squares.
+The argument is a count over the seven symbols of Step 5.
 
 Consider $\Gamma^\mu{}_{\rho\lambda}\Gamma^\lambda{}_{\nu\sigma}$.
 The second factor is nonzero only if its upper index $\lambda$ is $v$, $x$ or $y$.
@@ -252,7 +252,7 @@ The only symbol with an upper transverse index is $\Gamma^a{}_{UU} = -\tfrac{1}{
 
 $$R^a{}_{UUb} = \partial_U\Gamma^a{}_{Ub} - \partial_b\Gamma^a{}_{UU} = \tfrac{1}{2}\partial_a\partial_b H, \qquad R^a{}_{UbU} = -\tfrac{1}{2}\partial_a\partial_b H.$$
 
-Those sixteen components are the published `ulll` block: four choices of the transverse pair $(a,b)$ in each of the four slots
+Those sixteen components are the whole of the Riemann tensor with the first index up: four choices of the transverse pair $(a,b)$ in each of the four slots
 
 $$R^v{}_{aub} = \tfrac{1}{2}\partial_a\partial_b H, \quad R^v{}_{abu} = -\tfrac{1}{2}\partial_a\partial_b H, \quad R^a{}_{uub} = \tfrac{1}{2}\partial_a\partial_b H, \quad R^a{}_{ubu} = -\tfrac{1}{2}\partial_a\partial_b H,$$
 
@@ -277,10 +277,10 @@ The result is one formula,
 
 $$R_{uaub} = -\tfrac{1}{2}\partial_a\partial_b H,$$
 
-together with everything the symmetries $R_{\mu\nu\rho\sigma} = -R_{\nu\mu\rho\sigma} = -R_{\mu\nu\sigma\rho} = R_{\rho\sigma\mu\nu}$ generate from it, which is the sixteen entries of the published `llll` block.
+together with everything the symmetries $R_{\mu\nu\rho\sigma} = -R_{\nu\mu\rho\sigma} = -R_{\mu\nu\sigma\rho} = R_{\rho\sigma\mu\nu}$ generate from it, which is the sixteen components of the Riemann tensor with every index lowered.
 The pair symmetry is visible in it: $R_{uaub}$ and $R_{aubu}$ are the same number, as they must be.
 
-Two properties of this block carry the rest of the document.
+Two properties of the lowered Riemann tensor carry everything that follows.
 Every nonzero component has exactly two $u$ indices, one in each antisymmetric pair, and two transverse ones.
 And no nonzero component has a $v$ index in any slot.
 
@@ -288,11 +288,11 @@ And no nonzero component has a $v$ index in any slot.
 
 ## Step 9. The Ricci tensor, and where the harmonic condition comes from
 
-Contract on the middle index, $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$, using the `ulll` block of Step 7.
+Contract on the middle index, $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$, using the Riemann tensor of Step 7 with the first index up.
 
 For the contraction to be nonzero the component must have its first and third indices equal.
 The $v$ row of Step 7 has $R^v{}_{a\rho\sigma}$ with $\rho$ drawn from $U$ and the transverse directions, so its third index is never $v$ and it contributes nothing.
-The transverse rows have $R^a{}_{U\rho\nu}$, whose third index equals the first when $\rho = a$, and Step 7 says that $R^a{}_{Ua\nu}$ is nonzero only for $\nu = U$, where it is $R^a{}_{UaU} = -\tfrac{1}{2}\partial_a\partial_a H$ with no sum.
+The transverse rows have $R^a{}_{U\rho\nu}$, whose third index equals the first when $\rho = a$, and by Step 7, $R^a{}_{Ua\nu}$ is nonzero only for $\nu = U$, where it is $R^a{}_{UaU} = -\tfrac{1}{2}\partial_a\partial_a H$ with no sum.
 The $u$ row is zero.
 
 So the Ricci tensor has one component,
@@ -316,7 +316,7 @@ $$\boxed{\ \partial_x^2 H + \partial_y^2 H = 0.\ }$$
 A pp-wave is a vacuum exactly where its profile is a harmonic function of the two transverse coordinates, at each moment of retarded time, with the dependence on $u$ left completely free.
 The equation is linear, which is the superposition of Step 7 seen again, and it is an equation in two dimensions, so its solutions are the real parts of holomorphic functions of $\zeta = x + iy$ with $u$ carried along as a parameter.
 
-One consequence is worth drawing out, because it explains why the next chart looks the way it does.
+One consequence is worth drawing out, because it explains why the exact plane wave chart looks the way it does.
 A function harmonic on the whole transverse plane and bounded there is constant, and a constant profile has vanishing Hessian and therefore vanishing curvature by Step 7.
 So a nontrivial vacuum pp-wave has to grow without bound in the transverse directions, or else be singular somewhere in the plane, or be defined on less than the whole plane.
 These spacetimes are never asymptotically flat sideways, and the exact plane waves of Step 14 are quadratic for exactly this reason.
@@ -331,18 +331,18 @@ By Step 3 that entry of the inverse metric is zero, so
 $$R = g^{uu}R_{uu} = 0$$
 
 for every profile, whether or not the spacetime is a vacuum.
-This is not the vacuum condition in disguise; it is the null structure, and Step 12 is the general version of it.
+This is not the vacuum condition in disguise; it is the null structure, and its general version is in Step 12.
 
 With $R = 0$ the Einstein tensor is the Ricci tensor,
 
 $$G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = R_{\mu\nu}, \qquad G_{uu} = -\tfrac{1}{2}\left(\partial_x^2 H + \partial_y^2 H\right),$$
 
-which is what the entry publishes.
+which is the whole of the Einstein tensor with both indices down.
 Raising indices with Step 3 sends a lower $u$ to an upper $v$ and multiplies by $-1$ each time, since $g^{vu} = -1$, so
 
 $$G^u{}_v = R^u{}_v = 0, \qquad G^v{}_u = R^v{}_u = \tfrac{1}{2}\left(\partial_x^2 H + \partial_y^2 H\right), \qquad G^{vv} = R^{vv} = -\tfrac{1}{2}\left(\partial_x^2 H + \partial_y^2 H\right),$$
 
-which are the mixed and raised variants the entry publishes.
+which are the Einstein tensor with mixed indices and with both indices up.
 
 Where the profile is not harmonic the spacetime is not empty, and the stress energy it needs is pure radiation.
 With the standard contraction the field equations carry their usual sign, $G_{\mu\nu} = 8\pi G\,T_{\mu\nu}/c^4$, so
@@ -380,8 +380,8 @@ Written out, that is
 
 $$C_{uxux} = -C_{uyuy} = \tfrac{1}{4}\left(\partial_y^2 H - \partial_x^2 H\right), \qquad C_{uxuy} = -\tfrac{1}{2}\partial_x\partial_y H,$$
 
-and the sixteen entries of the published `llll` block are these and what the symmetries of Step 8 generate.
-Raising the first index sends $u$ to $v$ and flips the sign, giving the published `ulll` block.
+and the sixteen components of the Weyl tensor with every index lowered are these and what the symmetries of Step 8 generate.
+Raising the first index sends $u$ to $v$ and flips the sign, giving the Weyl tensor with the first index up.
 
 Nothing new appears in a slot where Riemann vanished, and that has to be checked rather than assumed, because it is exactly where a Weyl tensor differs from a Riemann tensor in general.
 A correction term is nonzero only when the two indices landing on $S$ are both $u$ and the two landing on the metric pick out a nonzero entry, which by Step 3 means $g_{uu}$, $g_{uv}$, $g_{vu}$, $g_{xx}$ or $g_{yy}$.
@@ -389,7 +389,7 @@ The transverse choices are the family just computed.
 The choices $g_{uu}$, $g_{uv}$ and $g_{vu}$ put a $u$ in the same antisymmetric pair as one of the two $u$ indices on $S$, and the four correction terms then cancel in pairs: $C_{uuvu}$, for instance, has $-\tfrac{1}{2}(g_{uv}S_{uu} - g_{uu}S_{vu} - g_{uv}S_{uu} + g_{uu}S_{vu}) = 0$.
 So the Weyl tensor has the same sixteen nonzero slots as the Riemann tensor and no others.
 
-The curvature is of Petrov type N, and that can be read off the block without any of the Newman-Penrose apparatus.
+The curvature is of Petrov type N, and that can be read off the components without any of the Newman-Penrose apparatus.
 No nonzero component of $C$ carries a $v$ index, so contracting any slot with the ray $k^\mu = \delta^\mu_v$ of Step 6 gives zero:
 
 $$C_{\mu\nu\rho\sigma}k^\sigma = 0,$$
@@ -399,14 +399,14 @@ A null direction that annihilates the Weyl tensor outright is a principal null d
 The two independent numbers left in it, $\tfrac{1}{2}(\partial_x^2 - \partial_y^2)H$ and $\partial_x\partial_y H$, are the two polarisations.
 
 In a vacuum $\Delta_\perp H = 0$ and the correction term vanishes, so there the Weyl tensor is the Riemann tensor exactly.
-That is why the exact plane wave chart of Step 14 publishes identical Weyl and Riemann blocks, and it is a genuine equality rather than the copying mistake `_tools/derivations/weyl.md` was written to undo: it holds because that chart is a vacuum, and sympy confirms it from the line element without being told.
+That is why the Weyl and Riemann tensors of the exact plane wave chart of Step 14 are identical, and it is a genuine equality rather than the copying mistake undone in `_tools/derivations/weyl.md`: it holds because that chart is a vacuum, and sympy confirms it from the line element without being told.
 
 ---
 
 ## Step 12. Why every curvature scalar vanishes while the curvature does not
 
 The Kretschmann scalar is $K = R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}$, and it is zero for every profile.
-The reason is the two properties of Step 8, and it is worth doing slowly because it is the fact the entry's history turns on.
+The reason is the two properties of Step 8, and it is worth doing slowly because the history of the pp-wave turns on it.
 
 Raise all four indices of the second factor.
 For a term to contribute, the lowered tensor inside it must be nonzero, so by Step 8 each of its pairs holds one $u$ index and one transverse index.
@@ -420,15 +420,15 @@ Every term of the sum therefore has a zero in it, and
 $$K = 0$$
 
 identically, for every profile, vacuum or not.
-The same argument applied to the Weyl tensor, whose block sits in the same slots by Step 11, gives $C_{\mu\nu\rho\sigma}C^{\mu\nu\rho\sigma} = 0$, and applied to the Ricci tensor gives $R_{\mu\nu}R^{\mu\nu} = R_{vv}R^{vv}\cdot 0 = 0$, since $R^{\mu\nu}$ is nonzero only in the $vv$ slot and $R_{vv} = 0$.
+The same argument applied to the Weyl tensor, whose components sit in the same slots by Step 11, gives $C_{\mu\nu\rho\sigma}C^{\mu\nu\rho\sigma} = 0$, and applied to the Ricci tensor gives $R_{\mu\nu}R^{\mu\nu} = R_{vv}R^{vv}\cdot 0 = 0$, since $R^{\mu\nu}$ is nonzero only in the $vv$ slot and $R_{vv} = 0$.
 The Ricci scalar was already zero in Step 10 for the same reason in its simplest form, $g^{uu} = 0$.
 
 The general statement is that every scalar polynomial in the curvature vanishes here.
 Each contraction in such a polynomial must pair an index of one curvature factor with an index of another; the pairing goes through the inverse metric; and the inverse metric can only pair a $u$ with a $v$, while the curvature has no $v$ slot to offer.
 These are the vanishing scalar invariant spacetimes, and the flat metric is not the only one among them.
 
-So the situation is the one the entry's history describes.
-The curvature is not zero: the Weyl tensor of Step 11 is nonzero wherever the transverse Hessian of the profile has a trace free part, and Step 13 shows it doing measurable work on nearby particles.
+So the situation is the one the history of the pp-wave describes.
+The curvature is not zero: the Weyl tensor of Step 11 is nonzero wherever the transverse Hessian of the profile has a trace free part, and in Step 13 it does measurable work on nearby particles.
 Yet every scalar one can build from that curvature is zero, so no scalar can be used to tell a wave from flat space, and no argument conducted in scalars can settle whether a wave is there at all.
 The settlement had to come from the relative acceleration of two freely falling particles, which is the Riemann tensor with its indices still on it.
 
@@ -445,7 +445,7 @@ $$\ddot{v} - \tfrac{1}{2}\partial_u H\,\dot{u}^2 - \partial_x H\,\dot{u}\dot{x} 
 
 $$\ddot{x} - \tfrac{1}{2}\partial_x H\,\dot{u}^2 = 0, \qquad \ddot{y} - \tfrac{1}{2}\partial_y H\,\dot{u}^2 = 0,$$
 
-which are the four the entry publishes.
+which are the four geodesic equations.
 The factors of two in the $v$ equation come from $\Gamma^v{}_{ux}$ and $\Gamma^v{}_{xu}$ being the same symbol counted twice, and the $x$ and $y$ equations have no such factor because $\Gamma^x{}_{uu}$ is a single term.
 
 The first equation is the whole of the $u$ row of Step 5 being empty: $cu$ is an affine parameter along every geodesic, so
@@ -490,7 +490,7 @@ $$H = A(u)\left(x^2 - y^2\right) + 2B(u)xy = \operatorname{Re}\left[\left(A - iB
 
 with $A$ and $B$ arbitrary functions of the retarded time.
 Both carry $1/L^2$, since $H$ is dimensionless and $x^2$ is a length squared, and they are the amplitudes of the two polarisations of Step 11.
-This is the second coordinate system the entry publishes, and every value in it comes from the Brinkmann formulas above by substituting the four derivatives
+This is the second chart of the pp-wave, and every component in it comes from the Brinkmann formulas by substituting the four derivatives
 
 $$\partial_x H = 2\left(Ax + By\right), \qquad \partial_y H = 2\left(Bx - Ay\right), \qquad \partial_u H = A'\left(x^2 - y^2\right) + 2B'xy,$$
 
@@ -502,25 +502,25 @@ The Christoffel symbols of Step 5 become
 
 $$\Gamma^v{}_{uu} = -\tfrac{1}{2}\left(A'\left(x^2 - y^2\right) + 2B'xy\right), \qquad \Gamma^v{}_{ux} = \Gamma^x{}_{uu} = -\left(Ax + By\right), \qquad \Gamma^v{}_{uy} = \Gamma^y{}_{uu} = Ay - Bx,$$
 
-with the lowered block of Step 4 equal to these in the $x$ and $y$ rows and to the negative of the $v$ row in its $u$ row, which is what Step 5 does in reverse.
+with the lowered symbols of Step 4 equal to these in the $x$ and $y$ rows and to the negative of the $v$ row in its $u$ row, which is the raising of Step 5 in reverse.
 The Riemann tensor of Step 7 becomes
 
 $$R^v{}_{xux} = R^x{}_{uux} = A, \qquad R^v{}_{yuy} = R^y{}_{uuy} = -A, \qquad R^v{}_{xuy} = R^v{}_{yux} = B,$$
 
-and the rest by the symmetries, with the sign flips in the slots Step 7 lists.
-The Ricci tensor, the Ricci scalar, the Einstein tensor and the Kretschmann scalar are all zero: the first two because the profile is harmonic by construction, the last by Step 12, which needed no vacuum.
-The Weyl tensor equals the Riemann tensor, for the reason Step 11 gives.
+and the rest by the symmetries, with the sign flips in the slots of Step 7.
+The Ricci tensor, the Ricci scalar, the Einstein tensor and the Kretschmann scalar are all zero: the first two because the profile is harmonic by construction, the last by the argument of Step 12, which needed no vacuum.
+The Weyl tensor equals the Riemann tensor, for the reason given in Step 11.
 
 The curvature is a pair of functions of $u$ alone, so the tidal field is the same everywhere on a wave front, which is what makes this the exact analogue of a plane wave in electromagnetism and what the word plane in its name means beyond the flatness of the fronts.
 Constant $A$ and $B$ give a homogeneous wave that never turns off.
 Amplitudes vanishing outside an interval of $u$ give a sandwich wave, flat before and flat after, with a burst in between; the geodesics of Step 13 enter parallel and leave converging, which is the focusing Penrose used to show that a plane wave admits no Cauchy surface.
-That is the entry's last piece of history and it is visible in the oscillator equation $\ddot{x} = \beta^2(Ax + By)$, whose solutions are focused by any pulse of $A$ of one sign no matter how brief.
+That is the last piece of the pp-wave's history, and it is visible in the oscillator equation $\ddot{x} = \beta^2(Ax + By)$, whose solutions are focused by any pulse of $A$ of one sign no matter how brief.
 
 ---
 
-## Step 15. Every published equation is dimensionally consistent
+## Step 15. Every equation is dimensionally consistent
 
-The declarations are $[u] = T$, $[v] = [x] = [y] = L$ and $[H] = 1$, with $[A] = [B] = 1/L^2$ in the second chart.
+The dimensions are $[u] = T$, $[v] = [x] = [y] = L$ and $[H] = 1$, with $[A] = [B] = 1/L^2$ in the second chart.
 Since the chart multiplies $u$ by $c$, every chart coordinate carries a length, so a chart component of the metric is dimensionless, a Christoffel symbol carries $1/L$, and a Riemann, Ricci, Einstein or Weyl component carries $1/L^2$.
 
 The line element: $H\,c^2du^2$ carries $1\cdot(L/T)^2T^2 = L^2$, the mixed term $2c\,du\,dv$ carries $(L/T)\cdot T\cdot L = L^2$, and $dx^2$ carries $L^2$.
@@ -534,26 +534,26 @@ The second derivatives $\partial_a\partial_b H$ carry $1/L^2$, so every Riemann,
 
 The geodesics: each term is measured against $\ddot{x}^\mu$, which carries $[x^\mu_{\text{chart}}]/\lambda^2 = L/\lambda^2$, and a chart velocity $\dot{x}^\mu$ carries $L/\lambda$.
 In the $x$ equation, $\partial_x H\,\dot{u}^2$ carries $(1/L)(L/\lambda)^2 = L/\lambda^2$.
-In the $v$ equation, $\partial_u H\,\dot{u}^2$ and $\partial_x H\,\dot{u}\dot{x}$ both carry $L/\lambda^2$, and they do so only because the printed $\partial_u$ carries the factor of $c$ that the dot on $\dot u$ also carries.
+In the $v$ equation, $\partial_u H\,\dot{u}^2$ and $\partial_x H\,\dot{u}\dot{x}$ both carry $L/\lambda^2$, and they do so only because the written $\partial_u$ carries the factor of $c$ that the dot on $\dot u$ also carries.
 
 The second chart: $Ax$ carries $(1/L^2)L = 1/L$, matching a Christoffel symbol; $A$ carries $1/L^2$, matching a Riemann component; and $A' = c^{-1}dA/du$ carries $(T/L)(1/L^2)(1/T) = 1/L^3$, so $A'(x^2 - y^2)$ carries $1/L$ and sits correctly in $\Gamma^v{}_{uu}$.
 
 ---
 
-## Step 16. What the entry publishes, and what the checker needed
+## Step 16. The components, and what the checker needed
 
-For each of the two charts the entry publishes the line element, the metric and its inverse, both Christoffel variants, both Riemann variants, the three Ricci variants, the Ricci scalar, the Kretschmann scalar, the three Einstein variants, both Weyl variants and the four geodesic equations.
-The Brinkmann chart publishes them for an arbitrary profile, so its Ricci and Einstein blocks are not empty and the vacuum condition is stated in the entry's `convention` and in the description of $H$ rather than imposed on the values.
-The exact plane wave chart has the condition already solved, so its Ricci and Einstein blocks are empty and its values hold for any amplitudes at all.
+In each of the two charts we compute the line element, the metric and its inverse, the Christoffel symbols with the first index up and with every index lowered, the Riemann tensor with the first index up and with every index lowered, the Ricci tensor with both indices down, with mixed indices and with both up, the Ricci scalar, the Kretschmann scalar, the Einstein tensor in the same three index positions, the Weyl tensor with the first index up and with every index lowered, and the four geodesic equations.
+In the Brinkmann chart they hold for an arbitrary profile, so its Ricci and Einstein tensors do not vanish, and the vacuum condition is stated in the conventions of the pp-wave and in the description of $H$ rather than imposed on the components.
+The exact plane wave chart has the condition already solved, so its Ricci and Einstein tensors vanish and its components hold for any amplitudes at all.
 
 `verify_metrics.py` needed one declaration per chart in `DIMENSIONS`, each declaring $u$ a time and $v$, $x$ and $y$ lengths, with $[H] = 1$ in the first and $[A] = [B] = 1/L^2$ in the second.
-No entry in `PARAMETER_RELATIONS` is needed for either.
-The Brinkmann chart claims nothing that requires the profile to be harmonic, so its parameters are free; the plane wave chart claims its values for every $A$ and $B$, because the harmonic condition is already built into the shape of its profile rather than left as a constraint between parameters.
-That is the opposite of Kasner, whose exponents are bound by two equations and whose published values are true only on the surface those equations cut out.
+No relation in `PARAMETER_RELATIONS` is needed for either.
+Nothing in the Brinkmann chart requires the profile to be harmonic, so its parameters are free; the components of the plane wave chart hold for every $A$ and $B$, because the harmonic condition is already built into the shape of its profile rather than left as a constraint between parameters.
+That is the opposite of Kasner, whose exponents are bound by two equations and whose components are true only on the surface those equations cut out.
 
-Two things in the reader are new with this entry, and both are general rather than particular to it.
+Two things in the checker's reader are new with the pp-wave, and both are general rather than particular to it.
 A parameter may now be declared as a function of several coordinates, as `H = H(u,x,y)`, where before only a function of one coordinate was understood.
 And a partial derivative may be written with $\partial$, as $\partial_x H$ or $\partial_x^2 H$ or $\partial_x\partial_y H$, which the reader expands into the name it has declared for that derivative.
-Every first and second partial derivative of a declared function was declared, which was as far as any curvature tensor in the collection then reached, and a function of one coordinate still answers to a dot and to a prime as it did before.
-Tolman-Bondi later reached a third, and since 22 September 2026 the reader declares a partial derivative of any order when a published value names it; `tolman_bondi.md` Step 18 says why.
-Like the dot and the prime, the $\partial$ is taken with respect to the chart coordinate, so $\partial_u$ carries the $1/c$ of Step 1 and $\partial_x$ does not, and Step 15 is what that convention buys.
+Every first and second partial derivative of a declared function was declared, which was as far as any curvature tensor of any spacetime then reached, and a function of one coordinate still answers to a dot and to a prime as it did before.
+Tolman-Bondi later reached a third, and since 22 September 2026 the reader declares a partial derivative of any order when a component names it; the reason is in Step 18 of `tolman_bondi.md`.
+Like the dot and the prime, the $\partial$ is taken with respect to the chart coordinate, so $\partial_u$ carries the $1/c$ of Step 1 and $\partial_x$ does not, and that convention is what makes every term of Step 15 balance.
