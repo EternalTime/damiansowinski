@@ -38,6 +38,9 @@
 
   <canvas id="wavy-grid" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;"></canvas>
 
+  <!-- The title comes before the panels so that on a phone, where it is in the flow of the
+       page rather than fixed over it, it heads the column they stack in. -->
+  <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 7em);"></div>
   <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--teal-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
 
 <div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
@@ -134,14 +137,12 @@
     }
   </style>
 
-  <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 7em);"></div>
 
   <div id="mfs-content-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px 0 0 12px;
     top:150px;right:-100%;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-right:none;
     box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);
-    overflow-y:auto;pointer-events:none;padding:1em;">
-  </div>
+    overflow-y:auto;pointer-events:none;padding:1em;"></div>
 
   <script>
     /* ════════════════════════════════════════════════
@@ -209,6 +210,13 @@
       function resize() {
         canvas.width  = window.innerWidth;
         canvas.height = window.innerHeight;
+        anchor();
+      }
+
+      // Where each panel's bulge sits on the fixed canvas. The title and the exit sign are
+      // fixed on the desktop, but on a phone they scroll away with the page, and the bulge
+      // follows them there, so this runs on every scroll as well as on every resize.
+      function anchor() {
         panels.forEach(function(p) {
           if (p.anchorEl) {
             var r    = p.anchorEl.getBoundingClientRect();
@@ -382,6 +390,7 @@
       }
 
       window.addEventListener('resize', resize);
+      window.addEventListener('scroll', anchor, { passive: true });
       resize();
       // Re-anchor after fonts settle
       document.fonts.ready.then(function() { resize(); });
@@ -505,14 +514,29 @@
         var gen = _flickerGens[elId];
         el.innerHTML = '';
         var spans = [];
+        // Each word's letters are held together in a .mfs-word, so a title too wide for a
+        // phone wraps between its words and never inside one, which a line of separate
+        // inline blocks would otherwise do anywhere.
+        var word = null;
         for (var i = 0; i < text.length; i++) {
           var span = document.createElement('span');
           span.textContent      = text[i];
           span.style.opacity    = '0';
           span.style.display    = 'inline-block';
           span.style.whiteSpace = 'pre';
-          if (text[i] === ' ') span.style.fontSize = '0.5em';
-          el.appendChild(span);
+          if (text[i] === ' ') {
+            span.style.fontSize = '0.5em';
+            el.appendChild(span);
+            word = null;
+          } else {
+            if (!word) {
+              word = document.createElement('span');
+              word.className = 'mfs-word';
+              word.style.whiteSpace = 'nowrap';
+              el.appendChild(word);
+            }
+            word.appendChild(span);
+          }
           spans.push(span);
         }
         var SPREAD_MS = spans.length * STAGGER_MS;
@@ -563,11 +587,16 @@
 
       var panels = [el, coffee];
 
+      // Off-screen left by the panel's width and 20px more. The width is PANEL_W on the
+      // desktop and the screen's on a phone, where the phone stylesheet sets --mfs-left-w;
+      // it is left to the stylesheet so that it follows the screen as it turns.
+      var OFF_LEFT = 'calc(-1 * var(--mfs-left-w, ' + PANEL_W + 'px) - 20px)';
+
       // Set fixed size and top; start off-screen left
       el.style.top    = PANEL_TOP + 'px';
       el.style.width  = PANEL_W + 'px';
       el.style.height = PANEL_H + 'px';
-      panels.forEach(function(p) { p.style.left = (-PANEL_W - 20) + 'px'; });
+      panels.forEach(function(p) { p.style.left = OFF_LEFT; });
 
       function syncPanel() {
         el.style.top    = PANEL_TOP + 'px';
@@ -602,7 +631,7 @@
       window._mfsSlideOutLeft = function(duration) {
         panels.forEach(function(p) {
           p.style.transition = 'left ' + duration + 'ms cubic-bezier(0.55, 0.06, 0.68, 0.19)';
-          p.style.left       = (-PANEL_W - 20) + 'px';
+          p.style.left       = OFF_LEFT;
         });
       };
 
@@ -1176,7 +1205,7 @@
 
       function nrFigure(view) {
         var f = nrFrame(view);
-        return '<div class="mfs-nr-figure">' + nrSvg(view, f) + nrLabels(view, f) +
+        return '<div class="mfs-nr-figure" style="--nr-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + nrSvg(view, f) + nrLabels(view, f) +
           '<div class="mfs-nr-readout"><span>' + nrEsc(view.xlabel) + '</span> = <span class="nr-rx"></span>' +
           '<span class="nr-rgap"></span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></div></div>';
       }
@@ -1411,7 +1440,8 @@
       function cdFigure(view) {
         var f = cdFrame(view), wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
         var restriction = view.restriction ? '<div class="mfs-cd-restriction">' + nrProse(nrEsc(view.restriction)) + '</div>' : '';
-        return '<div class="mfs-cd-figure" style="max-width:' + wide.toFixed(0) + 'px">' + restriction +
+        return '<div class="mfs-cd-figure" style="max-width:' + wide.toFixed(0) + 'px;--cd-wide:' + wide.toFixed(0) +
+          'px;--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + restriction +
           '<div class="mfs-cd-drawing">' + cdSvg(view, f) + cdLabels(view, f) + '</div></div>';
       }
 
@@ -1474,6 +1504,57 @@
             '</div>',
           '</div>'
         ].join('');
+      }
+
+      /* Set a tensor's components in as many columns as its widest component allows, once
+         MathJax has set them. The count is taken again whenever the window changes width,
+         so a phone turned from its side to upright does not keep the two columns that only
+         the wider screen had room for. */
+      function reflowColumns() {
+        var compIds = ['mfs-comp-christoffel','mfs-comp-riemann','mfs-comp-ricci','mfs-comp-einstein','mfs-comp-weyl'];
+        compIds.forEach(function(id) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          el.style.columnCount = 'auto';
+          el.style.columnWidth = '';
+          void el.offsetWidth;
+          // Measure widest component using getBoundingClientRect in single-col mode
+          el.style.columnCount = '1';
+          void el.offsetWidth;
+          var maxW = 0;
+          el.querySelectorAll('.mfs-component').forEach(function(child) {
+            var r = child.getBoundingClientRect();
+            if (r.width > maxW) maxW = r.width;
+          });
+          if (maxW < 50) maxW = 400; // fallback
+          var panelW = el.getBoundingClientRect().width;
+          var gap = 24;
+          var count = Math.max(1, Math.floor((panelW + gap) / (maxW + gap)));
+          el.style.columnCount = String(count);
+        });
+      }
+      var _reflowPending = false;
+      window.addEventListener('resize', function() {
+        if (_reflowPending) return;
+        _reflowPending = true;
+        requestAnimationFrame(function() { _reflowPending = false; reflowColumns(); });
+      });
+
+      /* How much of the panel the sticky header covers once it has stuck, which it does
+         with its top above the panel's edge, kept as --mfs-head for the phone stylesheet:
+         a citation followed there brings its reference to just below the header instead of
+         under it. The header changes height when its title wraps anew. */
+      var _headObserver = null;
+      function wireHeader(head) {
+        if (_headObserver) _headObserver.disconnect();
+        function measure() {
+          var covered = head.getBoundingClientRect().height + parseFloat(getComputedStyle(head).top);
+          contentPanel.style.setProperty('--mfs-head', Math.max(0, covered) + 'px');
+        }
+        measure();
+        if (!window.ResizeObserver) return;
+        _headObserver = new ResizeObserver(measure);
+        _headObserver.observe(head);
       }
 
       function renderMetric(data, coordIdx) {
@@ -1562,8 +1643,14 @@
               '<select class="mfs-coord-select" id="mfs-coord-select">' + coordOptions + '</select>',
               (coord.domains && coord.domains.length ? [
                 '<div class="mfs-domains">',
+                  // Each scrolls on its own as a line of mathematics does, so one too wide
+                  // for the panel, as FRW's note on the equator of its closed case is on a
+                  // phone, is not cut off at the panel's edge. It is not a .mfs-line, which
+                  // the print copy would break at its relations, since it prints as it
+                  // always has, whole on a line of its own.
                   coord.domains.map(function(d) {
-                    return '<div class="mfs-component">' + tex(d) + '</div>';
+                    return '<div class="mfs-component mfs-domain"><div class="mfs-line-scroll">' +
+                      '<div class="mfs-domain-body">' + tex(d) + '</div></div></div>';
                   }).join(''),
                 '</div>'
               ].join('') : ''),
@@ -1728,36 +1815,12 @@
         window._mfsPrintName = data.name;
 
         contentPanel.innerHTML = header + body;
+        wireHeader(contentPanel.querySelector('.mfs-header'));
         wireDiagrams(contentPanel);
         if (_lineObserver) _lineObserver.disconnect();
         _lineObserver = null;
         wireLines(contentPanel);
         wireProse(contentPanel);
-
-        // Force column reflow after MathJax typesetting
-        function reflowColumns() {
-          var compIds = ['mfs-comp-christoffel','mfs-comp-riemann','mfs-comp-ricci','mfs-comp-einstein','mfs-comp-weyl'];
-          compIds.forEach(function(id) {
-            var el = document.getElementById(id);
-            if (!el) return;
-            el.style.columnCount = 'auto';
-            el.style.columnWidth = '';
-            void el.offsetWidth;
-            // Measure widest component using getBoundingClientRect in single-col mode
-            el.style.columnCount = '1';
-            void el.offsetWidth;
-            var maxW = 0;
-            el.querySelectorAll('.mfs-component').forEach(function(child) {
-              var r = child.getBoundingClientRect();
-              if (r.width > maxW) maxW = r.width;
-            });
-            if (maxW < 50) maxW = 400; // fallback
-            var panelW = el.getBoundingClientRect().width;
-            var gap = 24;
-            var count = Math.max(1, Math.floor((panelW + gap) / (maxW + gap)));
-            el.style.columnCount = String(count);
-          });
-        }
 
         // Wire coordinate selector (absent when no coordinates are constructed)
         var coordSelect = document.getElementById('mfs-coord-select');
@@ -1823,6 +1886,20 @@
         }
       }
 
+      /* On a phone the spacetime lies below the list rather than beside it, so once one is
+         chosen the page is scrolled down to it, to its scroll-margin-top above the panel;
+         the list is back at the top of the page. The scroll is vertical only: the panel is
+         still sliding in from the right at this moment, and scrollIntoView() would try to
+         follow it across as well, which Chrome answers by not scrolling at all. */
+      function onPhone() {
+        return getComputedStyle(document.documentElement).getPropertyValue('--mfs-phone').trim() === '1';
+      }
+      function bringIntoView(el) {
+        if (!onPhone()) return;
+        var margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - margin, behavior: 'smooth' });
+      }
+
       // Expose so search panel can call it
       window._mfsShowMetric = function(id) {
         var el = document.getElementById('mfs-content-panel');
@@ -1838,6 +1915,7 @@
                 fetchDiagrams(id, function() { fetchConformal(id, function() {
                   renderMetric(data, 0);
                   el.scrollTop = 0;
+                  bringIntoView(el);
                   el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                   el.style.transform  = 'translateX(0)';
                   setTimeout(function() {
@@ -1851,7 +1929,7 @@
         } else {
           fetchBib(function() {
             fetchMetric(id, function(data) {
-              fetchDiagrams(id, function() { fetchConformal(id, function() { renderMetric(data, 0); }); });
+              fetchDiagrams(id, function() { fetchConformal(id, function() { renderMetric(data, 0); bringIntoView(el); }); });
             });
           });
         }
@@ -1964,7 +2042,16 @@
       overscroll-behavior-x: contain;
       scrollbar-width: thin; scrollbar-color: rgba(0,229,255,0.25) transparent;
     }
-    #mfs-content-panel .mfs-line-body { width: max-content; white-space: nowrap; }
+    #mfs-content-panel .mfs-line-body,
+    #mfs-content-panel .mfs-domain-body { width: max-content; white-space: nowrap; }
+    #mfs-content-panel .mfs-domain { min-width: 0; }
+    /* MathJax lays a hidden copy of each formula over it for screen readers, at the width
+       the browser's own MathML gives it, which can be a few pixels wider than the formula
+       as MathJax sets it. It is clipped from sight but not from a scroller's width, so a
+       formula that fits would fade at its edge and scroll a few pixels onto nothing. So it
+       is held to the width of the formula it reads out, which a screen reader never sees. */
+    #mfs-content-panel mjx-container { position: relative; }
+    #mfs-content-panel mjx-assistive-mml { max-width: 100%; }
     #mfs-content-panel .mfs-more-left  { --mfs-fade-l: 1.5em; }
     #mfs-content-panel .mfs-more-right { --mfs-fade-r: 1.5em; }
     #mfs-content-panel .mfs-more-left,
@@ -2209,6 +2296,110 @@
     #mfs-content-panel a.mfs-ref-link:hover { color: var(--cyan) !important; text-decoration-color: var(--teal-light); text-shadow: 0 0 8px var(--cyan), 0 0 20px var(--cyan); transition: color 0.15s, text-shadow 0.15s; }
   </style>
 
+  <style>
+    /* ── The page on a phone ──
+       The desktop page is three fixed panels side by side, the list 280px wide on the left
+       and the spacetime beside it, which leaves a 390pt iPhone 90px for the spacetime; and
+       its list starts 150px down and runs 320px, which a phone on its side, under 440pt
+       tall, cannot hold. So a screen narrower than 600px, or a touch screen under 500px
+       tall, which is every iPhone in either orientation, gets the same panels in one column
+       that the page scrolls through: the title, the list with the coffee panel under it,
+       and the spacetime below them. The desktop's geometry is otherwise untouched, and
+       everything here is for the screen alone: the print copy is laid out for its paper
+       whatever the screen it was printed from.
+
+       Each panel keeps the edge it hangs from on the desktop, the list the left and the
+       spacetime the right, with the same 20px between them, now above and below. The
+       spacetime panel no longer scrolls inside itself, the page does, so its sticky header
+       sticks to the top of the screen, which is the top edge of what shows of the panel.
+       Text is set at about seven tenths of its desktop size, which keeps a line of history
+       near forty characters on the narrowest of these screens; the list, the search box
+       and the coordinate selector keep a size of at least 16px, below which Safari zooms
+       the page on a tap. A line of mathematics still scrolls on its own. The desktop's
+       panel scripts write their geometry into each panel's own style, so the overrides
+       here that replace it carry !important, and --mfs-phone tells those scripts that
+       this layout is the one in force. */
+    @media screen and (max-width: 600px), screen and (max-height: 500px) and (pointer: coarse) {
+      :root { --mfs-phone: 1; --mfs-left-w: 100vw; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+      /* The panels slide in from beyond the screen's edges, and while the spacetime panel is
+         still off to the right the page would be twice the screen's width, which a phone
+         answers by zooming the page out, for good. So the column is clipped at the screen's
+         sides. The clip is on the body, which clipping leaves no scroller of its own, so the
+         sticky header still sticks to the screen; the root takes the page's own overflow. */
+      html { overflow-x: hidden; }
+      body { overflow-x: clip; }
+
+      /* The title and the exit sign scroll away with the page instead of lying over it,
+         the title in the flow so that the list starts below it however it wraps. */
+      #mfs-title {
+        position: relative !important; top: auto !important; left: auto !important;
+        width: fit-content; margin: 0.45em 0 0 0.6em;
+        font-size: 1.6em !important; max-width: calc(100% - 5.5em) !important;
+      }
+      #mfs-exit { position: absolute !important; font-size: 1.25em !important; top: 0.8em !important; right: 0.7em !important; }
+
+      #mfs-search-panel, #mfs-coffee-panel {
+        position: relative !important; top: auto !important;
+        width: auto !important; margin-right: 20px;
+      }
+      #mfs-search-panel { margin-top: 40px; }
+      #mfs-coffee-panel { max-height: none !important; }
+      #mfs-search-input { font-size: 16px !important; }
+
+      /* Empty until a spacetime is chosen, and then it takes its place below the list. */
+      #mfs-content-panel:empty { display: none; }
+      #mfs-content-panel {
+        position: relative !important; top: auto !important; right: auto !important;
+        width: auto !important; height: auto !important;
+        margin: 20px 0 20px 20px; scroll-margin-top: 12px;
+        overflow: visible !important; overflow-x: clip !important;
+        font-size: 15px !important;
+      }
+      #mfs-content-panel .mfs-header { padding-left: 6px; padding-right: 6px; }
+      #mfs-content-panel .mfs-label { font-size: 14px; }
+      #mfs-content-panel .mfs-title { font-size: 26px; }
+      #mfs-content-panel #mfs-print-btn { font-size: 12px; padding: 3px 9px; }
+      #mfs-content-panel .mfs-coord-select { font-size: 17px; }
+      #mfs-content-panel .mfs-section { padding: 8px 6px; }
+      #mfs-content-panel .mfs-section-head { flex-wrap: wrap; gap: 4px 12px; }
+      #mfs-content-panel .mfs-section-label { font-size: 14px; }
+      #mfs-content-panel .mfs-placeholder { font-size: 16px; }
+      #mfs-content-panel .mfs-table { font-size: 13px; }
+      #mfs-content-panel .mfs-table th,
+      #mfs-content-panel .mfs-table td { padding: 4px 8px; }
+      #mfs-content-panel .mfs-convention p { font-size: 14px; }
+      #mfs-content-panel .mfs-component { font-size: 19px; }
+      #mfs-content-panel .mfs-history { font-size: 15px !important; }
+      #mfs-content-panel .mfs-zero { font-size: 18px; }
+      #mfs-content-panel .mfs-nr-btn { font-size: 12px; padding: 3px 9px; }
+      #mfs-content-panel .mfs-nr-caption p { font-size: 14px; }
+      #mfs-content-panel .mfs-nr-item,
+      #mfs-content-panel .mfs-nr-note { font-size: 12px; }
+      #mfs-content-panel .mfs-nr-k,
+      #mfs-content-panel .mfs-convention-k { font-size: 11px; }
+      #mfs-content-panel .mfs-reference { font-size: 13px; scroll-margin-top: calc(var(--mfs-head, 0px) + 8px); }
+
+      /* A diagram is drawn whole, never cropped or scrolled sideways, as wide as the panel
+         allows and never taller than the screen, unless that would draw it narrower than
+         on the same phone held upright, whose panel is the screen's short side less the
+         64px of the panel's margin, border and padding: turning the phone never shrinks a
+         drawing. Its labels are placed in its own units and scale with it, as on the
+         desktop, and stay legible at an upright phone's width. Upright, the width is what
+         binds; on its side a square drawing is held to the screen's height, which still
+         draws it larger than upright and leaves room for the caption beside it, where the
+         desktop puts it, while a tall one, such as a conformal diagram's tower of regions,
+         keeps its upright width and is read by scrolling. --nr-aspect and --cd-aspect are
+         a drawing's width over its height, which nrFigure() and cdFigure() write on each
+         figure, and --cd-wide is the width cdFigure() already holds a tall one to. */
+      #mfs-content-panel .mfs-nr-figure {
+        max-width: max(calc(100svh * var(--nr-aspect, 1)), calc(100vh - 64px));
+      }
+      #mfs-content-panel .mfs-cd-figure {
+        max-width: min(var(--cd-wide), max(calc(100svh * var(--cd-aspect, 1)), calc(100vh - 64px))) !important;
+      }
+    }
+  </style>
+
   <script>
     /* ── MFS exit transition: ramp scale down then navigate ── */
     (function() {
@@ -2253,7 +2444,7 @@
 
         function flickerOutEl(el) {
           if (!el) return;
-          var allSpans = el.querySelectorAll('span');
+          var allSpans = el.querySelectorAll('span:not(.mfs-word)');
           if (!allSpans.length) return;
           var indices = Array.prototype.slice.call(allSpans).map(function(_, i) { return i; });
           // shuffle
