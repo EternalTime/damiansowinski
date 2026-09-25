@@ -89,28 +89,6 @@
     "diagrams": "714c1f9de4ccc6e5"
   },
   {
-    "id": "cosmic_string",
-    "name": "Vilenkin-Gott",
-    "tags": [
-      "topological defect",
-      "conical",
-      "angular deficit",
-      "flat",
-      "gravitational lensing",
-      "cylindrical symmetry",
-      "axial symmetry",
-      "static",
-      "stationary",
-      "exact solution",
-      "asymptotically flat",
-      "Lorentzian",
-      "Einstein equations",
-      "four-dimensional",
-      "idealized model"
-    ],
-    "version": "23da00712a4c4a50"
-  },
-  {
     "id": "de_sitter",
     "name": "de Sitter",
     "tags": [
@@ -689,5 +667,27 @@
       "idealized model"
     ],
     "version": "afe472b667877216"
+  },
+  {
+    "id": "cosmic_string",
+    "name": "Vilenkin-Gott",
+    "tags": [
+      "topological defect",
+      "conical",
+      "angular deficit",
+      "flat",
+      "gravitational lensing",
+      "cylindrical symmetry",
+      "axial symmetry",
+      "static",
+      "stationary",
+      "exact solution",
+      "asymptotically flat",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "2c3a771533a2cc93"
   }
 ]

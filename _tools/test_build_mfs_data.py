@@ -26,7 +26,7 @@ DASHES = "\u2010\u2011\u2012\u2013\u2014\u2015\u2212"
 
 # The fields written in sentences. The LaTeX and structural fields are mathematics
 # and are left out on purpose, since a minus sign belongs in them.
-PROSE_FIELDS = ("name", "short_name", "sort_name", "description", "history", "convention")
+PROSE_FIELDS = ("name", "short_name", "description", "history", "convention")
 
 
 def read(path):
@@ -45,6 +45,15 @@ def prose(metric):
         for parameter in system.get("parameters") or []:
             if parameter.get("description"):
                 yield f"{where}.parameters[{parameter.get('symbol')}].description", parameter["description"]
+
+
+def load_folder(files):
+    """Load metrics from a scratch folder holding `files`, a map of file name to metric."""
+    with tempfile.TemporaryDirectory() as folder:
+        for filename, metric in files.items():
+            (Path(folder) / filename).write_text(json.dumps(metric), encoding="utf-8")
+        with mock.patch.object(build, "METRICS_DIR", Path(folder)):
+            return build.load_metrics()
 
 
 def diagram_files():
@@ -110,6 +119,10 @@ class Index(unittest.TestCase):
         with self.assertRaises(build.DataError):
             self.load_one("x.json", {"id": "y", "name": "X", "short_name": "X", "tags": ["t"]})
 
+    def test_a_metric_with_a_sort_name_is_refused(self):
+        with self.assertRaises(build.DataError):
+            self.load_one("x.json", {"id": "x", "name": "X", "short_name": "X", "sort_name": "A", "tags": ["t"]})
+
     def test_a_cloud_sync_conflict_copy_is_passed_over(self):
         good = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"]}
         stale = dict(good, name="An older X")
@@ -125,11 +138,33 @@ class Index(unittest.TestCase):
         return self.load_folder({filename: metric})
 
     def load_folder(self, files):
-        with tempfile.TemporaryDirectory() as folder:
-            for filename, metric in files.items():
-                (Path(folder) / filename).write_text(json.dumps(metric), encoding="utf-8")
-            with mock.patch.object(build, "METRICS_DIR", Path(folder)):
-                return build.load_metrics()
+        return load_folder(files)
+
+
+class ListOrder(unittest.TestCase):
+    """The search list reads in alphabetical order of the names it shows."""
+
+    def test_the_published_list_is_in_order_of_its_displayed_names(self):
+        names = [e["name"] for e in read(build.INDEX_FILE)]
+        for before, after in zip(names, names[1:]):
+            self.assertLessEqual(build.name_key(before), build.name_key(after), f"{before!r} is listed before {after!r}")
+
+    def test_the_key_ignores_case_and_accents_and_nothing_else(self):
+        self.assertEqual(build.name_key("Gödel"), build.name_key("Godel"))
+        self.assertEqual(build.name_key("Natário"), build.name_key("Natario"))
+        self.assertEqual(build.name_key("Reissner-Nordström"), build.name_key("reissner-nordstrom"))
+        in_order = ["Anti-de Sitter", "Bianchi", "de Sitter", "Ellis-Bronnikov", "Gödel", "Kasner",
+                    "Natário", "Oppenheimer-Snyder", "pp-wave", "Reissner-Nordström", "Vilenkin-Gott"]
+        self.assertEqual(sorted(reversed(in_order), key=build.name_key), in_order)
+
+    def test_a_new_spacetime_takes_its_place_by_name_not_by_id(self):
+        folder = {
+            "a.json": {"id": "a", "name": "Z", "short_name": "Zeta", "tags": ["t"]},
+            "b.json": {"id": "b", "name": "E", "short_name": "Éta", "tags": ["t"]},
+            "c.json": {"id": "c", "name": "A", "short_name": "alpha", "tags": ["t"]},
+        }
+        loaded = load_folder(folder)
+        self.assertEqual([m["short_name"] for m in loaded], ["alpha", "Éta", "Zeta"])
 
 
 class Stamps(unittest.TestCase):

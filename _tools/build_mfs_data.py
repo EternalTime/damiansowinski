@@ -44,15 +44,26 @@ def content_version(value):
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:VERSION_LENGTH]
 
 
-def sort_key(metric):
-    """The order the search list is shown in: by name, accents folded away.
+def name_key(name):
+    """The key a displayed name sorts by: its letters as written, case and accents ignored.
 
-    `sort_name` exists for the spacetimes whose place in the list is not where
-    their displayed name would put them.
+    Unicode's compatibility decomposition (NFKD) splits a letter such as ö into o and a
+    combining diaeresis, and dropping the combining marks leaves the base letter, so Gödel
+    sorts as Godel and Natário as Natario without a table of letters kept here. casefold
+    then puts de Sitter under D beside Anti-de Sitter under A, and pp-wave under P.
     """
-    name = metric.get("sort_name") or metric["short_name"]
     folded = "".join(c for c in unicodedata.normalize("NFKD", name) if not unicodedata.combining(c))
     return folded.casefold()
+
+
+def sort_key(metric):
+    """The order the search list is shown in: by the name the reader sees there.
+
+    That name is `short_name`, the one the index publishes as `name`. There is no per entry
+    override: a hand kept position is wrong the moment another spacetime is added. The id
+    only breaks a tie between two equal names, so the order never depends on the folder.
+    """
+    return name_key(metric["short_name"]), metric["id"]
 
 
 CONFLICT_COPY = re.compile(r" \d+$")
@@ -72,6 +83,8 @@ def load_metrics():
                 raise DataError(f"{path.name} has no {field}")
         if metric["id"] != path.stem:
             raise DataError(f"{path.name} carries the id {metric['id']!r}")
+        if "sort_name" in metric:
+            raise DataError(f"{path.name} has a sort_name; the list is ordered by short_name alone")
         metrics.append(metric)
 
     ids = [m["id"] for m in metrics]

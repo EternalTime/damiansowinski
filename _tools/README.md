@@ -6,7 +6,8 @@ Jekyll ignores any directory whose name starts with an underscore, so nothing in
 
 Write the new metric file at `MFS/assets/data/metrics/<id>.json`, with its `id` equal to the file name.
 It needs `name` (the long title on the page), `short_name` (the label in the search list) and `tags`.
-Add `sort_name` only if the spacetime belongs somewhere else in the alphabetical list than its `short_name` puts it.
+The search list is ordered by `short_name` alone, case and accents ignored, so Gödel sorts as Godel and de Sitter falls under D.
+There is no per entry sort field, and the build refuses a file that carries `sort_name`; a new spacetime takes its place from its name.
 Cite references by their key in `assets/data/references.bib`.
 
 Every entry cites each of its references in its `history`, as `[key]` or `[key1, key2]` at the point the prose leans on it, and lists them in `references` in the order they are first cited.
