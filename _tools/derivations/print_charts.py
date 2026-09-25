@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Compute and write the coordinate systems of the four entries whose mathematics is printed
-by machine: tov, malament_hogarth, mixmaster and lentz.
+"""Compute and write the coordinate systems whose mathematics is printed by machine: the
+charts of tov, malament_hogarth, mixmaster and lentz, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -17,7 +17,7 @@ one. The Ricci scalar and the Kretschmann scalar are written by hand where a str
 reads better than an expanded one, and each of those is checked against sympy here too.
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
-malament_hogarth.md, mixmaster.md and lentz.md beside this file.
+malament_hogarth.md, mixmaster.md, lentz.md and godel.md beside this file.
 """
 import argparse
 import json
@@ -209,13 +209,68 @@ def lentz():
     }
 
 
-CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz}
+# -- Godel, cylindrical --------------------------------------------------------------
+
+def godel():
+    """Godel's own cylindrical coordinates of 1949, about one world line of the dust, which the
+    Cartesian chart of this entry is carried to by e^x = cosh 2r + cos(phi) sinh 2r,
+    y e^x = sqrt(2) sin(phi) sinh 2r, t_x = 2t + sqrt(2)(2 arctan(e^(-2r) tan(phi/2)) - phi) and
+    z_x = 2z. Before the chart is written, the published Cartesian metric is pulled back through
+    that map and checked equal to this line element's metric, slot by slot; godel.md derives it."""
+    coords = ["t", "r", "\\phi", "z"]
+    parameters = ["\\omega"]
+    line = ("ds^2 = \\dfrac{2}{\\omega^2}\\left(-dt^2 + dr^2 + \\left(\\sinh^2 r - \\sinh^4 r\\right)d\\phi^2"
+            " - 2\\sqrt{2}\\sinh^2 r\\,dt\\,d\\phi + dz^2\\right)")
+    return {
+        "metric_id": "godel",
+        "system": {"id": "cylindrical", "name": "Cylindrical", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                               "z \\in (-\\infty, \\infty)",
+                               "\\sinh r = 1 \\;\\text{(the circles of constant } t, r, z \\text{ are null)}"],
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": []},
+        "pretty": cp.hyperbolic(vm.Reader(coords, parameters, ()).symbol["r"]),
+        "check": godel_pullback,
+    }
+
+
+def godel_pullback(chart):
+    """J^T g J, with g the metric the Cartesian chart of godel.json publishes and J the Jacobian
+    of the map in godel()'s docstring, minus the metric of `chart`, simplified to zero in every
+    slot. About seven seconds."""
+    metric = json.loads((METRICS / "godel.json").read_text(encoding="utf-8"))
+    cartesian = next(c for c in metric["coordinates"] if c["id"] == "cartesian")
+    reader = vm.Reader(cartesian["coords"], [p["symbol"] for p in cartesian["parameters"]], ())
+    g = sp.zeros(4, 4)
+    for comp in cartesian["metric_components"]:
+        i, j = (cartesian["coords"].index(x) for x in comp["indices"])
+        g[i, j] = g[j, i] = reader(comp["value"])
+    t, r, phi, z = chart.symbols
+    omega = chart.reader.parameters["omega"]
+    spread = sp.cosh(2 * r) + sp.cos(phi) * sp.sinh(2 * r)
+    image = [2 * t + sp.sqrt(2) * (2 * sp.atan(sp.exp(-2 * r) * sp.tan(phi / 2)) - phi), sp.log(spread),
+             sp.sqrt(2) * sp.sin(phi) * sp.sinh(2 * r) / spread, 2 * z]
+    J = sp.Matrix(4, 4, lambda a, b: sp.diff(image[a], chart.symbols[b]))
+    at = dict(zip([reader.symbol[c] for c in cartesian["coords"]], image))
+    at[reader.parameters["omega"]] = omega
+    pulled = J.T * g.subs(at) * J
+    for a in range(4):
+        for b in range(a, 4):
+            if sp.simplify((pulled[a, b] - chart.geo.g[a, b]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"godel: the pullback of the Cartesian metric misses the cylindrical "
+                                     f"one in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+
+
+CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel}
 
 
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
                      spec["printer"], spec.get("pretty"))
+    if "check" in spec:
+        spec["check"](chart)
     math = chart.mathematics()
     for field in ("ricci_scalar", "kretschmann"):
         computed = chart.geo.ricci_scalar() if field == "ricci_scalar" else chart.geo.kretschmann()
@@ -226,15 +281,27 @@ def write(spec):
 
     path = METRICS / f"{spec['metric_id']}.json"
     metric = json.loads(path.read_text(encoding="utf-8"))
-    old = {s["id"]: s for s in metric.get("coordinates", [])}.get(spec["system"]["id"], {})
-    described = {p["symbol"]: p["description"] for p in old.get("parameters", [])}
+    charts = metric.get("coordinates", [])
+    # A parameter keeps the description it has in this chart, or in another chart of the same
+    # spacetime where it means the same thing, as Godel's omega does in both of its charts.
+    described = {p["symbol"]: p["description"] for chart in charts if chart["id"] != spec["system"]["id"]
+                 for p in chart.get("parameters", [])}
+    described.update({p["symbol"]: p["description"] for chart in charts if chart["id"] == spec["system"]["id"]
+                      for p in chart.get("parameters", [])})
     missing = [s for s in spec["system"]["parameters"] if s not in described]
     if missing:
         raise SystemExit(f"{path.name}: describe the parameters {missing} in the file before writing it")
     system = dict(spec["system"])
     system["parameters"] = [{"symbol": s, "description": described[s]} for s in spec["system"]["parameters"]]
     system.update(math)
-    metric["coordinates"] = [{k: system[k] for k in SYSTEM_ORDER}]
+    # The chart replaces the one of its id, or joins the spacetime's others after them.
+    written = {k: system[k] for k in SYSTEM_ORDER}
+    ids = [chart["id"] for chart in charts]
+    if spec["system"]["id"] in ids:
+        charts[ids.index(spec["system"]["id"])] = written
+    else:
+        charts.append(written)
+    metric["coordinates"] = charts
     path.write_text(json.dumps(metric, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"{path.name}: {time.time() - start:.0f}s, {path.stat().st_size} bytes", flush=True)
 
