@@ -2060,7 +2060,8 @@ def vaidya(ck, src):
 
 def tov(ck, src):
     """A static star of fluid, its redshift and mass functions solved for a declared equation of
-    state from this spacetime's own Einstein tensor, G = c = M_sun = 1.
+    state from this spacetime's own Einstein tensor, G = c = M_sun = 1, by null_rays.StarSolver,
+    which the spacetime diagram draws the same star with.
 
     G^t_t = -8 pi rho and G^r_r = 8 pi p, read from the published components with Phi and m
     as plain symbols, are linear in m' and Phi', and give them; the pressure follows from
@@ -2073,72 +2074,10 @@ def tov(ck, src):
     is shifted to meet it. Then r* = int e^(-Phi) (1 - 2m/r)^(-1/2) dr runs from 0 at the
     centre to infinity and p, q = arctan((t -+ r*)/R) give Minkowski's triangle.
     """
-    kappa, rho_c = 100.0, 1.28e-3
+    solver = nr.StarSolver("tov", "spherical", 100.0, 1.28e-3)
     pl = Plane(src, "tov", "spherical", ("t", "r"), EQUATOR, numeric=["Phi", "m"])
     src.note("tov", "spherical", ["einstein_tensor"])
-    ul = pl.entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
-
-    def published(index):
-        return pl.prep(pl.reader(next(c["value"] for c in ul if c["indices"] == [index, index])))
-    Gtt, Grr, Gthth = published("t"), published("r"), published("\\theta")
-    (_, F1, F2), (M0, M1, _) = pl.numeric["Phi"][2], pl.numeric["m"][2]
-    rho, pres, r = sp.Symbol("rho"), sp.Symbol("p"), pl.x1
-    solved = sp.solve([Gtt + 8 * sp.pi * rho, Grr - 8 * sp.pi * pres], [M1, F1], dict=True)[0]
-    dm = sp.lambdify((r, M0, rho), solved[M1], "numpy")
-    dPhi = sp.lambdify((r, M0, pres), solved[F1], "numpy")
-    theta_theta = sp.lambdify((r, F1, F2, M0, M1), Gthth, "numpy")
-
-    def energy(p):
-        rho0 = np.sqrt(np.maximum(p, 0) / kappa)
-        return rho0 + p, rho0
-
-    def rhs(x, y):
-        m, _, p = y
-        e, _ = energy(p)
-        f = dPhi(x, m, p)
-        return [dm(x, m, e), f, -(e + max(p, 0)) * f]
-
-    def surface(x, y):
-        return y[2]
-    surface.terminal = True
-    p_c = kappa * rho_c ** 2
-    r0 = 1e-6
-    ivp = solve_ivp(rhs, (r0, 100), [4 * PI / 3 * (rho_c + p_c) * r0 ** 3, 0.0, p_c], events=surface,
-                    rtol=1e-12, atol=1e-16, dense_output=True, method="DOP853")
-    R = float(ivp.t_events[0][0])
-    M = float(ivp.sol(R)[0])
-    shift = 0.5 * np.log(1 - 2 * M / R) - float(ivp.sol(R)[1])
-
-    def values(x):
-        """(value, first, second derivative) of Phi and of m at radii x."""
-        x = np.atleast_1d(np.asarray(x, dtype=float))
-        inside = x < R
-        out = {"Phi": [np.empty_like(x) for _ in range(3)], "m": [np.empty_like(x) for _ in range(3)]}
-        if inside.any():
-            xi = np.maximum(x[inside], r0)
-            m, phi, p = ivp.sol(xi)
-            p = np.maximum(p, 0)
-            e, rho0 = energy(p)
-            f = dPhi(xi, m, p)
-            me = dm(xi, m, e)
-            dp = -(e + p) * f
-            de = -(1 + 2 * kappa * rho0) * f / (2 * kappa) + dp
-            num, den = m + 4 * PI * xi ** 3 * p, xi * (xi - 2 * m)
-            dnum = me + 12 * PI * xi ** 2 * p + 4 * PI * xi ** 3 * dp
-            dden = 2 * xi - 2 * m - 2 * me * xi
-            for store, v in zip(out["Phi"], (phi + shift, f, (dnum * den - num * dden) / den ** 2)):
-                store[inside] = v
-            for store, v in zip(out["m"], (m, me, 8 * PI * xi * e + 4 * PI * xi ** 2 * de)):
-                store[inside] = v
-        outer = ~inside
-        if outer.any():
-            xo = x[outer]
-            for store, v in zip(out["Phi"], (0.5 * np.log(1 - 2 * M / xo), M / (xo * (xo - 2 * M)),
-                                             -2 * M * (xo - M) / (xo ** 2 * (xo - 2 * M) ** 2))):
-                store[outer] = v
-            for store, v in zip(out["m"], (np.full_like(xo, M), 0 * xo, 0 * xo)):
-                store[outer] = v
-        return out
+    R, M, r0, values = solver.R, solver.M, solver.r0, solver.values
 
     def fvals(t, x):
         v = values(x)
@@ -2161,12 +2100,8 @@ def tov(ck, src):
              ck.uniform(0.01, R), lambda t, x: (1, 0), fvals)
     ck.chart("Tolman-Oppenheimer-Volkoff, outside it", pl, star, ck.uniform(-60, 60),
              ck.uniform(R, 80), lambda t, x: (1, 0), fvals)
-    x = np.linspace(0.05 * R, 0.95 * R, 200)
-    vi = values(x)
-    p = np.maximum(ivp.sol(x)[2], 0)
     ck.limit("Tolman-Oppenheimer-Volkoff: the declared star solves the published G^theta_theta = 8 pi p",
-             (theta_theta(x, vi["Phi"][1], vi["Phi"][2], vi["m"][0], vi["m"][1]) - 8 * PI * p) / (8 * PI * p_c),
-             0, 1e-7)
+             solver.theta_theta(np.linspace(0.05 * R, 0.95 * R, 200)), 0, 1e-7)
     ck.limit("Tolman-Oppenheimer-Volkoff: the surface clears Buchdahl's bound, 2M/R < 8/9",
              [float(2 * M / R < 8 / 9)], [1], 0.5)
     ck.limit("Tolman-Oppenheimer-Volkoff: Phi is continuous at the surface",
