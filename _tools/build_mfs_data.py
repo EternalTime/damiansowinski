@@ -5,15 +5,16 @@ Run from anywhere:
 
     python3 _tools/build_mfs_data.py
 
-Reads   MFS/assets/data/metrics/*.json, MFS/assets/data/diagrams/*.json and assets/data/references.bib
+Reads   MFS/assets/data/metrics/*.json, MFS/assets/data/diagrams/*.json,
+        MFS/assets/data/conformal/*.json and assets/data/references.bib
 Writes  MFS/assets/data/metrics_index.json and MFS/assets/data/references.json
 
 Pass --check to verify the written files are up to date without changing them.
 
-The diagram files are drawn by _tools/derivations/null_rays.py, which needs sympy and
-numpy; this script only reads them. It refuses a diagram drawn from components its metric
-no longer publishes, and stamps each diagram file's version into the index beside the
-metric's own.
+The diagram files are drawn by _tools/derivations/null_rays.py and the conformal diagram
+files by _tools/derivations/conformal.py, which need sympy and numpy; this script only
+reads them. It refuses either kind drawn from components its metric no longer publishes,
+and stamps each file's version into the index beside the metric's own.
 """
 
 import argparse
@@ -30,6 +31,7 @@ INDEX_FILE = ROOT / "MFS" / "assets" / "data" / "metrics_index.json"
 BIB_FILE = ROOT / "assets" / "data" / "references.bib"
 REFERENCES_FILE = ROOT / "MFS" / "assets" / "data" / "references.json"
 DIAGRAMS_DIR = ROOT / "MFS" / "assets" / "data" / "diagrams"
+CONFORMAL_DIR = ROOT / "MFS" / "assets" / "data" / "conformal"
 
 VERSION_LENGTH = 16
 
@@ -144,7 +146,51 @@ def load_diagrams(metrics):
     return diagrams
 
 
-def build_index(metrics, diagrams=None):
+def load_conformal(metrics):
+    """Every conformal diagram file, refused if any field it was drawn from has changed.
+
+    A conformal diagram is of a whole spacetime and may read more than one coordinate
+    system, or another spacetime's, as the interior Schwarzschild star reads the exterior
+    of schwarzschild.json, so the file lists every system it read under `source`.
+    """
+    by_id = {m["id"]: m for m in metrics}
+    conformal = {}
+    for path in sorted(CONFORMAL_DIR.glob("*.json")):
+        if CONFLICT_COPY.search(path.stem):
+            continue
+        where = f"conformal/{path.name}"
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise DataError(f"{where} is not valid JSON: {exc}") from exc
+        if data.get("metric") != path.stem:
+            raise DataError(f"{where} carries the metric {data.get('metric')!r}")
+        if path.stem not in by_id:
+            raise DataError(f"{where} has no metric file to belong to")
+        if not data.get("source"):
+            raise DataError(f"{where} does not say what it was drawn from")
+        for source in data["source"]:
+            metric = by_id.get(source["metric"])
+            if metric is None:
+                raise DataError(f"{where} was drawn from {source['metric']}.json, which does not exist")
+            systems = {s["id"]: s for s in metric.get("coordinates") or []}
+            if source["system"] not in systems:
+                raise DataError(f"{where} was drawn from {source['system']!r}, which "
+                                f"{source['metric']}.json has no coordinate system for")
+            if diagram_source_version(systems[source["system"]], source["fields"]) != source["version"]:
+                raise DataError(
+                    f"{where} was drawn from components of the {source['system']} system that "
+                    f"{source['metric']}.json no longer publishes; redraw it with "
+                    f"_tools/derivations/conformal.py --metric {path.stem}")
+        for view in data.get("views", []):
+            if view.get("system") and view["system"] not in {s["id"] for s in by_id[path.stem]["coordinates"]}:
+                raise DataError(f"{where}: the view {view['id']!r} tints {view['system']!r}, which "
+                                f"{path.stem}.json has no coordinate system for")
+        conformal[path.stem] = data
+    return conformal
+
+
+def build_index(metrics, diagrams=None, conformal=None):
     index = []
     for m in metrics:
         entry = {
@@ -155,6 +201,8 @@ def build_index(metrics, diagrams=None):
         }
         if diagrams and m["id"] in diagrams:
             entry["diagrams"] = content_version(diagrams[m["id"]])
+        if conformal and m["id"] in conformal:
+            entry["conformal"] = content_version(conformal[m["id"]])
         index.append(entry)
     return index
 
@@ -308,8 +356,9 @@ def main(argv=None):
         check_citations(metrics, references["entries"])
         check_history_shape(metrics)
         diagrams = load_diagrams(metrics)
+        conformal = load_conformal(metrics)
         outputs = {
-            INDEX_FILE: serialise(build_index(metrics, diagrams)),
+            INDEX_FILE: serialise(build_index(metrics, diagrams, conformal)),
             REFERENCES_FILE: serialise(references),
         }
     except DataError as exc:

@@ -104,7 +104,7 @@ The command refuses to write anything, and `--check` fails, while any history is
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.
 Its `name` is the metric's `short_name`, which is what the search list shows, not the long `name` the page titles the spacetime with.
-An entry also carries `diagrams` when the spacetime has a file in `MFS/assets/data/diagrams/`; the page fetches that file only for an entry that says so.
+An entry also carries `diagrams` when the spacetime has a file in `MFS/assets/data/diagrams/`, and `conformal` when it has one in `MFS/assets/data/conformal/`; the page fetches either file only for an entry that says so.
 
 `MFS/assets/data/references.json` is the whole of `assets/data/references.bib` parsed into JSON, so a reader can pull every reference the collection cites in one fetch instead of walking every metric file.
 The `.bib` file stays where it is and stays the one place a reference is written; the publications page still reads it.
@@ -115,7 +115,7 @@ A metric's `version` is a hash of that metric's content.
 It changes when the content changes and not otherwise, so reformatting a file or republishing the site leaves it alone.
 This is what the iOS application uses to fetch only the spacetimes that actually changed, since GitHub Pages rewrites every file's own tag on every publish.
 `references.json` carries one stamp of its own at the top for the same reason.
-An index entry's `diagrams` is the same kind of hash over that spacetime's diagram file, so the application can fetch a redrawn diagram without fetching its metric again.
+An index entry's `diagrams` and `conformal` are the same kind of hash over that spacetime's diagram file and conformal diagram file, so the application can fetch a redrawn diagram without fetching its metric again.
 
 ## Checking
 
@@ -205,6 +205,44 @@ Lentz's soliton exists only as a numerical integral over his rhomboid sources, s
 The Mixmaster's scale factors have no closed form to declare, being the chaotic solutions of its own field equations, and the one plane of time and an Euler angle that keeps its light rays, time against $\psi$, would show only $a_3$.
 The Malament-Hogarth toy is Minkowski space times a conformal factor, which changes no null direction, so its diagram would be Minkowski's with one point missing; what it changes is proper time, which a diagram of light rays cannot show.
 The cosmic string's two charts, Oppenheimer-Snyder's exterior, Natario's plane flow chart, the Brinkmann chart of the pp-wave and Minkowski's double null chart would each only repeat a plane drawn elsewhere, flat or the same as another chart's.
+
+## Conformal diagrams
+
+`MFS/assets/data/conformal/<metric_id>.json` holds the conformal diagram of one spacetime: the whole spacetime brought to a finite drawing with light at 45°, or, where no picture of the whole is faithful, a totally geodesic surface in it that says so.
+The page draws it once per spacetime, under the heading "conformal diagram", between the conventions and the coordinates, since it belongs to the spacetime and not to a chart; its views are buttons, and the view shown first is the one that tints the region the selected coordinate system covers.
+The application reads the same files.
+
+`_tools/derivations/conformal.py` draws them, one function per spacetime, each carrying its derivation in its docstring, reading the published metric through the checker's `Reader` with the `load` and `published_matrix` the null rays use.
+It needs the same environment as `null_rays.py` and takes a few seconds for the whole collection:
+
+    /tmp/mfs-venv/bin/python _tools/derivations/conformal.py
+    python3 _tools/build_mfs_data.py
+
+`--metric <metric_id>` redraws one spacetime, and `--verify` prints every check and writes nothing.
+
+Every map drawn is checked by the function that draws with it, at random points of the region it covers, against the published metric and inverse metric: lines of constant drawn null coordinate are light rays, the two families are distinct, the future is up, and the published inverse on the surface is the inverse of the published metric there.
+Each spacetime adds the limits that place its horizons, infinities and singularities, and the published Kretschmann scalar must diverge wherever a line is drawn as a singularity and stay finite on every centre or throat drawn as regular.
+The script refuses to write anything while one check fails; the docstring lists them.
+
+A file records every coordinate system it read and a stamp over the fields it read from each, in `source`, computed by the same `diagram_source_version` as the null rays' stamps.
+A diagram can read another spacetime's metric, as the interior Schwarzschild star reads the exterior of `schwarzschild.json`, and `build_mfs_data.py` refuses the file when any of those fields changes, naming the system and the command that redraws it.
+The domains are not among the fields, since no conformal diagram reads one.
+
+`DRAWN` in the script names the seventeen spacetimes that have a diagram, and `NOT_DRAWN` gives each of the others the reason it has none: every event's future is the whole spacetime for Gödel and van Stockum, the diagram is whatever a free function makes it for the warp drives, the Krasnikov tube, Tolman-Bondi and Bianchi, the Mixmaster has no surface that carries its causal structure, and so on.
+A free function does not by itself rule a diagram out: where every choice of it gives the same shape, as for the Tolman-Oppenheimer-Volkoff star and the Morris-Thorne wormhole, the diagram is drawn with a declared choice that moves only the lines inside, and the Malament-Hogarth toy is drawn for every conformal factor at once, since a conformal factor changes no null direction.
+Nothing is published for those, and the script stops if a metric file is in neither table, so a new spacetime needs a decision.
+
+A view of a surface that is not the whole spacetime carries `restriction`, which the page prints in a band across the top of the figure, never in a footnote.
+Kerr and Kerr-Newman are drawn on the symmetry axis and the cosmic string on the half plane of fixed $\phi$ and $z$, and the tests hold those three to carrying a restriction on every view.
+
+Every text in a view is TeX in `$...$`: the labels on the drawing, the buttons, the legend, the caption, the restriction and the parameter values.
+A caption opens by naming what is drawn, "This is the whole of ..." or "This is the plane ...", and its prose is for the reader of "Whom the prose is for" above; the tests hold every text in these files to that rule's words and to the dash rule.
+
+`_tools/derivations/tex_check.cjs` typesets every TeX string the page sets, in the metrics, the diagram files and the conformal files, a published value together with its negation, through the TeX input MathJax loads on the page, and exits non-zero naming each one it cannot set.
+sympy never reads the typesetting, so this is the check that catches a value that is right and prints as an error box:
+
+    npm install --prefix /tmp/mfs-node mathjax-full
+    node _tools/derivations/tex_check.cjs /tmp/mfs-node
 
 ## Checking the physics
 

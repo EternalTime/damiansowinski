@@ -1286,6 +1286,168 @@
         });
       }
 
+      /* ── Conformal diagrams ──
+         One per spacetime, read from MFS/assets/data/conformal/<id>.json, which
+         _tools/derivations/conformal.py computes from the published metrics; the page only
+         draws it. A view's geometry is in the drawing's own coordinates, X = q - p across and
+         T = p + q up for its null coordinates p and q, drawn at one scale on both axes, so a
+         light ray runs at 45 degrees on the screen because it does in the data. Its labels
+         are TeX laid over the SVG in percentages of the figure, as the spacetime diagrams'
+         are, and a view of a surface that is not the whole spacetime carries its restriction
+         on the figure itself. The diagram belongs to the spacetime and not to a chart, so it
+         sits above the coordinates; a view that tints the region a coordinate system covers
+         names that system, and the one shown first is the one for the system selected below
+         it, so choosing a chart shows where it lies. */
+      var _conformalCache = {};  // id → parsed JSON, or null where the spacetime has none
+      var _cdUid = 0;
+      var CD_W = 560, CD_M = 34, CD_MAXH = 880;
+
+      function fetchConformal(id, cb) {
+        if (id in _conformalCache) { cb(_conformalCache[id]); return; }
+        withIndex(function(index) {
+          var entry = index.filter(function(e) { return e.id === id; })[0];
+          if (!entry || !entry.conformal) { _conformalCache[id] = null; cb(null); return; }
+          fetch('{{ "/MFS/assets/data/conformal/" | relative_url }}' + id + '.json')
+            .then(function(r) { return r.json(); })
+            .then(function(data) { _conformalCache[id] = data; cb(data); })
+            .catch(function(e) {
+              console.error('Failed to load the conformal diagram:', id, e);
+              _conformalCache[id] = null;
+              cb(null);
+            });
+        });
+      }
+
+      // The drawing's frame in the SVG's own units: CD_W wide, in a margin CD_M all round.
+      function cdFrame(view) {
+        var b = view.box, s = CD_W / (b[1] - b[0]), H = s * (b[3] - b[2]);
+        return { s: s, H: H, vw: CD_W + 2 * CD_M, vh: H + 2 * CD_M,
+                 x: function(X) { return CD_M + (X - b[0]) * s; },
+                 y: function(T) { return CD_M + (b[3] - T) * s; } };
+      }
+
+      function cdPath(f, pts, close) {
+        return pts.map(function(p, i) {
+          return (i ? 'L' : 'M') + f.x(p[0]).toFixed(1) + ' ' + f.y(p[1]).toFixed(1);
+        }).join(' ') + (close ? ' Z' : '');
+      }
+
+      // The zigzag the site marks a divergent Kretschmann scalar with, along a polyline,
+      // resampled at equal lengths so its teeth do not depend on how the curve was sampled.
+      function cdZig(f, pts) {
+        var P = pts.map(function(p) { return [f.x(p[0]), f.y(p[1])]; });
+        var cum = [0];
+        for (var i = 1; i < P.length; i++) cum.push(cum[i - 1] + Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]));
+        var total = cum[cum.length - 1];
+        if (total < 1) return '';
+        var n = Math.max(2, Math.round(total / 5)), d = '', j = 1;
+        for (var k = 0; k <= n; k++) {
+          var at = total * k / n;
+          while (j < P.length - 1 && cum[j] < at) j++;
+          var w = (at - cum[j - 1]) / (cum[j] - cum[j - 1] || 1);
+          var dx = P[j][0] - P[j - 1][0], dy = P[j][1] - P[j - 1][1], L = Math.hypot(dx, dy) || 1;
+          var a = (k === 0 || k === n) ? 0 : (k % 2 ? 3 : -3);
+          var x = P[j - 1][0] + w * dx - dy / L * a, y = P[j - 1][1] + w * dy + dx / L * a;
+          d += (k ? ' L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+        }
+        return d;
+      }
+
+      function cdSvg(view, f) {
+        var id = 'mfs-cd-' + (_cdUid++), out = [];
+        var order = { fill: 0, line: 1, zig: 2, point: 3 };
+        view.layers.slice().sort(function(a, b) { return order[a.kind] - order[b.kind]; }).forEach(function(L) {
+          var cls = 'cd-' + L['class'];
+          if (L.kind === 'fill') out.push(nrEl('path', { 'class': cls, d: cdPath(f, L.points, true) }));
+          else if (L.kind === 'line') out.push(nrEl('path', { 'class': cls, d: cdPath(f, L.points, false) }));
+          else if (L.kind === 'zig') out.push(nrEl('path', { 'class': cls, d: cdZig(f, L.points) }));
+          else out.push(nrEl('circle', { 'class': cls, cx: f.x(L.at[0]).toFixed(1), cy: f.y(L.at[1]).toFixed(1), r: 3 }));
+        });
+        // Where the spacetime runs on past the drawing, it fades into the page.
+        var defs = '';
+        if (view.fade) {
+          defs = '<defs><linearGradient id="' + id + '-fade" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" class="cd-fade-edge"/><stop offset="1" class="cd-fade-clear"/></linearGradient></defs>';
+          ['top', 'bottom'].forEach(function(edge) {
+            if (!view.fade[edge]) return;
+            var h = CD_M + view.fade[edge] * f.s, y = edge === 'top' ? 0 : f.vh - h;
+            out.push(nrEl('rect', { 'class': 'cd-fade', x: 0, y: y.toFixed(1), width: f.vw, height: h.toFixed(1),
+              fill: 'url(#' + id + '-fade)',
+              transform: edge === 'top' ? '' : 'rotate(180 ' + (f.vw / 2) + ' ' + (y + h / 2).toFixed(1) + ')' }));
+          });
+        }
+        return nrEl('svg', { 'class': 'mfs-cd-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
+          'aria-label': 'Conformal diagram, ' + nrPlain(view.label) }, defs + out.join(''));
+      }
+
+      // A label's anchor is the point of its box pinned to its place, and its size is in
+      // units of the figure's width, so it scales with the drawing and never moves off it.
+      var CD_ANCHOR = { c: [-50, -50], l: [0, -50], r: [-100, -50], t: [-50, 0], b: [-50, -100],
+                        tl: [0, 0], tr: [-100, 0], bl: [0, -100], br: [-100, -100] };
+      var CD_SIZE = { lab: 15, small: 13, region: 13, coord: 12 };
+
+      function cdLabels(view, f) {
+        var out = view.labels.map(function(L) {
+          var x = f.x(L.at[0]) + (L.dx || 0), y = f.y(L.at[1]) + (L.dy || 0), a = CD_ANCHOR[L.anchor || 'c'];
+          return '<span class="cd-at cd-lab-' + L['class'] + '" style="left:' + (100 * x / f.vw).toFixed(3) +
+            '%;top:' + (100 * y / f.vh).toFixed(3) + '%;transform:translate(' + a[0] + '%,' + a[1] +
+            '%);font-size:calc(100cqw * ' + (CD_SIZE[L['class']] || 14) + ' / ' + f.vw + ')">' + nrEsc(L.text) + '</span>';
+        });
+        return '<div class="mfs-cd-labels" aria-hidden="true">' + out.join('') + '</div>';
+      }
+
+      function cdSwatch(kind, cls) {
+        var inner;
+        if (kind === 'fill') inner = '<rect class="cd-' + cls + ' cd-swatch-fill" x="2" y="2" width="30" height="12"/>';
+        else if (kind === 'zig') inner = '<path class="cd-' + cls + '" d="M2 8 L7 5 L12 11 L17 5 L22 11 L27 5 L32 8"/>';
+        else if (kind === 'point') inner = '<circle class="cd-' + cls + '" cx="17" cy="8" r="3"/>';
+        else inner = '<line class="cd-' + cls + '" x1="2" y1="8" x2="32" y2="8"/>';
+        return '<svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner + '</svg>';
+      }
+
+      // A tall diagram is drawn narrower, so that none is taller than CD_MAXH. A view of a
+      // surface that is not the whole spacetime says what that surface is in a band across
+      // the top of the figure, where it hides nothing that is drawn.
+      function cdFigure(view) {
+        var f = cdFrame(view), wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
+        var restriction = view.restriction ? '<div class="mfs-cd-restriction">' + nrProse(nrEsc(view.restriction)) + '</div>' : '';
+        return '<div class="mfs-cd-figure" style="max-width:' + wide.toFixed(0) + 'px">' + restriction +
+          '<div class="mfs-cd-drawing">' + cdSvg(view, f) + cdLabels(view, f) + '</div></div>';
+      }
+
+      function conformalSection(metricId, coordId) {
+        var data = _conformalCache[metricId];
+        if (!data || !data.views || !data.views.length) return '';
+        var views = data.views, shown = 0;
+        views.some(function(v, i) { if (v.system && v.system === coordId) { shown = i; return true; } return false; });
+        var buttons = views.length > 1 ? '<div class="mfs-nr-buttons">' + views.map(function(v, i) {
+          return '<button type="button" class="mfs-nr-btn' + (i === shown ? ' mfs-nr-on' : '') + '">' + nrEsc(v.label) + '</button>';
+        }).join('') + '</div>' : '';
+        return [
+          '<div class="mfs-section mfs-diagram mfs-conformal">',
+            '<div class="mfs-section-head">',
+              '<div class="mfs-section-label">conformal diagram</div>',
+              buttons,
+            '</div>',
+            views.map(function(view, i) {
+              return [
+                '<div class="mfs-nr-view' + (i === shown ? '' : ' mfs-nr-hidden') + '">',
+                  cdFigure(view),
+                  '<div class="mfs-nr-text">',
+                    '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
+                    '<div class="mfs-nr-legend">' + view.legend.map(function(item) {
+                      return '<span class="mfs-nr-item">' + cdSwatch(item[0], item[1]) + '<span>' + nrProse(nrEsc(item[2])) + '</span></span>';
+                    }).join('') + '</div>',
+                    view.settings ? '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn at</span> ' + nrProse(nrEsc(view.settings)) + '</div>' : '',
+                    view.input ? '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn with</span> ' + nrProse(nrEsc(view.input)) + '</div>' : '',
+                  '</div>',
+                '</div>'
+              ].join('');
+            }).join(''),
+          '</div>'
+        ].join('');
+      }
+
       /* The conventions a spacetime is written in: its signature, and the paragraph that says
          what range each coordinate takes, what each parameter means, which chart the
          components are printed in and which contraction the Ricci tensor is. They open the
@@ -1391,6 +1553,8 @@
           ].join('') : '',
 
           conventionSection(data),
+
+          conformalSection(data.id, hasCoords ? coord.id : null),
 
           (hasCoords ? [
             '<div class="mfs-section">',
@@ -1560,7 +1724,7 @@
         // Stash pre-typeset (raw LaTeX) body + name for the print/PDF handler
         // The print copy's diagrams get ids of their own, since the screen copy they would
         // otherwise point into is hidden while printing.
-        window._mfsPrintBody = body.replace(/mfs-nr-(\d+)/g, 'mfs-nrp-$1');
+        window._mfsPrintBody = body.replace(/mfs-nr-(\d+)/g, 'mfs-nrp-$1').replace(/mfs-cd-(\d+)/g, 'mfs-cdp-$1');
         window._mfsPrintName = data.name;
 
         contentPanel.innerHTML = header + body;
@@ -1671,7 +1835,7 @@
           setTimeout(function() {
             fetchBib(function() {
               fetchMetric(id, function(data) {
-                fetchDiagrams(id, function() {
+                fetchDiagrams(id, function() { fetchConformal(id, function() {
                   renderMetric(data, 0);
                   el.scrollTop = 0;
                   el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -1680,14 +1844,14 @@
                     el.style.pointerEvents = 'all';
                     el.style.transition    = '';
                   }, SLIDE_DUR);
-                });
+                }); });
               });
             });
           }, SLIDE_DUR);
         } else {
           fetchBib(function() {
             fetchMetric(id, function(data) {
-              fetchDiagrams(id, function() { renderMetric(data, 0); });
+              fetchDiagrams(id, function() { fetchConformal(id, function() { renderMetric(data, 0); }); });
             });
           });
         }
@@ -1972,6 +2136,59 @@
     .nr-apparent { fill: none; stroke: var(--blue-lighter); stroke-width: 2.8; stroke-dasharray: 0.5 5; stroke-linecap: round; }
     .nr-singular { fill: none; stroke: var(--pink-dark); stroke-width: 1.8; }
     .nr-reference { stroke: var(--text-dim); stroke-width: 1; stroke-dasharray: 3 5; stroke-opacity: 0.7; }
+    /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
+       diagrams'; the figure, its labels and its lines are these. A label is sized in units
+       of the figure's width, n being n units of the SVG's 628 unit wide viewBox. */
+    #mfs-content-panel .mfs-cd-figure { flex: 0 1 628px; min-width: min(260px, 100%); }
+    .mfs-cd-figure { position: relative; container-type: inline-size; width: 100%; }
+    .mfs-cd-svg { display: block; width: 100%; height: auto; }
+    .mfs-cd-labels {
+      position: absolute; inset: 0; pointer-events: none;
+      font-family: 'Source Code Pro', monospace; line-height: 1; color: var(--text-bright);
+    }
+    .mfs-cd-labels .cd-at { position: absolute; white-space: nowrap; }
+    .mfs-cd-labels .cd-lab-small,
+    .mfs-cd-labels .cd-lab-coord,
+    .mfs-cd-labels .cd-lab-region { background: rgba(0,6,9,0.72); padding: 0.12em 0.3em; border-radius: 3px; }
+    .mfs-cd-labels .cd-lab-small { color: var(--cyan); }
+    .mfs-cd-labels .cd-lab-coord { color: var(--text-dim); }
+    .mfs-cd-labels .cd-lab-region { color: var(--text-mid); letter-spacing: 0.06em; font-style: italic; }
+    .mfs-cd-drawing { position: relative; }
+    #mfs-content-panel .mfs-cd-restriction {
+      font-family: 'Source Code Pro', monospace; font-size: 15px; line-height: 1.5; color: var(--amber);
+      background: rgba(249,180,80,0.06); border: 1px solid rgba(249,180,80,0.55); border-radius: 4px;
+      padding: 6px 10px; margin: 0 0 4px;
+    }
+    .cd-region { fill: rgba(0,229,255,0.035); stroke: none; }
+    .cd-cover { fill: rgba(37,217,200,0.13); stroke: none; }
+    .cd-cover2 { fill: rgba(212,175,55,0.13); stroke: none; }
+    .cd-star { fill: rgba(249,180,80,0.10); stroke: none; }
+    .cd-past { fill: rgba(122,173,224,0.14); stroke: none; }
+    .cd-swatch-fill { stroke: rgba(168,192,208,0.35); stroke-width: 1; }
+    .cd-r, .cd-r2, .cd-t, .cd-t2, .cd-null { fill: none; stroke-width: 1.1; stroke-opacity: 0.75; }
+    .cd-null { stroke-width: 1.3; stroke-opacity: 0.9; }
+    .cd-r, .cd-r2 { stroke: var(--pink-light); }
+    .cd-t, .cd-t2 { stroke: var(--teal-light); }
+    .cd-r2, .cd-t2 { stroke-dasharray: 4 3; }
+    .cd-null { stroke: var(--gold); }
+    .cd-scri { fill: none; stroke: var(--text-mid); stroke-width: 1.6; }
+    .cd-boundary { fill: none; stroke: var(--cyan); stroke-width: 2.4; }
+    .cd-centre { fill: none; stroke: var(--text-dim); stroke-width: 1.6; stroke-dasharray: 2 4; stroke-linecap: round; }
+    .cd-horizon, .cd-event { fill: none; stroke: var(--cyan); stroke-width: 2; stroke-dasharray: 7 5; }
+    .cd-chartedge { fill: none; stroke: var(--text-mid); stroke-width: 1.6; stroke-dasharray: 10 4 2 4; }
+    .cd-apparent { fill: none; stroke: var(--blue-lighter); stroke-width: 2.8; stroke-dasharray: 0.5 5; stroke-linecap: round; }
+    .cd-throat { fill: none; stroke: var(--amber); stroke-width: 2.6; stroke-dasharray: 2 4; }
+    .cd-surface { fill: none; stroke: var(--amber); stroke-width: 2.2; }
+    .cd-singular { fill: none; stroke: var(--pink-dark); stroke-width: 1.8; stroke-linejoin: round; }
+    .cd-world { fill: none; stroke: var(--gold); stroke-width: 2.2; }
+    .cd-cone { fill: none; stroke: var(--blue-lighter); stroke-width: 1.6; }
+    .cd-infinity { fill: var(--bg-black, #0d0d0d); stroke: var(--text-mid); stroke-width: 1.4; }
+    .cd-event { stroke-width: 2.2; }
+    .cd-mark { fill: var(--gold); stroke: none; }
+    .cd-removed { fill: #000; stroke: var(--pink-light); stroke-width: 1.8; }
+    .cd-fade { pointer-events: none; }
+    .cd-fade-edge { stop-color: #000; stop-opacity: 1; }
+    .cd-fade-clear { stop-color: #000; stop-opacity: 0; }
     #mfs-content-panel .mfs-references {
       margin-top: 8px;
     }
@@ -2278,6 +2495,28 @@
       .mfs-print-body .nr-cone { stroke: #a8841f; }
       .mfs-print-body .nr-cone-dot { fill: #a8841f; }
       .mfs-print-body .nr-areal, .mfs-print-body .nr-reference, .mfs-print-body .nr-g00 { stroke: #666; }
+      /* Every view of the conformal diagram prints too, at most 12cm wide, a tall one still
+         held to its screen height, with its lines in the print copy's darker inks. */
+      .mfs-print-body .mfs-cd-figure { width: 12cm; }
+      .mfs-print-body .mfs-cd-restriction { border: 1px solid #000 !important; font-size: 9.5pt; margin: 0 0 4pt; padding: 3pt 6pt; }
+      .mfs-print-body .cd-region { fill: #f3f3f3; }
+      .mfs-print-body .cd-cover { fill: #d8efec; }
+      .mfs-print-body .cd-cover2 { fill: #f3e9c8; }
+      .mfs-print-body .cd-star { fill: #f7e6cf; }
+      .mfs-print-body .cd-past { fill: #dce8f5; }
+      .mfs-print-body .cd-r, .mfs-print-body .cd-r2 { stroke: #d81b60; }
+      .mfs-print-body .cd-t, .mfs-print-body .cd-t2 { stroke: #168f84; }
+      .mfs-print-body .cd-null, .mfs-print-body .cd-world { stroke: #a8841f; }
+      .mfs-print-body .cd-scri, .mfs-print-body .cd-chartedge { stroke: #333; }
+      .mfs-print-body .cd-centre { stroke: #666; }
+      .mfs-print-body .cd-boundary, .mfs-print-body .cd-horizon, .mfs-print-body .cd-event { stroke: #0a6e82; }
+      .mfs-print-body .cd-apparent, .mfs-print-body .cd-cone { stroke: #3a6fa8; }
+      .mfs-print-body .cd-throat, .mfs-print-body .cd-surface { stroke: #b8741a; }
+      .mfs-print-body .cd-singular { stroke: #c2185b; }
+      .mfs-print-body .cd-infinity { fill: #fff; stroke: #333; }
+      .mfs-print-body .cd-mark { fill: #a8841f; }
+      .mfs-print-body .cd-removed { fill: #fff; stroke: #c2185b; }
+      .mfs-print-body .cd-fade-edge, .mfs-print-body .cd-fade-clear { stop-color: #fff; }
       .mfs-print-body .mfs-table { font-size: 10pt; }
       .mfs-print-body .mfs-table th,
       .mfs-print-body .mfs-table td { border: 1px solid #000 !important; }
