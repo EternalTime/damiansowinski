@@ -18,7 +18,8 @@
       "causality violation"
     ],
     "version": "0595177102b74777",
-    "diagrams": "21b15a24416c997d"
+    "diagrams": "21b15a24416c997d",
+    "conformal": "226351242ae48016"
   },
   {
     "id": "anti_de_sitter",
@@ -88,7 +89,8 @@
       "idealized model"
     ],
     "version": "5383d3a35a398e0e",
-    "diagrams": "43c8c6213c0ce506"
+    "diagrams": "43c8c6213c0ce506",
+    "conformal": "66c0e05785665801"
   },
   {
     "id": "de_sitter",
@@ -186,7 +188,8 @@
       "idealized model"
     ],
     "version": "67e103d664e6b4d7",
-    "diagrams": "9192e620149a4a72"
+    "diagrams": "9192e620149a4a72",
+    "conformal": "e99b3fb9222cd29b"
   },
   {
     "id": "kasner",
@@ -209,7 +212,8 @@
       "idealized model"
     ],
     "version": "f403b7576023723d",
-    "diagrams": "3a9790a368a1047c"
+    "diagrams": "3a9790a368a1047c",
+    "conformal": "818b9c153bde23cd"
   },
   {
     "id": "kerr",
@@ -302,7 +306,8 @@
       "causality violation"
     ],
     "version": "95e1753c04fe9f08",
-    "diagrams": "37e31174b944590b"
+    "diagrams": "37e31174b944590b",
+    "conformal": "564863613f74911f"
   },
   {
     "id": "stockum_dust",
@@ -325,7 +330,8 @@
       "idealized model"
     ],
     "version": "892fee3b8e4bef7e",
-    "diagrams": "2d1c6678a9c4968d"
+    "diagrams": "2d1c6678a9c4968d",
+    "conformal": "9f22e694976a68b5"
   },
   {
     "id": "lentz",
@@ -347,7 +353,8 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "68a45d112954ddea"
+    "version": "68a45d112954ddea",
+    "conformal": "b29c1e4a7e572831"
   },
   {
     "id": "malament_hogarth",
@@ -410,7 +417,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "284da4f2517b07aa"
+    "version": "284da4f2517b07aa",
+    "conformal": "2bd147155d7478a7"
   },
   {
     "id": "morris_thorne",
@@ -457,7 +465,8 @@
       "four-dimensional"
     ],
     "version": "47e2ccd655f6bde4",
-    "diagrams": "f9bbecde4af1033f"
+    "diagrams": "f9bbecde4af1033f",
+    "conformal": "0ed2a58eca9c6b7e"
   },
   {
     "id": "oppenheimer_snyder",
@@ -503,7 +512,8 @@
       "idealized model"
     ],
     "version": "d0ecb371ac958e21",
-    "diagrams": "8480afb9fc557712"
+    "diagrams": "8480afb9fc557712",
+    "conformal": "7c9e63c27d5f3c1a"
   },
   {
     "id": "rn_metric",
@@ -611,7 +621,8 @@
       "idealized model"
     ],
     "version": "d5feea6304cb7c41",
-    "diagrams": "0d1ca4595d385adb"
+    "diagrams": "0d1ca4595d385adb",
+    "conformal": "59d169aee80287b1"
   },
   {
     "id": "tolman_bondi",
@@ -634,7 +645,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "122584c10dd87680"
+    "version": "122584c10dd87680",
+    "conformal": "c94512c8cf224577"
   },
   {
     "id": "tov",

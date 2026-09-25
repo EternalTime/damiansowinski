@@ -84,7 +84,9 @@ def conformal_files():
 
 def conformal_prose(name, conformal):
     """Yield every field of a conformal diagram file a reader sees, each with its place."""
-    for view in conformal["views"]:
+    for position, paragraph in enumerate(conformal.get("none", [])):
+        yield f"conformal/{name}.json none[{position}]", paragraph
+    for view in conformal.get("views", []):
         where = f"conformal/{name}.json {view['id']}"
         yield f"{where}.label", view["label"]
         for position, paragraph in enumerate(view["caption"]):
@@ -664,9 +666,18 @@ class ConformalDiagrams(unittest.TestCase):
             self.load_folder({"x.json": {"metric": "x", "source": source, "views": []}}, [metric])
         self.assertIn("'b'", str(raised.exception))
 
+    def test_every_spacetime_has_a_diagram_or_says_why_not(self):
+        """No spacetime is left with a silent gap: each has a file, of views or of the reason."""
+        self.assertEqual(set(self.conformal), {m["id"] for m in self.metrics})
+        for metric_id, data in self.conformal.items():
+            self.assertNotEqual(bool(data.get("views")), bool(data.get("none")), metric_id)
+        with self.assertRaises(build.DataError) as raised:
+            self.load_folder({"kerr.json": dict(self.conformal["kerr"], none=["A reason."])}, self.metrics)
+        self.assertIn("either views or the reason", str(raised.exception))
+
     def test_every_caption_names_what_is_drawn(self):
         for metric_id, data in self.conformal.items():
-            for view in data["views"]:
+            for view in data.get("views", []):
                 self.assertTrue(view["caption"], f"{metric_id} {view['id']}")
                 self.assertTrue(view["caption"][0].startswith("This is the "), f"{metric_id} {view['id']}")
 
@@ -689,9 +700,9 @@ class ConformalDiagrams(unittest.TestCase):
     def test_every_view_draws_inside_its_box_and_names_only_what_it_draws(self):
         kinds = {"fill", "line", "zig", "point"}
         for name, data in self.conformal.items():
-            ids = [view["id"] for view in data["views"]]
+            ids = [view["id"] for view in data.get("views", [])]
             self.assertEqual(len(ids), len(set(ids)), name)
-            for view in data["views"]:
+            for view in data.get("views", []):
                 where = f"{name} {view['id']}"
                 x0, x1, t0, t1 = view["box"]
                 self.assertTrue(x0 < x1 and t0 < t1, where)

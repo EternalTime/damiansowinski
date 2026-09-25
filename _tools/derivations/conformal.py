@@ -55,8 +55,9 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the fifteen spacetimes that have a diagram. NOT_DRAWN records, for whoever
-next asks, why each of the others has none; nothing is published for them.
+DRAWN lists the seventeen spacetimes that have a diagram. NOT_DRAWN gives each of the
+others the reason it has none, as prose written into its file in place of views, which the
+page prints where the diagram would be, so no spacetime is left with a silent gap.
 
 
 Output
@@ -79,6 +80,10 @@ fields changes without the file being redrawn. A view is
                   surface is, printed on the diagram itself;
   settings, input the parameter values and any declared function, as TeX prose;
   fade            {top, bottom}: how far the drawing fades out where it continues.
+
+The file of a spacetime with no diagram carries `none` in place of `views`: the paragraphs
+of NOT_DRAWN, stamped like views with the coords, parameters and metric components of each
+of its coordinate systems, so a changed metric asks for the reason again.
 """
 
 import argparse
@@ -106,37 +111,69 @@ HALF = PI / 2
 Q4 = PI / 4
 EQUATOR = {"theta": "pi/2", "phi": "0"}
 
-# Why each spacetime without a diagram has none. None of this is published.
+# Why each spacetime without a diagram has none, as prose the page prints in the diagram's
+# place, so that no spacetime is left with a silent gap.
 NOT_DRAWN = {
-    "godel": "Closed timelike curves pass through every event and every event's chronological "
-             "future is the whole spacetime, so there is no causal boundary to draw.",
-    "stockum_dust": "Beyond r = R the circles of constant t and r are timelike, so every "
-                    "event's future is the whole spacetime, as for Godel; and frame dragging "
-                    "turns every radial light ray out of the (t, r) plane.",
-    "taub_nut": "Time is twisted into the sphere through 2l cos(theta) dphi, so no quotient is a "
-                "picture; the equatorial plane could be drawn only with t unwrapped and the Misner "
-                "string kept, and wrapping t makes the extension across the horizon non unique.",
-    "kasner": "Each (t, x_i) plane is conformal to half of two dimensional Minkowski space for "
-              "every exponent below one, so all three draw the same half diamond and the "
-              "anisotropy, which is the spacetime, is invisible.",
-    "bianchi": "With free a_i(t) each plane's diagram depends on whether the integral of dt/a_i "
-               "converges at each end, and the planes do not add up to the spacetime.",
-    "tolman_bondi": "Its diagram is whatever its free functions make it, from FRW's to "
-                    "Oppenheimer-Snyder's, with shell crossings in between.",
-    "alcubierre": "The horizons of the axis depend on v_s(t), f and the bubble's whole history.",
-    "natario": "Three free functions of four coordinates, and horizons set by the flow's history.",
-    "krasnikov": "The returning null coordinate, and with it the diagram, depends on k(t, x, r), "
-                 "which is the tube's whole construction history.",
-    "pp_wave": "The (u, v) plane on the axis is flat and draws Minkowski's diamond, which is false "
-               "for the spacetime: plane waves have no Cauchy surface, because the transverse "
-               "focusing that no (u, v) picture contains bends every light ray.",
-    "mixmaster": "Bianchi IX with free scale factors: its slices are squashed three spheres, with no "
-                 "spherical symmetry and no totally geodesic surface that carries the causal structure "
-                 "of the whole, and its vacuum solutions approach the singularity through an endless "
-                 "sequence of Kasner epochs whose horizons change direction from one to the next.",
-    "lentz": "Alcubierre's reason, and its potential exists only as a numerical integral over "
-             "Lentz's rhomboid sources, so no soliton of his can even be declared.",
+    "godel": [
+        "The Gödel universe has no conformal diagram. A closed timelike curve passes through every "
+        "event, so every event lies in the chronological future of every other, and there is no "
+        "boundary between where light can reach and where it cannot."],
+    "stockum_dust": [
+        "Van Stockum's cylinder has no conformal diagram, for the reason the Gödel universe has none. "
+        "Beyond $r = R$ the circles of constant $t$, $r$ and $z$ are closed timelike curves, and a "
+        "timelike curve that runs out to them and back again joins any two events, so every event "
+        "lies in the chronological future of every other."],
+    "taub_nut": [
+        "Taub-NUT has no conformal diagram. Its time is wound into the angles through "
+        "$c\\,dt + 2l\\cos\\theta\\,d\\phi$, so the axis is singular unless $t$ is made periodic, and "
+        "made periodic it runs in closed timelike curves outside the Taub region, wherever "
+        "$\\partial_t$ is timelike, and continues across $r_+$ in more than one way."],
+    "kasner": [
+        "The Kasner spacetime has no conformal diagram that tells its directions apart. Each plane "
+        "of $t$ and one of $x$, $y$ and $z$ is totally geodesic, and on it the metric "
+        "$-c^2dt^2 + t^{2p_i}dx_i^2$ is flat in the time $c\\,t^{1 - p_i}/(1 - p_i)$, which runs from "
+        "zero to infinity for every exponent below one. So all three planes give the same half of "
+        "Minkowski's diamond, the singularity along its lower edge, and they cannot be told apart."],
+    "bianchi": [
+        "Bianchi I has no conformal diagram of its own. Each plane of $t$ and one of $x$, $y$ and $z$ "
+        "is flat in the time $\\int c\\,dt/a_i$, and where that time begins and ends is up to the "
+        "free scale factors. For dust each one begins at a finite value at the singularity and runs "
+        "on without end, so each plane gives the half of Minkowski's diamond that Kasner's planes "
+        "give, the three alike."],
+    "tolman_bondi": [
+        "Tolman-Bondi has no single conformal diagram. Its free functions make it anything from a "
+        "Friedmann universe to the Oppenheimer-Snyder collapse, with shell crossings, black holes "
+        "and naked singularities between, and each choice of them has a diagram of its own."],
+    "alcubierre": [
+        "The Alcubierre warp drive has no conformal diagram of its own. Where light can reach "
+        "depends on the whole history of the bubble, $v_s(t)$ and $f$ from its start to its end, "
+        "which the metric leaves free."],
+    "natario": [
+        "The Natário warp drive has no conformal diagram of its own, for the reason the Alcubierre "
+        "drive has none: its horizons are set by the whole history of the flow, three free "
+        "functions of all four coordinates."],
+    "krasnikov": [
+        "The Krasnikov tube has no conformal diagram of its own. Light returning through the tube "
+        "arrives when the shape $k(t, x, r)$ lets it, so the null coordinate a diagram would be "
+        "built on depends on the whole history of the tube's construction."],
+    "pp_wave": [
+        "The plane wave has no conformal diagram. On its axis the plane of $u$ and $v$ is flat, "
+        "and its diamond would be Minkowski's, but the wave focuses light across that plane, in "
+        "$x$ and $y$, so strongly that the spacetime has no Cauchy surface, as Penrose showed in "
+        "1965, and its causal structure is not Minkowski's."],
+    "mixmaster": [
+        "The Mixmaster universe has no conformal diagram. Its slices are three spheres squashed "
+        "differently along three directions, with no spherical symmetry to reduce them to a line, "
+        "so no surface of two dimensions carries the causal structure of the whole. Toward the "
+        "singularity its vacuum solutions pass through an endless sequence of Kasner epochs, and "
+        "the directions light can cross the universe in change from one epoch to the next."],
+    "lentz": [
+        "Lentz's soliton has no conformal diagram. Where light can reach depends on the whole "
+        "history of the soliton, as it does for every warp drive, and the potential is known only "
+        "as a numerical integral over the rhomboid sources Lentz laid out, so no soliton of the "
+        "class can be written down to draw."],
 }
+NONE_FIELDS = ["coords", "parameters", "metric_components"]
 
 
 # ---------------------------------------------------------------- the drawing
@@ -2565,6 +2602,11 @@ CAPTIONS = {
 
 def draw(metric_id, ck):
     src = Sources()
+    if metric_id in NOT_DRAWN:
+        metric = json.loads((build.METRICS_DIR / f"{metric_id}.json").read_text(encoding="utf-8"))
+        for system in metric["coordinates"]:
+            src.note(metric_id, system["id"], NONE_FIELDS)
+        return {"metric": metric_id, "source": src.stamps(), "none": NOT_DRAWN[metric_id]}
     views = DRAWN[metric_id](ck, src)
     out = []
     for v in views:
@@ -2591,10 +2633,10 @@ def main(argv=None):
     parser.add_argument("--metric", action="append", default=[], help="redraw only this spacetime, repeatable")
     parser.add_argument("--verify", action="store_true", help="run and print every check instead of writing")
     args = parser.parse_args(argv)
-    unknown = set(args.metric) - set(DRAWN)
+    unknown = set(args.metric) - set(DRAWN) - set(NOT_DRAWN)
     if unknown:
         parser.error(f"no conformal diagram is drawn for {sorted(unknown)}")
-    wanted = [m for m in DRAWN if not args.metric or m in args.metric]
+    wanted = [m for m in list(DRAWN) + list(NOT_DRAWN) if not args.metric or m in args.metric]
     start = time.time()
     ck = Checks()
     # A compactification sends the ends of every coordinate line to infinity on purpose:

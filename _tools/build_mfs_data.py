@@ -166,7 +166,9 @@ def load_conformal(metrics):
 
     A conformal diagram is of a whole spacetime and may read more than one coordinate
     system, or another spacetime's, as the interior Schwarzschild star reads the exterior
-    of schwarzschild.json, so the file lists every system it read under `source`.
+    of schwarzschild.json, so the file lists every system it read under `source`. A
+    spacetime with no diagram has a file all the same, carrying the reason under `none` in
+    place of views, stamped by the systems it speaks of.
     """
     by_id = {m["id"]: m for m in metrics}
     conformal = {}
@@ -197,6 +199,8 @@ def load_conformal(metrics):
                     f"{where} was drawn from components of the {source['system']} system that "
                     f"{source['metric']}.json no longer publishes; redraw it with "
                     f"_tools/derivations/conformal.py --metric {path.stem}")
+        if bool(data.get("views")) == bool(data.get("none")):
+            raise DataError(f"{where} must carry either views or the reason it has none, and not both")
         for view in data.get("views", []):
             if view.get("system") and view["system"] not in {s["id"] for s in by_id[path.stem]["coordinates"]}:
                 raise DataError(f"{where}: the view {view['id']!r} tints {view['system']!r}, which "
