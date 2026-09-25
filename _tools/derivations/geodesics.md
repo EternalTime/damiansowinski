@@ -1,18 +1,18 @@
 # The geodesic equations of Godel, Reissner-Nordstrom and the Schwarzschild interior
 
-This is the working behind the `geodesics` field of three entries:
+Three spacetimes, each in one chart, need their geodesic equations:
 
-* `godel/cartesian` in `MFS/assets/data/metrics/godel.json`,
-* `rn_metric/spherical` in `MFS/assets/data/metrics/rn_metric.json`,
-* `interior_schwarzschild/spherical` in `MFS/assets/data/metrics/interior_schwarzschild.json`.
+* the Godel universe, in the Cartesian chart,
+* Reissner-Nordstrom, in the spherical chart,
+* the Schwarzschild interior, in the spherical chart.
 
-A sweep of every chart in the collection found these three, and only these three, carrying a full set of curvature blocks and no geodesic equations at all.
+A sweep of every chart of every spacetime found these three, and only these three, with their connection and curvature worked out in full and no geodesic equations at all.
 Every other chart had them.
-This file derives the twelve missing equations, four per chart, and nothing else: the curvature blocks of all three entries are left exactly as they were.
+We derive the twelve missing equations, four per chart, and nothing else: the connection and curvature of all three spacetimes stay exactly as they were.
 
-The three are unrelated as spacetimes and they are together here because they were missing the same thing.
+The three are unrelated as spacetimes and share only the missing equations.
 They are also a useful set to do at once, because each one exercises a different part of the convention.
-Godel has an off diagonal metric and a time coordinate carrying no dimensions at all, Reissner-Nordstrom has two horizons and a term whose sign changes inside them, and the Schwarzschild interior has square roots that a computer algebra system will not simplify without being told the signs, which is what decides the form the equations are printed in.
+Godel has an off diagonal metric and a time coordinate carrying no dimensions at all, Reissner-Nordstrom has two horizons and a term whose sign changes inside them, and the Schwarzschild interior has square roots that a computer algebra system will not simplify without being told the signs, which is what decides the form its equations take.
 
 ---
 
@@ -22,53 +22,53 @@ The signature is $(-,+,+,+)$ and the Christoffel symbols are those of the Levi-C
 
 $$\Gamma^\mu{}_{\nu\rho} = \tfrac{1}{2}g^{\mu\alpha}\left(\partial_\nu g_{\alpha\rho} + \partial_\rho g_{\alpha\nu} - \partial_\alpha g_{\nu\rho}\right),$$
 
-which is what the `christoffel` block of each entry publishes in its `ull` variant.
+taken with the first index up and the other two down.
 
-The geodesic equation is the one the whole collection uses,
+The geodesic equation takes the same form for every spacetime,
 
 $$\ddot{x}^\mu + \Gamma^\mu{}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho = 0,$$
 
-with the same $\Gamma$ that is printed above it in the entry, and with the dot the derivative with respect to an affine parameter $\lambda$.
+with $\Gamma$ the connection just defined, and with the dot the derivative with respect to an affine parameter $\lambda$.
 
-The dots are velocities of the chart, not of the bare coordinate letters, and each entry now says so in its own `convention` field, in the way `kasner.json` and `vaidya.json` say it.
+The dots are velocities of the chart, not of the bare coordinate letters, and the conventions of each of the three spacetimes now say so, as those of Kasner and Vaidya do.
 The chart is $x^0 = ct$, so
 
 $$\dot{t} \equiv \frac{d(ct)}{d\lambda}, \qquad \ddot{t} \equiv \frac{d^2(ct)}{d\lambda^2},$$
 
-even though the index and the dot are both printed with the bare letter $t$.
-This is the one place in an entry where the chart convention can be lost silently, because a geodesic equation is the only thing an entry publishes that adds a derivative of the time coordinate to a derivative of a space coordinate; Step 3 checks all twelve equations on that reading.
+even though the index and the dot are both written with the bare letter $t$.
+The geodesic equations are the one place the chart convention can be lost silently, because among the metric, the connection, the curvature and the geodesics only a geodesic equation adds a derivative of the time coordinate to a derivative of a space coordinate; we check all twelve equations on that reading in Step 3.
 
-All three entries here use geometric units, so the chart coordinate and the printed letter happen to coincide.
+All three spacetimes here are in geometric units, so the chart coordinate and the written letter happen to coincide.
 Godel sets $G = c = 1$, and the other two set $c = 1$.
-That does not make the convention idle: it fixes what the dimensional pass has to find, and the three entries answer it differently.
-Reissner-Nordstrom and the Schwarzschild interior both carry $t$ as a length, beside $r$ and beside the length parameters, so no published component of either carries a factor of $c$.
+That does not make the convention idle: it fixes what the dimensional pass has to find, and the three spacetimes answer it differently.
+Reissner-Nordstrom and the Schwarzschild interior both carry $t$ as a length, beside $r$ and beside the length parameters, so no component of either carries a factor of $c$.
 Godel carries all four coordinates as pure numbers, because $e^x$ needs a dimensionless $x$ and the metric then needs the same of $t$, $y$ and $z$, which leaves the entire length of the solution in $1/\omega$.
 
-The Ricci contraction is the standard one, $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$, settled across the collection on 2026-09-18.
-It does not reach anything in this file.
-A geodesic is a statement about the connection alone, and the connection is fixed by the metric before any curvature is contracted at all, so the twelve equations below would be the same under either convention.
-They are quoted here only so that the file is readable beside the entries, whose curvature blocks are on the standard contraction.
+The Ricci contraction is the standard one, $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$, in use for every spacetime since 2026-09-18.
+It does not reach the geodesic equations.
+A geodesic is a statement about the connection alone, and the connection is fixed by the metric before any curvature is contracted at all, so the twelve equations would be the same under either convention.
+The contraction matters only for the curvature of the three spacetimes, which is on the standard one.
 
 ---
 
 ## Step 2. What is being built on, and how it was checked
 
-Each entry already publishes its own Christoffel symbols, and the geodesic equations below are assembled from those published symbols by the double sum in Step 1.
-That is the fastest route and it is the one taken, so the equations inherit whatever the connection blocks say.
-Inheriting is not the same as trusting, and the connection of each entry was therefore recomputed from that entry's own line element, independently of the file, before any equation was written.
+Each of the three spacetimes already has its Christoffel symbols worked out, and we assemble the geodesic equations from those symbols by the double sum in Step 1.
+That is the fastest route and it is the one taken, so the equations inherit whatever those symbols say.
+Inheriting is not the same as trusting, and we therefore recomputed the connection of each spacetime from its own line element, independently of the existing symbols, before writing any equation.
 
 The recomputation was done twice.
 Once in sympy, from the line element alone, which reproduced all nine nonzero symbols of Godel, all thirteen of Reissner-Nordstrom and all thirteen of the Schwarzschild interior, with nothing missing and nothing extra.
-Once by hand, for two symbols of each entry, worked out in full below at Steps A2, B2 and C2.
+Once by hand, for two symbols of each spacetime, worked out in full at Steps A2, B2 and C2.
 The hand checks were chosen to be the symbols the equations lean on hardest: the coefficient of $\dot{t}^2$ in the radial equation and the coefficient of $\dot{t}\dot{r}$ or $\dot{t}\dot{x}$ in the time equation, which are the two places a sign or a factor of two would go unnoticed.
 
-All three connections came back clean, in the sense that matters: every published symbol is the right number.
-Not one of them had to be corrected, and the equations below are the entries' own connections read back as equations of motion.
-What is not clean is the written form of three of the Schwarzschild interior's symbols, which the checker cannot reconcile with its own rebuild even though they agree to forty digits; Step C4 diagnoses that and says what it decided about the twelve equations.
+All three connections came back clean, in the sense that matters: every symbol is the right number.
+Not one of them had to be corrected, and the geodesic equations are those three connections read back as equations of motion.
+What is not clean is the written form of three of the Schwarzschild interior's symbols, which the checker cannot reconcile with its own rebuild even though they agree to forty digits; the cause, and the form it forced on the twelve equations, are in Step C4.
 
-One consequence of building on the published connection is worth stating plainly, because it shows up in Part C.
+Building on the existing connection has one consequence worth stating plainly, because it shows up in Part C.
 An expression can be the right number and still be written in a form a computer algebra system will not recognise as equal to another form of the same number.
-The Schwarzschild interior is exactly that case, and Step C4 says which form its geodesics are printed in and why.
+The Schwarzschild interior is exactly that case, and the form of its geodesic equations, with the reason for it, is in Step C4.
 
 ---
 
@@ -76,7 +76,7 @@ The Schwarzschild interior is exactly that case, and Step C4 says which form its
 
 ### A1. The line element
 
-The entry publishes, in the chart $(t,x,y,z)$ with all four coordinates running over $\mathbb{R}$,
+The line element, in the chart $(t,x,y,z)$ with all four coordinates running over $\mathbb{R}$, is
 
 $$ds^2 = -\frac{1}{2\omega^2}dt^2 - \frac{e^x}{\omega^2}dt\,dy + \frac{1}{2\omega^2}dx^2 - \frac{e^{2x}}{4\omega^2}dy^2 + \frac{1}{2\omega^2}dz^2,$$
 
@@ -84,12 +84,12 @@ which gathers into
 
 $$ds^2 = \frac{1}{2\omega^2}\left[-\left(dt + e^x dy\right)^2 + dx^2 + \tfrac{1}{2}e^{2x}dy^2 + dz^2\right].$$
 
-The second form is the one to read the geometry off.
+The geometry shows in the second form.
 The metric matrix, in the order $(t,x,y,z)$, is
 
 $$g_{\mu\nu} = \frac{1}{2\omega^2}\begin{pmatrix} -1 & 0 & -e^x & 0 \\ 0 & 1 & 0 & 0 \\ -e^x & 0 & -\tfrac{1}{2}e^{2x} & 0 \\ 0 & 0 & 0 & 1\end{pmatrix}, \qquad \det g = -\frac{e^{2x}}{32\omega^8},$$
 
-and the inverse the entry publishes is
+and the inverse metric is
 
 $$g^{\mu\nu} = 2\omega^2\begin{pmatrix} 1 & 0 & -2e^{-x} & 0 \\ 0 & 1 & 0 & 0 \\ -2e^{-x} & 0 & 2e^{-2x} & 0 \\ 0 & 0 & 0 & 1\end{pmatrix}.$$
 
@@ -103,7 +103,7 @@ The curves it generates are not closed here, because $y$ runs over the whole lin
 
 ### A2. The connection, with two symbols checked by hand
 
-The entry publishes nine nonzero symbols:
+The connection has nine nonzero symbols:
 
 $$\Gamma^t{}_{tx} = \Gamma^t{}_{xt} = 1, \qquad \Gamma^t{}_{xy} = \Gamma^t{}_{yx} = \frac{e^x}{2},$$
 
@@ -111,8 +111,8 @@ $$\Gamma^x{}_{ty} = \Gamma^x{}_{yt} = \frac{e^x}{2}, \qquad \Gamma^x{}_{yy} = \f
 
 $$\Gamma^y{}_{tx} = \Gamma^y{}_{xt} = -\cosh x + \sinh x.$$
 
-The last one is printed in hyperbolic functions in the file and is the plain exponential $-e^{-x}$, since $\cosh x - \sinh x = e^{-x}$.
-The equations below use the exponential, which is also the form the inverse metric is printed in.
+The last one, written in hyperbolic functions, is the plain exponential $-e^{-x}$, since $\cosh x - \sinh x = e^{-x}$.
+The geodesic equations use the exponential, which is also the form of the inverse metric.
 
 Here is $\Gamma^y{}_{tx}$ by hand.
 Writing the definition out,
@@ -129,14 +129,14 @@ so
 
 $$\Gamma^y{}_{tx} = \tfrac{1}{2}\left(4e^{-2x}\omega^2\right)\left(-\frac{e^x}{2\omega^2}\right) = -e^{-x},$$
 
-which is the published value.
+which is the listed value.
 
 Here is $\Gamma^t{}_{tx}$ by hand.
 The same two brackets appear, because the index pattern $tx$ is the same and only the raised index has changed,
 
 $$\Gamma^t{}_{tx} = \tfrac{1}{2}g^{t\alpha}\left(\partial_t g_{\alpha x} + \partial_x g_{\alpha t} - \partial_\alpha g_{tx}\right) = \tfrac{1}{2}\left(-4e^{-x}\omega^2\right)\left(-\frac{e^x}{2\omega^2}\right) = 1,$$
 
-which is the published value, and the exponentials cancelling against each other is what leaves the bare $1$.
+which is the listed value, and the exponentials cancelling against each other is what leaves the bare $1$.
 
 One structural remark, which the equations of Step A3 make visible.
 No symbol carries $\omega$.
@@ -161,7 +161,7 @@ $$\Gamma^y{}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho = -2e^{-x}\dot{t}\dot{x}.$$
 
 For $\mu = z$ there is nothing at all.
 
-So the entry publishes
+So the geodesic equations are
 
 $$\ddot{t} + 2\dot{t}\dot{x} + e^x\dot{x}\dot{y} = 0,$$
 
@@ -202,10 +202,10 @@ The dust is in free fall.
 The Godel solution is sourced by pressureless dust comoving with $\partial_t$, and a pressureless fluid has to move on geodesics, since there is no pressure gradient available to push it off one.
 The equations say so directly: setting $\dot{x} = \dot{y} = \dot{z} = 0$ leaves $\ddot{t} = 0$ in the first equation and nothing at all in the other three, because $\Gamma^\mu{}_{tt} = 0$ for every $\mu$.
 The worldlines of constant $x$, $y$ and $z$ are therefore geodesics, affinely parametrised by $t$ itself, and since $g_{tt} = -1/(2\omega^2)$ the unit four velocity along them is $u^\mu = \sqrt{2}\,\omega\,\delta^\mu_t$.
-That is the $u^\mu$ the entry's own `convention` field names when it writes $R_{\mu\nu} = 2\omega^2u_\mu u_\nu$.
+That is the $u^\mu$ of Godel's convention $R_{\mu\nu} = 2\omega^2u_\mu u_\nu$.
 
 The timelike direction that closes is not free.
-Section A1 noted that $\partial_y$ is timelike everywhere.
+By Step A1, $\partial_y$ is timelike everywhere.
 The second equation says what it costs to follow it: a curve with $\dot{y}$ alone nonzero has
 
 $$\ddot{x} = -\frac{e^{2x}}{2}\dot{y}^2 < 0,$$
@@ -226,7 +226,7 @@ Write
 
 $$\Delta \equiv r^2 - r_s r + r_q^2,$$
 
-as the entry's `convention` field does, with $r_s = 2GM/c^2$ the Schwarzschild radius and $r_q^2 = Q^2G/(4\pi\epsilon_0c^4)$ the square of the charge radius.
+as the conventions of Reissner-Nordstrom do, with $r_s = 2GM/c^2$ the Schwarzschild radius and $r_q^2 = Q^2G/(4\pi\epsilon_0c^4)$ the square of the charge radius.
 Then
 
 $$ds^2 = -\frac{\Delta}{r^2}dt^2 + \frac{r^2}{\Delta}dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right),$$
@@ -239,46 +239,46 @@ $$r_\pm = \frac{r_s}{2} \pm \sqrt{\frac{r_s^2}{4} - r_q^2},$$
 real when $r_s \geq 2r_q$.
 
 The metric is diagonal, which makes the connection short, and the only function of $r$ in it is $\Delta/r^2$ and its reciprocal.
-Its derivative is used three times below, so it is worth having once:
+Its derivative recurs three times, so it is worth having once:
 
 $$\partial_r\frac{\Delta}{r^2} = \partial_r\left(1 - \frac{r_s}{r} + \frac{r_q^2}{r^2}\right) = \frac{r_s}{r^2} - \frac{2r_q^2}{r^3} = \frac{r r_s - 2r_q^2}{r^3}.$$
 
-The combination $r r_s - 2r_q^2$ that appears in every one of the entry's radial symbols is nothing but this derivative, cleared of its denominator.
+The combination $r r_s - 2r_q^2$ that runs through the radial sector of the connection is nothing but this derivative, cleared of its denominator.
 
 ### B2. The connection, with two symbols checked by hand
 
-The entry publishes thirteen nonzero symbols, and the radial sector is
+The connection has thirteen nonzero symbols, and the radial sector is
 
 $$\Gamma^t{}_{tr} = \Gamma^t{}_{rt} = \frac{r r_s - 2r_q^2}{2r\Delta}, \qquad \Gamma^r{}_{tt} = \frac{\Delta\left(r r_s - 2r_q^2\right)}{2r^5},$$
 
 $$\Gamma^r{}_{rr} = -\frac{r r_s - 2r_q^2}{2r\Delta}, \qquad \Gamma^r{}_{\theta\theta} = -\frac{\Delta}{r}, \qquad \Gamma^r{}_{\phi\phi} = -\frac{\Delta}{r}\sin^2\theta,$$
 
 with the angular sector the usual $\Gamma^\theta{}_{r\theta} = \Gamma^\phi{}_{r\phi} = 1/r$, $\Gamma^\theta{}_{\phi\phi} = -\sin\theta\cos\theta$ and $\Gamma^\phi{}_{\theta\phi} = \cot\theta$ of any spherically symmetric chart with areal radius $r$.
-The file prints $\Gamma^r{}_{\theta\theta}$ as $r_s - r - r_q^2/r$, which is $-\Delta/r$ expanded, and $\Gamma^r{}_{rr}$ over the cleared denominator $2r^3 + 2rr_q^2 - 2r^2r_s$, which is $2r\Delta$.
+Written out in full, $\Gamma^r{}_{\theta\theta}$ is $r_s - r - r_q^2/r$, which is $-\Delta/r$ expanded, and $\Gamma^r{}_{rr}$ sits over the cleared denominator $2r^3 + 2rr_q^2 - 2r^2r_s$, which is $2r\Delta$.
 
 Here is $\Gamma^r{}_{tt}$ by hand.
 The metric is diagonal and $g_{tt}$ depends on $r$ alone, so only one term of the definition survives,
 
 $$\Gamma^r{}_{tt} = -\tfrac{1}{2}g^{rr}\,\partial_r g_{tt} = -\tfrac{1}{2}\cdot\frac{\Delta}{r^2}\cdot\partial_r\left(-\frac{\Delta}{r^2}\right) = \frac{\Delta}{2r^2}\cdot\frac{r r_s - 2r_q^2}{r^3} = \frac{\Delta\left(r r_s - 2r_q^2\right)}{2r^5},$$
 
-using the derivative of Step B1, and that is the published value.
+using the derivative of Step B1, and that is the listed value.
 
 Here is $\Gamma^t{}_{tr}$ by hand.
 The same derivative appears, now divided by $g_{tt}$ rather than multiplied by $g^{rr}$,
 
 $$\Gamma^t{}_{tr} = \tfrac{1}{2}g^{tt}\,\partial_r g_{tt} = \tfrac{1}{2}\,\partial_r\ln\left(\frac{\Delta}{r^2}\right) = \frac{r^2}{2\Delta}\cdot\frac{r r_s - 2r_q^2}{r^3} = \frac{r r_s - 2r_q^2}{2r\Delta},$$
 
-which is the published value.
+which is the listed value.
 The pairing is the one every static spherically symmetric chart has: $\Gamma^t{}_{tr}$ is half the logarithmic derivative of the redshift factor, and $\Gamma^r{}_{tt}$ is that same derivative weighted by the factor itself.
 
-Setting $r_q = 0$ turns $\Delta$ into $r(r-r_s)$ and every symbol above into the Schwarzschild one the `schwarzschild/spherical` entry publishes, which is a third check and a free one.
+Setting $r_q = 0$ turns $\Delta$ into $r(r-r_s)$ and every symbol into its Schwarzschild counterpart in the spherical chart, which is a third check and a free one.
 
 ### B3. The four equations
 
 For $\mu = t$ the only symbol is $\Gamma^t{}_{tr}$, counted twice.
 For $\mu = r$ the four symbols $\Gamma^r{}_{tt}$, $\Gamma^r{}_{rr}$, $\Gamma^r{}_{\theta\theta}$ and $\Gamma^r{}_{\phi\phi}$ are each counted once, since each has a repeated lower index.
 For $\mu = \theta$ and $\mu = \phi$ the angular sector gives the standard pattern, with $\Gamma^\theta{}_{r\theta}$, $\Gamma^\phi{}_{r\phi}$ and $\Gamma^\phi{}_{\theta\phi}$ counted twice and $\Gamma^\theta{}_{\phi\phi}$ once.
-So the entry publishes
+So the geodesic equations are
 
 $$\ddot{t} + \frac{r r_s - 2r_q^2}{r\left(r^2 - r r_s + r_q^2\right)}\dot{r}\dot{t} = 0,$$
 
@@ -288,8 +288,8 @@ $$\ddot{\theta} + \frac{2}{r}\dot{r}\dot{\theta} - \cos\theta\sin\theta\,\dot{\p
 
 $$\ddot{\phi} + \frac{2}{r}\dot{r}\dot{\phi} + 2\cot\theta\,\dot{\theta}\dot{\phi} = 0.$$
 
-$\Delta$ is written out in full rather than abbreviated, so that each equation stands on its own and so that the machine check of Step 4 reads the same symbols the rest of the entry uses.
-Setting $r_q = 0$ returns the `schwarzschild/spherical` equations term by term.
+$\Delta$ is written out in full rather than abbreviated, so that each equation stands on its own and so that the machine check of Step 4 reads the same symbols as the metric and the connection.
+Setting $r_q = 0$ returns the Schwarzschild geodesic equations of the spherical chart term by term.
 
 ### B4. The first integrals and the equatorial plane
 
@@ -302,12 +302,12 @@ Differentiating,
 
 $$\frac{dE}{d\lambda} = \frac{\Delta}{r^2}\ddot{t} + \dot{t}\dot{r}\,\partial_r\frac{\Delta}{r^2} = \frac{\Delta}{r^2}\left(\ddot{t} + \frac{r^2}{\Delta}\cdot\frac{r r_s - 2r_q^2}{r^3}\dot{r}\dot{t}\right) = \frac{\Delta}{r^2}\left(\ddot{t} + \frac{r r_s - 2r_q^2}{r\Delta}\dot{r}\dot{t}\right),$$
 
-and the bracket is the published time equation exactly, so $E$ is constant if and only if that equation holds.
+and the bracket is the time equation of Step B3 exactly, so $E$ is constant if and only if that equation holds.
 That is the cleanest possible confirmation of the coefficient: no factor of two is free in it.
 
 The third equation is what makes the equatorial plane usable.
 Its only term without a $\dot\theta$ is $-\cos\theta\sin\theta\,\dot{\phi}^2$, which vanishes at $\theta = \pi/2$, so a geodesic starting in that plane with $\dot\theta = 0$ has $\ddot\theta = 0$ and stays in it.
-That is why the two integrals above, together with the normalisation of the velocity, are enough to reduce the problem to one radial equation, and why $L$ simplifies to $r^2\dot\phi$ in every textbook treatment.
+That is why the two Killing integrals, together with the normalisation of the velocity, are enough to reduce the problem to one radial equation, and why $L$ simplifies to $r^2\dot\phi$ in every textbook treatment.
 
 ### B5. Where the attraction reverses
 
@@ -319,7 +319,7 @@ into the metric function $\Delta$ and the second factor $r r_s - 2r_q^2$, which 
 
 Outside the outer horizon both factors are positive, so the term is positive, so $\ddot{r}$ is negative for a static particle, which is an attraction.
 $\Delta > 0$ there by definition.
-And $r r_s - 2r_q^2 > 0$ there because $r \geq r_+ \geq r_s/2$ gives $r r_s \geq r_s^2/2 \geq 2r_q^2$, the last step being the condition $r_s \geq 2r_q$ for horizons to exist at all, which the entry states.
+And $r r_s - 2r_q^2 > 0$ there because $r \geq r_+ \geq r_s/2$ gives $r r_s \geq r_s^2/2 \geq 2r_q^2$, the last step being the condition $r_s \geq 2r_q$ for horizons to exist at all, which the spacetime is assumed to meet.
 Equality holds only in the extremal case $r_s = 2r_q$ evaluated on the horizon itself.
 
 Inside, the second factor changes sign at
@@ -336,7 +336,7 @@ $$\frac{r_\ast}{r_-} = \frac{2r_q^2/r_s}{r_q^2/r_+} = \frac{2r_+}{r_+ + r_-} > 1
 so $r_- < r_\ast$ strictly whenever the two horizons are distinct, and the whole of the inner static region lies below $r_\ast$.
 There $\Delta > 0$ while $r r_s - 2r_q^2 < 0$, so $\Gamma^r{}_{tt} < 0$ and the radial equation gives $\ddot{r} > 0$ for a static particle: the charge term has overtaken the mass term and the field points outward.
 That is the repulsion of the timelike Reissner-Nordstrom singularity, the reason a radially infalling particle is turned around before reaching $r = 0$ rather than crushed on it.
-The whole of that statement is one sign in one coefficient of the second equation, and it is the physical reason the equation is worth publishing rather than leaving to the reader.
+The whole of that statement is one sign in one coefficient of the second equation, and it is the physical reason to write the equation out rather than leave it to the reader.
 
 Setting $r_q = 0$ removes $r_\ast$ altogether, and the attraction never reverses, which is Schwarzschild.
 
@@ -346,11 +346,11 @@ Setting $r_q = 0$ removes $r_\ast$ altogether, and the attraction never reverses
 
 ### C1. The line element and two abbreviations
 
-The entry publishes, on $0 \leq r \leq R$ with $r$ the areal radius and $R$ the stellar radius,
+The line element, on $0 \leq r \leq R$ with $r$ the areal radius and $R$ the stellar radius, is
 
 $$ds^2 = -\frac{1}{4}\left(\sqrt{1 - \frac{r^2r_s}{R^3}} - 3\sqrt{1 - \frac{r_s}{R}}\right)^2 dt^2 + \frac{dr^2}{1 - \dfrac{r^2r_s}{R^3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right).$$
 
-Two abbreviations shorten everything below and are used only in this file, never in the entry:
+Two abbreviations shorten the algebra, and the components of the metric, the connection and the curvature never use them:
 
 $$f(r) \equiv \sqrt{1 - \frac{r^2r_s}{R^3}}, \qquad h \equiv \sqrt{1 - \frac{r_s}{R}}.$$
 
@@ -371,9 +371,9 @@ At the centre it is $3h - 1$, which is positive when $9\left(1 - r_s/R\right) > 
 
 $$r_s < \frac{8}{9}R,$$
 
-or equivalently $R > \tfrac{9}{8}r_s$, which is the compactness limit the entry's own `history` field names.
+or equivalently $R > \tfrac{9}{8}r_s$, which is the compactness limit the history of the Schwarzschild interior names.
 At $R = \tfrac{9}{8}r_s$ the central value of $g_{tt}$ reaches zero, the central redshift and the central pressure both diverge, and no static uniform sphere exists past it; Buchdahl later showed the same number bounds every equation of state.
-So $3h - f > 0$ everywhere on a star the entry describes, and every sign below is settled by that.
+So $3h - f > 0$ everywhere on any star the solution describes, and that settles every sign in the connection and the geodesic equations.
 
 ### C2. The connection, with two symbols checked by hand
 
@@ -392,7 +392,7 @@ $$\Gamma^r{}_{rr} = \tfrac{1}{2}g^{rr}\,\partial_r g_{rr} = -\frac{f'}{f} = \fra
 
 $$\Gamma^r{}_{\theta\theta} = -\tfrac{1}{2}g^{rr}\,\partial_r\left(r^2\right) = -rf^2 = r\left(\frac{r^2r_s}{R^3} - 1\right), \qquad \Gamma^r{}_{\phi\phi} = \Gamma^r{}_{\theta\theta}\sin^2\theta,$$
 
-and the last two are exactly the forms the entry prints.
+and the last two are exactly the forms of the given connection.
 The angular sector is again the standard one of an areal radius chart.
 
 The two hand values are tied to each other by the relation every static diagonal chart obeys,
@@ -418,9 +418,9 @@ $$\ddot{\phi} + \frac{2}{r}\dot{r}\dot{\phi} + 2\cot\theta\,\dot{\theta}\dot{\ph
 The first two are the hand values of Step C2 with $f$ and $h$ written out, the first doubled because its lower indices are distinct.
 The angular pair is identical to Reissner-Nordstrom's and to Schwarzschild's, as it has to be, since those two equations see only $g_{\theta\theta} = r^2$ and $g_{\phi\phi} = r^2\sin^2\theta$.
 
-### C4. Why these equations are printed in the radicals of the metric
+### C4. Why these equations are written in the radicals of the metric
 
-The entry's own `christoffel` block prints the time symbol differently,
+In the given connection the time symbol takes a different form,
 
 $$\Gamma^t{}_{tr} = \frac{r r_s}{-R^3 + r^2r_s + 3R\sqrt{\left(R - r_s\right)\left(R^3 - r^2r_s\right)}},$$
 
@@ -435,7 +435,7 @@ $$\sqrt{\left(R - r_s\right)\left(R^3 - r^2r_s\right)} = \sqrt{Rh^2\cdot R^3f^2}
 the second line using $R > 0$ and $f, h \geq 0$, which the domain $0 \leq r \leq R$ and the bound $r_s < 8R/9$ of Step C1 guarantee.
 So the denominator is $-R^3f^2 + 3R^3fh = R^3f\left(3h - f\right)$, and the two forms agree.
 
-The published geodesics use the $\sqrt{1 - \cdot}$ form rather than the gathered one, and the reason is worth recording rather than leaving as a matter of taste.
+The geodesic equations use the $\sqrt{1 - \cdot}$ form rather than the gathered one, for a reason and not as a matter of taste.
 The gathered form needs the step $\sqrt{AB} = \sqrt{A}\sqrt{B}$, which is only true when neither factor is negative.
 A computer algebra system carrying $R$, $r$ and $r_s$ as real symbols will not take that step, since it is false for real arguments in general, so it cannot reduce the difference of the two forms to zero.
 `_tools/derivations/verify_metrics.py` carries exactly such symbols, and it rebuilds the connection from the line element before comparing, so the geodesic equations have to be in a form whose difference from the rebuilt one it can close.
@@ -444,15 +444,15 @@ Written in the gathered form, it does not, and the checker reports a disagreemen
 
 The identity was confirmed three ways before choosing: symbolically under a simplifier told that the factors are positive, numerically at several interior points to forty digits, and by the hand derivation of Step C2, which reaches the $\sqrt{1 - \cdot}$ form straight from the line element without passing through the gathered one at all.
 
-This is not a hypothetical limitation, and the entry already shows it.
-Run the checker against `interior_schwarzschild/spherical` and it reports the three gathered symbols of the `christoffel` block, $\Gamma^t{}_{tr}$, $\Gamma^t{}_{rt}$ and $\Gamma^r{}_{tt}$, as disagreements in both variants, along with the Riemann, Ricci and Einstein components built on them.
-Those reports are about the form and not about the numbers: each of those symbols is the right value, as Step C2 derives independently and as a forty digit evaluation confirms.
-The `christoffel` block was not touched here, because the curvature of this entry is being corrected by separate work and moving it would collide.
-What this file could control is the form of its own twelve equations, and choosing the radicals the line element already uses is what lets the geodesic comparison close where the blocks above it do not.
+This is not a hypothetical limitation, and the connection of the Schwarzschild interior already shows it.
+Run the checker on the spherical chart of the Schwarzschild interior and it reports the three gathered Christoffel symbols, $\Gamma^t{}_{tr}$, $\Gamma^t{}_{rt}$ and $\Gamma^r{}_{tt}$, as disagreements both with the first index up and with every index lowered, along with the Riemann, Ricci and Einstein components built on them.
+Those reports are about the form and not about the numbers: each of those symbols is the right value, derived independently in Step C2 and confirmed by a forty digit evaluation.
+Those Christoffel symbols stay as they were, because the curvature of the Schwarzschild interior is being corrected by separate work and changing them would collide with it.
+The form of the twelve geodesic equations was free, and choosing the radicals the line element already uses is what lets the geodesic comparison close where the comparison of the connection and curvature does not.
 
 ### C5. The surface, checked against the exterior
 
-The entry's `convention` field says the solution matches the exterior Schwarzschild metric at $r = R$, and the connection is where that can be checked directly.
+The interior solution matches the exterior Schwarzschild metric at $r = R$, as its conventions state, and the connection is where that can be checked directly.
 Evaluating the interior symbols at $r = R$, where $f = h$ and so $3h - f = 2h$ and $h^2 = 1 - r_s/R$:
 
 | symbol | interior at $r = R$ | exterior Schwarzschild at $r = R$ | |
@@ -462,7 +462,7 @@ Evaluating the interior symbols at $r = R$, where $f = h$ and so $3h - f = 2h$ a
 | $\Gamma^r{}_{\theta\theta}$ | $r_s - R$ | $r_s - R$ | matches |
 | $\Gamma^r{}_{rr}$ | $\dfrac{r_s}{R\left(R - r_s\right)}$ | $-\dfrac{r_s}{2R\left(R - r_s\right)}$ | jumps |
 
-The exterior column is the `schwarzschild/spherical` entry's own connection at $r = R$, which the reader can check against `schwarzschild.json` directly.
+The exterior values are those of the Schwarzschild connection in the spherical chart at $r = R$, which anyone can check directly.
 
 Three of the four match, and the fourth is expected to jump.
 The junction conditions constrain the induced metric on the surface and its extrinsic curvature, which between them involve $g_{tt}$, $g_{\theta\theta}$ and their radial derivatives, and those are precisely the three that match.
@@ -497,7 +497,7 @@ That the factors of $c$ land correctly is a consequence of the chart convention 
 
 ---
 
-## Step 3. Every published equation is dimensionally consistent
+## Step 3. Every geodesic equation is dimensionally consistent
 
 A geodesic equation is measured against its own second derivative: every term of it has to carry $[x^\mu]/\lambda^2$, where $[x^\mu]$ is the dimension of the chart coordinate the equation belongs to.
 The dots are the chart velocities of Step 1, so each carries $[x^\mu]/\lambda$ and each double dot $[x^\mu]/\lambda^2$.
@@ -527,25 +527,25 @@ So $\dot{t}$ and $\dot{r}$ are $L/\lambda$, $\dot\theta$ and $\dot\phi$ are $1/\
 
 The interior Schwarzschild coefficients balance the same way.
 Its radicals are dimensionless, since $r^2r_s/R^3$ and $r_s/R$ are, so the time coefficient is $L^2/L^3 = 1/L$ and the $\dot{t}^2$ coefficient of the radial equation is $L^2/L^3 = 1/L$ as well, each meeting an $L^2/\lambda^2$ from the pair of dots.
-The $\dot{r}^2$ coefficient is $L^2/L^3 = 1/L$ and the $\dot\theta^2$ coefficient is $L\cdot 1 = L$, which are the same two patterns the table above shows.
+The $\dot{r}^2$ coefficient is $L^2/L^3 = 1/L$ and the $\dot\theta^2$ coefficient is $L\cdot 1 = L$, which are the same two patterns as the radial terms of Reissner-Nordstrom.
 
-The angular equations of the last two entries are identical and both balance at $1/\lambda^2$, which is the check that catches a missing factor of $r$: a term $\dot{r}\dot\theta/r$ is $\left(1/L\right)\left(L/\lambda\right)\left(1/\lambda\right) = 1/\lambda^2$, and the same term without its $1/r$ would be a length over $\lambda^2$ and could not be added to $\ddot\theta$.
+The angular equations of the last two spacetimes are identical and both balance at $1/\lambda^2$, which is the check that catches a missing factor of $r$: a term $\dot{r}\dot\theta/r$ is $\left(1/L\right)\left(L/\lambda\right)\left(1/\lambda\right) = 1/\lambda^2$, and the same term without its $1/r$ would be a length over $\lambda^2$ and could not be added to $\ddot\theta$.
 
-All twelve equations were put through this check mechanically, parsed out of the JSON rather than copied by hand, and every term balances.
+We put all twelve equations through this check mechanically, parsing them by machine rather than copying them by hand, and every term balances.
 
 ---
 
-## Step 4. What the three entries publish, and how to check it
+## Step 4. The geodesic equations, and how to check them
 
-| entry | field | value |
+| spacetime | chart | geodesic equations |
 | --- | --- | --- |
-| `godel/cartesian` | `geodesics` | four equations, Step A3 |
-| `rn_metric/spherical` | `geodesics` | four equations, Step B3 |
-| `interior_schwarzschild/spherical` | `geodesics` | four equations, Step C3 |
+| Godel | Cartesian | four equations, Step A3 |
+| Reissner-Nordstrom | spherical | four equations, Step B3 |
+| Schwarzschild interior | spherical | four equations, Step C3 |
 
-Each entry's `convention` field gained one sentence naming the chart, giving the geodesic equation in the form of Step 1, and fixing the dots as derivatives of that chart, in the way `kasner.json` and `vaidya.json` do.
-Nothing else in the three files was touched.
-In particular every curvature block is byte for byte what it was, since all three were being corrected by separate work at the same time as this.
+The conventions of each of the three spacetimes gained one sentence naming the chart, giving the geodesic equation in the form of Step 1, and fixing the dots as derivatives of that chart, as the conventions of Kasner and Vaidya do.
+Nothing else about the three spacetimes changed.
+In particular the connection and curvature of each are byte for byte what they were, since all three were being corrected by separate work at the same time.
 
 To check:
 
@@ -556,12 +556,12 @@ To check:
 
 The first two take a few seconds each and the third takes about twelve minutes, almost all of it in the curvature comparison rather than in the geodesics.
 The geodesic comparison itself is well under a second for all three, and it reports no disagreement for any of them.
-The other blocks do: at the time of writing the checker reports four disagreements in Godel's `einstein_tensor` and a long list in the Schwarzschild interior's curvature, most of the second list being the form problem of Step C4.
-Those are the subject of separate work and none of them is touched here.
+The curvature comparisons do: at the time of writing the checker reports four disagreements in Godel's Einstein tensor and a long list in the Schwarzschild interior's curvature, most of the second list being the form problem of Step C4.
+Those are the subject of separate work and none of them changed along with the geodesic equations.
 Reissner-Nordstrom comes back clean throughout.
-Each run rebuilds the connection from the entry's own line element and measures every published equation against
+Each run rebuilds the connection from the spacetime's own line element and measures every geodesic equation against
 
 $$\ddot{x}^\mu + \Gamma^\mu{}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho,$$
 
-so it is an independent check of the equations rather than a restatement of the file.
-The dimensional pass of Step 3 is the same script with `--dimensions-only`, which runs over the whole collection in about eight seconds.
+so it is an independent check of the equations rather than a restatement of them.
+The dimensional pass of Step 3 is the same script with `--dimensions-only`, which runs over every spacetime in about eight seconds.

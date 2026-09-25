@@ -1,24 +1,24 @@
 # Oppenheimer-Snyder collapse
 
-This is the working behind the two coordinate systems in `MFS/assets/data/metrics/oppenheimer_snyder.json`.
-Every value the entry prints is derived here, in order, from the line elements down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+We describe the Oppenheimer-Snyder collapse in two coordinate systems, a comoving one inside the star and Schwarzschild's outside it.
+We derive every component, in order, from the line elements down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we do not compute.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares every component it computes with the stated one, so the algebra is checkable by hand and by machine independently.
 
-This entry is the only one in the collection that is two spacetimes rather than one.
+The Oppenheimer-Snyder spacetime is two spacetimes joined along a surface rather than one.
 Neither half is new.
-The interior is the closed case of the Friedmann-Lemaître-Robertson-Walker dust cosmology, which `MFS/assets/data/metrics/frw.json` already publishes, written here in the chart that makes the surface of the star a coordinate surface.
-The exterior is the Schwarzschild vacuum, which `MFS/assets/data/metrics/schwarzschild.json` already publishes, in the same spherical chart and with the same $r_s$.
-The work of this document is therefore not in either curvature block but in the seam between them, and Steps 11 to 15 are the seam.
+The interior is the closed case of the Friedmann-Lemaître-Robertson-Walker dust cosmology, written in the chart that makes the surface of the star a coordinate surface.
+The exterior is the Schwarzschild vacuum, in Schwarzschild's own spherical chart and with the same $r_s$.
+The physics is therefore not in the curvature of either half but in the seam between them, which we join in Steps 11 to 15.
 
 One equation comes out of it,
 
 $$r_s = a_m\sin^3\chi_0,$$
 
 binding the exterior's mass to the interior's scale factor, and it is the whole of the matching.
-Step 15 reads it three ways: as $M = \tfrac{4}{3}\pi\rho R^3$ holding at every moment of the collapse, as the compactness $\sin^2\chi_0 = r_s/R_0$ of the star at release, and as the redshift $\cos\chi_0 = \sqrt{1 - r_s/R_0}$ a distant observer sees from its surface before it starts to fall.
-Steps 16 to 18 are what the joined solution then says: the star falls to a singularity in a finite proper time, its surface crosses the Schwarzschild radius at a conformal time $\eta = \pi - 2\chi_0$ with time to spare before the singularity, and the same crossing takes forever in the exterior chart, the star fading with an e folding time of $4GM/c^3$.
+It has three readings, worked out in Step 15: as $M = \tfrac{4}{3}\pi\rho R^3$ holding at every moment of the collapse, as the compactness $\sin^2\chi_0 = r_s/R_0$ of the star at release, and as the redshift $\cos\chi_0 = \sqrt{1 - r_s/R_0}$ a distant observer sees from its surface before it starts to fall.
+The joined solution then says three things, in Steps 16 to 18: the star falls to a singularity in a finite proper time, its surface crosses the Schwarzschild radius at a conformal time $\eta = \pi - 2\chi_0$ with time to spare before the singularity, and the same crossing takes forever in the exterior chart, the star fading with an e folding time of $4GM/c^3$.
 
 ---
 
@@ -33,35 +33,35 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+and every Riemann component follows it.
 
 The Ricci tensor is the standard contraction,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-settled for the collection on 2026-09-18.
+settled as the convention on 2026-09-18.
 The settlement costs nothing in the exterior, where every one of these tensors vanishes on either contraction, and it decides a sign in the interior, where the dust is.
 On this contraction the interior's Einstein tensor comes out as
 
 $$G_{\tau\tau} = 3\frac{\dot{a}^2+1}{a^2} = \frac{8\pi G\rho}{c^2},$$
 
 which is the Friedmann equation with a positive density on the right.
-On the other contraction it would be the same equation with a negative one, and Step 7 is where that is checked rather than assumed.
+On the other contraction it would be the same equation with a negative one, and we check that in Step 7 rather than assume it.
 
-The chart is the collection's, the one whose zeroth coordinate is
+The chart, as for every other spacetime, is the one whose zeroth coordinate is
 
 $$x^0 = c\tau \quad\text{inside}, \qquad x^0 = ct \quad\text{outside}.$$
 
-The index is printed with the bare letter, but the component printed against it is a component of that chart, and everything from Step 4 onward is computed directly in it.
+The index is written with the bare letter, but the component carrying it is a component of that chart, and from Step 4 onward we compute directly in it.
 A dot on the scale factor is a derivative with respect to the chart time,
 
 $$\dot{a} = \frac{da}{d(c\tau)} = \frac{1}{c}\frac{da}{d\tau},$$
 
 so that $\dot{a}$ is dimensionless and $\ddot{a}$ carries one inverse length.
 The dots in the geodesic equations are velocities of the same chart, so $\dot{\tau}$ means $d(c\tau)/d\lambda$ and $\dot{t}$ means $d(ct)/d\lambda$.
-Step 21 checks that this is the reading on which every published term balances.
+This is the reading on which every term balances in the dimensional count of Step 21.
 
-Two conventions of this document only, never of the published file.
+Two further symbols belong to the matching alone and never appear in a component.
 A subscript $\Sigma$ marks a quantity evaluated on the surface of the star.
 A square bracket marks the jump of a quantity across that surface, $[X] = X_{\text{out}} - X_{\text{in}}$, both sides taken in the same coordinates on the surface.
 
@@ -72,11 +72,11 @@ A square bracket marks the jump of a quantity across that surface, $[X] = X_{\te
 A star of dust has a boundary, and a boundary is where a solution of the Einstein equations stops being the solution it is.
 Inside, the source is a ball of pressureless matter of uniform density, and the field equations there are the field equations of a dust cosmology.
 Outside, the source is nothing at all, and Birkhoff's theorem leaves no freedom: the only spherically symmetric vacuum is Schwarzschild, static whether or not the star inside it is [birkhoff1923].
-That last point is the one worth pausing on, because it is what makes the problem solvable at all.
+That last point is what makes the problem solvable at all.
 The star may be collapsing at any rate it likes, and the geometry outside it does not care, does not radiate, and does not change.
 
 So the spacetime is two exact solutions with a common boundary, and the only question is what the field equations demand where they meet.
-They demand two things, and Steps 11 to 14 impose them:
+They demand two things, which we impose in Steps 11 to 14:
 
 * the induced metric on the surface is the same computed from either side, so the surface has one geometry rather than two;
 * the extrinsic curvature of the surface is the same computed from either side, so there is no thin shell of matter sitting at the join.
@@ -88,23 +88,23 @@ $$S_{ij} = -\frac{c^4}{8\pi G}\left(\left[K_{ij}\right] - h_{ij}\left[K\right]\r
 Asking for no surface layer is asking for $[K_{ij}] = 0$.
 The Oppenheimer-Snyder star has all of its matter in its interior and none of it painted on its boundary, so that is the condition to impose [oppenheimersnyder1939].
 
-The static version of the same construction is already in the collection.
-`MFS/assets/data/metrics/interior_schwarzschild.json` is a ball of uniform density held up by pressure and matched to the same exterior, and the pressure it needs is what diverges when the ball is too compact.
-This entry is what happens when there is no pressure to begin with.
+The static version of the same construction is the interior Schwarzschild star.
+It is a ball of uniform density held up by pressure and matched to the same exterior, and the pressure it needs is what diverges when the ball is too compact.
+The Oppenheimer-Snyder star is what happens when there is no pressure to begin with.
 
 ---
 
 ## Step 3. The interior line element
 
 The interior is homogeneous and isotropic about its centre, so its spatial slices are the three geometries that are, and the collapse of a ball of dust released from rest picks the closed one.
-The reason is the field equation rather than a choice, and Step 8 shows it: a solution with $\dot{a} = 0$ at some moment needs $k > 0$ to satisfy the Friedmann equation with a positive density, because the equation at that moment reads $k = 8\pi G\rho a^2/(3c^2) > 0$.
+The reason is the field equation rather than a choice, through the first integral of Step 8: a solution with $\dot{a} = 0$ at some moment needs $k > 0$ to satisfy the Friedmann equation with a positive density, because the equation at that moment reads $k = 8\pi G\rho a^2/(3c^2) > 0$.
 Writing the closed slice as a three sphere of radius $a$ and a dimensionless polar angle $\chi$,
 
 $$ds^2 = -c^2d\tau^2 + a(\tau)^2\left[d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right].$$
 
-This is the same geometry `frw.json` publishes at $k = +1$, under $r = \sin\chi$, which turns $dr^2/(1-r^2)$ into $d\chi^2$.
+This is the same geometry as FRW at $k = +1$, under $r = \sin\chi$, which turns $dr^2/(1-r^2)$ into $d\chi^2$.
 The two charts differ in where the length sits.
-There $r$ is a length and $a$ is dimensionless; here $\chi$ is an angle and $a$ carries the length, which is the normalisation a collapse wants, since $a$ is then a radius that shrinks to zero and $a_m$ is a radius the star is released from.
+In the FRW chart $r$ is a length and $a$ is dimensionless; in this one $\chi$ is an angle and $a$ carries the length, which is the normalisation a collapse wants, since $a$ is then a radius that shrinks to zero and $a_m$ is a radius the star is released from.
 
 The star is the ball $\chi \le \chi_0$, and $\chi_0$ is a constant because the dust is comoving: a particle of dust sits at fixed $\chi$ for all time, and so does the outermost one.
 The areal radius of the sphere at $\chi$, meaning the radius read off the area $4\pi\tilde{r}^2$ of that sphere, is
@@ -117,10 +117,10 @@ $$R(\tau) = a(\tau)\sin\chi_0.$$
 
 The whole of the matching is written in that one function.
 
-Two bounds on $\chi_0$ are worth stating before they are used.
+Two bounds constrain $\chi_0$.
 The chart needs $\chi_0 < \pi$ for the ball to be a ball.
 The physics needs $\chi_0 < \pi/2$, because $\tilde{r} = a\sin\chi$ has its maximum at $\chi = \pi/2$, and a star whose surface sat beyond the equator of the three sphere would be one whose spheres get smaller as you move outward through the matter, which is a star already inside a trapped region at the moment it is released.
-Step 15 gets the same bound from the exterior, where it reads $R_0 > r_s$.
+The exterior gives the same bound in Step 15, where it reads $R_0 > r_s$.
 
 ---
 
@@ -145,7 +145,7 @@ The determinant is $-a^6\sin^4\chi\sin^2\theta$, which is nonzero on $0 < \chi <
 
 ## Step 5. The Christoffel symbols
 
-Only $a$ depends on the chart time and only the angular blocks depend on $\chi$ and $\theta$, so the symbols come in three families.
+Only $a$ depends on the chart time and only the angular components depend on $\chi$ and $\theta$, so the symbols come in three families.
 From the definition in Step 1, with $\partial_0 = \partial/\partial(c\tau)$,
 
 $$\Gamma^\tau{}_{\chi\chi} = -\tfrac{1}{2}g^{\tau\tau}\partial_0 g_{\chi\chi} = a\dot{a},$$
@@ -164,15 +164,15 @@ $$\Gamma^\chi{}_{\theta\theta} = -\sin\chi\cos\chi, \qquad \Gamma^\chi{}_{\phi\p
 
 $$\Gamma^\theta{}_{\phi\phi} = -\sin\theta\cos\theta, \qquad \Gamma^\phi{}_{\theta\phi} = \cot\theta.$$
 
-Counting the two orderings of each mixed lower pair, that is the eighteen symbols the entry publishes.
+Counting the two orderings of each mixed lower pair, that makes eighteen nonzero symbols.
 
-The lowered variant follows by one multiplication by the diagonal metric, which flips the sign of the three with a time index and multiplies the spatial ones by $a^2$,
+The symbols with every index lowered follow by one multiplication by the diagonal metric, which flips the sign of the three with a time index and multiplies the spatial ones by $a^2$,
 
 $$\Gamma_{\tau\chi\chi} = -a\dot{a}, \qquad \Gamma_{\chi\tau\chi} = a\dot{a}, \qquad \Gamma_{\chi\theta\theta} = -a^2\sin\chi\cos\chi, \qquad \Gamma_{\theta\chi\theta} = a^2\sin\chi\cos\chi,$$
 
 and so on through the list, eighteen again.
 
-$\Gamma^\chi{}_{\tau\tau} = 0$ is worth naming, because Step 12 leans on it: a curve of constant $\chi$, $\theta$ and $\phi$ is a geodesic, so every particle of the dust, including every particle on the surface, is in free fall.
+The extrinsic curvature of Step 12 leans on $\Gamma^\chi{}_{\tau\tau} = 0$: a curve of constant $\chi$, $\theta$ and $\phi$ is a geodesic, so every particle of the dust, including every particle on the surface, is in free fall.
 That is what pressureless means, and it is built into the chart.
 
 ---
@@ -188,15 +188,15 @@ and the purely spatial ones combine the curvature of the three sphere with the s
 
 $$R^\chi{}_{\theta\chi\theta} = \left(\dot{a}^2+1\right)\sin^2\chi.$$
 
-The $1$ in that bracket is the curvature of the unit three sphere and would be $k$ in the chart `frw.json` uses.
+The $1$ in that bracket is the curvature of the unit three sphere and would be $k$ in the FRW chart.
 Everything else follows from these two by the symmetries and by the factors of $\sin^2\chi$ and $\sin^2\theta$ the angular metric carries:
 
 $$R^\tau{}_{\theta\tau\theta} = a\ddot{a}\sin^2\chi, \qquad R^\tau{}_{\phi\tau\phi} = a\ddot{a}\sin^2\chi\sin^2\theta, \qquad R^\chi{}_{\tau\chi\tau} = R^\theta{}_{\tau\theta\tau} = R^\phi{}_{\tau\phi\tau} = -\frac{\ddot{a}}{a},$$
 
 $$R^\theta{}_{\chi\theta\chi} = R^\phi{}_{\chi\phi\chi} = \dot{a}^2+1, \qquad R^\theta{}_{\phi\theta\phi} = \left(\dot{a}^2+1\right)\sin^2\chi\sin^2\theta, \qquad R^\phi{}_{\theta\phi\theta} = \left(\dot{a}^2+1\right)\sin^2\chi.$$
 
-With the antisymmetry in the last pair that is twenty four nonzero components, and the entry publishes all twenty four rather than half of them, because the checker requires every component it does not find to vanish.
-The fully lowered variant is these multiplied by $g_{\mu\mu}$ on the first index, which flips the sign of the six with a leading time index and multiplies the spatial ones by $a^2$ or $a^2\sin^2\chi$:
+With the antisymmetry in the last pair that is twenty four nonzero components, and the checker needs all twenty four rather than half of them, because it requires every component it does not find to vanish.
+The fully lowered Riemann tensor is these multiplied by $g_{\mu\mu}$ on the first index, which flips the sign of the six with a leading time index and multiplies the spatial ones by $a^2$ or $a^2\sin^2\chi$:
 
 $$R_{\tau\chi\tau\chi} = -a\ddot{a}, \qquad R_{\chi\theta\chi\theta} = a^2\left(\dot{a}^2+1\right)\sin^2\chi, \qquad R_{\theta\phi\theta\phi} = a^2\left(\dot{a}^2+1\right)\sin^4\chi\sin^2\theta,$$
 
@@ -206,7 +206,7 @@ twenty four again.
 
 ## Step 7. Ricci, the scalar, Einstein, and the field equations
 
-Contracting on the first lower index as Step 1 says,
+Contracting on the first lower index, the convention of Step 1,
 
 $$R_{\tau\tau} = R^\chi{}_{\tau\chi\tau} + R^\theta{}_{\tau\theta\tau} + R^\phi{}_{\tau\phi\tau} = -3\frac{\ddot{a}}{a},$$
 
@@ -236,9 +236,9 @@ Both signs are the contraction's doing.
 Had the Ricci tensor been contracted on the last index instead, every component of this step would carry the opposite sign, the first equation would read $3(\dot{a}^2+1)/a^2 = -8\pi G\rho/c^2$, and a ball of ordinary matter would have to have a negative density to collapse.
 That is the concrete content of the settlement named in Step 1.
 
-The entry publishes these components with $a(\tau)$ left free, not with the dust condition imposed.
-That is deliberate, and it is the same choice `frw.json` makes.
-A published $G_{\chi\chi} = 0$ would be a true statement about the Oppenheimer-Snyder solution and a false statement about the line element it is printed under, and the checker compares against the line element.
+These components hold with $a(\tau)$ left free, not with the dust condition imposed.
+That is deliberate, and FRW's curvature is stated the same way, for a free scale factor.
+A stated $G_{\chi\chi} = 0$ would be a true statement about the Oppenheimer-Snyder solution and a false statement about the general line element of Step 3, and the checker compares against the line element.
 
 ---
 
@@ -279,10 +279,10 @@ $$ds^2 = a(\eta)^2\left[-d\eta^2 + d\chi^2 + \sin^2\chi\,d\Omega^2\right],$$
 
 which is why $\eta$ is the right parameter for anything to do with light.
 A radial null ray has $d\chi = \pm\,d\eta$ in it, exactly, with no reference to $a$ at all.
-Step 17 is entirely that observation.
+The horizons of Step 17 rest entirely on that observation.
 
-The entry does not publish this chart.
-It publishes the comoving one and declares $a_m$ as a parameter, because the components of the conformal chart would be the same geometry written twice, and because the free function $a(\tau)$ is the honest statement of what the published curvature depends on.
+The components stay in the comoving chart, not the conformal one.
+They keep $a_m$ as a parameter, because the components of the conformal chart would be the same geometry written twice, and because the free function $a(\tau)$ is the honest statement of what the curvature depends on.
 
 ---
 
@@ -292,7 +292,7 @@ The Kretschmann scalar of the interior, from the fully lowered Riemann tensor of
 
 $$K = R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma} = 12\frac{a^2\ddot{a}^2 + \left(\dot{a}^2+1\right)^2}{a^4},$$
 
-the first term coming from the three independent blocks with a time index and the second from the three purely spatial ones, each block counted four times over by the two antisymmetries, which is where both twelves come from.
+the first term coming from the three independent components with a time index and the second from the three purely spatial ones, each counted four times over by the two antisymmetries, which is where both twelves come from.
 On the dust solution of Step 8 it collapses to a single power.
 Differentiating the first integral gives $\ddot{a} = -a_m/(2a^2)$, and substituting both it and $\dot{a}^2+1 = a_m/a$,
 
@@ -305,24 +305,24 @@ The Weyl tensor of the interior vanishes identically,
 
 $$C^\mu{}_{\nu\rho\sigma} = 0,$$
 
-in every component and at every moment of the collapse, and the entry publishes both variants as empty blocks.
+in every component, with the first index up and with every index down, and at every moment of the collapse.
 This is computed rather than quoted: subtracting the Ricci traces from the Riemann tensor of Step 6,
 
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \left(g_{\mu[\rho}R_{\sigma]\nu} - g_{\nu[\rho}R_{\sigma]\mu}\right) + \tfrac{1}{3}R\,g_{\mu[\rho}g_{\sigma]\nu},$$
 
 every slot cancels.
-The reason it must is that a homogeneous isotropic slicing is conformally flat, which Step 8 showed in the most direct possible way: the line element is a function of $\eta$ times a static metric, and the static metric it multiplies, the Einstein universe, is itself conformally flat.
+The reason it must is that a homogeneous isotropic slicing is conformally flat, as the conformal line element of Step 8 shows in the most direct possible way: the line element is a function of $\eta$ times a static metric, and the static metric it multiplies, the Einstein universe, is itself conformally flat.
 So all of the interior's curvature is Ricci, which is to say all of it is the dust, and none of it is tidal.
 A small ball of test particles falling with the dust is squeezed but not distorted.
 
-One practical note for whoever writes the next entry with a three sphere in it.
+A three sphere needs care in sympy.
 Two of the Weyl components come out of sympy's `simplify` as
 
 $$\frac{a\dot{a}\left(\sin 2\chi\tan\chi + \cos 2\chi - 1\right)}{2\tan\chi},$$
 
 which is zero, since $\sin2\chi\tan\chi = 2\sin^2\chi$ and $\cos2\chi - 1 = -2\sin^2\chi$, but is not recognisably zero to `simplify` alone.
-It is the exact form the docstring of `norm` in `verify_metrics.py` names as its reason for existing, and `norm` does reduce it, which is why the empty published block passes.
-A derivation that trusted a bare `simplify` would have published two components that are not there.
+It is the exact form the docstring of `norm` in `verify_metrics.py` names as its reason for existing, and `norm` does reduce it, which is why the vanishing Weyl tensor passes the checker.
+A derivation that trusted a bare `simplify` would have claimed two nonzero Weyl components that are not there.
 
 ---
 
@@ -332,26 +332,26 @@ Outside the surface the solution is Schwarzschild,
 
 $$ds^2 = -\left(1-\frac{r_s}{r}\right)c^2dt^2 + \frac{dr^2}{1-\dfrac{r_s}{r}} + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2, \qquad r_s = \frac{2GM}{c^2},$$
 
-in the standard spherical chart, and the entry publishes it: thirteen Christoffel symbols in each variant, twenty four Riemann components in each, an empty Ricci tensor and an empty Einstein tensor in all three variants each, $R = 0$, $K = 12r_s^2/r^6$, twenty four Weyl components in each variant and four geodesic equations.
+in the standard spherical chart, with thirteen nonzero Christoffel symbols of each kind, twenty four nonzero Riemann components with the first index up and as many with every index down, a vanishing Ricci tensor and a vanishing Einstein tensor in all three index positions, $R = 0$, $K = 12r_s^2/r^6$, twenty four nonzero Weyl components in each of its two index positions, and four geodesic equations.
 
-None of that is derived here, because `MFS/assets/data/metrics/schwarzschild.json` publishes the same chart and `verify_metrics.py` checks it, and repeating the derivation would be repeating a page the collection already carries.
-Two things about it do belong here.
+We do not derive any of it again, because it is Schwarzschild's spacetime in Schwarzschild's own chart, which `verify_metrics.py` already checks.
+Two things about it matter for the collapse.
 
 The first is the domain.
-The Schwarzschild entry publishes the exterior region $r > r_s$ of an eternal black hole.
-This entry publishes $r \ge R(\tau)$ of a collapsing star, which is a different region of the same local geometry: while the star is large the chart never reaches $r_s$ at all, and the part of the eternal solution that this spacetime does not contain, the white hole and the second asymptotic region, is replaced by the star.
-The published components are identical because the geometry is; the domain is the whole of the difference, and it is the reason this entry does not simply point at the other one.
+The Schwarzschild chart, taken alone, covers the exterior region $r > r_s$ of an eternal black hole.
+Here the exterior chart covers $r \ge R(\tau)$ of a collapsing star, which is a different region of the same local geometry: while the star is large the chart never reaches $r_s$ at all, and the part of the eternal solution that this spacetime does not contain, the white hole and the second asymptotic region, is replaced by the star.
+The components are identical because the geometry is, and the domain is the whole of the difference.
 
-The exterior time runs over $t \ge 0$ and not the whole line; `oppenheimer_snyder.json` gave $t \in (-\infty, \infty)$ until 24 September 2026.
+The exterior time runs over $t \ge 0$ and not the whole line; until 24 September 2026 it was taken over $t \in (-\infty, \infty)$.
 The interior starts at the moment of rest, $\tau \ge 0$ with $a(0) = a_m$ and $\dot{a}(0) = 0$, and the model says nothing about what came before: a star held at rest by something the model leaves out, or the time reverse of the collapse, are equally consistent with it, and it contains neither.
 So before release there is no $R(t)$ and no surface to be outside of, and a domain claiming the whole of $t$ claimed more than the model supports.
 The origin of Schwarzschild time is free, and it is put at the release, so that $t = 0$ and $\tau = 0$ are the same instant on the surface.
-That instant is a slice of time symmetry on both sides at once: inside because $\dot{a} = 0$ there, outside because every slice of constant $t$ in the static chart has vanishing extrinsic curvature, and on the surface because it is at rest, $dR/dt = 0$, the geodesic of energy $\tilde{E} = c^2\cos\chi_0$ that Steps 14 and 15 put it on being at its turning point $R_0$.
-The upper end needs no bound: the surface takes an infinite $t$ to reach $r_s$, as Step 18 shows, so $R(t) > r_s$ at every $t$ the coordinates reach, and the part of the black hole outside the star, $r < r_s$ after the surface has crossed, lies in neither set of coordinates.
+That instant is a slice of time symmetry on both sides at once: inside because $\dot{a} = 0$ there, outside because every slice of constant $t$ in the static chart has vanishing extrinsic curvature, and on the surface because it is at rest, $dR/dt = 0$, the geodesic of energy $\tilde{E} = c^2\cos\chi_0$ of Steps 14 and 15 being at its turning point $R_0$.
+The upper end needs no bound: the surface takes an infinite $t$ to reach $r_s$ (Step 18), so $R(t) > r_s$ at every $t$ the coordinates reach, and the part of the black hole outside the star, $r < r_s$ after the surface has crossed, lies in neither set of coordinates.
 
 The second is the Weyl tensor.
-It is equal to the Riemann tensor here, component for component, and that is a fact about a vacuum rather than a licence to copy a block: with $R_{\mu\nu} = 0$ and $R = 0$ every correction term in the definition quoted in Step 9 is zero, so $C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma}$ identically.
-It was computed from Riemann minus its traces for this entry, in sympy, and it came out equal, all twenty four components of it, which is what a vacuum requires.
+It is equal to the Riemann tensor here, component for component, and that is a fact about a vacuum rather than a licence to copy the Riemann components: with $R_{\mu\nu} = 0$ and $R = 0$ every correction term in the definition quoted in Step 9 is zero, so $C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma}$ identically.
+We computed it from Riemann minus its traces, in sympy, and it came out equal, all twenty four components of it, which is what a vacuum requires.
 So the two halves of this spacetime carry complementary curvature: the interior is all Ricci and no Weyl, the exterior is all Weyl and no Ricci.
 
 ---
@@ -417,7 +417,7 @@ The three that matter are
 
 $$K_{\tau\tau} = -a\,\Gamma^\chi{}_{\tau\tau} = 0, \qquad K_{\theta\theta} = -a\,\Gamma^\chi{}_{\theta\theta} = a\sin\chi_0\cos\chi_0, \qquad K_{\phi\phi} = K_{\theta\theta}\sin^2\theta,$$
 
-the first because $\Gamma^\chi{}_{\tau\tau}$ vanishes, which Step 5 already flagged as the free fall of the dust.
+the first because $\Gamma^\chi{}_{\tau\tau}$ vanishes, which is the free fall of the dust of Step 5.
 The mixed components vanish with their Christoffel symbols.
 In mixed form, which is the form that compares most cleanly,
 
@@ -486,14 +486,14 @@ So
 
 $$\boxed{\ r_s = a_m\sin^3\chi_0.\ }$$
 
-Two things are worth noticing about how that came out.
+Two features of that result matter.
 
 It is a constraint on constants, not a differential equation, and it had to be: the two field equations have already fixed $a(\tau)$ up to the constant $a_m$, and the matching has only to say which exterior mass goes with which interior.
 Had the $a$ dependence not cancelled, the junction conditions would have been inconsistent with the field equations and the construction would have failed.
 
 And the matching used the interior's first integral, which is the pressureless condition integrated once.
 That is the sense in which this is a dust result.
-A ball with pressure has a different $a$ equation, its surface is not in free fall, and $K^\tau{}_\tau$ does not vanish on either side; matching it is the calculation `interior_schwarzschild.json` does at the other extreme, where the ball does not move at all.
+A ball with pressure has a different $a$ equation, its surface is not in free fall, and $K^\tau{}_\tau$ does not vanish on either side; matching it is the calculation of the interior Schwarzschild star at the other extreme, where the ball does not move at all.
 
 ---
 
@@ -510,9 +510,9 @@ Both sides of that equation change as the star falls, and they change together, 
 
 $$\sin^2\chi_0 = \frac{a_m\sin^3\chi_0}{a_m\sin\chi_0} = \frac{r_s}{R_0}.$$
 
-The comoving angle of the surface, which looked like a piece of bookkeeping about the three sphere, is the compactness of the star at the moment it starts to fall.
+The comoving angle of the surface, which looked like a mere label on the three sphere, is the compactness of the star at the moment it starts to fall.
 A star released far outside its own Schwarzschild radius occupies a small polar cap of the three sphere; a star released close to it occupies a large one.
-And $R_0 > r_s$ is $\sin^2\chi_0 < 1$, which is the bound $\chi_0 < \pi/2$ Step 3 got from the geometry of the three sphere.
+And $R_0 > r_s$ is $\sin^2\chi_0 < 1$, which is the bound $\chi_0 < \pi/2$ that the geometry of the three sphere gave in Step 3.
 The two readings of that bound are the same bound.
 
 **It is a redshift, and an energy.** Since $\cos\chi_0 = \sqrt{1-\sin^2\chi_0}$,
@@ -532,7 +532,7 @@ so the proper mass, the mass got by counting the dust, is $M_p = \rho V$, and
 $$\frac{M}{M_p} = \frac{\tfrac{4}{3}\pi\rho a^3\sin^3\chi_0}{2\pi\rho a^3\left(\chi_0-\sin\chi_0\cos\chi_0\right)} = \frac{2\sin^3\chi_0}{3\left(\chi_0-\sin\chi_0\cos\chi_0\right)} = 1 - \frac{3}{10}\chi_0^2 + O(\chi_0^4).$$
 
 The ratio is less than one for every $\chi_0 > 0$, and the deficit is the gravitational binding energy.
-Its leading term is worth writing out, using $\chi_0^2 \approx r_s/R_0$ from the second reading above:
+Its leading term follows from $\chi_0^2 \approx r_s/R_0$, the compactness at release:
 
 $$\left(M_p - M\right)c^2 \approx \frac{3}{10}\frac{r_s}{R_0}Mc^2 = \frac{3}{5}\frac{GM^2}{R_0},$$
 
@@ -560,7 +560,7 @@ depending on nothing but the density the ball started at.
 A ball of the Sun's mean density, about $1.4\times10^3\ \mathrm{kg\,m^{-3}}$, falls in for about half an hour whatever its size; a ball of nuclear density falls in in a fraction of a millisecond.
 
 This is the finite proper time of the history: the surface, and every other particle of the dust, reaches the singularity in a span of its own time that is not merely finite but unremarkable, with nothing locally to mark the horizon it passed on the way.
-Step 18 is the other half of that sentence.
+The other half is the view from outside, in Step 18.
 
 ---
 
@@ -576,7 +576,7 @@ The proper time it happens at, and the proper time left afterwards, follow from 
 
 $$c\tau_H = \frac{a_m}{2}\left(\pi - 2\chi_0 + \sin2\chi_0\right), \qquad c\left(\tau_s - \tau_H\right) = \frac{a_m}{2}\left(2\chi_0 - \sin2\chi_0\right).$$
 
-The second is the interesting one.
+The second is nearly the same for every diffuse star.
 For a star that was large and diffuse when it was released, $\chi_0$ is small, and expanding with $a_m = r_s/\sin^3\chi_0$,
 
 $$c\left(\tau_s-\tau_H\right) = \frac{r_s}{2\sin^3\chi_0}\left(2\chi_0 - \sin2\chi_0\right) = \frac{2r_s}{3} + \frac{r_s}{5}\chi_0^2 + O(\chi_0^4).$$
@@ -586,7 +586,7 @@ For ten solar masses that is about sixty six microseconds.
 The limit $\chi_0 \to \pi/2$ is the other extreme, where $c(\tau_s-\tau_H) \to \pi a_m/2$ is the whole collapse, because a star released at $R_0 = r_s$ crosses the horizon at the moment it is released.
 
 **The apparent horizon.** Inside the star the horizon is not at any fixed areal radius, and the thing that is locally defined is the trapped region: the set of spheres whose area decreases along their own outgoing light rays.
-Step 8 said that a radial outgoing ray has $d\chi = d\eta$, so along one the areal radius changes at
+A radial outgoing ray has $d\chi = d\eta$ by Step 8, so along one the areal radius changes at
 
 $$\frac{d}{d\eta}\left[a(\eta)\sin\chi\right]_{\chi = \eta + \text{const}} = \frac{da}{d\eta}\sin\chi + a\cos\chi = \frac{a_m}{2}\left[\cos\chi + \cos\left(\chi+\eta\right)\right],$$
 
@@ -596,7 +596,7 @@ $$\chi_{AH}(\eta) = \frac{\pi-\eta}{2}$$
 
 and is negative for $\chi > \chi_{AH}$.
 So the trapped region is the outer part of the star, not the inner, and its boundary sweeps inward as $\eta$ grows, reaching the centre exactly at $\eta = \pi$, the singularity.
-Where does it first touch the surface? At $\chi_{AH} = \chi_0$, which is $\eta = \pi - 2\chi_0 = \eta_H$.
+It first touches the surface at $\chi_{AH} = \chi_0$, which is $\eta = \pi - 2\chi_0 = \eta_H$.
 The apparent horizon reaches the surface of the star at precisely the moment the surface crosses the Schwarzschild radius, which is a consistency check on the whole construction: the interior and the exterior have to agree about when the star becomes trapped, and they do, having been told nothing about each other except the two junction conditions.
 
 **The event horizon.** The event horizon is the boundary of what can still get out, so it is the outgoing null ray that reaches the surface exactly when the surface reaches $r_s$.
@@ -623,8 +623,8 @@ The event horizon is a global object that knows the star's whole future, and it 
 
 ## Step 18. The view from outside, and why the star appears to freeze
 
-Everything in Step 16 and Step 17 was written in $\tau$ or $\eta$, the time of somebody falling with the star.
-The distant observer uses $t$, and Step 11 already has the conversion.
+The times in Step 16 and Step 17 are $\tau$ or $\eta$, the time of somebody falling with the star.
+The distant observer uses $t$, and the conversion between them is already in Step 11.
 Substituting $f(R)\,dT/d\tau = \cos\chi_0$, which is what the matching of Step 14 made of it,
 
 $$\frac{dT}{d\tau} = \frac{\cos\chi_0}{1-\dfrac{r_s}{R}}.$$
@@ -634,7 +634,7 @@ As $R \to r_s$ this diverges, and it diverges like $1/(R-r_s)$ while $R$ approac
 $$T \sim -\frac{r_s}{c}\ln\left(\tau_H - \tau\right).$$
 
 The crossing that takes the surface a finite proper time to reach takes infinite Schwarzschild time.
-The star never crosses, as far as the exterior chart is concerned, and this is the freezing the 1939 paper describes.
+The star never crosses, as far as the exterior chart is concerned, and this is the freezing Oppenheimer and Snyder describe in 1939.
 It is a statement about the chart and not about the star: $t$ is the proper time of a static observer far away, there is no static observer at $r_s$ for it to be the time of, and the surface itself passes $r_s$ at the perfectly ordinary $\eta_H$ of Step 17.
 
 What the distant observer actually sees is light, so the sharper statement is about the redshift.
@@ -661,7 +661,7 @@ $$\Delta t = \frac{2r_s}{c} = \frac{4GM}{c^3}$$
 
 of the distant observer's time.
 For a solar mass that is about twenty microseconds, and for ten solar masses about two hundred.
-The received flux falls faster still, since the photons arrive rarer as well as redder and the cone of directions that escapes closes down as the surface approaches the horizon; this entry computes only the frequency factor, which is enough to make the point.
+The received flux falls faster still, since the photons arrive rarer as well as redder and the cone of directions that escapes closes down as the surface approaches the horizon; we compute only the frequency factor, which is enough to show the fading.
 The star does not so much freeze as vanish: after a few of those e foldings there is nothing left to see, and the eternal hovering image the chart suggests is far too faint to detect.
 An infalling observer crossing with the surface, meanwhile, measures the ordinary local physics of Step 9 and has the sixty six microseconds of Step 17 left to think about it.
 
@@ -673,7 +673,7 @@ The junction conditions asked for the continuity of two things, the induced metr
 They did not ask for the continuity of the curvature tensors, and the curvature tensors are not continuous.
 
 The Ricci tensor obviously jumps, since the density jumps from $\rho$ to zero at the surface, and the field equations tie the Ricci tensor to the density pointwise.
-The Weyl tensor jumps too, and less obviously, since Step 9 computed it to be identically zero inside and Step 10 has it nonzero outside.
+The Weyl tensor jumps too, and less obviously, since it is identically zero inside, by Step 9, and nonzero outside, by Step 10.
 The cleanest statement of both is the Kretschmann scalar.
 Just inside the surface, from Step 9 at $a = R/\sin\chi_0$ and $a_m = r_s/\sin^3\chi_0$,
 
@@ -704,15 +704,15 @@ $$\ddot{\theta} + \frac{2\dot{a}}{a}\dot{\tau}\dot{\theta} + 2\cot\chi\,\dot{\ch
 $$\ddot{\phi} + \frac{2\dot{a}}{a}\dot{\tau}\dot{\phi} + 2\cot\chi\,\dot{\chi}\dot{\phi} + 2\cot\theta\,\dot{\theta}\dot{\phi} = 0,$$
 
 the factors of two on the mixed terms being the two orderings of each mixed Christoffel index pair.
-The exterior's four are Schwarzschild's and the entry publishes them unchanged.
+The exterior's four are Schwarzschild's, unchanged.
 
-Two solutions of the interior equations are used above.
-A comoving particle, $\dot{\chi} = \dot{\theta} = \dot{\phi} = 0$, satisfies all four with $\ddot{\tau} = 0$, so the dust is in free fall and $\tau$ is its proper time, which is Step 5's remark and Step 12's $K_{\tau\tau} = 0$.
-A radial null ray has $\dot{\theta} = \dot{\phi} = 0$ and $a\dot{\chi} = \pm\dot{\tau}$ from the line element, which integrates to the $\chi = \pm\eta + \text{const}$ of Step 8, and Step 17 is built on it.
+Two solutions of the interior equations carry the collapse.
+A comoving particle, $\dot{\chi} = \dot{\theta} = \dot{\phi} = 0$, satisfies all four with $\ddot{\tau} = 0$, so the dust is in free fall and $\tau$ is its proper time, which is the free fall of Step 5 and the $K_{\tau\tau} = 0$ of Step 12.
+A radial null ray has $\dot{\theta} = \dot{\phi} = 0$ and $a\dot{\chi} = \pm\dot{\tau}$ from the line element, which integrates to the $\chi = \pm\eta + \text{const}$ of Step 8, and the horizons of Step 17 rest on it.
 
 ---
 
-## Step 21. Every published expression is dimensionally consistent
+## Step 21. Every expression is dimensionally consistent
 
 The interior's chart coordinates are $\left(c\tau, \chi, \theta, \phi\right)$, one length and three dimensionless angles, and the parameters are $a$ and $a_m$, both lengths, and $\chi_0$, an angle.
 A component then carries
@@ -720,7 +720,7 @@ A component then carries
 $$[g_{\mu\nu}] = \frac{L^2}{[x^\mu][x^\nu]},$$
 
 with an upper index contributing $[x^\mu]/L$ and a lower one $L/[x^\mu]$ on top of the $1$, $L^{-1}$, $L^{-2}$ or $L^{-4}$ the field itself carries.
-Since the angles are dimensionless, each angular index contributes a whole factor of $L$, which is what makes the bookkeeping here less trivial than in a Cartesian chart.
+Since the angles are dimensionless, each angular index contributes a whole factor of $L$, which makes the dimensional count less trivial than in a Cartesian chart.
 
 The derivative convention does the rest.
 A dot is $d/d(c\tau)$, so $\dot{a}$ is dimensionless and $\ddot{a}$ carries $L^{-1}$.
@@ -730,7 +730,7 @@ Five samples.
 $g_{\theta\theta} = a^2\sin^2\chi$ carries $L^2$, which is $L^2/([\theta][\theta]) = L^2$.
 
 $\Gamma^\tau{}_{\chi\chi} = a\dot{a}$ carries $L$, and the requirement is $L^{-1}\cdot\left([\tau]/L\right)\cdot\left(L/[\chi]\right)^2 = L^{-1}\cdot 1\cdot L^2 = L$.
-A published $\Gamma^\chi{}_{\tau\chi} = \dot{a}/a$ carries $L^{-1}$, and its requirement is $L^{-1}\cdot L^{-1}\cdot 1\cdot L = L^{-1}$.
+Likewise $\Gamma^\chi{}_{\tau\chi} = \dot{a}/a$ carries $L^{-1}$, and its requirement is $L^{-1}\cdot L^{-1}\cdot 1\cdot L = L^{-1}$.
 Both work only because $\dot{a}$ is the chart derivative; on the reading $\dot{a} = da/d\tau$ each would be one factor of $c$ out.
 
 $R^\chi{}_{\theta\chi\theta} = \left(\dot{a}^2+1\right)\sin^2\chi$ is dimensionless, and so is its requirement, $L^{-2}\cdot L^{-1}\cdot L\cdot L\cdot L = 1$.
@@ -750,10 +750,10 @@ The exterior's balance is Schwarzschild's and holds for the same reasons; `verif
 
 ---
 
-## Step 22. What the entry publishes, and the declarations the checker needs
+## Step 22. The components, and the declarations the checker needs
 
-The interior publishes the line element, four metric components and four inverse ones, eighteen Christoffel symbols in each of two variants, twenty four Riemann components in each of two variants, four Ricci components in each of three variants, the Ricci scalar, the Kretschmann scalar, four Einstein components in each of three variants, two empty Weyl blocks and four geodesic equations.
-The exterior publishes Schwarzschild's spherical chart entire, as Step 10 lists it.
+The interior has the line element, four metric components and four inverse ones, eighteen nonzero Christoffel symbols with the first index up and as many with every index lowered, twenty four Riemann components with the first index up and as many with every index down, four Ricci components in each of three index positions, the Ricci scalar, the Kretschmann scalar, four Einstein components in each of three index positions, a Weyl tensor that vanishes in both its index positions, and four geodesic equations.
+The exterior has every component of Schwarzschild's spherical chart, in the counts of Step 10.
 
 For the checker to read them, `DIMENSIONS` in `verify_metrics.py` needs one line each:
 
@@ -766,12 +766,12 @@ For the checker to read them, `DIMENSIONS` in `verify_metrics.py` needs one line
     },
 
 The declaration `"\\tau": "T"` is what tells the checker that $\tau$ is a time and so that the chart coordinate is $c\tau$; every factor of $c$ in the comparison follows from it, as does the reading of the dot on $a$ as a chart derivative.
-Declaring `"a": "L"` with `"\\chi": "1"` is the choice of Step 3, the opposite of the one `frw.json` declares, and it is the declaration that makes $\dot{a}$ dimensionless and $R = a\sin\chi_0$ a length.
-$\chi_0$ and $a_m$ are declared although no published component contains them, because the entry states the matching in them and the checker requires the declarations and the parameter list to agree exactly.
-Neither appears in a component value on purpose, quite apart from taste: the reader in `verify_metrics.py` turns `\chi` into a name before it looks at what follows, so a `\chi_0` inside a published value would be read as $\chi$ times an unknown, and rejected.
+Declaring `"a": "L"` with `"\\chi": "1"` is the choice of Step 3, the opposite of the one declared for FRW, and it is the declaration that makes $\dot{a}$ dimensionless and $R = a\sin\chi_0$ a length.
+$\chi_0$ and $a_m$ are declared although no component contains them, because the matching is stated in them and the checker requires the declarations and the parameter list to agree exactly.
+Neither appears in a component value on purpose, quite apart from taste: the reader in `verify_metrics.py` turns `\chi` into a name before it looks at what follows, so a `\chi_0` inside a component would be read as $\chi$ times an unknown, and rejected.
 
-The entry needs no line in `PARAMETER_RELATIONS`.
-It could have wanted one, and the reason it does not is Step 7's last paragraph: the published components are printed for a free $a(\tau)$, so every one of them is an identity that holds for any line element of that form, and the dust solution, the cycloid and the matching are stated in the entry's prose and derived here rather than substituted into a curvature block.
+The Oppenheimer-Snyder spacetime needs no line in `PARAMETER_RELATIONS`.
+It could have wanted one, and the reason it does not is the free scale factor of Step 7: the components hold for a free $a(\tau)$, so every one of them is an identity that holds for any line element of that form, and the dust solution, the cycloid and the matching are derived rather than substituted into the curvature.
 The relation $r_s = a_m\sin^3\chi_0$ ties a parameter of one system to a parameter of another, which `PARAMETER_RELATIONS` has no way to express and no need to, since neither symbol appears in a component.
 
 Running

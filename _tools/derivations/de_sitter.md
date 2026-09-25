@@ -1,15 +1,15 @@
 # The de Sitter spacetime
 
-This is the working behind the two coordinate systems in `MFS/assets/data/metrics/de_sitter.json`.
-Every number the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+We work out de Sitter space in two coordinate systems, the static patch and the flat slicing.
+Every component is derived in order, from the line element down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we do not compute.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the stored components, so every line of the algebra is checkable by hand and by machine independently.
 
-de Sitter is the first entry in the collection that is a vacuum and yet has a curvature the Ricci tensor carries.
-Every other vacuum here empties the Ricci tensor and leaves the whole of the curvature in Weyl.
-This one does the opposite, and does it completely: Step 9 finds $R_{\mu\nu} = \Lambda g_{\mu\nu}$, and Step 11 finds that the Weyl tensor is empty in every slot.
-That is what maximal symmetry costs and what it buys, and it is why Step 11 is a computation rather than a copy.
+de Sitter is the first of the spacetimes that is a vacuum and yet has a curvature the Ricci tensor carries.
+Every other vacuum among them empties the Ricci tensor and leaves the whole of the curvature in Weyl.
+This one does the opposite, and does it completely: its Ricci tensor is $R_{\mu\nu} = \Lambda g_{\mu\nu}$ in Step 9, and its Weyl tensor is empty in every slot in Step 11.
+That is what maximal symmetry costs and what it buys, and it is why the Weyl tensor of Step 11 is computed rather than copied.
 
 ---
 
@@ -24,23 +24,23 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+which fixes the sign of every Riemann component.
 
 The Ricci tensor is the standard contraction,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-settled for the collection on 2026-09-18.
-Here the settlement is not free, as it was for the vacuum entries whose Ricci tensor vanishes either way.
-This spacetime has a nonzero Ricci tensor, so the two contractions differ in every slot of it, of the Einstein tensor and of the Ricci scalar, and Step 9 says which sign the published values carry and why that is the one that reads correctly.
+the contraction every spacetime has used since 2026-09-18.
+Here the choice is not free, as it was for the vacuum spacetimes whose Ricci tensor vanishes either way.
+This spacetime has a nonzero Ricci tensor, so the two contractions differ in every slot of it, of the Einstein tensor and of the Ricci scalar, and which sign the components carry, and why that is the one that reads correctly, comes out in Step 9.
 
-The chart is the collection's, the one whose zeroth coordinate is
+The chart is the one whose zeroth coordinate is
 
 $$x^0 = ct.$$
 
-The index is printed with the bare letter $t$, but the component printed against it is a component of that chart.
-Everything from Step 4 onward is computed directly in it.
-The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$, and Step 19 checks that this is the reading on which every published term balances.
+The index is written with the bare letter $t$, but the component written against it is a component of that chart.
+We compute everything from Step 4 onward directly in it.
+The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$, and it is on this reading that every term balances in Step 19.
 
 The one parameter of the static patch is the cosmological constant $\Lambda$, taken positive, carrying an inverse length squared.
 It sets one length,
@@ -53,8 +53,8 @@ The abbreviation
 $$f = 1 - \frac{\Lambda r^2}{3} = \frac{3 - \Lambda r^2}{3} = 1 - \frac{r^2}{\ell^2}$$
 
 runs through Steps 3 to 14.
-It is shorthand for this document only.
-The published file writes every component out in $r$ and $\Lambda$, because the checker reads the file symbol by symbol and has no way to be told what an abbreviation means.
+It is shorthand for the derivation only, and never enters the components themselves.
+Every stored component is written out in $r$ and $\Lambda$, because the checker reads each one symbol by symbol and has no way to be told what an abbreviation means.
 
 ---
 
@@ -82,14 +82,14 @@ and therefore
 $$G_{\mu\nu} = \Lambda g_{\mu\nu} - 2\Lambda g_{\mu\nu} = -\Lambda g_{\mu\nu}.$$
 
 Those three identities hold for any solution of the $\Lambda$ vacuum equation in four dimensions, whatever its symmetry.
-They are what the entry publishes for both charts, and Steps 9, 10 and 16 recover each of them from the metric rather than from this argument.
+Both charts satisfy them, and each of them is recovered from the metric rather than from this argument in Steps 9, 10 and 16.
 The word vacuum is doing narrower work than usual here: there is no matter, so $T_{\mu\nu} = 0$, but the Ricci tensor is not zero, because $\Lambda$ sits on the geometry side of the equation and is a curvature in its own right.
 
 What is special about de Sitter, and does not follow from the field equation alone, is maximal symmetry: it is the solution whose Riemann tensor is built from the metric and nothing else,
 
 $$R_{\mu\nu\rho\sigma} = \frac{\Lambda}{3}\left(g_{\mu\rho}g_{\nu\sigma} - g_{\mu\sigma}g_{\nu\rho}\right).$$
 
-Step 8 gets that form out of the static patch by computing four of its components, and Step 16 gets the same form with the same $\Lambda$ out of the flat slicing.
+Four components of the static patch yield that form in Step 8, and the flat slicing yields the same form with the same $\Lambda$ in Step 16.
 
 ---
 
@@ -101,17 +101,17 @@ $$ds^2 = -\left(1 - \frac{\Lambda r^2}{3}\right)c^2dt^2 + \frac{dr^2}{1 - \dfrac
 
 that is $ds^2 = -fc^2dt^2 + f^{-1}dr^2 + r^2d\Omega^2$.
 
-Two things about it are worth saying before any algebra.
+Two things about it matter before any algebra.
 
 The coordinate $r$ is the areal radius, exactly as in Schwarzschild: the sphere at fixed $t$ and $r$ has area $4\pi r^2$, since the angular part of the line element is $r^2d\Omega^2$ untouched.
 That is a definition of $r$, not a result, and it is what makes the horizon radius of Step 13 a statement about an area rather than about a distance.
 
 The chart is static only where $f > 0$.
 At $r = \ell$ the coefficient of $dt^2$ vanishes and the coefficient of $dr^2$ blows up, and past it the two swap sign, so $t$ stops being a time.
-Step 13 shows that nothing happens to the curvature there.
+Nothing happens to the curvature there, by Step 13.
 
 The form is the same one Schwarzschild wears, with $f = 1 - r_s/r$ replaced by $f = 1 - r^2/\ell^2$.
-Every Christoffel symbol below can be written once in terms of $f$ and $f'$ and then specialised, and the specialisation is
+Every Christoffel symbol can be written once in terms of $f$ and $f'$ and then specialised, and the specialisation is
 
 $$f' = \frac{df}{dr} = -\frac{2\Lambda r}{3}, \qquad f'' = -\frac{2\Lambda}{3}.$$
 
@@ -125,7 +125,7 @@ In the chart $x^0 = ct$ the time term is $-f(c\,dt)^2$, so the matrix of the met
 
 $$g_{\mu\nu} = \begin{pmatrix} -f & 0 & 0 & 0 \\ 0 & f^{-1} & 0 & 0 \\ 0 & 0 & r^2 & 0 \\ 0 & 0 & 0 & r^2\sin^2\theta \end{pmatrix},$$
 
-which is what the entry publishes as
+which written out is
 
 $$g_{tt} = -\left(1 - \frac{\Lambda r^2}{3}\right), \qquad g_{rr} = \frac{3}{3 - \Lambda r^2}, \qquad g_{\theta\theta} = r^2, \qquad g_{\phi\phi} = r^2\sin^2\theta.$$
 
@@ -142,13 +142,13 @@ The matrix is diagonal, so the inverse is the reciprocal slot by slot,
 
 $$g^{tt} = -\frac{3}{3 - \Lambda r^2}, \qquad g^{rr} = 1 - \frac{\Lambda r^2}{3}, \qquad g^{\theta\theta} = \frac{1}{r^2}, \qquad g^{\phi\phi} = \frac{1}{r^2\sin^2\theta},$$
 
-which is the block the entry publishes as `inverse_metric_components`.
+which is the inverse metric in full.
 
 ---
 
 ## Step 5. The Christoffel symbols with an upper index
 
-Every symbol below comes from the connection formula of Step 1 with the diagonal metric of Step 4.
+Every symbol comes from the connection formula of Step 1 with the diagonal metric of Step 4.
 
 The two that mix $t$ and $r$:
 
@@ -157,7 +157,7 @@ $$\Gamma^t{}_{tr} = \Gamma^t{}_{rt} = \tfrac{1}{2}g^{tt}\partial_r g_{tt} = \tfr
 $$\Gamma^r{}_{tt} = -\tfrac{1}{2}g^{rr}\partial_r g_{tt} = -\tfrac{1}{2}f\cdot(-f') = \frac{ff'}{2} = -\frac{\Lambda r\left(3 - \Lambda r^2\right)}{9}.$$
 
 In the first, $f'/(2f)$ becomes $(-2\Lambda r/3)/(2(3-\Lambda r^2)/3)$, and the threes cancel.
-In the second, $ff'/2$ becomes $\left((3-\Lambda r^2)/3\right)\left(-2\Lambda r/3\right)/2$, which is the published nine in the denominator.
+In the second, $ff'/2$ becomes $\left((3-\Lambda r^2)/3\right)\left(-2\Lambda r/3\right)/2$, which is where the nine in the denominator comes from.
 
 The purely radial one:
 
@@ -177,7 +177,7 @@ $$\Gamma^\theta{}_{r\theta} = \Gamma^\theta{}_{\theta r} = \Gamma^\phi{}_{r\phi}
 
 $$\Gamma^\theta{}_{\phi\phi} = -\cos\theta\sin\theta, \qquad \Gamma^\phi{}_{\theta\phi} = \Gamma^\phi{}_{\phi\theta} = \cot\theta.$$
 
-That is thirteen nonzero symbols counting both orderings of each mixed pair, and it is the `ull` block of the entry.
+That is thirteen nonzero symbols counting both orderings of each mixed pair, and it is all of the Christoffel symbols with an upper index.
 Not one of them carries a factor of $c$: the metric has no $c$ in this chart and does not depend on $t$, so nothing can produce one.
 
 ---
@@ -192,7 +192,7 @@ $$\Gamma_{rtt} = g_{rr}\Gamma^r{}_{tt} = \frac{1}{f}\cdot\frac{ff'}{2} = \frac{f
 
 $$\Gamma_{rrr} = g_{rr}\Gamma^r{}_{rr} = \frac{1}{f}\cdot\left(-\frac{f'}{2f}\right) = -\frac{f'}{2f^2} = \frac{3\Lambda r}{\left(3 - \Lambda r^2\right)^2}.$$
 
-The last one is where the $f^{-2}$ of the published denominator comes from, and it is the only lowered symbol whose form differs from the corresponding one with an upper index by more than a sign.
+The last one is where the $f^{-2}$ of the denominator comes from, and it is the only lowered symbol whose form differs from the corresponding one with an upper index by more than a sign.
 
 The rest lose their metric functions entirely:
 
@@ -202,14 +202,14 @@ $$\Gamma_{\theta r\theta} = \Gamma_{\theta\theta r} = r^2\cdot\frac{1}{r} = r, \
 
 $$\Gamma_{\theta\phi\phi} = r^2(-\cos\theta\sin\theta) = -r^2\cos\theta\sin\theta, \qquad \Gamma_{\phi\theta\phi} = \Gamma_{\phi\phi\theta} = r^2\sin^2\theta\cot\theta = r^2\cos\theta\sin\theta.$$
 
-That is the `lll` block, thirteen symbols again.
+That is every Christoffel symbol with every index lowered, thirteen symbols again.
 
 ---
 
 ## Step 7. Four components of the Riemann tensor, computed
 
 The Riemann tensor of a static spherically symmetric metric has four independent components up to the symmetries, one for each plane the geometry distinguishes.
-All four are computed here from the definition of Step 1, and Step 8 shows that they are enough.
+We compute all four from the definition of Step 1, and by the argument of Step 8 they are enough.
 
 **The $tr$ plane.**
 With $\mu = t$, $\nu = r$, $\rho = t$, $\sigma = r$, and using $\Gamma^t{}_{rr} = 0$,
@@ -265,22 +265,22 @@ $$\frac{\Lambda}{3}\delta^t{}_t g_{rr} = \frac{\Lambda}{3}\cdot\frac{1}{f} = \fr
 $$\frac{\Lambda}{3}\delta^r{}_r g_{\theta\theta} = \frac{\Lambda r^2}{3}, \qquad \frac{\Lambda}{3}\delta^\theta{}_\theta g_{\phi\phi} = \frac{\Lambda r^2\sin^2\theta}{3},$$
 
 which are the four values computed.
-Since a static spherically symmetric Riemann tensor has no independent components beyond those four, and the expression above has the right symmetries, it is the whole tensor.
+Since a static spherically symmetric Riemann tensor has no independent components beyond those four, and that expression has the right symmetries, it is the whole tensor.
 
 Lowering the first index gives the form quoted in Step 2,
 
 $$R_{\mu\nu\rho\sigma} = \frac{\Lambda}{3}\left(g_{\mu\rho}g_{\nu\sigma} - g_{\mu\sigma}g_{\nu\rho}\right),$$
 
-and every one of the twenty four nonzero components the entry publishes in each variant is one slot of it.
+and every one of the twenty four nonzero components, with the first index up or with every index lowered, is one slot of it.
 Three examples, one per pattern:
 
 $$R_{trtr} = \frac{\Lambda}{3}g_{tt}g_{rr} = \frac{\Lambda}{3}(-f)\frac{1}{f} = -\frac{\Lambda}{3},$$
 
 $$R_{t\theta t\theta} = \frac{\Lambda}{3}g_{tt}g_{\theta\theta} = -\frac{\Lambda r^2 f}{3} = -\frac{\Lambda r^2\left(3-\Lambda r^2\right)}{9}, \qquad R_{\theta\phi\theta\phi} = \frac{\Lambda}{3}g_{\theta\theta}g_{\phi\phi} = \frac{\Lambda r^4\sin^2\theta}{3}.$$
 
-The first is a constant, with both metric functions cancelled, and it is the cleanest statement in the entry that the curvature does not vary from point to point.
+The first is a constant, with both metric functions cancelled, and it is the cleanest statement that the curvature does not vary from point to point.
 
-The antisymmetry $R_{\mu\nu\rho\sigma} = -R_{\mu\nu\sigma\rho}$ is what pairs the published components: every slot appears twice, once with the last two indices in each order and with opposite signs, which is how the count reaches twenty four in a tensor with six independent planes.
+The antisymmetry $R_{\mu\nu\rho\sigma} = -R_{\mu\nu\sigma\rho}$ is what pairs the components: every slot appears twice, once with the last two indices in each order and with opposite signs, which is how the count reaches twenty four in a tensor with six independent planes.
 
 ---
 
@@ -299,12 +299,12 @@ and with one index raised the metric disappears entirely,
 
 $$R^\mu{}_\nu = \Lambda\delta^\mu{}_\nu,$$
 
-so all four diagonal components of the `ul` block are the bare $\Lambda$.
-That block is the one to read: a curvature that is a multiple of the identity in an orthonormal frame is the definition of isotropy, and it holds at every point of the chart, including at the horizon where the other two variants have a factor that misbehaves.
+so all four diagonal components of the Ricci tensor with one index up are the bare $\Lambda$.
+That form shows the isotropy directly: a curvature that is a multiple of the identity in an orthonormal frame is the definition of isotropy, and it holds at every point of the chart, including at the horizon where the other two index positions have a factor that misbehaves.
 
-The contraction matters here in a way it did not for the vacuum entries.
+The contraction matters here in a way it did not for the vacuum spacetimes.
 Contracting on the last index instead would give $R_{\mu\nu} = -\Lambda g_{\mu\nu}$, $R = -4\Lambda$ and $G_{\mu\nu} = +\Lambda g_{\mu\nu}$, and the field equation would have to be written $G_{\mu\nu} = \Lambda g_{\mu\nu}$ to compensate.
-On the standard contraction the sign works out the way the rest of physics reads it: a positive $\Lambda$ acts as a fluid of positive energy density $\rho_\Lambda = \Lambda c^4/(8\pi G)$ and pressure $p_\Lambda = -\rho_\Lambda$, and $G_{tt}$ comes out positive where that density is, exactly as it does for ordinary matter in the FRW entry.
+On the standard contraction the sign works out the way the rest of physics reads it: a positive $\Lambda$ acts as a fluid of positive energy density $\rho_\Lambda = \Lambda c^4/(8\pi G)$ and pressure $p_\Lambda = -\rho_\Lambda$, and $G_{tt}$ comes out positive where that density is, exactly as it does for ordinary matter in FRW.
 
 ---
 
@@ -314,13 +314,13 @@ The scalar is the trace of Step 9,
 
 $$R = g^{\nu\sigma}R_{\nu\sigma} = \Lambda g^{\nu\sigma}g_{\nu\sigma} = 4\Lambda,$$
 
-a constant, published as $R = 4\Lambda$.
+a constant, written $R = 4\Lambda$.
 
 The Einstein tensor follows without any further computation:
 
 $$G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = \Lambda g_{\mu\nu} - 2\Lambda g_{\mu\nu} = -\Lambda g_{\mu\nu},$$
 
-so every published Einstein component is minus the Ricci component in the same slot and the same variant, and the mixed block is $G^\mu{}_\nu = -\Lambda\delta^\mu{}_\nu$.
+so every Einstein component is minus the Ricci component in the same slot and the same index position, and the mixed Einstein tensor is $G^\mu{}_\nu = -\Lambda\delta^\mu{}_\nu$.
 Written out, $G_{\mu\nu} + \Lambda g_{\mu\nu} = 0$, which is the field equation of Step 2 and the sense in which this spacetime is empty.
 
 ---
@@ -331,7 +331,7 @@ The Weyl tensor in four dimensions is Riemann with its traces removed,
 
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \frac{1}{2}\left(g_{\mu\rho}R_{\sigma\nu} - g_{\mu\sigma}R_{\rho\nu} - g_{\nu\rho}R_{\sigma\mu} + g_{\nu\sigma}R_{\rho\mu}\right) + \frac{R}{6}\left(g_{\mu\rho}g_{\sigma\nu} - g_{\mu\sigma}g_{\rho\nu}\right),$$
 
-which is the expression `_tools/derivations/weyl.md` works from and the one the checker computes.
+which is the expression the checker computes, the one derived in `_tools/derivations/weyl.md`.
 It is not Riemann here, because the Ricci tensor is not zero, and it is not the Ricci tensor either.
 It has to be computed.
 
@@ -348,11 +348,11 @@ Adding the three,
 $$C_{\mu\nu\rho\sigma} = \frac{\Lambda}{3}P_{\mu\nu\rho\sigma} - \frac{1}{2}\cdot 2\Lambda P_{\mu\nu\rho\sigma} + \frac{2\Lambda}{3}P_{\mu\nu\rho\sigma} = \Lambda\left(\frac{1}{3} - 1 + \frac{2}{3}\right)P_{\mu\nu\rho\sigma} = 0.$$
 
 The three rational numbers cancel identically, with no appeal to the value of $\Lambda$, to the coordinates or to the chart.
-So the Weyl tensor vanishes in every slot of both variants, and the entry publishes an empty `nonzero` list for each, as the FRW entry does for the same reason.
+So the Weyl tensor vanishes in every slot, with the first index up and with every index lowered, and the checker requires every component of both to vanish, as it does for FRW for the same reason.
 
 This is the arithmetic behind the word conformally flat.
 A maximally symmetric spacetime has no tidal curvature at all: the whole of its Riemann tensor is trace, so removing the traces leaves nothing.
-It is worth saying plainly that the empty block here is not the empty block of a vacuum: Schwarzschild has $R_{\mu\nu} = 0$ and $C = R \neq 0$, de Sitter has $C = 0$ and $R_{\mu\nu} \neq 0$, and the two are opposite corners of the same decomposition.
+A vanishing Weyl tensor here is not the vanishing Ricci tensor of a vacuum: Schwarzschild has $R_{\mu\nu} = 0$ and $C = R \neq 0$, de Sitter has $C = 0$ and $R_{\mu\nu} \neq 0$, and the two are opposite corners of the same decomposition.
 
 ---
 
@@ -374,21 +374,21 @@ which is $2n(n-1)$ at $n = 4$, and
 
 $$K = \left(\frac{\Lambda}{3}\right)^2\cdot 24 = \frac{24\Lambda^2}{9} = \frac{8\Lambda^2}{3}.$$
 
-That is the published value, and it is a constant: the same number at the origin, at the horizon and at every point of the flat slicing, which Step 16 confirms by getting $24H^4/c^4$ from the other chart.
-Nothing in this spacetime is singular, and the entry's $K$ is the shortest proof of it.
+That value is a constant: the same number at the origin, at the horizon and at every point of the flat slicing, and the other chart gives it again as $24H^4/c^4$ in Step 16.
+Nothing in this spacetime is singular, and $K$ is the shortest proof of it.
 
 ---
 
 ## Step 13. The horizon at $r = \sqrt{3/\Lambda}$ is a coordinate fact
 
 At $r = \ell = \sqrt{3/\Lambda}$ the function $f$ vanishes, so $g_{tt} \to 0$ and $g_{rr} \to \infty$.
-Three published quantities say at once that this is the chart failing and not the geometry.
+Three quantities say at once that this is the chart failing and not the geometry.
 
 $K = 8\Lambda^2/3$ is finite there, and so is every other curvature invariant, because all of them are built from $\Lambda$ and the metric alone.
 
 $R^\mu{}_\nu = \Lambda\delta^\mu{}_\nu$ has no $r$ in it at all, so the Ricci tensor is as regular at $r = \ell$ as it is anywhere.
 
-The Riemann tensor in the `ulll` variant has components such as $R^t{}_{rtr} = \Lambda/(3-\Lambda r^2)$ that do blow up, and components such as $R^t{}_{\theta t\theta} = \Lambda r^2/3$ that do not, in the same tensor at the same point.
+The Riemann tensor with its first index up has components such as $R^t{}_{rtr} = \Lambda/(3-\Lambda r^2)$ that do blow up, and components such as $R^t{}_{\theta t\theta} = \Lambda r^2/3$ that do not, in the same tensor at the same point.
 A tensor cannot be singular in one slot and regular in another at the same point in a good chart, so the chart is bad.
 
 What the surface is instead is a Killing horizon of $\partial_t$, the boundary of the region a single observer at $r = 0$ can ever receive a signal from.
@@ -398,7 +398,7 @@ $$\kappa = \frac{c^2}{2}\left|f'(\ell)\right| = \frac{c^2}{2}\cdot\frac{2\Lambda
 
 the one combination the geometry can make, and it is what fixes the Gibbons-Hawking temperature $T = \hbar H/2\pi k_B$ that every de Sitter observer sees.
 Unlike a black hole horizon it is observer dependent: it is centred wherever the observer at $r = 0$ is placed, and the flat slicing of Step 15 crosses it without noticing.
-The entry states the radius in its `domains` for the static patch, alongside the range of $r$, rather than leaving a reader to find the zero of $g_{tt}$.
+The domain of the static patch states the radius, alongside the range of $r$, rather than leaving a reader to find the zero of $g_{tt}$.
 
 ---
 
@@ -430,7 +430,7 @@ $$E = \left(1 - \frac{\Lambda r^2}{3}\right)\dot{t}$$
 
 is conserved, and it is the energy the timelike Killing vector $\partial_t$ defines, per unit rest mass and in units of $c^2$.
 The fourth equation integrates the same way on $\partial_\phi$, giving the angular momentum $L = r^2\sin^2\theta\,\dot\phi$.
-Neither constant is published, since the entry publishes equations rather than their solutions, but both are one line from what is published and worth knowing when reading it.
+Neither constant appears among the geodesic equations, which are equations rather than their solutions, but both are one line from them and worth knowing.
 
 ---
 
@@ -444,7 +444,7 @@ Its parameter is $H$ rather than $\Lambda$, carrying an inverse time, and the tw
 
 $$\frac{3H^2}{c^2} = \Lambda.$$
 
-That relation is what turns every published component of this chart into a statement about $\Lambda$: $R = 12H^2/c^2$ is $4\Lambda$, and $K = 24H^4/c^4$ is $8\Lambda^2/3$.
+That relation is what turns every component of this chart into a statement about $\Lambda$: $R = 12H^2/c^2$ is $4\Lambda$, and $K = 24H^4/c^4$ is $8\Lambda^2/3$.
 
 The change of coordinates from the flat slicing to the static patch is worth doing in full, because it produces the static $f$ out of nothing but a completed square.
 Write the spatial part in polar form, $\rho^2 = x^2+y^2+z^2$, and set
@@ -495,7 +495,7 @@ The connection of a spatially flat expanding metric has two families:
 $$\Gamma^t{}_{ij} = a a'\delta_{ij} = \frac{H}{c}e^{2Ht}\delta_{ij}, \qquad \Gamma^i{}_{tj} = \Gamma^i{}_{jt} = \frac{a'}{a}\delta^i{}_j = \frac{H}{c}\delta^i{}_j,$$
 
 with $i$ and $j$ running over $x$, $y$ and $z$.
-That is nine nonzero symbols, three of the first kind and six of the second, and it is the `ull` block.
+That is nine nonzero symbols, three of the first kind and six of the second, and it is all of the Christoffel symbols with an upper index.
 Lowering the first index gives $\Gamma_{tij} = -aa'\delta_{ij}$ and $\Gamma_{itj} = \Gamma_{ijt} = aa'\delta_{ij}$, the only change being the sign that $g_{tt} = -1$ puts on the first family.
 
 The Riemann tensor takes two computations.
@@ -517,14 +517,14 @@ Both results are the maximally symmetric form of Step 8 with $\Lambda$ replaced 
 
 $$R^\mu{}_{\nu\rho\sigma} = \frac{H^2}{c^2}\left(\delta^\mu{}_\rho g_{\nu\sigma} - \delta^\mu{}_\sigma g_{\nu\rho}\right),$$
 
-since $\tfrac{H^2}{c^2}g_{ij} = \tfrac{H^2}{c^2}a^2\delta_{ij}$ and $-\tfrac{H^2}{c^2}g_{tt} = \tfrac{H^2}{c^2}$, which is the published $R^x{}_{ttx}$.
+since $\tfrac{H^2}{c^2}g_{ij} = \tfrac{H^2}{c^2}a^2\delta_{ij}$ and $-\tfrac{H^2}{c^2}g_{tt} = \tfrac{H^2}{c^2}$, which is the component $R^x{}_{ttx}$.
 So the same $\Lambda$ appears in a chart that never mentions it, and everything from Step 9 to Step 12 carries over verbatim:
 
 $$R_{\mu\nu} = \frac{3H^2}{c^2}g_{\mu\nu}, \qquad R^\mu{}_\nu = \frac{3H^2}{c^2}\delta^\mu{}_\nu, \qquad R = \frac{12H^2}{c^2}, \qquad G_{\mu\nu} = -\frac{3H^2}{c^2}g_{\mu\nu}, \qquad C_{\mu\nu\rho\sigma} = 0,$$
 
 $$K = \left(\frac{H^2}{c^2}\right)^2\cdot 24 = \frac{24H^4}{c^4} = \frac{8\Lambda^2}{3}.$$
 
-The published components carry the scale factor where the metric does: $R_{xx} = 3H^2e^{2Ht}/c^2$ has it, $R^x{}_x = 3H^2/c^2$ does not, and $R^{xx} = 3H^2e^{-2Ht}/c^2$ has its inverse.
+The components carry the scale factor where the metric does: $R_{xx} = 3H^2e^{2Ht}/c^2$ has it, $R^x{}_x = 3H^2/c^2$ does not, and $R^{xx} = 3H^2e^{-2Ht}/c^2$ has its inverse.
 
 ---
 
@@ -534,8 +534,8 @@ de Sitter space is the hyperboloid
 
 $$-\left(X^0\right)^2 + \left(X^1\right)^2 + \left(X^2\right)^2 + \left(X^3\right)^2 + \left(X^4\right)^2 = \ell^2$$
 
-in five dimensional Minkowski space with metric $\mathrm{diag}(-1,1,1,1,1)$, and both published charts are charts on it.
-This is not needed for any published number, but it is what makes the relation between the two charts a fact about regions rather than about formulas.
+in five dimensional Minkowski space with metric $\mathrm{diag}(-1,1,1,1,1)$, and both charts are charts on it.
+No component needs the hyperboloid, but it is what makes the relation between the two charts a fact about regions rather than about formulas.
 
 The static patch is
 
@@ -556,7 +556,7 @@ $$X^0 + X^4 = \ell\left(\sinh Ht + \cosh Ht\right) = \ell e^{Ht} > 0,$$
 
 so the flat slicing covers exactly the half of the hyperboloid on which $X^0 + X^4 > 0$, and no point outside it, for any $t$ and any $x^i$.
 That half is the expanding one, bounded by the past horizon $X^0 + X^4 = 0$, and the static patch is the part of it with $r < \ell$.
-The entry says so in the `domains` of the flat slicing, because a chart whose coordinates each run over the whole real line while covering half a spacetime is exactly the case a reader will not guess.
+The half covering is easy to miss, because every coordinate of the flat slicing runs over the whole real line, which by itself suggests the whole spacetime.
 
 ---
 
@@ -574,7 +574,7 @@ Any peculiar velocity decays, since the spatial equations integrate exactly to $
 
 ---
 
-## Step 19. Every published expression is dimensionally consistent
+## Step 19. Every expression is dimensionally consistent
 
 The chart coordinates of the static patch are $(ct, r, \theta, \phi)$, of dimensions $L$, $L$, $1$, $1$, and its parameter is $[\Lambda] = L^{-2}$.
 Those of the flat slicing are $(ct, x, y, z)$, all $L$, with $[H] = T^{-1}$.
@@ -596,7 +596,7 @@ $R = 4\Lambda$ carries $L^{-2}$ and $K = 8\Lambda^2/3$ carries $L^{-4}$, as a sc
 In the flat slicing every factor of $c$ earns its place in the same way.
 $\Gamma^x{}_{tx} = H/c$ must carry $L^{-1}$, and $H/c$ is $T^{-1}\cdot T/L = L^{-1}$.
 $R_{xx} = 3H^2e^{2Ht}/c^2$ must carry $L^{-2}$, which $H^2/c^2$ does, and the exponential is dimensionless because $Ht$ is.
-Had the components been printed in the bare chart rather than in $x^0 = ct$, those factors of $c$ would not be there and the dimensional pass would name every one of them.
+Had the components been written in the bare chart rather than in $x^0 = ct$, those factors of $c$ would not be there and the dimensional pass would name every one of them.
 
 The geodesic equations are measured against their own second derivatives.
 In the first equation of Step 18, $\ddot{t}$ carries $L/\lambda^2$, and the term $\left(H/c\right)e^{2Ht}\dot{x}^2$ carries
@@ -605,14 +605,14 @@ $$\frac{1}{L}\cdot\left(\frac{L}{\lambda}\right)^2 = \frac{L}{\lambda^2},$$
 
 which matches, and matches only because $\dot{t}$ is $d(ct)/d\lambda$ and $\dot{x}$ is $dx/d\lambda$, both velocities of the same chart.
 On the other reading, with $\dot t = dt/d\lambda$, that term would be one factor of $c$ away from its left hand side.
-It is not, on any of the 218 expressions the two systems publish between them.
+It is not, on any of the 218 expressions of the two systems between them.
 
 ---
 
-## Step 20. What the entry publishes, and the declarations the checker needs
+## Step 20. The expressions, and the declarations the checker needs
 
-The static patch publishes 113 expressions: the line element, four metric components and four inverse ones, thirteen Christoffel symbols in each of two variants, twenty four Riemann components in each of two, four Ricci components in each of three, four Einstein components in each of three, two scalars, an empty Weyl block in each of two variants, and four geodesic equations.
-The flat slicing publishes 105, differing only in having nine Christoffel symbols per variant rather than thirteen.
+The static patch has 113 expressions: the line element, four metric components and four inverse ones, thirteen Christoffel symbols in each of two index positions, twenty four Riemann components in each of two, four Ricci components in each of three, four Einstein components in each of three, two scalars, a vanishing Weyl tensor in each of two index positions, and four geodesic equations.
+The flat slicing has 105, differing only in having nine Christoffel symbols per index position rather than thirteen.
 
 For the checker to read either of them, `DIMENSIONS` in `verify_metrics.py` needs one line per system:
 
@@ -625,7 +625,7 @@ For the checker to read either of them, `DIMENSIONS` in `verify_metrics.py` need
 
 The declaration `"t": "T"` is what tells the checker that $t$ is a time and so that the chart coordinate is $ct$; every factor of $c$ in the comparison follows from it.
 Declaring $\Lambda$ as $L^{-2}$ and $H$ as $T^{-1}$ is what makes the two charts balance without either of them naming the other's parameter.
-Neither system needs a line in `PARAMETER_RELATIONS`, because neither parameter is constrained: every positive $\Lambda$ gives a de Sitter space, and the published values hold for all of them.
+Neither system needs a line in `PARAMETER_RELATIONS`, because neither parameter is constrained: every positive $\Lambda$ gives a de Sitter space, and the components hold for all of them.
 
 Running
 

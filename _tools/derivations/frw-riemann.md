@@ -1,14 +1,13 @@
 # The Riemann tensor of the Friedmann-Lemaître-Robertson-Walker universe
 
-This is the working behind the Riemann block of `MFS/assets/data/metrics/frw.json`, and behind the two components it forces elsewhere in that file.
-It is narrower than the other files in this directory, which derive a whole entry.
-The FLRW Christoffel symbols, Ricci tensor, Einstein tensor, Ricci scalar and Kretschmann scalar were already right when this was written, and the Weyl block was already empty, which is what a conformally flat spacetime requires.
-What was wrong was the curvature tensor sitting between the connection and the Ricci tensor, so that the entry published a Riemann tensor which does not contract to its own Ricci tensor.
-Every component this file changed is computed here from the connection, by hand, so that the captain can check any one of them without running anything.
-Step 13, added later, works out where $r$ ends in the closed case.
+We derive here only the Riemann tensor of FLRW and the two components it forces outside that tensor, not every tensor of the spacetime.
+The FLRW Christoffel symbols, Ricci tensor, Einstein tensor, Ricci scalar and Kretschmann scalar were already right before the correction, and the Weyl tensor already vanished, which is what a conformally flat spacetime requires.
+What was wrong was the curvature tensor sitting between the connection and the Ricci tensor, so that the Riemann tensor did not contract to the Ricci tensor beside it.
+Every component the correction changed is computed here from the connection, by hand, so that the captain can check any one of them without running anything.
+Where $r$ ends in the closed case is worked out in Step 13, added later.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file.
-Running it on `frw/comoving_spherical` and `frw/conformal_spherical` takes about thirteen seconds, which makes this the cheapest entry in the collection to re-check.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and checks every stated component against it.
+Running it on the comoving and conformal spherical charts of FLRW takes about thirteen seconds, which makes FLRW the cheapest spacetime to re-check.
 
 ---
 
@@ -27,26 +26,26 @@ The Ricci tensor is the standard contraction on the first lower index,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-which the collection settled on for every entry on 18 September 2026.
-On that contraction FLRW reads $R_{tt} = -3\ddot{a}/a$ and $G_{tt} = 3(\dot{a}^2+k)/a^2$, the second of which is positive for ordinary matter, and both of which the entry already published.
-Step 7 shows that the corrected Riemann tensor of this file contracts to exactly those, which is the whole point of the correction: the published Ricci tensor was never in doubt, and the Riemann tensor had to be brought into line with it rather than the other way round.
+settled for every spacetime on 18 September 2026.
+On that contraction FLRW reads $R_{tt} = -3\ddot{a}/a$ and $G_{tt} = 3(\dot{a}^2+k)/a^2$, the second of which is positive for ordinary matter, and both of which were already right.
+The corrected Riemann tensor contracts to exactly those in Step 7, which is the whole point of the correction: the Ricci tensor was never in doubt, and the Riemann tensor had to be brought into line with it rather than the other way round.
 
 Factors of $c$ and $G$ are explicit.
-The chart is the one whose time coordinate is $x^0 = ct$, which is why the entry prints $g_{tt} = -1$ against a line element whose time term is $-c^2dt^2$.
+The chart is the one whose time coordinate is $x^0 = ct$, which is why $g_{tt} = -1$ while the time term of the line element is $-c^2dt^2$.
 Because the rescaling $t \to ct$ is linear with constant coefficients, a component in this chart is the component taken with the bare coordinate multiplied by $c$ once for every upper time index and divided by $c$ once for every lower one, and the Christoffel symbols follow the same rule because the inhomogeneous term in their transformation law carries a second derivative of the coordinate change, which vanishes for a linear one.
 
-Every dot in this file and in the entry is a derivative with respect to that chart coordinate,
+Every dot is a derivative with respect to that chart coordinate,
 
 $$\dot{a} \equiv \frac{da}{dx^0} = \frac{1}{c}\frac{da}{dt}, \qquad \ddot{a} \equiv \frac{d^2a}{(dx^0)^2} = \frac{1}{c^2}\frac{d^2a}{dt^2}.$$
 
-This is what keeps the printed components free of $c$ while every one of them is a component in the $x^0 = ct$ chart.
+This is what keeps the components free of $c$ while every one of them is a component in the $x^0 = ct$ chart.
 It is also what makes them dimensionally honest.
 The scale factor $a$ is dimensionless and $r$ is a comoving length, so $k$ is a curvature carrying $1/L^2$, and $\dot{a}$, being a derivative with respect to a length, carries $1/L$.
 Then $\dot{a}^2 + k$ carries $1/L^2$ and $\ddot{a}/a$ carries $1/L^2$, which is what a Riemann component with one upper and three lower indices, all of them lengths, has to carry.
-That last sentence is the whole of the dimensional argument that condemned four of the old components on sight, and Step 8 returns to it.
+That count is the whole of the dimensional argument that condemned four of the old components on sight, and it returns in Step 8.
 
-Working in the $x^0$ chart from the start, rather than in the bare $t$ chart and converting at the end, means no factor of $c$ appears anywhere below.
-Every expression in Steps 2 to 9 is already in the form the entry prints.
+Working in the $x^0$ chart from the start, rather than in the bare $t$ chart and converting at the end, means no factor of $c$ appears anywhere.
+Every expression in Steps 2 to 9 is already in its final form.
 
 ---
 
@@ -71,13 +70,13 @@ Two abbreviations are used throughout, purely to keep the lines short:
 $$f \equiv 1 - kr^2, \qquad f' = \frac{df}{dr} = -2kr.$$
 
 The scale factor depends on $x^0$ alone and on nothing else, and $f$ depends on $r$ alone and on nothing else.
-That single fact kills most of the terms below before they are written.
+That single fact kills most of the terms of the curvature before they are written.
 
 ---
 
 ## Step 3. The connection
 
-These are the entry's own published Christoffel symbols, restated because every Riemann component is built from them.
+These are the Christoffel symbols of FLRW, restated because every Riemann component is built from them.
 The checker agrees with all nineteen, and none of them was touched by this correction.
 They are listed once, with the symmetric partner $\Gamma^\mu{}_{\rho\nu} = \Gamma^\mu{}_{\nu\rho}$ left implicit.
 
@@ -89,9 +88,9 @@ $$\Gamma^r{}_{rr} = \frac{kr}{f}, \qquad \Gamma^r{}_{\theta\theta} = -rf, \qquad
 
 $$\Gamma^\theta{}_{r\theta} = \Gamma^\phi{}_{r\phi} = \frac{1}{r}, \qquad \Gamma^\theta{}_{\phi\phi} = -\sin\theta\cos\theta, \qquad \Gamma^\phi{}_{\theta\phi} = \cot\theta.$$
 
-The entry writes $\Gamma^r{}_{\theta\theta} = r(kr^2-1)$ and $\Gamma^r{}_{\phi\phi} = r(kr^2-1)\sin^2\theta$, which are $-rf$ and $-rf\sin^2\theta$.
+Written out, $\Gamma^r{}_{\theta\theta} = r(kr^2-1)$ and $\Gamma^r{}_{\phi\phi} = r(kr^2-1)\sin^2\theta$, which are $-rf$ and $-rf\sin^2\theta$.
 
-Three features of this list do all the work below.
+Three features of this list do all the work in the curvature.
 There is no $\Gamma^\mu{}_{tt}$ of any kind, because the comoving observers are geodesic, so every term carrying $\Gamma^\lambda{}_{tt}$ drops.
 There is no $\Gamma^t{}_{t\mu}$ of any kind, because $g_{tt}$ is the constant $-1$, so every term carrying $\Gamma^t{}_{t\lambda}$ drops.
 And the three symbols $\Gamma^r{}_{tr}$, $\Gamma^\theta{}_{t\theta}$ and $\Gamma^\phi{}_{t\phi}$ are the same number $\dot{a}/a$, which is why the three components $R^r{}_{ttr}$, $R^\theta{}_{tt\theta}$ and $R^\phi{}_{tt\phi}$ come out equal in Step 4.
@@ -127,8 +126,8 @@ The same three lines with $r$ replaced by $\theta$ or by $\phi$ give the same an
 
 $$R^\theta{}_{tt\theta} = R^\phi{}_{tt\phi} = \frac{\ddot{a}}{a}.$$
 
-These three are the components the old file got most conspicuously wrong, and the value $\ddot{a}/a$ is the same for all three no matter what $r$ or $\theta$ is.
-That is isotropy, and it is worth noticing that it is impossible to reconcile with a published value carrying an $r^2$ or a $\sin^2\theta$.
+These three are the components that were most conspicuously wrong before the correction, and the value $\ddot{a}/a$ is the same for all three no matter what $r$ or $\theta$ is.
+That is isotropy, and it cannot be reconciled with a value carrying an $r^2$ or a $\sin^2\theta$.
 
 ### 4b. $R^t{}_{rtr}$
 
@@ -217,7 +216,7 @@ $$\boxed{R^\theta{}_{r\theta r} = \frac{\dot{a}^2+k}{f} = \frac{\dot{a}^2+k}{1-k
 
 The $\phi$ version is the same computation with $\Gamma^\phi{}_{\phi t} = \dot{a}/a$ and $\Gamma^\phi{}_{\phi r} = 1/r$ in place of the $\theta$ ones, and every one of those is the same number as its $\theta$ counterpart.
 No $\sin^2\theta$ enters, because none of the four symbols used carries one.
-This is the component the old file published with a spurious $\sin^2\theta$, and Step 6 explains where the reader's intuition for that factor goes wrong.
+This is the component that used to carry a spurious $\sin^2\theta$, and the index count of Step 6 shows where the intuition for that factor goes wrong.
 
 ### 4f. $R^\theta{}_{\phi\theta\phi}$ and $R^\phi{}_{\theta\phi\theta}$, which are not equal
 
@@ -274,14 +273,14 @@ so
 $$\boxed{R^\phi{}_{\theta\phi\theta} = r^2\left(\dot{a}^2+k\right).}$$
 
 The two differ by exactly $\sin^2\theta$, and neither is a typo for the other.
-Step 6 says why in one line.
+The reason is the one line index count of Step 6.
 
 ---
 
-## Step 5. The mixed block in full
+## Step 5. The mixed components in full
 
 Antisymmetry in the last two indices, $R^\mu{}_{\nu\rho\sigma} = -R^\mu{}_{\nu\sigma\rho}$, doubles the six boxed values of Step 4 into twelve, and the relabelling already noted in Step 4 carries them to all twenty-four nonzero components.
-This is the corrected `frw/comoving_spherical.riemann.ulll` block, in the order the file publishes it.
+These are the corrected mixed components in the comoving spherical chart.
 
 | $R^\mu{}_{\nu\rho\sigma}$ | value | | $R^\mu{}_{\nu\rho\sigma}$ | value |
 | --- | --- | --- | --- | --- |
@@ -298,14 +297,14 @@ This is the corrected `frw/comoving_spherical.riemann.ulll` block, in the order 
 | $R^r{}_{\phi r\phi}$ | $r^2(\dot{a}^2+k)\sin^2\theta$ | | $R^\phi{}_{\theta\theta\phi}$ | $-r^2(\dot{a}^2+k)$ |
 | $R^r{}_{\phi\phi r}$ | $-r^2(\dot{a}^2+k)\sin^2\theta$ | | $R^\phi{}_{\theta\phi\theta}$ | $r^2(\dot{a}^2+k)$ |
 
-Eight of these twenty-four were already right in the file, and they are the eight in the $R^r{}_{\theta\cdot\cdot}$, $R^r{}_{\phi\cdot\cdot}$, $R^\theta{}_{r\cdot\cdot}$ and $R^\theta{}_{\phi\cdot\cdot}$ rows.
-The other sixteen are Step 9.
+Eight of these twenty-four were already right before the correction, and they are the eight in the $R^r{}_{\theta\cdot\cdot}$, $R^r{}_{\phi\cdot\cdot}$, $R^\theta{}_{r\cdot\cdot}$ and $R^\theta{}_{\phi\cdot\cdot}$ rows.
+The other sixteen were wrong in the three ways of Step 9.
 
 ---
 
 ## Step 6. Why $\sin^2\theta$ rides with the lower index and not the upper one
 
-The rule the old file appears to have followed is that a $\phi$ index anywhere brings a $\sin^2\theta$.
+The old components appear to follow the rule that a $\phi$ index anywhere brings a $\sin^2\theta$.
 It does not, and the reason is worth stating once because it decides four components in the comoving chart and two in the conformal one.
 
 The metric carries the factor: $g_{\phi\phi} = g_{\theta\theta}\sin^2\theta$.
@@ -318,7 +317,7 @@ $$R_{\phi\theta\phi\theta} = g_{\phi\phi}R^\phi{}_{\theta\phi\theta} = a^2r^2\si
 
 They agree, as the pair exchange symmetry $R_{\mu\nu\rho\sigma} = R_{\rho\sigma\mu\nu}$ demands.
 And they can only agree if the mixed components differ by exactly the $\sin^2\theta$ that separates $g_{\theta\theta}$ from $g_{\phi\phi}$.
-So the two mixed components are obliged to be unequal, and the file publishing them equal was the error, not the inequality.
+So the two mixed components are obliged to be unequal, and setting them equal was the error, not the inequality.
 
 The same argument settles $R^\phi{}_{rr\phi}$ against $R^r{}_{\phi\phi r}$, which the pair exchange also forces to share a lowered value:
 
@@ -334,14 +333,14 @@ For $R^\theta{}_{\phi\theta\phi}$ that is $+\tfrac{1}{2}+\tfrac{1}{2} = 1$, for 
 
 ---
 
-## Step 7. The fully lowered block, and the check that closes it
+## Step 7. The fully lowered Riemann tensor, and the check that closes it
 
 Lowering the first index of a diagonal metric is a single multiplication with no sum,
 
 $$R_{\mu\nu\rho\sigma} = g_{\mu\mu}R^\mu{}_{\nu\rho\sigma} \quad (\text{no sum over } \mu),$$
 
-which gives the corrected `frw/comoving_spherical.riemann.llll` block.
-The file previously published twelve of these twenty-four and left twelve out, so this is the block that grew.
+which gives the corrected Riemann tensor with every index lowered.
+Only twelve of these twenty-four were there before the correction, and the other twelve were missing.
 
 The six independent values are
 
@@ -363,10 +362,10 @@ The three pairs that had to come out equal did: $R_{trtr}$ against $R_{rtrt} = -
 None of those equalities was imposed.
 Each is a consequence of six separately computed mixed components meeting four separately written metric factors, so the pair exchange symmetry is a real check on the whole of Step 4 and not a restatement of it.
 
-### The contraction to the published Ricci tensor
+### The contraction to the Ricci tensor
 
-This is the check the old block failed, and the reason the correction was necessary at all.
-Contract the corrected mixed block on the first lower index, $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$:
+The old Riemann tensor failed this check, and that failure is the reason the correction was necessary at all.
+Contract the corrected mixed components on the first lower index, $R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$:
 
 $$R_{tt} = R^r{}_{trt} + R^\theta{}_{t\theta t} + R^\phi{}_{t\phi t} = -\frac{\ddot{a}}{a} - \frac{\ddot{a}}{a} - \frac{\ddot{a}}{a} = -3\frac{\ddot{a}}{a},$$
 
@@ -376,19 +375,19 @@ $$R_{\theta\theta} = R^t{}_{\theta t\theta} + R^r{}_{\theta r\theta} + R^\phi{}_
 
 $$R_{\phi\phi} = R^t{}_{\phi t\phi} + R^r{}_{\phi r\phi} + R^\theta{}_{\phi\theta\phi} = r^2\left(a\ddot{a} + 2(\dot{a}^2+k)\right)\sin^2\theta.$$
 
-All four are exactly what the entry already published, and they were left untouched.
+All four are exactly the Ricci components that were already right, and they were left untouched.
 Notice that $R_{\theta\theta}$ needs $R^\phi{}_{\theta\phi\theta}$ without a $\sin^2\theta$ and $R_{\phi\phi}$ needs $R^\theta{}_{\phi\theta\phi}$ with one.
-The old file had both carrying $\sin^2\theta$, which cannot produce both of those Ricci components, so the old Riemann block was inconsistent with the same entry's own Ricci tensor whichever way the contraction was taken.
+Both old components carried $\sin^2\theta$, which cannot produce both of those Ricci components, so the old Riemann tensor was inconsistent with the Ricci tensor beside it whichever way the contraction was taken.
 
 ---
 
 ## Step 8. The dimensional argument, which condemns four components without any algebra
 
-The dimensional pass in `verify_metrics.py` flagged four terms in the old block, all in the same family, and they are worth seeing because they need no derivative at all.
+The dimensional pass in `verify_metrics.py` flagged four terms in the old Riemann tensor, all in the same family, and condemning them needs no derivative at all.
 
 From Step 1, $a$ is dimensionless, $r$ is a length, $k$ carries $1/L^2$, and $\dot{a}$ and $\ddot{a}$, being derivatives with respect to the length $x^0$, carry $1/L$ and $1/L^2$.
 
-The bookkeeping for an indexed component is the one the checker uses: a curvature carries a base $1/L^2$, and each index then contributes the dimension of its own chart coordinate divided by $L$ when it sits above, and $L$ divided by that dimension when it sits below.
+An indexed component is counted the way the checker counts it: a curvature carries a base $1/L^2$, and each index then contributes the dimension of its own chart coordinate divided by $L$ when it sits above, and $L$ divided by that dimension when it sits below.
 A chart coordinate that is already a length contributes nothing either way, and that covers $t$, whose chart coordinate is $x^0 = ct$, and $r$.
 An angle contributes $1/L$ above and $L$ below, so an angle appearing once above and once below contributes nothing either.
 That is exactly the shape of $R^\theta{}_{tt\theta}$, whose two $t$ indices contribute nothing and whose two $\theta$ indices cancel each other, so it must carry the bare $1/L^2$.
@@ -398,7 +397,7 @@ $$\frac{\ddot{a}}{a} \ \text{carries}\ \frac{1}{L^2}, \qquad r^2a\ddot{a} \ \tex
 
 So the old $R^\theta{}_{tt\theta} = r^2a\ddot{a}$ was dimensionless where a curvature was wanted, and no choice of sign or convention could have rescued it.
 The same holds for $R^\theta{}_{t\theta t}$, $R^\phi{}_{tt\phi}$ and $R^\phi{}_{t\phi t}$.
-The value $r^2a\ddot{a}$ is the correct $R_{\theta tt\theta}$, which carries no net dimension because its one upper index has been traded for a lower one, and that is the fingerprint of the mistake: a fully lowered value printed in a mixed slot.
+The value $r^2a\ddot{a}$ is the correct $R_{\theta tt\theta}$, which carries no net dimension because its one upper index has been traded for a lower one, and that is the fingerprint of the mistake: a fully lowered value standing in a mixed slot.
 
 ---
 
@@ -408,23 +407,23 @@ The sixteen mixed components that changed fall into three groups, and the audit 
 
 **Six were the right value with the wrong sign.**
 These are the six $R^t{}_{\cdot\cdot\cdot}$ components.
-The file published $R^t{}_{rtr} = -a\ddot{a}/(1-kr^2)$ where Step 4b gives $+a\ddot{a}/(1-kr^2)$, and similarly for the $\theta$ and $\phi$ rows and their antisymmetric partners.
+The old component was $R^t{}_{rtr} = -a\ddot{a}/(1-kr^2)$ against the $+a\ddot{a}/(1-kr^2)$ of Step 4b, and similarly for the $\theta$ and $\phi$ rows and their antisymmetric partners.
 These six are exactly the lowered values in disguise as well, since $g_{tt} = -1$ makes a sign flip and a lowering the same operation on a $t$ index, which is why they read as a sign error rather than as the placement error the next group is.
 
 **Six carried the fully lowered value where the mixed one belongs.**
 These are the $R^r{}_{tt r}$, $R^\theta{}_{tt\theta}$ and $R^\phi{}_{tt\phi}$ components and their partners.
-The file published $R^r{}_{ttr} = a\ddot{a}/(1-kr^2)$, which is $R_{rttr}$ from Step 7, where Step 4a gives $R^r{}_{ttr} = \ddot{a}/a$.
+The old component was $R^r{}_{ttr} = a\ddot{a}/(1-kr^2)$, which is $R_{rttr}$ from Step 7, against $R^r{}_{ttr} = \ddot{a}/a$ from Step 4a.
 The two differ by the factor $g_{rr} = a^2/(1-kr^2)$, which is precisely the lowering.
-The $\theta$ and $\phi$ ones were published as $r^2a\ddot{a}$ and $r^2a\ddot{a}\sin^2\theta$, which are $R_{\theta tt\theta}$ and $R_{\phi tt\phi}$, and those are the four the dimensional pass caught in Step 8.
+The $\theta$ and $\phi$ ones were $r^2a\ddot{a}$ and $r^2a\ddot{a}\sin^2\theta$, which are $R_{\theta tt\theta}$ and $R_{\phi tt\phi}$, and those are the four the dimensional pass caught in Step 8.
 
 **Four carried a $\sin^2\theta$ that belongs to a different slot.**
-These are $R^\phi{}_{rr\phi}$, $R^\phi{}_{r\phi r}$, $R^\phi{}_{\theta\theta\phi}$ and $R^\phi{}_{\theta\phi\theta}$, published with $\sin^2\theta$ where Steps 4e and 4f give none.
-Step 6 is the whole of the explanation.
+These are $R^\phi{}_{rr\phi}$, $R^\phi{}_{r\phi r}$, $R^\phi{}_{\theta\theta\phi}$ and $R^\phi{}_{\theta\phi\theta}$, which carried $\sin^2\theta$ though the values of Steps 4e and 4f have none.
+The index count of Step 6 is the whole of the explanation.
 
-The fully lowered block was in a different state: of its twenty-four nonzero components the file published twelve and omitted twelve, and of the twelve published, ten carried the wrong sign.
+The fully lowered Riemann tensor was in a different state: of its twenty-four nonzero components twelve were given and twelve were missing, and of the twelve given, ten carried the wrong sign.
 The two that were right are $R_{\theta\phi\theta\phi}$ and $R_{\theta\phi\phi\theta}$.
 The twelve omitted are every component whose first index is $r$ paired with $t$, every component whose first index is $\theta$ paired with $t$ or $r$, and every component whose first index is $\phi$.
-Since the block is a list of nonzero components and anything absent from it is read as zero, omitting them asserted that they vanish, which Step 7 shows they do not.
+Since an absent component counts as zero, omitting them asserted that they vanish, which by Step 7 they do not.
 
 ---
 
@@ -432,35 +431,35 @@ Since the block is a list of nonzero components and anything absent from it is r
 
 ### $R^{rr}$
 
-The entry publishes the Ricci tensor in three variants, and the doubly raised one had $R^{rr}$ raised with $g_{rr}$ where $g^{rr}$ was wanted.
+The doubly raised Ricci tensor had $R^{rr}$ raised with $g_{rr}$ where $g^{rr}$ was wanted.
 The correct raise is
 
 $$R^{rr} = g^{rr}g^{rr}R_{rr} = \left(\frac{1-kr^2}{a^2}\right)^2\cdot\frac{a\ddot{a}+2(\dot{a}^2+k)}{1-kr^2} = \frac{(1-kr^2)\left(a\ddot{a}+2(\dot{a}^2+k)\right)}{a^4}.$$
 
-The file had $\left(a\ddot{a}+2(\dot{a}^2+k)\right)/\left((1-kr^2)a^4\right)$, which is the above divided by $(1-kr^2)^2$, exactly the error of raising with the metric instead of its inverse twice over.
-The other three components of that block were already right, which is what one expects: $g^{tt} = g_{tt} = -1$, so $R^{tt}$ cannot tell the difference, and the $\theta$ and $\phi$ ones were written out correctly.
+The old value was $\left(a\ddot{a}+2(\dot{a}^2+k)\right)/\left((1-kr^2)a^4\right)$, which is the correct one divided by $(1-kr^2)^2$, exactly the error of raising with the metric instead of its inverse twice over.
+The other three components of the doubly raised Ricci tensor were already right, which is what one expects: $g^{tt} = g_{tt} = -1$, so $R^{tt}$ cannot tell the difference, and the $\theta$ and $\phi$ ones were written out correctly.
 
 ### Nothing else moves
 
-The Einstein tensor, the Ricci scalar, the Kretschmann scalar and the Weyl block are untouched, and the checker confirms all four.
-The Weyl block is empty in both variants, which is correct and was fixed by an earlier job: FLRW is conformally flat, so $C_{\mu\nu\rho\sigma} = 0$ identically, and that is a fact about the spacetime rather than a copy of anything.
-It is worth saying plainly that the vanishing was checked rather than assumed: `verify_metrics.py` builds the Weyl tensor from the corrected Riemann tensor, the Ricci tensor and the Ricci scalar through
+The Einstein tensor, the Ricci scalar, the Kretschmann scalar and the Weyl tensor are untouched, and the checker confirms all four.
+The Weyl tensor vanishes with one index up and with all four down, which is correct and was fixed by an earlier job: FLRW is conformally flat, so $C_{\mu\nu\rho\sigma} = 0$ identically, and that is a fact about the spacetime rather than a copy of anything.
+The vanishing was checked rather than assumed: `verify_metrics.py` builds the Weyl tensor from the corrected Riemann tensor, the Ricci tensor and the Ricci scalar through
 
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \frac{1}{n-2}\left(g_{\mu\rho}R_{\sigma\nu} - g_{\mu\sigma}R_{\rho\nu} - g_{\nu\rho}R_{\sigma\mu} + g_{\nu\sigma}R_{\rho\mu}\right) + \frac{R}{(n-1)(n-2)}\left(g_{\mu\rho}g_{\sigma\nu} - g_{\mu\sigma}g_{\rho\nu}\right),$$
 
-and finds every one of its 256 components zero, against an empty published block.
+and finds every one of its 256 components zero.
 
 ---
 
 ## Step 11. The conformal chart
 
-The second coordinate system writes the same spacetime as
+The conformal chart writes the same spacetime as
 
 $$ds^2 = a^2\left(-d\eta^2 + \frac{dr^2}{1-kr^2} + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right),$$
 
 with $\eta$ a length, so that no factor of $c$ appears in the chart at all, and with the prime denoting $d/d\eta$.
 Twenty-two of its twenty-four mixed components and all twenty-four of its fully lowered components were already right.
-The two that were wrong are the pair of Step 4f, published without their $\sin^2\theta$.
+The two that were wrong are the pair of Step 4f, which lacked their $\sin^2\theta$.
 
 The connection symbols the computation needs are
 
@@ -480,8 +479,8 @@ which is the same cancellation as Step 4f with $\dot{a}$ replaced by $a'/a$, and
 
 $$\boxed{R^\theta{}_{\phi\theta\phi} = r^2\left(\frac{a'^2}{a^2}+k\right)\sin^2\theta, \qquad R^\theta{}_{\phi\phi\theta} = -r^2\left(\frac{a'^2}{a^2}+k\right)\sin^2\theta.}$$
 
-There is a one line check on this inside the entry itself, which needs no derivative at all.
-The conformal fully lowered block already published
+A one line check on this needs no derivative at all.
+The fully lowered component in the conformal chart was already right,
 
 $$R_{\theta\phi\theta\phi} = r^4a^2\left(\frac{a'^2}{a^2}+k\right)\sin^2\theta,$$
 
@@ -489,14 +488,14 @@ and $g_{\theta\theta} = a^2r^2$, so
 
 $$R^\theta{}_{\phi\theta\phi} = \frac{R_{\theta\phi\theta\phi}}{g_{\theta\theta}} = r^2\left(\frac{a'^2}{a^2}+k\right)\sin^2\theta.$$
 
-The entry was therefore already contradicting itself across its own two variants, and the fully lowered one was the one telling the truth.
-Its sibling $R^\phi{}_{\theta\phi\theta} = r^2(a'^2/a^2+k)$ was published without a $\sin^2\theta$ and was already right, which is the same asymmetry Step 6 describes.
+The mixed and fully lowered components therefore already contradicted each other, and the fully lowered one was right.
+Its sibling $R^\phi{}_{\theta\phi\theta} = r^2(a'^2/a^2+k)$ carried no $\sin^2\theta$ and was already right, which is the same asymmetry as in Step 6.
 
 ---
 
 ## Step 12. What the checker says
 
-`verify_metrics.py` compares each published component against sympy in the $x^0 = cT$ chart and separately checks that every term carries the dimension its left hand side fixes.
+`verify_metrics.py` compares each component against sympy in the $x^0 = cT$ chart and separately checks that every term carries the dimension its left hand side fixes.
 Before this change the two FLRW systems reported 41 disagreements and 4 terms whose dimensions do not balance.
 After it they report none of either:
 
@@ -516,23 +515,23 @@ The 41 break down as the 16 mixed components of Step 9, the 22 fully lowered one
 That is $16 + 22 + 1 + 2 = 41$.
 
 The full sweep was run twice to show that nothing else moved, once against the tree as it stood and once against the corrected tree, and the two reports were diffed line by line.
-The collection went from 113 disagreements to 72.
-Every one of the 41 lines that disappeared names `frw`, and no line appeared that was not there before.
+The full sweep went from 113 disagreements to 72.
+Every one of the 41 lines that disappeared belongs to FLRW, and no line appeared that was not there before.
 The dimensional pass went from 7 terms to 3, and the 4 that went are the four of Step 8; the 3 that remain are the Lanczos-van Stockum doubly raised Einstein tensor, which this change does not touch.
-What is left of the 72 is 51 in `interior_schwarzschild`, 13 in `ellis_bronnikov`, 4 in `godel` and 4 in `stockum_dust`, which is the audit's own accounting of what survives once the Weyl group and the FLRW group are gone.
+What is left of the 72 is 51 in the interior Schwarzschild star, 13 in the Ellis-Bronnikov wormhole, 4 in Gödel's universe and 4 in the Lanczos-van Stockum dust, which is the audit's own accounting of what survives once the Weyl group and the FLRW group are gone.
 
-One difference between the two reports is not a disagreement and is worth naming so that the next reader is not puzzled by it.
-The `UNCHECKED` count went from 20 to 22, because `kerr/boyer_lindquist.christoffel.ull` and `.lll` finished inside the 120 second budget in the first run and timed out in the second.
+One difference between the two reports is not a disagreement.
+The `UNCHECKED` count went from 20 to 22, because the Christoffel symbols of Kerr in Boyer-Lindquist coordinates, with the first index up and with every index lowered, finished inside the 120 second budget in the first run and timed out in the second.
 The machine was carrying a load average near 150 from other work at the time, and the budget is wall clock.
-Neither block reported a disagreement in the run that did finish, so this moved the `UNCHECKED` count and left the disagreement count alone.
-`_tools/README.md` already records that Kerr is the entry a full sweep cannot be relied on to complete.
+Neither set reported a disagreement in the run that did finish, so this moved the `UNCHECKED` count and left the disagreement count alone.
+Kerr is the spacetime a full sweep cannot be relied on to complete, as `_tools/README.md` already records.
 
 ---
 
 ## Step 13. The radial domain of the closed case
 
-This step is not about the Riemann tensor, and it is here because it concerns the same line element.
-Until 24 September 2026 `frw.json` gave both coordinate systems $r \in [0, \infty)$ for every $k$.
+The radial domain has nothing to do with the Riemann tensor, and it sits beside it only because it concerns the same line element.
+Until 24 September 2026 both coordinate systems of FRW took $r \in [0, \infty)$ for every $k$.
 That is right for $k = 0$ and $k = -1$, where $1 - kr^2 \ge 1$ and every value of $r$ is a sphere of the slice, and wrong for $k = +1$.
 No component changed with it, and none needed to.
 
@@ -554,10 +553,10 @@ So the coordinates end at $r = 1/\sqrt{k}$ and cover one hemisphere, and the dom
 The divergence is the chart's and not the geometry's: the slice is homogeneous, so in the orthonormal frame of the comoving observers every curvature component depends on $t$ alone and is finite at the equator, and the Kretschmann scalar has no $r$ in it at all.
 
 The end is written $1/\sqrt{k}$ rather than $1$ because $r$ is a length and $k$ a curvature; with $k = +1$ in units of the curvature radius the two agree.
-Friedmann's 1922 paper and the textbooks of Misner, Thorne and Wheeler and of Wald, all cited for FRW, write the closed case in the angle $\chi$.
+Friedmann in 1922, and Misner, Thorne and Wheeler and Wald in their textbooks, write the closed case in the angle $\chi$.
 The Oppenheimer-Snyder interior is written the same way, with the length moved into $a$.
-Adding $\chi$ as a third coordinate system would bring a third curvature to derive and check, and this correction changes the domain and the prose only; the substitution above takes a reader from $r$ to $\chi$.
+A third coordinate system in $\chi$ would bring a third curvature to derive and check, while only the domain needed correcting; the substitution $r = \sin\chi/\sqrt{k}$ carries $r$ to $\chi$.
 
-The domains of $r$ are now two, `r \in [0, \infty) \;\text{for}\; k \le 0` and `r \in [0, 1/\sqrt{k}) \;\text{for}\; k > 0`, with a note naming the equator beside them.
+The domain of $r$ now has two cases, `r \in [0, \infty) \;\text{for}\; k \le 0` and `r \in [0, 1/\sqrt{k}) \;\text{for}\; k > 0`, with the equator named beside them.
 `parse_domains` in `null_rays.py` reads a domain with a `\;\text{for}\;` condition only for a view whose parameter values satisfy it, so the diagrams, all drawn at $k = 0$, are hatched by the first and never by the second.
-The domains are among the fields a diagram is stamped over, so the three FRW views were redrawn with the change, and they came out as before.
+A diagram is stamped over the domains, so the three FRW views were redrawn with the change, and they came out as before.

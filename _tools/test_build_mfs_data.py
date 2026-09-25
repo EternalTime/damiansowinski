@@ -29,6 +29,23 @@ DASHES = "\u2010\u2011\u2012\u2013\u2014\u2015\u2212"
 # and are left out on purpose, since a minus sign belongs in them.
 PROSE_FIELDS = ("name", "short_name", "description", "history", "convention")
 
+# Words that in this prose can only mean the collection's own machinery or the page
+# describing itself, which a reader who came for a spacetime is never told about.
+# _tools/README.md carries the rule this stands for.
+MACHINERY = (
+    r"(?i)\bentr(?:y|ies)\b",
+    r"(?i)\b(?:this|the) collection\b",
+    r"(?i)\b(?:displayed|published|printed|shown|listed) (?:here|above|below)\b",
+    r"(?i)\bthe history describes\b",
+    r"`",
+)
+MACHINERY_OUTSIDE_A_HISTORY = (
+    r"(?i)\bpublish\w*",
+    r"(?i)\bprint(?:ed|s)?\b",
+    r"(?i)(?<!building )\bblocks?\b",
+    r"(?i)\bvariants?\b",
+)
+
 
 def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -218,6 +235,37 @@ class Prose(unittest.TestCase):
                     for field, value in diagram_prose(name, {"systems": {system: [view]}}):
                         self.assertNotRegex(value, r"(?i)\bblocks?\b", field)
         self.assertTrue(views)
+
+    def test_no_prose_names_the_collection_or_the_page(self):
+        """A reader is told about the spacetime, never about the collection that holds it."""
+        fields = [(f"{m['id']}.json: {field}", field, value)
+                  for m in build.load_metrics() for field, value in prose(m)]
+        fields += [(field, field, value) for name, diagram in diagram_files().items()
+                   for field, value in diagram_prose(name, diagram)]
+        self.assertTrue(fields, "no prose was read, so nothing was checked")
+        for where, field, value in fields:
+            for pattern in MACHINERY:
+                self.assertNotRegex(value, pattern, where)
+            if field != "history":
+                # A history tells of papers that were published and printed.
+                for pattern in MACHINERY_OUTSIDE_A_HISTORY:
+                    self.assertNotRegex(value, pattern, where)
+
+    def test_the_machinery_words_are_caught_and_the_physics_is_not(self):
+        def caught(text, history=False):
+            patterns = MACHINERY + (() if history else MACHINERY_OUTSIDE_A_HISTORY)
+            return any(re.search(p, text) for p in patterns)
+        for text in ("the statements of the entry are on it", "no published value leans on a symbol the entry has not declared",
+                     "the two published blocks", "the second published chart", "with the same $\\Gamma$ printed above them",
+                     "the mixed variant is the shortest", "the one component flow that `alcubierre` carries",
+                     "geometries already in this collection", "the Rindler coordinates displayed here"):
+            self.assertTrue(caught(text), text)
+        self.assertTrue(caught("which is why no metric is displayed here", history=True))
+        for text, history in (("the local building block of every generic singularity", False),
+                              ("Einstein and Rosen published it in 1937", True),
+                              ("the translation the Monthly Notices printed in 1931", True),
+                              ("the chart covers the exterior", False), ("a uniform electromagnetic field", False)):
+            self.assertFalse(caught(text, history), text)
 
     def assert_no_dashes(self, fields):
         self.assertTrue(fields, "no prose was read, so nothing was checked")

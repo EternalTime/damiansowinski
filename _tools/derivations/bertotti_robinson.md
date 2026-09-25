@@ -1,16 +1,16 @@
 # The Bertotti-Robinson electrovacuum
 
-This is the working behind the two coordinate systems in `MFS/assets/data/metrics/bertotti_robinson.json`.
-Every number the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+The Bertotti-Robinson electrovacuum is worked here in two coordinate systems, the static chart and the Poincaré chart.
+Every component of the metric and of its curvature is derived in order, from the line element down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we do not compute.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and checks every component against its own result, so the algebra is checkable by hand and by machine independently.
 
 This is an electrovacuum: the Ricci scalar vanishes, the Ricci tensor does not, and the Einstein tensor is the Maxwell stress of a field that is the same at every event.
-Reissner-Nordstrom is the other entry in the collection carrying a stress tensor of that kind, and the difference between the two is worth holding on to while reading.
+Reissner-Nordstrom is the other spacetime carrying a stress tensor of that kind, and the two differ in how the field depends on position.
 There the field falls off with the radius and the curvature diverges at the centre; here the field does not fall off at all and the curvature is the same number everywhere.
-Step 8 is where that correspondence is made, and it is the whole physical content of the entry.
-Step 9 computes the Weyl tensor and gets zero, which is not a shortcut but a result, and finds that the same single condition on the two radii is responsible for the vanishing of the Ricci scalar and for the vanishing of Weyl.
+The identification of the Einstein tensor with the Maxwell stress of a uniform field, made in Step 8, is the whole physical content of the solution.
+The Weyl tensor, computed in Step 9, is zero as a result and not by a shortcut, and the same single condition on the two radii is responsible for the vanishing of the Ricci scalar and for the vanishing of Weyl.
 
 ---
 
@@ -25,28 +25,28 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu{}_{\nu\sigma} - \partial_\sigma \Gamma^\mu{}_{\nu\rho} + \Gamma^\mu{}_{\rho\lambda}\Gamma^\lambda{}_{\nu\sigma} - \Gamma^\mu{}_{\sigma\lambda}\Gamma^\lambda{}_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+which fixes the sign of every Riemann component.
 
 The Ricci tensor is the standard contraction,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-settled for the collection on 2026-09-18.
+settled on 2026-09-18 for every spacetime alike.
 Here the settlement costs something, because this Ricci tensor is not zero and the other contraction is minus it in every slot.
-On the convention published, the energy density of the electromagnetic field comes out positive, which is the reason the convention was chosen: Step 8 gets $G^t{}_t = -1/b^2$ and reads it as $-8\pi G u/c^4$ with $u > 0$.
+On this convention the energy density of the electromagnetic field comes out positive, which is the reason the convention was chosen: the Einstein tensor of Step 8 has $G^t{}_t = -1/b^2$, which is $-8\pi G u/c^4$ with $u > 0$.
 The Weyl tensor of Step 9 is built from the same contraction.
 
 Factors of $G$ and $c$ are kept explicit, and so is $\epsilon_0$ where the electromagnetic field itself is written down.
-The solution has one parameter, the length $b$, and no published component of either chart carries a factor of $c$, of $G$ or of $\epsilon_0$ at all.
+The solution has one parameter, the length $b$, and no component in either chart carries a factor of $c$, of $G$ or of $\epsilon_0$ at all.
 Those constants enter only in Step 8, where $b$ is traded for the strength of the field that holds the geometry up.
 
-The chart is the collection's, the one whose zeroth coordinate is
+The chart, as for every spacetime, is the one whose zeroth coordinate is
 
 $$x^0 = ct.$$
 
-The index is printed with the bare letter $t$, but the component printed against it is a component of that chart.
-Because neither published metric depends on $t$, the rescaling leaves nothing behind, and every component below is a function of the radial coordinate and of $\theta$ alone.
-The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$ with $\lambda$ an affine parameter, and Step 11 checks that this is the reading on which every published term balances.
+The index is written with the bare letter $t$, but the component written against it is a component of that chart.
+Because neither metric depends on $t$, the rescaling leaves nothing behind, and every component is a function of the radial coordinate and of $\theta$ alone.
+The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$ with $\lambda$ an affine parameter, and every term of the geodesic equations balances on that reading, by the dimensional count of Step 11.
 
 ---
 
@@ -57,7 +57,7 @@ The solution is the product of a two dimensional anti-de Sitter spacetime with a
 $$\mathrm{AdS}_2(b) \times S^2(b),$$
 
 and the choice of chart is a choice of chart for the $\mathrm{AdS}_2$ factor alone, since the sphere has only one.
-The entry publishes two, and the first is the one the page opens on.
+Two charts are used, and the static chart comes first.
 
 The first is the static chart,
 
@@ -65,11 +65,11 @@ $$ds^2 = -\frac{r^2}{b^2}c^2dt^2 + \frac{b^2}{r^2}dr^2 + b^2\left(d\theta^2 + \s
 
 which is the form the solution is usually met in.
 Three things recommend it.
-It is static and diagonal, with $\partial_t$ a Killing vector that is timelike on the whole of $r > 0$, so the components below are the ones a static observer measures.
+It is static and diagonal, with $\partial_t$ a Killing vector that is timelike on the whole of $r > 0$, so the components in this chart are the ones a static observer measures.
 It is the chart in which the spacetime appears as the near horizon limit of an extremal Reissner-Nordstrom black hole, worked out in Step 13, so $r$ is the coordinate that came from the parent hole's radial coordinate and $t$ the one that came from its time.
 And it puts the whole of the electromagnetic field into a single component that does not depend on position, which is Step 8.
 
-One warning has to go with it, and the entry's `convention` field carries it.
+One warning has to go with it, and it stands among the conventions of the spacetime.
 Neither $r$ here nor $x$ in the second chart is an areal radius.
 Every sphere of this spacetime has the same area $4\pi b^2$, because $g_{\theta\theta} = b^2$ is a constant, so the areal radius is $b$ everywhere and is not a coordinate at all.
 What $r$ measures is position along the $\mathrm{AdS}_2$ factor, and the surface $r = 0$ is a degenerate Killing horizon rather than a centre.
@@ -79,14 +79,14 @@ The second chart is the Poincaré chart,
 $$ds^2 = \frac{b^2}{x^2}\left(-c^2dt^2 + dx^2\right) + b^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right),$$
 
 reached from the first by $rx = b^2$, which Step 12 carries out.
-It is published for three reasons.
+It is used for three reasons.
 The $\mathrm{AdS}_2$ factor is manifestly a conformal multiple of a flat two dimensional metric in it, which is as close as any chart comes to displaying by eye the conformal flatness that Step 9 proves of the whole four dimensional spacetime.
 It is the chart the solution is used in, since the Poincaré patch of $\mathrm{AdS}_2$ is where near horizon black hole thermodynamics and two dimensional holography do their work.
 And it gives a second and independent reading of the same invariants: $R = 0$, $C_{\mu\nu\rho\sigma} = 0$ and $K = 8/b^4$ come out of two different sets of Christoffel symbols, which is a check on both.
 
 Neither chart is complete.
 Both cover a Poincaré patch of the $\mathrm{AdS}_2$ factor, bounded by a horizon at $r = 0$, equivalently $x = \infty$, and the maximal extension is the global $\mathrm{AdS}_2$ cylinder.
-Nothing is lost by stopping there, because Step 10 finds the curvature constant: there is no singularity anywhere in this spacetime to extend towards.
+Nothing is lost by stopping there, because the curvature is constant, as the Kretschmann scalar of Step 10 shows: there is no singularity anywhere in this spacetime to extend towards.
 
 ---
 
@@ -98,7 +98,7 @@ $$g_{\mu\nu} = \mathrm{diag}\left(-\frac{r^2}{b^2},\ \frac{b^2}{r^2},\ b^2,\ b^2
 
 The first two entries are dimensionless, as they must be in a chart whose zeroth coordinate is $ct$ and whose first is a length, and the last two carry $L^2$ against the two angles.
 Note the shape of it: the first two entries are reciprocals of each other up to sign, and the last two do not mention $r$.
-Both facts are the product structure showing itself, and both are used below.
+Both facts are the product structure showing itself, and both shape the connection and the curvature.
 
 The determinant is a product of the four:
 
@@ -111,7 +111,7 @@ The inverse is the entrywise reciprocal, since the metric is diagonal:
 
 $$g^{\mu\nu} = \mathrm{diag}\left(-\frac{b^2}{r^2},\ \frac{r^2}{b^2},\ \frac{1}{b^2},\ \frac{1}{b^2\sin^2\theta}\right).$$
 
-The entry publishes both, and the checker confirms that the published pair multiply to the identity.
+The checker confirms that the metric and its inverse multiply to the identity.
 
 ---
 
@@ -144,7 +144,7 @@ because $g_{\theta\theta}$ and $g_{\phi\phi}$ do not depend on $r$, and for the 
 $$\Gamma^\theta{}_{r\theta} = \tfrac{1}{2}\partial_r\ln b^2 = 0, \qquad \Gamma^\phi{}_{r\phi} = \tfrac{1}{2}\partial_r\ln\left(b^2\sin^2\theta\right) = 0.$$
 
 Those four zeros are the ones a reader who knows Schwarzschild will look for, where they are $-rf$, $-rf\sin^2\theta$ and $1/r$ twice.
-Their absence here is the product structure, and Step 5 says what follows from it.
+Their absence here is the product structure, whose consequences are drawn in Step 5.
 
 The sphere keeps its own two symbols,
 
@@ -152,32 +152,30 @@ $$\Gamma^\theta{}_{\phi\phi} = -\sin\theta\cos\theta, \qquad \Gamma^\phi{}_{\the
 
 which are those of a round sphere of any radius, since a constant factor in $g_{\theta\theta}$ and $g_{\phi\phi}$ cancels between the metric and its inverse.
 
-So seven symbols are nonzero, counting the reflections in the lower pair, and the entry publishes all seven.
+So seven symbols are nonzero, counting the reflections in the lower pair.
 Lowering the first index with $\Gamma_{\mu\nu\rho} = g_{\mu\mu}\Gamma^\mu{}_{\nu\rho}$ multiplies each by one diagonal entry:
 
 $$\Gamma_{ttr} = \Gamma_{trt} = -\frac{r^2}{b^2}\cdot\frac{1}{r} = -\frac{r}{b^2}, \qquad \Gamma_{rtt} = \frac{b^2}{r^2}\cdot\frac{r^3}{b^4} = \frac{r}{b^2}, \qquad \Gamma_{rrr} = \frac{b^2}{r^2}\cdot\left(-\frac{1}{r}\right) = -\frac{b^2}{r^3},$$
 
 $$\Gamma_{\theta\phi\phi} = -b^2\sin\theta\cos\theta, \qquad \Gamma_{\phi\theta\phi} = \Gamma_{\phi\phi\theta} = b^2\sin^2\theta\cot\theta = b^2\sin\theta\cos\theta.$$
 
-Both variants are in the entry.
-
-The factors of $c$ are worth one line, because they are where an entry in this collection is most easily got wrong.
+The factors of $c$ need one line, because they are where a component is most easily got wrong.
 Computed with the bare $t$, the symbol $\Gamma^r{}_{tt}$ carries $c^2$ and $\Gamma^t{}_{tr}$ carries none.
 In the chart $x^0 = ct$ a symbol is multiplied by $c$ once per upper time index and divided by $c$ once per lower one, so $\Gamma^r{}_{tt}$ loses its $c^2$ and $\Gamma^t{}_{tr}$, which has one upper time index and one lower, is unchanged.
-Every $c$ cancels, which is why none appears in the list.
+Every $c$ cancels, which is why no symbol carries one.
 
 ---
 
 ## Step 5. The product structure, read off the connection
 
 Split the indices into the two factors: let $a, b$ run over $(t, r)$ and $i, j$ over $(\theta, \phi)$.
-Step 4 found that every mixed symbol vanishes,
+By Step 4 every mixed symbol vanishes,
 
 $$\Gamma^a{}_{ij} = 0, \qquad \Gamma^i{}_{aj} = 0, \qquad \Gamma^a{}_{ib} = 0, \qquad \Gamma^i{}_{ab} = 0,$$
 
-and that the surviving symbols are exactly those of the two factors taken separately.
+and the surviving symbols are exactly those of the two factors taken separately.
 The connection is therefore the direct sum of the connection of $\mathrm{AdS}_2$ and the connection of $S^2$, and so is everything built from it.
-Concretely, Riemann has no component with indices drawn from both blocks, the two blocks below are the Riemann tensors of the factors, and a curve that starts in one factor stays in it.
+Concretely, Riemann has no component with indices drawn from both factors, its components with every index in one factor are the Riemann tensor of that factor, and a curve that starts in one factor stays in it.
 
 That is what makes this spacetime easy and is also what makes it strange.
 The sphere is rigid: no motion, no wave and no observer changes its area, because there is no connection component that could tilt a radial direction into an angular one.
@@ -187,7 +185,7 @@ Each factor is a two dimensional space of constant curvature, and in two dimensi
 $$R_{abcd} = K\left(g_{ac}g_{bd} - g_{ad}g_{bc}\right).$$
 
 For the $\mathrm{AdS}_2$ factor $K_1 = -1/b^2$ and for the sphere $K_2 = +1/b^2$.
-Step 6 confirms both by direct computation rather than by citation.
+Both values are confirmed in Step 6 by direct computation rather than by citation.
 
 ---
 
@@ -195,7 +193,7 @@ Step 6 confirms both by direct computation rather than by citation.
 
 Only two independent components survive, one per factor.
 
-For the $\mathrm{AdS}_2$ block take $\mu = t$, $\nu = r$, $\rho = t$, $\sigma = r$ in the definition.
+For the $\mathrm{AdS}_2$ factor take $\mu = t$, $\nu = r$, $\rho = t$, $\sigma = r$ in the definition.
 The derivative terms are
 
 $$\partial_t\Gamma^t{}_{rr} - \partial_r\Gamma^t{}_{rt} = 0 - \partial_r\frac{1}{r} = \frac{1}{r^2},$$
@@ -221,15 +219,15 @@ Raising the other way,
 
 $$R^r{}_{trt} = g^{rr}R_{rtrt} = \frac{r^2}{b^2}\cdot\frac{1}{b^2} = \frac{r^2}{b^4}.$$
 
-For the sphere block the two dimensional formula and the standard symbols give
+For the sphere factor the two dimensional formula and the standard symbols give
 
 $$R_{\theta\phi\theta\phi} = K_2\,g_{\theta\theta}g_{\phi\phi} = \frac{1}{b^2}\cdot b^2\cdot b^2\sin^2\theta = b^2\sin^2\theta,$$
 
 $$R^\theta{}_{\phi\theta\phi} = g^{\theta\theta}R_{\theta\phi\theta\phi} = \sin^2\theta, \qquad R^\phi{}_{\theta\phi\theta} = g^{\phi\phi}R_{\phi\theta\phi\theta} = 1.$$
 
-Every component not obtainable from these two by the symmetries of Riemann is zero, and in particular every component with one index in each block is zero, which is Step 5.
+Every component not obtainable from these two by the symmetries of Riemann is zero, and in particular every component with one index in each factor is zero, which is Step 5.
 
-The published blocks list the eight nonzero components of each variant, which are these two together with the sign flips forced by antisymmetry in the last pair and by the pair exchange:
+The Riemann tensor with its first index up and with every index lowered has eight nonzero components each, which are these two together with the sign flips forced by antisymmetry in the last pair and by the pair exchange:
 
 $$R^t{}_{rtr} = -\frac{1}{r^2} = -R^t{}_{rrt}, \qquad R^r{}_{trt} = \frac{r^2}{b^4} = -R^r{}_{ttr},$$
 
@@ -239,18 +237,18 @@ $$R^\theta{}_{\phi\theta\phi} = \sin^2\theta = -R^\theta{}_{\phi\phi\theta}, \qq
 
 $$R_{\theta\phi\theta\phi} = R_{\phi\theta\phi\theta} = b^2\sin^2\theta = -R_{\theta\phi\phi\theta} = -R_{\phi\theta\theta\phi}.$$
 
-Two remarks before going on.
-The lowered components carry no $r$ at all: the curvature of this spacetime is the same at every event, which is the homogeneity the history section claims, made arithmetic.
-And the two blocks carry opposite signs in the same normalisation, $-1/b^2$ against $+1/b^2$, which is the balance the next three steps live on.
+Two things follow.
+The lowered components carry no $r$ at all: the curvature of this spacetime is the same at every event, which is its homogeneity, made arithmetic.
+And the two factors carry opposite signs in the same normalisation, $-1/b^2$ against $+1/b^2$, which is the balance the Ricci scalar, the Einstein tensor and the Weyl tensor rest on.
 
 ---
 
 ## Step 7. The Ricci tensor, and why the scalar vanishes
 
 Contract on the first lower index.
-Because Riemann is block diagonal, the sum for an index in one factor runs over that factor alone.
+Because Riemann has no component mixing the two factors, the sum for an index in one factor runs over that factor alone.
 
-In the $\mathrm{AdS}_2$ block,
+In the $\mathrm{AdS}_2$ factor,
 
 $$R_{tt} = R^\alpha{}_{t\alpha t} = R^r{}_{trt} = \frac{r^2}{b^4}, \qquad R_{rr} = R^t{}_{rtr} = -\frac{1}{r^2},$$
 
@@ -258,7 +256,7 @@ and both are $K_1$ times the metric,
 
 $$R_{tt} = -\frac{1}{b^2}\left(-\frac{r^2}{b^2}\right), \qquad R_{rr} = -\frac{1}{b^2}\cdot\frac{b^2}{r^2}.$$
 
-In the sphere block,
+In the sphere factor,
 
 $$R_{\theta\theta} = R^\phi{}_{\theta\phi\theta} = 1 = \frac{1}{b^2}\cdot b^2, \qquad R_{\phi\phi} = R^\theta{}_{\phi\theta\phi} = \sin^2\theta = \frac{1}{b^2}\cdot b^2\sin^2\theta.$$
 
@@ -268,7 +266,7 @@ $$R_{ab} = K_1 g_{ab} = -\frac{1}{b^2}g_{ab}, \qquad R_{ij} = K_2 g_{ij} = +\fra
 
 which is the general statement that a product of two dimensional factors is an Einstein space in each factor separately but not as a whole.
 
-The mixed form is the cleanest way to see it, and the entry publishes it:
+The mixed form is the cleanest way to see it:
 
 $$R^t{}_t = R^r{}_r = -\frac{1}{b^2}, \qquad R^\theta{}_\theta = R^\phi{}_\phi = +\frac{1}{b^2}.$$
 
@@ -278,11 +276,11 @@ $$R = 2K_1 + 2K_2 = -\frac{2}{b^2} + \frac{2}{b^2} = 0.$$
 
 It vanishes because the two radii are equal, and for no other reason.
 Had the sphere had radius $b_2 \neq b_1$ the scalar would have been $2(1/b_2^2 - 1/b_1^2)$, which is the Nariai family of products and is not an electrovacuum.
-The entry publishes $R = 0$ and the front end prints it as vanishing.
+The Ricci scalar is therefore exactly $R = 0$.
 
-The Ricci tensor itself is emphatically not zero, and this is the place to say why the collection's contraction convention matters here when it did not for the vacuum entries.
+The Ricci tensor itself is emphatically not zero, which is why the contraction convention matters here when it does not in vacuum.
 The other contraction, on the last index, gives $-R_{\mu\nu}$, and with it $R^t{}_t$ would read $+1/b^2$ and the energy density of Step 8 would come out negative.
-Nothing in the geometry changes, but the reading of it does, and the collection reads it the way that makes ordinary matter positive.
+Nothing in the geometry changes, but the reading of it does, and the standard contraction is the reading that makes the energy of ordinary matter positive.
 
 ---
 
@@ -292,7 +290,7 @@ Since $R = 0$, the Einstein tensor is the Ricci tensor:
 
 $$G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = R_{\mu\nu},$$
 
-so the entry's two blocks are componentwise identical, and they are published that way rather than one of them omitted.
+so the Ricci tensor and the Einstein tensor are componentwise identical.
 In mixed form,
 
 $$G^t{}_t = G^r{}_r = -\frac{1}{b^2}, \qquad G^\theta{}_\theta = G^\phi{}_\phi = +\frac{1}{b^2}, \qquad G^\mu{}_\mu = 0.$$
@@ -364,24 +362,24 @@ that is
 $$T^\mu{}_\nu = \frac{\epsilon_0E^2}{2}\,\mathrm{diag}(-1,-1,+1,+1),$$
 
 with the familiar $u = \epsilon_0E^2/2$ in front.
-Comparing slot by slot with the Einstein tensor above, all four equations of $G^\mu{}_\nu = 8\pi G T^\mu{}_\nu/c^4$ reduce to the single condition
+Comparing slot by slot with the Einstein tensor, all four equations of $G^\mu{}_\nu = 8\pi G T^\mu{}_\nu/c^4$ reduce to the single condition
 
 $$\frac{1}{b^2} = \frac{4\pi G\epsilon_0E^2}{c^4}, \qquad\text{that is}\qquad b = \frac{c^2}{E\sqrt{4\pi G\epsilon_0}}, \qquad b^2 = \frac{c^4}{8\pi G u}.$$
 
-That is the whole content of the entry's parameter.
+That is the whole content of the one parameter of the solution.
 $b$ is not free once the field is given: the radius of the sphere and the radius of the anti-de Sitter factor are both fixed by the strength of the field, and a stronger field makes a tighter throat.
 Run the numbers and the field has to be violent, because $c^4/G$ is enormous: a throat a kilometre across takes about $10^{24}$ volts per metre, and an energy density of some $5\times10^{36}$ joules per cubic metre to go with it.
 
-Two footnotes to this step.
+Two further facts go with the field.
 The magnetic case is the same geometry.
-Replacing $F$ by its dual, $F = B b^2\sin\theta\,d\theta\wedge d\phi$, which is a monopole field threading the sphere with constant flux, gives the same stress tensor with $\epsilon_0E^2/2$ replaced by $B^2/2\mu_0$, so it changes nothing above and the entry's geometry covers both.
+Replacing $F$ by its dual, $F = B b^2\sin\theta\,d\theta\wedge d\phi$, which is a monopole field threading the sphere with constant flux, gives the same stress tensor with $\epsilon_0E^2/2$ replaced by $B^2/2\mu_0$, so the geometry is unchanged and covers both.
 And the electrovacuum condition is what forced the two radii to agree in the first place.
 For a product $\mathrm{AdS}_2(b_1)\times S^2(b_2)$ with the radii left free, the same computation gives
 
 $$G^t{}_t = G^r{}_r = -\frac{1}{b_2^2}, \qquad G^\theta{}_\theta = G^\phi{}_\phi = +\frac{1}{b_1^2},$$
 
 whose trace vanishes only when $b_1 = b_2$.
-A Maxwell field has a traceless stress tensor, so it can only source a product whose radii agree, and the equal radii the entry publishes are a consequence of the source being electromagnetic and not an extra assumption.
+A Maxwell field has a traceless stress tensor, so it can only source a product whose radii agree, and the equal radii are a consequence of the source being electromagnetic and not an extra assumption.
 
 ---
 
@@ -426,16 +424,16 @@ For Bertotti-Robinson $K_1 = -1/b^2$ and $K_2 = +1/b^2$, so
 
 $$C_{\mu\nu\rho\sigma} = 0$$
 
-in every slot, and both published Weyl blocks are empty, which the front end prints as all vanish.
+in every slot, with the first index up and with every index lowered alike.
 
 The condition $K_1 + K_2 = 0$ is the same condition that made the Ricci scalar vanish in Step 7 and the same condition the traceless Maxwell stress forced in Step 8.
 So for this family the three statements are one statement: the source is electromagnetic, the radii agree, and the spacetime is conformally flat.
 Take the radii apart and all three fail together.
-That is worth saying because conformal flatness is rare, and because everywhere else in the collection it is bought with symmetry or with a fluid.
-Minkowski publishes an empty Weyl tensor by being flat outright and anti-de Sitter by being maximally symmetric, so neither has anything left to remove; Friedmann Robertson Walker and the interior Schwarzschild solution publish one on the strength of a perfect fluid and a preferred rest frame.
-This entry is the only one that gets there through its source being electromagnetic, and the only one where the condition for it is an equality between two curvatures that were free to differ.
+Conformal flatness is rare, and in the other spacetimes that have it, it is bought with symmetry or with a fluid.
+Minkowski has a vanishing Weyl tensor by being flat outright and anti-de Sitter by being maximally symmetric, so neither has anything left to remove; Friedmann Robertson Walker and the interior Schwarzschild solution have one on the strength of a perfect fluid and a preferred rest frame.
+Bertotti-Robinson is the only one that gets there through its source being electromagnetic, and the only one where the condition for it is an equality between two curvatures that were free to differ.
 
-An empty Weyl block is a claim, not an omission, and it is the claim the checker is strictest about: it requires every component the entry does not print to vanish, so a Weyl tensor published as empty is checked in all two hundred and fifty six slots.
+A vanishing Weyl tensor is a claim, not an omission, and it is the claim the checker is strictest about: it requires every other component to vanish, so a Weyl tensor with no nonzero component is checked in all two hundred and fifty six slots.
 
 ---
 
@@ -445,12 +443,12 @@ For a two dimensional space of Gaussian curvature $K$, the fully raised Riemann 
 
 $$R_{abcd}R^{abcd} = K^2\left(4 - 2 - 2 + 4\right) = 4K^2,$$
 
-where each $4$ is $\delta^a_a\delta^b_b$ over a two dimensional block and each $2$ is $\delta^a_b\delta^b_a$.
-Riemann is block diagonal, so the two blocks add with no cross term:
+where each $4$ is $\delta^a_a\delta^b_b$ over a two dimensional factor and each $2$ is $\delta^a_b\delta^b_a$.
+Riemann has no component mixing the two factors, so the two add with no cross term:
 
 $$K_{\text{Kretschmann}} = R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma} = 4K_1^2 + 4K_2^2 = \frac{4}{b^4} + \frac{4}{b^4} = \frac{8}{b^4}.$$
 
-The entry publishes
+The Kretschmann scalar is therefore
 
 $$K = \frac{8}{b^4}.$$
 
@@ -478,14 +476,14 @@ $$\ddot{\theta} - \sin\theta\cos\theta\,\dot{\phi}^2 = 0,$$
 
 $$\ddot{\phi} + 2\cot\theta\,\dot{\theta}\dot{\phi} = 0,$$
 
-which is what the entry publishes.
+which are the geodesic equations of the static chart.
 
 The two halves do not talk to each other, which is Step 5 again and is the most striking thing about motion here.
 The last two equations are the geodesic equations of a sphere of radius $b$ with no reference to $r$ or $t$ whatever, so the angular motion of any free particle is uniform motion along a great circle of a fixed sphere, forever.
 The first two are the geodesic equations of $\mathrm{AdS}_2$ with no reference to the angles, so the radial motion is unaffected by how fast the particle is going around.
 There are no orbits in this spacetime in the sense Schwarzschild has them: nothing circles a centre, because there is no centre, and the angular momentum of a particle exerts no centrifugal effect on its radial motion at all.
 
-The dimensional check is the one the collection insists on, and the second equation is where the reading of the dot is forced.
+Every term must carry the same dimension, and the second equation is where the reading of the dot is forced.
 Every term of the first equation carries $L/\lambda^2$: $\ddot{t}$ does because the chart coordinate $ct$ is a length, and $\dot{t}\dot{r}/r$ does because it is $(L/\lambda)(L/\lambda)/L$.
 That equation would balance on the bare reading too, both of its terms simply carrying $T/\lambda^2$ instead, so it decides nothing.
 The second does.
@@ -526,7 +524,7 @@ The curvature follows as before:
 
 $$R^t{}_{xtx} = R^x{}_{ttx} = -\frac{1}{x^2}, \qquad R_{txtx} = \frac{b^2}{x^4}, \qquad R_{tt} = -R_{xx} = \frac{1}{x^2},$$
 
-with the sphere block identical to Step 6, and the mixed Ricci tensor is the same four numbers as before,
+with the sphere components identical to Step 6, and the mixed Ricci tensor is the same four numbers as before,
 
 $$R^t{}_t = R^x{}_x = -\frac{1}{b^2}, \qquad R^\theta{}_\theta = R^\phi{}_\phi = +\frac{1}{b^2}.$$
 
@@ -537,13 +535,13 @@ $$\ddot{t} - \frac{2}{x}\dot{t}\dot{x} = 0, \qquad \ddot{x} - \frac{1}{x}\dot{t}
 with the two angular equations unchanged.
 
 The invariants agree with Step 7, Step 9 and Step 10 exactly: $R = 0$, every component of Weyl vanishes, and $K = 8/b^4$.
-They had to, being invariants, and the point of publishing the second chart is that they do so through a different set of Christoffel symbols and so check the first.
+They had to, being invariants, and they do so through a different set of Christoffel symbols, which makes the second chart a check on the first.
 
 ---
 
 ## Step 13. Where the geometry comes from
 
-The entry's history calls this spacetime the throat of an extremal Reissner-Nordstrom hole.
+This spacetime is the throat of an extremal Reissner-Nordstrom hole.
 That is a statement about a limit and is worth doing, because it is where the parameter $b$ gets its physical meaning.
 
 The extremal Reissner-Nordstrom solution has $r_s = 2r_q$ and so a double horizon at $\rho = r_q$:
@@ -564,11 +562,11 @@ The limit is exactly the static chart of Step 2 with
 
 $$b = r_q, \qquad r_q^2 = \frac{GQ^2}{4\pi\epsilon_0c^4},$$
 
-the charge radius the Reissner-Nordstrom entry defines.
+the charge radius of Reissner-Nordstrom.
 The two readings of $b$ agree: the electric field at the horizon of an extremal hole is $E = Q/4\pi\epsilon_0r_q^2$, and putting that into the $b$ of Step 8 returns $b = r_q$ identically.
 
 So the throat is not an analogy.
-An extremal charged hole has an infinitely long neck of constant circumference, and the geometry of that neck, on its own, is this entry.
+An extremal charged hole has an infinitely long neck of constant circumference, and the geometry of that neck, on its own, is this spacetime.
 The distance down it is the coordinate $r$, the constant circumference is the $4\pi b^2$ of Step 3, and the uniform field of Step 8 is the hole's own field, which stops falling off once the sphere stops shrinking.
 
 ---
@@ -582,10 +580,10 @@ Run
 
 and it reports both systems checked with no disagreement and no dimensional failure, in about three seconds.
 
-It reads $g_{\mu\nu}$ off each line element, computes the inverse, both Christoffel variants, Riemann in both variants, Ricci in three, the Ricci scalar, Kretschmann, Einstein in three and Weyl in two, weights every component into the chart $x^0 = ct$, and compares it against what the entry prints.
-Anything the entry omits has to vanish, which is what makes the two empty Weyl blocks and the many zero slots of the other blocks into checked claims rather than silence.
-It also confirms that the published metric and the published inverse multiply to the identity, and that each published geodesic equation is $\ddot{x}^\mu + \Gamma^\mu{}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho = 0$ for the published symbols.
+It reads $g_{\mu\nu}$ off each line element, computes the inverse, the Christoffel symbols with the first index up and with every index lowered, Riemann in the same two index positions, Ricci in three, the Ricci scalar, Kretschmann, Einstein in three and Weyl in two, weights every component into the chart $x^0 = ct$, and checks each one against its expected value.
+Every component not given a nonzero value has to vanish, which is what makes the vanishing Weyl tensor of both charts and the many zero slots of the other tensors into checked claims rather than silence.
+It also confirms that the metric and its inverse multiply to the identity, and that each geodesic equation is $\ddot{x}^\mu + \Gamma^\mu{}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho = 0$ for those Christoffel symbols.
 
 Both systems are declared in `DIMENSIONS` in that script, as $t$ a time, $r$ and $x$ lengths, $\theta$ and $\phi$ angles and $b$ a length.
-That declaration is what tells the checker which coordinate the chart multiplies by $c$, and it is also what the dimensional pass weighs every published term against.
-There is no `PARAMETER_RELATIONS` line, because $b$ is a free parameter of the family: fixing it needs the field of Step 8, which is not part of the metric, so every published value here is an identity in $b$.
+That declaration is what tells the checker which coordinate the chart multiplies by $c$, and it is also what the dimensional pass weighs every term against.
+There is no `PARAMETER_RELATIONS` line, because $b$ is a free parameter of the family: fixing it needs the field of Step 8, which is not part of the metric, so every component is an identity in $b$.

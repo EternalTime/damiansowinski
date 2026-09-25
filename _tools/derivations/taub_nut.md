@@ -1,14 +1,13 @@
 # The Taub-NUT vacuum spacetime
 
-This is the working behind the coordinate system in `MFS/assets/data/metrics/taub_nut.json`.
-Every number the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+Every component and scalar of the Taub-NUT spacetime in its spherical chart is derived here, in order, from the line element down to the geodesic equations.
+We compute every result rather than assert it, and leave none as an exercise.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and checks every stated expression against it, so each result is checkable by hand and by machine independently.
 
-Taub-NUT is the first entry in the collection whose metric is not diagonal.
-The whole of what makes it interesting sits in one off diagonal component, $g_{t\phi}$, and the entry publishes it rather than rotating it away, because it cannot be rotated away.
-Step 2 says what that term is, Step 8 shows it does not disturb the vacuum condition, Step 11 shows it doubling the Kretschmann scalar into a real part and an imaginary part, and Step 14 says where the price is paid.
+The metric of Taub-NUT is not diagonal.
+The whole of what makes it interesting sits in one off diagonal component, $g_{t\phi}$, which cannot be rotated away.
+That term is the potential of a gravitomagnetic monopole (Step 2), it leaves the vacuum condition undisturbed (Step 8), it doubles the Kretschmann scalar into a real part and an imaginary part (Step 11), and its price is paid on the axis (Step 14).
 
 ---
 
@@ -23,14 +22,14 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+and every Riemann component is taken in this convention.
 
 The Ricci tensor is the standard contraction,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-settled for the collection on 2026-09-18.
-For this spacetime the settlement costs nothing, because the contraction vanishes and so does its negative: Step 8 computes it and gets zero in every slot, so an entry written with either convention would print the same empty block.
+settled on 2026-09-18.
+For this spacetime the settlement costs nothing, because the contraction vanishes and so does its negative: it is zero in every slot by Step 8, so either convention gives the same vanishing Ricci tensor.
 The Weyl tensor is built from the same contraction in Step 10, which is the only place the choice could have shown.
 
 Factors of $G$ and $c$ are kept explicit.
@@ -40,23 +39,23 @@ The mass enters only through the geometric mass
 $$m = \frac{GM}{c^2},$$
 
 which is half the Schwarzschild radius, and the NUT parameter $l$ is a length beside it.
-That is the same bargain Schwarzschild strikes with $r_s = 2GM/c^2$, and it is why no published component of this entry carries a factor of $c$ or of $G$ at all.
+That is the same bargain Schwarzschild strikes with $r_s = 2GM/c^2$, and it is why no component of Taub-NUT carries a factor of $c$ or of $G$ at all.
 
-The chart is the collection's, the one whose zeroth coordinate is
+The chart is the one whose zeroth coordinate is
 
 $$x^0 = ct.$$
 
-The index is printed with the bare letter $t$, but the component printed against it is a component of that chart.
-Everything from Step 3 onward is computed directly in it, so no conversion is needed at the end.
+The index is written with the bare letter $t$, but a component carrying it is a component of that chart.
+Every component from Step 3 onward is computed directly in it, so no conversion is needed at the end.
 Because the metric of this spacetime does not depend on $t$, the rescaling leaves nothing behind: in the chart $x^0 = ct$ every component of the metric, of the connection and of every curvature tensor is a function of $r$ and $\theta$ alone, with no $c$ anywhere.
-The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$, and Step 15 checks that this is the reading on which every published term balances.
+The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$, and on this reading every term balances, as the dimensional check of Step 15 confirms.
 
-Three abbreviations run through everything below.
+Three abbreviations run through the algebra.
 
 $$\rho^2 = r^2 + l^2, \qquad \Delta = r^2 - 2mr - l^2, \qquad f = \frac{\Delta}{\rho^2}.$$
 
-They are shorthand for this document only.
-The published file writes every component out in $r$, $\theta$, $m$ and $l$, because the checker reads the file symbol by symbol and has no way to be told what an abbreviation means.
+They are shorthand for the hand algebra only.
+The components themselves are written out in $r$, $\theta$, $m$ and $l$, because the checker reads them symbol by symbol and has no way to be told what an abbreviation means.
 
 ---
 
@@ -70,7 +69,7 @@ with
 
 $$f(r) = \frac{r^2 - 2mr - l^2}{r^2 + l^2}.$$
 
-Setting $l = 0$ gives $f = 1 - 2m/r = 1 - r_s/r$, kills the cross term and returns Schwarzschild exactly, which is the first check to make on any expression below.
+Setting $l = 0$ gives $f = 1 - 2m/r = 1 - r_s/r$, kills the cross term and returns Schwarzschild exactly, which is the first check to make on any expression.
 
 Write the one form inside the bracket as
 
@@ -82,14 +81,14 @@ $$dA = -2l\sin\theta\,d\theta\wedge d\phi$$
 
 is $-2l$ times the area form of the unit sphere, the monopole field itself.
 That is the content of calling $l$ a gravitomagnetic charge: the NUT parameter enters the metric the way a magnetic charge enters electromagnetism, through a potential whose curl is a monopole field, and a monopole potential cannot be made regular everywhere on a sphere.
-Step 14 collects what that costs.
+What that costs is the Misner string of Step 14.
 
 The horizon is where $f$ vanishes, that is where $\Delta = 0$:
 
 $$r_\pm = m \pm \sqrt{m^2 + l^2}.$$
 
 Both roots are real for every $m$ and every $l$, and $r_- < 0 < r_+$, so unlike Reissner-Nordstrom there is no extremal case and no naked case.
-The entry publishes the exterior, $r > r_+$.
+The chart covers the exterior, $r > r_+$.
 
 ---
 
@@ -99,11 +98,11 @@ Expanding the square in Step 2 with $x^0 = ct$ and ordering the coordinates $(t,
 
 $$g_{\mu\nu} = \begin{pmatrix} -f & 0 & 0 & -2lf\cos\theta \\ 0 & \dfrac{1}{f} & 0 & 0 \\ 0 & 0 & \rho^2 & 0 \\ -2lf\cos\theta & 0 & 0 & \rho^2\sin^2\theta - 4l^2f\cos^2\theta\end{pmatrix}.$$
 
-Every entry is dimensionless, as it must be in a chart whose four coordinates are a length, an angle and an angle, once the zeroth is $ct$.
-The two mixed entries are the whole of the difference from Schwarzschild.
+Every component is dimensionless, as it must be in a chart whose four coordinates are a length, an angle and an angle, once the zeroth is $ct$.
+The two mixed components are the whole of the difference from Schwarzschild.
 
-The determinant comes out of the $2\times 2$ block in $(t,\phi)$ and the two diagonal entries between.
-For the block,
+The determinant comes out of the $2\times 2$ part in $(t,\phi)$ and the two diagonal components between.
+For that part,
 
 $$g_{tt}g_{\phi\phi} - g_{t\phi}^2 = -f\left(\rho^2\sin^2\theta - 4l^2f\cos^2\theta\right) - 4l^2f^2\cos^2\theta = -f\rho^2\sin^2\theta,$$
 
@@ -115,7 +114,7 @@ $$\det g = -\rho^4\sin^2\theta, \qquad \sqrt{-g} = \left(r^2+l^2\right)\sin\thet
 The volume element knows nothing about $m$ and nothing about the cross term.
 It is the flat measure of a sphere of areal radius $\rho$, which is the first hint that the NUT parameter is not a source of anything.
 
-Inverting the same block,
+Inverting the same part,
 
 $$g^{tt} = \frac{g_{\phi\phi}}{-f\rho^2\sin^2\theta} = -\frac{1}{f} + \frac{4l^2\cos^2\theta}{\rho^2\sin^2\theta}, \qquad g^{t\phi} = \frac{-g_{t\phi}}{-f\rho^2\sin^2\theta} = -\frac{2l\cos\theta}{\rho^2\sin^2\theta}, \qquad g^{\phi\phi} = \frac{1}{\rho^2\sin^2\theta},$$
 
@@ -123,8 +122,8 @@ and the rest are reciprocals:
 
 $$g^{rr} = f, \qquad g^{\theta\theta} = \frac{1}{\rho^2}.$$
 
-Two things are worth reading off before going on.
-The inverse metric carries $1/\sin^2\theta$ in three of its entries, which is the axis making its first appearance, and $g^{\phi\phi}$ is the same as it would be on a sphere, so the cross term has been pushed entirely into $g^{tt}$ and $g^{t\phi}$.
+Two features of it matter before going on.
+The inverse metric carries $1/\sin^2\theta$ in three of its components, which is the axis making its first appearance, and $g^{\phi\phi}$ is the same as it would be on a sphere, so the cross term has been pushed entirely into $g^{tt}$ and $g^{t\phi}$.
 
 ---
 
@@ -149,18 +148,17 @@ $$\Gamma^\theta{}_{t\phi} = -\frac{lf\sin\theta}{\rho^2}, \qquad \Gamma^\theta{}
 
 $$\Gamma^\phi{}_{t\theta} = \frac{lf}{\rho^2\sin\theta}, \qquad \Gamma^\phi{}_{r\phi} = \frac{r}{\rho^2}, \qquad \Gamma^\phi{}_{\theta\phi} = \left(1 + \frac{2l^2f}{\rho^2}\right)\cot\theta.$$
 
-Here $W$ is the polynomial that Step 7 will meet again,
+Here $W$ is the polynomial that returns in Step 7,
 
 $$W = l\left(r^3 - 3mr^2 - 3l^2r + l^2m\right).$$
 
 Set $l = 0$ and the list collapses to Schwarzschild's nine: $\Gamma^t{}_{tr} = f'/2f$, $\Gamma^r{}_{tt} = ff'/2$, $\Gamma^r{}_{rr} = -f'/2f$, $\Gamma^r{}_{\theta\theta} = -rf$, $\Gamma^r{}_{\phi\phi} = -rf\sin^2\theta$, $\Gamma^\theta{}_{r\theta} = \Gamma^\phi{}_{r\phi} = 1/r$, $\Gamma^\theta{}_{\phi\phi} = -\sin\theta\cos\theta$ and $\Gamma^\phi{}_{\theta\phi} = \cot\theta$.
 Six symbols survive only because $l \neq 0$, and every one of them carries an odd power of $l$: those are the ones the cross term paid for.
 
-Two of them deserve a sentence.
-$\Gamma^\theta{}_{t\phi}$ and $\Gamma^\phi{}_{t\theta}$ are the gravitomagnetic terms proper.
+Two of them, $\Gamma^\theta{}_{t\phi}$ and $\Gamma^\phi{}_{t\theta}$, are the gravitomagnetic terms proper.
 They couple a velocity in time to a velocity in angle, which is exactly how a magnetic field couples in the Lorentz force, and they are why a particle dropped radially in this spacetime does not fall radially.
 
-The published file writes each of these twenty five with $\rho^2$, $\Delta$, $f$ and $P$ substituted out, so for instance the first of them appears as
+With $\rho^2$, $\Delta$, $f$ and $P$ substituted out, each of these twenty five grows longer, and the first of them, for instance, is
 
 $$\Gamma^t{}_{tr} = \frac{mr^2 + 2l^2r - l^2m}{\left(r^2+l^2\right)\left(r^2 - 2mr - l^2\right)}.$$
 
@@ -174,7 +172,6 @@ $$\Gamma_{t\nu\rho} = g_{tt}\Gamma^t{}_{\nu\rho} + g_{t\phi}\Gamma^\phi{}_{\nu\r
 
 while the $r$ and $\theta$ rows lower with one factor each.
 The count is unchanged at twenty five, since the mixing is invertible and no symbol is annihilated by it.
-The entry publishes both variants in full.
 
 ---
 
@@ -212,7 +209,7 @@ and every frame component not obtainable from these by the symmetries of Riemann
 
 Now split the curvature the way an observer along $e^0$ sees it.
 The electric part is the tidal tensor $E_{ij} = R_{0i0j}$ and the magnetic part is its dual, $B_{ij} = \tfrac{1}{2}\varepsilon_i{}^{kl}R_{0jkl}$.
-From the eight components above,
+From these eight components,
 
 $$E_{ij} = \frac{U}{\rho^6}\,\mathrm{diag}(-2,1,1), \qquad B_{ij} = \frac{W}{\rho^6}\,\mathrm{diag}(-2,1,1).$$
 
@@ -231,7 +228,7 @@ $$\frac{U + iW}{\rho^6} = \frac{m + il}{(r + il)^3},$$
 
 so the entire curvature of Taub-NUT is the Schwarzschild expression $m/r^3$ with the mass complexified to $m + il$ and the radius complexified to $r + il$.
 That identity is not decoration.
-It is the reason $l$ is called a gravitomagnetic charge, it is why every polynomial in this document has coefficients $1, 3, 3, 1$ up to signs, and Step 11 gets the Kretschmann scalar out of it in one line.
+It is the reason $l$ is called a gravitomagnetic charge, it is why every polynomial of Taub-NUT has coefficients $1, 3, 3, 1$ up to signs, and it gives the Kretschmann scalar in one line in Step 11.
 
 ---
 
@@ -239,7 +236,7 @@ It is the reason $l$ is called a gravitomagnetic charge, it is why every polynom
 
 In an orthonormal frame the Ricci tensor is $R_{ab} = \eta^{cd}R_{cadb} = -R_{0a0b} + \sum_k R_{kakb}$.
 
-The diagonal entries are four sums, and all four use only the tracelessness of $\mathrm{diag}(-2,1,1)$:
+The diagonal components are four sums, and all four use only the tracelessness of $\mathrm{diag}(-2,1,1)$:
 
 $$R_{00} = R_{0101} + R_{0202} + R_{0303} = \frac{U}{\rho^6}\left(-2 + 1 + 1\right) = 0,$$
 
@@ -249,7 +246,7 @@ $$R_{22} = -R_{0202} + R_{1212} + R_{2323} = \frac{U}{\rho^6}\left(-1 - 1 + 2\ri
 
 and $R_{33}$ the same as $R_{22}$ by the symmetry between $e^2$ and $e^3$.
 
-The six off diagonal entries are shorter still.
+The six off diagonal components are shorter still.
 Each of them is a sum of frame components whose two index pairs are different and share one index, such as $(20)(21)$ or $(21)(23)$, and not one of those appears among the eight: for example
 
 $$R_{01} = R_{2021} + R_{3031} = 0 + 0, \qquad R_{13} = -R_{0103} + R_{2123} = 0 + 0.$$
@@ -265,8 +262,8 @@ So in the chart,
 
 $$R_{\mu\nu} = 0,$$
 
-and the entry publishes an empty block for it in all three variants, $R_{\mu\nu}$, $R^\mu{}_\nu$ and $R^{\mu\nu}$.
-The sign convention of the contraction cannot be read off an empty block, which is why Step 1 records it in prose instead.
+and it vanishes with both indices down, with one up and with both up, $R_{\mu\nu}$, $R^\mu{}_\nu$ and $R^{\mu\nu}$.
+The sign convention of the contraction cannot be read off a tensor that vanishes, which is why it is stated in words in Step 1.
 
 ---
 
@@ -274,8 +271,8 @@ The sign convention of the contraction cannot be read off an empty block, which 
 
 $$R = g^{\mu\nu}R_{\mu\nu} = 0, \qquad G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = 0.$$
 
-Both follow from Step 8 with no further work, and the Einstein tensor is published empty in all three variants as well.
-There is no stress energy anywhere: $T_{\mu\nu} = 0$, the spacetime is empty, and everything the entry prints below is curvature of the vacuum sort, sourced by nothing at any point of the manifold the chart covers.
+Both follow from Step 8 with no further work, and the Einstein tensor vanishes with both indices down, with one up and with both up.
+There is no stress energy anywhere: $T_{\mu\nu} = 0$, the spacetime is empty, and all the curvature of Taub-NUT is of the vacuum sort, sourced by nothing at any point of the manifold the chart covers.
 
 ---
 
@@ -286,9 +283,9 @@ The Weyl tensor in four dimensions is Riemann with its traces removed:
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \frac{1}{2}\left(g_{\mu\rho}\mathcal{R}_{\sigma\nu} - g_{\mu\sigma}\mathcal{R}_{\rho\nu} - g_{\nu\rho}\mathcal{R}_{\sigma\mu} + g_{\nu\sigma}\mathcal{R}_{\rho\mu}\right) + \frac{\mathcal{R}}{6}\left(g_{\mu\rho}g_{\sigma\nu} - g_{\mu\sigma}g_{\rho\nu}\right),$$
 
 where $\mathcal{R}_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu}$ and $\mathcal{R} = g^{\mu\nu}\mathcal{R}_{\mu\nu}$ are the traces of Riemann itself.
-Those traces are the ones Weyl is defined by, whatever a file chooses to call its Ricci tensor, so this formula is convention free.
+Those traces are the ones Weyl is defined by, whatever convention names the Ricci tensor, so this formula is convention free.
 
-The computation was run as written, on all two hundred and fifty six components, with $\mathcal{R}_{\mu\nu}$ and $\mathcal{R}$ recomputed from the published Riemann tensor rather than assumed.
+The computation was run as written, on all two hundred and fifty six components, with $\mathcal{R}_{\mu\nu}$ and $\mathcal{R}$ recomputed from the Riemann tensor rather than assumed.
 Both correction terms came out identically zero, because both are built from $\mathcal{R}_{\mu\nu}$, which Step 8 showed vanishes.
 Hence
 
@@ -298,7 +295,7 @@ in every one of the seventy two nonzero slots, and $C^\mu{}_{\nu\rho\sigma} = R^
 
 The equality is a theorem about vacuum solutions and not a shortcut through the arithmetic.
 It says something: all of the curvature of Taub-NUT is Weyl curvature, which is to say tidal and free, none of it traceable to matter at the point where it is felt.
-The published Weyl block is therefore numerically identical to the published Riemann block, and the check that it should be was the computation above, not the copy.
+The Weyl tensor is therefore numerically identical to the Riemann tensor, and the check that it should be was the computation of the traces, not a copy.
 
 In the frame of Step 7 the same statement reads $E_{ij} + iB_{ij} = \mathfrak{c}\,\mathrm{diag}(-2,1,1)$ with
 
@@ -334,7 +331,7 @@ which by Step 7 is
 
 $$K = 48\,\mathrm{Re}\left[\left(\frac{m+il}{(r+il)^3}\right)^2\right] = 48\,\mathrm{Re}\left[\frac{(m+il)^2}{(r+il)^6}\right].$$
 
-The two factors, written out, are what the entry publishes:
+The two factors, written out, are
 
 $$U - W = mr^3 - lr^3 + 3lmr^2 + 3l^2r^2 - 3l^2mr + 3l^3r - l^3m - l^4,$$
 
@@ -356,7 +353,7 @@ That is the first of the spacetime's several refusals to behave: a solution with
 Continue $r$ down through the horizon and through zero and out the far side and the curvature stays bounded the whole way.
 
 $K$ is also finite on the axis, at $\theta = 0$ and $\theta = \pi$, being independent of $\theta$ altogether.
-The Misner string of Step 14 is therefore not a curvature singularity and cannot be one; it is a defect of the chart, and Step 14 says which.
+The Misner string of Step 14 is therefore not a curvature singularity and cannot be one; it is a defect of the chart, namely of the gauge of the monopole potential in Step 14.
 
 The second thing $K$ says is that it changes sign.
 Expanding the quotient of Step 11 for large $r$,
@@ -365,7 +362,7 @@ $$K = \frac{48\left(m^2 - l^2\right)}{r^6} + O\!\left(\frac{1}{r^7}\right),$$
 
 so once $l > m$ the Kretschmann scalar is negative far from the source, which $48m^2/r^6$ never is.
 Both $U-W$ and $U+W$ are cubics in $r$ with real roots for any $l \neq 0$, so $K$ passes through zero at finite radius in every case; whether any of those radii lies in the exterior is what $l$ against $m$ decides.
-For $l > m$ exactly one of them does, and for $l < m$ they all sit at or inside the horizon and $K$ stays positive over the whole published domain.
+For $l > m$ exactly one of them does, and for $l < m$ they all sit at or inside the horizon and $K$ stays positive over the whole exterior.
 At a radius where $K$ vanishes the magnetic part has caught the electric part up, $|E| = |B|$, and the tidal field is null in the same algebraic sense a null electromagnetic field is.
 Nothing of the kind happens in Schwarzschild, and the difference is entirely the NUT parameter's.
 
@@ -378,7 +375,7 @@ The equations are
 $$\ddot{x}^\mu + \Gamma^\mu{}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho = 0$$
 
 with the $\Gamma$ of Step 4 and the dot the derivative with respect to an affine parameter $\lambda$ along the curve, taken of the chart coordinates, so $\dot{t} = d(ct)/d\lambda$ and $\dot{r} = dr/d\lambda$.
-Summing over both orders of $\nu$ and $\rho$ doubles every symbol whose lower pair is unequal, which is where the factors of two below come from.
+Summing over both orders of $\nu$ and $\rho$ doubles every symbol whose lower pair is unequal, which is where the factors of two in the equations come from.
 
 $$\ddot{t} + \frac{f'}{f}\dot{t}\dot{r} - \frac{4l^2f\cos\theta}{\rho^2\sin\theta}\dot{t}\dot{\theta} - \frac{4W\cos\theta}{\rho^2\Delta}\dot{r}\dot{\phi} + \frac{2l\left[\left(\rho^4+4l^2\Delta\right)\sin^2\theta - 2\left(\rho^4+2l^2\Delta\right)\right]}{\rho^4\sin\theta}\dot{\theta}\dot{\phi} = 0,$$
 
@@ -388,9 +385,9 @@ $$\ddot{\theta} - \frac{2lf\sin\theta}{\rho^2}\dot{t}\dot{\phi} + \frac{2r}{\rho
 
 $$\ddot{\phi} + \frac{2lf}{\rho^2\sin\theta}\dot{t}\dot{\theta} + \frac{2r}{\rho^2}\dot{r}\dot{\phi} + 2\left(1 + \frac{2l^2f}{\rho^2}\right)\cot\theta\,\dot{\theta}\dot{\phi} = 0.$$
 
-The entry prints these with $f$, $\rho^2$, $\Delta$ and $W$ substituted out.
+In full, the four equations have $f$, $\rho^2$, $\Delta$ and $W$ substituted out.
 
-The third equation is the one to read.
+The third equation carries the physics.
 Set $l = 0$ and its first term goes, leaving the Schwarzschild statement that a particle launched in the equatorial plane with $\dot{\theta} = 0$ and $\dot{\phi} \neq 0$ stays in it.
 With $l \neq 0$ the term $-2lf\sin\theta\,\dot{t}\dot{\phi}/\rho^2$ survives, and any particle with $\dot{\phi} \neq 0$ is pushed off the plane at once.
 There are no planar orbits in Taub-NUT.
@@ -400,12 +397,12 @@ Orbits lie instead on cones about the axis, which is the gravitational copy of t
 
 ## Step 14. The Misner string
 
-$\theta$ runs over the open interval $(0, \pi)$ in the published domains, and the exclusion of the two endpoints is not tidiness.
+$\theta$ runs over the open interval $(0, \pi)$ in the domain of the chart, and the exclusion of the two endpoints is not tidiness.
 
 On a sphere $d\phi$ is undefined at both poles, so a one form $h(\theta)d\phi$ extends to the pole only if $h$ vanishes there.
 The potential of Step 2 has $h = 2l\cos\theta$, which is $+2l$ at $\theta = 0$ and $-2l$ at $\theta = \pi$.
 It vanishes at neither.
-So in this gauge the metric is singular along the whole axis, and the singularity is a coordinate one: Step 12 showed $K$ is finite there.
+So in this gauge the metric is singular along the whole axis, and the singularity is a coordinate one, since $K$ is finite there by Step 12.
 The singular half axis is the Misner string, the gravitational counterpart of the Dirac string that trails a magnetic monopole, and it is there for the same reason.
 
 The gauge can be moved but not removed.
@@ -426,11 +423,11 @@ $$t \sim t + \frac{8\pi l}{c}.$$
 
 That is Misner's repair, and it is worse than the disease.
 A periodic time coordinate whose orbits are timelike somewhere makes closed timelike curves through every point of the region where they are, so the spacetime is regular and causally hopeless, or causally sensible and singular along a half axis, and there is no third option.
-The entry publishes the second, with $\theta \in (0,\pi)$ in the domains and the whole story in the convention field, because the components printed are the components of a chart, and a chart that covers the axis in this gauge does not exist.
+We take the second, with $\theta \in (0,\pi)$ as the domain of the chart, because the components are the components of a chart, and a chart that covers the axis in this gauge does not exist.
 
 ---
 
-## Step 15. Every published expression is dimensionally consistent
+## Step 15. Every expression is dimensionally consistent
 
 The chart coordinates are $(ct, r, \theta, \phi)$, of dimensions $L$, $L$, $1$, $1$.
 The parameters $m$ and $l$ are both lengths.
@@ -445,7 +442,7 @@ Three samples, one per rank.
 $g_{t\phi} = -2lf\cos\theta$ must carry $L^2/(L\cdot 1) = L$, and $f$ is dimensionless while $l$ is a length, so it carries $L$.
 This is the component that decides the whole scheme: if $m$ and $l$ were not lengths there would be no way for a $dt\,d\phi$ term to balance against a $d\theta^2$ term in the same line element.
 
-$\Gamma^\theta{}_{t\phi} = -lf\sin\theta/\rho^2$ carries $L^{-1}$ from the field, times $1/L$ for the upper $\theta$, times $L/L = 1$ for the lower $t$, times $L/1 = L$ for the lower $\phi$, so $L^{-1}$ in all; and $l/\rho^2$ is $L/L^2 = L^{-1}$.
+$\Gamma^\theta{}_{t\phi} = -lf\sin\theta/\rho^2$ carries $L^{-1}$ as a connection coefficient, times $1/L$ for the upper $\theta$, times $L/L = 1$ for the lower $t$, times $L/1 = L$ for the lower $\phi$, so $L^{-1}$ in all; and $l/\rho^2$ is $L/L^2 = L^{-1}$.
 
 $K = 48(U^2-W^2)/\rho^{12}$ must carry $L^{-4}$, and $U$ and $W$ are quartics in lengths, so $U^2$ carries $L^8$ against $\rho^{12} = L^{12}$.
 
@@ -456,34 +453,34 @@ $$\frac{L^4}{L^2\cdot L^2}\cdot\frac{L}{\lambda}\cdot\frac{1}{\lambda} = \frac{L
 
 which matches, and matches only because $\dot{t}$ is $d(ct)/d\lambda$ and not $dt/d\lambda$.
 On the other reading the first term of that equation would come out one factor of $c$ away from the rest, and the dimensional pass in `verify_metrics.py` would name it.
-It does not, on any of the three hundred and seventy three expressions the entry publishes.
+It does not, on any of the three hundred and seventy three expressions of Taub-NUT.
 
 ---
 
-## Step 16. What the entry publishes, and what the checker needs
+## Step 16. The components, and what the checker needs
 
-The file carries one coordinate system, `spherical`, and in it:
+In the spherical chart there are:
 
-the line element; the six nonzero $g_{\mu\nu}$ and the six nonzero $g^{\mu\nu}$; the twenty five $\Gamma^\mu{}_{\nu\rho}$ and the twenty five $\Gamma_{\mu\nu\rho}$; the eighty $R^\mu{}_{\nu\rho\sigma}$ and the seventy two $R_{\mu\nu\rho\sigma}$; empty blocks for $R_{\mu\nu}$, $R^\mu{}_\nu$, $R^{\mu\nu}$, $G_{\mu\nu}$, $G^\mu{}_\nu$ and $G^{\mu\nu}$; $R = 0$; the Kretschmann scalar; the eighty $C^\mu{}_{\nu\rho\sigma}$ and the seventy two $C_{\mu\nu\rho\sigma}$; and the four geodesic equations.
+the line element; the six nonzero $g_{\mu\nu}$ and the six nonzero $g^{\mu\nu}$; the twenty five $\Gamma^\mu{}_{\nu\rho}$ and the twenty five $\Gamma_{\mu\nu\rho}$; the eighty $R^\mu{}_{\nu\rho\sigma}$ and the seventy two $R_{\mu\nu\rho\sigma}$; vanishing $R_{\mu\nu}$, $R^\mu{}_\nu$, $R^{\mu\nu}$, $G_{\mu\nu}$, $G^\mu{}_\nu$ and $G^{\mu\nu}$; $R = 0$; the Kretschmann scalar; the eighty $C^\mu{}_{\nu\rho\sigma}$ and the seventy two $C_{\mu\nu\rho\sigma}$; and the four geodesic equations.
 
-For `verify_metrics.py` to read it, the system needs one line in `DIMENSIONS`,
+For `verify_metrics.py` to read the spherical chart, `DIMENSIONS` needs one line,
 
     ("taub_nut", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L",
     },
 
 declaring $t$ a time, which is what tells the script that the chart multiplies it by $c$, and declaring both parameters lengths, which is what lets the dimensional pass weigh the cross term.
-No entry in `PARAMETER_RELATIONS` is needed: $m$ and $l$ are free, and every value published is an identity in both.
+No line in `PARAMETER_RELATIONS` is needed: $m$ and $l$ are free, and every component is an identity in both.
 
 The one thing to know before rerunning the check is that this system is slow.
-Every published value agrees with sympy, but the metric has an off diagonal block, so the inverse is dense in the $t$ and $\phi$ rows and every contraction below Riemann carries the extra terms.
+Every component agrees with sympy, but the metric has an off diagonal part, so the inverse is dense in the $t$ and $\phi$ rows and every contraction after Riemann carries the extra terms.
 None of the tensors from Riemann down reliably finishes inside the default per tensor budget of one hundred and twenty seconds, and the Kretschmann scalar never does.
-The budget is wall clock, so how much of the entry comes back `UNCHECKED` at the default depends on what else the machine is doing.
+The budget is wall clock, so how many of the tensors come back `UNCHECKED` at the default depends on what else the machine is doing.
 Verify it at a larger budget instead:
 
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py \
         --system taub_nut/spherical --budget 2400
 
 which reports no disagreements and no dimensional failures, and takes from nine minutes to about half an hour depending on the load.
-Since 22 September 2026 that is no longer necessary: `norm` keeps denominators factored instead of calling `simplify`, and the whole entry checks in about three seconds at the default budget, with nothing unchecked.
-The dimensional pass is unaffected and runs over the whole entry in a moment, as it does everywhere else.
+Since 22 September 2026 that is no longer necessary: `norm` keeps denominators factored instead of calling `simplify`, and the whole chart checks in about three seconds at the default budget, with nothing unchecked.
+The dimensional pass is unaffected and runs over every expression in a moment, as it does everywhere else.

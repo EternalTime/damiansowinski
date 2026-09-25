@@ -1,14 +1,14 @@
 # The Kasner anisotropic vacuum cosmology
 
-This is the working behind the Cartesian coordinate system in `MFS/assets/data/metrics/kasner.json`.
-Every number the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+The Kasner anisotropic vacuum cosmology is worked here in one coordinate system, the Cartesian chart.
+Every component of the metric and of its curvature is derived in order, from the line element down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we do not compute.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and checks every component against its own result, so the algebra is checkable by hand and by machine independently.
 
-Kasner is the first entry in the collection whose parameters are not free.
+The parameters of Kasner's metric are not free.
 Its three exponents are bound by two algebraic constraints, and everything that makes it a vacuum solution is carried by those constraints rather than by the shape of the metric.
-Step 8 derives them from the field equations, and Step 15 gives the parametrisation of the constraint surface that lets a machine check an entry which only claims its values on that surface.
+They follow from the field equations in Step 8, and the parametrisation of the constraint surface in Step 15 lets a machine check components that hold only on that surface.
 
 ---
 
@@ -23,26 +23,26 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+which fixes the sign of every Riemann component.
 
 The Ricci tensor is the standard contraction on the first lower index,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-which is what the collection publishes everywhere.
-For this spacetime the choice does not reach anything published, because the other contraction is the negative of this one and the two vanish together on the constraint surface; Step 8 computes this one and Step 9 says why the entry was untouched when the collection settled on it.
+which is the contraction used for every spacetime.
+For this spacetime the choice reaches no component, because the other contraction is the negative of this one and the two vanish together on the constraint surface; this one is computed in Step 8, and Step 9 gives the reason no component of Kasner changed when the convention was settled.
 
 Factors of $c$ are kept explicit.
-The chart, here and everywhere else in the collection, is the one whose time coordinate is $x^0 = cT$.
+The chart, here as for every other spacetime, is the one whose time coordinate is $x^0 = cT$.
 Schwarzschild shows the convention plainly, quoting $g_{tt} = -(1-r_s/r)$ against a line element whose time term is $-(1-r_s/r)c^2dt^2$.
-Since $t$ here is a time, the chart coordinate is $ct$, and every component printed against an index $t$ is a component in that chart even though the index is written with the bare letter.
+Since $t$ here is a time, the chart coordinate is $ct$, and every component written against an index $t$ is a component in that chart even though the index is written with the bare letter.
 
 Because the rescaling $t \to ct$ is linear with constant coefficients, the rule is arithmetic: a component in the chart is the component taken with the bare coordinate, multiplied by $c$ once for every upper $t$ index and divided by $c$ once for every lower one.
 The Christoffel symbols obey the same rule as the tensors, since the inhomogeneous term in their transformation law carries a second derivative of the coordinate change, which vanishes for a linear one.
 A scalar has no index at all and is therefore the same number in both charts, which is worth holding on to for the Kretschmann scalar of Step 12.
 
-Steps 2 to 13 work in the bare $(t,x,y,z)$ chart, where $g_{tt} = -c^2$, because that is where the computation is done.
-Step 14 carries the results into the chart the entry prints.
+From Step 2 to Step 13 the computation is done in the bare $(t,x,y,z)$ chart, where $g_{tt} = -c^2$.
+In Step 14 the results are carried into the rescaled chart.
 
 ---
 
@@ -54,13 +54,13 @@ with the three constants $p_1, p_2, p_3$ obeying
 
 $$p_1 + p_2 + p_3 = 1, \qquad p_1^2 + p_2^2 + p_3^2 = 1.$$
 
-Step 8 shows that these two conditions are exactly the vacuum field equations for this ansatz, so they are not an extra assumption laid on top of the metric; they are what the metric has to satisfy in order to solve anything.
+These two conditions are exactly the vacuum field equations for this ansatz, derived in Step 8, so they are not an extra assumption laid on top of the metric; they are what the metric has to satisfy in order to solve anything.
 
 The chart is $t \in (0,\infty)$ with $x$, $y$ and $z$ each running over the whole real line.
-The surface $t=0$ is left out, and Step 13 shows that it is a curvature singularity rather than a defect of the chart.
+The surface $t=0$ is left out, and it is a curvature singularity rather than a defect of the chart, which is Step 13.
 
 Two remarks on reading the line element.
-First, the exponents are generically irrational, so $t^{2p_i}$ only makes sense with $t$ read in a fixed unit of time; the constant that fixes the unit is absorbed into $x$, $y$ and $z$ once and for all and is not carried below.
+First, the exponents are generically irrational, so $t^{2p_i}$ only makes sense with $t$ read in a fixed unit of time; the constant that fixes the unit is absorbed into $x$, $y$ and $z$ once and for all and is not carried further.
 Second, the coefficient of $dt^2$ is the only place $c$ appears, which is why the factors of $c$ in later steps all come from $g^{tt} = -1/c^2$.
 
 ---
@@ -80,7 +80,7 @@ The determinant is negative for every $t>0$, so the signature is Lorentzian on t
 It vanishes only in the limit $t \to 0$.
 
 Since $\sqrt{-g} = c\,t$, the proper volume of a fixed coordinate box shrinks linearly to zero as $t \to 0$, even though one of the three directions is stretching without bound while the other two collapse.
-That is the first sign of the cigar shape the history describes.
+That is the first sign of the cigar shape the universe takes near the singularity.
 
 A diagonal matrix inverts entry by entry,
 
@@ -128,7 +128,7 @@ $$\Gamma^t_{xx} = \frac{p_1 t^{2p_1-1}}{c^2}, \qquad \Gamma^t_{yy} = \frac{p_2 t
 
 $$\Gamma^x_{tx} = \Gamma^x_{xt} = \frac{p_1}{t}, \qquad \Gamma^y_{ty} = \Gamma^y_{yt} = \frac{p_2}{t}, \qquad \Gamma^z_{tz} = \Gamma^z_{zt} = \frac{p_3}{t}.$$
 
-That is nine nonzero symbols out of the $4^3 = 64$ index combinations, and the other fifty five vanish by the two cases above.
+That is nine nonzero symbols out of the $4^3 = 64$ index combinations, and the other fifty five vanish by the two cases of the upper index.
 
 ---
 
@@ -205,7 +205,7 @@ $$R_{jiji} = g_{jj}R^j{}_{iji} = t^{2p_j}\frac{p_ip_j t^{2p_i-2}}{c^2} = \frac{p
 which is symmetric under exchanging $i$ and $j$, as the pair symmetry demands.
 
 Counting what survives: six coordinate planes, the three $t$ and $i$ planes of Step 6 and the three $i$ and $j$ planes here, each contributing four nonzero components once the antisymmetry in the first pair and in the last pair is written out.
-That is twenty four nonzero components out of $4^4 = 256$, which is what the entry lists in each of its two Riemann variants.
+That is twenty four nonzero components out of $4^4 = 256$, with the first index up and with every index lowered alike.
 
 ---
 
@@ -220,7 +220,7 @@ $$R_{tt} = \sum_{i} R^i{}_{tit} = -\sum_i \frac{p_i(p_i-1)}{t^2} = \frac{1}{t^2}
 using $R^i{}_{tit} = -R^i{}_{tti}$ and Step 6.
 
 For a spatial slot, take $i = x$ as the representative.
-The contraction runs over $\alpha = t$, which is the Step 6 family, and over the two spatial $\alpha = j \neq x$, which is the Step 7 family, and both are components those steps computed directly:
+The contraction runs over $\alpha = t$, which is the Step 6 family, and over the two spatial $\alpha = j \neq x$, which is the Step 7 family, and both are components computed directly there:
 
 $$R_{xx} = R^t{}_{xtx} + \sum_{j \neq x} R^j{}_{xjx} = \frac{p_1(p_1-1)t^{2p_1-2}}{c^2} + \sum_{j\neq x}\frac{p_1p_j\,t^{2p_1-2}}{c^2}.$$
 
@@ -232,7 +232,7 @@ and by the same computation on the other two axes,
 
 $$R_{ii} = \frac{p_i\,t^{2p_i-2}}{c^2}\left(\sum_i p_i - 1\right).$$
 
-Every off diagonal component vanishes, because a nonzero $R_{\mu\nu}$ with $\mu \neq \nu$ would need a nonzero $R^\alpha{}_{\mu\alpha\nu}$, and every Riemann component Steps 6 and 7 leave standing repeats its second index in its fourth.
+Every off diagonal component vanishes, because a nonzero $R_{\mu\nu}$ with $\mu \neq \nu$ would need a nonzero $R^\alpha{}_{\mu\alpha\nu}$, and every nonzero Riemann component of Steps 6 and 7 repeats its second index in its fourth.
 
 Now impose $R_{\mu\nu} = 0$, which for a vacuum with no cosmological constant is the whole of the field equations.
 A spatial equation reads $p_i\left(\sum_i p_i - 1\right)t^{2p_i-2} = 0$, and $t^{2p_i-2}$ is nowhere zero on $t>0$, so each axis demands $p_i = 0$ or $\sum_i p_i = 1$.
@@ -244,12 +244,12 @@ Given that, the time equation reads
 
 $$R_{tt} = \frac{1}{t^2}\left(1 - \sum_i p_i^2\right) = 0 \iff \sum_i p_i^2 = 1.$$
 
-So the two constraints the entry publishes are precisely the vacuum field equations for a diagonal power law metric, one from the spatial trace and one from the time slot.
+So the two constraints on the exponents are precisely the vacuum field equations for a diagonal power law metric, one from the spatial trace and one from the time slot.
 On the constraint surface,
 
 $$R_{\mu\nu} = 0,$$
 
-and the entry publishes all three variants $R_{\mu\nu}$, $R^\mu{}_\nu$ and $R^{\mu\nu}$ as empty, since raising an index on a vanishing tensor leaves it vanishing.
+and $R_{\mu\nu}$, $R^\mu{}_\nu$ and $R^{\mu\nu}$ all vanish, since raising an index on a vanishing tensor leaves it vanishing.
 
 ---
 
@@ -261,12 +261,12 @@ a sum of multiples of components that vanish by Step 8, and then
 
 $$G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = 0 - 0 = 0,$$
 
-in every variant, for the same reason.
-The entry publishes $R = 0$ and three empty lists for the Einstein tensor.
+in every index position, for the same reason.
+So $R = 0$ and the Einstein tensor vanishes in all three index positions.
 
-This is why the convention never reached this entry.
+This is why the contraction convention never reached Kasner.
 The two contractions are related by $R^\alpha{}_{\mu\alpha\nu} = -R^\alpha{}_{\mu\nu\alpha}$, by the antisymmetry of Riemann in its last two indices, so they differ by an overall sign and vanish together.
-When the collection moved onto the standard contraction, every entry with a nonzero Ricci tensor had its published values negated and this one had nothing to change.
+When the standard contraction was adopted, every spacetime with a nonzero Ricci tensor had its values negated and Kasner had nothing to change.
 
 ---
 
@@ -281,7 +281,7 @@ Both are zero on the constraint surface, whichever of the two contractions is us
 
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma}.$$
 
-The entry publishes the Weyl tensor with exactly the component list it publishes for Riemann, in both the $C^\mu{}_{\nu\rho\sigma}$ and the $C_{\mu\nu\rho\sigma}$ variant.
+The Weyl tensor has exactly the nonzero components of Riemann, in both the $C^\mu{}_{\nu\rho\sigma}$ and the $C_{\mu\nu\rho\sigma}$ index positions.
 Physically this says that all the curvature of a Kasner universe is tidal.
 There is no matter anywhere, and what survives at $t \to 0$ is pure shear.
 
@@ -300,7 +300,7 @@ $$R_{titi} = R_{itit} = -R_{tiit} = -R_{itti} = p_i(1-p_i)\,t^{2p_i-2},$$
 $$R_{ijij} = R_{jiji} = -R_{ijji} = -R_{jiij} = \frac{p_ip_j\,t^{2p_i+2p_j-2}}{c^2}.$$
 
 Every one of these is a component in the bare chart.
-Step 14 carries them into the chart the entry prints, which changes only the first family.
+Carrying them into the rescaled chart in Step 14 changes only the first family.
 
 ---
 
@@ -311,7 +311,7 @@ The metric is diagonal, so raising all four indices on a component whose index p
 
 $$R_{abab}R^{abab} = \left(g^{aa}g^{bb}R_{abab}\right)^2.$$
 
-Step 11 leaves four nonzero components for each of the six coordinate planes, namely $abab$, $abba$, $baab$ and $baba$, and each of the four contributes the same square.
+By Step 11 each of the six coordinate planes has four nonzero components, namely $abab$, $abba$, $baab$ and $baba$, and each of the four contributes the same square.
 Hence
 
 $$K = 4\sum_{a<b}\left(g^{aa}g^{bb}R_{abab}\right)^2,$$
@@ -361,7 +361,7 @@ The two are equal, and
 
 $$K = \frac{4}{c^4t^4}\left(-4e_3\right) = -\frac{16\,p_1p_2p_3}{c^4t^4}.$$
 
-Being a scalar, this is the same number in the bare chart and in the chart the entry prints, which is why it carries $c^{-4}$ in both.
+Being a scalar, this is the same number in the bare chart and in the rescaled chart, which is why it carries $c^{-4}$ in both.
 
 ---
 
@@ -374,7 +374,7 @@ If one exponent is zero, say $p_3 = 0$, then $p_1 + p_2 = 1$ and $p_1^2 + p_2^2 
 
 So every Kasner solution has exactly one negative exponent and two positive ones, except for the three permutations of $(1,0,0)$.
 In the first case $p_1p_2p_3 < 0$ and $K > 0$; in the second $p_1p_2p_3 = 0$ and $K = 0$.
-The published $K = -16p_1p_2p_3/(c^4t^4)$ is therefore never negative, which it had better not be for a spacetime whose Riemann tensor is entirely tidal.
+The Kretschmann scalar $K = -16p_1p_2p_3/(c^4t^4)$ is therefore never negative, which it had better not be for a spacetime whose Riemann tensor is entirely tidal.
 
 Second, the exceptional points.
 At $(1,0,0)$ every Riemann component of Step 11 vanishes term by term: the first family carries $p_i(p_i-1)$, which is $1\cdot 0$ for the exponent $1$ and $0\cdot(-1)$ for each exponent $0$; the second carries $p_ip_j$, and every pair of the three exponents contains a zero.
@@ -388,11 +388,11 @@ It is also reached: a comoving observer at fixed $x,y,z$ has $ds^2 = -c^2dt^2$, 
 
 ---
 
-## Step 14. The same components in the chart the entry prints
+## Step 14. The same components in the rescaled chart
 
-Steps 2 to 13 worked with the bare $t$, which is a time.
-The entry prints the chart of Step 1, whose time coordinate is $ct$, so each upper $t$ index multiplies by $c$ and each lower one divides by it.
-Applying that count to each published value:
+From Step 2 to Step 13 the coordinate was the bare $t$, which is a time.
+The rescaled chart is the chart of Step 1, whose time coordinate is $ct$, so each upper $t$ index multiplies by $c$ and each lower one divides by it.
+Applying that count to each component:
 
 $$g_{tt} = \frac{1}{c^2}\left(-c^2\right) = -1, \qquad g^{tt} = c^2\left(-\frac{1}{c^2}\right) = -1,$$
 
@@ -406,10 +406,10 @@ $$\Gamma^t_{ii} = c\cdot\frac{p_i t^{2p_i-1}}{c^2} = \frac{p_i\,t^{2p_i-1}}{c}, 
 $$\Gamma_{tii} = \frac{1}{c}\left(-p_i\,t^{2p_i-1}\right) = -\frac{p_i\,t^{2p_i-1}}{c}, \qquad \Gamma_{iti} = \Gamma_{iit} = \frac{1}{c}\,p_i\,t^{2p_i-1} = \frac{p_i\,t^{2p_i-1}}{c}.$$
 
 The first of these gains a factor of $c$ because its time index is upper; the other three lose one because theirs is lower.
-Note that the bare $\Gamma^t_{ii}$ already carried $1/c^2$ from $g^{tt}$, so what the entry prints is $1/c$ rather than no $c$ at all.
+Note that the bare $\Gamma^t_{ii}$ already carried $1/c^2$ from $g^{tt}$, so the rescaled symbol carries $1/c$ rather than no $c$ at all.
 
 For the Riemann tensor, a component with one upper $t$ and one lower $t$ is unchanged, since the two factors cancel, and the same for a component with none.
-$R^t{}_{iti}$ has one of each, and $R^j{}_{iji}$ has neither, so both are printed exactly as Step 11 computed them.
+$R^t{}_{iti}$ has one of each, and $R^j{}_{iji}$ has neither, so both stand exactly as in Step 11.
 $R^i{}_{tti}$ has two lower $t$ and no upper, so it divides by $c^2$:
 
 $$R^i{}_{tti} = \frac{p_i(p_i-1)}{c^2t^2}.$$
@@ -422,11 +422,11 @@ while $R_{ijij}$ has no time index and is unchanged.
 The Ricci tensor, the Einstein tensor and the Ricci scalar are zero and stay zero.
 The Kretschmann scalar has no index and is the same number in both charts.
 
-These are the values the entry publishes.
+These are the components in the rescaled chart.
 
 ---
 
-## Step 15. The Kasner circle, and how a machine checks a constrained entry
+## Step 15. The Kasner circle, and how a machine checks a constrained spacetime
 
 The two constraints cut a curve out of the space of exponents.
 The plane $p_1+p_2+p_3=1$ meets the unit sphere $p_1^2+p_2^2+p_3^2=1$ in a circle, centred on $(1/3,1/3,1/3)$, and every Kasner universe is one point of it.
@@ -447,11 +447,11 @@ $$-\tfrac{1}{3} \leq p_i \leq 1.$$
 
 The endpoints are $(-1/3,2/3,2/3)$ and $(1,0,0)$, the two most symmetric points on the circle.
 
-A verifier that treated $p_1,p_2,p_3$ as free symbols would be checking a claim the entry never makes.
-Step 8 is the proof: for free exponents the Ricci tensor is not zero, so the published empty lists would be read as errors, and the Kretschmann scalar of Step 12 would keep its general quartic form instead of collapsing to $-16p_1p_2p_3$.
+A verifier that treated $p_1,p_2,p_3$ as free symbols would be checking the components off the circle, where they were never claimed to hold.
+For free exponents the Ricci tensor of Step 8 is not zero, so a vanishing Ricci tensor and a vanishing Einstein tensor would be read as errors, and the Kretschmann scalar of Step 12 would keep its general quartic form instead of collapsing to $-16p_1p_2p_3$.
 What has to be checked is an identity along the circle, not an identity in three unconstrained variables.
 
-The circle is a conic, so it has a rational parametrisation, and the one the collection uses is the map that Belinskii, Khalatnikov and Lifshitz bounce along:
+The circle is a conic, so it has a rational parametrisation, and the one the checker uses is the map that Belinskii, Khalatnikov and Lifshitz bounce along:
 
 $$p_1 = \frac{-u}{1+u+u^2}, \qquad p_2 = \frac{1+u}{1+u+u^2}, \qquad p_3 = \frac{u(1+u)}{1+u+u^2}.$$
 
@@ -482,13 +482,13 @@ duly vanishes there.
 
 The geodesic equation is $\ddot x^\mu + \Gamma^\mu_{\nu\rho}\dot x^\nu \dot x^\rho = 0$, where the dot is $d/d\lambda$ for an affine parameter $\lambda$ and the symbols are the chart ones of Step 14.
 
-The velocities have to be the velocities of the same chart those symbols are printed in, and that is worth stating in full, because it is the one place in the entry where the convention of Step 1 is easy to lose.
+The velocities have to be the velocities of the same chart as those symbols, because the geodesic equations are the one place where the convention of Step 1 is easy to lose.
 The chart coordinates are $x^\mu = (ct, x, y, z)$, so
 
 $$\dot t \equiv \frac{d(ct)}{d\lambda} = c\frac{dt}{d\lambda}, \qquad \ddot t \equiv \frac{d^2(ct)}{d\lambda^2},$$
 
-even though the index and the dot are both printed with the bare letter $t$.
-Every velocity is then a length over $\lambda$ and every acceleration a length over $\lambda^2$, the time slot included, and Step 17 checks that the published equations balance on that reading and on no other.
+even though the index and the dot are both written with the bare letter $t$.
+Every velocity is then a length over $\lambda$ and every acceleration a length over $\lambda^2$, the time slot included, and the geodesic equations balance on that reading and on no other, by the dimensional count of Step 17.
 
 For $\mu = t$, the only nonzero symbols are the three $\Gamma^t_{ii}$, each appearing once:
 
@@ -498,7 +498,7 @@ For $\mu = i$, the only nonzero symbols are $\Gamma^i_{ti} = \Gamma^i_{it} = p_i
 
 $$\ddot x + \frac{2p_1}{ct}\dot t\dot x = 0, \qquad \ddot y + \frac{2p_2}{ct}\dot t\dot y = 0, \qquad \ddot z + \frac{2p_3}{ct}\dot t\dot z = 0,$$
 
-which is what the entry prints.
+which are the three spatial geodesic equations.
 
 The three spatial equations integrate once.
 Using $\dot t = c\,dt/d\lambda$ to clear the $c$, the $x$ equation reads
@@ -514,10 +514,10 @@ A particle moving along a contracting axis is therefore blue shifted without bou
 
 ---
 
-## Step 17. Every published equation is dimensionally consistent
+## Step 17. Every equation is dimensionally consistent
 
 A convention that is only in the reader's head is a convention that gets lost, and the way it shows is a term that cannot be added to the term beside it.
-So here is the check, run over every equation the entry publishes.
+So every equation of the spacetime is checked, term by term.
 
 Two things have to be fixed first.
 The powers $t^{2p_i}$ are dimensionless, by the second remark of Step 2, so an integer shift in the exponent is what carries dimension: $t^{2p_i-1}$ is $t^{2p_i}/t$ and goes as $1/T$, and $t^{2p_i+2p_j-2}$ goes as $1/T^2$.
@@ -525,7 +525,7 @@ And the dots are the chart velocities of Step 16, so each is $L/\lambda$ and eac
 
 With $L$ for length and $T$ for time, the chart coordinates $x^\mu = (ct,x,y,z)$ are all lengths, which fixes what everything else has to be.
 
-| quantity | must be | published form | check |
+| quantity | must be | chart form | check |
 | --- | --- | --- | --- |
 | $ds^2$ | $L^2$ | $-c^2dt^2$ | $(L/T)^2T^2 = L^2$ |
 | | | $t^{2p_i}dx^2$ | $1 \cdot L^2 = L^2$ |
@@ -541,38 +541,38 @@ With $L$ for length and $T$ for time, the chart coordinates $x^\mu = (ct,x,y,z)$
 | | | $p_i t^{2p_i-1}\dot x^2/c$ | $(1/T)(L^2/\lambda^2)(T/L) = L/\lambda^2$ |
 | | | $2p_i\dot t\dot x/(ct)$ | $(T/L)(1/T)(L/\lambda)^2 = L/\lambda^2$ |
 
-The Christoffel symbols are the row to look at twice.
-Both of the printed forms come out as $1/L$, and they have to, because a connection coefficient in a chart of lengths is one over a length whatever its index pattern is.
+The Christoffel symbols are the subtle case.
+Both of their forms come out as $1/L$, and they have to, because a connection coefficient in a chart of lengths is one over a length whatever its index pattern is.
 The two get there differently: $\Gamma^t{}_{ii}$ carried $1/c^2$ in the bare chart and gained a factor of $c$ in Step 14, while $\Gamma^i{}_{ti}$ carried none and lost one.
 
-The last row is the one the convention lives or dies on.
+The geodesic terms are the ones the convention lives or dies on.
 Read $\dot t$ as $dt/d\lambda$ instead of $d(ct)/d\lambda$ and the term $2p_i\dot t\dot x/(ct)$ becomes $(T/L)(1/T)(T/\lambda)(L/\lambda) = T/\lambda^2$, which cannot be added to the $\ddot x$ beside it, a length over $\lambda^2$.
 The equation would be out by exactly one factor of $c$.
-That is not a hypothetical: it is how a wrong reading of this convention shows itself, and a geodesic equation is where it shows, because a geodesic equation is the only thing the entry publishes that adds a time derivative to a space derivative.
+That is not a hypothetical: it is how a wrong reading of this convention shows itself, and a geodesic equation is where it shows, because a geodesic equation is the only equation of the spacetime that adds a time derivative to a space derivative.
 
-All 137 expressions and terms the entry publishes were put through this check mechanically, parsed out of the JSON rather than copied by hand, and every one balances.
+All 137 expressions and terms of the spacetime were put through this check mechanically, parsed by machine rather than copied by hand, and every one balances.
 Repeating it with $\dot t$ read as $dt/d\lambda$ fails on exactly three of them, the three spatial geodesic equations, which is the signature of the mistake.
 
 ---
 
-## Step 18. What the entry publishes
+## Step 18. The components
 
-| field | value |
+| quantity | value |
 | --- | --- |
-| `metric_components` | $g_{tt} = -1$, $g_{ii} = t^{2p_i}$ |
-| `inverse_metric_components` | $g^{tt} = -1$, $g^{ii} = t^{-2p_i}$ |
-| `christoffel` `ull` | nine symbols, Step 14 |
-| `christoffel` `lll` | nine symbols, Step 14 |
-| `riemann` `ulll` | twenty four components, Steps 11 and 14 |
-| `riemann` `llll` | twenty four components, Steps 11 and 14 |
-| `ricci_tensor` | empty in all three variants, Step 8 |
-| `ricci_scalar` | $R = 0$, Step 9 |
-| `kretschmann` | $K = -16p_1p_2p_3/(c^4t^4)$, Step 12 |
-| `einstein_tensor` | empty in all three variants, Step 9 |
-| `weyl_tensor` | the Riemann lists, Step 10 |
-| `geodesics` | four equations, Step 16, in the chart velocities of that step |
+| metric | $g_{tt} = -1$, $g_{ii} = t^{2p_i}$ |
+| inverse metric | $g^{tt} = -1$, $g^{ii} = t^{-2p_i}$ |
+| Christoffel symbols, first index up | nine symbols, Step 14 |
+| Christoffel symbols, every index lowered | nine symbols, Step 14 |
+| Riemann tensor, first index up | twenty four components, Steps 11 and 14 |
+| Riemann tensor, every index lowered | twenty four components, Steps 11 and 14 |
+| Ricci tensor | zero in all three index positions, Step 8 |
+| Ricci scalar | $R = 0$, Step 9 |
+| Kretschmann scalar | $K = -16p_1p_2p_3/(c^4t^4)$, Step 12 |
+| Einstein tensor | zero in all three index positions, Step 9 |
+| Weyl tensor | the Riemann components, Step 10 |
+| geodesic equations | four equations, Step 16, in the chart velocities of that step |
 
-To check it:
+To check every component:
 
     python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system kasner/cartesian

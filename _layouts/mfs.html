@@ -4,7 +4,7 @@
   {%- include head.txt -%}
   {%- if site.google_analytics -%}{%- include google-analytics.html -%}{%- endif -%}
 
-  <title>{{ page.title | escape }} — My Favorite Spacetimes</title>
+  <title>{{ page.title | escape }} - My Favorite Spacetimes</title>
   <link rel="icon" href="{{ '/assets/images/sagA_icon.png' | relative_url }}" type="image/png">
   <link rel="stylesheet" href="{{ '/assets/css/palette.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/mfs.css' | relative_url }}">
@@ -1220,8 +1220,8 @@
         if (seen.throat) items.push(['throat', tex('\\partial_r R = 0') + ', the throat']);
         if (view.areal) items.push(['areal', 'spheres of fixed areal radius']);
         if (seen.singular) items.push(['singular', 'Kretschmann scalar diverges']);
-        if (seen.reference) items.push(['reference', 'where the declared input starts']);
-        if (view.hatch.length) items.push(['hatch', 'outside the published domain']);
+        if (seen.reference) items.push(['reference', 'where the initial data are set']);
+        if (view.hatch.length) items.push(['hatch', 'outside the domain of the chart']);
         return '<div class="mfs-nr-legend">' + items.map(function(item) {
           return '<span class="mfs-nr-item">' + nrSwatch(item[0]) + '<span>' + item[1] + '</span></span>';
         }).join('') + '</div>';
@@ -1248,7 +1248,7 @@
                     '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(p) + '</p>'; }).join(''), '</div>',
                     nrLegend(view),
                     '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn at</span> ' + nrProse(view.settings) + '</div>',
-                    view.input ? '<div class="mfs-nr-note"><span class="mfs-nr-k">declared input</span> ' + nrProse(view.input) + '</div>' : '',
+                    view.input ? '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn with</span> ' + nrProse(view.input) + '</div>' : '',
                   '</div>',
                 '</div>'
               ].join('');

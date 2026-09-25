@@ -1,11 +1,11 @@
 # Null coordinates on Minkowski spacetime
 
-This is the working behind the two null coordinate systems in `MFS/assets/data/metrics/minkowski.json`, the ones the entry calls Double Null and Spherical Null.
-Every number the entry prints is derived here, in order, from the transformation down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+Minkowski spacetime carries two null coordinate systems, Double Null and Spherical Null.
+We derive every component of each, in order, from the transformation down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we do not compute.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
-That script checks every coordinate system in the collection the same way, not only these two.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares every component it computes with the stated one, so the algebra is checkable by hand and by machine independently.
+That script checks every coordinate system of every spacetime the same way, not only these two.
 
 ---
 
@@ -25,20 +25,20 @@ The Ricci tensor is the contraction $R_{\nu\sigma} = R^\mu{}_{\nu\mu\sigma}$.
 Factors of $c$ are kept explicit.
 The coordinates $u$ and $v$ carry dimensions of time, exactly as $t$ does, since they are built as $t \pm (\text{length})/c$.
 
-The chart, here and everywhere else in the collection, is the one whose time coordinate is $x^0 = cT$.
-The Cartesian and Spherical entries in the same file quote $g_{tt} = -1$ against a line element $-c^2dt^2$, which is that chart; so does Schwarzschild, quoting $g_{tt} = -(1-r_s/r)$ against a time term $-(1-r_s/r)c^2dt^2$.
-The two null systems follow it too, which is what the factors of $c$ below are doing.
-Since $u$ and $v$ are times, the chart coordinates are $cu$ and $cv$, and every component printed against an index $u$ or $v$ is a component in that chart even though the index is written with the bare letter.
+The chart, here and for every other spacetime, is the one whose time coordinate is $x^0 = cT$.
+The Cartesian and spherical charts of Minkowski spacetime have $g_{tt} = -1$ against a line element $-c^2dt^2$, which is that chart; so does Schwarzschild, with $g_{tt} = -(1-r_s/r)$ against a time term $-(1-r_s/r)c^2dt^2$.
+The two null systems follow it too, and that is where the factors of $c$ in their components come from.
+Since $u$ and $v$ are times, the chart coordinates are the rescaled $cu$ and $cv$, and every component with an index $u$ or $v$ is a component in that rescaled chart even though the index is written with the bare letter.
 
 Because the rescaling is linear with constant coefficients, the rule is arithmetic: a component in the chart is the component taken with the bare coordinate, multiplied by $c$ once for every upper $u$ or $v$ index and divided by $c$ once for every lower one.
 The Christoffel symbols obey the same rule as the tensors, since the inhomogeneous term in their transformation law carries a second derivative of the coordinate change, which vanishes for a linear one.
-This is why, below, $\Gamma^u{}_{\theta\theta}$ carries a $c$ and $\Gamma^\theta{}_{u\theta}$ carries a $1/c$, while $\Gamma^\theta{}_{\phi\phi}$ and $\Gamma^\phi{}_{\theta\phi}$, which have no null index at all, carry none.
-The line element itself is written in $du$ and $dv$ throughout, so it is unchanged by any of this; it is only the printed components that sit in the $cu, cv$ chart.
+This is why $\Gamma^u{}_{\theta\theta}$ carries a $c$ and $\Gamma^\theta{}_{u\theta}$ carries a $1/c$, while $\Gamma^\theta{}_{\phi\phi}$ and $\Gamma^\phi{}_{\theta\phi}$, which have no null index at all, carry none.
+The line element itself is written in $du$ and $dv$ throughout, so it is unchanged by any of this; only the components sit in the $cu, cv$ chart.
 
-Steps 4 to 7 and Steps 14 to 18 below work in the bare $(u,v)$ chart, because that is where the transformation from Cartesian naturally lands.
-Step 18a and Step 22a then carry the results into the chart the entry prints.
+In Steps 4 to 7 and Steps 14 to 18 we work in the bare $(u,v)$ chart, because that is where the transformation from Cartesian naturally lands.
+In Steps 7a, 17a and 22a we then carry the results into the rescaled chart.
 
-The starting point in both parts is the Cartesian line element the same file publishes,
+The starting point in both parts is the Cartesian line element of Minkowski spacetime,
 
 $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2,$$
 
@@ -89,7 +89,7 @@ Therefore
 
 $$ds^2 = -c^2\,du\,dv + dy^2 + dz^2,$$
 
-which is the line element the entry prints.
+which is the double null line element.
 
 ## Step 5. The metric by contracting the Jacobian
 
@@ -154,17 +154,17 @@ $$g^{y\alpha}g_{\alpha y} = g^{yy}g_{yy} = 1, \qquad g^{z\alpha}g_{\alpha z} = g
 and every remaining mixed component, such as $g^{u\alpha}g_{\alpha y}$, vanishes because the only nonzero $g^{u\alpha}$ is $g^{uv}$ and $g_{vy} = 0$.
 The product is the identity.
 
-## Step 7a. The same metric in the chart the entry prints
+## Step 7a. The same metric in the rescaled chart
 
-Steps 4 to 7 worked with the bare $u$ and $v$, which are times.
-The entry prints the chart of Step 1, whose coordinates are $cu$ and $cv$, so each lower null index divides by $c$ and each upper one multiplies by it.
+In Steps 4 to 7 we worked with the bare $u$ and $v$, which are times.
+The chart of Step 1 has the coordinates $cu$ and $cv$, so each lower null index divides by $c$ and each upper one multiplies by it.
 Only $g_{uv}$ and $g^{uv}$ carry null indices at all, and each carries two:
 
 $$g_{uv} = g_{vu} = \frac{1}{c^2}\left(-\frac{c^2}{2}\right) = -\frac{1}{2}, \qquad g^{uv} = g^{vu} = c^2\left(-\frac{2}{c^2}\right) = -2.$$
 
 The components $g_{yy} = g_{zz} = 1$ have no null index and are unchanged, and the product is still the identity, since each factor of $c$ introduced on the inverse is cancelled by the one removed from the metric.
-These four numbers are what the entry prints.
-Read directly, they say that in the chart the entry uses, the flat metric in double null coordinates carries no $c$ at all, which is the point of using that chart.
+These four numbers are the components of the metric and its inverse in the rescaled chart.
+In the rescaled chart the flat metric in double null coordinates carries no $c$ at all, which is the point of using that chart.
 
 ## Step 8. Every Christoffel symbol
 
@@ -178,8 +178,8 @@ The Christoffel formula is built from exactly three such derivatives,
 $$\Gamma^\mu_{\nu\rho} = \tfrac{1}{2}g^{\mu\alpha}\left(\partial_\nu g_{\alpha\rho} + \partial_\rho g_{\alpha\nu} - \partial_\alpha g_{\nu\rho}\right) = \tfrac{1}{2}g^{\mu\alpha}\left(0 + 0 - 0\right) = 0,$$
 
 for all $4^3 = 64$ index combinations.
-Every Christoffel symbol vanishes, in both the $\Gamma^\mu_{\nu\rho}$ and the $\Gamma_{\mu\nu\rho}$ variant, the second because $\Gamma_{\mu\nu\rho} = g_{\mu\alpha}\Gamma^\alpha_{\nu\rho}$ is a sum of multiples of symbols that are already zero.
-The entry prints both lists empty.
+Every Christoffel symbol vanishes, both $\Gamma^\mu_{\nu\rho}$ and $\Gamma_{\mu\nu\rho}$, the second because $\Gamma_{\mu\nu\rho} = g_{\mu\alpha}\Gamma^\alpha_{\nu\rho}$ is a sum of multiples of symbols that are already zero.
+The checker therefore expects no nonzero Christoffel symbol of either kind.
 
 Note that this is a stronger statement than it looks.
 The metric is not diagonal, and the coordinates are not orthogonal, yet the connection still vanishes, because what the connection sees is not whether the metric is diagonal but whether it is constant.
@@ -194,16 +194,16 @@ The contraction $R_{\nu\sigma} = R^\mu{}_{\nu\mu\sigma}$ is then a sum of zeros,
 The Kretschmann scalar $K = R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}$ is a sum of products of vanishing components, so $K = 0$.
 The Einstein tensor $G_{\mu\nu} = R_{\mu\nu} - \tfrac{1}{2}Rg_{\mu\nu} = 0 - 0 = 0$.
 The Weyl tensor is Riemann minus terms built entirely from Ricci and $R$, all of which are zero, so it vanishes too.
-The entry prints empty lists for Riemann, Ricci, Einstein and Weyl, and $R = 0$, $K = 0$ for the two scalars.
+The Riemann, Ricci, Einstein and Weyl tensors all vanish, and $R = 0$, $K = 0$ for the two scalars.
 
 ## Step 10. The geodesic equations
 
 The geodesic equation is $\ddot x^\mu + \Gamma^\mu_{\nu\rho}\dot x^\nu \dot x^\rho = 0$, where the dot is $d/d\lambda$ for an affine parameter $\lambda$.
-Step 8 kills the second term for every $\mu$, leaving
+The vanishing symbols of Step 8 kill the second term for every $\mu$, leaving
 
 $$\ddot u = 0, \qquad \ddot v = 0, \qquad \ddot y = 0, \qquad \ddot z = 0,$$
 
-which is what the entry prints.
+which are the geodesic equations in double null coordinates.
 The solutions are affine in $\lambda$ in each of the four coordinates, as they must be, since they are linear combinations of the Cartesian straight lines of Step 2.
 
 ---
@@ -248,7 +248,7 @@ $$J^a{}_\mu = \begin{pmatrix} \tfrac{1}{2} & \tfrac{1}{2} & 0 & 0 \\[2pt] -\tfra
 
 ## Step 13. The six dot products the transformation needs
 
-Every component of the transformed metric is one of six dot products of the three vectors of Step 12, so all six are computed here explicitly.
+Every component of the transformed metric is one of six dot products of the three vectors of Step 12, so we compute all six explicitly.
 
 $$\hat n \cdot \hat n = \sin^2\theta\cos^2\phi + \sin^2\theta\sin^2\phi + \cos^2\theta = \sin^2\theta + \cos^2\theta = 1,$$
 
@@ -286,11 +286,11 @@ Substituting $r = c(v-u)/2$, so that $r^2 = c^2(v-u)^2/4$, the line element is
 
 $$ds^2 = -c^2\,du\,dv + \frac{c^2(v-u)^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right),$$
 
-which is what the entry prints.
+which is the spherical null line element.
 
 ## Step 15. The same result starting from the spherical chart
 
-As a second route, start instead from the spherical line element the same file publishes,
+As a second route, start instead from the spherical line element of Minkowski spacetime,
 
 $$ds^2 = -c^2dt^2 + dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2,$$
 
@@ -338,14 +338,14 @@ $$g^{\phi\alpha}g_{\alpha\phi} = g^{\phi\phi}g_{\phi\phi} = \frac{4}{c^2(v-u)^2\
 Every off block component vanishes, because the only nonzero $g^{u\alpha}$ is $g^{uv}$ and $g_{v\theta} = g_{v\phi} = 0$, the only nonzero $g^{\theta\alpha}$ is $g^{\theta\theta}$ and $g_{\theta u} = g_{\theta v} = g_{\theta\phi} = 0$, and likewise for $v$ and $\phi$.
 The product is the identity.
 
-## Step 17a. The same metric in the chart the entry prints
+## Step 17a. The same metric in the rescaled chart
 
-As in Step 7a, the entry prints components in the chart whose null coordinates are $cu$ and $cv$.
+As in Step 7a, we pass to the chart whose null coordinates are $cu$ and $cv$.
 The two components carrying null indices carry two apiece,
 
 $$g_{uv} = g_{vu} = -\frac{1}{2}, \qquad g^{uv} = g^{vu} = -2,$$
 
-while $g_{\theta\theta}$, $g_{\phi\phi}$ and their inverses carry none, so they are printed exactly as Steps 16 and 17 computed them,
+while $g_{\theta\theta}$, $g_{\phi\phi}$ and their inverses carry none, so they keep exactly the values of Steps 16 and 17,
 
 $$g_{\theta\theta} = \frac{c^2(v-u)^2}{4}, \qquad g_{\phi\phi} = \frac{c^2(v-u)^2\sin^2\theta}{4}.$$
 
@@ -441,8 +441,8 @@ $$\Gamma^\phi_{\phi u} = -\frac{1}{v-u}, \qquad \Gamma^\phi_{\phi v} = \frac{1}{
 The case $\nu = \rho = \phi$ gives $\tfrac{1}{2}g^{\phi\phi}\left(\partial_\phi g_{\phi\phi} + \partial_\phi g_{\phi\phi} - \partial_\phi g_{\phi\phi}\right) = 0$.
 Every other $\Gamma^\phi_{\nu\rho}$ is zero.
 
-Steps 19 to 21 give fifteen nonzero symbols in total, in the bare $(u,v)$ chart.
-Step 22a carries them into the chart the entry prints under `ull`.
+The connection has fifteen nonzero symbols in total in the bare $(u,v)$ chart, those of Steps 19 to 21.
+In Step 22a we carry them into the rescaled chart.
 
 ## Step 22. The same symbols with the first index lowered
 
@@ -467,11 +467,11 @@ $$\Gamma_{\phi u\phi} = \Gamma_{\phi\phi u} = \frac{c^2(v-u)^2\sin^2\theta}{4}\l
 
 $$\Gamma_{\phi\theta\phi} = \Gamma_{\phi\phi\theta} = \frac{c^2(v-u)^2\sin^2\theta}{4}\cot\theta = \frac{c^2(v-u)^2\sin\theta\cos\theta}{4}.$$
 
-These fifteen are the lowered symbols in the bare chart; Step 22a carries them over too.
+These fifteen are the lowered symbols in the bare chart, and in Step 22a we carry them over too.
 
-## Step 22a. Both lists in the chart the entry prints
+## Step 22a. Both kinds of symbol in the rescaled chart
 
-By Step 1 the printed symbols are those of the chart whose null coordinates are $cu$ and $cv$, so each symbol is multiplied by $c$ once for every upper $u$ or $v$ index and divided by $c$ once for every lower one.
+In the chart of Step 1, whose null coordinates are $cu$ and $cv$, each symbol is multiplied by $c$ once for every upper $u$ or $v$ index and divided by $c$ once for every lower one.
 For $\Gamma^\mu{}_{\nu\rho}$ that means the four with an upper null index gain a $c$, the eight with one lower null index lose one, and the three purely angular symbols are untouched:
 
 $$\Gamma^u_{\theta\theta} = \frac{c(v-u)}{2}, \qquad \Gamma^u_{\phi\phi} = \frac{c(v-u)\sin^2\theta}{2}, \qquad \Gamma^v_{\theta\theta} = -\frac{c(v-u)}{2}, \qquad \Gamma^v_{\phi\phi} = -\frac{c(v-u)\sin^2\theta}{2},$$
@@ -493,13 +493,13 @@ $$\Gamma_{\phi u\phi} = \Gamma_{\phi\phi u} = -\frac{c(v-u)\sin^2\theta}{4}, \qq
 
 $$\Gamma_{\theta\phi\phi} = -\frac{c^2(v-u)^2\sin\theta\cos\theta}{4}, \qquad \Gamma_{\phi\theta\phi} = \Gamma_{\phi\phi\theta} = \frac{c^2(v-u)^2\sin\theta\cos\theta}{4}.$$
 
-These two lists of fifteen are what the entry prints under `ull` and `lll`.
+These are the fifteen nonzero Christoffel symbols of each kind in the rescaled chart, with the first index up and with every index lowered.
 The lowering identity survives the change of chart, as it must: $\Gamma_{u\theta\theta} = g_{uv}\Gamma^v_{\theta\theta} = \left(-\tfrac{1}{2}\right)\left(-\tfrac{c(v-u)}{2}\right) = \tfrac{c(v-u)}{4}$, using the $g_{uv}$ of Step 17a rather than the one of Step 16.
 
 ## Step 23. The shape of the connection
 
 Before computing the curvature it pays to name the pattern, because it is what makes the cancellations visible.
-This step and the four after it use the bare chart symbols of Steps 19 to 21 rather than the printed ones of Step 22a, because the pattern is cleaner without the factors of $c$ and the conclusion is that every curvature component vanishes.
+For the curvature, in Steps 23 to 27, we use the bare chart symbols of Steps 19 to 21 rather than the rescaled ones of Step 22a, because the pattern is cleaner without the factors of $c$ and the conclusion is that every curvature component vanishes.
 That conclusion is the same in either chart: rescaling a coordinate multiplies a component by a nonzero power of $c$, which cannot turn a zero into anything else.
 
 Let $a,b,e,f$ run over the two null indices $\{u,v\}$ and let $i,j,k,l,m$ run over the two angular indices $\{\theta,\phi\}$.
@@ -507,10 +507,10 @@ Write $w = v-u$, and attach to each null index the sign
 
 $$\sigma_u = -1, \qquad \sigma_v = +1,$$
 
-which is a bookkeeping label on the letter $u$ or $v$, not a tensor.
+which is a label on the letter $u$ or $v$, not a tensor.
 With that label, $\partial_a w = \sigma_a$, and let $\hat\gamma_{ij} = \mathrm{diag}\left(1, \sin^2\theta\right)$ be the metric of the unit two-sphere, so that $g_{ij} = \tfrac{c^2w^2}{4}\hat\gamma_{ij}$.
 
-Steps 19 to 21 then say exactly this, and nothing else is nonzero:
+In this notation the symbols of Steps 19 to 21 are exactly these, and nothing else is nonzero:
 
 $$\Gamma^a_{ij} = -\frac{w}{2}\sigma_a\,\hat\gamma_{ij}, \qquad \Gamma^i_{aj} = \Gamma^i_{ja} = \frac{\sigma_a}{w}\delta^i{}_j, \qquad \Gamma^i_{jk} = \hat\Gamma^i_{jk},$$
 
@@ -526,7 +526,7 @@ And $\hat\Gamma^i_{jk}$ and $\hat\gamma_{ij}$ depend on $\theta$ alone, so $\par
 ## Step 24. The Riemann tensor, case by case
 
 Each index of $R^\mu{}_{\nu\rho\sigma}$ is either null or angular, giving four combinations for $(\mu,\nu)$ and, since the tensor is antisymmetric in the last pair, three for $\{\rho,\sigma\}$.
-All twelve cases are done below, and every one of them is zero.
+We work through all twelve cases, and every one of them is zero.
 Throughout, $\lambda$ in the quadratic terms is summed over all four indices, and the rule from Step 23 decides which values contribute.
 
 **(1) $R^a{}_{bef}$.**
@@ -647,7 +647,7 @@ So the whole component is
 
 $$R^i{}_{jkl} = \hat R^i{}_{jkl} - \left(\delta^i{}_k\hat\gamma_{jl} - \delta^i{}_l\hat\gamma_{jk}\right),$$
 
-and Step 25 shows that the two pieces are equal.
+and the two pieces are equal by the curvature of the unit two-sphere in Step 25.
 
 ## Step 25. The curvature of the unit two-sphere
 
@@ -655,7 +655,7 @@ The unit two-sphere has constant curvature $+1$, meaning
 
 $$\hat R^i{}_{jkl} = \delta^i{}_k\hat\gamma_{jl} - \delta^i{}_l\hat\gamma_{jk}.$$
 
-That identity is verified here rather than quoted.
+We verify that identity rather than quote it.
 Antisymmetry in $kl$ leaves $(k,l) = (\theta,\phi)$, and two free indices give four components, of which two are computed and two are immediate.
 
 $$\hat R^\theta{}_{\phi\theta\phi} = \partial_\theta\hat\Gamma^\theta_{\phi\phi} - \partial_\phi\hat\Gamma^\theta_{\phi\theta} + \hat\Gamma^\theta_{\theta m}\hat\Gamma^m_{\phi\phi} - \hat\Gamma^\theta_{\phi m}\hat\Gamma^m_{\phi\theta}.$$
@@ -703,7 +703,7 @@ $$R^\mu{}_{\nu\rho\sigma} = \frac{\partial \tilde x^\mu}{\partial x^a}\frac{\par
 
 In the Cartesian chart every metric component is constant, so by the argument of Step 8 every Christoffel symbol vanishes there and $R^a{}_{bcd} = 0$ at every point.
 The right hand side is then a sum of finite Jacobian factors times zero, so the left hand side is zero at every point of the null chart.
-This reproduces Step 24 without touching a single index, and the two together are the reason the entry prints Riemann as an empty list.
+The transformation law reproduces the result of Step 24 without touching a single index, and the two together establish that the Riemann tensor vanishes.
 
 ## Step 27. Ricci, Ricci scalar, Kretschmann, Einstein and Weyl
 
@@ -718,13 +718,13 @@ The Weyl tensor in four dimensions is
 $$C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma} - \left(g_{\mu[\rho}R_{\sigma]\nu} - g_{\nu[\rho}R_{\sigma]\mu}\right) + \tfrac{1}{3}R\,g_{\mu[\rho}g_{\sigma]\nu},$$
 
 every term of which is built from Riemann, Ricci or $R$, all of which vanish, so $C_{\mu\nu\rho\sigma} = 0$.
-The entry prints empty lists for all four tensors and $R = 0$, $K = 0$ for the two scalars, in both null systems.
-This is the flat spacetime it started as, written in a chart where the metric is no longer constant; curvature does not care.
+All four tensors vanish, and $R = 0$, $K = 0$ for the two scalars, in both null systems.
+This is the flat spacetime it started as, written in a chart where the metric is no longer constant, and no change of chart can give a tensor that vanishes in one chart a nonzero component in another.
 
 ## Step 28. The geodesic equations
 
 Take $\ddot x^\mu = -\Gamma^\mu_{\nu\rho}\dot x^\nu \dot x^\rho$ with the fifteen symbols of Step 22a, and remember that the sum over $\nu$ and $\rho$ runs over both orderings, which is what turns each pair of equal mixed symbols into a factor of two.
-The equations are taken in the same chart as those symbols, so $\dot u$ and $\dot v$ are the rates of the chart coordinates $cu$ and $cv$ along the curve, matching the indices the symbols are printed with.
+The equations are taken in the same chart as those symbols, so $\dot u$ and $\dot v$ are the rates of the chart coordinates $cu$ and $cv$ along the curve, matching the indices the symbols carry.
 
 For $\mu = u$, the only contributions are $\Gamma^u_{\theta\theta}$ and $\Gamma^u_{\phi\phi}$:
 
@@ -742,12 +742,12 @@ For $\mu = \phi$, the contributions are the four mixed symbols $\Gamma^\phi_{u\p
 
 $$\ddot\phi = -\frac{2\left(\dot v - \dot u\right)}{c(v-u)}\dot\phi - 2\cot\theta\,\dot\theta\dot\phi.$$
 
-These four are what the entry prints.
+These four are the geodesic equations in spherical null coordinates.
 
-## Step 29. Consistency with the Spherical entry
+## Step 29. Consistency with the spherical chart
 
-The same file gives the spherical geodesics as $\ddot t = 0$, $\ddot r = r\dot\theta^2 + r\sin^2\theta\,\dot\phi^2$, and the two angular equations with $-\tfrac{2}{r}\dot r$ in front.
-Those are printed in the same chart, so the $t$ they are written with is the chart coordinate $ct$, and the null chart coordinates are $cu = ct - r$ and $cv = ct + r$.
+In the spherical chart of Minkowski spacetime the geodesic equations are $\ddot t = 0$, $\ddot r = r\dot\theta^2 + r\sin^2\theta\,\dot\phi^2$, and the two angular equations with $-\tfrac{2}{r}\dot r$ in front.
+Those hold in the same chart, so the $t$ in them is the chart coordinate $ct$, and the null chart coordinates are $cu = ct - r$ and $cv = ct + r$.
 Differentiating $cu = ct - r$ twice along the curve gives $\ddot u = \ddot t - \ddot r$ with every dot now a chart rate, so
 
 $$\ddot u = 0 - \left(r\dot\theta^2 + r\sin^2\theta\,\dot\phi^2\right) = -r\dot\theta^2 - r\sin^2\theta\,\dot\phi^2,$$
@@ -765,8 +765,8 @@ The two coordinate systems describe the same geodesics, as they must.
 
 ## What the machine checks
 
-`_tools/derivations/verify_metrics.py` builds the metric of every published coordinate system from the line element the file itself prints, and then computes the inverse metric, both Christoffel variants, Riemann, Ricci, the Ricci scalar, Kretschmann, Einstein and Weyl in sympy.
-It reads every value each entry prints, translates the LaTeX back into an expression and asserts equality, and it also asserts that no component an entry leaves out is nonzero, which catches an omission as well as a wrong number.
+`_tools/derivations/verify_metrics.py` builds the metric of every coordinate system from its stated line element, and then computes the inverse metric, the Christoffel symbols with the first index up and with every index lowered, Riemann, Ricci, the Ricci scalar, Kretschmann, Einstein and Weyl in sympy.
+It reads every stated component, translates the LaTeX back into an expression and asserts equality, and it also requires every other component to vanish, which catches an omission as well as a wrong number.
 It weights each component into the $x^0 = cT$ chart of Step 1 before comparing, which is the arithmetic of Steps 7a, 17a and 22a done by machine, and it checks each geodesic equation against $\ddot x^\mu + \Gamma^\mu_{\nu\rho}\dot x^\nu\dot x^\rho = 0$ built from the symbols it computed.
 Anything it cannot parse, or cannot finish simplifying inside its time budget, it reports as UNCHECKED and names, rather than passing it in silence.
 It exits non-zero and names what disagreed.
@@ -776,4 +776,5 @@ It needs sympy, in a virtual environment outside the repository:
     python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
 
-Both of the systems derived above pass it. Pass `--system minkowski/spherical_null` to check just one.
+Both null systems pass it.
+Pass `--system minkowski/spherical_null` to check just one.

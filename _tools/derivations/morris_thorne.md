@@ -1,17 +1,16 @@
 # The Morris-Thorne traversable wormhole
 
-This is the working behind the two coordinate systems in `MFS/assets/data/metrics/morris_thorne.json`.
-Every number the entry prints is derived here, in order, from the line element down to the geodesic equations.
-Nothing is left as an exercise and nothing is asserted that is not computed.
+We derive every quantity of the Morris-Thorne wormhole in its areal chart and its proper distance chart, in order, from the line element down to the geodesic equations.
+We leave nothing as an exercise and assert nothing we have not computed.
 
-The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file, so the algebra below is checkable by hand and by machine independently.
+The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares its result with every component, so each component can be checked by hand and by machine independently.
 
-This entry is the first in the collection whose whole point is an inequality.
-The geometry is written down first and the matter is read off it afterwards, which is the direction Morris and Thorne ran the problem in, and what comes back is a demand no ordinary matter can meet: at the throat the radial tension has to exceed the energy density.
-Step 11 is where that inequality appears, Step 12 turns it into the failure of the null energy condition, and Step 16 shows it again in a chart where the throat is an ordinary point rather than a place two of the published components have to be read as limits.
+The whole point of the Morris-Thorne wormhole is an inequality.
+The geometry is written down first and the matter is read off it afterwards, which is the direction Morris and Thorne ran the problem in, and the geometry demands what no ordinary matter can supply: at the throat the radial tension has to exceed the energy density.
+That inequality appears in Step 11, becomes the failure of the null energy condition in Step 12, and appears again in Step 16 in a chart where the throat is an ordinary point rather than a place where two of the components have to be taken as limits.
 
-The entry publishes the general case.
-The redshift function $\Phi$ and the shape function $b$ are left as declared functions of the radial coordinate, so every component below is an identity in them, and the inequality of Step 11 is a statement about every wormhole of this form rather than about a chosen example.
+We treat the general case.
+The redshift function $\Phi$ and the shape function $b$ are left as free functions of the radial coordinate, so every component is an identity in them, and the inequality of Step 11 is a statement about every wormhole of this form rather than about a chosen example.
 
 ---
 
@@ -26,15 +25,15 @@ The Riemann tensor is
 
 $$R^\mu{}_{\nu\rho\sigma} = \partial_\rho \Gamma^\mu_{\nu\sigma} - \partial_\sigma \Gamma^\mu_{\nu\rho} + \Gamma^\mu_{\rho\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\mu_{\sigma\lambda}\Gamma^\lambda_{\nu\rho},$$
 
-which is what the published Riemann components are in.
+and every Riemann component follows this sign convention.
 
 The Ricci tensor is the standard contraction on the first lower index,
 
 $$R_{\mu\nu} = R^\alpha{}_{\mu\alpha\nu},$$
 
-settled for the collection on 2026-09-18.
+the convention since 2026-09-18.
 Here the choice matters in every slot, because this spacetime is not a vacuum and its Ricci tensor is nowhere zero.
-Contracting on the last index instead would give the negative of every Ricci and Einstein component published, and it would flip the sign of the inequality Step 11 exists to state, so the convention is carried explicitly through Step 10 where the field equations are written down.
+Contracting on the last index instead would give the negative of every Ricci and Einstein component, and it would flip the sign of the inequality of Step 11, so we carry the convention explicitly through to Step 10, where the field equations are written down.
 On the convention used here the field equations read
 
 $$G_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu\nu},$$
@@ -42,27 +41,27 @@ $$G_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu\nu},$$
 and ordinary matter comes out with a positive energy density.
 
 Factors of $G$ and $c$ are kept explicit.
-The chart is the collection's, the one whose zeroth coordinate is
+The chart is the one whose zeroth coordinate is
 
 $$x^0 = ct.$$
 
-The index is printed with the bare letter $t$, but the component printed against it is a component of that chart.
+The time index is labelled with the bare letter $t$, but a component with that index is a component of that chart.
 Everything from Step 3 onward is computed directly in it, so nothing has to be converted at the end.
-Both radial coordinates used below, the areal radius $r$ and the proper distance $l$, are lengths already, so a radial derivative carries no factor of $c$ and no published component of either chart carries one either.
+Both radial coordinates, the areal radius $r$ and the proper distance $l$, are lengths already, so a radial derivative carries no factor of $c$ and no component in either chart carries one either.
 
 The dots in the geodesic equations are velocities of that same chart, so $\dot{t}$ means $d(ct)/d\lambda$ and not $dt/d\lambda$, and the equations are
 
 $$\ddot{x}^\mu + \Gamma^\mu{}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho = 0$$
 
-with the same printed connection the entry lists.
-Step 15 checks that this is the reading on which every term of every equation carries the dimensions of its left hand side.
+with the same Levi-Civita connection.
+On this reading every term of every equation carries the dimensions of its left hand side, term by term, in the check of Step 15.
 
-Two abbreviations run through the areal chart below.
+Two abbreviations run through the areal chart.
 
 $$f(r) = 1 - \frac{b(r)}{r}, \qquad \Phi' = \partial_r\Phi, \qquad b' = \partial_r b.$$
 
-They are shorthand for this document only.
-The published file writes $1 - b/r$ out wherever it appears and spells every derivative $\partial_r\Phi$, $\partial_r^2\Phi$ or $\partial_r b$, because the checker reads the file symbol by symbol and has no way to be told what an abbreviation means.
+They are shorthand for the derivation only.
+The components themselves carry $1 - b/r$ written out wherever it appears and spell every derivative $\partial_r\Phi$, $\partial_r^2\Phi$ or $\partial_r b$, because the checker reads them symbol by symbol and has no way to be told what an abbreviation means.
 One identity in that shorthand is used constantly and is worth recording once:
 
 $$f' = \partial_r\left(1 - \frac{b}{r}\right) = \frac{b - rb'}{r^2}.$$
@@ -78,7 +77,7 @@ $$ds^2 = -e^{2\Phi(r)}c^2dt^2 + \frac{dr^2}{1 - \dfrac{b(r)}{r}} + r^2\left(d\th
 The coordinate $r$ is the areal radius, so that the sphere labelled $r$ has area $4\pi r^2$ and circumference $2\pi r$.
 It is not a distance from anything.
 There is no center in this spacetime, and $r$ does not run down to zero: it runs from the throat radius $b_0$ outward, and the far side of the wormhole is a second copy of the same chart joined to this one at $r = b_0$.
-That is the one thing about the areal chart a reader has to hold on to, and it is why Step 16 publishes a second chart in which the throat is an ordinary point and one coordinate covers both sides.
+That is the one essential fact about the areal chart, and it is the reason for the second chart of Step 16, in which the throat is an ordinary point and one coordinate covers both sides.
 
 The two functions do two different jobs.
 
@@ -93,8 +92,8 @@ Its name is earned in the embedding of Step 9: the shape of the funnel a slice o
 It obeys $b(b_0) = b_0$ at the throat and $b(r) < r$ outside it, so that $f > 0$ away from the throat and the radial part of the metric stays positive.
 
 At $r = b_0$ the metric component $g_{rr} = 1/f$ diverges.
-That is a coordinate degeneracy and not a curvature singularity, in the same way that Schwarzschild's $r = r_s$ is, and Step 17 shows the curvature is perfectly finite there.
-It does mean that several components published in this chart carry $r - b$ in a denominator, and that their value at the throat is the limit $r \to b_0$ rather than a value the chart holds.
+That is a coordinate degeneracy and not a curvature singularity, in the same way that Schwarzschild's $r = r_s$ is, and the Kretschmann scalar of Step 14 shows the curvature is perfectly finite there.
+It does mean that several components in this chart carry $r - b$ in a denominator, and that their value at the throat is the limit $r \to b_0$ rather than a value the chart holds.
 
 ---
 
@@ -104,7 +103,7 @@ In the chart $x^0 = ct$, with the ordering $(t, r, \theta, \phi)$, the metric is
 
 $$g_{\mu\nu} = \operatorname{diag}\left(-e^{2\Phi},\ \frac{1}{f},\ r^2,\ r^2\sin^2\theta\right).$$
 
-The $c^2$ of the line element is absorbed by the rescaling $t \mapsto ct$, which is why $g_{tt}$ is printed as $-e^{2\Phi}$ and carries no dimensions.
+The $c^2$ of the line element is absorbed by the rescaling $t \mapsto ct$, which is why $g_{tt}$ is $-e^{2\Phi}$ and carries no dimensions.
 A diagonal metric inverts termwise:
 
 $$g^{\mu\nu} = \operatorname{diag}\left(-e^{-2\Phi},\ f,\ \frac{1}{r^2},\ \frac{\csc^2\theta}{r^2}\right).$$
@@ -129,11 +128,11 @@ $$\Gamma^r{}_{\theta\theta} = -\tfrac{1}{2}g^{rr}\partial_r g_{\theta\theta} = -
 
 $$\Gamma^\theta{}_{r\theta} = \Gamma^\phi{}_{r\phi} = \tfrac{1}{2}g^{\theta\theta}\partial_r g_{\theta\theta} = \frac{1}{r}, \qquad \Gamma^\theta{}_{\phi\phi} = -\sin\theta\cos\theta, \qquad \Gamma^\phi{}_{\theta\phi} = \cot\theta.$$
 
-Those are the thirteen nonzero symbols the entry publishes, counting the two orderings of each mixed pair separately.
+Those are the thirteen nonzero symbols, counting the two orderings of each mixed pair separately.
 The two of them that carry a time index, $\Gamma^t{}_{tr}$ and $\Gamma^r{}_{tt}$, illustrate the chart rule of Step 1.
 $\Gamma^t{}_{tr}$ has one upper time index and one lower one, so the two factors of $c$ cancel and the chart symbol equals the bare one.
 $\Gamma^r{}_{tt}$ has two lower time indices, so the chart symbol is $c^{-2}$ times the symbol computed with the bare $t$, and the $c^2$ that would otherwise sit in front of $f e^{2\Phi}\Phi'$ is gone.
-Neither prints a $c$, which is the whole point of the convention.
+Neither carries a $c$, which is the whole point of the convention.
 
 Lowering the first index with the diagonal metric is a single multiplication each time:
 
@@ -177,9 +176,9 @@ $E_1$ and $E_2$ are the only pieces $\Phi$ enters at all; $E_3$ and $E_4$ know n
 And $E_2$ carries a bare factor of $f$, which vanishes at the throat, so the transverse tidal squeeze goes to zero there however $\Phi$ is chosen.
 That second statement needs one caveat, made good in Step 11: $\partial_r\Phi$ itself diverges at the throat for any wormhole worth the name, and it is the absence of a horizon that keeps the divergence slow enough for the product $f\,\partial_r\Phi$ to vanish anyway.
 $E_1$ does not vanish there.
-Its three terms each blow up or vanish separately and the sum is finite, which Step 16 computes cleanly in a chart with no such cancellation in it.
+Its three terms each blow up or vanish separately and the sum is finite, and in the chart of Step 16, with no such cancellation in it, the sum comes out cleanly.
 
-Every component the entry publishes is one of these four with metric factors on it.
+Every coordinate component is one of these four with metric factors on it.
 Converting a frame index back into a coordinate one multiplies by the corresponding coframe factor, so
 
 $$R_{trtr} = \frac{e^{2\Phi}}{f}E_1 = \frac{e^{2\Phi}\left(2r\left(r-b\right)\left(\left(\partial_r\Phi\right)^2 + \partial_r^2\Phi\right) - \left(r\,\partial_r b - b\right)\partial_r\Phi\right)}{2r\left(r-b\right)},$$
@@ -190,8 +189,8 @@ $$R_{r\theta r\theta} = \frac{r^2}{f}E_3 = \frac{r\,\partial_r b - b}{2\left(r -
 
 $$R_{\theta\phi\theta\phi} = r^4\sin^2\theta\,E_4 = b\,r\sin^2\theta.$$
 
-The remaining published components are these with one index raised, or with a pair swapped, and the antisymmetry $R_{\mu\nu\rho\sigma} = -R_{\mu\nu\sigma\rho}$ supplies the sign.
-Twenty four components in each variant, all of them one of four independent curvatures in a dress, which is why the entry's page shows the fully lowered variant on six lines and the mixed one on ten once the equal and opposite components are grouped together.
+The remaining components are these with one index raised, or with a pair swapped, and the antisymmetry $R_{\mu\nu\rho\sigma} = -R_{\mu\nu\sigma\rho}$ supplies the sign.
+The Riemann tensor has twenty four nonzero components with an upper index and twenty four with all four down, all of them one of four independent curvatures in a dress, so that once the equal and opposite components are grouped together the fully lowered tensor falls into six groups and the mixed one into ten.
 
 Everything that is not one of those six vanishes.
 The reason is symmetry rather than algebra.
@@ -206,7 +205,7 @@ In the orthonormal frame the contraction $R_{\hat{\mu}\hat{\nu}} = \eta^{\hat{\a
 
 $$R_{\hat{t}\hat{t}} = E_1 + 2E_2, \qquad R_{\hat{r}\hat{r}} = -E_1 + 2E_3, \qquad R_{\hat{\theta}\hat{\theta}} = R_{\hat{\phi}\hat{\phi}} = -E_2 + E_3 + E_4.$$
 
-Dressing those back into the chart gives what the entry publishes:
+Dressing those back into the chart gives
 
 $$R_{tt} = e^{2\Phi}\left(E_1 + 2E_2\right) = \frac{e^{2\Phi}\left(2r\left(r - b\right)\left(\left(\partial_r\Phi\right)^2 + \partial_r^2\Phi\right) + \left(4r - 3b - r\,\partial_r b\right)\partial_r\Phi\right)}{2r^2},$$
 
@@ -239,7 +238,7 @@ $$G_{\hat{r}\hat{r}} = 2E_2 - E_4 = \frac{2f\,\partial_r\Phi}{r} - \frac{b}{r^3}
 
 $$G_{\hat{\theta}\hat{\theta}} = G_{\hat{\phi}\hat{\phi}} = E_1 + E_2 - E_3.$$
 
-The first of those is the single cleanest formula in the entry.
+The first of those is the single cleanest formula of the wormhole.
 Every trace of $\Phi$ has cancelled out of it, and what is left says that the energy density is fixed by the slope of the shape function and by nothing else.
 The second has lost its dependence on $\Phi''$.
 Only the transverse pressure still carries the second derivative of the redshift function.
@@ -251,7 +250,7 @@ $$G_{tt} = e^{2\Phi}G_{\hat{t}\hat{t}} = \frac{e^{2\Phi}\,\partial_r b}{r^2}, \q
 $$G_{\theta\theta} = r^2\left(E_1 + E_2 - E_3\right) = r\left(r - b\right)\left(\left(\partial_r\Phi\right)^2 + \partial_r^2\Phi\right) + \frac{\left(2r - b - r\,\partial_r b\right)\partial_r\Phi}{2} + \frac{b}{2r} - \frac{\partial_r b}{2},$$
 
 with $G_{\phi\phi} = G_{\theta\theta}\sin^2\theta$.
-The entry also publishes the mixed and fully raised variants, of which the one worth quoting is
+Of the Einstein tensor with one index up and with both up, the component worth quoting is
 
 $$G^t{}_t = -\frac{\partial_r b}{r^2},$$
 
@@ -284,8 +283,8 @@ With $b(b_0) = b_0$ this is exactly
 $$\partial_r b(b_0) < 1,$$
 
 the flare out condition [morris1988].
-It is published in the entry as part of the description of $b$, since it is a constraint on the function rather than an equation between published components, and the checker has no inequalities to test it with.
-Step 16 shows it again in a form that needs no embedding at all.
+It is a constraint on the function $b$ rather than an equation between components, and the checker has no inequalities to test it with.
+It appears again in Step 16 in a form that needs no embedding at all.
 
 ---
 
@@ -296,7 +295,7 @@ Read the field equations of Step 1 in the static orthonormal frame, where the st
 $$T_{\hat{t}\hat{t}} = \rho c^2, \qquad T_{\hat{r}\hat{r}} = p_r = -\tau, \qquad T_{\hat{\theta}\hat{\theta}} = T_{\hat{\phi}\hat{\phi}} = p.$$
 
 $\rho$ is the mass density a static observer measures, $\tau$ is the radial tension, which is minus the radial pressure, and $p$ is the transverse pressure.
-Tension rather than pressure is the natural variable here, and Step 11 is why.
+Tension rather than pressure is the natural variable here, for the reason of Step 11.
 
 With Step 8 in hand the three equations are immediate:
 
@@ -307,7 +306,7 @@ These are Morris and Thorne's equations (12), with $G$ and $c$ kept rather than 
 Two readings are worth making before the inequality.
 The density is fixed by $b$ alone, so a shape function that is flat, $\partial_r b = 0$, describes a geometry threaded by matter of zero density, which is what the Schwarzschild limit of Step 14 turns out to be.
 The redshift function never appears in the density at all.
-It appears in the tension only through the combination $f\,\partial_r\Phi$, and that combination is the subject of the first half of Step 11.
+It appears in the tension only through the combination $f\,\partial_r\Phi$, and the value of that combination at the throat is settled in the first half of Step 11.
 
 ---
 
@@ -322,7 +321,7 @@ $$f = \left(\partial_l r\right)^2 \sim \left(\partial_l^2r(0)\right)^2l^2, \qqua
 
 $\partial_r\Phi$ does diverge at the throat, but only as $1/l$, so $f\,\partial_r\Phi$ vanishes as $l$.
 What bounds $\partial_l\Phi(0)$ is the no horizon requirement of Step 2: $\Phi$ is finite at the throat, so it is a smooth function of the proper distance there and its first derivative is a number.
-A $\Phi$ that was allowed a horizon could diverge fast enough for the product to survive, and Step 14 shows the one case where it does.
+A $\Phi$ that was allowed a horizon could diverge fast enough for the product to survive, and it does in the one case of Step 14.
 
 So, for a wormhole with no horizon,
 
@@ -376,12 +375,12 @@ At the throat the first term vanishes, by the argument of Step 11, and $f' = \le
 
 $$G_{\hat{\mu}\hat{\nu}}k^{\hat{\mu}}k^{\hat{\nu}}\Big|_{r=b_0} = -\frac{1 - \partial_r b(b_0)}{b_0^2} < 0.$$
 
-So an observer crossing the throat radially fast enough measures a negative energy density: with four velocity $\gamma(1, v, 0, 0)$ in the orthonormal frame the density measured is $\gamma^2(\rho c^2 + v^2p_r)$, and as $v \to 1$ that tends to $\gamma^2$ times the negative quantity above.
+So an observer crossing the throat radially fast enough measures a negative energy density: with four velocity $\gamma(1, v, 0, 0)$ in the orthonormal frame the density measured is $\gamma^2(\rho c^2 + v^2p_r)$, and as $v \to 1$ that tends to $\gamma^2$ times the negative null contraction of the stress energy at the throat.
 The failure is not marginal and it is not tunable: it is forced by the same inequality that makes the thing a wormhole at all, and it holds however $\Phi$ is chosen, since the redshift function leaves no trace at the throat once the no horizon requirement is in force.
 
 This is the local version of a theorem.
 Friedman, Schleich and Witt's topological censorship says that under the null energy condition any topological shortcut collapses too fast for light to get through it [friedman1993].
-The calculation above is that theorem's contrapositive in one spacetime: a shortcut light can cross is a shortcut where the condition fails.
+This calculation is that theorem's contrapositive in one spacetime: a shortcut light can cross is a shortcut where the condition fails.
 
 ---
 
@@ -405,7 +404,7 @@ $$C_{\hat{t}\hat{r}\hat{t}\hat{r}} = -\Psi, \qquad C_{\hat{t}\hat{\theta}\hat{t}
 
 The pattern $-1, \tfrac{1}{2}, \tfrac{1}{2}, -\tfrac{1}{2}, -\tfrac{1}{2}, 1$ sums to zero as it must, and it is the signature of Petrov type D, which is what every static spherically symmetric spacetime is away from the points where $\Psi$ vanishes.
 
-Written out, $6r^3\Psi$ is the bracket every published Weyl component is a multiple of:
+Written out, $6r^3\Psi$ is the bracket every Weyl component is a multiple of:
 
 $$6r^3\Psi = 3b - r\,\partial_r b + r\left(2r - 3b + r\,\partial_r b\right)\partial_r\Phi - 2r^2\left(r - b\right)\left(\left(\partial_r\Phi\right)^2 + \partial_r^2\Phi\right).$$
 
@@ -413,7 +412,7 @@ So, for instance,
 
 $$C^t{}_{rtr} = \frac{6r^3\Psi}{6r^2\left(r-b\right)}, \qquad C_{\theta\phi\theta\phi} = \frac{r\sin^2\theta\cdot 6r^3\Psi}{6} = r^4\sin^2\theta\,\Psi,$$
 
-and the other twenty two components of each variant are this one with metric factors and a sign.
+and the other twenty two, with an upper index and again with all four down, are this one with metric factors and a sign.
 The Weyl tensor vanishes only where $\Psi$ does, which is the condition for the geometry to be conformally flat, and that is a differential equation on $\Phi$ and $b$ rather than something a general pair of them satisfies.
 
 ---
@@ -426,7 +425,7 @@ Each unordered index pair contributes four terms, one for each ordering of the t
 $$K = 4\left(E_1^2 + 2E_2^2 + 2E_3^2 + E_4^2\right).$$
 
 It is a sum of squares, so it is positive wherever the geometry is curved at all, and it can only be made to vanish by making all four of the $E$ vanish together, which is flat space.
-Written out in the published functions,
+Written out in the two functions,
 
 $$K = 4\left(\frac{\left(r - b\right)\left(\left(\partial_r\Phi\right)^2 + \partial_r^2\Phi\right)}{r} + \frac{\left(b - r\,\partial_r b\right)\partial_r\Phi}{2r^2}\right)^2 + \frac{8\left(r-b\right)^2\left(\partial_r\Phi\right)^2}{r^4} + \frac{2\left(r\,\partial_r b - b\right)^2}{r^6} + \frac{4b^2}{r^6}.$$
 
@@ -434,7 +433,7 @@ Nothing in it diverges at the throat, though the areal chart does not show that 
 The $E_2$ term vanishes there, and the $E_3$ and $E_4$ terms are manifestly finite.
 $E_1$ is the one to watch.
 It carries a factor $f$ that vanishes at the throat against a factor $\partial_r\Phi$ that in general diverges there, because a redshift function that is smooth in the proper distance of Step 16 has $\partial_r\Phi = \partial_l\Phi/\partial_l r$ with a denominator going to zero.
-The product is finite, and Step 16 computes it with no indeterminate form anywhere, giving $E_1(b_0) = \left(\left(\partial_l\Phi\right)^2 + \partial_l^2\Phi\right)\big|_{l=0}$.
+The product is finite, and in the chart of Step 16 it has no indeterminate form anywhere, giving $E_1(b_0) = \left(\left(\partial_l\Phi\right)^2 + \partial_l^2\Phi\right)\big|_{l=0}$.
 With that,
 
 $$K\big|_{r=b_0} = 4E_1(b_0)^2 + \frac{2\left(1 - \partial_r b(b_0)\right)^2 + 4}{b_0^4},$$
@@ -449,7 +448,7 @@ So $G_{\hat{t}\hat{t}} = 2E_3 + E_4 = 0$, the solution is a vacuum as it must be
 
 $$K = 4\left(\frac{r_s^2}{r^6} + \frac{2r_s^2}{4r^6} + \frac{2r_s^2}{4r^6} + \frac{r_s^2}{r^6}\right) = \frac{12r_s^2}{r^6},$$
 
-which is the Schwarzschild value the collection publishes elsewhere.
+which is the Kretschmann scalar of Schwarzschild.
 $\Psi = \tfrac{1}{3}(E_2 + E_4 - E_1 - E_3) = r_s/r^3$, which is the Schwarzschild Weyl scalar, and there the Weyl tensor is equal to the Riemann tensor, as it must be in a vacuum.
 
 This limit is also the exception that proves Step 11.
@@ -512,19 +511,19 @@ $$ds^2 = -e^{2\Phi(l)}c^2dt^2 + dl^2 + r(l)^2\left(d\theta^2 + \sin^2\theta\,d\p
 with the areal radius $r(l)$ now a declared function of the coordinate rather than the coordinate itself.
 It has a minimum $r(0) = b_0$ at the throat and grows without bound on both sides.
 
-This is the form the Ellis-Bronnikov drainhole is published in, and that entry is the special case
+This is the form of the Ellis-Bronnikov drainhole, which is the special case
 
 $$\Phi = 0, \qquad r(l) = \sqrt{l^2 + \ell^2}, \qquad b_0 = \ell,$$
 
 which makes it the best available check on this chart, since it was computed independently and years earlier.
-Substituting those two functions into the ninety nine values `ellis_bronnikov.json` publishes and that this chart publishes as well reproduces every one of them exactly.
+Substituting those two functions reproduces exactly each of the ninety nine components computed independently for the Ellis-Bronnikov drainhole that also appear in this chart.
 Three by hand:
 
 $$\partial_l r = \frac{l}{\sqrt{l^2+\ell^2}}, \qquad \partial_l^2 r = \frac{\ell^2}{\left(l^2+\ell^2\right)^{3/2}}, \qquad 1 - \left(\partial_l r\right)^2 = \frac{\ell^2}{l^2+\ell^2},$$
 
-so $R_{ll} = -2\partial_l^2r/r = -2\ell^2/\left(l^2+\ell^2\right)^2$, which is that entry's one nonzero Ricci component; $G_{tt} = \left(1 - \left(\partial_l r\right)^2 - 2r\partial_l^2 r\right)/r^2 = -\ell^2/\left(l^2+\ell^2\right)^2$, which is the negative energy density it names in its own convention field; and $K = 8\left(\partial_l^2r\right)^2/r^2 + 4\left(1 - \left(\partial_l r\right)^2\right)^2/r^4 = 12\ell^4/\left(l^2+\ell^2\right)^4$, which is its Kretschmann scalar.
-The differences that remain are that entry's and not this chart's: it publishes no inverse metric, and it omits twelve nonzero Riemann and Weyl components that this chart carries.
-Those twelve are part of the disagreements the checker already reports against that file, and they are left alone here.
+so $R_{ll} = -2\partial_l^2r/r = -2\ell^2/\left(l^2+\ell^2\right)^2$, which is the one nonzero Ricci component of the drainhole; $G_{tt} = \left(1 - \left(\partial_l r\right)^2 - 2r\partial_l^2 r\right)/r^2 = -\ell^2/\left(l^2+\ell^2\right)^2$, which is the negative energy density of the drainhole's own conventions; and $K = 8\left(\partial_l^2r\right)^2/r^2 + 4\left(1 - \left(\partial_l r\right)^2\right)^2/r^4 = 12\ell^4/\left(l^2+\ell^2\right)^4$, which is its Kretschmann scalar.
+The differences that remain lie with the drainhole and not with this chart: its inverse metric is not written out, and twelve of its nonzero Riemann and Weyl components, which this chart carries, are missing.
+The checker already reports those twelve among its disagreements for the Ellis-Bronnikov drainhole, and we leave them alone.
 
 The dictionary between the charts is one identity and its derivative.
 Squaring the definition of $l$,
@@ -544,7 +543,7 @@ So the flare out condition $\partial_r b(b_0) < 1$ is exactly
 $$\partial_l^2 r(0) > 0,$$
 
 which is the statement that the areal radius really has a minimum at the throat rather than an inflection.
-That is the whole of Step 9 without an embedding diagram, and it is the form the entry publishes in this chart's parameter description.
+That is the whole of Step 9 without an embedding diagram, and it is the form the flare out condition takes in this chart.
 
 Everything else is easier here than in the areal chart, because the metric is polynomial in $r$ and its derivatives with no $1/f$ anywhere.
 The four curvatures of Step 5 become
@@ -567,13 +566,13 @@ At the throat $\partial_l r = 0$, so the first term drops and
 $$G_{\hat{\mu}\hat{\nu}}k^{\hat{\mu}}k^{\hat{\nu}}\Big|_{l=0} = -\frac{2\partial_l^2 r(0)}{b_0} = -\frac{1 - \partial_r b(b_0)}{b_0^2},$$
 
 which is the areal chart's answer, reached without taking a limit and without the redshift function ever being touched.
-That agreement between two independently computed charts is the strongest check in this document.
+That agreement between two independently computed charts is the strongest check on either of them.
 
 The Weyl scalar in this chart is
 
 $$3r^2\Psi = -\left(r^2\left(\left(\partial_l\Phi\right)^2 + \partial_l^2\Phi\right) - r\,\partial_l\Phi\,\partial_l r + \left(\partial_l r\right)^2 - r\,\partial_l^2 r - 1\right),$$
 
-the bracket every published Weyl component of this chart is a multiple of, and the Kretschmann scalar is the same sum of four squares,
+the bracket every Weyl component of this chart is a multiple of, and the Kretschmann scalar is the same sum of four squares,
 
 $$K = 4\left(\left(\partial_l\Phi\right)^2 + \partial_l^2\Phi\right)^2 + \frac{8\left(\partial_l\Phi\right)^2\left(\partial_l r\right)^2}{r^2} + \frac{8\left(\partial_l^2 r\right)^2}{r^2} + \frac{4\left(1 - \left(\partial_l r\right)^2\right)^2}{r^4}.$$
 
@@ -581,23 +580,23 @@ Both are manifestly finite at $l = 0$, with nothing to cancel and no limit to ta
 
 ---
 
-## Step 17. What the entry publishes, and what the checker needs
+## Step 17. The components, and what the checker needs
 
-For each of the two charts the entry publishes the line element, the metric and its inverse, both Christoffel variants, both Riemann variants, the three Ricci variants, the Ricci scalar, the Kretschmann scalar, the three Einstein variants, both Weyl variants and the four geodesic equations.
+In each of the two charts we compute the line element, the metric and its inverse, the Christoffel symbols with an upper index and with every index lowered, the Riemann tensor with an upper index and with every index lowered, the Ricci tensor with both indices down, one up and both up, the Ricci scalar, the Kretschmann scalar, the Einstein tensor with both indices down, one up and both up, the Weyl tensor with an upper index and with every index lowered, and the four geodesic equations.
 
-No block is empty and nothing vanishes identically.
-Within each block the components that are zero are zero for one reason, given in Step 5: the metric is diagonal and depends on the radial coordinate alone, and the spacetime is invariant under reversal of $t$ and under reflection of either angle, so every off diagonal Ricci and Einstein component vanishes and the only surviving Riemann and Weyl components are those whose two index pairs are the same pair.
+None of these tensors vanishes identically, in either chart.
+Within each tensor the components that are zero are zero for one reason, given in Step 5: the metric is diagonal and depends on the radial coordinate alone, and the spacetime is invariant under reversal of $t$ and under reflection of either angle, so every off diagonal Ricci and Einstein component vanishes and the only surviving Riemann and Weyl components are those whose two index pairs are the same pair.
 
 `verify_metrics.py` needed one declaration per chart.
-`DIMENSIONS` gained an entry for each, declaring $t$ as a time, so the checker knows the chart multiplies it by $c$, and declaring $\Phi$ dimensionless, $b$ a length and $b_0$ a length in the areal chart, and $\Phi$ dimensionless and $r$ a length in the proper distance chart, where $r$ is a declared function rather than a coordinate.
+`DIMENSIONS` gained a line for each chart, declaring $t$ as a time, so the checker knows the chart multiplies it by $c$, and declaring $\Phi$ dimensionless, $b$ a length and $b_0$ a length in the areal chart, and $\Phi$ dimensionless and $r$ a length in the proper distance chart, where $r$ is a declared function rather than a coordinate.
 
-The two functions are declared to the reader as `\Phi = \Phi(r)` and `b = b(r)`, and every published derivative of them is spelled `\partial_r\Phi`, `\partial_r^2\Phi` or `\partial_r b` rather than with a prime.
+The two functions are declared to the reader as `\Phi = \Phi(r)` and `b = b(r)`, and every derivative of them is spelled `\partial_r\Phi`, `\partial_r^2\Phi` or `\partial_r b` rather than with a prime.
 A function of one coordinate does answer to a prime, and `b'` reads correctly, but a function whose name is a LaTeX command does not: the reader turns primes into suffixes before it turns `\Phi` into a name, so `\Phi'` leaves a stray backslash behind and is rejected as unhandled LaTeX.
-The `\partial` spelling works for either kind of name, and it is what this entry uses throughout so that the two functions are written the same way.
-Both radial coordinates are lengths, so none of those derivatives carries a factor of $c$, unlike the retarded time derivatives of the Vaidya and pp-wave entries.
+The `\partial` spelling works for either kind of name, and it is used throughout so that the two functions are written the same way.
+Both radial coordinates are lengths, so none of those derivatives carries a factor of $c$, unlike the retarded time derivatives of the Vaidya and pp-wave spacetimes.
 
-No entry in `PARAMETER_RELATIONS` is needed.
-$\Phi$ and $b$ are free: every published component is an identity in them, and the entry claims nothing that holds only on some surface in the space of functions.
+No line in `PARAMETER_RELATIONS` is needed.
+$\Phi$ and $b$ are free: every component is an identity in them, and no component holds only on some surface in the space of functions.
 The two constraints that do exist, $b(b_0) = b_0$ and $\partial_r b(b_0) < 1$, are a boundary condition and an inequality.
-Neither is a relation the checker's machinery can carry, which takes rational parametrisations of equalities between free parameters, and neither is needed for any published value to be correct.
-They are published in the parameter descriptions instead, where a reader meets them next to the function they constrain.
+Neither is a relation the checker's machinery can carry, which takes rational parametrisations of equalities between free parameters, and neither is needed for any component to be correct.
+They stand instead as conditions on the shape function itself.
