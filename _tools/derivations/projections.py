@@ -470,7 +470,7 @@ def string_rays(spec, n=12, half_width=1.8, left=-3.0, right=3.0, height=2.1):
         raise SystemExit(f"{key(spec)}: g_phiphi is not k^2 r^2 with 0 < k < 1")
     _, entry, reader = nr.load(spec.metric, spec.system)
     gamma = {tuple(c["indices"]): c["value"] for c in entry["christoffel"]["variants"]["ull"]["nonzero"]}
-    r_, ph_ = reader.symbol["r"], reader.symbol["\\phi"]
+    r_ = reader.symbol["r"]
     G_r = sp.lambdify(r_, sl.prep(reader(gamma[("r", "\\phi", "\\phi")])), "numpy")
     G_phi = sp.lambdify(r_, sl.prep(reader(gamma[("\\phi", "r", "\\phi")])), "numpy")
     wedge = np.pi * (1 - k)
