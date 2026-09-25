@@ -218,13 +218,15 @@ class Diagram:
     inside: bool = False            # rays stop short of the edge of the published domain
     cone: str = None                # what a cone is, where it is not the future light cone
     periodic: tuple = ()            # drawn coordinates whose two ends are one line, never hatched
-    horizon: tuple = None           # (x^0, family, legend): the ray of that family through the
-                                    # outermost zero of g^rr at that x^0, drawn as a horizon
+    marked: tuple = ()              # (kind, point, family, legend[, "past"]): a ray of one family,
+                                    # or of both, through a point, drawn and named; see Plot.marked
+    points: tuple = ()              # (kind, (x^0, r), legend): an event drawn and named
     lines: tuple = ()               # (kind, "x0" or "r", value, legend): a line of constant
                                     # coordinate drawn and named, such as where a declared function jumps
     surface: str = None             # r at which a star's surface is released from rest; see Surface
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     star: dict = None               # a declared polytrope, {"K": ..., "rho_c": ...}; see StarSolver
+    any_factor: str = None          # a declared conformal factor the drawing holds for every value of
 
 
 def _alcubierre_profile():
@@ -256,6 +258,11 @@ def _natario_field():
 
 _KRASNIKOV_TUBE = ("1 - (2 - 1/5)*(1 + tanh((1 - r**2)/(2*3/20)))/2*(1 + tanh((t - x)/(3/20)))/2"
                    "*(1 + tanh(x/(3/20)))/2*(1 + tanh((4 - x)/(3/20)))/2")
+
+# A conformal factor of the Malament-Hogarth kind: 1 outside the unit ball about the removed
+# event and growing as 1/rho toward it, so as 1/|ct| along the axis.
+_MH_FACTOR = ("Piecewise((1 + exp(1 - 1/(1 - (t**2 + x**2 + y**2 + z**2)))/sqrt(t**2 + x**2 + y**2 + z**2),"
+              " t**2 + x**2 + y**2 + z**2 < 1), (1, True))")
 
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
@@ -444,13 +451,23 @@ DIAGRAMS = [
     Diagram("tov", "spherical", "through", "through the centre", ("t", "r"), (0, 16, -16, 16),
             "$x\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, mirror=True, families=SIDEWAYS,
             cones=(4, 8), areal=True, star=POLYTROPE, input=POLYTROPE_INPUT),
+    Diagram("malament_hogarth", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$ct$", {},
+            {"y": "0", "z": "0"}, families=SIDEWAYS, functions={"Omega": _MH_FACTOR}, any_factor="Omega",
+            lines=(("world", "r", "0", "the computer's world line, up the axis into the removed event",
+                    ("-1000000", "0")),),
+            points=(("removed", ("0", "0"), "the removed event"), ("mark", ("1", "0"), "the event $p$")),
+            marked=(("past", {"x0": "1", "r": "0"}, "both", "the past light cone of $p$", "past"),),
+            input="Any $\\Omega$, since the rays and cones are the same for every one; drawn with "
+                  "$\\Omega = 1 + e^{1 - 1/(1 - \\rho^2)}/\\rho$ for $\\rho^2 = c^2t^2 + x^2 + y^2 + z^2 < 1$ "
+                  "and $\\Omega = 1$ beyond, which grows as $1/|ct|$ along the axis, and checked to give "
+                  "the null directions of $\\Omega = 1$."),
     # The collapse the conformal diagram draws, released from rest at R_0 = 2 r_s, chi_0 = pi/4:
     # the dust in its own chart, and the vacuum outside it in Schwarzschild's.
     Diagram("oppenheimer_snyder", "interior_comoving", "through", "through the centre", ("\\tau", "\\chi"),
             (0, math.pi / 4, 0, math.pi / 2), "$\\chi$", "$c\\tau/a_m$", {"chi_0": "pi/4", "a_m": 1}, EQUATOR,
             mirror=True, families=SIDEWAYS, cones=(4, 8), tau="tau", areal=True, dust=OS_DUST,
             lines=(("surface", "r", "pi/4", "the surface of the star, $\\chi = \\chi_0$"),),
-            horizon=({"r": "pi/4", "areal": "sqrt(2)/4"}, 1, "the event horizon"),
+            marked=(("event", {"r": "pi/4", "areal": "sqrt(2)/4"}, 1, "the event horizon"),),
             input="Dust released from rest at $\\tau = 0$ with $a = a_m$, $a(\\tau)$ solved from this "
                   "spacetime's own $G^\\chi{}_\\chi = 0$, and $\\chi_0 = \\pi/4$, so that the star starts "
                   "at twice its Schwarzschild radius."),
@@ -463,13 +480,13 @@ DIAGRAMS = [
     Diagram("vaidya", "eddington_finkelstein_ingoing", "shell", "an imploding shell", ("v", "r"),
             (0, 4, -2.5, 1.5), "$r/r_s$", "$(cv - r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_IN,
             tau="v - r", areal=True, functions={"m": "Heaviside(v)/2"}, lines=(("shell", "x0", "0", "the shell, $v = 0$"),),
-            horizon=("1/1000", 1, "the event horizon"), singular_runs=True,
+            marked=(("event", "1/1000", 1, "the event horizon"),), singular_runs=True,
             input="$m(v) = 0$ for $v < 0$ and $M$ for $v > 0$, with $r_s = 2GM/c^2$: a shell of null "
                   "dust of mass $M$ falling in along $v = 0$."),
     Diagram("vaidya", "eddington_finkelstein_outgoing", "shell", "an exploding shell", ("u", "r"),
             (0, 4, -1.5, 2.5), "$r/r_s$", "$(cu + r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_OUT,
             tau="u + r", areal=True, functions={"m": "Heaviside(-u)/2"}, lines=(("shell", "x0", "0", "the shell, $u = 0$"),),
-            horizon=("-1/1000", 0, "the white hole's horizon"), singular_runs=True,
+            marked=(("event", "-1/1000", 0, "the white hole's horizon"),), singular_runs=True,
             input="$m(u) = M$ for $u < 0$ and $0$ for $u > 0$, with $r_s = 2GM/c^2$: a shell of null "
                   "dust carrying off the whole mass $M$ along $u = 0$."),
 ]
@@ -898,6 +915,19 @@ CAPTIONS = {
         "right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, which spherical symmetry makes "
         "exact. Rays cross the centre smoothly, where the cones are narrowest and the Kretschmann "
         "scalar is finite, and the surface shows on both sides.",
+    ],
+    ("malament_hogarth", "cartesian", "tx"): [
+        "This is the plane of $t$ and $x$ at $y = z = 0$, through the removed event at the origin. "
+        "The metric on it is $\\Omega^2(-c^2dt^2 + dx^2)$, and $\\Omega^2$ drops out of the null "
+        "condition, so for every $\\Omega$ the light rays are Minkowski's, straight at 45°. The "
+        "computer's world line runs up the axis $x = 0$ into the removed event and has no end in "
+        "the spacetime.",
+        "The event $p$ at $ct = 1$ on the axis has the whole of that world line in its past light "
+        "cone, whose two edges run back from it, so a signal the computer sends at any moment can "
+        "reach $p$ by passing round the removed event. Where $\\Omega$ grows at least as fast as "
+        "$1/|t|$ toward the origin, the computer's proper time $\\int\\Omega\\,dt$ up to the removed "
+        "event is infinite, while an observer who keeps away from the origin reaches $p$ in a "
+        "finite time of their own.",
     ],
     ("oppenheimer_snyder", "interior_comoving", "through"): [
         "This is the line through the centre of the collapsing star in the plane $\\theta = \\pi/2$, in "
@@ -1844,6 +1874,28 @@ class Plot:
                     runs.append(rounded(edge[[run[0], run[-1]]]))
         return whole, runs
 
+    def marked(self, at, family, toward=None):
+        """The rays a view marks through one point: of `family`, 0 or 1, or of both, traced both
+        ways or, with toward="past", only into the past. The point is an x^0, meaning the
+        outermost zero of g^rr there; {"r": r, "areal": R}, the x^0 on that line where the areal
+        radius is R; or {"x0": x^0, "r": r} itself."""
+        fn = self.c.fn
+        if isinstance(at, dict) and "areal" in at:
+            r0, area = float(number(at["r"])), float(number(at["areal"]))
+            x0 = root_between(lambda t: float(fn["R"](np.array([t]), np.array([r0]))[0]) - area, *self.x0_range())
+        elif isinstance(at, dict):
+            x0, r0 = float(number(at["x0"])), float(number(at["r"]))
+        else:
+            x0 = float(number(at))
+            r0 = outer_root(self.c, x0)
+        seed = self.to_unit(self.to_display(x0, r0))
+        families = (0, 1) if family == "both" else (family,)
+        if toward is None:
+            return [self.ray_through(seed, f) for f in families]
+        _, _, _, P, M = self.dirs_unit(seed[None, :])
+        signs = self.c.orient(x0, r0, P[0], M[0])
+        return [self.trace(seed, f, -signs[f]) for f in families]
+
     def x0_range(self):
         """The least and greatest x^0 over the drawing's box."""
         corners = self.to_chart(self.from_unit(np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)))
@@ -1896,7 +1948,9 @@ class Plot:
             lines = self.zero_set("gi00")
             if lines:
                 out.append({"kind": "g00", "lines": lines})
-        lines = self.zero_set("girr")
+        # Under a conformal factor g^rr vanishes only where the factor is infinite, at an event
+        # the view marks itself.
+        lines = [] if spec.any_factor else self.zero_set("girr")
         if lines:
             out.append({"kind": "grr", "lines": lines})
         if spec.mark_gtt:
@@ -1915,12 +1969,16 @@ class Plot:
                 apparent = [l for l in apparent if not same_line(l, throat)]
                 if apparent:
                     out.append({"kind": "apparent", "lines": apparent})
-        for kind, which, at, legend in spec.lines:
+        for kind, which, at, legend, *span in spec.lines:
             at = float(number(at))
-            pairs = [(at, v) for v in (-1e6, 1e6)] if which == "x0" else [(v, at) for v in (-1e6, 1e6)]
+            ends = [float(number(v)) for v in span[0]] if span else (-1e6, 1e6)
+            pairs = [(at, v) for v in ends] if which == "x0" else [(v, at) for v in ends]
             line = clip_unit(np.array([self.to_unit(self.to_display(*pair)) for pair in pairs]))
             if line is not None:
                 out.append({"kind": kind, "lines": [rounded(line)], "legend": legend})
+        for kind, (x0, r), legend in spec.points:
+            u = self.to_unit(self.to_display(float(number(x0)), float(number(r))))
+            out.append({"kind": kind, "points": [rounded(u)], "legend": legend})
         if spec.surface:
             out.append({"kind": "surface", "lines": [rounded(thin(self.surface_line(), 0.0006))],
                         "legend": self.c.surface.legend})
@@ -1929,19 +1987,9 @@ class Plot:
             line = clip_unit(np.array([self.to_unit(self.to_display(x0, R)) for x0 in (-1e6, 1e6)]))
             out.append({"kind": "surface", "lines": [rounded(line)],
                         "legend": "the surface of the star, where the pressure falls to zero"})
-        if spec.horizon:
-            at, family, legend = spec.horizon
-            if isinstance(at, dict):
-                # The point of the line r = at["r"] where the areal radius is at["areal"].
-                r0 = float(number(at["r"]))
-                area = float(number(at["areal"]))
-                x0 = root_between(lambda t: float(fn["R"](np.array([t]), np.array([r0]))[0]) - area,
-                                  *self.x0_range())
-            else:
-                x0 = float(number(at))
-                r0 = outer_root(self.c, x0)
-            line = inside_unit(self.ray_through(self.to_unit(self.to_display(x0, r0)), family))
-            out.append({"kind": "event", "lines": [rounded(thin(line, 0.0006))], "legend": legend})
+        for kind, at, family, legend, *toward in spec.marked:
+            lines = [inside_unit(line) for line in self.marked(at, family, toward[0] if toward else None)]
+            out.append({"kind": kind, "lines": [rounded(thin(line, 0.0006)) for line in lines], "legend": legend})
         if spec.singular_runs:
             edges, runs = self.singular_runs()
             if edges or runs:
@@ -2246,6 +2294,18 @@ def principal_checks(chart, n=241):
     return {"points": int(finite.sum()), "geodesic": geodesic, "repeated": repeated}
 
 
+def factor_check(spec, chart):
+    """A view drawn for every value of a conformal factor: its null directions with the declared
+    factor are those with the factor 1, to rounding, at points all over the drawing."""
+    flat = Chart(replace(spec, functions={**spec.functions, spec.any_factor: "1"}, any_factor=None))
+    u = np.random.default_rng(3).uniform(0.01, 0.99, (2000, 2))
+    plot = Plot(chart)
+    x0, r = plot.to_chart(plot.from_unit(u))
+    gap = _same_directions(chart, flat, x0, r)
+    if not gap < 1e-12:
+        raise SystemExit(f"{key(spec)}: the null directions change with the conformal factor, by {gap:.1e}")
+
+
 def star_checks(spec, star):
     """A declared star solves the one field equation its construction did not use, the
     published G^theta_theta = 8 pi p, and is the star its declared input says it is."""
@@ -2268,6 +2328,8 @@ def draw(spec):
         principal_checks(chart)
     if spec.star:
         star_checks(spec, chart.solver)
+    if spec.any_factor:
+        factor_check(spec, chart)
     view = {
         "id": spec.view, "label": spec.label, "plane": list(spec.plane), "families": list(spec.families),
         "xlabel": spec.xlabel, "ylabel": spec.ylabel, "ticks": axes(spec), "box": list(spec.box),
