@@ -157,8 +157,9 @@ It writes nothing and exits non-zero if anything fails; run it after changing th
 
 ### What is not drawn
 
-Kerr and Kerr-Newman are drawn on the axis only: off it the fixed angle null curves are not light rays, and inside the ergoregion the plane has no null direction at all.
-Their honest radial rays are the principal null congruence, which leaves the plane, and so does every light ray of van Stockum.
+Kerr and Kerr-Newman are drawn on the axis only.
+Off it the null curves of fixed $\theta$ and $\phi$ are not null geodesics, since $\Gamma^\theta{}_{tt}$, $\Gamma^\theta{}_{rr}$ and $\Gamma^\phi{}_{tr}$ turn a light ray launched along one out of the plane, and inside the ergoregion the plane has no null direction at all.
+The radial null geodesics they do have are the principal null congruence, which leaves the plane, and every null geodesic of van Stockum leaves its plane too.
 Tolman-Bondi, Vaidya and the proper distance chart of Morris-Thorne leave functions free that no choice has been made for yet, and Oppenheimer-Snyder's collapse needs its two charts drawn together.
 The cosmic string's two charts, Oppenheimer-Snyder's exterior, Natario's plane flow chart, the Brinkmann chart of the pp-wave and Minkowski's double null chart would each only repeat a plane drawn elsewhere, flat or the same as another chart's.
 
