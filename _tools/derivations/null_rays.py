@@ -1018,6 +1018,22 @@ CAPTIONS = {
 # given in place of the diagram. A system of a spacetime drawn elsewhere that has no view is
 # accounted for in _tools/README.md instead.
 NOT_DRAWN = {
+    "lentz": {
+        "cartesian": [
+            "Lentz's soliton has no spacetime diagram. Its potential is known only as a numerical "
+            "integral over the rhomboid sources Lentz laid out, so no soliton of the class can be "
+            "written down to draw, and a potential written in its place would draw some other "
+            "soliton of the class."],
+    },
+    "mixmaster": {
+        "euler_angles": [
+            "The Mixmaster universe has no spacetime diagram. Its scale factors are the solutions of "
+            "its own vacuum field equations, which reach the singularity through an endless sequence "
+            "of Kasner epochs packed ever closer toward it, so a drawing of any one solution would "
+            "end on a handful of epochs and leave out the infinitely many that follow. The one plane "
+            "of time and an Euler angle whose null curves are light rays, $t$ against $\\psi$ at "
+            "$\\theta = \\pi/2$, has the cones $c\\,dt = \\pm a_3\\,d\\psi$ and would follow $a_3$ alone."],
+    },
     "cosmic_string": {
         "interior_cap": [
             "Gott's core has no spacetime diagram of its own. On its plane of $t$ and $\\chi$ the metric "
