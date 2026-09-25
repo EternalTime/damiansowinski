@@ -17,7 +17,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "5e19daca7f2f22a2",
+    "version": "0595177102b74777",
     "diagrams": "21b15a24416c997d"
   },
   {
@@ -113,7 +113,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5d8ffc3bdb129fec",
+    "version": "7a1faba2335a8194",
     "diagrams": "753dcb7b63367a23",
     "conformal": "d88e649f9aef7518"
   },
@@ -240,7 +240,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "120c3737636c0b94",
+    "version": "af676d1d359dd3ca",
     "diagrams": "11f485504dd141b2",
     "conformal": "a4e7519dbf03eb7e"
   },
@@ -276,7 +276,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "20450a2ff043b699",
+    "version": "f9d1f67433b25886",
     "diagrams": "ee329fe7ec5d9117",
     "conformal": "3b31c44db0a73aa5"
   },
@@ -301,7 +301,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "4a89be8a85c10936",
+    "version": "95e1753c04fe9f08",
     "diagrams": "31090c6ffe73615e"
   },
   {
@@ -324,7 +324,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "356f466f7cd99eb4"
+    "version": "892fee3b8e4bef7e"
   },
   {
     "id": "lentz",
@@ -381,7 +381,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ac59b6fcd659c201",
+    "version": "0c3acd4a9ca78f18",
     "diagrams": "8feaff32ce312782",
     "conformal": "cd0618f27000d42b"
   },
@@ -455,7 +455,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "29ce93cec0689575",
+    "version": "47e2ccd655f6bde4",
     "diagrams": "f101a956a611b7b3"
   },
   {
@@ -481,7 +481,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1b92954f777c0028",
+    "version": "a594cfe02785a7eb",
     "conformal": "960db5c40917b21b"
   },
   {
@@ -563,7 +563,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5129229fc8f65561",
+    "version": "d40426d103725d8a",
     "diagrams": "4d3ff600e6d63c78",
     "conformal": "34234ecbbced3e21"
   },
@@ -704,7 +704,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a3b77bf5dff298ee",
+    "version": "9e17628996c2a6fe",
     "conformal": "5e96d2285669e796"
   }
 ]

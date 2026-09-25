@@ -1,5 +1,5 @@
 {
-  "version": "503dac2b7f243e05",
+  "version": "78896ece60ad5b03",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -5257,6 +5257,276 @@
         "pages": "1599--1606",
         "year": "1989",
         "url": "https://doi.org/10.1088/0264-9381/6/11/013"
+      }
+    },
+    "baxter1995gossamer": {
+      "type": "article",
+      "fields": {
+        "title": "Gossamer",
+        "author": "Baxter, Stephen",
+        "journal": "Science Fiction Age",
+        "volume": "4",
+        "number": "1",
+        "month": "November",
+        "year": "1995",
+        "url": "https://www.lightspeedmagazine.com/fiction/gossamer/"
+      }
+    },
+    "macfarlane2017orville": {
+      "type": "misc",
+      "fields": {
+        "title": "The Orville",
+        "author": "MacFarlane, Seth",
+        "publisher": "Fox",
+        "year": "2017"
+      }
+    },
+    "bormanis2017quantum": {
+      "type": "misc",
+      "fields": {
+        "title": "The Science of THE ORVILLE: Quantum Drive",
+        "author": "Bormanis, Andr\\'e",
+        "publisher": "YouTube",
+        "year": "2017",
+        "url": "https://www.youtube.com/watch?v=v8Xi58N5ddQ"
+      }
+    },
+    "dickinson2024exordia": {
+      "type": "book",
+      "fields": {
+        "title": "Exordia",
+        "author": "Dickinson, Seth",
+        "publisher": "Tor Books",
+        "address": "New York",
+        "isbn": "978-1-250-23301-1",
+        "year": "2024"
+      }
+    },
+    "flynn2008january": {
+      "type": "book",
+      "fields": {
+        "title": "The January Dancer",
+        "author": "Flynn, Michael",
+        "publisher": "Tor",
+        "address": "New York",
+        "isbn": "978-0-7653-1817-6",
+        "year": "2008",
+        "url": "https://archive.org/details/januarydancer00flyn"
+      }
+    },
+    "flynn2010jim": {
+      "type": "book",
+      "fields": {
+        "title": "Up Jim River",
+        "author": "Flynn, Michael",
+        "publisher": "Tor",
+        "address": "New York",
+        "isbn": "978-0-7653-2284-5",
+        "year": "2010",
+        "url": "https://archive.org/details/upjimriver00flyn"
+      }
+    },
+    "flynn2012lion": {
+      "type": "book",
+      "fields": {
+        "title": "In the Lion's Mouth",
+        "author": "Flynn, Michael",
+        "publisher": "Tor",
+        "address": "New York",
+        "isbn": "978-0-7653-2285-2",
+        "year": "2012",
+        "url": "https://archive.org/details/inlionsmouth00flyn"
+      }
+    },
+    "phillips1949manna": {
+      "type": "article",
+      "fields": {
+        "title": "Manna",
+        "author": "Phillips, Peter",
+        "journal": "Astounding Science Fiction",
+        "volume": "42",
+        "number": "6",
+        "month": "February",
+        "year": "1949",
+        "url": "https://archive.org/details/AstoundingScienceFictionv42n6"
+      }
+    },
+    "lethem1997table": {
+      "type": "book",
+      "fields": {
+        "title": "As She Climbed Across the Table",
+        "author": "Lethem, Jonathan",
+        "publisher": "Doubleday",
+        "address": "New York",
+        "isbn": "0-385-48517-4",
+        "year": "1997",
+        "url": "https://archive.org/details/assheclimbedacro0000leth"
+      }
+    },
+    "nolan2023oppenheimer": {
+      "type": "misc",
+      "fields": {
+        "title": "Oppenheimer",
+        "author": "Nolan, Christopher",
+        "publisher": "Universal Pictures",
+        "year": "2023"
+      }
+    },
+    "sawyer2020oppenheimer": {
+      "type": "book",
+      "fields": {
+        "title": "The Oppenheimer Alternative",
+        "author": "Sawyer, Robert J.",
+        "publisher": "CAEZIK SF\\&F Books",
+        "isbn": "978-1-64710-013-1",
+        "year": "2020",
+        "url": "https://www.sfwriter.com/exoa.htm"
+      }
+    },
+    "nolan2014interstellar": {
+      "type": "misc",
+      "fields": {
+        "title": "Interstellar",
+        "author": "Nolan, Christopher",
+        "publisher": "Paramount Pictures",
+        "year": "2014"
+      }
+    },
+    "james2015lensing": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational lensing by spinning black holes in astrophysics, and in the movie Interstellar",
+        "author": "James, Oliver and von Tunzelmann, Eug\\'enie and Franklin, Paul and Thorne, Kip S.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "32",
+        "number": "6",
+        "pages": "065001",
+        "year": "2015",
+        "url": "https://doi.org/10.1088/0264-9381/32/6/065001"
+      }
+    },
+    "niven1977cylinders": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating Cylinders and the Possibility of Global Causality Violation",
+        "author": "Niven, Larry",
+        "journal": "Analog Science Fiction/Science Fact",
+        "volume": "97",
+        "number": "8",
+        "month": "August",
+        "year": "1977"
+      }
+    },
+    "wack2014timebomber": {
+      "type": "book",
+      "fields": {
+        "title": "Time Bomber",
+        "author": "Wack, Robert P.",
+        "publisher": "Boissevain Books",
+        "address": "New York",
+        "isbn": "978-0-9845232-8-3",
+        "year": "2014",
+        "url": "https://archive.org/details/timebomber0000robe"
+      }
+    },
+    "egan2010plusminus": {
+      "type": "misc",
+      "fields": {
+        "title": "Plus, Minus: A Gentle Introduction to the Physics of Orthogonal",
+        "author": "Egan, Greg",
+        "publisher": "gregegan.net",
+        "year": "2010",
+        "url": "https://www.gregegan.net/ORTHOGONAL/00/PM.html"
+      }
+    },
+    "egan2011clockwork": {
+      "type": "book",
+      "fields": {
+        "title": "The Clockwork Rocket",
+        "author": "Egan, Greg",
+        "publisher": "Night Shade Books",
+        "isbn": "978-1-59780-227-7",
+        "year": "2011"
+      }
+    },
+    "egan2012eternal": {
+      "type": "book",
+      "fields": {
+        "title": "The Eternal Flame",
+        "author": "Egan, Greg",
+        "publisher": "Night Shade Books",
+        "isbn": "978-1-59780-293-2",
+        "year": "2012"
+      }
+    },
+    "egan2013arrows": {
+      "type": "book",
+      "fields": {
+        "title": "The Arrows of Time",
+        "author": "Egan, Greg",
+        "publisher": "Gollancz",
+        "address": "London",
+        "isbn": "978-0-575-10576-8",
+        "year": "2013"
+      }
+    },
+    "stewart2001flatterland": {
+      "type": "book",
+      "fields": {
+        "title": "Flatterland: Like Flatland, Only More So",
+        "author": "Stewart, Ian",
+        "publisher": "Perseus Publishing",
+        "address": "Cambridge, Massachusetts",
+        "isbn": "0-7382-0442-0",
+        "year": "2001",
+        "url": "https://archive.org/details/flatterlandlikef00stew"
+      }
+    },
+    "baxter1994ring": {
+      "type": "book",
+      "fields": {
+        "title": "Ring",
+        "author": "Baxter, Stephen",
+        "publisher": "HarperCollins",
+        "address": "London",
+        "isbn": "0-00-224026-2",
+        "year": "1994"
+      }
+    },
+    "landis1998perimelasma": {
+      "type": "article",
+      "fields": {
+        "title": "Approaching Perimelasma",
+        "author": "Landis, Geoffrey A.",
+        "journal": "Asimov's Science Fiction",
+        "month": "January",
+        "year": "1998",
+        "url": "https://www.infinityplus.co.uk/stories/perimelasma.htm"
+      }
+    },
+    "anderson1968kyrie": {
+      "type": "incollection",
+      "fields": {
+        "title": "Kyrie",
+        "author": "Anderson, Poul",
+        "booktitle": "The Farthest Reaches",
+        "editor": "Elder, Joseph",
+        "publisher": "Trident Press",
+        "address": "New York",
+        "year": "1968",
+        "url": "https://archive.org/details/farthestreaches0000elde"
+      }
+    },
+    "sheffield1983mcandrew": {
+      "type": "book",
+      "fields": {
+        "title": "The McAndrew Chronicles",
+        "author": "Sheffield, Charles",
+        "publisher": "Tor",
+        "address": "New York",
+        "isbn": "0-523-48566-2",
+        "year": "1983",
+        "url": "https://archive.org/details/mcandrewschronic0000char"
       }
     }
   }
