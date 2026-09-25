@@ -110,6 +110,11 @@ def diagram_prose(name, diagram):
                 yield f"{where}.caption[{position}]", paragraph
             if view.get("input"):
                 yield f"{where}.input", view["input"]
+            if view.get("cone"):
+                yield f"{where}.cone", view["cone"]
+            for position, marker in enumerate(view["markers"]):
+                if marker.get("legend"):
+                    yield f"{where}.markers[{position}].legend", marker["legend"]
 
 
 class PublishedFilesAreCurrent(unittest.TestCase):
@@ -447,6 +452,20 @@ class Diagrams(unittest.TestCase):
                     for parameter in system.get("parameters", []):
                         parameter["description"] = parameter.get("description", "") + " Reworded."
         self.assertIn(metric_id, build.load_diagrams(changed))
+
+    def test_the_principal_rays_are_tied_to_the_weyl_tensor_and_the_christoffel_symbols(self):
+        """Kerr's principal null rays are found from its Weyl tensor and checked against its
+        Christoffel symbols, so a change to either stops its diagrams, as a changed metric does."""
+        for field in ("weyl_tensor", "christoffel"):
+            changed = copy.deepcopy(self.metrics)
+            kerr = next(m for m in changed if m["id"] == "kerr")
+            system = next(s for s in kerr["coordinates"] if s["id"] == "boyer_lindquist")
+            variant = system[field]["variants"][system[field]["default"]]
+            variant["nonzero"][0]["value"] = "2" + variant["nonzero"][0]["value"]
+            with self.assertRaises(build.DataError) as raised:
+                build.load_diagrams(changed)
+            self.assertIn("diagrams/kerr.json", str(raised.exception), field)
+            self.assertIn("'principal'", str(raised.exception), field)
 
     def test_every_axis_is_labelled_as_tex_and_ticked_inside_its_box(self):
         """The page and the application both set these labels as TeX and draw no tick of their own."""

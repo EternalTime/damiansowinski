@@ -46,6 +46,54 @@ for every fixed coordinate A. The planes in DIAGRAMS pass that test, except Gode
 caption says its null curves are not null geodesics.
 
 
+Rays that leave the plane
+-------------------------
+
+Off its axis, Kerr's light rays that run straight in and straight out stay in no plane of
+two coordinates: they turn in phi as they go. They are its principal null congruence, and
+a row with principal=True draws it from the published Weyl tensor rather than from a
+formula for it.
+
+At each point the published C_abcd, taken in a frame the published metric makes
+orthonormal, is an operator C^AB_CD on the six bivectors, its entries the size of its
+eigenvalues. Where the Weyl tensor is of Petrov type D, the two eigenvalues of largest
+size are -2 times the other four, which fall into two equal pairs, and the eigenbivectors
+of those two span a pair of simple planes, one timelike and one spacelike. The timelike
+one is the principal plane, and its two null directions are the repeated principal null
+directions, the k with C_abc[d k_e] k^b k^c = 0.
+
+The principal plane is written in the basis U_0, U_r whose shadow on the drawn pair of
+coordinates is their coordinate basis, and its metric h_ij = g(U_i, U_j) takes the place
+of the coordinate plane's metric in the null condition above: the same quadratic, the same
+P and M, the same tracing and the same cones, which are now the future cone of the
+principal plane, whose edges are the two principal null directions. A ray traced so is the
+shadow on the drawn pair of a ray that also moves in the coordinates the row names in
+`leaves`. That is exact when the published metric does not depend on them, since the
+principal plane then does not either, and the script requires it: every coordinate is
+drawn, held fixed or left, and neither the published metric nor the Weyl tensor may depend
+on one that is left. It refuses to draw, naming the point, where the Weyl tensor is not of
+type D, where the principal plane has a component along a coordinate held fixed, so that
+its rays would leave the surface drawn, or where the plane does not project one to one
+onto the drawn pair. Beside a curvature singularity the published components lose to
+rounding the digits the plane is read from, so it is not taken where the Kretschmann
+scalar passes K_END, and a ray stops there.
+
+The same rays seen from above are the pair (phi, r) drawn as X = r cos phi and
+Y = r sin phi, which to_display=POLAR asks for. Their seeds are spaced evenly around the
+circle inscribed in the box, so the rays of a family are copies of one another turned
+about the axis, as the independence of phi makes them, and with inside=True a ray stops a
+thousandth of the drawing short of the edge of the published domain, where phi winds
+without end.
+
+Before a principal view is written, its rays are checked to be null geodesics against the
+published Christoffel symbols, k^b nabla_b k^a parallel to k^a, and its directions against
+C_abc[d k_e] k^b k^c = 0 with the published Weyl tensor, and both fields are stamped.
+--verify adds the closed forms of Kerr and Kerr-Newman, which the drawing never uses, and
+shows that in Schwarzschild, Reissner-Nordstrom and Taub-NUT the principal plane is the
+plane of t and r their radial views already draw, and that van Stockum's Weyl tensor is of
+type I, with no principal congruence to draw.
+
+
 Which way is the future
 -----------------------
 
@@ -69,6 +117,8 @@ Markers
 
   grr         g^rr = 0 (or g^xx), where r = const is null or the chart ends.
   g00         g^00 = 0, where x^0 = const stops being spacelike, on request.
+  gtt         g_tt = 0 for the chart's own time t, on request: where d_t turns null, which
+              for Kerr and Kerr-Newman is the ergosurface. It names itself in the legend.
   throat      d_r R = 0, with R^2 = g_theta_theta the areal radius.
   apparent    |grad R|^2 = 0 where grad R is not zero: marginally trapped spheres.
   singular    an edge along which the published Kretschmann scalar exceeds 1e8 and grows
@@ -94,13 +144,15 @@ Each view records the published fields it was drawn from and their version, as
 build_mfs_data.diagram_source_version computes it; build_mfs_data.py --check fails when
 a metric changes without its diagram being redrawn. It carries its ticks, and every
 label as TeX in $...$, so the page and the application draw and set the same ones.
+to_display is the linear map's rows, or "polar". A view whose cones are not the future
+light cone says what they are in `cone`, and a marker that names itself carries `legend`.
 """
 
 import argparse
 import json
 import math
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from decimal import Decimal
 from fractions import Fraction
 from pathlib import Path
@@ -126,6 +178,8 @@ UV_TO_TZ = ((-0.5, 1), (0.5, 1))        # (u, v) of the plane wave to z = v - u/
 RADIAL = ("ingoing", "outgoing")
 SIDEWAYS = ("moving left", "moving right")
 EQUATOR = {"theta": "pi/2", "phi": "0"}
+POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
+PRINCIPAL_CONE = "future cone of the principal plane"
 
 
 @dataclass
@@ -143,7 +197,7 @@ class Diagram:
     ylabel: str
     params: dict = field(default_factory=dict)      # parameter -> value
     fixed: dict = field(default_factory=dict)       # every other coordinate -> value
-    to_display: tuple = ((0, 1), (1, 0))            # rows: X = a.(x^0, r), Y = b.(x^0, r)
+    to_display: tuple = ((0, 1), (1, 0))            # rows: X = a.(x^0, r), Y = b.(x^0, r), or POLAR
     mirror: bool = False            # a line through the centre: x = r and its reflection x = -r
     orient: str = "tau"             # tau, ingoing, outgoing or vector; see the header
     tau: str = "t"                  # the time function, in the Reader's plain names
@@ -156,7 +210,13 @@ class Diagram:
     reference: str = None           # label of the line where a dust solution starts, as TeX
     kretschmann: bool = True
     mark_g00: bool = False
+    mark_gtt: str = None            # mark g_tt = 0, named in the legend by this prose
     input: str = None               # the declared input, in prose, printed beside the diagram
+    principal: bool = False         # the principal null congruence; see "Rays that leave the plane"
+    leaves: tuple = ()              # the coordinates its rays move in off the drawn pair
+    ring: int = 0                   # a polar view's rays: this many of each family, evenly around
+    inside: bool = False            # rays stop short of the edge of the published domain
+    cone: str = None                # what a cone is, where it is not the future light cone
 
 
 def _alcubierre_profile():
@@ -277,10 +337,34 @@ DIAGRAMS = [
     Diagram("kerr", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
             "$r/(GM/c^2)$", "$ct/(GM/c^2)$", {"G": 1, "M": 1, "a": "9/10"},
             {"theta": "0", "phi": "0"}, orient="ingoing"),
+    # The principal null congruence on the equator, where the ergoregion is widest and the
+    # ring singularity lies, drawn twice: its shadow on t and r, which carries the cones and
+    # the horizons as the axis does, and its shadow on the equatorial plane seen from above,
+    # which carries the turning in phi. r changes monotonically along every ray, so the two
+    # shadows, sharing r, fix the ray. Twelve rays of each family from above, one every 30
+    # degrees, keep the two spirals apart at the ergosurface, and a box of 3 GM/c^2 each
+    # way keeps the winding onto the horizon as large as the straight runs far out.
+    Diagram("kerr", "boyer_lindquist", "principal", "principal null rays, $t$ and $r$", ("t", "r"),
+            (0, 4, -2, 2), "$r/(GM/c^2)$", "$ct/(GM/c^2)$", {"G": 1, "M": 1, "a": "9/10"},
+            {"theta": "pi/2"}, orient="ingoing", principal=True, leaves=("phi",),
+            mark_gtt="the ergosurface", cone=PRINCIPAL_CONE),
+    Diagram("kerr", "boyer_lindquist", "above", "principal null rays from above", ("\\phi", "r"),
+            (-3, 3, -3, 3), "$r\\cos\\phi/(GM/c^2)$", "$r\\sin\\phi/(GM/c^2)$",
+            {"G": 1, "M": 1, "a": "9/10"}, {"theta": "pi/2"}, to_display=POLAR, cones=(0, 0),
+            principal=True, leaves=("t",), ring=12, inside=True, mark_gtt="the ergosurface"),
     Diagram("kerr_newman", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"),
             (0, 4, -2, 2), "$r/(GM/c^2)$", "$ct/(GM/c^2)$",
             {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "0", "phi": "0"},
             orient="ingoing"),
+    Diagram("kerr_newman", "boyer_lindquist", "principal", "principal null rays, $t$ and $r$",
+            ("t", "r"), (0, 4, -2, 2), "$r/(GM/c^2)$", "$ct/(GM/c^2)$",
+            {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "pi/2"}, orient="ingoing",
+            principal=True, leaves=("phi",), mark_gtt="the ergosurfaces", cone=PRINCIPAL_CONE),
+    Diagram("kerr_newman", "boyer_lindquist", "above", "principal null rays from above",
+            ("\\phi", "r"), (-3, 3, -3, 3), "$r\\cos\\phi/(GM/c^2)$", "$r\\sin\\phi/(GM/c^2)$",
+            {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "pi/2"}, to_display=POLAR,
+            cones=(0, 0), principal=True, leaves=("t",), ring=12, inside=True,
+            mark_gtt="the ergosurfaces"),
     Diagram("kasner", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-1, 1, 0, 2), "$x$", "$ct$",
             {"p_1": "-2/7", "p_2": "3/7", "p_3": "6/7"}, {"y": "0", "z": "0"},
             families=SIDEWAYS,
@@ -553,6 +637,41 @@ CAPTIONS = {
         "Lorentzian, and the Kretschmann scalar stays finite at $r = 0$, because the ring "
         "singularity lies in the equatorial plane.",
     ],
+    ("kerr", "boyer_lindquist", "principal"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ drawn in $t$ and $r$, with $\\phi$ left "
+        "out, for $a = 0.9\\,GM/c^2$. Its rays are Kerr's principal null congruence, the light "
+        "rays that run straight in and straight out: the two null directions of the plane of "
+        "$\\partial_r$ and $(r^2 + a^2)\\,\\partial_t + a\\,\\partial_\\phi$, which are the repeated "
+        "principal null directions of the Weyl tensor. That plane tilts into $\\phi$, so every ray "
+        "turns as it goes, at $d\\phi/dr = \\pm a/\\Delta$ with $\\Delta = r^2 - 2GMr/c^2 + a^2$, "
+        "and the curves are the rays' projections, $d(ct)/dr = \\pm(r^2 + a^2)/\\Delta$. The same "
+        "projections fall at every $\\theta$, and on the axis they are the radial light rays "
+        "themselves.",
+        "The rays are null geodesics, the paths light takes, and each cone is the future cone of "
+        "the principal plane, its edges the two principal directions. The dotted line is the "
+        "ergosurface, $g_{tt} = 0$, at $r = 2GM/c^2$ on the equator. Between it and $r_+$ nothing, "
+        "light included, can keep $\\phi$ fixed, and the plane of $t$ and $r$ at fixed $\\phi$ has "
+        "no null direction, while the principal rays, already turning, cross it smoothly. The "
+        "cones close at both horizons, where $\\Delta = 0$, and point to smaller $r$ between them, "
+        "and the ingoing rays end on the ring singularity at $r = 0$, which lies in this plane.",
+    ],
+    ("kerr", "boyer_lindquist", "above"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ seen from above, along the axis from "
+        "$\\theta = 0$, with $r$ and $\\phi$ drawn as polar coordinates and $t$ left out, for "
+        "$a = 0.9\\,GM/c^2$. Its rays are Kerr's principal null congruence, each turning at "
+        "$d\\phi/dr = \\pm a/\\Delta$ with $\\Delta = r^2 - 2GMr/c^2 + a^2$, so both families wind "
+        "counterclockwise, the way the hole turns: the ingoing rays as they fall and the outgoing "
+        "rays as they climb. Far out the turning dies away as $a/r^2$ and the rays run nearly "
+        "straight. The rate $d\\phi/dr$ is the same at every $\\theta$, and on the equator the rays "
+        "stay in this plane.",
+        "At the horizon $r_+$ the angle $\\phi$ runs to infinity along every ray, as $t$ does in "
+        "the plane of $t$ and $r$, so the ingoing rays wind without end onto the horizon and the "
+        "outgoing rays unwind off it. The winding is in the coordinate $\\phi$ alone: along an "
+        "ingoing ray $\\tilde\\phi = \\phi + \\int a\\,dr/\\Delta$ stays fixed, and in it the ray "
+        "crosses the horizon at a finite angle. The dotted circle is the ergosurface, "
+        "$r = 2GM/c^2$ on the equator, and between it and $r_+$ nothing, light included, can keep "
+        "$\\phi$ fixed.",
+    ],
     ("kerr_newman", "boyer_lindquist", "radial"): [
         "This is the plane of $t$ and $r$ on the rotation axis, $\\theta = 0$, drawn for $a = "
         "0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$. The curves drawn are null, and on the axis they "
@@ -563,6 +682,39 @@ CAPTIONS = {
         "The domain of the chart begins at $r_+$, the outer zero of $g^{rr}$. On the axis the "
         "Kretschmann scalar stays finite at $r = 0$, because the ring singularity lies in the "
         "equatorial plane.",
+    ],
+    ("kerr_newman", "boyer_lindquist", "principal"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ drawn in $t$ and $r$, with $\\phi$ left "
+        "out, for $a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$. Its rays are the principal null "
+        "congruence, the light rays that run straight in and straight out: the two null directions "
+        "of the plane of $\\partial_r$ and $(r^2 + a^2)\\,\\partial_t + a\\,\\partial_\\phi$, the "
+        "repeated principal null directions of the Weyl tensor, as in Kerr. Every ray turns as it "
+        "goes, at $d\\phi/dr = \\pm a/\\Delta$ with $\\Delta = r^2 - 2GMr/c^2 + a^2 + r_Q^2$, and "
+        "the curves are the rays' projections, $d(ct)/dr = \\pm(r^2 + a^2)/\\Delta$, the same at "
+        "every $\\theta$ and on the axis the radial light rays themselves.",
+        "The rays are null geodesics, the paths light takes, and each cone is the future cone of "
+        "the principal plane, its edges the two principal directions. The cones close at both "
+        "horizons, $r_\\pm = GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - a^2 - r_Q^2}$, and point to smaller "
+        "$r$ between them. The dotted lines are $g_{tt} = 0$, at $r = GM/c^2 \\pm "
+        "\\sqrt{(GM/c^2)^2 - r_Q^2}$ on the equator, $1.866$ and $0.134\\,GM/c^2$, the outer and "
+        "inner ergosurfaces: between them $\\partial_t$ is spacelike, and inside the inner one it "
+        "is timelike again. The ingoing rays end on the ring singularity at $r = 0$, which lies in "
+        "this plane.",
+    ],
+    ("kerr_newman", "boyer_lindquist", "above"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ seen from above, along the axis from "
+        "$\\theta = 0$, with $r$ and $\\phi$ drawn as polar coordinates and $t$ left out, for "
+        "$a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$. Its rays are the principal null congruence, "
+        "each turning at $d\\phi/dr = \\pm a/\\Delta$ with $\\Delta = r^2 - 2GMr/c^2 + a^2 + r_Q^2$, "
+        "so both families wind counterclockwise, the way the hole turns, and far out the turning "
+        "dies away as $a/r^2$. The charge enters only through $\\Delta$: it pulls the horizon in "
+        "to $r_+ = 1.625\\,GM/c^2$, and the rays wind onto it without end, as $\\phi$ runs to "
+        "infinity there.",
+        "The winding is in the coordinate $\\phi$ alone: along an ingoing ray "
+        "$\\tilde\\phi = \\phi + \\int a\\,dr/\\Delta$ stays fixed, and in it the ray crosses the "
+        "horizon at a finite angle. The dotted circles are the ergosurfaces, "
+        "$r = GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - r_Q^2}$ on the equator, and between the outer one "
+        "and $r_+$ nothing, light included, can keep $\\phi$ fixed.",
     ],
     ("kasner", "cartesian", "tx"): [
         "This is the plane of $t$ and $x$ at $y = z = 0$. Along $x$ the scale factor $t^{-2/7}$ "
@@ -787,9 +939,14 @@ class Chart:
         g = published_matrix(reader, entry, "metric_components")
         gi = published_matrix(reader, entry, "inverse_metric_components")
         self.fn = {}
-        for name, expr in (("g00", g[a, a]), ("g0r", g[a, b]), ("grr", g[b, b]),
-                           ("gi00", gi[a, a]), ("gi0r", gi[a, b]), ("girr", gi[b, b])):
+        # A principal view's null directions come from the principal plane instead of the
+        # coordinate plane; its markers still come from the published inverse metric.
+        drawn = (() if spec.principal else (("g00", g[a, a]), ("g0r", g[a, b]), ("grr", g[b, b])))
+        for name, expr in drawn + (("gi00", gi[a, a]), ("gi0r", gi[a, b]), ("girr", gi[b, b])):
             self.fn[name] = self.lambdify(prep(expr))
+        if spec.mark_gtt:
+            self.fn["gtt"] = self.lambdify(prep(g[0, 0]))
+        self.principal = PrincipalPlane(self, g, prep, a, b) if spec.principal else None
         K = prep(reader(strip_lhs(entry["kretschmann"]))) if spec.kretschmann else sp.Integer(0)
         self.fn["K"] = self.lambdify(K)
         tau = sp.sympify(spec.tau, locals={str(self.x0): self.x0, str(self.xr): self.xr})
@@ -840,9 +997,16 @@ class Chart:
 
         return call
 
+    def block(self, x0, r):
+        """The metric on the drawn plane, g_00, g_0r and g_rr: the coordinate plane's, or a
+        principal view's principal plane in the basis whose shadow is (d_0, d_r)."""
+        if self.principal:
+            return self.principal.block(x0, r)
+        return self.fn["g00"](x0, r), self.fn["g0r"](x0, r), self.fn["grr"](x0, r)
+
     def null_dirs(self, x0, r):
         """The directions P and M in (dx^0, dr), and D. NaN where there are none."""
-        g00, g0r, grr = self.fn["g00"](x0, r), self.fn["g0r"](x0, r), self.fn["grr"](x0, r)
+        g00, g0r, grr = self.block(x0, r)
         scale = np.maximum.reduce([np.abs(g00), np.abs(g0r), np.abs(grr)])
         with np.errstate(all="ignore"):
             g00, g0r, grr = g00 / scale, g0r / scale, grr / scale
@@ -857,7 +1021,7 @@ class Chart:
     def orient(self, x0, r, P, M):
         """Signs making P and M future directed at one point, or (0, 0) where none do."""
         at = (np.array([x0]), np.array([r]))
-        g00, g0r, grr = (self.fn[k](*at)[0] for k in ("g00", "g0r", "grr"))
+        g00, g0r, grr = (value[0] for value in self.block(*at))
 
         def dot(p, q):
             return g00 * p[0] * q[0] + g0r * (p[0] * q[1] + p[1] * q[0]) + grr * p[1] * q[1]
@@ -886,6 +1050,167 @@ def _as_lambda(reader, name, rep):
     return sp.Lambda(fn.args, body)
 
 
+# ---------------------------------------------------------------- rays that leave the plane
+
+PAIRS = ((0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3))    # the bivectors e_a ^ e_b, a < b
+_PI, _PJ = np.array(PAIRS).T
+TYPE_D = 1e-6       # how far, in the size of the eigenvalues, type D may miss
+TANGENT = 1e-8      # how large, against the plane's own basis, a fixed coordinate's part may be
+# Beside a curvature singularity the published components lose to rounding the digits the
+# principal plane is read from: beside Kerr's ring, where K = 48/r^6, the directions miss
+# the closed form by rounding over r^4, 1e-8 at r = 0.01 and 3e-4 at r = 0.001. So the plane
+# is not taken where K passes K_END, r = 0.006 there, under a pixel from the ring, and a
+# ray stops at it as it does at any point where the published metric is not finite.
+K_END = 1e12
+
+
+def simple(X, Y):
+    """eps_abcd X^ab Y^cd / 4 for bivectors given by their six components: zero on X = Y
+    exactly when X is simple, the wedge of two vectors."""
+    return (X[..., 0] * Y[..., 5] + X[..., 5] * Y[..., 0] - X[..., 1] * Y[..., 4]
+            - X[..., 4] * Y[..., 1] + X[..., 2] * Y[..., 3] + X[..., 3] * Y[..., 2])
+
+
+class PrincipalPlane:
+    """The principal plane of the published Weyl tensor at points of a view: the metric on
+    it, in the basis U_0, U_r whose shadow on the drawn pair is their coordinate basis. The
+    header's "Rays that leave the plane" gives the construction."""
+
+    def __init__(self, chart, g, prep, a, b):
+        spec, entry, reader = chart.spec, chart.entry, chart.reader
+        coords = entry["coords"]
+        self.name, self.a, self.b = key(spec), a, b
+        plain = [reader._plain(c) for c in coords]
+        drawn = [reader._plain(spec.plane[0]), reader._plain(spec.plane[1])]
+        every = sorted(drawn + list(spec.fixed) + list(spec.leaves))
+        if len(coords) != 4 or spec.dust or every != sorted(plain):
+            raise SystemExit(f"{self.name}: a principal view needs four coordinates, no dust, and each "
+                             "coordinate drawn, held fixed or left exactly once")
+        self.fixed_index = [plain.index(name) for name in spec.fixed]
+        by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
+        left = {by_plain[name] for name in spec.leaves}
+
+        weyl = entry["weyl_tensor"]["variants"]["llll"]["nonzero"]
+        gamma = entry["christoffel"]["variants"]["ull"]["nonzero"]
+        self.weyl_index = [tuple(coords.index(x) for x in comp["indices"]) for comp in weyl]
+        self.gamma_index = [tuple(coords.index(x) for x in comp["indices"]) for comp in gamma]
+        exprs = ([prep(g[i, j]) for i in range(4) for j in range(4)]
+                 + [prep(reader(strip_lhs(entry["kretschmann"])))]
+                 + [prep(reader(comp["value"])) for comp in weyl])
+        gammas = [prep(reader(comp["value"])) for comp in gamma]
+        for expr in exprs + gammas:
+            if expr.free_symbols & left:
+                raise SystemExit(f"{self.name}: the published metric depends on "
+                                 f"{sorted(map(str, expr.free_symbols & left))}, which the rays leave "
+                                 "the drawn plane in, so the plane's rays are not the shadow of one ray")
+        args = (chart.x0, chart.xr, *chart.fixed_syms)
+        self.f = sp.lambdify(args, exprs, "numpy")
+        self.f_gamma = sp.lambdify(args, gammas, "numpy")
+        self.fixed_vals = chart.fixed_vals
+        self.worst = {"type D": 0.0, "tangent": 0.0}
+
+    def _values(self, f, x0, r):
+        x0, r = np.broadcast_arrays(np.asarray(x0, dtype=float), np.asarray(r, dtype=float))
+        n = x0.size
+        args = [np.full(n, v) for v in self.fixed_vals]
+        with np.errstate(all="ignore"):
+            out = f(x0.ravel(), r.ravel(), *args)
+        return x0.shape, np.array([np.broadcast_to(np.asarray(v, dtype=float), (n,)) for v in out])
+
+    def fields(self, x0, r):
+        """The published g_ab, Kretschmann scalar and C_abcd at the points, stacked along the
+        first axis."""
+        shape, v = self._values(self.f, x0, r)
+        n = v.shape[1]
+        C = np.zeros((n, 4, 4, 4, 4))
+        for (i, j, k, l), value in zip(self.weyl_index, v[17:]):
+            C[:, i, j, k, l] = value
+        return shape, v[:16].T.reshape(n, 4, 4), v[16], C
+
+    def christoffel(self, x0, r):
+        """The published Gamma^a_bc at the points, stacked along the first axis."""
+        _, v = self._values(self.f_gamma, x0, r)
+        G = np.zeros((v.shape[1], 4, 4, 4))
+        for (i, j, k), value in zip(self.gamma_index, v):
+            G[:, i, j, k] = value
+        return G
+
+    def plane(self, x0, r):
+        """U, 4 by 2 at each point: its columns span the principal plane, and their shadow on
+        the drawn pair is (d_0, d_r). NaN where a published quantity is not finite, or where
+        the Kretschmann scalar passes K_END."""
+        shape, g, K, C = self.fields(x0, r)
+        U = np.full(g.shape[:1] + (4, 2), np.nan)
+        good = np.isfinite(g).all((1, 2)) & np.isfinite(C).all((1, 2, 3, 4)) & (np.abs(K) < K_END)
+        if good.any():
+            U[good] = self._plane(g[good], C[good], np.asarray(x0), np.asarray(r))
+        return shape, U, g
+
+    def _plane(self, g, C, x0, r):
+        n = g.shape[0]
+        # The operator is taken in a frame orthonormal by g, e = O |Lambda|^(-1/2) from g's
+        # eigenvectors, where its entries are the size of its eigenvalues; in the coordinate
+        # basis, where g_theta theta = r^2 and g^theta theta = 1/r^2, they differ by powers of
+        # r that cost the eigenvalues six digits beside the ring.
+        lam_g, O = np.linalg.eigh(g)
+        frame = O / np.sqrt(np.abs(lam_g))[:, None, :]
+        eta = np.sign(lam_g)
+        Cf = np.einsum("nabcd,naA,nbB,ncC,ndD->nABCD", C, frame, frame, frame, frame, optimize=True)
+        Cuu = Cf * eta[:, :, None, None, None] * eta[:, None, :, None, None]
+        W = Cuu[:, _PI[:, None], _PJ[:, None], _PI[None, :], _PJ[None, :]]
+        lam, V = np.linalg.eig(W)
+        order = np.argsort(-np.abs(lam), axis=1)
+        lam = np.take_along_axis(lam, order, 1)
+        V = np.take_along_axis(V, order[:, None, :], 2)
+        # Type D: each of the four smaller eigenvalues is -1/2 of one of the two larger.
+        miss = (np.abs(lam[:, 2:, None] + lam[:, None, :2] / 2).min(2).max(1)
+                / np.abs(lam[:, :2]).max(1))
+        self._require("type D", miss, TYPE_D, x0, r, "the Weyl tensor is not of Petrov type D")
+        # The real span of the larger two's eigenbivectors holds l ^ n and its dual, the two
+        # simple bivectors of that span, found as the null directions of eps on it.
+        span = np.linalg.svd(np.concatenate([V[:, :, :2].real, V[:, :, :2].imag], 2))[0][:, :, :2]
+        B1, B2 = span[..., 0], span[..., 1]
+        s12 = simple(B1, B2)
+        mu, Q = np.linalg.eigh(np.stack([np.stack([simple(B1, B1), s12], -1),
+                                         np.stack([s12, simple(B2, B2)], -1)], -2))
+        w = np.stack([np.sqrt(np.maximum(mu[:, 1], 0)), np.sqrt(np.maximum(-mu[:, 0], 0))], -1)
+        planes = []
+        for sign in (1.0, -1.0):
+            c = np.einsum("nij,nj->ni", Q, w * np.array([1.0, sign]))
+            B = c[:, :1] * B1 + c[:, 1:] * B2
+            M = np.zeros((n, 4, 4))
+            M[:, _PI, _PJ], M[:, _PJ, _PI] = B, -B
+            E = np.einsum("nab,nbi->nai", frame, np.linalg.svd(M)[0][:, :, :2])
+            planes.append((E, np.linalg.det(np.einsum("nai,nab,nbj->nij", E, g, E))))
+        (E1, d1), (E2, d2) = planes
+        if not np.all((d1 < 0) != (d2 < 0)):
+            raise SystemExit(f"{self.name}: the principal bivectors are not one timelike plane and "
+                             "one spacelike plane")
+        E = np.where((d1 < 0)[:, None, None], E1, E2)
+        shadow = E[:, [self.a, self.b], :]
+        if np.any(np.abs(np.linalg.det(shadow)) < 1e-9):
+            raise SystemExit(f"{self.name}: the principal plane does not project one to one onto the "
+                             "drawn pair")
+        U = E @ np.linalg.inv(shadow)
+        part = (np.abs(U[:, self.fixed_index, :]).max((1, 2)) / np.abs(U).max((1, 2))
+                if self.fixed_index else np.zeros(n))
+        self._require("tangent", part, TANGENT, x0, r, "the principal plane leaves the surface of the "
+                                                         "coordinates held fixed")
+        return U
+
+    def _require(self, what, values, tolerance, x0, r, failure):
+        worst = float(np.max(values)) if values.size else 0.0
+        self.worst[what] = max(self.worst[what], worst)
+        if not worst <= tolerance:
+            raise SystemExit(f"{self.name}: {failure}, by {worst:.1e}, among the points "
+                             f"{np.ravel(x0)[:3]}, {np.ravel(r)[:3]}")
+
+    def block(self, x0, r):
+        shape, U, g = self.plane(x0, r)
+        h = np.einsum("nai,nab,nbj->nij", U, g, U)
+        return h[:, 0, 0].reshape(shape), h[:, 0, 1].reshape(shape), h[:, 1, 1].reshape(shape)
+
+
 # ---------------------------------------------------------------- one view of a chart
 
 class Plot:
@@ -894,19 +1219,35 @@ class Plot:
     def __init__(self, chart):
         spec = chart.spec
         self.c = chart
-        self.A = np.array(spec.to_display, float)
-        self.Ai = np.linalg.inv(self.A)
+        self.polar = spec.to_display == POLAR
+        if not self.polar:
+            self.A = np.array(spec.to_display, float)
+            self.Ai = np.linalg.inv(self.A)
         X0, X1, Y0, Y1 = spec.box
         self.lo = np.array([X0, Y0], float)
         self.span = np.array([X1 - X0, Y1 - Y0], float)
+        self.edge = self.domain_edge() if spec.inside else None
 
     def to_chart(self, q):
-        """Drawn axes (X, Y) to the chart's (x^0, r): the map is linear, with no offset."""
+        """Drawn axes (X, Y) to the chart's (x^0, r): linear with no offset, or for a polar
+        view the angle phi in [0, 2 pi) and the radius r."""
+        if self.polar:
+            q = np.asarray(q, dtype=float)
+            phi = np.mod(np.arctan2(q[..., 1], q[..., 0]), 2 * np.pi)
+            return np.where(phi < 2 * np.pi, phi, 0.0), np.hypot(q[..., 0], q[..., 1])
         p = np.asarray(q) @ self.Ai.T
         return p[..., 0], p[..., 1]
 
     def from_unit(self, u):
         return np.asarray(u) * self.span + self.lo
+
+    def push(self, k, x0, r):
+        """Directions (dx^0, dr) of the chart at chart points, as directions of the drawn axes."""
+        if self.polar:
+            c, s = np.cos(x0)[..., None], np.sin(x0)[..., None]
+            dphi, dr, r = k[..., :1], k[..., 1:], np.asarray(r)[..., None]
+            return np.concatenate([c * dr - r * s * dphi, s * dr + r * c * dphi], -1)
+        return k @ self.A.T
 
     def dirs_unit(self, u):
         """P and M at unit square points u, as unit vectors of the square, with D, P and M."""
@@ -914,10 +1255,24 @@ class Plot:
         P, M, D = self.c.null_dirs(x0, r)
         out = []
         for k in (P, M):
-            d = (k @ self.A.T) / self.span
+            d = self.push(k, x0, r) / self.span
             with np.errstate(all="ignore"):
                 out.append(d / np.linalg.norm(d, axis=-1, keepdims=True))
         return out[0], out[1], D, P, M
+
+    def domain_edge(self):
+        """For inside=True, the published domain of the drawn r pulled in by a thousandth of
+        the drawing: a ray is traced up to it and no further."""
+        lo, hi, _, _ = parse_domains(self.c).get(self.c.spec.plane[1], (None, None, False, False))
+        margin = 1e-3 * float(np.max(self.span))
+        return (None if lo is None else lo + margin, None if hi is None else hi - margin)
+
+    def beyond(self, u):
+        if self.edge is None:
+            return False
+        _, r = self.to_chart(self.from_unit(u))
+        lo, hi = self.edge
+        return bool((lo is not None and r < lo) or (hi is not None and r > hi))
 
     # ---- rays
 
@@ -953,6 +1308,8 @@ class Plot:
             if not np.isfinite(n) or n < 1e-6:
                 break
             u = u + h * step / n
+            if self.beyond(u):
+                break
             previous = step / n
             points.append(u.copy())
             if np.any(u < -0.02) or np.any(u > 1.02):
@@ -965,6 +1322,8 @@ class Plot:
     def rays(self, per_edge=15):
         """Both families, seeded evenly along the four edges, a seed passed over when a ray
         of its own family already runs within half a spacing of it."""
+        if self.c.spec.ring:
+            return self.ring_rays(self.c.spec.ring)
         edge = (np.arange(per_edge) + 0.5) / per_edge
         eps = 1e-3
         seeds = ([(x, eps) for x in edge] + [(eps, y) for y in edge]
@@ -994,6 +1353,24 @@ class Plot:
             families[family] = kept
         if self.c.spec.mirror:
             self.join_at_axis(families)
+        return families
+
+    def ring_rays(self, n):
+        """A polar view's rays, n of each family, through seeds spaced evenly around the
+        circle inscribed in the box: copies of one another turned about the axis."""
+        X0, X1, Y0, Y1 = self.c.spec.box
+        rho = 0.98 * min(X1 - X0, Y1 - Y0) / 2
+        centre = np.array([(X0 + X1) / 2, (Y0 + Y1) / 2])
+        families = {}
+        for family in (0, 1):
+            kept = []
+            for j in range(n):
+                angle = 2 * np.pi * j / n
+                seed = (centre + rho * np.array([np.cos(angle), np.sin(angle)]) - self.lo) / self.span
+                line = self.ray_through(seed, family)
+                if len(line) >= 3:
+                    kept.append(line)
+            families[family] = kept
         return families
 
     def join_at_axis(self, families, tol=0.004):
@@ -1071,7 +1448,10 @@ class Plot:
         out = []
         for name, at in edges.items():
             near, far = (np.abs(self.c.fn["K"](*self.to_chart(self.from_unit(at(e))))) for e in (1e-5, 1e-4))
-            lorentzian = self.c.null_dirs(*self.to_chart(self.from_unit(at(1e-4))))[2] > 0
+            # A principal plane is timelike wherever it is taken, and is not taken this
+            # close to a singularity.
+            lorentzian = (True if self.c.principal
+                          else self.c.null_dirs(*self.to_chart(self.from_unit(at(1e-4))))[2] > 0)
             with np.errstate(all="ignore"):
                 if ((near > 1e8) & (near / far > 50) & lorentzian).mean() > 0.5:
                     out.append(name)
@@ -1113,6 +1493,13 @@ class Plot:
         lines = self.zero_set("girr")
         if lines:
             out.append({"kind": "grr", "lines": lines})
+        if spec.mark_gtt:
+            # Not on the ring itself, where cos(pi/2) is not zero in rounding and the published
+            # g_tt reads -1: only where the Kretschmann scalar is below K_END.
+            lines = self.zero_set("gtt", keep=lambda x0, r: np.abs(fn["K"](x0, r)) < K_END)
+            if lines:
+                t = self.c.entry["coords"][0]
+                out.append({"kind": "gtt", "lines": lines, "legend": f"$g_{{{t}{t}}} = 0$, {spec.mark_gtt}"})
         if spec.areal:
             throat = self.zero_set("dRr", keep=lambda x0, r: fn["R"](x0, r) > 1e-6, drop_edge=True)
             if throat:
@@ -1176,7 +1563,10 @@ def thin(points, tol):
 
 def outer_root(chart):
     """The outermost zero of g^rr along the drawn radial range, where r_+ sits."""
-    X = np.linspace(chart.spec.box[0], chart.spec.box[1], 20001)
+    lo, hi = chart.spec.box[0], chart.spec.box[1]
+    if chart.spec.to_display == POLAR:
+        lo, hi = 0.0, float(np.hypot(np.max(np.abs(chart.spec.box[:2])), np.max(np.abs(chart.spec.box[2:]))))
+    X = np.linspace(lo, hi, 20001)
     f = chart.fn["girr"](np.zeros_like(X), X)
     crossings = np.where(np.sign(f[:-1]) * np.sign(f[1:]) < 0)[0]
     if not crossings.size:
@@ -1300,17 +1690,89 @@ def settings(spec, entry):
     return ", ".join(parts)
 
 
+PRINCIPAL_FIELDS = ["weyl_tensor", "christoffel"]
+# How far k^b nabla_b k^a may miss k^a, against the size of its two terms. Beside the horizons
+# both terms grow as 1/Delta^2 and cancel, and rounding in their central differences leaves
+# about 2e-6 at any step; a direction that is not a geodesic misses by order one.
+GEODESIC = 1e-4
+REPEATED = 1e-9     # how far C_abc[d k_e] k^b k^c may miss zero, against |C| |k|^2 |k_e|
+
+
+def principal_checks(chart, n=241):
+    """A principal view's rays against what the drawing does not use.
+
+    At n points along the drawn r, away from where g^rr vanishes, each family's tangent k,
+    scaled to k^r = 1, is checked to satisfy k^b nabla_b k^a = lambda k^a with the published
+    Christoffel symbols, derivatives along both drawn coordinates taken by central
+    differences, so that the rays are null geodesics; and C_abc[d k_e] k^b k^c = 0 with the
+    published Weyl tensor, so that they are its repeated principal null directions. Returns
+    the worst of each and refuses the view past GEODESIC or REPEATED.
+    """
+    spec, pp = chart.spec, chart.principal
+    lo, hi = spec.box[0], spec.box[1]
+    if spec.to_display == POLAR:
+        lo, hi = 0.0, float(np.max(np.abs(spec.box)))
+    r = np.linspace(lo, hi, n)[1:-1]
+    x0 = np.full_like(r, 0.5)
+    with np.errstate(all="ignore"):
+        keep = np.abs(chart.fn["girr"](x0, r)) > 1e-2
+    x0, r = x0[keep], r[keep]
+    step = 1e-5 * np.maximum(1.0, np.abs(r))
+
+    def tangents(t, rr):
+        _, U, _ = pp.plane(t, rr)
+        P, M, _ = chart.null_dirs(t, rr)
+        return [k / k[:, pp.b:pp.b + 1] for k in (np.einsum("nai,ni->na", U, d) for d in (P, M))]
+
+    here = tangents(x0, r)
+    # d k / d x^0 and d k / d r by central differences, the other coordinates being ones the
+    # metric does not depend on or ones k has no part along.
+    along = [[(p - m) / (2 * step[:, None]) for p, m in zip(tangents(*plus), tangents(*minus))]
+             for plus, minus in (((x0 + step, r), (x0 - step, r)), ((x0, r + step), (x0, r - step)))]
+    _, g, _, C = pp.fields(x0, r)
+    G = pp.christoffel(x0, r)
+    geodesic, repeated, finite = [], [], np.ones(r.size, dtype=bool)
+    for f, k in enumerate(here):
+        dk = k[:, pp.a:pp.a + 1] * along[0][f] + k[:, pp.b:pp.b + 1] * along[1][f]
+        Gkk = np.einsum("nabc,nb,nc->na", G, k, k)
+        acc = dk + Gkk
+        across = acc - (np.sum(acc * k, 1) / np.sum(k * k, 1))[:, None] * k
+        size = np.linalg.norm(dk, axis=1) + np.linalg.norm(Gkk, axis=1)
+        geodesic.append(np.linalg.norm(across, axis=1) / size)
+        lower = np.einsum("nab,nb->na", g, k)
+        Q = np.einsum("nabcd,nb,nc->nad", C, k, k)
+        T = Q[:, :, :, None] * lower[:, None, None, :] - Q[:, :, None, :] * lower[:, None, :, None]
+        scale = (np.abs(C).max((1, 2, 3, 4)) * np.abs(k).max(1) ** 2 * np.abs(lower).max(1))
+        repeated.append(np.abs(T).max((1, 2, 3)) / scale)
+        finite &= np.isfinite(geodesic[-1]) & np.isfinite(repeated[-1])
+    # A point where the plane is not taken, beside a singularity, is left out; a NaN must never
+    # pass as agreement, so the worst is taken over the finite points and too few of them fail.
+    if finite.sum() < 0.8 * r.size:
+        raise SystemExit(f"{key(spec)}: the principal checks are finite at {finite.sum()} of {r.size} points")
+    geodesic = float(max(np.max(g[finite]) for g in geodesic))
+    repeated = float(max(np.max(q[finite]) for q in repeated))
+    if not (geodesic <= GEODESIC and repeated <= REPEATED):
+        raise SystemExit(f"{key(spec)}: the principal rays miss the geodesic equation by {geodesic:.1e} "
+                         f"or the principal condition by {repeated:.1e}")
+    return {"points": int(finite.sum()), "geodesic": geodesic, "repeated": repeated}
+
+
 def draw(spec):
     chart = Chart(spec)
     plot = Plot(chart)
     families = plot.rays()
-    fields = BASE_FIELDS + (["einstein_tensor"] if spec.dust else [])
+    fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust else [])
+              + (PRINCIPAL_FIELDS if spec.principal else []))
+    if spec.principal:
+        principal_checks(chart)
     view = {
         "id": spec.view, "label": spec.label, "plane": list(spec.plane), "families": list(spec.families),
         "xlabel": spec.xlabel, "ylabel": spec.ylabel, "ticks": axes(spec), "box": list(spec.box),
-        "to_display": [list(map(float, row)) for row in spec.to_display], "mirror": spec.mirror,
+        "to_display": POLAR if plot.polar else [list(map(float, row)) for row in spec.to_display],
+        "mirror": spec.mirror,
         "rays": {name: [rounded(thin(l, 0.0006)) for l in families[i]] for i, name in ((0, "P"), (1, "M"))},
-        "cones": plot.cones(), "markers": plot.markers(), "hatch": plot.hatch(),
+        "cones": plot.cones(), **({"cone": spec.cone} if spec.cone else {}),
+        "markers": plot.markers(), "hatch": plot.hatch(),
         "settings": settings(spec, chart.entry), "input": spec.input,
         "caption": CAPTIONS[(spec.metric, spec.system, spec.view)],
         "source": {"fields": fields, "version": build.diagram_source_version(chart.entry, fields)},
@@ -1389,6 +1851,30 @@ CLOSED_FORMS = {
 }
 
 
+def _kerr_forms(a, rQ=0.0):
+    """Kerr's and Kerr-Newman's principal null rays, with M = 1: t -+ r_* and phi -+ r_# are
+    conserved on the ingoing and outgoing rays, dr_*/dr = (r^2 + a^2)/Delta and
+    dr_#/dr = a/Delta, Delta = (r - r_+)(r - r_-)."""
+    rp, rm = 1 + math.sqrt(1 - a * a - rQ * rQ), 1 - math.sqrt(1 - a * a - rQ * rQ)
+
+    def rstar(r):
+        return (r + (rp * rp + a * a) / (rp - rm) * np.log(np.abs(r - rp))
+                - (rm * rm + a * a) / (rp - rm) * np.log(np.abs(r - rm)))
+
+    def rsharp(r):
+        return a / (rp - rm) * np.log(np.abs((r - rp) / (r - rm)))
+
+    def away(x, r):
+        return (np.abs(r - rp) > 0.05) & (np.abs(r - rm) > 0.05) & (r > 0.05)
+    return ((lambda t, r: t + rstar(r), lambda t, r: t - rstar(r), away),
+            (lambda phi, r: phi + rsharp(r), lambda phi, r: phi - rsharp(r), away))
+
+
+for _metric, _forms in (("kerr", _kerr_forms(0.9)), ("kerr_newman", _kerr_forms(0.6, 0.5))):
+    CLOSED_FORMS[(_metric, "boyer_lindquist", "principal")] = _forms[0]
+    CLOSED_FORMS[(_metric, "boyer_lindquist", "above")] = _forms[1]
+
+
 def verify():
     """Trace rays as the page does and measure how far each family's closed form drifts.
     Returns the number of failures."""
@@ -1404,8 +1890,10 @@ def verify():
     forms[("frw", "comoving_spherical", "radial")] = (lambda t, r: eta(t) + r, lambda t, r: eta(t) - r,
                                                       lambda t, r: t > 0.02)
     print(f"{'view':56s} {'P drift':>9s} {'M drift':>9s}  other family spread")
+    traced = {}
     for where, (own_P, own_M, keep) in forms.items():
         plot = Plot(Chart(specs[where]))
+        traced[where] = plot.c
         drift, spread = {0: 0.0, 1: 0.0}, {0: 0.0, 1: 0.0}
         for s in np.linspace(0.05, 0.95, 7):
             for seed in ((s, 0.001), (0.999, s), (s, 0.999), (0.001, s)):
@@ -1415,6 +1903,8 @@ def verify():
                     line = plot.ray_through(np.array(seed), family)
                     line = line[(line >= 0).all(1) & (line <= 1).all(1)]
                     x0, r = plot.to_chart(plot.from_unit(line))
+                    if plot.polar:
+                        x0 = np.unwrap(x0)
                     mask = np.ones_like(r, bool) if keep is None else keep(x0, r)
                     if mask.sum() < 10:
                         continue
@@ -1452,6 +1942,68 @@ def verify():
     ok = gap < 1e-12
     failures += not ok
     print(f"Natario against Alcubierre on the axis: the metrics on the plane differ by {gap:.1e}  {'ok' if ok else 'FAILED'}")
+    return failures + verify_principal(specs, traced)
+
+
+def _sine(A, B):
+    """The sine of the angle between two stacks of plane directions, blind to their sign."""
+    with np.errstate(all="ignore"):
+        return np.abs(A[..., 0] * B[..., 1] - A[..., 1] * B[..., 0]) / (
+            np.linalg.norm(A, axis=-1) * np.linalg.norm(B, axis=-1))
+
+
+def _same_directions(first, second, x0, r):
+    """The largest angle, as a sine, between the P of two charts and between their M."""
+    one, two = first.null_dirs(x0, r), second.null_dirs(x0, r)
+    return float(np.nanmax([_sine(one[0], two[0]), _sine(one[1], two[1])]))
+
+
+def verify_principal(specs, traced):
+    """The principal views' own checks where their rays ran, and the method run where it has
+    nothing new to draw. Returns the number of failures."""
+    failures = 0
+    print()
+    for spec in DIAGRAMS:
+        if not spec.principal:
+            continue
+        chart = traced[(spec.metric, spec.system, spec.view)]
+        c = principal_checks(chart)
+        w = chart.principal.worst
+        print(f"{key(spec):56s} type D to {w['type D']:.0e}, tangent to {w['tangent']:.0e} where "
+              f"traced; at {c['points']} points geodesic to {c['geodesic']:.0e}, principal to "
+              f"{c['repeated']:.0e}  ok")
+    r = np.linspace(0.07, 3.97, 40)
+    t = np.full_like(r, 0.3)
+    for where in (("schwarzschild", "spherical", "radial"), ("rn_metric", "spherical", "radial"),
+                  ("taub_nut", "spherical", "radial")):
+        spec = specs[where]
+        box = spec.box
+        T, R = np.meshgrid(np.linspace(box[2], box[3], 9)[1:-1], np.linspace(box[0], box[1], 41)[1:-1])
+        gap = _same_directions(Chart(spec), Chart(replace(spec, principal=True)), T, R)
+        ok = gap < 1e-9
+        failures += not ok
+        print(f"{'/'.join(where):56s} the principal plane is the plane of t and r drawn: "
+              f"directions agree to {gap:.0e}  {'ok' if ok else 'FAILED'}")
+    for metric in ("kerr", "kerr_newman"):
+        spec = specs[(metric, "boyer_lindquist", "principal")]
+        at_equator = Chart(spec)
+        gap_theta = _same_directions(at_equator, Chart(replace(spec, fixed={"theta": "pi/5"})), t, r)
+        gap_axis = _same_directions(at_equator, Chart(specs[(metric, "boyer_lindquist", "radial")]), t, r)
+        ok = gap_theta < 1e-9 and gap_axis < 1e-9
+        failures += not ok
+        print(f"{metric + '/boyer_lindquist/principal':56s} in t and r the same at theta = pi/5 to "
+              f"{gap_theta:.0e}, and on the axis to {gap_axis:.0e}  {'ok' if ok else 'FAILED'}")
+    stockum = Diagram("stockum_dust", "cylindrical", "principal", "", ("t", "r"), (0, 2, -1, 1), "", "",
+                      {"R": 1}, {"z": "0"}, principal=True, leaves=("phi",))
+    try:
+        Chart(stockum).null_dirs(np.zeros(5), np.linspace(0.2, 1.8, 5))
+        refused = ""
+    except SystemExit as exc:
+        refused = str(exc)
+    ok = "Petrov type D" in refused
+    failures += not ok
+    print(f"{'stockum_dust/cylindrical':56s} refused, its Weyl tensor of type I: {refused or 'NOT refused'}"
+          f"  {'ok' if ok else 'FAILED'}")
     return failures
 
 
