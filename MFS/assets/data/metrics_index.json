@@ -18,7 +18,7 @@
       "causality violation"
     ],
     "version": "834789b2cd8b76db",
-    "diagrams": "51ae94449e223fe5"
+    "diagrams": "0092fb55aca280e5"
   },
   {
     "id": "anti_de_sitter",
@@ -43,7 +43,7 @@
       "idealized model"
     ],
     "version": "ca8d4c051463c036",
-    "diagrams": "20bc74203cb3aa15"
+    "diagrams": "5536c2fb43be2540"
   },
   {
     "id": "bertotti_robinson",
@@ -65,7 +65,7 @@
       "idealized model"
     ],
     "version": "8baf370598b8b4b4",
-    "diagrams": "2a12cf475a793a86"
+    "diagrams": "28ab88e421c88797"
   },
   {
     "id": "bianchi",
@@ -136,7 +136,7 @@
       "idealized model"
     ],
     "version": "11f61184e7ff970a",
-    "diagrams": "f3ab55c175cb04be"
+    "diagrams": "957f4b22136034d9"
   },
   {
     "id": "frw",
@@ -158,7 +158,7 @@
       "idealized model"
     ],
     "version": "1b293ca9a39c0a20",
-    "diagrams": "89657ee29c1f6480"
+    "diagrams": "ecd1cc1c70783de3"
   },
   {
     "id": "godel",
@@ -181,7 +181,7 @@
       "idealized model"
     ],
     "version": "33e45359baa4dbc3",
-    "diagrams": "f254b16102e88b80"
+    "diagrams": "a7ca06ba429f85e5"
   },
   {
     "id": "kasner",
@@ -236,7 +236,7 @@
       "idealized model"
     ],
     "version": "641566a8a1f57bcd",
-    "diagrams": "8de8e62868aafc6e"
+    "diagrams": "cdb649c92c7f1a76"
   },
   {
     "id": "kerr_newman",
@@ -271,7 +271,7 @@
       "idealized model"
     ],
     "version": "4db0c1bd50dee80e",
-    "diagrams": "9f79637ced96f37e"
+    "diagrams": "bb92d1eb13504adb"
   },
   {
     "id": "krasnikov",
@@ -374,7 +374,7 @@
       "idealized model"
     ],
     "version": "228d233da5f97fb6",
-    "diagrams": "ec46d64ff78557bf"
+    "diagrams": "e8243b39929faada"
   },
   {
     "id": "mixmaster",
@@ -423,7 +423,7 @@
       "idealized model"
     ],
     "version": "36bafba5e4ecccbf",
-    "diagrams": "478e06924287fa58"
+    "diagrams": "0982ff26a6d77799"
   },
   {
     "id": "natario",
@@ -446,7 +446,7 @@
       "four-dimensional"
     ],
     "version": "ed66e5d545f23dfa",
-    "diagrams": "c428525084f816eb"
+    "diagrams": "53799d2c84382e9b"
   },
   {
     "id": "oppenheimer_snyder",
@@ -491,7 +491,7 @@
       "idealized model"
     ],
     "version": "b30e21f916a5160a",
-    "diagrams": "efef6ec38f413b93"
+    "diagrams": "e1ac992c8fd9f7c5"
   },
   {
     "id": "rn_metric",
@@ -552,7 +552,7 @@
       "idealized model"
     ],
     "version": "132e86e871a751d0",
-    "diagrams": "cfe5d56f5e4a39c6"
+    "diagrams": "8a4118fc858ac0bd"
   },
   {
     "id": "interior_schwarzschild",
@@ -574,7 +574,7 @@
       "idealized model"
     ],
     "version": "31cc97350e4f1540",
-    "diagrams": "4a121e3699a86222"
+    "diagrams": "8ea66611b8131aa3"
   },
   {
     "id": "taub_nut",
@@ -596,7 +596,7 @@
       "idealized model"
     ],
     "version": "6bc42b8d7b461067",
-    "diagrams": "324dc13c251fbc07"
+    "diagrams": "ae64bab6a5e31989"
   },
   {
     "id": "tolman_bondi",
