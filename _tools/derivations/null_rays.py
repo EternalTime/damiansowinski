@@ -289,6 +289,10 @@ KM = 1.4766250614                       # GM_sun/c^2 in km
 BIANCHI_DUST = {"funcs": ["a_1", "a_2", "a_3"], "eqs": [["x", "x"], ["y", "y"], ["z", "z"]],
                 "rates": [-0.5, 1.5, 2.0]}
 
+# Godel's radius r_c = ln(1 + sqrt 2), where sinh r = 1 and the circles of constant t, r and z
+# turn from spacelike to timelike; the views read it off the published g_phiphi as well.
+GODEL_RC = math.asinh(1.0)
+
 # Every view the page draws, in the order it shows them. Plot ranges are chosen with
 # equal scales on both axes, so light in flat space runs at 45 degrees, and cone
 # lattices so that no cone sits exactly on a line where the chart is singular.
@@ -453,6 +457,16 @@ DIAGRAMS = [
     Diagram("stockum_dust", "cylindrical", "beyond", "$t$ and $\\phi$ at $r = 3R/2$", ("t", "\\phi"),
             (-3 * math.pi / 2, 3 * math.pi / 2, -3 * math.pi / 2, 3 * math.pi / 2), "$r\\phi/R$", "$t/R$",
             {"R": 1}, {"r": "3/2", "z": "0"}, to_display=((0, 1.5), (1, 0)), orient="vector",
+            families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    # Godel's cylinders of t and phi about one world line of the dust, drawn as van Stockum's are,
+    # phi scaled by r, at half and one and a half times r_c.
+    Diagram("godel", "cylindrical", "inside", "$t$ and $\\phi$ at $r = r_c/2$", ("t", "\\phi"),
+            tuple(s * math.pi * GODEL_RC / 2 for s in (-1, 1, -1, 1)), "$r\\phi$", "$t$", {"omega": 1},
+            {"r": "asinh(1)/2", "z": "0"}, to_display=((0, GODEL_RC / 2), (1, 0)), orient="vector",
+            families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    Diagram("godel", "cylindrical", "beyond", "$t$ and $\\phi$ at $r = 3r_c/2$", ("t", "\\phi"),
+            tuple(s * math.pi * 3 * GODEL_RC / 2 for s in (-1, 1, -1, 1)), "$r\\phi$", "$t$", {"omega": 1},
+            {"r": "3*asinh(1)/2", "z": "0"}, to_display=((0, 3 * GODEL_RC / 2), (1, 0)), orient="vector",
             families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
     Diagram("tov", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 16, -8, 8),
             "$r\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, areal=True, star=POLYTROPE,
@@ -916,6 +930,35 @@ CAPTIONS = {
         "each turn. None of the curves drawn here is a null geodesic: the ray moving to $+\\phi$ is "
         "turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and $\\Gamma^r{}_{\\phi\\phi}$, and the ray "
         "moving to $-\\phi$ away from it.",
+    ],
+    ("godel", "cylindrical", "inside"): [
+        "This is the cylinder of $t$ and $\\phi$ at $r = r_c/2$ and $z = 0$, with $\\sinh r_c = 1$, about "
+        "the axis $r = 0$, which is the world line of one particle of the dust. It is opened along the "
+        "line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that "
+        "one line. The metric on it is the same at every point, so its null curves are straight: "
+        "$dt = \\sinh r\\,(\\cosh r - \\sqrt{2}\\sinh r)\\,d\\phi$ moving to $+\\phi$, which is "
+        "$dt = \\tfrac{1}{2}(\\sqrt{2} - 1)\\,d\\phi$ here, and $dt = -\\sinh r\\,(\\cosh r + "
+        "\\sqrt{2}\\sinh r)\\,d\\phi$ moving to $-\\phi$, which is $dt = -\\tfrac{1}{2}(3 - \\sqrt{2})\\,d\\phi$. "
+        "The cross term tilts every cone toward $+\\phi$, and a curve moving that way covers "
+        "$1 + 2\\sqrt{2}$ times the $\\phi$ in a given $t$ that one moving the other way does.",
+        "At this radius the curve moving to $+\\phi$ is a null geodesic: $\\Gamma^r{}_{t\\phi}$ and "
+        "$\\Gamma^r{}_{\\phi\\phi}$ cancel along it, and light sent that way circles the axis at "
+        "$r = r_c/2$. The curve moving to $-\\phi$ is not a geodesic, and light launched along it is "
+        "turned away from the axis. The horizontal lines, circles of constant $t$, lie outside every "
+        "cone and are spacelike.",
+    ],
+    ("godel", "cylindrical", "beyond"): [
+        "This is the cylinder of $t$ and $\\phi$ at $r = 3r_c/2$ and $z = 0$, opened along "
+        "$\\phi = \\pm\\pi$ in the same way. Beyond $r_c$ the coefficient $g_{\\phi\\phi} = "
+        "2\\sinh^2 r\\,(1 - \\sinh^2 r)/\\omega^2$ is negative, and the cones have tipped over past the "
+        "horizontal: the null curve moving to $+\\phi$, $dt = -\\tfrac{1}{2}(3 - \\sqrt{2})\\,d\\phi$, goes "
+        "down in $t$, while the one moving to $-\\phi$, $dt = -\\tfrac{1}{2}(17 - \\sqrt{2})\\,d\\phi$, climbs "
+        "steeply. Every horizontal line, run toward $+\\phi$, points into the future cones, so the circle "
+        "of constant $t$, $r$ and $z$ is a closed timelike curve.",
+        "The curve moving to $+\\phi$ comes round to its own $\\phi$ at a $t$ earlier by "
+        "$(3 - \\sqrt{2})\\pi$ after each turn. None of the curves drawn here is a null geodesic: light "
+        "launched along one moving to $+\\phi$ is turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and "
+        "$\\Gamma^r{}_{\\phi\\phi}$, and light launched along one moving to $-\\phi$ is turned away from it.",
     ],
     ("tov", "spherical", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ through a star of fluid "
@@ -2319,7 +2362,7 @@ def settings(spec, entry):
     names.update({vm.Reader._plain(c): c for c in entry["coords"]})
     parts = []
     for plain, value in list(spec.params.items()) + list(spec.fixed.items()):
-        shown = sp.latex(number(value))
+        shown = sp.latex(number(value), ln_notation=True)
         parts.append(f"${names[plain]} = {shown}$")
     return ", ".join(parts)
 
@@ -2565,6 +2608,26 @@ CLOSED_FORMS = {
     ("pp_wave", "exact_plane_wave", "tz"): (lambda u, v: v, lambda u, v: u, None),
     ("krasnikov", "cylindrical", "tx"): (None, lambda t, x: t - x, None),
 }
+# The cylinders of t and phi, where each family runs straight, dt = k dphi, and conserves
+# t - k phi: van Stockum's k = r(1 - r/R) moving right and -r(1 + r/R) moving left, and
+# Godel's sinh r (cosh r - sqrt 2 sinh r) and -sinh r (cosh r + sqrt 2 sinh r), which are the
+# numbers the captions state.
+CYLINDERS = {
+    ("stockum_dust", "cylindrical", "inside"): (-0.75, 0.25),
+    ("stockum_dust", "cylindrical", "beyond"): (-3.75, -0.75),
+    ("godel", "cylindrical", "inside"): (-(3 - math.sqrt(2)) / 2, (math.sqrt(2) - 1) / 2),
+    ("godel", "cylindrical", "beyond"): (-(17 - math.sqrt(2)) / 2, -(3 - math.sqrt(2)) / 2),
+}
+CLOSED_FORMS.update({where: (lambda t, phi, k=left: t - k * phi, lambda t, phi, k=right: t - k * phi, None)
+                     for where, (left, right) in CYLINDERS.items()})
+# What light launched along each family of a cylinder does, as its caption says: stays on the
+# cylinder as a null geodesic, or is turned toward or away from the axis.
+TURNING = {
+    ("stockum_dust", "cylindrical", "inside"): ("away", "geodesic"),
+    ("stockum_dust", "cylindrical", "beyond"): ("away", "toward"),
+    ("godel", "cylindrical", "inside"): ("away", "geodesic"),
+    ("godel", "cylindrical", "beyond"): ("away", "toward"),
+}
 
 
 def _kerr_forms(a, rQ=0.0):
@@ -2658,7 +2721,44 @@ def verify():
     ok = gap < 1e-12
     failures += not ok
     print(f"Natario against Alcubierre on the axis: the metrics on the plane differ by {gap:.1e}  {'ok' if ok else 'FAILED'}")
-    return failures + verify_principal(specs, traced)
+    return failures + verify_turning(specs) + verify_principal(specs, traced)
+
+
+def verify_turning(specs):
+    """On each cylinder of t and phi, the acceleration off the cylinder of light launched along
+    each family, -Gamma^r_ab k^a k^b from the published Christoffel symbols, against what the
+    caption says it is. Returns the number of failures."""
+    failures = 0
+    print()
+    for where, said in TURNING.items():
+        spec = specs[where]
+        _, entry, reader = load(spec.metric, spec.system)
+        coords = entry["coords"]
+        at = {reader.c: 1}
+        at.update({reader.parameters[k]: number(v) for k, v in spec.params.items()})
+        by_plain = {reader._plain(n): sym for n, sym in reader.symbol.items()}
+        at.update({by_plain[k]: number(v) for k, v in spec.fixed.items()})
+        at.update({reader.symbol[c]: 0 for c in spec.plane})
+        g = np.array(published_matrix(reader, entry, "metric_components").subs(at), dtype=float)
+        gamma = {tuple(c["indices"]): float(reader(c["value"]).subs(at))
+                 for c in entry["christoffel"]["variants"]["ull"]["nonzero"] if c["indices"][0] == "r"}
+        i, j = (coords.index(c) for c in spec.plane)
+        found = []
+        for sign in (-1, 1):
+            # (dt, dphi) = (lam, sign), null on the cylinder and future along d_t.
+            a, b, c = g[i, i], 2 * g[i, j] * sign, g[j, j]
+            roots = [(-b + e * math.sqrt(b * b - 4 * a * c)) / (2 * a) for e in (-1, 1)]
+            lam = next(x for x in roots if g[i, i] * x + g[i, j] * sign < 0)
+            k = {spec.plane[0]: lam, spec.plane[1]: sign}
+            terms = [gamma.get((("r",) + (m, n)), 0.0) * k[m] * k[n] for m in k for n in k]
+            accel = -sum(terms)
+            scale = sum(abs(x) for x in terms)
+            found.append("geodesic" if abs(accel) < 1e-12 * scale else "toward" if accel < 0 else "away")
+        ok = tuple(found) == said
+        failures += not ok
+        print(f"{'/'.join(where):56s} light moving left turned {found[0]}, moving right {found[1]}, "
+              f"as the caption says  {'ok' if ok else 'FAILED'}")
+    return failures
 
 
 def _sine(A, B):

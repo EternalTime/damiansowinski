@@ -37,8 +37,10 @@ is checked to be the inverse of the published metric there, which holds exactly 
 slice is orthogonal to the coordinates held fixed.
 
 A cone is painted as the convex hull of its apex and its rim, filled faintly, with its rim
-and the two generators that bound it in the projection drawn over the fill. Cones are
-painted farthest first.
+and the two generators that bound it in the projection drawn over the fill, and RIBS of its
+generators drawn faintly from the apex to the rim. A wide cone seen from inside its opening
+projects to an oval with its apex inside, and the ribs are what show where the apex is and
+which way the cone opens. Cones are painted farthest first.
 
 
 Output
@@ -68,6 +70,7 @@ import null_rays as nr
 
 LENGTH = 0.32               # a cone's generators, as a fraction of the figure's slice radius
 RIM = 96                    # generators per cone
+RIBS = 8                    # of them drawn from the apex to the rim
 NULL = 1e-12                # how far a drawn generator may miss null, against |g| |k|^2
 INVERSE = 1e-12             # how far g^-1 g may miss the identity on the slice
 
@@ -290,13 +293,15 @@ class Figure:
         self.layers.append({"kind": "point", "class": cls, "at": rounded(self.camera.screen(P))})
 
     def cone(self, apex, rim, cls="cone"):
-        """A cone of its apex and rim, both in the drawing: the hull filled, the rim and the
-        two generators that bound it in the projection drawn over it."""
+        """A cone of its apex and rim, both in the drawing: the hull filled, the rim, RIBS
+        generators and the two generators that bound it in the projection drawn over it."""
         a, R = self.camera.screen(apex), self.camera.screen(rim)
         H = hull(np.vstack([a[None, :], R]))
         self.fill(cls, H)
         self.layers.append({"kind": "line", "class": cls + "-rim",
                             "points": rounded(np.vstack([R, R[:1]]))})
+        for i in range(0, len(R), len(R) // RIBS):
+            self.layers.append({"kind": "line", "class": cls + "-rib", "points": rounded([a, R[i]])})
         at = np.flatnonzero(np.all(np.isclose(H, np.round(a, 12)), axis=1))
         if at.size:
             i = int(at[0])
@@ -359,42 +364,59 @@ def arrow(sl, t, r, phi, size, sense=1):
     return np.array([tip[0] + 0.5 * size * side, tip[1], tip[2] - 0.5 * size * side])
 
 
-def stockum(spec, camera=Camera(-90, 30), length=0.2, rings=(4, 6, 6)):
-    """Van Stockum's light cones about the axis of the dust, on the slice z = 0 at R = 1.
+def about_axis(spec, sl, bracket, names, camera=Camera(-90, 30)):
+    """Future light cones about the axis of a polar slice (t, r, phi) whose circles of
+    constant t and r turn from spacelike to timelike at a critical radius r_c.
 
-    The slice is (t, r, phi), drawn polar with the proper distance from the axis as its
-    radius. The critical radius is where the published g_phiphi vanishes, found by
-    bisection, and the circle drawn beyond it is checked timelike there by the published
-    g_phiphi < 0. Cones stand on the axis and around the circles r = R/2, R and 3R/2."""
-    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
-    sl.proper_radius(2.5)
+    r_c is where the published g_phiphi vanishes, found by bisection on `bracket`, and the
+    circle drawn at 3 r_c/2 is checked timelike there by the published g_phiphi < 0. Cones
+    stand on the axis and at four places around each of the circles r_c/2, r_c and 3 r_c/2,
+    those on r_c turned by 45 degrees from the others so that no two meet, and `names` are
+    the TeX names of r_c and 3 r_c/2. The floor reaches out to 2 r_c, and the cones, the axis
+    and the arrows are sized against the drawn radius of r_c."""
     g_phiphi = lambda r: sl.metric((0.0, r, 0.0))[2, 2]
-    critical = root(g_phiphi, 0.5, 1.5)
+    critical = root(g_phiphi, *bracket)
     beyond = 1.5 * critical
     if not g_phiphi(beyond) < 0:
-        raise SystemExit("stockum: the circle beyond the critical radius is not timelike")
+        raise SystemExit(f"{key(spec)}: the circle beyond the critical radius is not timelike")
+    unit = float(sl.radius(critical))
     fig = Figure(spec.view, spec.label, camera)
     for k in range(12):
         ph = k * np.pi / 6
-        fig.line("floor", sl.to_drawing((np.zeros(2), np.array([0.0, 2.0]), np.full(2, ph))))
+        fig.line("floor", sl.to_drawing((np.zeros(2), np.array([0.0, 2 * critical]), np.full(2, ph))))
     for r, cls in ((0.5, "floor"), (2.0, "floor"), (1.0, "critical"), (1.5, "ctc")):
         fig.line(cls, circle(sl, 0.0, r * critical), closed=True)
     for k in range(4):
-        fig.line("ctc", arrow(sl, 0.0, beyond, (k + 0.25) * np.pi / 2, 0.05))
-    fig.line("axis", np.array([[0, 0, -0.35], [0, 0, 0.75]]))
+        fig.line("ctc", arrow(sl, 0.0, beyond, (k + 0.75) * np.pi / 2, 0.058 * unit))
+    fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 0.875]]) * unit)
     cones = [(0.0, 1e-6, 0.0)]
-    for n, r, shift in zip(rings, (0.5 * critical, critical, beyond), (0.5, 0.0, 0.5)):
-        cones += [(0.0, r, (k + shift) * 2 * np.pi / n) for k in range(n)]
-    drawn = [future_cone(sl, x, length) for x in cones]
+    for r, shift in ((0.5 * critical, 0.5), (critical, 0.0), (beyond, 0.5)):
+        cones += [(0.0, r, (k + shift) * np.pi / 2) for k in range(4)]
+    drawn = [future_cone(sl, x, 0.187 * unit) for x in cones]
     for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
         fig.cone(apex, rim)
-    fig.label(np.array([0, 0, 0.75]), "$t$", "b", dy=-4)
-    fig.label(sl.to_drawing((0.0, critical, -np.pi / 5)), "$r = R$", "tl", dx=4, dy=4)
-    fig.label(sl.to_drawing((0.0, beyond, -np.pi / 5)), "$r = 3R/2$", "tl", dx=6, dy=6)
+    fig.label(np.array([0, 0, 0.875 * unit]), "$t$", "b", dy=-4)
+    for r, name in ((critical, names[0]), (beyond, names[1])):
+        fig.label(sl.to_drawing((0.0, r, -7 * np.pi / 18)), f"${name}$", "tl", dx=6, dy=4)
     fig.legend("cone", "cone", "future light cone")
-    fig.legend("line", "critical", "$r = R$, where the circle of fixed $t$ and $r$ is null")
-    fig.legend("line", "ctc", "$r = 3R/2$, where it is timelike")
+    fig.legend("line", "critical", f"${names[0]}$, where the circle of fixed $t$ and $r$ is null")
+    fig.legend("line", "ctc", f"${names[1]}$, where it is timelike")
     return fig.done(), sl
+
+
+def stockum(spec):
+    """Van Stockum's light cones about the axis of the dust, on the slice z = 0 at R = 1,
+    drawn polar with the proper distance from the axis as its radius."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
+    sl.proper_radius(2.5)
+    return about_axis(spec, sl, (0.5, 1.5), ("r = R", "r = 3R/2"))
+
+
+def godel(spec):
+    """Godel's light cones about one world line of the dust, on the slice z = 0 at omega = 1,
+    drawn polar with r itself as its radius: g_rr = -g_tt, so dt = +-dr runs at 45 degrees."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
+    return about_axis(spec, sl, (0.5, 1.5), ("r = r_c", "r = 3r_c/2"))
 
 
 CAPTIONS = {
@@ -423,12 +445,27 @@ CAPTIONS = {
         "horizontal, and the circle $r = 3R/2$, run counterclockwise as its arrows point, lies inside "
         "every one of them: a closed timelike curve through each of its events.",
     ],
+    ("godel", "cylindrical", "tipping"): [
+        "This is the slice $z = 0$ of $t$, $r$ and $\\phi$ about the axis $r = 0$, the world line of one "
+        "particle of the dust, with $t$ up and $r$ as the radius, which puts the null directions "
+        "$dt = \\pm dr$ at 45°. The cones stand at $t = 0$ on the axis and around the circles "
+        "$r = r_c/2$, $r_c$ and $3r_c/2$, with $\\sinh r_c = 1$. On the axis they are upright, and "
+        "farther out the cross term $g_{t\\phi} = -2\\sqrt{2}\\sinh^2 r/\\omega^2$ tips them over toward "
+        "$+\\phi$, counterclockwise seen from above.",
+        "At $r = r_c$, where $g_{\\phi\\phi}$ vanishes, one edge of every cone lies along the circle of "
+        "constant $t$ and $r$, which is a closed null curve. Beyond it the cones have tipped past the "
+        "horizontal, and the circle $r = 3r_c/2$, run counterclockwise as its arrows point, lies inside "
+        "every one of them: a closed timelike curve through each of its events. Every world line of the "
+        "dust is equivalent to every other, so the cones tip over in the same way about each one.",
+    ],
 }
 
 
 FIGURES = [
     Projection("stockum_dust", "cylindrical", "tipping", "light cones about the axis", stockum,
                {"R": 1}, {"z": "0"}),
+    Projection("godel", "cylindrical", "tipping", "light cones about the axis", godel,
+               {"omega": 1}, {"z": "0"}),
     # The deficit the conformal diagram draws with, 4 G mu/c^2 = 0.1, so delta = 36 degrees.
     Projection("cosmic_string", "conical", "beam", "light passing the string", lambda spec: string_rays(spec),
                {"mu": "1/40", "G": 1, "delta": "pi/5"}, {"z": "0"}, fields=("christoffel",)),

@@ -576,6 +576,17 @@ class Figures(unittest.TestCase):
                 self.assertIn(kind, {"fill", "line", "point", "cone"}, where)
                 self.assertIn(cls, drawn, f"{where} legend {cls}")
 
+    def test_every_class_a_figure_paints_is_styled_on_the_page_and_in_print(self):
+        # A class the stylesheet does not know is painted as a black line on the dark page.
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        for name, system, figure in self.figures:
+            for layer in figure["layers"]:
+                selector = "pj-" + layer["class"] + ("-fill" if layer["kind"] == "fill" else "")
+                self.assertRegex(page, r"\n    \." + re.escape(selector) + r"(?![\w-])[^{\n]*\{",
+                                 f"{name}/{system}/{figure['id']} paints {selector}, which is not styled")
+                self.assertRegex(page, r"\.mfs-print-body \." + re.escape(selector) + r"(?![\w-])",
+                                 f"{name}/{system}/{figure['id']} paints {selector}, which is not styled in print")
+
     def test_every_text_is_tex_with_its_mathematics_closed(self):
         for name, diagram in self.diagrams.items():
             for field, value in diagram_prose(name, diagram):

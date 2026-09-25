@@ -215,7 +215,9 @@ Kasner is drawn at the exponents $(-2/7, 3/7, 6/7)$.
 
 traces rays as the page's files are traced and measures, for every view with a closed form, how far the quantity each family should conserve drifts along a ray, together with the dust solutions and the equality of Natario's and Alcubierre's metrics on the plane of their axis.
 For the principal null rays it adds the checks the next section describes, and the closed forms $ct \mp r_*$ and $\phi \mp r_\sharp$ of Kerr and Kerr-Newman, which the drawing never uses.
+On each cylinder of $t$ and $\phi$, van Stockum's and Gödel's, it checks the straight lines against the slopes the captions state, and checks what light launched along each family does against what the caption says, from the published Christoffel symbols: stays on the cylinder as a null geodesic, or is turned toward the axis or away from it.
 It writes nothing and exits non-zero if anything fails; run it after changing the method.
+It took 958 seconds on 25 September 2026.
 
 ### Rays that leave the plane
 
@@ -239,6 +241,29 @@ Before a principal view is written, the script checks at points along the drawn 
 Kerr and Kerr-Newman are the only charts the extension draws something new for.
 Every spherically symmetric chart that is not conformally flat has the plane of $t$ and $r$ as its principal plane, and so does Taub-NUT, whose twist sits in $g_{t\phi}$; Gödel's is the plane of $t$ and $z$ along its axis of rotation, which is flat.
 van Stockum's Weyl tensor has four distinct principal directions and no repeated one, so its light rays, which frame dragging turns out of the plane of $t$ and $r$, form no principal congruence, and the pp-wave's one repeated direction, $\partial_v$, lies in the plane of its axis, already drawn.
+
+### Figures in three dimensions
+
+Where the causal structure a reader comes for turns in a direction no plane of two coordinates holds, a coordinate system also gets a figure in three dimensions: a slice of one time and two spatial coordinates, every other coordinate held fixed, drawn from the published metric by `_tools/derivations/projections.py` and projected once from a fixed camera.
+The file holds the projection, polylines, polygons and points of the page's own plane in the order they are painted, farthest first, with TeX labels, which is the form a conformal diagram takes.
+So the page draws a figure with the conformal diagram's frame and labels, it prints, and the application can draw the same data with its own renderer; nothing is left for a reader to turn, and there is no scene in the browser.
+`FIGURES` and `CAPTIONS` in that script are its table, and `null_rays.py` writes each figure into its spacetime's diagram file under `projections`, keyed by coordinate system beside the flat views under `systems`, which an application that reads only the flat views passes over.
+A figure is stamped with the fields it was drawn from, as a flat view is.
+
+van Stockum's cylinder and the Gödel universe, in Gödel's cylindrical chart, each get the slice $z = 0$ of $t$, $r$ and $\phi$, with future light cones on the axis and at four places around each of the circles $r_c/2$, $r_c$ and $3r_c/2$, where $r_c$ is the zero of the published $g_{\phi\phi}$.
+The cones tip over toward $+\phi$, one edge of each lies along the circle at $r_c$, and beyond it the circle is a closed timelike curve.
+van Stockum's radius is drawn as the proper distance from the axis and Gödel's as $r$ itself, since its $g_{rr} = -g_{tt}$, so that in both the null directions straight out from the axis run at 45°.
+Each also gets the cylinders of $t$ and $\phi$ at $r_c/2$ and $3r_c/2$ as flat views, drawn by the plane method with $\phi$ scaled by $r$ and `periodic` keeping the cylinder's two edges, which are one line, from being hatched.
+The cosmic string's figure is its plane $z = 0$ seen from straight overhead with $t$ left out: a beam of light rays run with the published Christoffel symbols past the string, laid flat with the angle $(1 - 4G\mu/c^2)\phi$ so that each ray is checked straight, and carried across the wedge the deficit removes.
+
+A cone is the convex hull of its apex and its rim, every generator one Euclidean length in the drawing, so its size says nothing and its shape and tilt are the metric's; every generator is checked null against the published metric, and the published inverse is checked to be the inverse of the published metric on the slice.
+Beyond $r_c$ the cones are so wide that from most directions the camera looks into their opening, and a cone projects to an oval with its apex inside; eight of its generators are therefore drawn faintly from the apex to the rim, which is what shows where the apex is and which way the cone opens.
+A cone whose axis points along the camera's own direction is the worst case, so the cones on $r_c$ are turned by 45° from those on the other circles and none is placed where its neighbour's rim would cover it.
+
+Every class a figure paints needs a style in `_layouts/mfs.html`, as `.pj-<class>` on the screen and under `.mfs-print-body` in print, and a fill as `.pj-<class>-fill`.
+A path the stylesheet does not know is painted as nothing at all, so a test holds every class of every figure to having both.
+
+A coordinate system with neither a flat view nor a figure, in a spacetime that has a diagram file, states why under `none`, from `NOT_DRAWN` in `null_rays.py`, stamped by the fields it speaks of, and the page prints the reason under the heading "spacetime diagram".
 
 ### What is not drawn
 
