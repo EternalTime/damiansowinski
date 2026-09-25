@@ -102,7 +102,6 @@
 
         results.querySelectorAll('.mfs-result').forEach(function(el) {
           el.addEventListener('click', function() {
-            if (window._mfsSlideInRight) window._mfsSlideInRight();
             if (window._mfsShowMetric) window._mfsShowMetric(this.dataset.id);
             results.querySelectorAll('.mfs-result').forEach(function(r) { r.classList.remove('mfs-result-active'); });
             el.classList.add('mfs-result-active');
@@ -137,6 +136,11 @@
     }
   </style>
 
+
+  <!-- Shown where the spacetime panel rests while a chosen spacetime is being set, and
+       under it, so the panel slides in over it. It comes before the panel so that on a
+       phone, where it is out of the flow, its place is the top of the panel's. -->
+  <div id="mfs-loading" role="status" aria-hidden="true" hidden>Spacetime data loading...</div>
 
   <div id="mfs-content-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px 0 0 12px;
     top:150px;right:-100%;
@@ -639,7 +643,7 @@
   </script>
 
   <script>
-    /* ── MFS content panel: slide in from off-screen right ── */
+    /* ── MFS content panel: waits off-screen right; window._mfsShowMetric slides it in ── */
     (function() {
       var el = document.getElementById('mfs-content-panel');
       if (!el) return;
@@ -647,40 +651,31 @@
       var LEFT_PANEL_W  = 280;
       var GAP           = 20;
       var PANEL_TOP     = 150;
-      var SLIDE_DELAY   = 800;
-      var SLIDE_DUR     = 500;
 
+      // The loading line covers the panel's resting place, so it is sized with the panel.
+      var note = document.getElementById('mfs-loading');
       function syncPanel() {
         var vw = window.innerWidth;
         var panelW = vw - LEFT_PANEL_W - GAP;
-        el.style.top    = PANEL_TOP + 'px';
-        el.style.width  = panelW + 'px';
-        el.style.height = (window.innerHeight - PANEL_TOP - 20) + 'px';
+        [el, note].forEach(function(box) {
+          box.style.top    = PANEL_TOP + 'px';
+          box.style.width  = panelW + 'px';
+          box.style.height = (window.innerHeight - PANEL_TOP - 20) + 'px';
+        });
       }
 
-      // Start off-screen right
+      // Start off-screen right, and 30px further, which its glow reaches: at its own width
+      // out the glow lay along the right edge of the screen with no panel beside it.
+      var OFF_RIGHT = 'translateX(calc(100% + 30px))';
       el.style.right = '0';
-      el.style.transform = 'translateX(100%)';
+      el.style.transform = OFF_RIGHT;
       syncPanel();
       window.addEventListener('resize', syncPanel);
 
-      var _slid = false;
-      // Expose for search result click to trigger
-      window._mfsSlideInRight = function() {
-        if (_slid) return;
-        _slid = true;
-        el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        el.style.transform  = 'translateX(0)';
-        setTimeout(function() {
-          el.style.pointerEvents = 'all';
-          el.style.transition    = '';
-        }, SLIDE_DUR);
-      };
-
-      // Expose for exit transition
+      // Expose for exit transition and for a spacetime chosen in place of the one shown
       window._mfsSlideOutRight = function(duration) {
         el.style.transition = 'transform ' + duration + 'ms cubic-bezier(0.55, 0.06, 0.68, 0.19)';
-        el.style.transform  = 'translateX(100%)';
+        el.style.transform  = OFF_RIGHT;
       };
     })();
   </script>
@@ -1911,12 +1906,12 @@
         });
 
 
-        // Typeset MathJax
+        // Typeset MathJax; the promise is kept when it is set and its columns counted
         if (window.MathJax && MathJax.typesetPromise) {
-          MathJax.typesetPromise([contentPanel]).then(reflowColumns);
-        } else {
-          reflowColumns();
+          return MathJax.typesetPromise([contentPanel]).then(reflowColumns);
         }
+        reflowColumns();
+        return Promise.resolve();
       }
 
       /* On a phone the spacetime lies below the list rather than beside it, so once one is
@@ -1933,38 +1928,84 @@
         window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - margin, behavior: 'smooth' });
       }
 
-      // Expose so search panel can call it
+      /* While a chosen spacetime is fetched and set, "Spacetime data loading..." shows where
+         its panel rests, and the panel slides in over it once its mathematics is set and laid
+         out. Most of the wait is spent with the page's main thread held, by MathJax and then
+         by laying out what it made, so nothing can be shown or started once it begins. The
+         line is therefore asked for as the wait begins, and its fade in is a CSS transition
+         with a delay, which the browser runs off the main thread: it appears only if the
+         wait is still going NOTE_GRACE ms after the panel has gone, and a spacetime that is
+         set within that never shows it. The delay sits in the widest gap in how long the
+         spacetimes take on a desktop, where all but seven are set within 300ms of the panel
+         going and the rest take from half a second to seconds, and the line is not shown for
+         a pause no longer than the slide that came before it. On a phone every spacetime
+         takes longer, and the larger half show it. It fades out as the panel comes in. */
+      var NOTE_GRACE = 400;
+      var NOTE_OUT   = 150;   // the fade out in the stylesheet
+      var loadingNote = document.getElementById('mfs-loading');
+      var _noteOff = null;
+      function showNote(delay) {
+        clearTimeout(_noteOff);
+        if (loadingNote.classList.contains('mfs-loading-on')) return;
+        loadingNote.hidden = false;
+        loadingNote.removeAttribute('aria-hidden');
+        loadingNote.style.setProperty('--mfs-loading-delay', delay + 'ms');
+        void getComputedStyle(loadingNote).opacity;   // so the fade starts from its hidden style
+        loadingNote.classList.add('mfs-loading-on');
+      }
+      function hideNote() {
+        if (!loadingNote.classList.contains('mfs-loading-on')) return;
+        loadingNote.classList.remove('mfs-loading-on');
+        loadingNote.setAttribute('aria-hidden', 'true');
+        _noteOff = setTimeout(function() { loadingNote.hidden = true; }, NOTE_OUT);
+      }
+      window._mfsHideLoading = hideNote;
+
+      // Resolves once the browser has drawn a frame since it was called, which is when the
+      // layout and the observers that MathJax's output sets off have run.
+      function afterFrame() {
+        return new Promise(function(r) { requestAnimationFrame(function() { requestAnimationFrame(r); }); });
+      }
+
+      // Expose so search panel can call it. Only the spacetime chosen last is slid in, so one
+      // chosen while another is still loading replaces it.
+      var _shown = 0;
       window._mfsShowMetric = function(id) {
         var el = document.getElementById('mfs-content-panel');
         var SLIDE_DUR = 350;
+        var seq = ++_shown;
         var isVisible = el && (el.style.transform === 'translateX(0px)' || el.style.transform === 'translateX(0)');
-        if (isVisible) {
-          el.style.transition    = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.55, 0.06, 0.68, 0.19)';
-          el.style.transform     = 'translateX(100%)';
-          el.style.pointerEvents = 'none';
-          setTimeout(function() {
-            fetchBib(function() {
-              fetchMetric(id, function(data) {
-                fetchDiagrams(id, function() { fetchConformal(id, function() {
-                  renderMetric(data, 0);
-                  el.scrollTop = 0;
-                  bringIntoView(el);
+        showNote((isVisible ? SLIDE_DUR : 0) + NOTE_GRACE);
+        bringIntoView(loadingNote);
+        function load() {
+          fetchBib(function() {
+            fetchMetric(id, function(data) {
+              fetchDiagrams(id, function() { fetchConformal(id, function() {
+                if (seq !== _shown) return;
+                renderMetric(data, 0).then(afterFrame).then(function() {
+                  if (seq !== _shown) return;
+                  hideNote();
                   el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                   el.style.transform  = 'translateX(0)';
                   setTimeout(function() {
                     el.style.pointerEvents = 'all';
                     el.style.transition    = '';
                   }, SLIDE_DUR);
-                }); });
-              });
-            });
-          }, SLIDE_DUR);
-        } else {
-          fetchBib(function() {
-            fetchMetric(id, function(data) {
-              fetchDiagrams(id, function() { fetchConformal(id, function() { renderMetric(data, 0); bringIntoView(el); }); });
+                });
+                el.scrollTop = 0;
+                bringIntoView(el);
+              }); });
             });
           });
+        }
+        if (isVisible) {
+          window._mfsSlideOutRight(SLIDE_DUR);
+          el.style.pointerEvents = 'none';
+          setTimeout(load, SLIDE_DUR);
+        } else {
+          // The fade has to reach the compositor before the main thread is held, or its
+          // start waits on the main thread with it and the line never shows.
+          afterFrame().then(load);
         }
       };
 
@@ -2033,6 +2074,27 @@
       font-size: 23px; color: var(--teal-light);
       line-height: 1.6; font-style: italic;
       letter-spacing: 0.03em; padding: 1.2em 0;
+    }
+    /* The loading line is set as the placeholder above is, the one other line the panel's
+       place shows instead of a spacetime, and centred in that place. It fades in over 300ms
+       after the delay showNote() gives it, starting slowly, so a wait that ends just past
+       the delay leaves it all but unseen rather than half shown, and fades out in 150ms,
+       before the panel sliding over it has reached the middle. Its geometry on a
+       desktop is the panel's, from syncPanel(). Only opacity changes, and will-change keeps
+       it on a layer of its own, since the fade has to run while the main thread is held. */
+    #mfs-loading {
+      position: fixed; right: 0; z-index: 14; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1em; text-align: center;
+      font-size: 23px; color: var(--teal-light);
+      line-height: 1.6; font-style: italic; letter-spacing: 0.03em;
+      pointer-events: none; opacity: 0; will-change: opacity;
+      transition: opacity 150ms ease-in;
+    }
+    #mfs-loading[hidden] { display: none; }
+    #mfs-loading.mfs-loading-on {
+      opacity: 1;
+      transition: opacity 300ms ease-in var(--mfs-loading-delay, 0ms);
     }
     #mfs-content-panel .mfs-table-scroll { overflow-x: auto; margin: 1em 0; }
     #mfs-content-panel .mfs-table {
@@ -2382,6 +2444,16 @@
 
       /* Empty until a spacetime is chosen, and then it takes its place below the list. */
       #mfs-content-panel:empty { display: none; }
+      /* The loading line stays out of the flow, at the place the panel's top takes below the
+         list, and is one screen tall less the panel's scroll margin, so that once the page is
+         brought down to it the line is in the middle of the screen, whether or not the panel
+         is there yet. */
+      #mfs-loading {
+        position: absolute !important; top: auto !important; right: auto !important;
+        width: calc(100% - 20px) !important; height: calc(100svh - 12px) !important;
+        margin: 20px 0 0 20px; scroll-margin-top: 12px;
+        font-size: 16px;
+      }
       #mfs-content-panel {
         position: relative !important; top: auto !important; right: auto !important;
         width: auto !important; height: auto !important;
@@ -2505,7 +2577,8 @@
 
         // slide search and coffee panels back out to the left, together
         if (window._mfsSlideOutLeft) window._mfsSlideOutLeft(RAMP_MS * 0.6);
-        // slide content panel back out to the right
+        // slide content panel back out to the right, and let go of the loading line
+        if (window._mfsHideLoading) window._mfsHideLoading();
         if (window._mfsSlideOutRight) window._mfsSlideOutRight(RAMP_MS * 0.6);
 
         window._mfsRampDown(RAMP_MS, function() {
