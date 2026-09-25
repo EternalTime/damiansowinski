@@ -1181,10 +1181,13 @@
           '<span class="nr-rgap"></span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></div></div>';
       }
 
-      // Inline math and the punctuation after it stay on one line, so a comma never wraps
-      // alone to the start of the next. The conventions are set the same way.
+      // Inline math and whatever touches it without a space stay on one line, so a comma
+      // never wraps alone to the start of the next and AdS$_2$ never parts from its
+      // subscript. The conventions and the histories are set the same way.
       function nrProse(text) {
-        return text.replace(/(\$[^$]+\$[,.;:)]+)/g, '<span class="mfs-nr-keep">$1</span>');
+        return text.replace(/([^\s$<>]*)(\$[^$]+\$)([^\s$<>]*)/g, function(all, before, math, after) {
+          return before || after ? '<span class="mfs-nr-keep">' + all + '</span>' : all;
+        });
       }
 
       function nrSwatch(kind) {
@@ -1373,7 +1376,7 @@
                     return '<div class="mfs-math">' + part + '</div>';
                   }
                   if (!part.trim()) return '';
-                  var text = part.replace(/\s*\[([^\]]+)\]/g, function(_, inner) {
+                  var text = nrProse(part).replace(/\s*\[([^\]]+)\]/g, function(_, inner) {
                     var keys = inner.split(',').map(function(k) { return k.trim(); });
                     return keys.map(function(key) {
                       var idx = refs.indexOf(key);

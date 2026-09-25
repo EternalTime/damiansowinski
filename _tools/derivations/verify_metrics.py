@@ -192,10 +192,11 @@ DIMENSIONS = {
     ("ellis_bronnikov", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L",
     },
-    # r is the comoving distance the entry calls it and a(t) is dimensionless, which is
-    # the normalisation its published curvature obeys; k is then a curvature, carrying
-    # 1/L^2, and the values -1, 0 and +1 the entry lists for it are in units of the
-    # curvature radius.
+    # r is the comoving radial coordinate the entry calls it, a length, and a(t) is
+    # dimensionless, which is the normalisation its published curvature obeys; k is then a
+    # curvature, carrying 1/L^2, and the values -1, 0 and +1 the entry lists for it are in
+    # units of the curvature radius. That is why the closed case's domain ends at
+    # r = 1/sqrt(k) rather than at 1.
     ("frw", "comoving_spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1", "k": "1/L**2",
     },

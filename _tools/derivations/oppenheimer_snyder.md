@@ -342,6 +342,13 @@ The Schwarzschild entry publishes the exterior region $r > r_s$ of an eternal bl
 This entry publishes $r \ge R(\tau)$ of a collapsing star, which is a different region of the same local geometry: while the star is large the chart never reaches $r_s$ at all, and the part of the eternal solution that this spacetime does not contain, the white hole and the second asymptotic region, is replaced by the star.
 The published components are identical because the geometry is; the domain is the whole of the difference, and it is the reason this entry does not simply point at the other one.
 
+The exterior time runs over $t \ge 0$ and not the whole line; `oppenheimer_snyder.json` gave $t \in (-\infty, \infty)$ until 24 September 2026.
+The interior starts at the moment of rest, $\tau \ge 0$ with $a(0) = a_m$ and $\dot{a}(0) = 0$, and the model says nothing about what came before: a star held at rest by something the model leaves out, or the time reverse of the collapse, are equally consistent with it, and it contains neither.
+So before release there is no $R(t)$ and no surface to be outside of, and a domain claiming the whole of $t$ claimed more than the model supports.
+The origin of Schwarzschild time is free, and it is put at the release, so that $t = 0$ and $\tau = 0$ are the same instant on the surface.
+That instant is a slice of time symmetry on both sides at once: inside because $\dot{a} = 0$ there, outside because every slice of constant $t$ in the static chart has vanishing extrinsic curvature, and on the surface because it is at rest, $dR/dt = 0$, the geodesic of energy $\tilde{E} = c^2\cos\chi_0$ that Steps 14 and 15 put it on being at its turning point $R_0$.
+The upper end needs no bound: the surface takes an infinite $t$ to reach $r_s$, as Step 18 shows, so $R(t) > r_s$ at every $t$ the coordinates reach, and the part of the black hole outside the star, $r < r_s$ after the surface has crossed, lies in neither set of coordinates.
+
 The second is the Weyl tensor.
 It is equal to the Riemann tensor here, component for component, and that is a fact about a vacuum rather than a licence to copy a block: with $R_{\mu\nu} = 0$ and $R = 0$ every correction term in the definition quoted in Step 9 is zero, so $C_{\mu\nu\rho\sigma} = R_{\mu\nu\rho\sigma}$ identically.
 It was computed from Riemann minus its traces for this entry, in sympy, and it came out equal, all twenty four components of it, which is what a vacuum requires.

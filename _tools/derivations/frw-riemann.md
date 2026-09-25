@@ -5,6 +5,7 @@ It is narrower than the other files in this directory, which derive a whole entr
 The FLRW Christoffel symbols, Ricci tensor, Einstein tensor, Ricci scalar and Kretschmann scalar were already right when this was written, and the Weyl block was already empty, which is what a conformally flat spacetime requires.
 What was wrong was the curvature tensor sitting between the connection and the Ricci tensor, so that the entry published a Riemann tensor which does not contract to its own Ricci tensor.
 Every component this file changed is computed here from the connection, by hand, so that the captain can check any one of them without running anything.
+Step 13, added later, works out where $r$ ends in the closed case.
 
 The companion script `_tools/derivations/verify_metrics.py` does the same work in sympy and compares it against the published file.
 Running it on `frw/comoving_spherical` and `frw/conformal_spherical` takes about thirteen seconds, which makes this the cheapest entry in the collection to re-check.
@@ -525,3 +526,38 @@ The `UNCHECKED` count went from 20 to 22, because `kerr/boyer_lindquist.christof
 The machine was carrying a load average near 150 from other work at the time, and the budget is wall clock.
 Neither block reported a disagreement in the run that did finish, so this moved the `UNCHECKED` count and left the disagreement count alone.
 `_tools/README.md` already records that Kerr is the entry a full sweep cannot be relied on to complete.
+
+---
+
+## Step 13. The radial domain of the closed case
+
+This step is not about the Riemann tensor, and it is here because it concerns the same line element.
+Until 24 September 2026 `frw.json` gave both coordinate systems $r \in [0, \infty)$ for every $k$.
+That is right for $k = 0$ and $k = -1$, where $1 - kr^2 \ge 1$ and every value of $r$ is a sphere of the slice, and wrong for $k = +1$.
+No component changed with it, and none needed to.
+
+In the closed case the spatial slice is a three sphere.
+Put $r = \sin\chi/\sqrt{k}$, with $k > 0$ carrying the $1/L^2$ of Step 1, so that $\sqrt{k}\,r$ is dimensionless.
+Then
+
+$$dr = \frac{\cos\chi}{\sqrt{k}}\,d\chi, \qquad 1 - kr^2 = \cos^2\chi, \qquad \frac{dr^2}{1-kr^2} = \frac{d\chi^2}{k},$$
+
+and the spatial part of the line element becomes
+
+$$a^2\left(\frac{dr^2}{1-kr^2} + r^2d\Omega^2\right) = \frac{a^2}{k}\left(d\chi^2 + \sin^2\chi\,d\Omega^2\right),$$
+
+a three sphere of radius $a/\sqrt{k}$ covered once as $\chi$ runs over $[0, \pi]$.
+The map $\chi \mapsto r$ is one to one only on $[0, \pi/2)$, where $\cos\chi > 0$.
+At $\chi = \pi/2$, the equator, $r$ reaches its largest value $1/\sqrt{k}$ and $g_{rr} = a^2/(1-kr^2)$ diverges, while $g^{rr}$ vanishes.
+Beyond it $r$ decreases again, so the southern hemisphere repeats the values of the northern one, and a value $r > 1/\sqrt{k}$ is not a point of the spacetime at all: there $g_{rr}$ is negative and the chart would have two timelike directions.
+So the coordinates end at $r = 1/\sqrt{k}$ and cover one hemisphere, and the domain is $r \in [0, 1/\sqrt{k})$, open at the equator as de Sitter's static coordinates are open at their horizon.
+The divergence is the chart's and not the geometry's: the slice is homogeneous, so in the orthonormal frame of the comoving observers every curvature component depends on $t$ alone and is finite at the equator, and the Kretschmann scalar has no $r$ in it at all.
+
+The end is written $1/\sqrt{k}$ rather than $1$ because $r$ is a length and $k$ a curvature; with $k = +1$ in units of the curvature radius the two agree.
+Friedmann's 1922 paper and the textbooks of Misner, Thorne and Wheeler and of Wald, all cited for FRW, write the closed case in the angle $\chi$.
+The Oppenheimer-Snyder interior is written the same way, with the length moved into $a$.
+Adding $\chi$ as a third coordinate system would bring a third curvature to derive and check, and this correction changes the domain and the prose only; the substitution above takes a reader from $r$ to $\chi$.
+
+The domains of $r$ are now two, `r \in [0, \infty) \;\text{for}\; k \le 0` and `r \in [0, 1/\sqrt{k}) \;\text{for}\; k > 0`, with a note naming the equator beside them.
+`parse_domains` in `null_rays.py` reads a domain with a `\;\text{for}\;` condition only for a view whose parameter values satisfy it, so the diagrams, all drawn at $k = 0$, are hatched by the first and never by the second.
+The domains are among the fields a diagram is stamped over, so the three FRW views were redrawn with the change, and they came out as before.
