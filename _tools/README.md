@@ -335,15 +335,18 @@ Nothing is ever passed in silence. A value that cannot be parsed, a system with 
 
 ## Printing a chart by machine
 
-`tov`, `malament_hogarth`, `mixmaster` and `lentz` have their mathematics written by `_tools/derivations/print_charts.py`, which defines each of their charts, computes every tensor with the checker's own `Geometry`, and prints each value through `chart_printer.py` beside it:
+`tov`, `malament_hogarth`, `mixmaster` and `lentz`, and the cylindrical chart of `godel`, have their mathematics written by `_tools/derivations/print_charts.py`, which defines each of those charts, computes every tensor with the checker's own `Geometry`, and prints each value through `chart_printer.py` beside it:
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py --metric tov
 
 Every printed value is read back through the checker's `Reader` and compared with the value it came from before anything is written, and `verify_metrics.py` then checks the file like any other.
 The script writes only the coordinate system's mathematics, the line element and the domains; the prose, the convention and the description of each parameter stay in the metric file and are carried over, and a parameter with no description stops the script.
 A chart can pass a function that regroups the numerator of each value, which is how TOV's curvature is printed around $(\partial_r\Phi)^2 + \partial_r^2\Phi$ and Bianchi IX's around $a_1^2\cos^2\psi + a_2^2\sin^2\psi$, and a Ricci or Kretschmann scalar can be given in a structured form, which is checked against sympy before it is used.
-`tov.md`, `malament_hogarth.md`, `mixmaster.md` and `lentz.md` in the same folder record why each chart is the one published.
-The other entries were written by hand and are not touched by the script.
+A chart can instead pass a whole `pretty`, as Gödel's cylindrical chart passes `chart_printer.hyperbolic`, which rewrites the exponentials the checker's `Geometry` hands back in $\sinh r$ and $\cosh r$.
+A chart the script writes replaces the chart of its id, or joins the spacetime's other charts after them, so Gödel's Cartesian chart stays as it was written.
+A parameter keeps the description it has in that chart, or in another chart of the same spacetime.
+`tov.md`, `malament_hogarth.md`, `mixmaster.md`, `lentz.md` and `godel.md` in the same folder record why each chart is the one published; `godel.md` also records the transformation from the Cartesian chart, whose pullback sympy checks symbolically.
+The other charts were written by hand and are not touched by the script.
 
 ## The three conventions the checker encodes
 

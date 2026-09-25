@@ -208,6 +208,9 @@ DIMENSIONS = {
     ("godel", "cartesian"): {
         "t": "1", "x": "1", "y": "1", "z": "1", "\\omega": "1/L",
     },
+    ("godel", "cylindrical"): {
+        "t": "1", "r": "1", "\\phi": "1", "z": "1", "\\omega": "1/L",
+    },
     ("interior_schwarzschild", "spherical"): {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "R": "L",
     },

@@ -21,8 +21,8 @@ import sympy as sp
 
 import verify_metrics as vm
 
-GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "lambda", "mu", "nu", "rho"}
-TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec)
+GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho"}
+TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
 
 
 def tex_name(name):
@@ -180,6 +180,8 @@ class Printer:
         coefficient = abs(coefficient)
         numerator, denominator = [], []
         for f in sp.Mul.make_args(rest):
+            if f == 1:
+                continue
             base, exponent = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
             if isinstance(base, sp.exp):
                 numerator.append((sp.exp(base.args[0] * exponent), sp.Integer(1)))
@@ -261,7 +263,7 @@ class Printer:
         if isinstance(base, sp.Derivative):
             return (5, self.rank_of(base), self.atom(base))
         if isinstance(base, TRIG):
-            order = {sp.sin: 0, sp.cos: 1, sp.cot: 2, sp.csc: 3, sp.tan: 4, sp.sec: 5}
+            order = {sp.sin: 0, sp.cos: 1, sp.cot: 2, sp.csc: 3, sp.tan: 4, sp.sec: 5, sp.sinh: 6, sp.cosh: 7}
             return (6, str(base.args[0]), order[base.func])
         return (7, str(base))
 
@@ -288,7 +290,7 @@ class Printer:
                 return "\\sqrt{" + text + "}"
             return "\\left(" + text + "\\right)^" + _sup(exponent)
         if exponent == sp.Rational(1, 2):
-            return "\\sqrt{" + self.expr(base) + "}"
+            return "\\sqrt{" + (_num(base) if base.is_Number else self.expr(base)) + "}"
         if isinstance(base, sp.exp):
             return "e^{" + self.expr(base.args[0]) + "}"
         if isinstance(base, TRIG):
@@ -347,7 +349,7 @@ def _sup(exponent):
     return text if len(text) == 1 else "{" + text + "}"
 
 
-TRIG_TEX = ("\\sin", "\\cos", "\\cot", "\\csc")
+TRIG_TEX = ("\\sin", "\\cos", "\\cot", "\\csc", "\\sinh", "\\cosh")
 
 
 def _needs_space(left, right, previous):
@@ -366,6 +368,43 @@ def _needs_space(left, right, previous):
     if right.startswith(TRIG_TEX):
         return isinstance(previous, sp.Derivative) or left.endswith("'")
     return True
+
+
+# -- hyperbolic functions --------------------------------------------------------------
+
+def hyperbolic(r):
+    """A `pretty` for a chart whose metric carries sinh r and cosh r, which the checker's
+    Geometry hands back as exponentials: each value is rewritten in S = sinh r and C = cosh r,
+    reduced by C^2 = 1 + S^2, its denominator cleared of C by its conjugate, factored, and every
+    factor 1 + S^2 written as C^2, as Godel's cylindrical chart is printed."""
+    S, C = sp.symbols("_S _C", positive=True)
+    relation = [C ** 2 - 1 - S ** 2]
+
+    def reduce(p):
+        return sp.expand(sp.reduced(sp.expand(p), relation, C, S)[1])
+
+    def pretty(value):
+        x = sp.sympify(value)
+        x = x.replace(lambda e: isinstance(e, sp.exp) and sp.expand(e.args[0] / r).is_Integer,
+                      lambda e: (S + C) ** sp.expand(e.args[0] / r))
+        num, den = (reduce(p) for p in sp.fraction(sp.together(x)))
+        d0, d1 = sp.Poly(den, C).coeff_monomial(1), sp.Poly(den, C).coeff_monomial(C)
+        if d1 != 0:
+            num, den = reduce(num * (d0 - d1 * C)), sp.expand(d0 ** 2 - d1 ** 2 * (1 + S ** 2))
+        out = sp.factor(sp.cancel(sp.factor(num) / sp.factor(den)))
+        out = out.replace(lambda e: sp.expand(e - (S ** 2 + 1)) == 0, lambda e: C ** 2)
+        # (S - 1)(S + 1) is read as the one factor S^2 - 1 it came from.
+        powers = sp.Mul.make_args(out)
+        pair = {}
+        for f in powers:
+            base, k = (f.base, f.exp) if f.is_Pow else (f, 1)
+            if sp.expand(base - (S - 1)) == 0 or sp.expand(base - (S + 1)) == 0:
+                pair[sp.expand(base)] = k
+        if len(pair) == 2 and len(set(pair.values())) == 1:
+            k = next(iter(pair.values()))
+            out = sp.Mul(*[f for f in powers if sp.expand((f.base if f.is_Pow else f)) not in pair]) * (S ** 2 - 1) ** k
+        return out.subs({S: sp.sinh(r), C: sp.cosh(r)})
+    return pretty
 
 
 # -- regrouping a numerator ------------------------------------------------------------
