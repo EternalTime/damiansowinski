@@ -402,8 +402,8 @@ CAPTIONS = {
         "This is the plane $z = 0$ around the string seen from above, $t$ left out, drawn with $r$ as "
         "the radius and the angle $(1 - 4G\\mu/c^2)\\phi$, in which the plane is flat and every light "
         "ray straight. That angle runs short of a full turn by the deficit $\\delta = 8\\pi G\\mu/c^2$, "
-        "so a wedge of $\\delta$ is missing from the plane; $\\phi$ is measured from the direction away "
-        "from the beam, which puts the wedge behind the string, and its two edges, $\\phi = 0$ and "
+        "so a wedge of $\\delta$ is missing from the plane. With $\\phi$ measured from the direction the "
+        "beam is heading, the wedge lies behind the string, and its two edges, $\\phi = 0$ and "
         "$\\phi = 2\\pi$, are one line. A beam of parallel light arrives from the left, each ray run "
         "with the Christoffel symbols $\\Gamma^r{}_{\\phi\\phi}$ and $\\Gamma^\\phi{}_{r\\phi}$.",
         "Every ray stays straight: one that reaches an edge of the wedge carries on from the same point "
