@@ -906,30 +906,29 @@ CAPTIONS = {
     ("stockum_dust", "cylindrical", "inside"): [
         "This is the cylinder of $t$ and $\\phi$ at $r = R/2$ and $z = 0$, opened along the line "
         "$\\phi = \\pm\\pi$ and drawn with $r\\phi/R$ across, so that its left and right edges are that "
-        "one line. "
-        "The metric on it is $-dt^2 - (2r^2/R)\\,dt\\,d\\phi + r^2(1 - r^2/R^2)\\,d\\phi^2$, the same at "
-        "every point, and its light rays are straight: $dt = r(1 - r/R)\\,d\\phi$ moving to $+\\phi$ and "
-        "$dt = -r(1 + r/R)\\,d\\phi$ moving to $-\\phi$. The cross term tilts every cone toward $+\\phi$, "
-        "and a ray moving that way covers three times the $\\phi$ in a given $t$ that one moving the "
-        "other way does.",
-        "At this radius the ray moving to $+\\phi$ is a null geodesic: $\\Gamma^r{}_{t\\phi}$ and "
+        "one line. The metric on it is $-dt^2 - (2r^2/R)\\,dt\\,d\\phi + r^2(1 - r^2/R^2)\\,d\\phi^2$, the "
+        "same at every point, so its null curves are straight: $dt = r(1 - r/R)\\,d\\phi$ moving to "
+        "$+\\phi$ and $dt = -r(1 + r/R)\\,d\\phi$ moving to $-\\phi$. The cross term tilts every cone "
+        "toward $+\\phi$, and a curve moving that way covers three times the $\\phi$ in a given $t$ that "
+        "one moving the other way does.",
+        "At this radius the curve moving to $+\\phi$ is a null geodesic: $\\Gamma^r{}_{t\\phi}$ and "
         "$\\Gamma^r{}_{\\phi\\phi}$ cancel along it, and light sent that way circles the axis at "
-        "$r = R/2$. The ray moving to $-\\phi$ is a null curve that is not a geodesic, and light "
-        "launched along it is turned away from the axis. The horizontal lines, circles of constant "
-        "$t$, lie outside every cone and are spacelike.",
+        "$r = R/2$. The curve moving to $-\\phi$ is not a geodesic, and light launched along it is "
+        "turned away from the axis. The horizontal lines, circles of constant $t$, lie outside every "
+        "cone and are spacelike.",
     ],
     ("stockum_dust", "cylindrical", "beyond"): [
         "This is the cylinder of $t$ and $\\phi$ at $r = 3R/2$ and $z = 0$, opened along "
         "$\\phi = \\pm\\pi$ in the same way. Beyond $r = R$ the coefficient $g_{\\phi\\phi} = "
-        "r^2(1 - r^2/R^2)$ is negative, and the cones have tipped over past the horizontal: along "
-        "$dt = r(1 - r/R)\\,d\\phi$ a ray moving to $+\\phi$ goes down in $t$, while a ray moving to "
-        "$-\\phi$ climbs steeply, $dt = -r(1 + r/R)\\,d\\phi$. Every horizontal line lies inside the "
-        "future cones, so the circle of constant $t$, $r$ and $z$, run toward $+\\phi$, is a closed "
+        "r^2(1 - r^2/R^2)$ is negative, and the cones have tipped over past the horizontal: the null "
+        "curve moving to $+\\phi$, $dt = r(1 - r/R)\\,d\\phi$, goes down in $t$, while the one moving to "
+        "$-\\phi$, $dt = -r(1 + r/R)\\,d\\phi$, climbs steeply. Every horizontal line, run toward "
+        "$+\\phi$, points into the future cones, so the circle of constant $t$, $r$ and $z$ is a closed "
         "timelike curve.",
-        "A ray moving to $+\\phi$ comes round to its own $\\phi$ at a $t$ earlier by $3\\pi R/2$ after "
-        "each turn. None of the curves drawn here is a null geodesic: the ray moving to $+\\phi$ is "
-        "turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and $\\Gamma^r{}_{\\phi\\phi}$, and the ray "
-        "moving to $-\\phi$ away from it.",
+        "The curve moving to $+\\phi$ comes round to its own $\\phi$ at a $t$ earlier by $3\\pi R/2$ after "
+        "each turn. None of the curves drawn here is a null geodesic: light launched along one moving "
+        "to $+\\phi$ is turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and $\\Gamma^r{}_{\\phi\\phi}$, and "
+        "light launched along one moving to $-\\phi$ is turned away from it.",
     ],
     ("godel", "cylindrical", "inside"): [
         "This is the cylinder of $t$ and $\\phi$ at $r = r_c/2$ and $z = 0$, with $\\sinh r_c = 1$, about "
@@ -1011,8 +1010,9 @@ CAPTIONS = {
         "at $t = 0$, along the radial geodesic the Christoffel symbols give, and what lies inside it, "
         "$r < R(t)$, is the star, which these coordinates do not cover.",
         "The surface reaches $r_s$ only as $t \\to \\infty$, though its own clock reads a finite time "
-        "there, and each outgoing ray it sends takes longer than the last to climb away. The horizon "
-        "it crosses, and the black hole behind it, lie beyond both sets of coordinates.",
+        "there, and each outgoing ray it sends takes longer than the last to climb away. Outside the "
+        "star the horizon and the black hole behind it lie beyond these coordinates; inside it the "
+        "comoving coordinates carry on across both to the crunch.",
     ],
     ("tolman_bondi", "comoving_synchronous", "collapse"): [
         "This is the plane of $t$ and the comoving $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, through a "
@@ -1020,8 +1020,7 @@ CAPTIONS = {
         "outside. Every shell falls on its own clock, $R^{3/2} = r^{3/2} - \\tfrac{3}{2}"
         "\\sqrt{2GM(r)/c^2}\\,ct$, and reaches $R = 0$ at its own time: the centre first, at "
         "$ct = 0.60\\,r_b$, and the surface at $0.94\\,r_b$. The singularity, where the Kretschmann "
-        "scalar diverges, is that curve rather than a single instant, and beyond it there is no "
-        "spacetime. The rays obey $c\\,dt = \\pm\\partial_r R\\,dr$, and outside the cloud the same "
+        "scalar diverges, is that curve, and beyond it there is no spacetime. The rays obey $c\\,dt = \\pm\\partial_r R\\,dr$, and outside the cloud the same "
         "coordinates are Lemaître's for Schwarzschild's exterior, carried by observers who fall "
         "freely from rest at infinity.",
         "The dotted curve, where $|\\nabla R|^2 = 1 - 2GM(r)/c^2R$ vanishes, bounds the trapped "

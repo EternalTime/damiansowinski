@@ -540,8 +540,9 @@ CAPTIONS = {
         "ray straight. That angle runs short of a full turn by the deficit $\\delta = 8\\pi G\\mu/c^2$, "
         "so a wedge of $\\delta$ is missing from the plane. With $\\phi$ measured from the direction the "
         "beam is heading, the wedge lies behind the string, and its two edges, $\\phi = 0$ and "
-        "$\\phi = 2\\pi$, are one line. A beam of parallel light arrives from the left, each ray run "
-        "with the Christoffel symbols $\\Gamma^r{}_{\\phi\\phi}$ and $\\Gamma^\\phi{}_{r\\phi}$.",
+        "$\\phi = 2\\pi$, are one line. A beam of parallel light arrives from the left, each ray a null "
+        "geodesic of the plane, whose Christoffel symbols are $\\Gamma^r{}_{\\phi\\phi}$ and "
+        "$\\Gamma^\\phi{}_{r\\phi}$.",
         "Every ray stays straight: one that reaches an edge of the wedge carries on from the same point "
         "of the other edge, in the same direction relative to it, so the rays that passed above the "
         "string cross those that passed below. In the two sectors beside the wedge, $\\delta$ across "
@@ -550,8 +551,8 @@ CAPTIONS = {
     ],
     ("stockum_dust", "cylindrical", "tipping"): [
         "This is the slice $z = 0$ of $t$, $r$ and $\\phi$, with $t$ up and the proper distance from "
-        "the axis, $\\int e^{-r^2/2R^2}dr$, as the radius, so that light moving straight out runs at "
-        "45° as it does on the axis. The cones stand at $t = 0$ on the axis and around the circles "
+        "the axis, $\\int e^{-r^2/2R^2}dr$, as the radius, which puts the null directions straight out "
+        "from the axis at 45°. The cones stand at $t = 0$ on the axis and around the circles "
         "$r = R/2$, $R$ and $3R/2$. On the axis they are upright, and farther out the cross term "
         "$g_{t\\phi} = -r^2/R$ tips them over toward $+\\phi$, counterclockwise seen from above.",
         "At $r = R$, where $g_{\\phi\\phi}$ vanishes, one edge of every cone lies along the circle of "

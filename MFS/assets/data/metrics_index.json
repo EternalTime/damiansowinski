@@ -213,7 +213,7 @@
     ],
     "version": "f403b7576023723d",
     "diagrams": "3a9790a368a1047c",
-    "conformal": "818b9c153bde23cd"
+    "conformal": "ce4167b192f44203"
   },
   {
     "id": "kerr",
@@ -330,7 +330,7 @@
       "idealized model"
     ],
     "version": "892fee3b8e4bef7e",
-    "diagrams": "c4c646305292f27f",
+    "diagrams": "d40de64d9ab7556d",
     "conformal": "9f22e694976a68b5"
   },
   {
@@ -495,7 +495,7 @@
       "idealized model"
     ],
     "version": "a594cfe02785a7eb",
-    "diagrams": "367ea3feb766bc9b",
+    "diagrams": "89b0221a26257abe",
     "conformal": "705427e2a3c91f5b"
   },
   {
@@ -650,7 +650,7 @@
       "idealized model"
     ],
     "version": "122584c10dd87680",
-    "diagrams": "8bf46f2ed452d6c0",
+    "diagrams": "3845f1ea67eecea1",
     "conformal": "c94512c8cf224577"
   },
   {
@@ -725,7 +725,7 @@
       "idealized model"
     ],
     "version": "9e17628996c2a6fe",
-    "diagrams": "2724a1a0a90fbaaa",
+    "diagrams": "16b1bae468c2c578",
     "conformal": "3932aa9189dc4fac"
   }
 ]
