@@ -49,6 +49,11 @@ A formula inside prose, in a `history`, a `convention` or a caption, is set inli
 `fitProseMath` in `_layouts/mfs.html` measures that again whenever the paragraph changes width.
 Each of these observers measures everything it was handed before it changes any class, because a class changed between two measurements makes the second lay the whole page out again, and once per line that held Kerr-Newman still for seconds and Natario for nearly a minute.
 
+A chosen spacetime's panel waits off the screen until its mathematics is set and laid out, and only then slides in.
+While it waits, "Spacetime data loading..." shows where the panel rests, centred, under the panel so the panel slides in over it.
+Most of that wait holds the main thread, so the line cannot be shown once it starts; it is asked for as the wait begins and fades in by a CSS transition with a delay, which the browser runs off the main thread, so a spacetime set within that delay never shows it.
+`showNote` in `_layouts/mfs.html` carries the timings and why.
+
 ## The page on a phone
 
 A screen narrower than 600px, or a touch screen under 500px tall, gets the same panels in one column that the page scrolls through: the title, the list with the coffee panel, then the spacetime.
