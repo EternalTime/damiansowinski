@@ -70,6 +70,19 @@ The tests hold this rule over every metric file on disk, so a new spacetime carr
 A character outside ASCII is written as itself, as the `î` of `Lemaître` is, and never as a JSON `\u` escape with its backslash doubled, since neither the page nor TeX reads such an escape and the reader sees all six characters of it.
 The tests hold that rule over the same fields.
 
+## The shape of a history
+
+A history has at least five paragraphs, and every paragraph has three to six sentences, so no paragraph runs to more than twice the length of another.
+A table, the paragraph written as a `TABLE::` line, is not prose and is left out of the count.
+Where an entry is too thin for five paragraphs, it wants more history, sourced and cited like the rest, never filler.
+
+`sentences` in `build_mfs_data.py` does the counting.
+A sentence ends at a full stop, a question mark or an exclamation mark, after any closing quote or bracket, where the next word begins with a capital or a digit.
+A capital standing alone before a full stop is an initial, as in J. Robert Oppenheimer, and ends nothing.
+Mathematics between dollar signs counts as one word, and ends a sentence only when the stop is inside it, as when a displayed equation closes one.
+
+The command refuses to write anything, and `--check` fails, while any history is out of shape, naming every such history with the sentences in each of its paragraphs and the paragraph that breaks the rule.
+
 ## What the command writes
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.
@@ -117,6 +130,11 @@ The second command stamps each diagram file's version into the index, as it does
 `CAPTIONS` beside it carries each view's caption, which is prose under the rule above, and the tests hold the captions, the labels and the declared inputs to it as they hold the metrics.
 A new view is a row in each, and the script refuses to run while one lacks the other.
 
+A caption opens by naming its plane: the two coordinates drawn and the value of every coordinate held fixed, as "the plane of $t$ and $r$ at $\theta = \pi/2$ and $\phi = 0$".
+It says what the drawing shows, and where the feature a reader comes looking for lies off the plane, it says where that feature is, as the Ellis-Bronnikov caption places the throat in $g_{\theta\theta}$ and the Gödel caption places the closed timelike curves.
+A caption never stops at saying what a diagram leaves out.
+Every curve drawn is a null curve; a caption calls it a null geodesic, the path light takes, only where no Christoffel symbol turns it out of the plane, and says so where one does, as for Gödel and for Kerr off the axis.
+
 ### Labels are TeX
 
 Every label in a view is text with its mathematics in `$...$`, the form a caption takes: the button's name, the two axes, each tick and the line where a dust solution starts.
@@ -130,11 +148,6 @@ Every view records the fields it was drawn from and a stamp over them, computed 
 The fields are the coordinates, the parameter symbols, the metric and its inverse, the Kretschmann scalar and the domains, and the Einstein tensor as well for a view whose input is solved as dust.
 `build_mfs_data.py` recomputes each stamp from the metric file as it stands and refuses, naming the file, the system and the view, when one no longer matches, in `--check` and when writing alike.
 So an edit to any of those fields leaves the collection unpublishable until its diagrams are redrawn, while an edit to a history, a reference or a parameter's description leaves them standing.
-A caption opens by naming its plane: the two coordinates drawn and the value of every coordinate held fixed, as "the plane of $t$ and $r$ at $\theta = \pi/2$ and $\phi = 0$".
-It says what the drawing shows, and where the feature a reader comes looking for lies off the plane, it says where that feature is, as the Ellis-Bronnikov caption places the throat in $g_{\theta\theta}$ and the Gödel caption places the closed timelike curves.
-A caption never stops at saying what a diagram leaves out.
-Every curve drawn is a null curve; a caption calls it a null geodesic, the path light takes, only where no Christoffel symbol turns it out of the plane, and says so where one does, as for Gödel and for Kerr off the axis.
-
 
 ### Which way the cones point
 

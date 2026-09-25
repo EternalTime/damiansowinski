@@ -223,6 +223,76 @@ def check_citations(metrics, entries):
                 )
 
 
+# A history reads evenly: at least five paragraphs, each of three to six sentences, and the
+# longest paragraph no more than twice the length of the shortest. A table is not a
+# paragraph of prose and is left out of the count.
+HISTORY_PARAGRAPHS = 5
+HISTORY_SENTENCES = (3, 6)
+HISTORY_SPREAD = 2
+
+MATH = re.compile(r"\$\$.+?\$\$|\$[^$]+\$", re.DOTALL)
+STOP = re.compile(r"[.?!][\"')\]]*\s+")
+
+
+def sentences(paragraph):
+    """The sentences of one paragraph of prose.
+
+    A sentence ends at a full stop, a question mark or an exclamation mark, after any
+    closing quote or bracket, where the next word begins with a capital letter or a digit.
+    A capital standing alone before a full stop is an initial, as in J. Robert Oppenheimer,
+    and ends nothing. Mathematics counts as a single word, which ends a sentence only when
+    it closes with the stop itself, as a displayed equation at the end of a sentence does.
+    """
+    text = MATH.sub(lambda m: "MATH." if re.search(r"[.?!]\s*\$+$", m.group(0)) else "MATH",
+                    paragraph).strip()
+    found, start = [], 0
+    for stop in STOP.finditer(text):
+        after = text[stop.end():].lstrip("\"'([")
+        initial = (text[stop.start()] == "." and stop.start() > 0 and text[stop.start() - 1].isupper()
+                   and (stop.start() == 1 or not text[stop.start() - 2].isalnum()))
+        if after and (after[0].isupper() or after[0].isdigit()) and not initial:
+            found.append(text[start:stop.end()].strip())
+            start = stop.end()
+    if text[start:].strip():
+        found.append(text[start:].strip())
+    return found
+
+
+def prose_paragraphs(history):
+    """Each paragraph of a history that is prose, with its place among all of them."""
+    return [(n, p) for n, p in enumerate(history.split("¶"), 1) if not p.startswith("TABLE::")]
+
+
+def history_shape(history):
+    """The number of sentences in each paragraph of a history, tables left out."""
+    return [len(sentences(p)) for _, p in prose_paragraphs(history)]
+
+
+def check_history_shape(metrics):
+    """Refuse a history too short to read as a story, or with paragraphs of uneven length.
+
+    Every history out of shape is named at once, with each paragraph that breaks the rule.
+    """
+    low, high = HISTORY_SENTENCES
+    problems = []
+    for metric in metrics:
+        paragraphs = prose_paragraphs(metric.get("history") or "")
+        shape = [len(sentences(p)) for _, p in paragraphs]
+        where = f"{metric['id']}.json: the history, {shape},"
+        if len(shape) < HISTORY_PARAGRAPHS:
+            problems.append(f"{where} has {len(shape)} paragraphs and needs at least "
+                            f"{HISTORY_PARAGRAPHS}")
+        for (position, _), count in zip(paragraphs, shape):
+            if not low <= count <= high:
+                problems.append(f"{where} has {count} sentences in paragraph {position}, "
+                                f"where a paragraph takes {low} to {high}")
+        if shape and max(shape) > HISTORY_SPREAD * min(shape):
+            problems.append(f"{where} has a longest paragraph more than {HISTORY_SPREAD} "
+                            f"times its shortest")
+    if problems:
+        raise DataError("\n".join(problems))
+
+
 def serialise(value):
     return json.dumps(value, indent=2, ensure_ascii=False) + "\n"
 
@@ -236,6 +306,7 @@ def main(argv=None):
         references = build_references()
         metrics = load_metrics()
         check_citations(metrics, references["entries"])
+        check_history_shape(metrics)
         diagrams = load_diagrams(metrics)
         outputs = {
             INDEX_FILE: serialise(build_index(metrics, diagrams)),
