@@ -99,7 +99,9 @@ def conformal_prose(name, conformal):
 
 
 def diagram_prose(name, diagram):
-    """Yield every sentence carrying field of a diagram file, each with the name of its place."""
+    """Yield every sentence carrying field of a diagram file, each with the name of its place:
+    its flat views, its figures in three dimensions and the reasons it gives for drawing
+    nothing of a coordinate system."""
     for system, views in diagram["systems"].items():
         for view in views:
             where = f"diagrams/{name}.json {system}/{view['id']}"
@@ -115,6 +117,22 @@ def diagram_prose(name, diagram):
             for position, marker in enumerate(view["markers"]):
                 if marker.get("legend"):
                     yield f"{where}.markers[{position}].legend", marker["legend"]
+    for system, figures in diagram.get("projections", {}).items():
+        for figure in figures:
+            where = f"diagrams/{name}.json {system}/{figure['id']}"
+            yield f"{where}.label", figure["label"]
+            for position, paragraph in enumerate(figure["caption"]):
+                yield f"{where}.caption[{position}]", paragraph
+            for field in ("settings", "input"):
+                if figure.get(field):
+                    yield f"{where}.{field}", figure[field]
+            for position, (_, _, text) in enumerate(figure["legend"]):
+                yield f"{where}.legend[{position}]", text
+            for position, label in enumerate(figure["labels"]):
+                yield f"{where}.labels[{position}]", label["text"]
+    for system, reason in diagram.get("none", {}).items():
+        for position, paragraph in enumerate(reason["text"]):
+            yield f"diagrams/{name}.json {system}.none[{position}]", paragraph
 
 
 class PublishedFilesAreCurrent(unittest.TestCase):
@@ -267,17 +285,24 @@ class Prose(unittest.TestCase):
                 self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}",
                                     f"{metric['id']}.json: {field} spells a character as an escape")
 
+    def test_no_diagram_spells_a_character_as_an_escape(self):
+        for name, diagram in diagram_files().items():
+            for field, value in diagram_prose(name, diagram):
+                self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}", field)
+
     def test_every_caption_names_its_plane_and_never_a_block(self):
         """A reader is told which slice is drawn, in words, and never handed the shorthand."""
         views = 0
         for name, diagram in diagram_files().items():
-            for system, drawn in diagram["systems"].items():
-                for view in drawn:
-                    views += 1
-                    where = f"diagrams/{name}.json {system}/{view['id']}"
-                    self.assertTrue(view["caption"][0].startswith("This is the "), where)
-                    for field, value in diagram_prose(name, {"systems": {system: [view]}}):
-                        self.assertNotRegex(value, r"(?i)\bblocks?\b", field)
+            for part in ("systems", "projections"):
+                for system, drawn in diagram.get(part, {}).items():
+                    for view in drawn:
+                        views += 1
+                        where = f"diagrams/{name}.json {system}/{view['id']}"
+                        self.assertTrue(view["caption"][0].startswith("This is the "), where)
+                        one = {"systems": {}, part: {system: [view]}}
+                        for field, value in diagram_prose(name, one):
+                            self.assertNotRegex(value, r"(?i)\bblocks?\b", field)
         self.assertTrue(views)
 
     def test_no_prose_names_the_collection_or_the_page(self):
@@ -517,6 +542,59 @@ class Diagrams(unittest.TestCase):
                 (Path(folder) / filename).write_text(json.dumps(diagram), encoding="utf-8")
             with mock.patch.object(build, "DIAGRAMS_DIR", Path(folder)):
                 return build.load_diagrams(metrics)
+
+
+class Figures(unittest.TestCase):
+    """A figure in three dimensions is drawn from what its metric publishes, inside its box,
+    and names in its legend only what it draws; a reason given for drawing nothing is tied to
+    the metric in the same way."""
+
+    def setUp(self):
+        self.metrics = build.load_metrics()
+        self.diagrams = diagram_files()
+        self.figures = [(name, system, figure) for name, diagram in self.diagrams.items()
+                        for system, figures in diagram.get("projections", {}).items() for figure in figures]
+        self.assertTrue(self.figures, "no figure was found, so nothing was checked")
+
+    def test_every_figure_draws_inside_its_box_and_names_only_what_it_draws(self):
+        for name, system, figure in self.figures:
+            where = f"{name}/{system}/{figure['id']}"
+            x0, x1, y0, y1 = figure["box"]
+            self.assertTrue(x0 < x1 and y0 < y1, where)
+            drawn = set()
+            for layer in figure["layers"]:
+                self.assertIn(layer["kind"], {"fill", "line", "point"}, where)
+                drawn.add(layer["class"])
+                for x, y in [layer["at"]] if layer["kind"] == "point" else layer["points"]:
+                    self.assertTrue(x0 <= x <= x1 and y0 <= y <= y1, f"{where} {layer['class']} at {x}, {y}")
+            for label in figure["labels"]:
+                x, y = label["at"]
+                self.assertTrue(x0 <= x <= x1 and y0 <= y <= y1, f"{where} label {label['text']}")
+            for kind, cls, _ in figure["legend"]:
+                self.assertIn(kind, {"fill", "line", "point", "cone"}, where)
+                self.assertIn(cls, drawn, f"{where} legend {cls}")
+
+    def test_every_text_is_tex_with_its_mathematics_closed(self):
+        for name, diagram in self.diagrams.items():
+            for field, value in diagram_prose(name, diagram):
+                self.assertTrue(value.strip(), field)
+                self.assertEqual(value.replace("\\$", "").count("$") % 2, 0, field)
+                self.assertEqual(value.count("{"), value.count("}"), field)
+
+    def test_a_changed_component_stops_a_figure_and_a_reason(self):
+        by_id = {m["id"]: m for m in self.metrics}
+        stamped = [(name, system, figure["id"]) for name, system, figure in self.figures]
+        stamped += [(name, system, None) for name, diagram in self.diagrams.items()
+                    for system in diagram.get("none", {})]
+        for name, system, view in stamped:
+            changed = copy.deepcopy(self.metrics)
+            chart = next(s for s in next(m for m in changed if m["id"] == name)["coordinates"] if s["id"] == system)
+            chart["metric_components"][0]["value"] = "2" + chart["metric_components"][0]["value"]
+            with self.assertRaises(build.DataError) as raised:
+                build.load_diagrams(changed)
+            self.assertIn(f"diagrams/{name}.json", str(raised.exception))
+            self.assertIn(system, str(raised.exception))
+        self.assertTrue(by_id)
 
 
 class ConformalDiagrams(unittest.TestCase):

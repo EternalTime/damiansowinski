@@ -217,6 +217,7 @@ class Diagram:
     ring: int = 0                   # a polar view's rays: this many of each family, evenly around
     inside: bool = False            # rays stop short of the edge of the published domain
     cone: str = None                # what a cone is, where it is not the future light cone
+    periodic: tuple = ()            # drawn coordinates whose two ends are one line, never hatched
 
 
 def _alcubierre_profile():
@@ -408,6 +409,16 @@ DIAGRAMS = [
             families=SIDEWAYS, functions={"A": "exp(-u**2)", "B": "0"},
             input="The amplitudes $A(u)$ and $B(u)$ do not enter on the axis, so any profile gives "
                   "this diagram."),
+    # The cylinders of t and phi at one r, unrolled, phi scaled by r/R so that the cones next to
+    # the axis would stand at 45 degrees. The metric on each is the same at every point of it.
+    Diagram("stockum_dust", "cylindrical", "inside", "$t$ and $\\phi$ at $r = R/2$", ("t", "\\phi"),
+            (-math.pi / 2, math.pi / 2, -math.pi / 2, math.pi / 2), "$r\\phi/R$", "$t/R$", {"R": 1},
+            {"r": "1/2", "z": "0"}, to_display=((0, 0.5), (1, 0)), orient="vector", families=SIDEWAYS,
+            cones=(5, 5), periodic=("\\phi",)),
+    Diagram("stockum_dust", "cylindrical", "beyond", "$t$ and $\\phi$ at $r = 3R/2$", ("t", "\\phi"),
+            (-3 * math.pi / 2, 3 * math.pi / 2, -3 * math.pi / 2, 3 * math.pi / 2), "$r\\phi/R$", "$t/R$",
+            {"R": 1}, {"r": "3/2", "z": "0"}, to_display=((0, 1.5), (1, 0)), orient="vector",
+            families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
 ]
 
 
@@ -790,7 +801,40 @@ CAPTIONS = {
         "$y$. On the axis both accelerations vanish, so the null curves drawn there are null "
         "geodesics.",
     ],
+    ("stockum_dust", "cylindrical", "inside"): [
+        "This is the cylinder of $t$ and $\\phi$ at $r = R/2$ and $z = 0$, cut along $\\phi = \\pm\\pi$ "
+        "and unrolled, with $\\phi$ scaled by $r/R$ across, so the left and right edges are one line. "
+        "The metric on it is $-dt^2 - (2r^2/R)\\,dt\\,d\\phi + r^2(1 - r^2/R^2)\\,d\\phi^2$, the same at "
+        "every point, and its light rays are straight: $dt = r(1 - r/R)\\,d\\phi$ moving to $+\\phi$ and "
+        "$dt = -r(1 + r/R)\\,d\\phi$ moving to $-\\phi$. The cross term tilts every cone toward $+\\phi$, "
+        "and a ray moving that way covers three times the $\\phi$ in a given $t$ that one moving the "
+        "other way does.",
+        "At this radius the ray moving to $+\\phi$ is a null geodesic: $\\Gamma^r{}_{t\\phi}$ and "
+        "$\\Gamma^r{}_{\\phi\\phi}$ cancel along it, and light sent that way circles the axis at "
+        "$r = R/2$. The ray moving to $-\\phi$ is a null curve that is not a geodesic, and light "
+        "launched along it is turned away from the axis. The horizontal lines, circles of constant "
+        "$t$, lie outside every cone and are spacelike.",
+    ],
+    ("stockum_dust", "cylindrical", "beyond"): [
+        "This is the cylinder of $t$ and $\\phi$ at $r = 3R/2$ and $z = 0$, unrolled in the same way, "
+        "its left and right edges one line. Beyond $r = R$ the coefficient $g_{\\phi\\phi} = "
+        "r^2(1 - r^2/R^2)$ is negative, and the cones have tipped over past the horizontal: along "
+        "$dt = r(1 - r/R)\\,d\\phi$ a ray moving to $+\\phi$ goes down in $t$, while a ray moving to "
+        "$-\\phi$ climbs steeply, $dt = -r(1 + r/R)\\,d\\phi$. Every horizontal line lies inside the "
+        "future cones, so the circle of constant $t$, $r$ and $z$, run toward $+\\phi$, is a closed "
+        "timelike curve.",
+        "A ray moving to $+\\phi$ comes round to its own $\\phi$ at a $t$ earlier by $3\\pi R/2$ after "
+        "each turn. None of the curves drawn here is a null geodesic: the ray moving to $+\\phi$ is "
+        "turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and $\\Gamma^r{}_{\\phi\\phi}$, and the ray "
+        "moving to $-\\phi$ away from it.",
+    ],
 }
+
+
+# Why a coordinate system of a spacetime with no view at all has none, as prose a reader is
+# given in place of the diagram. A system of a spacetime drawn elsewhere that has no view is
+# accounted for in _tools/README.md instead.
+NOT_DRAWN = {}
 
 
 # ---------------------------------------------------------------- reading a chart
@@ -1467,7 +1511,7 @@ class Plot:
         UU, VV, x0, r = self.grid(161)
         outside = np.zeros_like(UU, dtype=bool)
         for name, values in ((self.c.spec.plane[0], x0), (self.c.spec.plane[1], r)):
-            if name in domains:
+            if name in domains and name not in self.c.spec.periodic:
                 lo, hi, lo_open, hi_open = domains[name]
                 if lo is not None:
                     outside |= (values < lo) | ((values == lo) & lo_open)
@@ -1784,22 +1828,53 @@ def draw(spec):
     return view
 
 
+NONE_FIELDS = ["coords", "parameters", "metric_components"]
+
+
+def not_drawn(metric_id):
+    """The reasons a spacetime's coordinate systems carry no view, as its file carries them,
+    each stamped with the fields it speaks of so that a changed metric asks for it again."""
+    metric = json.loads((build.METRICS_DIR / f"{metric_id}.json").read_text(encoding="utf-8"))
+    systems = {s["id"]: s for s in metric["coordinates"]}
+    return {system_id: {"text": text, "source": {"fields": NONE_FIELDS, "version": build.diagram_source_version(
+                systems[system_id], NONE_FIELDS)}}
+            for system_id, text in NOT_DRAWN[metric_id].items()}
+
+
+def by_metric():
+    """Every spacetime with a diagram file: its flat views and its figures, in table order."""
+    import projections as pj
+    out = {}
+    for spec in DIAGRAMS:
+        out.setdefault(spec.metric, ([], []))[0].append(spec)
+    for spec in pj.FIGURES:
+        out.setdefault(spec.metric, ([], []))[1].append(spec)
+    for metric_id in NOT_DRAWN:
+        out.setdefault(metric_id, ([], []))
+    return out
+
+
 def write(metric_ids=None):
+    import projections as pj
     if not DIAGRAMS_DIR.exists():
         DIAGRAMS_DIR.mkdir(parents=True)
-    by_metric = {}
-    for spec in DIAGRAMS:
-        by_metric.setdefault(spec.metric, []).append(spec)
-    for metric_id, specs in by_metric.items():
+    for metric_id, (specs, figures) in by_metric().items():
         if metric_ids and metric_id not in metric_ids:
             continue
-        systems = {}
+        systems, projections = {}, {}
         for spec in specs:
             systems.setdefault(spec.system, []).append(draw(spec))
             print(f"  {key(spec)}", flush=True)
+        for spec in figures:
+            projections.setdefault(spec.system, []).append(pj.draw(spec))
+            print(f"  {pj.key(spec)}", flush=True)
+        data = {"metric": metric_id, "systems": systems}
+        if projections:
+            data["projections"] = projections
+        if metric_id in NOT_DRAWN:
+            data["none"] = not_drawn(metric_id)
         path = DIAGRAMS_DIR / f"{metric_id}.json"
-        path.write_text(json.dumps({"metric": metric_id, "systems": systems},
-                                   ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
         print(f"wrote {path.relative_to(build.ROOT)}")
 
 
@@ -2010,14 +2085,24 @@ def verify_principal(specs, traced):
 
 
 def check_table():
-    """Every view has a caption, and no two views share a place."""
-    places = [(spec.metric, spec.system, spec.view) for spec in DIAGRAMS]
-    if len(set(places)) != len(places):
-        raise SystemExit("two views in DIAGRAMS share a metric, system and view id")
-    missing = [key(spec) for spec in DIAGRAMS if (spec.metric, spec.system, spec.view) not in CAPTIONS]
-    stray = set(CAPTIONS) - set(places)
-    if missing or stray:
-        raise SystemExit(f"views without a caption: {missing}; captions without a view: {sorted(stray)}")
+    """Every view and figure has a caption, no two share a place, and a coordinate system with
+    a stated reason for drawing nothing draws nothing."""
+    import projections as pj
+    flat = [(spec.metric, spec.system, spec.view) for spec in DIAGRAMS]
+    figures = [(spec.metric, spec.system, spec.view) for spec in pj.FIGURES]
+    if len(set(flat + figures)) != len(flat + figures):
+        raise SystemExit("two views share a metric, system and view id")
+    for table, places, captions in (("DIAGRAMS", flat, CAPTIONS), ("FIGURES", figures, pj.CAPTIONS)):
+        missing = ["/".join(place) for place in places if place not in captions]
+        stray = set(captions) - set(places)
+        if missing or stray:
+            raise SystemExit(f"{table}: views without a caption: {missing}; captions without a view: "
+                             f"{sorted(stray)}")
+    drawn = {(metric, system) for metric, system, _ in flat + figures}
+    both = [f"{metric}/{system}" for metric, systems in NOT_DRAWN.items() for system in systems
+            if (metric, system) in drawn]
+    if both:
+        raise SystemExit(f"NOT_DRAWN gives a reason for systems that are drawn: {both}")
 
 
 def main(argv=None):
@@ -2027,7 +2112,7 @@ def main(argv=None):
     parser.add_argument("--verify", action="store_true",
                         help="check the rays against closed forms instead of writing")
     args = parser.parse_args(argv)
-    unknown = set(args.metric) - {spec.metric for spec in DIAGRAMS}
+    unknown = set(args.metric) - set(by_metric())
     if unknown:
         parser.error(f"no diagram is drawn for {sorted(unknown)}")
     if args.verify:

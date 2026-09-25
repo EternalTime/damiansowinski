@@ -115,6 +115,13 @@ def diagram_source_version(system, fields):
     return content_version(diagram_source(system, fields))
 
 
+def check_diagram_stamp(path, system, what, source):
+    if diagram_source_version(system, source["fields"]) != source["version"]:
+        raise DataError(
+            f"diagrams/{path.name}: {what} components {path.stem}.json no longer publishes; redraw it "
+            f"with _tools/derivations/null_rays.py --metric {path.stem}")
+
+
 def load_diagrams(metrics):
     """Every diagram file, refused if it was drawn from what its metric no longer publishes."""
     by_id = {m["id"]: m for m in metrics}
@@ -131,17 +138,25 @@ def load_diagrams(metrics):
         if path.stem not in by_id:
             raise DataError(f"diagrams/{path.name} has no metric file to belong to")
         systems = {s["id"]: s for s in by_id[path.stem].get("coordinates") or []}
-        for system_id, views in data.get("systems", {}).items():
+        # The flat views, the figures projected from three coordinates, and the reason a
+        # system has neither, each stamped with what it was drawn from or speaks of.
+        for part, what in (("systems", "view"), ("projections", "figure")):
+            for system_id, views in data.get(part, {}).items():
+                if system_id not in systems:
+                    raise DataError(f"diagrams/{path.name} draws {system_id!r}, "
+                                    f"which {path.stem}.json has no coordinate system for")
+                for view in views:
+                    check_diagram_stamp(path, systems[system_id], f"the {system_id} {what} {view['id']!r} was "
+                                        "drawn from", view["source"])
+        for system_id, reason in data.get("none", {}).items():
             if system_id not in systems:
-                raise DataError(f"diagrams/{path.name} draws {system_id!r}, "
+                raise DataError(f"diagrams/{path.name} gives a reason for {system_id!r}, "
                                 f"which {path.stem}.json has no coordinate system for")
-            for view in views:
-                source = view["source"]
-                if diagram_source_version(systems[system_id], source["fields"]) != source["version"]:
-                    raise DataError(
-                        f"diagrams/{path.name}: the {system_id} view {view['id']!r} was drawn from "
-                        f"components {path.stem}.json no longer publishes; redraw it with "
-                        f"_tools/derivations/null_rays.py --metric {path.stem}")
+            if system_id in data.get("systems", {}) or system_id in data.get("projections", {}):
+                raise DataError(f"diagrams/{path.name} gives a reason for drawing nothing of {system_id!r}, "
+                                "and draws it")
+            check_diagram_stamp(path, systems[system_id], f"the reason {system_id} is not drawn speaks of",
+                                reason["source"])
         diagrams[path.stem] = data
     return diagrams
 
