@@ -196,6 +196,15 @@ class Prose(unittest.TestCase):
                   for field, value in diagram_prose(name, diagram)]
         self.assert_no_dashes(fields)
 
+    def test_no_metric_on_disk_spells_a_character_as_an_escape(self):
+        # A \u escaped twice in the JSON reaches the page as the six characters of the
+        # escape, as the î of Lemaître did in the Tolman-Bondi conventions, since neither
+        # TeX nor the page reads it. The character itself is what the files carry.
+        for metric in build.load_metrics():
+            for field, value in prose(metric):
+                self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}",
+                                    f"{metric['id']}.json: {field} spells a character as an escape")
+
     def assert_no_dashes(self, fields):
         self.assertTrue(fields, "no prose was read, so nothing was checked")
         for where, value in fields:

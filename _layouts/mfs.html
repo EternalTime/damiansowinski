@@ -871,6 +871,46 @@
         });
       }
 
+      /* Prose wraps and a formula inside it cannot, since MathJax 3 never breaks inline
+         mathematics, and one wider than its paragraph was cut off at the panel's edge in a
+         narrow window: a few of the conventions and one history carry such a formula. So a
+         formula too wide for its paragraph is set on a line of its own that scrolls sideways,
+         as a line of mathematics does, and fades at the edge it continues past; the prose
+         around it wraps as before, and a formula that fits is left inline and untouched.
+         Where nrProse() kept punctuation with the formula, the punctuation scrolls with it.
+         Whether a formula fits is measured again whenever its prose changes width, which a
+         ResizeObserver sees when MathJax sets it, when the window changes size and when a
+         hidden diagram view is shown. */
+      var _proseObserver = null;
+      function fitProseMath(block) {
+        if (!block.clientWidth) return;
+        var boxes = [].map.call(block.querySelectorAll('mjx-container'), function(m) {
+          var keep = m.parentElement;
+          return keep.classList.contains('mfs-nr-keep') ? keep : m;
+        });
+        boxes.forEach(function(box) { box.classList.remove('mfs-wide-math', 'mfs-more-left', 'mfs-more-right'); });
+        var widths = boxes.map(function(box) { return box.getBoundingClientRect().width; });
+        boxes.forEach(function(box, i) {
+          if (widths[i] <= block.clientWidth) return;
+          box.classList.add('mfs-wide-math');
+          markEdges(box);
+          if (!box._mfsScrollWired) {
+            box._mfsScrollWired = true;
+            box.addEventListener('scroll', function() { markEdges(box); }, { passive: true });
+          }
+        });
+      }
+      function wireProse(root) {
+        if (_proseObserver) _proseObserver.disconnect();
+        if (!window.ResizeObserver) return;
+        _proseObserver = new ResizeObserver(function(entries) {
+          entries.forEach(function(e) { fitProseMath(e.target); });
+        });
+        root.querySelectorAll('.mfs-history, .mfs-convention, .mfs-nr-caption').forEach(function(block) {
+          _proseObserver.observe(block);
+        });
+      }
+
       function buildMetricMatrix(components, coords, label) {
         // Build a 4x4 grid initialized to '0'
         var n = coords.length;
@@ -1142,7 +1182,7 @@
       }
 
       // Inline math and the punctuation after it stay on one line, so a comma never wraps
-      // alone to the start of the next.
+      // alone to the start of the next. The conventions are set the same way.
       function nrProse(text) {
         return text.replace(/(\$[^$]+\$[,.;:)]+)/g, '<span class="mfs-nr-keep">$1</span>');
       }
@@ -1243,6 +1283,34 @@
         });
       }
 
+      /* The conventions a spacetime is written in: its signature, and the paragraph that says
+         what range each coordinate takes, what each parameter means, which chart the
+         components are printed in and which contraction the Ricci tensor is. They open the
+         mathematics, above the coordinates, which is where the application reads them since
+         the captain moved them there from the history on 23 September 2026: nothing below
+         can be read without them, and they belong to the spacetime rather than to a chart,
+         since an entry carries one signature and one convention and none per chart, so the
+         coordinate selector leaves them standing. The heading is the one the application
+         gives them. They are prose with inline TeX, set in the one MathJax pass with the
+         rest of the page, and they wrap as the diagram captions do rather than scroll as a
+         line of mathematics does. The text is escaped, since it is never HTML and a TeX
+         `k < 0` must reach MathJax as it is written. An entry that carries neither field
+         gets no section at all. */
+      function conventionSection(data) {
+        if (!data.signature && !data.convention) return '';
+        return [
+          '<div class="mfs-section">',
+            '<div class="mfs-section-label">conventions</div>',
+            '<div class="mfs-convention">',
+              data.signature ? '<p><span class="mfs-convention-k">signature</span> ' + tex(nrEsc(data.signature)) + '</p>' : '',
+              (data.convention || '').split('¶').map(function(p) {
+                return p.trim() ? '<p>' + nrProse(nrEsc(p.trim())) + '</p>' : '';
+              }).join(''),
+            '</div>',
+          '</div>'
+        ].join('');
+      }
+
       function renderMetric(data, coordIdx) {
         _currentMetric  = data;
         _currentCoordIdx = coordIdx;
@@ -1318,6 +1386,8 @@
               }).join('') + '</div>',
             '</div>'
           ].join('') : '',
+
+          conventionSection(data),
 
           (hasCoords ? [
             '<div class="mfs-section">',
@@ -1495,6 +1565,7 @@
         if (_lineObserver) _lineObserver.disconnect();
         _lineObserver = null;
         wireLines(contentPanel);
+        wireProse(contentPanel);
 
         // Force column reflow after MathJax typesetting
         function reflowColumns() {
@@ -1627,13 +1698,15 @@
        as a line of mathematics does, so nothing can carry the headings sideways. */
     #mfs-content-panel { overflow-y: auto; overflow-x: hidden; font-size: 21px !important; }
     /* The header reaches up through the panel's 1em of padding and sticks at the panel's
-       edge, not below the padding, where the text scrolling under it would show above it. */
+       edge, not below the padding, where the text scrolling under it would show above it.
+       It is opaque: at 95% the text passing under it stayed legible behind the title, and
+       the grid, which is all the other 5% let through, is already all but hidden there. */
     #mfs-content-panel .mfs-header {
       margin-top: -1em;
       padding: calc(10px + 1em) 16px 8px;
       border-bottom: 1px solid rgba(0,229,255,0.2);
       position: sticky; top: -1em;
-      background: rgba(0,0,0,0.95);
+      background: #000;
       z-index: 1;
     }
     #mfs-content-panel .mfs-label {
@@ -1697,10 +1770,13 @@
       color: var(--cyan); font-weight: 600;
       letter-spacing: 0.04em; background: rgba(0,229,255,0.06);
     }
-    #mfs-content-panel .mfs-convention {
-      font-size: 21px; color: rgba(0,229,255,0.4);
-      letter-spacing: 0.06em;
+    /* The conventions are prose in the mathematics, set as its other prose, the diagram
+       captions, is set, and they wrap: nothing of a line of mathematics' scrolling applies. */
+    #mfs-content-panel .mfs-convention p {
+      font-family: 'Source Code Pro', monospace; font-size: 19px; line-height: 1.65;
+      color: var(--teal-light); margin: 0 0 0.8em;
     }
+    #mfs-content-panel .mfs-convention p:last-child { margin-bottom: 0.3em; }
     #mfs-content-panel .mfs-component {
       font-size: 27px; color: var(--teal-light);
       line-height: 1.8; padding: 1px 0;
@@ -1730,6 +1806,15 @@
                                           #000 calc(100% - var(--mfs-fade-r, 0px)), transparent);
               mask-image: linear-gradient(to right, transparent, #000 var(--mfs-fade-l, 0px),
                                           #000 calc(100% - var(--mfs-fade-r, 0px)), transparent);
+    }
+    /* A formula too wide for the prose it sits in, which fitProseMath() gives a line of its
+       own. The padding is room for what MathJax draws past its own box, which the scroller
+       would otherwise clip. */
+    #mfs-content-panel .mfs-wide-math {
+      display: block; white-space: nowrap;
+      overflow-x: auto; overflow-y: hidden; padding: 0.2em 0;
+      overscroll-behavior-x: contain;
+      scrollbar-width: thin; scrollbar-color: rgba(0,229,255,0.25) transparent;
     }
     #mfs-content-panel .mfs-domains {
       display: flex; flex-wrap: wrap; gap: 0.4em 1.5em;
@@ -1857,7 +1942,8 @@
     #mfs-content-panel .mfs-nr-note {
       font-size: 16px; line-height: 1.6; color: rgba(0,229,255,0.55); margin: 0 0 6px;
     }
-    #mfs-content-panel .mfs-nr-k {
+    #mfs-content-panel .mfs-nr-k,
+    #mfs-content-panel .mfs-convention-k {
       color: rgba(0,229,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; font-size: 14px;
       margin-right: 0.4em;
     }
@@ -2107,6 +2193,9 @@
         border-bottom: 1px solid #000 !important;
         padding-bottom: 6px; margin-bottom: 12px; font-size: 11pt;
       }
+      /* The two sides keep their lines and a long name wraps between them instead, which
+         otherwise squeezed the sides into four ragged lines each. */
+      .mfs-print-header .pl, .mfs-print-header .pr { flex: none; white-space: nowrap; }
       .mfs-print-header .pl { text-align: left; }
       .mfs-print-header .pr { text-align: right; }
       .mfs-print-header .pc {
@@ -2161,7 +2250,9 @@
       .mfs-print-body .mfs-nr-caption p, .mfs-print-body .mfs-nr-note, .mfs-print-body .mfs-nr-item { font-size: 10pt; }
       .mfs-print-body .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 4px 0; }
       .mfs-print-body .mfs-nr-item { display: inline-flex; align-items: center; gap: 5px; }
-      .mfs-print-body .mfs-nr-k { text-transform: uppercase; letter-spacing: 0.08em; font-size: 8pt; margin-right: 0.4em; }
+      .mfs-print-body .mfs-nr-k,
+      .mfs-print-body .mfs-convention-k { text-transform: uppercase; letter-spacing: 0.08em; font-size: 8pt; margin-right: 0.4em; }
+      .mfs-print-body .mfs-convention p { font-size: 10pt; line-height: 1.45; margin: 0 0 6pt; }
       .mfs-print-body .nr-bg { fill: #fff; }
       .mfs-print-body .nr-grid { stroke: #e4e4e4; }
       .mfs-print-body .nr-axis, .mfs-print-body .nr-frame { stroke: #000; }
