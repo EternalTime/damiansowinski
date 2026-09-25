@@ -41,6 +41,14 @@ The print copy cannot scroll, so there a wide line breaks before a top level `+`
 So a value whose whole length sits inside one `\left(\right)` prints small, which is one more reason to collect it rather than expand it.
 `mathLine` and `printPrepare` in `_layouts/mfs.html` carry the details.
 
+A formula inside prose, in a `history`, a `convention` or a caption, is set inline and cannot break, so one wider than its paragraph is given a line of its own that scrolls in the same way, and the prose around it wraps as before.
+`fitProseMath` in `_layouts/mfs.html` measures that again whenever the paragraph changes width.
+
+The page prints a spacetime's `signature` and `convention` under the heading "conventions", between the history and the coordinates, which is where the application reads them.
+They belong to the spacetime and not to a chart, so the coordinate selector leaves them standing.
+A `convention` is prose with inline TeX between dollar signs, split into paragraphs at `¶`, and never carries a citation or HTML.
+An entry with neither field shows no conventions section at all.
+
 A cloud-sync conflict copy dropped into the metrics folder, named like `kerr 2.json`, is passed over rather than read.
 Those are the same names `.gitignore` already keeps out of the repository.
 Any other file name is read, so a metric whose `id` does not match its file name still stops the command.
@@ -58,6 +66,9 @@ An ordinary English compound is rewritten so that the hyphen is not needed.
 Minus signs inside the LaTeX fields are mathematics and are left alone.
 
 The tests hold this rule over every metric file on disk, so a new spacetime carrying one of these dashes in its prose fails before it is published, named along with the field and the character that tripped it.
+
+A character outside ASCII is written as itself, as the `î` of `Lemaître` is, and never as a JSON `\u` escape with its backslash doubled, since neither the page nor TeX reads such an escape and the reader sees all six characters of it.
+The tests hold that rule over the same fields.
 
 ## What the command writes
 
