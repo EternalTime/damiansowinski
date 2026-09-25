@@ -496,7 +496,8 @@ CAPTIONS = {
         "$0.2\\,r_s$, and the cones close at both. Between them $r$ is the time and the cones "
         "point to smaller $r$. Inside $r_-$, $t$ is a time again.",
         "The chart alone does not orient the two inner regions; the cones there follow the ingoing "
-        "family, as an ingoing chart carries them through both horizons. The Kretschmann scalar "
+        "family, as an ingoing chart carries them through both horizons, which reads the region "
+        "between the horizons as the black hole and not the white hole. The Kretschmann scalar "
         "diverges at $r = 0$.",
     ],
     ("taub_nut", "spherical", "radial"): [
@@ -1183,15 +1184,48 @@ def outer_root(chart):
     return float(X[i] - f[i] * (X[i + 1] - X[i]) / (f[i + 1] - f[i]))
 
 
+DOMAIN_CONDITION = "\\;\\text{for}\\;"
+CONDITION_OPERATORS = {"\\le": np.less_equal, "\\ge": np.greater_equal, "\\ne": np.not_equal,
+                       "<": np.less, ">": np.greater, "=": np.equal}
+
+
+def domain_holds(chart, condition, text):
+    """Whether a domain's condition on the parameters, such as k \\le 0, holds at the view's
+    values. A condition this cannot read, or one on a parameter the view leaves free, stops
+    the run: a domain it silently passed over would draw the wrong region unhatched."""
+    subs = {chart.reader.c: 1}
+    subs.update({chart.reader.parameters[k]: number(v) for k, v in chart.spec.params.items()})
+    for op in sorted(CONDITION_OPERATORS, key=len, reverse=True):
+        lhs, found, rhs = condition.partition(op)
+        if found:
+            try:
+                a, b = (float(sp.N(chart.reader(s.strip()).subs(subs))) for s in (lhs, rhs))
+            except (vm.LatexError, TypeError, ValueError) as exc:
+                raise SystemExit(f"{key(chart.spec)}: cannot evaluate the condition of the "
+                                 f"domain {text!r} at {chart.spec.params}: {exc}")
+            return bool(CONDITION_OPERATORS[op](a, b))
+    raise SystemExit(f"{key(chart.spec)}: cannot read the condition of the domain {text!r}")
+
+
 def parse_domains(chart):
-    """{coordinate: (low, high, low open, high open)} for the two coordinates of the plane."""
+    """{coordinate: (low, high, low open, high open)} for the two coordinates of the plane.
+
+    A domain may end in a condition on the parameters, "r \\in [0, \\infty) \\;\\text{for}\\;
+    k \\le 0", and is then read only for a view whose parameter values satisfy it; two domains
+    for one coordinate that both hold are refused."""
     out = {}
     for text in chart.entry.get("domains", []):
-        t = text.replace("\\left", "").replace("\\right", "").replace("\\,", "")
+        t, conditional, condition = text.partition(DOMAIN_CONDITION)
+        if conditional and not domain_holds(chart, condition.strip(), text):
+            continue
+        t = t.replace("\\left", "").replace("\\right", "").replace("\\,", "")
         name, found, interval = t.partition("\\in")
         name, interval = name.strip(), interval.strip()
         if not found or name not in chart.spec.plane or len(interval) < 2:
             continue
+        if name in out:
+            raise SystemExit(f"{key(chart.spec)}: two domains for {name} hold at "
+                             f"{chart.spec.params}")
         if interval[0] not in "([" or interval[-1] not in ")]":
             continue
         body, depth, cut = interval[1:-1], 0, None
