@@ -203,7 +203,15 @@ class Slice:
 
 def future_cone(sl, x, length, orient="vector", n=RIM):
     """The rim of the future light cone at the slice point x: n points of the drawing, each
-    at Euclidean distance `length` from the apex along one future null generator.
+    at Euclidean distance `length` from the apex along one future null generator."""
+    gen, _ = generators(sl, x, orient, n)
+    apex = sl.to_drawing(x)
+    return apex, apex[None, :] + length * gen / np.linalg.norm(gen, axis=1, keepdims=True)
+
+
+def generators(sl, x, orient="vector", n=RIM):
+    """n future null generators at the slice point x, in the drawing's (X, Y, T) and in the
+    slice's own coordinates.
 
     The generators are checked null against the published metric and the published inverse
     against the published metric's inverse, and a failure stops the figure."""
@@ -243,8 +251,7 @@ def future_cone(sl, x, length, orient="vector", n=RIM):
     miss = np.abs(np.einsum("na,ab,nb->n", k, g, k)) / (np.abs(g).max() * np.einsum("na,na->n", k, k))
     if not miss.max() <= NULL:
         raise SystemExit(f"{sl.metric_id}/{sl.system_id}: a cone generator misses null by {miss.max():.1e}")
-    apex = sl.to_drawing(x)
-    return apex, apex[None, :] + length * gen / np.linalg.norm(gen, axis=1, keepdims=True)
+    return gen, k
 
 
 def hull(points):
@@ -419,6 +426,57 @@ def godel(spec):
     return about_axis(spec, sl, (0.5, 1.5), ("r = r_c", "r = 3r_c/2"))
 
 
+def ergoregion(spec, camera=Camera(-90, 30)):
+    """The light cones of a rotating hole on its equator, the slice theta = pi/2 of t, r and
+    phi, drawn polar with r itself as its radius, down to the horizon.
+
+    The horizon r_+ is the outer zero of the published g^rr, the ergosurface r_E the zero of
+    the published g_tt outside it, both found by bisection. Cones stand at four places around
+    each of the circles halfway through the ergoregion, on the ergosurface and at 3 r_E/2, those
+    on r_E turned by 45 degrees from the others, oriented by the time function t, which the
+    published g^tt < 0 makes one outside r_+. Before anything is drawn, g_tt is checked positive
+    on the inner circle, so that its cones hold no curve of fixed r and phi, and negative on the
+    outer. The floor reaches out to 7 r_E/4 and stops at r_+, where the chart does, and the
+    cones and the axis are sized against r_E. The cones are narrower than van Stockum's, since
+    t runs fast against proper time near the hole, so they are drawn larger. With a cone every
+    45 degrees round the ergosurface no label fits beside its circles, so the legend names them."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
+    g_tt = lambda r: sl.metric((0.0, r, 0.0))[0, 0]
+    g_rr_up = lambda r: sl.inverse((0.0, r, 0.0))[1, 1]
+    horizon = root(g_rr_up, 1.0, 1.9)
+    ergo = root(g_tt, horizon * (1 + 1e-9), 3.0)
+    inner, outer = 0.5 * (horizon + ergo), 1.5 * ergo
+    if not (g_tt(inner) > 0 and g_tt(outer) < 0 and sl.inverse((0.0, inner, 0.0))[0, 0] < 0):
+        raise SystemExit(f"{key(spec)}: the ergoregion is not where the published g_tt puts it")
+    # Every future generator turns toward +phi inside, none turns back on r_E, and some do
+    # outside, measured by dphi against the size of the generator.
+    turn = {}
+    for r in (inner, ergo, outer):
+        _, k = generators(sl, (0.0, r, 0.0), "tau", 3600)
+        turn[r] = float((k[:, 2] * r / np.linalg.norm(k * [1, 1, r], axis=1)).min())
+    if not (turn[inner] > 0 and abs(turn[ergo]) < 1e-5 and turn[outer] < 0):
+        raise SystemExit(f"{key(spec)}: the cones do not turn as the ergoregion says: {turn}")
+    unit = ergo
+    fig = Figure(spec.view, spec.label, camera)
+    for k in range(12):
+        ph = k * np.pi / 6
+        fig.line("floor", sl.to_drawing((np.zeros(2), np.array([horizon, 1.75 * ergo]), np.full(2, ph))))
+    for r, cls in ((outer, "floor"), (1.75 * ergo, "floor"), (horizon, "horizon"), (ergo, "ergo")):
+        fig.line(cls, circle(sl, 0.0, r), closed=True)
+    fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 1.1]]) * unit)
+    cones = []
+    for r, shift in ((inner, 0.5), (ergo, 0.0), (outer, 0.5)):
+        cones += [(0.0, r, (k + shift) * np.pi / 2) for k in range(4)]
+    drawn = [future_cone(sl, x, 0.32 * unit, orient="tau") for x in cones]
+    for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    fig.label(np.array([0, 0, 1.1 * unit]), "$t$", "b", dy=-4)
+    fig.legend("cone", "cone", "future light cone")
+    fig.legend("line", "horizon", "$r_+$, the horizon")
+    fig.legend("line", "ergo", "$r_E$, the ergosurface, where $g_{tt} = 0$")
+    return fig.done(), sl
+
+
 CAPTIONS = {
     ("cosmic_string", "conical", "beam"): [
         "This is the plane $z = 0$ around the string seen from above, $t$ left out, drawn with $r$ as "
@@ -458,6 +516,37 @@ CAPTIONS = {
         "every one of them: a closed timelike curve through each of its events. Every world line of the "
         "dust is equivalent to every other, so the cones tip over in the same way about each one.",
     ],
+    ("kerr", "boyer_lindquist", "dragging"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ with $t$ up and $r$ and $\\phi$ as polar "
+        "coordinates about the axis, for $a = 0.9\\,GM/c^2$, down to the horizon $r_+ = "
+        "1.436\\,GM/c^2$, where the chart ends. Light moving in this plane stays in it, since the "
+        "reflection $\\theta \\to \\pi - \\theta$ leaves it fixed. The cones stand at $t = 0$ at four "
+        "places around each of three circles: $r = 3GM/c^2$, the ergosurface $r_E = 2GM/c^2$, and "
+        "halfway between $r_E$ and $r_+$. On the outer circle they stand nearly upright, and closer "
+        "in the cross term $g_{t\\phi} = -2GMa/c^2r$ tips them toward $+\\phi$, counterclockwise seen "
+        "from above, the way the hole turns.",
+        "On the ergosurface $g_{tt} = -(1 - 2GM/c^2r)$ vanishes, so $\\partial_t$ is null and one edge "
+        "of every cone stands vertical, along a curve of fixed $r$ and $\\phi$. Inside it $g_{tt}$ is "
+        "positive and the cones have tipped past the vertical: every future direction, timelike or "
+        "null, moves toward $+\\phi$, and nothing can stay at fixed $\\phi$. Toward $r_+$ the cones "
+        "also close in $r$, as $g_{rr} = r^2/\\Delta$ grows without bound where $\\Delta = r^2 - "
+        "2GMr/c^2 + a^2$ falls to zero.",
+    ],
+    ("kerr_newman", "boyer_lindquist", "dragging"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ with $t$ up and $r$ and $\\phi$ as polar "
+        "coordinates about the axis, for $a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$, down to the "
+        "horizon $r_+ = 1.625\\,GM/c^2$, where the chart ends. As in Kerr, light moving in this plane "
+        "stays in it. The cones stand at $t = 0$ at four places around each of three circles: $r = "
+        "3r_E/2$, the outer ergosurface $r_E = 1.866\\,GM/c^2$, and halfway between $r_E$ and $r_+$. "
+        "On the outer circle they stand nearly upright, and closer in the cross term $g_{t\\phi} = "
+        "-a(2GMr/c^2 - r_Q^2)/r^2$ tips them toward $+\\phi$, counterclockwise seen from above, the "
+        "way the hole turns.",
+        "On the ergosurface $g_{tt} = -\\left(1 - (2GMr/c^2 - r_Q^2)/r^2\\right)$ vanishes, so one "
+        "edge of every cone stands vertical, along a curve of fixed $r$ and $\\phi$. Inside it the "
+        "cones have tipped past the vertical, and every future direction, timelike or null, moves "
+        "toward $+\\phi$. Toward $r_+$ the cones also close in $r$, as $g_{rr} = r^2/\\Delta$ grows "
+        "without bound where $\\Delta = r^2 - 2GMr/c^2 + a^2 + r_Q^2$ falls to zero.",
+    ],
 }
 
 
@@ -469,6 +558,11 @@ FIGURES = [
     # The deficit the conformal diagram draws with, 4 G mu/c^2 = 0.1, so delta = 36 degrees.
     Projection("cosmic_string", "conical", "beam", "light passing the string", lambda spec: string_rays(spec),
                {"mu": "1/40", "G": 1, "delta": "pi/5"}, {"z": "0"}, fields=("christoffel",)),
+    # The equator, where the ergoregion is widest, at the spins and charge the flat views use.
+    Projection("kerr", "boyer_lindquist", "dragging", "light cones on the equator", ergoregion,
+               {"G": 1, "M": 1, "a": "9/10"}, {"theta": "pi/2"}),
+    Projection("kerr_newman", "boyer_lindquist", "dragging", "light cones on the equator", ergoregion,
+               {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "pi/2"}),
 ]
 
 
