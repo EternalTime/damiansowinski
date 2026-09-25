@@ -133,7 +133,7 @@ NOT_DRAWN = {
         "of $t$ and one of $x$, $y$ and $z$ is totally geodesic, and on it the metric "
         "$-c^2dt^2 + t^{2p_i}dx_i^2$ is flat in the time $c\\,t^{1 - p_i}/(1 - p_i)$, which runs from "
         "zero to infinity for every exponent below one. So all three planes give the same half of "
-        "Minkowski's diamond, the singularity along its lower edge, and they cannot be told apart."],
+        "Minkowski's diamond, the singularity along its lower edge."],
     "bianchi": [
         "Bianchi I has no conformal diagram of its own. Each plane of $t$ and one of $x$, $y$ and $z$ "
         "is flat in the time $\\int c\\,dt/a_i$, and where that time begins and ends is up to the "
