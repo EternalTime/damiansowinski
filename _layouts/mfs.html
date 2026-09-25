@@ -1843,6 +1843,9 @@
         window._mfsPrintBody = body.replace(/mfs-nr-(\d+)/g, 'mfs-nrp-$1').replace(/mfs-cd-(\d+)/g, 'mfs-cdp-$1');
         window._mfsPrintName = data.name;
 
+        // MathJax keeps every formula it has set until told to let go, and with it the page
+        // the formula was on, so the spacetime shown before is let go of before it is replaced.
+        if (window.MathJax && MathJax.typesetClear) MathJax.typesetClear([contentPanel]);
         contentPanel.innerHTML = header + body;
         wireHeader(contentPanel.querySelector('.mfs-header'));
         wireDiagrams(contentPanel);
@@ -1894,6 +1897,7 @@
               // Re-render components
               var compEl = document.getElementById('mfs-comp-' + tensorId);
               if (compEl) {
+                if (window.MathJax && MathJax.typesetClear) MathJax.typesetClear([compEl]);
                 compEl.innerHTML = renderComponents(meta.variants[canonical].nonzero, meta.label, canonical);
                 wireLines(compEl);
                 if (window.MathJax && MathJax.typesetPromise) {
@@ -2572,7 +2576,10 @@
         });
 
         var old = document.getElementById('mfs-print-root');
-        if (old) old.parentNode.removeChild(old);
+        if (old) {
+          if (window.MathJax && MathJax.typesetClear) MathJax.typesetClear([old]);
+          old.parentNode.removeChild(old);
+        }
 
         var root = document.createElement('div');
         root.id = 'mfs-print-root';
