@@ -140,10 +140,10 @@ runs the tests, which include that check.
 
 ## Spacetime diagrams
 
-`MFS/assets/data/diagrams/<metric_id>.json` holds the spacetime diagrams of one spacetime: null rays and future light cones on a plane of the time and one spatial coordinate, for each coordinate system that has any.
+`MFS/assets/data/diagrams/<metric_id>.json` holds the spacetime diagrams of one spacetime: null rays and future light cones on a plane of the time and one spatial coordinate, for each coordinate system that has any, and for Kerr and Kerr-Newman the principal null rays, which leave every such plane.
 The page draws them in a section per coordinate system, after the geodesics, and the application displays the same files.
 Nothing in them is drawn by eye or computed by the page.
-`_tools/derivations/null_rays.py` computes every ray, cone and marker from the system's published `metric_components`, `inverse_metric_components`, `kretschmann` and `domains`, read through the checker's own `Reader`, and its docstring records the method.
+`_tools/derivations/null_rays.py` computes every ray, cone and marker from the system's published `metric_components`, `inverse_metric_components`, `kretschmann` and `domains`, and for the principal null rays its `weyl_tensor` and `christoffel` as well, read through the checker's own `Reader`, and its docstring records the method.
 
 A domain that holds only for some values of a parameter ends in `\;\text{for}\;` and a condition, as FRW's closed case writes `r \in [0, 1/\sqrt{k}) \;\text{for}\; k > 0` beside `r \in [0, \infty) \;\text{for}\; k \le 0`.
 The script hatches a view by the domains whose conditions hold at that view's parameter values, and stops, naming the view, on a condition it cannot evaluate or on two domains for one coordinate that both hold.
@@ -165,6 +165,7 @@ A new view is a row in each, and the script refuses to run while one lacks the o
 A caption opens by naming its plane: the two coordinates drawn and the value of every coordinate held fixed, as "the plane of $t$ and $r$ at $\theta = \pi/2$ and $\phi = 0$".
 It says what the drawing shows, and where the feature a reader comes looking for lies off the plane, it says where that feature is, as the Ellis-Bronnikov caption places the throat in $g_{\theta\theta}$ and the Gödel caption places the closed timelike curves.
 A caption never stops at saying what a diagram leaves out.
+A view of rays that leave the plane names the surface they lie on and the coordinate left out of the drawing, as "the equatorial plane $\theta = \pi/2$ drawn in $t$ and $r$, with $\phi$ left out".
 Every curve drawn is a null curve; a caption calls it a null geodesic, the path light takes, only where no Christoffel symbol turns it out of the plane, and says so where one does, as for Gödel and for Kerr off the axis.
 
 ### Labels are TeX
@@ -177,7 +178,7 @@ The page lays the labels over the SVG as HTML rather than drawing them as SVG te
 ### A diagram is tied to what it was drawn from
 
 Every view records the fields it was drawn from and a stamp over them, computed by `diagram_source_version` in `build_mfs_data.py`, the one function both scripts use.
-The fields are the coordinates, the parameter symbols, the metric and its inverse, the Kretschmann scalar and the domains, and the Einstein tensor as well for a view whose input is solved as dust.
+The fields are the coordinates, the parameter symbols, the metric and its inverse, the Kretschmann scalar and the domains, the Einstein tensor as well for a view whose input is solved as dust, and the Weyl tensor and the Christoffel symbols for a view of the principal null rays.
 `build_mfs_data.py` recomputes each stamp from the metric file as it stands and refuses, naming the file, the system and the view, when one no longer matches, in `--check` and when writing alike.
 So an edit to any of those fields leaves the collection unpublishable until its diagrams are redrawn, while an edit to a history, a reference or a parameter's description leaves them standing.
 
@@ -203,13 +204,37 @@ Kasner is drawn at the exponents $(-2/7, 3/7, 6/7)$.
     /tmp/mfs-venv/bin/python _tools/derivations/null_rays.py --verify
 
 traces rays as the page's files are traced and measures, for every view with a closed form, how far the quantity each family should conserve drifts along a ray, together with the dust solutions and the equality of Natario's and Alcubierre's metrics on the plane of their axis.
+For the principal null rays it adds the checks the next section describes, and the closed forms $ct \mp r_*$ and $\phi \mp r_\sharp$ of Kerr and Kerr-Newman, which the drawing never uses.
 It writes nothing and exits non-zero if anything fails; run it after changing the method.
+
+### Rays that leave the plane
+
+Off its axis, a light ray of Kerr that runs straight in or straight out turns in $\phi$ as it goes, so no plane of two coordinates holds it.
+Such rays are the principal null congruence, and a row with `principal=True` draws it from the published Weyl tensor rather than from a formula for it.
+At each point the script takes the Weyl tensor as an operator on bivectors, in a frame the published metric makes orthonormal, requires it to be of Petrov type D, and finds its principal plane: the timelike plane whose two null directions are the Weyl tensor's repeated principal null directions.
+That plane's metric, in the basis whose projection onto the two drawn coordinates is their coordinate basis, takes the place of the coordinate plane's metric in the same null condition, so the tracing, the two families, the orientation rules and the cones are the plane method's own, and a cone is the future cone of the principal plane, as the legend says.
+The row names in `leaves` the coordinates the rays move in off the drawn pair, and the script refuses the row if the published metric or the Weyl tensor depends on one of them, since only then are the drawn curves the projections of single rays.
+It also refuses, naming the point, where the Weyl tensor is not of type D, where the principal plane has a part along a coordinate held fixed, or where it does not project one to one onto the drawn pair.
+
+Kerr and Kerr-Newman each get two such views on the equator, where the ergoregion is widest and the ring singularity lies.
+One is the projection onto $t$ and $r$, which carries the cones and both horizons; the other is the equatorial plane seen from above, $r$ and $\phi$ drawn as polar coordinates by `to_display=POLAR`, which carries the turning.
+$r$ changes monotonically along every principal ray, so the two projections, which share it, fix each ray.
+The view from above seeds twelve rays of each family evenly around the circle inscribed in its box, and `inside=True` stops each a thousandth of the drawing short of the edge of the domain, $r_+$, where $\phi$ winds without end.
+Both views mark the ergosurface, $g_{tt} = 0$, with `mark_gtt`, whose marker carries its own legend.
+Beside a curvature singularity the published components lose to rounding the digits the principal plane is found from, a direction error of rounding over $r^4$ beside Kerr's ring, so the plane is not taken where the Kretschmann scalar passes $10^{12}$ in the view's units, $r = 0.006\,GM/c^2$ beside the ring and under a pixel from it, and a ray stops there as it does wherever the metric is not finite.
+
+Before a principal view is written, the script checks at points along the drawn $r$ that its rays satisfy the geodesic equation with the published Christoffel symbols and that their directions satisfy $C_{abc[d}k_{e]}k^bk^c = 0$ with the published Weyl tensor, and refuses to write the view if either misses.
+`--verify` adds the closed forms, shows that the projection onto $t$ and $r$ is the same at $\theta = \pi/5$ as on the equator and equals the plane of $t$ and $r$ on the axis, shows that in Schwarzschild, Reissner-Nordstrom and Taub-NUT the principal plane is the plane of $t$ and $r$ their radial views already draw, and shows the script refusing van Stockum, whose Weyl tensor is of type I.
+
+Kerr and Kerr-Newman are the only charts the extension draws something new for.
+Every spherically symmetric chart that is not conformally flat has the plane of $t$ and $r$ as its principal plane, and so does Taub-NUT, whose twist sits in $g_{t\phi}$; Gödel's is the plane of $t$ and $z$ along its axis of rotation, which is flat.
+van Stockum's Weyl tensor has four distinct principal directions and no repeated one, so its light rays, which frame dragging turns out of the plane of $t$ and $r$, form no principal congruence, and the pp-wave's one repeated direction, $\partial_v$, lies in the plane of its axis, already drawn.
 
 ### What is not drawn
 
-Kerr and Kerr-Newman are drawn on the axis only.
-Off it the null curves of fixed $\theta$ and $\phi$ are not null geodesics, since $\Gamma^\theta{}_{tt}$, $\Gamma^\theta{}_{rr}$ and $\Gamma^\phi{}_{tr}$ turn a light ray launched along one out of the plane, and inside the ergoregion the plane has no null direction at all.
-The radial null geodesics they do have are the principal null congruence, which leaves the plane, and every null geodesic of van Stockum leaves its plane too.
+Kerr's and Kerr-Newman's planes of $t$ and $r$ are drawn on the axis only, and off it their principal null rays are drawn instead.
+Off the axis the null curves of fixed $\theta$ and $\phi$ are not null geodesics, since $\Gamma^\theta{}_{tt}$, $\Gamma^\theta{}_{rr}$ and $\Gamma^\phi{}_{tr}$ turn a light ray launched along one out of the plane, and inside the ergoregion the plane has no null direction at all.
+Every null geodesic of van Stockum leaves its plane too, and its Weyl tensor, of type I, gives no congruence to draw them by.
 Tolman-Bondi, Vaidya and the proper distance chart of Morris-Thorne leave functions free that no choice has been made for yet, and Oppenheimer-Snyder's collapse needs its two charts drawn together.
 The Tolman-Oppenheimer-Volkoff star leaves its redshift and mass functions free, and its one closed form member, the star of uniform density, is drawn already as the interior Schwarzschild solution.
 Lentz's soliton exists only as a numerical integral over his rhomboid sources, so no potential of his can be declared in closed form.

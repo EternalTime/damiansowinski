@@ -2042,7 +2042,7 @@ def tov(ck, src):
     def published(index):
         return pl.prep(pl.reader(next(c["value"] for c in ul if c["indices"] == [index, index])))
     Gtt, Grr, Gthth = published("t"), published("r"), published("\\theta")
-    (F0, F1, F2), (M0, M1, M2) = pl.numeric["Phi"][2], pl.numeric["m"][2]
+    (_, F1, F2), (M0, M1, _) = pl.numeric["Phi"][2], pl.numeric["m"][2]
     rho, pres, r = sp.Symbol("rho"), sp.Symbol("p"), pl.x1
     solved = sp.solve([Gtt + 8 * sp.pi * rho, Grr - 8 * sp.pi * pres], [M1, F1], dict=True)[0]
     dm = sp.lambdify((r, M0, rho), solved[M1], "numpy")

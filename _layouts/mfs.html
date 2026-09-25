@@ -1227,6 +1227,7 @@
           none: '<circle class="nr-none" cx="17" cy="8" r="2.6"/>',
           grr: '<line class="nr-grr" x1="2" y1="8" x2="32" y2="8"/>',
           g00: '<line class="nr-g00" x1="2" y1="8" x2="32" y2="8"/>',
+          gtt: '<line class="nr-gtt" x1="2" y1="8" x2="32" y2="8"/>',
           throat: '<line class="nr-throat" x1="2" y1="8" x2="32" y2="8"/>',
           apparent: '<line class="nr-apparent" x1="2" y1="8" x2="32" y2="8"/>',
           singular: '<path class="nr-singular" d="' + nrZigzag(2, 8, 32, 8, 5, 3) + '"/>',
@@ -1239,12 +1240,16 @@
 
       function nrLegend(view) {
         var x0 = view.plane[0], x1 = view.plane[1];
-        var items = [['M', view.families[1]], ['P', view.families[0]], ['cone', 'future light cone']];
+        // A view of the principal null rays says what its cones are, and one drawn from
+        // above, with the time left out, has none.
+        var items = [['M', view.families[1]], ['P', view.families[0]]];
+        if (view.cones.length) items.push(['cone', view.cone ? nrEsc(view.cone) : 'future light cone']);
         var seen = {};
         view.markers.forEach(function(mk) { seen[mk.kind] = mk; });
         if (view.cones.some(function(c) { return c.kind === 'none'; })) items.push(['none', 'no null direction in this plane']);
         if (seen.grr) items.push(['grr', tex('g^{' + x1 + x1 + '} = 0')]);
         if (seen.g00) items.push(['g00', tex('g^{' + x0 + x0 + '} = 0')]);
+        if (seen.gtt) items.push(['gtt', nrProse(nrEsc(seen.gtt.legend))]);
         if (seen.apparent) items.push(['apparent', tex('|\\nabla R|^2 = 0') + ', with ' + tex('R') + ' the areal radius']);
         if (seen.throat) items.push(['throat', tex('\\partial_r R = 0') + ', the throat']);
         if (view.areal) items.push(['areal', 'spheres of fixed areal radius']);
@@ -2219,6 +2224,7 @@
     .nr-none { fill: none; stroke: rgba(168,192,208,0.6); stroke-width: 1.1; }
     .nr-grr { fill: none; stroke: var(--cyan); stroke-width: 2; stroke-dasharray: 7 5; }
     .nr-g00 { fill: none; stroke: var(--text-mid); stroke-width: 2; stroke-dasharray: 10 4 2 4; }
+    .nr-gtt { fill: none; stroke: var(--green-light); stroke-width: 2.4; stroke-dasharray: 1 4.5; stroke-linecap: round; }
     .nr-throat { fill: none; stroke: var(--amber); stroke-width: 2.6; stroke-dasharray: 2 4; }
     .nr-apparent { fill: none; stroke: var(--blue-lighter); stroke-width: 2.8; stroke-dasharray: 0.5 5; stroke-linecap: round; }
     .nr-singular { fill: none; stroke: var(--pink-dark); stroke-width: 1.8; }
@@ -2686,6 +2692,7 @@
       .mfs-print-body .nr-cone { stroke: #a8841f; }
       .mfs-print-body .nr-cone-dot { fill: #a8841f; }
       .mfs-print-body .nr-areal, .mfs-print-body .nr-reference, .mfs-print-body .nr-g00 { stroke: #666; }
+      .mfs-print-body .nr-gtt { stroke: #2a6e2a; }
       /* Every view of the conformal diagram prints too, at most 12cm wide, a tall one still
          held to its screen height, with its lines in the print copy's darker inks. */
       .mfs-print-body .mfs-cd-figure { width: 12cm; }

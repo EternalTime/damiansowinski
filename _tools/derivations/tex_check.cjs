@@ -8,7 +8,7 @@
                   which the page prints when it merges a component with its opposite, the
                   line elements, domains, geodesics and scalars, the signature, and the
                   mathematics inside every history, convention and parameter description;
-     diagrams     every label, tick, caption and declared input of the null ray diagrams;
+     diagrams     every label, tick, legend, caption and declared input of the null ray diagrams;
      conformal    every label, legend, caption, restriction, setting and input of the
                   conformal diagrams.
 
@@ -45,7 +45,7 @@ const DATA = path.join(ROOT, 'MFS', 'assets', 'data');
 // Mathematics set as it stands, and prose whose mathematics sits between dollar signs.
 const MATH = new Set(['line_element', 'value', 'ricci_scalar', 'kretschmann', 'signature', 'domains', 'geodesics']);
 const PROSE = new Set(['history', 'convention', 'description', 'caption', 'input', 'settings', 'restriction',
-                       'label', 'xlabel', 'ylabel', 'legend', 'text', 'families']);
+                       'label', 'xlabel', 'ylabel', 'legend', 'text', 'families', 'cone']);
 
 function segments(text) {
   const out = [];
