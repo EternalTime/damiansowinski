@@ -74,6 +74,29 @@ A cloud-sync conflict copy dropped into the metrics folder, named like `kerr 2.j
 Those are the same names `.gitignore` already keeps out of the repository.
 Any other file name is read, so a metric whose `id` does not match its file name still stops the command.
 
+## How long a spacetime takes to open
+
+`_tools/page_timing.mjs` opens every spacetime and every chart in headless Chrome as a reader does, and times each from the click until its mathematics is typeset and the page answers again:
+
+    bundle exec jekyll serve
+    node _tools/page_timing.mjs http://127.0.0.1:4000
+
+It prints each chart's time and the longest task that held the page, slowest last, and exits non-zero when a chart takes longer than `--budget`, 10 seconds by default.
+`--metric <id>` times one spacetime, `--phone` lays the page out as an upright iPhone, and `--cpu 4` slows the processor four times over, as Chrome's own tools do to stand in for a slower phone.
+It needs Chrome and Node 22 or later, and nothing installed.
+
+Once the observers measured every line before marking any, what was left of a large chart's time went to laying out a whole tensor again and again.
+A tensor with room for one column only was a multicol container of one column, which the browser lays out whole whenever anything inside it changes, so each index toggle, each fade marked at a line's edge and each change in the width of the prose above laid out all of Natário's Weyl tensor once more.
+`reflowColumns` in `_layouts/mfs.html` now leaves a tensor of one column a plain block, as the print stylesheet already did, and counts every tensor's columns before it sets any.
+`printPrepare` measures every line of the print copy before it sets the width of any, for the same reason the observers do.
+
+On 25 September 2026, in Chrome 154 on an M4 Pro at 1440 by 900, Natário's general flow chart was ready in 2.9 seconds, 2.0 of them in MathJax, Lentz in 1.9, the Mixmaster in 1.6 and Kerr-Newman in 1.0, where with the multicol containers they had taken 4.7, 2.9, 2.4 and 1.4, and every other chart was ready in under a second.
+Laid out as an iPhone with the processor slowed four times, Natário's took 10.0 seconds, 7.9 of them in MathJax, Lentz 6.5 and the Mixmaster 5.1, where they had taken 18.5, 13.7 and 10.0, and every other chart took under 5.
+Once that chart was open, flipping the first index of its Weyl tensor took 0.5 or 1.1 seconds, where it had taken 1.5 or 2.9, and a change in the window's width 0.1, where it had taken 2.8.
+Pressing print on it brought up the print dialog in 2.1 seconds, where it had taken about 3.
+Those three are the largest by far, with a quarter of a million, 150,000 and 125,000 elements on the page, and the next, Kerr-Newman and Alcubierre, have about 60,000.
+With every layout done once, the time left grows with the length of the published expressions and is mostly MathJax setting them, so a chart several times the size of Natário's would want its tensors typeset as the reader reaches them rather than all at once.
+
 ## Dashes in the prose
 
 The prose fields carry no dashes as punctuation.
