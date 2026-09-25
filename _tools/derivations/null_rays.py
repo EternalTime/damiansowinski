@@ -222,6 +222,7 @@ class Diagram:
                                     # outermost zero of g^rr at that x^0, drawn as a horizon
     jump: tuple = None              # (x^0, legend): where a declared function jumps, drawn
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
+    star: dict = None               # a declared polytrope, {"K": ..., "rho_c": ...}; see StarSolver
 
 
 def _alcubierre_profile():
@@ -255,6 +256,15 @@ _KRASNIKOV_TUBE = ("1 - (2 - 1/5)*(1 + tanh((1 - r**2)/(2*3/20)))/2*(1 + tanh((t
                    "*(1 + tanh(x/(3/20)))/2*(1 + tanh((4 - x)/(3/20)))/2")
 
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
+# The polytrope the conformal diagram declares, and what it makes of the star.
+POLYTROPE = {"K": 100, "rho_c": "1.28e-3"}
+POLYTROPE_INPUT = ("A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
+                   "$\\rho c^2 = \\rho_0c^2 + p$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$ in "
+                   "units where $G = c = M_\\odot = 1$, solved from this spacetime's own $G^t{}_t$ and "
+                   "$G^r{}_r$: a star of $M = 1.40\\,M_\\odot$ and $R = 14.2$ km.")
+POLYTROPE_STATED = {"M": (1.40, 2), "R_km": (14.2, 1)}
+KM = 1.4766250614                       # GM_sun/c^2 in km
+
 BIANCHI_DUST = {"funcs": ["a_1", "a_2", "a_3"], "eqs": [["x", "x"], ["y", "y"], ["z", "z"]],
                 "rates": [-0.5, 1.5, 2.0]}
 
@@ -423,6 +433,12 @@ DIAGRAMS = [
             (-3 * math.pi / 2, 3 * math.pi / 2, -3 * math.pi / 2, 3 * math.pi / 2), "$r\\phi/R$", "$t/R$",
             {"R": 1}, {"r": "3/2", "z": "0"}, to_display=((0, 1.5), (1, 0)), orient="vector",
             families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    Diagram("tov", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 16, -8, 8),
+            "$r\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, areal=True, star=POLYTROPE,
+            input=POLYTROPE_INPUT),
+    Diagram("tov", "spherical", "through", "through the centre", ("t", "r"), (0, 16, -16, 16),
+            "$x\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, mirror=True, families=SIDEWAYS,
+            cones=(4, 8), areal=True, star=POLYTROPE, input=POLYTROPE_INPUT),
     # A shell of null dust falls in along v = 0: flat inside, Schwarzschild outside, as the
     # conformal diagram declares it. The outgoing chart draws its time reverse.
     Diagram("vaidya", "eddington_finkelstein_ingoing", "shell", "an imploding shell", ("v", "r"),
@@ -846,6 +862,24 @@ CAPTIONS = {
         "turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and $\\Gamma^r{}_{\\phi\\phi}$, and the ray "
         "moving to $-\\phi$ away from it.",
     ],
+    ("tov", "spherical", "radial"): [
+        "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, the same at every fixed "
+        "angle by spherical symmetry, through a star of fluid with a polytrope for its equation of "
+        "state. Its mass and redshift functions come from $G^t{}_t$ and $G^r{}_r$ and its pressure "
+        "from $\\partial_r p = -(\\rho c^2 + p)\\,\\partial_r\\Phi$, and beyond its surface, where the "
+        "pressure falls to zero, the same coordinates carry on as Schwarzschild's exterior. The "
+        "rays obey $c\\,dt = \\pm e^{-\\Phi}(1 - 2m/r)^{-1/2}\\,dr$.",
+        "The cones are narrowest at the centre, where a clock runs at $e^\\Phi = 0.67$ of the rate "
+        "$t$ counts, and they open toward the surface, where it runs at $0.84$, and on toward 45° far "
+        "away. They stay open everywhere, since at $2GM/c^2R = 0.29$ the star is well inside "
+        "Buchdahl's bound of $8/9$ and has no horizon.",
+    ],
+    ("tov", "spherical", "through"): [
+        "This is the line through the centre of the star in the plane $\\theta = \\pi/2$: $x = r$ on the "
+        "right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, which spherical symmetry makes "
+        "exact. Rays cross the centre smoothly, where the cones are narrowest and the Kretschmann "
+        "scalar is finite, and the surface shows on both sides.",
+    ],
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): [
         "This is the plane of $v$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn with $cv - r$ up "
         "so that the ingoing rays, $v$ constant, run at 45°. A shell of null dust of mass $M$ falls in "
@@ -974,6 +1008,9 @@ class DustSolver:
         y[0::2] = np.where(y[0::2] > 0, y[0::2], np.nan)
         return y
 
+    def at(self, name, x0, r):
+        return self.values(name, x0)
+
     def values(self, name, t):
         """(a, a dot, a double dot) of one scale factor at chart times t."""
         i = self.funcs.index(name)
@@ -982,7 +1019,123 @@ class DustSolver:
         return y[2 * i], y[2 * i + 1], np.asarray(acc[i], dtype=float) * np.ones_like(y[0])
 
 
+class StarSolver:
+    """A static star of fluid, its redshift and mass functions solved for a declared polytrope
+    from an entry's own published Einstein tensor, G = c = M_sun = 1.
+
+    G^t_t = -8 pi rho and G^r_r = 8 pi p, read from the published components with Phi and m
+    as plain symbols, are linear in m' and Phi', and give them; the pressure follows from the
+    conservation law p' = -(rho + p) Phi', which the Bianchi identity makes the same statement
+    as G^theta_theta = G^r_r, so the published G^theta_theta is left for a check. The equation
+    of state is p = K rho_0^2 with energy density rho = rho_0 + p. Outside the surface, where
+    p = 0, m = M and e^(2 Phi) = 1 - 2M/r, the Schwarzschild exterior in the same coordinates,
+    and Phi inside is shifted to meet it. conformal.py draws the same star.
+    """
+
+    funcs = ("Phi", "m")
+
+    def __init__(self, metric_id, system_id, K, rho_c, fixed=None):
+        _, entry, reader = load(metric_id, system_id)
+        self.entry, self.kappa, self.rho_c = entry, K, rho_c
+        ul = entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
+        r = reader.symbol["r"]
+        by_plain = {reader._plain(n): sym for n, sym in reader.symbol.items()}
+        held = {by_plain[k]: number(v) for k, v in (fixed or EQUATOR).items()}
+        symbols = {}
+        for name in self.funcs:
+            symbols[name] = (reader.parameters[name], sp.symbols(f"_{name}0 _{name}1 _{name}2"))
+
+        def published(index):
+            e = reader(next(c["value"] for c in ul if c["indices"] == [index, index]))
+            for fn, (F0, F1, F2) in symbols.values():
+                e = e.subs(sp.Derivative(fn, (r, 2)), F2).subs(sp.Derivative(fn, r), F1).subs(fn, F0)
+            return sp.simplify(e.subs(reader.c, 1).subs(held))
+        Gtt, Grr = published("t"), published("r")
+        self.Gthth = published("\\theta")
+        (_, F1, F2), (M0, M1, _) = symbols["Phi"][1], symbols["m"][1]
+        self.r, self.symbols = r, (F1, F2, M0, M1)
+        rho, pres = sp.Symbol("rho"), sp.Symbol("p")
+        solved = sp.solve([Gtt + 8 * sp.pi * rho, Grr - 8 * sp.pi * pres], [M1, F1], dict=True)[0]
+        self.dm = sp.lambdify((r, M0, rho), solved[M1], "numpy")
+        self.dPhi = sp.lambdify((r, M0, pres), solved[F1], "numpy")
+        self.p_c = K * rho_c ** 2
+        self.r0 = 1e-6
+
+        def rhs(x, y):
+            m, _, p = y
+            e, _ = self.energy(p)
+            f = self.dPhi(x, m, p)
+            return [self.dm(x, m, e), f, -(e + max(p, 0)) * f]
+
+        def surface(x, y):
+            return y[2]
+        surface.terminal = True
+        r0 = self.r0
+        self.ivp = solve_ivp(rhs, (r0, 100), [4 * np.pi / 3 * (rho_c + self.p_c) * r0 ** 3, 0.0, self.p_c],
+                             events=surface, rtol=1e-12, atol=1e-16, dense_output=True, method="DOP853")
+        self.R = float(self.ivp.t_events[0][0])
+        self.M = float(self.ivp.sol(self.R)[0])
+        self.shift = 0.5 * np.log(1 - 2 * self.M / self.R) - float(self.ivp.sol(self.R)[1])
+
+    def energy(self, p):
+        rho0 = np.sqrt(np.maximum(p, 0) / self.kappa)
+        return rho0 + p, rho0
+
+    def values(self, x):
+        """(value, first, second derivative) of Phi and of m at radii x."""
+        K, R, M, r0 = self.kappa, self.R, self.M, self.r0
+        x = np.atleast_1d(np.asarray(x, dtype=float))
+        inside = x < R
+        out = {"Phi": [np.empty_like(x) for _ in range(3)], "m": [np.empty_like(x) for _ in range(3)]}
+        if inside.any():
+            xi = np.maximum(x[inside], r0)
+            m, phi, p = self.ivp.sol(xi)
+            p = np.maximum(p, 0)
+            e, rho0 = self.energy(p)
+            f = self.dPhi(xi, m, p)
+            me = self.dm(xi, m, e)
+            dp = -(e + p) * f
+            de = -(1 + 2 * K * rho0) * f / (2 * K) + dp
+            num, den = m + 4 * np.pi * xi ** 3 * p, xi * (xi - 2 * m)
+            dnum = me + 12 * np.pi * xi ** 2 * p + 4 * np.pi * xi ** 3 * dp
+            dden = 2 * xi - 2 * m - 2 * me * xi
+            for store, v in zip(out["Phi"], (phi + self.shift, f, (dnum * den - num * dden) / den ** 2)):
+                store[inside] = v
+            for store, v in zip(out["m"], (m, me, 8 * np.pi * xi * e + 4 * np.pi * xi ** 2 * de)):
+                store[inside] = v
+        outer = ~inside
+        if outer.any():
+            xo = x[outer]
+            for store, v in zip(out["Phi"], (0.5 * np.log(1 - 2 * M / xo), M / (xo * (xo - 2 * M)),
+                                             -2 * M * (xo - M) / (xo ** 2 * (xo - 2 * M) ** 2))):
+                store[outer] = v
+            for store, v in zip(out["m"], (np.full_like(xo, M), 0 * xo, 0 * xo)):
+                store[outer] = v
+        return out
+
+    def at(self, name, x0, r):
+        """A declared function and its first two derivatives at chart points (x^0, r)."""
+        shape = np.broadcast(np.asarray(x0), np.asarray(r)).shape
+        return [v.reshape(shape) for v in self.values(np.broadcast_to(np.asarray(r, dtype=float), shape).ravel())[name]]
+
+    def theta_theta(self, x):
+        """The published G^theta_theta - 8 pi p along the solution, against 8 pi p_c: zero if
+        the star solves the one field equation its construction did not use."""
+        F1, F2, M0, M1 = self.symbols
+        f = sp.lambdify((self.r, F1, F2, M0, M1), self.Gthth, "numpy")
+        v = self.values(x)
+        p = np.maximum(self.ivp.sol(x)[2], 0)
+        return (f(x, v["Phi"][1], v["Phi"][2], v["m"][0], v["m"][1]) - 8 * np.pi * p) / (8 * np.pi * self.p_c)
+
+
 _SOLVERS = {}
+
+
+def star_solver(metric_id, system_id, star):
+    key = (metric_id, system_id, json.dumps(star, sort_keys=True))
+    if key not in _SOLVERS:
+        _SOLVERS[key] = StarSolver(metric_id, system_id, float(number(star["K"])), float(number(star["rho_c"])))
+    return _SOLVERS[key]
 
 
 def dust_solver(metric_id, system_id, time_name, dust):
@@ -1014,8 +1167,8 @@ class Chart:
         by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
         self.fixed_syms = [by_plain[name] for name in spec.fixed]
         self.fixed_vals = [float(number(spec.fixed[name])) for name in spec.fixed]
-        self.solver = (dust_solver(spec.metric, spec.system, spec.plane[0], spec.dust)
-                       if spec.dust else None)
+        self.solver = (dust_solver(spec.metric, spec.system, spec.plane[0], spec.dust) if spec.dust
+                       else star_solver(spec.metric, spec.system, spec.star) if spec.star else None)
 
         def prep(expr):
             expr = sp.sympify(expr)
@@ -1074,7 +1227,7 @@ class Chart:
             args = [np.full(shape, v) for v in self.fixed_vals]
             if self.solver:
                 for name in self.solver.funcs:
-                    args += list(self.solver.values(name, x0))
+                    args += list(self.solver.at(name, x0, r))
             with np.errstate(all="ignore"):
                 out = np.asarray(f(x0, r, *args))
             if np.iscomplexobj(out):
@@ -1630,6 +1783,11 @@ class Plot:
             line = clip_unit(np.array(ends))
             if line is not None:
                 out.append({"kind": "shell", "lines": [rounded(line)], "legend": legend})
+        if spec.star:
+            R = self.c.solver.R
+            line = clip_unit(np.array([self.to_unit(self.to_display(x0, R)) for x0 in (-1e6, 1e6)]))
+            out.append({"kind": "surface", "lines": [rounded(line)],
+                        "legend": "the surface of the star, where the pressure falls to zero"})
         if spec.horizon:
             at, family, legend = spec.horizon
             r0 = outer_root(self.c, float(number(at)))
@@ -1920,14 +2078,28 @@ def principal_checks(chart, n=241):
     return {"points": int(finite.sum()), "geodesic": geodesic, "repeated": repeated}
 
 
+def star_checks(spec, star):
+    """A declared star solves the one field equation its construction did not use, the
+    published G^theta_theta = 8 pi p, and is the star its declared input says it is."""
+    x = np.linspace(0.05 * star.R, 0.95 * star.R, 200)
+    miss = float(np.max(np.abs(star.theta_theta(x))))
+    stated = {"M": star.M, "R_km": star.R * KM}
+    wrong = {k: v for k, v in stated.items() if round(v, POLYTROPE_STATED[k][1]) != POLYTROPE_STATED[k][0]}
+    if not miss < 1e-7 or wrong or not 2 * star.M / star.R < 8 / 9:
+        raise SystemExit(f"{key(spec)}: the star misses G^theta_theta by {miss:.1e}, or is not the star its "
+                         f"input states: {wrong}")
+
+
 def draw(spec):
     chart = Chart(spec)
     plot = Plot(chart)
     families = plot.rays()
-    fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust else [])
+    fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust or spec.star else [])
               + (PRINCIPAL_FIELDS if spec.principal else []))
     if spec.principal:
         principal_checks(chart)
+    if spec.star:
+        star_checks(spec, chart.solver)
     view = {
         "id": spec.view, "label": spec.label, "plane": list(spec.plane), "families": list(spec.families),
         "xlabel": spec.xlabel, "ylabel": spec.ylabel, "ticks": axes(spec), "box": list(spec.box),

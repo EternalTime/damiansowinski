@@ -1256,6 +1256,7 @@
           gtt: '<line class="nr-gtt" x1="2" y1="8" x2="32" y2="8"/>',
           event: '<line class="nr-event" x1="2" y1="8" x2="32" y2="8"/>',
           shell: '<line class="nr-shell" x1="2" y1="8" x2="32" y2="8"/>',
+          surface: '<line class="nr-surface" x1="2" y1="8" x2="32" y2="8"/>',
           throat: '<line class="nr-throat" x1="2" y1="8" x2="32" y2="8"/>',
           apparent: '<line class="nr-apparent" x1="2" y1="8" x2="32" y2="8"/>',
           singular: '<path class="nr-singular" d="' + nrZigzag(2, 8, 32, 8, 5, 3) + '"/>',
@@ -1279,6 +1280,7 @@
         if (seen.g00) items.push(['g00', tex('g^{' + x0 + x0 + '} = 0')]);
         if (seen.gtt) items.push(['gtt', nrProse(nrEsc(seen.gtt.legend))]);
         if (seen.shell) items.push(['shell', nrProse(nrEsc(seen.shell.legend))]);
+        if (seen.surface) items.push(['surface', nrProse(nrEsc(seen.surface.legend))]);
         if (seen.event) items.push(['event', nrProse(nrEsc(seen.event.legend))]);
         if (seen.apparent) items.push(['apparent', tex('|\\nabla R|^2 = 0') + ', with ' + tex('R') + ' the areal radius']);
         if (seen.throat) items.push(['throat', tex('\\partial_r R = 0') + ', the throat']);
@@ -2379,6 +2381,7 @@
     .nr-gtt { fill: none; stroke: var(--green-light); stroke-width: 2.4; stroke-dasharray: 1 4.5; stroke-linecap: round; }
     .nr-throat { fill: none; stroke: var(--amber); stroke-width: 2.6; stroke-dasharray: 2 4; }
     .nr-shell { fill: none; stroke: var(--amber); stroke-width: 2.4; stroke-linecap: round; }
+    .nr-surface { fill: none; stroke: var(--amber); stroke-width: 2; stroke-dasharray: 12 3 2 3; }
     .nr-event { fill: none; stroke: var(--text-bright); stroke-width: 2.2; stroke-dasharray: 9 4 2 4; stroke-linecap: round; }
     .nr-apparent { fill: none; stroke: var(--blue-lighter); stroke-width: 2.8; stroke-dasharray: 0.5 5; stroke-linecap: round; }
     .nr-singular { fill: none; stroke: var(--pink-dark); stroke-width: 1.8; }
@@ -2872,7 +2875,7 @@
       .mfs-print-body .nr-cone-dot { fill: #a8841f; }
       .mfs-print-body .nr-areal, .mfs-print-body .nr-reference, .mfs-print-body .nr-g00 { stroke: #666; }
       .mfs-print-body .nr-gtt { stroke: #2a6e2a; }
-      .mfs-print-body .nr-shell { stroke: #b8741a; }
+      .mfs-print-body .nr-shell, .mfs-print-body .nr-surface { stroke: #b8741a; }
       .mfs-print-body .nr-event { stroke: #000; }
       .mfs-print-body .mfs-pj-svg { background: #fff; }
       .mfs-print-body .pj-floor { stroke: #c8c8c8; }
