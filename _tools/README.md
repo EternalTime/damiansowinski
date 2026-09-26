@@ -300,7 +300,7 @@ A cone whose axis points along the camera's own direction is the worst case, so 
 Every class a figure paints needs a style in `_layouts/mfs.html`, as `.pj-<class>` on the screen and under `.mfs-print-body` in print, and a fill as `.pj-<class>-fill`.
 A path the stylesheet does not know is painted as nothing at all, so a test holds every class of every figure to having both.
 
-A coordinate system with neither a flat view nor a figure, in a spacetime that has a diagram file, states why under `none`, from `NOT_DRAWN` in `null_rays.py`, stamped by the fields it speaks of, and the page prints the reason under the heading "spacetime diagram".
+A coordinate system with neither a flat view nor a figure has no section on the page, and a spacetime with neither has no diagram file, which a full redraw removes if one is left behind; `build_mfs_data.py` refuses a diagram file that draws nothing.
 
 ### What is not drawn
 
@@ -310,7 +310,7 @@ van Stockum's plane of $t$ and $r$ is not drawn: every null geodesic leaves it, 
 The proper distance chart of Morris-Thorne leaves its functions free with no choice made for them, while its spherical chart draws the Ellis-Bronnikov member.
 Natário's plane flow chart, the Brinkmann chart of the pp-wave and Minkowski's double null chart would each only repeat a plane drawn elsewhere, flat or the same as another chart's.
 
-Three coordinate systems have nothing drawn and say why on the page, from `NOT_DRAWN` in `null_rays.py`.
+Nothing at all is drawn of Lentz's soliton, the Mixmaster universe or Gott's core.
 Lentz's soliton exists only as a numerical integral over his rhomboid sources, so no soliton of the class can be written down, and a potential written in its place would draw another soliton of the class.
 The Mixmaster's scale factors reach the singularity through an endless sequence of Kasner epochs, which a drawing of one solution follows only for a handful, and the one plane of time and an Euler angle that keeps its light rays, $t$ against $\psi$, would follow $a_3$ alone.
 Gott's core, the cosmic string's interior, is flat on its plane of $t$ and $\chi$, and acts on light across it, in the cap of $\chi$ and $\phi$.
@@ -337,10 +337,9 @@ A file records every coordinate system it read and a stamp over the fields it re
 A diagram can read another spacetime's metric, as the interior Schwarzschild star reads the exterior of `schwarzschild.json`, and `build_mfs_data.py` refuses the file when any of those fields changes, naming the system and the command that redraws it.
 The domains are not among the fields, since no conformal diagram reads one.
 
-`DRAWN` in the script names the seventeen spacetimes that have a diagram, and `NOT_DRAWN` gives each of the others the reason it has none: every event's future is the whole spacetime for Gödel and van Stockum, the diagram is whatever a free function makes it for the warp drives, the Krasnikov tube, Tolman-Bondi and Bianchi, the Mixmaster has no surface that carries its causal structure, and so on.
+`DRAWN` in the script names the seventeen spacetimes that have a diagram and `NOT_DRAWN` the twelve that have none: every event's future is the whole spacetime for Gödel and van Stockum, the diagram is whatever a free function makes it for the warp drives, the Krasnikov tube, Tolman-Bondi and Bianchi, the Mixmaster has no surface that carries its causal structure, and so on.
 A free function does not by itself rule a diagram out: where every choice of it gives the same shape, as for the Tolman-Oppenheimer-Volkoff star and the Morris-Thorne wormhole, the diagram is drawn with a declared choice that moves only the lines inside, and the Malament-Hogarth toy is drawn for every conformal factor at once, since a conformal factor changes no null direction.
-Each of the twelve gets a file of its own that carries its reason under `none` in place of views, stamped by the coordinates, parameters and metric components of each coordinate system it speaks of, and the page prints the reason under the heading "conformal diagram".
-`build_mfs_data.py` refuses a file with both views and a reason or with neither, a test holds that every spacetime has one or the other, and the script stops if a metric file is in neither table, so a new spacetime needs a decision.
+Those twelve have no file, which a full redraw removes if one is left behind, so the page has no conformal diagram section for them; `build_mfs_data.py` refuses a file that draws nothing, and the script stops if a metric file is in neither table, so a new spacetime needs a decision.
 
 A view of a surface that is not the whole spacetime carries `restriction`, which the page prints in a band across the top of the figure, never in a footnote.
 Kerr and Kerr-Newman are drawn on the symmetry axis and the cosmic string on the half plane of fixed $\phi$ and $z$, and the tests hold those three to carrying a restriction on every view.

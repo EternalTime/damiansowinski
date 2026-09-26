@@ -138,8 +138,8 @@ def load_diagrams(metrics):
         if path.stem not in by_id:
             raise DataError(f"diagrams/{path.name} has no metric file to belong to")
         systems = {s["id"]: s for s in by_id[path.stem].get("coordinates") or []}
-        # The flat views, the figures projected from three coordinates, and the reason a
-        # system has neither, each stamped with what it was drawn from or speaks of.
+        # The flat views and the figures projected from three coordinates, each stamped with
+        # what it was drawn from.
         for part, what in (("systems", "view"), ("projections", "figure")):
             for system_id, views in data.get(part, {}).items():
                 if system_id not in systems:
@@ -148,15 +148,8 @@ def load_diagrams(metrics):
                 for view in views:
                     check_diagram_stamp(path, systems[system_id], f"the {system_id} {what} {view['id']!r} was "
                                         "drawn from", view["source"])
-        for system_id, reason in data.get("none", {}).items():
-            if system_id not in systems:
-                raise DataError(f"diagrams/{path.name} gives a reason for {system_id!r}, "
-                                f"which {path.stem}.json has no coordinate system for")
-            if system_id in data.get("systems", {}) or system_id in data.get("projections", {}):
-                raise DataError(f"diagrams/{path.name} gives a reason for drawing nothing of {system_id!r}, "
-                                "and draws it")
-            check_diagram_stamp(path, systems[system_id], f"the reason {system_id} is not drawn speaks of",
-                                reason["source"])
+        if not any(data.get("systems", {}).values()) and not any(data.get("projections", {}).values()):
+            raise DataError(f"diagrams/{path.name} draws nothing")
         diagrams[path.stem] = data
     return diagrams
 
@@ -166,9 +159,7 @@ def load_conformal(metrics):
 
     A conformal diagram is of a whole spacetime and may read more than one coordinate
     system, or another spacetime's, as the interior Schwarzschild star reads the exterior
-    of schwarzschild.json, so the file lists every system it read under `source`. A
-    spacetime with no diagram has a file all the same, carrying the reason under `none` in
-    place of views, stamped by the systems it speaks of.
+    of schwarzschild.json, so the file lists every system it read under `source`.
     """
     by_id = {m["id"]: m for m in metrics}
     conformal = {}
@@ -199,9 +190,9 @@ def load_conformal(metrics):
                     f"{where} was drawn from components of the {source['system']} system that "
                     f"{source['metric']}.json no longer publishes; redraw it with "
                     f"_tools/derivations/conformal.py --metric {path.stem}")
-        if bool(data.get("views")) == bool(data.get("none")):
-            raise DataError(f"{where} must carry either views or the reason it has none, and not both")
-        for view in data.get("views", []):
+        if not data.get("views"):
+            raise DataError(f"{where} draws nothing")
+        for view in data["views"]:
             if view.get("system") and view["system"] not in {s["id"] for s in by_id[path.stem]["coordinates"]}:
                 raise DataError(f"{where}: the view {view['id']!r} tints {view['system']!r}, which "
                                 f"{path.stem}.json has no coordinate system for")

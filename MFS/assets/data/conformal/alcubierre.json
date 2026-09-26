@@ -1,1 +1,0 @@
-{"metric":"alcubierre","source":[{"metric":"alcubierre","system":"cartesian","fields":["coords","metric_components","parameters"],"version":"98c798c422bb8c1e"}],"none":["The Alcubierre warp drive has no conformal diagram of its own. Where light can reach depends on the whole history of the bubble, $v_s(t)$ and $f$ from its start to its end, which the metric leaves free."]}
