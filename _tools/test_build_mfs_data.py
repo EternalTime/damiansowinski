@@ -84,9 +84,7 @@ def conformal_files():
 
 def conformal_prose(name, conformal):
     """Yield every field of a conformal diagram file a reader sees, each with its place."""
-    for position, paragraph in enumerate(conformal.get("none", [])):
-        yield f"conformal/{name}.json none[{position}]", paragraph
-    for view in conformal.get("views", []):
+    for view in conformal["views"]:
         where = f"conformal/{name}.json {view['id']}"
         yield f"{where}.label", view["label"]
         for position, paragraph in enumerate(view["caption"]):
@@ -102,8 +100,7 @@ def conformal_prose(name, conformal):
 
 def diagram_prose(name, diagram):
     """Yield every sentence carrying field of a diagram file, each with the name of its place:
-    its flat views, its figures in three dimensions and the reasons it gives for drawing
-    nothing of a coordinate system."""
+    its flat views and its figures in three dimensions."""
     for system, views in diagram["systems"].items():
         for view in views:
             where = f"diagrams/{name}.json {system}/{view['id']}"
@@ -132,9 +129,6 @@ def diagram_prose(name, diagram):
                 yield f"{where}.legend[{position}]", text
             for position, label in enumerate(figure["labels"]):
                 yield f"{where}.labels[{position}]", label["text"]
-    for system, reason in diagram.get("none", {}).items():
-        for position, paragraph in enumerate(reason["text"]):
-            yield f"diagrams/{name}.json {system}.none[{position}]", paragraph
 
 
 class PublishedFilesAreCurrent(unittest.TestCase):
@@ -528,6 +522,14 @@ class Diagrams(unittest.TestCase):
             self.load_diagram_folder({"ghost.json": {"metric": "ghost", "systems": {}}}, [])
         self.assertIn("ghost", str(raised.exception))
 
+    def test_a_diagram_file_that_draws_nothing_is_refused(self):
+        """A spacetime with no diagram has no file, rather than one the page would find empty."""
+        metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "coordinates": [{"id": "a"}]}
+        for diagram in ({"metric": "x", "systems": {}}, {"metric": "x", "systems": {"a": []}, "projections": {}}):
+            with self.assertRaises(build.DataError) as raised:
+                self.load_diagram_folder({"x.json": diagram}, [metric])
+            self.assertIn("draws nothing", str(raised.exception))
+
     def metric_with_a_changed_component(self):
         metric_id = sorted(self.diagrams)[0]
         system_id = next(iter(self.diagrams[metric_id]["systems"]))
@@ -548,8 +550,7 @@ class Diagrams(unittest.TestCase):
 
 class Figures(unittest.TestCase):
     """A figure in three dimensions is drawn from what its metric publishes, inside its box,
-    and names in its legend only what it draws; a reason given for drawing nothing is tied to
-    the metric in the same way."""
+    and names in its legend only what it draws."""
 
     def setUp(self):
         self.metrics = build.load_metrics()
@@ -594,12 +595,9 @@ class Figures(unittest.TestCase):
                 self.assertEqual(value.replace("\\$", "").count("$") % 2, 0, field)
                 self.assertEqual(value.count("{"), value.count("}"), field)
 
-    def test_a_changed_component_stops_a_figure_and_a_reason(self):
+    def test_a_changed_component_stops_a_figure(self):
         by_id = {m["id"]: m for m in self.metrics}
-        stamped = [(name, system, figure["id"]) for name, system, figure in self.figures]
-        stamped += [(name, system, None) for name, diagram in self.diagrams.items()
-                    for system in diagram.get("none", {})]
-        for name, system, view in stamped:
+        for name, system, _ in self.figures:
             changed = copy.deepcopy(self.metrics)
             chart = next(s for s in next(m for m in changed if m["id"] == name)["coordinates"] if s["id"] == system)
             chart["metric_components"][0]["value"] = "2" + chart["metric_components"][0]["value"]
@@ -677,18 +675,17 @@ class ConformalDiagrams(unittest.TestCase):
             self.load_folder({"x.json": {"metric": "x", "source": source, "views": []}}, [metric])
         self.assertIn("'b'", str(raised.exception))
 
-    def test_every_spacetime_has_a_diagram_or_says_why_not(self):
-        """No spacetime is left with a silent gap: each has a file, of views or of the reason."""
-        self.assertEqual(set(self.conformal), {m["id"] for m in self.metrics})
-        for metric_id, data in self.conformal.items():
-            self.assertNotEqual(bool(data.get("views")), bool(data.get("none")), metric_id)
-        with self.assertRaises(build.DataError) as raised:
-            self.load_folder({"kerr.json": dict(self.conformal["kerr"], none=["A reason."])}, self.metrics)
-        self.assertIn("either views or the reason", str(raised.exception))
+    def test_a_file_that_draws_nothing_is_refused(self):
+        """A spacetime with no conformal diagram has no file, rather than one the page would find empty."""
+        kerr = self.conformal["kerr"]
+        for data in (dict(kerr, views=[]), {key: value for key, value in kerr.items() if key != "views"}):
+            with self.assertRaises(build.DataError) as raised:
+                self.load_folder({"kerr.json": data}, self.metrics)
+            self.assertIn("draws nothing", str(raised.exception))
 
     def test_every_caption_names_what_is_drawn(self):
         for metric_id, data in self.conformal.items():
-            for view in data.get("views", []):
+            for view in data["views"]:
                 self.assertTrue(view["caption"], f"{metric_id} {view['id']}")
                 self.assertTrue(view["caption"][0].startswith("This is the "), f"{metric_id} {view['id']}")
 
@@ -711,9 +708,9 @@ class ConformalDiagrams(unittest.TestCase):
     def test_every_view_draws_inside_its_box_and_names_only_what_it_draws(self):
         kinds = {"fill", "line", "zig", "point"}
         for name, data in self.conformal.items():
-            ids = [view["id"] for view in data.get("views", [])]
+            ids = [view["id"] for view in data["views"]]
             self.assertEqual(len(ids), len(set(ids)), name)
-            for view in data.get("views", []):
+            for view in data["views"]:
                 where = f"{name} {view['id']}"
                 x0, x1, t0, t1 = view["box"]
                 self.assertTrue(x0 < x1 and t0 < t1, where)

@@ -1320,11 +1320,11 @@
       }
 
       // The flat views of a coordinate system and then its figures in three dimensions, each
-      // its own button, or, for a system that has neither, the reason in their place.
+      // its own button.
       function diagramSection(metricId, coordId) {
         var data = _diagramCache[metricId];
         var views = ((data && data.systems[coordId]) || []).concat((data && data.projections && data.projections[coordId]) || []);
-        if (!views.length) return data && data.none && data.none[coordId] ? noneSection('spacetime diagram', data.none[coordId].text) : '';
+        if (!views.length) return '';
         var buttons = views.length > 1 ? '<div class="mfs-nr-buttons">' + views.map(function(v, i) {
           return '<button type="button" class="mfs-nr-btn' + (i ? '' : ' mfs-nr-on') + '">' + nrEsc(v.label) + '</button>';
         }).join('') + '</div>' : '';
@@ -1348,16 +1348,6 @@
                 '</div>'
               ].join('');
             }).join(''),
-          '</div>'
-        ].join('');
-      }
-
-      // A section whose figure does not exist, with the reason it does not in its place.
-      function noneSection(label, paragraphs, cls) {
-        return [
-          '<div class="mfs-section mfs-diagram mfs-diagram-none' + (cls ? ' ' + cls : '') + '">',
-            '<div class="mfs-section-head"><div class="mfs-section-label">' + label + '</div></div>',
-            '<div class="mfs-nr-caption">', paragraphs.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
           '</div>'
         ].join('');
       }
@@ -1560,7 +1550,6 @@
 
       function conformalSection(metricId, coordId) {
         var data = _conformalCache[metricId];
-        if (data && data.none) return noneSection('conformal diagram', data.none, 'mfs-conformal');
         if (!data || !data.views || !data.views.length) return '';
         var views = data.views, shown = 0;
         views.some(function(v, i) { if (v.system && v.system === coordId) { shown = i; return true; } return false; });

@@ -12,7 +12,8 @@ directions at a point, and every marker is the zero set of a published quantity.
     python3 _tools/build_mfs_data.py
 
 writes MFS/assets/data/diagrams/<metric_id>.json, one file per spacetime that has a
-diagram, and the second command stamps each file's version into the index. Pass
+diagram, removing the file of any spacetime that has none, and the second command stamps
+each file's version into the index. Pass
 --metric <metric_id> to redraw one spacetime, repeatable, and --verify to check the
 rays against closed forms the drawing never uses instead of writing anything.
 
@@ -1053,37 +1054,6 @@ CAPTIONS = {
         "space to the centre, arriving at $cu = 2r_s$. Every ingoing ray that reaches the centre "
         "before that moment came out of the white hole, and every one after came in from far away.",
     ],
-}
-
-
-# Why a coordinate system of a spacetime with no view at all has none, as prose a reader is
-# given in place of the diagram. A system of a spacetime drawn elsewhere that has no view is
-# accounted for in _tools/README.md instead.
-NOT_DRAWN = {
-    "lentz": {
-        "cartesian": [
-            "Lentz's soliton has no spacetime diagram. Its potential is known only as a numerical "
-            "integral over the rhomboid sources Lentz laid out, so no soliton of the class can be "
-            "written down to draw, and a potential written in its place would draw some other "
-            "soliton of the class."],
-    },
-    "mixmaster": {
-        "euler_angles": [
-            "The Mixmaster universe has no spacetime diagram. Its scale factors are the solutions of "
-            "its own vacuum field equations, which reach the singularity through an endless sequence "
-            "of Kasner epochs packed ever closer toward it, so a drawing of any one solution would "
-            "end on a handful of epochs and leave out the infinitely many that follow. The one plane "
-            "of time and an Euler angle whose null curves are light rays, $t$ against $\\psi$ at "
-            "$\\theta = \\pi/2$, has the cones $c\\,dt = \\pm a_3\\,d\\psi$ and would follow $a_3$ alone."],
-    },
-    "cosmic_string": {
-        "interior_cap": [
-            "Gott's core has no spacetime diagram of its own. On its plane of $t$ and $\\chi$ the metric "
-            "is $-c^2dt^2 + \\ell^2d\\chi^2$, which is flat, and its light rays are Minkowski's. The core "
-            "acts on light across that plane, in the cap of $\\chi$ and $\\phi$, "
-            "$\\ell^2(d\\chi^2 + \\sin^2\\chi\\,d\\phi^2)$, a piece of a sphere whose total curvature, "
-            "$2\\pi(1 - \\cos\\chi_0) = \\delta$, is the wedge the cone outside it is missing."],
-    },
 }
 
 
@@ -2508,19 +2478,6 @@ def draw(spec):
     return view
 
 
-NONE_FIELDS = ["coords", "parameters", "metric_components"]
-
-
-def not_drawn(metric_id):
-    """The reasons a spacetime's coordinate systems carry no view, as its file carries them,
-    each stamped with the fields it speaks of so that a changed metric asks for it again."""
-    metric = json.loads((build.METRICS_DIR / f"{metric_id}.json").read_text(encoding="utf-8"))
-    systems = {s["id"]: s for s in metric["coordinates"]}
-    return {system_id: {"text": text, "source": {"fields": NONE_FIELDS, "version": build.diagram_source_version(
-                systems[system_id], NONE_FIELDS)}}
-            for system_id, text in NOT_DRAWN[metric_id].items()}
-
-
 def by_metric():
     """Every spacetime with a diagram file: its flat views and its figures, in table order."""
     import projections as pj
@@ -2529,8 +2486,6 @@ def by_metric():
         out.setdefault(spec.metric, ([], []))[0].append(spec)
     for spec in pj.FIGURES:
         out.setdefault(spec.metric, ([], []))[1].append(spec)
-    for metric_id in NOT_DRAWN:
-        out.setdefault(metric_id, ([], []))
     return out
 
 
@@ -2538,7 +2493,14 @@ def write(metric_ids=None):
     import projections as pj
     if not DIAGRAMS_DIR.exists():
         DIAGRAMS_DIR.mkdir(parents=True)
-    for metric_id, (specs, figures) in by_metric().items():
+    drawn = by_metric()
+    if not metric_ids:
+        # A spacetime nothing is drawn of has no file, so a full redraw removes one left behind.
+        for path in sorted(DIAGRAMS_DIR.glob("*.json")):
+            if path.stem not in drawn and not build.CONFLICT_COPY.search(path.stem):
+                path.unlink()
+                print(f"removed {path.relative_to(build.ROOT)}")
+    for metric_id, (specs, figures) in drawn.items():
         if metric_ids and metric_id not in metric_ids:
             continue
         systems, projections = {}, {}
@@ -2551,8 +2513,6 @@ def write(metric_ids=None):
         data = {"metric": metric_id, "systems": systems}
         if projections:
             data["projections"] = projections
-        if metric_id in NOT_DRAWN:
-            data["none"] = not_drawn(metric_id)
         path = DIAGRAMS_DIR / f"{metric_id}.json"
         path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n",
                         encoding="utf-8")
@@ -2823,8 +2783,7 @@ def verify_principal(specs, traced):
 
 
 def check_table():
-    """Every view and figure has a caption, no two share a place, and a coordinate system with
-    a stated reason for drawing nothing draws nothing."""
+    """Every view and figure has a caption, and no two share a place."""
     import projections as pj
     flat = [(spec.metric, spec.system, spec.view) for spec in DIAGRAMS]
     figures = [(spec.metric, spec.system, spec.view) for spec in pj.FIGURES]
@@ -2836,11 +2795,6 @@ def check_table():
         if missing or stray:
             raise SystemExit(f"{table}: views without a caption: {missing}; captions without a view: "
                              f"{sorted(stray)}")
-    drawn = {(metric, system) for metric, system, _ in flat + figures}
-    both = [f"{metric}/{system}" for metric, systems in NOT_DRAWN.items() for system in systems
-            if (metric, system) in drawn]
-    if both:
-        raise SystemExit(f"NOT_DRAWN gives a reason for systems that are drawn: {both}")
 
 
 def main(argv=None):

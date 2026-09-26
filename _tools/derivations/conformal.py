@@ -55,9 +55,9 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the seventeen spacetimes that have a diagram. NOT_DRAWN gives each of the
-others the reason it has none, as prose written into its file in place of views, which the
-page prints where the diagram would be, so no spacetime is left with a silent gap.
+DRAWN lists the seventeen spacetimes that have a diagram and NOT_DRAWN the others, which
+have no file: a full redraw removes one left behind. The script stops if a metric file is
+in neither, so a new spacetime needs a decision.
 
 
 Output
@@ -80,10 +80,6 @@ fields changes without the file being redrawn. A view is
                   surface is, printed on the diagram itself;
   settings, input the parameter values and any declared function, as TeX prose;
   fade            {top, bottom}: how far the drawing fades out where it continues.
-
-The file of a spacetime with no diagram carries `none` in place of `views`: the paragraphs
-of NOT_DRAWN, stamped like views with the coords, parameters and metric components of each
-of its coordinate systems, so a changed metric asks for the reason again.
 """
 
 import argparse
@@ -111,69 +107,9 @@ HALF = PI / 2
 Q4 = PI / 4
 EQUATOR = {"theta": "pi/2", "phi": "0"}
 
-# Why each spacetime without a diagram has none, as prose the page prints in the diagram's
-# place, so that no spacetime is left with a silent gap.
-NOT_DRAWN = {
-    "godel": [
-        "The Gödel universe has no conformal diagram. A closed timelike curve passes through every "
-        "event, so every event lies in the chronological future of every other, and there is no "
-        "boundary between where light can reach and where it cannot."],
-    "stockum_dust": [
-        "Van Stockum's cylinder has no conformal diagram, for the reason the Gödel universe has none. "
-        "Beyond $r = R$ the circles of constant $t$, $r$ and $z$ are closed timelike curves, and a "
-        "timelike curve that runs out to them and back again joins any two events, so every event "
-        "lies in the chronological future of every other."],
-    "taub_nut": [
-        "Taub-NUT has no conformal diagram. Its time is wound into the angles through "
-        "$c\\,dt + 2l\\cos\\theta\\,d\\phi$, so the axis is singular unless $t$ is made periodic, and "
-        "made periodic it runs in closed timelike curves outside the Taub region, wherever "
-        "$\\partial_t$ is timelike, and continues across $r_+$ in more than one way."],
-    "kasner": [
-        "The Kasner spacetime has no conformal diagram that tells its directions apart. Each plane "
-        "of $t$ and one of $x$, $y$ and $z$ is totally geodesic, and on it the metric "
-        "$-c^2dt^2 + t^{2p_i}dx_i^2$ is flat in the time $c\\,t^{1 - p_i}/(1 - p_i)$, which runs from "
-        "zero to infinity for every exponent below one. So all three planes give the same half of "
-        "Minkowski's diamond, the singularity along its lower edge."],
-    "bianchi": [
-        "Bianchi I has no conformal diagram of its own. Each plane of $t$ and one of $x$, $y$ and $z$ "
-        "is flat in the time $\\int c\\,dt/a_i$, and where that time begins and ends is up to the "
-        "free scale factors. For dust each one begins at a finite value at the singularity and runs "
-        "on without end, so each plane gives the half of Minkowski's diamond that Kasner's planes "
-        "give, the three alike."],
-    "tolman_bondi": [
-        "Tolman-Bondi has no single conformal diagram. Its free functions make it anything from a "
-        "Friedmann universe to the Oppenheimer-Snyder collapse, with shell crossings, black holes "
-        "and naked singularities between, and each choice of them has a diagram of its own."],
-    "alcubierre": [
-        "The Alcubierre warp drive has no conformal diagram of its own. Where light can reach "
-        "depends on the whole history of the bubble, $v_s(t)$ and $f$ from its start to its end, "
-        "which the metric leaves free."],
-    "natario": [
-        "The Natário warp drive has no conformal diagram of its own, for the reason the Alcubierre "
-        "drive has none: its horizons are set by the whole history of the flow, three free "
-        "functions of all four coordinates."],
-    "krasnikov": [
-        "The Krasnikov tube has no conformal diagram of its own. Light returning through the tube "
-        "arrives when the shape $k(t, x, r)$ lets it, so the null coordinate a diagram would be "
-        "built on depends on the whole history of the tube's construction."],
-    "pp_wave": [
-        "The plane wave has no conformal diagram. On its axis the plane of $u$ and $v$ is flat, "
-        "and its diamond would be Minkowski's, but the wave focuses light across that plane, in "
-        "$x$ and $y$, so strongly that the spacetime has no Cauchy surface, as Penrose showed in "
-        "1965, and its causal structure is not Minkowski's."],
-    "mixmaster": [
-        "The Mixmaster universe has no conformal diagram. Its slices are three spheres squashed "
-        "differently along three directions, with no spherical symmetry to reduce them to a line, "
-        "so no surface of two dimensions carries the causal structure of the whole. Toward the "
-        "singularity its vacuum solutions pass through an endless sequence of Kasner epochs, and "
-        "the directions light can cross the universe in change from one epoch to the next."],
-    "lentz": [
-        "Lentz's soliton has no conformal diagram. Where light can reach depends on the whole "
-        "history of the soliton, as it does for every warp drive, and the potential is known only "
-        "as a numerical integral over the rhomboid sources Lentz laid out, so no soliton of the "
-        "class can be written down to draw."],
-}
-NONE_FIELDS = ["coords", "parameters", "metric_components"]
+# The spacetimes with no conformal diagram, for which nothing is written.
+NOT_DRAWN = {"godel", "stockum_dust", "taub_nut", "kasner", "bianchi", "tolman_bondi", "alcubierre",
+             "natario", "krasnikov", "pp_wave", "mixmaster", "lentz"}
 
 
 # ---------------------------------------------------------------- the drawing
@@ -2537,11 +2473,6 @@ CAPTIONS = {
 
 def draw(metric_id, ck):
     src = Sources()
-    if metric_id in NOT_DRAWN:
-        metric = json.loads((build.METRICS_DIR / f"{metric_id}.json").read_text(encoding="utf-8"))
-        for system in metric["coordinates"]:
-            src.note(metric_id, system["id"], NONE_FIELDS)
-        return {"metric": metric_id, "source": src.stamps(), "none": NOT_DRAWN[metric_id]}
     views = DRAWN[metric_id](ck, src)
     out = []
     for v in views:
@@ -2551,7 +2482,7 @@ def draw(metric_id, ck):
 
 
 def check_table():
-    """Every view has a caption, and every spacetime is either drawn or says why not."""
+    """Every view has a caption, and every spacetime is either drawn or named as not drawn."""
     ids = {p.stem for p in build.METRICS_DIR.glob("*.json") if not build.CONFLICT_COPY.search(p.stem)}
     both = set(DRAWN) & set(NOT_DRAWN)
     neither = ids - set(DRAWN) - set(NOT_DRAWN)
@@ -2568,10 +2499,10 @@ def main(argv=None):
     parser.add_argument("--metric", action="append", default=[], help="redraw only this spacetime, repeatable")
     parser.add_argument("--verify", action="store_true", help="run and print every check instead of writing")
     args = parser.parse_args(argv)
-    unknown = set(args.metric) - set(DRAWN) - set(NOT_DRAWN)
+    unknown = set(args.metric) - set(DRAWN)
     if unknown:
         parser.error(f"no conformal diagram is drawn for {sorted(unknown)}")
-    wanted = [m for m in list(DRAWN) + list(NOT_DRAWN) if not args.metric or m in args.metric]
+    wanted = [m for m in DRAWN if not args.metric or m in args.metric]
     start = time.time()
     ck = Checks()
     # A compactification sends the ends of every coordinate line to infinity on purpose:
@@ -2589,6 +2520,12 @@ def main(argv=None):
     if failed or args.verify:
         return 1 if failed else 0
     CONFORMAL_DIR.mkdir(parents=True, exist_ok=True)
+    if not args.metric:
+        # A spacetime that is not drawn has no file, so a full redraw removes one left behind.
+        for path in sorted(CONFORMAL_DIR.glob("*.json")):
+            if path.stem not in DRAWN and not build.CONFLICT_COPY.search(path.stem):
+                path.unlink()
+                print(f"removed {path.relative_to(build.ROOT)}")
     for metric_id, data in files.items():
         path = CONFORMAL_DIR / f"{metric_id}.json"
         path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
