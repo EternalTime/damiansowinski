@@ -125,12 +125,6 @@ body {
   flex: 1;
 }
 
-/* ── Coordinate selector ── */
-#mfs-coord-select {
-  font-size: 0.8em;
-  color: var(--text-dim);
-}
-
 /* ── Main content area (desktop: offset from left panel) ── */
 #mfs-content {
   position: relative;
