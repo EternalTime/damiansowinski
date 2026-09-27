@@ -943,6 +943,9 @@
             fitPlots(figures);
             fitTicks(figures);
             markAllEdges(contentPanel);
+            var words = [].slice.call(contentPanel.querySelectorAll(FIT_WORDS));
+            words.forEach(function(el) { el._mfsWordEm = 0; });
+            fitWords(words);
           });
         });
       }
@@ -1018,6 +1021,68 @@
         root.querySelectorAll('.mfs-history, .mfs-convention, .mfs-nr-caption, .mfs-nr-note, .mfs-nr-itext, .mfs-cd-restriction').forEach(function(block) {
           _proseObserver.observe(block);
         });
+      }
+
+      /* A spacetime's name, the word above it, a heading and a choice's name are set at their
+         usual size for the reader's text, but never so large that one word of them is wider
+         than the line they are set on: at three times the usual text on a phone the name
+         broke into "Schwa rz- schild", "conventions" into "CONVENTIO NS" and a chart into
+         "Schwarzschi ld (spherical)". So the widest word of each, in ems of its own size and
+         for a choice with its own padding, is measured once, and --mfs-fit holds its size to
+         the width of its line over that, the stylesheet taking the smaller of the two. The
+         limit is a width alone, so a change in the text size that leaves the line as wide
+         leaves it as it is, and a ResizeObserver sets it again when the line changes width.
+         A name is held so too, even below the size of the prose: a whole word reads better
+         than one broken where the line ends, which is what hyphenation gave "Schwarzschild"
+         at the size of the prose there. A choice written in mathematics is left as it is,
+         since mathematics never wraps. The words are measured again once fonts have
+         loaded, which change their width, and all of them together, in hidden copies. */
+      var FIT_WORDS = '.mfs-header .mfs-title, .mfs-header .mfs-label, .mfs-section-label, .mfs-choice';
+      var _wordObserver = null;
+      function lineOf(el) { return el.closest('.mfs-header, .mfs-section'); }
+      function fitWords(els) {
+        els = els.filter(function(el) {
+          return el.isConnected && lineOf(el) && el.getClientRects().length && !el.querySelector('mjx-container');
+        });
+        var fresh = els.filter(function(el) { return !el._mfsWordEm; });
+        var copies = fresh.map(function(el) {
+          var copy = el.cloneNode(false);
+          copy.removeAttribute('id');
+          copy.style.cssText += ';position:absolute;left:0;top:0;visibility:hidden;width:auto;max-width:none;white-space:nowrap;';
+          el.textContent.trim().split(/\s+/).forEach(function(word) {
+            word.replace(/([-\u2010\u2013])/g, '$1\n').split('\n').forEach(function(piece) {
+              var line = document.createElement('div');
+              line.textContent = piece;
+              copy.appendChild(line);
+            });
+          });
+          el.parentNode.appendChild(copy);
+          return copy;
+        });
+        fresh.forEach(function(el, i) {
+          var cs = getComputedStyle(copies[i]);
+          var edge = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+          el._mfsWordEm = (copies[i].getBoundingClientRect().width - edge) / parseFloat(cs.fontSize);
+        });
+        copies.forEach(function(copy) { copy.remove(); });
+        var fits = els.map(function(el) {
+          var line = lineOf(el), ls = getComputedStyle(line), cs = getComputedStyle(el);
+          var room = line.clientWidth - parseFloat(ls.paddingLeft) - parseFloat(ls.paddingRight);
+          var edge = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+          return Math.floor((room - edge) / el._mfsWordEm * 100) / 100;
+        });
+        els.forEach(function(el, i) { el.style.setProperty('--mfs-fit', fits[i] + 'px'); });
+      }
+      function wireWords(root) {
+        if (_wordObserver) _wordObserver.disconnect();
+        if (!window.ResizeObserver) return;
+        _wordObserver = new ResizeObserver(function(entries) {
+          var lines = entries.map(function(e) { return e.target; });
+          fitWords([].slice.call(root.querySelectorAll(FIT_WORDS)).filter(function(el) {
+            return lines.indexOf(lineOf(el)) >= 0;
+          }));
+        });
+        root.querySelectorAll('.mfs-header, .mfs-section').forEach(function(line) { _wordObserver.observe(line); });
       }
 
       function buildMetricMatrix(components, coords, label) {
@@ -2131,6 +2196,7 @@
         _lineObserver = null;
         wireLines(contentPanel);
         wireProse(contentPanel);
+        wireWords(contentPanel);
 
         // A chart's button draws the spacetime again in that chart. The buttons are drawn anew
         // with it, so one pressed from the keyboard hands its focus to the new one.
@@ -2298,9 +2364,10 @@
        the text a heading keeps its room above and below it rather than crowding what it
        heads; only the hairlines of borders stay in px. A word longer than its line is
        broken rather than cut off at the panel's edge, which at twice the usual text on a
-       phone a spacetime's name did: "Schwarzschild" alone is wider than the column there, so
-       the name is hyphenated where the language allows and every other word broken where it
-       must be. Mathematics never wraps and is not touched by either. */
+       phone a spacetime's name did: "Schwarzschild" alone is wider than the column there.
+       A name, a heading and a choice are first set smaller, as far as their widest word
+       needs (fitWords() says how), so this is the last resort, and a name is hyphenated
+       where the language allows before any word is broken elsewhere. Mathematics never wraps and is not touched by either. */
     #mfs-content-panel {
       overflow-y: auto; overflow-x: hidden; font-size: 1.3125rem !important;
       overflow-wrap: break-word;
@@ -2317,21 +2384,25 @@
       position: sticky; top: -1em;
       background: #000;
       z-index: 1;
-      display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
+      display: flex; flex-wrap: wrap; align-items: center; column-gap: 0.75rem;
     }
     #mfs-content-panel .mfs-header.mfs-header-loose { position: relative; top: auto; }
-    #mfs-content-panel .mfs-header .mfs-title { grid-column: 1 / -1; }
+    /* The word "metric" and the print button share the first line while both fit, and the
+       button goes to a line of its own, still at the right, when they do not: at three
+       times the usual text on a phone the button's side of a grid squeezed the word into
+       "ME TRI C". The name takes the whole of the line below. */
+    #mfs-content-panel .mfs-header .mfs-title { order: 2; flex-basis: 100%; min-width: 0; }
     #mfs-content-panel .mfs-label {
-      font-size: 1.3125rem; color: rgba(0,229,255,0.5);
+      font-size: min(1.3125rem, var(--mfs-fit, 1.3125rem)); color: rgba(0,229,255,0.5);
       letter-spacing: 0.12em; text-transform: uppercase;
     }
     #mfs-content-panel .mfs-title {
-      font-size: 2.5rem; font-weight: 600;
+      font-size: min(2.5rem, var(--mfs-fit, 2.5rem)); font-weight: 600;
       letter-spacing: 0.05em; margin: 0.125rem 0 0.375rem;
       color: var(--cyan);
     }
     #mfs-content-panel #mfs-print-btn {
-      grid-column: 2; grid-row: 1; margin-left: 0.75rem;
+      order: 1; margin-left: auto;
       font-family: 'Source Code Pro', monospace;
       font-size: 0.9375rem; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--cyan); background: transparent;
@@ -2354,15 +2425,15 @@
       display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
       gap: 0.25rem 0.75rem;
     }
-    /* A heading or a choice whose one word is wider than the whole line, as "coordinates"
-       and "Cylindrical" are at three times the usual text on a phone, breaks inside that
-       word rather than reaching past the panel's edge, as the prose does; a word that fits
-       is never broken. It is `anywhere` rather than the panel's `break-word` because these
-       share a line in a row that wraps, and only `anywhere` lets them narrow to the line. */
+    /* fitWords() keeps every word of a heading or a choice within its line, and should one
+       still be wider, it breaks inside that word rather than reaching past the panel's
+       edge, as the prose does; a word that fits is never broken. It is `anywhere` rather
+       than the panel's `break-word` because these share a line in a row that wraps, and
+       only `anywhere` lets them narrow to the line. */
     #mfs-content-panel .mfs-section-label,
     #mfs-content-panel .mfs-choice { overflow-wrap: anywhere; }
     #mfs-content-panel .mfs-section-label {
-      font-size: 1.3125rem; color: rgba(0,229,255,0.5);
+      font-size: min(1.3125rem, var(--mfs-fit, 1.3125rem)); color: rgba(0,229,255,0.5);
       letter-spacing: 0.1em; text-transform: uppercase;
       margin-bottom: 0.25rem;
     }
@@ -2374,10 +2445,10 @@
     #mfs-content-panel .mfs-choices { display: flex; flex-wrap: wrap; gap: 0.375rem; }
     #mfs-content-panel .mfs-choice {
       font-family: 'Source Code Pro', monospace;
-      font-size: 0.9375rem; letter-spacing: 0.06em; line-height: 1.5;
+      font-size: min(0.9375rem, var(--mfs-fit, 0.9375rem)); letter-spacing: 0.06em; line-height: 1.5;
       color: rgba(0,229,255,0.6); background: transparent;
       border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
-      padding: 0.1875rem 0.75rem; cursor: pointer;
+      padding: 0.2em 0.8em; cursor: pointer;
       transition: box-shadow 0.15s, border-color 0.15s, color 0.15s;
     }
     #mfs-content-panel .mfs-choice:hover { border-color: var(--cyan); color: var(--cyan); }
@@ -2827,17 +2898,19 @@
         font-size: 0.9375rem !important;
         padding-left: min(1em, 4.2vw) !important; padding-right: min(1em, 4.2vw) !important;
       }
-      /* The room at the sides of the panel, its sections and its header grows with the
-         reader's text only as far as the screen allows: what it is at the usual size on a
-         phone from 360px wide up, and more on a wider window, but no more on a phone, where
-         at three times the usual text it took two fifths of a 390px screen and left the
-         mathematics and the drawings under eight ems to be set in. */
+      /* The room at the sides of the panel, its sections, its header and the box that says
+         where a conformal diagram is drawn grows with the reader's text only as far as the
+         screen allows: what it is at the usual size on a phone from 360px wide up, and more
+         on a wider window, but no more on a phone, where at three times the usual text it
+         took two fifths of a 390px screen and left the mathematics and the drawings under
+         eight ems to be set in, and the box nine letters to a line. */
       #mfs-content-panel .mfs-header { padding-left: min(0.375rem, 1.6vw); padding-right: min(0.375rem, 1.6vw); }
-      #mfs-content-panel .mfs-label { font-size: 0.875rem; }
-      #mfs-content-panel .mfs-title { font-size: 1.625rem; }
+      #mfs-content-panel .mfs-label { font-size: min(0.875rem, var(--mfs-fit, 0.875rem)); }
+      #mfs-content-panel .mfs-title { font-size: min(1.625rem, var(--mfs-fit, 1.625rem)); }
       #mfs-content-panel #mfs-print-btn { font-size: 0.75rem; padding: 0.1875rem 0.5625rem; }
       #mfs-content-panel .mfs-section { padding: 0.5rem min(0.375rem, 1.6vw); }
-      #mfs-content-panel .mfs-section-label { font-size: 0.875rem; }
+      #mfs-content-panel .mfs-cd-restriction { padding-left: min(0.625rem, 2.78vw); padding-right: min(0.625rem, 2.78vw); }
+      #mfs-content-panel .mfs-section-label { font-size: min(0.875rem, var(--mfs-fit, 0.875rem)); }
       #mfs-content-panel .mfs-placeholder { font-size: 1rem; }
       #mfs-content-panel .mfs-table { font-size: 0.8125rem; }
       #mfs-content-panel .mfs-table th,
@@ -2846,7 +2919,7 @@
       #mfs-content-panel .mfs-component { font-size: 1.1875rem; }
       #mfs-content-panel .mfs-history { font-size: 0.9375rem !important; }
       #mfs-content-panel .mfs-zero { font-size: 1.125rem; }
-      #mfs-content-panel .mfs-choice { font-size: 0.75rem; padding: 0.1875rem 0.5625rem; }
+      #mfs-content-panel .mfs-choice { font-size: min(0.75rem, var(--mfs-fit, 0.75rem)); padding: 0.25em 0.75em; }
       #mfs-content-panel .mfs-nr-caption p { font-size: 0.875rem; }
       #mfs-content-panel .mfs-nr-item,
       #mfs-content-panel .mfs-nr-note { font-size: 0.75rem; }
