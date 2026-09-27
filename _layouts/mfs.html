@@ -57,9 +57,13 @@
   <canvas id="wavy-grid" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;"></canvas>
 
   <!-- The title comes before the panels so that on a phone, where it is in the flow of the
-       page rather than fixed over it, it heads the column they stack in. -->
+       page rather than fixed over it, it heads the column they stack in. The title and the
+       exit sign are one row there, which the phone stylesheet lays out; elsewhere the row
+       has no box of its own and each is fixed in its corner. -->
+  <div id="mfs-banner">
   <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 7em);"></div>
   <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--teal-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
+  </div>
 
 <div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
     width:var(--mfs-left-w);height:320px;
@@ -99,6 +103,30 @@
   </div>
 
   <script>
+    /* The widest word of the given texts, in ems of el's font: a word runs to a space, or to
+       a hyphen or dash, after which a line may end, and through a no-break space. The banner's title, the names in the
+       list and the hint in the search field are held to a size at which their widest word
+       fits their line, so that at a large text size none is cut off at the screen's or the
+       panel's edge; the words are set in a hidden copy in el's font. */
+    window.mfsWidestWord = function(el, texts) {
+      var cs = getComputedStyle(el), copy = document.createElement('div');
+      ['fontFamily', 'fontSize', 'fontStyle', 'fontWeight', 'letterSpacing', 'textTransform'].forEach(function(k) {
+        copy.style[k] = cs[k];
+      });
+      copy.style.cssText += ';position:absolute;left:0;top:0;visibility:hidden;white-space:nowrap;';
+      texts.forEach(function(text) {
+        text.trim().split(/[ \t\n\r\f]+/).forEach(function(word) {
+          word.replace(/([-\u2010\u2013])/g, '$1\n').split('\n').forEach(function(piece) {
+            copy.appendChild(document.createElement('div')).textContent = piece;
+          });
+        });
+      });
+      document.body.appendChild(copy);
+      var em = copy.getBoundingClientRect().width / parseFloat(cs.fontSize);
+      copy.remove();
+      return em;
+    };
+
     /* ── MFS search: simple filter over metric index ── */
     (function() {
       var input   = document.getElementById('mfs-search-input');
@@ -127,11 +155,33 @@
         });
       }
 
+      /* Every name in the list is set at one size, at most the size at which the widest word
+         of any of them fits the list's line, less an entry's 0.5rem of room at either side,
+         so that the size does not change as the list is searched; and the hint in the
+         search field, which cannot wrap, at most the size at which it fits the field, less
+         the field's 0.5em of room at either side and its border. At three times the usual
+         text on a phone "Alcubierre" and "Schwarzschild" were cut off at the panel's edge
+         and the hint read "Search spa". Each limit is a width of its container over a
+         number of ems, so the stylesheet keeps it as the panel changes width; the ems are
+         measured again once fonts have loaded. */
+      function fitList(index) {
+        var entry = results.querySelector('.mfs-result');
+        if (entry) {
+          var names = mfsWidestWord(entry, index.map(function(m) { return m.name; }));
+          results.style.setProperty('--mfs-fit', 'calc((100cqw - 1rem) / ' + names.toFixed(3) + ')');
+        }
+        var hint = mfsWidestWord(input, [input.placeholder.replace(/\s+/g, '\u00A0')]);
+        input.style.setProperty('--mfs-fit', 'calc((100cqw - 1em - 2px) / ' + hint.toFixed(3) + ')');
+      }
+
       fetch('{{ "/MFS/assets/data/metrics_index.json" | relative_url }}')
         .then(function(r) { return r.json(); })
         .then(function(index) {
           window._mfsIndex = index;  // shared with the renderer, which reads the diagram stamps
           renderResults(index, '');
+          fitList(index);
+          document.fonts.ready.then(function() { fitList(index); });
+          document.fonts.addEventListener('loadingdone', function() { fitList(index); });
           input.addEventListener('input', function() { renderResults(index, this.value); });
         });
     })();
@@ -148,10 +198,15 @@
        the title however large it is set and however it wraps, which the panel script
        measures. */
     :root { --mfs-left-w: clamp(280px, 17.5rem, 25vw); --mfs-top: 150px; }
+    #mfs-banner { display: contents; }
+    /* The list and the search field are held to sizes at which their words fit, which the
+       search script measures as a width of these containers over ems. */
+    #mfs-search-panel, #mfs-search-results { container-type: inline-size; }
+    #mfs-search-input::placeholder { font-size: min(1em, var(--mfs-fit, 1em)); }
     .mfs-result {
       padding: 0.3125rem 0.5rem;
       font-family: 'Source Code Pro', monospace;
-      font-size: 1.125rem;
+      font-size: min(1.125rem, var(--mfs-fit, 1.125rem));
       color: var(--teal-light);
       border-radius: 4px;
       cursor: pointer;
@@ -590,7 +645,18 @@
 
       var titleText = 'My Favorite Spacetimes';
       var exitText  = 'Exit';
+      /* On a phone the title is at most the size at which its widest word fits the screen
+         with the 0.6em of room it has on its left on either side of it, which at three times
+         the usual text "Spacetimes" alone is not; a width of the banner's row over ems, as
+         the list's names are held. */
+      function fitTitle() {
+        var title = document.getElementById('mfs-title');
+        title.style.setProperty('--mfs-fit', 'calc(100cqw / ' + (mfsWidestWord(title, [titleText]) + 1.2).toFixed(3) + ')');
+      }
+      fitTitle();
+      document.fonts.addEventListener('loadingdone', fitTitle);
       document.fonts.ready.then(function() {
+        fitTitle();
         flickerIn(document.getElementById('mfs-title'), titleText, 0, 0, [0, 3, 12]);
         flickerIn(document.getElementById('mfs-exit'),  exitText,  270, 1);
         // Re-anchor panels now that spans are built and elements have size
@@ -3007,14 +3073,22 @@
       html { overflow-x: hidden; }
       body { overflow-x: clip; }
 
-      /* The title and the exit sign scroll away with the page instead of lying over it,
-         the title in the flow so that the list starts below it however it wraps. */
+      /* The title and the exit sign scroll away with the page instead of lying over it, in
+         the flow so that the list starts below them however they wrap. They share a row
+         while the title's widest word and the sign fit side by side, the title no wider
+         than it was beside the sign; past that, as at twice the usual text, the sign takes a
+         row of its own below the title, where it had lain over it. The title is at most the
+         size at which its widest word fits the screen, which fitTitle() measures. */
+      #mfs-banner { display: flex; flex-wrap: wrap; align-items: flex-start; container-type: inline-size; }
       #mfs-title {
         position: relative !important; top: auto !important; left: auto !important;
-        width: fit-content; margin: 0.45em 0 0 0.6em;
-        font-size: 1.6em !important; max-width: calc(100% - 5.5em) !important;
+        flex: 1 1 0; min-width: min-content; margin: 0.45em 0 0 0.6em;
+        font-size: min(1.6em, var(--mfs-fit, 1.6em)) !important; max-width: calc(100% - 5.5em) !important;
       }
-      #mfs-exit { position: absolute !important; font-size: 1.25em !important; top: 0.8em !important; right: 0.7em !important; }
+      #mfs-exit {
+        position: relative !important; top: auto !important; right: auto !important;
+        flex: none; margin: 0.8em 0.7em 0 auto; font-size: 1.25em !important;
+      }
 
       #mfs-search-panel, #mfs-coffee-panel {
         position: relative !important; top: auto !important;
