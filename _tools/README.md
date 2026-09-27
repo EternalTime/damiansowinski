@@ -63,10 +63,24 @@ They are for the screen alone, so the print copy is the same whatever screen it 
 
 The desktop's panel scripts write their geometry into each panel's own style, so the phone block overrides it with `!important`, and it sets `--mfs-phone` on the root, which is how the scripts tell which layout is in force.
 Anything new on the page has to hold at 390pt upright and 844 by 390 on its side: a line of mathematics, a coordinate domain or a formula in prose scrolls on its own there, and nothing may make the page wider than the screen, even for a frame, since a phone answers that by zooming the whole page out.
-A spacetime diagram is drawn whole, as wide as the panel and never taller than the screen, with its labels scaling with it.
+A spacetime diagram is drawn whole, as wide as the panel and never taller than the screen.
 
-The page prints a spacetime's `signature` and `convention` under the heading "conventions", between the history and the coordinates, which is where the application reads them.
-They belong to the spacetime and not to a chart, so the coordinate selector leaves them standing.
+## The reader's text size
+
+Every size a reader reads on the spacetimes page is in rem, so a reader who enlarges text in the browser, by Chrome's font size, a larger default font, or Safari's and Firefox's zoom of text only, enlarges every word on it: the name, the headings, the buttons, the domains, the prose, the mathematics, the list and every word on both kinds of diagram.
+At the browser's usual 16px each is the pixel size it was when the page was set in pixels, and only the hairlines of borders stay in px.
+The list's column grows with the text up to a quarter of the window, the panels start below the page's title however it wraps, the one-column layout's widths are in em so a large text size takes it on a narrower desktop window, and a sticky header that would cover more than a quarter of the view scrolls away instead.
+A spacetime diagram's numbers and axis names are laid out around its plot, so they take the room they need and the numbers thin out where they would touch.
+A conformal diagram's labels and a figure's stand at points inside the drawing, so the drawing keeps its proportion to them and is drawn larger with the text, scrolling sideways in its own frame where it is wider than the panel.
+`nrFigure` and `cdFrameAround` in `_layouts/mfs.html` carry the details.
+Reproduce a text size fault the way a reader meets it, with a larger default font size and not with page zoom, which scales everything and hides it.
+
+Every choice on the page, the chart, a view of a diagram and a tensor's index placement, is one control, a row of buttons built by `choiceButton`, and a row appears only where there is more than one thing to choose.
+Every drawing, a spacetime diagram, a conformal diagram and a figure in three dimensions, stands on one dark ground, `--mfs-ground`, across the whole figure with its words, and prints on white.
+
+The coordinates come first in the mathematics, right after the history, since the chart is chosen before anything that depends on it: their buttons, then each coordinate with its domain.
+The page prints a spacetime's `signature` and `convention` under the heading "conventions" just below them, which is where the application reads them.
+They belong to the spacetime and not to a chart, so choosing a chart leaves them standing.
 A `convention` is prose with inline TeX between dollar signs, split into paragraphs at `¶`, and never carries a citation or HTML.
 An entry with neither field shows no conventions section at all.
 
@@ -318,7 +332,8 @@ Gott's core, the cosmic string's interior, is flat on its plane of $t$ and $\chi
 ## Conformal diagrams
 
 `MFS/assets/data/conformal/<metric_id>.json` holds the conformal diagram of one spacetime: the whole spacetime brought to a finite drawing with light at 45°, or, where no picture of the whole is faithful, a totally geodesic surface in it that says so.
-The page draws it once per spacetime, under the heading "conformal diagram", between the conventions and the coordinates, since it belongs to the spacetime and not to a chart; its views are buttons, and the view shown first is the one that tints the region the selected coordinate system covers.
+The page draws it under the heading "conformal diagram", below the coordinates and the conventions, and it follows the chart chosen there: it shows the views that name that chart, then the views that name no chart, with buttons only when that makes more than one.
+A chart none of whose views is its own shows no conformal diagram at all, as Vaidya's outgoing chart does, since the one drawn is the shell imploding in the ingoing chart.
 The application reads the same files.
 
 `_tools/derivations/conformal.py` draws them, one function per spacetime, each carrying its derivation in its docstring, reading the published metric through the checker's `Reader` with the `load` and `published_matrix` the null rays use.
