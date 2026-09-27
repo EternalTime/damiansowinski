@@ -124,9 +124,9 @@ function timed(action, chart) {
     var start = performance.now();
     ${action}
     (function poll() {
-      var select = document.getElementById('mfs-coord-select'), header = panel.querySelector('.mfs-header');
+      var on = panel.querySelector('.mfs-charts .mfs-choice-on'), header = panel.querySelector('.mfs-header');
       var ready = header && header !== before && t.busy === 0 &&
-        (!select || select.value === '${chart}') && !/\\\\[(\\[]/.test(panel.textContent);
+        (!on || on.dataset.chart === '${chart}') && !/\\\\[(\\[]/.test(panel.textContent);
       if (!ready) {
         if (performance.now() - start > ${LIMIT_S * 1000}) { resolve(null); return; }
         setTimeout(poll, 25); return;
@@ -136,7 +136,7 @@ function timed(action, chart) {
         var longest = t.long.filter(function (l) { return l[0] + l[1] > start; })
                             .reduce(function (m, l) { return Math.max(m, l[1]); }, 0);
         resolve({ seconds: (end - start) / 1000, longest: longest / 1000,
-                  chart: select ? select.options[select.selectedIndex].text : '',
+                  chart: on ? on.textContent : '',
                   lines: panel.querySelectorAll('.mfs-line').length,
                   elements: panel.getElementsByTagName('*').length });
       }, 0); }); });
@@ -150,10 +150,9 @@ for (const id of ids) {
   const first = await timed(`document.querySelector('.mfs-result[data-id="${id}"]').click();`, 0);
   results.push({ id, ...(first || { chart: '?' }), failed: !first });
   if (!first) continue;
-  const charts = await evaluate(`(document.getElementById('mfs-coord-select') || { options: [1] }).options.length`);
+  const charts = await evaluate(`document.querySelectorAll('.mfs-charts .mfs-choice').length || 1`);
   for (let c = 1; c < charts; c++) {
-    const r = await timed(`var s = document.getElementById('mfs-coord-select'); s.value = '${c}';
-                           s.dispatchEvent(new Event('change'));`, c);
+    const r = await timed(`document.querySelector('.mfs-charts [data-chart="${c}"]').click();`, c);
     results.push({ id, ...(r || { chart: String(c) }), failed: !r });
   }
 }
