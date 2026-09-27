@@ -73,6 +73,10 @@ The list's column grows with the text up to a quarter of the window, the panels 
 A spacetime diagram's numbers and axis names are laid out around its plot, so they take the room they need and the numbers thin out where they would touch.
 A conformal diagram's labels and a figure's stand at points inside the drawing, so the drawing keeps its proportion to them and is drawn larger with the text, scrolling sideways in its own frame where it is wider than the panel.
 `nrFigure` and `cdFrameAround` in `_layouts/mfs.html` carry the details.
+No word is broken inside itself at any size: the name, the headings, the choices, the page's title, the names in the list and the search hint are held to the size at which their widest word fits their line, which `fitWords` and `mfsWidestWord` measure.
+A word of the prose wider than its whole line is hyphenated by `hyphenateWords` with TeX's English patterns, since the browser's own hyphenation never divides a capitalised name such as Schwarzschild.
+On a phone the page's title and its exit sign share a row until they no longer fit side by side, when the sign takes a row of its own below the title.
+The print copy's sizes are points and its prose 12pt, so it prints the same whatever the reader's text size on the screen.
 Reproduce a text size fault the way a reader meets it, with a larger default font size and not with page zoom, which scales everything and hides it.
 
 Every choice on the page, the chart, a view of a diagram and a tensor's index placement, is one control, a row of buttons built by `choiceButton`, and a row appears only where there is more than one thing to choose.
