@@ -3443,8 +3443,10 @@
          buttons, and a tensor prints in the placement the entry gives first. The chart the
          copy is written in is named under the heading of its coordinates, in a box as it was
          when a selector named it. The copy's own text sizes are points, which the reader's
-         text size on the screen does not reach. */
-      #mfs-print-root { --mfs-text: 1; }
+         text size on the screen does not reach, and so is the size its prose inherits, 12pt,
+         which is the usual 16px: from the browser's default size, the history printed at
+         36pt under an 11pt header for a reader who reads at three times the usual text. */
+      #mfs-print-root { --mfs-text: 1; font-size: 12pt; }
       .mfs-print-body .mfs-choices, .mfs-print-body .mfs-nr-readout { display: none !important; }
       .mfs-print-body .mfs-choices.mfs-charts { display: block !important; }
       .mfs-print-body .mfs-charts .mfs-choice:not(.mfs-choice-on) { display: none; }
