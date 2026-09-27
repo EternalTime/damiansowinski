@@ -963,7 +963,8 @@
 
       /* Prose wraps and a formula inside it cannot, since MathJax 3 never breaks inline
          mathematics, and one wider than its paragraph was cut off at the panel's edge in a
-         narrow window: a few of the conventions and one history carry such a formula. So a
+         narrow window: a few of the conventions and one history carry such a formula, and at
+         twice the usual text on a phone so do the values a diagram is drawn at. So a
          formula too wide for its paragraph is set on a line of its own that scrolls sideways,
          as a line of mathematics does, and fades at the edge it continues past; the prose
          around it wraps as before, and a formula that fits is left inline and untouched.
@@ -1011,7 +1012,7 @@
         _proseObserver = new ResizeObserver(function(entries) {
           fitProseMath(entries.map(function(e) { return e.target; }));
         });
-        root.querySelectorAll('.mfs-history, .mfs-convention, .mfs-nr-caption').forEach(function(block) {
+        root.querySelectorAll('.mfs-history, .mfs-convention, .mfs-nr-caption, .mfs-nr-note, .mfs-cd-restriction').forEach(function(block) {
           _proseObserver.observe(block);
         });
       }
@@ -1311,8 +1312,8 @@
           '<div class="nr-yticks" aria-hidden="true"><span class="nr-sizer">' +
             view.ticks.y.map(function(t) { return '<span>' + nrEsc(t.label) + '</span>'; }).join('') + '</span>' + ys.join('') + '</div>' +
           '<div class="nr-plot">' + nrSvg(view, f) + refs.join('') +
-            '<div class="mfs-nr-readout"><span>' + nrEsc(view.xlabel) + '</span> = <span class="nr-rx"></span>' +
-            '<span class="nr-rgap"></span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></div></div>' +
+            '<div class="mfs-nr-readout"><span><span>' + nrEsc(view.xlabel) + '</span> = <span class="nr-rx"></span></span>' +
+            '<span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></span></div></div>' +
           '<div class="nr-xticks" aria-hidden="true">' + xs.join('') + '</div>' +
           '<div class="nr-xlabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.xlabel) + '</span></div>' +
         '</div>';
@@ -2406,6 +2407,12 @@
     }
     #mfs-content-panel .mfs-line-body,
     #mfs-content-panel .mfs-domain-body { width: max-content; white-space: nowrap; }
+    /* A formula taller than the line it is set on, a fraction or a matrix, makes the line as
+       tall as itself and no taller, so two in a row met with nothing between them, the foot
+       of one fraction on the head of the next. A fifth of an em above and below it keeps them
+       apart; a formula of one line's height sits inside its line's own leading, which is more
+       than that, and moves nothing. */
+    #mfs-content-panel .mfs-line mjx-math { margin: 0.2em 0; }
     #mfs-content-panel .mfs-domain { min-width: 0; }
     /* MathJax lays a hidden copy of each formula over it for screen readers, at the width
        the browser's own MathML gives it, which can be a few pixels wider than the formula
@@ -2520,13 +2527,18 @@
     }
     /* The plot's own frame and the marks on its edges are drawn just outside its box. */
     .mfs-nr-svg { display: block; width: 100%; height: auto; overflow: visible; }
+    /* The values under the pointer, the horizontal one and then the vertical, at the plot's
+       top right corner; on a plot too narrow for both on one line, as at a large text size on
+       a phone, the vertical goes under the horizontal rather than past the plot's left edge. */
     #mfs-content-panel .mfs-nr-readout {
       position: absolute; right: 0.3rem; top: 0.3rem; pointer-events: none;
-      font-family: 'Source Code Pro', monospace; font-size: 0.8125rem; line-height: 1.3; white-space: nowrap;
+      max-width: calc(100% - 0.6rem); box-sizing: border-box;
+      display: flex; flex-wrap: wrap; justify-content: flex-end; column-gap: 2em;
+      font-family: 'Source Code Pro', monospace; font-size: 0.8125rem; line-height: 1.3;
       color: var(--text-dim); background: rgba(0,0,0,0.8); padding: 1px 6px; border-radius: 3px;
       opacity: 0; transition: opacity 0.12s;
     }
-    #mfs-content-panel .mfs-nr-readout .nr-rgap { display: inline-block; width: 2em; }
+    #mfs-content-panel .mfs-nr-readout > span { white-space: nowrap; }
     #mfs-content-panel .mfs-nr-text { flex: 1 1 21.25rem; min-width: 0; }
     #mfs-content-panel .mfs-nr-caption p {
       font-family: 'Source Code Pro', monospace; font-size: 1.1875rem; line-height: 1.65;
