@@ -928,19 +928,21 @@
          size: until MathJax's own fonts have arrived its glyphs are drawn in another face and
          can reach a few pixels past the box MathJax gave them, and a domain marked in that
          moment kept a fade at an edge it no longer continued past once they had. So when
-         MathJax is done and whenever fonts finish loading, every scroller in the panel is
-         measured, and then all are marked, and a spacetime diagram's numbers, which change
-         width with the fonts as well, are thinned again. */
+         MathJax is done and whenever fonts finish loading, a spacetime diagram's plot is held
+         to its width and its numbers, which change width with the fonts as well, are thinned
+         again, and then every scroller in the panel is measured, and then all are marked. */
       function markAllEdges(root) {
-        var scrollers = [].slice.call(root.querySelectorAll('.mfs-line-scroll, .mfs-cd-scroll'));
+        var scrollers = [].slice.call(root.querySelectorAll('.mfs-line-scroll, .mfs-fig-scroll'));
         var edges = scrollers.map(edgesOf);
         scrollers.forEach(function(s, i) { setEdges(s, edges[i]); });
       }
       if (document.fonts && document.fonts.addEventListener) {
         document.fonts.addEventListener('loadingdone', function() {
           requestAnimationFrame(function() {
+            var figures = [].slice.call(contentPanel.querySelectorAll('.mfs-nr-figure'));
+            fitPlots(figures);
+            fitTicks(figures);
             markAllEdges(contentPanel);
-            fitTicks([].slice.call(contentPanel.querySelectorAll('.mfs-nr-figure')));
           });
         });
       }
@@ -1297,7 +1299,11 @@
          edge stand at their values; where they are set so large that neighbours would touch,
          fitTicks() shows every second one, or every third, keeping zero, and every tick mark
          stays. A column of numbers takes the width of its widest, which the hidden copy of
-         them in .nr-sizer gives it, since the numbers themselves are placed absolutely. */
+         them in .nr-sizer gives it, since the numbers themselves are placed absolutely.
+         The plot is never drawn narrower than it is at the usual text size, which fitPlots()
+         sees to, so the words grow around it rather than into it; where the plot and its
+         words are then wider than the panel, as at twice the usual size on a phone, the
+         figure scrolls sideways in its own frame, as a conformal diagram does. */
       function nrFigure(view) {
         var f = nrFrame(view);
         function tick(t, style) {
@@ -1308,7 +1314,7 @@
         var refs = view.markers.filter(function(mk) { return mk.kind === 'reference'; }).map(function(mk) {
           return '<span class="nr-ref" aria-hidden="true" style="top:' + (100 * (1 - mk.y)).toFixed(3) + '%">' + nrEsc(mk.label) + '</span>';
         });
-        return '<div class="mfs-nr-figure" style="--nr-aspect:' + (f.vw / f.vh).toFixed(4) + '">' +
+        return '<div class="mfs-fig-scroll mfs-nr-scroll" style="--nr-aspect:' + (f.vw / f.vh).toFixed(4) + '"><div class="mfs-nr-figure">' +
           '<div class="nr-ylabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.ylabel) + '</span></div>' +
           '<div class="nr-yticks" aria-hidden="true"><span class="nr-sizer">' +
             view.ticks.y.map(function(t) { return '<span>' + nrEsc(t.label) + '</span>'; }).join('') + '</span>' + ys.join('') + '</div>' +
@@ -1317,7 +1323,25 @@
             '<span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></span></div></div>' +
           '<div class="nr-xticks" aria-hidden="true">' + xs.join('') + '</div>' +
           '<div class="nr-xlabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.xlabel) + '</span></div>' +
-        '</div>';
+        '</div></div>';
+      }
+
+      /* Hold each plot to at least the width it has at the usual text size on this screen:
+         the width the figure takes there, its frame's or its own basis of 38.75rem, whichever
+         is less, less the room its words take there, which is the room they take now over
+         the reader's text size, since every one of them is set in ems. The figure is then as
+         wide as that plot and its words at least, and a figure wider than its frame scrolls.
+         Every figure is measured before any is set, as the lines are. */
+      function fitPlots(figures) {
+        var s = parseFloat(getComputedStyle(document.documentElement).fontSize) / 16 || 1;
+        var widths = figures.map(function(fig) {
+          var frame = fig.parentNode;
+          if (!frame.clientWidth) return null;
+          var words = fig.getBoundingClientRect().width - fig.querySelector('.nr-plot').getBoundingClientRect().width;
+          var usual = Math.min(frame.clientWidth, parseFloat(getComputedStyle(frame).flexBasis) / s || Infinity);
+          return Math.ceil(Math.max(0, usual - words / s) + words);
+        });
+        figures.forEach(function(fig, i) { if (widths[i] !== null) fig.style.minWidth = widths[i] + 'px'; });
       }
 
       // Show every n-th number along an edge, the smallest n at which no two of those shown
@@ -1507,13 +1531,19 @@
         if (_figureObserver) _figureObserver.disconnect();
         _figureObserver = window.ResizeObserver ? new ResizeObserver(function(entries) {
           var targets = entries.map(function(e) { return e.target; });
-          var scrollers = targets.filter(function(t) { return t.classList.contains('mfs-cd-scroll'); });
-          fitTicks(targets.filter(function(t) { return t.classList.contains('nr-plot'); }).map(function(t) { return t.parentNode; }));
+          var figures = [], scrollers = [];
+          targets.forEach(function(t) {
+            var scroller = t.closest('.mfs-fig-scroll'), frame = t.closest('.mfs-nr-scroll');
+            if (scroller && scrollers.indexOf(scroller) < 0) scrollers.push(scroller);
+            if (frame && figures.indexOf(frame.firstChild) < 0) figures.push(frame.firstChild);
+          });
+          fitPlots(figures);
+          fitTicks(figures);
           var edges = scrollers.map(edgesOf);
           scrollers.forEach(function(s, i) { setEdges(s, edges[i]); });
         }) : null;
         root.querySelectorAll('.nr-plot').forEach(function(plot) { if (_figureObserver) _figureObserver.observe(plot); });
-        root.querySelectorAll('.mfs-cd-scroll').forEach(function(scroller) {
+        root.querySelectorAll('.mfs-fig-scroll').forEach(function(scroller) {
           scroller.addEventListener('scroll', function() { markEdges(scroller); }, { passive: true });
           if (_figureObserver) {
             _figureObserver.observe(scroller);
@@ -1664,7 +1694,7 @@
          it is the drawing that follows the reader's text size: it is drawn as wide as it is at
          the usual size on this screen, times --mfs-text, its lines thickening with it. Where
          that is wider than the panel, as at twice the usual size on a desktop or at any size
-         above the usual on a phone, it scrolls sideways inside its own frame, .mfs-cd-scroll,
+         above the usual on a phone, it scrolls sideways inside its own frame, .mfs-fig-scroll,
          and fades at the edge it continues past, as a line of mathematics does, while the band
          above it and the caption beside or below it wrap at the panel's width. Its width at
          the usual size is --cd-cap or the panel's, whichever is less: --cd-wide is the width a
@@ -1676,7 +1706,7 @@
         var wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
         return '<div class="mfs-cd-figure' + (extra ? ' ' + extra : '') + '" style="--cd-wide:' + wide.toFixed(0) +
           'px;--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + above +
-          '<div class="mfs-cd-scroll"><div class="mfs-cd-drawing">' + drawing + '</div></div></div>';
+          '<div class="mfs-fig-scroll"><div class="mfs-cd-drawing">' + drawing + '</div></div></div>';
       }
 
       function cdFigure(view) {
@@ -2149,7 +2179,9 @@
         // Typeset MathJax; the promise is kept when it is set and its columns counted
         function laidOut() {
           reflowColumns();
-          fitTicks([].slice.call(contentPanel.querySelectorAll('.mfs-nr-figure')));
+          var figures = [].slice.call(contentPanel.querySelectorAll('.mfs-nr-figure'));
+          fitPlots(figures);
+          fitTicks(figures);
           markAllEdges(contentPanel);
         }
         if (window.MathJax && MathJax.typesetPromise) {
@@ -2322,6 +2354,13 @@
       display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
       gap: 0.25rem 0.75rem;
     }
+    /* A heading or a choice whose one word is wider than the whole line, as "coordinates"
+       and "Cylindrical" are at three times the usual text on a phone, breaks inside that
+       word rather than reaching past the panel's edge, as the prose does; a word that fits
+       is never broken. It is `anywhere` rather than the panel's `break-word` because these
+       share a line in a row that wraps, and only `anywhere` lets them narrow to the line. */
+    #mfs-content-panel .mfs-section-label,
+    #mfs-content-panel .mfs-choice { overflow-wrap: anywhere; }
     #mfs-content-panel .mfs-section-label {
       font-size: 1.3125rem; color: rgba(0,229,255,0.5);
       letter-spacing: 0.1em; text-transform: uppercase;
@@ -2506,7 +2545,10 @@
        conformal diagram's dark background. It is one definition, so they cannot drift apart. */
     :root { --mfs-ground: rgba(0,0,0,0.55); }
     .mfs-nr-figure, .mfs-cd-drawing { background: var(--mfs-ground); }
-    #mfs-content-panel .mfs-nr-figure { flex: 0 1 38.75rem; min-width: min(17.5rem, 100%); }
+    /* A spacetime diagram's frame, .mfs-fig-scroll, is what stands beside its caption, and the
+       figure inside it is the frame's width or, where fitPlots() holds its plot wider than
+       that leaves room for, wider, and scrolls. */
+    #mfs-content-panel .mfs-nr-scroll { flex: 0 1 38.75rem; min-width: min(17.5rem, 100%); }
     /* A spacetime diagram as nrFigure() lays it out: the name of the vertical axis, its
        numbers and the plot, with the horizontal axis's numbers and name under the plot. Its
        words are set at two thirds of the text around them, 14px beside the panel's 21px at the
@@ -2634,8 +2676,10 @@
     #mfs-content-panel .mfs-cd-figure {
       flex: 0 1 calc(var(--cd-cap) * var(--mfs-text, 1)); min-width: min(16.25rem, 100%); max-width: 100%;
     }
-    /* cdFrameAround() says why a drawing is as wide as this and when it scrolls. */
-    .mfs-cd-scroll {
+    /* The frame a drawing scrolls sideways in when it is wider than the panel, a conformal
+       diagram's or a figure's as cdFrameAround() says and a spacetime diagram's as nrFigure()
+       says; cdFrameAround() says why a conformal drawing is as wide as this. */
+    .mfs-fig-scroll {
       overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
       scrollbar-width: thin; scrollbar-color: rgba(0,229,255,0.25) transparent;
     }
@@ -2781,12 +2825,18 @@
         margin: 20px 0 20px 20px; scroll-margin-top: 12px;
         overflow: visible !important; overflow-x: clip !important;
         font-size: 0.9375rem !important;
+        padding-left: min(1em, 4.2vw) !important; padding-right: min(1em, 4.2vw) !important;
       }
-      #mfs-content-panel .mfs-header { padding-left: 0.375rem; padding-right: 0.375rem; }
+      /* The room at the sides of the panel, its sections and its header grows with the
+         reader's text only as far as the screen allows: what it is at the usual size on a
+         phone from 360px wide up, and more on a wider window, but no more on a phone, where
+         at three times the usual text it took two fifths of a 390px screen and left the
+         mathematics and the drawings under eight ems to be set in. */
+      #mfs-content-panel .mfs-header { padding-left: min(0.375rem, 1.6vw); padding-right: min(0.375rem, 1.6vw); }
       #mfs-content-panel .mfs-label { font-size: 0.875rem; }
       #mfs-content-panel .mfs-title { font-size: 1.625rem; }
       #mfs-content-panel #mfs-print-btn { font-size: 0.75rem; padding: 0.1875rem 0.5625rem; }
-      #mfs-content-panel .mfs-section { padding: 0.5rem 0.375rem; }
+      #mfs-content-panel .mfs-section { padding: 0.5rem min(0.375rem, 1.6vw); }
       #mfs-content-panel .mfs-section-label { font-size: 0.875rem; }
       #mfs-content-panel .mfs-placeholder { font-size: 1rem; }
       #mfs-content-panel .mfs-table { font-size: 0.8125rem; }
@@ -2815,10 +2865,11 @@
          --nr-aspect and --cd-aspect are a plot's or a drawing's width over its height, which
          nrFigure() and cdFrameAround() write on each figure, and --cd-wide is the width a
          tall one is already held to. A spacetime diagram's words grow with the reader's text
-         inside that width, as nrFigure() lays them out; a conformal diagram, whose labels
+         around a plot never narrower than at the usual size, as nrFigure() says, the figure
+         scrolling in this width when they need more; a conformal diagram, whose labels
          stand inside it, is drawn larger with them and scrolls sideways, as cdFrameAround()
          says, so --cd-cap is its width at the usual size. */
-      #mfs-content-panel .mfs-nr-figure {
+      #mfs-content-panel .mfs-nr-scroll {
         max-width: max(calc(100svh * var(--nr-aspect, 1)), calc(100vh - 64px));
       }
       #mfs-content-panel .mfs-cd-figure {
@@ -3155,7 +3206,7 @@
       /* Every view of the conformal diagram prints too, at most 12cm wide, a tall one still
          held to its screen height, with its lines in the print copy's darker inks. */
       .mfs-print-body .mfs-cd-figure { width: 12cm; max-width: var(--cd-wide); }
-      .mfs-print-body .mfs-cd-scroll { overflow: visible; }
+      .mfs-print-body .mfs-fig-scroll { overflow: visible; }
       .mfs-print-body .mfs-cd-restriction { border: 1px solid #000 !important; font-size: 9.5pt; margin: 0 0 4pt; padding: 3pt 6pt; }
       .mfs-print-body .cd-region { fill: #f3f3f3; }
       .mfs-print-body .cd-cover { fill: #d8efec; }
