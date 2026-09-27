@@ -1032,7 +1032,7 @@ def reissner_nordstrom(ck, src):
     rIII = [0.3] + nice_all(even_radii(T, "III", 2, 0, rm, xmax=HALF), [0, rm, 0.3])
     grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
     views = []
-    v = View("tower", "Spherical", box, "spherical")
+    v = View("tower", "Maximal extension", box, "spherical")
     D.draw(v, grids, cover=[("I", False), ("II", False), ("III", False)])
     D.labels(v)
     v.set(fade={"top": 0.9, "bottom": 0.9})
@@ -1063,7 +1063,8 @@ def reissner_nordstrom(ck, src):
     v.point("mark", (pe, qe))
     D.labels(v)
     v.label((pe, qe), "an event beyond $r_-$", "l", "small", dx=7)
-    v.label(T.pq("I", 0.0, 1.2), "observer at $r = 1.2\\,r_s$", "r", "small", dx=-6)
+    # Low on the observer's world line, clear of the region's own name at its centre.
+    v.label(T.pq("I", -0.9 / T.kp, 1.2), "observer at $r = 1.2\\,r_s$", "r", "small", dx=-6)
     v.set(fade={"top": 0.9, "bottom": 0.9})
     v.legend("past", "the whole exterior, in the event's causal past")
     v.legend("world", "a static observer, whose proper time is infinite")
