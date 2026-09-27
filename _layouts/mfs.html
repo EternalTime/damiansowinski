@@ -946,6 +946,7 @@
             var words = [].slice.call(contentPanel.querySelectorAll(FIT_WORDS));
             words.forEach(function(el) { el._mfsWordEm = 0; });
             fitWords(words);
+            hyphenateWords([].slice.call(contentPanel.querySelectorAll('.mfs-section')));
           });
         });
       }
@@ -1035,12 +1036,26 @@
          A name is held so too, even below the size of the prose: a whole word reads better
          than one broken where the line ends, which is what hyphenation gave "Schwarzschild"
          at the size of the prose there. A choice written in mathematics is left as it is,
-         since mathematics never wraps. The words are measured again once fonts have
-         loaded, which change their width, and all of them together, in hidden copies. */
+         since mathematics never wraps. A row of choices takes the size its narrowest room
+         allows for all of them, and so do the headings, so that no choice is set smaller
+         than the one beside it and no heading smaller than another. The words are measured
+         again once fonts have loaded, which change their width, and all of them together,
+         in hidden copies. */
       var FIT_WORDS = '.mfs-header .mfs-title, .mfs-header .mfs-label, .mfs-section-label, .mfs-choice';
       var _wordObserver = null;
       function lineOf(el) { return el.closest('.mfs-header, .mfs-section'); }
+      function groupOf(el) {
+        if (el.classList.contains('mfs-choice')) return el.parentElement;
+        return el.classList.contains('mfs-section-label') ? contentPanel : el;
+      }
       function fitWords(els) {
+        els.slice().forEach(function(el) {
+          var group = groupOf(el);
+          if (group === el) return;
+          [].forEach.call(group.querySelectorAll(group === contentPanel ? '.mfs-section-label' : ':scope > .mfs-choice'), function(other) {
+            if (els.indexOf(other) < 0) els.push(other);
+          });
+        });
         els = els.filter(function(el) {
           return el.isConnected && lineOf(el) && el.getClientRects().length && !el.querySelector('mjx-container');
         });
@@ -1071,7 +1086,12 @@
           var edge = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
           return Math.floor((room - edge) / el._mfsWordEm * 100) / 100;
         });
-        els.forEach(function(el, i) { el.style.setProperty('--mfs-fit', fits[i] + 'px'); });
+        var least = new Map();
+        els.forEach(function(el, i) {
+          var group = groupOf(el);
+          least.set(group, Math.min(least.has(group) ? least.get(group) : Infinity, fits[i]));
+        });
+        els.forEach(function(el) { el.style.setProperty('--mfs-fit', least.get(groupOf(el)) + 'px'); });
       }
       function wireWords(root) {
         if (_wordObserver) _wordObserver.disconnect();
@@ -1081,8 +1101,125 @@
           fitWords([].slice.call(root.querySelectorAll(FIT_WORDS)).filter(function(el) {
             return lines.indexOf(lineOf(el)) >= 0;
           }));
+          hyphenateWords(lines);
         });
         root.querySelectorAll('.mfs-header, .mfs-section').forEach(function(line) { _wordObserver.observe(line); });
+      }
+
+      /* A word of the prose wider than the whole of its line, as "gravitational" is in the
+         monospaced history at three times the usual text on a phone, where a line holds
+         twelve letters, is hyphenated where English divides it, rather than broken at
+         whatever letter the line ends on, which made "Schwarzschi ld" and "gravitationa l"
+         of the history there. Only such a word is: a whole word reads better than a divided
+         one, and hyphenating all the prose would divide words at the ends of its lines at
+         every size. The places a word divides come from TeX's patterns for English, which
+         the hyphen library carries and which are fetched the first time a word needs them,
+         so never at the usual size. They are written into the word as soft hyphens, which
+         every browser divides a word at, where a browser's own hyphenation divides no
+         name, and "Schwarzschild" is the commonest long word in the collection; a place is
+         kept only with two letters before it and three after, as TeX keeps them for English.
+         A word is taken as far as a hyphen, a dash or a slash in it, where a line may already
+         end, and is looked at only if it has more letters than its line has ems, since no
+         letter is wider than an em, so at the usual size almost none is; one that runs onto
+         a second line is kept in a span of its own, and divided while it would still do so
+         set whole. Headings, choices and the name are held to their line by fitWords()
+         instead, and the drawings lay out their own words. As with the lines, every word is
+         set whole before any is measured, and every one measured before any is divided. */
+      var WORD_SKIP = 'mjx-container, svg, script, style, .mfs-section-label, .mfs-choice, .mfs-line-scroll, .mfs-nr-figure, .mfs-cd-drawing, .mfs-long-word';
+      var HYPHEN_LIB = 'https://cdn.jsdelivr.net/npm/hyphen@1.14.1/';
+      /* Names the English patterns find no place in, divided as TeX would be told to divide
+         them; a name missing here is broken where its line ends, as before. */
+      var HYPHEN_NAMES = ['Kretsch-mann', 'Chris-to-dou-lou', "Chris-to-dou-lou's", 'Amarz-gui-oui'];
+      var _divide = null, _divideWanted = false;
+      function letters(s) {
+        return s.split('').filter(function(c) { return c.toLowerCase() !== c.toUpperCase(); }).length;
+      }
+      function loadDivide() {
+        if (_divideWanted) return;
+        _divideWanted = true;
+        var files = [
+          ['hyphen.js', 'sha384-LYPbVnLQYa4oY7YwktJbXzwrU3SRhidrYu3jAaUFgOzjAzDqdN5Jc3G9mpy9Rhr0'],
+          ['patterns/en-us.js', 'sha384-ZJ4hKgMOS/1GNVy+NofF8Bj1oyf+GztnwPah8Sa0CNsBIhj4YC3cR+Ido0DopS7D']
+        ], left = files.length;
+        files.forEach(function(file) {
+          var script = document.createElement('script');
+          script.src = HYPHEN_LIB + file[0];
+          script.integrity = file[1];
+          script.crossOrigin = 'anonymous';
+          script.onload = function() {
+            if (--left || !window.createHyphenator || !window.hyphenationPatternsEnUs) return;
+            var mark = window.createHyphenator(window.hyphenationPatternsEnUs, { html: false, exceptions: HYPHEN_NAMES });
+            _divide = function(word) {
+              var pieces = mark(word).split('\u00AD'), out = pieces[0];
+              for (var i = 1; i < pieces.length; i++) {
+                var keep = letters(out) >= 2 && letters(pieces.slice(i).join('')) >= 3;
+                out += (keep ? '\u00AD' : '') + pieces[i];
+              }
+              return out;
+            };
+            hyphenateWords([].slice.call(contentPanel.querySelectorAll('.mfs-section')));
+          };
+          document.head.appendChild(script);
+        });
+      }
+      function hyphenateWords(lines) {
+        lines = lines.filter(function(line) {
+          return line.isConnected && line.classList.contains('mfs-section') && line.getClientRects().length;
+        });
+        var spans = [];
+        lines.forEach(function(line) {
+          [].forEach.call(line.querySelectorAll('.mfs-long-word'), function(span) {
+            if (span.textContent !== span._mfsWhole) span.textContent = span._mfsWhole;
+            spans.push(span);
+          });
+        });
+        function split(rects) {
+          var tops = [].filter.call(rects, function(r) { return r.width > 0.5; }).map(function(r) { return r.top; });
+          return tops.some(function(t) { return Math.abs(t - tops[0]) > 2; });
+        }
+        var limits = new Map();
+        function limitOf(el) {
+          if (!limits.has(el)) {
+            var cs = getComputedStyle(el), block = el, bs = cs;
+            while (bs.display === 'inline' && block.parentElement) { block = block.parentElement; bs = getComputedStyle(block); }
+            var room = block.clientWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
+            limits.set(el, room / (parseFloat(cs.fontSize) + (parseFloat(cs.letterSpacing) || 0)));
+          }
+          return limits.get(el);
+        }
+        var long = spans.filter(function(span) { return split(span.getClientRects()); });
+        var found = [];
+        lines.forEach(function(line) {
+          var walker = document.createTreeWalker(line, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, { acceptNode: function(node) {
+            if (node.nodeType === 3) return NodeFilter.FILTER_ACCEPT;
+            return node.matches(WORD_SKIP) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_SKIP;
+          } });
+          for (var text = walker.nextNode(); text; text = walker.nextNode()) {
+            var limit = limitOf(text.parentElement), words = [], word, re = /[^\s\-\u2010\u2013\u2014\/]+[\-\u2010\u2013\u2014\/]?/g;
+            while ((word = re.exec(text.data))) {
+              if (word[0].length <= limit) continue;
+              var range = document.createRange();
+              range.setStart(text, word.index);
+              range.setEnd(text, word.index + word[0].length);
+              if (split(range.getClientRects())) words.push([word.index, word.index + word[0].length]);
+            }
+            if (words.length) found.push({ text: text, words: words });
+          }
+        });
+        found.forEach(function(f) {
+          f.words.reverse().forEach(function(w) {
+            f.text.splitText(w[1]);
+            var piece = f.text.splitText(w[0]), span = document.createElement('span');
+            span.className = 'mfs-long-word';
+            span._mfsWhole = piece.data;
+            piece.parentNode.insertBefore(span, piece);
+            span.appendChild(piece);
+            long.push(span);
+          });
+        });
+        if (!long.length) return;
+        if (!_divide) { loadDivide(); return; }
+        long.forEach(function(span) { span.textContent = _divide(span._mfsWhole); });
       }
 
       function buildMetricMatrix(components, coords, label) {
@@ -2365,14 +2502,14 @@
        heads; only the hairlines of borders stay in px. A word longer than its line is
        broken rather than cut off at the panel's edge, which at twice the usual text on a
        phone a spacetime's name did: "Schwarzschild" alone is wider than the column there.
-       A name, a heading and a choice are first set smaller, as far as their widest word
-       needs (fitWords() says how), so this is the last resort, and a name is hyphenated
-       where the language allows before any word is broken elsewhere. Mathematics never wraps and is not touched by either. */
+       It is the last resort: a name, a heading and a choice are first set smaller, as far
+       as their widest word needs, and a word of the prose is first hyphenated where the
+       language divides it (fitWords() and hyphenateWords() say how). Mathematics never
+       wraps and is not touched by either. */
     #mfs-content-panel {
       overflow-y: auto; overflow-x: hidden; font-size: 1.3125rem !important;
       overflow-wrap: break-word;
     }
-    #mfs-content-panel .mfs-header .mfs-title { -webkit-hyphens: auto; hyphens: auto; }
     /* The header reaches up through the panel's 1em of padding and sticks at the panel's
        edge, not below the padding, where the text scrolling under it would show above it.
        It is opaque: at 95% the text passing under it stayed legible behind the title, and
@@ -2674,10 +2811,17 @@
     #mfs-content-panel .mfs-nr-note { font-family: 'Source Code Pro', monospace; }
     #mfs-content-panel .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 0.375rem 1.375rem; margin: 0.25rem 0 0.75rem; }
     /* An entry of a legend is never wider than the legend, its words wrapping beside its
-       swatch, and a formula too wide for what is left scrolls as one in a caption does. */
+       swatch, and a formula too wide for what is left scrolls as one in a caption does.
+       In a legend narrower than twelve ems of its words the words go below the swatch
+       instead, since at three times the usual text on a phone the swatch left them nine
+       letters to a line and a number was divided between two of them. */
+    #mfs-content-panel .mfs-nr-legend { container-type: inline-size; font-size: 1rem; }
     #mfs-content-panel .mfs-nr-item {
       display: inline-flex; align-items: center; gap: 0.5rem; max-width: 100%;
-      font-size: 1rem; color: var(--text-mid);
+      color: var(--text-mid);
+    }
+    @container (max-width: 12em) {
+      #mfs-content-panel .mfs-nr-item { flex-direction: column; align-items: stretch; }
     }
     #mfs-content-panel .mfs-nr-itext { min-width: 0; }
     #mfs-content-panel .mfs-nr-swatch { flex: none; width: 2.125rem; height: 1rem; }
@@ -2819,7 +2963,9 @@
     #mfs-content-panel .mfs-ref-journal { color: rgba(0,229,255,0.5); }
     #mfs-content-panel .mfs-ref-volume  { color: rgba(0,229,255,0.4); }
     #mfs-content-panel .mfs-ref-num     { color: var(--teal-light); margin-right: 0.3em; font-size: 0.85em; }
-    #mfs-content-panel a.mfs-cite       { color: var(--teal-light); text-decoration: none; font-size: 0.8em; }
+    /* A citation's number is never divided between two lines, as "[1" and "2]" were at three
+       times the usual text on a phone, where the word it follows was wider than the line. */
+    #mfs-content-panel a.mfs-cite       { color: var(--teal-light); text-decoration: none; font-size: 0.8em; white-space: nowrap; }
     #mfs-content-panel a.mfs-cite:hover { text-decoration: underline; }
     #mfs-content-panel a.mfs-ref-link   { color: rgba(0,229,255,0.7) !important; text-decoration: underline; text-decoration-color: rgba(0,229,255,0.3); transition: color 0.15s, text-shadow 0.15s; }
     #mfs-content-panel a.mfs-ref-link:hover { color: var(--cyan) !important; text-decoration-color: var(--teal-light); text-shadow: 0 0 8px var(--cyan), 0 0 20px var(--cyan); transition: color 0.15s, text-shadow 0.15s; }
@@ -2921,7 +3067,7 @@
       #mfs-content-panel .mfs-zero { font-size: 1.125rem; }
       #mfs-content-panel .mfs-choice { font-size: min(0.75rem, var(--mfs-fit, 0.75rem)); padding: 0.25em 0.75em; }
       #mfs-content-panel .mfs-nr-caption p { font-size: 0.875rem; }
-      #mfs-content-panel .mfs-nr-item,
+      #mfs-content-panel .mfs-nr-legend,
       #mfs-content-panel .mfs-nr-note { font-size: 0.75rem; }
       #mfs-content-panel .mfs-nr-k,
       #mfs-content-panel .mfs-convention-k { font-size: 0.6875rem; }
