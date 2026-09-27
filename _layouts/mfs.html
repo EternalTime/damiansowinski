@@ -36,6 +36,24 @@
 </head>
 <body>
 
+  <!-- The reader's text size, as a factor of the browser's usual 16px, kept in --mfs-text on
+       the root for the few lengths that have to follow it and cannot be written in rem, and
+       kept current when the reader changes it with the page open: the probe is 1rem wide, so
+       a change in the text size is a change in its size. A drawing uses it, since how wide it
+       is at the usual size depends on the screen as well as on the text; see cdFigure(). -->
+  <div id="mfs-rem-probe" aria-hidden="true" style="position:absolute;top:0;left:0;width:1rem;height:0;overflow:hidden;visibility:hidden;pointer-events:none;"></div>
+  <script>
+    (function () {
+      var probe = document.getElementById('mfs-rem-probe');
+      function measure() {
+        var s = parseFloat(getComputedStyle(document.documentElement).fontSize) / 16;
+        document.documentElement.style.setProperty('--mfs-text', String(s > 0 ? s : 1));
+      }
+      measure();
+      if (window.ResizeObserver) new ResizeObserver(measure).observe(probe);
+    })();
+  </script>
+
   <canvas id="wavy-grid" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;"></canvas>
 
   <!-- The title comes before the panels so that on a phone, where it is in the flow of the
@@ -44,13 +62,13 @@
   <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--teal-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
 
 <div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
-    width:280px;height:320px;
+    width:var(--mfs-left-w);height:320px;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
     box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
-    padding:1em; display:flex; flex-direction:column; gap:0.6em;">
+    padding:min(1em, 16px); display:flex; flex-direction:column; gap:0.6em;">
   <input id="mfs-search-input" type="text" placeholder="Search spacetimes…"
     style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--cyan);border-radius:4px;
-    color:var(--text-bright);padding:0.4em 0.6em;font-family:'Source Code Pro',monospace;font-size:0.85em;
+    color:var(--text-bright);padding:0.4em 0.5em;font-family:'Source Code Pro',monospace;font-size:0.85em;
     outline:none;box-sizing:border-box; flex-shrink:0;">
   <div id="mfs-search-results" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;"></div>
   </div>
@@ -62,10 +80,10 @@
      #mfs-coffee-scroll takes the overflow when the viewport is short, so only the copy scrolls
      and the button below it stays visible as a non-scrolling bottom row. -->
 <div id="mfs-coffee-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
-    width:280px;
+    width:var(--mfs-left-w);
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
     box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
-    padding:1em; display:flex; flex-direction:column; align-items:center; gap:0.7em;">
+    padding:min(1em, 16px); display:flex; flex-direction:column; align-items:center; gap:0.7em;">
   <div id="mfs-coffee-scroll" style="align-self:stretch;min-height:0;overflow-y:auto;">
     <p id="mfs-coffee-text" style="margin:0;font-family:'Source Code Pro',monospace;font-size:0.72em;line-height:1.5;
       color:var(--teal-light);letter-spacing:0.02em;text-align:left;">
@@ -120,10 +138,20 @@
   </script>
 
   <style>
+    /* Every size a reader reads is in rem, the reader's own text size, so that enlarging the
+       text in the browser (Chrome's font size, a larger default font, or Safari's and
+       Firefox's zoom of text only) enlarges every word on the page and not only the few that
+       were sized in em; at the browser's usual 16px each is the pixel size it always was. The
+       geometry the text sits in follows it where the text needs the room: the column of the
+       list, --mfs-left-w, grows with the text up to a quarter of the window, which leaves the
+       spacetime three quarters of it at any size, and the panels start at --mfs-top, below
+       the title however large it is set and however it wraps, which the panel script
+       measures. */
+    :root { --mfs-left-w: clamp(280px, 17.5rem, 25vw); --mfs-top: 150px; }
     .mfs-result {
-      padding: 5px 8px;
+      padding: 0.3125rem 0.5rem;
       font-family: 'Source Code Pro', monospace;
-      font-size: 18px;
+      font-size: 1.125rem;
       color: var(--teal-light);
       border-radius: 4px;
       cursor: pointer;
@@ -143,7 +171,7 @@
   <div id="mfs-loading" role="status" aria-hidden="true" hidden>Spacetime data loading...</div>
 
   <div id="mfs-content-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px 0 0 12px;
-    top:150px;right:-100%;
+    top:var(--mfs-top);right:-100%;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-right:none;
     box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);
     overflow-y:auto;pointer-events:none;padding:1em;"></div>
@@ -581,9 +609,9 @@
       var coffee = document.getElementById('mfs-coffee-panel');
       if (!el) return;
 
-      var PANEL_TOP   = 150;   // px from top of viewport — adjust once content is added
+      var PANEL_TOP   = 150;   // px from top of viewport, at the least; see placeTop()
+      var TITLE_GAP   = 60;    // px at the least between the title and the panels below it
       var PANEL_LEFT  = 0;     // flush with left edge of window
-      var PANEL_W     = 280;
       var PANEL_H     = 320;
       var BOTTOM_GAP  = 20;    // same bottom clearance the content panel leaves
       var SLIDE_DELAY = 800;   // ms after flicker-in starts
@@ -591,31 +619,43 @@
 
       var panels = [el, coffee];
 
-      // Off-screen left by the panel's width and 20px more. The width is PANEL_W on the
-      // desktop and the screen's on a phone, where the phone stylesheet sets --mfs-left-w;
-      // it is left to the stylesheet so that it follows the screen as it turns.
-      var OFF_LEFT = 'calc(-1 * var(--mfs-left-w, ' + PANEL_W + 'px) - 20px)';
+      // Off-screen left by the panel's width and 20px more. The width is --mfs-left-w, 17.5rem
+      // on the desktop and the screen's on a phone, where the phone stylesheet sets it; it is
+      // left to the stylesheet so that it follows the screen as it turns and the reader's
+      // text size as it changes.
+      var OFF_LEFT = 'calc(-1 * var(--mfs-left-w) - 20px)';
 
-      // Set fixed size and top; start off-screen left
-      el.style.top    = PANEL_TOP + 'px';
-      el.style.width  = PANEL_W + 'px';
-      el.style.height = PANEL_H + 'px';
-      panels.forEach(function(p) { p.style.left = OFF_LEFT; });
+      /* The panels start 150px down, below the title, until the title needs more: set large
+         enough it wraps onto a second line, which at twice the usual text size it does on a
+         1440px screen, and its last line would otherwise lie over the panels. So they start
+         TITLE_GAP below the title's foot, which takes in the rise the grid makes under it.
+         The title is fixed on the desktop, so its box is its place on the screen; on a phone
+         it is in the flow and the phone stylesheet places the panels. The title's size is
+         watched, since it changes when the reader's text size does and when it wraps anew. */
+      function placeTop() {
+        var foot = document.getElementById('mfs-title').getBoundingClientRect().bottom;
+        var top = Math.max(PANEL_TOP, Math.ceil(foot + TITLE_GAP));
+        document.documentElement.style.setProperty('--mfs-top', top + 'px');
+      }
 
+      // Set size and top; start off-screen left
       function syncPanel() {
-        el.style.top    = PANEL_TOP + 'px';
-        el.style.width  = PANEL_W + 'px';
+        placeTop();
+        el.style.top    = 'var(--mfs-top)';
+        el.style.width  = 'var(--mfs-left-w)';
         el.style.height = PANEL_H + 'px';
-        coffee.style.top       = (PANEL_TOP + PANEL_H) + 'px';
-        coffee.style.width     = PANEL_W + 'px';
+        coffee.style.top       = 'calc(var(--mfs-top) + ' + PANEL_H + 'px)';
+        coffee.style.width     = 'var(--mfs-left-w)';
         // No height: the panel is content sized. The clamp only stops it running past the
         // bottom of a short viewport, where a fixed, overflow:hidden panel would put the
         // button out of reach; past that point #mfs-coffee-scroll scrolls the copy instead.
-        coffee.style.maxHeight = Math.max(0, window.innerHeight - PANEL_TOP - PANEL_H - BOTTOM_GAP) + 'px';
+        coffee.style.maxHeight = 'max(0px, calc(100vh - var(--mfs-top) - ' + (PANEL_H + BOTTOM_GAP) + 'px))';
       }
+      panels.forEach(function(p) { p.style.left = OFF_LEFT; });
       syncPanel();
       window._mfsSyncPanel = syncPanel;
-      window.addEventListener('resize', syncPanel);
+      window.addEventListener('resize', placeTop);
+      if (window.ResizeObserver) new ResizeObserver(placeTop).observe(document.getElementById('mfs-title'));
 
       // Slide in after delay
       setTimeout(function() {
@@ -648,19 +688,17 @@
       var el = document.getElementById('mfs-content-panel');
       if (!el) return;
 
-      var LEFT_PANEL_W  = 280;
       var GAP           = 20;
-      var PANEL_TOP     = 150;
 
       // The loading line covers the panel's resting place, so it is sized with the panel.
+      // Both follow the list's column and the title's foot, which the stylesheet and the
+      // script above keep in --mfs-left-w and --mfs-top.
       var note = document.getElementById('mfs-loading');
       function syncPanel() {
-        var vw = window.innerWidth;
-        var panelW = vw - LEFT_PANEL_W - GAP;
         [el, note].forEach(function(box) {
-          box.style.top    = PANEL_TOP + 'px';
-          box.style.width  = panelW + 'px';
-          box.style.height = (window.innerHeight - PANEL_TOP - 20) + 'px';
+          box.style.top    = 'var(--mfs-top)';
+          box.style.width  = 'calc(100vw - var(--mfs-left-w) - ' + GAP + 'px)';
+          box.style.height = 'calc(100vh - var(--mfs-top) - 20px)';
         });
       }
 
@@ -670,7 +708,6 @@
       el.style.right = '0';
       el.style.transform = OFF_RIGHT;
       syncPanel();
-      window.addEventListener('resize', syncPanel);
 
       // Expose for exit transition and for a spacetime chosen in place of the one shown
       window._mfsSlideOutRight = function(duration) {
@@ -887,6 +924,26 @@
         scroller.classList.toggle('mfs-more-right', edges[1]);
       }
       function markEdges(scroller) { setEdges(scroller, edgesOf(scroller)); }
+      /* What a scroller holds can overflow it without anything the observer watches changing
+         size: until MathJax's own fonts have arrived its glyphs are drawn in another face and
+         can reach a few pixels past the box MathJax gave them, and a domain marked in that
+         moment kept a fade at an edge it no longer continued past once they had. So when
+         MathJax is done and whenever fonts finish loading, every scroller in the panel is
+         measured, and then all are marked, and a spacetime diagram's numbers, which change
+         width with the fonts as well, are thinned again. */
+      function markAllEdges(root) {
+        var scrollers = [].slice.call(root.querySelectorAll('.mfs-line-scroll, .mfs-cd-scroll'));
+        var edges = scrollers.map(edgesOf);
+        scrollers.forEach(function(s, i) { setEdges(s, edges[i]); });
+      }
+      if (document.fonts && document.fonts.addEventListener) {
+        document.fonts.addEventListener('loadingdone', function() {
+          requestAnimationFrame(function() {
+            markAllEdges(contentPanel);
+            fitTicks([].slice.call(contentPanel.querySelectorAll('.mfs-nr-figure')));
+          });
+        });
+      }
       function wireLines(root) {
         if (!_lineObserver && window.ResizeObserver) {
           _lineObserver = new ResizeObserver(function(entries) {
@@ -985,39 +1042,32 @@
       }
 
 
-      // Render the index position widget for a given convention string (e.g. 'ull').
-      // Only the first index is togglable; the rest are fixed lower.
-      // Render index widget. For tensors with all-fixed lower indices except first (ull, ulll, llll etc.),
-      // only the first column is togglable. For rank-2 symmetric tensors (uu/ul/ll), both columns toggle.
-      function renderConventionWidget(convention, tensorId) {
-        var symmetric = convention.length === 2;  // Ricci, Einstein
-        var cols = '';
-        for (var i = 0; i < convention.length; i++) {
-          var isToggle = (i === 0) || symmetric;
-          var cur = convention[i];
-          var topSel = cur === 'u' ? ' mfs-idx-on' : '';
-          var botSel = cur === 'l' ? ' mfs-idx-on' : '';
-          if (isToggle) {
-            cols += [
-              '<div class="mfs-idx-col mfs-idx-col-toggle" data-colidx="' + i + '">',
-                '<div class="mfs-idx-box' + topSel + '" data-pos="u" data-colidx="' + i + '"></div>',
-                '<div class="mfs-idx-box' + botSel + '" data-pos="l" data-colidx="' + i + '"></div>',
-              '</div>'
-            ].join('');
-          } else {
-            cols += [
-              '<div class="mfs-idx-col mfs-idx-col-fixed">',
-                '<div class="mfs-idx-spacer"></div>',
-                '<div class="mfs-idx-box mfs-idx-on mfs-idx-fixed"></div>',
-              '</div>'
-            ].join('');
-          }
-        }
-        return [
-          '<div class="mfs-idx-widget" data-tensor="' + tensorId + '" data-convention="' + convention + '">',
-            cols,
-          '</div>'
-        ].join('');
+      /* Every choice the page offers is one control: a row of .mfs-choice buttons, the one
+         chosen lit. The chart is chosen with it, a diagram's view with it, and a tensor's
+         index placement with it, which the captain asked for on 27 September 2026 ("Use
+         buttons everywhere") where a column of bare boxes had stood. A placement's button
+         carries the placement's own pattern as the entry writes it in its `note`, such as
+         R^\mu{}_{\nu\rho\sigma}, set with the mathematics, and the placements run from the
+         most indices raised to the fewest, so each tensor's row reads the same way. */
+      function choiceButton(label, on, attrs) {
+        var a = '';
+        for (var k in attrs) a += ' ' + k + '="' + nrEsc(attrs[k]) + '"';
+        return '<button type="button" class="mfs-choice' + (on ? ' mfs-choice-on' : '') + '" aria-pressed="' + on + '"' + a + '>' +
+          label + '</button>';
+      }
+      function choices(buttons, name, extra) {
+        return '<div class="mfs-choices' + (extra ? ' ' + extra : '') + '" role="group" aria-label="' + name + '">' + buttons.join('') + '</div>';
+      }
+      function raised(placement) { return placement.split('u').length - 1; }
+      function placementButtons(tensor, symbol, tensorId) {
+        var keys = Object.keys(tensor.variants);
+        if (keys.length < 2) return '';
+        keys.sort(function(a, b) { return raised(b) - raised(a); });
+        var generic = ['\\mu', '\\nu', '\\rho', '\\sigma'];
+        return choices(keys.map(function(k) {
+          var note = tensor.variants[k].note || symbol + makeIdxStr({ indices: generic }, k);
+          return choiceButton(tex(note), k === tensor.default, { 'data-tensor': tensorId, 'data-placement': k });
+        }), 'index placement');
       }
 
       /* ── Spacetime diagrams ──
@@ -1029,13 +1079,14 @@
 
          Every label, on an axis, a tick, a reference line or a view's button, is text with
          its mathematics in $...$, as a caption is, and the page sets it in the same MathJax
-         pass as the line element, so a symbol on an axis is the symbol in the metric. The labels are HTML laid over the SVG rather than SVG text, which MathJax's
-         CHTML output cannot enter: each sits at its point of the drawing in percentages of
-         the figure, and the figure is a size container whose width sets their size, so they
-         scale with the drawing as its own text did and never move a line of it. That costs
-         no second copy of MathJax or its fonts, which MathJax's own SVG output would, and
-         none of the foreignObject rendering Safari still gets wrong. The generator writes
-         the labels and ticks, as TeX, into the file, so the application sets the same ones. */
+         pass as the line element, so a symbol on an axis is the symbol in the metric. The
+         labels are HTML rather than SVG text, which MathJax's CHTML output cannot enter: a
+         spacetime diagram's numbers and names are laid out around its plot, as nrFigure()
+         says, and a conformal diagram's labels, which stand at points inside the drawing, are
+         laid over it as cdLabels() says. That costs no second copy of MathJax or its fonts,
+         which MathJax's own SVG output would, and none of the foreignObject rendering Safari
+         still gets wrong. The generator writes the labels and ticks, as TeX, into the file, so
+         the application sets the same ones. */
       var _diagramCache = {};  // id → parsed JSON, or null where the spacetime has none
       var _nrUid = 0;
 
@@ -1109,31 +1160,15 @@
         return label.replace(/\$/g, '').replace(/\\/g, '');
       }
 
-      // The drawing's frame in the SVG's own units: the plot is W wide, in margins m.
+      // The plot in the SVG's own units: W wide and as tall as the box's proportions make it.
+      // The SVG holds the plot alone, and its numbers and the names of its axes are laid out
+      // around it by nrFigure(), so the margins m are nothing.
       function nrFrame(view) {
         var b = view.box, X0 = view.mirror ? -b[1] : b[0], X1 = b[1], Y0 = b[2], Y1 = b[3];
-        var W = 520, H = W * (Y1 - Y0) / (X1 - X0), m = { l: 62, r: 16, t: 14, b: 54 };
-        return { X0: X0, X1: X1, Y0: Y0, Y1: Y1, W: W, H: H, m: m, vw: W + m.l + m.r, vh: H + m.t + m.b,
+        var W = 520, H = W * (Y1 - Y0) / (X1 - X0), m = { l: 0, r: 0, t: 0, b: 0 };
+        return { X0: X0, X1: X1, Y0: Y0, Y1: Y1, W: W, H: H, m: m, vw: W, vh: H,
                  x: function(v) { return m.l + (v - X0) / (X1 - X0) * W; },
                  y: function(v) { return m.t + (1 - (v - Y0) / (Y1 - Y0)) * H; } };
-      }
-
-      // Every label of a view, each pinned at its point of the drawing by the edge or
-      // centre its class names, in percentages of the figure the SVG fills.
-      function nrLabels(view, f) {
-        function at(cls, x, y, label) {
-          return '<span class="nr-at ' + cls + '" style="left:' + (100 * x / f.vw).toFixed(3) + '%;top:' +
-            (100 * y / f.vh).toFixed(3) + '%">' + nrEsc(label) + '</span>';
-        }
-        var m = f.m, out = [];
-        view.ticks.x.forEach(function(t) { out.push(at('nr-at-x', f.x(t.at), m.t + f.H + 8, t.label)); });
-        view.ticks.y.forEach(function(t) { out.push(at('nr-at-y', m.l - 9, f.y(t.at), t.label)); });
-        out.push(at('nr-at-xlabel', m.l + f.W / 2, m.t + f.H + 32, view.xlabel));
-        out.push(at('nr-at-ylabel', 20, m.t + f.H / 2, view.ylabel));
-        view.markers.forEach(function(mk) {
-          if (mk.kind === 'reference') out.push(at('nr-at-ref', m.l + f.W - 6, m.t + (1 - mk.y) * f.H - 5, mk.label));
-        });
-        return '<div class="mfs-nr-labels" aria-hidden="true">' + out.join('') + '</div>';
       }
 
       function nrSvg(view, f) {
@@ -1161,7 +1196,6 @@
             nrEl('rect', { 'class': 'nr-hatch-bg', width: 7, height: 7 }) +
             nrEl('line', { 'class': 'nr-hatch-line', x1: 0, y1: 0, x2: 0, y2: 7 })) +
           '</defs>');
-        out.push(nrEl('rect', { 'class': 'nr-bg', x: m.l, y: m.t, width: W, height: H }));
 
         view.ticks.x.forEach(function(t) {
           var X = f.x(t.at);
@@ -1251,11 +1285,70 @@
         }, out.join(''));
       }
 
+      /* A spacetime diagram is a plot with numbers along two of its edges and a name for each
+         axis, and every one of those words is text the reader sets the size of. So they are
+         not placed in the plot's own units, as they were until 27 September 2026, which kept
+         them one size relative to the drawing and deaf to the reader's text size; they are laid
+         out around the plot as text is, in a grid whose columns and rows are as wide and as tall
+         as the words in them, and the plot takes what is left of the figure's width. However
+         large the text, no number leaves the figure or lies over the plot. The numbers along an
+         edge stand at their values; where they are set so large that neighbours would touch,
+         fitTicks() shows every second one, or every third, keeping zero, and every tick mark
+         stays. A column of numbers takes the width of its widest, which the hidden copy of
+         them in .nr-sizer gives it, since the numbers themselves are placed absolutely. */
       function nrFigure(view) {
         var f = nrFrame(view);
-        return '<div class="mfs-nr-figure" style="--nr-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + nrSvg(view, f) + nrLabels(view, f) +
-          '<div class="mfs-nr-readout"><span>' + nrEsc(view.xlabel) + '</span> = <span class="nr-rx"></span>' +
-          '<span class="nr-rgap"></span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></div></div>';
+        function tick(t, style) {
+          return '<span class="nr-tick" data-at="' + t.at + '" style="' + style + '">' + nrEsc(t.label) + '</span>';
+        }
+        var xs = view.ticks.x.map(function(t) { return tick(t, 'left:' + (100 * (t.at - f.X0) / (f.X1 - f.X0)).toFixed(3) + '%'); });
+        var ys = view.ticks.y.map(function(t) { return tick(t, 'top:' + (100 * (1 - (t.at - f.Y0) / (f.Y1 - f.Y0))).toFixed(3) + '%'); });
+        var refs = view.markers.filter(function(mk) { return mk.kind === 'reference'; }).map(function(mk) {
+          return '<span class="nr-ref" aria-hidden="true" style="top:' + (100 * (1 - mk.y)).toFixed(3) + '%">' + nrEsc(mk.label) + '</span>';
+        });
+        return '<div class="mfs-nr-figure" style="--nr-aspect:' + (f.vw / f.vh).toFixed(4) + '">' +
+          '<div class="nr-ylabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.ylabel) + '</span></div>' +
+          '<div class="nr-yticks" aria-hidden="true"><span class="nr-sizer">' +
+            view.ticks.y.map(function(t) { return '<span>' + nrEsc(t.label) + '</span>'; }).join('') + '</span>' + ys.join('') + '</div>' +
+          '<div class="nr-plot">' + nrSvg(view, f) + refs.join('') +
+            '<div class="mfs-nr-readout"><span>' + nrEsc(view.xlabel) + '</span> = <span class="nr-rx"></span>' +
+            '<span class="nr-rgap"></span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></div></div>' +
+          '<div class="nr-xticks" aria-hidden="true">' + xs.join('') + '</div>' +
+          '<div class="nr-xlabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.xlabel) + '</span></div>' +
+        '</div>';
+      }
+
+      // Show every n-th number along an edge, the smallest n at which no two of those shown
+      // come within a third of a number's height of each other, counted from zero where zero
+      // is one of them. Every number is measured before any is hidden, which hiding cannot
+      // change, since a hidden number keeps its place.
+      function fitTicks(figures) {
+        var edges = [];
+        figures.forEach(function(fig) {
+          if (!fig.clientWidth) return;
+          ['x', 'y'].forEach(function(axis) {
+            var ticks = [].slice.call(fig.querySelectorAll('.nr-' + axis + 'ticks .nr-tick'));
+            if (ticks.length) edges.push({ axis: axis, ticks: ticks });
+          });
+        });
+        edges.forEach(function(e) {
+          e.rects = e.ticks.map(function(t) { return t.getBoundingClientRect(); });
+          e.room = e.ticks.length ? parseFloat(getComputedStyle(e.ticks[0]).fontSize) / 3 : 0;
+        });
+        edges.forEach(function(e) {
+          var a = e.axis === 'x' ? 'left' : 'top', b = e.axis === 'x' ? 'right' : 'bottom';
+          var order = e.ticks.map(function(_, i) { return i; }).sort(function(i, j) { return e.rects[i][a] - e.rects[j][a]; });
+          var zero = Math.max(0, order.map(function(i) { return +e.ticks[i].dataset.at; }).indexOf(0));
+          var step = 1;
+          for (; step < order.length; step++) {
+            var clear = true;
+            for (var k = zero % step + step; k < order.length && clear; k += step) {
+              clear = e.rects[order[k]][a] >= e.rects[order[k - step]][b] + e.room;
+            }
+            if (clear) break;
+          }
+          order.forEach(function(i, k) { e.ticks[i].classList.toggle('nr-tick-off', (k - zero) % step !== 0); });
+        });
       }
 
       // Inline math and whatever touches it without a space stay on one line, so a comma
@@ -1325,9 +1418,9 @@
         var data = _diagramCache[metricId];
         var views = ((data && data.systems[coordId]) || []).concat((data && data.projections && data.projections[coordId]) || []);
         if (!views.length) return '';
-        var buttons = views.length > 1 ? '<div class="mfs-nr-buttons">' + views.map(function(v, i) {
-          return '<button type="button" class="mfs-nr-btn' + (i ? '' : ' mfs-nr-on') + '">' + nrEsc(v.label) + '</button>';
-        }).join('') + '</div>' : '';
+        var buttons = views.length > 1 ? choices(views.map(function(v, i) {
+          return choiceButton(nrEsc(v.label), i === 0, {});
+        }), 'view') : '';
         return [
           '<div class="mfs-section mfs-diagram">',
             '<div class="mfs-section-head">',
@@ -1371,9 +1464,8 @@
       }
 
       function pjFigure(view) {
-        var f = cdFrame(view), wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
-        return '<div class="mfs-cd-figure mfs-pj-figure" style="max-width:' + wide.toFixed(0) + 'px;--cd-wide:' + wide.toFixed(0) +
-          'px;--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '"><div class="mfs-cd-drawing">' + pjSvg(view, f) + cdLabels(view, f) + '</div></div>';
+        var f = cdFrame(view);
+        return cdFrameAround(f, '', pjSvg(view, f) + cdLabels(view, f), 'mfs-pj-figure');
       }
 
       function pjLegend(view) {
@@ -1389,17 +1481,42 @@
         }).join('') + '</div>';
       }
 
-      // The view buttons, and the axes' values under the pointer.
+      /* The view buttons, the axes' values under the pointer, and a watch on every figure's
+         size. A spacetime diagram's numbers are thinned again whenever its plot changes width,
+         which it does when MathJax sets the numbers beside it, when the window or the reader's
+         text size changes and when a hidden view is shown; and a drawing wider than its frame
+         fades at the edge it continues past, as a line of mathematics does. As with the lines,
+         every figure is measured before any is marked. */
+      var _figureObserver = null;
       function wireDiagrams(root) {
         root.querySelectorAll('.mfs-diagram').forEach(function(section) {
-          var buttons = section.querySelectorAll('.mfs-nr-btn');
+          var buttons = section.querySelectorAll('.mfs-diagram > .mfs-section-head .mfs-choice');
           var views = section.querySelectorAll('.mfs-nr-view');
           buttons.forEach(function(button, i) {
             button.addEventListener('click', function() {
               views.forEach(function(v, j) { v.classList.toggle('mfs-nr-hidden', i !== j); });
-              buttons.forEach(function(b, j) { b.classList.toggle('mfs-nr-on', i === j); });
+              buttons.forEach(function(b, j) {
+                b.classList.toggle('mfs-choice-on', i === j);
+                b.setAttribute('aria-pressed', String(i === j));
+              });
             });
           });
+        });
+        if (_figureObserver) _figureObserver.disconnect();
+        _figureObserver = window.ResizeObserver ? new ResizeObserver(function(entries) {
+          var targets = entries.map(function(e) { return e.target; });
+          var scrollers = targets.filter(function(t) { return t.classList.contains('mfs-cd-scroll'); });
+          fitTicks(targets.filter(function(t) { return t.classList.contains('nr-plot'); }).map(function(t) { return t.parentNode; }));
+          var edges = scrollers.map(edgesOf);
+          scrollers.forEach(function(s, i) { setEdges(s, edges[i]); });
+        }) : null;
+        root.querySelectorAll('.nr-plot').forEach(function(plot) { if (_figureObserver) _figureObserver.observe(plot); });
+        root.querySelectorAll('.mfs-cd-scroll').forEach(function(scroller) {
+          scroller.addEventListener('scroll', function() { markEdges(scroller); }, { passive: true });
+          if (_figureObserver) {
+            _figureObserver.observe(scroller);
+            _figureObserver.observe(scroller.firstChild);
+          }
         });
         root.querySelectorAll('.mfs-nr-figure').forEach(function(figure) {
           var svg = figure.querySelector('svg'), readout = figure.querySelector('.mfs-nr-readout');
@@ -1424,12 +1541,11 @@
          draws it. A view's geometry is in the drawing's own coordinates, X = q - p across and
          T = p + q up for its null coordinates p and q, drawn at one scale on both axes, so a
          light ray runs at 45 degrees on the screen because it does in the data. Its labels
-         are TeX laid over the SVG in percentages of the figure, as the spacetime diagrams'
-         are, and a view of a surface that is not the whole spacetime carries its restriction
-         on the figure itself. The diagram belongs to the spacetime and not to a chart, so it
-         sits above the coordinates; a view that tints the region a coordinate system covers
-         names that system, and the one shown first is the one for the system selected below
-         it, so choosing a chart shows where it lies. */
+         are TeX laid over the SVG in percentages of the drawing, and a view of a surface that
+         is not the whole spacetime carries its restriction on the figure itself. A view that
+         tints the region a coordinate system covers names that system, so the diagram stands
+         below the coordinates and shows the views of the chart chosen there, and choosing a
+         chart shows where it lies; conformalSection() says which views those are. */
       var _conformalCache = {};  // id → parsed JSON, or null where the spacetime has none
       var _cdUid = 0;
       var CD_W = 560, CD_M = 34, CD_MAXH = 880;
@@ -1513,7 +1629,8 @@
       }
 
       // A label's anchor is the point of its box pinned to its place, and its size is in
-      // units of the figure's width, so it scales with the drawing and never moves off it.
+      // units of the drawing's width, so it scales with the drawing and never moves off it;
+      // cdFrameAround() says how the drawing follows the reader's text size.
       var CD_ANCHOR = { c: [-50, -50], l: [0, -50], r: [-100, -50], t: [-50, 0], b: [-50, -100],
                         tl: [0, 0], tr: [-100, 0], bl: [0, -100], br: [-100, -100] };
       var CD_SIZE = { lab: 15, small: 13, region: 13, coord: 12 };
@@ -1537,25 +1654,55 @@
         return '<svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner + '</svg>';
       }
 
-      // A tall diagram is drawn narrower, so that none is taller than CD_MAXH. A view of a
-      // surface that is not the whole spacetime says what that surface is in a band across
-      // the top of the figure, where it hides nothing that is drawn.
-      function cdFigure(view) {
-        var f = cdFrame(view), wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
-        var restriction = view.restriction ? '<div class="mfs-cd-restriction">' + nrProse(nrEsc(view.restriction)) + '</div>' : '';
-        return '<div class="mfs-cd-figure" style="max-width:' + wide.toFixed(0) + 'px;--cd-wide:' + wide.toFixed(0) +
-          'px;--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + restriction +
-          '<div class="mfs-cd-drawing">' + cdSvg(view, f) + cdLabels(view, f) + '</div></div>';
+      /* A conformal diagram's labels, and a figure's, stand at points inside the drawing beside
+         the lines they name, so they cannot be moved out of its way as a spacetime diagram's
+         numbers are: set larger than the drawing was composed for, they run into each other
+         and off its edge, as the label on FRW's flat universe does at a tenth larger. So the
+         drawing keeps its proportion to its labels, which are sized in units of its width, and
+         it is the drawing that follows the reader's text size: it is drawn as wide as it is at
+         the usual size on this screen, times --mfs-text, its lines thickening with it. Where
+         that is wider than the panel, as at twice the usual size on a desktop or at any size
+         above the usual on a phone, it scrolls sideways inside its own frame, .mfs-cd-scroll,
+         and fades at the edge it continues past, as a line of mathematics does, while the band
+         above it and the caption beside or below it wrap at the panel's width. Its width at
+         the usual size is --cd-cap or the panel's, whichever is less: --cd-wide is the width a
+         tall diagram is held to, so that none is taller than CD_MAXH at the usual size, and
+         the phone stylesheet holds it to the screen's height as well. A view of a surface that
+         is not the whole spacetime says what that surface is in a band across the top of the
+         figure, where it hides nothing that is drawn. */
+      function cdFrameAround(f, above, drawing, extra) {
+        var wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
+        return '<div class="mfs-cd-figure' + (extra ? ' ' + extra : '') + '" style="--cd-wide:' + wide.toFixed(0) +
+          'px;--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + above +
+          '<div class="mfs-cd-scroll"><div class="mfs-cd-drawing">' + drawing + '</div></div></div>';
       }
 
+      function cdFigure(view) {
+        var f = cdFrame(view);
+        var restriction = view.restriction ? '<div class="mfs-cd-restriction">' + nrProse(nrEsc(view.restriction)) + '</div>' : '';
+        return cdFrameAround(f, restriction, cdSvg(view, f) + cdLabels(view, f));
+      }
+
+      /* The views the chart being read has: those that name it, then those that name no chart,
+         such as FRW's three universes of dust or the Malament-Hogarth event on
+         Reissner-Nordström's tower. The chart is chosen once, above, and the conformal diagram
+         follows it, as the captain asked on 27 September 2026: "The coordinate options already
+         exist once, why do they exist again in the conformal diagram?" So a view that names a
+         chart is never a button here, and only a chart with more than one view of its own gets
+         buttons, to choose among them. A chart whose every view names another chart has none
+         and shows nothing, as a spacetime with no conformal diagram shows nothing: Vaidya's one
+         view is the shell imploding in its ingoing chart, and its outgoing chart's own
+         spacetime diagram draws the time reverse of that shell. */
       function conformalSection(metricId, coordId) {
         var data = _conformalCache[metricId];
-        if (!data || !data.views || !data.views.length) return '';
-        var views = data.views, shown = 0;
-        views.some(function(v, i) { if (v.system && v.system === coordId) { shown = i; return true; } return false; });
-        var buttons = views.length > 1 ? '<div class="mfs-nr-buttons">' + views.map(function(v, i) {
-          return '<button type="button" class="mfs-nr-btn' + (i === shown ? ' mfs-nr-on' : '') + '">' + nrEsc(v.label) + '</button>';
-        }).join('') + '</div>' : '';
+        if (!data || !data.views) return '';
+        var views = data.views.filter(function(v) { return v.system === coordId; })
+          .concat(data.views.filter(function(v) { return !v.system; }));
+        if (!views.length) return '';
+        var shown = 0;
+        var buttons = views.length > 1 ? choices(views.map(function(v, i) {
+          return choiceButton(nrEsc(v.label), i === shown, {});
+        }), 'view') : '';
         return [
           '<div class="mfs-section mfs-diagram mfs-conformal">',
             '<div class="mfs-section-head">',
@@ -1583,13 +1730,14 @@
 
       /* The conventions a spacetime is written in: its signature, and the paragraph that says
          what range each coordinate takes, what each parameter means, which chart the
-         components are printed in and which contraction the Ricci tensor is. They open the
-         mathematics, above the coordinates, which is where the application reads them since
-         the captain moved them there from the history on 23 September 2026: nothing below
-         can be read without them, and they belong to the spacetime rather than to a chart,
-         since an entry carries one signature and one convention and none per chart, so the
-         coordinate selector leaves them standing. The heading is the one the application
-         gives them. They are prose with inline TeX, set in the one MathJax pass with the
+         components are printed in and which contraction the Ricci tensor is. The captain moved
+         them into the mathematics from the history on 23 September 2026, and they stand just
+         under the coordinates, since he asked on 27 September for the chart to be chosen
+         before anything, and above everything else, since nothing below can be read without
+         them. They belong to the spacetime rather than to a chart, since an entry carries one
+         signature and one convention and none per chart, so choosing a chart leaves them
+         standing. The application reads them in the same place, under the heading it gives
+         them. They are prose with inline TeX, set in the one MathJax pass with the
          rest of the page, and they wrap as the diagram captions do rather than scroll as a
          line of mathematics does. The text is escaped, since it is never HTML and a TeX
          `k < 0` must reach MathJax as it is written. An entry that carries neither field
@@ -1652,14 +1800,25 @@
          with its top above the panel's edge, kept as --mfs-head for the phone stylesheet:
          a citation followed there brings its reference to just below the header instead of
          under it. The header changes height when its title wraps anew. */
-      var _headObserver = null;
+      /* A header that would cover more than a quarter of what shows of the panel, the panel's
+         own height on the desktop and the screen's on a phone, does not stick at all and
+         scrolls away with the rest: at twice the usual text a long name set on two lines
+         made it half of a 1440 by 900 screen's panel, which left the reader a strip to read
+         through. It is measured again when it changes size and when the window does. */
+      var _headObserver = null, _headMeasure = null;
       function wireHeader(head) {
         if (_headObserver) _headObserver.disconnect();
         function measure() {
-          var covered = head.getBoundingClientRect().height + parseFloat(getComputedStyle(head).top);
+          var view = onPhone() ? window.innerHeight : contentPanel.clientHeight;
+          var height = head.getBoundingClientRect().height;
+          var loose = height > view / 4;
+          head.classList.toggle('mfs-header-loose', loose);
+          var covered = loose ? 0 : height + parseFloat(getComputedStyle(head).top);
           contentPanel.style.setProperty('--mfs-head', Math.max(0, covered) + 'px');
         }
         measure();
+        if (!_headMeasure) window.addEventListener('resize', function() { if (_headMeasure) _headMeasure(); });
+        _headMeasure = measure;
         if (!window.ResizeObserver) return;
         _headObserver = new ResizeObserver(measure);
         _headObserver.observe(head);
@@ -1675,10 +1834,10 @@
         var hasCoords = !!(data.coordinates && data.coordinates.length);
         var coord = hasCoords ? data.coordinates[coordIdx] : {};
 
-        // Coordinate selector
-        var coordOptions = hasCoords ? data.coordinates.map(function(c, i) {
-          return '<option value="' + i + '"' + (i === coordIdx ? ' selected' : '') + '>' + c.name + '</option>';
-        }).join('') : '';
+        // The chart is chosen with a row of buttons, the page's one control for a choice
+        var chartButtons = hasCoords ? choices(data.coordinates.map(function(c, i) {
+          return choiceButton(nrEsc(c.name), i === coordIdx, { 'data-chart': i });
+        }), 'coordinate chart', 'mfs-charts') : '';
 
         // Coordinate-level guard: a coordinate exists but has no constructed
         // differential-geometry fields. Show placeholder under the selector.
@@ -1741,14 +1900,18 @@
             '</div>'
           ].join('') : '',
 
-          conventionSection(data),
-
-          conformalSection(data.id, hasCoords ? coord.id : null),
-
+          /* The chart is chosen before anything that depends on it, which the captain asked
+             for on 27 September 2026, so the coordinates open the mathematics, their buttons
+             and then the chart's domains, and everything below them is the chart's: the
+             conformal diagram shows its views, and every quantity is written in it. Only the
+             conventions below belong to the spacetime rather than to the chart, and they stand
+             between the domains and the diagram, which the application does too. */
           (hasCoords ? [
-            '<div class="mfs-section">',
-              '<div class="mfs-section-label">coordinates</div>',
-              '<select class="mfs-coord-select" id="mfs-coord-select">' + coordOptions + '</select>',
+            '<div class="mfs-section mfs-coordinates">',
+              '<div class="mfs-section-head">',
+                '<div class="mfs-section-label">coordinates</div>',
+                chartButtons,
+              '</div>',
               (coord.domains && coord.domains.length ? [
                 '<div class="mfs-domains">',
                   // Each scrolls on its own as a line of mathematics does, so one too wide
@@ -1764,6 +1927,10 @@
               ].join('') : ''),
             '</div>'
           ].join('') : ''),
+
+          conventionSection(data),
+
+          conformalSection(data.id, hasCoords ? coord.id : null),
 
           ((hasCoords && !coordHasContent) ? [
             '<div class="mfs-section"><div class="mfs-placeholder">',
@@ -1799,7 +1966,7 @@
               '<div class="mfs-section" id="mfs-sec-christoffel">',
                 '<div class="mfs-section-head">',
                   '<div class="mfs-section-label">Christoffel symbols</div>',
-                  renderConventionWidget(chConv, 'christoffel'),
+                  placementButtons(coord.christoffel, '\\Gamma', 'christoffel'),
                 '</div>',
                 '<div id="mfs-comp-christoffel">',
                   renderComponents(chV.nonzero, '\\Gamma', chConv),
@@ -1815,7 +1982,7 @@
               '<div class="mfs-section" id="mfs-sec-riemann">',
                 '<div class="mfs-section-head">',
                   '<div class="mfs-section-label">Riemann tensor</div>',
-                  renderConventionWidget(rConv, 'riemann'),
+                  placementButtons(coord.riemann, 'R', 'riemann'),
                 '</div>',
                 '<div id="mfs-comp-riemann">',
                   renderComponents(rV.nonzero, 'R', rConv),
@@ -1831,7 +1998,7 @@
               '<div class="mfs-section" id="mfs-sec-ricci">',
                 '<div class="mfs-section-head">',
                   '<div class="mfs-section-label">Ricci tensor</div>',
-                  renderConventionWidget(rConv, 'ricci'),
+                  placementButtons(coord.ricci_tensor, 'R', 'ricci'),
                 '</div>',
                 '<div id="mfs-comp-ricci">',
                   renderComponents(rV.nonzero, 'R', rConv),
@@ -1861,7 +2028,7 @@
               '<div class="mfs-section" id="mfs-sec-einstein">',
                 '<div class="mfs-section-head">',
                   '<div class="mfs-section-label">Einstein tensor</div>',
-                  renderConventionWidget(eConv, 'einstein'),
+                  placementButtons(coord.einstein_tensor, 'G', 'einstein'),
                 '</div>',
                 '<div id="mfs-comp-einstein">',
                   renderComponents(eV.nonzero, 'G', eConv),
@@ -1877,7 +2044,7 @@
               '<div class="mfs-section" id="mfs-sec-weyl">',
                 '<div class="mfs-section-head">',
                   '<div class="mfs-section-label">Weyl tensor</div>',
-                  renderConventionWidget(wConv, 'weyl'),
+                  placementButtons(coord.weyl_tensor, 'C', 'weyl'),
                 '</div>',
                 '<div id="mfs-comp-weyl">',
                   renderComponents(wV.nonzero, 'C', wConv),
@@ -1933,15 +2100,18 @@
         wireLines(contentPanel);
         wireProse(contentPanel);
 
-        // Wire coordinate selector (absent when no coordinates are constructed)
-        var coordSelect = document.getElementById('mfs-coord-select');
-        if (coordSelect) {
-          coordSelect.addEventListener('change', function() {
-            renderMetric(data, parseInt(this.value));
+        // A chart's button draws the spacetime again in that chart. The buttons are drawn anew
+        // with it, so one pressed from the keyboard hands its focus to the new one.
+        contentPanel.querySelectorAll('.mfs-charts .mfs-choice').forEach(function(button) {
+          button.addEventListener('click', function() {
+            var chart = parseInt(button.dataset.chart), focused = document.activeElement === button;
+            if (chart === coordIdx) return;
+            renderMetric(data, chart);
+            if (focused) contentPanel.querySelector('.mfs-charts [data-chart="' + chart + '"]').focus({ preventScroll: true });
           });
-        }
+        });
 
-        // Wire convention widgets
+        // A placement's button writes the tensor's components out again in that placement.
         var tensorMeta = {
           christoffel: coord.christoffel    ? { label: '\\Gamma', variants: coord.christoffel.variants }    : null,
           riemann:     coord.riemann        ? { label: 'R',       variants: coord.riemann.variants }        : null,
@@ -1949,52 +2119,41 @@
           einstein:    coord.einstein_tensor? { label: 'G',       variants: coord.einstein_tensor.variants }: null,
           weyl:        coord.weyl_tensor    ? { label: 'C',       variants: coord.weyl_tensor.variants }     : null
         };
-        contentPanel.querySelectorAll('.mfs-idx-widget').forEach(function(widget) {
-          var tensorId = widget.dataset.tensor;
-          var meta = tensorMeta[tensorId];
+        contentPanel.querySelectorAll('.mfs-choice[data-placement]').forEach(function(button) {
+          var tensorId = button.dataset.tensor, meta = tensorMeta[tensorId];
           if (!meta) return;
-          widget.querySelectorAll('.mfs-idx-box[data-pos]').forEach(function(box) {
-            box.addEventListener('click', function() {
-              var colIdx  = parseInt(box.dataset.colidx);
-              var pos     = box.dataset.pos;
-              var oldConv = widget.dataset.convention;
-              // Build new convention string with this column set to pos
-              var chars = oldConv.split('');
-              chars[colIdx] = pos;
-              var rawConv = chars.join('');
-              // Canonicalize: for rank-2 symmetric, ul=lu → always 'ul'
-              var canonical = rawConv;
-              if (rawConv === 'lu') canonical = 'ul';
-              // Only switch if this variant exists
-              if (!meta.variants[canonical]) return;
-              widget.dataset.convention = canonical;
-              // Update highlights for each toggleable column
-              widget.querySelectorAll('.mfs-idx-box[data-pos]').forEach(function(b) {
-                var bCol = parseInt(b.dataset.colidx);
-                b.classList.toggle('mfs-idx-on', b.dataset.pos === canonical[bCol]);
-              });
-              // Re-render components
-              var compEl = document.getElementById('mfs-comp-' + tensorId);
-              if (compEl) {
-                if (window.MathJax && MathJax.typesetClear) MathJax.typesetClear([compEl]);
-                compEl.innerHTML = renderComponents(meta.variants[canonical].nonzero, meta.label, canonical);
-                wireLines(compEl);
-                if (window.MathJax && MathJax.typesetPromise) {
-                  MathJax.typesetPromise([compEl]).then(reflowColumns);
-                } else {
-                  reflowColumns();
-                }
-              }
+          button.addEventListener('click', function() {
+            var placement = button.dataset.placement;
+            if (button.classList.contains('mfs-choice-on')) return;
+            button.parentNode.querySelectorAll('.mfs-choice').forEach(function(b) {
+              var on = b === button;
+              b.classList.toggle('mfs-choice-on', on);
+              b.setAttribute('aria-pressed', String(on));
             });
+            var compEl = document.getElementById('mfs-comp-' + tensorId);
+            if (compEl) {
+              if (window.MathJax && MathJax.typesetClear) MathJax.typesetClear([compEl]);
+              compEl.innerHTML = renderComponents(meta.variants[placement].nonzero, meta.label, placement);
+              wireLines(compEl);
+              if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([compEl]).then(reflowColumns);
+              } else {
+                reflowColumns();
+              }
+            }
           });
         });
 
-
         // Typeset MathJax; the promise is kept when it is set and its columns counted
-        if (window.MathJax && MathJax.typesetPromise) {
-          return MathJax.typesetPromise([contentPanel]).then(reflowColumns);
+        function laidOut() {
+          reflowColumns();
+          fitTicks([].slice.call(contentPanel.querySelectorAll('.mfs-nr-figure')));
+          markAllEdges(contentPanel);
         }
-        reflowColumns();
+        if (window.MathJax && MathJax.typesetPromise) {
+          return MathJax.typesetPromise([contentPanel]).then(laidOut);
+        }
+        laidOut();
         return Promise.resolve();
       }
 
@@ -2098,64 +2257,88 @@
 
   <style>
     /* The panel scrolls down and never across: whatever is too wide scrolls inside itself,
-       as a line of mathematics does, so nothing can carry the headings sideways. */
-    #mfs-content-panel { overflow-y: auto; overflow-x: hidden; font-size: 21px !important; }
+       as a line of mathematics does, so nothing can carry the headings sideways.
+       Every size in it is in rem, the reader's text size, as the stylesheet at the top of
+       the page says: at the browser's usual 16px, 1.3125rem is the 21px the panel was set
+       in, and so on for each. The spacing between its words is in rem too, so that at twice
+       the text a heading keeps its room above and below it rather than crowding what it
+       heads; only the hairlines of borders stay in px. */
+    #mfs-content-panel { overflow-y: auto; overflow-x: hidden; font-size: 1.3125rem !important; }
     /* The header reaches up through the panel's 1em of padding and sticks at the panel's
        edge, not below the padding, where the text scrolling under it would show above it.
        It is opaque: at 95% the text passing under it stayed legible behind the title, and
        the grid, which is all the other 5% let through, is already all but hidden there. */
     #mfs-content-panel .mfs-header {
       margin-top: -1em;
-      padding: calc(10px + 1em) 16px 8px;
+      padding: calc(0.625rem + 1em) 1rem 0.5rem;
       border-bottom: 1px solid rgba(0,229,255,0.2);
       position: sticky; top: -1em;
       background: #000;
       z-index: 1;
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
     }
+    #mfs-content-panel .mfs-header.mfs-header-loose { position: relative; top: auto; }
+    #mfs-content-panel .mfs-header .mfs-title { grid-column: 1 / -1; }
     #mfs-content-panel .mfs-label {
-      font-size: 21px; color: rgba(0,229,255,0.5);
+      font-size: 1.3125rem; color: rgba(0,229,255,0.5);
       letter-spacing: 0.12em; text-transform: uppercase;
     }
     #mfs-content-panel .mfs-title {
-      font-size: 40px; font-weight: 600;
-      letter-spacing: 0.05em; margin: 2px 0 6px;
+      font-size: 2.5rem; font-weight: 600;
+      letter-spacing: 0.05em; margin: 0.125rem 0 0.375rem;
       color: var(--cyan);
     }
     #mfs-content-panel #mfs-print-btn {
-      float: right; margin-top: 4px;
+      grid-column: 2; grid-row: 1; margin-left: 0.75rem;
       font-family: 'Source Code Pro', monospace;
-      font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.9375rem; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--cyan); background: transparent;
       border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
-      padding: 3px 12px; cursor: pointer;
+      padding: 0.1875rem 0.75rem; cursor: pointer;
       transition: box-shadow 0.15s, border-color 0.15s;
     }
     #mfs-content-panel #mfs-print-btn:hover {
       border-color: var(--cyan);
       box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan);
     }
-    #mfs-content-panel .mfs-coord-select {
-      width: 100%; background: rgba(0,26,26,0.9);
-      border: 1px solid rgba(0,229,255,0.4);
-      color: var(--cyan);
-      font-family: 'Source Code Pro', monospace;
-      font-size: 26px; padding: 4px 6px;
-      border-radius: 4px; outline: none;
-    }
     #mfs-content-panel .mfs-section {
-      padding: 8px 16px;
+      padding: 0.5rem 1rem;
       border-bottom: 1px solid rgba(0,229,255,0.12);
     }
+    /* A heading and the choices it offers share a line while they fit on one, the choices
+       at its end, and the choices go under the heading when they do not, which a large text
+       size or a narrow screen brings about. */
     #mfs-content-panel .mfs-section-head {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 0.25rem 0.75rem;
     }
     #mfs-content-panel .mfs-section-label {
-      font-size: 21px; color: rgba(0,229,255,0.5);
+      font-size: 1.3125rem; color: rgba(0,229,255,0.5);
       letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 0.25rem;
+    }
+    /* The page's one control for a choice, built by choiceButton(): the chart the
+       mathematics is written in, a tensor's index placement and a view of a diagram are all
+       chosen with a row of these, the one chosen lit, and pressing another changes what is
+       shown below it in place. A choice's name is text the reader reads, so it takes the
+       reader's text size with everything else. */
+    #mfs-content-panel .mfs-choices { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+    #mfs-content-panel .mfs-choice {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.9375rem; letter-spacing: 0.06em; line-height: 1.5;
+      color: rgba(0,229,255,0.6); background: transparent;
+      border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
+      padding: 0.1875rem 0.75rem; cursor: pointer;
+      transition: box-shadow 0.15s, border-color 0.15s, color 0.15s;
+    }
+    #mfs-content-panel .mfs-choice:hover { border-color: var(--cyan); color: var(--cyan); }
+    #mfs-content-panel .mfs-choice:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+    #mfs-content-panel .mfs-choice.mfs-choice-on {
+      color: var(--cyan); border-color: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan);
     }
     #mfs-content-panel .mfs-placeholder {
-      font-size: 23px; color: var(--teal-light);
+      font-size: 1.4375rem; color: var(--teal-light);
       line-height: 1.6; font-style: italic;
       letter-spacing: 0.03em; padding: 1.2em 0;
     }
@@ -2170,7 +2353,7 @@
       position: fixed; right: 0; z-index: 14; box-sizing: border-box;
       display: flex; align-items: center; justify-content: center;
       padding: 1em; text-align: center;
-      font-size: 23px; color: var(--teal-light);
+      font-size: 1.4375rem; color: var(--teal-light);
       line-height: 1.6; font-style: italic; letter-spacing: 0.03em;
       pointer-events: none; opacity: 0; will-change: opacity;
       transition: opacity 150ms ease-in;
@@ -2183,12 +2366,12 @@
     #mfs-content-panel .mfs-table-scroll { overflow-x: auto; margin: 1em 0; }
     #mfs-content-panel .mfs-table {
       border-collapse: collapse; width: 100%;
-      font-size: 19px; color: var(--teal-light);
+      font-size: 1.1875rem; color: var(--teal-light);
     }
     #mfs-content-panel .mfs-table th,
     #mfs-content-panel .mfs-table td {
       border: 1px solid rgba(0,229,255,0.25);
-      padding: 6px 12px; text-align: left; vertical-align: top;
+      padding: 0.375rem 0.75rem; text-align: left; vertical-align: top;
     }
     #mfs-content-panel .mfs-table th {
       color: var(--cyan); font-weight: 600;
@@ -2197,12 +2380,12 @@
     /* The conventions are prose in the mathematics, set as its other prose, the diagram
        captions, is set, and they wrap: nothing of a line of mathematics' scrolling applies. */
     #mfs-content-panel .mfs-convention p {
-      font-family: 'Source Code Pro', monospace; font-size: 19px; line-height: 1.65;
+      font-family: 'Source Code Pro', monospace; font-size: 1.1875rem; line-height: 1.65;
       color: var(--teal-light); margin: 0 0 0.8em;
     }
     #mfs-content-panel .mfs-convention p:last-child { margin-bottom: 0.3em; }
     #mfs-content-panel .mfs-component {
-      font-size: 27px; color: var(--teal-light);
+      font-size: 1.6875rem; color: var(--teal-light);
       line-height: 1.8; padding: 1px 0;
     }
     /* A line of mathematics, as mathLine() builds it: the label that stays, then the
@@ -2251,7 +2434,7 @@
     }
     #mfs-content-panel .mfs-domains {
       display: flex; flex-wrap: wrap; gap: 0.4em 1.5em;
-      margin-top: 6px;
+      margin-top: 0.375rem;
     }
     #mfs-comp-christoffel,
     #mfs-comp-riemann,
@@ -2268,7 +2451,7 @@
       break-inside: avoid;
     }
     #mfs-content-panel .mfs-history {
-      font-size: 21px !important; color: var(--teal-light) !important;
+      font-size: 1.3125rem !important; color: var(--teal-light) !important;
       line-height: 1.7 !important; opacity: 0.8;
     }
     #mfs-content-panel .mfs-history p {
@@ -2284,103 +2467,88 @@
       color: var(--teal-light) !important;
     }
     #mfs-content-panel .mfs-zero {
-      font-size: 26px; color: rgba(0,229,255,0.35);
+      font-size: 1.625rem; color: rgba(0,229,255,0.35);
       font-style: italic;
     }
-    #mfs-content-panel .mfs-idx-widget {
-      display: flex; flex-direction: row; align-items: flex-end; gap: 3px;
-    }
-    #mfs-content-panel .mfs-idx-col {
-      display: flex; flex-direction: column; gap: 3px; align-items: center;
-    }
-    #mfs-content-panel .mfs-idx-spacer {
-      width: 18px; height: 18px;
-    }
-    #mfs-content-panel .mfs-idx-box {
-      width: 18px; height: 18px;
-      border: 1.5px solid rgba(0,229,255,0.25);
-      border-radius: 3px;
-      box-sizing: border-box;
-      cursor: pointer;
-      transition: box-shadow 0.15s, border-color 0.15s;
-    }
-    #mfs-content-panel .mfs-idx-box.mfs-idx-on {
-      border-color: var(--cyan);
-      box-shadow: 0 0 4px var(--cyan), 0 0 10px var(--cyan);
-    }
-    #mfs-content-panel .mfs-idx-box.mfs-idx-fixed {
-      cursor: default;
-    }
-    #mfs-content-panel .mfs-idx-col-toggle .mfs-idx-box:not(.mfs-idx-on):hover {
-      border-color: rgba(0,229,255,0.5);
-    }
     /* ── Spacetime diagrams ── */
-    #mfs-content-panel .mfs-nr-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
-    #mfs-content-panel .mfs-nr-btn {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 15px; letter-spacing: 0.06em;
-      color: rgba(0,229,255,0.6); background: transparent;
-      border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
-      padding: 3px 12px; cursor: pointer;
-      transition: box-shadow 0.15s, border-color 0.15s, color 0.15s;
-    }
-    #mfs-content-panel .mfs-nr-btn:hover { border-color: var(--cyan); color: var(--cyan); }
-    #mfs-content-panel .mfs-nr-btn.mfs-nr-on {
-      color: var(--cyan); border-color: var(--cyan);
-      box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan);
-    }
     #mfs-content-panel .mfs-nr-view {
       display: flex; flex-wrap: wrap; align-items: flex-start;
-      gap: 12px 32px; margin: 10px 0 6px;
+      gap: 0.75rem 2rem; margin: 0.625rem 0 0.375rem;
     }
     #mfs-content-panel .mfs-nr-hidden { display: none; }
-    #mfs-content-panel .mfs-nr-figure { flex: 0 1 620px; min-width: min(280px, 100%); }
-    /* The labels are sized in units of the figure's width, which is what the drawing scales
-       with: a font size of n here is n units of the SVG's 598 unit wide viewBox. The print
-       copy's figures take this too. */
-    .mfs-nr-figure { position: relative; container-type: inline-size; }
-    .mfs-nr-labels {
-      position: absolute; inset: 0; pointer-events: none;
-      font-family: 'Source Code Pro', monospace; font-size: calc(100cqw * 14 / 598); line-height: 1;
+    /* The dark ground every drawing stands on, a spacetime diagram, a conformal diagram and a
+       figure in three dimensions alike: black at 55% behind the whole of the drawing, edge to
+       edge, its words included, with square corners and no inset, and white paper in print,
+       where the print stylesheet clears every background. The figures in three dimensions
+       had it already, drawn in the conformal diagram's frame, while a spacetime diagram had it
+       behind its plot alone, its numbers and the names of its axes on the bare panel beside
+       it, until the captain asked on 27 September 2026 for the spacetime diagrams to have the
+       conformal diagram's dark background. It is one definition, so they cannot drift apart. */
+    :root { --mfs-ground: rgba(0,0,0,0.55); }
+    .mfs-nr-figure, .mfs-cd-drawing { background: var(--mfs-ground); }
+    #mfs-content-panel .mfs-nr-figure { flex: 0 1 38.75rem; min-width: min(17.5rem, 100%); }
+    /* A spacetime diagram as nrFigure() lays it out: the name of the vertical axis, its
+       numbers and the plot, with the horizontal axis's numbers and name under the plot. Its
+       words are set at two thirds of the text around them, 14px beside the panel's 21px at the
+       usual size, the names of the axes a little larger and a reference line's label a little
+       smaller, and the room between them is in the same ems, so the frame grows with the
+       reader's text and the plot takes what is left of the width. Print sets it in points. */
+    .mfs-nr-figure {
+      position: relative; display: grid;
+      grid-template-columns: auto auto minmax(0, 1fr);
+      grid-template-areas: "yname yticks plot" ". . xticks" ". . xname";
+      padding: 1em 1.4em 0.7em 0.5em;
+      font-family: 'Source Code Pro', monospace; font-size: 0.6667em; line-height: 1;
       color: var(--text-dim);
     }
-    .mfs-nr-labels .nr-at { position: absolute; white-space: nowrap; }
-    .mfs-nr-labels .nr-at-x { transform: translate(-50%, 0); }
-    .mfs-nr-labels .nr-at-y { transform: translate(-100%, -50%); }
-    .mfs-nr-labels .nr-at-xlabel { transform: translate(-50%, 0); font-size: calc(100cqw * 15 / 598); }
-    .mfs-nr-labels .nr-at-ylabel { transform: translate(-50%, -50%) rotate(-90deg); font-size: calc(100cqw * 15 / 598); }
-    .mfs-nr-labels .nr-at-ref { transform: translate(-100%, -100%); font-size: calc(100cqw * 13 / 598); }
-    #mfs-content-panel .mfs-nr-svg { display: block; width: 100%; height: auto; }
+    .mfs-nr-figure .nr-name { font-size: 1.0714em; white-space: nowrap; }
+    .mfs-nr-figure .nr-ylabel { grid-area: yname; position: relative; width: 1.6em; margin-right: 0.3em; }
+    .mfs-nr-figure .nr-ylabel .nr-name { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-90deg); }
+    .mfs-nr-figure .nr-yticks { grid-area: yticks; position: relative; padding-right: 0.65em; }
+    .mfs-nr-figure .nr-sizer { display: block; height: 0; overflow: hidden; visibility: hidden; }
+    .mfs-nr-figure .nr-sizer > span { display: block; white-space: nowrap; }
+    .mfs-nr-figure .nr-tick { position: absolute; white-space: nowrap; }
+    .mfs-nr-figure .nr-yticks .nr-tick { right: 0.65em; transform: translateY(-50%); }
+    .mfs-nr-figure .nr-xticks { grid-area: xticks; position: relative; height: 1.75em; }
+    .mfs-nr-figure .nr-xticks .nr-tick { top: 0.57em; transform: translateX(-50%); }
+    .mfs-nr-figure .nr-tick-off { visibility: hidden; }
+    .mfs-nr-figure .nr-xlabel { grid-area: xname; text-align: center; padding-top: 0.15em; }
+    .mfs-nr-figure .nr-plot { grid-area: plot; position: relative; }
+    .mfs-nr-figure .nr-ref {
+      position: absolute; right: 0.45em; transform: translateY(calc(-100% - 0.35em));
+      font-size: 0.9286em; white-space: nowrap;
+    }
+    /* The plot's own frame and the marks on its edges are drawn just outside its box. */
+    .mfs-nr-svg { display: block; width: 100%; height: auto; overflow: visible; }
     #mfs-content-panel .mfs-nr-readout {
-      position: absolute; right: 18px; top: 18px; pointer-events: none;
-      font-family: 'Source Code Pro', monospace; font-size: 13px; white-space: nowrap;
+      position: absolute; right: 0.3rem; top: 0.3rem; pointer-events: none;
+      font-family: 'Source Code Pro', monospace; font-size: 0.8125rem; line-height: 1.3; white-space: nowrap;
       color: var(--text-dim); background: rgba(0,0,0,0.8); padding: 1px 6px; border-radius: 3px;
       opacity: 0; transition: opacity 0.12s;
     }
     #mfs-content-panel .mfs-nr-readout .nr-rgap { display: inline-block; width: 2em; }
-    #mfs-content-panel .mfs-nr-text { flex: 1 1 340px; min-width: 0; }
+    #mfs-content-panel .mfs-nr-text { flex: 1 1 21.25rem; min-width: 0; }
     #mfs-content-panel .mfs-nr-caption p {
-      font-family: 'Source Code Pro', monospace; font-size: 19px; line-height: 1.65;
+      font-family: 'Source Code Pro', monospace; font-size: 1.1875rem; line-height: 1.65;
       color: var(--teal-light); margin: 0 0 0.8em;
     }
     #mfs-content-panel .mfs-nr-legend,
     #mfs-content-panel .mfs-nr-note { font-family: 'Source Code Pro', monospace; }
-    #mfs-content-panel .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 4px 0 12px; }
+    #mfs-content-panel .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 0.375rem 1.375rem; margin: 0.25rem 0 0.75rem; }
     #mfs-content-panel .mfs-nr-item {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 16px; color: var(--text-mid);
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 1rem; color: var(--text-mid);
     }
-    #mfs-content-panel .mfs-nr-swatch { flex: none; }
+    #mfs-content-panel .mfs-nr-swatch { flex: none; width: 2.125rem; height: 1rem; }
     .mfs-nr-keep { white-space: nowrap; }
     #mfs-content-panel .mfs-nr-note {
-      font-size: 16px; line-height: 1.6; color: rgba(0,229,255,0.55); margin: 0 0 6px;
+      font-size: 1rem; line-height: 1.6; color: rgba(0,229,255,0.55); margin: 0 0 0.375rem;
     }
     #mfs-content-panel .mfs-nr-k,
     #mfs-content-panel .mfs-convention-k {
-      color: rgba(0,229,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; font-size: 14px;
+      color: rgba(0,229,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.875rem;
       margin-right: 0.4em;
     }
-    .mfs-nr-svg .nr-bg { fill: rgba(0,0,0,0.55); }
     .mfs-nr-svg .nr-grid { stroke: rgba(0,229,255,0.07); stroke-width: 1; }
     .mfs-nr-svg .nr-axis { stroke: rgba(0,229,255,0.45); stroke-width: 1; }
     .mfs-nr-svg .nr-frame { fill: none; stroke: rgba(0,229,255,0.45); stroke-width: 1.2; }
@@ -2412,7 +2580,6 @@
     .nr-reference { stroke: var(--text-dim); stroke-width: 1; stroke-dasharray: 3 5; stroke-opacity: 0.7; }
     /* A figure in three dimensions: the floor it stands on, the axis, the circles it marks,
        and the cones, filled faintly and painted farthest first. */
-    .mfs-pj-svg { background: rgba(0,0,0,0.55); }
     .pj-floor { fill: none; stroke: rgba(168,192,208,0.26); stroke-width: 1; }
     .pj-axis { fill: none; stroke: var(--text-dim); stroke-width: 1.4; stroke-dasharray: 2 4; stroke-linecap: round; }
     .pj-critical { fill: none; stroke: var(--cyan); stroke-width: 2; stroke-dasharray: 7 5; }
@@ -2435,8 +2602,19 @@
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
        diagrams'; the figure, its labels and its lines are these. A label is sized in units
        of the figure's width, n being n units of the SVG's 628 unit wide viewBox. */
-    #mfs-content-panel .mfs-cd-figure { flex: 0 1 628px; min-width: min(260px, 100%); }
-    .mfs-cd-figure { position: relative; container-type: inline-size; width: 100%; }
+    .mfs-cd-figure { --cd-cap: var(--cd-wide); position: relative; width: 100%; }
+    #mfs-content-panel .mfs-cd-figure {
+      flex: 0 1 calc(var(--cd-cap) * var(--mfs-text, 1)); min-width: min(16.25rem, 100%); max-width: 100%;
+    }
+    /* cdFrameAround() says why a drawing is as wide as this and when it scrolls. */
+    .mfs-cd-scroll {
+      overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+      scrollbar-width: thin; scrollbar-color: rgba(0,229,255,0.25) transparent;
+    }
+    .mfs-cd-drawing {
+      position: relative; container-type: inline-size;
+      width: max(100%, calc(min(100%, var(--cd-cap)) * var(--mfs-text, 1)));
+    }
     .mfs-cd-svg { display: block; width: 100%; height: auto; }
     .mfs-cd-labels {
       position: absolute; inset: 0; pointer-events: none;
@@ -2449,11 +2627,10 @@
     .mfs-cd-labels .cd-lab-small { color: var(--cyan); }
     .mfs-cd-labels .cd-lab-coord { color: var(--text-dim); }
     .mfs-cd-labels .cd-lab-region { color: var(--text-mid); letter-spacing: 0.06em; font-style: italic; }
-    .mfs-cd-drawing { position: relative; }
     #mfs-content-panel .mfs-cd-restriction {
-      font-family: 'Source Code Pro', monospace; font-size: 15px; line-height: 1.5; color: var(--amber);
+      font-family: 'Source Code Pro', monospace; font-size: 0.9375rem; line-height: 1.5; color: var(--amber);
       background: rgba(249,180,80,0.06); border: 1px solid rgba(249,180,80,0.55); border-radius: 4px;
-      padding: 6px 10px; margin: 0 0 4px;
+      padding: 0.375rem 0.625rem; margin: 0 0 0.25rem;
     }
     .cd-region { fill: rgba(0,229,255,0.035); stroke: none; }
     .cd-cover { fill: rgba(37,217,200,0.13); stroke: none; }
@@ -2486,11 +2663,11 @@
     .cd-fade-edge { stop-color: #000; stop-opacity: 1; }
     .cd-fade-clear { stop-color: #000; stop-opacity: 0; }
     #mfs-content-panel .mfs-references {
-      margin-top: 8px;
+      margin-top: 0.5rem;
     }
     #mfs-content-panel .mfs-reference {
-      font-size: 16px; color: rgba(0,229,255,0.5);
-      line-height: 1.7; margin-bottom: 12px;
+      font-size: 1rem; color: rgba(0,229,255,0.5);
+      line-height: 1.7; margin-bottom: 0.75rem;
       word-break: break-word;
     }
     #mfs-content-panel .mfs-ref-author  { color: var(--teal-light); }
@@ -2513,7 +2690,10 @@
        tall, cannot hold. So a screen narrower than 600px, or a touch screen under 500px
        tall, which is every iPhone in either orientation, gets the same panels in one column
        that the page scrolls through: the title, the list with the coffee panel under it,
-       and the spacetime below them. The desktop's geometry is otherwise untouched, and
+       and the spacetime below them. Those widths are in em, which a media query reads as the
+       reader's text size, so a desktop window set to twice the usual text takes this layout
+       below 1200px, where the side by side panels would leave the spacetime as little room
+       for its larger text as a phone's. The desktop's geometry is otherwise untouched, and
        everything here is for the screen alone: the print copy is laid out for its paper
        whatever the screen it was printed from.
 
@@ -2521,14 +2701,14 @@
        spacetime the right, with the same 20px between them, now above and below. The
        spacetime panel no longer scrolls inside itself, the page does, so its sticky header
        sticks to the top of the screen, which is the top edge of what shows of the panel.
-       Text is set at about seven tenths of its desktop size, which keeps a line of history
-       near forty characters on the narrowest of these screens; the list, the search box
-       and the coordinate selector keep a size of at least 16px, below which Safari zooms
-       the page on a tap. A line of mathematics still scrolls on its own. The desktop's
+       Text is set at about seven tenths of its desktop size, in rem as it is there, which
+       keeps a line of history near forty characters on the narrowest of these screens; the
+       search box keeps a size of at least 16px, below which Safari zooms the page on a tap.
+       A line of mathematics still scrolls on its own. The desktop's
        panel scripts write their geometry into each panel's own style, so the overrides
        here that replace it carry !important, and --mfs-phone tells those scripts that
        this layout is the one in force. */
-    @media screen and (max-width: 600px), screen and (max-height: 500px) and (pointer: coarse) {
+    @media screen and (max-width: 37.5em), screen and (max-height: 31.25em) and (pointer: coarse) {
       :root { --mfs-phone: 1; --mfs-left-w: 100vw; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
       /* The panels slide in from beyond the screen's edges, and while the spacetime panel is
          still off to the right the page would be twice the screen's width, which a phone
@@ -2553,7 +2733,7 @@
       }
       #mfs-search-panel { margin-top: 40px; }
       #mfs-coffee-panel { max-height: none !important; }
-      #mfs-search-input { font-size: 16px !important; }
+      #mfs-search-input { font-size: max(1rem, 16px) !important; }
 
       /* Empty until a spacetime is chosen, and then it takes its place below the list. */
       #mfs-content-panel:empty { display: none; }
@@ -2565,56 +2745,56 @@
         position: absolute !important; top: auto !important; right: auto !important;
         width: calc(100% - 20px) !important; height: calc(100svh - 12px) !important;
         margin: 20px 0 0 20px; scroll-margin-top: 12px;
-        font-size: 16px;
+        font-size: 1rem;
       }
       #mfs-content-panel {
         position: relative !important; top: auto !important; right: auto !important;
         width: auto !important; height: auto !important;
         margin: 20px 0 20px 20px; scroll-margin-top: 12px;
         overflow: visible !important; overflow-x: clip !important;
-        font-size: 15px !important;
+        font-size: 0.9375rem !important;
       }
-      #mfs-content-panel .mfs-header { padding-left: 6px; padding-right: 6px; }
-      #mfs-content-panel .mfs-label { font-size: 14px; }
-      #mfs-content-panel .mfs-title { font-size: 26px; }
-      #mfs-content-panel #mfs-print-btn { font-size: 12px; padding: 3px 9px; }
-      #mfs-content-panel .mfs-coord-select { font-size: 17px; }
-      #mfs-content-panel .mfs-section { padding: 8px 6px; }
-      #mfs-content-panel .mfs-section-head { flex-wrap: wrap; gap: 4px 12px; }
-      #mfs-content-panel .mfs-section-label { font-size: 14px; }
-      #mfs-content-panel .mfs-placeholder { font-size: 16px; }
-      #mfs-content-panel .mfs-table { font-size: 13px; }
+      #mfs-content-panel .mfs-header { padding-left: 0.375rem; padding-right: 0.375rem; }
+      #mfs-content-panel .mfs-label { font-size: 0.875rem; }
+      #mfs-content-panel .mfs-title { font-size: 1.625rem; }
+      #mfs-content-panel #mfs-print-btn { font-size: 0.75rem; padding: 0.1875rem 0.5625rem; }
+      #mfs-content-panel .mfs-section { padding: 0.5rem 0.375rem; }
+      #mfs-content-panel .mfs-section-label { font-size: 0.875rem; }
+      #mfs-content-panel .mfs-placeholder { font-size: 1rem; }
+      #mfs-content-panel .mfs-table { font-size: 0.8125rem; }
       #mfs-content-panel .mfs-table th,
-      #mfs-content-panel .mfs-table td { padding: 4px 8px; }
-      #mfs-content-panel .mfs-convention p { font-size: 14px; }
-      #mfs-content-panel .mfs-component { font-size: 19px; }
-      #mfs-content-panel .mfs-history { font-size: 15px !important; }
-      #mfs-content-panel .mfs-zero { font-size: 18px; }
-      #mfs-content-panel .mfs-nr-btn { font-size: 12px; padding: 3px 9px; }
-      #mfs-content-panel .mfs-nr-caption p { font-size: 14px; }
+      #mfs-content-panel .mfs-table td { padding: 0.25rem 0.5rem; }
+      #mfs-content-panel .mfs-convention p { font-size: 0.875rem; }
+      #mfs-content-panel .mfs-component { font-size: 1.1875rem; }
+      #mfs-content-panel .mfs-history { font-size: 0.9375rem !important; }
+      #mfs-content-panel .mfs-zero { font-size: 1.125rem; }
+      #mfs-content-panel .mfs-choice { font-size: 0.75rem; padding: 0.1875rem 0.5625rem; }
+      #mfs-content-panel .mfs-nr-caption p { font-size: 0.875rem; }
       #mfs-content-panel .mfs-nr-item,
-      #mfs-content-panel .mfs-nr-note { font-size: 12px; }
+      #mfs-content-panel .mfs-nr-note { font-size: 0.75rem; }
       #mfs-content-panel .mfs-nr-k,
-      #mfs-content-panel .mfs-convention-k { font-size: 11px; }
-      #mfs-content-panel .mfs-reference { font-size: 13px; scroll-margin-top: calc(var(--mfs-head, 0px) + 8px); }
+      #mfs-content-panel .mfs-convention-k { font-size: 0.6875rem; }
+      #mfs-content-panel .mfs-reference { font-size: 0.8125rem; scroll-margin-top: calc(var(--mfs-head, 0px) + 8px); }
 
-      /* A diagram is drawn whole, never cropped or scrolled sideways, as wide as the panel
-         allows and never taller than the screen, unless that would draw it narrower than
-         on the same phone held upright, whose panel is the screen's short side less the
-         64px of the panel's margin, border and padding: turning the phone never shrinks a
-         drawing. Its labels are placed in its own units and scale with it, as on the
-         desktop, and stay legible at an upright phone's width. Upright, the width is what
-         binds; on its side a square drawing is held to the screen's height, which still
-         draws it larger than upright and leaves room for the caption beside it, where the
-         desktop puts it, while a tall one, such as a conformal diagram's tower of regions,
-         keeps its upright width and is read by scrolling. --nr-aspect and --cd-aspect are
-         a drawing's width over its height, which nrFigure() and cdFigure() write on each
-         figure, and --cd-wide is the width cdFigure() already holds a tall one to. */
+      /* At the usual text size a diagram is drawn whole, as wide as the panel allows and
+         never taller than the screen, unless that would draw it narrower than on the same
+         phone held upright, whose panel is the screen's short side less the 64px of the
+         panel's margin, border and padding: turning the phone never shrinks a drawing.
+         Upright, the width is what binds; on its side a square drawing is held to the
+         screen's height, which still draws it larger than upright and leaves room for the
+         caption beside it, where the desktop puts it, while a tall one, such as a conformal
+         diagram's tower of regions, keeps its upright width and is read by scrolling.
+         --nr-aspect and --cd-aspect are a plot's or a drawing's width over its height, which
+         nrFigure() and cdFrameAround() write on each figure, and --cd-wide is the width a
+         tall one is already held to. A spacetime diagram's words grow with the reader's text
+         inside that width, as nrFigure() lays them out; a conformal diagram, whose labels
+         stand inside it, is drawn larger with them and scrolls sideways, as cdFrameAround()
+         says, so --cd-cap is its width at the usual size. */
       #mfs-content-panel .mfs-nr-figure {
         max-width: max(calc(100svh * var(--nr-aspect, 1)), calc(100vh - 64px));
       }
       #mfs-content-panel .mfs-cd-figure {
-        max-width: min(var(--cd-wide), max(calc(100svh * var(--cd-aspect, 1)), calc(100vh - 64px))) !important;
+        --cd-cap: min(var(--cd-wide), max(calc(100svh * var(--cd-aspect, 1)), calc(100vh - 64px)));
       }
     }
   </style>
@@ -2887,26 +3067,31 @@
       /* One column, and not a one column multicol container, which the browser moved whole
          to the next page rather than start on the page the tensor before it ended on. */
       .mfs-print-body [id^="mfs-comp-"] { column-count: auto !important; }
-      .mfs-print-body .mfs-idx-widget { display: none !important; }  /* interactive toggle, not printable */
-      .mfs-print-body .mfs-coord-select {
-        border: 1px solid #000 !important; font-size: 11pt;
-        -webkit-appearance: none; appearance: none;
+      /* The choices are for the screen: every view of a diagram prints, on white, without its
+         buttons, and a tensor prints in the placement the entry gives first. The chart the
+         copy is written in is named under the heading of its coordinates, in a box as it was
+         when a selector named it. The copy's own text sizes are points, which the reader's
+         text size on the screen does not reach. */
+      #mfs-print-root { --mfs-text: 1; }
+      .mfs-print-body .mfs-choices, .mfs-print-body .mfs-nr-readout { display: none !important; }
+      .mfs-print-body .mfs-choices.mfs-charts { display: block !important; }
+      .mfs-print-body .mfs-charts .mfs-choice:not(.mfs-choice-on) { display: none; }
+      .mfs-print-body .mfs-charts .mfs-choice {
+        border: 1px solid #000 !important; border-radius: 0; padding: 1pt 4pt;
+        font-family: inherit; font-size: 11pt;
       }
-      /* Every view of a diagram prints, on white, without its buttons. */
-      .mfs-print-body .mfs-nr-buttons, .mfs-print-body .mfs-nr-readout { display: none !important; }
       .mfs-print-body .mfs-diagram .mfs-section-head { break-after: avoid; }
       /* A document that ends at the foot of a page would otherwise print one more page
          holding nothing but the descenders of the repeated footer. */
       #mfs-print-root { overflow: hidden; }
       .mfs-print-body .mfs-nr-view { display: block !important; break-inside: avoid; margin: 6px 0 14px; }
-      .mfs-print-body .mfs-nr-figure { max-width: 12cm; }
+      .mfs-print-body .mfs-nr-figure { max-width: 12cm; font-size: 8pt; }
       .mfs-print-body .mfs-nr-caption p, .mfs-print-body .mfs-nr-note, .mfs-print-body .mfs-nr-item { font-size: 10pt; }
       .mfs-print-body .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 4px 0; }
       .mfs-print-body .mfs-nr-item { display: inline-flex; align-items: center; gap: 5px; }
       .mfs-print-body .mfs-nr-k,
       .mfs-print-body .mfs-convention-k { text-transform: uppercase; letter-spacing: 0.08em; font-size: 8pt; margin-right: 0.4em; }
       .mfs-print-body .mfs-convention p { font-size: 10pt; line-height: 1.45; margin: 0 0 6pt; }
-      .mfs-print-body .nr-bg { fill: #fff; }
       .mfs-print-body .nr-grid { stroke: #e4e4e4; }
       .mfs-print-body .nr-axis, .mfs-print-body .nr-frame { stroke: #000; }
       .mfs-print-body .nr-hatch-bg { fill: #fff; }
@@ -2923,7 +3108,6 @@
       .mfs-print-body .nr-mark { fill: #a8841f; stroke: #fff; }
       .mfs-print-body .nr-removed { fill: #fff; stroke: #c2185b; }
       .mfs-print-body .nr-event { stroke: #000; }
-      .mfs-print-body .mfs-pj-svg { background: #fff; }
       .mfs-print-body .pj-floor { stroke: #c8c8c8; }
       .mfs-print-body .pj-axis { stroke: #666; }
       .mfs-print-body .pj-critical { stroke: #0a6e82; }
@@ -2942,7 +3126,8 @@
       .mfs-print-body .pj-string { fill: #000; stroke: #fff; }
       /* Every view of the conformal diagram prints too, at most 12cm wide, a tall one still
          held to its screen height, with its lines in the print copy's darker inks. */
-      .mfs-print-body .mfs-cd-figure { width: 12cm; }
+      .mfs-print-body .mfs-cd-figure { width: 12cm; max-width: var(--cd-wide); }
+      .mfs-print-body .mfs-cd-scroll { overflow: visible; }
       .mfs-print-body .mfs-cd-restriction { border: 1px solid #000 !important; font-size: 9.5pt; margin: 0 0 4pt; padding: 3pt 6pt; }
       .mfs-print-body .cd-region { fill: #f3f3f3; }
       .mfs-print-body .cd-cover { fill: #d8efec; }
