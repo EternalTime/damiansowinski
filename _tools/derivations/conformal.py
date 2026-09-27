@@ -1490,7 +1490,8 @@ def cosmic_string(ck, src):
     TS = (-4, -2, -1, 0, 1, 2, 4)
     views = []
 
-    v = View("conical", "Conical exterior", box, "conical")
+    # Wider to the left than Gott's core, so that the string's name beside it stays on the drawing.
+    v = View("conical", "Conical exterior", [-0.5] + box[1:], "conical")
     v.fill("region", TRIANGLE)
     v.fill("cover", TRIANGLE)
     grid(v, "r", lambda r, t: mink_pq(t, r), (0.5, 1, 2, 4), S_ALL)
