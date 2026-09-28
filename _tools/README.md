@@ -422,7 +422,7 @@ Schwarzschild is Flamm's paraboloid on both sheets of the Einstein-Rosen bridge,
 The interior Schwarzschild star, at $R = 1.5\,r_s$ as its conformal diagram declares, is the cap of a sphere of radius $\sqrt{R^3/r_s}$ joined to the exterior of `schwarzschild.json`, which the file reads, with the vacuum paraboloid drawn on under the cap down to the throat the star replaces.
 Morris-Thorne is drawn as its Ellis-Bronnikov member, $b = b_0^2/r$, the catenoid, as its other diagrams declare; the surface reads $b$ alone, and its proper radial chart, with $r(l) = \sqrt{l^2 + b_0^2}$, is checked to give the same surface.
 The cosmic string is its cone at $4G\mu/c^2 = 0.1$ with Gott's core rounding the apex, and the figure lays the cone flat beside it, cut along one meridian, so that the missing wedge $\delta = 36°$ shows.
-FRW is its closed universe of dust at five moments, $a = 1 - \cos\eta$ as its conformal diagram declares, checked to make the published $G^r{}_r$ vanish; its flat slices are planes and its open slices have no surface in flat space, which the view states under `stops` and the script checks at the scale factors of dust.
+FRW is its closed universe of dust at five moments, $a = 1 - \cos\eta$ as its conformal diagram declares, checked to make the published $G^r{}_r$ vanish; its flat slices are planes and its open slices have no surface of revolution in flat space, and no surface at all as a whole, which the view states under `stops` and the script checks at the scale factors of dust.
 
 ### The file, which the application reads
 
