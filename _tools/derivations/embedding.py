@@ -110,7 +110,6 @@ SAG = 2e-5          # how far the profile may stray from a chord, as a part of t
 BEND = 0.004        # and as a part of the chord: the chord then turns through at most 0.032
 STEP = 1 / 90       # the longest chord of the profile, as a part of the drawing's size
 DIGITS = 6          # decimals written for rho and z
-X_DIGITS = 10       # significant digits written for x, which a throat's divergent g_xx magnifies
 DPHI = 0.02         # the turn of the "across" chords, in radians
 ALONG = 2e-4        # how far a chord may miss the proper distance, as a part of it
 ACROSS = 2e-4       # the same for the chords across
@@ -177,6 +176,17 @@ class Slice:
         self._rho = sp.lambdify(self.x, self.rho, "numpy")
         self._drho = sp.lambdify(self.x, self.drho, "numpy")
         self._defect = sp.lambdify(self.x, self.defect, "numpy")
+        self.exact = {}             # a float the drawing uses -> the exact number it stands for
+        self._near = {}
+
+    def horizons(self):
+        """The real roots of 1/g_xx where it is a rational function, largest first, as floats,
+        each remembered exactly, so that slope() takes its limit at the root itself."""
+        roots = [z for z in sp.solve(sp.numer(sp.together(1 / self.gxx)), self.x) if z.is_real]
+        roots = sorted(roots, key=float, reverse=True)
+        for z in roots:
+            self.exact[float(z)] = z
+        return [float(z) for z in roots]
 
     @staticmethod
     def _at(f, x):
@@ -204,23 +214,55 @@ class Slice:
         if self.numeric:
             g = float(self.gxx_at(x))
             return np.array([float(self._at(self._drho, x)) / math.sqrt(g), math.sqrt(max(float(self.defect_at(x)), 0.0) / g)])
-        x0 = sp.nsimplify(x)
+        x0 = self.exact.get(x, sp.nsimplify(x))
         return np.array([float(sp.limit(e, self.x, x0, side)) for e in
                          (self.drho / sp.sqrt(self.gxx), sp.sqrt(self.defect / self.gxx))])
 
+    def _local(self, root):
+        """g_xx, g_phiphi and g_xx - (drho/dx)^2 as numpy functions of u = x - root, expanded in
+        sympy with the root exact, so that what cancels at the root cancels exactly and they keep
+        their precision where u is far below the root's own rounding, as next to a throat."""
+        if root not in self._near:
+            u = sp.Symbol("u")
+
+            def near(e):
+                n, d = sp.fraction(sp.together(e.subs(self.x, self.exact[root] + u)))
+                f = sp.lambdify(u, sp.expand(n) / sp.expand(d), "numpy")
+                return lambda v: float(f(v))
+            self._near[root] = [near(e) for e in (self.gxx, self.gpp, self.defect)]
+        return self._near[root]
+
+    def _between(self, a, b):
+        """(g_xx, g_phiphi, defect, lo, hi): the three as functions of s from lo to hi along the
+        interval from x = a to b, s being x - root from an end at a horizon and x otherwise."""
+        for end in (a, b):
+            if end in self.exact:
+                return (*self._local(end), a - end, b - end)
+        return (lambda v: float(self.gxx_at(v)), lambda v: float(self.gpp_at(v)),
+                lambda v: float(self.defect_at(v)), a, b)
+
     def proper(self, a, b):
         """The proper distance along the slice from x = a to x = b at fixed phi."""
-        return integrate(lambda s: math.sqrt(float(self.gxx_at(s))), a, b)
+        g, _, _, lo, hi = self._between(a, b)
+        return integrate(lambda s: math.sqrt(g(s)), lo, hi)
+
+    def across(self, a, b, turn):
+        """The length the metric gives the line from x = a to b that turns steadily through
+        `turn` radians per unit of proper distance."""
+        g, gpp, _, lo, hi = self._between(a, b)
+        return integrate(lambda s: math.sqrt(g(s) * (1 + gpp(s) * turn ** 2)), lo, hi)
 
     def rise(self, a, b):
         """z(b) - z(a) of the surface of revolution, the quadrature of sqrt(g_xx - (drho/dx)^2)."""
+        g, _, defect, lo, hi = self._between(a, b)
+
         def f(s):
-            d = float(self.defect_at(s))
-            if d < -1e-12 * max(1.0, float(self.gxx_at(s))):
+            d = defect(s)
+            if d < -1e-12 * max(1.0, g(s)):
                 raise SystemExit(f"{self.metric_id}/{self.system_id}: g_xx - (drho/dx)^2 = {d} < 0 at "
-                                 f"{self.coordinate} = {s}, where the slice has no surface of revolution")
+                                 f"{self.coordinate} = {s} from {a}, where the slice has no surface of revolution")
             return math.sqrt(max(d, 0.0))
-        return integrate(f, a, b)
+        return integrate(f, lo, hi)
 
 
 def numeric_function(name, f, df):
@@ -339,8 +381,11 @@ def fixed(v, digits=DIGITS):
     return round(float(v), digits) + 0.0
 
 
+# x is written as the double itself, the shortest decimal that reads back as it: next to a
+# throat g_xx diverges, and an irrational horizon, as Kerr's, rounded to fewer figures would
+# fall inside it.
 def significant(x):
-    return float(f"{x:.{X_DIGITS}g}") + 0.0
+    return float(x) + 0.0
 
 
 def end_data(end):
@@ -406,8 +451,7 @@ class Checks:
             P = np.array([rho[i], 0.0, z[i]])
             Q = np.array([rho[i + 1] * math.cos(DPHI), rho[i + 1] * math.sin(DPHI), z[i + 1]])
             space = float(np.linalg.norm(Q - P))
-            turn = DPHI / L
-            length = integrate(lambda s: math.sqrt(float(sl.gxx_at(s)) * (1 + float(sl.gpp_at(s)) * turn ** 2)), a, b)
+            length = sl.across(a, b, DPHI / L)
             worst = max(worst, abs(space - length) / length)
         self.add(f"{where}: across, {DPHI} round the axis", worst, ACROSS)
         want = np.sqrt(np.maximum(sl.gpp_at(x), 0.0))
@@ -976,6 +1020,141 @@ def morris_thorne(ck, src):
                        "wormhole; $\\Phi$ does not enter the surface.")]
 
 
+def two_sheets(ck, name, sl, throat, top, radii, size, near_marks=(), texts=("", "")):
+    """A slice of constant t through a bifurcation sphere, as Schwarzschild's: the exterior from
+    the throat out to `top`, tinted, and the same surface turned over on the other side."""
+    near = Piece("exterior", "sheet", sl, throat, top, 0.0, 1,
+                 (("throat", f"the throat $r = r_+$, the bifurcation sphere{texts[0]}, where the other exterior begins"),
+                  ("edge", "the surface runs on to $r \\to \\infty$")),
+                 list(near_marks) + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, throat, top, 0.0, -1,
+                (("throat", "the throat $r = r_+$"), ("edge", "the surface runs on to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    for p in (near, far):
+        ck.isometry(f"{name}, {p.id}", p)
+    ck.join(f"{name}, the two sheets at the throat", near, throat, far, throat)
+    return near, far
+
+
+def rn_metric(ck, src):
+    """Reissner-Nordstrom at r_q = 0.48 r_s, as the conformal diagram draws it, so that r+ =
+    0.64 and r- = 0.36 r_s. g_rr = r^2/(r^2 - r_s r + r_q^2): outside r+ the slice of constant t
+    runs through the outer bifurcation sphere into a second exterior; between the horizons g_rr
+    < 0 and it is not a moment of space; inside r- it runs through the inner bifurcation sphere,
+    the widest circle there, into a second region inside r-, and g_rr - 1 = (r_s r - r_q^2)/
+    (...) falls to zero at r = r_q^2/r_s, where the surface lies level, and is negative nearer
+    the singularity, where no surface of revolution in flat space carries the slice."""
+    sl = Slice(src, "rn_metric", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1, "r_q": "12/25"})
+    rp, rm = sl.horizons()
+    level = 0.48 ** 2
+    ck.add("Reissner-Nordstrom: the horizons are at 0.64 and 0.36 r_s", abs(rp - 0.64) + abs(rm - 0.36), 1e-12)
+    ck.stops("Reissner-Nordstrom, between the horizons", sl, np.linspace(rm, rp, 402)[1:-1])
+    ck.stops("Reissner-Nordstrom, nearer the singularity than r_q^2/r_s", sl, np.linspace(0, level, 402)[1:-1])
+    top, radii = 6.0, (1.0, 2.0, 3.0, 4.0, 5.0)
+    size = 2 * top
+    near, far = two_sheets(ck, "Reissner-Nordstrom outside", sl, rp, top, radii, size,
+                           [(rp, "horizon", "$r = r_+$")], (" of the outer horizon", ""))
+    outside = Surface([near, far])
+    fig = figure_of([outside], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rp, 0.0, "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1$, $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$r_s = 1$, the unit of every length, and $r_q = 0.48\\,r_s$, so that $r_+ = 0.64\\,r_s$ and $r_- = 0.36\\,r_s$."
+    between = ("Between the horizons, $r_- < r < r_+$, $g_{rr} < 0$: $r$ is a time there and a slice of "
+               "constant $t$ is not a moment of space, so nothing is drawn.")
+    views = [view("outside", "Outside $r_+$", "$r_s$", [outside], fig.done(), settings=settings, stops=[between])]
+
+    # Inside r-: each side from where the surface lies level up to the widest circle, r-.
+    size = 2 * rm
+    lo = Piece("inside", "sheet", sl, level, rm, 0.0, 1,
+               (("stops", "at $r = r_q^2/r_s$ the surface lies level, and nearer the singularity the circles grow "
+                          "faster than the distance out to them"),
+                ("join", "the inner horizon $r = r_-$, the widest circle, where the slice runs on into the other "
+                         "region inside $r_-$")),
+               [(level, "chartedge", None), (0.3, "r", None), (rm, "horizon", "$r = r_-$")], size)
+    lo.z = lo.z - lo.z[-1]
+    hi = Piece("other_inside", "sheet2", sl, level, rm, -lo.z[0], -1,
+               (("stops", "at $r = r_q^2/r_s$"), ("join", "the inner horizon $r = r_-$")),
+               [(level, "chartedge", None), (0.3, "r2", None)], size)
+    for p in (lo, hi):
+        ck.isometry(f"Reissner-Nordstrom inside, {p.id}", p)
+    ck.join("Reissner-Nordstrom inside, the two sides at r-", lo, rm, hi, rm)
+    inside = Surface([lo, hi])
+    fig = figure_of([inside], {"sheet": "cover"}, size, Camera(-90, 22))
+    ring_label(fig, [0, 0, 0], rm, 0.0, "$r = r_-$", dx=10)
+    ring_label(fig, [0, 0, 0], *lo.at(level), "$r_q^2/r_s$", side=-1)
+    fig.legend("fill", "cover", "the region $r < r_-$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0.3\\,r_s$")
+    fig.legend("line", "r2", "the same radius in the other region inside $r_-$")
+    fig.legend("line", "horizon", "the widest circle $r = r_-$, where the slice crosses the inner horizon")
+    fig.legend("line", "chartedge", "$r = r_q^2/r_s$, where the surface lies level and the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("inside", "Inside $r_-$", "$r_s$", [inside], fig.done(), settings=settings,
+                      stops=["Nearer the singularity than $r = r_q^2/r_s$, $g_{rr} < 1$: the circles grow faster "
+                             "than the distance out to them, and no surface in flat space carries that part of the "
+                             "slice.", between]))
+    return views
+
+
+def kerr_family(ck, src, metric_id, name, params, ergo):
+    """The equatorial slice of constant Boyer-Lindquist t outside r+, which has no cross term,
+    g_tphi dropping out at constant t: rho = sqrt(g_phiphi), the circumference radius, and the
+    two sheets through the bifurcation sphere, with the ergosphere's edge, where g_tt = 0 on
+    the equator, marked."""
+    sl = Slice(src, metric_id, "boyer_lindquist", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    rp = sl.horizons()[0]
+    top, radii = 8.0, (3.0, 4.0, 5.0, 6.0, 7.0)
+    size = 2 * float(sl.rho_at(top))
+    near, far = two_sheets(ck, name, sl, rp, top, radii, size,
+                           [(rp, "horizon", "$r = r_+$"), (ergo, "ergo", None)])
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(ergo), "$r_E$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$8\\,GM/c^2$")
+    return sl, rp, near, surface, fig
+
+
+def kerr(ck, src):
+    """a = 0.9 GM/c^2, as the conformal diagram draws Kerr. On the equator the circumference
+    radius at r+ is (r+^2 + a^2)/r+ = 2GM/c^2 whatever the spin, which is checked, and the
+    ergosphere's edge is r = 2GM/c^2."""
+    sl, rp, near, surface, fig = kerr_family(ck, src, "kerr", "Kerr", {"G": 1, "M": 1, "a": "9/10"}, 2.0)
+    ck.add("Kerr: the throat's circumference radius is 2GM/c^2", abs(near.at(rp)[0] - 2.0), 1e-6)
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$, $7$ and $8\\,GM/c^2$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "ergo", "the edge of the ergosphere, $r_E = 2GM/c^2$ on the equator")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$GM/c^2$", [surface], fig.done(),
+                 settings="$G = c = M = 1$, so that $GM/c^2$ is the unit of every length, and $a = 0.9\\,GM/c^2$, "
+                          f"so that $r_+ = {rp:.3f}\\,GM/c^2$.")]
+
+
+def kerr_newman(ck, src):
+    """a = 0.6 GM/c^2 and r_Q = 0.5 GM/c^2, as the conformal diagram draws Kerr-Newman; the
+    ergosphere's edge on the equator is where g_tt = 0, r^2 - 2GMr/c^2 + r_Q^2 = 0."""
+    ergo = 1 + math.sqrt(0.75)
+    sl, rp, near, surface, fig = kerr_family(ck, src, "kerr_newman", "Kerr-Newman",
+                                             {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, ergo)
+    ck.add("Kerr-Newman: the throat's circumference radius is 2GM/c^2 - r_Q^2/r+", abs(near.at(rp)[0] - (2 - 0.25 / rp)), 1e-6)
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$, $7$ and $8\\,GM/c^2$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "ergo", "the edge of the ergosphere, $r_E = GM/c^2 + \\sqrt{(GM/c^2)^2 - r_Q^2}$ on the equator")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$GM/c^2$", [surface], fig.done(),
+                 settings="$G = c = M = 1$, so that $GM/c^2$ is the unit of every length, $a = 0.6\\,GM/c^2$ and "
+                          f"$r_Q = 0.5\\,GM/c^2$, so that $r_+ = {rp:.3f}\\,GM/c^2$ and $r_E = {ergo:.3f}\\,GM/c^2$.")]
+
+
 def ellis_bronnikov(ck, src):
     """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
     l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
@@ -1270,6 +1449,9 @@ DRAWN = {
     "tov": tov,
     "morris_thorne": morris_thorne,
     "ellis_bronnikov": ellis_bronnikov,
+    "rn_metric": rn_metric,
+    "kerr": kerr,
+    "kerr_newman": kerr_newman,
     "cosmic_string": cosmic_string,
     "frw": frw,
 }
@@ -1278,8 +1460,8 @@ DRAWN = {
 # Mixmaster's slices are squashed three spheres and a pp-wave's spacelike slices carry its
 # profile, so neither is flat and neither has one surface that says anything; the
 # Malament-Hogarth slices take whatever shape an arbitrary conformal factor gives them.
-NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth", "oppenheimer_snyder", "tolman_bondi", "rn_metric",
-             "kerr", "kerr_newman", "de_sitter", "vaidya",
+NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth", "oppenheimer_snyder", "tolman_bondi",
+             "de_sitter", "vaidya",
              "bertotti_robinson", "stockum_dust", "taub_nut", "godel"}
 
 CAPTIONS = {
@@ -1333,6 +1515,51 @@ CAPTIONS = {
         "density, which observers passing through it fast measure as a negative energy density. With "
         "$b = b_0^2/r$ the surface is the catenoid $r = b_0\\cosh(z/b_0)$, the shape of a soap film "
         "stretched between two rings.",
+    ],
+    ("rn_metric", "outside"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of a charged black hole at one moment of $t$ "
+        "outside its outer horizon, drawn as a surface in flat space so that every distance along it is the "
+        "distance the metric gives. On it $g_{rr} = r^2/(r^2 - r_sr + r_q^2)$, so $dz/dr = \\sqrt{(r_sr - "
+        "r_q^2)/((r - r_+)(r - r_-))}$, and the slice passes through the outer horizon's bifurcation sphere "
+        "$r = r_+$, its throat, into a second exterior, as Schwarzschild's does through $r_s$.",
+        "The charge pulls the throat in from $r_s$ to $r_+ = (r_s + \\sqrt{r_s^2 - 4r_q^2})/2$, and far out the "
+        "surface rises as Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{r_s/r}$. Between the "
+        "horizons $r$ is a time, and no slice of constant $t$ enters there.",
+    ],
+    ("rn_metric", "inside"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of the same black hole at one moment of $t$ inside "
+        "its inner horizon, where $r$ is again a distance and $t$ a time, drawn as a surface in flat space so "
+        "that every distance along it is the distance the metric gives. The slice runs through the inner "
+        "horizon's bifurcation sphere $r = r_-$, its widest circle, into a second region inside $r_-$, the "
+        "same surface turned over.",
+        "Moving in from $r_-$, $g_{rr} = r^2/((r_+ - r)(r_- - r))$ falls to $1$ at $r = r_q^2/r_s$, where the "
+        "surface lies level. Nearer the singularity at $r = 0$, $g_{rr} < 1$: the circles grow faster than "
+        "the distance out to them, and no surface in flat space carries that part of the slice.",
+    ],
+    ("kerr", "equator"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of a rotating black hole at one moment of "
+        "Boyer-Lindquist $t$, drawn as a surface in flat space so that every distance along it is the "
+        "distance the metric gives. The rotation's $g_{t\\phi}$ drops out at constant $t$, and the spin "
+        "enters through the circles, whose circumference is $2\\pi\\sqrt{r^2 + a^2 + 2GMa^2/c^2r}$, so the "
+        "drawing's distance from the axis is this radius rather than $r$. As Schwarzschild's does, the "
+        "slice passes through the bifurcation sphere at $r_+$, its throat, into a second exterior.",
+        "On the equator the throat's circumference is $4\\pi GM/c^2$ whatever the spin, since $r_+^2 + a^2 = "
+        "2GMr_+/c^2$ there. The dotted circle is the edge of the ergosphere, $r = 2GM/c^2$ on the equator, "
+        "inside which nothing can stand still against the rotation. Nothing in the shape of the slice marks "
+        "it: the ergosphere lies in how the slices are stacked, the rotation dragging each one round past "
+        "the next.",
+    ],
+    ("kerr_newman", "equator"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of a charged rotating black hole at one moment of "
+        "Boyer-Lindquist $t$, drawn as a surface in flat space so that every distance along it is the "
+        "distance the metric gives. The rotation's $g_{t\\phi}$ drops out at constant $t$, and the circles "
+        "have circumference $2\\pi\\sqrt{r^2 + a^2 + a^2(2GMr/c^2 - r_Q^2)/r^2}$, the drawing's distance from "
+        "the axis. As Schwarzschild's does, the slice passes through the bifurcation sphere at $r_+$, its "
+        "throat, into a second exterior.",
+        "At the horizon $r_+^2 + a^2 = 2GMr_+/c^2 - r_Q^2$, so the throat's circumference radius is $2GM/c^2 "
+        "- r_Q^2/r_+$, which the charge pulls in below Kerr's $2GM/c^2$. The dotted circle is the edge of the "
+        "ergosphere, where $g_{tt} = 0$ on the equator, inside which nothing can stand still against the "
+        "rotation.",
     ],
     ("ellis_bronnikov", "wormhole"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Ellis-Bronnikov wormhole at one moment of "
