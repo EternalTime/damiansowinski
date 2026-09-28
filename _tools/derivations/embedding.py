@@ -109,7 +109,7 @@ EQUATOR = {"theta": "pi/2"}
 SAG = 2e-5          # how far the profile may stray from a chord, as a part of the drawing's size
 BEND = 0.004        # and as a part of the chord: the chord then turns through at most 0.032
 STEP = 1 / 90       # the longest chord of the profile, as a part of the drawing's size
-DIGITS = 6          # decimals written for rho and z
+DIGITS = 1e-7       # rho and z are rounded to below this part of the drawing's size
 DPHI = 0.02         # the turn of the "across" chords, in radians
 ALONG = 2e-4        # how far a chord may miss the proper distance, as a part of it
 ACROSS = 2e-4       # the same for the chords across
@@ -211,6 +211,13 @@ class Slice:
         to `x` from above (side '+') or below ('-'), taken in sympy so that it is exact at a
         throat, where g_xx diverges, or from the numbers where a function is numerical, at a
         point where g_xx is finite."""
+        if x in self.exact:
+            # A horizon: 1/g_xx vanishes there while drho/dx stays finite, which is checked,
+            # so drho/sqrt(g_xx) -> 0 and the unit tangent is vertical, whichever side.
+            d = sp.simplify(self.drho.subs(self.x, self.exact[x]))
+            if not d.is_finite:
+                raise AssertionError(f"{self.metric_id}: drho/dx is {d} at the horizon {x}")
+            return np.array([0.0, 1.0])
         if self.numeric:
             g = float(self.gxx_at(x))
             return np.array([float(self._at(self._drho, x)) / math.sqrt(g), math.sqrt(max(float(self.defect_at(x)), 0.0) / g)])
@@ -368,7 +375,7 @@ class Piece:
     def data(self):
         out = {"id": self.id, "class": self.cls, "metric": self.sl.metric_id, "system": self.sl.system_id,
                "coordinate": self.sl.coordinate,
-               "points": [[significant(x), fixed(r), fixed(z)]
+               "points": [[significant(x), fixed(r, decimals(self.size)), fixed(z, decimals(self.size))]
                           for x, r, z in zip(self.x, self.rho, self.z)],
                "start": end_data(self.ends[0]), "end": end_data(self.ends[1])}
         if self.reference:
@@ -377,8 +384,14 @@ class Piece:
 
 
 # Adding 0.0 turns a -0.0 that rounding leaves into 0.0, which is how every number is written.
-def fixed(v, digits=DIGITS):
+def fixed(v, digits):
     return round(float(v), digits) + 0.0
+
+
+def decimals(size):
+    """The decimals written for rho and z of a drawing of this size: six for Flamm's paraboloid,
+    drawn 12 across, and more for a smaller drawing, so the rounding is below DIGITS of it."""
+    return max(6, math.ceil(-math.log10(DIGITS * size)))
 
 
 # x is written as the double itself, the shortest decimal that reads back as it: next to a
@@ -405,7 +418,8 @@ class Surface:
         for p in self.pieces:
             for x, cls, text in p.marks:
                 rho, z = p.at(x)
-                ring = {"piece": p.id, "class": cls, "x": significant(x), "rho": fixed(rho), "z": fixed(z)}
+                d = decimals(p.size)
+                ring = {"piece": p.id, "class": cls, "x": significant(x), "rho": fixed(rho, d), "z": fixed(z, d)}
                 if text:
                     ring["label"] = text
                 out.append(ring)
@@ -415,7 +429,7 @@ class Surface:
         out = {}
         if self.label:
             out["label"] = self.label
-            out["time"] = fixed(self.time)
+            out["time"] = fixed(self.time, 6)
         out["pieces"] = [p.data() for p in self.pieces]
         out["rings"] = self.rings()
         return out

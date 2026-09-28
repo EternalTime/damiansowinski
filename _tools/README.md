@@ -397,6 +397,8 @@ The surface exists exactly where $g_{xx} \ge (d\rho/dx)^2$, and where a circle g
 
 $d\rho/dx$ is taken in sympy as $g_{\phi\phi}'/(2\sqrt{g_{\phi\phi}})$, so no absolute value is ever differentiated, and $z$ is the adaptive quadrature of $\sqrt{g_{xx} - (d\rho/dx)^2}$ between neighbouring points.
 An end where the integrand diverges, as $g_{rr}$ does at a throat, is moved to the end of a new variable $s$ with $x = x_0 \pm (b - a)s^2$, which makes the integrand finite there.
+A horizon found by `Slice.horizons()`, a root of $1/g_{xx}$, is kept exact, and next to it the metric is evaluated in $u = x - x_0$, expanded in sympy with the root exact, since the factor that vanishes there, as $r^2 - r_sr + r_q^2$, loses every digit to cancellation in floating point within $10^{-13}$ of an irrational root such as Kerr's $r_+ = 1 + \sqrt{19}/10$.
+At such a horizon $1/g_{xx} = 0$ while $d\rho/dx$ is finite, which is checked, so the surface's tangent is vertical there exactly.
 An interval is halved until the profile strays from its chord by less than $2 \times 10^{-5}$ of the drawing's size and by less than $0.004$ of the chord, and the chord is shorter than $1/90$ of the size, so a chord falls short of its arc by less than about $4 \times 10^{-5}$ of it.
 No closed form is used to draw anything; the closed forms are only checked against.
 
@@ -411,8 +413,8 @@ The surface is measured as the application will draw it, from the rounded number
 - forms: each surface against the closed form it is known by, Flamm's paraboloid, the interior Schwarzschild cap, the catenoid, the cone, Gott's cap and the sphere;
 - stops: where a view says a slice cannot be drawn, $g_{xx} - (d\rho/dx)^2$ is negative at every sample, and where it says a slice is a plane, it is zero.
 
-On 27 September 2026 the worst chord missed its proper distance by $1.1 \times 10^{-4}$ of it and the worst line across by $1.4 \times 10^{-4}$, both on the spheres of radius $a = 1/2$ of FRW's first and last moments, where six decimals of rounding on chords a sixtieth of a unit long are most of it.
-Every profile end to end was within $3.3 \times 10^{-5}$ of its proper length, every $\rho$ within $1.3 \times 10^{-7}$ of the drawing's size of $\sqrt{g_{\phi\phi}}$, every closed form within $1.3 \times 10^{-7}$ of the size, and every join met to $3 \times 10^{-13}$ with tangents equal to $4 \times 10^{-16}$.
+On 27 September 2026 the worst chord missed its proper distance by $7.0 \times 10^{-5}$ of it, inside Reissner-Nordstrom's inner horizon, and the worst line across by $1.1 \times 10^{-4}$, on the sphere of radius $a = 1/2$ of FRW's first moment, where the rounding on chords a sixtieth of a unit long is most of it.
+Every profile end to end was within $3.3 \times 10^{-5}$ of its proper length, every $\rho$ within $5 \times 10^{-8}$ of the drawing's size of $\sqrt{g_{\phi\phi}}$, every closed form within $5 \times 10^{-8}$ of the size, and every join met to $3 \times 10^{-13}$ with tangents equal to $4 \times 10^{-16}$.
 The tests hold the files on disk to the same closed forms without sympy, from the numbers written and nothing else, so a redraw that changed a surface fails there too.
 
 ### Which spacetimes
@@ -468,12 +470,12 @@ A surface is:
 Every surface is a surface of revolution about the vertical axis $z$, and every piece is a profile curve in a half plane through the axis.
 Its `points` are `[x, rho, z]`, running from its `start` to its `end` with `x` strictly increasing or strictly decreasing, at least two of them:
 
-- `rho` is the distance from the axis, never negative, and `z` the height, both in `unit`, rounded to six decimals;
-- `x` is the value of the piece's `coordinate` at the point, as that coordinate system writes it with the view's `settings`, a length in `unit`, an angle in radians such as $\chi$, or a number such as FRW's comoving $r$, to ten significant figures, which a client needs only to label a point or to find one.
+- `rho` is the distance from the axis, never negative, and `z` the height, both in `unit`, rounded to below $10^{-7}$ of the drawing's size: six decimals for a drawing 12 units across, as Flamm's paraboloid, and more for a smaller one, eight inside Reissner-Nordstrom's inner horizon;
+- `x` is the value of the piece's `coordinate` at the point, as that coordinate system writes it with the view's `settings`, a length in `unit`, an angle in radians such as $\chi$, or a number such as FRW's comoving $r$, written as the double it was computed at, the shortest decimal that reads back as it, since next to an irrational horizon a rounded $x$ would fall inside it; a client needs it only to label a point or to find one.
 
 No number is written as `-0.0`.
 A piece holds the surface for the values of `x` from its first point to its last and says nothing beyond them; its `start` and `end` say what the surface does at each.
-The pieces drawn on 27 September 2026 have 9 to 108 points each.
+The pieces drawn on 27 September 2026 have 9 to 199 points each.
 
 To draw a piece, turn every point about the axis, $(\rho\cos\phi, \rho\sin\phi, z)$ for $\phi$ from $0$ to $2\pi$, and join neighbouring points and neighbouring angles.
 The points are close enough that straight segments between them are the surface to within $2 \times 10^{-5}$ of the drawing's size, the diameter of the widest circle drawn, so no smoothing is wanted, and a client may add angles as finely as it likes.
