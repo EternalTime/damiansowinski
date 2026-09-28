@@ -3651,6 +3651,10 @@
       .mfs-print-body .em-reference, .mfs-print-body .em-reference-far { stroke: #666; }
       .mfs-print-body .em-chartedge, .mfs-print-body .em-chartedge-far { stroke: #333; }
       .mfs-print-body .em-cut, .mfs-print-body .em-cut-far { stroke: #a8841f; }
+      /* A figure's label stands on the surface beside the circle it names, over its lines, on
+         a ground of its own on the screen; the print copy clears every ground, so here it
+         gets a white one, or the lines would cross it on paper. */
+      #mfs-print-root .mfs-em-figure .cd-lab-small { background: rgba(255,255,255,0.85) !important; }
       .mfs-print-body .mfs-table { font-size: 10pt; }
       .mfs-print-body .mfs-table th,
       .mfs-print-body .mfs-table td { border: 1px solid #000 !important; }
