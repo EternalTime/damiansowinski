@@ -92,7 +92,7 @@
     box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
     padding:min(1em, 16px); display:flex; flex-direction:column; align-items:center; gap:0.7em;">
   <div id="mfs-coffee-scroll" style="align-self:stretch;min-height:0;overflow-y:auto;">
-    <p id="mfs-coffee-text" style="margin:0;font-family:'Source Code Pro',monospace;font-size:0.72em;line-height:1.5;
+    <p id="mfs-coffee-text" style="margin:0;font-size:0.72em;line-height:1.5;
       color:var(--teal-light);letter-spacing:0.02em;text-align:left;">
       Please let me know if you would like any other spacetimes added to the collection, or if (gasp) you see an error somewhere.
       General relativity calculations are best fueled by coffee, so if you find this site useful lend me a hand in the endless struggle of keeping myself caffeinated.
@@ -2971,7 +2971,7 @@
     }
     #mfs-content-panel .mfs-placeholder {
       font-size: 1.4375rem; color: var(--teal-light);
-      line-height: 1.6; font-style: italic;
+      line-height: 1.6;
       letter-spacing: 0.03em; padding: 1.2em 0;
     }
     /* The loading line is set as the placeholder above is, the one other line the panel's
@@ -2986,7 +2986,7 @@
       display: flex; align-items: center; justify-content: center;
       padding: 1em; text-align: center;
       font-size: 1.4375rem; color: var(--teal-light);
-      line-height: 1.6; font-style: italic; letter-spacing: 0.03em;
+      line-height: 1.6; letter-spacing: 0.03em;
       pointer-events: none; opacity: 0; will-change: opacity;
       transition: opacity 150ms ease-in;
     }
@@ -3003,7 +3003,6 @@
     #mfs-content-panel .mfs-table-scroll { overflow-x: auto; margin: 1em 0; }
     #mfs-content-panel .mfs-table {
       border-collapse: collapse; width: 100%;
-      font-family: 'Source Code Pro', monospace;
       font-size: 1.1875rem; color: var(--teal-light);
     }
     #mfs-content-panel .mfs-table th,
@@ -3018,7 +3017,7 @@
     /* The conventions are prose in the mathematics, set as its other prose, the diagram
        captions, is set, and they wrap: nothing of a line of mathematics' scrolling applies. */
     #mfs-content-panel .mfs-convention p {
-      font-family: 'Source Code Pro', monospace; font-size: 1.1875rem; line-height: 1.65;
+      font-size: 1.1875rem; line-height: 1.65;
       color: var(--teal-light); margin: 0 0 0.8em;
     }
     #mfs-content-panel .mfs-convention p:last-child { margin-bottom: 0.3em; }
@@ -3103,10 +3102,36 @@
       line-height: 1.7 !important;
     }
     #mfs-content-panel .mfs-history p {
-      font-family: 'Source Code Pro', monospace !important;
       font-size: 1em !important; color: var(--teal-light) !important;
       line-height: 1.7 !important;
       margin: 0 0 0.9em !important;
+    }
+    /* Every written area of the page is set in the font of the history's prose, Source Code
+       Pro at its regular weight, upright, as the captain asked on 28 September 2026: "every
+       written area must use the same font as the History section." That is the history and
+       its tables, the conventions, every diagram's captions, legends, notes and restriction
+       bands, the sentences under "not drawn", the references, the words that stand in for a
+       vanishing tensor or scalar, the placeholder and the loading line, and the note beside
+       the coffee button. The references, the placeholders, the loading line and "vanishing"
+       were in the page's serif, EB Garamond, and the last three in its italic. Each keeps its
+       own size. The headings, the choices, the list of names and every word inside a
+       drawing keep their own fonts. The print copy is set whole in EB Garamond, the history
+       with it, since these rules are the screen's; _tools/test_build_mfs_data.py holds this
+       list to the history's font. */
+    #mfs-content-panel .mfs-history p,
+    #mfs-content-panel .mfs-table,
+    #mfs-content-panel .mfs-convention p,
+    #mfs-content-panel .mfs-nr-caption p,
+    #mfs-content-panel .mfs-nr-legend,
+    #mfs-content-panel .mfs-nr-note,
+    #mfs-content-panel .mfs-cd-restriction,
+    #mfs-content-panel .mfs-reference,
+    #mfs-content-panel .mfs-zero,
+    #mfs-content-panel .mfs-placeholder,
+    #mfs-loading,
+    #mfs-coffee-text {
+      font-family: 'Source Code Pro', monospace !important;
+      font-weight: 400; font-style: normal;
     }
     #mfs-content-panel .mfs-history p:last-child {
       margin-bottom: 0 !important;
@@ -3116,7 +3141,6 @@
     }
     #mfs-content-panel .mfs-zero {
       font-size: 1.625rem; color: rgba(0,229,255,0.35);
-      font-style: italic;
     }
     /* ── Spacetime diagrams ── */
     #mfs-content-panel .mfs-nr-view {
@@ -3185,11 +3209,9 @@
     #mfs-content-panel .mfs-nr-readout > span { white-space: nowrap; }
     #mfs-content-panel .mfs-nr-text { flex: 1 1 21.25rem; min-width: 0; }
     #mfs-content-panel .mfs-nr-caption p {
-      font-family: 'Source Code Pro', monospace; font-size: 1.1875rem; line-height: 1.65;
+      font-size: 1.1875rem; line-height: 1.65;
       color: var(--teal-light); margin: 0 0 0.8em;
     }
-    #mfs-content-panel .mfs-nr-legend,
-    #mfs-content-panel .mfs-nr-note { font-family: 'Source Code Pro', monospace; }
     #mfs-content-panel .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 0.375rem 1.375rem; margin: 0.25rem 0 0.75rem; }
     /* An entry of a legend is never wider than the legend, its words wrapping beside its
        swatch, and a formula too wide for what is left scrolls as one in a caption does.
@@ -3342,7 +3364,7 @@
     .mfs-cd-labels .cd-lab-coord { color: var(--text-dim); }
     .mfs-cd-labels .cd-lab-region { color: var(--text-mid); letter-spacing: 0.06em; font-style: italic; }
     #mfs-content-panel .mfs-cd-restriction {
-      font-family: 'Source Code Pro', monospace; font-size: 0.9375rem; line-height: 1.5; color: var(--amber);
+      font-size: 0.9375rem; line-height: 1.5; color: var(--amber);
       background: rgba(249,180,80,0.06); border: 1px solid rgba(249,180,80,0.55); border-radius: 4px;
       padding: 0.375rem 0.625rem; margin: 0 0 0.25rem;
     }

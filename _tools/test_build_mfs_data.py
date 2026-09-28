@@ -528,18 +528,128 @@ class HistoryShape(unittest.TestCase):
             self.assertEqual(path.read_text(encoding="utf-8"), text)
 
 
-    def test_a_table_is_set_in_the_font_of_the_prose_around_it(self):
-        # Bianchi's list of the nine types came up in the page's serif among the history's
-        # monospaced prose; the two rules must name the same family.
-        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
 
-        def family(selector):
-            rule = re.search(re.escape(selector) + r" \{([^}]*)\}", page)
-            self.assertIsNotNone(rule, selector)
-            found = re.search(r"font-family:\s*([^;!]+)", rule.group(1))
-            self.assertIsNotNone(found, f"{selector} names no font")
-            return found.group(1).strip()
-        self.assertEqual(family("#mfs-content-panel .mfs-table"), family("#mfs-content-panel .mfs-history p"))
+def page_rules():
+    """Every rule of the spacetimes page's stylesheets, in order, as (selectors, declarations,
+    print), print being whether the rule sits inside an @media print block."""
+    page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+    rules = []
+    for sheet in re.findall(r"<style>(.*?)</style>", page, re.S):
+        sheet = re.sub(r"/\*.*?\*/", "", sheet, flags=re.S)
+        blocks, start = [], 0
+        for i, char in enumerate(sheet):
+            if char == "{":
+                blocks.append(sheet[start:i].strip())
+                start = i + 1
+            elif char == "}":
+                selector = blocks.pop()
+                if not selector.startswith("@"):
+                    declarations = dict(
+                        (name.strip(), value.strip()) for name, _, value in
+                        (d.partition(":") for d in sheet[start:i].split(";") if ":" in d))
+                    rules.append(([s.strip() for s in selector.split(",")], declarations,
+                                  any(b.startswith("@media print") for b in blocks)))
+                start = i + 1
+    return page, rules
+
+
+class WrittenAreas(unittest.TestCase):
+    """Every written area of the spacetimes page is set in the font of the history's prose,
+    as the captain asked on 28 September 2026: "every written area must use the same font as
+    the History section." Bianchi's list of the nine types had come up in the page's serif
+    among the history's monospaced prose, and the references, the placeholders, the loading
+    line and the word standing in for a vanishing tensor still did."""
+
+    HISTORY = "#mfs-content-panel .mfs-history p"
+    # Each written area, by the rule that sets it. Headings, the choices, the list of names
+    # and the words inside a drawing are not among them and keep their own fonts.
+    WRITTEN = (
+        HISTORY,
+        "#mfs-content-panel .mfs-table",
+        "#mfs-content-panel .mfs-convention p",
+        "#mfs-content-panel .mfs-nr-caption p",
+        "#mfs-content-panel .mfs-nr-legend",
+        "#mfs-content-panel .mfs-nr-note",
+        "#mfs-content-panel .mfs-cd-restriction",
+        "#mfs-content-panel .mfs-reference",
+        "#mfs-content-panel .mfs-zero",
+        "#mfs-content-panel .mfs-placeholder",
+        "#mfs-loading",
+        "#mfs-coffee-text",
+    )
+    # What the page's script sets as prose, in the classes wireProse() watches, and the
+    # written area that holds each.
+    PROSE_HELD_BY = {
+        ".mfs-history": "#mfs-content-panel .mfs-history p",
+        ".mfs-convention": "#mfs-content-panel .mfs-convention p",
+        ".mfs-nr-caption": "#mfs-content-panel .mfs-nr-caption p",
+        ".mfs-nr-note": "#mfs-content-panel .mfs-nr-note",
+        ".mfs-nr-itext": "#mfs-content-panel .mfs-nr-legend",
+        ".mfs-cd-restriction": "#mfs-content-panel .mfs-cd-restriction",
+    }
+
+    @classmethod
+    def setUpClass(cls):
+        cls.page, cls.rules = page_rules()
+        cls.tokens = {re.findall(r"[.#][\w-]+", selector)[-1] for selector in cls.WRITTEN} | {".mfs-history"}
+
+    def resolved(self, selector, prop, printed=False):
+        """What the last rule naming selector exactly gives prop, an !important one winning."""
+        found = [(d[prop].endswith("!important"), n) for n, (selectors, d, p) in enumerate(self.rules)
+                 if selector in selectors and prop in d and p == printed]
+        if not found:
+            return None
+        return self.rules[max(found)[1]][1][prop].replace("!important", "").strip()
+
+    def concerns_written_area(self, selector):
+        return any(re.search(re.escape(token) + r"(?![\w-])", selector) for token in self.tokens)
+
+    def test_the_history_is_source_code_pro_regular_and_upright(self):
+        self.assertEqual(self.resolved(self.HISTORY, "font-family"), "'Source Code Pro', monospace")
+        self.assertIn(self.resolved(self.HISTORY, "font-weight"), (None, "400", "normal"))
+        self.assertIn(self.resolved(self.HISTORY, "font-style"), (None, "normal"))
+
+    def test_every_written_area_is_set_in_the_history_font(self):
+        family = self.resolved(self.HISTORY, "font-family")
+        for selector in self.WRITTEN:
+            with self.subTest(selector):
+                self.assertEqual(self.resolved(selector, "font-family"), family)
+                self.assertIn(self.resolved(selector, "font-weight"), (None, "400", "normal"))
+                self.assertIn(self.resolved(selector, "font-style"), (None, "normal"))
+
+    def test_no_rule_gives_a_written_area_another_font(self):
+        # A rule that reaches into a written area, such as the table's cells, the legend's
+        # entries or the phone's sizes, may not name a family or a style of its own; on paper,
+        # where the copy is set whole in the print root's font, it may not name one at all.
+        family = self.resolved(self.HISTORY, "font-family")
+        for selectors, declarations, printed in self.rules:
+            for selector in filter(self.concerns_written_area, selectors):
+                with self.subTest(selector, printed=printed):
+                    named = declarations.get("font-family", "").replace("!important", "").strip()
+                    self.assertIn(named, ("",) if printed else ("", family))
+                    if selector.split()[-1] in self.tokens or selector.split()[-1] == "p":
+                        self.assertNotEqual(declarations.get("font-style"), "italic")
+
+    def test_no_written_area_carries_a_font_in_its_own_markup(self):
+        for tag in re.findall(r"<[a-z]+\b[^>]*>", self.page):
+            names = re.findall(r'(?:id|class)="([^"]*)"', tag)
+            if any(("." + n in self.tokens or "#" + n in self.tokens) for ns in names for n in ns.split()):
+                self.assertNotIn("font-family", tag, tag[:80])
+        # The script sets no font of its own on anything; fitWords() only reads them.
+        self.assertIsNone(re.search(r"\.style\.fontFamily\s*=|cssText[^\n]*font-family", self.page),
+                          "the page's script sets a font")
+
+    def test_every_prose_the_page_fits_is_a_written_area(self):
+        watched = re.search(r"root\.querySelectorAll\('([^']*)'\)\.forEach\(function\(block\) \{\s*"
+                            r"_proseObserver", self.page)
+        self.assertIsNotNone(watched, "wireProse() no longer names the prose it fits")
+        for cls in (c.strip() for c in watched.group(1).split(",")):
+            with self.subTest(cls):
+                self.assertIn(cls, self.PROSE_HELD_BY, f"{cls} is prose; add its rule to WRITTEN")
+                self.assertIn(self.PROSE_HELD_BY[cls], self.WRITTEN)
+
+    def test_the_print_copy_sets_its_prose_in_the_print_root_font(self):
+        self.assertEqual(self.resolved("#mfs-print-root", "font-family", printed=True), "'EB Garamond', serif")
 
 
 class ConventionShape(unittest.TestCase):
