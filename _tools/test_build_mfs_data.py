@@ -1021,6 +1021,13 @@ class EmbeddingDiagrams(unittest.TestCase):
             near(rho, r, f"Tolman-Bondi release rho at {r}")
         for r, rho, z in outside:
             near(z - outside[0][2], 2 * math.sqrt(0.5 * (r - 0.5)) - 1, f"Tolman-Bondi release z at {r}")
+        # Bertotti-Robinson's equator is a cylinder of radius b, z = b ln r, and its sphere of radius b.
+        for r, rho, z in piece("bertotti_robinson", "cylinder"):
+            near(rho, 1.0, f"Bertotti-Robinson rho at {r}")
+            near(z, math.log(r), f"Bertotti-Robinson z at {r}")
+        for theta, rho, z in piece("bertotti_robinson", "sphere", view=1):
+            near(rho, math.sin(theta), f"Bertotti-Robinson sphere rho at {theta}")
+            near(z, 1 - math.cos(theta), f"Bertotti-Robinson sphere z at {theta}")
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
