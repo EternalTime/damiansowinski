@@ -980,6 +980,12 @@ class EmbeddingDiagrams(unittest.TestCase):
                     near(rho, r, f"Reissner-Nordstrom rho at {r}")
                 if view:
                     self.assertEqual((points[0][0], points[-1][0]), (0.2304, 0.36), pid)
+        # On Kerr's equator the throat's circumference radius is 2GM/c^2 whatever the spin, and
+        # Kerr-Newman's charge pulls it in to 2GM/c^2 - r_Q^2/r+, at a = 0.6 and r_Q = 0.5.
+        self.assertAlmostEqual(piece("kerr", "exterior")[0][1], 2.0, places=6)
+        r_plus = 1 + math.sqrt(0.39)
+        self.assertAlmostEqual(piece("kerr_newman", "exterior")[0][0], r_plus, places=12)
+        self.assertAlmostEqual(piece("kerr_newman", "exterior")[0][1], 2 - 0.25 / r_plus, places=6)
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
