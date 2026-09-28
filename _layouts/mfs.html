@@ -2028,6 +2028,99 @@
         ].join('');
       }
 
+      /* ── Embedding diagrams ──
+         One per spacetime that has one, read from MFS/assets/data/embedding/<id>.json, which
+         _tools/derivations/embedding.py computes from the published metrics: a slice of the
+         spacetime, the equatorial plane at one moment, drawn as a surface in flat space so that
+         distances along it are the distances the metric gives, and projected once from a fixed
+         point of view with the lines the surface hides drawn faint. The file also carries the
+         surface itself, which the application draws; the page draws the projection only, in
+         the conformal diagram's frame with its labels, so it follows the reader's text size
+         and prints as the conformal diagram does. Views follow the chart chosen above as the
+         conformal diagram's do. _tools/README.md defines the file. */
+      var _embeddingCache = {};  // id → parsed JSON, or null where the spacetime has none
+
+      function fetchEmbedding(id, cb) {
+        if (id in _embeddingCache) { cb(_embeddingCache[id]); return; }
+        withIndex(function(index) {
+          var entry = index.filter(function(e) { return e.id === id; })[0];
+          if (!entry || !entry.embedding) { _embeddingCache[id] = null; cb(null); return; }
+          fetch('{{ "/MFS/assets/data/embedding/" | relative_url }}' + id + '.json')
+            .then(function(r) { return r.json(); })
+            .then(function(data) { _embeddingCache[id] = data; cb(data); })
+            .catch(function(e) {
+              console.error('Failed to load the embedding diagram:', id, e);
+              _embeddingCache[id] = null;
+              cb(null);
+            });
+        });
+      }
+
+      // A fill may have holes, where another surface lies nearer the camera.
+      function emSvg(view, f) {
+        var out = view.figure.layers.map(function(L) {
+          var cls = 'em-' + L['class'];
+          if (L.kind === 'fill') return nrEl('path', { 'class': cls + '-fill', 'fill-rule': 'evenodd',
+            d: [L.points].concat(L.holes || []).map(function(ring) { return cdPath(f, ring, true); }).join(' ') });
+          if (L.kind === 'line') return nrEl('path', { 'class': cls, d: cdPath(f, L.points, false) });
+          return nrEl('circle', { 'class': cls, cx: f.x(L.at[0]).toFixed(1), cy: f.y(L.at[1]).toFixed(1), r: 3 });
+        });
+        return nrEl('svg', { 'class': 'mfs-cd-svg mfs-em-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
+          'aria-label': 'Embedding diagram, ' + nrPlain(view.label) }, out.join(''));
+      }
+
+      function emFigure(view) {
+        var f = cdFrame(view.figure);
+        return cdFrameAround(f, '', emSvg(view, f) + cdLabels(view.figure, f), 'mfs-em-figure');
+      }
+
+      function emLegend(view) {
+        return '<div class="mfs-nr-legend">' + view.figure.legend.map(function(item) {
+          var cls = 'em-' + item[1], inner;
+          if (item[0] === 'fill') inner = '<rect class="' + cls + '-fill cd-swatch-fill" x="2" y="2" width="30" height="12"/>';
+          else if (item[0] === 'point') inner = '<circle class="' + cls + '" cx="17" cy="8" r="3"/>';
+          else inner = '<line class="' + cls + '" x1="2" y1="8" x2="32" y2="8"/>';
+          return '<span class="mfs-nr-item"><svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner +
+            '</svg><span class="mfs-nr-itext">' + nrProse(nrEsc(item[2])) + '</span></span>';
+        }).join('') + '</div>';
+      }
+
+      function embeddingSection(metricId, coordId) {
+        var data = _embeddingCache[metricId];
+        if (!data || !data.views) return '';
+        var views = data.views.filter(function(v) { return v.system === coordId; })
+          .concat(data.views.filter(function(v) { return !v.system; }));
+        if (!views.length) return '';
+        var buttons = views.length > 1 ? choices(views.map(function(v, i) {
+          return choiceButton(nrEsc(v.label), i === 0, {});
+        }), 'view') : '';
+        function note(key, text) {
+          return '<div class="mfs-nr-note"><span class="mfs-nr-k">' + key + '</span> ' + nrProse(nrEsc(text)) + '</div>';
+        }
+        return [
+          '<div class="mfs-section mfs-diagram mfs-embedding">',
+            '<div class="mfs-section-head">',
+              '<div class="mfs-section-label">embedding diagram</div>',
+              buttons,
+            '</div>',
+            views.map(function(view, i) {
+              return [
+                '<div class="mfs-nr-view' + (i ? ' mfs-nr-hidden' : '') + '">',
+                  emFigure(view),
+                  '<div class="mfs-nr-text">',
+                    '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
+                    emLegend(view),
+                    view.settings ? note('drawn at', view.settings) : '',
+                    view.input ? note('drawn with', view.input) : '',
+                    (view.stops || []).map(function(text) { return note('not drawn', text); }).join(''),
+                  '</div>',
+                '</div>'
+              ].join('');
+            }).join(''),
+          '</div>'
+        ].join('');
+      }
+
       /* The conventions a spacetime is written in: its signature, and the paragraph that says
          what range each coordinate takes, what each parameter means, which chart the
          components are printed in and which contraction the Ricci tensor is. The captain moved
@@ -2232,6 +2325,8 @@
           conventionSection(data),
 
           conformalSection(data.id, hasCoords ? coord.id : null),
+
+          embeddingSection(data.id, hasCoords ? coord.id : null),
 
           ((hasCoords && !coordHasContent) ? [
             '<div class="mfs-section"><div class="mfs-placeholder">',
@@ -2527,7 +2622,7 @@
         function load() {
           fetchBib(function() {
             fetchMetric(id, function(data) {
-              fetchDiagrams(id, function() { fetchConformal(id, function() {
+              fetchDiagrams(id, function() { fetchConformal(id, function() { fetchEmbedding(id, function() {
                 if (seq !== _shown) return;
                 renderMetric(data, 0).then(afterFrame).then(function() {
                   if (seq !== _shown) return;
@@ -2541,7 +2636,7 @@
                 });
                 el.scrollTop = 0;
                 bringIntoView(el);
-              }); });
+              }); }); });
             });
           });
         }
@@ -2957,6 +3052,23 @@
     .pj-wedge-fill { fill: rgba(10,14,18,0.95); stroke: none; }
     .pj-double-fill { fill: rgba(212,175,55,0.13); stroke: none; }
     .pj-string { fill: var(--text-bright); stroke: #000; stroke-width: 1; }
+    /* ── Embedding diagrams ── The figure is a figure in three dimensions in the conformal
+       diagram's frame; a surface is tinted where it is nearest the reader, and the part of a
+       line the surface hides, its class with -far, is drawn faint. */
+    .em-cover-fill { fill: rgba(37,217,200,0.13); stroke: none; }
+    .em-star-fill { fill: rgba(249,180,80,0.16); stroke: none; }
+    .em-wedge-fill { fill: rgba(10,14,18,0.95); stroke: none; }
+    .em-outline, .em-outline-far { fill: none; stroke: var(--text-bright); stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; }
+    .em-meridian, .em-meridian-far { fill: none; stroke: var(--text-dim); stroke-width: 0.8; stroke-opacity: 0.55; }
+    .em-r, .em-r-far, .em-r2, .em-r2-far { fill: none; stroke: var(--pink-light); stroke-width: 1.2; stroke-opacity: 0.85; }
+    .em-r2, .em-r2-far { stroke-dasharray: 4 3; }
+    .em-horizon, .em-horizon-far { fill: none; stroke: var(--cyan); stroke-width: 2; stroke-dasharray: 7 5; }
+    .em-throat, .em-throat-far { fill: none; stroke: var(--amber); stroke-width: 2.6; stroke-dasharray: 2 4; }
+    .em-surface, .em-surface-far { fill: none; stroke: var(--amber); stroke-width: 2.2; }
+    .em-reference, .em-reference-far { fill: none; stroke: var(--text-dim); stroke-width: 1.1; stroke-dasharray: 4 3; stroke-opacity: 0.75; }
+    .em-chartedge, .em-chartedge-far { fill: none; stroke: var(--text-mid); stroke-width: 1.8; stroke-dasharray: 10 4 2 4; }
+    .em-cut, .em-cut-far { fill: none; stroke: var(--gold); stroke-width: 2.2; stroke-linecap: round; }
+    .mfs-em-svg [class$="-far"] { stroke-opacity: 0.28; }
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
        diagrams'; the figure, its labels and its lines are these. A label is sized in units
        of the figure's width, n being n units of the SVG's 628 unit wide viewBox. */
@@ -3528,6 +3640,17 @@
       .mfs-print-body .cd-mark { fill: #a8841f; }
       .mfs-print-body .cd-removed { fill: #fff; stroke: #c2185b; }
       .mfs-print-body .cd-fade-edge, .mfs-print-body .cd-fade-clear { stop-color: #fff; }
+      .mfs-print-body .em-cover-fill { fill: #d8efec; }
+      .mfs-print-body .em-star-fill { fill: #f7e6cf; }
+      .mfs-print-body .em-wedge-fill { fill: #d8d8d8; }
+      .mfs-print-body .em-outline, .mfs-print-body .em-outline-far { stroke: #000; }
+      .mfs-print-body .em-meridian, .mfs-print-body .em-meridian-far { stroke: #666; }
+      .mfs-print-body .em-r, .mfs-print-body .em-r-far, .mfs-print-body .em-r2, .mfs-print-body .em-r2-far { stroke: #d81b60; }
+      .mfs-print-body .em-horizon, .mfs-print-body .em-horizon-far { stroke: #0a6e82; }
+      .mfs-print-body .em-throat, .mfs-print-body .em-throat-far, .mfs-print-body .em-surface, .mfs-print-body .em-surface-far { stroke: #b8741a; }
+      .mfs-print-body .em-reference, .mfs-print-body .em-reference-far { stroke: #666; }
+      .mfs-print-body .em-chartedge, .mfs-print-body .em-chartedge-far { stroke: #333; }
+      .mfs-print-body .em-cut, .mfs-print-body .em-cut-far { stroke: #a8841f; }
       .mfs-print-body .mfs-table { font-size: 10pt; }
       .mfs-print-body .mfs-table th,
       .mfs-print-body .mfs-table td { border: 1px solid #000 !important; }
