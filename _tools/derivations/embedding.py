@@ -585,7 +585,8 @@ class Figure:
         self.legend_items.append([kind, cls, text])
 
     def done(self, pad=0.04):
-        """The figure as it is written, boxed so that every label fits inside at its size."""
+        """The figure as it is written, boxed so that every label fits inside at its size, and
+        refused if two labels overlap, since each is set on its own ground over the lines."""
         self.fills_seen()
         P = np.vstack(self.extent)
         lo, hi = P.min(0), P.max(0)
@@ -594,17 +595,16 @@ class Figure:
             unit = width / 560          # data units per unit of a figure 628 wide, of which 560 drawn
             box_lo, box_hi = lo - pad * width, hi + pad * width
             for L in self.labels:
-                size = LAB[L["class"]] * unit
-                w, h = label_width(L["text"]) * size, 1.25 * size
-                ax, ay = {"l": (0, -0.5), "r": (-1, -0.5), "t": (-0.5, 0), "b": (-0.5, -1), "c": (-0.5, -0.5),
-                          "tl": (0, 0), "tr": (-1, 0), "bl": (0, -1), "br": (-1, -1)}[L["anchor"]]
-                x0 = L["at"][0] + L["dx"] * unit + ax * w
-                # The page's y runs down, the drawing's up.
-                y0 = L["at"][1] - L["dy"] * unit - (ay + 1) * h
+                x0, y0, x1, y1 = label_box(L, unit)
                 box_lo = np.minimum(box_lo, [x0 - pad * width / 4, y0 - pad * width / 4])
-                box_hi = np.maximum(box_hi, [x0 + w + pad * width / 4, y0 + h + pad * width / 4])
+                box_hi = np.maximum(box_hi, [x1 + pad * width / 4, y1 + pad * width / 4])
             lo, hi = box_lo + pad * width, box_hi - pad * width
         box = [box_lo[0], box_hi[0], box_lo[1], box_hi[1]]
+        boxes = [label_box(L, unit) for L in self.labels]
+        for i, a in enumerate(boxes):
+            for j, b in enumerate(boxes[:i]):
+                if a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]:
+                    raise AssertionError(f"the labels {self.labels[j]['text']} and {self.labels[i]['text']} overlap")
         layers = [dict(layer, points=rounded(layer["points"]), **({"holes": [rounded(h) for h in layer["holes"]]}
                                                                     if "holes" in layer else {}))
                   for layer in self.fills]
@@ -633,10 +633,28 @@ def rounded(points):
 def label_width(text):
     """A generous width of a TeX label in ems: what MathJax sets, less the markup."""
     plain = text.replace("$", "").replace("\\,", " ")
-    for cmd in ("\\chi", "\\ell", "\\pi", "\\phi", "\\eta", "\\theta", "\\sqrt", "\\frac", "\\infty", "\\mu"):
+    for cmd in ("\\chi", "\\ell", "\\pi", "\\phi", "\\eta", "\\theta", "\\sqrt", "\\frac", "\\infty", "\\mu",
+                "\\delta"):
         plain = plain.replace(cmd, "x")
     plain = plain.replace("{", "").replace("}", "").replace("_", "").replace("^", "")
     return 0.55 * len(plain) + 0.3
+
+
+ANCHOR = {"l": (0, -0.5), "r": (-1, -0.5), "t": (-0.5, 0), "b": (-0.5, -1), "c": (-0.5, -0.5),
+          "tl": (0, 0), "tr": (-1, 0), "bl": (0, -1), "br": (-1, -1)}
+
+
+def label_box(L, unit):
+    """The box a label takes in the drawing, x0, y0, x1, y1, with `unit` the drawing's length
+    per unit of a figure 628 wide: generous, as label_width() is, and 1.25 of its size tall,
+    which holds the ground the page sets it on."""
+    size = LAB[L["class"]] * unit
+    w, h = label_width(L["text"]) * size, 1.25 * size
+    ax, ay = ANCHOR[L["anchor"]]
+    x0 = L["at"][0] + L["dx"] * unit + ax * w
+    # The page's y runs down, the drawing's up.
+    y0 = L["at"][1] - L["dy"] * unit - (ay + 1) * h
+    return x0, y0, x0 + w, y0 + h
 
 
 def draw_surface(fig, surface, offset=(0.0, 0.0, 0.0), meridians=24):
