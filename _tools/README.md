@@ -515,7 +515,7 @@ The kinds of end are:
 - `stops`: the construction ends here, because past this point no surface in flat space carries the slice, and the text says why.
 
 A ring is a circle to mark on a surface, `{"piece", "class", "x", "rho", "z", "label"}`, of radius `rho` at height `z`, which is one of the points of its piece, and `label`, when present, is TeX to set beside it.
-Its `class` is `r` for a circle of constant coordinate on a `sheet` or `star` piece, `r2` for one on a `sheet2` piece, `horizon` for the horizon, `throat` for a wormhole's throat, `surface` for the edge of matter, a star's surface or the edge of Gott's core, `chartedge` for the circle where a chart ends, as FRW's equator, and `reference` for a circle on a reference piece.
+Its `class` is `r` for a circle of constant coordinate on a `sheet` or `star` piece, `r2` for one on a `sheet2` piece, `horizon` for the horizon, `throat` for a wormhole's throat, `surface` for the edge of matter, a star's surface or the edge of Gott's core, `chartedge` for the circle where a chart ends or a drawing stops, as FRW's equator or where Reissner-Nordstrom's inner surface lies level, `ergo` for the edge of an ergosphere on Kerr's and Kerr-Newman's equator, and `reference` for a circle on a reference piece.
 
 The `figure` is the drawing the page makes of the view, projected by the script once from a fixed camera, in the form a figure in three dimensions takes in the diagram files:
 

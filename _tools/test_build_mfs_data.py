@@ -938,6 +938,19 @@ class EmbeddingDiagrams(unittest.TestCase):
                         self.assertIn([ring["x"], ring["rho"], ring["z"]], piece["points"], f"{where} ring {ring}")
                 self.assertEqual(times, sorted(times), where)
 
+    def test_a_ring_is_classed_by_the_piece_it_lies_on(self):
+        # The README gives r to a circle on a sheet or star piece and r2 to one on a sheet2
+        # piece, which is how a client tells the two sides of a throat apart.
+        allowed = {"sheet": {"r"}, "star": {"r"}, "sheet2": {"r2"}, "reference": {"reference"}}
+        for name, data in self.embedding.items():
+            for view in data["views"]:
+                for surface in view["surfaces"]:
+                    kinds = {p["id"]: p["class"] for p in surface["pieces"]}
+                    for ring in surface["rings"]:
+                        if ring["class"] in ("r", "r2", "reference"):
+                            self.assertIn(ring["class"], allowed[kinds[ring["piece"]]],
+                                          f"{name} {view['id']} ring {ring['class']} on {ring['piece']}")
+
     def test_the_surfaces_are_the_ones_known_in_closed_form(self):
         """Flamm's paraboloid, the interior Schwarzschild cap, the catenoid, the cone, Gott's cap
         and the sphere, from the numbers written and nothing else, to their rounding."""
