@@ -976,6 +976,37 @@ def morris_thorne(ck, src):
                        "wormhole; $\\Phi$ does not enter the surface.")]
 
 
+def ellis_bronnikov(ck, src):
+    """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
+    l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
+    the surface Morris-Thorne draws, here as one piece through the throat, since the chart
+    runs from one side to the other."""
+    sl = Slice(src, "ellis_bronnikov", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"ell": 1})
+    top = 5.0
+    size = 2 * math.sqrt(top ** 2 + 1)
+    steps = (1.0, 2.0, 3.0, 4.0)
+    whole = Piece("whole", "sheet", sl, -top, top, -math.asinh(top), 1,
+                  (("edge", "the side $r < 0$ runs on, flattening, to $r \\to -\\infty$"),
+                   ("edge", "the side $r > 0$ runs on, flattening, to $r \\to \\infty$")),
+                  [(-top, "r", None)] + [(-r, "r", None) for r in reversed(steps)] + [(0.0, "throat", "$r = 0$")]
+                  + [(r, "r", None) for r in steps] + [(top, "r", None)], size)
+    ck.isometry("Ellis-Bronnikov, through the throat", whole)
+    ck.form("Ellis-Bronnikov, the catenoid z = l arcsinh(r/l)", whole, np.arcsinh, size)
+    ck.radius("Ellis-Bronnikov, the catenoid rho = sqrt(r^2 + l^2)", whole, lambda r: np.sqrt(r * r + 1), size)
+    surface = Surface([whole])
+
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *whole.at(0.0), "$r = 0$", dx=14)
+    ring_label(fig, [0, 0, 0], *whole.at(2.0), "$2\\ell$")
+    ring_label(fig, [0, 0, 0], *whole.at(-2.0), "$-2\\ell$")
+    fig.legend("fill", "cover", "the whole slice, which $t$ and $r$ cover from one side to the other")
+    fig.legend("line", "r", "$r$ constant, at $\\pm\\ell$, $\\pm 2\\ell$, $\\pm 3\\ell$, $\\pm 4\\ell$ and $\\pm 5\\ell$")
+    fig.legend("line", "throat", "the throat $r = 0$, the smallest circle, of radius $\\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("wormhole", "The wormhole", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, the unit of every length.")]
+
+
 def cosmic_string(ck, src):
     """The conical exterior: g_rr = 1 and g_phiphi = (1 - 4G mu/c^2)^2 r^2, so rho =
     (1 - 4G mu/c^2) r and dz/dr = sqrt(1 - (1 - 4G mu/c^2)^2): a cone of half angle
@@ -1238,6 +1269,7 @@ DRAWN = {
     "interior_schwarzschild": interior_schwarzschild,
     "tov": tov,
     "morris_thorne": morris_thorne,
+    "ellis_bronnikov": ellis_bronnikov,
     "cosmic_string": cosmic_string,
     "frw": frw,
 }
@@ -1247,7 +1279,7 @@ DRAWN = {
 # profile, so neither is flat and neither has one surface that says anything; the
 # Malament-Hogarth slices take whatever shape an arbitrary conformal factor gives them.
 NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth", "oppenheimer_snyder", "tolman_bondi", "rn_metric",
-             "kerr", "kerr_newman", "ellis_bronnikov", "de_sitter", "vaidya",
+             "kerr", "kerr_newman", "de_sitter", "vaidya",
              "bertotti_robinson", "stockum_dust", "taub_nut", "godel"}
 
 CAPTIONS = {
@@ -1301,6 +1333,20 @@ CAPTIONS = {
         "density, which observers passing through it fast measure as a negative energy density. With "
         "$b = b_0^2/r$ the surface is the catenoid $r = b_0\\cosh(z/b_0)$, the shape of a soap film "
         "stretched between two rings.",
+    ],
+    ("ellis_bronnikov", "wormhole"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of the Ellis-Bronnikov wormhole at one moment of "
+        "$t$, drawn as a surface in flat space so that every distance along it is the distance the metric "
+        "gives. Its $r$ is the proper distance from the throat, running from $-\\infty$ on one side to "
+        "$\\infty$ on the other, so the circles of constant $r$ stand at equal steps along the surface, and "
+        "the circle at $r$ has circumference $2\\pi\\sqrt{r^2 + \\ell^2}$. The surface that carries both is "
+        "the catenoid $\\sqrt{r^2 + \\ell^2} = \\ell\\cosh(z/\\ell)$, one piece through the throat at $r = 0$, "
+        "where the circles are smallest and the surface stands vertical.",
+        "It is the surface the Morris-Thorne wormhole draws, and the same metric: Michael Morris and Kip "
+        "Thorne set it out in 1988 as the simplest traversable wormhole, with the shape function $b = "
+        "\\ell^2/R$ of the areal radius $R = \\sqrt{r^2 + \\ell^2}$, unaware that Homer Ellis and Kirill "
+        "Bronnikov had each found it in 1973. The areal radius turns back at the throat, so it covers one side "
+        "at a time; the proper $r$ runs straight through.",
     ],
     ("cosmic_string", "cone"): [
         "This is the plane $z = 0$ across a straight cosmic string at one moment of $t$, drawn as a "
