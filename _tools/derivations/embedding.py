@@ -1454,7 +1454,7 @@ def oppenheimer_snyder(ck, src):
                       {"chi_0": "pi/4", "a_m": repr(am)}, {"a": repr(a)})
         outer = cloud.slice(src, tau, "-1/(2*r)")
         edge = cloud.horizon(tau, 0.0, top)
-        dust_marks = [(chi0 / 3, "r2", None), (2 * chi0 / 3, "r2", None), (chi0, "surface", None)]
+        dust_marks = [(chi0 / 3, "r", None), (2 * chi0 / 3, "r", None), (chi0, "surface", None)]
         out_marks = [(r, "r", None) for r in (3.0, top)]
         if edge is not None and edge > R0:
             out_marks.append((edge, "horizon", None))
@@ -1477,8 +1477,8 @@ def oppenheimer_snyder(ck, src):
     fig = sequence_figure(surfaces, {"star": "star", "sheet": "cover"}, size, columns=2)
     fig.legend("fill", "star", "the dust, a cap of a sphere of radius $a(\\tau)$, which $\\tau$ and $\\chi$ cover")
     fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the dust")
-    fig.legend("line", "r2", "$\\chi$ constant in the dust, at $\\chi_0/3$ and $2\\chi_0/3$")
-    fig.legend("line", "r", "the clocks released at $3$ and $4\\,r_s$")
+    fig.legend("line", "r", "$\\chi$ constant in the dust, at $\\chi_0/3$ and $2\\chi_0/3$, and outside the clocks "
+                            "released at $3$ and $4\\,r_s$")
     fig.legend("line", "surface", "the surface of the dust, $\\chi = \\chi_0$")
     fig.legend("line", "horizon", "the apparent horizon, $R = 2GM/c^2$ for the mass inside it")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
@@ -1513,7 +1513,7 @@ def tolman_bondi(ck, src):
         horizon = [(edge, "horizon", None)] if edge is not None else []
         dust = Piece("cloud", "star", sl, 0.0, 1.0, 0.0, 1,
                      (("axis", "the centre $r = 0$, where the surface is smooth"), ("join", "the surface $r = r_b$")),
-                     [(1 / 3, "r2", None), (2 / 3, "r2", None), (1.0, "surface", None)] + [h for h in horizon if h[0] < 1], size)
+                     [(1 / 3, "r", None), (2 / 3, "r", None), (1.0, "surface", None)] + [h for h in horizon if h[0] < 1], size)
         ext = Piece("exterior", "sheet", sl, 1.0, top, dust.z[-1], 1,
                     (("join", "the surface $r = r_b$"), ("edge", "the slice runs on to $r \\to \\infty$")),
                     [(r, "r", None) for r in (1.5, 2.0, top)] + [h for h in horizon if h[0] > 1], size)
@@ -1527,8 +1527,8 @@ def tolman_bondi(ck, src):
     fig = sequence_figure(surfaces, {"star": "star", "sheet": "cover"}, size, columns=2)
     fig.legend("fill", "star", "the cloud, $r < r_b$")
     fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the cloud")
-    fig.legend("line", "r2", "the shells $r = r_b/3$ and $2r_b/3$ of the cloud")
-    fig.legend("line", "r", "the clocks released at $1.5$, $2$ and $2.5\\,r_b$")
+    fig.legend("line", "r", "$r$ constant: the shells $r_b/3$ and $2r_b/3$ of the cloud, and outside it the clocks "
+                            "released at $1.5$, $2$ and $2.5\\,r_b$")
     fig.legend("line", "surface", "the surface of the cloud, $r = r_b$")
     if any(ring["class"] == "horizon" for s in surfaces for ring in s.rings()):
         fig.legend("line", "horizon", "the apparent horizon, $R = 2GM(r)/c^2$ for the mass inside it")
