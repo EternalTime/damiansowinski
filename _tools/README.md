@@ -162,7 +162,7 @@ The command refuses to write anything, and `--check` fails, while any history is
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.
 Its `name` is the metric's `short_name`, which is what the search list shows, not the long `name` the page titles the spacetime with.
-An entry also carries `diagrams` when the spacetime has a file in `MFS/assets/data/diagrams/`, and `conformal` when it has one in `MFS/assets/data/conformal/`; the page fetches either file only for an entry that says so.
+An entry also carries `diagrams` when the spacetime has a file in `MFS/assets/data/diagrams/`, `conformal` when it has one in `MFS/assets/data/conformal/`, and `embedding` when it has one in `MFS/assets/data/embedding/`; the page fetches each file only for an entry that says so.
 
 `MFS/assets/data/references.json` is the whole of `assets/data/references.bib` parsed into JSON, so a reader can pull every reference the collection cites in one fetch instead of walking every metric file.
 The `.bib` file stays where it is and stays the one place a reference is written; the publications page still reads it.
@@ -173,7 +173,7 @@ A metric's `version` is a hash of that metric's content.
 It changes when the content changes and not otherwise, so reformatting a file or republishing the site leaves it alone.
 This is what the iOS application uses to fetch only the spacetimes that actually changed, since GitHub Pages rewrites every file's own tag on every publish.
 `references.json` carries one stamp of its own at the top for the same reason.
-An index entry's `diagrams` and `conformal` are the same kind of hash over that spacetime's diagram file and conformal diagram file, so the application can fetch a redrawn diagram without fetching its metric again.
+An index entry's `diagrams`, `conformal` and `embedding` are the same kind of hash over that spacetime's diagram file, conformal diagram file and embedding diagram file, so the application can fetch a redrawn diagram without fetching its metric again.
 
 ## Checking
 
@@ -372,6 +372,142 @@ sympy never reads the typesetting, so this is the check that catches a value tha
 
     npm install --prefix /tmp/mfs-node mathjax-full
     node _tools/derivations/tex_check.cjs /tmp/mfs-node
+
+## Embedding diagrams
+
+`MFS/assets/data/embedding/<metric_id>.json` holds the embedding diagram of one spacetime: a slice of it, the equatorial plane at one moment, drawn as a surface in ordinary flat three dimensional space so that every distance along the surface is the distance the metric gives.
+The page draws it under the heading "embedding diagram", just below the conformal diagram, and the application reads the same files.
+The file is the definition in "The file, which the application reads" below, and the application is built against that section, so a change to the shape of the file is a change to it first.
+
+`_tools/derivations/embedding.py` draws them, one function per spacetime with its derivation in its docstring, reading the published metric through the checker's `Reader` with the `load` and `published_matrix` the null rays use.
+It needs the same environment as `null_rays.py` and took 6 seconds for the whole collection on 27 September 2026:
+
+    /tmp/mfs-venv/bin/python _tools/derivations/embedding.py
+    python3 _tools/build_mfs_data.py
+
+`--metric <metric_id>` redraws one spacetime, and `--verify` prints every check and writes nothing.
+
+### The construction
+
+Every slice drawn is the surface of one spatial coordinate $x$ and the angle $\phi$ of one coordinate system, every other coordinate held fixed, with the metric $g_{xx}(x)\,dx^2 + g_{\phi\phi}(x)\,d\phi^2$ read from the published `metric_components`.
+The script refuses a slice with a cross term $g_{x\phi}$ or with a component that still depends on anything but $x$, since only then is it a surface of revolution.
+A circle of constant $x$ has circumference $2\pi\sqrt{g_{\phi\phi}}$, so it is drawn at the radius $\rho = \sqrt{g_{\phi\phi}}$ from the axis, and the distance $\sqrt{g_{xx}}\,dx$ out to the next circle is the hypotenuse of $d\rho$ and $dz$, so $dz/dx = \sqrt{g_{xx} - (d\rho/dx)^2}$.
+With an areal radius, $\rho = r$, that is the familiar $dz/dr = \sqrt{g_{rr} - 1}$.
+The surface exists exactly where $g_{xx} \ge (d\rho/dx)^2$, and where a circle grows faster than the distance out to it no surface of revolution in flat space carries the slice.
+
+$d\rho/dx$ is taken in sympy as $g_{\phi\phi}'/(2\sqrt{g_{\phi\phi}})$, so no absolute value is ever differentiated, and $z$ is the adaptive quadrature of $\sqrt{g_{xx} - (d\rho/dx)^2}$ between neighbouring points.
+An end where the integrand diverges, as $g_{rr}$ does at a throat, is moved to the end of a new variable $s$ with $x = x_0 \pm (b - a)s^2$, which makes the integrand finite there.
+An interval is halved until the profile strays from its chord by less than $2 \times 10^{-5}$ of the drawing's size and by less than $0.004$ of the chord, and the chord is shorter than $1/90$ of the size, so a chord falls short of its arc by less than about $4 \times 10^{-5}$ of it.
+No closed form is used to draw anything; the closed forms are only checked against.
+
+### Checking the surface
+
+The surface is measured as the application will draw it, from the rounded numbers the file holds, against the published metric, and the script refuses to write while any check fails:
+
+- along: each chord of each profile, and each profile end to end, against the proper distance between the same two values of $x$;
+- across: the straight line in space from each point to the next one $0.02$ further round the axis, against the length the metric gives the line that runs out at a steady proper distance while it turns steadily through the same angle;
+- around: $\rho$ at every point against $\sqrt{g_{\phi\phi}}$;
+- joins: where two pieces meet, as a star's surface meets the exterior, they meet at one point with one tangent, which says $g_{xx}$ agrees on both sides;
+- forms: each surface against the closed form it is known by, Flamm's paraboloid, the interior Schwarzschild cap, the catenoid, the cone, Gott's cap and the sphere;
+- stops: where a view says a slice cannot be drawn, $g_{xx} - (d\rho/dx)^2$ is negative at every sample, and where it says a slice is a plane, it is zero.
+
+On 27 September 2026 the worst chord missed its proper distance by $1.1 \times 10^{-4}$ of it and the worst line across by $1.4 \times 10^{-4}$, both on the spheres of radius $a = 1/2$ of FRW's first and last moments, where six decimals of rounding on chords a sixtieth of a unit long are most of it.
+Every profile end to end was within $3.3 \times 10^{-5}$ of its proper length, every $\rho$ within $1.3 \times 10^{-7}$ of the drawing's size of $\sqrt{g_{\phi\phi}}$, every closed form within $1.3 \times 10^{-7}$ of the size, and every join met to $3 \times 10^{-13}$ with tangents equal to $4 \times 10^{-16}$.
+The tests hold the files on disk to the same closed forms without sympy, from the numbers written and nothing else, so a redraw that changed a surface fails there too.
+
+### Which spacetimes
+
+`DRAWN` in the script names the spacetimes that have a diagram and `NOT_DRAWN` the others, which have no file, and the script stops if a metric file is in neither table.
+Schwarzschild is Flamm's paraboloid on both sheets of the Einstein-Rosen bridge, the slice of constant $t$ running through the bifurcation sphere into the other exterior.
+The interior Schwarzschild star, at $R = 1.5\,r_s$ as its conformal diagram declares, is the cap of a sphere of radius $\sqrt{R^3/r_s}$ joined to the exterior of `schwarzschild.json`, which the file reads, with the vacuum paraboloid drawn on under the cap down to the throat the star replaces.
+Morris-Thorne is drawn as its Ellis-Bronnikov member, $b = b_0^2/r$, the catenoid, as its other diagrams declare; the surface reads $b$ alone, and its proper radial chart, with $r(l) = \sqrt{l^2 + b_0^2}$, is checked to give the same surface.
+The cosmic string is its cone at $4G\mu/c^2 = 0.1$ with Gott's core rounding the apex, and the figure lays the cone flat beside it, cut along one meridian, so that the missing wedge $\delta = 36°$ shows.
+FRW is its closed universe of dust at five moments, $a = 1 - \cos\eta$ as its conformal diagram declares, checked to make the published $G^r{}_r$ vanish; its flat slices are planes and its open slices have no surface in flat space, which the view states under `stops` and the script checks at the scale factors of dust.
+
+### The file, which the application reads
+
+The application downloads the file for a spacetime whose index entry carries `embedding`, the stamp of the whole file, which changes when the file does and not otherwise.
+Every number is a plain JSON number, every text is TeX in `$...$` inside prose, as the conformal diagram's texts are, and nothing in the file needs any relativity to draw.
+
+    {
+      "metric": "schwarzschild",
+      "source": [{"metric": "schwarzschild", "system": "spherical", "fields": [...], "version": "..."}],
+      "views": [view, ...]
+    }
+
+`source` is what `build_mfs_data.py` checks the file against, one entry for every coordinate system it read, which may be another spacetime's, as the star reads `schwarzschild.json`; the application can ignore it.
+`views` holds at least one view, and a view is:
+
+- `id`: unique in the file.
+- `label`: the name of its button, TeX, wanted only when a chart has more than one view to choose from.
+- `system`, optional: the coordinate system the view belongs to. A view without it belongs to every chart. Show the views that name the chart being read and then the views that name none, as the conformal diagram does, and nothing if that leaves none.
+- `unit`: TeX naming the length every number of the surface is measured in, as `$r_s$`, `$b_0$`, `$\ell$` or `$1/\sqrt{k}$`.
+- `surfaces`: at least one surface. One surface is one moment; more than one is a sequence of moments in the order of their `time`.
+- `figure`: the page's drawing of the view, described below; an application that draws the surfaces itself can ignore it.
+- `caption`: a list of paragraphs.
+- `settings`, optional: TeX prose giving the parameter values drawn at, printed after "drawn at". It names the length every number is measured in, as "$r_s = 1$, the unit of every length".
+- `input`, optional: TeX prose naming a declared function or matter, printed after "drawn with".
+- `stops`, optional: a list of TeX sentences, each saying where the construction stops or what in this spacetime has no surface, printed after "not drawn". FRW's view carries its flat and open universes here, which have no surface in the file.
+
+A surface is:
+
+- `label` and `time`, in a sequence only: the moment as TeX, and its $ct$ as a number in `unit`.
+- `pieces`: its profile curves, at least one.
+- `rings`: circles marked on it, possibly none.
+
+Every surface is a surface of revolution about the vertical axis $z$, and every piece is a profile curve in a half plane through the axis.
+Its `points` are `[x, rho, z]`, running from its `start` to its `end` with `x` strictly increasing or strictly decreasing, at least two of them:
+
+- `rho` is the distance from the axis, never negative, and `z` the height, both in `unit`, rounded to six decimals;
+- `x` is the value of the piece's `coordinate` at the point, as that coordinate system writes it with the view's `settings`, a length in `unit`, an angle in radians such as $\chi$, or a number such as FRW's comoving $r$, to ten significant figures, which a client needs only to label a point or to find one.
+
+No number is written as `-0.0`.
+A piece holds the surface for the values of `x` from its first point to its last and says nothing beyond them; its `start` and `end` say what the surface does at each.
+The pieces drawn on 27 September 2026 have 9 to 108 points each.
+
+To draw a piece, turn every point about the axis, $(\rho\cos\phi, \rho\sin\phi, z)$ for $\phi$ from $0$ to $2\pi$, and join neighbouring points and neighbouring angles.
+The points are close enough that straight segments between them are the surface to within $2 \times 10^{-5}$ of the drawing's size, the diameter of the widest circle drawn, so no smoothing is wanted, and a client may add angles as finely as it likes.
+The pieces of a surface may be drawn in any order, since every piece but a reference piece is part of one surface and no two of them overlap.
+Draw $\rho$ and $z$ at one scale, since a surface stretched along either axis no longer has the metric's distances.
+The zero of $z$ is wherever the construction put it and means nothing; only differences in $z$ do, and every piece of one surface shares one $z$.
+In a sequence every surface stands on its own axis at the origin, and placing them side by side or showing them one after another is the client's choice.
+
+A piece also carries:
+
+- `id`: unique in its surface.
+- `class`: `sheet` for the slice a chart of the spacetime covers, `sheet2` for the same surface run on past where that chart ends, as the other exterior of Schwarzschild, the other side of a wormhole or the far hemisphere of a closed universe, `star` for the slice through matter, as a star or Gott's core, and `reference` for a surface that is not part of the slice at all, drawn for comparison.
+- `reference`: `true` on a reference piece, and absent otherwise. A reference piece is drawn faintly and hides nothing, as the vacuum paraboloid under the star and the cone of an ideal string under Gott's core are.
+- `metric` and `system`: the spacetime and the coordinate system the piece was read from, one of the file's `source` entries.
+- `coordinate`: the coordinate `x` is, as that coordinate system spells it, as `r` or `\chi`.
+- `start` and `end`: what the surface does at each end of the piece, `{"kind": ..., "text": ...}`, the text TeX prose for a reader and sometimes absent.
+
+The kinds of end are:
+
+- `axis`: the piece reaches the axis, $\rho = 0$, and the surface closes there smoothly, as at a star's centre or a sphere's pole.
+- `apex`: the piece reaches the axis at a point where the surface is not smooth, as the cone's apex, where the string lies.
+- `join`: the piece meets another piece of the same surface, which has the same $\rho$ and $z$ there and the same tangent.
+- `throat`: the piece reaches a smallest circle, where its tangent is vertical and the surface turns back out as its own mirror image in the plane of that circle. The mirror image is the view's `sheet2` piece when the view draws the other side, as for Schwarzschild and the wormhole, and is not drawn otherwise, as under the star.
+- `edge`: the drawing ends here and the surface runs on; draw the circle there as the rim of the drawing, or fade the surface out.
+- `stops`: the construction ends here, because past this point no surface in flat space carries the slice, and the text says why.
+
+A ring is a circle to mark on a surface, `{"piece", "class", "x", "rho", "z", "label"}`, of radius `rho` at height `z`, which is one of the points of its piece, and `label`, when present, is TeX to set beside it.
+Its `class` is `r` for a circle of constant coordinate on a `sheet` or `star` piece, `r2` for one on a `sheet2` piece, `horizon` for the horizon, `throat` for a wormhole's throat, `surface` for the edge of matter, a star's surface or the edge of Gott's core, `chartedge` for the circle where a chart ends, as FRW's equator, and `reference` for a circle on a reference piece.
+
+The `figure` is the drawing the page makes of the view, projected by the script once from a fixed camera, in the form a figure in three dimensions takes in the diagram files:
+
+- `box`: `[Xmin, Xmax, Ymin, Ymax]` of the plane of the page, with $Y$ up, drawn at one scale.
+- `camera`: `{"azimuth", "elevation"}`, the angles in degrees the surfaces were projected from, the azimuth measured round the axis from $\phi = 0$ toward $\phi = \pi/2$ and the elevation above the plane $z = 0$, looking at the origin.
+- `layers`: painted in the order given, each with a `kind` and a `class`. A `fill` has `points`, a closed polygon, and optional `holes`, polygons painted with the even odd rule; a `line` has `points`, a polyline; a `point` has `at`. Every point is `[X, Y]` in the plane of the page, rounded to four decimals.
+- `labels`: TeX at a point, `{"at", "text", "anchor", "class", "dx", "dy"}`, the anchor and the offset in units of a figure 628 wide, as a conformal diagram's are, `class` being `lab` or `small`.
+- `legend`: `[kind, class, text]` for each class it names, the kind being `fill`, `line` or `point`.
+
+Each piece is tinted, `cover` or `star`, only where it is the surface nearest the camera, found by casting rays through the same truncated cones a client draws, and every line on the surfaces is split where another part of a surface hides it, the hidden part carrying its class with `-far` appended, which the page draws faint.
+A reference piece hides nothing.
+The fills are `cover`, `star` and `wedge`.
+The lines are `outline`, where the surface turns edge on to the camera and the rim at an `edge` or `stops` end; `meridian`, the profile turned to evenly spaced angles, as the legend says; `reference`, the meridians and outline of a reference piece in dashes; the ring classes above, each ring drawn as its circle, or as a `point` where its $\rho$ is zero; and `cut`.
+Each line class may also come with `-far`.
+The page styles each class as `.em-<class>` for a line and `.em-<class>-fill` for a fill, on the screen and in print, and a test holds every class a figure paints to having both.
+The cosmic string's figure also lays the cone flat beside it, a flat drawing in the plane of the page with the wedge the cone lacks painted as `wedge` and the two edges of the cut as `cut`.
 
 ## Checking the physics
 
