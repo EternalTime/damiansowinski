@@ -168,7 +168,7 @@
     "version": "ba34bf8132473424",
     "diagrams": "fcd93775e7e4477c",
     "conformal": "e88e86a636276c55",
-    "embedding": "cf771109721a1b55"
+    "embedding": "6b3ec414e5c7cb27"
   },
   {
     "id": "godel",
@@ -445,7 +445,7 @@
     "version": "8a9e6e5f3658830d",
     "diagrams": "b3e098f3fa69a786",
     "conformal": "7e7019647c111ba0",
-    "embedding": "000bfef5b1b7d574"
+    "embedding": "6184d7567b46409c"
   },
   {
     "id": "natario",
@@ -580,7 +580,7 @@
     "version": "d40426d103725d8a",
     "diagrams": "616546183cee8ce3",
     "conformal": "20ac047d9b33eddd",
-    "embedding": "4a359d023db245be"
+    "embedding": "559c4a5036d7c814"
   },
   {
     "id": "interior_schwarzschild",
@@ -604,7 +604,7 @@
     "version": "82f0226fa2248e04",
     "diagrams": "9c4e4f5a80fb393d",
     "conformal": "87f9bebc30cdeb41",
-    "embedding": "3b61521815c2ecaa"
+    "embedding": "c3ba2bca6bdb35c0"
   },
   {
     "id": "taub_nut",
@@ -677,7 +677,7 @@
     "version": "7515c50dcff44793",
     "diagrams": "4a421b3540c0dad0",
     "conformal": "703f6926638eb11b",
-    "embedding": "a5116e141b7e446d"
+    "embedding": "d5ad42feb882cf48"
   },
   {
     "id": "vaidya",
@@ -727,6 +727,6 @@
     "version": "9e17628996c2a6fe",
     "diagrams": "306767efeaa58e4e",
     "conformal": "4f92692b2b30e867",
-    "embedding": "30376ea12c78f762"
+    "embedding": "e60d5947e4dab7d0"
   }
 ]
