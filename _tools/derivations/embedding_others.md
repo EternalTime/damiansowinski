@@ -1,0 +1,159 @@
+# Embedding diagrams for the last eleven spacetimes
+
+Eighteen spacetimes have an embedding diagram drawn by `_tools/derivations/embedding.py`: the equatorial plane of one moment, a surface of one coordinate $x$ and one angle $\phi$ with metric $g_{xx}\,dx^2 + g_{\phi\phi}\,d\phi^2$, drawn as a surface of revolution in flat space at the radius $\rho = \sqrt{g_{\phi\phi}}$ and climbing at $dz/dx = \sqrt{g_{xx} - (d\rho/dx)^2}$.
+Eleven had none.
+Eight were stated in sentences, because their slices are flat or hyperbolic or not spacelike everywhere: Alcubierre, anti-de Sitter, Bianchi I, Kasner, Krasnikov, Lentz, Minkowski and Natário.
+Three had no file at all, because their slices were thought to carry no one surface that says anything: the Malament-Hogarth toy, the Mixmaster universe and the pp-wave.
+
+Each of the eleven gets a drawing here, and the drawings fall into three kinds.
+Where a slice is curved and has an axis, it is drawn as the other eighteen are, a surface of revolution in flat space, and where the construction runs out the drawing stops at the circle where it does: the Malament-Hogarth toy and the Mixmaster universe.
+Where a slice is curved the other way at every point, as the hyperbolic plane is, no surface in flat space carries it, and it is drawn in three dimensional Minkowski space instead, where the whole of it lies on one sheet of a hyperboloid: anti-de Sitter.
+Where a slice is flat, the surface is a plane, and what makes the spacetime what it is lies in how the slices are stacked, not in the shape of any one; the plane is drawn with that feature marked on it, a ring of free particles as it is stretched, the wall of a warp bubble and the flow of space through it, or the circle inside which the direction along a tube is a time.
+
+Every number below was computed from the published metric components through the checker's `Reader`, with `null_rays.load` and `published_matrix` as the other diagrams read them, and every declared function is the one a diagram of the same spacetime already declares, unless it says otherwise.
+The scratch scripts that computed them are not kept; `embedding.py` will recompute and check every number when the eleven are added to it.
+
+---
+
+## Group 1. Curved slices
+
+### The Malament-Hogarth toy
+
+The line element is $\Omega^2(-c^2dt^2 + dx^2 + dy^2 + dz^2)$ with the event at the origin removed, and its spacetime diagram declares
+
+$$\Omega = 1 + \frac{e^{1 - 1/(1 - \varrho^2)}}{\varrho},\qquad \varrho^2 = c^2t^2 + x^2 + y^2 + z^2 < 1,$$
+
+and $\Omega = 1$ for $\varrho \ge 1$, which grows as $1/|ct|$ along the axis toward the removed event.
+
+The slice drawn is the plane $z = 0$ at one moment $ct = T$, about the origin.
+The published metric is diagonal, so on the plane, in polar coordinates $x = s\cos\phi$, $y = s\sin\phi$, it pulls back to
+
+$$ds^2 = \Omega^2\left(ds^2 + s^2d\phi^2\right),\qquad \Omega = \Omega\left(\sqrt{T^2 + s^2}\right),$$
+
+which sympy returns from the published components with no cross term, and the declared $\Omega$ depends on $x$ and $y$ only through $s$.
+So the plane is a surface of revolution about the origin with $g_{ss} = \Omega^2$ and $\rho = s\,\Omega$, and
+
+$$g_{ss} - \left(\frac{d\rho}{ds}\right)^2 = \Omega^2 - (\Omega + s\Omega')^2 = -s\Omega'\,(2\Omega + s\Omega').$$
+
+The first factor is positive because $\Omega$ falls outward, and the second stays positive as well: its least value over $s$ is $0.1150$ at $T = 0$, reached at $s = 0.789$, and $0.1153$, $0.1530$, $0.4478$, $0.9814$ and $1.6129$ at $|cT| = 0.01$, $0.1$, $0.3$, $0.5$ and $0.7$.
+The surface therefore exists at every $s$ at every moment, a well sunk into a plane, flat beyond the circle $s = \sqrt{1 - T^2}$ where $\Omega$ reaches $1$.
+
+At a moment $T \ne 0$ the well has a smooth bottom, since $\Omega$ is finite at $s = 0$, $1 + e^{1 - 1/(1 - T^2)}/|T|$.
+At $T = 0$ it has none: $\Omega \to 1/s$ as $s \to 0$, so the circles close in on the radius $\rho = s\Omega \to 1$ while the proper distance down to them, $\int\Omega\,ds$, grows as $\ln(1/s)$.
+The slice through the removed event is a funnel that runs into a tube of radius $1$ and on down it for ever, as Bertotti and Robinson's cylinder runs on and as the throat of an extreme Reissner-Nordström hole does.
+
+The depths below the flat rim, and the proper distance from the centre out to the rim, are:
+
+| $cT$ | rim $s$ | $\Omega$ at the centre | depth | proper distance |
+|---|---|---|---|---|
+| $-0.9$ | $0.4359$ | $1.0156$ | $0.0363$ | $0.4382$ |
+| $-0.7$ | $0.7141$ | $1.5466$ | $0.4468$ | $0.8975$ |
+| $-0.5$ | $0.8660$ | $2.4331$ | $0.9244$ | $1.4651$ |
+| $-0.3$ | $0.9539$ | $4.0194$ | $1.4991$ | $2.1683$ |
+| $-0.1$ | $0.9950$ | $10.8995$ | $2.6596$ | $3.3879$ |
+
+and at $T = 0$, from the rim at $s = 1$ down to the circle at $s$:
+
+| $s$ | $\rho$ | depth | proper distance |
+|---|---|---|---|
+| $0.3$ | $1.205832$ | $1.1768$ | $1.3632$ |
+| $0.1$ | $1.089950$ | $2.4290$ | $2.6208$ |
+| $0.03$ | $1.029100$ | $3.6968$ | $3.8902$ |
+| $0.01$ | $1.009900$ | $4.8148$ | $5.0084$ |
+| $0.001$ | $1.000999$ | $7.1263$ | $7.3200$ |
+
+The computer of Earman and Norton's toy rides the axis toward the removed event, and its clock reads $\int\Omega\,c\,dt$ along the axis.
+From $ct = -1$ it reads $0.3470$ at $ct = -0.7$, $1.3632$ at $-0.3$, $2.6208$ at $-0.1$, $5.0084$ at $-0.01$ and $7.3200$ at $-0.001$, and without limit as $ct \to 0$.
+Those are the proper distances of the second table: because $\Omega$ depends only on $c^2t^2 + x^2 + y^2 + z^2$, the tube of the slice $T = 0$ from its rim down to the circle $s$ is exactly as long as the computer's clock runs from $ct = -1$ to $ct = -s$.
+The infinite proper time the computer spends reaching the removed event, the property the spacetime is named for, is the infinite length of the tube.
+
+The drawing is a sequence of four moments, $cT = -0.7$, $-0.3$, $-0.1$ and $0$, each out to $s = 1.5$, where the plane is flat, with the last drawn down the tube to $s = 0.03$ and ended there with an edge, the tube running on.
+The unit is the radius of the region where $\Omega \ne 1$, the unit the declared $\Omega$ is written in.
+Nothing is checked against a field equation, since the spacetime has none, its stress-energy being defined as its Einstein tensor; the checks are the isometry of every piece, the flat rim, the closed form $\rho \to 1$ of the tube and the equality of the tube's length with the axis clock at the four moments.
+
+### Anti-de Sitter
+
+The static slice has, on its equator, $g_{rr} = 1/(1 + r^2/L^2)$ and $g_{\phi\phi} = r^2$, so $d\rho/dr = 1$ and $g_{rr} - (d\rho/dr)^2 = -r^2/(L^2 + r^2) < 0$ at every $r > 0$.
+Every circle about the centre grows faster than the distance out to it, and no surface of revolution about the centre exists in flat space, from the centre outward.
+The slice is the hyperbolic plane of curvature $-1/L^2$: with $r = L\sinh(\sigma/L)$ it is $d\sigma^2 + L^2\sinh^2(\sigma/L)\,d\phi^2$.
+
+In three dimensional Minkowski space, with $dX^2 + dY^2 - dZ^2$, a profile $(\rho(r), Z(r))$ turned about the $Z$ axis has the metric $\left((d\rho/dr)^2 - (dZ/dr)^2\right)dr^2 + \rho^2d\phi^2$, so the construction runs with the sign of the defect turned over,
+
+$$\frac{dZ}{dr} = \sqrt{\left(\frac{d\rho}{dr}\right)^2 - g_{rr}} = \frac{r}{\sqrt{L^2 + r^2}},\qquad Z = \sqrt{L^2 + r^2} - L,$$
+
+which sympy returns from the published components.
+The surface is one sheet of the hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, and the whole hyperbolic plane lies on it, every distance along it, measured with $dX^2 + dY^2 - dZ^2$, the distance the metric gives.
+Its tangent planes are spacelike everywhere, and it approaches the light cone $Z + L = \rho$ of the flat space it is drawn in without reaching it, so the conformal boundary at $r \to \infty$ lies along that cone at infinity.
+Wilhelm Killing in 1880 and Henri Poincaré in 1881 each wrote the hyperbolic plane on this sheet.
+
+The drawing is the static slice's equator out to $r = 4L$, the range of its spacetime diagrams, with circles of constant $r$ at $L$, $2L$, $3L$ and $4L$, and the light cone drawn faintly as a reference, down to its apex at $Z = -L$.
+A distance on the drawing is not the distance a reader's eye measures: where the sheet is steep, $dZ$ nearly cancels $d\rho$, and the step from $r = 3L$ to $4L$, which looks longer than the step from $0$ to $L$, is $\mathrm{arcsinh}\,4 - \mathrm{arcsinh}\,3 = 0.2763\,L$ against $0.8814\,L$.
+The caption and the view say so.
+
+The rounding of the file needs care there.
+At $r = 4L$ the chord of the profile has $\sqrt{d\rho^2 - dZ^2} = 0.2425\,d\rho$, so a chord a ninetieth of the drawing's width of $8L$ is $0.0218\,L$ long in the metric, and one half as long, as the halving next to a bend leaves some, is $0.0108\,L$.
+Rounding $\rho$ and $Z$ to $2 \times 10^{-7}$, half the last place the file keeps for a piece $4L$ across, moves those chords by up to $7.4 \times 10^{-5}$ and $1.5 \times 10^{-4}$ of themselves, most of the $2 \times 10^{-4}$ the chords are held to.
+A surface in Minkowski space is therefore written to nine decimals, which brings both below $2 \times 10^{-6}$.
+
+The Poincaré patch's slice of constant $t$ is the same hyperbolic space, $L^2(dx^2 + dy^2 + dz^2)/z^2$, the upper half space, and its moment $t = 0$ is the global moment $t = 0$, since both are the surface fixed by $t \to -t$; so the one drawing serves both charts.
+The checks are the isometry in Minkowski space of every chord along the profile and every chord across it, $\rho = \sqrt{g_{\phi\phi}}$, and the closed form $Z = \sqrt{L^2 + r^2} - L$.
+
+### The Mixmaster universe
+
+The slice of constant $t$ is a three sphere with metric $a_1^2(\omega^1)^2 + a_2^2(\omega^2)^2 + a_3^2(\omega^3)^2$ in the Euler angles $(\psi, \theta, \phi)$, and when all three scale factors are equal to $a$ it is the round sphere of radius $2a$, whose equator is a round two sphere of radius $2a$.
+
+The two sphere drawn is the great sphere, the unit sphere of a three dimensional subspace when the three sphere is the unit quaternions.
+Left translations are isometries of every Mixmaster slice, and they carry any great sphere onto any other, so at any moment every great sphere is congruent to every other and the great sphere is one surface.
+Through the identity, the great sphere of the quaternions with no $k$ part is $\psi + \phi \equiv 0 \pmod{2\pi}$ in the Euler angles: two hemispheres, $\psi = -\phi$ and $\psi = 2\pi - \phi$, each with $\theta \in [0, \pi]$, meeting at $\theta = \pi$.
+Pulled back from the published components along $\psi = -\phi$, sympy gives
+
+$$g_{\theta\theta} = a_1^2\cos^2\phi + a_2^2\sin^2\phi,\qquad g_{\theta\phi} = \tfrac{1}{2}\left(a_2^2 - a_1^2\right)\sin 2\phi\sin\theta,$$
+
+$$g_{\phi\phi} = \left(a_1^2\sin^2\phi + a_2^2\cos^2\phi\right)\sin^2\theta + a_3^2(1 - \cos\theta)^2,$$
+
+and the same on the other hemisphere.
+Three great circles cross the sphere at right angles: the meridian $\phi = 0$, which runs on through the other hemisphere at $\phi = \pi$, with $g_{\theta\theta} = a_1^2$ all the way round; the meridian $\phi = \pi/2$, with $g_{\theta\theta} = a_2^2$; and the equator $\theta = \pi$, with $g_{\phi\phi} = 4a_3^2$.
+Their circumferences are $4\pi a_1$, $4\pi a_2$ and $4\pi a_3$: the three scale factors are the three principal circumferences of the great sphere divided by $4\pi$.
+
+When all three differ, the metric depends on $\phi$ as well as $\theta$, so no turn about the axis through the identity carries the sphere onto itself, and no surface of revolution about that axis carries it.
+When two are equal, $a_1 = a_2 = a$ and $a_3 = b$, the cross term vanishes and the rest loses $\phi$:
+
+$$ds^2 = a^2d\theta^2 + \left(a^2\sin^2\theta + b^2(1 - \cos\theta)^2\right)d\phi^2,$$
+
+a surface of revolution about the axis through the identity and its antipode, with $\phi$ closing after $2\pi$ on each hemisphere.
+Its poles are the identity and its antipode, the points $\theta = 0$ of the two hemispheres, and its equator $\theta = \pi$ is a fibre of $\psi$, the circle of quaternions in the plane of $i$ and $j$, of circumference $4\pi b$, where the tangent is vertical and the two hemispheres join with one tangent; each meridian from pole to pole is $2\pi a$ long.
+
+With $\rho^2 = a^2\sin^2\theta + b^2(1 - \cos\theta)^2$,
+
+$$g_{\theta\theta} - \left(\frac{d\rho}{d\theta}\right)^2 = \left(1 - \frac{3b^2}{4a^2}\right)a^2\theta^2 + O(\theta^4)$$
+
+near the pole, so the curvature of the great sphere there is $(1 - 3b^2/4a^2)/a^2$, $1/(2a)^2$ when $b = a$ as the round sphere's is.
+For $b < 2a/\sqrt{3}$ the defect is positive everywhere and the whole sphere is drawn; for $b > 2a/\sqrt{3}$ it is negative near both poles, the curvature there is negative, no surface of revolution carries the sphere about its poles, and the drawing is the band about the equator between the two circles where the defect vanishes.
+
+The moments are those of Abraham Taub's universe, the vacuum member of the family with $a_1 = a_2$, which Taub solved in closed form in 1951: in the Taub-NUT form, with Taub's time $T$,
+
+$$a_1 = a_2 = \sqrt{T^2 + l^2},\qquad a_3 = 2l\sqrt{U},\qquad U = \frac{-T^2 + 2mT + l^2}{T^2 + l^2},\qquad c\,d\tau = \frac{dT}{\sqrt{U}},$$
+
+with $\tau$ the proper time the published chart's $t$ is, at $m = 1$ and $l = m/2$ as Taub-NUT's spacetime diagram declares.
+Substituted into the published Einstein tensor, with $a_i' = \sqrt{U}\,da_i/dT$ and $a_i'' = \sqrt{U}\,d(\sqrt{U}\,da_i/dT)/dT$, every component, $G^t{}_t$, the diagonal and the off diagonal $G^\psi{}_\phi$, $G^\psi{}_\theta$ and $G^\theta{}_\phi$, simplifies to zero in sympy.
+This is the cosmological region that Taub-NUT's own embedding diagram stops at, across its horizon, where $r$ is a time: the same universe, now drawn.
+
+It lives between $T_- = m - \sqrt{m^2 + l^2} = -0.118034$ and $T_+ = 2.118034$, where $a_3 = 0$ and the fibres close up, a proper time $c\tau = 3.821549\,m$ in all.
+$b/a$ rises from $0$ through $1$ and $2/\sqrt{3}$ almost at once, by $T = -0.078211$, to its largest, $2.6938$ at $T = 0.1934$, falls back through $2/\sqrt{3}$ at $T = 0.841721$ and through $1$ at $T = 0.930523$, and returns to $0$.
+The drawing is a sequence of five moments:
+
+| $T$ | $c\tau$ | $a$ | $b$ | $b/a$ | drawn |
+|---|---|---|---|---|---|
+| $-0.1$ | $0.0922$ | $0.509902$ | $0.392232$ | $0.7692$ | the whole sphere |
+| $0.2$ | $0.3937$ | $0.538516$ | $1.450327$ | $2.6932$ | the band $\theta \ge 2.731485$ on each side |
+| $0.930523$ | $0.9479$ | $1.056349$ | $1.056349$ | $1$ | the round sphere of radius $2a$ |
+| $1.5$ | $1.6422$ | $1.581139$ | $0.632456$ | $0.4$ | the whole sphere |
+| $2.0$ | $2.8304$ | $2.061553$ | $0.242536$ | $0.1176$ | the whole sphere |
+
+in units of $m$.
+At $T = 0.2$ the band reaches $0.2208\,m$ of proper distance from the equator on each side, where its circles have radius $2.7887\,m$ against the equator's $2.9007\,m$.
+At $T = 2$ the fibres are nearly closed, and the great sphere is two lobes, each nearly a sphere of radius $a$, joined by a waist of radius $2b = 0.4851\,m$: as $b \to 0$ the three sphere becomes the two sphere of radius $a$ that its fibres are drawn over, and the great sphere covers it twice.
+Each $c\tau$ is the quadrature of $dT/\sqrt{U}$ from $T_-$, which converges there, since $U$ vanishes as $T - T_-$.
+
+The checks are the isometry of each hemisphere, the join of the two with one tangent at the equator, $\rho = 2b$ there and the meridian's length $2\pi a$, the closed form of the round moment, a sphere of radius $2a$, the negative defect between each pole and the band at $T = 0.2$, and Taub's scale factors against the published field equations.
+The view states that in every other Mixmaster universe the three scale factors differ, so its great sphere has no axis and no surface of revolution carries it, and that at a moment when two are equal and the third is more than $2/\sqrt{3}$ times them, as at $T = 0.2$, the great sphere curves negatively about its poles.
