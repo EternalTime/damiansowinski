@@ -1240,7 +1240,8 @@ class EmbeddingDiagrams(unittest.TestCase):
         # e^(1 - 1/(1 - s^2)), which closes in on 1 down the tube, and it is flat beyond s = 1.
         tube = view("malament_hogarth")["surfaces"][-1]
         for s, rho, z in piece(tube, "well"):
-            near(rho, s + math.exp(1 - 1 / (1 - s * s)), f"the tube at {s}", 1e-5)
+            near(rho, s + (math.exp(1 - 1 / (1 - s * s)) if s < 1 else 0.0), f"the tube at {s}", 1e-5)
+        self.assertEqual(piece(tube, "well")[-1][0], 1.0, "the well ends on the edge of the unit ball")
         flat = piece(tube, "flat")
         for s, rho, z in flat:
             near(rho, s, f"beyond the unit ball at {s}")
