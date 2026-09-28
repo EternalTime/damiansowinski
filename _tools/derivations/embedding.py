@@ -92,6 +92,7 @@ import contourpy
 import numpy as np
 import sympy as sp
 from scipy.integrate import IntegrationWarning, quad
+from sympy.utilities.lambdify import implemented_function
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -130,10 +131,12 @@ class Slice:
 
     fixed      every other coordinate, by plain name, and its value;
     params     parameter -> value; functions, a declared function -> an expression for it,
-               in the plain names of the coordinates and parameters, substituted first.
+               in the plain names of the coordinates and parameters, substituted first;
+    numeric    a declared function solved numerically -> (f, df), numpy functions of x giving
+               it and its derivative along x on the slice, as a star's mass m(r).
     """
 
-    def __init__(self, sources, metric_id, system_id, x, phi, fixed, params=None, functions=None):
+    def __init__(self, sources, metric_id, system_id, x, phi, fixed, params=None, functions=None, numeric=None):
         _, entry, reader = nr.load(metric_id, system_id)
         sources.note(metric_id, system_id, FIELDS)
         self.metric_id, self.system_id, self.coordinate = metric_id, system_id, x
@@ -149,6 +152,8 @@ class Slice:
         subs.update({R.parameters[k]: sp.sympify(v) for k, v in (params or {}).items()})
         held_at = {names[k]: sp.sympify(v) for k, v in fixed.items()}
         funcs = {R.parameters[k]: sp.sympify(v, locals=names) for k, v in (functions or {}).items()}
+        self.numeric = bool(numeric)
+        funcs.update({R.parameters[k]: numeric_function(k, f, df)(R.symbol[x]) for k, (f, df) in (numeric or {}).items()})
 
         def prep(e):
             for fn, rep in funcs.items():
@@ -194,7 +199,11 @@ class Slice:
     def slope(self, x, side):
         """The unit tangent (drho, dz)/sqrt(g_xx) of the profile, z rising with x, as x tends
         to `x` from above (side '+') or below ('-'), taken in sympy so that it is exact at a
-        throat, where g_xx diverges."""
+        throat, where g_xx diverges, or from the numbers where a function is numerical, at a
+        point where g_xx is finite."""
+        if self.numeric:
+            g = float(self.gxx_at(x))
+            return np.array([float(self._at(self._drho, x)) / math.sqrt(g), math.sqrt(max(float(self.defect_at(x)), 0.0) / g)])
         x0 = sp.nsimplify(x)
         return np.array([float(sp.limit(e, self.x, x0, side)) for e in
                          (self.drho / sp.sqrt(self.gxx), sp.sqrt(self.defect / self.gxx))])
@@ -212,6 +221,13 @@ class Slice:
                                  f"{self.coordinate} = {s}, where the slice has no surface of revolution")
             return math.sqrt(max(d, 0.0))
         return integrate(f, a, b)
+
+
+def numeric_function(name, f, df):
+    """A function of one variable for sympy, which numpy evaluates as f and whose derivative is
+    df, so that a declared function solved numerically enters a slice's metric and drho/dx."""
+    prime = implemented_function(sp.Function(f"{name}_prime"), df)
+    return type(name, (sp.Function,), {"_imp_": staticmethod(f), "fdiff": lambda self, i=1: prime(self.args[0])})
 
 
 def integrate(f, a, b):
@@ -855,6 +871,64 @@ def interior_schwarzschild(ck, src):
                  settings="$r_s = 1$, the unit of every length, and $R = 1.5\\,r_s$.")]
 
 
+def tov(ck, src):
+    """The declared neutron star: the polytrope p = K rho_0^2 at K = 100 and central rho_0 =
+    1.28e-3, G = c = M_sun = 1, which null_rays.StarSolver solves from this spacetime's own
+    Einstein tensor and the conformal diagram draws. On the slice g_rr = r/(r - 2m(r)), with the
+    solver's m, so dz/dr = sqrt(2m/(r - 2m)). Its Gaussian curvature is m'/r^2 - m/r^3 =
+    4 pi (rho - rho_mean/3): positive at the centre, negative in the outer layers, where the
+    density falls below a third of the mean inside, and -M/r^3 outside, where m = M and the
+    slice is Flamm's paraboloid of that mass, which is checked. The vacuum paraboloid is drawn
+    on under the star down to its throat at 2M, as under Schwarzschild's star."""
+    solver = nr.StarSolver("tov", "spherical", 100.0, 1.28e-3)
+    src.note("tov", "spherical", ["einstein_tensor"])
+    M, R = solver.M, solver.R
+    ck.add("TOV: the declared star solves the published G^theta_theta = 8 pi p",
+           float(np.max(np.abs(solver.theta_theta(np.linspace(0.05 * R, 0.95 * R, 200))))), 1e-7)
+
+    def mass(k):
+        return lambda x: solver.values(x)["m"][k].reshape(np.shape(x))
+    top = 3 * R
+    size = 2 * top
+    inner = Slice(src, "tov", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, numeric={"m": (mass(0), mass(1))})
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": repr(2 * M)})
+    vacuum = Piece("vacuum", "reference", outer, 2 * M, R, 0.0, 1,
+                   (("throat", "the throat $r = 2GM/c^2$ of the vacuum, which the star replaces"), ("join", None)),
+                   [(2 * M, "reference", None)], size, reference=True)
+    zR = vacuum.at(R)[1]
+    ext = Piece("exterior", "sheet", inner, R, top, zR, 1,
+                (("join", "the surface of the star, $r = R$"), ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                [(R, "surface", "$r = R$"), (2 * R, "r", None), (top, "r", None)], size)
+    star = Piece("star", "star", inner, 0.0, R, 0.0, 1,
+                 (("axis", "the centre $r = 0$, where the surface is flat"), ("join", "the surface of the star, $r = R$")),
+                 [(R / 3, "r", None), (2 * R / 3, "r", None)], size)
+    star.z = star.z + (zR - star.z[-1])
+    surface = Surface([star, ext, vacuum])
+    ck.isometry("TOV, the star", star)
+    ck.isometry("TOV, the exterior", ext)
+    ck.join("TOV, the star meets the exterior at r = R", star, R, ext, R)
+    ck.form("TOV, the exterior is Flamm's of mass M", ext, lambda r: 2 * np.sqrt(2 * M * (r - 2 * M)), size)
+
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *ext.at(R), "$r = R$", dx=10)
+    ring_label(fig, [0, 0, 0], *ext.at(2 * R), "$2R$")
+    ring_label(fig, [0, 0, 0], *ext.at(top), "$3R$")
+    ring_label(fig, [0, 0, 0], *vacuum.at(2 * M), "$r_s$", side=-1, dx=8)
+    fig.legend("fill", "star", "the star, where $p > 0$")
+    fig.legend("fill", "cover", "the exterior, Flamm's paraboloid of the star's mass")
+    fig.legend("line", "r", "$r$ constant, at $R/3$ and $2R/3$ inside and $2R$ and $3R$ outside")
+    fig.legend("line", "surface", "the surface of the star, $r = R$, where the pressure falls to zero")
+    fig.legend("line", "reference", "the vacuum paraboloid inside $R$, down to its throat at $r_s = 2GM/c^2$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    km = 1.4766250614  # GM_sun/c^2 in km
+    return [view("star", "The star and its exterior", "$GM_\\odot/c^2$", [surface], fig.done(),
+                 settings=f"$G = c = M_\\odot = 1$, so that the unit of every length is $GM_\\odot/c^2 = {km:.2f}$ km.",
+                 input="A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
+                       "$\\rho c^2 = \\rho_0c^2 + p$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$, "
+                       f"solved from this spacetime's own $G^t{{}}_t$ and $G^r{{}}_r$: a star of $M = {M:.2f}\\,M_\\odot$ "
+                       f"and $R = {R * km:.1f}$ km, the one numerical relativity tests its codes on.")]
+
+
 def morris_thorne(ck, src):
     """The Ellis-Bronnikov member, Phi = 0 and b = b_0^2/r, as the conformal diagram and the
     null rays draw it; the embedding reads b alone. g_rr = r^2/(r^2 - b_0^2) gives dz/dr =
@@ -1072,6 +1146,7 @@ def frw(ck, src):
 DRAWN = {
     "schwarzschild": schwarzschild,
     "interior_schwarzschild": interior_schwarzschild,
+    "tov": tov,
     "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string,
     "frw": frw,
@@ -1079,7 +1154,7 @@ DRAWN = {
 
 # The spacetimes with no embedding diagram yet, for which nothing is written.
 NOT_DRAWN = {"alcubierre", "natario", "lentz", "krasnikov", "kasner", "bianchi", "mixmaster", "pp_wave",
-             "minkowski", "malament_hogarth", "tov", "oppenheimer_snyder", "tolman_bondi", "rn_metric",
+             "minkowski", "malament_hogarth", "oppenheimer_snyder", "tolman_bondi", "rn_metric",
              "kerr", "kerr_newman", "ellis_bronnikov", "de_sitter", "anti_de_sitter", "vaidya",
              "bertotti_robinson", "stockum_dust", "taub_nut", "godel"}
 
@@ -1107,6 +1182,20 @@ CAPTIONS = {
         "circle with one tangent plane, and the surface is smooth across the surface of the star. The "
         "vacuum paraboloid would run on down to a throat at $r_s$. The star, at $R = 1.5\\,r_s$, ends it "
         "above there, and its circles shrink to a point at the centre instead.",
+    ],
+    ("tov", "star"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of a neutron star at one moment of $t$, drawn as "
+        "a surface in flat space so that every distance along it is the distance the metric gives. On it "
+        "$g_{rr} = r/(r - 2m)$, with $m = GM(r)/c^2$ for the mass $M(r)$ inside $r$, so the surface climbs "
+        "at $dz/dr = \\sqrt{2m/(r - 2m)}$: level at the centre, where $m$ grows as $r^3$, and steeper "
+        "outward as the mass inside grows. Outside the star $m$ no longer grows, and the surface is Flamm's "
+        "paraboloid for the star's mass.",
+        "The curvature of the surface at radius $r$ is $4\\pi G(\\rho - \\bar\\rho/3)/c^2$, with "
+        "$\\bar\\rho$ the mean density inside $r$. At the centre the two are equal and the surface curves "
+        "like a cap. In the outer layers the density falls below a third of the mean and the surface curves "
+        "like a saddle, as Flamm's paraboloid does everywhere, while Karl Schwarzschild's star of uniform "
+        "density is a cap of a sphere all the way out. This star, at $2GM/c^2R = 0.29$, ends far above the "
+        "throat the vacuum paraboloid would have at $r_s = 2GM/c^2$, drawn dashed below it.",
     ],
     ("morris_thorne", "wormhole"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Morris-Thorne wormhole at one moment of "
