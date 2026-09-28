@@ -432,6 +432,7 @@ Morris-Thorne is drawn as its Ellis-Bronnikov member, $b = b_0^2/r$, the catenoi
 Reissner-Nordstrom, at $r_q = 0.48\,r_s$ as its conformal diagram declares, has two views: outside $r_+$ the two sheets through the outer horizon's bifurcation sphere, and inside $r_-$ the two sides through the inner one, its widest circle there, each running in until $g_{rr} = 1$ at $r = r_q^2/r_s$, where the surface lies level; nearer the singularity and between the horizons no surface carries the slice, which the views state under `stops` and the script checks.
 Kerr, at $a = 0.9\,GM/c^2$, and Kerr-Newman, at $a = 0.6\,GM/c^2$ and $r_Q = 0.5\,GM/c^2$, as their conformal diagrams declare, are the equator of a slice of constant Boyer-Lindquist $t$, where $g_{t\phi}$ drops out, drawn at the circumference radius $\rho = \sqrt{g_{\phi\phi}}$ through the bifurcation sphere at $r_+$ into a second exterior, with the edge of the ergosphere marked as the class `ergo`; Kerr's throat is checked to have $\rho = 2GM/c^2$ at any spin and Kerr-Newman's $2GM/c^2 - r_Q^2/r_+$.
 De Sitter's static slice at $t = 0$ is the sphere of radius $\ell = \sqrt{3/\Lambda}$, drawn at $\Lambda = 3$: the static chart covers the hemisphere out to the horizon and the antipodal observer's patch the other, the waist of the hyperboloid; the flat slicing's slices are flat, which the view states and the script checks.
+Vaidya is its imploding shell of radiation at four moments, slices of constant $v - r$, since a slice of constant $v$ is null; `Slice` pulls the published metric back along $v = T + r$ to $(1 + 2Gm/c^2r)\,dr^2 + r^2d\phi^2$, a flat disc inside the shell, which is checked, and $z^2 = 4r_sr$ outside, Flamm's paraboloid moved in by $r_s$, meeting at a `crease`; the figure sets the four in two rows.
 Ellis-Bronnikov is the same catenoid in its own chart, whose $r$ is the proper distance from the throat, so it is one piece through the throat, checked against $z = \ell\,\mathrm{arcsinh}(r/\ell)$ and $\rho = \sqrt{r^2 + \ell^2}$.
 The cosmic string is its cone at $4G\mu/c^2 = 0.1$ with Gott's core rounding the apex, and the figure lays the cone flat beside it, cut along one meridian, so that the missing wedge $\delta = 36°$ shows.
 FRW is its closed universe of dust at five moments, $a = 1 - \cos\eta$ as its conformal diagram declares, checked to make the published $G^r{}_r$ vanish; its flat slices are planes and its open slices have no surface of revolution in flat space, and no surface at all as a whole, which the view states under `stops` and the script checks at the scale factors of dust.
@@ -466,7 +467,7 @@ A view is:
 
 A surface is:
 
-- `label` and `time`, in a sequence only: the moment as TeX, and its $ct$ as a number in `unit`.
+- `label` and `time`, in a sequence only: the moment as TeX, and its time as a number in `unit`, the time the view's `settings` name: $ct$ for FRW and $v - r$ for Vaidya.
 - `pieces`: its profile curves, at least one.
 - `rings`: circles marked on it, possibly none.
 
@@ -501,6 +502,7 @@ The kinds of end are:
 - `axis`: the piece reaches the axis, $\rho = 0$, and the surface closes there smoothly, as at a star's centre or a sphere's pole.
 - `apex`: the piece reaches the axis at a point where the surface is not smooth, as the cone's apex, where the string lies.
 - `join`: the piece meets another piece of the same surface, which has the same $\rho$ and $z$ there and the same tangent.
+- `crease`: the piece meets another piece of the same surface at the same $\rho$ and $z$ but at an angle, where a thin shell of matter folds the surface, as Vaidya's shell of radiation does.
 - `throat`: the piece reaches a smallest circle, where its tangent is vertical and the surface turns back out as its own mirror image in the plane of that circle. The mirror image is the view's `sheet2` piece when the view draws the other side, as for Schwarzschild and the wormhole, and is not drawn otherwise, as under the star.
 - `edge`: the drawing ends here and the surface runs on; draw the circle there as the rim of the drawing, or fade the surface out.
 - `stops`: the construction ends here, because past this point no surface in flat space carries the slice, and the text says why.
