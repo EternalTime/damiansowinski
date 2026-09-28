@@ -120,6 +120,7 @@ ACROSS = 2e-4       # the same for the chords across
 AROUND = 1e-6       # how far rho may miss sqrt(g_phiphi), as a part of the drawing's size
 FORM = 2e-5         # how far a point may lie from its closed form, as a part of the drawing's size
 JOIN = 1e-9         # how far two pieces may miss each other in place and in tangent
+OUTLINE = 1e-5      # how far off the surface a point of its outline is judged, as a part of the drawing's size
 
 CAMERA = Camera(-90, 22)
 RING = 720          # points round a circle of the drawing
@@ -607,23 +608,39 @@ class Scene:
 
 class Figure:
     """The page's drawing: layers painted in the order given, TeX labels at points, a legend,
-    in the plane of the page, the form a figure in three dimensions takes."""
+    in the plane of the page, the form a figure in three dimensions takes. It also records
+    what a client needs to draw the same figure from another camera, as the page does when a
+    reader turns it: where each surface stands, how many meridians it has, which pieces are
+    tinted, the lines marked on a surface besides its circles, the circle each label names,
+    and which layers lie flat in the plane of the page and never turn."""
 
     def __init__(self, scene):
         self.scene, self.camera = scene, scene.camera
         self.fills, self.lines, self.dots, self.labels, self.legend_items = [], [], [], [], []
         self.extent = []
+        self.surfaces, self.meridians, self.tint, self.marks = [], None, {}, []
 
     def screen(self, P):
         return self.camera.screen(np.asarray(P, dtype=float))
 
-    def line(self, cls, P, closed=False):
+    def line(self, cls, P, closed=False, normals=None):
         """A line on the surfaces, split into the parts seen, `cls`, and the parts hidden,
-        `cls`-far, cut halfway between neighbouring points of opposite kinds."""
+        `cls`-far, cut halfway between neighbouring points of opposite kinds. A line along the
+        outline comes with the surface's unit normal at each point, and each point is judged by
+        two points OUTLINE of the drawing's size off the surface on either side along it: the
+        line of sight only grazes the surface there, and between two circles of the profile the
+        cone that carries it dips across that line by less than OUTLINE where the profile is
+        concave, as on Flamm's paraboloid near its throat, which would hide the outline from
+        itself. On the side the surface folds toward the fold hides the point, and on the other
+        only what truly lies in front does, so the point is hidden only if both are."""
         P = np.asarray(P, dtype=float)
         if closed:
             P = np.vstack([P, P[:1]])
-        hid = self.scene.hidden(P)
+        if normals is None:
+            hid = self.scene.hidden(P)
+        else:
+            d = OUTLINE * self.scene.size * np.asarray(normals, dtype=float)
+            hid = self.scene.hidden(P + d) & self.scene.hidden(P - d)
         S = self.screen(P)
         self.extent.append(S)
         cuts = np.flatnonzero(hid[1:] != hid[:-1])
@@ -635,14 +652,22 @@ class Figure:
             if start > 0:
                 run = np.vstack([0.5 * (S[start - 1] + S[start]), run])
             if len(run) > 1:
-                self.lines.append((cls + ("-far" if hid[start] else ""), nr.thin(run, 4e-4 * self.scene.size)))
+                self.lines.append((cls + ("-far" if hid[start] else ""), nr.thin(run, 4e-4 * self.scene.size), False))
             start = c + 1
+
+    def mark(self, cls, k, piece, phi):
+        """The meridian at `phi` of `piece` on the figure's surface k, marked in a class of its
+        own, as the cut the cone is laid flat along."""
+        off = np.asarray(self.surfaces[k][1], dtype=float)
+        self.line(cls, off + densify(np.column_stack([piece.rho * math.cos(phi), piece.rho * math.sin(phi),
+                                                      piece.z]), 4))
+        self.marks.append({"class": cls, "surface": k, "piece": piece.id, "phi": phi})
 
     def flat(self, cls, S):
         """A line already in the plane of the page, never hidden."""
         S = np.asarray(S, dtype=float)
         self.extent.append(S)
-        self.lines.append((cls, S))
+        self.lines.append((cls, S, True))
 
     def fills_seen(self, n=420):
         """Where each fill class is the surface nearest the camera, as polygons of a grid n
@@ -673,15 +698,22 @@ class Figure:
         """A polygon already in the plane of the page, painted under every line."""
         S = np.asarray(S, dtype=float)
         self.extent.append(S)
-        self.fills.append({"kind": "fill", "class": cls, "points": S})
+        self.fills.append({"kind": "fill", "class": cls, "points": S, "flat": True})
 
     def dot(self, cls, P):
         S = self.screen(np.asarray(P, dtype=float)[None, :])[0]
         self.dots.append((cls, S))
 
-    def label(self, S, text, anchor="l", cls="lab", dx=0, dy=0):
-        """TeX at a point of the page, with an anchor and an offset in units of a figure 628 wide."""
-        self.labels.append({"at": S, "text": text, "anchor": anchor, "class": cls, "dx": dx, "dy": dy})
+    def label(self, S, text, anchor="l", cls="lab", dx=0, dy=0, ring=None, clear=None):
+        """TeX at a point of the page, with an anchor and an offset in units of a figure 628 wide;
+        `ring` names the circle it stands beside, and `clear` how far above and below the
+        circle's end it looks for the outline to stand past."""
+        L = {"at": S, "text": text, "anchor": anchor, "class": cls, "dx": dx, "dy": dy}
+        if ring:
+            L["ring"] = ring
+        if clear:
+            L["clear"] = fixed(clear, 4)
+        self.labels.append(L)
 
     def legend(self, kind, cls, text):
         self.legend_items.append([kind, cls, text])
@@ -713,9 +745,9 @@ class Figure:
         order = {cls: i for i, (_, cls, _) in enumerate(self.legend_items)}
         # Hidden lines first, then the lines seen, each in the order of the legend.
         for far in (True, False):
-            for cls, S in sorted(self.lines, key=lambda item: order.get(item[0].removesuffix("-far"), 99)):
+            for cls, S, flat in sorted(self.lines, key=lambda item: order.get(item[0].removesuffix("-far"), 99)):
                 if cls.endswith("-far") == far:
-                    layers.append({"kind": "line", "class": cls, "points": rounded(S)})
+                    layers.append({"kind": "line", "class": cls, "points": rounded(S), **({"flat": True} if flat else {})})
         for cls, S in self.dots:
             layers.append({"kind": "point", "class": cls, "at": rounded(S)})
         drawn = {layer["class"].removesuffix("-far") for layer in layers}
@@ -723,9 +755,11 @@ class Figure:
             if cls not in drawn:
                 raise AssertionError(f"the legend names {cls}, which is not drawn")
         labels = [dict(L, at=rounded(L["at"])) for L in self.labels]
+        turn = {"origins": [rounded(self.screen(off)) for _, off in self.surfaces], "meridians": self.meridians,
+                "tint": self.tint, "marks": self.marks}
         return {"box": [fixed(b, 4) for b in box],
                 "camera": {"azimuth": self.camera.azimuth, "elevation": self.camera.elevation},
-                "layers": layers, "labels": labels, "legend": self.legend_items}
+                "layers": layers, "labels": labels, "legend": self.legend_items, "turn": turn}
 
 
 def rounded(points):
@@ -770,8 +804,8 @@ def draw_surface(fig, surface, offset=(0.0, 0.0, 0.0), meridians=24):
             phi = 2 * math.pi * k / meridians
             P = off + np.column_stack([p.rho * math.cos(phi), p.rho * math.sin(phi), p.z])
             fig.line(style, densify(P, 4))
-        for run in outline(p, fig.camera):
-            fig.line("reference" if p.reference else "outline", off + run)
+        for run, normals in outline(p, fig.camera):
+            fig.line("reference" if p.reference else "outline", off + run, normals=normals)
         for (kind, _), x in zip(p.ends, (p.lo, p.hi)):
             if kind in ("edge", "stops") and not p.reference:
                 fig.line("outline", off + circle(*p.at(x)))
@@ -800,9 +834,11 @@ def circle(rho, z, n=RING):
 def outline(p, cam):
     """Where a piece turns edge on to the camera: on the circle of each point of the profile,
     the angles at which the normal (dz cos phi, dz sin phi, -drho) is square to the line of
-    sight, cos(phi - azimuth) = (drho/dz) tan(elevation), joined from point to point."""
+    sight, cos(phi - azimuth) = (drho/dz) tan(elevation), joined from point to point. Each run
+    is its points and the unit normal at each, which Figure.line() judges them by."""
     rho, z = p.rho, p.z
     drho, dz = np.gradient(rho), np.gradient(z)
+    length = np.hypot(drho, dz)
     tan_e = math.tan(math.radians(cam.elevation))
     a = math.radians(cam.azimuth)
     with np.errstate(divide="ignore", invalid="ignore"):
@@ -817,12 +853,13 @@ def outline(p, cam):
         while j < len(rho) and ok[j]:
             j += 1
         ang = np.arccos(np.clip(c[i:j], -1, 1))
-        side = [np.column_stack([rho[i:j] * np.cos(a + s * ang), rho[i:j] * np.sin(a + s * ang), z[i:j]])
-                for s in (1, -1)]
+        nr, nz = dz[i:j] / length[i:j], -drho[i:j] / length[i:j]
+        side = [(np.column_stack([rho[i:j] * np.cos(a + s * ang), rho[i:j] * np.sin(a + s * ang), z[i:j]]),
+                 np.column_stack([nr * np.cos(a + s * ang), nr * np.sin(a + s * ang), nz])) for s in (1, -1)]
         # The two sides meet where the outline turns, |c| = 1; otherwise each runs to an end.
         if j - i > 1:
             if i > 0 and j < len(rho):
-                runs.append(np.vstack([side[0][::-1], side[1]]))
+                runs.append((np.vstack([side[0][0][::-1], side[1][0]]), np.vstack([side[0][1][::-1], side[1][1]])))
             else:
                 runs += side
         i = j
@@ -832,11 +869,17 @@ def outline(p, cam):
 def ring_label(fig, off, rho, z, text, side=1, cls="small", dx=8, dy=0, clear=False):
     """A label beside the right (side 1) or left end of a circle, on the page. With `clear`
     it stands past the surface's outline instead, where the outline runs outside the circle's
-    end within the label's height, as a cone's sides do below its rim."""
+    end within the label's height, as a cone's sides do below its rim. The circle must be
+    exactly one of the circles the figure's surfaces mark, which the label names, so that a
+    client turning the figure keeps the label beside it."""
+    found = [(k, i) for k, (s, o) in enumerate(fig.surfaces) if np.array_equal(np.asarray(o, dtype=float), off)
+             for i, (p, x) in enumerate((p, x) for p in s.pieces for x, _, _ in p.marks) if p.at(x) == (rho, z)]
+    if len(found) != 1:
+        raise AssertionError(f"the label {text} stands beside {len(found)} marked circles, not one")
     S = fig.screen(np.asarray(off, dtype=float) + [side * rho, 0, z])
+    band = 0.02 * fig.scene.size
     if clear:
-        band = 0.02 * fig.scene.size
-        for cls_, P in fig.lines:
+        for cls_, P, _ in fig.lines:
             if cls_ != "outline":
                 continue
             for y in (S[1] - band, S[1], S[1] + band):
@@ -845,7 +888,9 @@ def ring_label(fig, off, rho, z, text, side=1, cls="small", dx=8, dy=0, clear=Fa
                 x = a[cross, 0] + (y - a[cross, 1]) * (b[cross, 0] - a[cross, 0]) / (b[cross, 1] - a[cross, 1])
                 if x.size:
                     S[0] = max(S[0], x.max()) if side > 0 else min(S[0], x.min())
-    fig.label(S, text, "l" if side > 0 else "r", cls, dx=side * dx, dy=dy)
+    (k, i), = found
+    fig.label(S, text, "l" if side > 0 else "r", cls, dx=side * dx, dy=dy,
+              ring={"surface": k, "ring": i, "side": side}, clear=band if clear else None)
 
 
 # ---------------------------------------------------------------- the spacetimes
@@ -867,6 +912,7 @@ def figure_of(surfaces, fills, size, camera=CAMERA, offsets=None, meridians=24):
             if not p.reference:
                 scene.add(p, off, fills.get(p.cls))
     fig = Figure(scene)
+    fig.surfaces, fig.meridians, fig.tint = list(zip(surfaces, offsets)), meridians, dict(fills)
     for s, off in zip(surfaces, offsets):
         draw_surface(fig, s, off, meridians)
     return fig
@@ -1772,15 +1818,14 @@ def cosmic_string(ck, src):
     camera = Camera(-90, 20)
     fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, camera)
     # The cut, the meridian at phi = 0, which the development opens along.
-    cut = 0.0
-    fig.line("cut", densify(np.column_stack([ext.rho * math.cos(cut), ext.rho * math.sin(cut), ext.z]), 4))
+    fig.mark("cut", 0, ext, 0.0)
     ring_label(fig, [0, 0, 0], *ext.at(1.0), "$r = \\ell$", side=-1, clear=True)
     ring_label(fig, [0, 0, 0], *ext.at(top), "$3\\ell$", side=-1)
 
     # The development: the cone laid flat beside it, a disc of radius r missing the wedge
     # delta = 2 pi (1 - fold), in the plane of the page. A circle of radius r on the cone
     # has length 2 pi fold r, so it is an arc of angle 2 pi fold; meridian phi lies at the
-    # angle fold (phi - cut) from the cut's first edge. It is drawn at half the cone's scale,
+    # angle fold phi from the cut's first edge. It is drawn at half the cone's scale,
     # which its label says, so that the cone, the surface itself, is the larger drawing.
     half = 0.5
     E = np.vstack(fig.extent)

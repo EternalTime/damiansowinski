@@ -70,7 +70,7 @@
     "version": "ce33004a0f8f16e5",
     "diagrams": "135e28c967b368b3",
     "conformal": "30e11e45b8741f63",
-    "embedding": "6f7978ee169fa66b"
+    "embedding": "6a920bfa4ace0d5f"
   },
   {
     "id": "bianchi",
@@ -120,7 +120,7 @@
     "version": "774d179cf8d84b9a",
     "diagrams": "98b8cfd5bac94a8d",
     "conformal": "957a46dd985ab3cd",
-    "embedding": "f0e788e3f3ef7923"
+    "embedding": "0e0a589f79fd122a"
   },
   {
     "id": "ellis_bronnikov",
@@ -146,7 +146,7 @@
     "version": "26c76b677a23ea70",
     "diagrams": "75ebef3369ae8edc",
     "conformal": "cb68c222d9ac3db6",
-    "embedding": "b5668945805bae63"
+    "embedding": "386991ab6c1de473"
   },
   {
     "id": "frw",
@@ -170,7 +170,7 @@
     "version": "ba34bf8132473424",
     "diagrams": "fcd93775e7e4477c",
     "conformal": "e88e86a636276c55",
-    "embedding": "a926ed182e92b1e6"
+    "embedding": "3c0e763e95360c66"
   },
   {
     "id": "godel",
@@ -194,7 +194,7 @@
     ],
     "version": "4aa05b6df8ffd7fb",
     "diagrams": "36c4ff3cb36e1e3e",
-    "embedding": "66c3a63d2406db86"
+    "embedding": "4eb712795513ff9d"
   },
   {
     "id": "kasner",
@@ -252,7 +252,7 @@
     "version": "04df1a40d4f6dcc7",
     "diagrams": "f3b98996676dfb82",
     "conformal": "d264e9591576e7a3",
-    "embedding": "9ae999ae5058da87"
+    "embedding": "78884e71192387cc"
   },
   {
     "id": "kerr_newman",
@@ -289,7 +289,7 @@
     "version": "aacdff39ea61de2f",
     "diagrams": "744e71f9033ac46b",
     "conformal": "b0e5c277f0e91fb7",
-    "embedding": "42099a6fb938ac10"
+    "embedding": "621bcd60f06ecce6"
   },
   {
     "id": "krasnikov",
@@ -338,7 +338,7 @@
     ],
     "version": "892fee3b8e4bef7e",
     "diagrams": "d40de64d9ab7556d",
-    "embedding": "e48ab2687e2fe6e0"
+    "embedding": "4ae693e799248fce"
   },
   {
     "id": "lentz",
@@ -451,7 +451,7 @@
     "version": "0da21902388f01ef",
     "diagrams": "b3e098f3fa69a786",
     "conformal": "7e7019647c111ba0",
-    "embedding": "e00b301c0be71d59"
+    "embedding": "150e4d5e2d0e151a"
   },
   {
     "id": "natario",
@@ -503,7 +503,7 @@
     "version": "9e6513bd98216c8f",
     "diagrams": "89b0221a26257abe",
     "conformal": "705427e2a3c91f5b",
-    "embedding": "5ef1888ae1786cf9"
+    "embedding": "ab9bd7b511daf5a0"
   },
   {
     "id": "pp_wave",
@@ -556,7 +556,7 @@
     "version": "9ad8cd56b4e6dc0a",
     "diagrams": "fbf4772e78759a72",
     "conformal": "dc36ef07acaf44fe",
-    "embedding": "2bd724d5ba4d699c"
+    "embedding": "381b95137b20a0cd"
   },
   {
     "id": "schwarzschild",
@@ -588,7 +588,7 @@
     "version": "d40426d103725d8a",
     "diagrams": "616546183cee8ce3",
     "conformal": "20ac047d9b33eddd",
-    "embedding": "849a180a6e6c42b1"
+    "embedding": "b62d34765850496c"
   },
   {
     "id": "interior_schwarzschild",
@@ -612,7 +612,7 @@
     "version": "87002f06ded702a8",
     "diagrams": "9c4e4f5a80fb393d",
     "conformal": "87f9bebc30cdeb41",
-    "embedding": "c3ba2bca6bdb35c0"
+    "embedding": "ff784452572e1d13"
   },
   {
     "id": "taub_nut",
@@ -635,7 +635,7 @@
     ],
     "version": "251d1cf729c014a7",
     "diagrams": "0d1ca4595d385adb",
-    "embedding": "3e4c6464ca0ad122"
+    "embedding": "db5a2be931974767"
   },
   {
     "id": "tolman_bondi",
@@ -660,7 +660,7 @@
     ],
     "version": "b4e8b0c2e19a6c45",
     "diagrams": "3845f1ea67eecea1",
-    "embedding": "e77064fb48066729"
+    "embedding": "a3c5866a90b9f4c9"
   },
   {
     "id": "tov",
@@ -687,7 +687,7 @@
     "version": "11f16b6d11ba52c3",
     "diagrams": "4a421b3540c0dad0",
     "conformal": "703f6926638eb11b",
-    "embedding": "578a2e253753eb0d"
+    "embedding": "0f36badf331ee7c0"
   },
   {
     "id": "vaidya",
@@ -713,7 +713,7 @@
     "version": "64419709c90e50d4",
     "diagrams": "fca4cb3b4ad841a3",
     "conformal": "a295e124a9018a1d",
-    "embedding": "1a45df3a4153b32e"
+    "embedding": "02824cc0331f2f7c"
   },
   {
     "id": "cosmic_string",
@@ -738,6 +738,6 @@
     "version": "ee609cf76de38a04",
     "diagrams": "306767efeaa58e4e",
     "conformal": "4f92692b2b30e867",
-    "embedding": "7bb71e6ce37a47a1"
+    "embedding": "539f8a88bc007208"
   }
 ]
