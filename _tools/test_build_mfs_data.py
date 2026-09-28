@@ -937,6 +937,12 @@ class EmbeddingDiagrams(unittest.TestCase):
             near(z - cap[0][2], math.sqrt(27 / 8) - math.sqrt(27 / 8 - r * r), f"cap z at {r}")
         for r, rho, z in piece("interior_schwarzschild", "exterior"):
             near(z, 2 * math.sqrt(r - 1), f"star exterior z at {r}")
+        # The neutron star's exterior is Flamm's paraboloid of its mass, whose throat, at 2M, is
+        # where the vacuum drawn under the star begins.
+        two_m = piece("tov", "vacuum")[0][0]
+        for r, rho, z in piece("tov", "exterior"):
+            near(rho, r, f"neutron star rho at {r}")
+            near(z, 2 * math.sqrt(two_m * (r - two_m)), f"neutron star exterior z at {r}")
         for sign, pid in ((1, "near"), (-1, "far")):
             for r, rho, z in piece("morris_thorne", pid):
                 near(z, sign * math.acosh(r), f"catenoid z at {r}")
