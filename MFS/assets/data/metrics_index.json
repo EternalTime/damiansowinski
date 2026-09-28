@@ -145,7 +145,7 @@
     "version": "26c76b677a23ea70",
     "diagrams": "75ebef3369ae8edc",
     "conformal": "cb68c222d9ac3db6",
-    "embedding": "5cf58df4999e14b8"
+    "embedding": "b5668945805bae63"
   },
   {
     "id": "frw",
@@ -169,7 +169,7 @@
     "version": "ba34bf8132473424",
     "diagrams": "fcd93775e7e4477c",
     "conformal": "e88e86a636276c55",
-    "embedding": "6b3ec414e5c7cb27"
+    "embedding": "a926ed182e92b1e6"
   },
   {
     "id": "godel",
@@ -250,7 +250,7 @@
     "version": "af676d1d359dd3ca",
     "diagrams": "f3b98996676dfb82",
     "conformal": "d264e9591576e7a3",
-    "embedding": "9220d6d926adbb9e"
+    "embedding": "9ae999ae5058da87"
   },
   {
     "id": "kerr_newman",
@@ -287,7 +287,7 @@
     "version": "4b71cc7b7992e60d",
     "diagrams": "744e71f9033ac46b",
     "conformal": "b0e5c277f0e91fb7",
-    "embedding": "4848b0059f9eef10"
+    "embedding": "42099a6fb938ac10"
   },
   {
     "id": "krasnikov",
@@ -448,7 +448,7 @@
     "version": "8a9e6e5f3658830d",
     "diagrams": "b3e098f3fa69a786",
     "conformal": "7e7019647c111ba0",
-    "embedding": "6184d7567b46409c"
+    "embedding": "e00b301c0be71d59"
   },
   {
     "id": "natario",
@@ -552,7 +552,7 @@
     "version": "57233587de15faf3",
     "diagrams": "fbf4772e78759a72",
     "conformal": "dc36ef07acaf44fe",
-    "embedding": "4a0fce8bcc5587e8"
+    "embedding": "2bd724d5ba4d699c"
   },
   {
     "id": "schwarzschild",
@@ -584,7 +584,7 @@
     "version": "d40426d103725d8a",
     "diagrams": "616546183cee8ce3",
     "conformal": "20ac047d9b33eddd",
-    "embedding": "559c4a5036d7c814"
+    "embedding": "849a180a6e6c42b1"
   },
   {
     "id": "interior_schwarzschild",
@@ -681,7 +681,7 @@
     "version": "7515c50dcff44793",
     "diagrams": "4a421b3540c0dad0",
     "conformal": "703f6926638eb11b",
-    "embedding": "d5ad42feb882cf48"
+    "embedding": "578a2e253753eb0d"
   },
   {
     "id": "vaidya",
@@ -732,6 +732,6 @@
     "version": "9e17628996c2a6fe",
     "diagrams": "306767efeaa58e4e",
     "conformal": "4f92692b2b30e867",
-    "embedding": "e60d5947e4dab7d0"
+    "embedding": "7bb71e6ce37a47a1"
   }
 ]
