@@ -10,6 +10,8 @@ import io
 import json
 import math
 import re
+import shutil
+import subprocess
 import tempfile
 import unicodedata
 import unittest
@@ -422,7 +424,7 @@ class HistoryShape(unittest.TestCase):
     def test_every_history_on_disk_keeps_its_shape(self):
         metrics = build.load_metrics()
         self.assertTrue(all(m.get("history") for m in metrics), "a metric has no history")
-        self.assertIsNone(build.check_history_shape(metrics))
+        self.assertIsNone(build.check_prose_shape(metrics))
 
     def test_sentences_are_counted_as_a_reader_counts_them(self):
         cases = {
@@ -440,34 +442,34 @@ class HistoryShape(unittest.TestCase):
             self.assertEqual(len(build.sentences(text)), count, text)
 
     def test_the_rule_holds_at_its_edges(self):
-        self.assertIsNone(build.check_history_shape([self.metric(self.history(3, 6, 3, 6, 3))]))
+        self.assertIsNone(build.check_prose_shape([self.metric(self.history(3, 6, 3, 6, 3))]))
 
     def test_a_history_of_four_paragraphs_is_refused(self):
         with self.assertRaises(build.DataError) as raised:
-            build.check_history_shape([self.metric(self.history(4, 4, 4, 4))])
+            build.check_prose_shape([self.metric(self.history(4, 4, 4, 4))])
         self.assertIn("4 paragraphs", str(raised.exception))
 
     def test_a_paragraph_too_short_or_too_long_is_refused_by_its_place(self):
         for counts, place in (((4, 4, 2, 4, 4), 3), ((4, 4, 4, 4, 7), 5)):
             with self.assertRaises(build.DataError) as raised:
-                build.check_history_shape([self.metric(self.history(*counts))])
+                build.check_prose_shape([self.metric(self.history(*counts))])
             self.assertIn(f"paragraph {place}", str(raised.exception))
 
     def test_the_longest_paragraph_may_be_at_most_twice_the_shortest(self):
-        with mock.patch.object(build, "HISTORY_SENTENCES", (1, 10)):
-            self.assertIsNone(build.check_history_shape([self.metric(self.history(2, 4, 3, 4, 2))]))
+        with mock.patch.object(build, "PARAGRAPH_SENTENCES", (1, 10)):
+            self.assertIsNone(build.check_prose_shape([self.metric(self.history(2, 4, 3, 4, 2))]))
             with self.assertRaises(build.DataError) as raised:
-                build.check_history_shape([self.metric(self.history(2, 5, 3, 4, 2))])
+                build.check_prose_shape([self.metric(self.history(2, 5, 3, 4, 2))])
         self.assertIn("more than 2 times", str(raised.exception))
 
     def test_a_table_is_not_a_paragraph(self):
         history = self.history(3, 3, 3, 3) + "¶TABLE:: a | b ;; 1 | 2¶" + self.paragraph(3)
-        self.assertEqual(build.history_shape(history), [3, 3, 3, 3, 3])
-        self.assertIsNone(build.check_history_shape([self.metric(history)]))
+        self.assertEqual(build.paragraph_shape(history), [3, 3, 3, 3, 3])
+        self.assertIsNone(build.check_prose_shape([self.metric(history)]))
 
     def test_every_history_out_of_shape_is_named_at_once(self):
         with self.assertRaises(build.DataError) as raised:
-            build.check_history_shape([self.metric(self.history(3, 3), "one"),
+            build.check_prose_shape([self.metric(self.history(3, 3), "one"),
                                        self.metric(self.history(4, 4, 4, 4, 4), "fine"),
                                        self.metric(self.history(9, 3, 3, 3, 3), "two")])
         self.assertIn("one.json", str(raised.exception))
@@ -498,6 +500,120 @@ class HistoryShape(unittest.TestCase):
             self.assertIsNotNone(found, f"{selector} names no font")
             return found.group(1).strip()
         self.assertEqual(family("#mfs-content-panel .mfs-table"), family("#mfs-content-panel .mfs-history p"))
+
+
+class ConventionShape(unittest.TestCase):
+    """Every convention is one paragraph or more, each of three to six sentences, broken
+    only where a sentence ends."""
+
+    HISTORY = "¶".join(HistoryShape.paragraph(3) for _ in range(5))
+
+    @classmethod
+    def metric(cls, convention, metric_id="x"):
+        return dict(HistoryShape.metric(cls.HISTORY, metric_id), convention=convention)
+
+    @staticmethod
+    def convention(*counts):
+        return "¶".join(HistoryShape.paragraph(count, "Signature") for count in counts)
+
+    def test_every_convention_on_disk_keeps_its_shape(self):
+        for metric in build.load_metrics():
+            if metric.get("convention"):
+                with self.subTest(metric["id"]):
+                    self.assertEqual(
+                        build.shape_problems(metric["id"], "convention", metric["convention"], 1), [])
+
+    def test_a_convention_may_be_a_single_paragraph(self):
+        for counts in ((3,), (6,), (3, 6), (4, 4, 5, 3)):
+            self.assertIsNone(build.check_prose_shape([self.metric(self.convention(*counts))]))
+
+    def test_a_spacetime_may_carry_no_convention(self):
+        self.assertIsNone(build.check_prose_shape([HistoryShape.metric(self.HISTORY)]))
+
+    def test_a_paragraph_too_short_or_too_long_is_refused_by_its_place(self):
+        for counts, place in (((2,), 1), ((7,), 1), ((4, 4, 2), 3), ((5, 7, 4), 2)):
+            with self.assertRaises(build.DataError) as raised:
+                build.check_prose_shape([self.metric(self.convention(*counts))])
+            self.assertIn(f"the convention, {list(counts)}, has", str(raised.exception))
+            self.assertIn(f"paragraph {place}", str(raised.exception))
+
+    def test_the_longest_paragraph_may_be_at_most_twice_the_shortest(self):
+        with mock.patch.object(build, "PARAGRAPH_SENTENCES", (1, 10)):
+            self.assertIsNone(build.check_prose_shape([self.metric(self.convention(2, 4))]))
+            with self.assertRaises(build.DataError) as raised:
+                build.check_prose_shape([self.metric(self.convention(2, 5))])
+        self.assertIn("the convention, [2, 5], has a longest paragraph more than 2 times",
+                      str(raised.exception))
+
+    def test_every_convention_out_of_shape_is_named_at_once(self):
+        with self.assertRaises(build.DataError) as raised:
+            build.check_prose_shape([self.metric(self.convention(9), "one"),
+                                     self.metric(self.convention(4, 4), "fine"),
+                                     self.metric(self.convention(3, 1), "two")])
+        self.assertIn("one.json: the convention", str(raised.exception))
+        self.assertIn("two.json: the convention", str(raised.exception))
+        self.assertNotIn("fine.json", str(raised.exception))
+
+    def test_a_convention_out_of_shape_leaves_both_published_files_alone(self):
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        broken = build.load_metrics()
+        broken[0] = dict(broken[0], convention=self.convention(8))
+        for argv in (["--check"], []):
+            with mock.patch.object(build, "load_metrics", return_value=broken), \
+                    contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(build.main(argv), 2)
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
+
+    def test_every_break_stands_where_a_sentence_ends(self):
+        # A break takes the place of the space between two sentences, so turning every break
+        # back into a space gives the prose as it reads unbroken, and splitting at the breaks
+        # gives each paragraph with nothing to trim. A paragraph that leads into a table may
+        # end on a colon, since the table is not prose.
+        for metric in build.load_metrics():
+            for field in ("history", "convention"):
+                text = metric.get(field)
+                if not text:
+                    continue
+                with self.subTest(f"{metric['id']}.json {field}"):
+                    self.assertNotRegex(text, r"\s¶|¶\s|^¶|¶$|¶¶")
+                    paragraphs = text.split("¶")
+                    for before, after in zip(paragraphs, paragraphs[1:]):
+                        if "TABLE::" in (before[:7], after[:7]):
+                            continue
+                        self.assertEqual(len(build.sentences(f"{before} {after}")),
+                                         len(build.sentences(before)) + len(build.sentences(after)),
+                                         f"a break inside a sentence, before {after[:40]!r}")
+
+    def test_the_breaks_change_no_word_of_main(self):
+        """With every break turned back into a space, each convention reads exactly as main's.
+
+        Cutting main's running conventions into paragraphs moves no word of them, and this
+        holds the cut to that. Once main's own conventions are in paragraphs, the shape check
+        holds them there and a later change may reword a convention on purpose, so this has
+        nothing left to guard and stands aside.
+        """
+        def main_text(path):
+            shown = subprocess.run(["git", "show", f"main:{path.relative_to(build.ROOT).as_posix()}"],
+                                   cwd=build.ROOT, capture_output=True, text=True)
+            return shown.stdout if shown.returncode == 0 else None
+
+        if shutil.which("git") is None or subprocess.run(
+                ["git", "rev-parse", "--verify", "--quiet", "main^{commit}"],
+                cwd=build.ROOT, capture_output=True).returncode != 0:
+            self.skipTest("no main to compare with")
+        on_main = {}
+        for metric in build.load_metrics():
+            text = main_text(build.METRICS_DIR / f"{metric['id']}.json")
+            if text is not None and json.loads(text).get("convention"):
+                on_main[metric["id"]] = json.loads(text)["convention"]
+        if not any(build.shape_problems(i, "convention", c, 1) for i, c in on_main.items()):
+            self.skipTest("main's conventions are already in paragraphs")
+        for metric in build.load_metrics():
+            if metric["id"] in on_main:
+                with self.subTest(metric["id"]):
+                    self.assertEqual(metric.get("convention", "").replace("¶", " "),
+                                     on_main[metric["id"]].replace("¶", " "))
 
 
 class Diagrams(unittest.TestCase):
