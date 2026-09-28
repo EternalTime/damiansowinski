@@ -1038,6 +1038,12 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertAlmostEqual(nut[0][0], 1 + math.sqrt(1.25), places=12)
         for r, rho, z in nut:
             near(rho, math.sqrt(r * r + 0.25), f"Taub-NUT rho at {r}")
+        # Godel's circles about one world line, which the drawing follows to sinh^2 r = 1/sqrt(2).
+        dust = piece("godel", "dust")
+        for r, rho, z in dust:
+            s = math.sinh(r)
+            near(rho, math.sqrt(2) * s * math.sqrt(max(1 - s * s, 0)), f"Godel rho at {r}")
+        self.assertAlmostEqual(dust[-1][0], math.asinh(2 ** -0.25), places=12)
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
