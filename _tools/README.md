@@ -161,7 +161,8 @@ The tests hold the words that can only ever mean the machinery out of every pros
 A history keeps "published" and "printed" for the papers it tells of, and "building block" stays wherever it is written, since neither names the collection.
 
 A noun is never handed back to what gives it: "every distance along it is the metric distance", never "is the distance the metric gives", and the same for "the X the Y yields", "provides" and "returns".
-The tests hold that rule over every prose field, every caption, label and declared input of every diagram, and the templates and pages a reader sees.
+Nor is the metric said to give anything; an equation is stated as it stands, "where $f = 1$, $ds^2 = -c^2dt^2$".
+The tests hold both rules over every prose field, every caption, label and declared input of every diagram, the templates and pages a reader sees, and the data in `/data` handed to agents.
 
 ## The shape of a history and a convention
 

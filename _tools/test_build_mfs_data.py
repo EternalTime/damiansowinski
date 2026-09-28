@@ -54,9 +54,14 @@ MACHINERY_OUTSIDE_A_HISTORY = (
 # the templates say it the compact way. _tools/README.md carries the rule this stands for.
 _WORD = r"(?:(?!(?:of|and|or|against|to|in|on|at|by)\b)[\w'-]+ )"
 GIVES = rf"(?i)\bthe {_WORD}{{1,2}}the {_WORD}{{0,2}}(?:gives?|yields?|provides?|returns?)\b"
+# Nor is the metric said to give anything: an equation is stated as it stands, "where $f = 1$,
+# $ds^2 = -c^2dt^2$", never "where $f = 1$ and the metric gives $ds^2 = -c^2dt^2$".
+METRIC_GIVES = r"(?i)\bthe metric gives?\b"
 
-# The templates and pages whose words reach a reader, beside the generated files.
-TEMPLATES = ("_layouts/*.html", "_includes/*.html", "_includes/*.txt", "MFS/*.markdown", "*.markdown", "llms*.txt")
+# The templates and pages whose words reach a reader, beside the generated files, and the
+# data the site hands to agents.
+TEMPLATES = ("_layouts/*.html", "_includes/*.html", "_includes/*.txt", "MFS/*.markdown", "*.markdown", "llms*.txt",
+             "data/*.json")
 
 
 def read(path):
@@ -403,6 +408,7 @@ class Prose(unittest.TestCase):
                    for p in templates]
         for where, value in fields:
             self.assertNotRegex(value, GIVES, where)
+            self.assertNotRegex(value, METRIC_GIVES, where)
 
     def test_the_noun_handed_back_is_caught_and_plain_speech_is_not(self):
         for text in ("every distance along it is the distance the metric gives.",
@@ -412,11 +418,15 @@ class Prose(unittest.TestCase):
                      "along the radial geodesic the Christoffel symbols give,"):
             self.assertRegex(text, GIVES, text)
         for text in ("every distance along it is the metric distance.", "the condition he gives is",
-                     "the Einstein tensor returns the density", "and the metric gives $ds^2 = -c^2dt^2$",
+                     "the Einstein tensor returns the density", "where $f = 1$, $ds^2 = -c^2dt^2$",
                      "for any $b_0$ the formula gives a metric",
                      "along its radial geodesic,", "reach the edge of the universe and return",
-                     "The first against the second gives $16$"):
+                     "The first against the second gives $16$", "the metric given above"):
             self.assertNotRegex(text, GIVES, text)
+            self.assertNotRegex(text, METRIC_GIVES, text)
+        for text in ("where $f = 1$ and the metric gives $ds^2 = -c^2dt^2$", "The metric gives the interval"):
+            self.assertNotRegex(text, GIVES, text)
+            self.assertRegex(text, METRIC_GIVES, text)
 
     def test_the_machinery_words_are_caught_and_the_physics_is_not(self):
         def caught(text, history=False):
