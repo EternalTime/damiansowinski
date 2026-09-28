@@ -584,7 +584,7 @@ CAPTIONS = {
         "On the dotted circle $v_sf = 1$, where $g_{tt} = -(1 - v_s^2f^2)$ vanishes, one edge of every "
         "cone stands vertical. The centre runs along $x = 2ct$, at 63° to the vertical, outside the "
         "upright cones far from the bubble and through the middle of the cone at the centre, where "
-        "$f = 1$ and the metric gives $ds^2 = -c^2dt^2$: its world line is timelike, and its clock "
+        "$f = 1$, $ds^2 = -c^2dt^2$: its world line is timelike, and its clock "
         "keeps $t$.",
     ],
     ("kerr", "boyer_lindquist", "dragging"): [
