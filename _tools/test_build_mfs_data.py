@@ -993,24 +993,46 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.load_folder({"schwarzschild.json": data}, self.metrics)
             self.assertIn("draws nothing", str(raised.exception))
 
-    def test_a_spacetime_with_nothing_to_draw_says_why_and_draws_nothing(self):
-        stated = {name: data for name, data in self.embedding.items() if not data["views"]}
-        self.assertTrue({"alcubierre", "natario", "lentz", "anti_de_sitter"} <= set(stated), sorted(stated))
-        for name, data in stated.items():
-            self.assertTrue(data["stops"], name)
-            self.assertTrue(all(text.strip() for text in data["stops"]), name)
+    def test_every_spacetime_draws_and_a_file_that_draws_nothing_says_why(self):
+        # Every spacetime has a surface drawn, and none says beside its views that it draws nothing.
+        self.assertEqual(set(self.embedding), {m["id"] for m in self.metrics})
         for name, data in self.embedding.items():
-            if data["views"]:
-                self.assertNotIn("stops", data, f"{name} keeps what it does not draw in its views")
-        # Words beside views, or no words and no views, are refused.
+            self.assertTrue(data["views"], name)
+            self.assertNotIn("stops", data, f"{name} keeps what it does not draw in its views")
+        # A file with no surface to draw says why in sentences, and a file with views may not.
         flamm = self.embedding["schwarzschild"]
+        stated = {"metric": "schwarzschild", "source": flamm["source"], "views": [], "stops": ["Nothing to draw."]}
+        self.assertEqual(set(self.load_folder({"schwarzschild.json": stated}, self.metrics)), {"schwarzschild"})
         with self.assertRaises(build.DataError) as raised:
             self.load_folder({"schwarzschild.json": dict(flamm, stops=["Nothing."])}, self.metrics)
         self.assertIn("says beside them", str(raised.exception))
-        warp = self.embedding["alcubierre"]
-        for data in (dict(warp, stops=[]), dict(warp, stops=[" "])):
+        for data in (dict(stated, stops=[]), dict(stated, stops=[" "])):
             with self.assertRaises(build.DataError):
-                self.load_folder({"alcubierre.json": data}, self.metrics)
+                self.load_folder({"schwarzschild.json": data}, self.metrics)
+
+    def test_every_curve_and_point_marked_on_a_surface_lies_on_its_piece(self):
+        # A curve or a point stands at a distance from the axis that the piece's profile reaches,
+        # at the height the profile has there, between the two points of it that it falls between.
+        marked = 0
+        for name, data in self.embedding.items():
+            for view in data["views"]:
+                for number, surface in enumerate(view["surfaces"]):
+                    pieces = {p["id"]: p for p in surface["pieces"]}
+                    for mark in surface.get("curves", []) + surface.get("dots", []):
+                        where = f"{name} {view['id']} surface {number} {mark['class']}"
+                        points = mark["points"] if "points" in mark else [mark["at"]]
+                        self.assertGreaterEqual(len(points), 1 if "at" in mark else 2, where)
+                        self.assertIn(mark.get("closed", False), (False, True), where)
+                        profile = sorted((rho, z) for _, rho, z in pieces[mark["piece"]]["points"])
+                        for X, Y, Z in points:
+                            r = math.hypot(X, Y)
+                            self.assertTrue(profile[0][0] - 1e-6 <= r <= profile[-1][0] + 1e-6, f"{where} at {r}")
+                            k = next((i for i in range(1, len(profile)) if profile[i][0] >= r), len(profile) - 1)
+                            (r0, z0), (r1, z1) = profile[k - 1], profile[k]
+                            z = z0 if r1 == r0 else z0 + (z1 - z0) * (r - r0) / (r1 - r0)
+                            self.assertLess(abs(Z - z), 1e-4, f"{where} at {r}")
+                        marked += 1
+        self.assertTrue(marked, "no curve or point was found, so nothing was checked")
 
     def test_a_piece_that_doubles_back_or_crosses_the_axis_is_refused(self):
         for spoil, words in ((lambda points: points.reverse() or points.insert(1, points[0]), "one way"),
@@ -1187,6 +1209,85 @@ class EmbeddingDiagrams(unittest.TestCase):
                 for r, rho, z in piece("frw", pid, number):
                     near(rho, a * r, f"sphere rho at {r}")
                     near(z, sign * a * math.sqrt(max(1 - r * r, 0)), f"sphere z at {r}")
+
+    def test_the_eleven_drawn_last_are_the_surfaces_known_in_closed_form(self):
+        """The plane, the hyperboloid, the tube of the Malament-Hogarth toy, Taub's round
+        moment, and the flat planes with what is marked on them, from the numbers written."""
+        def view(metric_id):
+            return self.embedding[metric_id]["views"][0]
+
+        def piece(surface, piece_id):
+            return [tuple(point) for point in next(p for p in surface["pieces"] if p["id"] == piece_id)["points"]]
+
+        def near(a, b, where, tol=2e-6):
+            self.assertLess(abs(a - b), tol, where)
+        # The flat planes: every point level, and rho the distance along the profile.
+        for metric_id, piece_id in (("minkowski", "plane"), ("krasnikov", "section"), ("alcubierre", "plane"),
+                                    ("natario", "plane"), ("lentz", "plane")):
+            for x, rho, z in piece(view(metric_id)["surfaces"][0], piece_id):
+                near(rho, x, f"{metric_id} rho at {x}")
+                self.assertEqual(z, 0, f"{metric_id} z at {x}")
+        # Anti-de Sitter's static equator on the hyperboloid Z = sqrt(L^2 + r^2) - L in Minkowski
+        # space, and the light cone it nears, Z = rho - L.
+        ads = view("anti_de_sitter")
+        self.assertEqual(ads["space"], "minkowski")
+        for r, rho, z in piece(ads["surfaces"][0], "sheet"):
+            near(rho, r, f"anti-de Sitter rho at {r}")
+            near(z, math.sqrt(1 + r * r) - 1, f"anti-de Sitter z at {r}")
+        for r, rho, z in piece(ads["surfaces"][0], "cone"):
+            near(z, rho - 1, f"the light cone at {r}")
+        # The Malament-Hogarth plane at ct = 0: the circle through s has radius s Omega, s plus
+        # e^(1 - 1/(1 - s^2)), which closes in on 1 down the tube, and it is flat beyond s = 1.
+        tube = view("malament_hogarth")["surfaces"][-1]
+        for s, rho, z in piece(tube, "well"):
+            near(rho, s + math.exp(1 - 1 / (1 - s * s)), f"the tube at {s}", 1e-5)
+        flat = piece(tube, "flat")
+        for s, rho, z in flat:
+            near(rho, s, f"beyond the unit ball at {s}")
+            self.assertEqual(z, flat[0][2], f"beyond the unit ball at {s}")
+        # Taub's round moment: the great sphere of radius 2a, rho = 2a sin(theta/2) and
+        # z = -2a cos(theta/2) on the near hemisphere; at every moment both hemispheres end at
+        # the equator theta = pi.
+        taub = view("mixmaster")["surfaces"]
+        hemisphere = piece(taub[2], "near")
+        a = hemisphere[-1][1] / 2
+        for theta, rho, z in hemisphere:
+            near(rho, 2 * a * math.sin(theta / 2), f"Taub's round moment rho at {theta}")
+            near(z, -2 * a * math.cos(theta / 2), f"Taub's round moment z at {theta}")
+        for surface in taub:
+            self.assertEqual(piece(surface, "near")[-1][0], math.pi)
+            self.assertEqual(piece(surface, "far")[-1][0], math.pi)
+        # Kasner's ring at t: the ellipse reaching t^(-2/7) along x and t^(6/7) along z. The dust's
+        # and the wave's rings are ellipses on the axes, and the wave's last a segment on x.
+        for surface in view("kasner")["surfaces"]:
+            t = surface["time"]
+            for X, Y, Z in surface["curves"][0]["points"]:
+                near((X / t ** (-2 / 7)) ** 2 + (Y / t ** (6 / 7)) ** 2, 1, f"Kasner's ring at t = {t}", 1e-5)
+        for metric_id in ("bianchi", "pp_wave"):
+            for surface in view(metric_id)["surfaces"]:
+                P = surface["curves"][0]["points"]
+                A, B = max(abs(p[0]) for p in P), max(abs(p[1]) for p in P)
+                for X, Y, Z in P:
+                    near((X / A) ** 2 + ((Y / B) ** 2 if B else 1 - (X / A) ** 2), 1, f"{metric_id}'s ring", 1e-5)
+        self.assertEqual(max(abs(p[1]) for p in view("pp_wave")["surfaces"][-1]["curves"][0]["points"]), 0)
+
+        # Alcubierre's crescents, where v_s (x/r_s) df/dr_s is half its greatest value, ahead of
+        # the ship and behind it, the path running along the drawing's Y; Natario's lines of flow,
+        # closed and each on one level of the stream function n(r_s) y^2, y being the drawing's X.
+        def slope(r):
+            return 4 * (1 / math.cosh(4 * (r + 1)) ** 2 - 1 / math.cosh(4 * (r - 1)) ** 2) / (2 * math.tanh(4))
+        curves = {c["class"]: c for c in view("alcubierre")["surfaces"][0]["curves"]}
+        for cls, sign in (("contract", -1), ("expand", 1)):
+            for X, Y, Z in curves[cls]["points"]:
+                r = math.hypot(X, Y)
+                near(2 * Y / r * slope(r), sign * 2.00134, f"Alcubierre's {cls} at {X}, {Y}", 1e-4)
+        n = lambda r: (math.tanh(4 * (r + 1)) - math.tanh(4 * (r - 1))) / (4 * math.tanh(4))  # noqa: E731
+        flows = [c for c in view("natario")["surfaces"][0]["curves"] if c["class"] == "flow"]
+        self.assertEqual(len(flows), 6)
+        for curve in flows:
+            self.assertTrue(curve["closed"])
+            levels = [n(math.hypot(X, Y)) * X * X for X, Y, Z in curve["points"]]
+            self.assertLess(max(levels) - min(levels), 1e-6 * max(levels), "a line of Natario's flow")
 
     def test_every_caption_names_what_is_drawn(self):
         for metric_id, data in self.embedding.items():

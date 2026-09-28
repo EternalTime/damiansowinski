@@ -107,8 +107,10 @@ for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) 
     }
     // A surface of revolution looks the same from every side: turned round its axis, its outline,
     // its rims and its circles, seen and hidden, stand where they stood, all but slivers where a
-    // circle crosses the outline, which fall between its points differently.
-    const still = c => !/^(meridian|cut|reference)(-far)?$/.test(c);
+    // circle crosses the outline, which fall between its points differently. A curve marked on
+    // it that is no circle turns with it, as its meridians do.
+    const curves = new Set(view.surfaces.flatMap(s => (s.curves || []).map(c => c['class'])));
+    const still = c => !/^(meridian|cut|reference)(-far)?$/.test(c) && !curves.has(c.replace(/-far$/, ''));
     let moved = 0, total = 0;
     for (const e of [e0, 60, -30]) {
       const A = byClass(turn.draw(M, a0, e, false).layers).lines, B = byClass(turn.draw(M, a0 + 37, e, false).layers).lines;

@@ -11,7 +11,7 @@ Where a slice is curved the other way at every point, as the hyperbolic plane is
 Where a slice is flat, the surface is a plane, and what makes the spacetime what it is lies in how the slices are stacked, not in the shape of any one; the plane is drawn with that feature marked on it, a ring of free particles as it is stretched, the wall of a warp bubble and the flow of space through it, or the circle inside which the direction along a tube is a time.
 
 Every number was computed from the published metric components through the checker's `Reader`, with `null_rays.load` and `published_matrix` as the other diagrams read them, and every declared function is the one a diagram of the same spacetime already declares, unless it says otherwise.
-The scratch scripts that computed them are not kept; `embedding.py` will recompute and check every number when the eleven are added to it.
+`embedding.py` recomputes every one of them and checks it before it writes a file.
 
 ---
 
@@ -69,6 +69,7 @@ The infinite proper time the computer spends reaching the removed event, the pro
 
 The drawing is a sequence of four moments, $cT = -0.7$, $-0.3$, $-0.1$ and $0$, each out to $s = 1.5$, where the plane is flat, with the last drawn down the tube to $s = 0.03$ and ended there with an edge, the tube running on.
 The unit is the radius of the region where $\Omega \ne 1$, the unit the declared $\Omega$ is written in.
+The edge of that region is taken a part in $10^{12}$ inside it, where $\Omega$ is $1$ to every digit: exactly on it, the float $c^2T^2 + s^2$ can land on either side of $1$ while the declared function's condition lands on the other, and the inside branch then divides by a number of the wrong sign.
 Nothing is checked against a field equation, since the spacetime has none, its stress-energy being defined as its Einstein tensor; the checks are the isometry of every piece, the flat rim, the closed form $\rho \to 1$ of the tube and the equality of the tube's length with the axis clock at the four moments.
 
 ### Anti-de Sitter
@@ -200,6 +201,7 @@ $$f = \frac{\tanh\sigma(r_s + R) - \tanh\sigma(r_s - R)}{2\tanh\sigma R},\qquad 
 with $R = 1$ and $\sigma = 4$, which centres the bubble on $x = 0$ at $t = 0$.
 The drawing is the plane $z = 0$ at $t = 0$, the plane of the ship's path, a flat disc of radius $3R$ about the ship, as far as its spacetime diagram runs.
 
+The path runs along the drawing's $Y$, away from the reader at the start, and the profile along $y$, so that the ends of the circles on the page, where their labels stand and stay as the drawing turns, lie clear of the path and of what is marked along it.
 Marked on it, first, the circle $v_sf = 1$, which for $v_s = 2$ is $f = 1/2$, at $r_s = 1.000168\,R$: the zero of the published $g_{tt}$, the circle the figure in three dimensions draws its cones round, inside which space is carried past the chart faster than light.
 The wall where $f$ falls from $0.9$ to $0.1$ lies between $r_s = 0.7262\,R$ and $1.2747\,R$.
 
@@ -236,7 +238,9 @@ with $X_x = y^{-1}\partial_y\Psi$ and $X_y = -y^{-1}\partial_x\Psi$; the declare
 Inside the bubble $n = 1/2$ and the level curves are lines along the path: space there moves rigidly forward at $v_s$ with the ship.
 Outside $n = 0$ and nothing moves.
 In the wall $n\,r_s^2$ rises to $0.2802\,R^2$ at $r_s = 0.8837\,R$ and falls to zero, so every level curve below that closes: space runs forward through the bubble and back round it through the wall, compressed nowhere, as a fluid that cannot be squeezed.
-The curves marked are the three pairs that cross the bubble at $y = \pm 0.2R$, $\pm 0.4R$ and $\pm 0.6R$, $\Psi = 0.04$, $0.16$ and $0.36$ in units of $R^2$ with $v_s = 2$, which come back through the wall at $y = \pm 1.5019R$, $\pm 1.2775R$ and $\pm 1.1111R$ on the plane $x = 0$.
+The lines drawn are found by following the declared field itself, from where each crosses the ship's plane $x = 0$ round until it crosses it again, and each is checked to close there to $10^{-8}$ and to hold $\Psi$, taken from the declared field as $\int y\,X_x\,dy$ out from the path, to one value to $10^{-8}$ of it.
+The path runs along the drawing's $Y$, as Alcubierre's does.
+The lines marked are the three pairs that cross the bubble at $y = \pm 0.2R$, $\pm 0.4R$ and $\pm 0.6R$, $\Psi = 0.04$, $0.16$ and $0.36$ in units of $R^2$ with $v_s = 2$, which come back through the wall at $y = \pm 1.5019R$, $\pm 1.2775R$ and $\pm 1.1111R$ on the plane $x = 0$.
 José Natário built the drive in 2002 to show that the expansion Alcubierre's drive turns on is not needed: with $\theta = 0$ everywhere the ship is carried by the sliding of space, and the energy density the riding observers measure is again $K^2 - K_{ij}K^{ij}$ over $16\pi G/c^4$, now $-K_{ij}K^{ij}$ alone, negative.
 
 ### Lentz's soliton
@@ -321,9 +325,11 @@ The checks are the published metric on the wave front, the particles' equations 
 
 Four things are new, and each is small.
 
-A curve on a surface: the ellipses, crescents and loops on the flat slices are not circles about the axis, so each is written as a polyline of points on the surface, in the drawing's own coordinates, with a class and an optional label, and is checked to lie on the surface.
-A point on a surface: the twelve particles of each ring.
-A surface in Minkowski space: anti-de Sitter's view says so, and every length along it is measured with $dX^2 + dY^2 - dZ^2$, with the checks and the rounding changed to match.
+A curve on a surface: the ellipses, crescents and loops on the flat slices are not circles about the axis, so each is written under the surface's `curves` as a polyline of points `[X, Y, Z]` in the surface's own frame, with a class, and is checked to lie on its piece.
+A point on a surface: the twelve particles of each ring, under `dots`.
+Both turn with the surface when a reader turns the drawing, and `MFS/assets/embedding-turn.js` draws them again at every camera by the rules the generator draws them by.
+A surface in Minkowski space: anti-de Sitter's view carries `"space": "minkowski"`, and every length along it is measured with $dX^2 + dY^2 - dZ^2$, with the checks and the rounding changed to match.
 A slice whose angle is not a chart coordinate: the Malament-Hogarth plane turns $x$ into $y$ about the removed event, and the Mixmaster great sphere moves $\psi$ with $\phi$, so the slice reads the published metric along the turn, as Vaidya's slice already reads it along $v = T + r$.
+The Mixmaster great sphere's $g_{\phi\phi}$ and defect are also written in half angles before they are evaluated, since the forms sympy gives subtract numbers that agree at the poles and lose every digit there.
 
 Every drawing keeps the rest of the construction: the profile from the published metric, the isometry checks along and across it, the closed forms where one exists, and the declared functions checked against the published field equations where there are any.

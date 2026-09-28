@@ -272,6 +272,15 @@ def load_embedding(metrics):
                     if ring["piece"] not in ids:
                         raise DataError(f"{where}: the view {view['id']!r} marks a circle on "
                                         f"{ring['piece']!r}, which it does not draw")
+                for mark, kind in [(c, "a curve") for c in surface.get("curves", [])] + \
+                                  [(d, "a point") for d in surface.get("dots", [])]:
+                    if mark["piece"] not in ids:
+                        raise DataError(f"{where}: the view {view['id']!r} marks {kind} on "
+                                        f"{mark['piece']!r}, which it does not draw")
+                for curve in surface.get("curves", []):
+                    if len(curve["points"]) < 2 or any(len(point) != 3 for point in curve["points"]):
+                        raise DataError(f"{where}: the view {view['id']!r} marks a curve that is not a "
+                                        "polyline of points [X, Y, Z]")
         embedding[path.stem] = data
     return embedding
 
