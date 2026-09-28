@@ -69,7 +69,7 @@ The infinite proper time the computer spends reaching the removed event, the pro
 
 The drawing is a sequence of four moments, $cT = -0.7$, $-0.3$, $-0.1$ and $0$, each out to $s = 1.5$, where the plane is flat, with the last drawn down the tube to $s = 0.03$ and ended there with an edge, the tube running on.
 The unit is the radius of the region where $\Omega \ne 1$, the unit the declared $\Omega$ is written in.
-The edge of that region is taken a part in $10^{12}$ inside it, where $\Omega$ is $1$ to every digit: exactly on it, the float $c^2T^2 + s^2$ can land on either side of $1$ while the declared function's condition lands on the other, and the inside branch then divides by a number of the wrong sign.
+The edge of that region is $\sqrt{1 - T^2}$ correctly rounded, moved on by a unit in the last place where the declared function's two branches disagree there: within one unit of the edge the float $T^2 + s^2$ can fall below $1$ while $s^2 - (1 - T^2)$ rounds above $0$, and the inside branch then divides by a number of the wrong sign, which happens at $cT = -0.7$ and at no other moment drawn.
 Nothing is checked against a field equation, since the spacetime has none, its stress-energy being defined as its Einstein tensor; the checks are the isometry of every piece, the flat rim, the closed form $\rho \to 1$ of the tube and the equality of the tube's length with the axis clock at the four moments.
 
 ### Anti-de Sitter

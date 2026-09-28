@@ -2613,9 +2613,13 @@ def malament_hogarth(ck, src):
     for T in ("-7/10", "-3/10", "-1/10", "0"):
         t = float(sp.Rational(T))
         sl = Slice(src, "malament_hogarth", "cartesian", "x", None, {"t": T, "z": 0}, functions=fn, turn="y")
-        # The edge of the region where Omega > 1, a part in 1e12 inside it, where the declared
-        # Omega is 1 to every digit and the float c^2t^2 + s^2 cannot land on the far side of 1.
-        rim = math.sqrt(1 - t * t) * (1 - 1e-12)
+        # The edge of the region where Omega > 1, sqrt(1 - c^2t^2) correctly rounded, moved on by
+        # a unit in the last place while the declared Omega's two branches disagree there, since
+        # within one unit of the edge the float c^2t^2 + s^2 can fall below 1 while s^2 - (1 -
+        # c^2t^2) rounds above 0, and the inside branch then divides by a number of the wrong sign.
+        rim = float(sp.sqrt(1 - sp.Rational(T) ** 2))
+        while not float(sl.gxx_at(rim)) == 1.0:
+            rim = float(np.nextafter(rim, 2.0))
         where = f"Malament-Hogarth, ct = {T}"
         lo = 0.03 if t == 0 else 0.0
         start = (("edge", "the tube runs on for ever toward the removed event") if t == 0
