@@ -310,12 +310,21 @@ class Piece:
     def data(self):
         out = {"id": self.id, "class": self.cls, "metric": self.sl.metric_id, "system": self.sl.system_id,
                "coordinate": self.sl.coordinate,
-               "points": [[float(f"{x:.{X_DIGITS}g}"), round(float(r), DIGITS), round(float(z), DIGITS)]
+               "points": [[significant(x), fixed(r), fixed(z)]
                           for x, r, z in zip(self.x, self.rho, self.z)],
                "start": end_data(self.ends[0]), "end": end_data(self.ends[1])}
         if self.reference:
             out["reference"] = True
         return out
+
+
+# Adding 0.0 turns a -0.0 that rounding leaves into 0.0, which is how every number is written.
+def fixed(v, digits=DIGITS):
+    return round(float(v), digits) + 0.0
+
+
+def significant(x):
+    return float(f"{x:.{X_DIGITS}g}") + 0.0
 
 
 def end_data(end):
@@ -335,8 +344,7 @@ class Surface:
         for p in self.pieces:
             for x, cls, text in p.marks:
                 rho, z = p.at(x)
-                ring = {"piece": p.id, "class": cls, "x": float(f"{x:.{X_DIGITS}g}"), "rho": round(rho, DIGITS),
-                        "z": round(z, DIGITS)}
+                ring = {"piece": p.id, "class": cls, "x": significant(x), "rho": fixed(rho), "z": fixed(z)}
                 if text:
                     ring["label"] = text
                 out.append(ring)
@@ -346,7 +354,7 @@ class Surface:
         out = {}
         if self.label:
             out["label"] = self.label
-            out["time"] = round(self.time, DIGITS)
+            out["time"] = fixed(self.time)
         out["pieces"] = [p.data() for p in self.pieces]
         out["rings"] = self.rings()
         return out
@@ -613,13 +621,13 @@ class Figure:
             if cls not in drawn:
                 raise AssertionError(f"the legend names {cls}, which is not drawn")
         labels = [dict(L, at=rounded(L["at"])) for L in self.labels]
-        return {"box": [round(float(b), 4) for b in box],
+        return {"box": [fixed(b, 4) for b in box],
                 "camera": {"azimuth": self.camera.azimuth, "elevation": self.camera.elevation},
                 "layers": layers, "labels": labels, "legend": self.legend_items}
 
 
 def rounded(points):
-    return np.round(np.asarray(points, dtype=float), 4).tolist()
+    return (np.round(np.asarray(points, dtype=float), 4) + 0.0).tolist()
 
 
 def label_width(text):

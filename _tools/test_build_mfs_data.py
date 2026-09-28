@@ -884,6 +884,14 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.load_folder({"schwarzschild.json": data}, self.metrics)
             self.assertIn(words, str(raised.exception))
 
+    def test_no_file_writes_a_negative_zero(self):
+        # Rounding a small negative number leaves -0.0, which a client would print as "-0".
+        # The match alone is reported, since the file is too long to print.
+        for path in sorted(build.EMBEDDING_DIR.glob("*.json")):
+            text = path.read_text(encoding="utf-8")
+            found = re.search(r"(?<![\d.])-0(\.0*)?(?![\d.eE])", text)
+            self.assertIsNone(found and text[max(found.start() - 40, 0):found.end() + 10], path.name)
+
     def test_every_surface_has_the_shape_its_definition_promises(self):
         for name, data in self.embedding.items():
             for view in data["views"]:
