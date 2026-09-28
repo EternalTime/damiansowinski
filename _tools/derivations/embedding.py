@@ -1442,7 +1442,7 @@ def oppenheimer_snyder(ck, src):
            float(np.max(np.abs(Gcc(a=am * half ** 2, a_tau=-np.tan(etas / 2), a_tautau=-1 / (2 * am * half ** 4)))
                         * (am * half ** 2) ** 2)), 1e-9)
     cloud.check(ck, src, "Oppenheimer-Snyder outside", np.linspace(R0, 8, 60), [0.0, 1.0, 2.0, 3.0, 4.0])
-    top = 6.0
+    top = 4.0
     size = 2 * top
     surfaces = []
     for f in (0.0, 0.3, 0.6, 0.8):
@@ -1455,7 +1455,7 @@ def oppenheimer_snyder(ck, src):
         outer = cloud.slice(src, tau, "-1/(2*r)")
         edge = cloud.horizon(tau, 0.0, top)
         dust_marks = [(chi0 / 3, "r2", None), (2 * chi0 / 3, "r2", None), (chi0, "surface", None)]
-        out_marks = [(r, "r", None) for r in (3.0, 4.0, 5.0, top)]
+        out_marks = [(r, "r", None) for r in (3.0, top)]
         if edge is not None and edge > R0:
             out_marks.append((edge, "horizon", None))
         elif edge is not None:
@@ -1478,7 +1478,7 @@ def oppenheimer_snyder(ck, src):
     fig.legend("fill", "star", "the dust, a cap of a sphere of radius $a(\\tau)$, which $\\tau$ and $\\chi$ cover")
     fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the dust")
     fig.legend("line", "r2", "$\\chi$ constant in the dust, at $\\chi_0/3$ and $2\\chi_0/3$")
-    fig.legend("line", "r", "the clocks released at $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r", "the clocks released at $3$ and $4\\,r_s$")
     fig.legend("line", "surface", "the surface of the dust, $\\chi = \\chi_0$")
     fig.legend("line", "horizon", "the apparent horizon, $R = 2GM/c^2$ for the mass inside it")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
@@ -1503,7 +1503,7 @@ def tolman_bondi(ck, src):
         flat = Slice(src, "tolman_bondi", "comoving_synchronous", "r", "\\phi", {"t": repr(t), **EQUATOR},
                      functions={"E": "0", "R": nr._TB_R})
         ck.plane(f"Tolman-Bondi, marginally bound, t = {t:g}", flat, np.linspace(0.02, 3, 300))
-    top = 4.0
+    top = 2.5
     size = 2 * top
     surfaces = []
     for t in (0.0, 0.6, 1.0, 1.3):
@@ -1516,7 +1516,7 @@ def tolman_bondi(ck, src):
                      [(1 / 3, "r2", None), (2 / 3, "r2", None), (1.0, "surface", None)] + [h for h in horizon if h[0] < 1], size)
         ext = Piece("exterior", "sheet", sl, 1.0, top, dust.z[-1], 1,
                     (("join", "the surface $r = r_b$"), ("edge", "the slice runs on to $r \\to \\infty$")),
-                    [(r, "r", None) for r in (2.0, 3.0, top)] + [h for h in horizon if h[0] > 1], size)
+                    [(r, "r", None) for r in (1.5, 2.0, top)] + [h for h in horizon if h[0] > 1], size)
         ck.isometry(f"{where}, the cloud", dust)
         ck.isometry(f"{where}, outside", ext)
         ck.join(f"{where}, the cloud meets the outside", dust, 1.0, ext, 1.0)
@@ -1528,7 +1528,7 @@ def tolman_bondi(ck, src):
     fig.legend("fill", "star", "the cloud, $r < r_b$")
     fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the cloud")
     fig.legend("line", "r2", "the shells $r = r_b/3$ and $2r_b/3$ of the cloud")
-    fig.legend("line", "r", "the clocks released at $2$, $3$ and $4\\,r_b$")
+    fig.legend("line", "r", "the clocks released at $1.5$, $2$ and $2.5\\,r_b$")
     fig.legend("line", "surface", "the surface of the cloud, $r = r_b$")
     if any(ring["class"] == "horizon" for s in surfaces for ring in s.rings()):
         fig.legend("line", "horizon", "the apparent horizon, $R = 2GM(r)/c^2$ for the mass inside it")
@@ -1551,21 +1551,21 @@ def bertotti_robinson(ck, src):
     one event of t and r is the second factor, drawn as the second view; the first factor is
     Lorentzian and has no surface in flat space."""
     sl = Slice(src, "bertotti_robinson", "static", "r", "\\phi", {"t": 0, **EQUATOR}, {"b": 1})
-    size = 4.0
-    tube = Piece("cylinder", "sheet", sl, math.exp(-2), math.exp(2), -2.0, 1,
+    size = 2.0
+    tube = Piece("cylinder", "sheet", sl, math.exp(-1), math.exp(1), -1.0, 1,
                  (("edge", "the cylinder runs on for ever toward $r \\to 0$"),
                   ("edge", "the cylinder runs on for ever toward $r \\to \\infty$")),
-                 [(math.exp(k), "r", None) for k in (-2, -1, 0, 1, 2)], size)
+                 [(math.exp(k / 2), "r", None) for k in (-2, -1, 0, 1, 2)], size)
     ck.isometry("Bertotti-Robinson, the equator", tube)
     ck.form("Bertotti-Robinson, the cylinder z = b ln r", tube, np.log, size)
     ck.radius("Bertotti-Robinson, the cylinder rho = b", tube, lambda r: np.ones_like(r), size)
     equator = Surface([tube])
     fig = figure_of([equator], {"sheet": "cover"}, size)
     ring_label(fig, [0, 0, 0], *tube.at(1.0), "$r = b$")
-    ring_label(fig, [0, 0, 0], *tube.at(math.exp(2)), "$e^2b$")
-    ring_label(fig, [0, 0, 0], *tube.at(math.exp(-2)), "$e^{-2}b$")
+    ring_label(fig, [0, 0, 0], *tube.at(math.exp(1)), "$eb$")
+    ring_label(fig, [0, 0, 0], *tube.at(math.exp(-1)), "$b/e$")
     fig.legend("fill", "cover", "the equator at one moment, which $t$ and $r$ cover")
-    fig.legend("line", "r", "$r$ constant, at $e^{-2}$, $e^{-1}$, $1$, $e$ and $e^2$ times $b$, a step $b$ apart along the cylinder")
+    fig.legend("line", "r", "$r$ constant, at $e^{-1}$, $e^{-1/2}$, $1$, $e^{1/2}$ and $e$ times $b$, a step $b/2$ apart along the cylinder")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     settings = "$b = 1$, the unit of every length."
     views = [view("equator", "The equator", "$b$", [equator], fig.done(), settings=settings,
