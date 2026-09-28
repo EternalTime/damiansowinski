@@ -247,3 +247,83 @@ What the drawing holds for every soliton of the class is the slice itself: the p
 Without a potential the published metric has no length in it, so the disc's radius is in any length $\ell$, and nothing else is marked.
 The caption carries the physics: on the flat slice the energy density the riding observers measure is $(K^2 - K_{ij}K^{ij})c^4/16\pi G = \sigma_2(\partial_i\partial_j\phi)\,c^4/8\pi G$, the sum of the principal minors of the Hessian of $\phi$, which Lentz arranged to be positive wherever his soliton has any, and which Jessica Santiago, Sebastian Schuster and Matt Visser showed an observer moving fast enough through the slices measures as negative.
 The check is the published spatial metric, $\delta_{ij}$ with no dependence on $\phi$.
+
+---
+
+## Group 3. Flat slices, with a ring of free particles stretched on them
+
+In these three the plane drawn is flat at every moment, and what the spacetime does is carry free particles on it apart along one direction and together along another, which no one surface can show and a ring of free particles does.
+Each drawing is a sequence of moments of one plane, a flat disc at each, with a ring of particles that starts as a circle marked on it as a curve, twelve of the particles as points, and the disc's own coordinates the proper distances along the two axes of the chart.
+At each moment the plane's metric is $g_{11}\,dx_1^2 + g_{22}\,dx_2^2$ with constant coefficients, so the chart point $(x_1, x_2)$ stands at $(\sqrt{g_{11}}\,x_1, \sqrt{g_{22}}\,x_2)$ in the drawing, and a ring of particles is an ellipse whenever the particles' chart positions are a linear image of a circle, which in all three they are.
+
+### Kasner's universe
+
+The published metric is $-c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2 + t^{2p_3}dz^2$, with $t$ in the fixed unit the powers are read in, and the spacetime diagrams declare $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, which sum to $1$ as their squares do.
+Every $\Gamma^i{}_{tt}$ of the published metric vanishes, so a particle at rest in the chart stays there: the ring of particles at $x^2 + z^2 = \ell^2$ in the plane $y = 0$ keeps its chart positions while the plane stretches under it.
+At time $t$ it is the ellipse of semi-axes $t^{p_1}\ell$ along $x$ and $t^{p_3}\ell$ along $z$, the most and least expanding directions of the three, and it encloses $\pi\ell^2t^{p_1 + p_3} = \pi\ell^2t^{4/7}$.
+
+| $t$ | along $x$ | along $z$ |
+|---|---|---|
+| $1/4$ | $1.4860\,\ell$ | $0.3048\,\ell$ |
+| $1/2$ | $1.2190\,\ell$ | $0.5520\,\ell$ |
+| $1$ | $\ell$ | $\ell$ |
+| $2$ | $0.8203\,\ell$ | $1.8114\,\ell$ |
+
+The discs are drawn out to $2\ell$.
+Toward the singularity at $t = 0$ the ring grows without bound along $x$ while it shrinks to nothing along $z$ and along $y$, so every sphere of particles is drawn out into a needle, the cigar singularity of the solution Edward Kasner found in 1921; the exponent $p_1 < 0$ that does it is what every Kasner universe but $(1, 0, 0)$ has, one direction contracting while the other two expand.
+The checks are the published spatial metric at each moment, the particles' chart positions held fixed by $\Gamma^i{}_{tt} = 0$, and each ellipse against its semi-axes.
+
+### Bianchi type I
+
+The published metric is $-c^2dt^2 + a_1^2dx^2 + a_2^2dy^2 + a_3^2dz^2$, and the spacetime diagram declares dust: the scale factors solved from the published $G^x{}_x = G^y{}_y = G^z{}_z = 0$ by `null_rays.DustSolver`, starting from $a_i = 1$ with rates $(-0.5, 1.5, 2.0)\,\bar H$ at the reference instant, $\bar H$ their mean, with the time shifted so that the singularity is $t = 0$ and lengths in $c/\bar H$.
+The reference instant is $c\bar Ht = 0.377980$.
+Every $\Gamma^i{}_{tt}$ of the published metric vanishes, so the dust itself is at rest in the chart, and the ring drawn is a ring of the dust, $x^2 + z^2 = \ell^2$ in the plane $y = 0$, the ellipse of semi-axes $a_1\ell$ and $a_3\ell$:
+
+| $c\bar Ht$ | $a_1$ | $a_2$ | $a_3$ |
+|---|---|---|---|
+| $0.1$ | $1.383749$ | $0.474583$ | $0.363183$ |
+| $0.377980$ | $1$ | $1$ | $1$ |
+| $1$ | $0.890637$ | $1.749871$ | $2.071726$ |
+| $2$ | $0.916967$ | $2.641095$ | $3.440658$ |
+
+The discs are drawn out to $3.5\,\ell$.
+Near the singularity the dust universe behaves as Kasner's, drawn out along $x$ and flattened along the other two; later the dust's own gravity turns the contraction along $x$ round, $a_1$ reaching its least, $0.8881$, at $c\bar Ht = 1.1780$ and growing after, as every direction of a dust universe expands at late times.
+The checks are those of Kasner, with the scale factors from the solver the spacetime diagram uses, which solves the published field equations for them.
+
+### The pp-wave
+
+The published exact plane wave is $\left(A(x^2 - y^2) + 2Bxy\right)c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$, and its spacetime diagram declares $A = e^{-u^2}$ and $B = 0$, a pulse of the plus polarisation with $A$ in units of $1/L^2$ and $cu$ in units of $L$.
+A surface of constant $u$ is a wave front, and its metric is $dx^2 + dy^2$ whatever $v$ is on it, since $g_{vv}$ and $g_{xv}$ vanish: the plane drawn is the flat wave front, on which the distance between two particles is $\sqrt{\Delta x^2 + \Delta y^2}$.
+
+The published Christoffel symbols have no $\Gamma^u{}_{\mu\nu}$, so $u$ is an affine parameter of every geodesic, and $\Gamma^x{}_{uu} = -Ax - By$, $\Gamma^y{}_{uu} = -Bx + Ay$ give
+
+$$\frac{d^2x}{d(cu)^2} = A\,x,\qquad \frac{d^2y}{d(cu)^2} = -A\,y.$$
+
+The ring is twelve particles at rest on the circle $x^2 + y^2 = L^2$ before the wave arrives, and since the equations are linear, each particle at $(L\cos\alpha, L\sin\alpha)$ is at $(X(u)L\cos\alpha, Y(u)L\sin\alpha)$ later, with $X$ and $Y$ the solutions from $X = Y = 1$ at rest, integrated from $cu = -8$:
+
+| $cu$ | $X$ | $Y$ | enclosed area over $\pi L^2$ |
+|---|---|---|---|
+| $-3$ | $1.0000030$ | $0.9999970$ | $1.0000$ |
+| $-0.5$ | $1.184116$ | $0.830017$ | $0.9828$ |
+| $0$ | $1.556176$ | $0.551250$ | $0.8578$ |
+| $0.660753$ | $2.645564$ | $0$ | $0$ |
+
+The wave stretches the ring along $x$ and squeezes it along $y$, and the area it encloses falls although the profile is harmonic and the spacetime a vacuum, $G_{\mu\nu} = 0$: the Weyl curvature shears the ring, and the shear alone focuses it.
+At $cu = 0.660753\,L$ every particle of the ring reaches the $x$ axis at once and the ring is a segment of half length $2.6456\,L$; the particles are still moving across it, and past it the ring turns inside out.
+That focusing of every ray of a plane wave is what Roger Penrose used in 1965 to show that no plane wave spacetime is globally hyperbolic.
+
+The discs are drawn out to $3L$, at $cu = -3$, $-0.5$, $0$ and $0.660753$.
+The checks are the published metric on the wave front, the particles' equations against the published Christoffel symbols, and each ring against its closed form $X\cos\alpha$, $Y\sin\alpha$.
+
+---
+
+## What the drawings need that the other eighteen did not
+
+Four things are new, and each is small.
+
+A curve on a surface: the ellipses, crescents and loops of groups 2 and 3 are not circles about the axis, so each is written as a polyline of points on the surface, in the drawing's own coordinates, with a class and an optional label, and is checked to lie on the surface.
+A point on a surface: the twelve particles of each ring.
+A surface in Minkowski space: anti-de Sitter's view says so, and every length along it is measured with $dX^2 + dY^2 - dZ^2$, with the checks and the rounding changed to match.
+A slice whose angle is not a chart coordinate: the Malament-Hogarth plane turns $x$ into $y$ about the removed event, and the Mixmaster great sphere moves $\psi$ with $\phi$, so the slice reads the published metric along the turn, as Vaidya's slice already reads it along $v = T + r$.
+
+Every drawing keeps the rest of the construction: the profile from the published metric, the isometry checks along and across it, the closed forms where one exists, and the declared functions checked against the published field equations where there are any.
