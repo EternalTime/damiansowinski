@@ -1540,6 +1540,161 @@ def tolman_bondi(ck, src):
                         "stacked."])]
 
 
+def bertotti_robinson(ck, src):
+    """AdS2 x S2 with one radius b = 1. The equator at one moment is a line of the first factor
+    times a great circle of the second, b^2 dr^2/r^2 + b^2 dphi^2: rho = b, z = b ln r, a
+    cylinder, flat, with r -> 0 and r -> infinity infinitely far. The sphere of theta and phi at
+    one event of t and r is the second factor, drawn as the second view; the first factor is
+    Lorentzian and has no surface in flat space."""
+    sl = Slice(src, "bertotti_robinson", "static", "r", "\\phi", {"t": 0, **EQUATOR}, {"b": 1})
+    size = 4.0
+    tube = Piece("cylinder", "sheet", sl, math.exp(-2), math.exp(2), -2.0, 1,
+                 (("edge", "the cylinder runs on for ever toward $r \\to 0$"),
+                  ("edge", "the cylinder runs on for ever toward $r \\to \\infty$")),
+                 [(math.exp(k), "r", None) for k in (-2, -1, 0, 1, 2)], size)
+    ck.isometry("Bertotti-Robinson, the equator", tube)
+    ck.form("Bertotti-Robinson, the cylinder z = b ln r", tube, np.log, size)
+    ck.radius("Bertotti-Robinson, the cylinder rho = b", tube, lambda r: np.ones_like(r), size)
+    equator = Surface([tube])
+    fig = figure_of([equator], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tube.at(1.0), "$r = b$")
+    ring_label(fig, [0, 0, 0], *tube.at(math.exp(2)), "$e^2b$")
+    ring_label(fig, [0, 0, 0], *tube.at(math.exp(-2)), "$e^{-2}b$")
+    fig.legend("fill", "cover", "the equator at one moment, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $e^{-2}$, $e^{-1}$, $1$, $e$ and $e^2$ times $b$, a step $b$ apart along the cylinder")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$b = 1$, the unit of every length."
+    views = [view("equator", "The equator", "$b$", [equator], fig.done(), settings=settings,
+                  stops=["The factor of $t$ and $r$ is a two dimensional anti-de Sitter space, which is Lorentzian and "
+                         "has no surface in flat space; its moment of constant $t$ is the line along the cylinder."])]
+    sphere_slice = Slice(src, "bertotti_robinson", "static", "\\theta", "\\phi", {"t": 0, "r": "1"}, {"b": 1})
+    size = 2.0
+    ball = Piece("sphere", "sheet", sphere_slice, 0.0, math.pi, 0.0, 1,
+                 (("axis", "the pole $\\theta = 0$"), ("axis", "the pole $\\theta = \\pi$")),
+                 [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)], size)
+    ck.isometry("Bertotti-Robinson, the sphere", ball)
+    ck.form("Bertotti-Robinson, the sphere z = b(1 - cos theta)", ball, lambda c: 1 - np.cos(c), size)
+    ck.radius("Bertotti-Robinson, the sphere rho = b sin theta", ball, np.sin, size)
+    sphere = Surface([ball])
+    fig = figure_of([sphere], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *ball.at(math.pi / 2), "$\\theta = \\pi/2$")
+    fig.legend("fill", "cover", "the sphere, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("sphere", "The sphere", "$b$", [sphere], fig.done(), settings=settings))
+    return views
+
+
+def stockum_dust(ck, src):
+    """The plane z = 0 at one moment, R = 1: g_rr = e^(-r^2), g_phiphi = r^2 (1 - r^2). The
+    circles grow out to r = R/sqrt(2) and shrink after, so the surface curls back toward the
+    axis; g_rr - (drho/dr)^2 falls to zero at r = 0.83 R, found here, beyond which the circles
+    shrink faster than the distance out to them; at r = R they are null and beyond it timelike,
+    the closed timelike curves, both checked."""
+    sl = Slice(src, "stockum_dust", "cylindrical", "r", "\\phi", {"t": 0, "z": 0}, {"R": 1})
+    stop = float(sp.nsolve(sl.defect, sl.x, 0.83))
+    ck.stops("van Stockum, between the last surface and r = R", sl, np.linspace(stop, 1, 202)[1:-1])
+    beyond = sl.gpp_at(np.linspace(1, 3, 201)[1:])
+    ck.add("van Stockum: beyond r = R the circles are timelike, g_phiphi < 0", float(max(0.0, np.max(beyond))), 0.0)
+    size = 2 * 0.72
+    widest = 1 / math.sqrt(2)
+    dust = Piece("dust", "star", sl, 0.0, stop, 0.0, 1,
+                 (("axis", "the axis $r = 0$"),
+                  ("stops", "the circles shrink faster than the distance out to them, and nothing in flat space carries the slice on")),
+                 [(0.25, "r", None), (0.5, "r", None), (widest, "r", None), (stop, "chartedge", None)], size)
+    ck.isometry("van Stockum, the dust", dust)
+    ck.add("van Stockum: the widest circle is at r = R/sqrt(2)", abs(float(np.max(dust.rho)) - 0.5), 1e-9)
+    surface = Surface([dust])
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *dust.at(widest), "$R/\\sqrt{2}$")
+    ring_label(fig, [0, 0, 0], *dust.at(stop), f"${stop:.2f}\\,R$", side=-1)
+    fig.legend("fill", "star", "the rotating dust, which $t$, $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $R/4$, $R/2$ and $R/\\sqrt{2}$, the widest circle")
+    fig.legend("line", "chartedge", f"$r = {stop:.2f}\\,R$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("dust", "The rotating dust", "$R$", [surface], fig.done(),
+                 settings="$R = 1$, the unit of every length.",
+                 stops=[f"From $r = {stop:.2f}\\,R$ the circles shrink faster than the distance out to them, "
+                        "$g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat space "
+                        "carries the slice on.",
+                        "At $r = R$ the circles about the axis are null, and beyond it they are closed timelike "
+                        "curves, so a surface of constant $t$ is not a moment of space there."])]
+
+
+def taub_nut(ck, src):
+    """The equator of a slice of constant t at m = 1 and l = 1/2, as the spacetime diagram draws
+    Taub-NUT: g_tphi carries cos(theta) and vanishes there, so the slice has g_rr = (r^2 + l^2)/
+    (r^2 - 2mr - l^2) and g_phiphi = r^2 + l^2, a surface of revolution out of the horizon r+ = m
+    + sqrt(m^2 + l^2), where it stands vertical with circumference radius sqrt(r+^2 + l^2) =
+    sqrt(2(m r+ + l^2)), more than Schwarzschild's 2m, which is checked with r+ from its formula.
+    Across the horizon lies Taub's cosmology, where r is a time."""
+    sl = Slice(src, "taub_nut", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1, "l": "1/2"})
+    rp = sl.horizons()[0]
+    top = 8.0
+    size = 2 * float(sl.rho_at(top))
+    near = Piece("exterior", "sheet", sl, rp, top, 0.0, 1,
+                 (("throat", "the horizon $r = r_+$, where the NUT region meets Taub's cosmology"),
+                  ("edge", "the surface runs on to $r \\to \\infty$")),
+                 [(rp, "horizon", "$r = r_+$")] + [(r, "r", None) for r in (3.0, 4.0, 5.0, 6.0, 7.0, top)], size)
+    ck.isometry("Taub-NUT, the equator", near)
+    formula = 1 + math.sqrt(1.25)
+    ck.add("Taub-NUT: the horizon is r+ = m + sqrt(m^2 + l^2)", abs(rp - formula), 1e-12)
+    ck.add("Taub-NUT: the horizon's circumference radius is sqrt(2(m r+ + l^2))",
+           abs(near.at(rp)[0] - math.sqrt(2 * (formula + 0.25))), 1e-6)
+    ck.stops("Taub-NUT, across the horizon", sl, np.linspace(1 - math.sqrt(1.25), rp, 202)[1:-1])
+    surface = Surface([near])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(top), "$8\\,m$")
+    fig.legend("fill", "cover", "the NUT region $r > r_+$, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$, $7$ and $8\\,m$")
+    fig.legend("line", "horizon", "the horizon $r = r_+$, where the surface stands vertical")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings=f"$m = GM/c^2 = 1$, the unit of every length, and $l = m/2$, so that $r_+ = {rp:.3f}\\,m$.",
+                 stops=["Across the horizon lies Taub's cosmology, where $r$ is a time and a slice of constant $t$ is "
+                        "not a moment of space, so the surface ends at $r_+$."])]
+
+
+def godel(ck, src):
+    """The plane z = 0 about one world line of the dust, at one moment of the cylindrical chart's
+    t, omega = 1: g_rr = 2 and g_phiphi = 2 (1 - sinh^2 r) sinh^2 r, so g_rr - (drho/dr)^2 =
+    2 (1 - (1 + s)(1 - 2s)^2/(1 - s)) with s = sinh^2 r, which vanishes where 4 s^3 = 2 s: the
+    construction stops at sinh^2 r = 1/sqrt(2), exactly, which is checked, before the circles
+    turn null at sinh r = 1, r_c, and timelike beyond, both checked."""
+    sl = Slice(src, "godel", "cylindrical", "r", "\\phi", {"t": 0, "z": 0}, {"omega": 1})
+    stop = math.asinh(2 ** -0.25)
+    rc = math.asinh(1)
+    ck.add("Godel: the surface stops at sinh^2 r = 1/sqrt(2), where g_rr = (drho/dr)^2",
+           abs(float(sl.defect_at(stop))), 1e-12)
+    ck.stops("Godel, between the last surface and r_c", sl, np.linspace(stop, rc, 202)[1:-1])
+    beyond = sl.gpp_at(np.linspace(rc, 3, 201)[1:])
+    ck.add("Godel: beyond r_c the circles are timelike, g_phiphi < 0", float(max(0.0, np.max(beyond))), 0.0)
+    size = 2 * 0.72
+    widest = math.asinh(math.sqrt(0.5))
+    dust = Piece("dust", "star", sl, 0.0, stop, 0.0, 1,
+                 (("axis", "the world line $r = 0$ of the dust"),
+                  ("stops", "the circles shrink faster than the distance out to them, and nothing in flat space carries the slice on")),
+                 [(rc / 4, "r", None), (rc / 2, "r", None), (widest, "r", None), (stop, "chartedge", None)], size)
+    ck.isometry("Godel, about one world line", dust)
+    surface = Surface([dust])
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *dust.at(widest), "$\\sinh^2 r = 1/2$")
+    fig.legend("fill", "star", "the dust about one of its world lines, which $t$, $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $r_c/4$ and $r_c/2$, and the widest circle, $\\sinh^2 r = 1/2$")
+    fig.legend("line", "chartedge", "$\\sinh^2 r = 1/\\sqrt{2}$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("dust", "About one world line", "$1/\\omega$", [surface], fig.done(),
+                 settings="$\\omega = 1$, so that $c/\\omega$ is the unit of every length and the proper distance out "
+                          "from the axis is $\\sqrt{2}\\,r$.",
+                 stops=["From $\\sinh^2 r = 1/\\sqrt{2}$ the circles shrink faster than the distance out to them and no "
+                        "surface of revolution in flat space carries the slice on.",
+                        "At $\\sinh r = 1$, $r_c$, the circles about the axis are null, and beyond it they are closed "
+                        "timelike curves, so a surface of constant $t$ is not a moment of space there. Gödel's universe "
+                        "has no moment of time that is space everywhere, and every world line of its dust is an axis "
+                        "like this one."])]
+
+
 def ellis_bronnikov(ck, src):
     """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
     l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
@@ -1839,6 +1994,10 @@ DRAWN = {
     "vaidya": vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "tolman_bondi": tolman_bondi,
+    "bertotti_robinson": bertotti_robinson,
+    "stockum_dust": stockum_dust,
+    "taub_nut": taub_nut,
+    "godel": godel,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "cosmic_string": cosmic_string,
@@ -1849,8 +2008,7 @@ DRAWN = {
 # Mixmaster's slices are squashed three spheres and a pp-wave's spacelike slices carry its
 # profile, so neither is flat and neither has one surface that says anything; the
 # Malament-Hogarth slices take whatever shape an arbitrary conformal factor gives them.
-NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth",
-             "bertotti_robinson", "stockum_dust", "taub_nut", "godel"}
+NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth"}
 
 CAPTIONS = {
     ("schwarzschild", "flamm"): [
@@ -1999,6 +2157,59 @@ CAPTIONS = {
         "diagram draws this cloud marginally bound, $E = 0$, falling from rest at infinity, and then every "
         "slice of constant $t$ is flat; drawn here released from rest from the same density at $t = 0$, its "
         "slices curve.",
+    ],
+    ("bertotti_robinson", "equator"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of the Bertotti-Robinson universe at one moment of "
+        "$t$, drawn as a surface in flat space so that every distance along it is the distance the metric "
+        "gives. The spacetime is the product of a two dimensional anti-de Sitter space, which carries $t$ and "
+        "$r$, and a sphere of radius $b$, which carries $\\theta$ and $\\phi$, so the equator at one moment is "
+        "a line of the one times a great circle of the other, $b^2dr^2/r^2 + b^2d\\phi^2$: a cylinder of "
+        "radius $b$, on which $z = b\\ln r$ puts $r \\to 0$ and $r \\to \\infty$ both infinitely far away.",
+        "Every circle on it has the circumference $2\\pi b$, and the cylinder is flat, as a rolled sheet of "
+        "paper is. It is the throat of an extreme Reissner-Nordström black hole, whose funnel narrows into "
+        "this cylinder, infinitely long, as its charge reaches its mass. Bruno Bertotti and Ivor Robinson "
+        "found the solution independently in 1959, a uniform electromagnetic field whose energy holds both "
+        "factors at the one radius $b$.",
+    ],
+    ("bertotti_robinson", "sphere"): [
+        "This is the sphere of $\\theta$ and $\\phi$ of the Bertotti-Robinson universe at one moment of $t$ "
+        "and one $r$, drawn as a surface in flat space so that every distance along it is the distance the "
+        "metric gives. It is the product's second factor, a sphere of radius $b$, the same at every $t$ and "
+        "$r$, so a slice of constant $t$ is the line along the cylinder of the other view times this sphere.",
+    ],
+    ("stockum_dust", "dust"): [
+        "This is the plane $z = 0$ across Cornelius Lanczos's cylinder of rotating dust at one moment of $t$, "
+        "drawn about its axis as a surface in flat space so that every distance along it is the distance the "
+        "metric gives. On it $g_{rr} = e^{-r^2/R^2}$, and the circle of radius $r$ has circumference "
+        "$2\\pi r\\sqrt{1 - r^2/R^2}$, which grows only out to $r = R/\\sqrt{2}$ and then shrinks, so the "
+        "surface curls back toward the axis.",
+        "At $r = 0.83\\,R$ the circles shrink faster than the distance out to them and the drawing stops. At "
+        "$r = R$ they are null, and beyond it they are closed timelike curves, which Willem Jacob van Stockum "
+        "found in 1937, more than a decade before Gödel's universe.",
+    ],
+    ("taub_nut", "equator"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of Taub-NUT space at one moment of $t$, drawn as a "
+        "surface in flat space so that every distance along it is the distance the metric gives. The NUT "
+        "parameter enters $g_{t\\phi}$ through $\\cos\\theta$, which vanishes on the equator, so the slice there "
+        "is a surface of revolution: $g_{rr} = (r^2 + l^2)/(r^2 - 2mr - l^2)$, with circles of circumference "
+        "$2\\pi\\sqrt{r^2 + l^2}$, standing vertical at the horizon $r_+ = m + \\sqrt{m^2 + l^2}$ as Flamm's "
+        "paraboloid does at $r_s$.",
+        "The horizon's circumference radius is $\\sqrt{2(mr_+ + l^2)}$, larger than Schwarzschild's $2m$ for "
+        "the same mass. Across the horizon lies Taub's cosmology, where $r$ is a time, so the slice ends there. The "
+        "equator stays clear of the Misner string, the singular axis $\\theta = 0$ and $\\pi$, which a periodic "
+        "$t$ removes only at the price of closed timelike curves through every point.",
+    ],
+    ("godel", "dust"): [
+        "This is the plane $z = 0$ about one world line of the dust in Gödel's universe, at one moment of the "
+        "cylindrical chart's $t$, drawn as a surface in flat space so that every distance along it is the "
+        "distance the metric gives. On it the circle $r$ has circumference $2\\pi\\sqrt{2}\\,\\sinh r"
+        "\\sqrt{1 - \\sinh^2 r}/\\omega$, which grows out to $\\sinh^2 r = 1/2$ and then shrinks, so the surface "
+        "curls back toward the axis, and at $\\sinh^2 r = 1/\\sqrt{2}$ the circles shrink faster than the "
+        "distance out to them and the drawing stops.",
+        "At $\\sinh r = 1$ the circles are null, and beyond it they are closed timelike curves, which Kurt "
+        "Gödel found in 1949. The universe is homogeneous, so every world line of the dust is an axis like "
+        "this one, and it has no moment of time that is space everywhere: this surface is a moment only near "
+        "its axis.",
     ],
     ("ellis_bronnikov", "wormhole"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Ellis-Bronnikov wormhole at one moment of "
