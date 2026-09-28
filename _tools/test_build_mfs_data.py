@@ -1004,6 +1004,16 @@ class EmbeddingDiagrams(unittest.TestCase):
             else:
                 for r, rho, z in piece("vaidya", "whole", number):
                     near(z, 2 * math.sqrt(r), f"Vaidya z at {r}")
+        # Oppenheimer-Snyder's dust is a cap of a sphere of radius a out to chi0 = pi/4 at every
+        # moment, and at the release, the first moment, the outside is Flamm's paraboloid.
+        for number in range(len(self.embedding["oppenheimer_snyder"]["views"][0]["surfaces"])):
+            dust = piece("oppenheimer_snyder", "dust", number)
+            a = dust[-1][1] / math.sin(math.pi / 4)
+            for chi, rho, z in dust:
+                near(rho, a * math.sin(chi), f"Oppenheimer-Snyder cap rho at {chi}")
+                near(z - dust[0][2], a * (1 - math.cos(chi)), f"Oppenheimer-Snyder cap z at {chi}")
+        for r, rho, z in piece("oppenheimer_snyder", "exterior"):
+            near(z, 2 * math.sqrt(r - 1) - 2, f"Oppenheimer-Snyder release z at {r}")
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
