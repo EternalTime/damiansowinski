@@ -8,6 +8,7 @@ import contextlib
 import copy
 import io
 import json
+import math
 import re
 import tempfile
 import unicodedata
@@ -98,6 +99,40 @@ def conformal_prose(name, conformal):
             yield f"{where}.labels[{position}]", label["text"]
 
 
+def embedding_files():
+    return {p.stem: read(p) for p in sorted(build.EMBEDDING_DIR.glob("*.json"))}
+
+
+def embedding_prose(name, data):
+    """Yield every field of an embedding diagram file a reader sees, each with its place."""
+    for view in data["views"]:
+        where = f"embedding/{name}.json {view['id']}"
+        yield f"{where}.label", view["label"]
+        yield f"{where}.unit", view["unit"]
+        for position, paragraph in enumerate(view["caption"]):
+            yield f"{where}.caption[{position}]", paragraph
+        for field in ("settings", "input"):
+            if view.get(field):
+                yield f"{where}.{field}", view[field]
+        for position, text in enumerate(view.get("stops", [])):
+            yield f"{where}.stops[{position}]", text
+        for position, (_, _, text) in enumerate(view["figure"]["legend"]):
+            yield f"{where}.figure.legend[{position}]", text
+        for position, label in enumerate(view["figure"]["labels"]):
+            yield f"{where}.figure.labels[{position}]", label["text"]
+        for number, surface in enumerate(view["surfaces"]):
+            at = f"{where}.surfaces[{number}]"
+            if surface.get("label"):
+                yield f"{at}.label", surface["label"]
+            for piece in surface["pieces"]:
+                for end in ("start", "end"):
+                    if piece[end].get("text"):
+                        yield f"{at}.{piece['id']}.{end}", piece[end]["text"]
+            for ring in surface["rings"]:
+                if ring.get("label"):
+                    yield f"{at}.rings[{ring['piece']} {ring['x']}]", ring["label"]
+
+
 def diagram_prose(name, diagram):
     """Yield every sentence carrying field of a diagram file, each with the name of its place:
     its flat views and its figures in three dimensions."""
@@ -152,10 +187,11 @@ class Index(unittest.TestCase):
         )
 
     def test_entry_carries_the_search_fields_and_a_stamp(self):
-        diagrams, conformal = diagram_files(), conformal_files()
+        diagrams, conformal, embedding = diagram_files(), conformal_files(), embedding_files()
         for entry, metric in zip(self.index, self.metrics):
             expected = ({"id", "name", "tags", "version"} | ({"diagrams"} if metric["id"] in diagrams else set())
-                        | ({"conformal"} if metric["id"] in conformal else set()))
+                        | ({"conformal"} if metric["id"] in conformal else set())
+                        | ({"embedding"} if metric["id"] in embedding else set()))
             self.assertEqual(set(entry), expected)
             self.assertEqual(entry["name"], metric["short_name"])
             self.assertEqual(entry["tags"], metric["tags"])
@@ -175,6 +211,14 @@ class Index(unittest.TestCase):
         stamped = {e["id"]: e["conformal"] for e in self.index if "conformal" in e}
         self.assertEqual(set(stamped), set(conformal))
         for metric_id, data in conformal.items():
+            self.assertEqual(stamped[metric_id], build.content_version(data))
+
+    def test_a_spacetime_with_an_embedding_diagram_carries_its_stamp(self):
+        embedding = embedding_files()
+        self.assertTrue(embedding, "no embedding diagram file was found, so nothing was checked")
+        stamped = {e["id"]: e["embedding"] for e in self.index if "embedding" in e}
+        self.assertEqual(set(stamped), set(embedding))
+        for metric_id, data in embedding.items():
             self.assertEqual(stamped[metric_id], build.content_version(data))
 
     def test_a_metric_missing_its_short_name_is_refused(self):
@@ -272,6 +316,16 @@ class Prose(unittest.TestCase):
             for field, value in conformal_prose(name, data):
                 self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}", field)
 
+    def test_no_embedding_diagram_on_disk_carries_a_dash_in_its_prose(self):
+        fields = [(field, value) for name, data in embedding_files().items()
+                  for field, value in embedding_prose(name, data)]
+        self.assert_no_dashes(fields)
+
+    def test_no_embedding_diagram_spells_a_character_as_an_escape(self):
+        for name, data in embedding_files().items():
+            for field, value in embedding_prose(name, data):
+                self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}", field)
+
     def test_no_metric_on_disk_spells_a_character_as_an_escape(self):
         # A \u escaped twice in the JSON reaches the page as the six characters of the
         # escape, as the î of Lemaître did in the Tolman-Bondi conventions, since neither
@@ -309,6 +363,8 @@ class Prose(unittest.TestCase):
                    for field, value in diagram_prose(name, diagram)]
         fields += [(field, field, value) for name, data in conformal_files().items()
                    for field, value in conformal_prose(name, data)]
+        fields += [(field, field, value) for name, data in embedding_files().items()
+                   for field, value in embedding_prose(name, data)]
         self.assertTrue(fields, "no prose was read, so nothing was checked")
         for where, field, value in fields:
             for pattern in MACHINERY:
@@ -748,6 +804,200 @@ class ConformalDiagrams(unittest.TestCase):
                 (Path(folder) / filename).write_text(json.dumps(data), encoding="utf-8")
             with mock.patch.object(build, "CONFORMAL_DIR", Path(folder)):
                 return build.load_conformal(metrics)
+
+
+class EmbeddingDiagrams(unittest.TestCase):
+    """An embedding diagram is a slice of a spacetime drawn as a surface of revolution, from
+    what its metrics publish, and stops being published when any of that changes. The file is
+    the definition in _tools/README.md, which the application builds against."""
+
+    ENDS = {"axis", "apex", "join", "throat", "edge", "stops"}
+
+    def setUp(self):
+        self.metrics = build.load_metrics()
+        self.embedding = embedding_files()
+        self.assertTrue(self.embedding, "no embedding diagram file was found, so nothing was checked")
+
+    def test_every_file_was_drawn_from_what_its_metrics_publish(self):
+        by_id = {m["id"]: m for m in self.metrics}
+        for metric_id, data in self.embedding.items():
+            self.assertTrue(data["source"], metric_id)
+            for source in data["source"]:
+                system = next(s for s in by_id[source["metric"]]["coordinates"] if s["id"] == source["system"])
+                self.assertEqual(build.diagram_source_version(system, source["fields"]), source["version"],
+                                 f"{metric_id} from {source['metric']}/{source['system']}")
+        self.assertEqual(set(build.load_embedding(self.metrics)), set(self.embedding))
+
+    def test_a_changed_component_is_refused_and_leaves_the_files_alone(self):
+        # The star is drawn with schwarzschild.json's exterior, so a change there stops it too.
+        changed = copy.deepcopy(self.metrics)
+        for metric in changed:
+            if metric["id"] == "schwarzschild":
+                system = next(s for s in metric["coordinates"] if s["id"] == "spherical")
+                system["metric_components"][1]["value"] = "2" + system["metric_components"][1]["value"]
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        for argv in (["--check"], []):
+            stderr = io.StringIO()
+            with mock.patch.object(build, "load_metrics", return_value=changed), \
+                    mock.patch.object(build, "load_diagrams", return_value={}), \
+                    mock.patch.object(build, "load_conformal", return_value={}), \
+                    contextlib.redirect_stderr(stderr):
+                self.assertEqual(build.main(argv), 2)
+            self.assertIn("embedding/", stderr.getvalue())
+            self.assertIn("embedding.py --metric", stderr.getvalue())
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
+        with self.assertRaises(build.DataError) as raised:
+            self.load_folder({"interior_schwarzschild.json": self.embedding["interior_schwarzschild"]}, changed)
+        self.assertIn("schwarzschild.json", str(raised.exception))
+
+    def test_a_change_that_draws_nothing_leaves_the_diagrams_standing(self):
+        changed = copy.deepcopy(self.metrics)
+        for metric in changed:
+            metric["history"] = metric.get("history", "") + " More."
+            for system in metric.get("coordinates") or []:
+                system["domains"] = (system.get("domains") or []) + ["x \\in \\mathbb{R}"]
+                for parameter in system.get("parameters", []):
+                    parameter["description"] = parameter.get("description", "") + " Reworded."
+        self.assertEqual(set(build.load_embedding(changed)), set(self.embedding))
+
+    def test_a_file_without_a_metric_or_a_source_or_a_surface_is_refused(self):
+        metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "coordinates": [{"id": "a"}]}
+        with self.assertRaises(build.DataError) as raised:
+            self.load_folder({"ghost.json": {"metric": "ghost", "source": [], "views": []}}, [metric])
+        self.assertIn("ghost", str(raised.exception))
+        with self.assertRaises(build.DataError) as raised:
+            self.load_folder({"x.json": {"metric": "x", "source": [], "views": []}}, [metric])
+        self.assertIn("drawn from", str(raised.exception))
+        flamm = self.embedding["schwarzschild"]
+        for data in (dict(flamm, views=[]), dict(flamm, views=[dict(flamm["views"][0], surfaces=[])])):
+            with self.assertRaises(build.DataError) as raised:
+                self.load_folder({"schwarzschild.json": data}, self.metrics)
+            self.assertIn("draws nothing", str(raised.exception))
+
+    def test_a_piece_that_doubles_back_or_crosses_the_axis_is_refused(self):
+        for spoil, words in ((lambda points: points.reverse() or points.insert(1, points[0]), "one way"),
+                             (lambda points: points[3].__setitem__(1, -0.5), "below the axis")):
+            data = copy.deepcopy(self.embedding["schwarzschild"])
+            spoil(data["views"][0]["surfaces"][0]["pieces"][0]["points"])
+            with self.assertRaises(build.DataError) as raised:
+                self.load_folder({"schwarzschild.json": data}, self.metrics)
+            self.assertIn(words, str(raised.exception))
+
+    def test_every_surface_has_the_shape_its_definition_promises(self):
+        for name, data in self.embedding.items():
+            for view in data["views"]:
+                where = f"{name} {view['id']}"
+                self.assertTrue(view["unit"].startswith("$") and view["unit"].endswith("$"), where)
+                sequence = len(view["surfaces"]) > 1
+                times = []
+                for surface in view["surfaces"]:
+                    self.assertEqual("label" in surface, sequence, where)
+                    self.assertEqual("time" in surface, sequence, where)
+                    times.append(surface.get("time", 0))
+                    ids = [piece["id"] for piece in surface["pieces"]]
+                    self.assertEqual(len(ids), len(set(ids)), where)
+                    for piece in surface["pieces"]:
+                        self.assertIn(piece["start"]["kind"], self.ENDS, where)
+                        self.assertIn(piece["end"]["kind"], self.ENDS, where)
+                        for point in piece["points"]:
+                            self.assertEqual(len(point), 3, where)
+                        if piece["start"]["kind"] in ("axis", "apex"):
+                            self.assertEqual(piece["points"][0][1], 0, f"{where} {piece['id']} starts on the axis")
+                    for ring in surface["rings"]:
+                        piece = next(p for p in surface["pieces"] if p["id"] == ring["piece"])
+                        self.assertIn([ring["x"], ring["rho"], ring["z"]], piece["points"], f"{where} ring {ring}")
+                self.assertEqual(times, sorted(times), where)
+
+    def test_the_surfaces_are_the_ones_known_in_closed_form(self):
+        """Flamm's paraboloid, the interior Schwarzschild cap, the catenoid, the cone, Gott's cap
+        and the sphere, from the numbers written and nothing else, to their rounding."""
+        def piece(metric_id, piece_id, number=0):
+            surface = self.embedding[metric_id]["views"][0]["surfaces"][number]
+            points = next(p for p in surface["pieces"] if p["id"] == piece_id)["points"]
+            return [tuple(point) for point in points]
+
+        def near(a, b, where):
+            self.assertLess(abs(a - b), 2e-6, where)
+        for sign, pid in ((1, "exterior"), (-1, "other_exterior")):
+            for r, rho, z in piece("schwarzschild", pid):
+                near(rho, r, f"Flamm rho at {r}")
+                near(z, sign * 2 * math.sqrt(r - 1), f"Flamm z at {r}")
+        cap = piece("interior_schwarzschild", "star")
+        for r, rho, z in cap:
+            near(rho, r, f"cap rho at {r}")
+            near(z - cap[0][2], math.sqrt(27 / 8) - math.sqrt(27 / 8 - r * r), f"cap z at {r}")
+        for r, rho, z in piece("interior_schwarzschild", "exterior"):
+            near(z, 2 * math.sqrt(r - 1), f"star exterior z at {r}")
+        for sign, pid in ((1, "near"), (-1, "far")):
+            for r, rho, z in piece("morris_thorne", pid):
+                near(z, sign * math.acosh(r), f"catenoid z at {r}")
+        for r, rho, z in piece("cosmic_string", "exterior"):
+            near(rho, 0.9 * r, f"cone rho at {r}")
+            near(z, math.sqrt(0.19) * r, f"cone z at {r}")
+        core = piece("cosmic_string", "core")
+        for chi, rho, z in core:
+            near(rho, math.sin(chi), f"Gott rho at {chi}")
+            near(z - core[0][2], 1 - math.cos(chi), f"Gott z at {chi}")
+        for number in range(len(self.embedding["frw"]["views"][0]["surfaces"])):
+            hemisphere = piece("frw", "near", number)
+            a = -hemisphere[0][2]
+            for sign, pid in ((-1, "near"), (1, "far")):
+                for r, rho, z in piece("frw", pid, number):
+                    near(rho, a * r, f"sphere rho at {r}")
+                    near(z, sign * a * math.sqrt(max(1 - r * r, 0)), f"sphere z at {r}")
+
+    def test_every_caption_names_what_is_drawn(self):
+        for metric_id, data in self.embedding.items():
+            for view in data["views"]:
+                self.assertTrue(view["caption"], f"{metric_id} {view['id']}")
+                self.assertTrue(view["caption"][0].startswith("This is the "), f"{metric_id} {view['id']}")
+
+    def test_every_text_is_tex_with_its_mathematics_closed(self):
+        for name, data in self.embedding.items():
+            for field, value in embedding_prose(name, data):
+                self.assertTrue(value.strip(), field)
+                self.assertEqual(value.replace("\\$", "").count("$") % 2, 0, field)
+                self.assertEqual(value.count("{"), value.count("}"), field)
+
+    def test_every_figure_draws_inside_its_box_and_names_only_what_it_draws(self):
+        for name, data in self.embedding.items():
+            for view in data["views"]:
+                figure, where = view["figure"], f"{name} {view['id']}"
+                x0, x1, y0, y1 = figure["box"]
+                self.assertTrue(x0 < x1 and y0 < y1, where)
+                drawn = {}
+                for layer in figure["layers"]:
+                    self.assertIn(layer["kind"], {"fill", "line", "point"}, where)
+                    drawn.setdefault(layer["class"].removesuffix("-far"), layer["kind"])
+                    rings = ([[layer["at"]]] if layer["kind"] == "point"
+                             else [layer["points"]] + layer.get("holes", []))
+                    for ring in rings:
+                        for x, y in ring:
+                            self.assertTrue(x0 <= x <= x1 and y0 <= y <= y1, f"{where} {layer['class']} at {x}, {y}")
+                for label in figure["labels"]:
+                    x, y = label["at"]
+                    self.assertTrue(x0 <= x <= x1 and y0 <= y <= y1, f"{where} label {label['text']}")
+                for kind, cls, _ in figure["legend"]:
+                    self.assertEqual(drawn.get(cls), kind, f"{where} legend {cls}")
+
+    def test_every_class_a_figure_paints_is_styled_on_the_page_and_in_print(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        for name, data in self.embedding.items():
+            for view in data["views"]:
+                for layer in view["figure"]["layers"]:
+                    selector = "em-" + layer["class"] + ("-fill" if layer["kind"] == "fill" else "")
+                    self.assertRegex(page, r"\n    [^\n{]*\." + re.escape(selector) + r"(?![\w-])[^{\n]*\{",
+                                     f"{name} {view['id']} paints {selector}, which is not styled")
+                    self.assertRegex(page, r"\.mfs-print-body \." + re.escape(selector) + r"(?![\w-])",
+                                     f"{name} {view['id']} paints {selector}, which is not styled in print")
+
+    def load_folder(self, files, metrics):
+        with tempfile.TemporaryDirectory() as folder:
+            for filename, data in files.items():
+                (Path(folder) / filename).write_text(json.dumps(data), encoding="utf-8")
+            with mock.patch.object(build, "EMBEDDING_DIR", Path(folder)):
+                return build.load_embedding(metrics)
 
 
 class Bibliography(unittest.TestCase):
