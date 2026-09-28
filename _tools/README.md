@@ -380,7 +380,7 @@ The page draws it under the heading "embedding diagram", just below the conforma
 The file is the definition in "The file, which the application reads" below, and the application is built against that section, so a change to the shape of the file is a change to it first.
 
 `_tools/derivations/embedding.py` draws them, one function per spacetime with its derivation in its docstring, reading the published metric through the checker's `Reader` with the `load` and `published_matrix` the null rays use.
-It needs the same environment as `null_rays.py` and took 6 seconds for the whole collection on 27 September 2026:
+It needs the same environment as `null_rays.py` and took 41 seconds for the whole collection on 27 September 2026, most of it in the two collapsing dust clouds, whose every shell is solved on its cycloid by bisection:
 
     /tmp/mfs-venv/bin/python _tools/derivations/embedding.py
     python3 _tools/build_mfs_data.py
@@ -410,11 +410,12 @@ The surface is measured as the application will draw it, from the rounded number
 - across: the straight line in space from each point to the next one $0.02$ further round the axis, against the length the metric gives the line that runs out at a steady proper distance while it turns steadily through the same angle;
 - around: $\rho$ at every point against $\sqrt{g_{\phi\phi}}$;
 - joins: where two pieces meet, as a star's surface meets the exterior, they meet at one point with one tangent, which says $g_{xx}$ agrees on both sides;
-- forms: each surface against the closed form it is known by, Flamm's paraboloid, the interior Schwarzschild cap, the catenoid, the cone, Gott's cap and the sphere;
-- stops: where a view says a slice cannot be drawn, $g_{xx} - (d\rho/dx)^2$ is negative at every sample, and where it says a slice is a plane, it is zero.
+- forms: each surface against the closed form it is known by: Flamm's paraboloid, also as the exterior of the neutron star, of each collapse at its release and, moved in by $r_s$, of Vaidya's slices; the interior Schwarzschild cap, the catenoid in both its charts, the cone, Gott's cap, the spheres of FRW, de Sitter and Oppenheimer-Snyder's dust, and Bertotti-Robinson's cylinder and sphere; and the circumference radius of the Kerr, Kerr-Newman and Taub-NUT horizons;
+- fields: a declared star, scale factor or dust cloud against the published Einstein tensor, the neutron star against $G^\theta{}_\theta = 8\pi p$, FRW's and Oppenheimer-Snyder's scale factors against their $G^r{}_r$ and $G^\chi{}_\chi$, and each cloud released from rest against Tolman-Bondi's $G^r{}_r = 0$ and its $G^t{}_t$, the density;
+- stops: where a view or a file says a slice cannot be drawn, $g_{xx} - (d\rho/dx)^2$ is negative at every sample, or $g_{\phi\phi}$ is, where the circles are timelike; where it says a slice is a plane, it is zero, or the spatial metric has no cross term and no component that depends on a spatial coordinate.
 
 On 27 September 2026 the worst chord missed its proper distance by $7.0 \times 10^{-5}$ of it, inside Reissner-Nordstrom's inner horizon, and the worst line across by $1.1 \times 10^{-4}$, on the sphere of radius $a = 1/2$ of FRW's first moment, where the rounding on chords a sixtieth of a unit long is most of it.
-Every profile end to end was within $3.3 \times 10^{-5}$ of its proper length, every $\rho$ within $5 \times 10^{-8}$ of the drawing's size of $\sqrt{g_{\phi\phi}}$, every closed form within $5 \times 10^{-8}$ of the size, and every join met to $3 \times 10^{-13}$ with tangents equal to $4 \times 10^{-16}$.
+Every profile end to end was within $3.3 \times 10^{-5}$ of its proper length, every $\rho$ within $2.5 \times 10^{-8}$ of the drawing's size of $\sqrt{g_{\phi\phi}}$, every closed form within $2.5 \times 10^{-8}$ of the size, every join met to $3 \times 10^{-13}$ with tangents equal to $4 \times 10^{-16}$, and every declared solution satisfied the published field equations to $1.4 \times 10^{-14}$; 382 checks in all, none failing, and running the script again writes the same bytes.
 The tests hold the files on disk to the same closed forms without sympy, from the numbers written and nothing else, so a redraw that changed a surface fails there too.
 
 ### Which spacetimes
@@ -485,7 +486,7 @@ Its `points` are `[x, rho, z]`, running from its `start` to its `end` with `x` s
 
 No number is written as `-0.0`.
 A piece holds the surface for the values of `x` from its first point to its last and says nothing beyond them; its `start` and `end` say what the surface does at each.
-The pieces drawn on 27 September 2026 have 9 to 199 points each.
+The pieces drawn on 27 September 2026 have 9 to 257 points each.
 
 To draw a piece, turn every point about the axis, $(\rho\cos\phi, \rho\sin\phi, z)$ for $\phi$ from $0$ to $2\pi$, and join neighbouring points and neighbouring angles.
 The points are close enough that straight segments between them are the surface to within $2 \times 10^{-5}$ of the drawing's size, the diameter of the widest circle drawn, so no smoothing is wanted, and a client may add angles as finely as it likes.

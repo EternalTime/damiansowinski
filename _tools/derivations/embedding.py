@@ -59,10 +59,14 @@ file holds, against the published metric:
   around    the circumference 2 pi rho at every point against 2 pi sqrt(g_phiphi);
   joins     where two pieces meet, as a star's surface meets the exterior, they meet at
             one point with one tangent, which says g_xx agrees on both sides;
-  forms     the closed form each surface is known by: Flamm's paraboloid, the interior
-            Schwarzschild cap, the catenoid, the cone, Gott's cap and the sphere;
+  forms     the closed form each surface is known by, as Flamm's paraboloid, the interior
+            Schwarzschild cap, the catenoid, the cone, Gott's cap, the sphere and the
+            cylinder, and the circumference of a rotating hole's horizon;
+  fields    a declared star, scale factor or dust cloud against the published Einstein
+            tensor it is meant to solve;
   stops     where the file says a slice cannot be drawn, g_xx - (drho/dx)^2 is negative
-            there, or identically zero where it says the slice is a plane.
+            there, or g_phiphi is, where the circles are timelike, and where it says a
+            slice is flat, that it is.
 
 A chord is shorter than the arc it cuts by a part in (h kappa)^2/24, h its length and
 kappa the profile's curvature, so ALONG and ACROSS allow that and a little rounding; a
