@@ -85,6 +85,12 @@ Reproduce a text size fault the way a reader meets it, with a larger default fon
 Every choice on the page, the chart, a view of a diagram and a tensor's index placement, is one control, a row of buttons built by `choiceButton`, and a row appears only where there is more than one thing to choose.
 Every drawing, a spacetime diagram, a conformal diagram and a figure in three dimensions, stands on one dark ground, `--mfs-ground`, across the whole figure with its words, and prints on white.
 
+Every written area of the spacetimes page is set in the history's font, Source Code Pro at its regular weight and upright.
+That is the history and its tables, the conventions, every diagram's captions, legends and notes, the sentences under "not drawn", the restriction bands, the references, "vanishing" where a tensor or a scalar is zero, the placeholders, the loading line and the note beside the coffee button.
+Each keeps its own size, and the headings, the choices, the list of names and every word inside a drawing keep their own fonts.
+One rule in `_layouts/mfs.html` names them all, and `WrittenAreas` in `_tools/test_build_mfs_data.py` holds every rule that reaches into one of them to that font, so a new kind of prose goes into both lists.
+The print copy is set whole in EB Garamond, the history with it.
+
 The coordinates come first in the mathematics, right after the history, since the chart is chosen before anything that depends on it: their buttons, then each coordinate with its domain.
 The page prints a spacetime's `signature` and `convention` under the heading "conventions" just below them, which is where the application reads them.
 They belong to the spacetime and not to a chart, so choosing a chart leaves them standing.
