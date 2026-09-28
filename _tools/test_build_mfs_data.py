@@ -428,6 +428,20 @@ class HistoryShape(unittest.TestCase):
             self.assertEqual(path.read_text(encoding="utf-8"), text)
 
 
+    def test_a_table_is_set_in_the_font_of_the_prose_around_it(self):
+        # Bianchi's list of the nine types came up in the page's serif among the history's
+        # monospaced prose; the two rules must name the same family.
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+
+        def family(selector):
+            rule = re.search(re.escape(selector) + r" \{([^}]*)\}", page)
+            self.assertIsNotNone(rule, selector)
+            found = re.search(r"font-family:\s*([^;!]+)", rule.group(1))
+            self.assertIsNotNone(found, f"{selector} names no font")
+            return found.group(1).strip()
+        self.assertEqual(family("#mfs-content-panel .mfs-table"), family("#mfs-content-panel .mfs-history p"))
+
+
 class Diagrams(unittest.TestCase):
     """A diagram is drawn from what its metric publishes, and stops being published when that changes."""
 
