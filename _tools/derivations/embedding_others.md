@@ -5,12 +5,12 @@ Eleven had none.
 Eight were stated in sentences, because their slices are flat or hyperbolic or not spacelike everywhere: Alcubierre, anti-de Sitter, Bianchi I, Kasner, Krasnikov, Lentz, Minkowski and Natário.
 Three had no file at all, because their slices were thought to carry no one surface that says anything: the Malament-Hogarth toy, the Mixmaster universe and the pp-wave.
 
-Each of the eleven gets a drawing here, and the drawings fall into three kinds.
+Each of the eleven now gets a drawing, and the drawings fall into three kinds.
 Where a slice is curved and has an axis, it is drawn as the other eighteen are, a surface of revolution in flat space, and where the construction runs out the drawing stops at the circle where it does: the Malament-Hogarth toy and the Mixmaster universe.
 Where a slice is curved the other way at every point, as the hyperbolic plane is, no surface in flat space carries it, and it is drawn in three dimensional Minkowski space instead, where the whole of it lies on one sheet of a hyperboloid: anti-de Sitter.
 Where a slice is flat, the surface is a plane, and what makes the spacetime what it is lies in how the slices are stacked, not in the shape of any one; the plane is drawn with that feature marked on it, a ring of free particles as it is stretched, the wall of a warp bubble and the flow of space through it, or the circle inside which the direction along a tube is a time.
 
-Every number below was computed from the published metric components through the checker's `Reader`, with `null_rays.load` and `published_matrix` as the other diagrams read them, and every declared function is the one a diagram of the same spacetime already declares, unless it says otherwise.
+Every number was computed from the published metric components through the checker's `Reader`, with `null_rays.load` and `published_matrix` as the other diagrams read them, and every declared function is the one a diagram of the same spacetime already declares, unless it says otherwise.
 The scratch scripts that computed them are not kept; `embedding.py` will recompute and check every number when the eleven are added to it.
 
 ---
@@ -64,7 +64,7 @@ and at $T = 0$, from the rim at $s = 1$ down to the circle at $s$:
 
 The computer of Earman and Norton's toy rides the axis toward the removed event, and its clock reads $\int\Omega\,c\,dt$ along the axis.
 From $ct = -1$ it reads $0.3470$ at $ct = -0.7$, $1.3632$ at $-0.3$, $2.6208$ at $-0.1$, $5.0084$ at $-0.01$ and $7.3200$ at $-0.001$, and without limit as $ct \to 0$.
-Those are the proper distances of the second table: because $\Omega$ depends only on $c^2t^2 + x^2 + y^2 + z^2$, the tube of the slice $T = 0$ from its rim down to the circle $s$ is exactly as long as the computer's clock runs from $ct = -1$ to $ct = -s$.
+At $T = 0$ the tube from its rim down to $s = 0.3$, $0.1$, $0.01$ and $0.001$ is $1.3632$, $2.6208$, $5.0084$ and $7.3200$ long: because $\Omega$ depends only on $c^2t^2 + x^2 + y^2 + z^2$, the tube of the slice $T = 0$ from its rim down to the circle $s$ is exactly as long as the computer's clock runs from $ct = -1$ to $ct = -s$.
 The infinite proper time the computer spends reaching the removed event, the property the spacetime is named for, is the infinite length of the tube.
 
 The drawing is a sequence of four moments, $cT = -0.7$, $-0.3$, $-0.1$ and $0$, each out to $s = 1.5$, where the plane is flat, with the last drawn down the tube to $s = 0.03$ and ended there with an edge, the tube running on.
@@ -90,7 +90,7 @@ The drawing is the static slice's equator out to $r = 4L$, the range of its spac
 A distance on the drawing is not the distance a reader's eye measures: where the sheet is steep, $dZ$ nearly cancels $d\rho$, and the step from $r = 3L$ to $4L$, which looks longer than the step from $0$ to $L$, is $\mathrm{arcsinh}\,4 - \mathrm{arcsinh}\,3 = 0.2763\,L$ against $0.8814\,L$.
 The caption and the view say so.
 
-The rounding of the file needs care there.
+The rounding of the written surface needs care there.
 At $r = 4L$ the chord of the profile has $\sqrt{d\rho^2 - dZ^2} = 0.2425\,d\rho$, so a chord a ninetieth of the drawing's width of $8L$ is $0.0218\,L$ long in the metric, and one half as long, as the halving next to a bend leaves some, is $0.0108\,L$.
 Rounding $\rho$ and $Z$ to $2 \times 10^{-7}$, half the last place the file keeps for a piece $4L$ across, moves those chords by up to $7.4 \times 10^{-5}$ and $1.5 \times 10^{-4}$ of themselves, most of the $2 \times 10^{-4}$ the chords are held to.
 A surface in Minkowski space is therefore written to nine decimals, which brings both below $2 \times 10^{-6}$.
@@ -210,7 +210,7 @@ $$\theta = \nabla_\mu n^\mu = v_s\,\partial_xf = v_s\frac{x - x_s}{r_s}\frac{df}
 which sympy returns from the published metric with $\sqrt{-g} = 1$.
 On the plane it is $v_s\cos\varphi\,f'(r_s)$, with $\varphi$ the angle from the direction of travel, so space contracts ahead of the ship and expands behind it, most, $4.0027/R$, on the path at $r_s = R$.
 The curves $\theta = \pm 2.0013/R$, half that, are marked: two crescents in the wall, one ahead and one behind, each crossing the path between $r_s = 0.7797\,R$ and $1.2203\,R$ and reaching $60°$ either side of it, where $\cos\varphi = 1/2$ at the steepest point of $f$.
-This is the picture Miguel Alcubierre drew in 1994 as a surface of $\theta$ over the plane; here the plane is drawn as the flat surface it is, with $\theta$ marked on it.
+This is the picture Miguel Alcubierre drew in 1994 as a surface of $\theta$ over the plane; the embedding diagram draws the plane as the flat surface it is, with $\theta$ marked on it.
 
 The energy density the same observers measure is, from the published $G^{tt}$,
 
@@ -321,7 +321,7 @@ The checks are the published metric on the wave front, the particles' equations 
 
 Four things are new, and each is small.
 
-A curve on a surface: the ellipses, crescents and loops of groups 2 and 3 are not circles about the axis, so each is written as a polyline of points on the surface, in the drawing's own coordinates, with a class and an optional label, and is checked to lie on the surface.
+A curve on a surface: the ellipses, crescents and loops on the flat slices are not circles about the axis, so each is written as a polyline of points on the surface, in the drawing's own coordinates, with a class and an optional label, and is checked to lie on the surface.
 A point on a surface: the twelve particles of each ring.
 A surface in Minkowski space: anti-de Sitter's view says so, and every length along it is measured with $dX^2 + dY^2 - dZ^2$, with the checks and the rounding changed to match.
 A slice whose angle is not a chart coordinate: the Malament-Hogarth plane turns $x$ into $y$ about the removed event, and the Mixmaster great sphere moves $\psi$ with $\phi$, so the slice reads the published metric along the turn, as Vaidya's slice already reads it along $v = T + r$.
