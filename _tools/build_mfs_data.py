@@ -6,15 +6,17 @@ Run from anywhere:
     python3 _tools/build_mfs_data.py
 
 Reads   MFS/assets/data/metrics/*.json, MFS/assets/data/diagrams/*.json,
-        MFS/assets/data/conformal/*.json and assets/data/references.bib
+        MFS/assets/data/conformal/*.json, MFS/assets/data/embedding/*.json
+        and assets/data/references.bib
 Writes  MFS/assets/data/metrics_index.json and MFS/assets/data/references.json
 
 Pass --check to verify the written files are up to date without changing them.
 
-The diagram files are drawn by _tools/derivations/null_rays.py and the conformal diagram
-files by _tools/derivations/conformal.py, which need sympy and numpy; this script only
-reads them. It refuses either kind drawn from components its metric no longer publishes,
-and stamps each file's version into the index beside the metric's own.
+The diagram files are drawn by _tools/derivations/null_rays.py, the conformal diagram
+files by _tools/derivations/conformal.py and the embedding diagram files by
+_tools/derivations/embedding.py, which need sympy and numpy; this script only reads them.
+It refuses any of them drawn from components its metric no longer publishes, and stamps
+each file's version into the index beside the metric's own.
 """
 
 import argparse
@@ -32,6 +34,7 @@ BIB_FILE = ROOT / "assets" / "data" / "references.bib"
 REFERENCES_FILE = ROOT / "MFS" / "assets" / "data" / "references.json"
 DIAGRAMS_DIR = ROOT / "MFS" / "assets" / "data" / "diagrams"
 CONFORMAL_DIR = ROOT / "MFS" / "assets" / "data" / "conformal"
+EMBEDDING_DIR = ROOT / "MFS" / "assets" / "data" / "embedding"
 
 VERSION_LENGTH = 16
 
@@ -200,7 +203,73 @@ def load_conformal(metrics):
     return conformal
 
 
-def build_index(metrics, diagrams=None, conformal=None):
+def load_embedding(metrics):
+    """Every embedding diagram file, refused if any field it was drawn from has changed.
+
+    Like a conformal diagram it is of a whole spacetime and may read more than one
+    coordinate system, or another spacetime's, as the interior Schwarzschild star reads the
+    exterior of schwarzschild.json, so the file lists every system it read under `source`.
+    Each piece of each surface must run from its start to its end in one direction of its
+    coordinate, never below the axis, as _tools/README.md defines it.
+    """
+    by_id = {m["id"]: m for m in metrics}
+    embedding = {}
+    for path in sorted(EMBEDDING_DIR.glob("*.json")):
+        if CONFLICT_COPY.search(path.stem):
+            continue
+        where = f"embedding/{path.name}"
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise DataError(f"{where} is not valid JSON: {exc}") from exc
+        if data.get("metric") != path.stem:
+            raise DataError(f"{where} carries the metric {data.get('metric')!r}")
+        if path.stem not in by_id:
+            raise DataError(f"{where} has no metric file to belong to")
+        if not data.get("source"):
+            raise DataError(f"{where} does not say what it was drawn from")
+        for source in data["source"]:
+            metric = by_id.get(source["metric"])
+            if metric is None:
+                raise DataError(f"{where} was drawn from {source['metric']}.json, which does not exist")
+            systems = {s["id"]: s for s in metric.get("coordinates") or []}
+            if source["system"] not in systems:
+                raise DataError(f"{where} was drawn from {source['system']!r}, which "
+                                f"{source['metric']}.json has no coordinate system for")
+            if diagram_source_version(systems[source["system"]], source["fields"]) != source["version"]:
+                raise DataError(
+                    f"{where} was drawn from components of the {source['system']} system that "
+                    f"{source['metric']}.json no longer publishes; redraw it with "
+                    f"_tools/derivations/embedding.py --metric {path.stem}")
+        if not data.get("views") or not all(view.get("surfaces") for view in data["views"]):
+            raise DataError(f"{where} draws nothing")
+        read = {(s["metric"], s["system"]) for s in data["source"]}
+        for view in data["views"]:
+            if view.get("system") and view["system"] not in {s["id"] for s in by_id[path.stem]["coordinates"]}:
+                raise DataError(f"{where}: the view {view['id']!r} names {view['system']!r}, which "
+                                f"{path.stem}.json has no coordinate system for")
+            for surface in view["surfaces"]:
+                for piece in surface["pieces"]:
+                    at = f"{where}: the view {view['id']!r}, piece {piece['id']!r}"
+                    if (piece["metric"], piece["system"]) not in read:
+                        raise DataError(f"{at} was drawn from {piece['metric']}/{piece['system']}, "
+                                        "which the file's source does not stamp")
+                    x = [point[0] for point in piece["points"]]
+                    steps = [b - a for a, b in zip(x, x[1:])]
+                    if len(x) < 2 or not (all(d > 0 for d in steps) or all(d < 0 for d in steps)):
+                        raise DataError(f"{at} does not run one way along its coordinate")
+                    if any(point[1] < 0 for point in piece["points"]):
+                        raise DataError(f"{at} has a point below the axis, rho < 0")
+                ids = {piece["id"] for piece in surface["pieces"]}
+                for ring in surface["rings"]:
+                    if ring["piece"] not in ids:
+                        raise DataError(f"{where}: the view {view['id']!r} marks a circle on "
+                                        f"{ring['piece']!r}, which it does not draw")
+        embedding[path.stem] = data
+    return embedding
+
+
+def build_index(metrics, diagrams=None, conformal=None, embedding=None):
     index = []
     for m in metrics:
         entry = {
@@ -213,6 +282,8 @@ def build_index(metrics, diagrams=None, conformal=None):
             entry["diagrams"] = content_version(diagrams[m["id"]])
         if conformal and m["id"] in conformal:
             entry["conformal"] = content_version(conformal[m["id"]])
+        if embedding and m["id"] in embedding:
+            entry["embedding"] = content_version(embedding[m["id"]])
         index.append(entry)
     return index
 
@@ -367,8 +438,9 @@ def main(argv=None):
         check_history_shape(metrics)
         diagrams = load_diagrams(metrics)
         conformal = load_conformal(metrics)
+        embedding = load_embedding(metrics)
         outputs = {
-            INDEX_FILE: serialise(build_index(metrics, diagrams, conformal)),
+            INDEX_FILE: serialise(build_index(metrics, diagrams, conformal, embedding)),
             REFERENCES_FILE: serialise(references),
         }
     except DataError as exc:
