@@ -157,3 +157,93 @@ Each $c\tau$ is the quadrature of $dT/\sqrt{U}$ from $T_-$, which converges ther
 
 The checks are the isometry of each hemisphere, the join of the two with one tangent at the equator, $\rho = 2b$ there and the meridian's length $2\pi a$, the closed form of the round moment, a sphere of radius $2a$, the negative defect between each pole and the band at $T = 0.2$, and Taub's scale factors against the published field equations.
 The view states that in every other Mixmaster universe the three scale factors differ, so its great sphere has no axis and no surface of revolution carries it, and that at a moment when two are equal and the third is more than $2/\sqrt{3}$ times them, as at $T = 0.2$, the great sphere curves negatively about its poles.
+
+---
+
+## Group 2. Flat slices, with what the spacetime does marked on them
+
+On each of these the metric of the plane drawn has constant coefficients and no cross term, which is checked from the published components, so the plane is flat and its embedding is a flat disc.
+A disc is a surface of revolution about any point of it, and is drawn about the point the spacetime turns on, the centre of the bubble or of the tube, with its profile running along one coordinate axis of the chart from that point, $\rho = \sqrt{g_{xx}}\,x$ and $z = 0$, and a circle or curve marked on it where the physics is.
+The marks that are not circles about the centre are curves on the plane, given as points of the plane in the drawing's own coordinates.
+
+### Minkowski space
+
+The equator of a slice of constant $t$ in the spherical chart has $g_{rr} = 1$ and $g_{\phi\phi} = r^2$, so $\rho = r$ and $g_{rr} - (d\rho/dr)^2 = 0$: the plane, on which a circle of radius $r$ has circumference $2\pi r$.
+It is the surface every other embedding diagram is measured against, and it is drawn as the others are, from the published spherical chart, out to $r = 4\ell$ as its spacetime diagram runs, with circles of constant $r$ at $\ell$, $2\ell$, $3\ell$ and $4\ell$.
+Minkowski space has no length of its own, so $\ell$ is any length.
+Every slice of constant $t$ of the Cartesian chart is the same flat space, and the plane is the equator of each; the checks are the isometry of the profile and $g_{rr} = (d\rho/dr)^2$ at every point, which the stated file already made.
+
+### The Krasnikov tube
+
+At constant $t$ the published metric is $k\,dx^2 + dr^2 + r^2d\phi^2$, with $k$ entering only $g_{xx}$ and $g_{tx}$.
+The spacetime diagram declares the tube along $x$ from $0$ to $D = 4$, built by a ship that left $x = 0$ at $t = 0$ at the speed of light:
+
+$$k = 1 - (2 - \delta)\,S\!\left(\frac{\rho_0^2 - r^2}{2\rho_0}\right)S(ct - x)\,S(x)\,S(D - x),\qquad S(w) = \frac{1 + \tanh(w/0.15)}{2},$$
+
+with $\delta = 0.2$ and $\rho_0 = 1$.
+Where $k < 0$ the direction along the tube is timelike at constant $t$, so the three dimensional slice of constant $t$ is not a moment of space inside the tube.
+The surface of constant $t$ and $x$ across the tube is: its metric is $dr^2 + r^2d\phi^2$, whatever $k$ is, spacelike and flat inside the tube as outside.
+
+The drawing is that cross-section halfway along the tube, $x = D/2 = 2$, at $ct = 3$, after the ship has passed, a flat disc out to $r = 2$.
+There $k = -0.79771$ on the axis and $1$ far out, and it passes through $0$ at $r = 0.983122$, with $k = -1/2$ at $r = 0.8710$ and $k = 1/2$ at $r = 1.0693$.
+The circle $k = 0$ is marked: inside it the direction along the tube, square to the drawing, is a time at constant $t$, which is how the tube carries a traveller back to within an instant of departure.
+Before the ship passes, at $ct = 1$, $k = 1$ everywhere on the same disc, and the disc is the same; the tube is in the direction the drawing leaves out and in the time at which it is drawn, which the caption says.
+The checks are the isometry of the disc, the published $g_{rr} = 1$ and $g_{\phi\phi} = r^2$ independent of $k$, and $k$ vanishing on the marked circle.
+
+### Alcubierre's warp drive
+
+The published metric has unit lapse and flat slices, $dx^2 + dy^2 + dz^2$ at constant $t$, and the shift $v_sf$ along $x$.
+The spacetime diagram declares $v_s = 2$ and Alcubierre's profile
+
+$$f = \frac{\tanh\sigma(r_s + R) - \tanh\sigma(r_s - R)}{2\tanh\sigma R},\qquad r_s = \sqrt{(x - 2ct)^2 + y^2 + z^2},$$
+
+with $R = 1$ and $\sigma = 4$, which centres the bubble on $x = 0$ at $t = 0$.
+The drawing is the plane $z = 0$ at $t = 0$, the plane of the ship's path, a flat disc of radius $3R$ about the ship, as far as its spacetime diagram runs.
+
+Marked on it, first, the circle $v_sf = 1$, which for $v_s = 2$ is $f = 1/2$, at $r_s = 1.000168\,R$: the zero of the published $g_{tt}$, the circle the figure in three dimensions draws its cones round, inside which space is carried past the chart faster than light.
+The wall where $f$ falls from $0.9$ to $0.1$ lies between $r_s = 0.7262\,R$ and $1.2747\,R$.
+
+Second, the expansion of the observers who ride the slices, $n^\mu = (1, v_sf, 0, 0)$ from the published inverse metric, whose volume changes at the rate
+
+$$\theta = \nabla_\mu n^\mu = v_s\,\partial_xf = v_s\frac{x - x_s}{r_s}\frac{df}{dr_s},$$
+
+which sympy returns from the published metric with $\sqrt{-g} = 1$.
+On the plane it is $v_s\cos\varphi\,f'(r_s)$, with $\varphi$ the angle from the direction of travel, so space contracts ahead of the ship and expands behind it, most, $4.0027/R$, on the path at $r_s = R$.
+The curves $\theta = \pm 2.0013/R$, half that, are marked: two crescents in the wall, one ahead and one behind, each crossing the path between $r_s = 0.7797\,R$ and $1.2203\,R$ and reaching $60°$ either side of it, where $\cos\varphi = 1/2$ at the steepest point of $f$.
+This is the picture Miguel Alcubierre drew in 1994 as a surface of $\theta$ over the plane; here the plane is drawn as the flat surface it is, with $\theta$ marked on it.
+
+The energy density the same observers measure is, from the published $G^{tt}$,
+
+$$\frac{c^4}{8\pi G}G^{tt} = -\frac{c^4}{8\pi G}\frac{v_s^2}{4}\frac{y^2 + z^2}{r_s^2}\left(\frac{df}{dr_s}\right)^2,$$
+
+checked on the plane against the declared profile to $3 \times 10^{-15}$: negative, zero on the path and largest at the sides of the wall, a ring about the direction of travel.
+On a flat slice that density is all extrinsic, $16\pi G\rho/c^4 = K^2 - K_{ij}K^{ij}$, since the scalar curvature of the slice vanishes; the drawing's flatness and the negative energy are two faces of one fact.
+
+### Natário's warp drive
+
+The published metric is Natário's flow chart, flat slices with the shift $(u, v, w)$, and the spacetime diagram declares $v_s = 2$, $n = f/2$ with Alcubierre's profile, and the zero expansion field
+
+$$X = v_s\left[(2n + r_sn')\,e_x - n'\,x_r\,(x_r, y, z)/r_s\right],\qquad x_r = x - v_st,$$
+
+whose divergence is checked to vanish.
+The drawing is the plane $z = 0$ at $t = 0$, a flat disc of radius $3R$ about the ship, with the circle $r_s = R$ marked, the middle of the wall.
+
+The field is axisymmetric about the path and divergence free, so in the plane $z = 0$ it flows along the level curves of Stokes's stream function,
+
+$$\Psi = v_s\,n(r_s)\,y^2,$$
+
+with $X_x = y^{-1}\partial_y\Psi$ and $X_y = -y^{-1}\partial_x\Psi$; the declared field is checked tangent to them, $X\cdot\nabla\Psi$ vanishing on the plane to $2 \times 10^{-16}$.
+Inside the bubble $n = 1/2$ and the level curves are lines along the path: space there moves rigidly forward at $v_s$ with the ship.
+Outside $n = 0$ and nothing moves.
+In the wall $n\,r_s^2$ rises to $0.2802\,R^2$ at $r_s = 0.8837\,R$ and falls to zero, so every level curve below that closes: space runs forward through the bubble and back round it through the wall, compressed nowhere, as a fluid that cannot be squeezed.
+The curves marked are the three pairs that cross the bubble at $y = \pm 0.2R$, $\pm 0.4R$ and $\pm 0.6R$, $\Psi = 0.04$, $0.16$ and $0.36$ in units of $R^2$ with $v_s = 2$, which come back through the wall at $y = \pm 1.5019R$, $\pm 1.2775R$ and $\pm 1.1111R$ on the plane $x = 0$.
+José Natário built the drive in 2002 to show that the expansion Alcubierre's drive turns on is not needed: with $\theta = 0$ everywhere the ship is carried by the sliding of space, and the energy density the riding observers measure is again $K^2 - K_{ij}K^{ij}$ over $16\pi G/c^4$, now $-K_{ij}K^{ij}$ alone, negative.
+
+### Lentz's soliton
+
+The published metric is Lentz's, unit lapse, flat slices and the shift a gradient, $N_i = \partial_i\phi$, with $\phi$ left free, and the flat slices are one of the three things Lentz fixed to define the class.
+His soliton exists only as a numerical integral of the wave equation $\partial_x^2\phi + \partial_y^2\phi - (2/v_h^2)\partial_z^2\phi = \rho_h$ over his rhomboid cells of source, so no member of the class can be written down, and a potential written in its place would draw another soliton, as the spacetime diagrams already say.
+What the drawing holds for every soliton of the class is the slice itself: the plane $y = 0$ of the path along $z$, at one moment, flat, a disc about the soliton's centre with the path marked as a line through it.
+Without a potential the published metric has no length in it, so the disc's radius is in any length $\ell$, and nothing else is marked.
+The caption carries the physics: on the flat slice the energy density the riding observers measure is $(K^2 - K_{ij}K^{ij})c^4/16\pi G = \sigma_2(\partial_i\partial_j\phi)\,c^4/8\pi G$, the sum of the principal minors of the Hessian of $\phi$, which Lentz arranged to be positive wherever his soliton has any, and which Jessica Santiago, Sebastian Schuster and Matt Visser showed an observer moving fast enough through the slices measures as negative.
+The check is the published spatial metric, $\delta_{ij}$ with no dependence on $\phi$.
