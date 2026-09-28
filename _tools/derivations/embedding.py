@@ -132,24 +132,31 @@ class Slice:
     params     parameter -> value; functions, a declared function -> an expression for it,
                in the plain names of the coordinates and parameters, substituted first;
     numeric    a declared function solved numerically -> (f, df), numpy functions of x giving
-               it and its derivative along x on the slice, as a star's mass m(r).
+               it and its derivative along x on the slice, as a star's mass m(r);
+    along      a coordinate that moves with x on the slice -> an expression for it in x, as
+               v = T + r on Vaidya's slice of constant v - r: the metric is pulled back along
+               the slice, g_xx picking up the cross terms and the moving coordinate's own.
     """
 
-    def __init__(self, sources, metric_id, system_id, x, phi, fixed, params=None, functions=None, numeric=None):
+    def __init__(self, sources, metric_id, system_id, x, phi, fixed, params=None, functions=None, numeric=None,
+                 along=None):
         _, entry, reader = nr.load(metric_id, system_id)
         sources.note(metric_id, system_id, FIELDS)
         self.metric_id, self.system_id, self.coordinate = metric_id, system_id, x
         R = reader
         names = {R._plain(n): s for n, s in R.symbol.items()}
         names.update(R.parameters)
+        along = along or {}
         held = sorted(R._plain(c) for c in entry["coords"] if c not in (x, phi))
-        if held != sorted(fixed):
+        if held != sorted([*fixed, *along]):
             raise SystemExit(f"{metric_id}/{system_id}: the slice of {x} and {phi} holds {held} fixed, "
-                             f"and the table fixes {sorted(fixed)}")
+                             f"and the table fixes {sorted(fixed)} and moves {sorted(along)}")
         self.x, self.phi = R.symbol[x], R.symbol[phi]
         subs = {R.c: 1}
         subs.update({R.parameters[k]: sp.sympify(v) for k, v in (params or {}).items()})
         held_at = {names[k]: sp.sympify(v) for k, v in fixed.items()}
+        moved = {names[k]: sp.sympify(v, locals=names) for k, v in along.items()}
+        held_at.update(moved)
         funcs = {R.parameters[k]: sp.sympify(v, locals=names) for k, v in (functions or {}).items()}
         self.numeric = bool(numeric)
         funcs.update({R.parameters[k]: numeric_function(k, f, df)(R.symbol[x]) for k, (f, df) in (numeric or {}).items()})
@@ -160,7 +167,16 @@ class Slice:
             return sp.simplify(e.subs(subs).subs(held_at))
         g = nr.published_matrix(R, entry, "metric_components")
         i, j = entry["coords"].index(x), entry["coords"].index(phi)
-        self.gxx, self.gxp, self.gpp = prep(g[i, i]), prep(g[i, j]), prep(g[j, j])
+        # The slice's tangent along x in the chart: 1 along x and d(expression)/dx along a moving
+        # coordinate, which is how g_xx picks up g_xv and g_vv on a slice of constant v - r.
+        tangent = [sp.Integer(0)] * len(entry["coords"])
+        tangent[i] = sp.Integer(1)
+        for name, expr in moved.items():
+            tangent[[names[R._plain(c)] for c in entry["coords"]].index(name)] = sp.diff(expr, self.x)
+        n = len(tangent)
+        gxx = sum(tangent[a] * tangent[b] * g[a, b] for a in range(n) for b in range(n))
+        gxp = sum(tangent[a] * g[a, j] for a in range(n))
+        self.gxx, self.gxp, self.gpp = prep(gxx), prep(gxp), prep(g[j, j])
         where = f"{metric_id}/{system_id} on the slice of {x} and {phi}"
         if self.gxp != 0:
             raise SystemExit(f"{where}: g_x phi = {self.gxp}, so the slice is not a surface of revolution")
@@ -844,6 +860,33 @@ def figure_of(surfaces, fills, size, camera=CAMERA, offsets=None, meridians=24):
     return fig
 
 
+def sequence_figure(surfaces, fills, size, columns, camera=CAMERA, meridians=12, gap=0.15):
+    """A sequence of surfaces in rows of `columns`, read left to right and down, each on its own
+    axis and centred in its column, the tops of a row level, and each moment's label set below
+    its row. `gap` is the space between columns as a part of the widest surface."""
+    phi = np.linspace(0, 2 * math.pi, 73)
+    boxes = []
+    for s in surfaces:
+        P = np.vstack([np.column_stack([np.outer(p.rho, np.cos(phi)).ravel(), np.outer(p.rho, np.sin(phi)).ravel(),
+                                        np.repeat(p.z, len(phi))]) for p in s.pieces if not p.reference])
+        S = camera.screen(P)
+        boxes.append((S.min(0), S.max(0)))
+    width = max(hi[0] - lo[0] for lo, hi in boxes)
+    height = max(hi[1] - lo[1] for lo, hi in boxes)
+    unit = columns * width * (1 + gap) / 560
+    row = height + (8 + 1.25 * LAB["small"] + 14) * unit
+    lift = float(camera.screen([0.0, 0.0, 1.0])[1] - camera.screen([0.0, 0.0, 0.0])[1])
+    offsets = []
+    for k, (lo, hi) in enumerate(boxes):
+        top = -(k // columns) * row
+        offsets.append(((k % columns) * width * (1 + gap) - 0.5 * (lo[0] + hi[0]), 0.0, (top - hi[1]) / lift))
+    fig = figure_of(surfaces, fills, size, camera, offsets, meridians)
+    for k, (s, off) in enumerate(zip(surfaces, offsets)):
+        at = np.array([float(fig.screen(np.asarray(off))[0]), -(k // columns) * row - height])
+        fig.label(at, s.label, "t", "small", dy=8)
+    return fig
+
+
 def schwarzschild(ck, src):
     """Flamm's paraboloid. The slice of constant Schwarzschild t through the equator has
     g_rr = 1/(1 - r_s/r) and g_phiphi = r^2, so dz/dr = sqrt(r_s/(r - r_s)) and z^2 =
@@ -1207,6 +1250,65 @@ def de_sitter(ck, src):
                         "being Euclidean space scaled by $e^{Ht}$, so its equator is a plane."])]
 
 
+def vaidya(ck, src):
+    """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
+    for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
+    are slices of constant v - r = T, spacelike everywhere, inside the horizon too, on which the
+    published metric pulls back to (1 + 2Gm/c^2r) dr^2 + r^2 dphi^2 with v = T + r. Inside the
+    shell, at r < -T, m = 0 and the surface is a flat disc, which is checked; outside, dz/dr =
+    sqrt(r_s/r), z = 2 sqrt(r_s r), Flamm's paraboloid moved in by r_s, which reaches the axis in
+    a spike at the singularity once the shell has gone. The shell folds the surface where they
+    meet. The event horizon, u = v - 2r = -2 r_s inside and r = r_s outside, is r = T + 2 on the
+    disc while the shell is outside r_s and r_s after."""
+    top = 4.0
+    size = 2 * top
+
+    def slice_at(T, m):
+        return Slice(src, "vaidya", "eddington_finkelstein_ingoing", "r", "\\phi", {"theta": "pi/2"}, {"G": 1},
+                     {"m": m}, along={"v": f"{T} + r"})
+    surfaces = []
+    rim = ("edge", "the surface runs on, as Flamm's paraboloid moved in by $r_s$, to $r \\to \\infty$")
+    for T in (-3.0, -1.5, -0.5, 1.0):
+        where = f"Vaidya, v - r = {T:g}"
+        hole = slice_at(T, "1/2")
+        rings = [(r, "r", None) for r in (2.0, 3.0, top)]
+        if T < 0:
+            R = -T
+            flat = slice_at(T, "0")
+            ck.plane(f"{where}, inside the shell", flat, np.linspace(1e-3, R, 200))
+            inside = Piece("inside", "sheet", flat, 0.0, R, 0.0, 1,
+                           (("axis", "the centre $r = 0$, where space is flat until the shell arrives"),
+                            ("crease", "the shell of radiation, where the surface folds")),
+                           [(R, "surface", None)] + ([(T + 2, "horizon", None)] if 0 < T + 2 < R else []), size)
+            outside = Piece("outside", "sheet", hole, R, top, 0.0, 1, (("crease", "the shell"), rim),
+                            ([(1.0, "horizon", None)] if R < 1 else []) + [m for m in rings if m[0] > R], size)
+            pieces = [inside, outside]
+            ck.add(f"{where}, the two sides meet at the shell: one point",
+                   float(np.max(np.abs(np.array(inside.at(R)) - outside.at(R)))), JOIN)
+            ck.form(f"{where}, outside the shell z = 2 sqrt(r_s r) - 2 sqrt(r_s R)", outside,
+                    lambda r, R=R: 2 * (np.sqrt(r) - np.sqrt(R)), size)
+        else:
+            whole = Piece("whole", "sheet", hole, 0.0, top, 0.0, 1,
+                          (("apex", "the singularity $r = 0$, where the surface closes in a spike"), rim),
+                          [(1.0, "horizon", None)] + rings, size)
+            pieces = [whole]
+            ck.form(f"{where}, z = 2 sqrt(r_s r)", whole, lambda r: 2 * np.sqrt(r), size)
+        for p in pieces:
+            ck.isometry(f"{where}, {p.id}", p)
+        surfaces.append(Surface(pieces, label=f"$v - r = {T:g}\\,r_s$", time=T))
+    fig = sequence_figure(surfaces, {"sheet": "cover"}, size, columns=2)
+    fig.legend("fill", "cover", "the slice of constant $v - r$, which $v$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$ and $4\\,r_s$")
+    fig.legend("line", "surface", "the shell of radiation, where the surface folds")
+    fig.legend("line", "horizon", "the event horizon, which forms at the centre at $v = -2\\,r_s$ and grows through flat "
+                                  "space to meet the shell at $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("shell", "The falling shell", "$r_s$", surfaces, fig.done(),
+                 settings="$r_s = 2GM/c^2 = 1$, the unit of every length; each moment is a slice of constant $v - r$.",
+                 input="An imploding shell of radiation, $m = 0$ for $v < 0$ and $m = M$ for $v > 0$, as the "
+                       "conformal diagram draws it.")]
+
+
 def ellis_bronnikov(ck, src):
     """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
     l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
@@ -1503,6 +1605,7 @@ DRAWN = {
     "ellis_bronnikov": ellis_bronnikov,
     "rn_metric": rn_metric,
     "de_sitter": de_sitter,
+    "vaidya": vaidya,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "cosmic_string": cosmic_string,
@@ -1514,7 +1617,6 @@ DRAWN = {
 # profile, so neither is flat and neither has one surface that says anything; the
 # Malament-Hogarth slices take whatever shape an arbitrary conformal factor gives them.
 NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth", "oppenheimer_snyder", "tolman_bondi",
-             "vaidya",
              "bertotti_robinson", "stockum_dust", "taub_nut", "godel"}
 
 CAPTIONS = {
@@ -1625,6 +1727,19 @@ CAPTIONS = {
         "smallest moment of the closed slicing, in which space is a three sphere of radius "
         "$\\ell\\cosh(ct/\\ell)$ that contracts to this waist and expands after it. The two observers can "
         "never exchange light: each hemisphere lies outside the other observer's past and future alike.",
+    ],
+    ("vaidya", "shell"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of space around a shell of radiation falling "
+        "inward, at four moments, each drawn as a surface in flat space so that every distance along it is "
+        "the distance the metric gives. A slice of constant $v$ is a light cone, so the moments are slices "
+        "of constant $v - r$, which are spacelike everywhere, inside the horizon as well, and carry the metric "
+        "$(1 + 2Gm/c^2r)\\,dr^2 + r^2d\\phi^2$. Inside the shell $m = 0$ and the surface is a flat disc. "
+        "Outside it $m = M$ and the surface is $z^2 = 4r_sr$, Flamm's paraboloid moved in by $r_s$, and the "
+        "energy of the shell folds the surface where the two meet.",
+        "The event horizon forms at the centre at $v = -2\\,r_s$, before the shell arrives, and grows "
+        "through the flat interior, where nothing yet marks it, to meet the shell at $r_s$, where it stays. "
+        "Once the shell has reached the centre the whole slice is Schwarzschild's, and the paraboloid runs "
+        "on through the horizon to close in a spike at the singularity $r = 0$.",
     ],
     ("ellis_bronnikov", "wormhole"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Ellis-Bronnikov wormhole at one moment of "

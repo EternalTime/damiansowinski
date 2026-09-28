@@ -813,7 +813,7 @@ class EmbeddingDiagrams(unittest.TestCase):
     what its metrics publish, and stops being published when any of that changes. The file is
     the definition in _tools/README.md, which the application builds against."""
 
-    ENDS = {"axis", "apex", "join", "throat", "edge", "stops"}
+    ENDS = {"axis", "apex", "join", "crease", "throat", "edge", "stops"}
 
     def setUp(self):
         self.metrics = build.load_metrics()
@@ -991,6 +991,19 @@ class EmbeddingDiagrams(unittest.TestCase):
             for r, rho, z in piece("de_sitter", pid):
                 near(rho, r, f"de Sitter rho at {r}")
                 near(z, sign * math.sqrt(max(1 - r * r, 0)), f"de Sitter z at {r}")
+        # Vaidya's slices of constant v - r: a flat disc inside the shell, and outside it Flamm's
+        # paraboloid moved in by r_s, z = 2 sqrt(r), from the shell at z = 0 or from the axis.
+        for number, surface in enumerate(self.embedding["vaidya"]["views"][0]["surfaces"]):
+            ids = [p["id"] for p in surface["pieces"]]
+            if "inside" in ids:
+                self.assertTrue(all(z == 0 for _, _, z in piece("vaidya", "inside", number)))
+                outside = piece("vaidya", "outside", number)
+                shell = outside[0][0]
+                for r, rho, z in outside:
+                    near(z, 2 * (math.sqrt(r) - math.sqrt(shell)), f"Vaidya z at {r}")
+            else:
+                for r, rho, z in piece("vaidya", "whole", number):
+                    near(z, 2 * math.sqrt(r), f"Vaidya z at {r}")
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
