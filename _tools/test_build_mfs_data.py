@@ -105,6 +105,8 @@ def embedding_files():
 
 def embedding_prose(name, data):
     """Yield every field of an embedding diagram file a reader sees, each with its place."""
+    for position, text in enumerate(data.get("stops", [])):
+        yield f"embedding/{name}.json stops[{position}]", text
     for view in data["views"]:
         where = f"embedding/{name}.json {view['id']}"
         yield f"{where}.label", view["label"]
@@ -874,6 +876,25 @@ class EmbeddingDiagrams(unittest.TestCase):
             with self.assertRaises(build.DataError) as raised:
                 self.load_folder({"schwarzschild.json": data}, self.metrics)
             self.assertIn("draws nothing", str(raised.exception))
+
+    def test_a_spacetime_with_nothing_to_draw_says_why_and_draws_nothing(self):
+        stated = {name: data for name, data in self.embedding.items() if not data["views"]}
+        self.assertTrue({"alcubierre", "natario", "lentz", "anti_de_sitter"} <= set(stated), sorted(stated))
+        for name, data in stated.items():
+            self.assertTrue(data["stops"], name)
+            self.assertTrue(all(text.strip() for text in data["stops"]), name)
+        for name, data in self.embedding.items():
+            if data["views"]:
+                self.assertNotIn("stops", data, f"{name} keeps what it does not draw in its views")
+        # Words beside views, or no words and no views, are refused.
+        flamm = self.embedding["schwarzschild"]
+        with self.assertRaises(build.DataError) as raised:
+            self.load_folder({"schwarzschild.json": dict(flamm, stops=["Nothing."])}, self.metrics)
+        self.assertIn("says beside them", str(raised.exception))
+        warp = self.embedding["alcubierre"]
+        for data in (dict(warp, stops=[]), dict(warp, stops=[" "])):
+            with self.assertRaises(build.DataError):
+                self.load_folder({"alcubierre.json": data}, self.metrics)
 
     def test_a_piece_that_doubles_back_or_crosses_the_axis_is_refused(self):
         for spoil, words in ((lambda points: points.reverse() or points.insert(1, points[0]), "one way"),

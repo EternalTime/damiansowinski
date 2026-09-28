@@ -2085,18 +2085,31 @@
         }).join('') + '</div>';
       }
 
+      /* A spacetime with no surface to draw says why instead, under the same heading, as the
+         warp drives do: the file then holds no view and its sentences under `stops`. */
       function embeddingSection(metricId, coordId) {
         var data = _embeddingCache[metricId];
         if (!data || !data.views) return '';
+        function note(key, text) {
+          return '<div class="mfs-nr-note"><span class="mfs-nr-k">' + key + '</span> ' + nrProse(nrEsc(text)) + '</div>';
+        }
+        if (!data.views.length) {
+          if (!data.stops || !data.stops.length) return '';
+          return [
+            '<div class="mfs-section mfs-diagram mfs-embedding">',
+              '<div class="mfs-section-head"><div class="mfs-section-label">embedding diagram</div></div>',
+              '<div class="mfs-nr-view"><div class="mfs-nr-text">',
+                data.stops.map(function(text) { return note('not drawn', text); }).join(''),
+              '</div></div>',
+            '</div>'
+          ].join('');
+        }
         var views = data.views.filter(function(v) { return v.system === coordId; })
           .concat(data.views.filter(function(v) { return !v.system; }));
         if (!views.length) return '';
         var buttons = views.length > 1 ? choices(views.map(function(v, i) {
           return choiceButton(nrEsc(v.label), i === 0, {});
         }), 'view') : '';
-        function note(key, text) {
-          return '<div class="mfs-nr-note"><span class="mfs-nr-k">' + key + '</span> ' + nrProse(nrEsc(text)) + '</div>';
-        }
         return [
           '<div class="mfs-section mfs-diagram mfs-embedding">',
             '<div class="mfs-section-head">',
