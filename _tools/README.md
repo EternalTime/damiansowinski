@@ -417,7 +417,12 @@ The tests hold the files on disk to the same closed forms without sympy, from th
 
 ### Which spacetimes
 
-`DRAWN` in the script names the spacetimes that have a diagram and `NOT_DRAWN` the others, which have no file, and the script stops if a metric file is in neither table.
+`DRAWN` in the script names the spacetimes that have a diagram, `STATED` those with no surface to draw whose file says why, and `NOT_DRAWN` the others, which have no file; the script stops if a metric file is in none of the three or in more than one.
+Each function in `STATED` checks what it says from the published metric before it says it.
+Alcubierre's, Natario's and Lentz's warp drives, Kasner's universe, Bianchi type I and Minkowski space are flat on every slice of constant $t$, their spatial metric having no cross term and no component that depends on a spatial coordinate, so the equator is a plane and the physics is in how the slices are stacked.
+Krasnikov's tube is flat outside, where $k = 1$, and deep inside it $k < 0$ makes the direction along the tube timelike at constant $t$, so a surface of constant $t$ is not a moment of space there.
+Anti-de Sitter's static slice is the hyperbolic plane, $g_{rr} < (d\rho/dr)^2$ at every $r > 0$, which is checked.
+Mixmaster's slices are squashed three spheres and a pp-wave's spacelike slices carry its profile, so neither is flat and neither has one surface that says anything, and a Malament-Hogarth spacetime's slices take whatever shape its arbitrary conformal factor gives them; those three have no file.
 Schwarzschild is Flamm's paraboloid on both sheets of the Einstein-Rosen bridge, the slice of constant $t$ running through the bifurcation sphere into the other exterior.
 The interior Schwarzschild star, at $R = 1.5\,r_s$ as its conformal diagram declares, is the cap of a sphere of radius $\sqrt{R^3/r_s}$ joined to the exterior of `schwarzschild.json`, which the file reads, with the vacuum paraboloid drawn on under the cap down to the throat the star replaces.
 The Tolman-Oppenheimer-Volkoff star is the polytrope its other diagrams declare, $M = 1.40\,M_\odot$ and $R = 14.2$ km, with the mass function `null_rays.StarSolver` solves from the published Einstein tensor entering the slice as numbers; its exterior is checked to be Flamm's paraboloid of that mass, and the vacuum paraboloid is drawn under it as under Schwarzschild's star.
@@ -437,7 +442,10 @@ Every number is a plain JSON number, every text is TeX in `$...$` inside prose, 
     }
 
 `source` is what `build_mfs_data.py` checks the file against, one entry for every coordinate system it read, which may be another spacetime's, as the star reads `schwarzschild.json`; the application can ignore it.
-`views` holds at least one view, and a view is:
+`views` holds at least one view, unless the spacetime has no surface to draw.
+Then `views` is empty and `stops`, a list of TeX sentences, says why, printed under the heading after "not drawn", as for the warp drives, whose slices are flat, and anti-de Sitter, whose slices are hyperbolic planes.
+A file with a view never carries `stops` of its own; what a view does not draw is in the view's `stops`.
+A view is:
 
 - `id`: unique in the file.
 - `label`: the name of its button, TeX, wanted only when a chart has more than one view to choose from.

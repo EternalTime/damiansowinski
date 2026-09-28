@@ -241,8 +241,15 @@ def load_embedding(metrics):
                     f"{where} was drawn from components of the {source['system']} system that "
                     f"{source['metric']}.json no longer publishes; redraw it with "
                     f"_tools/derivations/embedding.py --metric {path.stem}")
-        if not data.get("views") or not all(view.get("surfaces") for view in data["views"]):
+        # A spacetime with no surface to draw says why under `stops`, and draws no view; one
+        # that draws keeps what it does not draw in its views.
+        stated = data.get("views") == [] and bool(data.get("stops"))
+        if stated and not all(isinstance(text, str) and text.strip() for text in data["stops"]):
+            raise DataError(f"{where} states why it draws nothing in something other than sentences")
+        if not stated and (not data.get("views") or not all(view.get("surfaces") for view in data["views"])):
             raise DataError(f"{where} draws nothing")
+        if data.get("views") and "stops" in data:
+            raise DataError(f"{where} draws views and says beside them that it draws nothing")
         read = {(s["metric"], s["system"]) for s in data["source"]}
         for view in data["views"]:
             if view.get("system") and view["system"] not in {s["id"] for s in by_id[path.stem]["coordinates"]}:

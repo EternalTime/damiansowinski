@@ -1141,6 +1141,96 @@ def frw(ck, src):
 
 
 
+# ---------------------------------------------------------------- the spacetimes with nothing to draw
+
+def flat_slices(ck, src, metric_id, system_id, time="t"):
+    """Check that every slice of constant `time` of a coordinate system is flat: its spatial
+    metric has no cross term and no component that depends on a spatial coordinate, so at
+    each moment it is Euclidean space with its axes scaled, and its equator is a plane."""
+    _, entry, R = nr.load(metric_id, system_id)
+    src.note(metric_id, system_id, FIELDS)
+    g = nr.published_matrix(R, entry, "metric_components")
+    space = [i for i, c in enumerate(entry["coords"]) if c != time]
+    where = {R.symbol[entry["coords"][i]] for i in space}
+    ok = (all(sp.simplify(g[i, j]) == 0 for i in space for j in space if i != j)
+          and all(g[i, i] != 0 and not (sp.sympify(g[i, i]).free_symbols & where) for i in space))
+    ck.exact(f"{metric_id}/{system_id}: every slice of constant {time} is flat", ok)
+
+
+def warp_drive(metric_id, shift, systems):
+    def stated(ck, src):
+        for system_id in systems:
+            flat_slices(ck, src, metric_id, system_id)
+        return [f"Every slice of constant $t$ is flat: the metric on it is $dx^2 + dy^2 + dz^2$, so its equator "
+                f"is a plane. The warp drive is in how the slices are "
+                f"stacked, the shift {shift} carrying each one past the next, and not in the shape of any one of them."]
+    return stated
+
+
+def krasnikov(ck, src):
+    """At constant t the published metric is k dx^2 + dr^2 + r^2 dphi^2: flat where k = 1,
+    outside the tube, and not spacelike where k < 0, deep inside it."""
+    _, entry, R = nr.load("krasnikov", "cylindrical")
+    src.note("krasnikov", "cylindrical", FIELDS)
+    g = nr.published_matrix(R, entry, "metric_components")
+    k, r = R.parameters["k"], R.symbol["r"]
+    want = sp.diag(k, 1, r ** 2)
+    ck.exact("Krasnikov: at constant t the metric is k dx^2 + dr^2 + r^2 dphi^2",
+             sp.simplify(g[1:, 1:] - want) == sp.zeros(3, 3))
+    return ["Outside the tube $k = 1$ and every slice of constant $t$ is flat, its equator a plane. Deep "
+            "inside it $k = -1 + \\delta$ is negative, so the direction along the tube at constant $t$ is "
+            "timelike, and a surface of constant $t$ is not a moment of space there."]
+
+
+def kasner(ck, src):
+    flat_slices(ck, src, "kasner", "cartesian")
+    return ["Every slice of constant $t$ is flat, $t^{2p_1}dx^2 + t^{2p_2}dy^2 + t^{2p_3}dz^2$ being "
+            "Euclidean space with its three axes scaled, so its equator is a plane. The cosmology is in how "
+            "the scales change from one moment to the next, one axis contracting while the other two expand."]
+
+
+def bianchi(ck, src):
+    flat_slices(ck, src, "bianchi", "type_i_cartesian")
+    return ["Every slice of constant $t$ of type I is flat, $a_1^2dx^2 + a_2^2dy^2 + a_3^2dz^2$ being "
+            "Euclidean space with its three axes scaled, so its equator is a plane. The cosmology is in how "
+            "the three scale factors change from one moment to the next."]
+
+
+def minkowski(ck, src):
+    flat_slices(ck, src, "minkowski", "cartesian")
+    sl = Slice(src, "minkowski", "spherical", "r", "\\phi", {"t": 0, **EQUATOR})
+    ck.plane("Minkowski, the equator of the spherical chart", sl, np.linspace(1e-3, 20, 400))
+    return ["Every slice of constant $t$ is flat and its equator is the plane, on which $g_{rr} = 1$ and a "
+            "circle of radius $r$ has circumference $2\\pi r$: the surface every other embedding diagram is "
+            "measured against."]
+
+
+def anti_de_sitter(ck, src):
+    """The static slice has g_rr = 1/(1 + r^2/L^2) < 1 = (drho/dr)^2 at every r > 0: with r =
+    L sinh s it is L^2 (ds^2 + sinh^2 s dphi^2), the hyperbolic plane of curvature -1/L^2."""
+    sl = Slice(src, "anti_de_sitter", "static_global", "r", "\\phi", {"t": 0, **EQUATOR}, {"L": 1})
+    ck.stops("anti-de Sitter, the equator of the static chart", sl, np.linspace(1e-3, 20, 400))
+    return ["At every $r > 0$ the circles grow faster than the distance out to them, $g_{rr} = 1/(1 + r^2/L^2) "
+            "< 1$, so no surface of revolution in flat space carries the equator of a slice of constant $t$. It "
+            "is the hyperbolic plane of curvature $-1/L^2$: a piece of it lies in flat space on Eugenio "
+            "Beltrami's pseudosphere, and David Hilbert proved in 1901 that no surface in flat space carries "
+            "the whole of it."]
+
+
+# The spacetimes with no surface to draw that say why, each function checking what it states
+# from the published metric and returning the sentences.
+STATED = {
+    "alcubierre": warp_drive("alcubierre", "$v_sf$", ["cartesian"]),
+    "natario": warp_drive("natario", "$(u, v, w)$", ["cartesian_flow", "plane_flow"]),
+    "lentz": warp_drive("lentz", "$\\partial_i\\phi$", ["cartesian"]),
+    "krasnikov": krasnikov,
+    "kasner": kasner,
+    "bianchi": bianchi,
+    "minkowski": minkowski,
+    "anti_de_sitter": anti_de_sitter,
+}
+
+
 # ---------------------------------------------------------------- the tables
 
 DRAWN = {
@@ -1153,9 +1243,11 @@ DRAWN = {
 }
 
 # The spacetimes with no embedding diagram yet, for which nothing is written.
-NOT_DRAWN = {"alcubierre", "natario", "lentz", "krasnikov", "kasner", "bianchi", "mixmaster", "pp_wave",
-             "minkowski", "malament_hogarth", "oppenheimer_snyder", "tolman_bondi", "rn_metric",
-             "kerr", "kerr_newman", "ellis_bronnikov", "de_sitter", "anti_de_sitter", "vaidya",
+# Mixmaster's slices are squashed three spheres and a pp-wave's spacelike slices carry its
+# profile, so neither is flat and neither has one surface that says anything; the
+# Malament-Hogarth slices take whatever shape an arbitrary conformal factor gives them.
+NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth", "oppenheimer_snyder", "tolman_bondi", "rn_metric",
+             "kerr", "kerr_newman", "ellis_bronnikov", "de_sitter", "vaidya",
              "bertotti_robinson", "stockum_dust", "taub_nut", "godel"}
 
 CAPTIONS = {
@@ -1237,6 +1329,9 @@ CAPTIONS = {
 
 def draw(metric_id, ck):
     src = Sources()
+    if metric_id in STATED:
+        stops = STATED[metric_id](ck, src)
+        return {"metric": metric_id, "source": src.stamps(), "views": [], "stops": stops}
     views = DRAWN[metric_id](ck, src)
     for v in views:
         v["caption"] = CAPTIONS[(metric_id, v["id"])]
@@ -1244,12 +1339,14 @@ def draw(metric_id, ck):
 
 
 def check_table():
-    """Every view has a caption, and every spacetime is either drawn or named as not drawn."""
+    """Every view has a caption, and every spacetime is drawn, stated or named as not drawn,
+    in exactly one of the three tables."""
     ids = {p.stem for p in build.METRICS_DIR.glob("*.json") if not build.CONFLICT_COPY.search(p.stem)}
-    both = set(DRAWN) & set(NOT_DRAWN)
-    neither = ids - set(DRAWN) - set(NOT_DRAWN)
-    if both or neither:
-        raise SystemExit(f"drawn and not drawn: {sorted(both)}; neither: {sorted(neither)}")
+    tables = (set(DRAWN), set(STATED), set(NOT_DRAWN))
+    twice = {m for m in ids if sum(m in t for t in tables) > 1}
+    neither = ids - set().union(*tables)
+    if twice or neither:
+        raise SystemExit(f"in more than one table: {sorted(twice)}; in none: {sorted(neither)}")
     stray = {metric for metric, _ in CAPTIONS} - set(DRAWN)
     if stray:
         raise SystemExit(f"captions for spacetimes that are not drawn: {sorted(stray)}")
@@ -1261,10 +1358,10 @@ def main(argv=None):
     parser.add_argument("--metric", action="append", default=[], help="redraw only this spacetime, repeatable")
     parser.add_argument("--verify", action="store_true", help="run and print every check instead of writing")
     args = parser.parse_args(argv)
-    unknown = set(args.metric) - set(DRAWN)
+    unknown = set(args.metric) - set(DRAWN) - set(STATED)
     if unknown:
         parser.error(f"no embedding diagram is drawn for {sorted(unknown)}")
-    wanted = [m for m in DRAWN if not args.metric or m in args.metric]
+    wanted = [m for m in [*DRAWN, *STATED] if not args.metric or m in args.metric]
     start = time.time()
     ck = Checks()
     files = {metric_id: draw(metric_id, ck) for metric_id in wanted}
@@ -1281,7 +1378,7 @@ def main(argv=None):
     EMBEDDING_DIR.mkdir(parents=True, exist_ok=True)
     if not args.metric:
         for path in sorted(EMBEDDING_DIR.glob("*.json")):
-            if path.stem not in DRAWN and not build.CONFLICT_COPY.search(path.stem):
+            if path.stem not in DRAWN and path.stem not in STATED and not build.CONFLICT_COPY.search(path.stem):
                 path.unlink()
                 print(f"removed {path.relative_to(build.ROOT)}")
     for metric_id, data in files.items():
