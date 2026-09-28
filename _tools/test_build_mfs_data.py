@@ -1028,6 +1028,11 @@ class EmbeddingDiagrams(unittest.TestCase):
         for theta, rho, z in piece("bertotti_robinson", "sphere", view=1):
             near(rho, math.sin(theta), f"Bertotti-Robinson sphere rho at {theta}")
             near(z, 1 - math.cos(theta), f"Bertotti-Robinson sphere z at {theta}")
+        # Van Stockum's circles grow to r = R/sqrt(2) and shrink after, and the drawing stops at 0.83 R.
+        dust = piece("stockum_dust", "dust")
+        for r, rho, z in dust:
+            near(rho, r * math.sqrt(1 - r * r), f"van Stockum rho at {r}")
+        self.assertAlmostEqual(dust[-1][0], 0.8337, places=4)
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
