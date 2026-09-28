@@ -1,0 +1,787 @@
+# Damian R. Sowinski
+
+> Theoretical physicist studying how agency emerges from the physical substrate of the world, using information theory, complexity science and simulation.
+
+The full text of the main pages of damiansowinski.com as Markdown, for language models, generated from the page sources; the pages themselves are the reference.
+Index: https://damiansowinski.com/llms.txt
+
+## Home
+
+URL: https://damiansowinski.com/
+
+### Damian R. Sowinski
+
+Theoretical Physicist & Applied Mathemagician
+
+[Email](mailto:DRSowinski@gmail.com) |
+[Curriculum Vitae](https://damiansowinski.com/assets/docs/Sowinski_CV.pdf) |
+[GitHub](https://github.com/eternaltime) |
+[LinkedIn](https://www.linkedin.com/in/damian-sowinski-413b4214)
+
+Artificial Life & Intelligence | Complexity | Information | Simulation | Visualization
+
+#### What is Agency?
+
+Our description of the physical stuff of the world, in the language of modern physics, paints a picture of Nature driven by extremum principles.
+Energy minimization and entropy maximization guide this soup of particles, the *physical substrate*, towards thermodynamic equilibrium where, once there, nothing interesting ever happens.
+Yet, in this inexorable slide towards inevitable boredom, matter organizes itself from atoms to crystals and catalytic networks, patterns forming and growing in complexity and scale.
+And, if the conditions are just right, macroscopic structure supervenes over microscopic details giving birth to agency within the substrate.
+Matter, once subject solely to the whims of energy and entropy, gains the ability to scream **No! Not today Equilibrium!**, to act to suppress its slide towards that inevitable end.
+Our description of the physical stuff of the world, in the language of modern physics, does not know how matter does that.
+
+As AI gets more sophisticated, the ethical question of whether it is alive will grow in importance over the coming decades.
+My research is a cross-disciplinary approach towards trying to understand how agency emerges from the physical substrate of the world, a question of profound importance to humanity's understanding of itself, artificial intelligence, the biosphere both are a part of.
+Living systems act teleologically; since prediction is the providence of information theory, my approach towards tackling this enormous question draws not just from the physical and life sciences, but computer science and machine learning, neuroscience, the philosophy of language, and epistemology.
+A large component of this program is using the techniques of information theory to create informational narratives of systems complementing their traditional physical descriptions.
+This means characterizing how information is generated, stored, and flows in biological, ecological, and sociological systems, and identifying relationships between subsystems that lead to these informational structures.
+
+## About
+
+URL: https://damiansowinski.com/about/
+
+### A Nerd and his three housemates
+
+I am an affiliate of the [S.E.T.I. Institute](https://www.seti.org/), and a visiting researcher at the [University of Rochester's Department of Physics and Astronomy](https://www.pas.rochester.edu/).
+I was born in Poland, grew up in Berlin and California.
+I earned my B.A. in physics at the [University of California, Berkeley](https://physics.berkeley.edu/), and my theoretical physics Ph.D. in the lovely woods of New England from [Dartmouth College](https://physics.dartmouth.edu/).
+At Cal I worked on neutrino detection for the [KamLAND project](https://en.wikipedia.org/wiki/Kamioka_Liquid_Scintillator_Antineutrino_Detector).
+After undergrad I taught in N.Y.C. and researched low mass kinda-stars known as [brown dwarfs](https://en.wikipedia.org/wiki/Brown_dwarf) at the reknowned [Hayden Planetarium](https://www.amnh.org/research/hayden-planetarium) located in the [American Museum of Natural History](https://www.amnh.org/).
+For my Ph.D. I started off in [Cosmology](https://en.wikipedia.org/wiki/Lambda-CDM_model#:~:text=Inflation%20is%20a%20simple%20model,also%20determined%20by%20matching%20observations.), attending the prestigeous [Les Houches School of Physics](https://www.houches-school-physics.com/) summer program in the French Alps.
+I slowly found my thoughts shifting from the very large to the subjective, about the nature of knowledge and how mushy brains come to know things about the world.
+What exactly is information, how is it instantiated in the physical world, and how does it have causal power?
+My thesis was on the behavior of information theoretic measures to the formation of [solitons](https://en.wikipedia.org/wiki/Soliton) and [phase transitions.](https://en.wikipedia.org/wiki/Critical_phenomena)
+
+Since completing my doctorate I've been a research scientist in multiple fields: neuroscience, psychophysics, and continuum mechanics/biomedical physics.
+During my time at the [Wisconsin Center for Sleep and Consciousness](https://centerforsleepandconsciousness.psychiatry.wisc.edu/people/) I worked on [Integrated Information Theory](https://www.iit.wiki/home), one of the leading theories of how subjective experience emerges in matter.
+At the [Dartmouth-Hitchcock Medical Center](https://cim.dartmouth.edu/) I worked on a novel imaging modality known as [magentic resonance elastography](https://www.mayoclinic.org/tests-procedures/magnetic-resonance-elastography/about/pac-20385177).
+I was a fellow at the [Institute for Cross-Disciplinary Engagement](https://www.ice.dartmouth.edu/), giving me a multi-faceted perspective on the scientific endeavor.
+At the University of Rochester I developed the viability based approach to semantic information theory, applying it to complex systems ranging from the [Kuramoto model](https://en.wikipedia.org/wiki/Kuramoto_model) of firefly synchronization to an exoplanet variant of Lovelock's famous Daisyworld.
+None of these adventures would have been possible without the awesome power of mathematics coupled to creativity!
+
+I have loved art and mathematics for as long as I can remember.
+I'm keen on synthesizing the two, and make visualizations of the projects I work on.
+After all, if a picture is worth a thousand words, then a thousand frames of video is, what, a million words?
+That's also why I like mathematics.
+It's a formal language that lets us convey the pictures in our heads with high fidelity to other people's heads.
+And that is rad.
+
+When not frantically scribbling runic looking symbols on paper, I like to go hiking with my GSD, Ursus.
+He was born on 2023, still gives off major puppy vibes and so much energy.
+At home I'm always greeted by my old man, Cosmas.
+Cosmas was born in 2017, and is starting to get grey hairs and lose his teeth.
+He likes lounging at home all day with his younger brother, Gaius, whose favorite past time is running up to Ursus, slapping him, and then running for dear life.
+Animals are amazing, and I'm grateful to have these three guys in my life.
+
+## Research
+
+URL: https://damiansowinski.com/research/
+
+### Research
+
+#### What is Information?
+
+Information is a slippery concept.
+Is it a subjective quantity or an objective one?
+It's probably clear that there's information in a book.
+What about a book written in a language you don't understand?
+The book may be informative to someone, even if it is not informative to you, so it still contains information.
+What if the book is written in a language that no living person can read?
+Does it still contain information?
+To describe these situations more precisely one needs to distill information that has meaning from the information that doesn't.
+Subjective, meaningful information is *semantic*.
+The structural aspects of information, which may or may not have semantics, is referred to as *syntactic*.
+
+Surprisingly (pun intended, IYKYK), syntactic information is closely related to entropy, an objective aspect of the physical world.
+Take the microcanonical definition of entropy as the number of microstates in a given macrostate; for example imagine all the ways that the stuff in your bedroom could be positioned.
+A cheeky way of describing entropy is to say that there are WAAAY more ways for your bedroom to be disorganized than there are ways of it being organized.
+Where is your favorite shirt?
+In a disorganized room, you may have to look in many places before you find it, the room is said to have higher entropy.
+Entropy is synonymous with uncertainty - the more uncertain you are about the exact state of your bedroom, the more entropy it has.
+When you look around your bedroom you discount areas where the shirt is not, becoming more certain about where the shirt actually is.
+The information you gain reduces your uncertainty; the entropy of the room is smaller the more you know about it!
+
+Wait up. Hold on. Didn't that last paragraph start by saying entropy is an *objective* aspect of the world?
+Why are we talking about *subjective* uncertainty?
+Thermodynamic entropy is related to the temperature of a system.
+How can looking around for a particular molecule (your favorite one) in a gas, change the temperature of the gas?!
+The subjective and the objective shake hands to create what seems like a paradox.
+When you find your favorite shirt in your messy room, you grab it and put it on.
+Or put it into a dresser drawer.
+Whatever.
+The point is that you organize your room a little with the information you gain.
+Similarly, one can use the information about a particular molecule in a gas to change the temperature of the gas.
+James Clerk Maxwell first described such a *neat fingered being* in 1867, and dubbed *Maxwell's Demon* several years later by Lord Kelvin.
+The demon sits at a tiny doorway between two volumes of gas at equal temperature.
+When it sees a fast moving molecule approaching the door from the right, it lets it through.
+Similarly, if it sees a slow moving molecule moving from the left it also lets it through.
+By observing the gas, and acting on that information, the demon can make the gas on the left get hotter, while the gas on the right cools.
+Why don't you try it:
+
+- Maxwell's Demon (interactive applet)
+
+Were you hired?
+
+#### How does Agency emerge from Complexity?
+
+Look at that.
+It's like a little beastie, clamoring about in search of food.
+It notices the directions in which its food supply is increasing, and turns towards them.
+Sometimes it gets stuck between choices, shakes a little before choosing a particular option to move in.
+It looks like its making choices, like its looking for food.
+It's behavior looks complex, much like the behavior of paramecia under the microscope.
+But is it?
+
+What you're seeing is the simulation of a chemoton - a protocell consisting of a small collection of chemical species trapped inside a membrane.
+The environment contains sources of another chemical species, one that is metabolized by the species in the membrane to produce more membrane.
+As time goes by the membrane decays, causing the chemoton to shrink.
+The motion you're seeing is due to the front end of the chemoton's membrane growing, and its back shrinking.
+
+Seemingly complex behavior is what our eyes are drawn to, and agency is how our brains rationalize what they see.
+That is not what is actually there.
+This simple example of an incredibly basic system displaying complex, agent-like behavior is why finding agency is difficult.
+We can't rely on a system behaving in a complicated way to justify the claim that the system is an agent.
+For that matter, what exactly do we mean when we say *Agency*?
+We are agents, right?
+Entities capable of acting teleologically, of having goals and directing our actions towards attaining them.
+By that definition, however, LLMs too are agents.
+Whether one agrees or disagrees with that statement, it is clear that agency itself is still a nebulous concet.
+
+Sweeping such concerns under the rug for the moment, when does a system transition from being purely mechanistic to having true agency?
+The chemoton may not have agency, but does the paramecium?
+Or is it, too, simply a bag of chemicals, reacting and metabolizing its surroundings, all the while fooling us into rationalizing it is something more?
+I'm interested in models that live at this awkward boundary between automoton and agent.
+Understanding how complexity, computation, and control intertwine to create behavioral autonomy will get us one very large step closer to understanding its emergence in the physical substrate.
+
+AI poses the same problem to us as biology emerging from chemistry.
+The current generation of LLMs have already passed the Turing test.
+That type of complex, life-like behavior parallels the complex, life-like motions of the chemoton.
+
+#### How do Complex Systems Evolve?
+
+Life does not emerge from the soup of particles that is our Universe fully formed.
+[Assembly theory](https://www.nature.com/articles/s41586-023-06600-9) provides an excellent argument for why evolution starts as soon as molecules reach sizes of around 20 atoms:
+the combinatorial explosion in possible molecular configurations vastly exceeds the exploratory ability of all the atoms in the universe!
+Natural selection places pressure on any configurations that reach that size, leading to lineages of ever growing complexity.
+What this implies is that evolution
+
+#### Is Life a Phase Transition?
+
+#### What does General Relativity tell us is possible?
+
+## Publications
+
+URL: https://damiansowinski.com/publications/
+
+### Publications (with no pay-walls!)
+
+- Damian R Sowinski (2026). [Behavioral Speciation in the Neuroevolution of Recurrent Neural Net Foragers driven by Environmental Homogeneity](https://damiansowinski.com/assets/docs/papers/RNNs_Sowinski_2026.pdf). Working paper.
+- Damian R Sowinski, Gourab Ghoshal, Adam Frank (2025). [Exo-Daisy World: Revisiting Gaia theory through an informational architecture perspective](https://damiansowinski.com/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf). The Planetary Science Journal, 6.
+- Damian R Sowinski, Silvia Holler, Mike Wong, Gary Segal, David Parkinson, Clément Vidal, James Henderson Cleaves, Pritvik Sinhadc, Anirudh Prabhu, Stuart Bartlett (2025). [Causal Leverage Density: A Universal Framework for Semantic Information](https://damiansowinski.com/assets/docs/papers/CLD_Sowinski_2025.pdf). Artificial Life Conference Proceedings 37, 2025.
+- Damian R Sowinski, Sean Kelty, Gourab Ghoshal (2025). [Configurational information measures, phase transitions, and an upper bound on complexity](https://arxiv.org/abs/2503.02980). arXiv preprint arXiv:2503.02980. PDF: https://damiansowinski.com/assets/docs/papers/Ising_Sowinski_2025.pdf
+- Damian R Sowinski, Adam Frank, Gourab Ghoshal (2024). [Information-theoretic description of a feedback-control Kuramoto model](https://damiansowinski.com/assets/docs/papers/Kuramoto_Sowinski_2024.pdf). Physical Review Research, 6.
+- Damian R Sowinski, Jonathan Carroll-Nellenback, Robert N Markwick, Jordi Pinero, Marcelo Gleiser, Artemy Kolchinsky, Gourab Ghoshal, Adam Frank (2023). [Semantic information in a model of resource gathering agents](https://damiansowinski.com/assets/docs/papers/Foraging_Sowinski_2023.pdf). PRX Life, 1.
+- Damian R Sowinski, Jonathan Carroll-Nellenback, Jeremy DeSilva, Adam Frank, Gourab Ghoshal, Marcelo Gleiser (2022). [The consensus problem in polities of agents with dissimilar cognitive architectures](https://damiansowinski.com/assets/docs/papers/Consensus_Sowinski_2022.pdf). Entropy, 24.
+- Damian R Sowinski, Matthew DJ McGarry, Elijah EW Van Houten, Scott Gordon-Wylie, John B Weaver, Keith D Paulsen (2021). [Poroelasticity as a model of soft tissue structure: Hydraulic permeability reconstruction for magnetic resonance elastography in silico](https://damiansowinski.com/assets/docs/papers/Poro_Sowinski_2020.pdf). Frontiers in Physics, 8.
+- Damian Sowinski, Marcelo Gleiser (2018). [Configurational information approach to instantons and false vacuum decay in D-dimensional spacetime](https://damiansowinski.com/assets/docs/papers/Instantons_Sowinski_2018.pdf). Physical Review D, 98.
+- Damian Sowinski, Marcelo Gleiser (2017). [Information dynamics at a phase transition](https://damiansowinski.com/assets/docs/papers/PhaseDynamics_Sowinski_2017.pdf). Journal of Statistical Physics, 167.
+- Damian Radoslaw Sowinski (2016). [Complexity and Stability for Epistemic Agents: The Foundations and Phenomenology of Configurational Entropy](https://damiansowinski.com/assets/docs/papers/myThesis.pdf). Ph.D. Thesis.
+- Clément Vidal, Benji L. Fields, Damian R. Sowinski, Stuart Bartlett, Richard J. Terrile, Alex Ellery, Daliah Bibas, Armando M. Mastrogiovanni, Niklas Döbler, Manika Singla, Julia DeMarines, Theresa Fisher, Yuri Uno, Jake D. Turner, Evan L. Sneed, Advait Huggahalli, Megan Grace Li, Zhuofu (Chester) Li, Macy Huston, Ramiro Saide (2026). [The Search for Technosignatures: A Review of Possibilities](https://doi.org/10.48550/arXiv.2605.21093). arXiv preprint arXiv:2605.21093. PDF: https://damiansowinski.com/assets/docs/papers/Technosignature_Vidal_2026.pdf
+- Stuart Bartlett, Xianlei San, Siteng Fan, Gary Segal, Damian R. Sowinski, Yuk L. Yung (2026). [Reflections of Life: Distinguishing Living from Nonliving Worlds with Complexity Metrics](https://doi.org/10.3847/1538-3881/ae6b7b). The Astronomical Journal, 172. PDF: https://damiansowinski.com/assets/docs/papers/Reflections_Bartlett_2026.pdf
+- Jordi Piñero, Damian R Sowinski, Gourab Ghoshal, Adam Frank, Artemy Kolchinsky (2026). [Information bounds production in replicator systems](https://damiansowinski.com/assets/docs/papers/Replicators_Pinero_2026.pdf). Communications Physics.
+- Alice C Quillen, Nathan Skerrett, Damian R Sowinski, Abobakar Sediq Miakhel (2025). [Notions of adiabatic drift in the quantized Harper model](https://damiansowinski.com/assets/docs/papers/Harper_Alice_2025.pdf). Physical Review A, 112.
+- Matthew McGarry, Damian Sowinski, Likun Tan, John Weaver, Jacobus JM Zwanenburg, Keith Paulsen (2025). [In vivo magnetic resonance imaging of the interstitial pressure gradients (pgMRI) using a pulsatile poroelastic computational model](https://damiansowinski.com/assets/docs/papers/Pressure_McGarry_2025.pdf). Interface Focus, 15.
+- Matthew McGarry, Elijah Van Houten, Damian Sowinski, Dhrubo Jyoti, Daniel R Smith, Diego A Caban-Rivera, Grace McIlvain, Philip Bayly, Curtis L Johnson, John Weaver, et al. (2022). [Mapping heterogenous anisotropic tissue mechanical properties with transverse isotropic nonlinear inversion MR elastography](https://damiansowinski.com/assets/docs/papers/Transverse_McGarry_2022.pdf). Medical Image Analysis, 78.
+- Matthew McGarry, Elijah Van Houten, Charlotte Guertler, Ruth Okamoto, Daniel Smith, Damian Sowinski, Curtis Johnson, Philip Bayly, John Weaver, Keith Paulsen (2021). [A heterogenous, time harmonic, nearly incompressible transverse isotropic finite element brain simulation platform for MR elastography](https://damiansowinski.com/assets/docs/papers/NITI_McGarry_2021.pdf). Physics in Medicine & Biology, 66.
+- Ariel J Hannum, Grace McIlvain, Damian Sowinski, Matthew DJ McGarry, Curtis L Johnson (2022). [Correlated noise in brain magnetic resonance elastography](https://damiansowinski.com/assets/docs/papers/Noise_Hannum_2021.pdf). Magnetic Resonance in Medicine, 87.
+- Dhrubo Jyoti, Matthew McGarry, Elijah Van Houten, Damian Sowinski, Philip V Bayly, Curtis L Johnson, Keith Paulsen (2022). [Quantifying stability of parameter estimates for in vivo nearly incompressible transversely-isotropic brain MR elastography](https://damiansowinski.com/assets/docs/papers/Stability_Jyoti_2021.pdf). Biomedical Physics and Engineering Express, 8.
+- Elijah FW Bowen, Antonio M Rodriguez, Damian R Sowinski, Richard Granger (2022). [Visual stream connectivity predicts assessments of image quality](https://damiansowinski.com/assets/docs/papers/Vision_Bowen_2021.pdf). Journal of Vision, 22.
+- Marcelo Gleiser, Michelle Stephens, Damian Sowinski (2018). [Configurational entropy as a lifetime predictor and pattern discriminator for oscillons](https://damiansowinski.com/assets/docs/papers/Oscillons_Gleiser_2018.pdf). Physical Review D, 97.
+- Marcelo Gleiser, Damian Sowinski (2018). [How We Make Sense of the World: Information, Map-Making, and The Scientific Narrative](https://damiansowinski.com/assets/docs/papers/MapMaking_Sowinski_2018.pdf). The Map and the Territory: Exploring the Foundations of Science, Thought and Reality.
+- Marcelo Gleiser, Damian Sowinski (2015). [Information-entropic signature of the critical point](https://damiansowinski.com/assets/docs/papers/Critical_Gleiser_2017.pdf). Physics Letters B, 747.
+- Marcelo Gleiser, Damian Sowinski (2013). [Information-entropic stability bound for compact objects: Application to Q-balls and the Chandrasekhar limit of polytropes](https://damiansowinski.com/assets/docs/papers/Polytropes_Gleiser_2013.pdf). Physics Letters B, 727.
+
+## My Favorite Spacetimes
+
+URL: https://damiansowinski.com/MFS/
+
+Machine-readable catalogue: https://damiansowinski.com/data/spacetimes.json
+
+### Alcubierre Warp Drive
+
+A warp bubble metric that contracts space ahead of a ship and expands it behind, allowing travel that is effectively faster than light without locally exceeding light speed. It requires negative energy density (exotic matter) to sustain the bubble.
+
+- id: `alcubierre`
+- tags: warp drive, faster-than-light, exotic matter, negative energy, energy condition violation, time-dependent, non-vacuum, dynamical, idealized model, Lorentzian, Einstein equations, four-dimensional, causality violation
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/alcubierre.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + \left(dx - v_s f\,c\,dt\right)^2 + dy^2 + dz^2$$
+
+### Anti-de Sitter
+
+The maximally symmetric vacuum solution with constant negative curvature, arising from a negative cosmological constant. Its conformal boundary underpins the AdS/CFT correspondence in theoretical physics.
+
+- id: `anti_de_sitter`
+- tags: vacuum, vacuum solution, maximally symmetric, constant curvature, negative cosmological constant, cosmological constant, anti-de Sitter, AdS/CFT, holography, exact solution, static, homogeneous, isotropic, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json
+- chart Static global: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Poincare patch: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
+
+### Bertotti-Robinson Electrovacuum
+
+A conformally flat electrovacuum solution with uniform electromagnetic field, geometrically the product of two spaces of two dimensions each (AdS₂ × S²). It appears as the limit near the horizon of an extremal Reissner-Nordström black hole.
+
+- id: `bertotti_robinson`
+- tags: electrovacuum, electromagnetic field, charged, conformally flat, static, stationary, exact solution, near-horizon limit, extremal, spherically symmetric, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json
+- chart Static throat: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2}{b^2}c^2 dt^2 + \dfrac{b^2}{r^2}dr^2 + b^2 d\Omega^2$$
+- chart Poincaré: coordinates $(t, x, \theta, \phi)$, $$ds^2 = \dfrac{b^2}{x^2}\left(-c^2 dt^2 + dx^2\right) + b^2 d\Omega^2$$
+
+### Bianchi Anisotropic Cosmologies
+
+A family of spatially homogeneous but generally anisotropic cosmologies classified by the symmetry group of their spatial slices. They generalize FLRW models to study anisotropy in the early universe.
+
+- id: `bianchi`
+- tags: cosmology, cosmological, spatially homogeneous, homogeneous, anisotropic, Bianchi classification, exact solution, time-dependent, dynamical, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json
+- chart Type I, Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + a_1^2 dx^2 + a_2^2 dy^2 + a_3^2 dz^2$$
+
+### de Sitter
+
+The maximally symmetric vacuum solution with constant positive curvature, driven by a positive cosmological constant. It models an exponentially expanding empty universe and describes both inflation and the far future of our cosmos.
+
+- id: `de_sitter`
+- tags: vacuum, vacuum solution, maximally symmetric, constant curvature, positive cosmological constant, cosmological constant, de Sitter, inflation, expanding universe, cosmology, cosmological, homogeneous, isotropic, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json
+- chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda r^2}{3}\right)c^2 dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda r^2}{3}} + r^2 d\Omega^2$$
+- chart Flat Slicing: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + e^{2Ht}\left(dx^2 + dy^2 + dz^2\right)$$
+
+### Ellis-Bronnikov Traversable Wormhole
+
+A static, spherically symmetric traversable wormhole with zero redshift function, also known as the drainhole metric.
+
+- id: `ellis_bronnikov`
+- tags: wormhole, exotic matter, traversable, static, spherically symmetric, stationary, scalar field, phantom field, energy condition violation, non-vacuum, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + dr^2 + (r^2 + \ell^2)\left(d\theta^2 + \sin^2\theta\, d\phi^2\right)$$
+
+### Friedmann-Lemaître-Robertson-Walker Expanding Universe
+
+The Friedmann-Lemaître-Robertson-Walker metric describing a homogeneous, isotropic expanding universe.
+
+- id: `frw`
+- tags: cosmology, cosmological, expanding universe, homogeneous, isotropic, FLRW, time-dependent, dynamical, non-vacuum, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/frw.json
+- chart Comoving Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + a^2\left(\dfrac{dr^2}{1-kr^2} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2\right)$$
+- chart Conformal Time Spherical: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + \dfrac{dr^2}{1-kr^2} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2\right)$$
+
+### Gödel Rotating Universe
+
+An exact solution of Einstein's field equations describing a rotating dust universe with closed timelike curves.
+
+- id: `godel`
+- tags: dust, rotating, closed timelike curves, causality violation, cosmological, cosmology, exact solution, non-vacuum, stationary, homogeneous, cosmological constant, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/godel.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -\dfrac{1}{2\omega^2}dt^2 + \dfrac{1}{2\omega^2}dx^2 - \dfrac{e^x}{\omega^2}\,dt\,dy - \dfrac{e^{2x}}{4\omega^2}dy^2 + \dfrac{1}{2\omega^2}dz^2$$
+- chart Cylindrical: coordinates $(t, r, \phi, z)$, $$ds^2 = \dfrac{2}{\omega^2}\left(-dt^2 + dr^2 + \left(\sinh^2 r - \sinh^4 r\right)d\phi^2 - 2\sqrt{2}\sinh^2 r\,dt\,d\phi + dz^2\right)$$
+
+### Kasner Anisotropic Vacuum Cosmology
+
+An anisotropic vacuum cosmology that expands along some axes while contracting along another, with expansion exponents constrained by two algebraic relations. It is a key building block of the chaotic approach to cosmological singularities.
+
+- id: `kasner`
+- tags: vacuum, vacuum solution, anisotropic, cosmology, cosmological, Kasner, exact solution, time-dependent, dynamical, singularity, spatially homogeneous, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kasner.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + t^{2p_1} dx^2 + t^{2p_2} dy^2 + t^{2p_3} dz^2$$
+
+### Kerr Rotating Black Hole
+
+The exact vacuum solution for a rotating, uncharged black hole, characterized by mass and angular momentum. It features an ergosphere, frame dragging, and a ring singularity, and describes essentially all astrophysical black holes.
+
+- id: `kerr`
+- tags: vacuum, vacuum solution, rotating, rotating black hole, black hole, stationary, axisymmetric, angular momentum, mass, ergosphere, frame dragging, ring singularity, singularity, curvature singularity, horizon, event horizon, Cauchy horizon, causal structure, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr.json
+- chart Kerr (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2GMr}{c^2\left(r^2 + a^2\cos^2\theta\right)}\right)c^2 dt^2 - \dfrac{4GMar\sin^2\theta}{c^2\left(r^2 + a^2\cos^2\theta\right)}c\,dt\,d\phi + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{2GMr}{c^2}}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2 + \dfrac{2GMa^2r\sin^2\theta}{c^2\left(r^2 + a^2\cos^2\theta\right)}\right)\sin^2\theta\,d\phi^2$$
+
+### Kerr-Newman Charged Rotating Black Hole
+
+The most general stationary black hole solution, carrying mass, angular momentum, and electric charge. It unifies the Kerr and Reissner-Nordström metrics into a single electrovacuum spacetime.
+
+- id: `kerr_newman`
+- tags: electrovacuum, rotating, rotating black hole, charged, charged black hole, black hole, stationary, axisymmetric, angular momentum, mass, electric charge, ergosphere, frame dragging, ring singularity, singularity, curvature singularity, horizon, event horizon, Cauchy horizon, causal structure, asymptotically flat, electromagnetic field, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json
+- chart Kerr-Newman (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\dfrac{2GMr}{c^2} - r_Q^2}{r^2 + a^2\cos^2\theta}\right)c^2 dt^2 - \dfrac{2a\sin^2\theta\left(\dfrac{2GMr}{c^2} - r_Q^2\right)}{r^2 + a^2\cos^2\theta}c\,dt\,d\phi + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{2GMr}{c^2} + r_Q^2}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2 + \dfrac{a^2\sin^2\theta\left(\dfrac{2GMr}{c^2} - r_Q^2\right)}{r^2 + a^2\cos^2\theta}\right)\sin^2\theta\,d\phi^2$$
+
+### Krasnikov Tube
+
+A tube of modified spacetime laid down along the path of an outbound ship, flat inside but with its light cones tipped so far open that the trip home can be superluminal. The outbound leg is no faster than light, yet the round trip can be made arbitrarily short by clocks left at home, and holding the tube open takes negative energy density.
+
+- id: `krasnikov`
+- tags: faster-than-light, warp drive, exotic matter, negative energy, energy condition violation, closed timelike curves, causal structure, time-dependent, dynamical, non-vacuum, axisymmetric, idealized model, Lorentzian, Einstein equations, four-dimensional, causality violation
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/krasnikov.json
+- chart Cylindrical: coordinates $(t, x, r, \phi)$, $$ds^2 = -\left(c\,dt - dx\right)\left(c\,dt + k\,dx\right) + dr^2 + r^2d\phi^2$$
+
+### Lanczos-van Stockum Rotating Dust Universe
+
+An exact solution to the Einstein field equations describing an infinite rotating cylinder of pressureless dust, exhibiting closed timelike curves beyond a critical radius.
+
+- id: `stockum_dust`
+- tags: dust, rotating, cylindrical symmetry, axial symmetry, closed timelike curves, causality violation, exact solution, non-vacuum, cosmology, cosmological, stationary, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/stockum_dust.json
+- chart Cylindrical: coordinates $(t, r, \phi, z)$, $$ds^2 = -dt^2 - \dfrac{2r^2}{R}\,dt\,d\phi + e^{-r^2/R^2}\,dr^2 + r^2\!\left(1 - \dfrac{r^2}{R^2}\right)d\phi^2 + e^{-r^2/R^2}\,dz^2$$
+
+### Lentz Positive-Energy Warp Drive
+
+A superluminal soliton whose energy density is positive everywhere for the observers riding with it, sourced by a conducting plasma and electromagnetic fields. Jessica Santiago, Sebastian Schuster, and Matt Visser later showed that other observers still see the energy conditions fail.
+
+- id: `lentz`
+- tags: warp drive, faster-than-light, soliton, positive energy, plasma, electromagnetic field, energy condition violation, non-vacuum, time-dependent, dynamical, idealized model, Lorentzian, Einstein equations, four-dimensional, causality violation
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/lentz.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + \left(dx - \partial_x\phi\,c\,dt\right)^2 + \left(dy - \partial_y\phi\,c\,dt\right)^2 + \left(dz - \partial_z\phi\,c\,dt\right)^2$$
+
+### Malament-Hogarth Super-Turing Spacetimes
+
+A spacetime construction containing a worldline of infinite proper length that lies within the past of a single event reachable in finite proper time. It provides a relativistic model for hypercomputation that could complete infinite tasks.
+
+- id: `malament_hogarth`
+- tags: causal structure, hypercomputation, supercritical, time-dependent, causality violation, idealized model, Lorentzian, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = \Omega^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
+
+### Minkowski Flat Spacetime
+
+The flat spacetime of special relativity. No curvature, no gravity.
+
+- id: `minkowski`
+- tags: flat, special relativity, vacuum, vacuum solution, static, maximally symmetric, constant curvature, asymptotically flat, exact solution, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + dx^2 + dy^2 + dz^2$$
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + dr^2 + r^2 d\theta^2 + r^2 \sin^2\theta\, d\phi^2$$
+- chart Double Null: coordinates $(u, v, y, z)$, $$ds^2 = -c^2\,du\,dv + dy^2 + dz^2$$
+- chart Spherical Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -c^2\,du\,dv + \dfrac{c^2(v-u)^2}{4}\left(d\theta^2 + \sin^2\theta\, d\phi^2\right)$$
+- chart Rindler: coordinates $(T, X, Y, Z)$, $$ds^2 = -\dfrac{a^2}{c^4}X^2 c^2 dT^2 + dX^2 + dY^2 + dZ^2$$
+
+### Mixmaster Chaotic Cosmology
+
+A spatially homogeneous Bianchi type IX cosmology whose approach to the singularity consists of an infinite, chaotic sequence of Kasner oscillations. It is the prototype of chaotic cosmological dynamics near a singularity.
+
+- id: `mixmaster`
+- tags: vacuum, vacuum solution, anisotropic, cosmology, cosmological, spatially homogeneous, Bianchi classification, chaotic, oscillatory, Kasner, Misner variables, singularity, time-dependent, dynamical, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/mixmaster.json
+- chart Euler Angles: coordinates $(t, \psi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a_1^2\left(\cos\psi\,d\theta + \sin\psi\sin\theta\,d\phi\right)^2 + a_2^2\left(\sin\psi\,d\theta - \cos\psi\sin\theta\,d\phi\right)^2 + a_3^2\left(d\psi + \cos\theta\,d\phi\right)^2$$
+
+### Morris-Thorne Traversable Wormhole
+
+A static, spherically symmetric traversable wormhole engineered to have no horizon and tolerable tidal forces. Keeping its throat open requires exotic matter that violates the energy conditions.
+
+- id: `morris_thorne`
+- tags: wormhole, traversable, exotic matter, energy condition violation, negative energy, static, stationary, spherically symmetric, non-vacuum, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{2\Phi}c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -e^{2\Phi}c^2dt^2 + dl^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Natário Warp Drive
+
+A warp bubble metric in which space flows around a stationary ship instead of expanding behind it and contracting ahead, so that volume elements are carried along unchanged. It shows that the expansion of space is inessential to warp travel, and that the requirement of negative energy density survives its removal.
+
+- id: `natario`
+- tags: warp drive, faster-than-light, exotic matter, negative energy, energy condition violation, horizon, causal structure, causality violation, time-dependent, dynamical, non-vacuum, idealized model, Lorentzian, Einstein equations, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/natario.json
+- chart Cartesian flow: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + \left(dx - u\,dt\right)^2 + \left(dy - v\,dt\right)^2 + \left(dz - w\,dt\right)^2$$
+- chart Plane symmetric flow: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + \left(dx - u\,dt\right)^2 + dy^2 + dz^2$$
+
+### Oppenheimer-Snyder Gravitational Collapse
+
+The first dynamical model of gravitational collapse, matching a collapsing homogeneous dust sphere to an exterior Schwarzschild vacuum. It showed how a star can form a black hole in finite proper time.
+
+- id: `oppenheimer_snyder`
+- tags: dust, collapse, gravitational collapse, dynamical, matched solution, black hole, singularity, horizon, event horizon, time-dependent, non-vacuum, spherically symmetric, homogeneous, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json
+- chart Comoving Dust Interior: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2 d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\, d\theta^2 + \sin^2\chi\sin^2\theta\, d\phi^2\right)$$
+- chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{r_s}{r}\right)c^2 dt^2 + \dfrac{dr^2}{1-\dfrac{r_s}{r}} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2$$
+
+### pp-wave Plane Gravitational Waves
+
+A class of exact solutions describing gravitational waves with plane fronts and parallel rays. They model the radiation field of rapidly moving sources and exact gravitational wave geometries.
+
+- id: `pp_wave`
+- tags: vacuum, vacuum solution, plane wave, gravitational wave, exact solution, time-dependent, dynamical, radiating, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json
+- chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = H\,c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
+- chart Exact Plane Wave: coordinates $(u, v, x, y)$, $$ds^2 = \left(A\left(x^2 - y^2\right) + 2Bxy\right)c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
+
+### Reissner-Nordström Charged Black Hole
+
+The unique static, spherically symmetric vacuum solution to the Einstein-Maxwell equations describing the spacetime exterior to a charged mass that does not rotate.
+
+- id: `rn_metric`
+- tags: vacuum, static, stationary, spherically symmetric, charged, charged black hole, black hole, electric charge, mass, electrovacuum, electromagnetic field, singularity, curvature singularity, horizon, event horizon, Cauchy horizon, causal structure, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2 - r_s r + r_q^2}{r^2}\,dt^2 + \dfrac{r^2}{r^2 - r_s r + r_q^2}\,dr^2 + r^2 d\Omega^2$$
+
+### Schwarzschild Black Hole
+
+The unique spherically symmetric vacuum solution of the Einstein field equations, describing the spacetime outside a static, uncharged mass that does not rotate.
+
+- id: `schwarzschild`
+- tags: vacuum, vacuum solution, static, stationary, spherically symmetric, black hole, mass, singularity, curvature singularity, coordinate singularity, horizon, event horizon, white hole, maximal extension, geodesic completeness, causal structure, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json
+- chart Schwarzschild (spherical): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{r_s}{r}\right)c^2 dt^2 + \dfrac{dr^2}{1-\dfrac{r_s}{r}} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{r_s}{r}\right)du^2 - 2\,du\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
+
+### Schwarzschild's stellar interior metric
+
+The unique static, spherically symmetric solution for an incompressible perfect fluid ball of uniform density, with radius $R$ and Schwarzschild radius $r_s$.
+
+- id: `interior_schwarzschild`
+- tags: perfect fluid, static, stationary, spherically symmetric, interior, stellar interior, non-vacuum, matched solution, mass, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\frac{1}{4}\!\left(\sqrt{1 - \frac{r^2 r_s}{R^3}} - 3\sqrt{1 - \frac{r_s}{R}}\right)^{\!2} dt^2 + \frac{dr^2}{1 - \frac{r^2 r_s}{R^3}} + r^2 d\Omega^2$$
+
+### Taub-Newman-Unti-Tamburino Vacuum Spacetime
+
+A vacuum solution with unusual topology and a "gravitomagnetic" NUT parameter, often called a counterexample to many GR conjectures. It exhibits closed timelike curves and a fibered structure that is far from trivial.
+
+- id: `taub_nut`
+- tags: vacuum, vacuum solution, stationary, NUT parameter, gravitomagnetic, closed timelike curves, causality violation, axisymmetric, mass, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json
+- chart Taub-NUT (spherical): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2 - 2mr - l^2}{r^2 + l^2}\left(c\,dt + 2l\cos\theta\,d\phi\right)^2 + \dfrac{r^2 + l^2}{r^2 - 2mr - l^2}dr^2 + \left(r^2 + l^2\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Tolman-Bondi Inhomogeneous Dust Universe
+
+A spherically symmetric but inhomogeneous dust solution generalizing FLRW to a density and an expansion that vary with position. It is widely used to model voids, structure formation, and inhomogeneous cosmologies.
+
+- id: `tolman_bondi`
+- tags: dust, inhomogeneous, spherically symmetric, cosmology, cosmological, void, structure formation, comoving, time-dependent, dynamical, non-vacuum, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json
+- chart Comoving Synchronous: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + \dfrac{(\partial_r R)^2}{1+2E}dr^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Tolman-Oppenheimer-Volkoff Relativistic Star
+
+The hydrostatic equilibrium equations for a static, spherically symmetric relativistic star of perfect fluid. They set the maximum mass of neutron stars before collapse to a black hole.
+
+- id: `tov`
+- tags: perfect fluid, static, stationary, spherically symmetric, interior, stellar interior, hydrostatic equilibrium, neutron star, maximum mass, mass, matched solution, non-vacuum, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/tov.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{2\Phi}c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{2m}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Vaidya Radiating Star
+
+A dynamical solution describing the spacetime of a radiating or accreting spherical mass with outgoing or ingoing null dust. It models radiating stars and the evaporation or growth of black holes.
+
+- id: `vaidya`
+- tags: null dust, radiating, accreting, spherically symmetric, time-dependent, dynamical, black hole, mass, horizon, event horizon, non-vacuum, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2Gm}{c^2 r}\right)c^2 du^2 - 2c\,du\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2Gm}{c^2 r}\right)c^2 dv^2 + 2c\,dv\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
+
+### Vilenkin-Gott Cosmic String
+
+The conical spacetime around an infinitely thin, straight topological defect, locally flat but with an angular deficit set by the string's tension. It produces no local gravity yet causes global lensing and double images.
+
+- id: `cosmic_string`
+- tags: topological defect, conical, angular deficit, flat, gravitational lensing, cylindrical symmetry, axial symmetry, static, stationary, exact solution, asymptotically flat, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json
+- chart Conical Exterior: coordinates $(t, r, \phi, z)$, $$ds^2 = -c^2 dt^2 + dr^2 + \left(1 - \dfrac{4G\mu}{c^2}\right)^2 r^2 d\phi^2 + dz^2$$
+- chart Gott Interior: coordinates $(t, \chi, \phi, z)$, $$ds^2 = -c^2 dt^2 + \ell^2 d\chi^2 + \ell^2\sin^2\chi\, d\phi^2 + dz^2$$
+
+## Code
+
+URL: https://damiansowinski.com/code.html
+
+### Code Repositories
+
+Open-source libraries behind the physics. Pick a repository and its description
+and last update load into the terminal, with links to the documentation and its GitHub source.
+
+- [pyCA: Cellular Automata](https://damiansowinski.com/pyCA/), source https://github.com/EternalTime/CellularAutomata
+- [pyCE: Configurational Entropy](https://damiansowinski.com/pyCE/), source https://github.com/EternalTime/pyCE
+- [pyCoop: Cooperation Games](https://damiansowinski.com/pyCoop/), source https://github.com/EternalTime/pyCoop
+- [pyEDW: Exo-Daisy World](https://damiansowinski.com/pyEDW/), source https://github.com/EternalTime/pyEDW
+- [LEAFS: Foraging Simulator](https://damiansowinski.com/LEAFS/), source https://github.com/EternalTime/LEAFS
+- [pyGD: Graph Dynamics](https://damiansowinski.com/pyGD/), source https://github.com/EternalTime/pyGD
+
+## Applets
+
+URL: https://damiansowinski.com/applets.html
+
+### Computational Physics+ Applets
+
+Computational physics is awesome.
+It's the art of telling a computer how to simulate phenomena we see in the world.
+But it's not limited to just those phenomena we know about.
+We can use explore unknown worlds obeying strange rules, limited solely by our imaginations.
+Feel free to explore the applets below and see what you can discover.
+They've been organized loosley into categories, but many of them overlap in interesting ways.
+Each has a brief description of the physics and history behind it, just press the "What is this?" button in the applet window to learn more.
+
+#### Statistical Physics
+
+- Brownian Motion (interactive applet)
+- Ginzburg–Landau (interactive applet)
+- Hard Spheres (interactive applet)
+- Ising Model (interactive applet)
+- Maxwell's Demon (interactive applet)
+- XY Model (interactive applet)
+
+#### Pattern Formation
+
+- Gray–Scott (interactive applet)
+- Lenia (interactive applet)
+
+#### Ecological Physics
+
+- Ant Colony (interactive applet) (under construction)
+- Forager (interactive applet)
+- Forager 3D (interactive applet)
+- Kuramoto Model (interactive applet)
+- Toner–Tu Model (interactive applet)
+- Vicsek Model (interactive applet)
+
+#### Special Relativity
+
+- Lorentz Transformation (interactive applet)
+- Relativistic Lattice (interactive applet)
+
+#### Continuum & Classical Mechanics
+
+- Coupled Oscillators (interactive applet)
+- Driven Oscillator (interactive applet)
+- Elastic Cylinder (interactive applet) (under construction)
+- N-Body Gravity (interactive applet) (under construction)
+- Pendulums (interactive applet) (under construction)
+- Spring Lattice (interactive applet)
+- Three-Body Problem (interactive applet)
+
+#### Quantum Mechanics
+
+- Infinite Square Well (interactive applet)
+- Quantum Harmonic Oscillator (interactive applet)
+- Quantum Tunneling (interactive applet)
+
+#### Field Theory
+
+- Oscillon Formation (interactive applet)
+
+## Notes
+
+URL: https://damiansowinski.com/notes/
+
+### Paper Thoughts
+
+These are random notes on a plethora of topics I think about.
+Some are more complete than others, and I update them regularly.
+If you find any mistakes, please let me know.
+
+#### Classical Mechanics
+
+- [Newton's Shell Theorem](https://damiansowinski.com/assets/docs/notes/notes_shell_theorem.pdf)
+
+#### Computational Physics
+
+- [Introduction to Finite Difference Methods](https://damiansowinski.com/assets/docs/notes/Introduction_to_Finite_Difference_Methods.pdf)
+
+#### General Relativity & Cosmology
+
+- [The Cosmic Microwave Background](https://damiansowinski.com/assets/docs/notes/Understanding_the_CMB.pdf)
+- [Expansion of FLRW Universes](https://damiansowinski.com/assets/docs/notes/Expansion_of_the_Universe.pdf)
+- [Weak Field of a Moving Mass](https://damiansowinski.com/assets/docs/notes/Weak_Field_of_a_Moving_Mass.pdf)
+- [The Trials and Tribulations of Teleportation](https://damiansowinski.com/assets/docs/notes/Teleportation.pdf)
+
+#### Mathematics
+
+- [Circulants and Discrete Fourier Transforms](https://damiansowinski.com/assets/docs/notes/notes_circulants.pdf)
+- [Introduction to Graph Theory](https://damiansowinski.com/assets/docs/notes/Introduction_to_Graph_Theory.pdf)
+
+#### Statistical Mechanics
+
+- [Vicsek Model of Flocking](https://damiansowinski.com/assets/docs/notes/Introduction_to_the_Vicsek_Model.pdf)
+
+## Teaching
+
+URL: https://damiansowinski.com/teaching/
+
+### Teaching
+
+#### Institute for Cross-Disciplinary Engagement at Dartmouth College
+
+- [From Epistemology to Information, 3 part lecture series](https://damiansowinski.com/teaching/ice-dartmouth/Lectures/)
+
+#### University of Rochester
+
+- [PHYS LAB: Undergraduate Physics Labs](https://damiansowinski.com/teaching/university-of-rochester/PHYSLABS/)
+- [PHYS 100: Physics and the Natural World](https://damiansowinski.com/teaching/university-of-rochester/PHYS100/)
+- [PHYS 141: Honors Classical Mechanics](https://damiansowinski.com/teaching/university-of-rochester/PHYS141/)
+
+## From Epistemology to Information (lecture series)
+
+URL: https://damiansowinski.com/teaching/ice-dartmouth/Lectures/
+
+**From Epistemology to Information**
+
+What is information?
+It seems like a simple question, but turns out to be very difficult to answer.
+We all use the word in our vernacular, heck, we even live in the Age of Information.
+So... what is it?
+
+Is there information in a book?
+Obviously there is! Read it and you will know something new.
+What if the book is in a language you don't understand?
+Does the book have no information in it because YOU can't read it?
+That seems silly; SOMEONE could read it and learn something new, so there must still be information in it.
+What if the book is in a language that no one on Earth can speak?
+Now, does the book have no information in it?
+Is the information in the book there because of you, because of someone being able to read it and learn something?
+Or will there still be information in the book long after the last human has ceased to exist?
+
+In this lecture series I examine the relationship between ourselves and the world, and try to pin down what information is.
+In the first lecture, *How do we talk about the world consistently?*, I build a language to describe the world from the ground up.
+Consistency of valuations on logical connectives provide such a strong constraint that the resulting language is good-old sentential logic.
+
+In the second lecture of the series, *How do we reason about the world rationally*, I construct a graded valuation on the language - belief.
+Again, consistency provides a powerful constraint, forcing the algebra of belief functions to satisfy the same rules as probability functions.
+This approach, pioneered by Richard Threlkeld Cox, provides a rigorous foundation for the Bayesian interpretation of probability theory.
+
+[Video on YouTube](https://www.youtube.com/watch?v=fNPxAL3jvvg)
+
+[Video on YouTube](https://www.youtube.com/watch?v=39pC49MOEa4)
+
+[Video on YouTube](https://www.youtube.com/watch?v=c_kncsLBxyE)
+
+## Physics Lab Documentation
+
+URL: https://damiansowinski.com/teaching/university-of-rochester/PHYSLABS/
+
+**Physics Lab Documentation**
+
+The department's undergraduate coursework spans multiple labs.
+Fifteen labs are divided up into clusters of five, fulfilling requirements for Mechanics, Electromagnetism, and Modern Physics across the 110+,120+, and 140+ introductory courses.
+I have updated the labs, using a custom latex class to give them a coherent appearance.
+I am in the process of also updating the laboratory website.
+[UofR Physics Laboratory Webpage](https://www.pas.rochester.edu/~dsowinsk/)
+
+## PHYS 100: Physics and the Natural World
+
+URL: https://damiansowinski.com/teaching/university-of-rochester/PHYS100/
+
+**Physics 100: Physics and the Natural World**
+
+What is Nature?
+What do we know about it?
+What can we know about it?
+Physics is the art of describing how the natural world works, an art that began in antiquity and continues to this day.
+This course investigates the evolution of physics and how our physical theories have changed acrossthe millennia.
+It examines how humanity’s scientific view of Nature has been shaped by both theory and experiment.
+Designed as a cluster course for non-science majors, the course considers cultural, philosophical, and historical contexts through a wide selection of readings.
+
+**Spring 2026**
+
+- [Syllabus](https://damiansowinski.com/assets/docs/teaching/university-of-rochester/PHYS100/UofR_PHYSICS_100_Course_Syllabus.pdf)
+- [Worksheet 2](https://damiansowinski.com/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet2.pdf)
+- [Worksheet 3](https://damiansowinski.com/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet3.pdf)
+- [Worksheet 4](https://damiansowinski.com/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet4.pdf)
+- [Worksheet 5](https://damiansowinski.com/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet5.pdf)
+- [Worksheet 6](https://damiansowinski.com/assets/docs/teaching/university-of-rochester/PHYS100/PHYSICS_100_Worksheet6.pdf)
+- [Midterm Study Sheet](https://damiansowinski.com/assets/docs/teaching/university-of-rochester/PHYS100/PHYS100_midterm_studysheet.pdf)
+- [Final Exam Study Sheet](https://damiansowinski.com/assets/docs/teaching/university-of-rochester/PHYS100/PHYS100_Final_StudySheet.pdf)
+
+## PHYS 141: Honors Classical Mechanics
+
+URL: https://damiansowinski.com/teaching/university-of-rochester/PHYS141/
+
+**Physics 141: Honors Classical Mechanics**
+
+From pebbles rolling down hills to rockets traversing space—can you describe how things move with precision and clarity?
+Can you predict where they’ll be in seconds, days, or millennia?
+Mechanics is the language every physicist uses to do just that.
+This semester you’ll push yourself to master the quantitative machinery behind force, momentum, and energy, learning to see these concepts everywhere around you.
+We’ll apply calculus in one, two, and three dimensions, pushing your mathematical limits to build physical intuition.
+We’ll start with Newton’s classical mechanics, building foundations for advanced courses in Hamiltonian and Lagrangian mechanics.
+Later, we’ll explore how classical mechanics breaks down as objects approach the speed of light—Einstein’s relativity will reshape your concepts of time and space, preparing you for Modern Physics and
+Electricity/Magnetism.
+The journey ahead is challenging but rewarding, requiring focus, strong work ethic, and most importantly, boundless curiosity. It’s your first step toward becoming a physicist.
+Welcome!
+
+Here are notes on some of the topics you will learn about:
+
+- [Newton's Shell Theorem](https://damiansowinski.com/assets/docs/notes/notes_shell_theorem.pdf)
+
+**Autumn 2025**
+
+- [Syllabus](https://damiansowinski.com/assets/docs/teaching/UofR_PHYSICS_141_Syllabus.pdf)
+- [Exam I:](https://damiansowinski.com/assets/docs/teaching/UofR_PHYS141_Exam_I.pdf) Kinematics, Newton's Laws, and Gravitation
+- [Exam II:](https://damiansowinski.com/assets/docs/teaching/UofR_PHYS141_Exam_II.pdf) Center of Mass, Momentum, and Energy
+- [Exam III:](https://damiansowinski.com/assets/docs/teaching/UofR_PHYS141_Exam_III.pdf) Rotational Motion, Moment of Inertia, and Angular Momentum
+- [Exam IV:](https://damiansowinski.com/assets/docs/teaching/UofR_PHYS141_Exam_IV.pdf) Harmonics Motion and Normal Modes
+
+In order to promote transparency, this is the anonymized [report](https://damiansowinski.com/assets/docs/teaching/UofR_PHYS141_Grading_Report.pdf) for the distribution of final grades in the course
+
+## Press
+
+URL: https://damiansowinski.com/press/
+
+### Press Releases, Media Mentions, & Podcasts
+
+[Reflections of Life: Distinguishing Living from Nonliving Worlds with Complexity Metrics](https://astrobiology.com/2026/06/reflections-of-life-distinguishing-living-from-nonliving-worlds-with-complexity-metrics.html)
+*Astrobiology* — June 2026
+Earth and Mars, two worlds that may once have been twins, read here as stand-ins for distant exoplanets. The question — can the sheer complexity of a planet's reflected light betray whether something is alive beneath it?
+
+[Evolving strategies in search for extraterrestrial civilizations](https://www.centauri-dreams.org/2026/05/30/evolving-strategies-in-the-search-for-extraterrestrial-civilizations/)
+*Centauri Dreams* — May 2026
+A survey of how we might recognize a technological civilization — X-ray and neutrino beacons, warp-drive wakes, the exotica at the field's edge. It set off a long comment thread, readers turning over gravitational-lens beacons, the disputed Palomar plate "glints," and whether SETI's silence is itself the signal.
+
+[Embedded player: embed.podcasts.apple.com](https://embed.podcasts.apple.com/us/podcast/dr-damian-sowinski-on-information-theory/id1279127114?i=1000402894947)
+
+[Embedded player: open.spotify.com](https://open.spotify.com/embed/episode/1prG1n4RISTGiYSUvRDsFG?utm_source=generator)
+
+[A new way to detect daisy worlds](https://phys.org/news/2024-11-daisy-worlds.html)
+*Universe Today* — November 2024
+The daisy world model describes a hypothetical planet that self-regulates, maintaining a delicate balance involving its biogeochemical cycles, climate, and feedback loops that keep it habitable. It's associated with the Gaia Hypothesis developed by James Lovelock. How can we detect these worlds if they're out there?
+
+[A new way to detect daisy worlds](https://phys.org/news/2024-11-daisy-worlds.html)
+*Phys.org* — November 2024
+A living planet can hold its own climate steady — the daisy-world idea, descended from Lovelock's Gaia. This coverage takes up the harder question: how would we catch one in the act from light-years away?
+
+[Physicists: Perhaps Life Is a Unique State of Matter](https://mindmatters.ai/2024/07/physicists-perhaps-life-is-a-unique-state-of-matter/)
+*Mind Matters* — July 2024
+A physics gathering next week at the University of Rochester will explore the significance of the fact that life, unlike non-life, needs and uses information.
+
+[A new model for defining life across the Universe](https://bigthink.com/13-8/a-new-model-for-defining-life-across-the-universe/)
+*Big Think* — July 2024
+Here, Adam Frank previews an upcoming workshop where scientists of various backgrounds will discuss the concept of life as information-driven states of matter, exploring how this perspective could redefine our understanding of what it means to be alive..
+
+[How do living things use meaningful information to survive?](https://www.rochester.edu/newscenter/semantic-information-theory-living-systems-574112/)
+*University of Rochester* — November 2023
+SMART PHONES, SMART BIRDS: Birds gather, process, and communicate information about their environment. Smartphones do, too. The difference comes down to how the informational architectures in living things are intimately tied to self-preservation and reproduction. A team of physicists uses the theory of semantic information to address the questions, how much viability does a single bit of information provide? And how does viability change as more bits are added?
+
+[Exploring The 'Universe' In A Video Game](https://www.npr.org/sections/13.7/2015/12/09/459092106/exploring-the-universe-in-a-video-game)
+*NPR's 13.7* — December 2015
+Shout out to my Ph.D. advisor for mentioning me while talking about No Man's Sky. I'm more of a Bethesda fan. :P
