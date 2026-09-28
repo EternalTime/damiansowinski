@@ -119,6 +119,54 @@ def embedding_files():
     return {p.stem: read(p) for p in sorted(build.EMBEDDING_DIR.glob("*.json"))}
 
 
+def grid_nodes(piece):
+    """The nodes (X, Y, Z) of a grid piece, row i of u and column j of v, a polar grid's X and Y
+    being u cos v and u sin v, as _tools/README.md defines them."""
+    grid = piece["grid"]
+    polar = grid["frame"] == "polar"
+    return [[(u * math.cos(v), u * math.sin(v), z) if polar else (u, v, z)
+             for v, z in zip(grid["v"], row)] for u, row in zip(grid["u"], grid["z"])]
+
+
+def grid_height(piece, X, Y, reach=1e-6):
+    """The height of a grid piece's triangles over the point (X, Y), each cell cut along its
+    diagonal from (i, j) to (i + 1, j + 1), or None where none lies within `reach` of it, which
+    allows the rounding of a point written on an edge of a thin triangle. The cell is found by u
+    and v and checked with its neighbours, since a polar grid's cells have straight sides."""
+    grid, P = piece["grid"], grid_nodes(piece)
+    polar = grid["frame"] == "polar"
+    m, n = len(grid["u"]), len(grid["v"])
+    u, v = (math.hypot(X, Y), math.atan2(Y, X) % (2 * math.pi)) if polar else (X, Y)
+    i = max(0, min(m - 2, sum(1 for a in grid["u"] if a <= u) - 1))
+    j = sum(1 for b in grid["v"] if b <= v) - 1
+    best = None
+    for di in (0, -1, 1):
+        for dj in (0, -1, 1):
+            ii, jj = i + di, j + dj
+            if not 0 <= ii < m - 1:
+                continue
+            if polar:
+                jj %= n
+            elif not 0 <= jj < n - 1:
+                continue
+            j1 = (jj + 1) % n
+            a, b, c, d = P[ii][jj], P[ii + 1][jj], P[ii + 1][j1], P[ii][j1]
+            for A, B, C in ((a, b, c), (a, c, d)):
+                area = (B[0] - A[0]) * (C[1] - A[1]) - (C[0] - A[0]) * (B[1] - A[1])
+                if abs(area) < 1e-15:
+                    continue
+                wa = ((B[0] - X) * (C[1] - Y) - (C[0] - X) * (B[1] - Y)) / area
+                wb = ((C[0] - X) * (A[1] - Y) - (A[0] - X) * (C[1] - Y)) / area
+                wc = 1 - wa - wb
+                # How far outside the triangle the point lies, along the normal of each edge it
+                # lies beyond: a weight below zero is that distance over the corner's height.
+                edges = ((wa, B, C), (wb, C, A), (wc, A, B))
+                off = max(-w * abs(area) / math.hypot(Q[0] - P[0], Q[1] - P[1]) for w, P, Q in edges)
+                if off <= reach and (best is None or off < best[0]):
+                    best = (off, wa * A[2] + wb * B[2] + wc * C[2])
+    return best and best[1]
+
+
 def embedding_prose(name, data):
     """Yield every field of an embedding diagram file a reader sees, each with its place."""
     for position, text in enumerate(data.get("stops", [])):
@@ -129,7 +177,7 @@ def embedding_prose(name, data):
         yield f"{where}.unit", view["unit"]
         for position, paragraph in enumerate(view["caption"]):
             yield f"{where}.caption[{position}]", paragraph
-        for field in ("settings", "input"):
+        for field in ("settings", "input", "height"):
             if view.get(field):
                 yield f"{where}.{field}", view[field]
         for position, text in enumerate(view.get("stops", [])):
@@ -143,8 +191,8 @@ def embedding_prose(name, data):
             if surface.get("label"):
                 yield f"{at}.label", surface["label"]
             for piece in surface["pieces"]:
-                for end in ("start", "end"):
-                    if piece[end].get("text"):
+                for end in ("start", "end", "edge"):
+                    if piece.get(end, {}).get("text"):
                         yield f"{at}.{piece['id']}.{end}", piece[end]["text"]
             for ring in surface["rings"]:
                 if ring.get("label"):
@@ -1210,6 +1258,13 @@ class EmbeddingDiagrams(unittest.TestCase):
                         points = mark["points"] if "points" in mark else [mark["at"]]
                         self.assertGreaterEqual(len(points), 1 if "at" in mark else 2, where)
                         self.assertIn(mark.get("closed", False), (False, True), where)
+                        if "grid" in pieces[mark["piece"]]:
+                            for X, Y, Z in points:
+                                z = grid_height(pieces[mark["piece"]], X, Y)
+                                self.assertIsNotNone(z, f"{where} at {X}, {Y}")
+                                self.assertLess(abs(Z - z), 1e-6, f"{where} at {X}, {Y}")
+                            marked += 1
+                            continue
                         profile = sorted((rho, z) for _, rho, z in pieces[mark["piece"]]["points"])
                         for X, Y, Z in points:
                             r = math.hypot(X, Y)
@@ -1252,6 +1307,14 @@ class EmbeddingDiagrams(unittest.TestCase):
                     ids = [piece["id"] for piece in surface["pieces"]]
                     self.assertEqual(len(ids), len(set(ids)), where)
                     for piece in surface["pieces"]:
+                        if "grid" in piece:
+                            grid = piece["grid"]
+                            self.assertIn(grid["frame"], ("polar", "cartesian"), where)
+                            self.assertEqual(len(grid["z"]), len(grid["u"]), where)
+                            self.assertTrue(all(len(row) == len(grid["v"]) for row in grid["z"]), where)
+                            self.assertEqual(piece["edge"]["kind"], "edge", where)
+                            self.assertIn("height", view, f"{where}: a grid says what its height is")
+                            continue
                         self.assertIn(piece["start"]["kind"], self.ENDS, where)
                         self.assertIn(piece["end"]["kind"], self.ENDS, where)
                         for point in piece["points"]:
@@ -1409,8 +1472,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         def near(a, b, where, tol=2e-6):
             self.assertLess(abs(a - b), tol, where)
         # The flat planes: every point level, and rho the distance along the profile.
-        for metric_id, piece_id in (("minkowski", "plane"), ("krasnikov", "section"), ("alcubierre", "plane"),
-                                    ("natario", "plane"), ("lentz", "plane")):
+        for metric_id, piece_id in (("minkowski", "plane"), ("natario", "plane"), ("lentz", "plane")):
             for x, rho, z in piece(view(metric_id)["surfaces"][0], piece_id):
                 near(rho, x, f"{metric_id} rho at {x}")
                 self.assertEqual(z, 0, f"{metric_id} z at {x}")
@@ -1459,16 +1521,8 @@ class EmbeddingDiagrams(unittest.TestCase):
                     near((X / A) ** 2 + ((Y / B) ** 2 if B else 1 - (X / A) ** 2), 1, f"{metric_id}'s ring", 1e-5)
         self.assertEqual(max(abs(p[1]) for p in view("pp_wave")["surfaces"][-1]["curves"][0]["points"]), 0)
 
-        # Alcubierre's crescents, where v_s (x/r_s) df/dr_s is half its greatest value, ahead of
-        # the ship and behind it, the path running along the drawing's Y; Natario's lines of flow,
-        # closed and each on one level of the stream function n(r_s) y^2, y being the drawing's X.
-        def slope(r):
-            return 4 * (1 / math.cosh(4 * (r + 1)) ** 2 - 1 / math.cosh(4 * (r - 1)) ** 2) / (2 * math.tanh(4))
-        curves = {c["class"]: c for c in view("alcubierre")["surfaces"][0]["curves"]}
-        for cls, sign in (("contract", -1), ("expand", 1)):
-            for X, Y, Z in curves[cls]["points"]:
-                r = math.hypot(X, Y)
-                near(2 * Y / r * slope(r), sign * 2.00134, f"Alcubierre's {cls} at {X}, {Y}", 1e-4)
+        # Natario's lines of flow, closed and each on one level of the stream function n(r_s) y^2,
+        # y being the drawing's X.
         n = lambda r: (math.tanh(4 * (r + 1)) - math.tanh(4 * (r - 1))) / (4 * math.tanh(4))  # noqa: E731
         flows = [c for c in view("natario")["surfaces"][0]["curves"] if c["class"] == "flow"]
         self.assertEqual(len(flows), 6)
@@ -1521,6 +1575,129 @@ class EmbeddingDiagrams(unittest.TestCase):
                                      f"{name} {view['id']} paints {selector}, which is not styled")
                     self.assertRegex(page, r"\.mfs-print-body \." + re.escape(selector) + r"(?![\w-])",
                                      f"{name} {view['id']} paints {selector}, which is not styled in print")
+
+    def grid(self, metric_id):
+        view = self.embedding[metric_id]["views"][0]
+        piece = view["surfaces"][0]["pieces"][0]
+        self.assertIn("grid", piece, metric_id)
+        return view, piece
+
+    def test_alcubierre_draws_the_expansion_as_a_height(self):
+        """theta = v_s (x - x_s)/r_s df/dr_s of the observers who ride the slices, with v_s = 2 and
+        Alcubierre's profile at R = 1 and sigma = 4, drawn as the height theta R^2/4c over the plane
+        of the path, the ship heading toward +X: negative ahead of the ship, where space contracts,
+        and positive behind it, where it expands, as Alcubierre drew it in 1994."""
+        view, piece = self.grid("alcubierre")
+        grid = piece["grid"]
+        self.assertEqual(grid["frame"], "polar")
+
+        def theta(X, Y):
+            r = math.hypot(X, Y)
+            if r == 0:
+                return 0.0
+            df = 4 * (1 / math.cosh(4 * (r + 1)) ** 2 - 1 / math.cosh(4 * (r - 1)) ** 2) / (2 * math.tanh(4))
+            return 2 * X / r * df
+        nodes = [P for row in grid_nodes(piece) for P in row]
+        # Every node stands at theta R^2/4c, to the rounding of the file.
+        for X, Y, Z in nodes:
+            self.assertLess(abs(Z - theta(X, Y) / 4), 1e-6, f"Alcubierre's height at {X}, {Y}")
+        # Space contracts ahead of the ship and expands behind it, everywhere on the plane.
+        for X, Y, Z in nodes:
+            if abs(X) > 1e-9 and abs(Z) > 1e-6:
+                self.assertEqual(math.copysign(1, Z), -math.copysign(1, X), f"the sign of theta at {X}, {Y}")
+        # At chosen points, in units of c/R.
+        u, v = grid["u"], grid["v"]
+        for r, phi, want in ((1.0, math.pi, 4.002683), (1.0, 0.0, -4.002683), (0.5, math.pi, 0.282695),
+                             (0.5, 0.0, -0.282695), (1.0, math.pi / 4, -2.830324), (2.0, 0.0, -0.005367),
+                             (1.0, math.pi / 2, 0.0)):
+            i = min(range(len(u)), key=lambda k: abs(u[k] - r))
+            j = min(range(len(v)), key=lambda k: abs(v[k] - phi))
+            self.assertAlmostEqual(u[i], r, places=12)
+            self.assertAlmostEqual(v[j], phi, places=12)
+            self.assertLess(abs(4 * grid["z"][i][j] - want), 1e-5, f"theta at r_s = {r}, phi = {phi}")
+        # The greatest expansion, 4.0027 c/R one R behind the ship, is the highest node, and the
+        # fastest contraction the lowest, one R ahead.
+        top = max(nodes, key=lambda P: P[2])
+        bottom = min(nodes, key=lambda P: P[2])
+        self.assertAlmostEqual(top[2], 1.000671, places=5)
+        self.assertAlmostEqual(bottom[2], -1.000671, places=5)
+        self.assertLess(top[0], 0)
+        self.assertGreater(bottom[0], 0)
+        # The level lines lie at half the greatest expansion and contraction, the one ahead of
+        # the ship and the other behind it; the circle v_s f = 1 at 1.0001676 R.
+        curves = {c["class"]: c for c in view["surfaces"][0]["curves"]}
+        for cls, sign in (("contract", -1), ("expand", 1)):
+            for X, Y, Z in curves[cls]["points"]:
+                self.assertAlmostEqual(Z, sign * 0.500335, places=5, msg=f"Alcubierre's {cls} at {X}, {Y}")
+                self.assertEqual(math.copysign(1, X), -sign, f"Alcubierre's {cls} at {X}, {Y}")
+                self.assertLess(abs(theta(X, Y) / 4 - Z), 0.015, f"Alcubierre's {cls} at {X}, {Y}")
+        # The circle runs from node to node of the grid's circle there, on its 72 chords.
+        for X, Y, Z in curves["wall"]["points"]:
+            r = math.hypot(X, Y)
+            self.assertTrue(1.0001676 * math.cos(math.pi / 72) - 1e-6 <= r <= 1.0001676 + 1e-6,
+                            f"the circle v_s f = 1 at {X}, {Y}")
+        self.assertIn("4c/R", view["height"])
+
+    def test_krasnikov_draws_how_far_the_tube_tips_the_light_cone_as_a_height(self):
+        """1 - k, twice the published g_tx, of the tube the spacetime diagram declares, at
+        ct = 5 rho_0, drawn over the plane of the tube's axis: 0 outside the tube, 1 where k = 0
+        and 1.7977 on the axis in the middle of it."""
+        view, piece = self.grid("krasnikov")
+        grid = piece["grid"]
+        self.assertEqual(grid["frame"], "cartesian")
+
+        def step(q):
+            return (1 + math.tanh(q / 0.15)) / 2
+
+        def one_minus_k(X, Y):
+            x = X + 2
+            return 1.8 * step((1 - Y * Y) / 2) * step(5 - x) * step(x) * step(4 - x)
+        nodes = [P for row in grid_nodes(piece) for P in row]
+        for X, Y, Z in nodes:
+            self.assertLess(abs(Z - one_minus_k(X, Y)), 1e-6, f"Krasnikov's height at {X}, {Y}")
+            self.assertGreaterEqual(Z, 0, f"Krasnikov's height at {X}, {Y}")
+            self.assertLess(Z, 1.8, f"Krasnikov's height at {X}, {Y}")
+        u, v, z = grid["u"], grid["v"], grid["z"]
+        for X, Y, want in ((0.0, 0.0, 1.7977122), (0.0, 1.0, 0.9), (0.0, 0.5, 1.7879529), (-2.0, 0.0, 0.8988561),
+                           (2.0, 0.0, 0.8988546), (-2.5, 0.0, 0.0022849), (2.5, 0.0, 0.0022820), (0.0, 1.5, 0.0004326),
+                           (0.0, 2.0, 0.0)):
+            i, j = u.index(X), v.index(Y)
+            self.assertLess(abs(z[i][j] - want), 1e-6, f"1 - k at x = {X + 2}, r = {abs(Y)}")
+        # The ridge stands all along the path from x = 0 to D at the moment drawn: the tube is
+        # complete, and flat beyond both ends and outside its wall.
+        for X in (-1.5, -1.0, 0.0, 1.0, 1.5):
+            self.assertGreater(z[u.index(X)][v.index(0.0)], 1.79, f"the ridge at x = {X + 2}")
+        for X in (-3.0, 3.0):
+            self.assertLess(z[u.index(X)][v.index(0.0)], 3e-6, f"beyond the tube at x = {X + 2}")
+        curves = {c["class"]: c for c in view["surfaces"][0]["curves"]}
+        for X, Y, Z in curves["wall"]["points"]:
+            self.assertAlmostEqual(Z, 1.0, places=6, msg=f"k = 0 at {X}, {Y}")
+            self.assertLess(abs(one_minus_k(X, Y) - 1), 0.02, f"k = 0 at {X}, {Y}")
+        path = curves["path"]["points"]
+        self.assertEqual((path[0][0], path[-1][0]), (-2.0, 2.0))
+        self.assertTrue(all(Y == 0 for _, Y, _ in path))
+        self.assertIn("1 - k", view["height"])
+
+    def test_a_view_says_what_its_height_is_exactly_when_it_draws_a_grid(self):
+        for name, data in self.embedding.items():
+            for view in data["views"]:
+                grids = any("grid" in p for s in view["surfaces"] for p in s["pieces"])
+                self.assertEqual("height" in view, grids, f"{name} {view['id']}")
+        self.assertEqual({name for name, data in self.embedding.items()
+                          if any("height" in view for view in data["views"])}, {"alcubierre", "krasnikov"})
+
+    def test_a_grid_that_is_not_one_is_refused(self):
+        def spoil(change, words):
+            data = copy.deepcopy(self.embedding["krasnikov"])
+            change(data["views"][0]["surfaces"][0]["pieces"][0])
+            with self.assertRaises(build.DataError) as raised:
+                self.load_folder({"krasnikov.json": data}, self.metrics)
+            self.assertIn(words, str(raised.exception))
+        spoil(lambda p: p["grid"]["u"].reverse(), "one way along its u")
+        spoil(lambda p: p["grid"]["z"].pop(), "a height at every node")
+        spoil(lambda p: p["grid"].__setitem__("frame", "spherical"), "neither a polar nor a Cartesian")
+        spoil(lambda p: p.__setitem__("points", []), "a grid and a profile at once")
+        spoil(lambda p: p.pop("edge"), "beyond its edge")
 
     def load_folder(self, files, metrics):
         with tempfile.TemporaryDirectory() as folder:
@@ -1575,6 +1752,14 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
                 surface = view["surfaces"][mark["surface"]]
                 self.assertIn(mark["piece"], {p["id"] for p in surface["pieces"]}, where)
                 self.assertRegex(page, r"\.em-" + re.escape(mark["class"]) + r"\b", where)
+            # Every grid piece names the lines of its grid the figure draws, by index.
+            grids = {(k, p["id"]): p["grid"] for k, s in enumerate(view["surfaces"]) for p in s["pieces"] if "grid" in p}
+            self.assertEqual({(g["surface"], g["piece"]) for g in turn.get("grid", [])}, set(grids), where)
+            for g in turn.get("grid", []):
+                grid = grids[(g["surface"], g["piece"])]
+                self.assertTrue(all(0 <= i < len(grid["u"]) for i in g["u"]), where)
+                self.assertTrue(all(0 <= j < len(grid["v"]) for j in g["v"]), where)
+                self.assertRegex(page, r"\.em-" + re.escape(g["class"]) + r"\b", where)
             for label in figure["labels"]:
                 if "ring" in label:
                     ring = label["ring"]
@@ -1636,8 +1821,31 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
             self.assertEqual(start["scale"], 1, f"{where} is not at its own scale at its own camera")
 
     def test_turning_a_surface_round_its_axis_leaves_its_outline_and_circles_in_place(self):
+        # A height over a plane is no surface of revolution, and turns as the next test holds it.
         for v in self.check()["views"]:
+            if v["moved"] is None:
+                self.assertIn("height", v, f"{v['metric']} {v['view']}")
+                continue
             self.assertLess(v["moved"], 1e-3, f"{v['metric']} {v['view']}: {v['moved']:.2e} of the lines moved")
+
+    def test_a_height_over_a_plane_turns_under_the_hand(self):
+        # Looked at along the vertical a height hides nothing of itself and its tint covers its
+        # rim at the drawn scale; from just above the plane its relief hides part of its grid;
+        # and turned all the way round it keeps to its box, the Krasnikov tube's rectangle drawn
+        # smaller where it would stand wider or taller than it was published.
+        heights = {v["metric"]: v["height"] for v in self.check()["views"] if "height" in v}
+        self.assertEqual(set(heights), {"alcubierre", "krasnikov"})
+        for metric_id, h in heights.items():
+            for side in ("above", "below"):
+                seen = h[side]
+                self.assertEqual(seen["far"], 0, f"{metric_id} from {side}: part of the height is hidden")
+                self.assertGreater(seen["seen"], 0, f"{metric_id} from {side}")
+                self.assertLess(abs(seen["tint"] - seen["rim"]), 0.01 * seen["rim"],
+                                f"{metric_id} from {side}: the tint covers {seen['tint']:.3f} of {seen['rim']:.3f}")
+            self.assertGreater(h["low"]["far"], 0.02 * (h["low"]["far"] + h["low"]["seen"]),
+                               f"{metric_id} from just above the plane: the relief hides none of the grid")
+            self.assertLessEqual(h["turned"]["outside"], 1e-9, f"{metric_id} turned: drawn outside the box")
+        self.assertLess(heights["krasnikov"]["turned"]["scale"], 1)
 
     def test_from_straight_above_the_upper_sheet_hides_the_lower_and_from_below_the_reverse(self):
         # Schwarzschild's circles run from 1.5 to 6 r_s on each sheet. Looking down the axis every

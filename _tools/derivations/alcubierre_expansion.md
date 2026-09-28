@@ -101,7 +101,7 @@ There are 72 angles, $\phi_j = 5j°$, so that every third one is a meridian at t
 The radii run from $0$ to $3R$ and hold every multiple of $R/4$ and the circle $v_sf = 1$ at $1.0001676R$, so each of those is a line of the grid.
 Each cell between neighbouring radii $i$, $i + 1$ and neighbouring angles $j$, $j + 1$ is split into two triangles along the diagonal from $(i, j)$ to $(i + 1, j + 1)$, and a band between two radii is halved until every triangle in it lies within $5 \times 10^{-4}$ of the drawing's size of the surface $z = \theta R^2/4c$, that is within $3 \times 10^{-3}R$, measured as the distance in space from the triangle to the surface.
 That distance is the vertical miss divided by $\sqrt{1 + |\nabla z|^2}$, and it is the one to hold, since on the wall a triangle that lies on the surface to a thousandth of $R$ misses it vertically by three times as much where the relief climbs at $3$.
-The worst triangle misses by $2.94 \times 10^{-3}R$, and the grid has 43 radii, $72 \times 43 = 3096$ heights, which at six decimals take about 27 kilobytes.
+The worst triangle, taken from the heights as they are rounded, misses by $2.95 \times 10^{-3}R$, and the grid has 43 radii, $72 \times 43 = 3096$ heights, which at the seven decimals the file writes take about 32 kilobytes.
 The rim is the polygon of the 72 angles at $3R$, within $4.8 \times 10^{-4}$ of the size of the circle.
 
 A tolerance of $5 \times 10^{-4}$ of the size is about a third of a pixel on a figure 628 wide.

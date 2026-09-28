@@ -24,7 +24,16 @@
    being as wide as its widest circle from every side, but its height does as it tilts, so the
    surfaces are drawn smaller, all at one scale, only as far as a tilt needs more height than a
    surface had at the start, and moved up or down only as far as that height needs. So the
-   figure keeps its box and its labels their room, and at the start it is the published figure. */
+   figure keeps its box and its labels their room, and at the start it is the published figure.
+
+   A grid piece, a quantity drawn as a height over a plane, is drawn by the same rules from its
+   flat triangles: the lines of its grid that the figure names, its rim, and its outline where the
+   normal at its nodes turns square to the line of sight. What hides a point is found from the
+   triangles that cover the point of the page it falls on, which is exact for triangles seen along
+   one direction, and a point on a height is judged from just above and just below it, the two
+   sides of a height. A grid need not look the same from every side, so it is kept within the
+   width it had at the start as well as the height, a rectangle turned toward its diagonal drawn
+   smaller. */
 (function(root) {
   'use strict';
 
@@ -45,12 +54,23 @@
   function prepare(view) {
     var figure = view.figure, turn = figure.turn, box = figure.box;
     var size = Math.max(box[1] - box[0], box[3] - box[2]);
-    var e0 = figure.camera.elevation * RAD, classes = [];
+    var e0 = figure.camera.elevation * RAD, a0 = figure.camera.azimuth * RAD, classes = [];
     Object.keys(turn.tint).forEach(function(k) { if (classes.indexOf(turn.tint[k]) < 0) classes.push(turn.tint[k]); });
     classes.sort();
     var surfaces = view.surfaces.map(function(s, k) {
-      var low = Infinity, high = -Infinity, byId = {};
-      var pieces = s.pieces.map(function(p) {
+      var low = Infinity, high = -Infinity, byId = {}, grids = [];
+      var pieces = s.pieces.filter(function(p) {
+        if (!p.grid) return true;
+        var g = gridPiece(p);
+        for (var i = 0; i < g.Z.length; i++) {
+          if (g.Z[i] < low) low = g.Z[i];
+          if (g.Z[i] > high) high = g.Z[i];
+        }
+        g.code = turn.tint[g.cls] ? 2 + classes.indexOf(turn.tint[g.cls]) : 1;
+        byId[p.id] = g;
+        grids.push(g);
+        return false;
+      }).map(function(p) {
         var n = p.points.length, rho = new Float64Array(n), z = new Float64Array(n);
         for (var i = 0; i < n; i++) {
           rho[i] = p.points[i][1];
@@ -76,14 +96,20 @@
           code.push(p.code);
         }
       });
-      var S = { pieces: pieces, byId: byId, rings: s.rings, curves: s.curves || [], dots: s.dots || [], zc: (low + high) / 2,
+      var S = { pieces: pieces, grids: grids, byId: byId, rings: s.rings, curves: s.curves || [], dots: s.dots || [],
+                zc: (low + high) / 2,
                 r1: new Float64Array(r1), dr: new Float64Array(dr), z1: new Float64Array(z1), dz: new Float64Array(dz),
                 code: new Uint8Array(code) };
       var o = turn.origins[k];
       S.at = [o[0], o[1] + S.zc * Math.cos(e0)];
-      var h = height(S, e0);
+      var h = height(S, e0, a0);
       S.top0 = h[0];
       S.bottom0 = h[1];
+      if (grids.length) {
+        var w = width(S, a0);
+        S.left0 = w[0];
+        S.right0 = w[1];
+      }
       return S;
     });
     var order = {};
@@ -92,10 +118,185 @@
              eps: 1e-7 * size, unit: (box[1] - box[0]) / 560 };
   }
 
+  /* A grid piece: a quantity drawn as a height over a plane, sampled on a grid and drawn as flat
+     triangles, as _tools/README.md defines it. Its nodes in the surface's own frame, the node of
+     row i of u and column j of v at i * n + j, a polar grid's X and Y being u cos v and u sin v;
+     each cell cut into two triangles along its diagonal from (i, j) to (i + 1, j + 1), listed
+     first every triangle (i, j), (i + 1, j), (i + 1, j + 1) and then every (i, j), (i + 1, j + 1),
+     (i, j + 1), a polar grid's last column joining its first, as the generator lists them; and at
+     each node the normal pointing up, the sum of the normals of the triangles that meet there,
+     each as long as twice its area, as the generator's grid_normals() takes it. */
+  function gridPiece(p) {
+    var G = p.grid, m = G.u.length, n = G.v.length, wrap = G.frame === 'polar', N = m * n;
+    var X = new Float64Array(N), Y = new Float64Array(N), Z = new Float64Array(N), i, j, k;
+    for (i = 0; i < m; i++) {
+      for (j = 0; j < n; j++) {
+        k = i * n + j;
+        X[k] = wrap ? G.u[i] * Math.cos(G.v[j]) : G.u[i];
+        Y[k] = wrap ? G.u[i] * Math.sin(G.v[j]) : G.v[j];
+        Z[k] = G.z[i][j];
+      }
+    }
+    var cols = wrap ? n : n - 1, half = (m - 1) * cols, T = 2 * half;
+    var A = new Int32Array(T), B = new Int32Array(T), C = new Int32Array(T);
+    for (i = 0; i + 1 < m; i++) {
+      for (j = 0; j < cols; j++) {
+        var a = i * n + j, b = (i + 1) * n + j, c = (i + 1) * n + (j + 1) % n, d = i * n + (j + 1) % n, t = i * cols + j;
+        A[t] = a; B[t] = b; C[t] = c;
+        A[half + t] = a; B[half + t] = c; C[half + t] = d;
+      }
+    }
+    var nx = new Float64Array(N), ny = new Float64Array(N), nz = new Float64Array(N);
+    for (t = 0; t < T; t++) {
+      var ex = X[B[t]] - X[A[t]], ey = Y[B[t]] - Y[A[t]], ez = Z[B[t]] - Z[A[t]];
+      var fx = X[C[t]] - X[A[t]], fy = Y[C[t]] - Y[A[t]], fz = Z[C[t]] - Z[A[t]];
+      var cx = ey * fz - ez * fy, cy = ez * fx - ex * fz, cz = ex * fy - ey * fx;
+      if (cz < 0) { cx = -cx; cy = -cy; cz = -cz; }
+      [A[t], B[t], C[t]].forEach(function(q) { nx[q] += cx; ny[q] += cy; nz[q] += cz; });
+    }
+    for (k = 0; k < N; k++) {
+      var L = Math.sqrt(nx[k] * nx[k] + ny[k] * ny[k] + nz[k] * nz[k]);
+      nx[k] /= L; ny[k] /= L; nz[k] /= L;
+    }
+    // What hides a point on it is measured in the grid's own width across the plane, as the
+    // generator measures it.
+    var lo = [Infinity, Infinity], hi = [-Infinity, -Infinity];
+    for (k = 0; k < N; k++) {
+      lo[0] = Math.min(lo[0], X[k]); hi[0] = Math.max(hi[0], X[k]);
+      lo[1] = Math.min(lo[1], Y[k]); hi[1] = Math.max(hi[1], Y[k]);
+    }
+    var extent = Math.max(hi[0] - lo[0], hi[1] - lo[1]);
+    return { id: p.id, cls: p['class'], grid: true, m: m, n: n, wrap: wrap, X: X, Y: Y, Z: Z,
+             A: A, B: B, C: C, nx: nx, ny: ny, nz: nz, eps: 1e-7 * extent, lift: 1e-5 * extent };
+  }
+
+  function node(g, i, j) { var k = i * g.n + j; return [g.X[k], g.Y[k], g.Z[k]]; }
+
+  // Row i of a grid piece, round and back to its first node where the grid runs round.
+  function gridRow(g, i) {
+    var out = [];
+    for (var j = 0; j < g.n; j++) out.push(node(g, i, j));
+    if (g.wrap) out.push(node(g, i, 0));
+    return out;
+  }
+  function gridColumn(g, j) {
+    var out = [];
+    for (var i = 0; i < g.m; i++) out.push(node(g, i, j));
+    return out;
+  }
+  // The edge of a grid piece, closed: a polar grid's outermost row, or round a rectangle.
+  function gridRim(g) {
+    if (g.wrap) return gridRow(g, g.m - 1);
+    var out = [], i, j;
+    for (j = 0; j + 1 < g.n; j++) out.push(node(g, 0, j));
+    for (i = 0; i + 1 < g.m; i++) out.push(node(g, i, g.n - 1));
+    for (j = g.n - 1; j > 0; j--) out.push(node(g, g.m - 1, j));
+    for (i = g.m - 1; i > 0; i--) out.push(node(g, i, 0));
+    out.push(out[0]);
+    return out;
+  }
+
+  /* A grid piece seen from a camera: each node on the page and its depth, and the triangles that
+     cover any area of the page sorted into a grid of bins over the page by their boxes, about as
+     many bins as triangles, as the generator's Facets sorts them. A ray toward the camera from a
+     point meets a triangle exactly where the triangle covers the point of the page it falls on,
+     after the difference of their depths. */
+  function facetFrame(g, cam) {
+    var R = cam.right, U = cam.up, V = cam.toward, N = g.X.length, T = g.A.length, k, t;
+    var px = new Float64Array(N), py = new Float64Array(N), pd = new Float64Array(N);
+    for (k = 0; k < N; k++) {
+      px[k] = g.X[k] * R[0] + g.Y[k] * R[1];
+      py[k] = g.X[k] * U[0] + g.Y[k] * U[1] + g.Z[k] * U[2];
+      pd[k] = g.X[k] * V[0] + g.Y[k] * V[1] + g.Z[k] * V[2];
+    }
+    var area = new Float64Array(T), biggest = 0;
+    for (t = 0; t < T; t++) {
+      var a = g.A[t], b = g.B[t], c = g.C[t];
+      area[t] = (px[b] - px[a]) * (py[c] - py[a]) - (px[c] - px[a]) * (py[b] - py[a]);
+      biggest = Math.max(biggest, Math.abs(area[t]));
+    }
+    var floor = 1e-15 * Math.max(1, biggest), kept = [];
+    for (t = 0; t < T; t++) if (Math.abs(area[t]) > floor) kept.push(t);
+    var nb = Math.max(1, Math.floor(Math.sqrt(Math.max(kept.length, 1))));
+    var lo = kept.map(function(t) {
+      return [Math.min(px[g.A[t]], px[g.B[t]], px[g.C[t]]), Math.min(py[g.A[t]], py[g.B[t]], py[g.C[t]])];
+    });
+    var hi = kept.map(function(t) {
+      return [Math.max(px[g.A[t]], px[g.B[t]], px[g.C[t]]), Math.max(py[g.A[t]], py[g.B[t]], py[g.C[t]])];
+    });
+    var gx = Infinity, gy = Infinity, hx = -Infinity, hy = -Infinity;
+    lo.forEach(function(q) { gx = Math.min(gx, q[0]); gy = Math.min(gy, q[1]); });
+    hi.forEach(function(q) { hx = Math.max(hx, q[0]); hy = Math.max(hy, q[1]); });
+    if (!kept.length) { gx = gy = 0; hx = hy = 1; }
+    var sx = Math.max((hx - gx) / nb, 1e-12), sy = Math.max((hy - gy) / nb, 1e-12);
+    function bin(v, g0, s) { return Math.min(nb - 1, Math.max(0, Math.floor((v - g0) / s))); }
+    var count = new Int32Array(nb * nb + 1), span = kept.map(function(t, q) {
+      return [bin(lo[q][0], gx, sx), bin(hi[q][0], gx, sx), bin(lo[q][1], gy, sy), bin(hi[q][1], gy, sy)];
+    });
+    span.forEach(function(r) {
+      for (var y = r[2]; y <= r[3]; y++) for (var x = r[0]; x <= r[1]; x++) count[y * nb + x + 1]++;
+    });
+    for (k = 0; k < nb * nb; k++) count[k + 1] += count[k];
+    var list = new Int32Array(count[nb * nb]), fill = count.slice(0, nb * nb);
+    span.forEach(function(r, q) {
+      for (var y = r[2]; y <= r[3]; y++) for (var x = r[0]; x <= r[1]; x++) list[fill[y * nb + x]++] = kept[q];
+    });
+    return { px: px, py: py, pd: pd, area: area, nb: nb, gx: gx, gy: gy, hx: hx, hy: hy, sx: sx, sy: sy, start: count, list: list };
+  }
+
+  /* The deepest reach of a grid piece's triangles over the point (sx, sy) of the page, their depth
+     there less dq, above eps, or with `any` the first found; -Infinity where none lies over it. */
+  function facetReach(g, F, sx, sy, dq, eps, any) {
+    var best = -Infinity;
+    if (!(sx >= F.gx && sx <= F.hx && sy >= F.gy && sy <= F.hy)) return best;
+    // A point on the far edge of the bins falls in the last of them, as a triangle's box does.
+    var x = Math.min(F.nb - 1, Math.floor((sx - F.gx) / F.sx)), y = Math.min(F.nb - 1, Math.floor((sy - F.gy) / F.sy));
+    var b = y * F.nb + x, px = F.px, py = F.py, pd = F.pd;
+    for (var q = F.start[b]; q < F.start[b + 1]; q++) {
+      var t = F.list[q], a = g.A[t], bb = g.B[t], c = g.C[t], area = F.area[t];
+      var wa = ((px[bb] - sx) * (py[c] - sy) - (px[c] - sx) * (py[bb] - sy)) / area;
+      var wb = ((px[c] - sx) * (py[a] - sy) - (px[a] - sx) * (py[c] - sy)) / area;
+      var wc = 1 - wa - wb;
+      if (wa < -1e-12 || wb < -1e-12 || wc < -1e-12) continue;
+      var d = wa * pd[a] + wb * pd[bb] + wc * pd[c] - dq;
+      if (d > eps) {
+        if (any) return d;
+        if (d > best) best = d;
+      }
+    }
+    return best;
+  }
+
+  /* Where a grid piece turns edge on to the camera, as the generator's grid_outline() finds it:
+     the lines where the normal at the nodes, carried along each edge of the grid, is square to
+     the line of sight, by marching squares over the grid, a polar grid's first column repeated
+     after its last. Each point lies on an edge of the grid, and so on the triangles. */
+  function gridOutline(g, cam) {
+    var V = cam.toward, m = g.m, nj = g.wrap ? g.n + 1 : g.n, F = new Float64Array(m * nj);
+    for (var i = 0; i < m; i++) {
+      for (var jj = 0; jj < nj; jj++) {
+        var k = i * g.n + jj % g.n;
+        F[i * nj + jj] = g.nx[k] * V[0] + g.ny[k] * V[1] + g.nz[k] * V[2];
+      }
+    }
+    return isolines(F, m, nj).map(function(line) {
+      return line.map(function(at) {
+        var i0 = Math.floor(at[0]), j0 = Math.floor(at[1]), i1 = Math.min(i0 + 1, m - 1), j1 = Math.min(j0 + 1, nj - 1);
+        var wi = at[0] - i0, wj = at[1] - j0, P = [0, 0, 0];
+        [[i0, j0, (1 - wi) * (1 - wj)], [i1, j0, wi * (1 - wj)], [i0, j1, (1 - wi) * wj], [i1, j1, wi * wj]].forEach(function(c) {
+          var q = node(g, c[0], c[1] % g.n);
+          P[0] += c[2] * q[0]; P[1] += c[2] * q[1]; P[2] += c[2] * q[2];
+        });
+        return P;
+      });
+    });
+  }
+
   /* How far a surface reaches above and below its centre on the page at elevation e: a point
      of its profile draws a circle whose height on the page runs over (z - zc) cos e +- rho sin e,
-     and along a cone between two points both are linear, so the points bound the whole. */
-  function height(S, e) {
+     and along a cone between two points both are linear, so the points bound the whole. A grid
+     piece is flat between its nodes, so its nodes bound it, seen from the azimuth a as well. */
+  function height(S, e, a) {
     var ce = Math.cos(e), se = Math.abs(Math.sin(e)), top = -Infinity, bottom = Infinity;
     S.pieces.forEach(function(p) {
       for (var i = 0; i < p.rho.length; i++) {
@@ -104,17 +305,47 @@
         if (y - w < bottom) bottom = y - w;
       }
     });
+    if (S.grids.length) {
+      var u0 = -Math.sin(e) * Math.cos(a), u1 = -Math.sin(e) * Math.sin(a);
+      S.grids.forEach(function(g) {
+        for (var k = 0; k < g.Z.length; k++) {
+          var y = g.X[k] * u0 + g.Y[k] * u1 + (g.Z[k] - S.zc) * ce;
+          if (y > top) top = y;
+          if (y < bottom) bottom = y;
+        }
+      });
+    }
     return [top, bottom];
+  }
+
+  /* How far a surface with a grid piece reaches left and right of its axis on the page from the
+     azimuth a, [left, right], both positive. A surface of revolution is as wide from every side;
+     a grid over a rectangle is not. */
+  function width(S, a) {
+    var r0 = -Math.sin(a), r1 = Math.cos(a), left = 0, right = 0;
+    S.grids.forEach(function(g) {
+      for (var k = 0; k < g.X.length; k++) {
+        var x = g.X[k] * r0 + g.Y[k] * r1;
+        if (x > right) right = x;
+        if (-x > left) left = -x;
+      }
+    });
+    return [left, right];
   }
 
   // The one scale, never above 1, and each surface's move up or down, that keep every surface
   // within the height it had at the start.
   function fitting(M, cam) {
-    var e = cam.elevation * RAD, scale = 1;
-    var reach = M.surfaces.map(function(S) { return height(S, e); });
+    var e = cam.elevation * RAD, a = cam.azimuth * RAD, scale = 1;
+    var reach = M.surfaces.map(function(S) { return height(S, e, a); });
     M.surfaces.forEach(function(S, k) {
       var need = reach[k][0] - reach[k][1], have = S.top0 - S.bottom0;
       if (need > have) scale = Math.min(scale, have / need);
+      if (S.grids.length) {
+        var w = width(S, a);
+        if (w[0] > S.left0) scale = Math.min(scale, S.left0 / w[0]);
+        if (w[1] > S.right0) scale = Math.min(scale, S.right0 / w[1]);
+      }
     });
     var shift = M.surfaces.map(function(S, k) {
       return Math.min(Math.max(0, S.bottom0 - scale * reach[k][1]), S.top0 - scale * reach[k][0]);
@@ -179,7 +410,15 @@
     return best;
   }
 
-  function hidden(S, qx, qy, qz, v, eps) { return cast(S, qx, qy, qz, v, eps, true) >= 0; }
+  function hidden(S, qx, qy, qz, v, eps) {
+    if (cast(S, qx, qy, qz, v, eps, true) >= 0) return true;
+    for (var k = 0; k < S.grids.length; k++) {
+      var g = S.grids[k], F = g.frame, cam = S.camera;
+      var sx = qx * cam.right[0] + qy * cam.right[1], sy = qx * cam.up[0] + qy * cam.up[1] + qz * cam.up[2];
+      if (facetReach(g, F, sx, sy, qx * v[0] + qy * v[1] + qz * v[2], g.eps, true) > g.eps) return true;
+    }
+    return false;
+  }
 
   /* Whether a point of the outline is hidden. The line of sight only grazes the surface
      there, and along it the neighbouring cones lie as near the line as the rounding of the
@@ -187,9 +426,10 @@
      cone's is enough to hide every other point of its outline. So the point is taken a
      hundred thousandth of the drawing off the surface on either side, along its normal, and is
      hidden only if both are: on the side the surface folds toward, the fold hides it, and on
-     the other only what truly lies in front does. */
+     the other only what truly lies in front does. A point on a grid piece is taken a hundred
+     thousandth of the grid's width above and below it, as the generator takes it. */
   function outlined(S, P, v, M) {
-    var d = 1e-5 * M.size, n = P.normal;
+    var d = P.lift || 1e-5 * M.size, n = P.normal;
     return hidden(S, P[0] + d * n[0], P[1] + d * n[1], P[2] + d * n[2], v, M.eps) &&
            hidden(S, P[0] - d * n[0], P[1] - d * n[1], P[2] - d * n[2], v, M.eps);
   }
@@ -315,6 +555,14 @@
     return runs;
   }
 
+  // The points of a line on a grid piece, each to be judged from a hundred thousandth of the
+  // grid's width above and below it.
+  var UP = [0, 0, 1];
+  function upright(P, g) {
+    P.forEach(function(q) { q.normal = UP; q.lift = g.lift; });
+    return P;
+  }
+
   // A polyline of n points on each segment of P, as the generator's densify().
   function densify(P, n) {
     var out = [];
@@ -360,6 +608,8 @@
 
     M.surfaces.forEach(function(S, k) {
       var X0 = S.at[0], Y0 = S.at[1] + fit.shift[k] - s * S.zc * ce;
+      S.camera = cam;
+      S.grids.forEach(function(g) { g.frame = facetFrame(g, cam); });
       function page(P) { return [X0 + s * (P[0] * R[0] + P[1] * R[1]), Y0 + s * (P[0] * U[0] + P[1] * U[1] + P[2] * U[2])]; }
       // A line on the surface, split into the parts seen and the parts hidden, cut halfway
       // between neighbouring points of opposite kinds, as Figure.line() splits it.
@@ -400,9 +650,27 @@
       M.turn.marks.forEach(function(mark) {
         if (mark.surface === k) line(mark['class'], densify(meridian(S.byId[mark.piece], mark.phi), Q.densify));
       });
+      // A grid piece: the lines of its grid that the figure names, its rim and its outline, every
+      // point of each judged by the two points just above and below it, as the generator's
+      // draw_grid() judges them, the two sides of a height being above and below it.
+      (M.turn.grid || []).forEach(function(G) {
+        if (G.surface !== k) return;
+        var g = S.byId[G.piece];
+        G.u.forEach(function(i) { line(G['class'], upright(densify(gridRow(g, i), Q.densify), g)); });
+        G.v.forEach(function(j) { line(G['class'], upright(densify(gridColumn(g, j), Q.densify), g)); });
+      });
+      S.grids.forEach(function(g) {
+        line('outline', upright(densify(gridRim(g), Q.densify), g));
+        gridOutline(g, cam).forEach(function(run) { line('outline', upright(run, g)); });
+      });
       // A curve marked on the surface is drawn through its own points, and back to the first
       // where it closes; a point marked on it is drawn wherever it stands, as the generator's are.
-      S.curves.forEach(function(c) { line(c['class'], c.closed ? c.points.concat([c.points[0]]) : c.points); });
+      S.curves.forEach(function(c) {
+        var P = c.closed ? c.points.concat([c.points[0]]) : c.points;
+        var on = S.byId[c.piece];
+        if (on && on.grid) P = upright(P.map(function(q) { return q.slice(); }), on);
+        line(c['class'], P);
+      });
       S.dots.forEach(function(d) { dots.push({ kind: 'point', 'class': d['class'], at: page(d.at) }); });
     });
 
@@ -474,6 +742,20 @@
           }
         }
       });
+      // A grid piece is its triangles already.
+      S.grids.forEach(function(g) {
+        var N = g.X.length, X = new Float64Array(N), Y = new Float64Array(N), D = new Float64Array(N);
+        for (var q = 0; q < N; q++) {
+          var px = g.X[q], py = g.Y[q], pz = g.Z[q];
+          X[q] = (X0 + s * (px * R[0] + py * R[1]) - x0) / step;
+          Y[q] = (Y0 + s * (px * U[0] + py * U[1] + pz * U[2]) - y0) / step;
+          D[q] = px * V[0] + py * V[1] + pz * V[2];
+        }
+        for (var t = 0; t < g.A.length; t++) {
+          var a = g.A[t], b = g.B[t], c = g.C[t];
+          triangle(X[a], Y[a], D[a], X[b], Y[b], D[b], X[c], Y[c], D[c], g.code);
+        }
+      });
     });
 
     // The nearest piece at a point of the grid, by a ray from far behind every surface.
@@ -484,6 +766,10 @@
         var i = cast(S, a * R[0] + b * U[0] - back * V[0], a * R[1] + b * U[1] - back * V[1], b * U[2] - back * V[2],
                      V, M.eps, false);
         if (i >= 0 && reached - back > near) { near = reached - back; best = S.code[i]; }
+        S.grids.forEach(function(g) {
+          var d = facetReach(g, g.frame, a, b, 0, -Infinity, false);
+          if (d > near) { near = d; best = g.code; }
+        });
       });
       return best;
     }

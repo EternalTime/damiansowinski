@@ -9,8 +9,13 @@
    published ones, and how far each label lands from its published place; at a sweep of other
    cameras, the scale, how far any drawn point or label falls outside the box, and any number
    that is not one; and what share of the lines that a turn round the axis must leave in place
-   moves under one. For Schwarzschild it also gives how far out on each sheet a circle is seen
-   and how far out one is hidden, from straight above and from straight below. */
+   moves under one, for every view whose surfaces are surfaces of revolution. For Schwarzschild it
+   also gives how far out on each sheet a circle is seen and how far out one is hidden, from
+   straight above and from straight below. For a view that draws a height over a plane it gives,
+   from straight above and straight below, how much of its lines is hidden and how much of the page
+   its tint covers against its rim at the drawn scale; seen from just above the plane, how much of
+   its grid is hidden; and, turned all the way round, how far it strays from its box and the
+   least scale it is drawn at. */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -75,6 +80,42 @@ function astray(A, B, tol) {
   return far;
 }
 
+/* A height over a plane looked at along the vertical hides nothing of itself, and its tint then
+   covers its rim, drawn at the scale the turn chose; looked at from just above the plane, its
+   relief hides part of its grid behind it; and turned all the way round it keeps to its box,
+   drawn smaller where it would be wider or taller than it was. */
+function heights(M, view, a0, e0) {
+  const rim = view.surfaces[0].pieces.filter(p => p.grid).map(p => {
+    const g = p.grid, polar = g.frame === 'polar', P = [];
+    const node = (i, j) => polar ? [g.u[i] * Math.cos(g.v[j]), g.u[i] * Math.sin(g.v[j])] : [g.u[i], g.v[j]];
+    if (polar) for (let j = 0; j < g.v.length; j++) P.push(node(g.u.length - 1, j));
+    else P.push(node(0, 0), node(g.u.length - 1, 0), node(g.u.length - 1, g.v.length - 1), node(0, g.v.length - 1));
+    return area([P]);
+  }).reduce((a, b) => a + b, 0);
+  const out = {};
+  for (const [name, e] of [['above', 90], ['below', -90]]) {
+    const d = turn.draw(M, a0, e, false), mine = byClass(d.layers);
+    let far = 0, seen = 0;
+    for (const [c, L] of Object.entries(mine.lines)) (/-far$/.test(c) ? (far += length(L)) : (seen += length(L)));
+    out[name] = { far, seen, tint: area(mine.fills.cover || []), rim: rim * d.scale * d.scale };
+  }
+  const low = byClass(turn.draw(M, a0, 5, false).layers).lines;
+  out.low = { far: length(low['grid-far'] || []), seen: length(low.grid || []) };
+  const [x0, x1, y0, y1] = view.figure.box, size = Math.max(x1 - x0, y1 - y0);
+  let outside = 0, least = 1;
+  for (let a = a0; a < a0 + 360; a += 5) {
+    const d = turn.draw(M, a, e0, true);
+    least = Math.min(least, d.scale);
+    for (const L of d.layers) {
+      for (const p of (L.kind === 'point' ? [L.at] : L.points)) {
+        outside = Math.max(outside, x0 - p[0], p[0] - x1, y0 - p[1], p[1] - y1);
+      }
+    }
+  }
+  out.turned = { outside: outside / size, scale: least };
+  return out;
+}
+
 const out = { views: [] };
 for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   const data = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
@@ -111,17 +152,24 @@ for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) 
     // it that is no circle turns with it, as its meridians do.
     const curves = new Set(view.surfaces.flatMap(s => (s.curves || []).map(c => c['class'])));
     const still = c => !/^(meridian|cut|reference)(-far)?$/.test(c) && !curves.has(c.replace(/-far$/, ''));
-    let moved = 0, total = 0;
-    for (const e of [e0, 60, -30]) {
-      const A = byClass(turn.draw(M, a0, e, false).layers).lines, B = byClass(turn.draw(M, a0 + 37, e, false).layers).lines;
-      for (const c of new Set([...Object.keys(A), ...Object.keys(B)].filter(still))) {
-        moved += astray(A[c] || [], B[c] || [], 2e-3 * size);
-        total += length(A[c] || []) + length(B[c] || []);
+    const grids = view.surfaces.some(s => s.pieces.some(p => p.grid));
+    let moved = null;
+    if (!grids) {
+      let total = 0;
+      moved = 0;
+      for (const e of [e0, 60, -30]) {
+        const A = byClass(turn.draw(M, a0, e, false).layers).lines, B = byClass(turn.draw(M, a0 + 37, e, false).layers).lines;
+        for (const c of new Set([...Object.keys(A), ...Object.keys(B)].filter(still))) {
+          moved += astray(A[c] || [], B[c] || [], 2e-3 * size);
+          total += length(A[c] || []) + length(B[c] || []);
+        }
       }
+      moved /= total;
     }
-    moved /= total;
-    out.views.push({ metric: data.metric, view: view.id, size, boxArea: (x1 - x0) * (y1 - y0),
-                     lines, fills, labels, shown, sweep, moved });
+    const entry = { metric: data.metric, view: view.id, size, boxArea: (x1 - x0) * (y1 - y0),
+                    lines, fills, labels, shown, sweep, moved };
+    if (grids) entry.height = heights(M, view, a0, e0);
+    out.views.push(entry);
   }
 }
 

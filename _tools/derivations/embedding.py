@@ -26,8 +26,11 @@ construction stops and why rather than drawing past it; where every circle does,
 hyperbolic plane of anti-de Sitter space, the slice is drawn in three dimensional Minkowski
 space instead, dX^2 + dY^2 - dZ^2, where it climbs at dZ/dx = sqrt((drho/dx)^2 - g_xx).
 A flat slice is drawn as the plane it is, with what the spacetime does marked on it as
-curves and points that are no circles: a ring of free particles, the wall and the expansion
-of a warp bubble, the lines of its flow.
+curves and points that are no circles: a ring of free particles, the wall of a warp bubble,
+the lines of its flow. Two spacetimes whose slices are flat draw a quantity as a height over
+a plane instead, a GridPiece: Alcubierre's drive the expansion of the observers who ride its
+slices, and the Krasnikov tube 1 - k, how far it tips the light cone. The height is sampled on
+a grid and drawn as flat triangles, each within GRID_SAG of the drawing's size of it in space.
 
     python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy numpy scipy contourpy
     /tmp/mfs-venv/bin/python _tools/derivations/embedding.py
@@ -69,6 +72,8 @@ file holds, against the published metric:
             cylinder, the plane and the hyperboloid, the circumference of a rotating hole's
             horizon, and the ellipse a ring of particles is stretched into;
   marks     every curve and point marked on a surface lies on its piece;
+  heights   every node of a grid against the quantity it stands for, and every triangle within
+            GRID_SAG of the drawing's size of it, measured in space;
   fields    a declared star, scale factor or dust cloud against the published Einstein
             tensor it is meant to solve;
   stops     where the file says a slice cannot be drawn, g_xx - (drho/dx)^2 is negative
@@ -134,6 +139,8 @@ OUTLINE = 1e-5      # how far off the surface a point of its outline is judged, 
 CAMERA = Camera(-90, 22)
 RING = 720          # points round a circle of the drawing
 LAB = {"lab": 15, "small": 13}  # label sizes, in units of a figure 628 wide, as on the page
+GRID_SAG = 5e-4     # how far a facet of a height over a plane may lie from the height, in space, as a part of the drawing's size
+HEIGHT_CAMERA = Camera(-90, 30)  # a height over a plane seen from low enough that its relief shows
 
 
 # ---------------------------------------------------------------- reading a slice
@@ -647,6 +654,384 @@ class Surface:
         return out
 
 
+# ---------------------------------------------------------------- a height over a plane
+
+class Facets:
+    """Flat triangles, corners A, B and C of shape (T, 3), seen along one direction: for points of
+    the page, which triangles lie over them and how near the viewer, found exactly. Seen along
+    `toward`, a ray from a point P toward the viewer meets a triangle exactly where the triangle
+    covers the point of the page P falls on, and there it meets it after the difference of their
+    depths, so each point is tested against the triangles whose box on the page holds it, found
+    through a grid of bins laid over the page."""
+
+    def __init__(self, A, B, C):
+        self.A, self.B, self.C = (np.asarray(M, dtype=float) for M in (A, B, C))
+        self._seen = {}
+
+    def _frame(self, right, up, toward):
+        key = tuple(np.round(np.concatenate([right, up, toward]), 15))
+        if key in self._seen:
+            return self._seen[key]
+        page = [np.stack([M @ right, M @ up], -1) for M in (self.A, self.B, self.C)]
+        depth = [M @ toward for M in (self.A, self.B, self.C)]
+        (ax, ay), (bx, by), (cx, cy) = ((p[:, 0], p[:, 1]) for p in page)
+        area = (bx - ax) * (cy - ay) - (cx - ax) * (by - ay)
+        # A triangle seen edge on covers no area of the page and hides nothing.
+        keep = np.abs(area) > 1e-15 * max(1.0, float(np.max(np.abs(area))))
+        lo = np.minimum(np.minimum(page[0], page[1]), page[2])
+        hi = np.maximum(np.maximum(page[0], page[1]), page[2])
+        idx = np.flatnonzero(keep)
+        n = max(1, int(math.sqrt(max(len(idx), 1))))
+        g0 = lo[idx].min(0) if len(idx) else np.zeros(2)
+        g1 = hi[idx].max(0) if len(idx) else np.ones(2)
+        step = np.maximum((g1 - g0) / n, 1e-12)
+        i0 = np.clip(((lo[idx] - g0) // step).astype(int), 0, n - 1)
+        i1 = np.clip(((hi[idx] - g0) // step).astype(int), 0, n - 1)
+        nx, ny = i1[:, 0] - i0[:, 0] + 1, i1[:, 1] - i0[:, 1] + 1
+        count = nx * ny
+        tri = np.repeat(idx, count)
+        k = np.arange(int(count.sum())) - np.repeat(np.cumsum(count) - count, count)
+        bx_ = np.repeat(i0[:, 0], count) + k % np.repeat(nx, count)
+        by_ = np.repeat(i0[:, 1], count) + k // np.repeat(nx, count)
+        bins = by_ * n + bx_
+        order = np.argsort(bins, kind="stable")
+        tri, bins = tri[order], bins[order]
+        start = np.searchsorted(bins, np.arange(n * n))
+        end = np.searchsorted(bins, np.arange(n * n), side="right")
+        frame = {"page": page, "depth": depth, "area": area, "n": n, "g0": g0, "g1": g1, "step": step,
+                 "tri": tri, "start": start, "end": end}
+        self._seen[key] = frame
+        return frame
+
+    def over(self, S, right, up, toward):
+        """For points S of the page, (point, triangle, depth of the triangle there) for every
+        triangle that covers the point, edges included."""
+        F = self._frame(np.asarray(right, dtype=float), np.asarray(up, dtype=float), np.asarray(toward, dtype=float))
+        S = np.asarray(S, dtype=float).reshape(-1, 2)
+        n, g0, g1, step = F["n"], F["g0"], F["g1"], F["step"]
+        # A point on the far edge of the bins falls in the last of them, as a triangle's box does.
+        cell = np.clip(np.floor((S - g0) / step).astype(int), 0, n - 1)
+        inside = np.all((S >= g0) & (S <= g1), axis=1)
+        b = np.where(inside, cell[:, 1] * n + cell[:, 0], 0)
+        count = np.where(inside, F["end"][b] - F["start"][b], 0)
+        q = np.repeat(np.arange(len(S)), count)
+        k = np.arange(int(count.sum())) - np.repeat(np.cumsum(count) - count, count)
+        t = F["tri"][np.repeat(F["start"][b], count) + k]
+        (ax, ay), (bx, by), (cx, cy) = ((p[t, 0], p[t, 1]) for p in F["page"])
+        px, py = S[q, 0], S[q, 1]
+        area = F["area"][t]
+        wa = ((bx - px) * (cy - py) - (cx - px) * (by - py)) / area
+        wb = ((cx - px) * (ay - py) - (ax - px) * (cy - py)) / area
+        wc = 1.0 - wa - wb
+        hit = (wa >= -1e-12) & (wb >= -1e-12) & (wc >= -1e-12)
+        d = wa * F["depth"][0][t] + wb * F["depth"][1][t] + wc * F["depth"][2][t]
+        return q[hit], t[hit], d[hit]
+
+    def reach(self, P, camera, eps):
+        """For rays from P toward the camera, the largest t > eps at which each meets a triangle,
+        or -inf."""
+        P = np.asarray(P, dtype=float)
+        q, _, d = self.over(camera.screen(P), camera.right, camera.up, camera.toward)
+        t = d - P[q] @ camera.toward
+        out = np.full(len(P), -np.inf)
+        ok = t > eps
+        np.maximum.at(out, q[ok], t[ok])
+        return out
+
+    def height(self, X, Y):
+        """The height of the triangles over the points (X, Y), seen from straight above, or nan
+        where none lies."""
+        X, Y = np.broadcast_arrays(np.asarray(X, dtype=float), np.asarray(Y, dtype=float))
+        q, _, d = self.over(np.column_stack([X.ravel(), Y.ravel()]), [1.0, 0.0, 0.0], [0.0, 1.0, 0.0],
+                            [0.0, 0.0, 1.0])
+        out = np.full(X.size, -np.inf)
+        np.maximum.at(out, q, d)
+        return np.where(np.isfinite(out), out, np.nan).reshape(X.shape)
+
+
+class GridPiece:
+    """A quantity drawn as a height over a plane, z(X, Y) in the surface's own frame, sampled on a
+    grid and drawn as flat triangles. It is no slice of the spacetime, and nothing is measured
+    along it: the height stands for the quantity, at the scale the view states.
+
+    frame      "polar": u is the distance from the axis and v the angle from X toward Y, running
+               round; "cartesian": u is X and v is Y;
+    u, v       the values the grid must hold, as the lines it draws and the curves it marks along
+               them; u is halved, and for a Cartesian grid v as well, until every triangle lies
+               within GRID_SAG of the drawing's size of the height, measured in space;
+    height     z(X, Y), vectorised;
+    edge       the TeX text for what the surface does beyond its rim;
+    lines      the grid lines the figure draws, {"u": [values], "v": [values]}.
+
+    Each cell between neighbouring u_i, u_(i+1) and v_j, v_(j+1) is cut into two triangles
+    along its diagonal from (i, j) to (i+1, j+1). The heights are rounded as they are written,
+    and every triangle and check is taken from the rounded heights, so the surface drawn is the
+    surface the file holds."""
+
+    def __init__(self, pid, cls, frame, u, v, height, metric_id, system_id, edge, size, lines):
+        self.id, self.cls, self.frame, self.size = pid, cls, frame, size
+        self.metric_id, self.system_id, self.edge = metric_id, system_id, edge
+        self.reference, self.marks = False, []
+        self.wrap = frame == "polar"
+        self.fun = height
+        self.u = np.array(sorted(set(float(x) for x in u)))
+        self.v = np.array(sorted(set(float(x) for x in v)))
+        while True:
+            err = self._errors()
+            bad_u = np.flatnonzero(err.max(axis=1) > GRID_SAG * size)
+            bad_v = np.flatnonzero(err.max(axis=0) > GRID_SAG * size) if not self.wrap else np.array([], int)
+            if not len(bad_u) and not len(bad_v):
+                break
+            # Halving u cannot bring a polar grid's cells nearer the height than its angles allow,
+            # and the halving then runs on without end.
+            if len(self.u) * len(self.v) > 200000:
+                raise AssertionError(f"piece {pid}: the grid cannot hold the height within GRID_SAG by halving; "
+                                     "a polar grid needs more angles")
+            self.u = np.sort(np.concatenate([self.u, 0.5 * (self.u[bad_u] + self.u[bad_u + 1])]))
+            if len(bad_v):
+                self.v = np.sort(np.concatenate([self.v, 0.5 * (self.v[bad_v] + self.v[bad_v + 1])]))
+        X, Y = self.plane()
+        Z = height(X, Y)
+        self.decimals = decimals(max(float(np.ptp(X)), float(np.ptp(Y)), float(np.ptp(Z)), 1e-9))
+        self.Z = np.round(Z, self.decimals) + 0.0
+        self.lines = {k: [self.index(k, x) for x in lines.get(k, [])] for k in ("u", "v")}
+        self.facets = Facets(*self.triangles())
+        # The width of the grid across the plane, which the tests of what hides a point on it
+        # are measured in, so that the page, which knows the grid and not the drawing's size,
+        # judges them as the figure is written.
+        self.extent = self.facets.extent = max(float(np.ptp(X)), float(np.ptp(Y)))
+
+    def plane(self, u=None, v=None):
+        u = self.u if u is None else u
+        v = self.v if v is None else v
+        if self.wrap:
+            return np.outer(u, np.cos(v)), np.outer(u, np.sin(v))
+        return np.meshgrid(u, v, indexing="ij")
+
+    def index(self, which, value):
+        grid = self.u if which == "u" else self.v
+        i = int(np.argmin(np.abs(grid - value)))
+        if abs(grid[i] - value) > 1e-12:
+            raise AssertionError(f"piece {self.id}: {value} is not a value of {which} on the grid")
+        return i
+
+    def nodes(self):
+        X, Y = self.plane()
+        return np.stack([X, Y, self.Z], -1)
+
+    def _corners(self, P):
+        if self.wrap:
+            P = np.concatenate([P, P[:, :1]], axis=1)
+        a, b, c, d = P[:-1, :-1], P[1:, :-1], P[1:, 1:], P[:-1, 1:]
+        return a, b, c, d
+
+    def triangles(self):
+        a, b, c, d = (M.reshape(-1, 3) for M in self._corners(self.nodes()))
+        return np.vstack([a, a]), np.vstack([b, c]), np.vstack([c, d])
+
+    def _errors(self, Z=None):
+        """The distance in space from each cell's triangles to the height, the worst of samples
+        over each, with the heights Z at the corners, unrounded unless given."""
+        X, Y = self.plane()
+        P = np.stack([X, Y, self.fun(X, Y) if Z is None else Z], -1)
+        a, b, c, d = self._corners(P)
+        g = np.linspace(0, 1, 9)
+        s, t = (w.ravel() for w in np.meshgrid(g, g))
+        keep = s + t <= 1 + 1e-12
+        s, t = s[keep], t[keep]
+        worst = np.zeros(a.shape[:2])
+        h = 1e-6
+        for A, B, C in ((a, b, c), (a, c, d)):
+            Q = A[..., None, :] + s[:, None] * (B - A)[..., None, :] + t[:, None] * (C - A)[..., None, :]
+            x, y = Q[..., 0], Q[..., 1]
+            gx = (self.fun(x + h, y) - self.fun(x - h, y)) / (2 * h)
+            gy = (self.fun(x, y + h) - self.fun(x, y - h)) / (2 * h)
+            miss = np.abs(Q[..., 2] - self.fun(x, y)) / np.sqrt(1 + gx * gx + gy * gy)
+            worst = np.maximum(worst, miss.max(axis=-1))
+        return worst
+
+    def sag(self):
+        """The worst distance in space from a triangle, as the file holds it, to the height."""
+        return float(self._errors(self.Z).max())
+
+    def rim(self):
+        """The edge of the grid, its nodes in order round it, to be closed back to the first."""
+        P = self.nodes()
+        if self.wrap:
+            return P[-1]
+        return np.vstack([P[0, :-1], P[:-1, -1], P[-1, :0:-1], P[:0:-1, 0]])
+
+    def data(self):
+        d = self.decimals
+        return {"id": self.id, "class": self.cls, "metric": self.metric_id, "system": self.system_id,
+                "grid": {"frame": self.frame, "u": [significant(x) for x in self.u],
+                         "v": [significant(x) for x in self.v],
+                         "z": [[fixed(z, d) for z in row] for row in self.Z]},
+                "edge": end_data(("edge", self.edge))}
+
+
+def level_curves(piece, level):
+    """The curves on which the triangles of a grid piece stand at the height `level`, each a list of
+    points on the edges of the triangles, closed where it closes, a corner at the level counted
+    as above it."""
+    A, B, C = piece.triangles()
+    m, n = len(piece.u), len(piece.v)
+    cols = n if piece.wrap else n - 1
+    # The node index of each corner, to name the edges two triangles share.
+    ii, jj = np.meshgrid(np.arange(m - 1), np.arange(cols), indexing="ij")
+    na = (ii * n + jj).ravel()
+    nb = ((ii + 1) * n + jj).ravel()
+    nc = ((ii + 1) * n + (jj + 1) % n).ravel()
+    nd = (ii * n + (jj + 1) % n).ravel()
+    corners = [np.concatenate([na, na]), np.concatenate([nb, nc]), np.concatenate([nc, nd])]
+    pts = [A, B, C]
+    links, at = {}, {}
+    for k in range(len(A)):
+        above = [pts[e][k][2] >= level for e in range(3)]
+        if all(above) or not any(above):
+            continue
+        ends = []
+        for e0, e1 in ((0, 1), (1, 2), (2, 0)):
+            if above[e0] != above[e1]:
+                key = tuple(sorted((int(corners[e0][k]), int(corners[e1][k]))))
+                if key[0] == key[1]:
+                    continue
+                if key not in at:
+                    P, Q = pts[e0][k], pts[e1][k]
+                    w = (level - P[2]) / (Q[2] - P[2])
+                    at[key] = P + w * (Q - P)
+                ends.append(key)
+        if len(ends) == 2:
+            links.setdefault(ends[0], []).append(ends[1])
+            links.setdefault(ends[1], []).append(ends[0])
+    out, done = [], set()
+
+    def walk(start):
+        line, prev, cur = [start], None, start
+        done.add(start)
+        while True:
+            nxt = [e for e in links[cur] if e != prev and e not in done]
+            if not nxt:
+                break
+            prev, cur = cur, nxt[0]
+            line.append(cur)
+            done.add(cur)
+        closed = len(line) > 2 and start in links[cur]
+        return np.array([at[e] for e in line]), closed
+    for key, nb_ in links.items():
+        if len(nb_) == 1 and key not in done:
+            out.append(walk(key))
+    for key in links:
+        if key not in done:
+            out.append(walk(key))
+    return out
+
+
+def grid_isolines(F, ni, nj):
+    """The polylines where F = 0 on a grid of ni rows and nj columns, F[i * nj + j], by marching
+    squares with a zero counted as positive and a saddle settled by the mean of its corners, each
+    a list of (i, j) in grid units, a closed one repeating its first point at its end: the
+    isolines() of MFS/assets/embedding-turn.js, step for step, so the page draws the outline of a
+    grid as the figure is written."""
+    H = ni * nj
+    at, links = {}, {}
+
+    def place(key, i0, j0, i1, j1, p, q):
+        if key not in at:
+            w = p / (p - q)
+            at[key] = (i0 + w * (i1 - i0), j0 + w * (j1 - j0))
+        return key
+
+    def link(a, b):
+        links.setdefault(a, []).append(b)
+        links.setdefault(b, []).append(a)
+    for i in range(ni - 1):
+        for j in range(nj - 1):
+            a, b, c, d = F[i * nj + j], F[i * nj + j + 1], F[(i + 1) * nj + j + 1], F[(i + 1) * nj + j]
+            ia, ib, ic, id_ = a >= 0, b >= 0, c >= 0, d >= 0
+            if ia == ib == ic == id_:
+                continue
+            T = place(i * nj + j, i, j, i, j + 1, a, b) if ia != ib else -1
+            R = place(H + i * nj + j + 1, i, j + 1, i + 1, j + 1, b, c) if ib != ic else -1
+            B = place((i + 1) * nj + j, i + 1, j, i + 1, j + 1, d, c) if id_ != ic else -1
+            L = place(H + i * nj + j, i, j, i + 1, j, a, d) if ia != id_ else -1
+            if T >= 0 and R >= 0 and B >= 0 and L >= 0:
+                if (a + b + c + d >= 0) == ia:
+                    link(T, R)
+                    link(B, L)
+                else:
+                    link(T, L)
+                    link(R, B)
+            else:
+                ends = [e for e in (T, R, B, L) if e >= 0]
+                link(ends[0], ends[1])
+    out, done = [], set()
+
+    def walk(start):
+        line, prev, cur = [start], -1, start
+        done.add(start)
+        while True:
+            nxt = [e for e in links[cur] if e != prev and e not in done]
+            if not nxt:
+                break
+            line.append(nxt[0])
+            done.add(nxt[0])
+            prev, cur = cur, nxt[0]
+        if len(line) > 2 and start in links[cur]:
+            line.append(start)
+        return [at[k] for k in line]
+    for key, nb_ in links.items():
+        if len(nb_) == 1 and key not in done:
+            out.append(walk(key))
+    for key in links:
+        if key not in done:
+            out.append(walk(key))
+    return out
+
+
+def grid_normals(piece):
+    """The unit normal at each node of a grid piece, pointing up: the sum of the normals of the
+    triangles that meet there, each as long as twice its area."""
+    P = piece.nodes()
+    m, n = P.shape[:2]
+    Q = np.concatenate([P, P[:, :1]], axis=1) if piece.wrap else P
+    a, b, c, d = Q[:-1, :-1], Q[1:, :-1], Q[1:, 1:], Q[:-1, 1:]
+    N = np.zeros((m, Q.shape[1], 3))
+    for A, B, C, corners in ((a, b, c, ((0, 0), (1, 0), (1, 1))), (a, c, d, ((0, 0), (1, 1), (0, 1)))):
+        f = np.cross(B - A, C - A)
+        f *= np.where(f[..., 2:3] < 0, -1.0, 1.0)
+        for di, dj in corners:
+            N[di:di + m - 1, dj:dj + Q.shape[1] - 1] += f
+    if piece.wrap:
+        N[:, 0] += N[:, -1]
+        N = N[:, :-1]
+    return N / np.linalg.norm(N, axis=-1, keepdims=True)
+
+
+def grid_outline(piece, cam):
+    """Where a grid piece turns edge on to the camera: the lines where the normal at the nodes,
+    carried linearly along each edge of the grid, is square to the line of sight, found by
+    marching squares over the grid, each point on an edge of the grid and so on the triangles."""
+    P = piece.nodes()
+    N = grid_normals(piece)
+    F = N @ cam.toward
+    if piece.wrap:
+        P = np.concatenate([P, P[:, :1]], axis=1)
+        F = np.concatenate([F, F[:, :1]], axis=1)
+    ni, nj = F.shape
+    runs = []
+    for line in grid_isolines(F.ravel(), ni, nj):
+        pts = []
+        for gi, gj in line:
+            i0, j0 = int(math.floor(gi)), int(math.floor(gj))
+            i1, j1 = min(i0 + 1, ni - 1), min(j0 + 1, nj - 1)
+            wi, wj = gi - i0, gj - j0
+            pts.append((1 - wi) * (1 - wj) * P[i0, j0] + wi * (1 - wj) * P[i1, j0]
+                       + (1 - wi) * wj * P[i0, j1] + wi * wj * P[i1, j1])
+        runs.append(np.array(pts))
+    return runs
+
+
 # ---------------------------------------------------------------- the checks
 
 class Checks:
@@ -708,6 +1093,11 @@ class Checks:
         within the piece's circles, and its height the profile's there, between the two points of
         the profile it falls between, whose chord follows the profile to SAG of the size."""
         P = np.asarray(points, dtype=float).reshape(-1, 3)
+        if isinstance(piece, GridPiece):
+            off = np.abs(P[:, 2] - piece.facets.height(P[:, 0], P[:, 1]))
+            self.add(f"{where}: on the triangles of the grid", float(np.max(np.where(np.isnan(off), np.inf, off))) / piece.size,
+                     FORM)
+            return
         pts = np.array(piece.data()["points"])
         rho, z = pts[:, 1], pts[:, 2]
         if np.any(np.diff(rho) <= 0) and np.any(np.diff(rho) >= 0):
@@ -756,9 +1146,17 @@ class Scene:
     def __init__(self, camera=CAMERA, size=1.0):
         self.camera, self.size = camera, size
         self.solids = []            # (offset, rho, z, fill class or None)
+        self.grids = []             # (offset, Facets, fill class or None), after the solids
 
     def add(self, piece, offset=(0.0, 0.0, 0.0), fill=None):
+        if isinstance(piece, GridPiece):
+            self.grids.append((np.asarray(offset, dtype=float), piece.facets, fill))
+            return
         self.solids.append((np.asarray(offset, dtype=float), piece.rho.astype(float), piece.z.astype(float), fill))
+
+    def fills(self):
+        """The fill class of each solid and then of each grid, in the order reach() gives them."""
+        return [fill for *_, fill in self.solids] + [fill for *_, fill in self.grids]
 
     def reach(self, P, v, chunk=1500):
         """For rays P + t v, t > 0, the largest t at which each ray meets each solid, or -inf:
@@ -793,6 +1191,11 @@ class Scene:
                     hit = ok & np.isfinite(u) & (u >= 0) & (u <= 1) & (t > eps)
                     best = np.maximum(best, np.max(np.where(hit, t, -np.inf), axis=1))
                 out[s:s + chunk, k] = best
+        if self.grids:
+            if not np.allclose(v, self.camera.toward):
+                raise AssertionError("a grid is only cast through toward the camera")
+            out = np.hstack([out] + [facets.reach(P - off, self.camera, 1e-7 * facets.extent)[:, None]
+                                     for off, facets, _ in self.grids])
         return out
 
     def hidden(self, P):
@@ -821,6 +1224,7 @@ class Figure:
         self.fills, self.lines, self.dots, self.labels, self.legend_items = [], [], [], [], []
         self.extent = []
         self.surfaces, self.meridians, self.tint, self.marks = [], None, {}, []
+        self.grids = []             # the lines of each grid piece a client draws again, by index
 
     def screen(self, P):
         return self.camera.screen(np.asarray(P, dtype=float))
@@ -874,7 +1278,8 @@ class Figure:
     def fills_seen(self, n=420):
         """Where each fill class is the surface nearest the camera, as polygons of a grid n
         points across the drawing, painted under every line."""
-        classes = sorted({fill for *_, fill in self.scene.solids if fill})
+        fills = self.scene.fills()
+        classes = sorted({fill for fill in fills if fill})
         if not classes:
             return
         E = np.vstack(self.extent)
@@ -885,7 +1290,7 @@ class Figure:
         GX, GY = np.meshgrid(X, Y)
         near = self.scene.front(np.column_stack([GX.ravel(), GY.ravel()])).reshape(GX.shape)
         for cls in classes:
-            which = [k for k, (*_, fill) in enumerate(self.scene.solids) if fill == cls]
+            which = [k for k, fill in enumerate(fills) if fill == cls]
             mask = np.isin(near, which).astype(float)
             gen = contourpy.contour_generator(X, Y, mask, fill_type=contourpy.FillType.OuterOffset)
             points, offsets = gen.filled(0.5, 1.5)
@@ -959,6 +1364,8 @@ class Figure:
         labels = [dict(L, at=rounded(L["at"])) for L in self.labels]
         turn = {"origins": [rounded(self.screen(off)) for _, off in self.surfaces], "meridians": self.meridians,
                 "tint": self.tint, "marks": self.marks}
+        if self.grids:
+            turn["grid"] = self.grids
         return {"box": [fixed(b, 4) for b in box],
                 "camera": {"azimuth": self.camera.azimuth, "elevation": self.camera.elevation},
                 "layers": layers, "labels": labels, "legend": self.legend_items, "turn": turn}
@@ -998,9 +1405,12 @@ def label_box(L, unit):
 def draw_surface(fig, surface, offset=(0.0, 0.0, 0.0), meridians=24):
     """Every piece of a surface on the figure: its outline where it turns edge on to the
     camera, its meridians, its marked circles and the circles at its ends. A reference piece
-    is drawn in dashes, with every other meridian."""
+    is drawn in dashes, with every other meridian. A grid piece is drawn as draw_grid() draws it."""
     off = np.asarray(offset, dtype=float)
     for p in surface.pieces:
+        if isinstance(p, GridPiece):
+            draw_grid(fig, surface, p, off)
+            continue
         style = "reference" if p.reference else "meridian"
         for k in range(0, meridians, 2 if p.reference else 1):
             phi = 2 * math.pi * k / meridians
@@ -1018,9 +1428,36 @@ def draw_surface(fig, surface, offset=(0.0, 0.0, 0.0), meridians=24):
             else:
                 fig.dot(cls, off + [0, 0, z])
     for c in surface.curves:
-        fig.line(c.cls, off + c.points, closed=c.closed)
+        if isinstance(c.piece, GridPiece):
+            Q = np.vstack([c.points, c.points[:1]]) if c.closed else c.points
+            fig.line(c.cls, off + Q, normals=np.tile([0.0, 0.0, c.piece.extent / fig.scene.size], (len(Q), 1)))
+        else:
+            fig.line(c.cls, off + c.points, closed=c.closed)
     for _, cls, P in surface.dots:
         fig.dot(cls, off + np.asarray(P, dtype=float))
+
+
+def draw_grid(fig, surface, piece, off):
+    """A grid piece on the figure: the lines of its grid that `lines` names, in the class grid, its
+    rim and its outline, each densified as a meridian is. Every point of every line on it is
+    judged by the two points OUTLINE of the grid's extent above and below it, and hidden only if
+    both are: a line lies on the triangles, and above and below them are the two sides of a
+    height, as the two sides of an outline are."""
+    k = next(i for i, (s, _) in enumerate(fig.surfaces) if s is surface)
+    P = piece.nodes() + off
+    up = np.array([0.0, 0.0, piece.extent / fig.scene.size])
+
+    def line(cls, Q, closed=False):
+        Q = densify(np.vstack([Q, Q[:1]]) if closed else Q, 4)
+        fig.line(cls, Q, normals=np.tile(up, (len(Q), 1)))
+    for i in piece.lines["u"]:
+        line("grid", P[i], closed=piece.wrap)
+    for j in piece.lines["v"]:
+        line("grid", P[:, j])
+    line("outline", piece.rim() + off, closed=True)
+    for run in grid_outline(piece, fig.camera):
+        fig.line("outline", run + off, normals=np.tile(up, (len(run), 1)))
+    fig.grids.append({"class": "grid", "surface": k, "piece": piece.id, "u": piece.lines["u"], "v": piece.lines["v"]})
 
 
 def densify(P, n):
@@ -1030,6 +1467,19 @@ def densify(P, n):
     s = np.linspace(0, 1, n + 1)[:-1]
     out = (P[:-1, None, :] + s[None, :, None] * (P[1:] - P[:-1])[:, None, :]).reshape(-1, 3)
     return np.vstack([out, P[-1:]])
+
+
+def finely(P, most):
+    """A polyline with each segment cut into as few equal pieces as keep every piece shorter than
+    `most`, as a meridian's chords, a quarter of at most 1/90 of the drawing, are shorter than
+    1/360 of it, so that a line on a grid changes from seen to hidden close to where it does."""
+    P = np.asarray(P, dtype=float)
+    out = [P[:1]]
+    for a, b in zip(P[:-1], P[1:]):
+        n = max(1, int(math.ceil(float(np.linalg.norm(b - a)) / most)))
+        s = np.linspace(0, 1, n + 1)[1:]
+        out.append(a + s[:, None] * (b - a))
+    return np.vstack(out)
 
 
 def circle(rho, z, n=RING):
@@ -2206,54 +2656,83 @@ def minkowski(ck, src):
 
 
 def krasnikov(ck, src):
-    """The tube the spacetime diagram declares, along x from 0 to D = 4 behind a ship that left
-    x = 0 at t = 0 at the speed of light, at x = D/2 and ct = 3, after the ship has passed. At
-    constant t the published metric is k dx^2 + dr^2 + r^2 dphi^2, and where k < 0 the direction
-    along the tube is timelike, so the slice of constant t is not a moment of space there; the
-    surface of constant t and x across the tube is, dr^2 + r^2 dphi^2 whatever k is, a flat disc,
-    on which the circle k = 0, the zero of the published g_xx, is marked: inside it the direction
-    along the tube, square to the drawing, is a time."""
-    T, X = 3, 2
-    sl = Slice(src, "krasnikov", "cylindrical", "r", "\\phi", {"t": T, "x": X})
-    ck.plane("Krasnikov, the cross-section of constant t and x", sl, np.linspace(1e-3, 3, 300))
+    """How far the tube tips the light cone, 1 - k, drawn as a height over the plane of the tube's
+    axis, phi = 0 and pi, at ct = 5, a unit after the ship reached the far end of the tube the
+    spacetime diagram declares, along x from 0 to D = 4 behind a ship that left x = 0 at t = 0 at
+    the speed of light, so that the whole tube stands. In the plane of t and x the null directions
+    of the published metric are (1, 1) and (k, -1), so a light signal sent home over a length L
+    takes k L of ct where flat space takes L, and 1 - k, twice the published g_tx, is what it
+    gains per unit of length: 0 outside the tube, 1 on the curve k = 0, where the published g_xx
+    vanishes and inside which the direction along the tube is a time, and 2 - delta deep inside.
+    Over -1 <= x <= 5, as the spacetime diagram runs, and |y| <= 2, as the cross section was
+    drawn, on a Cartesian grid with its lines every rho_0/2, the path along the drawing's X from
+    x = 0 to D, and the level line k = 0 marked. The slice of constant t is no moment of space
+    inside that line, so the height is a plot over the coordinates and no embedding.
+    _tools/derivations/krasnikov_height.md is the derivation."""
+    T, D = 5.0, 4.0
+    src.note("krasnikov", "cylindrical", FIELDS)
     _, entry, R = nr.load("krasnikov", "cylindrical")
     g = nr.published_matrix(R, entry, "metric_components")
+    k = R.parameters["k"]
+    for name, L in (("outbound", [1, 1, 0, 0]), ("back", [k, -1, 0, 0])):
+        L = sp.Matrix(L)
+        ck.exact(f"Krasnikov: the {name} direction of the plane of t and x is null for every k",
+                 sp.simplify((L.T * g * L)[0]) == 0)
+    ck.exact("Krasnikov: 1 - k is twice the published g_tx", sp.simplify(2 * g[0, 1] - (1 - k)) == 0)
     names = {R._plain(n): s for n, s in R.symbol.items()}
     tube = sp.sympify(nr._KRASNIKOV_TUBE, locals=names)
-    gxx = g[1, 1].subs(R.parameters["k"], tube).subs({R.symbol["t"]: T, R.symbol["x"]: X, R.c: 1})
-    along = sp.lambdify(R.symbol["r"], gxx, "numpy")
-    wall = float(sp.nsolve(gxx, R.symbol["r"], 0.98))
-    ck.add("Krasnikov: the published g_xx vanishes on the circle marked", abs(float(along(wall))), 1e-12)
-    inside, outside = np.linspace(0, wall, 200)[:-1], np.linspace(wall, 3, 200)[1:]
-    ck.add("Krasnikov: inside it g_xx < 0, so the direction along the tube is a time",
-           float(max(0.0, np.max(along(inside)))), 0.0)
-    ck.add("Krasnikov: outside it g_xx > 0", float(max(0.0, -np.min(along(outside)))), 0.0)
-    ck.items[-2]["ok"] = bool(np.all(along(inside) < 0))
-    ck.items[-1]["ok"] = bool(np.all(along(outside) > 0))
-    top = 2.0
+    at = {R.symbol["t"]: T, R.c: 1}
+    x, r = R.symbol["x"], R.symbol["r"]
+    two_gtx = sp.lambdify((x, r), 2 * g[0, 1].subs(k, tube).subs(at), "numpy")
+    gxx = sp.lambdify((x, r), g[1, 1].subs(k, tube).subs(at), "numpy")
+
+    # The drawing's X runs along the axis from the middle of the tube, and Y = +-r across it.
+    def height(X, Y):
+        return two_gtx(np.asarray(X) + D / 2, np.abs(Y))
+    top, half = 3.0, 2.0
     size = 2 * top
-    section = Piece("section", "sheet", sl, 0.0, top, 0.0, 1,
-                    (("axis", "the axis of the tube, $r = 0$"), ("edge", "the plane runs on, flat, to $r \\to \\infty$")),
-                    [(0.5, "r", None), (wall, "wall", "$k = 0$"), (1.5, "r", None), (top, "r", None)], size)
-    ck.isometry("Krasnikov, the cross-section", section)
-    ck.radius("Krasnikov, the cross-section rho = r", section, lambda r: r, size)
-    surface = Surface([section])
-    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
-    ring_label(fig, [0, 0, 0], *section.at(wall), "$k = 0$")
-    ring_label(fig, [0, 0, 0], *section.at(top), "$2\\rho_0$")
-    fig.legend("fill", "cover", "the cross section of constant $t$ and $x$, which $r$ and $\\phi$ cover, flat")
-    fig.legend("line", "wall", f"$k = 0$, at $r = {wall:.3f}\\,\\rho_0$: inside it the direction along the tube is a time")
-    fig.legend("line", "r", "$r$ constant, at $\\rho_0/2$, $3\\rho_0/2$ and $2\\rho_0$")
-    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
-    return [view("section", "Across the tube", "$\\rho_0$", [surface], fig.done(),
-                 settings="$ct = 3$ and $x = 2$, halfway along the tube and after the ship has passed, with "
-                          "$\\rho_0 = 1$, the unit of every length.",
+    along = [-top + 0.5 * n for n in range(13)]
+    across = [-half + 0.5 * n for n in range(9)]
+    plane = GridPiece("plane", "sheet", "cartesian", along, across, height, "krasnikov", "cylindrical",
+                      "the plane runs on, flat, where $k = 1$", size, {"u": along[1:-1], "v": across[1:-1]})
+    X, Y = plane.plane()
+    ck.add("Krasnikov: the height at every node is 1 - k, twice the published g_tx",
+           float(np.max(np.abs(plane.Z - height(X, Y)))), 1e-7)
+    ck.add("Krasnikov: every triangle of the grid lies on the height, in space", plane.sag() / size, GRID_SAG)
+    # The path, from x = 0 to D along the axis, through the nodes of the grid.
+    j0 = plane.index("v", 0.0)
+    i0, i1 = plane.index("u", -D / 2), plane.index("u", D / 2)
+    path = finely(plane.nodes()[i0:i1 + 1, j0], size / 360)
+    # The level line k = 0, one closed curve round the tube.
+    levels = level_curves(plane, 1.0)
+    ck.exact("Krasnikov: k = 0 is one closed curve", len(levels) == 1 and levels[0][1])
+    wall = finely(np.vstack([levels[0][0], levels[0][0][:1]]), size / 360)[:-1]
+    ck.add("Krasnikov: the published g_xx vanishes on the curve k = 0, to the triangles' height",
+           float(np.max(np.abs(gxx(wall[:, 0] + D / 2, np.abs(wall[:, 1]))))), 5 * GRID_SAG * size)
+    inside = np.linspace(0.02, D - 0.02, 400)
+    ck.add("Krasnikov: inside it, on the axis, g_xx < 0, so the direction along the tube is a time",
+           float(max(0.0, np.max(gxx(inside, 0.0)))), 0.0)
+    ck.items[-1]["ok"] = bool(np.all(gxx(inside, 0.0) < 0))
+    for where, P in (("the path", path), ("the curve k = 0", wall)):
+        ck.on_piece(f"Krasnikov, {where}", plane, P)
+    surface = Surface([plane], curves=[Curve(plane, "wall", wall, closed=True), Curve(plane, "path", path)])
+    fig = figure_of([surface], {"sheet": "cover"}, size, HEIGHT_CAMERA)
+    fig.legend("fill", "cover", "$1 - k$ as a height over the plane of the tube's axis at $ct = 5\\rho_0$")
+    fig.legend("line", "grid", "$x$ constant and $r$ constant, every $\\rho_0/2$")
+    fig.legend("line", "path", "the ship's path, from $x = 0$ to $x = D$")
+    fig.legend("line", "wall", "$k = 0$, at the height $\\rho_0$: inside it the direction along the tube is a time")
+    deep = float(height(np.array(0.0), np.array(0.0)))
+    return [view("plane", "Along the tube", "$\\rho_0$", [surface], fig.done(),
+                 settings="$ct = 5\\rho_0$, a unit after the ship reached the far end of the tube, with $\\rho_0 = 1$, "
+                          "the unit of every length.",
                  input="A tube along $x$ from $0$ to $D = 4$, built by a ship that left $x = 0$ at $t = 0$ at the "
                        "speed of light: $k = 1 - (2 - \\delta)\\,S(\\tfrac{\\rho_0^2 - r^2}{2\\rho_0})\\,S(ct - x)"
                        "\\,S(x)\\,S(D - x)$ with $\\delta = 0.2$, $\\rho_0 = 1$ and $S$ a step of width $0.15$ built "
                        "from $\\tanh$, as the spacetime diagram declares.",
-                 stops=["The slice of constant $t$ is not a moment of space inside the circle $k = 0$, where the "
-                        "direction along the tube is timelike, so only its cross sections of constant $x$ are drawn."])]
+                 height=f"$1 - k = 2g_{{tx}}$, a height of $\\rho_0$ for $1 - k = 1$, and ${deep:.4f}\\rho_0$ on the "
+                        "axis in the middle of the tube.",
+                 stops=["The slice of constant $t$ itself, which is no moment of space inside the curve $k = 0$, "
+                        "where the direction along the tube is a time."])]
 
 
 def expansion(src, metric_id, system_id, functions, t0):
@@ -2274,46 +2753,22 @@ def expansion(src, metric_id, system_id, functions, t0):
     return sp.lambdify((X[1], X[2]), theta.subs({X[0]: t0, X[3]: 0}), "numpy"), sp.simplify(root)
 
 
-def crescent(theta, level, around, reach=(0.2, 2.5), n=241):
-    """The closed curve theta = level about the direction `around` from the origin, where theta
-    along each ray has one extreme of the level's sign: the inner and outer roots on each ray, from
-    one tip, where the extreme reaches the level, to the other."""
-    sign = np.sign(level)
-
-    def ray(a):
-        return lambda r: float(theta(r * math.cos(a), r * math.sin(a)))
-
-    def peak(a):
-        f = ray(a)
-        from scipy.optimize import minimize_scalar
-        m = minimize_scalar(lambda r: -sign * f(r), bounds=reach, method="bounded", options={"xatol": 1e-12})
-        return m.x, f(m.x)
-    from scipy.optimize import brentq
-    tip = brentq(lambda d: sign * (peak(around + d)[1] - level), 0.0 + 1e-9, math.pi / 2 - 1e-9, xtol=1e-14)
-    # Angles bunched toward the tips, where the two roots close on each other.
-    turns = around + tip * np.sin(np.linspace(-math.pi / 2, math.pi / 2, n))[1:-1]
-    inner, outer = [], []
-    for a in turns:
-        f, (rp, _) = ray(a), peak(a)
-        inner.append(brentq(lambda r: f(r) - level, reach[0], rp, xtol=1e-14))
-        outer.append(brentq(lambda r: f(r) - level, rp, reach[1], xtol=1e-14))
-    ends = [peak(around - tip)[0], peak(around + tip)[0]]
-    a = np.concatenate([[around - tip], turns, [around + tip], turns[::-1]])
-    r = np.concatenate([[ends[0]], inner, [ends[1]], outer[::-1]])
-    return np.column_stack([r * np.cos(a), r * np.sin(a), np.zeros_like(r)])
-
-
 def alcubierre(ck, src):
-    """The plane z = 0 of the ship's path at t = 0, where the declared profile centres the bubble
-    on x = 0, v_s = 2 and Alcubierre's f with R = 1 and sigma = 4, as the spacetime diagram
-    declares: flat, dx^2 + dy^2, a disc about the ship out to 3R. Marked on it, the circle
-    v_s f = 1, the zero of the published g_tt, and the curves where the expansion of the observers
-    who ride the slices, theta = div n = v_s df/dx, taken from the published metric, is half its
-    greatest value: a crescent ahead, where space contracts, and one behind, where it expands."""
+    """The expansion of the observers who ride the slices, drawn as a height over the plane z = 0
+    of the ship's path at t = 0, where the declared profile centres the bubble on x = 0, v_s = 2
+    and Alcubierre's f with R = 1 and sigma = 4, as the spacetime diagram declares. The observers'
+    n^mu = (1, v_s f, 0, 0) comes from the published inverse metric and sqrt(-g) = 1, so theta =
+    div n = v_s df/dx per unit of ct, c v_s (x - x_s)/r_s df/dr_s per unit of time: negative ahead
+    of the ship, where space contracts, and positive behind it, where it expands, as Miguel
+    Alcubierre drew it in 1994. The height is theta R^2/4c over the disc of radius 3R about the
+    ship, the path along the drawing's X with the ship heading toward +X, on a polar grid of 72
+    angles with its circles every R/4 and its lines from the ship every 15 degrees; marked on it,
+    the circle v_s f = 1, the zero of the published g_tt, and the level lines where theta is half
+    its greatest value ahead of the ship and behind it. The slice itself is flat, which is checked.
+    _tools/derivations/alcubierre_expansion.md is the derivation."""
     fns = {"v_s": "2", "f": nr._alcubierre_profile()}
-    # The profile runs along y from the ship and the path along the drawing's Y, away from the
-    # reader at the start, so that the ends of the circles on the page stand clear of the path.
-    sl = FlatPlane(src, "alcubierre", "cartesian", "y", "x", {"t": 0, "z": 0}, functions=fns)
+    # The slice is flat, dx^2 + dy^2, which FlatPlane checks as it reads it.
+    FlatPlane(src, "alcubierre", "cartesian", "x", "y", {"t": 0, "z": 0}, functions=fns)
     _, entry, R = nr.load("alcubierre", "cartesian")
     names = {R._plain(n): s for n, s in R.symbol.items()}
     names.update(R.parameters)
@@ -2321,9 +2776,9 @@ def alcubierre(ck, src):
     gtt = g[0, 0]
     for k, v in fns.items():
         gtt = gtt.subs(R.parameters[k], sp.sympify(v, locals=names)).doit()
-    gtt = gtt.subs({R.symbol["t"]: 0, R.symbol["x"]: 0, R.symbol["z"]: 0, R.c: 1})
-    wall = float(sp.nsolve(gtt, R.symbol["y"], 1.0))
-    ck.add("Alcubierre: the published g_tt vanishes on the circle v_s f = 1", abs(float(gtt.subs(R.symbol["y"], wall))), 1e-12)
+    gtt = gtt.subs({R.symbol["t"]: 0, R.symbol["y"]: 0, R.symbol["z"]: 0, R.c: 1})
+    wall = float(sp.nsolve(gtt, R.symbol["x"], 1.0))
+    ck.add("Alcubierre: the published g_tt vanishes on the circle v_s f = 1", abs(float(gtt.subs(R.symbol["x"], wall))), 1e-12)
     theta, root = expansion(src, "alcubierre", "cartesian", fns, 0)
     ck.exact("Alcubierre: sqrt(-g) = 1, so the expansion is the divergence of n", root == 1)
     rs = sp.Symbol("rs", positive=True)
@@ -2333,41 +2788,70 @@ def alcubierre(ck, src):
     rr = np.hypot(pts[:, 0], pts[:, 1])
     ck.add("Alcubierre: the expansion is v_s (x/r_s) df/dr_s", float(np.max(np.abs(theta(pts[:, 0], pts[:, 1])
                                                                                  - 2 * pts[:, 0] / rr * df(rr)))), 1e-12)
+    # The ship heads toward +x, so ahead of it space contracts and behind it expands.
+    for (px, py), sign, where in (((1.0, 0.0), -1, "one R ahead of the ship"), ((-1.0, 0.0), 1, "one R behind it"),
+                                  ((0.6, 0.8), -1, "ahead, off the path"), ((-0.6, -0.8), 1, "behind, off the path")):
+        value = float(theta(px, py))
+        ck.exact(f"Alcubierre: theta is {'negative' if sign < 0 else 'positive'} {where}, {value:.6f} c/R",
+                 sign * value > 0)
     from scipy.optimize import minimize_scalar
     best = minimize_scalar(lambda r: -float(theta(-r, 0.0)), bounds=(0.5, 1.5), method="bounded",
                            options={"xatol": 1e-12})
     most = float(theta(-best.x, 0.0))
-    ahead = crescent(theta, -most / 2, 0.0)
-    behind = crescent(theta, most / 2, math.pi)
-    for name, curve, level in (("ahead", ahead, -most / 2), ("behind", behind, most / 2)):
-        ck.add(f"Alcubierre, the crescent {name}: theta is half its greatest value on it",
-               float(np.max(np.abs(theta(curve[:, 0], curve[:, 1]) - level))), 1e-9)
-    # From the chart's (x, y) to the drawing's (X, Y) = (y, x).
-    ahead, behind = ahead[:, [1, 0, 2]], behind[:, [1, 0, 2]]
+
+    def height(X, Y):
+        with np.errstate(invalid="ignore", divide="ignore"):
+            z = theta(X, Y) / 4
+        # (x - x_s)/r_s df/dr_s runs to 0 at the centre of the bubble, where df/dr_s does.
+        return np.where(np.hypot(X, Y) > 0, z, 0.0)
     top = 3.0
     size = 2 * top
-    plane = disc(sl, "plane", top, "the ship, at the centre of the bubble", "the plane runs on, flat, to $r_s \\to \\infty$",
-                 [(wall, "wall", "$v_sf = 1$")], size)
-    ck.isometry("Alcubierre, the plane of the path", plane)
-    ck.radius("Alcubierre, the plane rho = y", plane, lambda y: y, size)
-    path = np.column_stack([np.zeros(241), np.linspace(-top, top, 241), np.zeros(241)])
-    for name, curve in (("ahead", ahead), ("behind", behind), ("the path", path)):
-        ck.on_piece(f"Alcubierre, {name}", plane, curve)
-    surface = Surface([plane], curves=[Curve(plane, "contract", ahead, closed=True),
-                                       Curve(plane, "expand", behind, closed=True), Curve(plane, "path", path)])
-    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
-    ring_label(fig, [0, 0, 0], *plane.at(wall), "$v_sf = 1$")
-    fig.legend("fill", "cover", "the plane $z = 0$ of the ship's path at $t = 0$, flat")
-    fig.legend("line", "path", "the ship's path, along $x$, the ship heading toward the crescent where space contracts")
+    angles = 2 * math.pi * np.arange(72) / 72
+    circles = [0.25 * n for n in range(1, 12)]
+    plane = GridPiece("plane", "sheet", "polar", [0.0, *circles, top, wall], angles, height, "alcubierre",
+                      "cartesian", "the plane runs on to $r_s \\to \\infty$, where $\\theta$ vanishes", size,
+                      {"u": circles, "v": angles[::3]})
+    X, Y = plane.plane()
+    ck.add("Alcubierre: the height at every node is theta R^2/4c", float(np.max(np.abs(plane.Z - height(X, Y)))), 1e-7)
+    ck.add("Alcubierre: every triangle of the grid lies on the height, in space", plane.sag() / size, GRID_SAG)
+    # The path through the nodes on the lines from the ship behind it and ahead of it.
+    P = plane.nodes()
+    back, ahead = plane.index("v", math.pi), plane.index("v", 0.0)
+    path = finely(np.vstack([P[::-1, back], P[1:, ahead]]), size / 360)
+    ring = plane.index("u", wall)
+    circle_ = finely(np.vstack([P[ring], P[ring, :1]]), size / 360)[:-1]
+    ck.add("Alcubierre: the circle v_s f = 1 lies at the published zero of g_tt",
+           float(np.max(np.abs(np.hypot(P[ring, :, 0], P[ring, :, 1]) - wall))), 1e-12)
+    crescents = {}
+    for cls, level in (("contract", -most / 8), ("expand", most / 8)):
+        found = level_curves(plane, level)
+        ck.exact(f"Alcubierre: theta = {4 * level:.4f} c/R is one closed curve", len(found) == 1 and found[0][1])
+        C = finely(np.vstack([found[0][0], found[0][0][:1]]), size / 360)[:-1]
+        ck.add(f"Alcubierre, the level line {cls}: theta there is half its greatest value, to the triangles' height",
+               float(np.max(np.abs(height(C[:, 0], C[:, 1]) - level))), 5 * GRID_SAG * size)
+        ck.exact(f"Alcubierre, the level line {cls}: it lies {'ahead of' if level < 0 else 'behind'} the ship",
+                 bool(np.all(np.sign(C[:, 0]) == np.sign(-level))))
+        crescents[cls] = C
+    for where, Q in (("the path", path), ("the circle v_s f = 1", circle_), ("contract", crescents["contract"]),
+                     ("expand", crescents["expand"])):
+        ck.on_piece(f"Alcubierre, {where}", plane, Q)
+    surface = Surface([plane], curves=[Curve(plane, "path", path), Curve(plane, "wall", circle_, closed=True),
+                                       Curve(plane, "contract", crescents["contract"], closed=True),
+                                       Curve(plane, "expand", crescents["expand"], closed=True)])
+    fig = figure_of([surface], {"sheet": "cover"}, size, HEIGHT_CAMERA)
+    fig.legend("fill", "cover", "$\\theta$ as a height over the plane $z = 0$ of the ship's path at $t = 0$")
+    fig.legend("line", "grid", "circles about the ship every $R/4$, and lines from it every $15°$")
+    fig.legend("line", "path", "the ship's path, along $x$, the ship heading toward the trough")
     fig.legend("line", "wall", "$v_sf = 1$, where $g_{tt} = 0$")
-    fig.legend("line", "contract", f"$\\theta = -{most / 2:.2f}/R$, half the fastest contraction, ahead of the ship")
-    fig.legend("line", "expand", f"$\\theta = {most / 2:.2f}/R$, half the fastest expansion, behind it")
-    fig.legend("line", "meridian", "straight lines from the ship, every $15°$")
+    fig.legend("line", "contract", f"$\\theta = -{most / 2:.2f}\\,c/R$, half the fastest contraction, ahead of the ship")
+    fig.legend("line", "expand", f"$\\theta = {most / 2:.2f}\\,c/R$, half the fastest expansion, behind it")
     return [view("plane", "The plane of the path", "$R$", [surface], fig.done(),
                  settings="$t = 0$, when the bubble is centred on $x = 0$, with $R = 1$, the unit of every length.",
                  input="$v_s = 2$, and Alcubierre's own profile, "
                        "$f = [\\tanh\\sigma(r_s + R) - \\tanh\\sigma(r_s - R)]/(2\\tanh\\sigma R)$ with $R = 1$ and "
-                       "$\\sigma = 4$, as the spacetime diagram declares.")]
+                       "$\\sigma = 4$, as the spacetime diagram declares.",
+                 height=f"$\\theta$, a height of $R$ for $\\theta = 4c/R$, and ${most / 4:.4f}R$ where the expansion "
+                        f"is fastest, $\\theta = {most:.4f}\\,c/R$.")]
 
 
 def natario(ck, src):
@@ -3170,30 +3654,35 @@ CAPTIONS = {
         "Roger Penrose showed in 1965 that this focusing keeps every plane wave spacetime from being globally "
         "hyperbolic.",
     ],
-    ("krasnikov", "section"): [
-        "This is the plane across the Krasnikov tube at one moment of $t$ and one place $x$, halfway along it and "
-        "after the ship has passed, drawn as a surface in flat space so that every distance along it is the "
-        "metric distance. At constant $t$ and $x$ the metric is $dr^2 + r^2d\\phi^2$ whatever the tube's "
-        "$k$ is, so the drawing is flat, and the circle marked is $k = 0$, inside which $g_{xx} = k$ is negative and "
-        "the direction along the tube, square to the drawing, is a time.",
-        "That is why a slice of constant $t$ is not a moment of space inside the tube, and why its cross sections "
-        "are drawn instead. Before the ship reaches $x$ the same plane carries no such circle; the ship opens the "
-        "tube behind it on the way out, and on the way back the traveller rides its tipped light cones home to "
-        "within an instant of leaving. Serguei Krasnikov proposed the tube in 1995, and in 1997 Allen Everett and "
-        "Thomas Roman built it in four dimensions and showed that its wall needs negative energy.",
+    ("krasnikov", "plane"): [
+        "This is the tilt of the light cone in the Krasnikov tube, $1 - k$, drawn as a height over the plane of the "
+        "tube's axis at the moment $ct = 5\\rho_0$: a height of $\\rho_0$ for $1 - k = 1$, and no surface of the "
+        "spacetime. Along the back edge of the light cone $c\\,dt = -k\\,dx$, so a light signal "
+        "sent home over a length $L$ arrives $(1 - k)L/c$ sooner than in flat space: $1 - k$ is $0$ outside the tube, "
+        "$1$ on the curve $k = 0$, where the signal arrives at the moment it left, and close to $1.8$ deep inside, "
+        "where it arrives $0.8L/c$ before it left.",
+        "The ship left $x = 0$ at $t = 0$ at the speed of light and reached the far end, $x = D = 4\\rho_0$, a unit "
+        "of $ct$ before this moment, so the whole tube stands behind it as a ridge along the path; at any earlier "
+        "moment the ridge ends at the ship, since nothing is built ahead of it. Inside the curve $k = 0$ the "
+        "direction along the tube is a time, so a slice of constant $t$ is no moment of space there, and a round "
+        "trip over the tube, out at the speed of light and home along the tipped cones, takes $(1 + k)D$ of $ct$, "
+        "which for Krasnikov's $k = -1 + \\delta$ is $\\delta D = 0.8\\rho_0$ where flat space takes "
+        "$2D = 8\\rho_0$. Serguei Krasnikov proposed the tube in 1995, and in 1997 Allen Everett and Thomas Roman "
+        "built it in four dimensions and showed that its wall needs negative energy.",
     ],
     ("alcubierre", "plane"): [
-        "This is the plane $z = 0$ of the path of Alcubierre's warp bubble at the moment $t = 0$, drawn as a surface "
-        "in flat space so that every distance along it is the metric distance. Every slice of constant "
-        "$t$ is flat, $dx^2 + dy^2 + dz^2$, so the drawing is a flat disc, and the drive is in how the slices are "
-        "stacked: the observers who ride them are carried along $x$ at $v_sf$ times the speed of light, faster "
-        "than light inside the circle $v_sf = 1$.",
-        "Their volume changes at the rate $\\theta = v_s\\,\\partial_xf$, which Miguel Alcubierre drew in 1994: "
-        "space contracts ahead of the ship and expands behind it, and the two crescents mark where it does so at "
-        "half its fastest rate. The energy density the same observers measure is $-\\frac{c^4v_s^2}{32\\pi G}"
-        "\\frac{y^2 + z^2}{r_s^2}\\left(\\frac{df}{dr_s}\\right)^2$, negative in the wall except on the path, where it "
-        "vanishes, and on a flat "
-        "slice it is set by how the slice bends in spacetime alone, $16\\pi G\\rho/c^4 = K^2 - K_{ij}K^{ij}$.",
+        "This is the expansion $\\theta$ of the observers who ride the slices of Alcubierre's warp drive, drawn as a "
+        "height over the plane $z = 0$ of the ship's path at the moment $t = 0$: the height is $\\theta$, a height of "
+        "$R$ for an expansion of $4c/R$, and no surface of the spacetime, whose slices are flat. The observers are "
+        "carried along $x$ at $v_sf$ times the speed of light, faster than light inside the circle $v_sf = 1$, and "
+        "a small volume of them changes at the rate $\\theta = c\\,v_s\\,\\partial_xf = c\\,v_s\\,\\frac{x - x_s}"
+        "{r_s}\\frac{df}{dr_s}$.",
+        "Ahead of the ship $f$ falls toward the front, so the observers behind catch up with those ahead and space "
+        "contracts, a trough; behind it they draw apart and space expands, a crest. Each is deepest or highest on "
+        "the path one $R$ from the ship, $4.00\\,c/R$, and the level lines mark half of that. Miguel Alcubierre "
+        "drew this surface in 1994 over $x$ and $\\rho = \\sqrt{y^2 + z^2}$. The energy density the same "
+        "observers measure is $-\\frac{c^4v_s^2}{32\\pi G}\\frac{y^2 + z^2}{r_s^2}\\left(\\frac{df}{dr_s}\\right)^2$, "
+        "negative in the wall except on the path, where it vanishes.",
     ],
     ("natario", "plane"): [
         "This is the plane $z = 0$ of the path of Natário's warp bubble at the moment $t = 0$, drawn as a surface in "
