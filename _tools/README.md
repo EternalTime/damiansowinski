@@ -64,6 +64,8 @@ They are for the screen alone, so the print copy is the same whatever screen it 
 The desktop's panel scripts write their geometry into each panel's own style, so the phone block overrides it with `!important`, and it sets `--mfs-phone` on the root, which is how the scripts tell which layout is in force.
 Anything new on the page has to hold at 390pt upright and 844 by 390 on its side: a line of mathematics, a coordinate domain or a formula in prose scrolls on its own there, and nothing may make the page wider than the screen, even for a frame, since a phone answers that by zooming the whole page out.
 A spacetime diagram is drawn whole, as wide as the panel and never taller than the screen.
+An embedding diagram turns under a finger that sets off across it, while a finger that sets off up or down scrolls the page, which `touch-action: pan-y` on the drawing leaves to the browser.
+Nothing that starts on that drawing scrolls it sideways, so two fingers moving across it scroll it where it is wider than its frame, as at a large text size, and two taps bring back the published figure.
 
 ## The reader's text size
 
@@ -475,7 +477,7 @@ A view is:
 - `system`, optional: the coordinate system the view belongs to. A view without it belongs to every chart. Show the views that name the chart being read and then the views that name none, as the conformal diagram does, and nothing if that leaves none.
 - `unit`: TeX naming the length every number of the surface is measured in, as `$r_s$`, `$b_0$`, `$\ell$` or `$1/\sqrt{k}$`.
 - `surfaces`: at least one surface. One surface is one moment; more than one is a sequence of moments in the order of their `time`.
-- `figure`: the page's drawing of the view, described below; an application that draws the surfaces itself can ignore it.
+- `figure`: the page's drawing of the view, described below, with what it takes to draw it again from another camera; an application that draws the surfaces itself can ignore it.
 - `caption`: a list of paragraphs.
 - `settings`, optional: TeX prose giving the parameter values drawn at, printed after "drawn at". It names the length every number is measured in, as "$r_s = 1$, the unit of every length".
 - `input`, optional: TeX prose naming a declared function or matter, printed after "drawn with".
@@ -526,23 +528,58 @@ The kinds of end are:
 A ring is a circle to mark on a surface, `{"piece", "class", "x", "rho", "z", "label"}`, of radius `rho` at height `z`, which is one of the points of its piece, and `label`, when present, is TeX to set beside it.
 Its `class` is `r` for a circle of constant coordinate on a `sheet` or `star` piece, `r2` for one on a `sheet2` piece, `horizon` for the horizon, `throat` for a wormhole's throat, `surface` for the edge of matter, a star's surface or the edge of Gott's core, `chartedge` for the circle where a chart ends or a drawing stops, as FRW's equator or where Reissner-Nordstrom's inner surface lies level, `ergo` for the edge of an ergosphere on Kerr's and Kerr-Newman's equator, and `reference` for a circle on a reference piece.
 
-The `figure` is the drawing the page makes of the view, projected by the script once from a fixed camera, in the form a figure in three dimensions takes in the diagram files:
+The `figure` is the drawing the page makes of the view, projected by the script once from a fixed camera, in the form a figure in three dimensions takes in the diagram files, and drawn again from the surfaces at whatever camera a reader turns it to, as "Turning the figure" below says:
 
 - `box`: `[Xmin, Xmax, Ymin, Ymax]` of the plane of the page, with $Y$ up, drawn at one scale.
 - `camera`: `{"azimuth", "elevation"}`, the angles in degrees the surfaces were projected from, the azimuth measured round the axis from $\phi = 0$ toward $\phi = \pi/2$ and the elevation above the plane $z = 0$, looking at the origin.
-- `layers`: painted in the order given, each with a `kind` and a `class`. A `fill` has `points`, a closed polygon, and optional `holes`, polygons painted with the even odd rule; a `line` has `points`, a polyline; a `point` has `at`. Every point is `[X, Y]` in the plane of the page, rounded to four decimals.
-- `labels`: TeX at a point, `{"at", "text", "anchor", "class", "dx", "dy"}`, the anchor and the offset in units of a figure 628 wide, as a conformal diagram's are, `class` being `lab` or `small`.
-  A `small` label names a circle and stands beside the end of it, on the surface and over its lines, so it is set on a ground of its own, dark on the screen and white in print, as the page sets it; a `lab` label stands where no line runs.
+- `layers`: painted in the order given, each with a `kind` and a `class`. A `fill` has `points`, a closed polygon, and optional `holes`, polygons painted with the even odd rule; a `line` has `points`, a polyline; a `point` has `at`. Every point is `[X, Y]` in the plane of the page, rounded to four decimals. A layer drawn in the plane of the page rather than on a surface, as the cone laid flat is, carries `"flat": true`.
+- `labels`: TeX at a point, `{"at", "text", "anchor", "class", "dx", "dy"}`, the anchor and the offset in units of a figure 628 wide, as a conformal diagram's are, `class` being `lab` or `small`, and for a label that names a circle `ring` and sometimes `clear`, which "Turning the figure" defines.
+  A `small` label names a circle and stands beside the end of it, or names a moment of a sequence and stands below its surface; either way it can stand over the surface and its lines, so it is set on a ground of its own, dark on the screen and white in print, as the page sets it; a `lab` label stands where no line runs.
   No two labels overlap, which the script checks before it writes.
 - `legend`: `[kind, class, text]` for each class it names, the kind being `fill`, `line` or `point`.
+- `turn`: what a client needs to draw the figure again from another camera, which "Turning the figure" defines.
 
 A `sheet` piece is tinted `cover` and a `star` piece `star`, while a `sheet2` or reference piece is left clear, so the part a chart covers stands out; each is tinted only where it is the surface nearest the camera, found by casting rays through the same truncated cones a client draws, and every line on the surfaces is split where another part of a surface hides it, the hidden part carrying its class with `-far` appended, which the page draws faint.
 A reference piece hides nothing.
+A point of a line is hidden when a ray from it toward the camera meets one of those cones further than $10^{-7}$ of the drawing's size along it.
+A point of the outline is where the line of sight grazes the surface, and there the cone between two circles of a concave profile dips across that line by less than $10^{-5}$ of the drawing, so each point of the outline is judged by the two points $10^{-5}$ of the drawing off the surface on either side along its normal and is hidden only if both are.
 The fills are `cover`, `star` and `wedge`.
 The lines are `outline`, where the surface turns edge on to the camera and the rim at an `edge` or `stops` end; `meridian`, the profile turned to evenly spaced angles, as the legend says; `reference`, the meridians and outline of a reference piece in dashes; the ring classes above, each ring drawn as its circle, or as a `point` where its $\rho$ is zero; and `cut`.
 Each line class may also come with `-far`.
 The page styles each class as `.em-<class>` for a line and `.em-<class>-fill` for a fill, on the screen and in print, and a test holds every class a figure paints to having both.
 The cosmic string's figure also lays the cone flat beside it, a flat drawing in the plane of the page with the wedge the cone lacks painted as `wedge` and the two edges of the cut as `cut`.
+
+### Turning the figure
+
+The page shows the published figure until a reader drags it, and then draws it again from the surfaces at the camera the drag has reached, with `MFS/assets/embedding-turn.js`, which is geometry alone and which the tests run against every published figure.
+The application turns its figures by the same rules, so the two agree, and at the figure's own camera the rules give back the published figure: the same lines split at the same points, the same labels at the same places, and the tint to within a point of its grid.
+
+`turn` holds:
+
+- `origins`: for each surface, in the order of `surfaces`, the point `[X, Y]` of the page where its axis meets $z = 0$ at the figure's camera.
+- `meridians`: how many meridians each piece carries, at $\phi = 2\pi k/n$, a reference piece every other one.
+- `tint`: the fill each piece class is tinted with, as `{"sheet": "cover", "star": "star"}`; a piece of any other class is left clear and still hides what lies behind it.
+- `marks`: the lines a surface carries besides its circles, each `{"class", "surface", "piece", "phi"}`, the meridian at `phi` of that piece of that surface drawn in that class, as the cosmic string's `cut`.
+
+A label that names a circle carries `ring`, `{"surface", "ring", "side"}`: the surface, the circle's place in that surface's `rings`, and `1` where the label stands to the right of the circle's end on the page or `-1` to the left.
+It may also carry `clear`, a length in `unit`: the label stands past the outline wherever the outline crosses a height within `clear` of the circle's end outside that end, as the cone's label does below the cone's rim.
+A label without `ring` stays where it is, as the moments of a sequence and the words on the cone laid flat do, and so does a layer with `flat`.
+
+At another camera, azimuth $a$ and elevation $e$, with the vectors `right`, `up` and `toward` of `projections.Camera`:
+
+- Each surface turns about its centre, the point of its axis at $z_c$ halfway between the lowest and the highest point of its pieces, which stays where the figure's camera put it, $(0, z_c\cos e_0)$ from its origin.
+- A surface of revolution is as wide on the page as its widest circle from every camera, but its height, from $\min\,((z - z_c)\cos e - \rho|\sin e|)$ to $\max\,((z - z_c)\cos e + \rho|\sin e|)$ over the points of its pieces, changes with $e$.
+  So all the surfaces are drawn at one scale $s$, never above 1, the largest that keeps each within the height it had at the figure's camera, and each is moved up or down only as far as that height needs; the `box` stays as it is, and every drawn point stays inside it.
+- Each piece is drawn as the script draws it: its meridians, its outline, the circle at an `edge` or `stops` end, its rings, and the marks, every line split into the parts seen and hidden as above, cut halfway between points of the two kinds.
+- The outline of a piece runs through the angles on the circle of each of its points at which $\cos(\phi - a) = (d\rho/dz)\tan e$, with the tangent taken as numpy's `gradient` takes it, joined from point to point; a run of such points inside the piece turns at both of its ends, where its two sides meet, and a run that reaches an end of the piece runs on to that end on each side.
+- Each tinted piece is filled where it is the surface nearest the camera, found on a grid of 420 points across the longer side of the `box`.
+- A label with `ring` stands beside the end of its circle on its side, $(\pm s\rho, s(z - z_c)\cos e)$ from the surface's centre, with its offset as published.
+  It names its circle whether the circle runs in front of the surface or behind it, as the published labels do, and gives way only while it would overlap a label that stays put or a label before it in `labels`.
+- The layers keep the published order: the flat fills, the tint, every line hidden and then every line seen, each in the order of the legend, and the points.
+
+The page turns a figure round its axis as far as the reader drags it, the drawing's width being half a turn, and tilts it from looking straight down the axis, $e = 90°$, to looking straight up it, $e = -90°$, never past, so the axis always stands up the page.
+It stays where it is let go, and the reset button in the corner of the frame, a double click or a double tap, Home and Escape bring back the published figure, which is also what prints.
+The arrow keys turn it by 15 degrees once the drawing has the focus, which a click on it gives.
 
 ## Checking the physics
 
