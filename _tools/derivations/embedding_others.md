@@ -83,7 +83,7 @@ In three dimensional Minkowski space, with $dX^2 + dY^2 - dZ^2$, a profile $(\rh
 $$\frac{dZ}{dr} = \sqrt{\left(\frac{d\rho}{dr}\right)^2 - g_{rr}} = \frac{r}{\sqrt{L^2 + r^2}},\qquad Z = \sqrt{L^2 + r^2} - L,$$
 
 which sympy returns from the published components.
-The surface is one sheet of the hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, and the whole hyperbolic plane lies on it, every distance along it, measured with $dX^2 + dY^2 - dZ^2$, the distance the metric gives.
+The surface is one sheet of the hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, and the whole hyperbolic plane lies on it, every distance along it, measured with $dX^2 + dY^2 - dZ^2$, the metric distance.
 Its tangent planes are spacelike everywhere, and it approaches the light cone $Z + L = \rho$ of the flat space it is drawn in without reaching it, so the conformal boundary at $r \to \infty$ lies along that cone at infinity.
 Wilhelm Killing in 1880 and Henri Poincaré in 1881 each wrote the hyperbolic plane on this sheet.
 

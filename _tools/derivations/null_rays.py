@@ -1008,7 +1008,7 @@ CAPTIONS = {
     ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ outside the collapsing "
         "star, where the metric is Schwarzschild's. The surface falls freely from rest at $r = 2r_s$ "
-        "at $t = 0$, along the radial geodesic the Christoffel symbols give, and what lies inside it, "
+        "at $t = 0$, along its radial geodesic, and what lies inside it, "
         "$r < R(t)$, is the star, which these coordinates do not cover.",
         "The surface reaches $r_s$ only as $t \\to \\infty$, though its own clock reads a finite time "
         "there, and each outgoing ray it sends takes longer than the last to climb away. Outside the "

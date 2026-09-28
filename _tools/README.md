@@ -152,6 +152,9 @@ This file is written for whoever builds the collection, and is the one place its
 The tests hold the words that can only ever mean the machinery out of every prose field of every metric and out of every caption, label and declared input of every diagram.
 A history keeps "published" and "printed" for the papers it tells of, and "building block" stays wherever it is written, since neither names the collection.
 
+A noun is never handed back to what gives it: "every distance along it is the metric distance", never "is the distance the metric gives", and the same for "the X the Y yields", "provides" and "returns".
+The tests hold that rule over every prose field, every caption, label and declared input of every diagram, and the templates and pages a reader sees.
+
 ## The shape of a history and a convention
 
 A history has at least five paragraphs, and every paragraph has three to six sentences, so no paragraph runs to more than twice the length of another.
@@ -387,7 +390,7 @@ sympy never reads the typesetting, so this is the check that catches a value tha
 
 ## Embedding diagrams
 
-`MFS/assets/data/embedding/<metric_id>.json` holds the embedding diagram of one spacetime: a slice of it, the equatorial plane at one moment or another surface of one moment, drawn as a surface in ordinary flat three dimensional space so that every distance along the surface is the distance the metric gives, or, where no surface in flat space carries it, in three dimensional Minkowski space.
+`MFS/assets/data/embedding/<metric_id>.json` holds the embedding diagram of one spacetime: a slice of it, the equatorial plane at one moment or another surface of one moment, drawn as a surface in ordinary flat three dimensional space so that every distance along the surface is the metric distance, or, where no surface in flat space carries it, in three dimensional Minkowski space.
 Every spacetime has one.
 The page draws it under the heading "embedding diagram", just below the conformal diagram, and the application reads the same files.
 The file is the definition in "The file, which the application reads" below, and the application is built against that section, so a change to the shape of the file is a change to it first.
@@ -429,7 +432,7 @@ Near its light cone a chord of such a surface is short in the metric against its
 The surface is measured as the application will draw it, from the rounded numbers the file holds, against the published metric, and the script refuses to write while any check fails:
 
 - along: each chord of each profile, and each profile end to end, against the proper distance between the same two values of $x$, a chord of a surface in Minkowski space measured as $\sqrt{d\rho^2 - dZ^2}$;
-- across: the straight line in space from each point to the next one $0.02$ further round the axis, against the length the metric gives the line that runs out at a steady proper distance while it turns steadily through the same angle;
+- across: the straight line in space from each point to the next one $0.02$ further round the axis, against the metric length of the line that runs out at a steady proper distance while it turns steadily through the same angle;
 - around: $\rho$ at every point against $\sqrt{g_{\phi\phi}}$;
 - joins: where two pieces meet, as a star's surface meets the exterior, they meet at one point with one tangent, which says $g_{xx}$ agrees on both sides;
 - forms: each surface against the closed form it is known by: Flamm's paraboloid, also as the exterior of the neutron star, of each collapse at its release and, moved in by $r_s$, of Vaidya's slices; the interior Schwarzschild cap, the catenoid in both its charts, the cone, Gott's cap, the spheres of FRW, de Sitter, Oppenheimer-Snyder's dust and Taub's round moment, Bertotti-Robinson's cylinder and sphere, the planes of Minkowski space, the Krasnikov tube and the warp drives, and anti-de Sitter's hyperboloid; the circumference radius of the Kerr, Kerr-Newman and Taub-NUT horizons and of Taub's equator; Kasner's, Bianchi's and the pp-wave's rings against the ellipses they are, and Alcubierre's crescents against half the greatest expansion;

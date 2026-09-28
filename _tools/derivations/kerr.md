@@ -401,7 +401,7 @@ That is the structural reason there are two curvature functions rather than ten,
 $$K = R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma},$$
 
 formed by raising all four indices with the inverse metric and contracting against the lowered tensor.
-Doing the contraction on the thirteen independent components of Step 7, with the multiplicities the symmetries give each of them, yields
+Doing the contraction on the thirteen independent components of Step 7, with the multiplicity each has under the symmetries, yields
 
 $$K = 48\left(\mathcal{A}^2 - \mathcal{B}^2\right).$$
 

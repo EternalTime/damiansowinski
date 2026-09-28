@@ -3,7 +3,7 @@
 
 An embedding diagram draws a two dimensional slice of a spacetime, the equatorial plane at
 one moment, as a surface in ordinary flat three dimensional space, so that distances
-measured along the surface are the distances the metric gives. Every slice drawn here is
+measured along the surface are the metric distances. Every slice drawn here is
 the surface of one spatial coordinate x and the angle phi of one coordinate system, every
 other coordinate held fixed, read from the system's published metric_components through
 the Reader of verify_metrics.py beside this file, in the x^0 = cT chart the collection
@@ -59,7 +59,7 @@ file holds, against the published metric:
   along     each chord of the profile, and the profile end to end, against the proper
             distance between the same two values of x, the quadrature of sqrt(g_xx);
   across    the straight line in space from each point to the next one DPHI further
-            round, against the length the metric gives the straight coordinate line
+            round, against the metric length of the straight coordinate line
             between them;
   around    the circumference 2 pi rho at every point against 2 pi sqrt(g_phiphi);
   joins     where two pieces meet, as a star's surface meets the exterior, they meet at
@@ -355,7 +355,7 @@ class Slice:
         return integrate(lambda s: math.sqrt(g(s)), lo, hi)
 
     def across(self, a, b, turn):
-        """The length the metric gives the line from x = a to b that turns steadily through
+        """The metric length of the line from x = a to b that turns steadily through
         `turn` radians per unit of proper distance."""
         g, gpp, _, lo, hi = self._between(a, b)
         return integrate(lambda s: math.sqrt(g(s) * (1 + gpp(s) * turn ** 2)), lo, hi)
@@ -2855,8 +2855,8 @@ NOT_DRAWN = set()
 CAPTIONS = {
     ("schwarzschild", "flamm"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Schwarzschild spacetime at one moment "
-        "of $t$, drawn as a surface in flat space so that every distance along it is the distance the "
-        "metric gives. On it the metric is $dr^2/(1 - r_s/r) + r^2d\\phi^2$: the circle of radius $r$ "
+        "of $t$, drawn as a surface in flat space so that every distance along it is the metric "
+        "distance. On it the metric is $dr^2/(1 - r_s/r) + r^2d\\phi^2$: the circle of radius $r$ "
         "has circumference $2\\pi r$, while the distance out to the next circle, $dr/\\sqrt{1 - r_s/r}$, "
         "is longer than $dr$. The surface of revolution that carries both is the paraboloid $z^2 = "
         "4r_s(r - r_s)$, which Ludwig Flamm found in 1916.",
@@ -2869,7 +2869,7 @@ CAPTIONS = {
     ("interior_schwarzschild", "star"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of a static star of uniform density at one "
         "moment of $t$, drawn as a surface in flat space so that every distance along it is the "
-        "distance the metric gives. Inside, $g_{rr} = 1/(1 - r^2r_s/R^3)$ is the metric of a sphere of "
+        "metric distance. Inside, $g_{rr} = 1/(1 - r^2r_s/R^3)$ is the metric of a sphere of "
         "radius $\\sqrt{R^3/r_s}$, so the slice is a cap of that sphere, curved alike at every point "
         "because the density is the same everywhere. Outside it is Flamm's paraboloid.",
         "At $r = R$ both sides give $g_{rr} = 1/(1 - r_s/R)$, so the cap meets the paraboloid in one "
@@ -2879,7 +2879,7 @@ CAPTIONS = {
     ],
     ("tov", "star"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of a neutron star at one moment of $t$, drawn as "
-        "a surface in flat space so that every distance along it is the distance the metric gives. On it "
+        "a surface in flat space so that every distance along it is the metric distance. On it "
         "$g_{rr} = r/(r - 2m)$, with $m = GM(r)/c^2$ for the mass $M(r)$ inside $r$, so the surface climbs "
         "at $dz/dr = \\sqrt{2m/(r - 2m)}$: level at the centre, where $m$ grows as $r^3$, and steeper "
         "outward as the mass inside grows. Outside the star $m$ no longer grows, and the surface is Flamm's "
@@ -2893,8 +2893,8 @@ CAPTIONS = {
     ],
     ("morris_thorne", "wormhole"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Morris-Thorne wormhole at one moment of "
-        "$t$, drawn as a surface in flat space so that every distance along it is the distance the "
-        "metric gives. The slice has $g_{rr} = 1/(1 - b/r)$, so $dz/dr = \\pm 1/\\sqrt{r/b - 1}$, and "
+        "$t$, drawn as a surface in flat space so that every distance along it is the metric "
+        "distance. The slice has $g_{rr} = 1/(1 - b/r)$, so $dz/dr = \\pm 1/\\sqrt{r/b - 1}$, and "
         "the shape function $b(r)$ alone fixes the surface, which is why Michael Morris and Kip Thorne "
         "gave it that name in 1988; the redshift function $\\Phi$ does not enter. At the throat "
         "$r = b_0$ the surface stands vertical and joins a second side, flat far away as the first is.",
@@ -2907,7 +2907,7 @@ CAPTIONS = {
     ("rn_metric", "outside"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of a charged black hole at one moment of $t$ "
         "outside its outer horizon, drawn as a surface in flat space so that every distance along it is the "
-        "distance the metric gives. On it $g_{rr} = r^2/(r^2 - r_sr + r_q^2)$, so $dz/dr = \\sqrt{(r_sr - "
+        "metric distance. On it $g_{rr} = r^2/(r^2 - r_sr + r_q^2)$, so $dz/dr = \\sqrt{(r_sr - "
         "r_q^2)/((r - r_+)(r - r_-))}$, and the slice passes through the outer horizon's bifurcation sphere "
         "$r = r_+$, its throat, into a second exterior, as Schwarzschild's does through $r_s$.",
         "The charge pulls the throat in from $r_s$ to $r_+ = (r_s + \\sqrt{r_s^2 - 4r_q^2})/2$, and far out the "
@@ -2917,7 +2917,7 @@ CAPTIONS = {
     ("rn_metric", "inside"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the same black hole at one moment of $t$ inside "
         "its inner horizon, where $r$ is again a distance and $t$ a time, drawn as a surface in flat space so "
-        "that every distance along it is the distance the metric gives. The slice runs through the inner "
+        "that every distance along it is the metric distance. The slice runs through the inner "
         "horizon's bifurcation sphere $r = r_-$, its widest circle, into a second region inside $r_-$, the "
         "same surface turned over.",
         "Moving in from $r_-$, $g_{rr} = r^2/((r_+ - r)(r_- - r))$ falls to $1$ at $r = r_q^2/r_s$, where the "
@@ -2927,7 +2927,7 @@ CAPTIONS = {
     ("kerr", "equator"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of a rotating black hole at one moment of "
         "Boyer-Lindquist $t$, drawn as a surface in flat space so that every distance along it is the "
-        "distance the metric gives. The rotation's $g_{t\\phi}$ drops out at constant $t$, and the spin "
+        "metric distance. The rotation's $g_{t\\phi}$ drops out at constant $t$, and the spin "
         "enters through the circles, whose circumference is $2\\pi\\sqrt{r^2 + a^2 + 2GMa^2/c^2r}$, so the "
         "drawing's distance from the axis is this radius rather than $r$. As Schwarzschild's does, the "
         "slice passes through the bifurcation sphere at $r_+$, its throat, into a second exterior.",
@@ -2940,7 +2940,7 @@ CAPTIONS = {
     ("kerr_newman", "equator"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of a charged rotating black hole at one moment of "
         "Boyer-Lindquist $t$, drawn as a surface in flat space so that every distance along it is the "
-        "distance the metric gives. The rotation's $g_{t\\phi}$ drops out at constant $t$, and the circles "
+        "metric distance. The rotation's $g_{t\\phi}$ drops out at constant $t$, and the circles "
         "have circumference $2\\pi\\sqrt{r^2 + a^2 + a^2(2GMr/c^2 - r_Q^2)/r^2}$, the drawing's distance from "
         "the axis. As Schwarzschild's does, the slice passes through the bifurcation sphere at $r_+$, its "
         "throat, into a second exterior.",
@@ -2951,8 +2951,8 @@ CAPTIONS = {
     ],
     ("de_sitter", "static"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of de Sitter space at the moment $t = 0$ of its "
-        "static chart, drawn as a surface in flat space so that every distance along it is the distance the "
-        "metric gives. On it $g_{rr} = 1/(1 - r^2/\\ell^2)$, with $\\ell = \\sqrt{3/\\Lambda}$, the metric of a "
+        "static chart, drawn as a surface in flat space so that every distance along it is the metric "
+        "distance. On it $g_{rr} = 1/(1 - r^2/\\ell^2)$, with $\\ell = \\sqrt{3/\\Lambda}$, the metric of a "
         "sphere of radius $\\ell$. The static chart covers the hemisphere about its observer out to the "
         "horizon $r = \\ell$, the equator, where the surface stands vertical, and the slice runs on through "
         "the horizon's bifurcation sphere into the static patch of an observer at the antipode.",
@@ -2964,7 +2964,7 @@ CAPTIONS = {
     ("vaidya", "shell"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of space around a shell of radiation falling "
         "inward, at four moments, each drawn as a surface in flat space so that every distance along it is "
-        "the distance the metric gives. A slice of constant $v$ is a light cone, so the moments are slices "
+        "the metric distance. A slice of constant $v$ is a light cone, so the moments are slices "
         "of constant $v - r$, which are spacelike everywhere, inside the horizon as well, and carry the metric "
         "$(1 + 2Gm/c^2r)\\,dr^2 + r^2d\\phi^2$. Inside the shell $m = 0$ and the surface is a flat disc. "
         "Outside it $m = M$ and the surface is $z^2 = 4r_sr$, Flamm's paraboloid moved in by $r_s$, and the "
@@ -2977,7 +2977,7 @@ CAPTIONS = {
     ("oppenheimer_snyder", "collapse"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of a star of dust collapsing from rest, at four "
         "moments of the dust's own time $\\tau$, each drawn as a surface in flat space so that every distance "
-        "along it is the distance the metric gives. The dust is a piece of a closed universe, and its slice is "
+        "along it is the metric distance. The dust is a piece of a closed universe, and its slice is "
         "a cap of a sphere of radius $a(\\tau)$ out to $\\chi = \\chi_0$, which shrinks as the dust falls while "
         "keeping its angle $\\chi_0$. Outside, the moment carries on as the moment of clocks released from rest "
         "at every radius when the dust was, Igor Novikov's slicing of Schwarzschild's exterior, and the two "
@@ -2991,7 +2991,7 @@ CAPTIONS = {
     ("tolman_bondi", "cloud"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of a cloud of dust collapsing from rest, densest at "
         "its centre, at four moments of $t$, each drawn as a surface in flat space so that every distance "
-        "along it is the distance the metric gives. On it $g_{rr} = (\\partial_rR)^2/(1 + 2E)$, with $R(r, t)$ "
+        "along it is the metric distance. On it $g_{rr} = (\\partial_rR)^2/(1 + 2E)$, with $R(r, t)$ "
         "the areal radius of the shell $r$, so in the areal radius the surface climbs at "
         "$dz/dR = \\sqrt{-2E/(1 + 2E)}$, set by the energy $E = -GM(r)/c^2r$ of the shell there alone. Every "
         "shell falls on its own clock, the centre first, and the surface follows the shells as they go.",
@@ -3002,8 +3002,8 @@ CAPTIONS = {
     ],
     ("bertotti_robinson", "equator"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Bertotti-Robinson universe at one moment of "
-        "$t$, drawn as a surface in flat space so that every distance along it is the distance the metric "
-        "gives. The spacetime is the product of a two dimensional anti-de Sitter space, which carries $t$ and "
+        "$t$, drawn as a surface in flat space so that every distance along it is the metric "
+        "distance. The spacetime is the product of a two dimensional anti-de Sitter space, which carries $t$ and "
         "$r$, and a sphere of radius $b$, which carries $\\theta$ and $\\phi$, so the equator at one moment is "
         "a line of the one times a great circle of the other, $b^2dr^2/r^2 + b^2d\\phi^2$: a cylinder of "
         "radius $b$, on which $z = b\\ln r$ puts $r \\to 0$ and $r \\to \\infty$ both infinitely far away.",
@@ -3015,14 +3015,14 @@ CAPTIONS = {
     ],
     ("bertotti_robinson", "sphere"): [
         "This is the sphere of $\\theta$ and $\\phi$ of the Bertotti-Robinson universe at one moment of $t$ "
-        "and one $r$, drawn as a surface in flat space so that every distance along it is the distance the "
-        "metric gives. It is the product's second factor, a sphere of radius $b$, the same at every $t$ and "
+        "and one $r$, drawn as a surface in flat space so that every distance along it is the metric "
+        "distance. It is the product's second factor, a sphere of radius $b$, the same at every $t$ and "
         "$r$, so a slice of constant $t$ is the line along the cylinder of the other view times this sphere.",
     ],
     ("stockum_dust", "dust"): [
         "This is the plane $z = 0$ across Cornelius Lanczos's cylinder of rotating dust at one moment of $t$, "
-        "drawn about its axis as a surface in flat space so that every distance along it is the distance the "
-        "metric gives. On it $g_{rr} = e^{-r^2/R^2}$, and the circle of radius $r$ has circumference "
+        "drawn about its axis as a surface in flat space so that every distance along it is the metric "
+        "distance. On it $g_{rr} = e^{-r^2/R^2}$, and the circle of radius $r$ has circumference "
         "$2\\pi r\\sqrt{1 - r^2/R^2}$, which grows only out to $r = R/\\sqrt{2}$ and then shrinks, so the "
         "surface curls back toward the axis.",
         "At $r = 0.83\\,R$ the circles shrink faster than the distance out to them and the drawing stops. At "
@@ -3031,7 +3031,7 @@ CAPTIONS = {
     ],
     ("taub_nut", "equator"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of Taub-NUT space at one moment of $t$, drawn as a "
-        "surface in flat space so that every distance along it is the distance the metric gives. The NUT "
+        "surface in flat space so that every distance along it is the metric distance. The NUT "
         "parameter enters $g_{t\\phi}$ through $\\cos\\theta$, which vanishes on the equator, so the slice there "
         "is a surface of revolution: $g_{rr} = (r^2 + l^2)/(r^2 - 2mr - l^2)$, with circles of circumference "
         "$2\\pi\\sqrt{r^2 + l^2}$, standing vertical at the horizon $r_+ = m + \\sqrt{m^2 + l^2}$ as Flamm's "
@@ -3044,7 +3044,7 @@ CAPTIONS = {
     ("godel", "dust"): [
         "This is the plane $z = 0$ about one world line of the dust in Gödel's universe, at one moment of the "
         "cylindrical chart's $t$, drawn as a surface in flat space so that every distance along it is the "
-        "distance the metric gives. On it the circle $r$ has circumference $2\\pi\\sqrt{2}\\,\\sinh r"
+        "metric distance. On it the circle $r$ has circumference $2\\pi\\sqrt{2}\\,\\sinh r"
         "\\sqrt{1 - \\sinh^2 r}/\\omega$, which grows out to $\\sinh^2 r = 1/2$ and then shrinks, so the surface "
         "curls back toward the axis, and at $\\sinh^2 r = 1/\\sqrt{2}$ the circles shrink faster than the "
         "distance out to them and the drawing stops.",
@@ -3055,8 +3055,8 @@ CAPTIONS = {
     ],
     ("ellis_bronnikov", "wormhole"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Ellis-Bronnikov wormhole at one moment of "
-        "$t$, drawn as a surface in flat space so that every distance along it is the distance the metric "
-        "gives. Its $r$ is the proper distance from the throat, running from $-\\infty$ on one side to "
+        "$t$, drawn as a surface in flat space so that every distance along it is the metric "
+        "distance. Its $r$ is the proper distance from the throat, running from $-\\infty$ on one side to "
         "$\\infty$ on the other, so the circles of constant $r$ stand at equal steps along the surface, and "
         "the circle at $r$ has circumference $2\\pi\\sqrt{r^2 + \\ell^2}$. The surface that carries both is "
         "the catenoid $\\sqrt{r^2 + \\ell^2} = \\ell\\cosh(z/\\ell)$, one piece through the throat at $r = 0$, "
@@ -3069,7 +3069,7 @@ CAPTIONS = {
     ],
     ("cosmic_string", "cone"): [
         "This is the plane $z = 0$ across a straight cosmic string at one moment of $t$, drawn as a "
-        "surface in flat space so that every distance along it is the distance the metric gives. The "
+        "surface in flat space so that every distance along it is the metric distance. The "
         "circle of radius $r$ about the string has circumference $2\\pi(1 - 4G\\mu/c^2)\\,r$, short of "
         "$2\\pi r$, so the surface is a cone of half angle $\\arcsin(1 - 4G\\mu/c^2)$, flat everywhere but "
         "at its apex. Cut along a line from the apex and laid flat, it is a plane with a wedge of angle "
@@ -3080,7 +3080,7 @@ CAPTIONS = {
     ],
     ("minkowski", "plane"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of Minkowski space at one moment of $t$, drawn as a "
-        "surface in flat space so that every distance along it is the distance the metric gives. On it $g_{rr} = 1$ "
+        "surface in flat space so that every distance along it is the metric distance. On it $g_{rr} = 1$ "
         "and the circle of radius $r$ has circumference $2\\pi r$, so the surface is the flat plane itself.",
         "Every other embedding diagram is measured against this one. Where a circle's circumference falls short of "
         "$2\\pi$ times the distance out to it, as around a star, the plane curves into a bowl; where it exceeds it, "
@@ -3091,7 +3091,7 @@ CAPTIONS = {
     ("anti_de_sitter", "hyperboloid"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of anti-de Sitter space at the moment $t = 0$ of its static "
         "chart, drawn as a surface in three dimensional Minkowski space so that every distance along it, measured "
-        "with $dX^2 + dY^2 - dZ^2$, is the distance the metric gives. On it $g_{rr} = 1/(1 + r^2/L^2)$ while the "
+        "with $dX^2 + dY^2 - dZ^2$, is the metric distance. On it $g_{rr} = 1/(1 + r^2/L^2)$ while the "
         "circle of radius $r$ has circumference $2\\pi r$, so every circle grows faster than the distance out to it, "
         "which no surface of revolution in flat space allows. In Minkowski space the plane is one sheet of the "
         "hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, and the whole hyperbolic plane of curvature $-1/L^2$ lies on it.",
@@ -3103,7 +3103,7 @@ CAPTIONS = {
     ],
     ("malament_hogarth", "plane"): [
         "This is the plane $z = 0$ about the removed event of a Malament-Hogarth spacetime at four moments of $t$, "
-        "each drawn as a surface in flat space so that every distance along it is the distance the metric gives. "
+        "each drawn as a surface in flat space so that every distance along it is the metric distance. "
         "The metric is $\\Omega^2$ times Minkowski's, so the circle of radius $s$ has circumference $2\\pi s\\Omega$ "
         "and every distance is $\\Omega$ times its flat value: where $\\Omega$ grows toward the removed event the "
         "plane sinks into a well, flat again beyond the unit ball where $\\Omega = 1$.",
@@ -3117,8 +3117,8 @@ CAPTIONS = {
     ],
     ("mixmaster", "sphere"): [
         "This is the great two sphere of the Mixmaster universe's three sphere at five moments of its proper time "
-        "$\\tau$, each drawn as a surface in flat space so that every distance along it is the distance the metric "
-        "gives. Every great sphere of a Mixmaster slice is congruent to every other, and the three great circles in "
+        "$\\tau$, each drawn as a surface in flat space so that every distance along it is the metric "
+        "distance. Every great sphere of a Mixmaster slice is congruent to every other, and the three great circles in "
         "which it meets its planes of symmetry have circumferences $4\\pi a_1$, $4\\pi a_2$ and $4\\pi a_3$, so the "
         "scale factors can be read off it. When all three agree it is a round sphere of radius $2a$, the equator of "
         "a round three sphere.",
@@ -3134,7 +3134,7 @@ CAPTIONS = {
     ],
     ("kasner", "ring"): [
         "This is the plane $y = 0$ of Kasner's universe at four moments of $t$, each drawn as a surface in flat space "
-        "so that every distance along it is the distance the metric gives. At every moment the plane is flat, "
+        "so that every distance along it is the metric distance. At every moment the plane is flat, "
         "$t^{2p_1}dx^2 + t^{2p_3}dz^2$ being Euclid's plane with its axes scaled, so the drawing is a flat disc, and "
         "what the geometry does shows in a ring of particles at rest in the chart, which stay at rest because the "
         "metric has no $\\Gamma^i{}_{tt}$.",
@@ -3146,7 +3146,7 @@ CAPTIONS = {
     ],
     ("bianchi", "ring"): [
         "This is the plane $y = 0$ of a Bianchi type I universe of dust at four moments of cosmic time, each drawn "
-        "as a surface in flat space so that every distance along it is the distance the metric gives. At every "
+        "as a surface in flat space so that every distance along it is the metric distance. At every "
         "moment the plane is flat, $a_1^2dx^2 + a_3^2dz^2$ being Euclid's plane with its axes scaled, so the drawing "
         "is a flat disc, and what the geometry does shows in a ring of the dust itself, whose grains stay at rest in "
         "the chart.",
@@ -3159,7 +3159,7 @@ CAPTIONS = {
     ],
     ("pp_wave", "ring"): [
         "This is the wave front of a plane gravitational wave at four values of its retarded time $u$, each drawn as "
-        "a surface in flat space so that every distance along it is the distance the metric gives. A surface of "
+        "a surface in flat space so that every distance along it is the metric distance. A surface of "
         "constant $u$ has the metric $dx^2 + dy^2$ whatever $v$ is on it, so the drawing is a flat disc, and what the "
         "wave does shows in a ring of free particles at rest on the circle $x^2 + y^2 = L^2$ before the pulse "
         "arrives.",
@@ -3173,7 +3173,7 @@ CAPTIONS = {
     ("krasnikov", "section"): [
         "This is the plane across the Krasnikov tube at one moment of $t$ and one place $x$, halfway along it and "
         "after the ship has passed, drawn as a surface in flat space so that every distance along it is the "
-        "distance the metric gives. At constant $t$ and $x$ the metric is $dr^2 + r^2d\\phi^2$ whatever the tube's "
+        "metric distance. At constant $t$ and $x$ the metric is $dr^2 + r^2d\\phi^2$ whatever the tube's "
         "$k$ is, so the drawing is flat, and the circle marked is $k = 0$, inside which $g_{xx} = k$ is negative and "
         "the direction along the tube, square to the drawing, is a time.",
         "That is why a slice of constant $t$ is not a moment of space inside the tube, and why its cross sections "
@@ -3184,7 +3184,7 @@ CAPTIONS = {
     ],
     ("alcubierre", "plane"): [
         "This is the plane $z = 0$ of the path of Alcubierre's warp bubble at the moment $t = 0$, drawn as a surface "
-        "in flat space so that every distance along it is the distance the metric gives. Every slice of constant "
+        "in flat space so that every distance along it is the metric distance. Every slice of constant "
         "$t$ is flat, $dx^2 + dy^2 + dz^2$, so the drawing is a flat disc, and the drive is in how the slices are "
         "stacked: the observers who ride them are carried along $x$ at $v_sf$ times the speed of light, faster "
         "than light inside the circle $v_sf = 1$.",
@@ -3197,7 +3197,7 @@ CAPTIONS = {
     ],
     ("natario", "plane"): [
         "This is the plane $z = 0$ of the path of Natário's warp bubble at the moment $t = 0$, drawn as a surface in "
-        "flat space so that every distance along it is the distance the metric gives. Every slice of constant $t$ "
+        "flat space so that every distance along it is the metric distance. Every slice of constant $t$ "
         "is flat, so the drawing is a flat disc, and the drive is in the flow of space $X$ that carries each slice "
         "past the next, whose divergence vanishes, so that no volume of space grows or shrinks anywhere.",
         "The lines marked are lines of that flow. Inside the bubble space moves forward at $v_s$ with the ship, "
@@ -3209,7 +3209,7 @@ CAPTIONS = {
     ],
     ("lentz", "plane"): [
         "This is the plane $y = 0$ of the path of Lentz's soliton at one moment, drawn as a surface in flat space so "
-        "that every distance along it is the distance the metric gives. Every slice of constant $t$ is flat, "
+        "that every distance along it is the metric distance. Every slice of constant $t$ is flat, "
         "$dx^2 + dy^2 + dz^2$, for every potential $\\phi$, because flat slices are one of the three things Erik "
         "Lentz fixed in 2021 to define his class, with a unit lapse and a shift that is the gradient of $\\phi$.",
         "His soliton exists only as a numerical integral over rhomboid cells of source, so no potential is drawn in "
@@ -3221,7 +3221,7 @@ CAPTIONS = {
     ("frw", "closed"): [
         "This is the equator $\\theta = \\pi/2$ of space in a closed universe of dust at five moments "
         "of cosmic time, each drawn as a surface in flat space so that every distance along it is the "
-        "distance the metric gives. Each slice of constant $t$ is a three sphere, and its equator is a "
+        "metric distance. Each slice of constant $t$ is a three sphere, and its equator is a "
         "sphere of radius $a(t)/\\sqrt{k}$. The comoving circles of constant $\\chi$ keep their places on "
         "it while every distance between them grows and shrinks with $a$, from zero at the bang to the "
         "largest at $ct = \\pi/\\sqrt{k}$ and back to zero at the crunch at $ct = 2\\pi/\\sqrt{k}$.",
