@@ -7,7 +7,8 @@
 
 Every address on damiansowinski.com that llms.txt or llms-full.txt names must be a file in
 the build, every outside address in llms.txt must answer when --external is given (those
-in llms-full.txt come from the pages and are only reported), both JSON files must parse and carry what agents query, robots.txt must point at
+in llms-full.txt come from the pages and are only reported), both JSON files must parse and carry what agents query, the publications page must list
+the same publications in the same order, robots.txt must point at
 a sitemap that parses, and each JSON-LD block must use only types and properties that the
 schema.org vocabulary defines, each property on a type it belongs to. The vocabulary is
 downloaded once and kept in ~/.cache/damiansowinski/.
@@ -28,6 +29,7 @@ SITE_URL = "https://damiansowinski.com"
 VOCABULARY_URL = "https://schema.org/version/latest/schemaorg-current-https.jsonld"
 VOCABULARY_CACHE = Path.home() / ".cache" / "damiansowinski" / "schemaorg-current-https.jsonld"
 MARKDOWN_LINK = re.compile(r"\]\(([^)\s]+)\)")
+PAGE_KEYS = re.compile(r"var KEYS = (\[.*?\]);", re.DOTALL)
 JSON_LD = re.compile(r'<script type="application/ld\+json">\s*(.*?)\s*</script>', re.DOTALL)
 # Pages whose JSON-LD the agent layer adds, and the types each must describe.
 JSON_LD_PAGES = {"index.html": "Person", "publications/index.html": "CollectionPage", "MFS/index.html": "Dataset"}
@@ -124,6 +126,9 @@ def check_data(site, problems):
             problems.check(p.get(field), f"publications.json: {p.get('key')} has no {field}")
         if p.get("pdf_url", "").startswith(SITE_URL):
             problems.check(local_file(site, p["pdf_url"]).is_file(), f"publications.json: {p['pdf_url']} is missing")
+    keys = PAGE_KEYS.search((site / "publications" / "index.html").read_text(encoding="utf-8"))
+    problems.check(keys and json.loads(keys.group(1)) == [p["key"] for p in publications["publications"]],
+                   "publications/index.html: the page lists other publications than publications.json")
     return len(spacetimes["spacetimes"]), len(publications["publications"])
 
 

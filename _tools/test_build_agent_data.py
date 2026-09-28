@@ -58,10 +58,6 @@ class Publications(unittest.TestCase):
     def test_in_the_order_the_page_lists_them(self):
         self.assertEqual([p["key"] for p in self.data["publications"]], self.keys)
 
-    def test_the_page_reads_the_same_list(self):
-        page = (mfs.ROOT / "publications.markdown").read_text(encoding="utf-8")
-        self.assertIn("var KEYS = {{ site.data.publication_keys | jsonify }};", page)
-
     def test_each_has_what_an_agent_cites_by(self):
         for p in self.data["publications"]:
             with self.subTest(p["key"]):
