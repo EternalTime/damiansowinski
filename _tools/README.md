@@ -499,6 +499,8 @@ The `figure` is the drawing the page makes of the view, projected by the script 
 - `camera`: `{"azimuth", "elevation"}`, the angles in degrees the surfaces were projected from, the azimuth measured round the axis from $\phi = 0$ toward $\phi = \pi/2$ and the elevation above the plane $z = 0$, looking at the origin.
 - `layers`: painted in the order given, each with a `kind` and a `class`. A `fill` has `points`, a closed polygon, and optional `holes`, polygons painted with the even odd rule; a `line` has `points`, a polyline; a `point` has `at`. Every point is `[X, Y]` in the plane of the page, rounded to four decimals.
 - `labels`: TeX at a point, `{"at", "text", "anchor", "class", "dx", "dy"}`, the anchor and the offset in units of a figure 628 wide, as a conformal diagram's are, `class` being `lab` or `small`.
+  A `small` label names a circle and stands beside the end of it, on the surface and over its lines, so it is set on a ground of its own, dark on the screen and white in print, as the page sets it; a `lab` label stands where no line runs.
+  No two labels overlap, which the script checks before it writes.
 - `legend`: `[kind, class, text]` for each class it names, the kind being `fill`, `line` or `point`.
 
 A `sheet` piece is tinted `cover` and a `star` piece `star`, while a `sheet2` or reference piece is left clear, so the part a chart covers stands out; each is tinted only where it is the surface nearest the camera, found by casting rays through the same truncated cones a client draws, and every line on the surfaces is split where another part of a surface hides it, the hidden part carrying its class with `-far` appended, which the page draws faint.
