@@ -617,16 +617,27 @@ class WrittenAreas(unittest.TestCase):
                 self.assertIn(self.resolved(selector, "font-weight"), (None, "400", "normal"))
                 self.assertIn(self.resolved(selector, "font-style"), (None, "normal"))
 
+    def test_every_written_area_is_set_at_the_history_size(self):
+        # The note beside the coffee button stands in the list's column and keeps its size.
+        self.assertEqual(self.resolved("#mfs-content-panel .mfs-history", "font-size"), "var(--mfs-prose)")
+        self.assertEqual(self.resolved(self.HISTORY, "font-size"), "1em")
+        for selector in set(self.WRITTEN) - {self.HISTORY, "#mfs-coffee-text"}:
+            with self.subTest(selector):
+                self.assertEqual(self.resolved(selector, "font-size"), "var(--mfs-prose)")
+
     def test_no_rule_gives_a_written_area_another_font(self):
         # A rule that reaches into a written area, such as the table's cells, the legend's
-        # entries or the phone's sizes, may not name a family or a style of its own; on paper,
-        # where the copy is set whole in the print root's font, it may not name one at all.
+        # entries or the phone's sizes, may not name a family, a size or a style of its own; on
+        # paper, where the copy is set whole in the print root's font at its 12pt, it may not
+        # name a family or a size at all.
         family = self.resolved(self.HISTORY, "font-family")
         for selectors, declarations, printed in self.rules:
             for selector in filter(self.concerns_written_area, selectors):
                 with self.subTest(selector, printed=printed):
                     named = declarations.get("font-family", "").replace("!important", "").strip()
                     self.assertIn(named, ("",) if printed else ("", family))
+                    size = declarations.get("font-size", "").replace("!important", "").strip()
+                    self.assertIn(size, ("",) if printed else ("", "var(--mfs-prose)", "1em"))
                     if selector.split()[-1] in self.tokens or selector.split()[-1] == "p":
                         self.assertNotEqual(declarations.get("font-style"), "italic")
 
@@ -647,6 +658,22 @@ class WrittenAreas(unittest.TestCase):
             with self.subTest(cls):
                 self.assertIn(cls, self.PROSE_HELD_BY, f"{cls} is prose; add its rule to WRITTEN")
                 self.assertIn(self.PROSE_HELD_BY[cls], self.WRITTEN)
+
+    def test_the_page_serves_the_history_font_itself(self):
+        # The site's own declarations in custom.css are not loaded on this page, and without
+        # its own a reader who had not installed Source Code Pro read the browser's monospace.
+        self.assertIn("/assets/css/mfs.css", self.page)
+        sheet = build.ROOT / "assets" / "css" / "mfs.css"
+        faces = re.findall(r"@font-face\s*\{([^}]*)\}", sheet.read_text(encoding="utf-8"))
+        styles = set()
+        for face in faces:
+            if "'Source Code Pro'" not in face:
+                continue
+            source = re.search(r"url\('([^']+)'\)", face).group(1)
+            self.assertTrue((sheet.parent / source).resolve().is_file(), source)
+            self.assertIn("font-weight: 100 900", face)
+            styles.add(re.search(r"font-style:\s*(\w+)", face).group(1))
+        self.assertEqual(styles, {"normal", "italic"})
 
     def test_the_print_copy_sets_its_prose_in_the_print_root_font(self):
         self.assertEqual(self.resolved("#mfs-print-root", "font-family", printed=True), "'EB Garamond', serif")

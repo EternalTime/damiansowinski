@@ -2970,7 +2970,7 @@
       box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan);
     }
     #mfs-content-panel .mfs-placeholder {
-      font-size: 1.4375rem; color: var(--teal-light);
+      color: var(--teal-light);
       line-height: 1.6;
       letter-spacing: 0.03em; padding: 1.2em 0;
     }
@@ -2985,7 +2985,7 @@
       position: fixed; right: 0; z-index: 14; box-sizing: border-box;
       display: flex; align-items: center; justify-content: center;
       padding: 1em; text-align: center;
-      font-size: 1.4375rem; color: var(--teal-light);
+      color: var(--teal-light);
       line-height: 1.6; letter-spacing: 0.03em;
       pointer-events: none; opacity: 0; will-change: opacity;
       transition: opacity 150ms ease-in;
@@ -3003,7 +3003,7 @@
     #mfs-content-panel .mfs-table-scroll { overflow-x: auto; margin: 1em 0; }
     #mfs-content-panel .mfs-table {
       border-collapse: collapse; width: 100%;
-      font-size: 1.1875rem; color: var(--teal-light);
+      color: var(--teal-light);
     }
     #mfs-content-panel .mfs-table th,
     #mfs-content-panel .mfs-table td {
@@ -3017,7 +3017,7 @@
     /* The conventions are prose in the mathematics, set as its other prose, the diagram
        captions, is set, and they wrap: nothing of a line of mathematics' scrolling applies. */
     #mfs-content-panel .mfs-convention p {
-      font-size: 1.1875rem; line-height: 1.65;
+      line-height: 1.65;
       color: var(--teal-light); margin: 0 0 0.8em;
     }
     #mfs-content-panel .mfs-convention p:last-child { margin-bottom: 0.3em; }
@@ -3098,26 +3098,31 @@
        dimmed its words, formulae and tables below everything else on the page, the longest
        prose in the collection the hardest to read. */
     #mfs-content-panel .mfs-history {
-      font-size: 1.3125rem !important; color: var(--teal-light) !important;
+      font-size: var(--mfs-prose) !important; color: var(--teal-light) !important;
       line-height: 1.7 !important;
     }
     #mfs-content-panel .mfs-history p {
-      font-size: 1em !important; color: var(--teal-light) !important;
+      color: var(--teal-light) !important;
       line-height: 1.7 !important;
       margin: 0 0 0.9em !important;
     }
     /* Every written area of the page is set in the font of the history's prose, Source Code
-       Pro at its regular weight, upright, as the captain asked on 28 September 2026: "every
-       written area must use the same font as the History section." That is the history and
-       its tables, the conventions, every diagram's captions, legends, notes and restriction
-       bands, the sentences under "not drawn", the references, the words that stand in for a
-       vanishing tensor or scalar, the placeholder and the loading line, and the note beside
-       the coffee button. The references, the placeholders, the loading line and "vanishing"
-       were in the page's serif, EB Garamond, and the last three in its italic. Each keeps its
-       own size. The headings, the choices, the list of names and every word inside a
-       drawing keep their own fonts. The print copy is set whole in EB Garamond, the history
-       with it, since these rules are the screen's; _tools/test_build_mfs_data.py holds this
-       list to the history's font. */
+       Pro at its regular weight, upright and at the history's size, --mfs-prose, as the
+       captain asked on 28 September 2026: "every written area must use the same font as the
+       History section." That is the history and its tables, the conventions, every diagram's
+       captions, legends, notes and restriction bands, the sentences under "not drawn", the
+       references, the words that stand in for a vanishing tensor or scalar, the placeholder
+       and the loading line, and the note beside the coffee button. The references, the
+       placeholders, the loading line and "vanishing" were in the page's serif, EB Garamond,
+       the last three in its italic, and every one but the history was a little smaller or
+       larger than it, from the restriction bands at 15px to "vanishing" at 26px. The note
+       beside the coffee button keeps its own size, since it stands in the list's column,
+       where the history's size would push the button below the foot of a laptop's screen.
+       The headings, the small capitals that name a note, the choices, the list of names
+       and every word inside a drawing keep their own fonts. The print copy is set whole in
+       EB Garamond at 12pt, the history with it, since these rules are the screen's;
+       _tools/test_build_mfs_data.py holds this list to the history's font. */
+    :root { --mfs-prose: 1.3125rem; }
     #mfs-content-panel .mfs-history p,
     #mfs-content-panel .mfs-table,
     #mfs-content-panel .mfs-convention p,
@@ -3133,15 +3138,24 @@
       font-family: 'Source Code Pro', monospace !important;
       font-weight: 400; font-style: normal;
     }
+    #mfs-content-panel .mfs-history p { font-size: 1em !important; }
+    #mfs-content-panel .mfs-table,
+    #mfs-content-panel .mfs-convention p,
+    #mfs-content-panel .mfs-nr-caption p,
+    #mfs-content-panel .mfs-nr-legend,
+    #mfs-content-panel .mfs-nr-note,
+    #mfs-content-panel .mfs-cd-restriction,
+    #mfs-content-panel .mfs-reference,
+    #mfs-content-panel .mfs-zero,
+    #mfs-content-panel .mfs-placeholder,
+    #mfs-loading { font-size: var(--mfs-prose); }
     #mfs-content-panel .mfs-history p:last-child {
       margin-bottom: 0 !important;
     }
     #mfs-content-panel .mfs-history .mfs-math {
       color: var(--teal-light) !important;
     }
-    #mfs-content-panel .mfs-zero {
-      font-size: 1.625rem; color: rgba(0,229,255,0.35);
-    }
+    #mfs-content-panel .mfs-zero { color: rgba(0,229,255,0.35); }
     /* ── Spacetime diagrams ── */
     #mfs-content-panel .mfs-nr-view {
       display: flex; flex-wrap: wrap; align-items: flex-start;
@@ -3209,7 +3223,7 @@
     #mfs-content-panel .mfs-nr-readout > span { white-space: nowrap; }
     #mfs-content-panel .mfs-nr-text { flex: 1 1 21.25rem; min-width: 0; }
     #mfs-content-panel .mfs-nr-caption p {
-      font-size: 1.1875rem; line-height: 1.65;
+      line-height: 1.65;
       color: var(--teal-light); margin: 0 0 0.8em;
     }
     #mfs-content-panel .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 0.375rem 1.375rem; margin: 0.25rem 0 0.75rem; }
@@ -3218,7 +3232,7 @@
        In a legend narrower than twelve ems of its words the words go below the swatch
        instead, since at three times the usual text on a phone the swatch left them nine
        letters to a line and a number was divided between two of them. */
-    #mfs-content-panel .mfs-nr-legend { container-type: inline-size; font-size: 1rem; }
+    #mfs-content-panel .mfs-nr-legend { container-type: inline-size; }
     #mfs-content-panel .mfs-nr-item {
       display: inline-flex; align-items: center; gap: 0.5rem; max-width: 100%;
       color: var(--text-mid);
@@ -3230,7 +3244,7 @@
     #mfs-content-panel .mfs-nr-swatch { flex: none; width: 2.125rem; height: 1rem; }
     .mfs-nr-keep { white-space: nowrap; }
     #mfs-content-panel .mfs-nr-note {
-      font-size: 1rem; line-height: 1.6; color: rgba(0,229,255,0.55); margin: 0 0 0.375rem;
+      line-height: 1.6; color: rgba(0,229,255,0.55); margin: 0 0 0.375rem;
     }
     #mfs-content-panel .mfs-nr-k,
     #mfs-content-panel .mfs-convention-k {
@@ -3364,7 +3378,7 @@
     .mfs-cd-labels .cd-lab-coord { color: var(--text-dim); }
     .mfs-cd-labels .cd-lab-region { color: var(--text-mid); letter-spacing: 0.06em; font-style: italic; }
     #mfs-content-panel .mfs-cd-restriction {
-      font-size: 0.9375rem; line-height: 1.5; color: var(--amber);
+      line-height: 1.5; color: var(--amber);
       background: rgba(249,180,80,0.06); border: 1px solid rgba(249,180,80,0.55); border-radius: 4px;
       padding: 0.375rem 0.625rem; margin: 0 0 0.25rem;
     }
@@ -3402,7 +3416,7 @@
       margin-top: 0.5rem;
     }
     #mfs-content-panel .mfs-reference {
-      font-size: 1rem; color: rgba(0,229,255,0.5);
+      color: rgba(0,229,255,0.5);
       line-height: 1.7; margin-bottom: 0.75rem;
       word-break: break-word;
     }
@@ -3447,7 +3461,7 @@
        here that replace it carry !important, and --mfs-phone tells those scripts that
        this layout is the one in force. */
     @media screen and (max-width: 37.5em), screen and (max-height: 31.25em) and (pointer: coarse) {
-      :root { --mfs-phone: 1; --mfs-left-w: 100vw; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+      :root { --mfs-phone: 1; --mfs-left-w: 100vw; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; --mfs-prose: 0.9375rem; }
       /* The panels slide in from beyond the screen's edges, and while the spacetime panel is
          still off to the right the page would be twice the screen's width, which a phone
          answers by zooming the page out, for good. So the column is clipped at the screen's
@@ -3491,7 +3505,6 @@
         position: absolute !important; top: auto !important; right: auto !important;
         width: calc(100% - 20px) !important; height: calc(100svh - 12px) !important;
         margin: 20px 0 0 20px; scroll-margin-top: 12px;
-        font-size: 1rem;
       }
       #mfs-content-panel {
         position: relative !important; top: auto !important; right: auto !important;
@@ -3514,21 +3527,13 @@
       #mfs-content-panel .mfs-section { padding: 0.5rem min(0.375rem, 1.6vw); }
       #mfs-content-panel .mfs-cd-restriction { padding-left: min(0.625rem, 2.78vw); padding-right: min(0.625rem, 2.78vw); }
       #mfs-content-panel .mfs-section-label { font-size: min(0.875rem, var(--mfs-fit, 0.875rem)); }
-      #mfs-content-panel .mfs-placeholder { font-size: 1rem; }
-      #mfs-content-panel .mfs-table { font-size: 0.8125rem; }
       #mfs-content-panel .mfs-table th,
       #mfs-content-panel .mfs-table td { padding: 0.25rem 0.5rem; }
-      #mfs-content-panel .mfs-convention p { font-size: 0.875rem; }
       #mfs-content-panel .mfs-component { font-size: 1.1875rem; }
-      #mfs-content-panel .mfs-history { font-size: 0.9375rem !important; }
-      #mfs-content-panel .mfs-zero { font-size: 1.125rem; }
       #mfs-content-panel .mfs-choice { font-size: min(0.75rem, var(--mfs-fit, 0.75rem)); padding: 0.25em 0.75em; }
-      #mfs-content-panel .mfs-nr-caption p { font-size: 0.875rem; }
-      #mfs-content-panel .mfs-nr-legend,
-      #mfs-content-panel .mfs-nr-note { font-size: 0.75rem; }
       #mfs-content-panel .mfs-nr-k,
       #mfs-content-panel .mfs-convention-k { font-size: 0.6875rem; }
-      #mfs-content-panel .mfs-reference { font-size: 0.8125rem; scroll-margin-top: calc(var(--mfs-head, 0px) + 8px); }
+      #mfs-content-panel .mfs-reference { scroll-margin-top: calc(var(--mfs-head, 0px) + 8px); }
 
       /* At the usual text size a diagram is drawn whole, as wide as the panel allows and
          never taller than the screen, unless that would draw it narrower than on the same
@@ -3843,12 +3848,11 @@
       #mfs-print-root { overflow: hidden; }
       .mfs-print-body .mfs-nr-view { display: block !important; break-inside: avoid; margin: 6px 0 14px; }
       .mfs-print-body .mfs-nr-figure { max-width: 12cm; font-size: 8pt; }
-      .mfs-print-body .mfs-nr-caption p, .mfs-print-body .mfs-nr-note, .mfs-print-body .mfs-nr-item { font-size: 10pt; }
       .mfs-print-body .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 4px 0; }
       .mfs-print-body .mfs-nr-item { display: inline-flex; align-items: center; gap: 5px; }
       .mfs-print-body .mfs-nr-k,
       .mfs-print-body .mfs-convention-k { text-transform: uppercase; letter-spacing: 0.08em; font-size: 8pt; margin-right: 0.4em; }
-      .mfs-print-body .mfs-convention p { font-size: 10pt; line-height: 1.45; margin: 0 0 6pt; }
+      .mfs-print-body .mfs-convention p { line-height: 1.45; margin: 0 0 6pt; }
       .mfs-print-body .nr-grid { stroke: #e4e4e4; }
       .mfs-print-body .nr-axis, .mfs-print-body .nr-frame { stroke: #000; }
       .mfs-print-body .nr-hatch-bg { fill: #fff; }
@@ -3885,7 +3889,7 @@
          held to its screen height, with its lines in the print copy's darker inks. */
       .mfs-print-body .mfs-cd-figure { width: 12cm; max-width: var(--cd-wide); }
       .mfs-print-body .mfs-fig-scroll { overflow: visible; }
-      .mfs-print-body .mfs-cd-restriction { border: 1px solid #000 !important; font-size: 9.5pt; margin: 0 0 4pt; padding: 3pt 6pt; }
+      .mfs-print-body .mfs-cd-restriction { border: 1px solid #000 !important; margin: 0 0 4pt; padding: 3pt 6pt; }
       .mfs-print-body .cd-region { fill: #f3f3f3; }
       .mfs-print-body .cd-cover { fill: #d8efec; }
       .mfs-print-body .cd-cover2 { fill: #f3e9c8; }
@@ -3928,7 +3932,6 @@
          gets a white one, or the lines would cross it on paper. */
       #mfs-print-root .mfs-em-figure .cd-lab-small { background: rgba(255,255,255,0.85) !important; }
       .mfs-print-body .mfs-em-reset { display: none !important; }
-      .mfs-print-body .mfs-table { font-size: 10pt; }
       .mfs-print-body .mfs-table th,
       .mfs-print-body .mfs-table td { border: 1px solid #000 !important; }
     }
