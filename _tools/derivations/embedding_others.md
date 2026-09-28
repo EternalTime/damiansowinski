@@ -190,6 +190,7 @@ There $k = -0.79771$ on the axis and $1$ far out, and it passes through $0$ at $
 The circle $k = 0$ is marked: inside it the direction along the tube, square to the drawing, is a time at constant $t$, which is how the tube carries a traveller back to within an instant of departure.
 Before the ship passes, at $ct = 1$, $k = 1$ everywhere on the same disc, and the disc is the same; the tube is in the direction the drawing leaves out and in the time at which it is drawn, which the caption says.
 The checks are the isometry of the disc, the published $g_{rr} = 1$ and $g_{\phi\phi} = r^2$ independent of $k$, and $k$ vanishing on the marked circle.
+Since 28 September 2026 the figure draws $1 - k$ as a height over the plane of the tube's axis instead, which `krasnikov_height.md` derives.
 
 ### Alcubierre's warp drive
 
@@ -220,6 +221,7 @@ $$\frac{c^4}{8\pi G}G^{tt} = -\frac{c^4}{8\pi G}\frac{v_s^2}{4}\frac{y^2 + z^2}{
 
 checked on the plane against the declared profile to $3 \times 10^{-15}$: negative, zero on the path and largest at the sides of the wall, a ring about the direction of travel.
 On a flat slice that density is all extrinsic, $16\pi G\rho/c^4 = K^2 - K_{ij}K^{ij}$, since the scalar curvature of the slice vanishes; the drawing's flatness and the negative energy are two faces of one fact.
+Since 28 September 2026 the figure draws $\theta$ itself as a height over this plane, as Alcubierre did, which `alcubierre_expansion.md` derives.
 
 ### Natário's warp drive
 

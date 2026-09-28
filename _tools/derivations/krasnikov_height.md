@@ -78,6 +78,6 @@ The walls climb at most $6.03$ in height per unit of distance across the tube at
 The ridge is straight along $x$ and its walls run along the axes of the chart, so the height is sampled on a Cartesian grid of the plane, $z(x, y)$, and drawn as flat triangles.
 The values of $x$ and of $y$ each hold every multiple of $\rho_0/2$, and $y = 0$, the axis, so each of those is a line of the grid.
 Each cell between neighbouring values $x_i$, $x_{i+1}$ and $y_j$, $y_{j+1}$ is split into two triangles along the diagonal from $(i, j)$ to $(i + 1, j + 1)$, and every interval of $x$ or of $y$ whose cells hold a triangle further than $5 \times 10^{-4}$ of the drawing's size, $3 \times 10^{-3}\rho_0$ on the long side of $6\rho_0$, from the surface $z = (1 - k)\rho_0$, measured as the distance in space, is halved until none does.
-The grid has 155 values of $x$ and 91 of $y$, $14105$ heights, about 122 kilobytes at six decimals, and the worst triangle misses by $2.52 \times 10^{-3}\rho_0$.
+The grid has 155 values of $x$ and 91 of $y$, $14105$ heights, about 139 kilobytes at the seven decimals the file writes, and the worst triangle misses by $2.52 \times 10^{-3}\rho_0$.
 Sampled at 300000 points, the worst vertical miss is $1.28 \times 10^{-3}$ of the size, on the steepest wall.
 A polar grid about the middle of the tube would need its finest spacing of angles everywhere the straight walls cross its circles.

@@ -22,6 +22,7 @@ each file's version into the index beside the metric's own.
 import argparse
 import hashlib
 import json
+import math
 import re
 import sys
 import unicodedata
@@ -203,6 +204,32 @@ def load_conformal(metrics):
     return conformal
 
 
+def check_grid(at, piece):
+    """A grid piece, a height over a plane, as _tools/README.md defines it: its values of u and v
+    each strictly increasing, a polar grid's u never below the axis and its angles within one
+    turn, a height at every node, one height where a polar grid meets its axis, and an edge that
+    says what lies beyond it, with no profile beside it."""
+    grid = piece["grid"]
+    if grid.get("frame") not in ("polar", "cartesian"):
+        raise DataError(f"{at} is a grid in neither a polar nor a Cartesian frame")
+    u, v, z = grid.get("u") or [], grid.get("v") or [], grid.get("z") or []
+    for name, values in (("u", u), ("v", v)):
+        if len(values) < 2 or not all(b > a for a, b in zip(values, values[1:])):
+            raise DataError(f"{at} does not run one way along its {name}")
+    if grid["frame"] == "polar" and (u[0] < 0 or v[0] < 0 or v[-1] >= 2 * math.pi or len(v) < 3):
+        raise DataError(f"{at} is a polar grid below the axis or beyond one turn")
+    if len(z) != len(u) or any(len(row) != len(v) for row in z):
+        raise DataError(f"{at} does not give a height at every node of its grid")
+    if not all(isinstance(h, (int, float)) and math.isfinite(h) for row in z for h in row):
+        raise DataError(f"{at} gives a height that is not a number")
+    if grid["frame"] == "polar" and u[0] == 0 and len(set(z[0])) != 1:
+        raise DataError(f"{at} meets its axis at more than one height")
+    if any(key in piece for key in ("points", "start", "end", "coordinate")):
+        raise DataError(f"{at} is a grid and a profile at once")
+    if piece.get("edge", {}).get("kind") != "edge":
+        raise DataError(f"{at} does not say what lies beyond its edge")
+
+
 def load_embedding(metrics):
     """Every embedding diagram file, refused if any field it was drawn from has changed.
 
@@ -210,7 +237,8 @@ def load_embedding(metrics):
     coordinate system, or another spacetime's, as the interior Schwarzschild star reads the
     exterior of schwarzschild.json, so the file lists every system it read under `source`.
     Each piece of each surface must run from its start to its end in one direction of its
-    coordinate, never below the axis, as _tools/README.md defines it.
+    coordinate, never below the axis, and each grid piece hold a height at every node of its
+    grid, as _tools/README.md defines them.
     """
     by_id = {m["id"]: m for m in metrics}
     embedding = {}
@@ -261,6 +289,9 @@ def load_embedding(metrics):
                     if (piece["metric"], piece["system"]) not in read:
                         raise DataError(f"{at} was drawn from {piece['metric']}/{piece['system']}, "
                                         "which the file's source does not stamp")
+                    if "grid" in piece:
+                        check_grid(at, piece)
+                        continue
                     x = [point[0] for point in piece["points"]]
                     steps = [b - a for a, b in zip(x, x[1:])]
                     if len(x) < 2 or not (all(d > 0 for d in steps) or all(d < 0 for d in steps)):
@@ -268,10 +299,14 @@ def load_embedding(metrics):
                     if any(point[1] < 0 for point in piece["points"]):
                         raise DataError(f"{at} has a point below the axis, rho < 0")
                 ids = {piece["id"] for piece in surface["pieces"]}
+                grids = {piece["id"] for piece in surface["pieces"] if "grid" in piece}
                 for ring in surface["rings"]:
                     if ring["piece"] not in ids:
                         raise DataError(f"{where}: the view {view['id']!r} marks a circle on "
                                         f"{ring['piece']!r}, which it does not draw")
+                    if ring["piece"] in grids:
+                        raise DataError(f"{where}: the view {view['id']!r} marks a circle of one height on "
+                                        f"the grid {ring['piece']!r}, which has no circles of one height")
                 for mark, kind in [(c, "a curve") for c in surface.get("curves", [])] + \
                                   [(d, "a point") for d in surface.get("dots", [])]:
                     if mark["piece"] not in ids:
