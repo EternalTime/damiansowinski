@@ -1026,8 +1026,9 @@ def frw(ck, src):
                  stops=["For $k = 0$ every slice of constant $t$ is flat, and its equator is a plane.",
                         "For $k = -1$ the circles about any point grow faster than the distance out to "
                         "them, $g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$ at every $r > 0$, so no "
-                        "surface in flat space carries the slice. By Hilbert's theorem no complete "
-                        "surface of constant negative curvature lies in flat space at all."])]
+                        "surface of revolution about a point carries the slice. A piece of it lies in "
+                        "flat space on Eugenio Beltrami's pseudosphere, and David Hilbert proved in 1901 "
+                        "that no surface in flat space carries the whole of it."])]
 
 
 
