@@ -986,6 +986,11 @@ class EmbeddingDiagrams(unittest.TestCase):
         r_plus = 1 + math.sqrt(0.39)
         self.assertAlmostEqual(piece("kerr_newman", "exterior")[0][0], r_plus, places=12)
         self.assertAlmostEqual(piece("kerr_newman", "exterior")[0][1], 2 - 0.25 / r_plus, places=6)
+        # de Sitter's static slice is the sphere of radius l, a hemisphere to each static patch.
+        for sign, pid in ((-1, "near"), (1, "far")):
+            for r, rho, z in piece("de_sitter", pid):
+                near(rho, r, f"de Sitter rho at {r}")
+                near(z, sign * math.sqrt(max(1 - r * r, 0)), f"de Sitter z at {r}")
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")

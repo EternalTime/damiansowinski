@@ -1169,6 +1169,44 @@ def kerr_newman(ck, src):
                           f"$r_Q = 0.5\\,GM/c^2$, so that $r_+ = {rp:.3f}\\,GM/c^2$ and $r_E = {ergo:.3f}\\,GM/c^2$.")]
 
 
+def de_sitter(ck, src):
+    """The static slice t = 0 at Lambda = 3, so that l = sqrt(3/Lambda) = 1: g_rr = 1/(1 - r^2),
+    the metric of a sphere of radius l, z = -sqrt(1 - r^2) on the hemisphere the static chart
+    covers out to its horizon r = l, and the same turned over on the antipodal observer's patch,
+    which the slice runs on into through the horizon's bifurcation sphere. It is the waist of
+    the hyperboloid, the smallest slice of the closed slicing. The flat slicing's slices are
+    flat, which is checked and stated."""
+    sl = Slice(src, "de_sitter", "static_spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"Lambda": 3})
+    horizon = sl.horizons()[0]
+    flat_slices(ck, src, "de_sitter", "flat_slicing")
+    size = 2.0
+    near = Piece("near", "sheet", sl, 0.0, horizon, -1.0, 1,
+                 (("axis", "the observer at $r = 0$, the pole of its hemisphere"),
+                  ("join", "the horizon $r = \\ell$, the equator, where the antipodal observer's patch begins")),
+                 [(0.5, "r", None), (math.sqrt(3) / 2, "r", None), (horizon, "horizon", "$r = \\ell$")], size)
+    far = Piece("far", "sheet2", sl, 0.0, horizon, 1.0, -1,
+                (("axis", "the antipodal observer"), ("join", "the horizon")),
+                [(0.5, "r2", None), (math.sqrt(3) / 2, "r2", None)], size)
+    for p in (near, far):
+        ck.isometry(f"de Sitter, the {p.id} hemisphere", p)
+        ck.radius(f"de Sitter, the {p.id} hemisphere, the sphere rho = r", p, lambda r: r, size)
+        ck.form(f"de Sitter, the {p.id} hemisphere, the sphere z = -+sqrt(l^2 - r^2)", p,
+                lambda r, s=p.sense: -s * np.sqrt(np.maximum(1 - r * r, 0)), size)
+    ck.join("de Sitter, the hemispheres meet at the horizon", near, horizon, far, horizon)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(horizon), "$r = \\ell$", dx=10)
+    fig.legend("fill", "cover", "the static patch $r < \\ell$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $\\ell/2$ and $\\sqrt{3}\\,\\ell/2$")
+    fig.legend("line", "r2", "the same radii in the antipodal observer's patch")
+    fig.legend("line", "horizon", "the horizon $r = \\ell$, the equator, where the slice crosses from one patch to the other")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("static", "The static patch", "$\\ell$", [surface], fig.done(),
+                 settings="$\\Lambda = 3$, so that $\\ell = \\sqrt{3/\\Lambda} = 1$, the unit of every length.",
+                 stops=["Every slice of constant $t$ of the flat slicing is flat, $e^{2Ht}(dx^2 + dy^2 + dz^2)$ "
+                        "being Euclidean space scaled by $e^{Ht}$, so its equator is a plane."])]
+
+
 def ellis_bronnikov(ck, src):
     """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
     l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
@@ -1464,6 +1502,7 @@ DRAWN = {
     "morris_thorne": morris_thorne,
     "ellis_bronnikov": ellis_bronnikov,
     "rn_metric": rn_metric,
+    "de_sitter": de_sitter,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "cosmic_string": cosmic_string,
@@ -1475,7 +1514,7 @@ DRAWN = {
 # profile, so neither is flat and neither has one surface that says anything; the
 # Malament-Hogarth slices take whatever shape an arbitrary conformal factor gives them.
 NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth", "oppenheimer_snyder", "tolman_bondi",
-             "de_sitter", "vaidya",
+             "vaidya",
              "bertotti_robinson", "stockum_dust", "taub_nut", "godel"}
 
 CAPTIONS = {
@@ -1574,6 +1613,18 @@ CAPTIONS = {
         "- r_Q^2/r_+$, which the charge pulls in below Kerr's $2GM/c^2$. The dotted circle is the edge of the "
         "ergosphere, where $g_{tt} = 0$ on the equator, inside which nothing can stand still against the "
         "rotation.",
+    ],
+    ("de_sitter", "static"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of de Sitter space at the moment $t = 0$ of its "
+        "static chart, drawn as a surface in flat space so that every distance along it is the distance the "
+        "metric gives. On it $g_{rr} = 1/(1 - r^2/\\ell^2)$, with $\\ell = \\sqrt{3/\\Lambda}$, the metric of a "
+        "sphere of radius $\\ell$. The static chart covers the hemisphere about its observer out to the "
+        "horizon $r = \\ell$, the equator, where the surface stands vertical, and the slice runs on through "
+        "the horizon's bifurcation sphere into the static patch of an observer at the antipode.",
+        "The whole slice is the three sphere of radius $\\ell$ at the waist of de Sitter's hyperboloid, the "
+        "smallest moment of the closed slicing, in which space is a three sphere of radius "
+        "$\\ell\\cosh(ct/\\ell)$ that contracts to this waist and expands after it. The two observers can "
+        "never exchange light: each hemisphere lies outside the other observer's past and future alike.",
     ],
     ("ellis_bronnikov", "wormhole"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Ellis-Bronnikov wormhole at one moment of "
