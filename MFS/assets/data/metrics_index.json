@@ -248,7 +248,8 @@
     ],
     "version": "af676d1d359dd3ca",
     "diagrams": "f3b98996676dfb82",
-    "conformal": "d264e9591576e7a3"
+    "conformal": "d264e9591576e7a3",
+    "embedding": "9220d6d926adbb9e"
   },
   {
     "id": "kerr_newman",
@@ -284,7 +285,8 @@
     ],
     "version": "4b71cc7b7992e60d",
     "diagrams": "744e71f9033ac46b",
-    "conformal": "b0e5c277f0e91fb7"
+    "conformal": "b0e5c277f0e91fb7",
+    "embedding": "4848b0059f9eef10"
   },
   {
     "id": "krasnikov",
