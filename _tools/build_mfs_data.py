@@ -359,12 +359,13 @@ def check_citations(metrics, entries):
                 )
 
 
-# A history reads evenly: at least five paragraphs, each of three to six sentences, and the
-# longest paragraph no more than twice the length of the shortest. A table is not a
-# paragraph of prose and is left out of the count.
+# Prose set in paragraphs reads evenly: every paragraph of a history or a convention has
+# three to six sentences, and the longest is no more than twice the length of the shortest.
+# A history tells a story, so it runs to at least five paragraphs; a convention may be a
+# single paragraph. A table is not a paragraph of prose and is left out of the count.
 HISTORY_PARAGRAPHS = 5
-HISTORY_SENTENCES = (3, 6)
-HISTORY_SPREAD = 2
+PARAGRAPH_SENTENCES = (3, 6)
+PARAGRAPH_SPREAD = 2
 
 MATH = re.compile(r"\$\$.+?\$\$|\$[^$]+\$", re.DOTALL)
 STOP = re.compile(r"[.?!][\"')\]]*\s+")
@@ -394,37 +395,48 @@ def sentences(paragraph):
     return found
 
 
-def prose_paragraphs(history):
-    """Each paragraph of a history that is prose, with its place among all of them."""
-    return [(n, p) for n, p in enumerate(history.split("¶"), 1) if not p.startswith("TABLE::")]
+def prose_paragraphs(text):
+    """Each paragraph of a history or a convention that is prose, with its place among all of them."""
+    return [(n, p) for n, p in enumerate(text.split("¶"), 1) if not p.startswith("TABLE::")]
 
 
-def history_shape(history):
-    """The number of sentences in each paragraph of a history, tables left out."""
-    return [len(sentences(p)) for _, p in prose_paragraphs(history)]
+def paragraph_shape(text):
+    """The number of sentences in each paragraph of a history or a convention, tables left out."""
+    return [len(sentences(p)) for _, p in prose_paragraphs(text)]
 
 
-def check_history_shape(metrics):
-    """Refuse a history too short to read as a story, or with paragraphs of uneven length.
+def shape_problems(metric_id, field, text, fewest):
+    """Each way one history or convention fails to read evenly, naming the paragraph at fault."""
+    low, high = PARAGRAPH_SENTENCES
+    paragraphs = prose_paragraphs(text)
+    shape = [len(sentences(p)) for _, p in paragraphs]
+    where = f"{metric_id}.json: the {field}, {shape},"
+    problems = []
+    if len(shape) < fewest:
+        problems.append(f"{where} has {len(shape)} paragraphs and needs at least {fewest}")
+    for (position, _), count in zip(paragraphs, shape):
+        if not low <= count <= high:
+            problems.append(f"{where} has {count} sentences in paragraph {position}, "
+                            f"where a paragraph takes {low} to {high}")
+    if shape and max(shape) > PARAGRAPH_SPREAD * min(shape):
+        problems.append(f"{where} has a longest paragraph more than {PARAGRAPH_SPREAD} "
+                        f"times its shortest")
+    return problems
 
-    Every history out of shape is named at once, with each paragraph that breaks the rule.
+
+def check_prose_shape(metrics):
+    """Refuse a history or a convention with paragraphs of uneven length, or a history too
+    short to read as a story.
+
+    Every one out of shape is named at once, with each paragraph that breaks the rule. A
+    spacetime may carry no convention, and then there is nothing to count.
     """
-    low, high = HISTORY_SENTENCES
     problems = []
     for metric in metrics:
-        paragraphs = prose_paragraphs(metric.get("history") or "")
-        shape = [len(sentences(p)) for _, p in paragraphs]
-        where = f"{metric['id']}.json: the history, {shape},"
-        if len(shape) < HISTORY_PARAGRAPHS:
-            problems.append(f"{where} has {len(shape)} paragraphs and needs at least "
-                            f"{HISTORY_PARAGRAPHS}")
-        for (position, _), count in zip(paragraphs, shape):
-            if not low <= count <= high:
-                problems.append(f"{where} has {count} sentences in paragraph {position}, "
-                                f"where a paragraph takes {low} to {high}")
-        if shape and max(shape) > HISTORY_SPREAD * min(shape):
-            problems.append(f"{where} has a longest paragraph more than {HISTORY_SPREAD} "
-                            f"times its shortest")
+        problems += shape_problems(metric["id"], "history", metric.get("history") or "",
+                                   HISTORY_PARAGRAPHS)
+        if metric.get("convention"):
+            problems += shape_problems(metric["id"], "convention", metric["convention"], 1)
     if problems:
         raise DataError("\n".join(problems))
 
@@ -442,7 +454,7 @@ def main(argv=None):
         references = build_references()
         metrics = load_metrics()
         check_citations(metrics, references["entries"])
-        check_history_shape(metrics)
+        check_prose_shape(metrics)
         diagrams = load_diagrams(metrics)
         conformal = load_conformal(metrics)
         embedding = load_embedding(metrics)

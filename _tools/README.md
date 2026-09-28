@@ -85,7 +85,11 @@ Every drawing, a spacetime diagram, a conformal diagram and a figure in three di
 The coordinates come first in the mathematics, right after the history, since the chart is chosen before anything that depends on it: their buttons, then each coordinate with its domain.
 The page prints a spacetime's `signature` and `convention` under the heading "conventions" just below them, which is where the application reads them.
 They belong to the spacetime and not to a chart, so choosing a chart leaves them standing.
-A `convention` is prose with inline TeX between dollar signs, split into paragraphs at `¶`, and never carries a citation or HTML.
+A `convention` is one string of prose with inline TeX between dollar signs, and never carries a citation, a table or HTML.
+Its paragraphs are marked as a history's are, by `¶`, which stands in place of the space between the last sentence of one paragraph and the first sentence of the next, as in `taken in that chart.¶The Ricci tensor`.
+So splitting the string at every `¶` gives the paragraphs in order, each whole, with no space to trim and no empty piece, and a convention of one paragraph carries no `¶`.
+The page sets each piece as a paragraph of its own under the signature, and the application does the same.
+Turning every `¶` back into a space gives the prose unbroken.
 An entry with neither field shows no conventions section at all.
 
 A cloud-sync conflict copy dropped into the metrics folder, named like `kerr 2.json`, is passed over rather than read.
@@ -145,18 +149,23 @@ This file is written for whoever builds the collection, and is the one place its
 The tests hold the words that can only ever mean the machinery out of every prose field of every metric and out of every caption, label and declared input of every diagram.
 A history keeps "published" and "printed" for the papers it tells of, and "building block" stays wherever it is written, since neither names the collection.
 
-## The shape of a history
+## The shape of a history and a convention
 
 A history has at least five paragraphs, and every paragraph has three to six sentences, so no paragraph runs to more than twice the length of another.
 A table, the paragraph written as a `TABLE::` line, is not prose and is left out of the count.
 Where an entry is too thin for five paragraphs, it wants more history, sourced and cited like the rest, never filler.
+
+A convention keeps the same paragraphs of three to six sentences, the longest no more than twice the shortest, but it may be a single paragraph.
+Each paragraph keeps to one subject, and most conventions take their subjects in the same order: the coordinates and the parameters, then the chart the components are taken in with its derivatives and the contraction of the Ricci tensor, then the physics the spacetime turns on.
+A break falls only where a sentence ends, and wherever the sentences allow it a paragraph opens on what it is about rather than on a word that points back across the break, such as "it" or "the second", since the break parts the word from what it names.
+The tests hold every break of a history and a convention to the end of a sentence, with no space on either side of the `¶`.
 
 `sentences` in `build_mfs_data.py` does the counting.
 A sentence ends at a full stop, a question mark or an exclamation mark, after any closing quote or bracket, where the next word begins with a capital or a digit.
 A capital standing alone before a full stop is an initial, as in J. Robert Oppenheimer, and ends nothing.
 Mathematics between dollar signs counts as one word, and ends a sentence only when the stop is inside it, as when a displayed equation closes one.
 
-The command refuses to write anything, and `--check` fails, while any history is out of shape, naming every such history with the sentences in each of its paragraphs and the paragraph that breaks the rule.
+The command refuses to write anything, and `--check` fails, while any history or convention is out of shape, naming each with the sentences in each of its paragraphs and the paragraph that breaks the rule.
 
 ## What the command writes
 
