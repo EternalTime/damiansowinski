@@ -109,7 +109,7 @@ EQUATOR = {"theta": "pi/2"}
 SAG = 2e-5          # how far the profile may stray from a chord, as a part of the drawing's size
 BEND = 0.004        # and as a part of the chord: the chord then turns through at most 0.032
 STEP = 1 / 90       # the longest chord of the profile, as a part of the drawing's size
-DIGITS = 1e-7       # rho and z are rounded to below this part of the drawing's size
+DIGITS = 1e-7       # rho and z are rounded to below this part of their piece's extent
 DPHI = 0.02         # the turn of the "across" chords, in radians
 ALONG = 2e-4        # how far a chord may miss the proper distance, as a part of it
 ACROSS = 2e-4       # the same for the chords across
@@ -206,8 +206,11 @@ class Slice:
 
     @staticmethod
     def _at(f, x):
+        # numpy evaluates both branches of a Piecewise, as E and R of the dust clouds, and the
+        # one not taken may divide by zero; every value that is used is measured by the checks.
         x = np.asarray(x, dtype=float)
-        return np.broadcast_to(np.asarray(f(x), dtype=float), x.shape) * 1.0
+        with np.errstate(all="ignore"):
+            return np.broadcast_to(np.asarray(f(x), dtype=float), x.shape) * 1.0
 
     def gxx_at(self, x):
         return self._at(self._gxx, x)
@@ -251,7 +254,7 @@ class Slice:
             def near(e):
                 n, d = sp.fraction(sp.together(e.subs(self.x, self.exact[root] + u)))
                 f = sp.lambdify(u, sp.expand(n) / sp.expand(d), "numpy")
-                return lambda v: float(f(v))
+                return lambda v: float(Slice._at(f, v))
             self._near[root] = [near(e) for e in (self.gxx, self.gpp, self.defect)]
         return self._near[root]
 
@@ -373,6 +376,10 @@ class Piece:
         xs.append(b)
         zs.append(zb)
 
+    @property
+    def decimals(self):
+        return decimals(max(float(np.ptp(self.rho)), float(np.ptp(self.z)), 1e-9))
+
     def at(self, x):
         """(rho, z) of the circle at x, which must be a point of the profile."""
         i = int(np.argmin(np.abs(self.x - x)))
@@ -391,7 +398,7 @@ class Piece:
     def data(self):
         out = {"id": self.id, "class": self.cls, "metric": self.sl.metric_id, "system": self.sl.system_id,
                "coordinate": self.sl.coordinate,
-               "points": [[significant(x), fixed(r, decimals(self.size)), fixed(z, decimals(self.size))]
+               "points": [[significant(x), fixed(r, self.decimals), fixed(z, self.decimals)]
                           for x, r, z in zip(self.x, self.rho, self.z)],
                "start": end_data(self.ends[0]), "end": end_data(self.ends[1])}
         if self.reference:
@@ -404,10 +411,11 @@ def fixed(v, digits):
     return round(float(v), digits) + 0.0
 
 
-def decimals(size):
-    """The decimals written for rho and z of a drawing of this size: six for Flamm's paraboloid,
-    drawn 12 across, and more for a smaller drawing, so the rounding is below DIGITS of it."""
-    return max(6, math.ceil(-math.log10(DIGITS * size)))
+def decimals(extent):
+    """The decimals written for rho and z of a piece whose rho or z spans `extent`, at least
+    six, and more for a small piece, as a collapsing star's shrinking cap, whose chords are
+    short, so the rounding is below DIGITS of it."""
+    return max(6, math.ceil(-math.log10(DIGITS * extent)))
 
 
 # x is written as the double itself, the shortest decimal that reads back as it: next to a
@@ -434,7 +442,7 @@ class Surface:
         for p in self.pieces:
             for x, cls, text in p.marks:
                 rho, z = p.at(x)
-                d = decimals(p.size)
+                d = p.decimals
                 ring = {"piece": p.id, "class": cls, "x": significant(x), "rho": fixed(rho, d), "z": fixed(z, d)}
                 if text:
                     ring["label"] = text
@@ -1309,6 +1317,229 @@ def vaidya(ck, src):
                        "conformal diagram draws it.")]
 
 
+def einstein(src, metric_id, system_id, index):
+    """A published G^i_i with c = 1, every declared function and derivative a plain symbol named
+    as R, R_t, R_tt, R_tr or E_r, as a numpy function of those symbols by keyword."""
+    _, entry, R = nr.load(metric_id, system_id)
+    src.note(metric_id, system_id, ["einstein_tensor"])
+    ul = entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
+    e = R(next(c["value"] for c in ul if c["indices"] == [index, index])).subs(R.c, 1)
+    named = {}
+    for d in sorted(e.atoms(sp.Derivative), key=lambda d: -len(d.variables)):
+        name = f"{d.expr.func}_{''.join(str(v) for v in d.variables)}"
+        named[name] = sp.Symbol(name)
+        e = e.subs(d, named[name])
+    for f in e.atoms(sp.core.function.AppliedUndef):
+        named[str(f.func)] = sp.Symbol(str(f.func))
+        e = e.subs(f, named[str(f.func)])
+    order = sorted(named)
+    fn = sp.lambdify([named[k] for k in order], e, "numpy")
+    return lambda **v: fn(*[v[k] for k in order])
+
+
+class RestCloud:
+    """Dust released from rest at t = 0 with R(r, 0) = r, G = c = 1, described by k(r) = 2M(r)/r^3,
+    M the mass inside the shell r: each shell falls on its own cycloid, R = (r/2)(1 + cos eta)
+    and t = (eta + sin eta)/(2 sqrt k), with 1 + 2E = 1 - k r^2 and E = -M/r, the energy of a
+    shell at rest at R = r. At fixed t, d eta/dr = (eta + sin eta) k'/(2k (1 + cos eta)), which
+    gives dR/dr; dR/dt = -r sqrt(k) tan(eta/2) and d^2R/dt^2 = -M/R^2 follow from the
+    parametrisation, and are checked against the published field equations rather than assumed.
+    Outside the dust M is constant and the slices of constant t are Novikov's, the moment of
+    clocks falling freely from rest, which run on through the horizon."""
+
+    def __init__(self, k, dk):
+        self.k, self.dk = k, dk
+
+    def eta(self, r, t):
+        """eta + sin eta = 2 t sqrt(k(r)) by bisection, which is exact to double precision."""
+        target = 2 * t * np.sqrt(self.k(r))
+        if np.any(target > math.pi):
+            raise AssertionError(f"a shell has reached R = 0 by t = {t}")
+        lo, hi = np.zeros_like(target), np.full_like(target, math.pi)
+        for _ in range(64):
+            mid = 0.5 * (lo + hi)
+            below = mid + np.sin(mid) < target
+            lo, hi = np.where(below, mid, lo), np.where(below, hi, mid)
+        return 0.5 * (lo + hi)
+
+    def fields(self, r, t):
+        r = np.asarray(r, dtype=float)
+        k, dk = self.k(r), self.dk(r)
+        e = self.eta(r, t)
+        c, sn = np.cos(e), np.sin(e)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            de = np.where(e > 0, (e + sn) * dk / (2 * k * (1 + c)), 0.0)
+        half = np.cos(e / 2)
+        return {"R": r * (1 + c) / 2, "R_r": (1 + c) / 2 - r * sn * de / 2,
+                "R_t": -r * np.sqrt(k) * np.tan(e / 2), "R_tt": -k * r / (2 * half ** 4),
+                "R_tr": -(np.sqrt(k) + r * dk / (2 * np.sqrt(k))) * np.tan(e / 2) - r * np.sqrt(k) * de / (2 * half ** 2),
+                "E": -k * r * r / 2, "E_r": -(dk * r * r + 2 * k * r) / 2,
+                "M": k * r ** 3 / 2, "M_r": (dk * r ** 3 + 3 * k * r * r) / 2, "eta": e}
+
+    def check(self, ck, src, name, rs, ts):
+        """The published G^r_r vanishes, which is dust, and G^t_t = -2 M'/(R^2 R') is its density."""
+        Grr = einstein(src, "tolman_bondi", "comoving_synchronous", "r")
+        Gtt = einstein(src, "tolman_bondi", "comoving_synchronous", "t")
+        worst_r = worst_t = 0.0
+        for t in ts:
+            f = self.fields(rs, t)
+            v = {"R": f["R"], "R_t": f["R_t"], "R_tt": f["R_tt"], "R_r": f["R_r"], "R_tr": f["R_tr"],
+                 "E": f["E"], "E_r": f["E_r"]}
+            scale = f["M"] / f["R"] ** 3 + 1e-300
+            worst_r = max(worst_r, float(np.max(np.abs(Grr(**v)) / scale)))
+            density = -2 * f["M_r"] / (f["R"] ** 2 * f["R_r"])
+            worst_t = max(worst_t, float(np.max(np.abs(Gtt(**v) - density) / scale)))
+        ck.add(f"{name}: released from rest, the published G^r_r vanishes", worst_r, 1e-9)
+        ck.add(f"{name}: the published G^t_t is -2M'/(R^2 R'), the declared density", worst_t, 1e-9)
+
+    def slice(self, src, t, E):
+        """Tolman-Bondi's comoving chart at time t, with R and dR/dr from the cycloids and E closed."""
+        def value(key):
+            return lambda x: self.fields(np.atleast_1d(x), t)[key].reshape(np.shape(x))
+        return Slice(src, "tolman_bondi", "comoving_synchronous", "r", "\\phi", {"t": repr(t), **EQUATOR},
+                     functions={"E": E}, numeric={"R": (value("R"), value("R_r"))})
+
+    def horizon(self, t, lo, hi):
+        """The outermost shell in (lo, hi) with R = 2M, the apparent horizon, or None."""
+        r = np.linspace(lo, hi, 4001)[1:]
+        f = self.fields(r, t)
+        g = f["R"] - 2 * f["M"]
+        cross = np.flatnonzero((g[:-1] < 0) & (g[1:] >= 0))
+        if not cross.size:
+            return None
+        a, b = r[cross[-1]], r[cross[-1] + 1]
+        for _ in range(64):
+            m = 0.5 * (a + b)
+            fm = self.fields(np.array([m]), t)
+            a, b = (m, b) if fm["R"][0] - 2 * fm["M"][0] < 0 else (a, m)
+        return 0.5 * (a + b)
+
+
+def oppenheimer_snyder(ck, src):
+    """Dust released from rest at R0 = 2 r_s, chi0 = pi/4 and a_m = 2 sqrt(2) r_s, as the
+    conformal diagram draws the collapse, at four moments of its proper time tau. Inside, the
+    published interior chart at a = (a_m/2)(1 + cos eta), tau = (a_m/2)(eta + sin eta), which is
+    checked to make the published G^chi_chi vanish: a cap of a sphere of radius a out to chi0.
+    Outside, the moment of constant tau carries on as Novikov's slice, the moment of clocks
+    released from rest at t = 0 at every radius, read from Tolman-Bondi's comoving chart with
+    no dust, k = r_s/r^3; a slice of constant Schwarzschild t would meet the dust at an angle
+    after the release and cannot reach it once it is inside r_s. The two meet with one tangent,
+    1 + 2E = 1 - r_s/R0 = cos^2 chi0 on both sides, which is checked; at the release the outside
+    is Flamm's paraboloid."""
+    R0, chi0 = 2.0, math.pi / 4
+    am = R0 / math.sin(chi0)
+    cloud = RestCloud(lambda r: np.where(r < R0, 1 / R0 ** 3, 1 / np.maximum(r, R0) ** 3),
+                      lambda r: np.where(r < R0, 0.0, -3 / np.maximum(r, R0) ** 4))
+    # The interior's own field equation, 2 a a'' + a'^2 + 1 = 0 in tau, along the cycloid.
+    Gcc = einstein(src, "oppenheimer_snyder", "interior_comoving", "\\chi")
+    etas = np.linspace(0.05, 0.95 * math.pi, 50)
+    half = np.cos(etas / 2)
+    ck.add("Oppenheimer-Snyder: a = (a_m/2)(1 + cos eta) makes the published G^chi_chi vanish",
+           float(np.max(np.abs(Gcc(a=am * half ** 2, a_tau=-np.tan(etas / 2), a_tautau=-1 / (2 * am * half ** 4)))
+                        * (am * half ** 2) ** 2)), 1e-9)
+    cloud.check(ck, src, "Oppenheimer-Snyder outside", np.linspace(R0, 8, 60), [0.0, 1.0, 2.0, 3.0, 4.0])
+    top = 6.0
+    size = 2 * top
+    surfaces = []
+    for f in (0.0, 0.3, 0.6, 0.8):
+        eta = f * math.pi
+        a = am * (1 + math.cos(eta)) / 2
+        tau = am * (eta + math.sin(eta)) / 2
+        where = f"Oppenheimer-Snyder, eta = {f:g} pi"
+        inner = Slice(src, "oppenheimer_snyder", "interior_comoving", "\\chi", "\\phi", {"tau": "0", **EQUATOR},
+                      {"chi_0": "pi/4", "a_m": repr(am)}, {"a": repr(a)})
+        outer = cloud.slice(src, tau, "-1/(2*r)")
+        edge = cloud.horizon(tau, 0.0, top)
+        dust_marks = [(chi0 / 3, "r2", None), (2 * chi0 / 3, "r2", None), (chi0, "surface", None)]
+        out_marks = [(r, "r", None) for r in (3.0, 4.0, 5.0, top)]
+        if edge is not None and edge > R0:
+            out_marks.append((edge, "horizon", None))
+        elif edge is not None:
+            dust_marks.append((math.asin(edge / am), "horizon", None))
+        ext = Piece("exterior", "sheet", outer, R0, top, 0.0, 1,
+                    (("join", "the surface of the dust"), ("edge", "the slice runs on to $r \\to \\infty$")), out_marks, size)
+        dust = Piece("dust", "star", inner, 0.0, chi0, 0.0, 1,
+                     (("axis", "the centre $\\chi = 0$, where the cap is smooth"), ("join", "the surface $\\chi = \\chi_0$")),
+                     dust_marks, size)
+        dust.z = dust.z + (ext.z[0] - dust.z[-1])
+        ck.isometry(f"{where}, the dust", dust)
+        ck.isometry(f"{where}, outside", ext)
+        ck.join(f"{where}, the dust meets the outside", dust, chi0, ext, R0)
+        ck.form(f"{where}, the dust is a cap of a sphere of radius a", dust,
+                lambda c, a=a, z0=dust.z[0]: z0 + a * (1 - np.cos(c)), size)
+        if f == 0:
+            ck.form(f"{where}, outside it is Flamm's paraboloid", ext, lambda r: 2 * np.sqrt(r - 1) - 2, size)
+        surfaces.append(Surface([dust, ext], label=f"$c\\tau = {tau:.2f}\\,r_s$", time=tau))
+    fig = sequence_figure(surfaces, {"star": "star", "sheet": "cover"}, size, columns=2)
+    fig.legend("fill", "star", "the dust, a cap of a sphere of radius $a(\\tau)$, which $\\tau$ and $\\chi$ cover")
+    fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the dust")
+    fig.legend("line", "r2", "$\\chi$ constant in the dust, at $\\chi_0/3$ and $2\\chi_0/3$")
+    fig.legend("line", "r", "the clocks released at $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "surface", "the surface of the dust, $\\chi = \\chi_0$")
+    fig.legend("line", "horizon", "the apparent horizon, $R = 2GM/c^2$ for the mass inside it")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("collapse", "The collapse", "$r_s$", surfaces, fig.done(),
+                 settings="$R_0 = 2\\,r_s$, so that $\\chi_0 = \\pi/4$ and $a_m = 2\\sqrt{2}\\,r_s$, with $r_s = 1$ the "
+                          "unit of every length; the moments are the dust's proper time $\\tau$ since the release.",
+                 input="Outside the dust, the slices of Tolman-Bondi's comoving chart with no dust in it, $1 + 2E = "
+                       "1 - r_s/r$, each shell of clocks released from rest at $R = r$ when the dust is.")]
+
+
+def tolman_bondi(ck, src):
+    """The cloud the spacetime diagram draws, density falling as 1 - r^2/r_b^2 to zero at r_b and
+    2GM(r_b)/c^2 = r_b/2, so k = 2M/r^3 = (5 - 3r^2)/4 inside and 1/(2r^3) outside, r_b = 1,
+    but released from rest, E = -M/r, rather than marginally bound: with E = 0 the slice has
+    g_rr = (dR/dr)^2 and is a plane, which is checked for the spacetime diagram's own cloud and
+    stated. Four moments of t until just before the centre is crushed, at t = pi/sqrt(5)."""
+    cloud = RestCloud(lambda r: np.where(r < 1, (5 - 3 * r * r) / 4, 1 / (2 * np.maximum(r, 1.0) ** 3)),
+                      lambda r: np.where(r < 1, -1.5 * r, -1.5 / np.maximum(r, 1.0) ** 4))
+    cloud.check(ck, src, "Tolman-Bondi", np.linspace(0.02, 4, 80), [0.0, 0.5, 1.0, 1.3])
+    E = "Piecewise((-(5 - 3*r**2)*r**2/8, r < 1), (-1/(4*r), True))"
+    for t in (0.0, 0.3):
+        flat = Slice(src, "tolman_bondi", "comoving_synchronous", "r", "\\phi", {"t": repr(t), **EQUATOR},
+                     functions={"E": "0", "R": nr._TB_R})
+        ck.plane(f"Tolman-Bondi, marginally bound, t = {t:g}", flat, np.linspace(0.02, 3, 300))
+    top = 4.0
+    size = 2 * top
+    surfaces = []
+    for t in (0.0, 0.6, 1.0, 1.3):
+        sl = cloud.slice(src, t, E)
+        where = f"Tolman-Bondi, t = {t:g}"
+        edge = cloud.horizon(t, 0.0, top)
+        horizon = [(edge, "horizon", None)] if edge is not None else []
+        dust = Piece("cloud", "star", sl, 0.0, 1.0, 0.0, 1,
+                     (("axis", "the centre $r = 0$, where the surface is smooth"), ("join", "the surface $r = r_b$")),
+                     [(1 / 3, "r2", None), (2 / 3, "r2", None), (1.0, "surface", None)] + [h for h in horizon if h[0] < 1], size)
+        ext = Piece("exterior", "sheet", sl, 1.0, top, dust.z[-1], 1,
+                    (("join", "the surface $r = r_b$"), ("edge", "the slice runs on to $r \\to \\infty$")),
+                    [(r, "r", None) for r in (2.0, 3.0, top)] + [h for h in horizon if h[0] > 1], size)
+        ck.isometry(f"{where}, the cloud", dust)
+        ck.isometry(f"{where}, outside", ext)
+        ck.join(f"{where}, the cloud meets the outside", dust, 1.0, ext, 1.0)
+        if t == 0:
+            ck.form(f"{where}, outside it is Flamm's paraboloid", ext,
+                    lambda r, z1=ext.z[0]: z1 + 2 * np.sqrt(0.5 * (r - 0.5)) - 2 * np.sqrt(0.25), size)
+        surfaces.append(Surface([dust, ext], label=f"$ct = {t:g}\\,r_b$", time=t))
+    fig = sequence_figure(surfaces, {"star": "star", "sheet": "cover"}, size, columns=2)
+    fig.legend("fill", "star", "the cloud, $r < r_b$")
+    fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the cloud")
+    fig.legend("line", "r2", "the shells $r = r_b/3$ and $2r_b/3$ of the cloud")
+    fig.legend("line", "r", "the clocks released at $2$, $3$ and $4\\,r_b$")
+    fig.legend("line", "surface", "the surface of the cloud, $r = r_b$")
+    if any(ring["class"] == "horizon" for s in surfaces for ring in s.rings()):
+        fig.legend("line", "horizon", "the apparent horizon, $R = 2GM(r)/c^2$ for the mass inside it")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("cloud", "The collapsing cloud", "$r_b$", surfaces, fig.done(),
+                 settings="$r_b = 1$, the unit of every length, and $2GM/c^2 = r_b/2$.",
+                 input="The cloud the spacetime diagram draws, its density falling as $1 - r^2/r_b^2$ to zero at $r_b$ "
+                       "with $R(r, 0) = r$, but released from rest, $E = -GM(r)/c^2r$, each shell falling on its own "
+                       "cycloid, checked to solve this spacetime's own $G^r{}_r = 0$ and to give its density.",
+                 stops=["The spacetime diagram's cloud is marginally bound, $E = 0$, and then every slice of constant "
+                        "$t$ is flat: $g_{rr} = (\\partial_rR)^2$ makes the distance between two shells the difference "
+                        "of their areal radii, so the equator is a plane and the collapse lies in how the slices are "
+                        "stacked."])]
+
+
 def ellis_bronnikov(ck, src):
     """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
     l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
@@ -1606,6 +1837,8 @@ DRAWN = {
     "rn_metric": rn_metric,
     "de_sitter": de_sitter,
     "vaidya": vaidya,
+    "oppenheimer_snyder": oppenheimer_snyder,
+    "tolman_bondi": tolman_bondi,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "cosmic_string": cosmic_string,
@@ -1616,7 +1849,7 @@ DRAWN = {
 # Mixmaster's slices are squashed three spheres and a pp-wave's spacelike slices carry its
 # profile, so neither is flat and neither has one surface that says anything; the
 # Malament-Hogarth slices take whatever shape an arbitrary conformal factor gives them.
-NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth", "oppenheimer_snyder", "tolman_bondi",
+NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth",
              "bertotti_robinson", "stockum_dust", "taub_nut", "godel"}
 
 CAPTIONS = {
@@ -1740,6 +1973,32 @@ CAPTIONS = {
         "through the flat interior, where nothing yet marks it, to meet the shell at $r_s$, where it stays. "
         "Once the shell has reached the centre the whole slice is Schwarzschild's, and the paraboloid runs "
         "on through the horizon to close in a spike at the singularity $r = 0$.",
+    ],
+    ("oppenheimer_snyder", "collapse"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of a star of dust collapsing from rest, at four "
+        "moments of the dust's own time $\\tau$, each drawn as a surface in flat space so that every distance "
+        "along it is the distance the metric gives. The dust is a piece of a closed universe, and its slice is "
+        "a cap of a sphere of radius $a(\\tau)$ out to $\\chi = \\chi_0$, which shrinks as the dust falls while "
+        "keeping its angle $\\chi_0$. Outside, the moment carries on as the moment of clocks released from rest "
+        "at every radius when the dust was, Igor Novikov's slicing of Schwarzschild's exterior, and the two "
+        "meet with one tangent, since $1 + 2E = \\cos^2\\chi_0$ on both sides of the surface.",
+        "At the release the outside is Flamm's paraboloid and the dust sits in it as Schwarzschild's star does. "
+        "As the dust falls, the cap shrinks and the outside follows it down, meeting it at the same angle at "
+        "every moment. Once the surface is inside $r_s$ the slice runs through the horizon, drawn where "
+        "$R = 2GM/c^2$, down to the dust, which no slice of constant Schwarzschild $t$ reaches. J. Robert "
+        "Oppenheimer and Hartland Snyder worked out this collapse in 1939.",
+    ],
+    ("tolman_bondi", "cloud"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of a cloud of dust collapsing from rest, densest at "
+        "its centre, at four moments of $t$, each drawn as a surface in flat space so that every distance "
+        "along it is the distance the metric gives. On it $g_{rr} = (\\partial_rR)^2/(1 + 2E)$, with $R(r, t)$ "
+        "the areal radius of the shell $r$, so in the areal radius the surface climbs at "
+        "$dz/dR = \\sqrt{-2E/(1 + 2E)}$, set by the energy $E = -GM(r)/c^2r$ of the shell there alone. Every "
+        "shell falls on its own clock, the centre first, and the surface follows the shells as they go.",
+        "Richard Tolman found these solutions in 1934 and Hermann Bondi took them up in 1947. The spacetime "
+        "diagram draws this cloud marginally bound, $E = 0$, falling from rest at infinity, and then every "
+        "slice of constant $t$ is flat; drawn here released from rest from the same density at $t = 0$, its "
+        "slices curve.",
     ],
     ("ellis_bronnikov", "wormhole"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Ellis-Bronnikov wormhole at one moment of "
