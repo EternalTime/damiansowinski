@@ -70,7 +70,7 @@
     "version": "68a0daac74933f96",
     "diagrams": "135e28c967b368b3",
     "conformal": "30e11e45b8741f63",
-    "embedding": "3768e54ce44e245b"
+    "embedding": "6f7978ee169fa66b"
   },
   {
     "id": "bianchi",
@@ -503,7 +503,7 @@
     "version": "a594cfe02785a7eb",
     "diagrams": "89b0221a26257abe",
     "conformal": "705427e2a3c91f5b",
-    "embedding": "21d195ab077bb7f1"
+    "embedding": "9be7859ce75c2d91"
   },
   {
     "id": "pp_wave",
@@ -660,7 +660,7 @@
     ],
     "version": "122584c10dd87680",
     "diagrams": "3845f1ea67eecea1",
-    "embedding": "2afb53de606ed343"
+    "embedding": "a3a650e797606b1d"
   },
   {
     "id": "tov",
