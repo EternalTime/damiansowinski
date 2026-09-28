@@ -1033,6 +1033,11 @@ class EmbeddingDiagrams(unittest.TestCase):
         for r, rho, z in dust:
             near(rho, r * math.sqrt(1 - r * r), f"van Stockum rho at {r}")
         self.assertAlmostEqual(dust[-1][0], 0.8337, places=4)
+        # Taub-NUT's equator has circles of radius sqrt(r^2 + l^2), from the horizon r+ = m + sqrt(m^2 + l^2).
+        nut = piece("taub_nut", "exterior")
+        self.assertAlmostEqual(nut[0][0], 1 + math.sqrt(1.25), places=12)
+        for r, rho, z in nut:
+            near(rho, math.sqrt(r * r + 0.25), f"Taub-NUT rho at {r}")
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")

@@ -633,7 +633,8 @@
       "idealized model"
     ],
     "version": "d5feea6304cb7c41",
-    "diagrams": "0d1ca4595d385adb"
+    "diagrams": "0d1ca4595d385adb",
+    "embedding": "3e4c6464ca0ad122"
   },
   {
     "id": "tolman_bondi",
