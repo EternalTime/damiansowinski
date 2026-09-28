@@ -33,6 +33,8 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- The geometry that turns an embedding diagram, which wireEmbedding() uses once a reader drags one. -->
+  <script defer src="{{ '/MFS/assets/embedding-turn.js' | relative_url }}"></script>
 </head>
 <body>
 
@@ -1970,11 +1972,11 @@
          the phone stylesheet holds it to the screen's height as well. A view of a surface that
          is not the whole spacetime says what that surface is in a band across the top of the
          figure, where it hides nothing that is drawn. */
-      function cdFrameAround(f, above, drawing, extra) {
+      function cdFrameAround(f, above, drawing, extra, attrs) {
         var wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
         return '<div class="mfs-cd-figure' + (extra ? ' ' + extra : '') + '" style="--cd-wide:' + wide.toFixed(0) +
           'px;--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + above +
-          '<div class="mfs-fig-scroll"><div class="mfs-cd-drawing">' + drawing + '</div></div></div>';
+          '<div class="mfs-fig-scroll"><div class="mfs-cd-drawing"' + (attrs || '') + '>' + drawing + '</div></div></div>';
       }
 
       function cdFigure(view) {
@@ -2034,10 +2036,11 @@
          spacetime, the equatorial plane at one moment, drawn as a surface in flat space so that
          distances along it are the distances the metric gives, and projected once from a fixed
          point of view with the lines the surface hides drawn faint. The file also carries the
-         surface itself, which the application draws; the page draws the projection only, in
-         the conformal diagram's frame with its labels, so it follows the reader's text size
-         and prints as the conformal diagram does. Views follow the chart chosen above as the
-         conformal diagram's do. _tools/README.md defines the file. */
+         surface itself, which the application draws. The page draws the projection, in the
+         conformal diagram's frame with its labels, so it follows the reader's text size and
+         prints as the conformal diagram does, and draws the surface again from the reader's
+         own point of view once the reader turns it, as wireEmbedding() says. Views follow the
+         chart chosen above as the conformal diagram's do. _tools/README.md defines the file. */
       var _embeddingCache = {};  // id → parsed JSON, or null where the spacetime has none
 
       function fetchEmbedding(id, cb) {
@@ -2056,22 +2059,31 @@
         });
       }
 
-      // A fill may have holes, where another surface lies nearer the camera.
-      function emSvg(view, f) {
-        var out = view.figure.layers.map(function(L) {
+      // A figure's layers as the SVG's paths. A fill may have holes, where another surface lies
+      // nearer the camera.
+      function emPaths(layers, f) {
+        return layers.map(function(L) {
           var cls = 'em-' + L['class'];
           if (L.kind === 'fill') return nrEl('path', { 'class': cls + '-fill', 'fill-rule': 'evenodd',
             d: [L.points].concat(L.holes || []).map(function(ring) { return cdPath(f, ring, true); }).join(' ') });
           if (L.kind === 'line') return nrEl('path', { 'class': cls, d: cdPath(f, L.points, false) });
           return nrEl('circle', { 'class': cls, cx: f.x(L.at[0]).toFixed(1), cy: f.y(L.at[1]).toFixed(1), r: 3 });
-        });
-        return nrEl('svg', { 'class': 'mfs-cd-svg mfs-em-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
-          'aria-label': 'Embedding diagram, ' + nrPlain(view.label) }, out.join(''));
+        }).join('');
       }
 
-      function emFigure(view) {
+      function emSvg(view, f) {
+        return nrEl('svg', { 'class': 'mfs-cd-svg mfs-em-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
+          'aria-label': 'Embedding diagram, ' + nrPlain(view.label) }, emPaths(view.figure.layers, f));
+      }
+
+      // The drawing names the view it draws, which wireEmbedding() turns, and the button that
+      // brings the published figure back stands hidden in the corner of its frame.
+      function emFigure(view, metricId, index) {
         var f = cdFrame(view.figure);
-        return cdFrameAround(f, '', emSvg(view, f) + cdLabels(view.figure, f), 'mfs-em-figure');
+        var reset = '<button type="button" class="mfs-em-reset" hidden>reset</button>';
+        return cdFrameAround(f, reset, emSvg(view, f) + cdLabels(view.figure, f), 'mfs-em-figure',
+          ' data-em-metric="' + nrEsc(metricId) + '" data-em-view="' + index + '" tabindex="0" role="group"' +
+          ' aria-label="Embedding diagram, ' + nrEsc(nrPlain(view.label)) + ', turned by dragging it or with the arrow keys"');
       }
 
       function emLegend(view) {
@@ -2119,7 +2131,7 @@
             views.map(function(view, i) {
               return [
                 '<div class="mfs-nr-view' + (i ? ' mfs-nr-hidden' : '') + '">',
-                  emFigure(view),
+                  emFigure(view, metricId, data.views.indexOf(view)),
                   '<div class="mfs-nr-text">',
                     '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
                     emLegend(view),
@@ -2132,6 +2144,192 @@
             }).join(''),
           '</div>'
         ].join('');
+      }
+
+      /* Turning an embedding diagram, which the captain asked for on 28 September 2026: "Why
+         are the embedding diagrams not rotatable?" The drawing shows the published figure until
+         the reader drags it with a mouse, a finger or a pen, and from then on MfsTurn, which
+         MFS/assets/embedding-turn.js defines, draws it again from the view's surfaces at each
+         step of the drag. A drag across turns the surface round its axis, as far as the reader
+         likes, the drawing's whole width being half a turn, and a drag up or down tilts it
+         toward the reader or away, from looking straight down the axis to looking straight up
+         it and never past, so the axis always stands up the page. The surface stays where it
+         is let go, since one that drifted on would carry off the labels the reader turned it
+         to read. While a drag goes on the drawing is made more coarsely, and in full when it
+         ends. The arrow keys turn it by 15 degrees, as a drag their way would, once the drawing
+         has the focus. The reset button in the corner of the frame, which shows only while the
+         surface is turned, a double click or a double tap and the Home or Escape key bring back
+         the published figure exactly, and that is also what prints, since the print copy is
+         made from the page as it was first drawn.
+
+         A finger that sets off across the drawing turns it and may then tilt it, while one that
+         sets off up or down scrolls the page, which touch-action: pan-y leaves to the browser,
+         so a phone still scrolls past the figure. Nothing that starts on the drawing scrolls it
+         sideways, so two fingers moving across it scroll a drawing wider than its frame, as at
+         a large text size on a phone. */
+      var _emObserver = null;
+      function wireEmbedding(root) {
+        // The reset button fills the drawing's top margin at the drawing's scale, as its labels
+        // do, so it covers nothing drawn at any width or text size: --em-u is the drawing's
+        // pixels to a unit of its 628, kept as the drawing changes size.
+        function unit(drawing) {
+          var view = _embeddingCache[drawing.getAttribute('data-em-metric')];
+          view = view && view.views[+drawing.getAttribute('data-em-view')];
+          if (!view) return;
+          drawing.closest('.mfs-cd-figure').style.setProperty('--em-u',
+            (drawing.getBoundingClientRect().width / cdFrame(view.figure).vw).toFixed(4) + 'px');
+        }
+        if (_emObserver) _emObserver.disconnect();
+        _emObserver = window.ResizeObserver ? new ResizeObserver(function(entries) {
+          entries.forEach(function(e) { unit(e.target); });
+        }) : null;
+        root.querySelectorAll('.mfs-cd-drawing[data-em-view]').forEach(function(drawing) {
+          unit(drawing);
+          if (_emObserver) _emObserver.observe(drawing);
+          var data = _embeddingCache[drawing.getAttribute('data-em-metric')];
+          var view = data && data.views[+drawing.getAttribute('data-em-view')];
+          if (!view || !view.figure.turn) return;
+          var f = cdFrame(view.figure), svg = drawing.querySelector('svg'), scroller = drawing.parentNode;
+          var reset = drawing.closest('.mfs-cd-figure').querySelector('.mfs-em-reset');
+          var spans = [].slice.call(drawing.querySelectorAll('.mfs-cd-labels .cd-at'));
+          var published = svg.innerHTML, places = spans.map(function(s) { return [s.style.left, s.style.top]; });
+          var start = view.figure.camera, az = start.azimuth, el = start.elevation, turned = false;
+          var model = null, sizes = null, frame = 0, quick = false, pointers = new Map(), drag = null, pan = null, tap = null;
+
+          function render() {
+            frame = 0;
+            if (!turned) {
+              svg.innerHTML = published;
+              spans.forEach(function(span, i) {
+                span.style.left = places[i][0];
+                span.style.top = places[i][1];
+                span.style.visibility = '';
+              });
+              reset.hidden = true;
+              return;
+            }
+            if (!window.MfsTurn) return;
+            if (!model) {
+              // Each label's width and height as MathJax set it, in the units of the figure's
+              // box, which is what keeps two labels off each other; they grow with the drawing,
+              // so they are measured once.
+              model = MfsTurn.prepare(view);
+              var across = drawing.getBoundingClientRect().width / f.vw * f.s;
+              sizes = spans.map(function(span) {
+                var r = span.getBoundingClientRect();
+                return [r.width / across, r.height / across];
+              });
+            }
+            var out = MfsTurn.draw(model, az, el, quick, sizes);
+            svg.innerHTML = emPaths(out.layers, f);
+            out.labels.forEach(function(L, i) {
+              var label = view.figure.labels[i];
+              spans[i].style.left = (100 * (f.x(L.at[0]) + (label.dx || 0)) / f.vw).toFixed(3) + '%';
+              spans[i].style.top = (100 * (f.y(L.at[1]) + (label.dy || 0)) / f.vh).toFixed(3) + '%';
+              spans[i].style.visibility = L.shown ? '' : 'hidden';
+            });
+            reset.hidden = false;
+          }
+          function show(coarse) {
+            quick = coarse;
+            if (!frame) frame = requestAnimationFrame(render);
+          }
+          function turn(a, e, coarse) {
+            az = a;
+            el = Math.max(-90, Math.min(90, e));
+            turned = el !== start.elevation || Math.abs((((az - start.azimuth) % 360) + 540) % 360 - 180) > 1e-9;
+            show(coarse);
+          }
+          function back() {
+            az = start.azimuth;
+            el = start.elevation;
+            turned = false;
+            show(false);
+          }
+          function across() {
+            var x = 0;
+            pointers.forEach(function(p) { x += p[0]; });
+            return x / pointers.size;
+          }
+
+          drawing.addEventListener('pointerdown', function(e) {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            // A mouse selects no text by dragging here, and its press gives the drawing the focus
+            // the arrow keys need, which pressing would otherwise have given.
+            if (e.pointerType === 'mouse') {
+              e.preventDefault();
+              drawing.focus({ preventScroll: true });
+            }
+            pointers.set(e.pointerId, [e.clientX, e.clientY]);
+            if (pointers.size === 1) {
+              drag = { id: e.pointerId, x: e.clientX, y: e.clientY, az: az, el: el, on: false, touch: e.pointerType === 'touch' };
+            } else {
+              if (drag && drag.on) {
+                drawing.classList.remove('mfs-em-turning');
+                show(false);
+              }
+              drag = null;
+              pan = { x: across(), left: scroller.scrollLeft };
+            }
+          });
+          drawing.addEventListener('pointermove', function(e) {
+            if (!pointers.has(e.pointerId)) return;
+            pointers.set(e.pointerId, [e.clientX, e.clientY]);
+            if (pan) {
+              scroller.scrollLeft = pan.left - (across() - pan.x);
+              return;
+            }
+            if (!drag || drag.id !== e.pointerId) return;
+            var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+            if (!drag.on) {
+              if (drag.touch ? Math.abs(dx) < 6 || Math.abs(dx) <= Math.abs(dy) : Math.hypot(dx, dy) < 3) return;
+              drag.on = true;
+              try { drawing.setPointerCapture(e.pointerId); } catch (err) {}
+              drawing.classList.add('mfs-em-turning');
+            }
+            var k = 180 / drawing.clientWidth;
+            turn(drag.az - k * dx, drag.el + k * dy, true);
+          });
+          // Two taps of one finger close together, which is a phone's double click.
+          function tapped(e) {
+            var now = performance.now();
+            if (tap && now - tap.t < 350 && Math.hypot(e.clientX - tap.x, e.clientY - tap.y) < 30) {
+              tap = null;
+              back();
+            } else {
+              tap = { t: now, x: e.clientX, y: e.clientY };
+            }
+          }
+          function end(e) {
+            if (!pointers.delete(e.pointerId)) return;
+            if (pointers.size < 2) pan = null;
+            if (drag && drag.id === e.pointerId) {
+              if (drag.on) {
+                drawing.classList.remove('mfs-em-turning');
+                show(false);
+              } else if (drag.touch && e.type === 'pointerup') {
+                tapped(e);
+              }
+              drag = null;
+            }
+          }
+          drawing.addEventListener('pointerup', end);
+          drawing.addEventListener('pointercancel', end);
+          drawing.addEventListener('dblclick', back);
+          drawing.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') turn(az + 15, el, false);
+            else if (e.key === 'ArrowRight') turn(az - 15, el, false);
+            else if (e.key === 'ArrowUp') turn(az, el - 15, false);
+            else if (e.key === 'ArrowDown') turn(az, el + 15, false);
+            else if (e.key === 'Home' || e.key === 'Escape') back();
+            else return;
+            e.preventDefault();
+          });
+          reset.addEventListener('click', function() {
+            back();
+            drawing.focus({ preventScroll: true });
+          });
+        });
       }
 
       /* The conventions a spacetime is written in: its signature, and the paragraph that says
@@ -2504,6 +2702,7 @@
         contentPanel.innerHTML = header + body;
         wireHeader(contentPanel.querySelector('.mfs-header'));
         wireDiagrams(contentPanel);
+        wireEmbedding(contentPanel);
         if (_lineObserver) _lineObserver.disconnect();
         _lineObserver = null;
         wireLines(contentPanel);
@@ -3083,6 +3282,27 @@
     .em-cut, .em-cut-far { fill: none; stroke: var(--gold); stroke-width: 2.2; stroke-linecap: round; }
     .em-ergo, .em-ergo-far { fill: none; stroke: var(--green-light); stroke-width: 2.4; stroke-dasharray: 1 4.5; stroke-linecap: round; }
     .mfs-em-svg [class$="-far"] { stroke-opacity: 0.28; }
+    /* The drawing takes a drag and leaves a swipe up or down to the page, and the button that
+       brings back the published figure sits in the top corner of the frame while the surface
+       is turned, exactly as tall as the drawing's empty margin above its box and set at the
+       size of its small labels, in --em-u, the drawing's pixels to a unit of its 628, which
+       wireEmbedding() keeps and says the reasons for. */
+    #mfs-content-panel .mfs-em-figure .mfs-cd-drawing {
+      cursor: grab; touch-action: pan-y; -webkit-user-select: none; user-select: none;
+    }
+    #mfs-content-panel .mfs-em-figure .mfs-cd-drawing.mfs-em-turning { cursor: grabbing; }
+    #mfs-content-panel .mfs-em-figure .mfs-cd-drawing:focus { outline: none; }
+    #mfs-content-panel .mfs-em-figure .mfs-cd-drawing:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+    #mfs-content-panel .mfs-em-reset {
+      position: absolute; top: 0; right: 0; z-index: 1; box-sizing: border-box;
+      height: calc(34 * var(--em-u, 1px)); padding: 0 calc(10 * var(--em-u, 1px));
+      font-family: 'Source Code Pro', monospace; font-size: calc(13 * var(--em-u, 1px)); line-height: 1; letter-spacing: 0.06em;
+      color: rgba(0,229,255,0.75); background: rgba(0,0,0,0.8);
+      border: solid rgba(0,229,255,0.4); border-width: 0 0 1px 1px; border-radius: 0 0 0 4px; cursor: pointer;
+    }
+    #mfs-content-panel .mfs-em-reset:hover { color: var(--cyan); border-color: var(--cyan); }
+    #mfs-content-panel .mfs-em-reset:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+    #mfs-content-panel .mfs-em-reset[hidden] { display: none; }
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
        diagrams'; the figure, its labels and its lines are these. A label is sized in units
        of the figure's width, n being n units of the SVG's 628 unit wide viewBox. */
@@ -3670,6 +3890,7 @@
          a ground of its own on the screen; the print copy clears every ground, so here it
          gets a white one, or the lines would cross it on paper. */
       #mfs-print-root .mfs-em-figure .cd-lab-small { background: rgba(255,255,255,0.85) !important; }
+      .mfs-print-body .mfs-em-reset { display: none !important; }
       .mfs-print-body .mfs-table { font-size: 10pt; }
       .mfs-print-body .mfs-table th,
       .mfs-print-body .mfs-table td { border: 1px solid #000 !important; }

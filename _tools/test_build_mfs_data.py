@@ -1241,6 +1241,136 @@ class EmbeddingDiagrams(unittest.TestCase):
                 return build.load_embedding(metrics)
 
 
+class TurningEmbeddingDiagrams(unittest.TestCase):
+    """The page turns an embedding diagram with MFS/assets/embedding-turn.js, which draws it again
+    from the view's surfaces by what the figure's `turn`, its labels' `ring` and `clear` and its
+    layers' `flat` say, as _tools/README.md, "Turning the figure", defines them. At the figure's
+    own camera it must give back the published figure, and at any other it must keep inside the
+    box, draw a surface of revolution the same from every side and hide what lies behind."""
+
+    _check = None
+
+    def setUp(self):
+        self.embedding = embedding_files()
+        self.views = [(name, view) for name, data in self.embedding.items() for view in data["views"]]
+        self.assertTrue(self.views)
+
+    def check(self):
+        # One run of the page's own geometry in Node over every published figure, shared by the
+        # tests that read it.
+        if shutil.which("node") is None:
+            self.skipTest("Node is not installed, so the page's geometry cannot be run")
+        if TurningEmbeddingDiagrams._check is None:
+            run = subprocess.run(["node", str(build.ROOT / "_tools" / "embedding_turn_check.cjs")],
+                                 capture_output=True, text=True, timeout=600)
+            self.assertEqual(run.returncode, 0, run.stderr[-2000:])
+            TurningEmbeddingDiagrams._check = json.loads(run.stdout)
+        return TurningEmbeddingDiagrams._check
+
+    def test_every_figure_carries_what_turning_it_needs(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        for name, view in self.views:
+            figure, where = view["figure"], f"{name} {view['id']}"
+            turn = figure["turn"]
+            self.assertEqual(len(turn["origins"]), len(view["surfaces"]), where)
+            for origin in turn["origins"]:
+                self.assertEqual(len(origin), 2, where)
+            self.assertIsInstance(turn["meridians"], int, where)
+            self.assertGreater(turn["meridians"], 0, where)
+            classes = {p["class"] for s in view["surfaces"] for p in s["pieces"]}
+            for cls, fill in turn["tint"].items():
+                self.assertIn(cls, classes, where)
+                self.assertIn(fill, {"cover", "star"}, where)
+                self.assertRegex(page, r"\.em-" + fill + r"-fill\b", where)
+            for mark in turn["marks"]:
+                surface = view["surfaces"][mark["surface"]]
+                self.assertIn(mark["piece"], {p["id"] for p in surface["pieces"]}, where)
+                self.assertRegex(page, r"\.em-" + re.escape(mark["class"]) + r"\b", where)
+            for label in figure["labels"]:
+                if "ring" in label:
+                    ring = label["ring"]
+                    self.assertLess(ring["ring"], len(view["surfaces"][ring["surface"]]["rings"]), where)
+                    self.assertIn(ring["side"], (1, -1), where)
+                if "clear" in label:
+                    self.assertIn("ring", label, where)
+                    self.assertGreater(label["clear"], 0, where)
+            for layer in figure["layers"]:
+                self.assertIn(layer.get("flat", False), (False, True), where)
+        # Only the cone laid flat lies in the plane of the page.
+        flat = {name for name, view in self.views if any(layer.get("flat") for layer in view["figure"]["layers"])}
+        self.assertEqual(flat, {"cosmic_string"})
+
+    def test_a_label_that_names_a_circle_stands_beside_its_end(self):
+        # The end of a circle on the page is (+-rho, z cos e) from where the axis meets z = 0, the
+        # point of it farthest right or left, which is where a client turning the figure puts it.
+        for name, view in self.views:
+            figure, where = view["figure"], f"{name} {view['id']}"
+            e = math.radians(figure["camera"]["elevation"])
+            for label in figure["labels"]:
+                if "ring" not in label:
+                    continue
+                ring = label["ring"]
+                circle = view["surfaces"][ring["surface"]]["rings"][ring["ring"]]
+                origin = figure["turn"]["origins"][ring["surface"]]
+                x = origin[0] + ring["side"] * circle["rho"]
+                y = origin[1] + circle["z"] * math.cos(e)
+                self.assertAlmostEqual(label["at"][1], y, delta=2e-4, msg=f"{where} {label['text']}")
+                if "clear" in label:
+                    self.assertGreaterEqual(ring["side"] * (label["at"][0] - x), -2e-4, f"{where} {label['text']}")
+                else:
+                    self.assertAlmostEqual(label["at"][0], x, delta=2e-4, msg=f"{where} {label['text']}")
+
+    def test_at_its_own_camera_the_page_draws_the_published_figure(self):
+        views = {(v["metric"], v["view"]): v for v in self.check()["views"]}
+        self.assertEqual(set(views), {(name, view["id"]) for name, view in self.views})
+        for (name, vid), v in views.items():
+            where = f"{name} {vid}"
+            self.assertLess(v["labels"], 2e-4, f"{where}: a label is not where it was published")
+            self.assertTrue(v["shown"], f"{where}: a label is hidden at the start")
+            for cls, (published, drawn) in v["lines"].items():
+                self.assertLessEqual(abs(published - drawn), 0.02 * max(published, drawn) + 0.01 * v["size"],
+                                     f"{where}: {cls} runs {drawn:.3f} where it was published {published:.3f} long")
+            for cls, (published, drawn) in v["fills"].items():
+                self.assertLessEqual(abs(published - drawn), 3e-3 * v["boxArea"],
+                                     f"{where}: {cls} covers {drawn:.4f} where it was published covering {published:.4f}")
+
+    def test_a_turned_figure_keeps_to_its_box_at_one_scale(self):
+        for v in self.check()["views"]:
+            where = f"{v['metric']} {v['view']}"
+            for step in v["sweep"]:
+                at = f"{where} at azimuth {step['azimuth']}, elevation {step['elevation']}"
+                self.assertEqual(step["bad"], 0, f"{at}: a point is not a number")
+                self.assertLessEqual(step["outside"], 1e-9, f"{at}: drawn outside the box")
+                self.assertGreater(step["scale"], 0, at)
+                self.assertLessEqual(step["scale"], 1, at)
+            start = v["sweep"][3]
+            self.assertEqual(start["scale"], 1, f"{where} is not at its own scale at its own camera")
+
+    def test_turning_a_surface_round_its_axis_leaves_its_outline_and_circles_in_place(self):
+        for v in self.check()["views"]:
+            self.assertLess(v["moved"], 1e-3, f"{v['metric']} {v['view']}: {v['moved']:.2e} of the lines moved")
+
+    def test_from_straight_above_the_upper_sheet_hides_the_lower_and_from_below_the_reverse(self):
+        # Schwarzschild's circles run from 1.5 to 6 r_s on each sheet. Looking down the axis every
+        # circle of the lower sheet lies under the upper sheet, all but the rim at 6 r_s, which
+        # lies under the upper rim's edge, and nothing hides a circle of the upper sheet.
+        seen = self.check()["schwarzschild"]
+        for view, near, far in (("above", "r", "r2"), ("below", "r2", "r")):
+            reach = seen[view]
+            self.assertNotIn(near + "-far", reach, view)
+            self.assertAlmostEqual(reach[near][0], 1.5, places=6, msg=view)
+            self.assertAlmostEqual(reach[far + "-far"][0], 1.5, places=6, msg=view)
+            self.assertGreater(reach.get(far, [6, 6])[0], 6 - 1e-3, f"{view}: a circle under the sheet is seen")
+
+    def test_the_drawing_turns_under_a_drag_and_leaves_a_vertical_swipe_to_the_page(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        self.assertIn("{{ '/MFS/assets/embedding-turn.js' | relative_url }}", page)
+        rule = re.search(r"\.mfs-em-figure \.mfs-cd-drawing \{([^}]*)\}", page)
+        self.assertIsNotNone(rule)
+        self.assertIn("touch-action: pan-y", rule.group(1))
+        self.assertIn(".mfs-print-body .mfs-em-reset { display: none", page)
+
+
 class Bibliography(unittest.TestCase):
     def setUp(self):
         self.references = read(build.REFERENCES_FILE)

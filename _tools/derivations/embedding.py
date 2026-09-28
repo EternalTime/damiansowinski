@@ -81,7 +81,8 @@ _tools/README.md, "Embedding diagrams", is the definition of the file, since the
 application builds against it: the surface itself, as profiles of surfaces of
 revolution with their units, marked circles and the kind of each end, and the page's
 drawing of it, projected here from a fixed camera into the form a figure in three
-dimensions takes in the diagram files.
+dimensions takes in the diagram files, with what a client needs to draw it again from
+another camera, as the page does with MFS/assets/embedding-turn.js when a reader turns it.
 """
 
 import argparse
