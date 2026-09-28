@@ -709,9 +709,22 @@ def outline(p, cam):
     return runs
 
 
-def ring_label(fig, off, rho, z, text, side=1, cls="small", dx=8, dy=0):
-    """A label beside the right (side 1) or left end of a circle, on the page."""
+def ring_label(fig, off, rho, z, text, side=1, cls="small", dx=8, dy=0, clear=False):
+    """A label beside the right (side 1) or left end of a circle, on the page. With `clear`
+    it stands past the surface's outline instead, where the outline runs outside the circle's
+    end within the label's height, as a cone's sides do below its rim."""
     S = fig.screen(np.asarray(off, dtype=float) + [side * rho, 0, z])
+    if clear:
+        band = 0.02 * fig.scene.size
+        for cls_, P in fig.lines:
+            if cls_ != "outline":
+                continue
+            for y in (S[1] - band, S[1], S[1] + band):
+                a, b = P[:-1], P[1:]
+                cross = ((a[:, 1] - y) * (b[:, 1] - y) <= 0) & (a[:, 1] != b[:, 1])
+                x = a[cross, 0] + (y - a[cross, 1]) * (b[cross, 0] - a[cross, 0]) / (b[cross, 1] - a[cross, 1])
+                if x.size:
+                    S[0] = max(S[0], x.max()) if side > 0 else min(S[0], x.min())
     fig.label(S, text, "l" if side > 0 else "r", cls, dx=side * dx, dy=dy)
 
 
@@ -908,26 +921,29 @@ def cosmic_string(ck, src):
     ck.radius("cosmic string, Gott's cap rho = l sin chi", core, np.sin, size)
     surface = Surface([core, ext, ideal])
 
-    # Seen from below the slope of the cone's wall, so that its sides stand out as a cone.
-    camera = Camera(-90, 14)
+    # Seen from 20 degrees up, below the 26 degree slope of the cone's wall, so that its sides
+    # stand out as a cone while its inside, with the core at the bottom, still shows.
+    camera = Camera(-90, 20)
     fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, camera)
     # The cut, the meridian at phi = 0, which the development opens along.
     cut = 0.0
     fig.line("cut", densify(np.column_stack([ext.rho * math.cos(cut), ext.rho * math.sin(cut), ext.z]), 4))
-    ring_label(fig, [0, 0, 0], *ext.at(1.0), "$r = \\ell$", side=-1)
+    ring_label(fig, [0, 0, 0], *ext.at(1.0), "$r = \\ell$", side=-1, clear=True)
     ring_label(fig, [0, 0, 0], *ext.at(top), "$3\\ell$", side=-1)
 
     # The development: the cone laid flat beside it, a disc of radius r missing the wedge
     # delta = 2 pi (1 - fold), in the plane of the page. A circle of radius r on the cone
     # has length 2 pi fold r, so it is an arc of angle 2 pi fold; meridian phi lies at the
-    # angle fold (phi - cut) from the cut's first edge.
+    # angle fold (phi - cut) from the cut's first edge. It is drawn at half the cone's scale,
+    # which its label says, so that the cone, the surface itself, is the larger drawing.
+    half = 0.5
     E = np.vstack(fig.extent)
-    centre = np.array([E[:, 0].max() + 0.4 + top, 0.5 * (E[:, 1].min() + E[:, 1].max())])
+    centre = np.array([E[:, 0].max() + 0.5 + half * top, 0.5 * (E[:, 1].min() + E[:, 1].max())])
     gap = 2 * math.pi * (1 - fold)
     first = gap / 2                         # the wedge opens to the right, as the cut lies on the cone
 
     def flat(r, psi):
-        return centre + np.column_stack([r * np.cos(psi), r * np.sin(psi)])
+        return centre + half * np.column_stack([r * np.cos(psi), r * np.sin(psi)])
     arc = np.linspace(first, first + 2 * math.pi * fold, 400)
     fig.plain_fill("cover", np.vstack([flat(top, arc), flat(join, arc[::-1])]))
     fig.plain_fill("wedge", np.vstack([centre, flat(top, np.linspace(first - gap, first, 60))]))
@@ -942,8 +958,8 @@ def cosmic_string(ck, src):
         fig.flat("r", flat(r, arc))
     fig.flat("outline", flat(top, arc))
     fig.flat("surface", flat(join, arc))
-    fig.label(centre + [top * 0.62, 0], "$\\delta$", "c", "lab")
-    fig.label(centre + [0, top], "the cone laid flat", "b", "small", dy=-6)
+    fig.label(centre + [half * top * 0.62, 0], "$\\delta$", "c", "lab")
+    fig.label(centre + [0, half * top], "laid flat, at half the scale", "b", "small", dy=-6)
     fig.legend("fill", "star", "Gott's core, $\\chi \\le \\chi_0$, a cap of a sphere of radius $\\ell$")
     fig.legend("fill", "cover", "the conical exterior, a cone of half angle $\\arcsin(1 - 4G\\mu/c^2)$")
     fig.legend("fill", "wedge", "the wedge $\\delta = 8\\pi G\\mu/c^2$ the cone lacks, laid flat")
