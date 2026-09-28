@@ -941,8 +941,8 @@ class EmbeddingDiagrams(unittest.TestCase):
     def test_the_surfaces_are_the_ones_known_in_closed_form(self):
         """Flamm's paraboloid, the interior Schwarzschild cap, the catenoid, the cone, Gott's cap
         and the sphere, from the numbers written and nothing else, to their rounding."""
-        def piece(metric_id, piece_id, number=0):
-            surface = self.embedding[metric_id]["views"][0]["surfaces"][number]
+        def piece(metric_id, piece_id, number=0, view=0):
+            surface = self.embedding[metric_id]["views"][view]["surfaces"][number]
             points = next(p for p in surface["pieces"] if p["id"] == piece_id)["points"]
             return [tuple(point) for point in points]
 
@@ -971,6 +971,15 @@ class EmbeddingDiagrams(unittest.TestCase):
         for r, rho, z in piece("ellis_bronnikov", "whole"):
             near(rho, math.sqrt(r * r + 1), f"Ellis-Bronnikov rho at {r}")
             near(z, math.asinh(r), f"Ellis-Bronnikov z at {r}")
+        # Reissner-Nordstrom's circles have their areal radius on both views, and inside r- each
+        # side starts level at r_q^2/r_s, 0.2304 r_s, and ends at r- = 0.36 r_s.
+        for view, pids in ((0, ("exterior", "other_exterior")), (1, ("inside", "other_inside"))):
+            for pid in pids:
+                points = piece("rn_metric", pid, view=view)
+                for r, rho, z in points:
+                    near(rho, r, f"Reissner-Nordstrom rho at {r}")
+                if view:
+                    self.assertEqual((points[0][0], points[-1][0]), (0.2304, 0.36), pid)
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
