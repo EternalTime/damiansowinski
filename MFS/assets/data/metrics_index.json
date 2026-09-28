@@ -19,7 +19,7 @@
     ],
     "version": "4e5ff44ba738f647",
     "diagrams": "8b4ba2ce9ea6b0bd",
-    "embedding": "169492bf3e7e4413"
+    "embedding": "8596146d70e546d6"
   },
   {
     "id": "anti_de_sitter",
@@ -46,7 +46,7 @@
     "version": "34b9ad6c0ec8031f",
     "diagrams": "23be9e80f68b43af",
     "conformal": "f2230e949c7f2cca",
-    "embedding": "588eb7fe96a43f47"
+    "embedding": "a40a43a31e6f3e32"
   },
   {
     "id": "bertotti_robinson",
@@ -70,7 +70,7 @@
     "version": "ce33004a0f8f16e5",
     "diagrams": "135e28c967b368b3",
     "conformal": "30e11e45b8741f63",
-    "embedding": "6a920bfa4ace0d5f"
+    "embedding": "0631465b5ced14f6"
   },
   {
     "id": "bianchi",
@@ -92,7 +92,7 @@
     ],
     "version": "c812feb6d807182d",
     "diagrams": "43c8c6213c0ce506",
-    "embedding": "cdcbde1e4738c802"
+    "embedding": "bd0ad4adbbc17d5a"
   },
   {
     "id": "de_sitter",
@@ -120,7 +120,7 @@
     "version": "774d179cf8d84b9a",
     "diagrams": "98b8cfd5bac94a8d",
     "conformal": "957a46dd985ab3cd",
-    "embedding": "0e0a589f79fd122a"
+    "embedding": "0abf8333d4b78826"
   },
   {
     "id": "ellis_bronnikov",
@@ -146,7 +146,7 @@
     "version": "26c76b677a23ea70",
     "diagrams": "75ebef3369ae8edc",
     "conformal": "cb68c222d9ac3db6",
-    "embedding": "386991ab6c1de473"
+    "embedding": "1e85889f25f6b1e8"
   },
   {
     "id": "frw",
@@ -170,7 +170,7 @@
     "version": "ba34bf8132473424",
     "diagrams": "fcd93775e7e4477c",
     "conformal": "e88e86a636276c55",
-    "embedding": "3c0e763e95360c66"
+    "embedding": "7e8514f366fb68e1"
   },
   {
     "id": "godel",
@@ -194,7 +194,7 @@
     ],
     "version": "4aa05b6df8ffd7fb",
     "diagrams": "36c4ff3cb36e1e3e",
-    "embedding": "4eb712795513ff9d"
+    "embedding": "feb629cb614b6502"
   },
   {
     "id": "kasner",
@@ -218,7 +218,7 @@
     ],
     "version": "f403b7576023723d",
     "diagrams": "3a9790a368a1047c",
-    "embedding": "98464c2e02da1e68"
+    "embedding": "441fe9ebc9ae676e"
   },
   {
     "id": "kerr",
@@ -252,7 +252,7 @@
     "version": "04df1a40d4f6dcc7",
     "diagrams": "f3b98996676dfb82",
     "conformal": "d264e9591576e7a3",
-    "embedding": "78884e71192387cc"
+    "embedding": "647f1f82942fa065"
   },
   {
     "id": "kerr_newman",
@@ -289,7 +289,7 @@
     "version": "aacdff39ea61de2f",
     "diagrams": "744e71f9033ac46b",
     "conformal": "b0e5c277f0e91fb7",
-    "embedding": "621bcd60f06ecce6"
+    "embedding": "6450010dab705f18"
   },
   {
     "id": "krasnikov",
@@ -314,7 +314,7 @@
     ],
     "version": "af1adf10b1cb092f",
     "diagrams": "37e31174b944590b",
-    "embedding": "da4a12f0ad7e22bf"
+    "embedding": "3d2364c8496f90ea"
   },
   {
     "id": "stockum_dust",
@@ -338,7 +338,7 @@
     ],
     "version": "892fee3b8e4bef7e",
     "diagrams": "d40de64d9ab7556d",
-    "embedding": "4ae693e799248fce"
+    "embedding": "f7f066fc47947a4b"
   },
   {
     "id": "lentz",
@@ -361,7 +361,7 @@
       "causality violation"
     ],
     "version": "f400453fb197f2b7",
-    "embedding": "f65ca799634b8696"
+    "embedding": "cdedadda629a8c07"
   },
   {
     "id": "malament_hogarth",
@@ -379,7 +379,7 @@
     "version": "37cda43309e51a85",
     "diagrams": "b3698ce16028662c",
     "conformal": "cde1cac7cf5518bf",
-    "embedding": "f78b83ea90ffd4e9"
+    "embedding": "9bd66a50fc92a233"
   },
   {
     "id": "minkowski",
@@ -401,7 +401,7 @@
     "version": "9965ccaa223840e1",
     "diagrams": "74a2f04afbc580af",
     "conformal": "93e885fc8fe5dc1f",
-    "embedding": "f8d164c4df9ce1ba"
+    "embedding": "9e53c2d09ea0d332"
   },
   {
     "id": "mixmaster",
@@ -428,7 +428,7 @@
       "idealized model"
     ],
     "version": "510887f3a296a032",
-    "embedding": "951692e386a37a40"
+    "embedding": "7af55a64360a8d1a"
   },
   {
     "id": "morris_thorne",
@@ -453,7 +453,7 @@
     "version": "0da21902388f01ef",
     "diagrams": "b3e098f3fa69a786",
     "conformal": "7e7019647c111ba0",
-    "embedding": "150e4d5e2d0e151a"
+    "embedding": "2f317a5d5ba77ba2"
   },
   {
     "id": "natario",
@@ -477,7 +477,7 @@
     ],
     "version": "1be40ff0a3dcd37d",
     "diagrams": "f9bbecde4af1033f",
-    "embedding": "11666cf778d93a37"
+    "embedding": "0390fd0e3a5936ad"
   },
   {
     "id": "oppenheimer_snyder",
@@ -503,9 +503,9 @@
       "idealized model"
     ],
     "version": "9e6513bd98216c8f",
-    "diagrams": "89b0221a26257abe",
+    "diagrams": "a170bb986d60ee1c",
     "conformal": "705427e2a3c91f5b",
-    "embedding": "ab9bd7b511daf5a0"
+    "embedding": "167fc4877345f21b"
   },
   {
     "id": "pp_wave",
@@ -526,7 +526,7 @@
     ],
     "version": "4652851d4098b61d",
     "diagrams": "8480afb9fc557712",
-    "embedding": "55551a9feeacb2bb"
+    "embedding": "fe817ce75d8c57ca"
   },
   {
     "id": "rn_metric",
@@ -559,7 +559,7 @@
     "version": "9ad8cd56b4e6dc0a",
     "diagrams": "fbf4772e78759a72",
     "conformal": "dc36ef07acaf44fe",
-    "embedding": "381b95137b20a0cd"
+    "embedding": "ba5fa98dbbe8c43b"
   },
   {
     "id": "schwarzschild",
@@ -591,7 +591,7 @@
     "version": "d40426d103725d8a",
     "diagrams": "616546183cee8ce3",
     "conformal": "20ac047d9b33eddd",
-    "embedding": "b62d34765850496c"
+    "embedding": "43888ed1a2da26ad"
   },
   {
     "id": "interior_schwarzschild",
@@ -615,7 +615,7 @@
     "version": "87002f06ded702a8",
     "diagrams": "9c4e4f5a80fb393d",
     "conformal": "87f9bebc30cdeb41",
-    "embedding": "ff784452572e1d13"
+    "embedding": "643ef68fc27fa67c"
   },
   {
     "id": "taub_nut",
@@ -638,7 +638,7 @@
     ],
     "version": "251d1cf729c014a7",
     "diagrams": "0d1ca4595d385adb",
-    "embedding": "db5a2be931974767"
+    "embedding": "9c3dd7ed8bcb5a2d"
   },
   {
     "id": "tolman_bondi",
@@ -663,7 +663,7 @@
     ],
     "version": "b4e8b0c2e19a6c45",
     "diagrams": "3845f1ea67eecea1",
-    "embedding": "a3c5866a90b9f4c9"
+    "embedding": "9aab4ac7d3dc6ac5"
   },
   {
     "id": "tov",
@@ -690,7 +690,7 @@
     "version": "11f16b6d11ba52c3",
     "diagrams": "4a421b3540c0dad0",
     "conformal": "703f6926638eb11b",
-    "embedding": "0f36badf331ee7c0"
+    "embedding": "5484418991900b55"
   },
   {
     "id": "vaidya",
@@ -716,7 +716,7 @@
     "version": "64419709c90e50d4",
     "diagrams": "fca4cb3b4ad841a3",
     "conformal": "a295e124a9018a1d",
-    "embedding": "02824cc0331f2f7c"
+    "embedding": "98ae252d37742878"
   },
   {
     "id": "cosmic_string",
@@ -741,6 +741,6 @@
     "version": "ee609cf76de38a04",
     "diagrams": "306767efeaa58e4e",
     "conformal": "4f92692b2b30e867",
-    "embedding": "539f8a88bc007208"
+    "embedding": "08e36b58c54c7fdc"
   }
 ]

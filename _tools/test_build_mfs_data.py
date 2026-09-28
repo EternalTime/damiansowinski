@@ -49,6 +49,15 @@ MACHINERY_OUTSIDE_A_HISTORY = (
     r"(?i)\bvariants?\b",
 )
 
+# "is the distance the metric gives": a noun handed back by what gives it, which reads
+# as artificial where "is the metric distance" says the same thing. The sentences and
+# the templates say it the compact way. _tools/README.md carries the rule this stands for.
+_WORD = r"(?:(?!(?:of|and|or|against|to|in|on|at|by)\b)[\w'-]+ )"
+GIVES = rf"(?i)\bthe {_WORD}{{1,2}}the {_WORD}{{0,2}}(?:gives?|yields?|provides?|returns?)\b"
+
+# The templates and pages whose words reach a reader, beside the generated files.
+TEMPLATES = ("_layouts/*.html", "_includes/*.html", "_includes/*.txt", "MFS/*.markdown", "*.markdown", "llms*.txt")
+
 
 def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -377,6 +386,37 @@ class Prose(unittest.TestCase):
                 # A history tells of papers that were published and printed.
                 for pattern in MACHINERY_OUTSIDE_A_HISTORY:
                     self.assertNotRegex(value, pattern, where)
+
+    def test_no_prose_or_template_hands_a_noun_back_to_what_gives_it(self):
+        """A reader is told the metric distance, never the distance the metric gives."""
+        fields = [(f"{m['id']}.json: {field}", value)
+                  for m in build.load_metrics() for field, value in prose(m)]
+        fields += [(field, value) for name, diagram in diagram_files().items()
+                   for field, value in diagram_prose(name, diagram)]
+        fields += [(field, value) for name, data in conformal_files().items()
+                   for field, value in conformal_prose(name, data)]
+        fields += [(field, value) for name, data in embedding_files().items()
+                   for field, value in embedding_prose(name, data)]
+        templates = sorted({p for pattern in TEMPLATES for p in build.ROOT.glob(pattern)})
+        self.assertTrue(templates, "no template was read, so none was checked")
+        fields += [(str(p.relative_to(build.ROOT)), " ".join(p.read_text(encoding="utf-8").split()))
+                   for p in templates]
+        for where, value in fields:
+            self.assertNotRegex(value, GIVES, where)
+
+    def test_the_noun_handed_back_is_caught_and_plain_speech_is_not(self):
+        for text in ("every distance along it is the distance the metric gives.",
+                     "the distances the metric gives", "against the length the metric gives the line",
+                     "the multiplicities the symmetries give each of them", "the value the chart yields",
+                     "the area the integral returns",
+                     "along the radial geodesic the Christoffel symbols give,"):
+            self.assertRegex(text, GIVES, text)
+        for text in ("every distance along it is the metric distance.", "the condition he gives is",
+                     "the Einstein tensor returns the density", "and the metric gives $ds^2 = -c^2dt^2$",
+                     "for any $b_0$ the formula gives a metric",
+                     "along its radial geodesic,", "reach the edge of the universe and return",
+                     "The first against the second gives $16$"):
+            self.assertNotRegex(text, GIVES, text)
 
     def test_the_machinery_words_are_caught_and_the_physics_is_not(self):
         def caught(text, history=False):
