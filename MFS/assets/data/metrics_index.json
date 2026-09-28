@@ -164,7 +164,7 @@
     "version": "ba34bf8132473424",
     "diagrams": "fcd93775e7e4477c",
     "conformal": "e88e86a636276c55",
-    "embedding": "1b6c75f945eee74e"
+    "embedding": "ca7b1327c61d4c8f"
   },
   {
     "id": "godel",
@@ -437,7 +437,7 @@
     "version": "8a9e6e5f3658830d",
     "diagrams": "b3e098f3fa69a786",
     "conformal": "7e7019647c111ba0",
-    "embedding": "5fa48a744807717b"
+    "embedding": "000bfef5b1b7d574"
   },
   {
     "id": "natario",
@@ -571,7 +571,7 @@
     "version": "d40426d103725d8a",
     "diagrams": "616546183cee8ce3",
     "conformal": "20ac047d9b33eddd",
-    "embedding": "8113a4f0c1e34599"
+    "embedding": "4a359d023db245be"
   },
   {
     "id": "interior_schwarzschild",
@@ -595,7 +595,7 @@
     "version": "82f0226fa2248e04",
     "diagrams": "9c4e4f5a80fb393d",
     "conformal": "87f9bebc30cdeb41",
-    "embedding": "01c67b67a18c82b2"
+    "embedding": "3b61521815c2ecaa"
   },
   {
     "id": "taub_nut",
@@ -717,6 +717,6 @@
     "version": "9e17628996c2a6fe",
     "diagrams": "306767efeaa58e4e",
     "conformal": "4f92692b2b30e867",
-    "embedding": "dee8537e1a71468c"
+    "embedding": "18edd680c7730be7"
   }
 ]
