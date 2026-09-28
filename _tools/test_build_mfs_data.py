@@ -967,6 +967,10 @@ class EmbeddingDiagrams(unittest.TestCase):
         for sign, pid in ((1, "near"), (-1, "far")):
             for r, rho, z in piece("morris_thorne", pid):
                 near(z, sign * math.acosh(r), f"catenoid z at {r}")
+        # Ellis-Bronnikov's proper r runs through the throat, one piece of the same catenoid.
+        for r, rho, z in piece("ellis_bronnikov", "whole"):
+            near(rho, math.sqrt(r * r + 1), f"Ellis-Bronnikov rho at {r}")
+            near(z, math.asinh(r), f"Ellis-Bronnikov z at {r}")
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
