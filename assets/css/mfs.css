@@ -3,6 +3,26 @@
    Custom layout CSS — uses palette.css variables only
    ============================================================ */
 
+/* ── Source Code Pro ──
+   The font of the history and of every other written area, of the names in the list and of
+   the words in a drawing, served with the page, since the site's own declarations in
+   custom.css are not loaded here: without these a reader who has not installed it read the
+   whole page in the browser's own monospace, which on a Mac is Menlo in Chrome and WebKit. One
+   variable file carries every weight, and its italic sets the title of a reference. */
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('../fonts/Source_Code_Pro/SourceCodePro-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('../fonts/Source_Code_Pro/SourceCodePro-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+}
+
 /* ── Reset / base ── */
 *, *::before, *::after { box-sizing: border-box; }
 
