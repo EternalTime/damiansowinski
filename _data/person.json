@@ -1,0 +1,55 @@
+{
+  "name": "Damian R. Sowinski",
+  "job_title": "Theoretical Physicist & Applied Mathemagician",
+  "summary": "Theoretical physicist studying how agency emerges from the physical substrate of the world, using information theory, complexity science and simulation.",
+  "email": "DRSowinski@gmail.com",
+  "image": "/assets/images/profile_photo.jpg",
+  "cv": "/assets/docs/Sowinski_CV.pdf",
+  "affiliations": [
+    {
+      "name": "SETI Institute",
+      "url": "https://www.seti.org/",
+      "role": "Affiliate"
+    },
+    {
+      "name": "University of Rochester, Department of Physics and Astronomy",
+      "url": "https://www.pas.rochester.edu/",
+      "role": "Visiting researcher"
+    }
+  ],
+  "alumni_of": [
+    {
+      "name": "Dartmouth College",
+      "url": "https://physics.dartmouth.edu/"
+    },
+    {
+      "name": "University of California, Berkeley",
+      "url": "https://physics.berkeley.edu/"
+    }
+  ],
+  "knows_about": [
+    "Artificial life",
+    "Artificial intelligence",
+    "Agency",
+    "Complexity",
+    "Information theory",
+    "Semantic information",
+    "Simulation",
+    "Visualization",
+    "General relativity"
+  ],
+  "same_as": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/EternalTime"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/damian-sowinski-413b4214"
+    },
+    {
+      "name": "X",
+      "url": "https://x.com/DRSowinski"
+    }
+  ]
+}

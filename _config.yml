@@ -48,6 +48,19 @@ header_pages:
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
+
+# The sitemap lists what the site links to. The AISTEM workshop pages are reached by
+# their own address rather than from the site, and the only post is Jekyll's sample.
+defaults:
+  - scope:
+      path: "AISTEM"
+    values:
+      sitemap: false
+  - scope:
+      type: "posts"
+    values:
+      sitemap: false
 
 # Sphinx documentation subsites (pyCE/, pyCA/) use underscore-prefixed
 # directories that Jekyll would otherwise treat as special and drop.

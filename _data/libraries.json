@@ -1,0 +1,8 @@
+[
+  { "repo": "CellularAutomata", "label": "Cellular Automata",       "docs": "/pyCA/",   "name": "pyCA" },
+  { "repo": "pyCE",             "label": "Configurational Entropy", "docs": "/pyCE/",   "name": "pyCE" },
+  { "repo": "pyCoop",           "label": "Cooperation Games",       "docs": "/pyCoop/", "name": "pyCoop" },
+  { "repo": "pyEDW",            "label": "Exo-Daisy World",         "docs": "/pyEDW/",  "name": "pyEDW" },
+  { "repo": "pyLEAFS",          "label": "Foraging Simulator",      "docs": "/LEAFS/",  "name": "LEAFS", "gh": "LEAFS" },
+  { "repo": "pyGD",             "label": "Graph Dynamics",          "docs": "/pyGD/",   "name": "pyGD" }
+]

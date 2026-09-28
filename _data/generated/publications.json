@@ -1,0 +1,496 @@
+{
+  "name": "Publications of Damian R. Sowinski",
+  "page_url": "https://damiansowinski.com/publications/",
+  "note": "In the order the publications page lists them. pdf_url is a copy with no pay-wall.",
+  "count": 25,
+  "publications": [
+    {
+      "key": "sowinski2026beh",
+      "type": "article",
+      "title": "Behavioral Speciation in the Neuroevolution of Recurrent Neural Net Foragers driven by Environmental Homogeneity",
+      "authors": [
+        "Damian R Sowinski"
+      ],
+      "year": 2026,
+      "venue": "Working paper",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/RNNs_Sowinski_2026.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/RNNs_Sowinski_2026.pdf"
+    },
+    {
+      "key": "sowinski2025exo",
+      "type": "article",
+      "title": "Exo-Daisy World: Revisiting Gaia theory through an informational architecture perspective",
+      "authors": [
+        "Damian R Sowinski",
+        "Gourab Ghoshal",
+        "Adam Frank"
+      ],
+      "year": 2025,
+      "venue": "The Planetary Science Journal",
+      "volume": "6",
+      "number": "7",
+      "pages": "176",
+      "publisher": "The American Astronomical Society",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/ExoDaisy_Sowinski_2025.pdf"
+    },
+    {
+      "key": "sowinski2025causal",
+      "type": "inproceedings",
+      "title": "Causal Leverage Density: A Universal Framework for Semantic Information",
+      "authors": [
+        "Damian R Sowinski",
+        "Silvia Holler",
+        "Mike Wong",
+        "Gary Segal",
+        "David Parkinson",
+        "Clément Vidal",
+        "James Henderson Cleaves",
+        "Pritvik Sinhadc",
+        "Anirudh Prabhu",
+        "Stuart Bartlett"
+      ],
+      "year": 2025,
+      "venue": "Artificial Life Conference Proceedings 37",
+      "volume": "2025",
+      "number": "1",
+      "pages": "43",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/CLD_Sowinski_2025.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/CLD_Sowinski_2025.pdf"
+    },
+    {
+      "key": "sowinski2025configurational",
+      "type": "article",
+      "title": "Configurational information measures, phase transitions, and an upper bound on complexity",
+      "authors": [
+        "Damian R Sowinski",
+        "Sean Kelty",
+        "Gourab Ghoshal"
+      ],
+      "year": 2025,
+      "venue": "arXiv preprint arXiv:2503.02980",
+      "arxiv": "2503.02980",
+      "arxiv_url": "https://arxiv.org/abs/2503.02980",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Ising_Sowinski_2025.pdf",
+      "url": "https://arxiv.org/abs/2503.02980"
+    },
+    {
+      "key": "sowinski2024information",
+      "type": "article",
+      "title": "Information-theoretic description of a feedback-control Kuramoto model",
+      "authors": [
+        "Damian R Sowinski",
+        "Adam Frank",
+        "Gourab Ghoshal"
+      ],
+      "year": 2024,
+      "venue": "Physical Review Research",
+      "volume": "6",
+      "number": "4",
+      "pages": "043188",
+      "publisher": "APS",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Kuramoto_Sowinski_2024.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Kuramoto_Sowinski_2024.pdf"
+    },
+    {
+      "key": "sowinski2023semantic",
+      "type": "article",
+      "title": "Semantic information in a model of resource gathering agents",
+      "authors": [
+        "Damian R Sowinski",
+        "Jonathan Carroll-Nellenback",
+        "Robert N Markwick",
+        "Jordi Pinero",
+        "Marcelo Gleiser",
+        "Artemy Kolchinsky",
+        "Gourab Ghoshal",
+        "Adam Frank"
+      ],
+      "year": 2023,
+      "venue": "PRX Life",
+      "volume": "1",
+      "number": "2",
+      "pages": "023003",
+      "publisher": "APS",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Foraging_Sowinski_2023.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Foraging_Sowinski_2023.pdf"
+    },
+    {
+      "key": "sowinski2022consensus",
+      "type": "article",
+      "title": "The consensus problem in polities of agents with dissimilar cognitive architectures",
+      "authors": [
+        "Damian R Sowinski",
+        "Jonathan Carroll-Nellenback",
+        "Jeremy DeSilva",
+        "Adam Frank",
+        "Gourab Ghoshal",
+        "Marcelo Gleiser"
+      ],
+      "year": 2022,
+      "venue": "Entropy",
+      "volume": "24",
+      "number": "10",
+      "pages": "1378",
+      "publisher": "MDPI",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Consensus_Sowinski_2022.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Consensus_Sowinski_2022.pdf"
+    },
+    {
+      "key": "sowinski2021poroelasticity",
+      "type": "article",
+      "title": "Poroelasticity as a model of soft tissue structure: Hydraulic permeability reconstruction for magnetic resonance elastography in silico",
+      "authors": [
+        "Damian R Sowinski",
+        "Matthew DJ McGarry",
+        "Elijah EW Van Houten",
+        "Scott Gordon-Wylie",
+        "John B Weaver",
+        "Keith D Paulsen"
+      ],
+      "year": 2021,
+      "venue": "Frontiers in Physics",
+      "volume": "8",
+      "pages": "617582",
+      "publisher": "Frontiers Media SA",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Poro_Sowinski_2020.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Poro_Sowinski_2020.pdf"
+    },
+    {
+      "key": "sowinski2018instantons",
+      "type": "article",
+      "title": "Configurational information approach to instantons and false vacuum decay in D-dimensional spacetime",
+      "authors": [
+        "Damian Sowinski",
+        "Marcelo Gleiser"
+      ],
+      "year": 2018,
+      "venue": "Physical Review D",
+      "volume": "98",
+      "number": "5",
+      "pages": "056026",
+      "publisher": "APS",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Instantons_Sowinski_2018.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Instantons_Sowinski_2018.pdf"
+    },
+    {
+      "key": "sowinski2017information",
+      "type": "article",
+      "title": "Information dynamics at a phase transition",
+      "authors": [
+        "Damian Sowinski",
+        "Marcelo Gleiser"
+      ],
+      "year": 2017,
+      "venue": "Journal of Statistical Physics",
+      "volume": "167",
+      "number": "5",
+      "pages": "1221–1232",
+      "publisher": "Springer",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/PhaseDynamics_Sowinski_2017.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/PhaseDynamics_Sowinski_2017.pdf"
+    },
+    {
+      "key": "sowinski2016complexity",
+      "type": "article",
+      "title": "Complexity and Stability for Epistemic Agents: The Foundations and Phenomenology of Configurational Entropy",
+      "authors": [
+        "Damian Radoslaw Sowinski"
+      ],
+      "year": 2016,
+      "venue": "Ph.D. Thesis",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/myThesis.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/myThesis.pdf"
+    },
+    {
+      "key": "vidal2026technosignatures",
+      "type": "article",
+      "title": "The Search for Technosignatures: A Review of Possibilities",
+      "authors": [
+        "Clément Vidal",
+        "Benji L. Fields",
+        "Damian R. Sowinski",
+        "Stuart Bartlett",
+        "Richard J. Terrile",
+        "Alex Ellery",
+        "Daliah Bibas",
+        "Armando M. Mastrogiovanni",
+        "Niklas Döbler",
+        "Manika Singla",
+        "Julia DeMarines",
+        "Theresa Fisher",
+        "Yuri Uno",
+        "Jake D. Turner",
+        "Evan L. Sneed",
+        "Advait Huggahalli",
+        "Megan Grace Li",
+        "Zhuofu (Chester) Li",
+        "Macy Huston",
+        "Ramiro Saide"
+      ],
+      "year": 2026,
+      "venue": "arXiv preprint arXiv:2605.21093",
+      "doi": "10.48550/arXiv.2605.21093",
+      "arxiv": "2605.21093",
+      "doi_url": "https://doi.org/10.48550/arXiv.2605.21093",
+      "arxiv_url": "https://arxiv.org/abs/2605.21093",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Technosignature_Vidal_2026.pdf",
+      "url": "https://doi.org/10.48550/arXiv.2605.21093"
+    },
+    {
+      "key": "bartlett2026ref",
+      "type": "article",
+      "title": "Reflections of Life: Distinguishing Living from Nonliving Worlds with Complexity Metrics",
+      "authors": [
+        "Stuart Bartlett",
+        "Xianlei San",
+        "Siteng Fan",
+        "Gary Segal",
+        "Damian R. Sowinski",
+        "Yuk L. Yung"
+      ],
+      "year": 2026,
+      "venue": "The Astronomical Journal",
+      "volume": "172",
+      "number": "1",
+      "pages": "16",
+      "publisher": "American Astronomical Society",
+      "doi": "10.3847/1538-3881/ae6b7b",
+      "doi_url": "https://doi.org/10.3847/1538-3881/ae6b7b",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Reflections_Bartlett_2026.pdf",
+      "url": "https://doi.org/10.3847/1538-3881/ae6b7b"
+    },
+    {
+      "key": "pinero2026information",
+      "type": "article",
+      "title": "Information bounds production in replicator systems",
+      "authors": [
+        "Jordi Piñero",
+        "Damian R Sowinski",
+        "Gourab Ghoshal",
+        "Adam Frank",
+        "Artemy Kolchinsky"
+      ],
+      "year": 2026,
+      "venue": "Communications Physics",
+      "publisher": "Nature Publishing Group UK London",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Replicators_Pinero_2026.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Replicators_Pinero_2026.pdf"
+    },
+    {
+      "key": "quillen2025notions",
+      "type": "article",
+      "title": "Notions of adiabatic drift in the quantized Harper model",
+      "authors": [
+        "Alice C Quillen",
+        "Nathan Skerrett",
+        "Damian R Sowinski",
+        "Abobakar Sediq Miakhel"
+      ],
+      "year": 2025,
+      "venue": "Physical Review A",
+      "volume": "112",
+      "number": "4",
+      "pages": "042226",
+      "publisher": "APS",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Harper_Alice_2025.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Harper_Alice_2025.pdf"
+    },
+    {
+      "key": "mcgarry2025vivo",
+      "type": "article",
+      "title": "In vivo magnetic resonance imaging of the interstitial pressure gradients (pgMRI) using a pulsatile poroelastic computational model",
+      "authors": [
+        "Matthew McGarry",
+        "Damian Sowinski",
+        "Likun Tan",
+        "John Weaver",
+        "Jacobus JM Zwanenburg",
+        "Keith Paulsen"
+      ],
+      "year": 2025,
+      "venue": "Interface Focus",
+      "volume": "15",
+      "number": "1",
+      "publisher": "The Royal Society",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Pressure_McGarry_2025.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Pressure_McGarry_2025.pdf"
+    },
+    {
+      "key": "mcgarry2022mapping",
+      "type": "article",
+      "title": "Mapping heterogenous anisotropic tissue mechanical properties with transverse isotropic nonlinear inversion MR elastography",
+      "authors": [
+        "Matthew McGarry",
+        "Elijah Van Houten",
+        "Damian Sowinski",
+        "Dhrubo Jyoti",
+        "Daniel R Smith",
+        "Diego A Caban-Rivera",
+        "Grace McIlvain",
+        "Philip Bayly",
+        "Curtis L Johnson",
+        "John Weaver",
+        "et al."
+      ],
+      "year": 2022,
+      "venue": "Medical Image Analysis",
+      "volume": "78",
+      "publisher": "Elsevier",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Transverse_McGarry_2022.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Transverse_McGarry_2022.pdf"
+    },
+    {
+      "key": "mcgarry2021heterogenous",
+      "type": "article",
+      "title": "A heterogenous, time harmonic, nearly incompressible transverse isotropic finite element brain simulation platform for MR elastography",
+      "authors": [
+        "Matthew McGarry",
+        "Elijah Van Houten",
+        "Charlotte Guertler",
+        "Ruth Okamoto",
+        "Daniel Smith",
+        "Damian Sowinski",
+        "Curtis Johnson",
+        "Philip Bayly",
+        "John Weaver",
+        "Keith Paulsen"
+      ],
+      "year": 2021,
+      "venue": "Physics in Medicine & Biology",
+      "volume": "66",
+      "number": "5",
+      "pages": "055029",
+      "publisher": "IOP Publishing",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/NITI_McGarry_2021.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/NITI_McGarry_2021.pdf"
+    },
+    {
+      "key": "hannum2022correlated",
+      "type": "article",
+      "title": "Correlated noise in brain magnetic resonance elastography",
+      "authors": [
+        "Ariel J Hannum",
+        "Grace McIlvain",
+        "Damian Sowinski",
+        "Matthew DJ McGarry",
+        "Curtis L Johnson"
+      ],
+      "year": 2022,
+      "venue": "Magnetic Resonance in Medicine",
+      "volume": "87",
+      "number": "3",
+      "pages": "1313–1328",
+      "publisher": "Wiley Online Library",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Noise_Hannum_2021.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Noise_Hannum_2021.pdf"
+    },
+    {
+      "key": "jyoti2022quantifying",
+      "type": "article",
+      "title": "Quantifying stability of parameter estimates for in vivo nearly incompressible transversely-isotropic brain MR elastography",
+      "authors": [
+        "Dhrubo Jyoti",
+        "Matthew McGarry",
+        "Elijah Van Houten",
+        "Damian Sowinski",
+        "Philip V Bayly",
+        "Curtis L Johnson",
+        "Keith Paulsen"
+      ],
+      "year": 2022,
+      "venue": "Biomedical Physics and Engineering Express",
+      "volume": "8",
+      "number": "3",
+      "pages": "035015",
+      "publisher": "IOP Publishing",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Stability_Jyoti_2021.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Stability_Jyoti_2021.pdf"
+    },
+    {
+      "key": "bowen2022visual",
+      "type": "article",
+      "title": "Visual stream connectivity predicts assessments of image quality",
+      "authors": [
+        "Elijah FW Bowen",
+        "Antonio M Rodriguez",
+        "Damian R Sowinski",
+        "Richard Granger"
+      ],
+      "year": 2022,
+      "venue": "Journal of Vision",
+      "volume": "22",
+      "number": "11",
+      "pages": "4",
+      "publisher": "The Association for Research in Vision and Ophthalmology",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Vision_Bowen_2021.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Vision_Bowen_2021.pdf"
+    },
+    {
+      "key": "gleiser2018oscillons",
+      "type": "article",
+      "title": "Configurational entropy as a lifetime predictor and pattern discriminator for oscillons",
+      "authors": [
+        "Marcelo Gleiser",
+        "Michelle Stephens",
+        "Damian Sowinski"
+      ],
+      "year": 2018,
+      "venue": "Physical Review D",
+      "volume": "97",
+      "number": "9",
+      "pages": "096007",
+      "publisher": "APS",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Oscillons_Gleiser_2018.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Oscillons_Gleiser_2018.pdf"
+    },
+    {
+      "key": "gleiser2018mapmaking",
+      "type": "incollection",
+      "title": "How We Make Sense of the World: Information, Map-Making, and The Scientific Narrative",
+      "authors": [
+        "Marcelo Gleiser",
+        "Damian Sowinski"
+      ],
+      "year": 2018,
+      "venue": "The Map and the Territory: Exploring the Foundations of Science, Thought and Reality",
+      "pages": "141–163",
+      "publisher": "Springer",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/MapMaking_Sowinski_2018.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/MapMaking_Sowinski_2018.pdf"
+    },
+    {
+      "key": "gleiser2015information",
+      "type": "article",
+      "title": "Information-entropic signature of the critical point",
+      "authors": [
+        "Marcelo Gleiser",
+        "Damian Sowinski"
+      ],
+      "year": 2015,
+      "venue": "Physics Letters B",
+      "volume": "747",
+      "pages": "125–128",
+      "publisher": "Elsevier",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Critical_Gleiser_2017.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Critical_Gleiser_2017.pdf"
+    },
+    {
+      "key": "gleiser2013information",
+      "type": "article",
+      "title": "Information-entropic stability bound for compact objects: Application to Q-balls and the Chandrasekhar limit of polytropes",
+      "authors": [
+        "Marcelo Gleiser",
+        "Damian Sowinski"
+      ],
+      "year": 2013,
+      "venue": "Physics Letters B",
+      "volume": "727",
+      "number": "1-3",
+      "pages": "272–275",
+      "publisher": "Elsevier",
+      "pdf_url": "https://damiansowinski.com/assets/docs/papers/Polytropes_Gleiser_2013.pdf",
+      "url": "https://damiansowinski.com/assets/docs/papers/Polytropes_Gleiser_2013.pdf"
+    }
+  ]
+}

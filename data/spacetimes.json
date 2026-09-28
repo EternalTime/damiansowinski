@@ -1,0 +1,5 @@
+---
+layout: null
+permalink: /data/spacetimes.json
+---
+{{ site.data.generated.spacetimes | jsonify }}

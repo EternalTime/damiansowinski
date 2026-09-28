@@ -15,33 +15,9 @@ permalink: /publications/
 
 <script>
 (function() {
-  var KEYS = [
-    'sowinski2026beh',
-    'sowinski2025exo',
-    'sowinski2025causal',
-    'sowinski2025configurational',
-    'sowinski2024information',
-    'sowinski2023semantic',
-    'sowinski2022consensus',
-    'sowinski2021poroelasticity',
-    'sowinski2018instantons',
-    'sowinski2017information',
-    'sowinski2016complexity',
-    'vidal2026technosignatures',
-    'bartlett2026ref',
-    'pinero2026information',
-    'quillen2025notions',
-    'mcgarry2025vivo',
-    'mcgarry2022mapping',
-    'mcgarry2021heterogenous',
-    'hannum2022correlated',
-    'jyoti2022quantifying',
-    'bowen2022visual',
-    'gleiser2018oscillons',
-    'gleiser2018mapmaking',
-    'gleiser2015information',
-    'gleiser2013information'
-  ];
+  // The order lives in _data/publication_keys.json, which also feeds
+  // /data/publications.json and llms.txt for agents.
+  var KEYS = {{ site.data.publication_keys | jsonify }};
 
   function unlatex(str) {
     return str

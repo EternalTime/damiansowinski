@@ -26,6 +26,7 @@ Then run one command from the top of the repository:
 That rewrites `MFS/assets/data/metrics_index.json` and `MFS/assets/data/references.json` from what is on disk.
 The index is never edited by hand, so it cannot disagree with the folder.
 Commit the new metric file together with whatever the command rewrote.
+Then run `python3 _tools/build_agent_data.py`, which adds the spacetime to `/data/spacetimes.json`, `/llms.txt` and `/llms-full.txt` for agents, and commit what it rewrote too.
 
 Every key a metric cites has to be an entry in `assets/data/references.bib`.
 The command refuses to write anything if one is not, naming the metric file and the key it could not find, so a mistyped citation is caught here rather than published as a reference the reader cannot resolve.
