@@ -7,11 +7,11 @@
 
 Every address on damiansowinski.com that llms.txt or llms-full.txt names must be a file in
 the build, every outside address in llms.txt must answer when --external is given (those
-in llms-full.txt come from the pages and are only reported), both JSON files must parse and carry what agents query, the publications page must list
-the same publications in the same order, robots.txt must point at
-a sitemap that parses, and each JSON-LD block must use only types and properties that the
-schema.org vocabulary defines, each property on a type it belongs to. The vocabulary is
-downloaded once and kept in ~/.cache/damiansowinski/.
+in llms-full.txt come from the pages and are only reported), both JSON files must parse
+and carry what agents query, the publications page must list the same publications in the
+same order, robots.txt must point at a sitemap that parses, and each JSON-LD block must use
+only types and properties that the schema.org vocabulary defines, each property on a type
+it belongs to. The vocabulary is downloaded once and kept in ~/.cache/damiansowinski/.
 """
 
 import argparse
