@@ -9,7 +9,8 @@
 
    The figure is drawn by the rules the generator draws it by: each piece's meridians, its
    outline where it turns edge on to the camera, the rim at an end where the drawing stops, its
-   marked circles and marked meridians, every line split where a surface hides it into the part
+   marked circles and marked meridians, the curves and points marked on a surface that are no
+   circles, as a ring of free particles on a flat plane, every line split where a surface hides it into the part
    seen and the part hidden, which carries -far, and each tinted piece filled where it is the
    surface nearest the camera. What hides a line is found as the generator finds it, by casting a
    ray from each of its points toward the camera through the truncated cones between neighbouring
@@ -75,7 +76,7 @@
           code.push(p.code);
         }
       });
-      var S = { pieces: pieces, byId: byId, rings: s.rings, zc: (low + high) / 2,
+      var S = { pieces: pieces, byId: byId, rings: s.rings, curves: s.curves || [], dots: s.dots || [], zc: (low + high) / 2,
                 r1: new Float64Array(r1), dr: new Float64Array(dr), z1: new Float64Array(z1), dz: new Float64Array(dz),
                 code: new Uint8Array(code) };
       var o = turn.origins[k];
@@ -399,6 +400,10 @@
       M.turn.marks.forEach(function(mark) {
         if (mark.surface === k) line(mark['class'], densify(meridian(S.byId[mark.piece], mark.phi), Q.densify));
       });
+      // A curve marked on the surface is drawn through its own points, and back to the first
+      // where it closes; a point marked on it is drawn wherever it stands, as the generator's are.
+      S.curves.forEach(function(c) { line(c['class'], c.closed ? c.points.concat([c.points[0]]) : c.points); });
+      S.dots.forEach(function(d) { dots.push({ kind: 'point', 'class': d['class'], at: page(d.at) }); });
     });
 
     var layers = M.figure.layers.filter(function(L) { return L.flat && L.kind === 'fill'; });

@@ -22,7 +22,12 @@ the distance sqrt(g_xx) dx between neighbouring circles is the hypotenuse of drh
 which for an areal radius, rho = r, is dz/dr = sqrt(g_rr - 1). The surface exists exactly
 where g_xx >= (drho/dx)^2. Where a circle grows faster than the distance across to it, no
 surface of revolution in flat space carries the slice, and the file says where the
-construction stops and why rather than drawing past it.
+construction stops and why rather than drawing past it; where every circle does, as on the
+hyperbolic plane of anti-de Sitter space, the slice is drawn in three dimensional Minkowski
+space instead, dX^2 + dY^2 - dZ^2, where it climbs at dZ/dx = sqrt((drho/dx)^2 - g_xx).
+A flat slice is drawn as the plane it is, with what the spacetime does marked on it as
+curves and points that are no circles: a ring of free particles, the wall and the expansion
+of a warp bubble, the lines of its flow.
 
     python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy numpy scipy contourpy
     /tmp/mfs-venv/bin/python _tools/derivations/embedding.py
@@ -60,8 +65,10 @@ file holds, against the published metric:
   joins     where two pieces meet, as a star's surface meets the exterior, they meet at
             one point with one tangent, which says g_xx agrees on both sides;
   forms     the closed form each surface is known by, as Flamm's paraboloid, the interior
-            Schwarzschild cap, the catenoid, the cone, Gott's cap, the sphere and the
-            cylinder, and the circumference of a rotating hole's horizon;
+            Schwarzschild cap, the catenoid, the cone, Gott's cap, the sphere, the
+            cylinder, the plane and the hyperboloid, the circumference of a rotating hole's
+            horizon, and the ellipse a ring of particles is stretched into;
+  marks     every curve and point marked on a surface lies on its piece;
   fields    a declared star, scale factor or dust cloud against the published Einstein
             tensor it is meant to solve;
   stops     where the file says a slice cannot be drawn, g_xx - (drho/dx)^2 is negative
@@ -115,6 +122,7 @@ SAG = 2e-5          # how far the profile may stray from a chord, as a part of t
 BEND = 0.004        # and as a part of the chord: the chord then turns through at most 0.032
 STEP = 1 / 90       # the longest chord of the profile, as a part of the drawing's size
 DIGITS = 1e-7       # rho and z are rounded to below this part of their piece's extent
+LORENTZ_DIGITS = 1e-9   # and a surface in Minkowski space, whose chords near the light cone are short
 DPHI = 0.02         # the turn of the "across" chords, in radians
 ALONG = 2e-4        # how far a chord may miss the proper distance, as a part of it
 ACROSS = 2e-4       # the same for the chords across
@@ -141,23 +149,38 @@ class Slice:
                it and its derivative along x on the slice, as a star's mass m(r);
     along      a coordinate that moves with x on the slice -> an expression for it in x, as
                v = T + r on Vaidya's slice of constant v - r: the metric is pulled back along
-               the slice, g_xx picking up the cross terms and the moving coordinate's own.
+               the slice, g_xx picking up the cross terms and the moving coordinate's own;
+    swept      a coordinate that moves with phi -> an expression for it in phi, as psi = -phi on
+               the Mixmaster great sphere: g_phiphi picks up the moving coordinate's terms;
+    turn       where the angle is no coordinate of the chart: the chart coordinate that turning
+               carries x into, about the chart's origin, as y on the Malament-Hogarth plane of
+               x and y; phi is then None, and the published metric is pulled back to the polar
+               coordinates x cos(phi), x sin(phi) of the plane, which must leave no phi in it;
+    space      "flat" for a surface drawn in flat space, or "minkowski" for one drawn in three
+               dimensional Minkowski space, dX^2 + dY^2 - dZ^2, where a profile whose circles
+               grow faster than the distance out to them climbs at dZ/dx = sqrt((drho/dx)^2 -
+               g_xx), as the hyperbolic plane does on its hyperboloid;
+    rewrite    a form to write g_phiphi and g_xx - (drho/dx)^2 in before they are evaluated, where
+               sympy's own loses digits, as half_angles() for the Mixmaster great sphere.
     """
 
     def __init__(self, sources, metric_id, system_id, x, phi, fixed, params=None, functions=None, numeric=None,
-                 along=None):
+                 along=None, swept=None, turn=None, space="flat", rewrite=None):
         _, entry, reader = nr.load(metric_id, system_id)
         sources.note(metric_id, system_id, FIELDS)
         self.metric_id, self.system_id, self.coordinate = metric_id, system_id, x
+        self.lorentz = {"flat": False, "minkowski": True}[space]
         R = reader
         names = {R._plain(n): s for n, s in R.symbol.items()}
         names.update(R.parameters)
-        along = along or {}
-        held = sorted(R._plain(c) for c in entry["coords"] if c not in (x, phi))
-        if held != sorted([*fixed, *along]):
-            raise SystemExit(f"{metric_id}/{system_id}: the slice of {x} and {phi} holds {held} fixed, "
-                             f"and the table fixes {sorted(fixed)} and moves {sorted(along)}")
-        self.x, self.phi = R.symbol[x], R.symbol[phi]
+        along, swept = along or {}, swept or {}
+        plane = (x, turn) if turn else (x, phi)
+        held = sorted(R._plain(c) for c in entry["coords"] if c not in plane)
+        if held != sorted([*fixed, *along, *swept]):
+            raise SystemExit(f"{metric_id}/{system_id}: the slice of {x} and {turn or phi} holds {held} fixed, "
+                             f"and the table fixes {sorted(fixed)} and moves {sorted([*along, *swept])}")
+        self.x = R.symbol[x]
+        self.phi = sp.Symbol("varphi", real=True) if turn else R.symbol[phi]
         subs = {R.c: 1}
         subs.update({R.parameters[k]: sp.sympify(v) for k, v in (params or {}).items()})
         held_at = {names[k]: sp.sympify(v) for k, v in fixed.items()}
@@ -172,18 +195,65 @@ class Slice:
                 e = e.subs(fn, rep).doit()
             return sp.simplify(e.subs(subs).subs(held_at))
         g = nr.published_matrix(R, entry, "metric_components")
-        i, j = entry["coords"].index(x), entry["coords"].index(phi)
-        # The slice's tangent along x in the chart: 1 along x and d(expression)/dx along a moving
-        # coordinate, which is how g_xx picks up g_xv and g_vv on a slice of constant v - r.
-        tangent = [sp.Integer(0)] * len(entry["coords"])
-        tangent[i] = sp.Integer(1)
-        for name, expr in moved.items():
-            tangent[[names[R._plain(c)] for c in entry["coords"]].index(name)] = sp.diff(expr, self.x)
-        n = len(tangent)
-        gxx = sum(tangent[a] * tangent[b] * g[a, b] for a in range(n) for b in range(n))
-        gxp = sum(tangent[a] * g[a, j] for a in range(n))
-        self.gxx, self.gxp, self.gpp = prep(gxx), prep(gxp), prep(g[j, j])
-        where = f"{metric_id}/{system_id} on the slice of {x} and {phi}"
+        coords = [names[R._plain(c)] for c in entry["coords"]]
+        n = len(coords)
+        if turn or swept:
+            # The surface as a map from (x, phi) into the chart, pulled back whole: the tangents
+            # along x and along phi are the derivatives of the map, and the metric is taken at
+            # the image of each point.
+            image = dict(held_at)
+            image.update({names[k]: sp.sympify(v, locals=names) for k, v in swept.items()})
+            if turn:
+                y = R.symbol[turn]
+                image.update({self.x: self.x * sp.cos(self.phi), y: self.x * sp.sin(self.phi)})
+            else:
+                image.setdefault(self.x, self.x)
+                image.setdefault(self.phi, self.phi)
+            at = [image.get(c, c) for c in coords]
+            along_x = [sp.diff(c, self.x) for c in at]
+            along_phi = [sp.diff(c, self.phi) for c in at]
+
+            # The metric at the image first, and only then contracted with the tangents, whose
+            # components are already functions of x and phi.
+            def placed(e):
+                for fn, rep in funcs.items():
+                    e = e.subs(fn, rep).doit()
+                return e.subs(subs).subs(dict(zip(coords, at)), simultaneous=True)
+            gi = g.applyfunc(placed)
+
+            def pulled(u, v):
+                return sum(u[a] * v[b] * gi[a, b] for a in range(n) for b in range(n))
+            full = [pulled(along_x, along_x), pulled(along_x, along_phi), pulled(along_phi, along_phi)]
+            if turn:
+                # sympy seldom clears cos^2 + sin^2 inside a declared function, so the metric is
+                # read where phi = 0, on the profile, and the turn is checked to carry it onto
+                # itself at a thousand points of the plane, to a part in 1e12.
+                points = np.random.default_rng(0).uniform([0.01, 0], [4, 2 * math.pi], (1000, 2))
+                for e in full:
+                    f = sp.lambdify((self.x, self.phi), e, "numpy")
+                    with np.errstate(all="ignore"):
+                        turned = np.array([complex(f(r, a)) for r, a in points])
+                        base = np.array([complex(f(r, 0.0)) for r, _ in points])
+                    if np.nanmax(np.abs(turned - base) / np.maximum(1, np.abs(base))) > 1e-12:
+                        raise SystemExit(f"{metric_id}/{system_id}: turning {x} into {turn} does not carry the "
+                                         "metric onto itself, so the plane is no surface of revolution")
+                full = [e.subs(self.phi, 0) for e in full]
+            self.gxx, self.gxp, self.gpp = (sp.simplify(e) for e in full)
+        else:
+            i, j = entry["coords"].index(x), entry["coords"].index(phi)
+            # The slice's tangent along x in the chart: 1 along x and d(expression)/dx along a moving
+            # coordinate, which is how g_xx picks up g_xv and g_vv on a slice of constant v - r.
+            tangent = [sp.Integer(0)] * n
+            tangent[i] = sp.Integer(1)
+            for name, expr in moved.items():
+                tangent[coords.index(name)] = sp.diff(expr, self.x)
+            gxx = sum(tangent[a] * tangent[b] * g[a, b] for a in range(n) for b in range(n))
+            gxp = sum(tangent[a] * g[a, j] for a in range(n))
+            self.gxx, self.gxp, self.gpp = prep(gxx), prep(gxp), prep(g[j, j])
+        self._surface(f"{metric_id}/{system_id} on the slice of {x} and {turn or phi}", rewrite)
+
+    def _surface(self, where, rewrite=None):
+        """Check the slice is a surface of revolution, and make the functions of x it is drawn by."""
         if self.gxp != 0:
             raise SystemExit(f"{where}: g_x phi = {self.gxp}, so the slice is not a surface of revolution")
         stray = (self.gxx.free_symbols | self.gpp.free_symbols) - {self.x}
@@ -193,6 +263,10 @@ class Slice:
         self.rho = sp.sqrt(self.gpp)
         self.drho = sp.diff(self.gpp, self.x) / (2 * self.rho)
         self.defect = sp.simplify(self.gxx - sp.diff(self.gpp, self.x) ** 2 / (4 * self.gpp))
+        if rewrite:
+            self.gpp, self.defect = rewrite(self.gpp, self.x), rewrite(self.defect, self.x)
+            self.rho = sp.sqrt(self.gpp)
+            self.drho = sp.diff(self.gpp, self.x) / (2 * self.rho)
         self._gxx = sp.lambdify(self.x, self.gxx, "numpy")
         self._gpp = sp.lambdify(self.x, self.gpp, "numpy")
         self._rho = sp.lambdify(self.x, self.rho, "numpy")
@@ -243,12 +317,14 @@ class Slice:
             if not d.is_finite:
                 raise AssertionError(f"{self.metric_id}: drho/dx is {d} at the horizon {x}")
             return np.array([0.0, 1.0])
+        sign = -1 if self.lorentz else 1
         if self.numeric:
             g = float(self.gxx_at(x))
-            return np.array([float(self._at(self._drho, x)) / math.sqrt(g), math.sqrt(max(float(self.defect_at(x)), 0.0) / g)])
+            return np.array([float(self._at(self._drho, x)) / math.sqrt(g),
+                             math.sqrt(max(sign * float(self.defect_at(x)), 0.0) / g)])
         x0 = self.exact.get(x, sp.nsimplify(x))
         return np.array([float(sp.limit(e, self.x, x0, side)) for e in
-                         (self.drho / sp.sqrt(self.gxx), sp.sqrt(self.defect / self.gxx))])
+                         (self.drho / sp.sqrt(self.gxx), sp.sqrt(sign * self.defect / self.gxx))])
 
     def _local(self, root):
         """g_xx, g_phiphi and g_xx - (drho/dx)^2 as numpy functions of u = x - root, expanded in
@@ -285,16 +361,82 @@ class Slice:
         return integrate(lambda s: math.sqrt(g(s) * (1 + gpp(s) * turn ** 2)), lo, hi)
 
     def rise(self, a, b):
-        """z(b) - z(a) of the surface of revolution, the quadrature of sqrt(g_xx - (drho/dx)^2)."""
+        """z(b) - z(a) of the surface of revolution, the quadrature of sqrt(g_xx - (drho/dx)^2),
+        or in Minkowski space of sqrt((drho/dx)^2 - g_xx)."""
         g, _, defect, lo, hi = self._between(a, b)
+        sign = -1.0 if self.lorentz else 1.0
 
         def f(s):
-            d = defect(s)
+            d = sign * defect(s)
             if d < -1e-12 * max(1.0, g(s)):
-                raise SystemExit(f"{self.metric_id}/{self.system_id}: g_xx - (drho/dx)^2 = {d} < 0 at "
-                                 f"{self.coordinate} = {s} from {a}, where the slice has no surface of revolution")
+                space = "Minkowski space" if self.lorentz else "flat space"
+                raise SystemExit(f"{self.metric_id}/{self.system_id}: g_xx - (drho/dx)^2 = {defect(s)} at "
+                                 f"{self.coordinate} = {s} from {a}, where no surface of revolution in {space} "
+                                 "carries the slice")
             return math.sqrt(max(d, 0.0))
         return integrate(f, lo, hi)
+
+
+class FlatPlane(Slice):
+    """A plane of two coordinates x and y of a chart, every other coordinate held fixed, on which
+    the published metric has constant coefficients and no cross term, g_xx dx^2 + g_yy dy^2, which
+    is checked. In X = sqrt(g_xx) x and Y = sqrt(g_yy) y it is the Euclidean plane, so it is drawn
+    as a flat disc about the chart's origin, a surface of revolution about any of its points,
+    with its profile along x: the circle through the point x of the profile has the proper radius
+    sqrt(g_xx) x, so g_phiphi = g_xx x^2 with phi the angle of the Euclidean plane, which need be
+    no angle of the chart, since in Kasner's plane of x and z a circle of the chart is an ellipse.
+    `draw` carries chart points (x, y) to the drawing's (X, Y, 0)."""
+
+    def __init__(self, sources, metric_id, system_id, x, y, fixed, params=None, functions=None):
+        _, entry, R = nr.load(metric_id, system_id)
+        sources.note(metric_id, system_id, FIELDS)
+        self.metric_id, self.system_id, self.coordinate = metric_id, system_id, x
+        self.lorentz, self.numeric = False, False
+        names = {R._plain(n): s for n, s in R.symbol.items()}
+        names.update(R.parameters)
+        held = sorted(R._plain(c) for c in entry["coords"] if c not in (x, y))
+        if held != sorted(fixed):
+            raise SystemExit(f"{metric_id}/{system_id}: the plane of {x} and {y} holds {held} fixed, "
+                             f"and the table fixes {sorted(fixed)}")
+        subs = {R.c: 1}
+        subs.update({R.parameters[k]: sp.sympify(v) for k, v in (params or {}).items()})
+        held_at = {names[k]: sp.sympify(v) for k, v in fixed.items()}
+        funcs = {R.parameters[k]: sp.sympify(v, locals=names) for k, v in (functions or {}).items()}
+
+        def prep(e):
+            for fn, rep in funcs.items():
+                e = e.subs(fn, rep).doit()
+            return sp.simplify(e.subs(subs).subs(held_at))
+        g = nr.published_matrix(R, entry, "metric_components")
+        i, j = entry["coords"].index(x), entry["coords"].index(y)
+        gxx, gyy, gxy = prep(g[i, i]), prep(g[j, j]), prep(g[i, j])
+        where = f"{metric_id}/{system_id} on the plane of {x} and {y}"
+        if gxy != 0 or gxx.free_symbols or gyy.free_symbols or not (gxx > 0 and gyy > 0):
+            raise SystemExit(f"{where}: g_xx = {gxx}, g_yy = {gyy} and g_xy = {gxy}, so the plane is not flat "
+                             "in these coordinates")
+        self.x, self.phi = R.symbol[x], sp.Symbol("varphi", real=True)
+        self.scale = np.array([math.sqrt(float(gxx)), math.sqrt(float(gyy))])
+        self.gxx, self.gxp, self.gpp = gxx, sp.Integer(0), gxx * self.x ** 2
+        self._surface(where)
+
+    def draw(self, cx, cy):
+        """The drawing's (X, Y, 0) of the chart points (cx, cy) of the plane."""
+        cx, cy = np.broadcast_arrays(np.asarray(cx, dtype=float), np.asarray(cy, dtype=float))
+        return np.column_stack([self.scale[0] * cx.ravel(), self.scale[1] * cy.ravel(), np.zeros(cx.size)])
+
+
+def half_angles(e, theta):
+    """e, a function of cos(theta) and sin(theta)^2 and of multiples of theta, written as a ratio
+    of polynomials in sin^2(theta/2), factored: 1 - cos(theta) = 2 sin^2(theta/2) then keeps every
+    digit at the pole theta = 0, where the great sphere of the Mixmaster slice and its defect
+    vanish as theta^2 and sympy's form of either subtracts numbers that agree there."""
+    u = sp.Symbol("u", positive=True)
+    e = sp.expand_trig(e).subs(sp.sin(theta) ** 2, 1 - sp.cos(theta) ** 2).subs(sp.cos(theta), 1 - 2 * u)
+    if e.has(theta):
+        raise AssertionError(f"{e} is not a function of cos(theta) and sin(theta)^2")
+    # Written with float coefficients once the form is set, since exact ones may be too large
+    # for numpy, and in this form nothing cancels.
+    return sp.N(sp.factor(sp.cancel(e)).subs(u, sp.sin(theta / 2) ** 2), 20)
 
 
 def numeric_function(name, f, df):
@@ -384,7 +526,8 @@ class Piece:
 
     @property
     def decimals(self):
-        return decimals(max(float(np.ptp(self.rho)), float(np.ptp(self.z)), 1e-9))
+        return decimals(max(float(np.ptp(self.rho)), float(np.ptp(self.z)), 1e-9),
+                        LORENTZ_DIGITS if self.sl.lorentz else DIGITS)
 
     def at(self, x):
         """(rho, z) of the circle at x, which must be a point of the profile."""
@@ -412,16 +555,29 @@ class Piece:
         return out
 
 
+class FormPiece(Piece):
+    """A reference piece given by a closed form rather than built from a slice's metric, as the
+    light cone anti-de Sitter's hyperboloid nears, which is no slice of the spacetime: its points
+    are rho_of(x) and z_of(x) at the values xs of the coordinate of `sl` it is set beside."""
+
+    def __init__(self, pid, sl, xs, rho_of, z_of, ends, size=1.0):
+        self.id, self.cls, self.sl, self.size = pid, "reference", sl, size
+        self.lo, self.hi, self.sense = float(xs[0]), float(xs[-1]), 1
+        self.ends, self.marks, self.reference, self.legend = ends, [], True, None
+        self.x = np.asarray(xs, dtype=float)
+        self.rho, self.z = np.asarray(rho_of(self.x), dtype=float), np.asarray(z_of(self.x), dtype=float)
+
+
 # Adding 0.0 turns a -0.0 that rounding leaves into 0.0, which is how every number is written.
 def fixed(v, digits):
     return round(float(v), digits) + 0.0
 
 
-def decimals(extent):
+def decimals(extent, digits=DIGITS):
     """The decimals written for rho and z of a piece whose rho or z spans `extent`, at least
     six, and more for a small piece, as a collapsing star's shrinking cap, whose chords are
-    short, so the rounding is below DIGITS of it."""
-    return max(6, math.ceil(-math.log10(DIGITS * extent)))
+    short, so the rounding is below `digits` of it."""
+    return max(6, math.ceil(-math.log10(digits * extent)))
 
 
 # x is written as the double itself, the shortest decimal that reads back as it: next to a
@@ -436,12 +592,33 @@ def end_data(end):
     return {"kind": kind, "text": text} if text else {"kind": kind}
 
 
-class Surface:
-    """A slice as a surface of revolution about the axis z: pieces and marked circles. In a
-    sequence, one surface per moment, with its `label` and `time`."""
+class Curve:
+    """A curve marked on a piece of a surface that is no circle about its axis, as a ring of free
+    particles stretched into an ellipse or a line of flow: points (X, Y, Z) in the surface's own
+    frame, the axis along Z, closed or open."""
 
-    def __init__(self, pieces, label=None, time=None):
+    def __init__(self, piece, cls, points, closed=False):
+        self.piece, self.cls, self.closed = piece, cls, closed
+        self.points = np.asarray(points, dtype=float)
+
+    def data(self):
+        d = self.piece.decimals
+        out = {"piece": self.piece.id, "class": self.cls}
+        if self.closed:
+            out["closed"] = True
+        out["points"] = [[fixed(v, d) for v in P] for P in self.points]
+        return out
+
+
+class Surface:
+    """A slice as a surface of revolution about the axis z: pieces and marked circles, and the
+    curves and points marked on it that are no circles. In a sequence, one surface per moment,
+    with its `label` and `time`."""
+
+    def __init__(self, pieces, label=None, time=None, curves=(), dots=()):
         self.pieces, self.label, self.time = pieces, label, time
+        self.curves = list(curves)
+        self.dots = list(dots)          # (piece, class, (X, Y, Z))
 
     def rings(self):
         out = []
@@ -462,6 +639,11 @@ class Surface:
             out["time"] = fixed(self.time, 6)
         out["pieces"] = [p.data() for p in self.pieces]
         out["rings"] = self.rings()
+        if self.curves:
+            out["curves"] = [c.data() for c in self.curves]
+        if self.dots:
+            out["dots"] = [{"piece": p.id, "class": cls, "at": [fixed(v, p.decimals) for v in P]}
+                           for p, cls, P in self.dots]
         return out
 
 
@@ -482,7 +664,10 @@ class Checks:
         pts = np.array(piece.data()["points"])
         x, rho, z = pts[:, 0], pts[:, 1], pts[:, 2]
         sl = piece.sl
-        chords = np.hypot(np.diff(rho), np.diff(z))
+        # In Minkowski space a chord's length is sqrt(drho^2 - dz^2), and every chord of a
+        # surface drawn there is spacelike.
+        chords = (np.sqrt(np.diff(rho) ** 2 - np.diff(z) ** 2) if sl.lorentz
+                  else np.hypot(np.diff(rho), np.diff(z)))
         proper = np.array([sl.proper(a, b) for a, b in zip(x, x[1:])])
         self.add(f"{where}: along each chord", float(np.max(np.abs(chords - proper) / proper)), ALONG)
         self.add(f"{where}: along the whole profile", abs(chords.sum() - proper.sum()) / proper.sum(), ALONG)
@@ -494,7 +679,8 @@ class Checks:
             a, b, L = x[i], x[i + 1], proper[i]
             P = np.array([rho[i], 0.0, z[i]])
             Q = np.array([rho[i + 1] * math.cos(DPHI), rho[i + 1] * math.sin(DPHI), z[i + 1]])
-            space = float(np.linalg.norm(Q - P))
+            d = Q - P
+            space = float(math.sqrt(d[0] ** 2 + d[1] ** 2 - d[2] ** 2) if sl.lorentz else np.linalg.norm(d))
             length = sl.across(a, b, DPHI / L)
             worst = max(worst, abs(space - length) / length)
         self.add(f"{where}: across, {DPHI} round the axis", worst, ACROSS)
@@ -516,6 +702,21 @@ class Checks:
     def radius(self, where, piece, rho_of, size):
         pts = np.array(piece.data()["points"])
         self.add(f"{where}: the closed form of rho", float(np.max(np.abs(pts[:, 1] - rho_of(pts[:, 0])))) / size, FORM)
+
+    def on_piece(self, where, piece, points):
+        """Every point (X, Y, Z) of a curve or a dot lies on the piece: its distance from the axis
+        within the piece's circles, and its height the profile's there, between the two points of
+        the profile it falls between, whose chord follows the profile to SAG of the size."""
+        P = np.asarray(points, dtype=float).reshape(-1, 3)
+        pts = np.array(piece.data()["points"])
+        rho, z = pts[:, 1], pts[:, 2]
+        if np.any(np.diff(rho) <= 0) and np.any(np.diff(rho) >= 0):
+            raise AssertionError(f"{where}: the profile of {piece.id} turns, so a height is not one of its radius")
+        order = np.argsort(rho)
+        r = np.hypot(P[:, 0], P[:, 1])
+        outside = float(max(0.0, np.max(rho.min() - r), np.max(r - rho.max())))
+        off = float(np.max(np.abs(P[:, 2] - np.interp(r, rho[order], z[order]))))
+        self.add(f"{where}: on the surface", max(outside, off) / piece.size, FORM)
 
     def stops(self, where, sl, xs):
         """g_xx - (drho/dx)^2 < 0 at every sample: no surface of revolution in flat space."""
@@ -816,6 +1017,10 @@ def draw_surface(fig, surface, offset=(0.0, 0.0, 0.0), meridians=24):
                 fig.line(cls, off + circle(rho, z))
             else:
                 fig.dot(cls, off + [0, 0, z])
+    for c in surface.curves:
+        fig.line(c.cls, off + c.points, closed=c.closed)
+    for _, cls, P in surface.dots:
+        fig.dot(cls, off + np.asarray(P, dtype=float))
 
 
 def densify(P, n):
@@ -1941,6 +2146,650 @@ def frw(ck, src):
 
 
 
+# ---------------------------------------------------------------- the eleven drawn last
+
+FLAT_CAMERA = Camera(-90, 55)   # a flat plane seen from well above it, so that what is marked on it shows
+
+
+def published_christoffel(src, metric_id, system_id):
+    """The published Gamma^a_bc of a chart, as {(a, b, c): sympy}, with c = 1."""
+    src.note(metric_id, system_id, ["christoffel"])
+    _, entry, R = nr.load(metric_id, system_id)
+    ull = entry["christoffel"]["variants"]["ull"]["nonzero"]
+    return {tuple(c["indices"]): R(c["value"]).subs(R.c, 1) for c in ull}, R
+
+
+def disc(sl, pid, top, centre, rim, marks=(), size=1.0, cls="sheet"):
+    """A flat piece from the centre of a plane out to the proper radius `top`, level at z = 0."""
+    return Piece(pid, cls, sl, 0.0, top / math.sqrt(float(sl.gxx)), 0.0, 1, (("axis", centre), ("edge", rim)),
+                 marks, size)
+
+
+def particles(ck, where, sl, piece, cx, cy, every=30):
+    """A ring of free particles at the chart points (cx, cy) of a flat plane, drawn as the curve
+    through all of them and as a point at every `every` of them, each checked to lie on the
+    plane, and the drawing's lengths checked against the plane's metric."""
+    P = sl.draw(cx, cy)
+    ck.on_piece(f"{where}, the ring", piece, P)
+    chord = np.linalg.norm(np.diff(P, axis=0), axis=1)
+    metric = np.sqrt(float(sl.gxx) * np.diff(cx) ** 2 + float(sl.scale[1] ** 2) * np.diff(cy) ** 2)
+    ck.add(f"{where}, the ring's steps against the plane's metric", float(np.max(np.abs(chord - metric))), 1e-12)
+    return Curve(piece, "particles", P, closed=True), [(piece, "particles", Q) for Q in P[:-1:every]]
+
+
+def minkowski(ck, src):
+    """The equator of a slice of constant t in the spherical chart: g_rr = 1 and g_phiphi = r^2,
+    so rho = r and the surface is the plane, on which a circle of radius r has circumference
+    2 pi r, the surface every other embedding diagram is measured against. Drawn out to r = 4, as
+    its spacetime diagram runs, in any unit, since flat space has none of its own. Every slice of
+    constant t of the Cartesian chart is the same flat space, which is checked."""
+    flat_slices(ck, src, "minkowski", "cartesian")
+    sl = Slice(src, "minkowski", "spherical", "r", "\\phi", {"t": 0, **EQUATOR})
+    ck.plane("Minkowski, the equator of the spherical chart", sl, np.linspace(1e-3, 20, 400))
+    top = 4.0
+    size = 2 * top
+    plane = Piece("plane", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the centre $r = 0$"), ("edge", "the plane runs on to $r \\to \\infty$")),
+                  [(r, "r", None) for r in (1.0, 2.0, 3.0, top)], size)
+    ck.isometry("Minkowski, the plane", plane)
+    ck.radius("Minkowski, the plane rho = r", plane, lambda r: r, size)
+    ck.form("Minkowski, the plane z = 0", plane, np.zeros_like, size)
+    surface = Surface([plane])
+    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
+    ring_label(fig, [0, 0, 0], *plane.at(1.0), "$r = \\ell$")
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$4\\,\\ell$")
+    fig.legend("fill", "cover", "the plane, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $\\ell$, $2\\ell$, $3\\ell$ and $4\\ell$, each of circumference $2\\pi r$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("plane", "The plane", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell$, any length, the unit of every length, since flat space has none of its own.")]
+
+
+def krasnikov(ck, src):
+    """The tube the spacetime diagram declares, along x from 0 to D = 4 behind a ship that left
+    x = 0 at t = 0 at the speed of light, at x = D/2 and ct = 3, after the ship has passed. At
+    constant t the published metric is k dx^2 + dr^2 + r^2 dphi^2, and where k < 0 the direction
+    along the tube is timelike, so the slice of constant t is not a moment of space there; the
+    surface of constant t and x across the tube is, dr^2 + r^2 dphi^2 whatever k is, a flat disc,
+    on which the circle k = 0, the zero of the published g_xx, is marked: inside it the direction
+    along the tube, square to the drawing, is a time."""
+    T, X = 3, 2
+    sl = Slice(src, "krasnikov", "cylindrical", "r", "\\phi", {"t": T, "x": X})
+    ck.plane("Krasnikov, the cross-section of constant t and x", sl, np.linspace(1e-3, 3, 300))
+    _, entry, R = nr.load("krasnikov", "cylindrical")
+    g = nr.published_matrix(R, entry, "metric_components")
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    tube = sp.sympify(nr._KRASNIKOV_TUBE, locals=names)
+    gxx = g[1, 1].subs(R.parameters["k"], tube).subs({R.symbol["t"]: T, R.symbol["x"]: X, R.c: 1})
+    along = sp.lambdify(R.symbol["r"], gxx, "numpy")
+    wall = float(sp.nsolve(gxx, R.symbol["r"], 0.98))
+    ck.add("Krasnikov: the published g_xx vanishes on the circle marked", abs(float(along(wall))), 1e-12)
+    inside, outside = np.linspace(0, wall, 200)[:-1], np.linspace(wall, 3, 200)[1:]
+    ck.add("Krasnikov: inside it g_xx < 0, so the direction along the tube is a time",
+           float(max(0.0, np.max(along(inside)))), 0.0)
+    ck.add("Krasnikov: outside it g_xx > 0", float(max(0.0, -np.min(along(outside)))), 0.0)
+    ck.items[-2]["ok"] = bool(np.all(along(inside) < 0))
+    ck.items[-1]["ok"] = bool(np.all(along(outside) > 0))
+    top = 2.0
+    size = 2 * top
+    section = Piece("section", "sheet", sl, 0.0, top, 0.0, 1,
+                    (("axis", "the axis of the tube, $r = 0$"), ("edge", "the plane runs on, flat, to $r \\to \\infty$")),
+                    [(0.5, "r", None), (wall, "wall", "$k = 0$"), (1.5, "r", None), (top, "r", None)], size)
+    ck.isometry("Krasnikov, the cross-section", section)
+    ck.radius("Krasnikov, the cross-section rho = r", section, lambda r: r, size)
+    surface = Surface([section])
+    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
+    ring_label(fig, [0, 0, 0], *section.at(wall), "$k = 0$")
+    ring_label(fig, [0, 0, 0], *section.at(top), "$2\\rho_0$")
+    fig.legend("fill", "cover", "the cross section of constant $t$ and $x$, which $r$ and $\\phi$ cover, flat")
+    fig.legend("line", "wall", f"$k = 0$, at $r = {wall:.3f}\\,\\rho_0$: inside it the direction along the tube is a time")
+    fig.legend("line", "r", "$r$ constant, at $\\rho_0/2$, $3\\rho_0/2$ and $2\\rho_0$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("section", "Across the tube", "$\\rho_0$", [surface], fig.done(),
+                 settings="$ct = 3$ and $x = 2$, halfway along the tube and after the ship has passed, with "
+                          "$\\rho_0 = 1$, the unit of every length.",
+                 input="A tube along $x$ from $0$ to $D = 4$, built by a ship that left $x = 0$ at $t = 0$ at the "
+                       "speed of light: $k = 1 - (2 - \\delta)\\,S(\\tfrac{\\rho_0^2 - r^2}{2\\rho_0})\\,S(ct - x)"
+                       "\\,S(x)\\,S(D - x)$ with $\\delta = 0.2$, $\\rho_0 = 1$ and $S$ a step of width $0.15$ built "
+                       "from $\\tanh$, as the spacetime diagram declares.",
+                 stops=["The slice of constant $t$ is not a moment of space inside the circle $k = 0$, where the "
+                        "direction along the tube is timelike, so only its cross sections of constant $x$ are drawn."])]
+
+
+def expansion(src, metric_id, system_id, functions, t0):
+    """The expansion of the observers who ride the slices of constant t, theta = div n with n_mu
+    = -N dt, from the published metric with the declared functions, as a numpy function of the
+    plane z = 0 at t = t0."""
+    _, entry, R = nr.load(metric_id, system_id)
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    names.update(R.parameters)
+    g = nr.published_matrix(R, entry, "metric_components").subs(R.c, 1)
+    for k, v in functions.items():
+        g = g.subs(R.parameters[k], sp.sympify(v, locals=names)).doit()
+    X = [R.symbol[c] for c in entry["coords"]]
+    gi, root = g.inv(), sp.sqrt(-g.det())
+    lapse = 1 / sp.sqrt(-gi[0, 0])
+    n = [-lapse * gi[a, 0] for a in range(4)]
+    theta = sum(sp.diff(root * n[a], X[a]) for a in range(4)) / root
+    return sp.lambdify((X[1], X[2]), theta.subs({X[0]: t0, X[3]: 0}), "numpy"), sp.simplify(root)
+
+
+def crescent(theta, level, around, reach=(0.2, 2.5), n=241):
+    """The closed curve theta = level about the direction `around` from the origin, where theta
+    along each ray has one extreme of the level's sign: the inner and outer roots on each ray, from
+    one tip, where the extreme reaches the level, to the other."""
+    sign = np.sign(level)
+
+    def ray(a):
+        return lambda r: float(theta(r * math.cos(a), r * math.sin(a)))
+
+    def peak(a):
+        f = ray(a)
+        from scipy.optimize import minimize_scalar
+        m = minimize_scalar(lambda r: -sign * f(r), bounds=reach, method="bounded", options={"xatol": 1e-12})
+        return m.x, f(m.x)
+    from scipy.optimize import brentq
+    tip = brentq(lambda d: sign * (peak(around + d)[1] - level), 0.0 + 1e-9, math.pi / 2 - 1e-9, xtol=1e-14)
+    # Angles bunched toward the tips, where the two roots close on each other.
+    turns = around + tip * np.sin(np.linspace(-math.pi / 2, math.pi / 2, n))[1:-1]
+    inner, outer = [], []
+    for a in turns:
+        f, (rp, _) = ray(a), peak(a)
+        inner.append(brentq(lambda r: f(r) - level, reach[0], rp, xtol=1e-14))
+        outer.append(brentq(lambda r: f(r) - level, rp, reach[1], xtol=1e-14))
+    ends = [peak(around - tip)[0], peak(around + tip)[0]]
+    a = np.concatenate([[around - tip], turns, [around + tip], turns[::-1]])
+    r = np.concatenate([[ends[0]], inner, [ends[1]], outer[::-1]])
+    return np.column_stack([r * np.cos(a), r * np.sin(a), np.zeros_like(r)])
+
+
+def alcubierre(ck, src):
+    """The plane z = 0 of the ship's path at t = 0, where the declared profile centres the bubble
+    on x = 0, v_s = 2 and Alcubierre's f with R = 1 and sigma = 4, as the spacetime diagram
+    declares: flat, dx^2 + dy^2, a disc about the ship out to 3R. Marked on it, the circle
+    v_s f = 1, the zero of the published g_tt, and the curves where the expansion of the observers
+    who ride the slices, theta = div n = v_s df/dx, taken from the published metric, is half its
+    greatest value: a crescent ahead, where space contracts, and one behind, where it expands."""
+    fns = {"v_s": "2", "f": nr._alcubierre_profile()}
+    # The profile runs along y from the ship and the path along the drawing's Y, away from the
+    # reader at the start, so that the ends of the circles on the page stand clear of the path.
+    sl = FlatPlane(src, "alcubierre", "cartesian", "y", "x", {"t": 0, "z": 0}, functions=fns)
+    _, entry, R = nr.load("alcubierre", "cartesian")
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    names.update(R.parameters)
+    g = nr.published_matrix(R, entry, "metric_components")
+    gtt = g[0, 0]
+    for k, v in fns.items():
+        gtt = gtt.subs(R.parameters[k], sp.sympify(v, locals=names)).doit()
+    gtt = gtt.subs({R.symbol["t"]: 0, R.symbol["x"]: 0, R.symbol["z"]: 0, R.c: 1})
+    wall = float(sp.nsolve(gtt, R.symbol["y"], 1.0))
+    ck.add("Alcubierre: the published g_tt vanishes on the circle v_s f = 1", abs(float(gtt.subs(R.symbol["y"], wall))), 1e-12)
+    theta, root = expansion(src, "alcubierre", "cartesian", fns, 0)
+    ck.exact("Alcubierre: sqrt(-g) = 1, so the expansion is the divergence of n", root == 1)
+    rs = sp.Symbol("rs", positive=True)
+    f_of = (sp.tanh(4 * (rs + 1)) - sp.tanh(4 * (rs - 1))) / (2 * sp.tanh(4))
+    df = sp.lambdify(rs, sp.diff(f_of, rs), "numpy")
+    pts = np.random.default_rng(3).uniform(-3, 3, (2000, 2))
+    rr = np.hypot(pts[:, 0], pts[:, 1])
+    ck.add("Alcubierre: the expansion is v_s (x/r_s) df/dr_s", float(np.max(np.abs(theta(pts[:, 0], pts[:, 1])
+                                                                                 - 2 * pts[:, 0] / rr * df(rr)))), 1e-12)
+    from scipy.optimize import minimize_scalar
+    best = minimize_scalar(lambda r: -float(theta(-r, 0.0)), bounds=(0.5, 1.5), method="bounded",
+                           options={"xatol": 1e-12})
+    most = float(theta(-best.x, 0.0))
+    ahead = crescent(theta, -most / 2, 0.0)
+    behind = crescent(theta, most / 2, math.pi)
+    for name, curve, level in (("ahead", ahead, -most / 2), ("behind", behind, most / 2)):
+        ck.add(f"Alcubierre, the crescent {name}: theta is half its greatest value on it",
+               float(np.max(np.abs(theta(curve[:, 0], curve[:, 1]) - level))), 1e-9)
+    # From the chart's (x, y) to the drawing's (X, Y) = (y, x).
+    ahead, behind = ahead[:, [1, 0, 2]], behind[:, [1, 0, 2]]
+    top = 3.0
+    size = 2 * top
+    plane = disc(sl, "plane", top, "the ship, at the centre of the bubble", "the plane runs on, flat, to $r_s \\to \\infty$",
+                 [(wall, "wall", "$v_sf = 1$")], size)
+    ck.isometry("Alcubierre, the plane of the path", plane)
+    ck.radius("Alcubierre, the plane rho = y", plane, lambda y: y, size)
+    path = np.column_stack([np.zeros(241), np.linspace(-top, top, 241), np.zeros(241)])
+    for name, curve in (("ahead", ahead), ("behind", behind), ("the path", path)):
+        ck.on_piece(f"Alcubierre, {name}", plane, curve)
+    surface = Surface([plane], curves=[Curve(plane, "contract", ahead, closed=True),
+                                       Curve(plane, "expand", behind, closed=True), Curve(plane, "path", path)])
+    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
+    ring_label(fig, [0, 0, 0], *plane.at(wall), "$v_sf = 1$")
+    fig.legend("fill", "cover", "the plane $z = 0$ of the ship's path at $t = 0$, flat")
+    fig.legend("line", "path", "the ship's path, along $x$, the ship heading toward the crescent where space contracts")
+    fig.legend("line", "wall", "$v_sf = 1$, where $g_{tt} = 0$")
+    fig.legend("line", "contract", f"$\\theta = -{most / 2:.2f}/R$, half the fastest contraction, ahead of the ship")
+    fig.legend("line", "expand", f"$\\theta = {most / 2:.2f}/R$, half the fastest expansion, behind it")
+    fig.legend("line", "meridian", "straight lines from the ship, every $15°$")
+    return [view("plane", "The plane of the path", "$R$", [surface], fig.done(),
+                 settings="$t = 0$, when the bubble is centred on $x = 0$, with $R = 1$, the unit of every length.",
+                 input="$v_s = 2$, and Alcubierre's own profile, "
+                       "$f = [\\tanh\\sigma(r_s + R) - \\tanh\\sigma(r_s - R)]/(2\\tanh\\sigma R)$ with $R = 1$ and "
+                       "$\\sigma = 4$, as the spacetime diagram declares.")]
+
+
+def natario(ck, src):
+    """The plane z = 0 of the ship's path at t = 0 in Natario's flow chart, with the zero
+    expansion field the spacetime diagram declares: flat, a disc about the ship out to 3R, with
+    the circle r_s = R, the middle of the wall, and three pairs of the lines along which the
+    declared field carries space, found by following the field from where each crosses the ship's
+    plane x = 0 at y = +-0.2, 0.4 and 0.6 R until it returns there. Inside the bubble they run along
+    the path, and every one closes through the wall, since the field is divergence free and zero
+    outside."""
+    fns = nr._natario_field()
+    # The path along the drawing's Y, as Alcubierre's.
+    sl = FlatPlane(src, "natario", "cartesian_flow", "y", "x", {"t": 0, "z": 0}, functions=fns)
+    tt, xx, yy, zz = sp.symbols("t x y z", real=True)
+    loc = {"t": tt, "x": xx, "y": yy, "z": zz}
+    U = sp.lambdify((xx, yy), sp.sympify(fns["u"], locals=loc).subs({tt: 0, zz: 0}), "numpy")
+    V = sp.lambdify((xx, yy), sp.sympify(fns["v"], locals=loc).subs({tt: 0, zz: 0}), "numpy")
+    from scipy.integrate import solve_ivp
+
+    def flow(_, P):
+        u, v = float(U(*P)), float(V(*P))
+        speed = math.hypot(u, v)
+        return [u / speed, v / speed]
+
+    def back(_, P):
+        return P[0]
+    back.direction = 1
+    lines = []
+    for y0 in (0.2, 0.4, 0.6, -0.2, -0.4, -0.6):
+        # Start just past x = 0 so that the first crossing of x = 0 met is the return.
+        run = solve_ivp(flow, (0, 40), [1e-9, y0], rtol=1e-12, atol=1e-13, events=back, dense_output=True,
+                        max_step=0.01)
+        end = run.t_events[0][0]
+        P = run.sol(np.linspace(0, end, 601)).T
+        ck.add(f"Natario, the flow line through y = {y0}: it closes", float(np.hypot(*(P[-1] - P[0]))), 1e-8)
+        # A field that is axisymmetric about the path and divergence free runs along the level
+        # curves of Stokes's stream function, Psi = integral of y u dy from the path, which is
+        # taken from the declared field and checked to hold one value along the line.
+        psi = [integrate(lambda w, x=x: w * float(U(x, w)), 0.0, y) for x, y in P[::20]]
+        ck.add(f"Natario, the flow line through y = {y0}: Stokes's stream function holds one value on it",
+               float(np.ptp(psi) / abs(np.mean(psi))), 1e-8)
+        lines.append(np.column_stack([P[:, 1], P[:, 0], np.zeros(len(P))]))
+    top = 3.0
+    size = 2 * top
+    plane = disc(sl, "plane", top, "the ship, at the centre of the bubble", "the plane runs on, flat, to $r_s \\to \\infty$",
+                 [(1.0, "wall", "$r_s = R$")], size)
+    ck.isometry("Natario, the plane of the path", plane)
+    for k, P in enumerate(lines):
+        ck.on_piece(f"Natario, flow line {k}", plane, P)
+    path = np.column_stack([np.zeros(241), np.linspace(-top, top, 241), np.zeros(241)])
+    ck.on_piece("Natario, the path", plane, path)
+    surface = Surface([plane], curves=[Curve(plane, "flow", P, closed=True) for P in lines]
+                      + [Curve(plane, "path", path)])
+    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
+    ring_label(fig, [0, 0, 0], *plane.at(1.0), "$r_s = R$")
+    fig.legend("fill", "cover", "the plane $z = 0$ of the ship's path at $t = 0$, flat")
+    fig.legend("line", "path", "the ship's path, along $x$")
+    fig.legend("line", "wall", "$r_s = R$, the middle of the wall")
+    fig.legend("line", "flow", "lines of the flow, forward through the bubble and back round it through the wall")
+    fig.legend("line", "meridian", "straight lines from the ship, every $15°$")
+    return [view("plane", "The plane of the path", "$R$", [surface], fig.done(),
+                 settings="$t = 0$, when the bubble is centred on $x = 0$, with $R = 1$, the unit of every length.",
+                 input="$v_s = 2$, $n = f/2$ with Alcubierre's profile, and the zero expansion field "
+                       "$X = v_s[(2n + \\rho n')\\,e_x - n'\\,x_r\\,(x_r, y, z)/\\rho]$, $x_r = x - v_s t$, as the "
+                       "spacetime diagram declares.")]
+
+
+def lentz(ck, src):
+    """The plane y = 0 of the soliton's path along z, at one moment: flat, dz^2 + dx^2, for every
+    potential phi, since Lentz fixed flat slices to define the class. His soliton exists only as a
+    numerical integral over his rhomboid sources, so no potential is written in its place, and
+    the disc about the soliton's centre carries its path alone, in any unit."""
+    sl = FlatPlane(src, "lentz", "cartesian", "x", "z", {"t": 0, "y": 0})
+    top = 3.0
+    size = 2 * top
+    plane = disc(sl, "plane", top, "the soliton's centre", "the plane runs on, flat, to infinity", [], size)
+    ck.isometry("Lentz, the plane of the path", plane)
+    path = np.column_stack([np.zeros(241), np.linspace(-top, top, 241), np.zeros(241)])
+    ck.on_piece("Lentz, the path", plane, path)
+    surface = Surface([plane], curves=[Curve(plane, "path", path)])
+    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
+    fig.legend("fill", "cover", "the plane $y = 0$ of the soliton's path, flat for every potential $\\phi$")
+    fig.legend("line", "path", "the soliton's path, along $z$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $15°$")
+    return [view("plane", "The plane of the path", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell$, any length, the unit of every length, since without a potential the metric "
+                          "has none.")]
+
+
+def at_rest(ck, src, metric_id, system_id):
+    """The published Christoffel symbols have no Gamma^i_tt, so a particle at rest in the chart
+    stays at rest, and a ring of them keeps its chart positions."""
+    gamma, _ = published_christoffel(src, metric_id, system_id)
+    ck.exact(f"{metric_id}: no published Gamma^i_tt, so particles at rest in the chart stay there",
+             not any(ix[1:] == ("t", "t") and ix[0] != "t" for ix in gamma))
+
+
+def ring_sequence(ck, src, name, metric_id, system_id, moments, top, params=None):
+    """A flat plane of x and z at each moment, (label, time, fixed, functions), with a ring of
+    particles at rest on the unit circle of the chart, which each moment stretches into an
+    ellipse of semi-axes sqrt(g_xx) and sqrt(g_zz), checked."""
+    size = 2 * top
+    alpha = np.linspace(0, 2 * math.pi, 361)
+    surfaces = []
+    for label, time, fixed_at, functions in moments:
+        sl = FlatPlane(src, metric_id, system_id, "x", "z", fixed_at, params, functions)
+        where = f"{name}, {label}"
+        plane = disc(sl, "plane", top, "the centre of the ring", "the plane runs on, flat, to infinity", [], size)
+        ck.isometry(where, plane)
+        ring, dots = particles(ck, where, sl, plane, np.cos(alpha), np.sin(alpha))
+        surfaces.append(Surface([plane], label=label, time=time, curves=[ring], dots=dots))
+    return surfaces
+
+
+def kasner(ck, src):
+    """The plane y = 0 at t = 1/4, 1/2, 1 and 2, at the exponents (-2/7, 3/7, 6/7) the spacetime
+    diagrams declare, each flat, t^(2 p_1) dx^2 + t^(2 p_3) dz^2, with the ring of particles at
+    rest on x^2 + z^2 = l^2, which the published Christoffel symbols keep at rest: the ellipse of
+    semi-axes t^p_1 l and t^p_3 l, along the direction that contracts and the one that expands
+    fastest."""
+    p = (sp.Rational(-2, 7), sp.Rational(3, 7), sp.Rational(6, 7))
+    ck.exact("Kasner: the exponents sum to 1, and so do their squares", sum(p) == 1 and sum(q * q for q in p) == 1)
+    at_rest(ck, src, "kasner", "cartesian")
+    params = {"p_1": "-2/7", "p_2": "3/7", "p_3": "6/7"}
+    moments = [(f"$t = {s}$", float(sp.Rational(s)), {"t": s, "y": 0}, None) for s in ("1/4", "1/2", "1", "2")]
+    surfaces = ring_sequence(ck, src, "Kasner", "kasner", "cartesian", moments, 2.0, params)
+    for s, (_, time, _, _) in zip(surfaces, moments):
+        P = s.curves[0].points
+        a = np.linspace(0, 2 * math.pi, 361)
+        want = np.column_stack([time ** (-2 / 7) * np.cos(a), time ** (6 / 7) * np.sin(a)])
+        ck.add(f"Kasner, t = {time}: the ellipse of semi-axes t^p_1 and t^p_3", float(np.max(np.abs(P[:, :2] - want))), 1e-12)
+    fig = sequence_figure(surfaces, {"sheet": "cover"}, 4.0, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
+    fig.legend("line", "particles", "a ring of particles at rest in the chart on $x^2 + z^2 = \\ell^2$, with twelve of them "
+                                    "marked: an ellipse reaching $t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    return [view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(),
+                 settings="$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ and $t$ in the unit the powers are read in, with $\\ell$ "
+                          "the ring's radius at $t = 1$, the unit of every length.",
+                 input="Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, a point on the Kasner circle, as the spacetime "
+                       "diagrams declare.")]
+
+
+def bianchi(ck, src):
+    """The plane y = 0 at four moments of the dust the spacetime diagram declares, solved from
+    this spacetime's own G^x_x = G^y_y = G^z_z = 0 by null_rays.DustSolver: flat at each,
+    a_1^2 dx^2 + a_3^2 dz^2, with the ring of dust on x^2 + z^2 = l^2, at rest in the chart as the
+    published Christoffel symbols keep it: the ellipse of semi-axes a_1 l and a_3 l."""
+    solver = nr.DustSolver("bianchi", "type_i_cartesian", "t", **nr.BIANCHI_DUST)
+    src.note("bianchi", "type_i_cartesian", ["einstein_tensor"])
+    at_rest(ck, src, "bianchi", "type_i_cartesian")
+    moments = []
+    for t in (0.1, solver.t_ref, 1.0, 2.0):
+        y = solver.state(np.array([t]))[:, 0]
+        functions = {"a_1": repr(float(y[0])), "a_2": repr(float(y[2])), "a_3": repr(float(y[4]))}
+        moments.append((f"$c\\bar Ht = {t:.2f}$", float(t), {"t": repr(float(t)), "y": 0}, functions))
+    surfaces = ring_sequence(ck, src, "Bianchi I", "bianchi", "type_i_cartesian", moments, 3.5)
+    for s, (_, t, _, fn) in zip(surfaces, moments):
+        P = s.curves[0].points
+        a = np.linspace(0, 2 * math.pi, 361)
+        want = np.column_stack([float(fn["a_1"]) * np.cos(a), float(fn["a_3"]) * np.sin(a)])
+        ck.add(f"Bianchi I, t = {t:.4f}: the ellipse of semi-axes a_1 and a_3", float(np.max(np.abs(P[:, :2] - want))), 1e-12)
+    fig = sequence_figure(surfaces, {"sheet": "cover"}, 7.0, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
+    fig.legend("line", "particles", "a ring of the dust on $x^2 + z^2 = \\ell^2$, with twelve of its grains marked: an "
+                                    "ellipse reaching $a_1\\ell$ along $x$ and $a_3\\ell$ along $z$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    return [view("ring", "A ring of dust", "$\\ell$", surfaces, fig.done(),
+                 settings="$t$ in units of $1/\\bar H$ from the singularity, with $\\ell$ the ring's radius where "
+                          "$a_1 = a_2 = a_3 = 1$, the unit of every length.",
+                 input="Dust: the three scale factors solved from this spacetime's own $G^x{}_x = G^y{}_y = G^z{}_z = 0$, "
+                       "starting from $a_i = 1$ with rates $(-0.5, 1.5, 2.0)\\,\\bar H$, $\\bar H$ their mean, as the "
+                       "spacetime diagram declares.")]
+
+
+def pp_wave(ck, src):
+    """The wave front at four values of u of the pulse A = exp(-u^2), B = 0 the spacetime diagram
+    declares, in units of L: a surface of constant u has the metric dx^2 + dy^2 whatever v is on
+    it, flat. The ring is 360 free particles at rest on x^2 + y^2 = L^2 before the pulse, each run
+    from cu = -8 with the published Christoffel symbols, u being affine on every geodesic since no
+    Gamma^u is published: x'' = -Gamma^x_uu and y'' = -Gamma^y_uu. The pulse stretches the ring
+    along x and squeezes it along y until every particle reaches the x axis at once."""
+    gamma, R = published_christoffel(src, "pp_wave", "exact_plane_wave")
+    ck.exact("pp-wave: no published Gamma^u, so u is an affine parameter", not any(ix[0] == "u" for ix in gamma))
+    ck.exact("pp-wave: the only published Gamma^x and Gamma^y are Gamma^x_uu and Gamma^y_uu",
+             {ix for ix in gamma if ix[0] in ("x", "y")} == {("x", "u", "u"), ("y", "u", "u")})
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    decl = {R.parameters["A"]: sp.exp(-names["u"] ** 2), R.parameters["B"]: sp.Integer(0)}
+    args = (names["u"], names["x"], names["y"])
+    gx = sp.lambdify(args, gamma[("x", "u", "u")].subs(decl).doit(), "numpy")
+    gy = sp.lambdify(args, gamma[("y", "u", "u")].subs(decl).doit(), "numpy")
+    from scipy.integrate import solve_ivp
+    from scipy.optimize import brentq
+    alpha = np.linspace(0, 2 * math.pi, 361)[:-1]
+    n = len(alpha)
+
+    def rhs(u, w):
+        x, y = w[:n], w[n:2 * n]
+        return np.concatenate([w[2 * n:3 * n], w[3 * n:], -gx(u, x, y) * np.ones(n), -gy(u, x, y) * np.ones(n)])
+    start = np.concatenate([np.cos(alpha), np.sin(alpha), np.zeros(2 * n)])
+    run = solve_ivp(rhs, (-8, 2), start, rtol=1e-12, atol=1e-14, dense_output=True)
+    focus = brentq(lambda u: run.sol(u)[n + 90], 0, 1.5, xtol=1e-15)
+    ck.add("pp-wave: at the focus every particle is on the x axis", float(np.max(np.abs(run.sol(focus)[n:2 * n]))), 1e-9)
+    top = 3.0
+    surfaces = []
+    for u in (-3.0, -0.5, 0.0, focus):
+        sl = FlatPlane(src, "pp_wave", "exact_plane_wave", "x", "y", {"u": repr(u), "v": 0},
+                       functions={"A": "exp(-u**2)", "B": "0"})
+        where = f"pp-wave, cu = {u:.4f}"
+        plane = disc(sl, "plane", top, "the centre of the ring", "the wave front runs on, flat, to infinity", [], 2 * top)
+        ck.isometry(where, plane)
+        w = run.sol(u)
+        cx, cy = np.append(w[:n], w[0]), np.append(w[n:2 * n], w[n])
+        X, Y = w[0], w[n + 90]
+        ck.add(f"{where}: the ring is the ellipse X cos(alpha), Y sin(alpha)",
+               float(np.max(np.abs(np.column_stack([cx, cy]) - np.column_stack([X * np.cos(np.append(alpha, 0)),
+                                                                                  Y * np.sin(np.append(alpha, 0))])))), 1e-9)
+        ring, dots = particles(ck, where, sl, plane, cx, cy)
+        label = "$cu = " + (f"{u:g}" if u != focus else f"{u:.2f}") + "\\,L$"
+        surfaces.append(Surface([plane], label=label, time=u, curves=[ring], dots=dots))
+    fig = sequence_figure(surfaces, {"sheet": "cover"}, 2 * top, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig.legend("fill", "cover", "the wave front at each moment, flat")
+    fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = L^2$ before the pulse, with twelve of them "
+                                    "marked")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    return [view("ring", "A ring of particles", "$L$", surfaces, fig.done(),
+                 settings="$L = 1$, the unit of every length and of $cu$; each moment is the wave front of one $u$.",
+                 input="A pulse of the plus polarisation, $A = e^{-u^2}/L^2$ and $B = 0$, as the spacetime diagram declares.")]
+
+
+def malament_hogarth(ck, src):
+    """The plane z = 0 about the removed event at ct = -0.7, -0.3, -0.1 and 0, with the conformal
+    factor the spacetime diagram declares, which depends only on c^2t^2 + x^2 + y^2 + z^2: turned
+    about the origin the plane is a surface of revolution with g_ss = Omega^2 and rho = s Omega,
+    and -s Omega'(2 Omega + s Omega') >= 0 everywhere, so it is drawn whole: a well inside the
+    unit ball, where Omega > 1, flat outside. At ct = 0 the well has no bottom: rho -> 1 while
+    the distance down grows as ln(1/s), a tube, drawn to s = 0.03, and its length from the rim to
+    s is the proper time of the computer on the axis from ct = -1 to -s, which is checked."""
+    fn = {"Omega": nr._MH_FACTOR}
+    top = 1.5
+    size = 2 * top
+    surfaces = []
+    for T in ("-7/10", "-3/10", "-1/10", "0"):
+        t = float(sp.Rational(T))
+        sl = Slice(src, "malament_hogarth", "cartesian", "x", None, {"t": T, "z": 0}, functions=fn, turn="y")
+        # The edge of the region where Omega > 1, a part in 1e12 inside it, where the declared
+        # Omega is 1 to every digit and the float c^2t^2 + s^2 cannot land on the far side of 1.
+        rim = math.sqrt(1 - t * t) * (1 - 1e-12)
+        where = f"Malament-Hogarth, ct = {T}"
+        lo = 0.03 if t == 0 else 0.0
+        start = (("edge", "the tube runs on for ever toward the removed event") if t == 0
+                 else ("axis", "the centre, straight below the removed event in time"))
+        marks = [(s, "r", None) for s in (0.1, 0.3, 0.5) if lo < s < rim] + [(rim, "surface", None)]
+        well = Piece("well", "star", sl, lo, rim, 0.0, 1, (start, ("join", "the edge of the region where $\\Omega > 1$")),
+                     marks, size)
+        flat = Piece("flat", "sheet", sl, rim, top, well.z[-1], 1,
+                     (("join", "the edge of the region where $\\Omega > 1$"), ("edge", "the plane runs on, flat")),
+                     [(1.0, "r", None)] if rim < 1.0 - 1e-9 else [], size)
+        ck.isometry(f"{where}, the well", well)
+        ck.isometry(f"{where}, the flat plane", flat)
+        ck.join(f"{where}, the well meets the flat plane", well, rim, flat, rim)
+        ck.plane(f"{where}, beyond the region where Omega > 1", sl, np.linspace(rim + 1e-6, 3, 300))
+        surfaces.append(Surface([well, flat], label=f"$ct = {t:g}$", time=t))
+        if t == 0:
+            _, entry, R = nr.load("malament_hogarth", "cartesian")
+            g = nr.published_matrix(R, entry, "metric_components")
+            names = {R._plain(n): s for n, s in R.symbol.items()}
+            omega = sp.sympify(nr._MH_FACTOR, locals=names)
+            gtt = g[0, 0].subs(R.parameters["Omega"], omega).subs({names["x"]: 0, names["y"]: 0, names["z"]: 0, R.c: 1})
+            clock = sp.lambdify(names["t"], sp.sqrt(-gtt), "numpy")
+            for s in (0.03, 0.1, 0.3):
+                length = sl.proper(s, 1.0)
+                ticks = integrate(lambda v: float(clock(v)), -1.0, -s)
+                ck.add(f"Malament-Hogarth: the tube from its rim down to s = {s} is as long as the computer's clock "
+                       f"runs from ct = -1 to -{s}", abs(length - ticks) / ticks, 1e-10)
+    fig = sequence_figure(surfaces, {"star": "star", "sheet": "cover"}, 4.0, columns=2, camera=Camera(-90, 22), meridians=12)
+    fig.legend("fill", "star", "inside the unit ball about the removed event, where $\\Omega > 1$")
+    fig.legend("fill", "cover", "outside it, where $\\Omega = 1$ and the plane is flat")
+    fig.legend("line", "surface", "the edge of the region where $\\Omega > 1$")
+    fig.legend("line", "r", "$s$ constant, at $0.1$, $0.3$, $0.5$ and $1$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("plane", "Toward the removed event", "$1$", surfaces, fig.done(),
+                 settings="$c\\,t$ and every length in the unit the declared $\\Omega$ is written in, the radius of the "
+                          "region where $\\Omega > 1$; each moment is the plane $z = 0$ of one $t$.",
+                 input="$\\Omega = 1 + e^{1 - 1/(1 - \\varrho^2)}/\\varrho$ for $\\varrho^2 = c^2t^2 + x^2 + y^2 + z^2 < 1$ and "
+                       "$\\Omega = 1$ beyond, as the spacetime diagram declares.",
+                 stops=["At $ct = 0$ the tube runs on without end toward the removed event, and is drawn down to "
+                        "$s = 0.03$."])]
+
+
+def anti_de_sitter(ck, src):
+    """The static slice's equator, g_rr = 1/(1 + r^2/L^2) and g_phiphi = r^2, at L = 1: its circles
+    grow faster than the distance out to them at every r > 0, which is checked, so no surface of
+    revolution in flat space carries it. In three dimensional Minkowski space, dX^2 + dY^2 - dZ^2,
+    it climbs at dZ/dr = sqrt((drho/dr)^2 - g_rr) = r/sqrt(1 + r^2): the hyperboloid Z = sqrt(1 +
+    r^2) - 1, on which the whole hyperbolic plane lies, drawn to r = 4 with the light cone it nears
+    as a reference."""
+    sl = Slice(src, "anti_de_sitter", "static_global", "r", "\\phi", {"t": 0, **EQUATOR}, {"L": 1}, space="minkowski")
+    ck.stops("anti-de Sitter, the equator of the static chart in flat space", sl, np.linspace(1e-3, 20, 400))
+    top = 4.0
+    size = 2 * top
+    sheet = Piece("sheet", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the centre $r = 0$"), ("edge", "the sheet runs on toward the light cone, to $r \\to \\infty$")),
+                  [(r, "r", None) for r in (1.0, 2.0, 3.0, top)], size)
+    cone = FormPiece("cone", sl, np.linspace(0.0, top, 81), lambda r: r, lambda r: r - 1.0,
+                     (("apex", "the apex of the light cone, a distance $L$ below the centre"),
+                      ("edge", "the cone runs on")), size)
+    ck.isometry("anti-de Sitter, the sheet", sheet)
+    ck.form("anti-de Sitter, the hyperboloid Z = sqrt(L^2 + r^2) - L", sheet, lambda r: np.sqrt(1 + r * r) - 1, size)
+    ck.radius("anti-de Sitter, rho = r", sheet, lambda r: r, size)
+    surface = Surface([sheet, cone])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(1.0), "$r = L$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$4L$")
+    fig.legend("fill", "cover", "the equator of the static slice at $t = 0$, which $t$ and $r$ cover whole")
+    fig.legend("line", "r", "$r$ constant, at $L$, $2L$, $3L$ and $4L$, a proper distance $0.88$, $0.56$, $0.37$ and "
+                            "$0.28\\,L$ apart")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears as "
+                                    "$r \\to \\infty$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("hyperboloid", "In Minkowski space", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length, and every length along the sheet measured with "
+                          "$dX^2 + dY^2 - dZ^2$.",
+                 space="minkowski",
+                 stops=["At every $r > 0$ the circles grow faster than the distance out to them, $g_{rr} < "
+                        "(\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, so no surface of revolution in flat space carries the "
+                        "slice, and it is drawn in Minkowski space instead."])]
+
+
+TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
+
+
+def taub(T):
+    """a_1 = a_2 = a and a_3 = b of Taub's universe at Taub's time T, exact in sympy."""
+    m, l = TAUB
+    U = (-T ** 2 + 2 * m * T + l ** 2) / (T ** 2 + l ** 2)
+    return sp.sqrt(T ** 2 + l ** 2), 2 * l * sp.sqrt(U), U
+
+
+def mixmaster(ck, src):
+    """The great two sphere of the slice at five moments of Abraham Taub's universe, the member of
+    the family with a_1 = a_2, at m = 1 and l = 1/2 as Taub-NUT declares, checked to make every
+    published Einstein component vanish. Through the identity the great sphere is psi + phi = 0 mod
+    2 pi: the hemispheres psi = -phi and psi = 2 pi - phi of theta and phi, on which, with a_1 = a_2
+    = a and a_3 = b, the published metric pulls back to a^2 dtheta^2 + (a^2 sin^2 theta + b^2 (1 -
+    cos theta)^2) dphi^2, a surface of revolution about the axis through the identity, meeting its
+    twin at the equator theta = pi, a fibre of psi of circumference 4 pi b. Near the pole g_thth -
+    (drho/dtheta)^2 = (1 - 3b^2/4a^2) a^2 theta^2, so where b > 2a/sqrt(3) the drawing is the band
+    about the equator out to where that vanishes."""
+    m, l = TAUB
+    T = sp.Symbol("T", real=True)
+    a, b, U = taub(T)
+    _, entry, R = nr.load("mixmaster", "euler_angles")
+    src.note("mixmaster", "euler_angles", ["einstein_tensor"])
+    t = R.symbol["t"]
+    D = lambda e: sp.sqrt(U) * sp.diff(e, T)  # noqa: E731, d/d(c tau) along Taub's time
+    values = {"a_1": a, "a_2": a, "a_3": b}
+    zero = True
+    for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]:
+        e = R(c["value"]).subs(R.c, 1)
+        for name, v in values.items():
+            fn = R.parameters[name]
+            e = e.subs(sp.Derivative(fn, (t, 2)), D(D(v))).subs(sp.Derivative(fn, t), D(v)).subs(fn, v)
+        zero = zero and sp.simplify(e) == 0
+    ck.exact("Mixmaster: Taub's universe makes every published Einstein component vanish", zero)
+    lo = float(m - sp.sqrt(m * m + l * l))
+    Uf = sp.lambdify(T, U, "numpy")
+    from scipy.optimize import brentq
+    round_T = brentq(lambda s: float(sp.N((a - b).subs(T, s))), 0.9, 0.95, xtol=1e-15)
+    moments = [sp.Rational(-1, 10), sp.Rational(1, 5), sp.Rational(repr(round_T)), sp.Rational(3, 2), sp.Integer(2)]
+    surfaces, size = [], 8.0
+    for Tm in moments:
+        A, B = a.subs(T, Tm), b.subs(T, Tm)
+        af, bf = float(A), float(B)
+        c_tau = integrate(lambda s: 1 / math.sqrt(Uf(s)), lo, float(Tm))
+        halves = [Slice(src, "mixmaster", "euler_angles", "\\theta", "\\phi", {"t": 0},
+                        functions={"a_1": str(A), "a_2": str(A), "a_3": str(B)}, swept={"psi": sweep}, rewrite=half_angles)
+                  for sweep in ("-phi", "2*pi - phi")]
+        where = f"Mixmaster, Taub's T = {float(Tm):.6f}"
+        if bf > 2 * af / math.sqrt(3):
+            begin = brentq(lambda th: float(halves[0].defect_at(th)), 1e-3, math.pi - 1e-9, xtol=1e-14)
+            ck.stops(f"{where}, about the poles", halves[0], np.linspace(0, begin, 202)[1:-1])
+            ends = ("stops", "the circles about the pole grow faster than the distance out to them, and no surface of "
+                             "revolution in flat space carries the sphere there")
+        else:
+            begin = 0.0
+            ends = ("axis", "the pole, the identity" )
+        H = halves[0].rise(begin, math.pi)
+        rings = [(th, "r", None) for th in (math.pi / 3, 2 * math.pi / 3) if th > begin]
+        near = Piece("near", "sheet", halves[0], begin, math.pi, -H, 1,
+                     (ends, ("join", "the equator $\\theta = \\pi$, a fibre of $\\psi$")),
+                     rings + [(math.pi, "chartedge", None)], size)
+        far = Piece("far", "sheet", halves[1], begin, math.pi, H, -1,
+                    ((ends[0], ends[1].replace("the identity", "its antipode")), ("join", "the equator")), rings, size)
+        for p in (near, far):
+            ck.isometry(f"{where}, the {p.id} hemisphere", p)
+        ck.join(f"{where}, the hemispheres meet at the equator", near, math.pi, far, math.pi)
+        ck.add(f"{where}: the equator has radius 2b", abs(near.at(math.pi)[0] - 2 * bf), 1e-9)
+        if begin == 0.0:
+            ck.add(f"{where}: pole to pole is pi a long", abs(halves[0].proper(0, math.pi) - math.pi * af) / af, 1e-10)
+        if abs(af - bf) < 1e-12:
+            ck.form(f"{where}, the round sphere z = -2a cos(theta/2)", near, lambda th: -2 * af * np.cos(th / 2), size)
+            ck.radius(f"{where}, the round sphere rho = 2a sin(theta/2)", near, lambda th: 2 * af * np.sin(th / 2), size)
+        surfaces.append(Surface([near, far], label=f"$c\\tau = {c_tau:.2f}\\,m$", time=c_tau))
+    fig = sequence_figure(surfaces, {"sheet": "cover"}, size, columns=3, meridians=12)
+    fig.legend("fill", "cover", "the great sphere through the identity, which the Euler angles cover but for its poles and "
+                                "equator")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/3$ and $2\\pi/3$ on each hemisphere")
+    fig.legend("line", "chartedge", "the equator $\\theta = \\pi$, a fibre of $\\psi$ of circumference $4\\pi a_3$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$, running on through the equator into the other hemisphere")
+    return [view("sphere", "The great sphere", "$m$", surfaces, fig.done(),
+                 settings="$m = 1$, the unit of every length, and $l = m/2$; each moment is labelled by the proper time "
+                          "$c\\tau$ from Taub's first horizon.",
+                 input="Taub's universe, $a_1 = a_2 = \\sqrt{T^2 + l^2}$ and $a_3 = 2l\\sqrt{U}$ with $U = (-T^2 + 2mT + "
+                       "l^2)/(T^2 + l^2)$ and $c\\,d\\tau = dT/\\sqrt{U}$, checked to make every Einstein component of "
+                       "this spacetime vanish.",
+                 stops=["When the three scale factors differ, as in every other Mixmaster universe, the great sphere's "
+                        "metric depends on $\\phi$ as well as $\\theta$, and no surface of revolution carries it.",
+                        "At the second moment $a_3$ is more than $2/\\sqrt{3}$ times $a_1$, the curvature about the poles "
+                        "is negative, and only the band about the equator is drawn."])]
+
+
 # ---------------------------------------------------------------- the spacetimes with nothing to draw
 
 def flat_slices(ck, src, metric_id, system_id, time="t"):
@@ -1957,78 +2806,9 @@ def flat_slices(ck, src, metric_id, system_id, time="t"):
     ck.exact(f"{metric_id}/{system_id}: every slice of constant {time} is flat", ok)
 
 
-def warp_drive(metric_id, shift, systems):
-    def stated(ck, src):
-        for system_id in systems:
-            flat_slices(ck, src, metric_id, system_id)
-        return [f"Every slice of constant $t$ is flat: the metric on it is $dx^2 + dy^2 + dz^2$, so its equator "
-                f"is a plane. The warp drive is in how the slices are "
-                f"stacked, the shift {shift} carrying each one past the next, and not in the shape of any one of them."]
-    return stated
-
-
-def krasnikov(ck, src):
-    """At constant t the published metric is k dx^2 + dr^2 + r^2 dphi^2: flat where k = 1,
-    outside the tube, and not spacelike where k < 0, deep inside it."""
-    _, entry, R = nr.load("krasnikov", "cylindrical")
-    src.note("krasnikov", "cylindrical", FIELDS)
-    g = nr.published_matrix(R, entry, "metric_components")
-    k, r = R.parameters["k"], R.symbol["r"]
-    want = sp.diag(k, 1, r ** 2)
-    ck.exact("Krasnikov: at constant t the metric is k dx^2 + dr^2 + r^2 dphi^2",
-             sp.simplify(g[1:, 1:] - want) == sp.zeros(3, 3))
-    return ["Outside the tube $k = 1$ and every slice of constant $t$ is flat, its equator a plane. Deep "
-            "inside it $k = -1 + \\delta$ is negative, so the direction along the tube at constant $t$ is "
-            "timelike, and a surface of constant $t$ is not a moment of space there."]
-
-
-def kasner(ck, src):
-    flat_slices(ck, src, "kasner", "cartesian")
-    return ["Every slice of constant $t$ is flat, $t^{2p_1}dx^2 + t^{2p_2}dy^2 + t^{2p_3}dz^2$ being "
-            "Euclidean space with its three axes scaled, so its equator is a plane. The cosmology is in how "
-            "the scales change from one moment to the next, one axis contracting while the other two expand."]
-
-
-def bianchi(ck, src):
-    flat_slices(ck, src, "bianchi", "type_i_cartesian")
-    return ["Every slice of constant $t$ of type I is flat, $a_1^2dx^2 + a_2^2dy^2 + a_3^2dz^2$ being "
-            "Euclidean space with its three axes scaled, so its equator is a plane. The cosmology is in how "
-            "the three scale factors change from one moment to the next."]
-
-
-def minkowski(ck, src):
-    flat_slices(ck, src, "minkowski", "cartesian")
-    sl = Slice(src, "minkowski", "spherical", "r", "\\phi", {"t": 0, **EQUATOR})
-    ck.plane("Minkowski, the equator of the spherical chart", sl, np.linspace(1e-3, 20, 400))
-    return ["Every slice of constant $t$ is flat and its equator is the plane, on which $g_{rr} = 1$ and a "
-            "circle of radius $r$ has circumference $2\\pi r$: the surface every other embedding diagram is "
-            "measured against."]
-
-
-def anti_de_sitter(ck, src):
-    """The static slice has g_rr = 1/(1 + r^2/L^2) < 1 = (drho/dr)^2 at every r > 0: with r =
-    L sinh s it is L^2 (ds^2 + sinh^2 s dphi^2), the hyperbolic plane of curvature -1/L^2."""
-    sl = Slice(src, "anti_de_sitter", "static_global", "r", "\\phi", {"t": 0, **EQUATOR}, {"L": 1})
-    ck.stops("anti-de Sitter, the equator of the static chart", sl, np.linspace(1e-3, 20, 400))
-    return ["At every $r > 0$ the circles grow faster than the distance out to them, $g_{rr} = 1/(1 + r^2/L^2) "
-            "< 1$, so no surface of revolution in flat space carries the equator of a slice of constant $t$. It "
-            "is the hyperbolic plane of curvature $-1/L^2$: a piece of it lies in flat space on Eugenio "
-            "Beltrami's pseudosphere, and David Hilbert proved in 1901 that no surface in flat space carries "
-            "the whole of it."]
-
-
 # The spacetimes with no surface to draw that say why, each function checking what it states
 # from the published metric and returning the sentences.
-STATED = {
-    "alcubierre": warp_drive("alcubierre", "$v_sf$", ["cartesian"]),
-    "natario": warp_drive("natario", "$(u, v, w)$", ["cartesian_flow", "plane_flow"]),
-    "lentz": warp_drive("lentz", "$\\partial_i\\phi$", ["cartesian"]),
-    "krasnikov": krasnikov,
-    "kasner": kasner,
-    "bianchi": bianchi,
-    "minkowski": minkowski,
-    "anti_de_sitter": anti_de_sitter,
-}
+STATED = {}
 
 
 # ---------------------------------------------------------------- the tables
@@ -2052,13 +2832,21 @@ DRAWN = {
     "kerr_newman": kerr_newman,
     "cosmic_string": cosmic_string,
     "frw": frw,
+    "minkowski": minkowski,
+    "anti_de_sitter": anti_de_sitter,
+    "malament_hogarth": malament_hogarth,
+    "mixmaster": mixmaster,
+    "kasner": kasner,
+    "bianchi": bianchi,
+    "pp_wave": pp_wave,
+    "krasnikov": krasnikov,
+    "alcubierre": alcubierre,
+    "natario": natario,
+    "lentz": lentz,
 }
 
-# The spacetimes with no embedding diagram yet, for which nothing is written.
-# Mixmaster's slices are squashed three spheres and a pp-wave's spacelike slices carry its
-# profile, so neither is flat and neither has one surface that says anything; the
-# Malament-Hogarth slices take whatever shape an arbitrary conformal factor gives them.
-NOT_DRAWN = {"mixmaster", "pp_wave", "malament_hogarth"}
+# The spacetimes with no embedding diagram, for which nothing is written.
+NOT_DRAWN = set()
 
 CAPTIONS = {
     ("schwarzschild", "flamm"): [
@@ -2285,6 +3073,146 @@ CAPTIONS = {
         "Richard Gott's core, a cylinder of uniform density, rounds the apex off. Its slice is a cap of "
         "a sphere of radius $\\ell$, and it meets the cone where their tangents agree, at $\\cos\\chi_0 = "
         "1 - 4G\\mu/c^2$. The cone of an ideal string runs on below the cap to its apex.",
+    ],
+    ("minkowski", "plane"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of Minkowski space at one moment of $t$, drawn as a "
+        "surface in flat space so that every distance along it is the distance the metric gives. On it $g_{rr} = 1$ "
+        "and the circle of radius $r$ has circumference $2\\pi r$, so the surface is the flat plane itself.",
+        "Every other embedding diagram is measured against this one. Where a circle's circumference falls short of "
+        "$2\\pi$ times the distance out to it, as around a star, the plane curves into a bowl; where it exceeds it, "
+        "as in anti-de Sitter space, no surface of revolution in flat space carries the plane at all. Hermann "
+        "Minkowski set out in 1908 the geometry in which space at one moment of any inertial observer is this flat "
+        "space of Euclid.",
+    ],
+    ("anti_de_sitter", "hyperboloid"): [
+        "This is the equatorial plane $\\theta = \\pi/2$ of anti-de Sitter space at the moment $t = 0$ of its static "
+        "chart, drawn as a surface in three dimensional Minkowski space so that every distance along it, measured "
+        "with $dX^2 + dY^2 - dZ^2$, is the distance the metric gives. On it $g_{rr} = 1/(1 + r^2/L^2)$ while the "
+        "circle of radius $r$ has circumference $2\\pi r$, so every circle grows faster than the distance out to it, "
+        "which no surface of revolution in flat space allows. In Minkowski space the plane is one sheet of the "
+        "hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, and the whole hyperbolic plane of curvature $-1/L^2$ lies on it.",
+        "Where the sheet is steep a step along it is shorter than it looks: the circles at $L$, $2L$, $3L$ and $4L$ "
+        "stand $0.88$, $0.56$, $0.37$ and $0.28\\,L$ apart. The sheet nears the light cone of the space it is drawn "
+        "in, dashed, without ever reaching it, and the conformal boundary of anti-de Sitter space lies along that "
+        "cone at infinity. Wilhelm Killing in 1880 and Henri Poincaré in 1881 each described the hyperbolic plane as "
+        "this sheet, and David Hilbert proved in 1901 that no surface in flat space carries the whole of it.",
+    ],
+    ("malament_hogarth", "plane"): [
+        "This is the plane $z = 0$ about the removed event of a Malament-Hogarth spacetime at four moments of $t$, "
+        "each drawn as a surface in flat space so that every distance along it is the distance the metric gives. "
+        "The metric is $\\Omega^2$ times Minkowski's, so the circle of radius $s$ has circumference $2\\pi s\\Omega$ "
+        "and every distance is $\\Omega$ times its flat value: where $\\Omega$ grows toward the removed event the "
+        "plane sinks into a well, flat again beyond the unit ball where $\\Omega = 1$.",
+        "As $t$ runs up to the moment of the removed event the well deepens without limit, and at $ct = 0$ it has no "
+        "bottom: its circles close in on the radius $1$ while the distance down to them grows as $\\ln(1/s)$, a tube "
+        "that runs on for ever. The computer of John Earman and John Norton's toy of 1993 rides the axis into the "
+        "removed event and ages $\\int\\Omega\\,c\\,dt$, which diverges. Because $\\Omega$ depends only on $c^2t^2 + "
+        "x^2 + y^2 + z^2$, the tube from its rim down to the circle $s$ is exactly as long as the computer's clock "
+        "runs from $ct = -1$ to $ct = -s$, so the infinite time the computer spends on its way is the infinite length "
+        "of the tube.",
+    ],
+    ("mixmaster", "sphere"): [
+        "This is the great two sphere of the Mixmaster universe's three sphere at five moments of its proper time "
+        "$\\tau$, each drawn as a surface in flat space so that every distance along it is the distance the metric "
+        "gives. Every great sphere of a Mixmaster slice is congruent to every other, and the three great circles in "
+        "which it meets its planes of symmetry have circumferences $4\\pi a_1$, $4\\pi a_2$ and $4\\pi a_3$, so the "
+        "scale factors can be read off it. When all three agree it is a round sphere of radius $2a$, the equator of "
+        "a round three sphere.",
+        "The moments are those of Abraham Taub's universe of 1951, the vacuum member of the family with $a_1 = a_2$, "
+        "which is the region across the horizon of Taub-NUT space where its $r$ is a time. Its fibres, the circles "
+        "of $\\psi$, open from nothing at its first horizon and close again at its last, so its great sphere, a "
+        "surface of revolution about the axis through the identity with a fibre as its equator, runs from a sphere "
+        "squeezed about its equator, through a wide band and a round sphere, to two lobes joined at a narrow waist. "
+        "At the second moment $a_3$ is $2.69$ times $a_1$, the curvature about the poles is negative, and only the "
+        "band about the equator has a surface of revolution in flat space. Charles Misner let all three scale "
+        "factors differ in 1969 and found them oscillating without end toward the singularity; the great sphere of "
+        "such a moment has no axis.",
+    ],
+    ("kasner", "ring"): [
+        "This is the plane $y = 0$ of Kasner's universe at four moments of $t$, each drawn as a surface in flat space "
+        "so that every distance along it is the distance the metric gives. At every moment the plane is flat, "
+        "$t^{2p_1}dx^2 + t^{2p_3}dz^2$ being Euclid's plane with its axes scaled, so the drawing is a flat disc, and "
+        "what the geometry does shows in a ring of particles at rest in the chart, which stay at rest because the "
+        "metric has no $\\Gamma^i{}_{tt}$.",
+        "The ring is the circle $x^2 + z^2 = \\ell^2$ at $t = 1$, and at time $t$ the ellipse reaching "
+        "$t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$. With $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ the "
+        "direction $x$ contracts while $y$ and $z$ expand, so toward the singularity at $t = 0$ every sphere of "
+        "particles is drawn out into a needle along $x$. Edward Kasner found the solution in 1921: its exponents sum "
+        "to $1$, so volumes grow as $t$, and the vacuum asks that their squares sum to $1$ as well.",
+    ],
+    ("bianchi", "ring"): [
+        "This is the plane $y = 0$ of a Bianchi type I universe of dust at four moments of cosmic time, each drawn "
+        "as a surface in flat space so that every distance along it is the distance the metric gives. At every "
+        "moment the plane is flat, $a_1^2dx^2 + a_3^2dz^2$ being Euclid's plane with its axes scaled, so the drawing "
+        "is a flat disc, and what the geometry does shows in a ring of the dust itself, whose grains stay at rest in "
+        "the chart.",
+        "The ring is the circle $x^2 + z^2 = \\ell^2$ at the moment all three scale factors are $1$, and at every "
+        "other moment the ellipse reaching $a_1\\ell$ along $x$ and $a_3\\ell$ along $z$. Near the singularity the dust "
+        "behaves as Kasner's vacuum does, drawn out along $x$ and flattened along $z$, and then the contraction along "
+        "$x$ turns round: $a_1$ reaches its least, $0.89$, at $c\\bar Ht = 1.18$, and afterwards every "
+        "direction expands. Luigi Bianchi sorted the homogeneous geometries of three dimensions into his nine types "
+        "in 1898, and type I is the one whose slices are flat.",
+    ],
+    ("pp_wave", "ring"): [
+        "This is the wave front of a plane gravitational wave at four values of its retarded time $u$, each drawn as "
+        "a surface in flat space so that every distance along it is the distance the metric gives. A surface of "
+        "constant $u$ has the metric $dx^2 + dy^2$ whatever $v$ is on it, so the drawing is a flat disc, and what the "
+        "wave does shows in a ring of free particles at rest on the circle $x^2 + y^2 = L^2$ before the pulse "
+        "arrives.",
+        "The pulse, $A = e^{-u^2}/L^2$ of the plus polarisation, pulls the particles as $d^2x/d(cu)^2 = Ax$ and "
+        "$d^2y/d(cu)^2 = -Ay$, stretching the ring along $x$ and squeezing it along $y$, and the area it encloses "
+        "falls although the spacetime is a vacuum: the Weyl curvature shears the ring, and the shear alone focuses "
+        "it. At $cu = 0.66\\,L$ every particle reaches the $x$ axis at once, and past it the ring turns inside out. "
+        "Roger Penrose showed in 1965 that this focusing keeps every plane wave spacetime from being globally "
+        "hyperbolic.",
+    ],
+    ("krasnikov", "section"): [
+        "This is the plane across the Krasnikov tube at one moment of $t$ and one place $x$, halfway along it and "
+        "after the ship has passed, drawn as a surface in flat space so that every distance along it is the "
+        "distance the metric gives. At constant $t$ and $x$ the metric is $dr^2 + r^2d\\phi^2$ whatever the tube's "
+        "$k$ is, so the drawing is flat, and the circle marked is $k = 0$, inside which $g_{xx} = k$ is negative and "
+        "the direction along the tube, square to the drawing, is a time.",
+        "That is why a slice of constant $t$ is not a moment of space inside the tube, and why its cross sections "
+        "are drawn instead. Before the ship reaches $x$ the same plane carries no such circle; the ship opens the "
+        "tube behind it on the way out, and on the way back the traveller rides its tipped light cones home to "
+        "within an instant of leaving. Serguei Krasnikov proposed the tube in 1995, and in 1997 Allen Everett and "
+        "Thomas Roman built it in four dimensions and showed that its wall needs negative energy.",
+    ],
+    ("alcubierre", "plane"): [
+        "This is the plane $z = 0$ of the path of Alcubierre's warp bubble at the moment $t = 0$, drawn as a surface "
+        "in flat space so that every distance along it is the distance the metric gives. Every slice of constant "
+        "$t$ is flat, $dx^2 + dy^2 + dz^2$, so the drawing is a flat disc, and the drive is in how the slices are "
+        "stacked: the observers who ride them are carried along $x$ at $v_sf$ times the speed of light, faster "
+        "than light inside the circle $v_sf = 1$.",
+        "Their volume changes at the rate $\\theta = v_s\\,\\partial_xf$, which Miguel Alcubierre drew in 1994: "
+        "space contracts ahead of the ship and expands behind it, and the two crescents mark where it does so at "
+        "half its fastest rate. The energy density the same observers measure is $-\\frac{c^4v_s^2}{32\\pi G}"
+        "\\frac{y^2 + z^2}{r_s^2}\\left(\\frac{df}{dr_s}\\right)^2$, negative in the wall except on the path, where it "
+        "vanishes, and on a flat "
+        "slice it is set by how the slice bends in spacetime alone, $16\\pi G\\rho/c^4 = K^2 - K_{ij}K^{ij}$.",
+    ],
+    ("natario", "plane"): [
+        "This is the plane $z = 0$ of the path of Natário's warp bubble at the moment $t = 0$, drawn as a surface in "
+        "flat space so that every distance along it is the distance the metric gives. Every slice of constant $t$ "
+        "is flat, so the drawing is a flat disc, and the drive is in the flow of space $X$ that carries each slice "
+        "past the next, whose divergence vanishes, so that no volume of space grows or shrinks anywhere.",
+        "The lines marked are lines of that flow. Inside the bubble space moves forward at $v_s$ with the ship, "
+        "outside it is at rest, and every line closes back through the wall, as the flow of a fluid that cannot be "
+        "compressed closes round an obstacle. José Natário built the drive in 2002 to show that Alcubierre's "
+        "contraction ahead and expansion behind are not what carries the ship; the energy density the riding "
+        "observers measure is still negative, $-c^4K_{ij}K^{ij}/16\\pi G$, since the trace $K$ vanishes with the "
+        "expansion.",
+    ],
+    ("lentz", "plane"): [
+        "This is the plane $y = 0$ of the path of Lentz's soliton at one moment, drawn as a surface in flat space so "
+        "that every distance along it is the distance the metric gives. Every slice of constant $t$ is flat, "
+        "$dx^2 + dy^2 + dz^2$, for every potential $\\phi$, because flat slices are one of the three things Erik "
+        "Lentz fixed in 2021 to define his class, with a unit lapse and a shift that is the gradient of $\\phi$.",
+        "His soliton exists only as a numerical integral over rhomboid cells of source, so no potential is drawn in "
+        "its place and the plane carries only its path. On a flat slice the energy density the riding observers "
+        "measure is $\\sigma_2(\\partial_i\\partial_j\\phi)\\,c^4/8\\pi G$, the sum of the principal minors of the "
+        "Hessian of $\\phi$, which Lentz arranged to be positive; Jessica Santiago, Sebastian Schuster and Matt "
+        "Visser showed in 2022 that an observer moving fast enough through the slices measures it negative.",
     ],
     ("frw", "closed"): [
         "This is the equator $\\theta = \\pi/2$ of space in a closed universe of dust at five moments "

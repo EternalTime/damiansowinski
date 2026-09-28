@@ -19,7 +19,7 @@
     ],
     "version": "4e5ff44ba738f647",
     "diagrams": "8b4ba2ce9ea6b0bd",
-    "embedding": "18c7a21d8fc186c6"
+    "embedding": "169492bf3e7e4413"
   },
   {
     "id": "anti_de_sitter",
@@ -46,7 +46,7 @@
     "version": "34b9ad6c0ec8031f",
     "diagrams": "23be9e80f68b43af",
     "conformal": "f2230e949c7f2cca",
-    "embedding": "31f6b15b70b9c1d6"
+    "embedding": "588eb7fe96a43f47"
   },
   {
     "id": "bertotti_robinson",
@@ -92,7 +92,7 @@
     ],
     "version": "c812feb6d807182d",
     "diagrams": "43c8c6213c0ce506",
-    "embedding": "3bf5f44e7992711f"
+    "embedding": "cdcbde1e4738c802"
   },
   {
     "id": "de_sitter",
@@ -218,7 +218,7 @@
     ],
     "version": "f403b7576023723d",
     "diagrams": "3a9790a368a1047c",
-    "embedding": "b1cf542c26016e66"
+    "embedding": "98464c2e02da1e68"
   },
   {
     "id": "kerr",
@@ -314,7 +314,7 @@
     ],
     "version": "af1adf10b1cb092f",
     "diagrams": "37e31174b944590b",
-    "embedding": "cc9f671aff6802db"
+    "embedding": "da4a12f0ad7e22bf"
   },
   {
     "id": "stockum_dust",
@@ -361,7 +361,7 @@
       "causality violation"
     ],
     "version": "f400453fb197f2b7",
-    "embedding": "c0d86e4703445390"
+    "embedding": "f65ca799634b8696"
   },
   {
     "id": "malament_hogarth",
@@ -378,7 +378,8 @@
     ],
     "version": "37cda43309e51a85",
     "diagrams": "b3698ce16028662c",
-    "conformal": "cde1cac7cf5518bf"
+    "conformal": "cde1cac7cf5518bf",
+    "embedding": "264961673d3580af"
   },
   {
     "id": "minkowski",
@@ -400,7 +401,7 @@
     "version": "9965ccaa223840e1",
     "diagrams": "74a2f04afbc580af",
     "conformal": "93e885fc8fe5dc1f",
-    "embedding": "9e8fd0fdeea026e7"
+    "embedding": "f8d164c4df9ce1ba"
   },
   {
     "id": "mixmaster",
@@ -426,7 +427,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "510887f3a296a032"
+    "version": "510887f3a296a032",
+    "embedding": "951692e386a37a40"
   },
   {
     "id": "morris_thorne",
@@ -475,7 +477,7 @@
     ],
     "version": "1be40ff0a3dcd37d",
     "diagrams": "f9bbecde4af1033f",
-    "embedding": "03e4bd80f9a92785"
+    "embedding": "11666cf778d93a37"
   },
   {
     "id": "oppenheimer_snyder",
@@ -523,7 +525,8 @@
       "idealized model"
     ],
     "version": "4652851d4098b61d",
-    "diagrams": "8480afb9fc557712"
+    "diagrams": "8480afb9fc557712",
+    "embedding": "55551a9feeacb2bb"
   },
   {
     "id": "rn_metric",

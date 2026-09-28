@@ -386,12 +386,13 @@ sympy never reads the typesetting, so this is the check that catches a value tha
 
 ## Embedding diagrams
 
-`MFS/assets/data/embedding/<metric_id>.json` holds the embedding diagram of one spacetime: a slice of it, the equatorial plane at one moment, drawn as a surface in ordinary flat three dimensional space so that every distance along the surface is the distance the metric gives.
+`MFS/assets/data/embedding/<metric_id>.json` holds the embedding diagram of one spacetime: a slice of it, the equatorial plane at one moment or another surface of one moment, drawn as a surface in ordinary flat three dimensional space so that every distance along the surface is the distance the metric gives, or, where no surface in flat space carries it, in three dimensional Minkowski space.
+Every spacetime has one.
 The page draws it under the heading "embedding diagram", just below the conformal diagram, and the application reads the same files.
 The file is the definition in "The file, which the application reads" below, and the application is built against that section, so a change to the shape of the file is a change to it first.
 
 `_tools/derivations/embedding.py` draws them, one function per spacetime with its derivation in its docstring, reading the published metric through the checker's `Reader` with the `load` and `published_matrix` the null rays use.
-It needs the same environment as `null_rays.py` and took 41 seconds for the whole collection on 27 September 2026, most of it in the two collapsing dust clouds, whose every shell is solved on its cycloid by bisection:
+It needs the same environment as `null_rays.py` and took 69 seconds for the whole collection on 28 September 2026, most of it in the two collapsing dust clouds, whose every shell is solved on its cycloid by bisection, and in the Malament-Hogarth plane, whose conformal factor is a piecewise function evaluated whole at every point of every quadrature:
 
     /tmp/mfs-venv/bin/python _tools/derivations/embedding.py
     python3 _tools/build_mfs_data.py
@@ -413,30 +414,43 @@ At such a horizon $1/g_{xx} = 0$ while $d\rho/dx$ is finite, which is checked, s
 An interval is halved until the profile strays from its chord by less than $2 \times 10^{-5}$ of the drawing's size and by less than $0.004$ of the chord, and the chord is shorter than $1/90$ of the size, so a chord falls short of its arc by less than about $4 \times 10^{-5}$ of it.
 No closed form is used to draw anything; the closed forms are only checked against.
 
+A slice may move one coordinate with the angle, as the Mixmaster great sphere's $\psi = -\phi$, where `Slice` pulls the published metric back along the move as it pulls Vaidya's back along $v = T + r$, and the result must depend on $x$ alone.
+A plane whose angle is no coordinate of its chart, as the Malament-Hogarth plane of $x$ and $y$, is turned about the chart's origin: the metric is read on the profile, where the angle is zero, and the turn is checked at a thousand points of the plane to carry the pulled back metric onto itself to a part in $10^{12}$, since sympy seldom clears $\cos^2 + \sin^2$ inside a declared function.
+A plane of two chart coordinates on which the published metric has constant coefficients and no cross term, as every slice of a warp drive, of Kasner's universe or of Bianchi type I, and a pp-wave's wave front, is `FlatPlane`: in the proper coordinates $\sqrt{g_{xx}}\,x$ and $\sqrt{g_{yy}}\,y$ it is Euclid's plane, drawn as a flat disc about the chart's origin with its profile along $x$.
+The Mixmaster great sphere's $g_{\phi\phi}$ and $g_{\theta\theta} - (d\rho/d\theta)^2$ both vanish as $\theta^2$ at its poles, and sympy's forms of them subtract numbers that agree there, so `half_angles` writes each as a factored ratio of polynomials in $\sin^2(\theta/2)$, which keeps every digit.
+
+Where every circle grows faster than the distance out to it, as on anti-de Sitter space's static slice, the slice is drawn in three dimensional Minkowski space, $dX^2 + dY^2 - dZ^2$.
+There a profile turned about the $Z$ axis has the metric $\left((d\rho/dx)^2 - (dZ/dx)^2\right)dx^2 + \rho^2d\phi^2$, so it climbs at $dZ/dx = \sqrt{(d\rho/dx)^2 - g_{xx}}$, and the whole hyperbolic plane lies on one sheet of a hyperboloid.
+Near its light cone a chord of such a surface is short in the metric against its length on the page, so it is written to below $10^{-9}$ of its extent, nine decimals where the others take seven.
+
 ### Checking the surface
 
 The surface is measured as the application will draw it, from the rounded numbers the file holds, against the published metric, and the script refuses to write while any check fails:
 
-- along: each chord of each profile, and each profile end to end, against the proper distance between the same two values of $x$;
+- along: each chord of each profile, and each profile end to end, against the proper distance between the same two values of $x$, a chord of a surface in Minkowski space measured as $\sqrt{d\rho^2 - dZ^2}$;
 - across: the straight line in space from each point to the next one $0.02$ further round the axis, against the length the metric gives the line that runs out at a steady proper distance while it turns steadily through the same angle;
 - around: $\rho$ at every point against $\sqrt{g_{\phi\phi}}$;
 - joins: where two pieces meet, as a star's surface meets the exterior, they meet at one point with one tangent, which says $g_{xx}$ agrees on both sides;
-- forms: each surface against the closed form it is known by: Flamm's paraboloid, also as the exterior of the neutron star, of each collapse at its release and, moved in by $r_s$, of Vaidya's slices; the interior Schwarzschild cap, the catenoid in both its charts, the cone, Gott's cap, the spheres of FRW, de Sitter and Oppenheimer-Snyder's dust, and Bertotti-Robinson's cylinder and sphere; and the circumference radius of the Kerr, Kerr-Newman and Taub-NUT horizons;
-- fields: a declared star, scale factor or dust cloud against the published Einstein tensor, the neutron star against $G^\theta{}_\theta = 8\pi p$, FRW's and Oppenheimer-Snyder's scale factors against their $G^r{}_r$ and $G^\chi{}_\chi$, and each cloud released from rest against Tolman-Bondi's $G^r{}_r = 0$ and its $G^t{}_t$, the density;
+- forms: each surface against the closed form it is known by: Flamm's paraboloid, also as the exterior of the neutron star, of each collapse at its release and, moved in by $r_s$, of Vaidya's slices; the interior Schwarzschild cap, the catenoid in both its charts, the cone, Gott's cap, the spheres of FRW, de Sitter, Oppenheimer-Snyder's dust and Taub's round moment, Bertotti-Robinson's cylinder and sphere, the planes of Minkowski space, the Krasnikov tube and the warp drives, and anti-de Sitter's hyperboloid; the circumference radius of the Kerr, Kerr-Newman and Taub-NUT horizons and of Taub's equator; Kasner's, Bianchi's and the pp-wave's rings against the ellipses they are, and Alcubierre's crescents against half the greatest expansion;
+- fields: a declared star, scale factor or dust cloud against the published Einstein tensor, the neutron star against $G^\theta{}_\theta = 8\pi p$, FRW's and Oppenheimer-Snyder's scale factors against their $G^r{}_r$ and $G^\chi{}_\chi$, each cloud released from rest against Tolman-Bondi's $G^r{}_r = 0$ and its $G^t{}_t$, the density, and Taub's scale factors against every published Einstein component of the Mixmaster universe; the pp-wave's particles are run with its published Christoffel symbols, Kasner's and Bianchi's are held at rest by theirs, and the length of the Malament-Hogarth tube is checked against the proper time of the computer on its axis;
+- marks: every curve and point marked on a surface lies on its piece, at the height the profile has at its distance from the axis, and each of Natário's lines of flow closes and holds Stokes's stream function to one value;
 - stops: where a view or a file says a slice cannot be drawn, $g_{xx} - (d\rho/dx)^2$ is negative at every sample, or $g_{\phi\phi}$ is, where the circles are timelike; where it says a slice is a plane, it is zero, or the spatial metric has no cross term and no component that depends on a spatial coordinate.
 
-On 27 September 2026 the worst chord missed its proper distance by $7.0 \times 10^{-5}$ of it, inside Reissner-Nordstrom's inner horizon, and the worst line across by $1.1 \times 10^{-4}$, on the sphere of radius $a = 1/2$ of FRW's first moment, where the rounding on chords a sixtieth of a unit long is most of it.
-Every profile end to end was within $3.3 \times 10^{-5}$ of its proper length, every $\rho$ within $2.5 \times 10^{-8}$ of the drawing's size of $\sqrt{g_{\phi\phi}}$, every closed form within $2.5 \times 10^{-8}$ of the size, every join met to $3 \times 10^{-13}$ with tangents equal to $4 \times 10^{-16}$, and every declared solution satisfied the published field equations to $1.4 \times 10^{-14}$; 382 checks in all, none failing, and running the script again writes the same bytes.
+On 28 September 2026 the worst chord missed its proper distance by $1.0 \times 10^{-4}$ of it, a chord $9 \times 10^{-4}$ long on the lip of the Malament-Hogarth well at $ct = -0.3$, where the rounding is most of it, and the worst line across by $1.1 \times 10^{-4}$, on the sphere of radius $a = 1/2$ of FRW's first moment, for the same reason.
+Every profile end to end was within $3.6 \times 10^{-5}$ of its proper length, every $\rho$ within $2.5 \times 10^{-8}$ of the drawing's size of $\sqrt{g_{\phi\phi}}$, every closed form within $2.5 \times 10^{-8}$ of the size, every join met to $3 \times 10^{-13}$ with tangents equal to $3 \times 10^{-14}$, and every declared solution satisfied the published field equations to $1.4 \times 10^{-14}$, Taub's exactly; 637 checks in all, none failing, and running the script again writes the same bytes.
 The tests hold the files on disk to the same closed forms without sympy, from the numbers written and nothing else, so a redraw that changed a surface fails there too.
 
 ### Which spacetimes
 
-`DRAWN` in the script names the spacetimes that have a diagram, `STATED` those with no surface to draw whose file says why, and `NOT_DRAWN` the others, which have no file; the script stops if a metric file is in none of the three or in more than one.
-Each function in `STATED` checks what it says from the published metric before it says it.
-Alcubierre's, Natario's and Lentz's warp drives, Kasner's universe, Bianchi type I and Minkowski space are flat on every slice of constant $t$, their spatial metric having no cross term and no component that depends on a spatial coordinate, so the equator is a plane and the physics is in how the slices are stacked.
-Krasnikov's tube is flat outside, where $k = 1$, and deep inside it $k < 0$ makes the direction along the tube timelike at constant $t$, so a surface of constant $t$ is not a moment of space there.
-Anti-de Sitter's static slice is the hyperbolic plane, $g_{rr} < (d\rho/dr)^2$ at every $r > 0$, which is checked.
-Mixmaster's slices are squashed three spheres and a pp-wave's spacelike slices carry its profile, so neither is flat and neither has one surface that says anything, and a Malament-Hogarth spacetime's slices take whatever shape its arbitrary conformal factor gives them; those three have no file.
+`DRAWN` in the script names every spacetime, and `STATED` and `NOT_DRAWN` are empty: a spacetime put in `STATED` would have a file with no surface that says why, checked from the published metric before it is said, and one in `NOT_DRAWN` no file, and the script stops if a metric file is in none of the three or in more than one.
+Minkowski space is its equator from the spherical chart, the plane every other diagram is measured against, out to $r = 4\ell$ in any length $\ell$, and every slice of constant $t$ of its Cartesian chart is checked flat.
+Anti-de Sitter's static equator has $g_{rr} < (d\rho/dr)^2$ at every $r > 0$, which is checked, so it is drawn in Minkowski space: the sheet $Z = \sqrt{L^2 + r^2} - L$ of a hyperboloid out to $r = 4L$, with the light cone it nears drawn as a reference piece, $Z = \rho - L$, given by its closed form since it is no slice of the spacetime.
+The Malament-Hogarth plane $z = 0$, with the $\Omega$ its spacetime diagram declares, is turned about the removed event at $ct = -0.7$, $-0.3$, $-0.1$ and $0$: a well inside the unit ball, flat beyond, and at $ct = 0$ a funnel into a tube of radius $1$ drawn down to $s = 0.03$, whose length from the rim down to $s$ is checked to be the proper time of the computer on the axis from $ct = -1$ to $-s$; the edge of the region where $\Omega > 1$ is taken a part in $10^{12}$ inside it, where $\Omega$ is $1$ to every digit and the float $c^2t^2 + s^2$ cannot land beyond $1$.
+The Mixmaster universe is the great two sphere of its three sphere, $\psi = -\phi$ and $\psi = 2\pi - \phi$ in the Euler angles, at five moments of Abraham Taub's universe, $a_1 = a_2$, at $m = 1$ and $l = m/2$ as Taub-NUT declares: only there does the great sphere have an axis, through the identity, and where $a_3 > 2a_1/\sqrt{3}$ its curvature about the poles is negative and the drawing is the band about the equator, which the view states and the script checks.
+Kasner's universe, Bianchi type I and the pp-wave are each a flat plane at four moments, Kasner's and Bianchi's the plane $y = 0$ at the exponents and the dust their spacetime diagrams declare, the pp-wave's its wave front at $cu = -3$, $-0.5$, $0$ and $0.661\,L$ with the pulse $A = e^{-u^2}$ its spacetime diagram declares, each with a ring of free particles marked on it as a curve and twelve of them as points: at rest in the chart for Kasner and Bianchi, and run from rest before the pulse for the pp-wave, which focuses every one onto the $x$ axis at once.
+The Krasnikov tube is its cross section of constant $t$ and $x$, halfway along the declared tube at $ct = 3$, flat whatever $k$ is, with the circle $k = 0$, where the published $g_{xx}$ vanishes, marked as `wall`.
+Alcubierre's and Natário's drives are the plane $z = 0$ of the path at $t = 0$, the path along the drawing's $Y$ so that the ends of the circles on the page stand clear of it: Alcubierre's with the circle $v_sf = 1$, the zero of the published $g_{tt}$, and the curves where the expansion of the riding observers, read from the published metric, is half its greatest value, and Natário's with the circle $r_s = R$ and six lines of the declared flow, each followed from the ship's plane $x = 0$ round to it again.
+Lentz's soliton cannot be written down, so its plane of the path is drawn flat with its path alone.
 Schwarzschild is Flamm's paraboloid on both sheets of the Einstein-Rosen bridge, the slice of constant $t$ running through the bifurcation sphere into the other exterior.
 The interior Schwarzschild star, at $R = 1.5\,r_s$ as its conformal diagram declares, is the cap of a sphere of radius $\sqrt{R^3/r_s}$ joined to the exterior of `schwarzschild.json`, which the file reads, with the vacuum paraboloid drawn on under the cap down to the throat the star replaces.
 The Tolman-Oppenheimer-Volkoff star is the polytrope its other diagrams declare, $M = 1.40\,M_\odot$ and $R = 14.2$ km, with the mass function `null_rays.StarSolver` solves from the published Einstein tensor entering the slice as numbers; its exterior is checked to be Flamm's paraboloid of that mass, and the vacuum paraboloid is drawn under it as under Schwarzschild's star.
@@ -467,8 +481,8 @@ Every number is a plain JSON number, every text is TeX in `$...$` inside prose, 
     }
 
 `source` is what `build_mfs_data.py` checks the file against, one entry for every coordinate system it read, which may be another spacetime's, as the star reads `schwarzschild.json`; the application can ignore it.
-`views` holds at least one view, unless the spacetime has no surface to draw.
-Then `views` is empty and `stops`, a list of TeX sentences, says why, printed under the heading after "not drawn", as for the warp drives, whose slices are flat, and anti-de Sitter, whose slices are hyperbolic planes.
+`views` holds at least one view, unless the spacetime has no surface to draw, which no spacetime lacks today.
+Then `views` is empty and `stops`, a list of TeX sentences, says why, printed under the heading after "not drawn".
 A file with a view never carries `stops` of its own; what a view does not draw is in the view's `stops`.
 A view is:
 
@@ -482,12 +496,15 @@ A view is:
 - `settings`, optional: TeX prose giving the parameter values drawn at, printed after "drawn at". It names the length every number is measured in, as "$r_s = 1$, the unit of every length".
 - `input`, optional: TeX prose naming a declared function or matter, printed after "drawn with".
 - `stops`, optional: a list of TeX sentences, each saying where the construction stops or what in this spacetime has no surface, printed after "not drawn". FRW's view carries its flat and open universes here, which have no surface in the file.
+- `space`, optional: `"minkowski"` for a view drawn in three dimensional Minkowski space, as anti-de Sitter's, where every length along a surface is measured with $dX^2 + dY^2 - dZ^2$. A client draws such a surface as any other and tells the reader how its lengths are measured, as the view's `settings` and caption do. A view without it is drawn in flat space.
 
 A surface is:
 
 - `label` and `time`, in a sequence only: the moment as TeX, and its time as a number in `unit`, the time the view's `settings` name: $ct$ for FRW and $v - r$ for Vaidya.
 - `pieces`: its profile curves, at least one.
 - `rings`: circles marked on it, possibly none.
+- `curves`, optional: curves marked on it that are no circles about its axis, as a ring of free particles stretched into an ellipse on a flat plane, each `{"piece", "class", "closed", "points"}`: the points `[X, Y, Z]` in the surface's own frame, $Z$ along its axis, $X$ along $\phi = 0$ and $Y$ along $\phi = \pi/2$, rounded as the piece's $\rho$ and $z$ are, and `closed` present and `true` when the last point joins the first. Every point lies on the piece, $\sqrt{X^2 + Y^2}$ a distance its profile reaches and $Z$ the height there. A curve turns with the surface, as its meridians do.
+- `dots`, optional: points marked on it, each `{"piece", "class", "at"}`, `at` an `[X, Y, Z]` on the piece, as twelve of a ring's particles.
 
 Every surface is a surface of revolution about the vertical axis $z$, and every piece is a profile curve in a half plane through the axis.
 Its `points` are `[x, rho, z]`, running from its `start` to its `end` with `x` strictly increasing or strictly decreasing, at least two of them:
@@ -497,7 +514,7 @@ Its `points` are `[x, rho, z]`, running from its `start` to its `end` with `x` s
 
 No number is written as `-0.0`.
 A piece holds the surface for the values of `x` from its first point to its last and says nothing beyond them; its `start` and `end` say what the surface does at each.
-The pieces drawn on 27 September 2026 have 9 to 257 points each.
+The pieces drawn on 28 September 2026 have 9 to 316 points each, and the curves 241 to 601.
 
 To draw a piece, turn every point about the axis, $(\rho\cos\phi, \rho\sin\phi, z)$ for $\phi$ from $0$ to $2\pi$, and join neighbouring points and neighbouring angles.
 The points are close enough that straight segments between them are the surface to within $2 \times 10^{-5}$ of the drawing's size, the diameter of the widest circle drawn, so no smoothing is wanted, and a client may add angles as finely as it likes.
@@ -526,7 +543,8 @@ The kinds of end are:
 - `stops`: the construction ends here, because past this point no surface in flat space carries the slice, and the text says why.
 
 A ring is a circle to mark on a surface, `{"piece", "class", "x", "rho", "z", "label"}`, of radius `rho` at height `z`, which is one of the points of its piece, and `label`, when present, is TeX to set beside it.
-Its `class` is `r` for a circle of constant coordinate on a `sheet` or `star` piece, `r2` for one on a `sheet2` piece, `horizon` for the horizon, `throat` for a wormhole's throat, `surface` for the edge of matter, a star's surface or the edge of Gott's core, `chartedge` for the circle where a chart ends or a drawing stops, as FRW's equator or where Reissner-Nordstrom's inner surface lies level, `ergo` for the edge of an ergosphere on Kerr's and Kerr-Newman's equator, and `reference` for a circle on a reference piece.
+Its `class` is `r` for a circle of constant coordinate on a `sheet` or `star` piece, `r2` for one on a `sheet2` piece, `horizon` for the horizon, `throat` for a wormhole's throat, `surface` for the edge of matter, a star's surface or the edge of Gott's core, `chartedge` for the circle where a chart ends or a drawing stops, as FRW's equator or where Reissner-Nordstrom's inner surface lies level, `ergo` for the edge of an ergosphere on Kerr's and Kerr-Newman's equator, `wall` for the wall of a warp bubble or of the Krasnikov tube, and `reference` for a circle on a reference piece.
+A curve's `class` is `particles` for a ring of free particles, whose `dots` carry it too, `path` for the path of a warp bubble or a soliton, `contract` and `expand` for where the expansion of the observers riding Alcubierre's slices is half its greatest value, ahead of the ship and behind it, and `flow` for a line of Natário's flow.
 
 The `figure` is the drawing the page makes of the view, projected by the script once from a fixed camera, in the form a figure in three dimensions takes in the diagram files, and drawn again from the surfaces at whatever camera a reader turns it to, as "Turning the figure" below says:
 
@@ -544,7 +562,7 @@ A reference piece hides nothing.
 A point of a line is hidden when a ray from it toward the camera meets one of those cones further than $10^{-7}$ of the drawing's size along it.
 A point of the outline is where the line of sight grazes the surface, and there the cone between two circles of a concave profile dips across that line by less than $10^{-5}$ of the drawing, so each point of the outline is judged by the two points $10^{-5}$ of the drawing off the surface on either side along its normal and is hidden only if both are.
 The fills are `cover`, `star` and `wedge`.
-The lines are `outline`, where the surface turns edge on to the camera and the rim at an `edge` or `stops` end; `meridian`, the profile turned to evenly spaced angles, as the legend says; `reference`, the meridians and outline of a reference piece in dashes; the ring classes above, each ring drawn as its circle, or as a `point` where its $\rho$ is zero; and `cut`.
+The lines are `outline`, where the surface turns edge on to the camera and the rim at an `edge` or `stops` end; `meridian`, the profile turned to evenly spaced angles, as the legend says; `reference`, the meridians and outline of a reference piece in dashes; the ring classes above, each ring drawn as its circle, or as a `point` where its $\rho$ is zero; the curve classes above, each curve drawn through its points, and `particles` also as a `point` at each of its `dots`; and `cut`.
 Each line class may also come with `-far`.
 The page styles each class as `.em-<class>` for a line and `.em-<class>-fill` for a fill, on the screen and in print, and a test holds every class a figure paints to having both.
 The cosmic string's figure also lays the cone flat beside it, a flat drawing in the plane of the page with the wedge the cone lacks painted as `wedge` and the two edges of the cut as `cut`.
@@ -571,6 +589,7 @@ At another camera, azimuth $a$ and elevation $e$, with the vectors `right`, `up`
 - A surface of revolution is as wide on the page as its widest circle from every camera, but its height, from $\min\,((z - z_c)\cos e - \rho|\sin e|)$ to $\max\,((z - z_c)\cos e + \rho|\sin e|)$ over the points of its pieces, changes with $e$.
   So all the surfaces are drawn at one scale $s$, never above 1, the largest that keeps each within the height it had at the figure's camera, and each is moved up or down only as far as that height needs; the `box` stays as it is, and every drawn point stays inside it.
 - Each piece is drawn as the script draws it: its meridians, its outline, the circle at an `edge` or `stops` end, its rings, and the marks, every line split into the parts seen and hidden as above, cut halfway between points of the two kinds.
+  Each curve of a surface is drawn through its points, and back to the first where it is `closed`, split the same way, and each of its `dots` as a `point` where it stands, hidden or not, as the script draws them.
 - The outline of a piece runs through the angles on the circle of each of its points at which $\cos(\phi - a) = (d\rho/dz)\tan e$, with the tangent taken as numpy's `gradient` takes it, joined from point to point; a run of such points inside the piece turns at both of its ends, where its two sides meet, and a run that reaches an end of the piece runs on to that end on each side.
 - Each tinted piece is filled where it is the surface nearest the camera, found on a grid of 420 points across the longer side of the `box`.
 - A label with `ring` stands beside the end of its circle on its side, $(\pm s\rho, s(z - z_c)\cos e)$ from the surface's centre, with its offset as published.
