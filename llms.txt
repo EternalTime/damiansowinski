@@ -1,0 +1,80 @@
+---
+layout: null
+permalink: /llms.txt
+---
+{%- comment -%}
+The index for language models (https://llmstxt.org). Jekyll builds it from _data and the
+pages themselves, so a page that moves or a spacetime or paper that is added shows here on
+the next build. README.md says how the generated data is refreshed.
+{%- endcomment -%}
+{%- assign person = site.data.person -%}
+{%- assign pubs = site.data.generated.publications -%}
+{%- assign mfs = site.data.generated.spacetimes -%}
+{%- assign research = site.pages | where: "path", "research.markdown" | first -%}
+{%- assign about = site.pages | where: "path", "about.markdown" | first -%}
+{%- assign publications = site.pages | where: "path", "publications.markdown" | first -%}
+{%- assign catalogue = site.pages | where: "path", "MFS/index.markdown" | first -%}
+{%- assign code = site.pages | where: "path", "code.markdown" | first -%}
+{%- assign applets = site.pages | where: "path", "applets.markdown" | first -%}
+{%- assign notes = site.pages | where: "path", "notes.markdown" | first -%}
+{%- assign teaching = site.pages | where: "path", "teaching.markdown" | first -%}
+{%- assign press = site.pages | where: "path", "press.markdown" | first -%}
+# {{ person.name }}
+
+> {{ person.summary }}
+
+{{ person.name }} is a {{ person.job_title }}. {% for a in person.affiliations %}{{ a.role }}, {{ a.name }}{% if forloop.last %}.{% else %}; {% endif %}{% endfor %}
+This site holds the research, papers with no pay-walls, the My Favorite Spacetimes catalogue of exact solutions in general relativity, the documentation of the Python libraries, interactive physics applets and lecture notes.
+Everything below is public and free to read; the JSON files are the data the pages themselves are drawn from.
+
+## Research
+
+- [{{ research.title }}]({{ research.url | absolute_url }}): What is information, how does agency emerge from complexity, how do complex systems evolve, and what general relativity says is possible.
+- [{{ about.title }}]({{ about.url | absolute_url }}): Background, education and research history.
+- [Full text of the main pages]({{ '/llms-full.txt' | absolute_url }}): Every main page of the site as Markdown in one file.
+
+## Publications
+
+- [Publications as JSON]({{ '/data/publications.json' | absolute_url }}): All {{ pubs.count }} publications with title, authors, year, venue, DOI, arXiv id and a PDF link.
+- [{{ publications.title }} page]({{ publications.url | absolute_url }}): The same list as the site shows it.
+{%- for p in pubs.publications %}
+- [{{ p.title }}]({{ p.url }}): {{ p.authors | join: ", " }} ({{ p.year }}){% if p.venue %}. {{ p.venue }}{% endif %}.
+{%- endfor %}
+
+## My Favorite Spacetimes
+
+- [Spacetimes as JSON]({{ '/data/spacetimes.json' | absolute_url }}): All {{ mfs.count }} spacetimes with name, id, description, tags, signature, and for each coordinate chart the coordinates, domains, parameters, line element, metric components and curvature invariants, in LaTeX.
+- [{{ catalogue.title }}]({{ catalogue.url | absolute_url }}): The interactive catalogue, with diagrams; it chooses a spacetime in the browser, so each entry below links its full data file.
+- [Bibliography of the catalogue]({{ '/MFS/assets/data/references.json' | absolute_url }}): The references each spacetime cites, keyed as in the data files.
+{%- for s in mfs.spacetimes %}
+- [{{ s.name }}]({{ s.data_url }}): {{ s.description }}
+{%- endfor %}
+
+## Python libraries
+
+- [{{ code.title }}]({{ code.url | absolute_url }}): The open-source libraries behind the physics.
+{%- for lib in site.data.libraries %}
+- [{{ lib.name }}: {{ lib.label }}]({{ lib.docs | absolute_url }}): Documentation; source at https://github.com/{{ site.github_username }}/{{ lib.gh | default: lib.repo }}
+{%- endfor %}
+
+## Applets
+
+- [{{ applets.title }}]({{ applets.url | absolute_url }}): Interactive simulations in the browser, from the Ising model and Maxwell's demon to Lenia, flocking and quantum tunnelling. The full text lists every applet.
+
+## Notes
+
+- [{{ notes.title }}]({{ notes.url | absolute_url }}): Lecture notes as PDFs on classical mechanics, computational physics, general relativity and cosmology, mathematics and statistical mechanics.
+- [{{ teaching.title }}]({{ teaching.url | absolute_url }}): Courses and a lecture series, with syllabi and study material.
+
+## Contact
+
+- [Email](mailto:{{ person.email }}): {{ person.email }}
+- [Curriculum vitae]({{ person.cv | absolute_url }})
+{%- for link in person.same_as %}
+- [{{ link.name }}]({{ link.url }})
+{%- endfor %}
+
+## Optional
+
+- [{{ press.title }}]({{ press.url | absolute_url }}): Press releases, media mentions and podcasts.
+- [Sitemap]({{ '/sitemap.xml' | absolute_url }}): Every page of the site.
