@@ -1014,6 +1014,13 @@ class EmbeddingDiagrams(unittest.TestCase):
                 near(z - dust[0][2], a * (1 - math.cos(chi)), f"Oppenheimer-Snyder cap z at {chi}")
         for r, rho, z in piece("oppenheimer_snyder", "exterior"):
             near(z, 2 * math.sqrt(r - 1) - 2, f"Oppenheimer-Snyder release z at {r}")
+        # Tolman-Bondi's cloud at its release: every shell at its label, R = r, and outside it
+        # Flamm's paraboloid of 2GM/c^2 = r_b/2 from the surface.
+        cloud, outside = piece("tolman_bondi", "cloud"), piece("tolman_bondi", "exterior")
+        for r, rho, z in cloud + outside:
+            near(rho, r, f"Tolman-Bondi release rho at {r}")
+        for r, rho, z in outside:
+            near(z - outside[0][2], 2 * math.sqrt(0.5 * (r - 0.5)) - 1, f"Tolman-Bondi release z at {r}")
         for r, rho, z in piece("cosmic_string", "exterior"):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
