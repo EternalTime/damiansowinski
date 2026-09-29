@@ -231,7 +231,7 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
     var seen = window.__mfsGlowSeen = [];
     function name(el) {
       return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') +
-        (typeof el.className === 'string' && el.className ? '.' + el.className.trim().split(/\s+/).join('.') : '') +
+        (typeof el.className === 'string' && el.className ? '.' + el.className.trim().split(/\\s+/).join('.') : '') +
         (el.textContent ? ' "' + el.textContent.trim().slice(0, 24) + '"' : '');
     }
     function glow(style) {
@@ -294,6 +294,8 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
       var pink = getComputedStyle(probe).color, out = [];
       probe.remove();
       [].forEach.call(document.querySelectorAll('#mfs-content-panel .mfs-choice-on, .mfs-result-active'), function (el) {
+        // A button turns pink over its colour's transition, which is measured at its end.
+        el.getAnimations().forEach(function (a) { a.finish(); });
         var cs = getComputedStyle(el), border = el.classList.contains('mfs-choice');
         if (cs.color !== pink || (border && cs.borderTopColor !== pink)) {
           out.push(name(el) + ' is chosen and ' + cs.color + (border ? ' bordered ' + cs.borderTopColor : '') + ', not pink ' + pink);
@@ -437,6 +439,7 @@ async function pressed() {
     await send('CSS.forcePseudoState', { nodeId: node, forcedPseudoClasses: ['hover', 'active'] });
     const found = await evaluate(`(function () {
       var el = document.querySelector(${JSON.stringify(selector)});
+      el.getAnimations().forEach(function (a) { a.finish(); });
       var probe = document.body.appendChild(document.createElement('i'));
       probe.style.color = 'var(--pink-light)';
       var pink = getComputedStyle(probe).color, cs = getComputedStyle(el);

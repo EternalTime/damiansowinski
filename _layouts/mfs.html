@@ -27,10 +27,32 @@
   </script>
 
   <script>
+    /* Nothing on the page casts a shadow, MathJax's right-click menu included: once MathJax is
+       ready, every rule of its menu's stylesheet that gives a shadow gives none. */
+    function mfsMenuWithoutShadow() {
+      [].forEach.call(document.styleSheets, function (sheet) {
+        var rules;
+        try { rules = sheet.cssRules; } catch (e) { return; }
+        [].forEach.call(rules, function (rule) {
+          if (rule.style && /CtxtMenu/.test(rule.selectorText || '') &&
+              ((rule.style.boxShadow && rule.style.boxShadow !== 'none') || (rule.style.textShadow && rule.style.textShadow !== 'none'))) {
+            rule.style.setProperty('box-shadow', 'none');
+            rule.style.setProperty('text-shadow', 'none');
+          }
+        });
+      });
+    }
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      startup: {
+        ready: function () {
+          MathJax.startup.defaultReady();
+          mfsMenuWithoutShadow();
+          MathJax.startup.promise.then(mfsMenuWithoutShadow);
+        }
       }
     };
   </script>
@@ -3336,10 +3358,11 @@
     }
     #mfs-content-panel .mfs-choice:hover { border-color: var(--cyan); color: var(--cyan); }
     #mfs-content-panel .mfs-choice:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-    #mfs-content-panel .mfs-choice.mfs-choice-on { color: var(--pink-light); border-color: var(--pink-light); }
-    /* A button being pressed turns pink, as the one chosen is. */
+    /* The chosen button and a button being pressed turn pink at once, with no transition, so a
+       press as short as a tap shows it whole. */
+    #mfs-content-panel .mfs-choice.mfs-choice-on { color: var(--pink-light); border-color: var(--pink-light); transition: none; }
     #mfs-content-panel .mfs-choice:active,
-    #mfs-content-panel #mfs-print-btn:active { color: var(--pink-light); border-color: var(--pink-light); }
+    #mfs-content-panel #mfs-print-btn:active { color: var(--pink-light); border-color: var(--pink-light); transition: none; }
     #mfs-content-panel .mfs-placeholder {
       color: var(--teal-light);
       line-height: 1.6;
