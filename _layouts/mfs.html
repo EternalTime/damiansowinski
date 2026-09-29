@@ -1622,6 +1622,8 @@
           return '<span class="nr-tick" data-at="' + t.at + '" style="' + style + '">' + nrEsc(t.label) + '</span>';
         }
         var xs = view.ticks.x.map(function(t) { return tick(t, 'left:' + (100 * (t.at - f.X0) / (f.X1 - f.X0)).toFixed(3) + '%'); });
+        // The last number along the bottom, the one that reaches farthest past the plot.
+        var last = view.ticks.x.reduce(function(a, t) { return !a || t.at > a.at ? t : a; }, null);
         var ys = view.ticks.y.map(function(t) { return tick(t, 'top:' + (100 * (1 - (t.at - f.Y0) / (f.Y1 - f.Y0))).toFixed(3) + '%'); });
         var refs = view.markers.filter(function(mk) { return mk.kind === 'reference'; }).map(function(mk) {
           return '<span class="nr-ref" aria-hidden="true" style="top:' + (100 * (1 - mk.y)).toFixed(3) + '%">' + nrEsc(mk.label) + '</span>';
@@ -1653,26 +1655,47 @@
             '<span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></span></div></div>' +
           '<div class="nr-xticks" aria-hidden="true">' + xs.join('') + '</div>' +
           '<div class="nr-xlabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.xlabel) + '</span></div>' +
+          '<div class="nr-xreach" aria-hidden="true">' + nrEsc(last ? last.label : '') + '</div>' +
         '</div></div>';
       }
 
       /* Hold each plot to at least the width it has at the usual text size on this screen:
          the width the figure takes there, its frame's or its own basis of 38.75rem, whichever
          is less, less the room its words take there, which is the room they take now over
-         the reader's text size, since every one of them is set in ems. The figure is then as
+         the reader's text size, since every one of them is set in ems, and to at least the
+         width of the name of its horizontal axis, which stands centred under it. The figure is then as
          wide as that plot and its words at least, and a figure wider than its frame scrolls.
          Every figure is measured before any is set, as the lines are. */
       function fitPlots(figures) {
+        fitAxisNames(figures);
         var s = parseFloat(getComputedStyle(document.documentElement).fontSize) / 16 || 1;
         var widths = figures.map(function(fig) {
           var frame = fig.parentNode;
           if (!frame.clientWidth) return null;
           var words = fig.getBoundingClientRect().width - fig.querySelector('.nr-plot').getBoundingClientRect().width;
           var usual = Math.min(frame.clientWidth, parseFloat(getComputedStyle(frame).flexBasis) / s || Infinity);
-          return Math.ceil(Math.max(0, usual - words / s) + words);
+          var name = fig.querySelector('.nr-xlabel .nr-name').getBoundingClientRect().width;
+          return Math.ceil(Math.max(0, usual - words / s, name) + words);
         });
         figures.forEach(function(fig, i) { if (widths[i] !== null) fig.style.minWidth = widths[i] + 'px'; });
       }
+
+      /* The name of the vertical axis is mathematics, a square root or a bar taller than a
+         letter, and it is turned on its side, so its column is as wide as the name set there
+         is tall, in ems of the diagram's words, which hold at every text size and in print.
+         A figure not shown keeps what it has until it is. Every name is measured before any
+         column is set. */
+      function fitAxisNames(figures) {
+        var widths = figures.map(function(fig) {
+          var name = fig.querySelector('.nr-ylabel .nr-name');
+          if (!fig.clientWidth || !name) return null;
+          return (name.getBoundingClientRect().width / parseFloat(getComputedStyle(fig).fontSize)).toFixed(4);
+        });
+        figures.forEach(function(fig, i) {
+          if (widths[i] !== null && fig.style.getPropertyValue('--nr-yname') !== widths[i]) fig.style.setProperty('--nr-yname', widths[i]);
+        });
+      }
+      window._mfsFitAxisNames = fitAxisNames;
 
       // Show every n-th number along an edge, the smallest n at which no two of those shown
       // come within a third of a number's height of each other, counted from zero where zero
@@ -3534,27 +3557,42 @@
        words are set at two thirds of the text around them, 14px beside the panel's 21px at the
        usual size, the names of the axes a little larger and a reference line's label a little
        smaller, and the room between them is in the same ems, so the frame grows with the
-       reader's text and the plot takes what is left of the width. Print sets it in points. */
+       reader's text and the plot takes what is left of the width. Print sets it in points.
+       Every word of the figure stands at least 1.5 em of its words from the edge of the
+       figure's ground, 21px at the usual text size, one em of the prose beside it, and in the
+       same proportion at every size, as the captain asked on 29 September 2026: "the
+       spacetime diagrams need larger margins". Its reach is measured from the farthest any word can stand: the numbers along the top
+       and the right hand edge stand centred on the plot's edge, so the top adds half a
+       number's height, and the column past the plot, .nr-xreach, is half as wide as the last
+       number along the bottom, a copy of it at half its size, Source Code Pro's letters
+       being all one width. The name of the vertical axis stands in a column exactly as wide
+       as the name is tall, which fitAxisNames() measures, 0.56 em from its numbers. page_timing.mjs fails on any number,
+       name or label within the margin of the figure's edge. */
     .mfs-nr-figure {
       position: relative; display: grid;
-      grid-template-columns: auto auto minmax(0, 1fr);
-      grid-template-areas: "yname yticks plot" ". . xticks" ". . xname";
-      padding: 1em 1.4em 0.7em 0.5em;
+      grid-template-columns: auto auto minmax(0, 1fr) auto;
+      grid-template-areas: "yname yticks plot xreach" ". . xticks ." ". . xname .";
+      padding: 2em 1.5em 1.5em;
       font-family: 'Source Code Pro', monospace; font-size: 0.6667em; line-height: 1;
       color: var(--text-dim);
     }
     .mfs-nr-figure .nr-name { font-size: 1.0714em; white-space: nowrap; }
-    .mfs-nr-figure .nr-ylabel { grid-area: yname; position: relative; width: 1.6em; margin-right: 0.3em; }
+    .mfs-nr-figure .nr-ylabel { grid-area: yname; position: relative; width: calc(var(--nr-yname, 1.0714) * 1em); margin-right: 0.5643em; }
     .mfs-nr-figure .nr-ylabel .nr-name { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-90deg); }
     .mfs-nr-figure .nr-yticks { grid-area: yticks; position: relative; padding-right: 0.65em; }
     .mfs-nr-figure .nr-sizer { display: block; height: 0; overflow: hidden; visibility: hidden; }
+    .mfs-nr-figure .nr-xreach { grid-area: xreach; height: 0; overflow: hidden; visibility: hidden; font-size: 0.5em; white-space: nowrap; }
     .mfs-nr-figure .nr-sizer > span { display: block; white-space: nowrap; }
-    .mfs-nr-figure .nr-tick { position: absolute; white-space: nowrap; }
+    /* A number is one line tall, the half of it above the plot half an em, however the minus
+       sign, drawn from another font, would stretch its line. */
+    .mfs-nr-figure .nr-tick { position: absolute; white-space: nowrap; height: 1em; }
     .mfs-nr-figure .nr-yticks .nr-tick { right: 0.65em; transform: translateY(-50%); }
     .mfs-nr-figure .nr-xticks { grid-area: xticks; position: relative; height: 1.75em; }
     .mfs-nr-figure .nr-xticks .nr-tick { top: 0.57em; transform: translateX(-50%); }
     .mfs-nr-figure .nr-tick-off { visibility: hidden; }
     .mfs-nr-figure .nr-xlabel { grid-area: xname; text-align: center; padding-top: 0.15em; }
+    /* A box of its own, so the name's letters, taller than its line, stand inside the row. */
+    .mfs-nr-figure .nr-xlabel .nr-name { display: inline-block; }
     .mfs-nr-figure .nr-plot { grid-area: plot; position: relative; }
     .mfs-nr-figure .nr-ref {
       position: absolute; right: 0.45em; transform: translateY(calc(-100% - 0.35em));
@@ -4068,6 +4106,7 @@
           g.need = ((head ? head.getBoundingClientRect().width : 0) + widest) / em + PRINT_INDENT_EM + 0.5;
         });
         gathered.forEach(function(g) { g.line.style.setProperty('--mfs-fit', g.need.toFixed(3)); });
+        window._mfsFitAxisNames([].slice.call(root.querySelectorAll('.mfs-nr-figure')));
         root.style.cssText = '';
       }
 
@@ -4120,6 +4159,10 @@
 
   <style>
     #mfs-print-root { display: none; }
+    /* The size of a spacetime diagram on paper, outside the print rules, so printPrepare()
+       measures the names of its axes at the size they print at: MathJax rounds a formula's
+       height at so small a size, and "ct/R" stands 1.4 em tall there and 1.27 at 30px. */
+    .mfs-print-body .mfs-nr-figure { max-width: 12cm; font-size: 8pt; }
 
     @media print {
       @page { margin: 1.6cm 2cm; }
@@ -4223,7 +4266,6 @@
          holding nothing but the descenders of the repeated footer. */
       #mfs-print-root { overflow: hidden; }
       .mfs-print-body .mfs-nr-view { display: block !important; break-inside: avoid; margin: 6px 0 14px; }
-      .mfs-print-body .mfs-nr-figure { max-width: 12cm; font-size: 8pt; }
       .mfs-print-body .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 4px 0; }
       .mfs-print-body .mfs-nr-item { display: inline-flex; align-items: center; gap: 5px; }
       .mfs-print-body .mfs-nr-k,
