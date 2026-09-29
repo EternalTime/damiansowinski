@@ -35,6 +35,7 @@ them, and `null_rays.py --slices` rewrites only the slices of every diagram file
 import functools
 import json
 import math
+import re
 import sys
 from pathlib import Path
 
@@ -426,6 +427,94 @@ def clip_ring(P, lo=(0.0, 0.0), hi=(1.0, 1.0)):
         if not out:
             return None
     return np.array(out)
+
+
+# ---------------------------------------------------------------- where a slice's label stands
+
+GAP = 0.3                       # between a label and the line it names, in ems of the label
+
+
+def label_size(text):
+    """A label's box as TeX sets it, in ems of its own size, roughly and a little large: half
+    an em a character, a quarter for a space, the padding of its ground, 0.3 em either side
+    and 0.12 above and below, and room for a subscript."""
+    plain = re.sub(r"\\[a-zA-Z]+|[${}^_]|\\,|\\;", "", text)
+    return 0.5 * len(plain.replace(" ", "")) + 0.28 * plain.count(" ") + 0.6, 1.5
+
+
+def place(marks, px, box, size, others=()):
+    """Where each mark's label stands, beside the right hand end of its lines or at its point,
+    so that no two labels, and no label and another label of the drawing, overlap, and no
+    label covers a line of a mark or leaves the box. A mark that is a region alone names its
+    moment in the legend and gets none.
+
+    marks   the Marks, their lines and points already in the drawing's own coordinates;
+    px      the map from those coordinates to the drawing's pixels, y down;
+    box     (width, height) of the drawing in pixels;
+    size    the size of a label in pixels;
+    others  the boxes (x0, y0, x1, y1) of the drawing's other labels.
+
+    The sides are tried in order: at the right hand end of the lines above the line and
+    toward the rest of it, below it, above and past the end, below and past it; then the same
+    at the left hand end; then the four corners of the point 85% of the way along from the
+    left hand end; and for a point from above and to its right round to below and to its
+    left. The side that stays in the box, overlaps no label, covers none of its own line and
+    none of another mark's wins, in that order of what matters most, the earliest of equals.
+    Returns, for each mark, None or {"at": [x, y], "anchor": ..., "dx": ..., "dy": ...},
+    dx and dy in ems of the label, away from `at`."""
+    W, H = box
+
+    def traced(mark):
+        out = []
+        for line in mark.lines:
+            P = np.array([px(q) for q in line])
+            for a, b in zip(P[:-1], P[1:]):
+                n = max(1, int(np.ceil(np.linalg.norm(b - a) / 2)))
+                out += list(a + (b - a) * np.linspace(0, 1, n + 1)[:, None])
+        return np.array(out) if out else np.zeros((0, 2))
+    traces = [traced(mark) for mark in marks]
+    taken = [tuple(o) for o in others]
+
+    def covers(rect, trace):
+        return bool(np.any((trace[:, 0] > rect[0]) & (trace[:, 0] < rect[2])
+                           & (trace[:, 1] > rect[1]) & (trace[:, 1] < rect[3])))
+    out = []
+    for i, mark in enumerate(marks):
+        if not (mark.lines or mark.points):
+            out.append(None)
+            continue
+        w, h = (v * size for v in label_size(mark.label))
+        g = GAP * size
+        corners = (("bl", 1, -1), ("tl", 1, 1), ("br", -1, -1), ("tr", -1, 1))
+        if mark.lines:
+            ends = [q for line in mark.lines for q in (line[0], line[-1])]
+            right = max(ends, key=lambda q: (px(q)[0], -px(q)[1]))
+            left = min(ends, key=lambda q: (px(q)[0], px(q)[1]))
+            line = max(mark.lines, key=lambda L: px(L[-1])[0] if px(L[-1])[0] >= px(L[0])[0] else px(L[0])[0])
+            P = np.array(line if px(line[-1])[0] >= px(line[0])[0] else line[::-1], dtype=float)
+            arc = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(np.array([px(q) for q in P]), axis=0), axis=1))])
+            along = np.array([np.interp(0.85 * arc[-1], arc, P[:, j]) for j in range(2)])
+            tries = ([(right, "br", 0, -1), (right, "tr", 0, 1), (right, "bl", 1, -1), (right, "tl", 1, 1),
+                      (left, "bl", 0, -1), (left, "tl", 0, 1), (left, "br", -1, -1), (left, "tr", -1, 1)]
+                     + [(along, a, sx, sy) for a, sx, sy in corners])
+        else:
+            tries = [(mark.points[0], a, sx, sy) for a, sx, sy in corners]
+        best = None
+        for order, (at, anchor, sx, sy) in enumerate(tries):
+            x, y = px(at)
+            x0 = x + sx * g - (w if anchor[1] == "r" else 0)
+            y0 = y + sy * g - (h if anchor[0] == "b" else 0)
+            rect = (x0, y0, x0 + w, y0 + h)
+            score = (not (rect[0] >= 0 and rect[1] >= 0 and rect[2] <= W and rect[3] <= H),
+                     any(rect[0] < o[2] and o[0] < rect[2] and rect[1] < o[3] and o[1] < rect[3] for o in taken),
+                     covers(rect, traces[i]),
+                     any(covers(rect, t) for j, t in enumerate(traces) if j != i), order)
+            if best is None or score < best[0]:
+                best = (score, at, anchor, sx, sy, rect)
+        _, at, anchor, sx, sy, rect = best
+        taken.append(rect)
+        out.append({"at": [round(float(v), 4) for v in at], "anchor": anchor, "dx": sx * GAP, "dy": sy * GAP})
+    return out
 
 
 # ---------------------------------------------------------------- the checks

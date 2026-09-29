@@ -226,7 +226,7 @@ runs the tests, which include that check.
 ## Spacetime diagrams
 
 `MFS/assets/data/diagrams/<metric_id>.json` holds the spacetime diagrams of one spacetime: null rays and future light cones on a plane of the time and one spatial coordinate, for each coordinate system that has any, for Kerr and Kerr-Newman the principal null rays, which leave every such plane, and figures in three dimensions where no plane carries the causal structure, as "Figures in three dimensions" below describes.
-The page draws them in a section per coordinate system, after the geodesics, and the application displays the same files.
+The page draws them in a section per coordinate system, the first of the three diagrams that close the mathematics, after the geodesics, and the application displays the same files.
 Nothing in them is drawn by eye or computed by the page.
 `_tools/derivations/null_rays.py` computes every ray, cone and marker from the system's published `metric_components`, `inverse_metric_components`, `kretschmann` and `domains`, and for the principal null rays its `weyl_tensor` and `christoffel` as well, read through the checker's own `Reader`, and its docstring records the method.
 
@@ -374,7 +374,7 @@ Gott's core, the cosmic string's interior, is flat on its plane of $t$ and $\chi
 ## Conformal diagrams
 
 `MFS/assets/data/conformal/<metric_id>.json` holds the conformal diagram of one spacetime: the whole spacetime brought to a finite drawing with light at 45°, or, where no picture of the whole is faithful, a totally geodesic surface in it that says so.
-The page draws it under the heading "conformal diagram", below the coordinates and the conventions, and it follows the chart chosen there: it shows the views that name that chart, then the views that name no chart, with buttons only when that makes more than one.
+The page draws it under the heading "conformal diagram", just below the spacetime diagram, and it follows the chart chosen at the top: it shows the views that name that chart, then the views that name no chart, with buttons only when that makes more than one.
 A chart none of whose views is its own shows no conformal diagram at all, as Vaidya's outgoing chart does, since the one drawn is the shell imploding in the ingoing chart.
 The application reads the same files.
 
@@ -655,6 +655,51 @@ At another camera, azimuth $a$ and elevation $e$, with the vectors `right`, `up`
 The page turns a figure round its axis as far as the reader drags it, the drawing's width being half a turn, and tilts it from looking straight down the axis, $e = 90°$, to looking straight up it, $e = -90°$, never past, so the axis always stands up the page.
 It stays where it is let go, and the reset button in the corner of the frame, a double click or a double tap, Home and Escape bring back the published figure, which is also what prints.
 The arrow keys turn it by 15 degrees once the drawing has the focus, which a click on it gives.
+
+## The three diagrams together
+
+A spacetime's spacetime diagram, conformal diagram and embedding diagram stand together, in that order, after the geodesics and before the references, as the captain asked on 28 September 2026.
+That is where the application's Graphs section stands, between its Maths and its References, and the page has no row of section buttons, so the three need no heading of their own.
+The spacetime diagram and the conformal diagram each draw the slice the embedding diagram is cut from, so the reader meets the line and then the surface cut along it.
+
+### The slice of the embedding diagram
+
+Every embedding diagram draws part of one moment of its spacetime, or of several moments in turn, and `_tools/derivations/embedding_slices.md` works out how each moment meets every other diagram of its spacetime.
+`_tools/derivations/slices.py` is that table in code.
+It reads each moment and how far the embedding reaches along it from the embedding file itself, and says what the moment is in the chart of each spacetime diagram's view: a line of constant time, the Eddington-Finkelstein curves of Schwarzschild's $t = 0$, de Sitter's static $t = 0$ in the flat slicing, the pp-wave's fronts $u = u_k$, Novikov's slice outside Oppenheimer and Snyder's dust, and the whole equator seen from above on Kerr's and Kerr-Newman's views of the principal rays.
+`/tmp/mfs-venv/bin/python _tools/derivations/slices.py` checks every chart transformation a moment is carried through by pulling one published metric back onto the other, and Novikov's shells against the published exterior.
+`HIDDEN` in it names the drawings on which a moment of the spacetime lies and is not drawn, each with the reason: FRW's flat universe and Tolman-Bondi's marginally bound cloud are other spacetimes than the ones embedded, Vaidya's outgoing chart draws the time reverse of the shell embedded, and beyond $r_c$ Gödel's and van Stockum's circles are closed timelike curves.
+
+Each drawing draws its slices with the map it draws everything else with: `null_rays.py` writes them into each flat view, `projections.py` into each figure and `conformal.py` into each conformal view.
+`null_rays.py --slices` rewrites only the slices of the diagram files, from the embedding files as they stand, tracing no ray, and redraws the figures, which take seconds; run it, and `conformal.py`, after an embedding diagram moves a moment.
+Each slice records a stamp over the embedding surface it marks, computed by `embedding_moment_version` in `build_mfs_data.py` over the view's settings and the surface's label, time and pieces, and the command refuses a slice whose stamp no longer matches, or that names an embedding view or surface the embedding file does not draw, in `--check` and when writing alike.
+The `Slices` tests hold every point of every slice to its moment and every line's ends to the embedding's reach or the drawing's box, from the numbers in the files alone, and every moment to appearing on every drawing it lies on and on no other.
+
+### The file, which the application reads
+
+A flat view of a spacetime diagram, a figure in three dimensions and a view of a conformal diagram may each carry `slices`, a list with one entry for each surface of each embedding view whose moment lies on the drawing, in the order of the embedding file's views and surfaces:
+
+- `view` and `surface`: the embedding view's `id` and the surface's place in its `surfaces`.
+- `label`: the moment as TeX, the surface's own `label` in a sequence and otherwise the moment in the drawing's own words, as `$t = 0$`, `static $t = 0$` or `$t = 0$, $r = b$`.
+- `version`: the stamp above; the application can ignore it.
+- `lines`: polylines, `points`: points, and `fills`: regions, each a list of rings filled by the even odd rule, any of them possibly empty, all in the drawing's own coordinates: a flat view's unit square, as its rays, the right half of a view through the centre, which the reader mirrors as it mirrors the rays; a figure's plane of the page, as its layers; and a conformal view's $(X, T)$, as its layers.
+- `place`, present where the drawing names the moment beside it: `at`, a point in the same coordinates, `anchor`, the corner of the label pinned there as a conformal label's anchor, and `dx` and `dy`, the gap between the label and the point in ems of the label.
+  On a view through the centre `at` may have a negative first coordinate, the mirror of the point at its absolute value.
+
+Draw a slice's regions under everything else on the drawing, and its lines and points over every other line and under the points that mark ends and events, as a solid line 2.6 wide of `--green-light`, #4db84a, on the dark ground and `--green-dark`, #2a6e2a, in print, a region tinted with the same green at 12%.
+Green marks nothing else on these drawings but in dots, Kerr's ergosurface, so a solid green line reads at once as the new mark.
+Set a label with `place` at its point, on a ground of its own as a conformal diagram's small labels are, in the same green, at the size of a small label on a conformal diagram and of a reference line's label on a spacetime diagram.
+A slice without `place` is a region alone, the floor of a figure or the equator seen from above, and is named in the legend instead.
+
+`slices.place` chooses each label's side for the drawing as it is drawn at the usual text size: beside the right hand end of the slice's lines, above the line and toward the rest of it, then below it, then past the end; then at the left hand end; then at a point 85% of the way along; for a point, round from above and to its right.
+The first side that stays in the drawing and overlaps no other label wins, and among those, the first that covers none of its own line and none of another slice's.
+A conformal diagram and a figure are drawn larger with the reader's text, their labels with them, so the place holds at every size.
+A spacetime diagram's words grow around a plot that does not, so at a larger text size the page tries the other sides of the same point in the same order and takes the first that is clear, and returns to the file's side when the text is smaller again; `fitSliceLabels` in `_layouts/mfs.html` carries the details.
+
+Each drawing's legend adds one entry for the slices of each embedding view it marks, shown with them: "the slice of the embedding diagram", "the slices of the embedding diagram" where the view is a sequence, and after it the moment where the drawing does not name it, as "the slice of the embedding diagram, $t = 0$".
+Where two embedding views' entries would read the same, as Reissner-Nordström's outside $r_+$ and inside $r_-$, they are one entry.
+Only the slices of the embedding view shown are drawn, so choosing another view of the embedding diagram draws its slices in place of the others, as a slider's moment would; the print copy prints every view of the embedding diagram, and so every slice.
+A sequence's moments stand side by side in the embedding diagram, so all of them are drawn at once.
 
 ## Checking the physics
 

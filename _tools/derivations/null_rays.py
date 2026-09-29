@@ -2483,13 +2483,13 @@ def draw(spec):
     }
     if spec.areal_contours:
         view["areal"] = plot.level_sets("R", spec.areal_contours)
-    marks = view_slices(spec)
+    marks = view_slices(spec, view["markers"])
     if marks:
         view["slices"] = marks
     return view
 
 
-def view_slices(spec):
+def view_slices(spec, markers=()):
     """The moments of the spacetime's embedding diagram that the view shows, which
     slices.flat declares in the chart's (x^0, r), carried into the unit square by the view's
     own map and box: lines cut where they leave the box and thinned as the rays are, points
@@ -2507,7 +2507,7 @@ def view_slices(spec):
             Q = P @ np.array(spec.to_display, float).T
         return (Q - lo) / span
 
-    out = []
+    out, drawn = [], []
     for mark in slices.flat(spec):
         lines = [rounded(thin(run, 0.0006)) for line in mark.lines for run in slices.clip_runs(unit(line))]
         points = [rounded(u) for p in mark.points for u in unit(p) if np.all((u >= 0) & (u <= 1))]
@@ -2520,6 +2520,29 @@ def view_slices(spec):
         if not (lines or points or fills):
             raise SystemExit(f"{key(spec)}: the moment {mark.label} of the embedding lies outside the box")
         out.append({**mark.moment.json(), "label": mark.label, "lines": lines, "points": points, "fills": fills})
+        # A mirrored view draws each line and its mirror, so either end may take the label.
+        both = lines + ([[[-u[0], u[1]] for u in line] for line in lines] if spec.mirror else [])
+        drawn.append(slices.Mark(mark.moment, both, points, fills, mark.label))
+    # The labels are placed on the plot as it is drawn at the usual text size, 520 pixels
+    # wide, a mirrored view's unit square its right half, at the size of a phone's labels
+    # against its narrower plot, the larger of the two; the reference line's label stands
+    # at the plot's right edge above its line.
+    W = 520.0
+    H = W * (Y1 - Y0) / ((X1 - X0) * (2 if spec.mirror else 1))
+    size = 14.5
+
+    def px(u):
+        x = (0.5 + 0.5 * u[0]) * W if spec.mirror else u[0] * W
+        return np.array([x, (1 - u[1]) * H])
+    others = []
+    for marker in markers:
+        if marker["kind"] == "reference":
+            y = (1 - marker["y"]) * H
+            w, h = (v * 13 for v in slices.label_size(marker["label"]))
+            others.append((W - 0.45 * 13 - w, y - 0.35 * 13 - h, W - 0.45 * 13, y - 0.35 * 13))
+    for entry, place in zip(out, slices.place(drawn, px, (W, H), size, others)):
+        if place:
+            entry["place"] = place
     return out
 
 
@@ -2540,7 +2563,7 @@ def rewrite_slices(metric_ids=None):
                 raise SystemExit(f"{key(spec)}: the file was drawn with another box or other values; "
                                  "redraw it whole")
             view.pop("slices", None)
-            marks = view_slices(spec)
+            marks = view_slices(spec, view["markers"])
             if marks:
                 view["slices"] = marks
         for spec in figures:

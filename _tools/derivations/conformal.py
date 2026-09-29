@@ -165,6 +165,14 @@ def rounded(points):
     return np.round(np.asarray(points, dtype=float), 4).tolist()
 
 
+# The page's drawing, as _layouts/mfs.html draws it: CD_W wide in a margin CD_M, a label's
+# size in units of that 628, and where its anchor pins it, as a fraction of its box.
+CD_W, CD_M = 560, 34
+CD_LABEL_SIZE = {"lab": 15, "small": 13, "region": 13, "coord": 12}
+CD_ANCHOR_SHIFT = {"c": (-0.5, -0.5), "l": (0, -0.5), "r": (-1, -0.5), "t": (-0.5, 0), "b": (-0.5, -1),
+                   "tl": (0, 0), "tr": (-1, 0), "bl": (0, -1), "br": (-1, -1)}
+
+
 # The order a legend lists its classes in, the same in every view: what is tinted, the
 # coordinate lines, what is marked inside, and then the edges of the spacetime.
 LEGEND_ORDER = ["cover", "cover2", "star", "past", "r", "r2", "t", "t2", "null", "world", "cone", "mark",
@@ -242,8 +250,31 @@ class View:
                 for at in [p for line in mark["lines"] for p in line] + mark["points"]:
                     if not (X0 <= at[0] <= X1 and T0 <= at[1] <= T1):
                         raise AssertionError(f"view {self.d['id']}: the slice {mark['label']} leaves the box at {at}")
+            self.place_slice_labels()
             self.d["slices"] = self.slices
         return self.d
+
+    def place_slice_labels(self):
+        """Each slice's label, placed by slices.place on the drawing as the page draws it,
+        628 units wide with its margin, at the size of the small labels, clear of every
+        label the view already carries."""
+        X0, X1, T0, T1 = self.d["box"]
+        s = CD_W / (X1 - X0)
+
+        def px(at):
+            return np.array([CD_M + (at[0] - X0) * s, CD_M + (T1 - at[1]) * s])
+        others = []
+        for L in self.labels:
+            size = CD_LABEL_SIZE.get(L["class"], 14)
+            w, h = (v * size for v in slices.label_size(L["text"]))
+            ax, ay = CD_ANCHOR_SHIFT[L["anchor"]]
+            x, y = px(L["at"]) + [L["dx"], L["dy"]]
+            others.append((x + ax * w, y + ay * h, x + (ax + 1) * w, y + (ay + 1) * h))
+        marks = [slices.Mark(None, mark["lines"], mark["points"], mark["fills"], mark["label"]) for mark in self.slices]
+        box = (CD_W + 2 * CD_M, (T1 - T0) * s + 2 * CD_M)
+        for mark, where in zip(self.slices, slices.place(marks, px, box, CD_LABEL_SIZE["small"], others)):
+            if where:
+                mark["place"] = where
 
 
 # ---------------------------------------------------------------- reading a surface
@@ -2044,8 +2075,8 @@ def oppenheimer_snyder(ck, src):
         chi = np.array([0.0, c])
         lo, hi = m.reach("comoving_synchronous", "r")
         U, V, _ = slices.novikov_kruskal(np.linspace(lo, hi, 401), m.time)
-        P, Q = o.P(U), o.Q(V)
-        v.slice(m, [(np.concatenate([(e - chi) / 2, P]), np.concatenate([(e + chi) / 2, Q]))])
+        # Two lines, so that the corner where they meet on the surface is kept exactly.
+        v.slice(m, [((e - chi) / 2, (e + chi) / 2), (o.P(U), o.Q(V))])
     return [v]
 
 
