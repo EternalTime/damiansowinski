@@ -1,23 +1,28 @@
-/* Turning an embedding diagram.
+/* Turning a figure drawn in three dimensions.
 
-   _layouts/mfs.html draws an embedding diagram's published figure, which
-   _tools/derivations/embedding.py projected once from a fixed camera, until the reader drags it,
-   and from then on draws the figure again from the view's surfaces at the camera the drag has
-   reached, with draw() below. Everything here is geometry and touches no page, so the tests run
-   it in Node against the published figures; _tools/README.md, "Turning the figure", is the
-   definition the application follows as well.
+   _layouts/mfs.html draws a figure's published drawing, which a generator projected once from a
+   fixed camera, until the reader drags it, and from then on draws the figure again from its
+   pieces in three dimensions at the camera the drag has reached, with prepare() and draw()
+   below. Two kinds of figure turn: an embedding diagram, from the surfaces of its view, which
+   _tools/derivations/embedding.py writes, and a figure of light cones in three dimensions, from
+   the `turn` of a spacetime diagram's figure, which _tools/derivations/projections.py writes.
+   The same hand turns both, as dragged(), keyed() and turned() say, and both keep to the box
+   they were published in. Everything here is geometry and touches no page, so the tests run it
+   in Node against the published figures; _tools/README.md, "Turning the figure" and "Turning a
+   figure of light cones", is the definition the application follows as well.
 
-   The figure is drawn by the rules the generator draws it by: each piece's meridians, its
-   outline where it turns edge on to the camera, the rim at an end where the drawing stops, its
-   marked circles and marked meridians, the curves and points marked on a surface that are no
-   circles, as a ring of free particles on a flat plane, every line split where a surface hides it into the part
-   seen and the part hidden, which carries -far, and each tinted piece filled where it is the
-   surface nearest the camera. What hides a line is found as the generator finds it, by casting a
-   ray from each of its points toward the camera through the truncated cones between neighbouring
-   circles of every profile, which is exact for the surface the points describe, and a point of
-   the outline, where the line of sight only grazes the surface, is judged a little off it on
-   either side. The tint is found on a grid of the page, as the generator's is, from the same
-   cones cut into facets and cast through exactly wherever two regions meet.
+   An embedding diagram is drawn by the rules the generator draws it by: each piece's meridians,
+   its outline where it turns edge on to the camera, the rim at an end where the drawing stops,
+   its marked circles and marked meridians, the curves and points marked on a surface that are no
+   circles, as a ring of free particles on a flat plane, every line split where a surface hides
+   it into the part seen and the part hidden, which carries -far, and each tinted piece filled
+   where it is the surface nearest the camera. What hides a line is found as the generator finds
+   it, by casting a ray from each of its points toward the camera through the truncated cones
+   between neighbouring circles of every profile, which is exact for the surface the points
+   describe, and a point of the outline, where the line of sight only grazes the surface, is
+   judged a little off it on either side. The tint is found on a grid of the page, as the
+   generator's is, from the same cones cut into facets and cast through exactly wherever two
+   regions meet.
 
    Each surface turns about the point of its axis halfway up its drawing, which stays where it
    stood on the page. Its width on the page never changes as it turns, a surface of revolution
@@ -33,7 +38,9 @@
    one direction, and a point on a height is judged from just above and just below it, the two
    sides of a height. A grid need not look the same from every side, so it is kept within the
    width it had at the start as well as the height, a rectangle turned toward its diagonal drawn
-   smaller. */
+   smaller.
+
+   A figure of light cones is drawn as drawCones() says. */
 (function(root) {
   'use strict';
 
@@ -50,8 +57,8 @@
              toward: [ce * ca, ce * sa, se], right: [-sa, ca, 0], up: [-se * ca, -se * sa, ce] };
   }
 
-  // What draw() needs of a view that does not depend on the camera.
-  function prepare(view) {
+  // What drawSurfaces() needs of an embedding view that does not depend on the camera.
+  function prepareSurfaces(view) {
     var figure = view.figure, turn = figure.turn, box = figure.box;
     var size = Math.max(box[1] - box[0], box[3] - box[2]);
     var e0 = figure.camera.elevation * RAD, a0 = figure.camera.azimuth * RAD, classes = [];
@@ -114,7 +121,7 @@
     });
     var order = {};
     figure.legend.forEach(function(item, i) { order[item[1]] = i; });
-    return { figure: figure, turn: turn, box: box, size: size, surfaces: surfaces, order: order, classes: classes,
+    return { kind: 'surfaces', figure: figure, turn: turn, box: box, size: size, surfaces: surfaces, order: order, classes: classes,
              eps: 1e-7 * size, unit: (box[1] - box[0]) / 560 };
   }
 
@@ -600,7 +607,7 @@
      figure's form: layers painted in order, fills first, then every line hidden and every line
      seen, each in the order of the legend, then points, and for each published label where it
      stands and whether it is shown. */
-  function draw(M, azimuth, elevation, quick, sizes) {
+  function drawSurfaces(M, azimuth, elevation, quick, sizes) {
     var Q = quick ? QUICK : FINE, cam = camera(azimuth, elevation), fit = fitting(M, cam);
     var s = fit.scale, ce = Math.cos(elevation * RAD), R = cam.right, U = cam.up, V = cam.toward;
     var lines = [], dots = [], outlines = M.surfaces.map(function() { return []; });
@@ -684,7 +691,7 @@
         .forEach(function(L) { layers.push({ kind: 'line', 'class': L.cls, points: L.points }); });
     });
     layers = layers.concat(dots);
-    return { layers: layers, labels: labels(M, cam, fit, outlines, sizes), scale: s };
+    return { layers: layers, slices: [], labels: labels(M, cam, fit, outlines, sizes), scale: s };
   }
 
   /* Where each fill class is the surface nearest the camera, as polygons on a grid of the
@@ -867,11 +874,18 @@
       }
       return { at: at, shown: true };
     });
+    return giveWay(M.figure.labels, out, M.unit, sizes, function(i) { return !!M.figure.labels[i].ring; });
+  }
+
+  /* Labels at their places `out`, each shown unless `moves` says it follows the figure round and
+     it would overlap a label that stays put or a label before it that is shown, measured by
+     `sizes` where the page gives each label's width and height as it set it. */
+  function giveWay(labels, out, unit, sizes, moves) {
     var boxes = [];
-    function boxOf(i) { return labelBox(M.figure.labels[i], out[i].at, M.unit, sizes && sizes[i]); }
-    M.figure.labels.forEach(function(L, i) { if (!L.ring) boxes.push(boxOf(i)); });
-    M.figure.labels.forEach(function(L, i) {
-      if (!L.ring || !out[i].shown) return;
+    function boxOf(i) { return labelBox(labels[i], out[i].at, unit, sizes && sizes[i]); }
+    labels.forEach(function(L, i) { if (!moves(i)) boxes.push(boxOf(i)); });
+    labels.forEach(function(L, i) {
+      if (!moves(i) || !out[i].shown) return;
       var a = boxOf(i);
       out[i].shown = boxes.every(function(b) { return !(a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3]); });
       if (out[i].shown) boxes.push(a);
@@ -879,7 +893,186 @@
     return out;
   }
 
-  var api = { camera: camera, prepare: prepare, draw: draw, fitting: fitting, hidden: hidden, isolines: isolines, labelBox: labelBox };
+  /* ── Light cones in three dimensions ──
+
+     A figure of _tools/derivations/projections.py that carries `turn` is drawn from its pieces
+     in the drawing's (X, Y, T), T up, by the rules the generator's Figure projects them by:
+     every line first, in the order published, projected and thinned by Ramer-Douglas-Peucker to
+     0.0005 of the page's units; then every cone, farthest first by the depth of its apex, as the
+     convex hull of its projected apex and rim, filled, its rim closed, every generator a `ribs`th
+     of the way round the rim drawn from the apex, the two generators that bound the hull where
+     the apex lies on it, and the apex. Cones whose apexes stand at depths closer than a hundred
+     thousandth of the drawing keep the order they were published in, the order the generator
+     painted them in at the figure's own camera. A slice of the embedding diagram on the floor
+     is projected and thinned as a line is, and the page paints it under everything else.
+
+     A label stands at the projection of its point, or where it names a circle about the axis
+     at the point of that circle as far round from the camera's azimuth as it stood at the
+     figure's own camera, so it keeps to the side of the circle nearest the reader, and gives
+     way where it would overlap a label before it, as a label naming an embedding's circle does.
+
+     The figure turns about `centre`, on the axis halfway up the drawing, which stays where it
+     stood on the page. It is drawn at one scale, never above 1, the largest that keeps it within
+     the width it had at the start on each side of the axis and within the height it had at the
+     start, and moved up or down only as far as that height needs, as an embedding's height over
+     a plane is; so at the figure's own camera it is the published figure. */
+  function prepareCones(figure) {
+    var box = figure.box, turn = figure.turn, c = turn.centre;
+    var start = camera(figure.camera.azimuth, figure.camera.elevation);
+    var M = { kind: 'cones', figure: figure, turn: turn, box: box, centre: c,
+              size: Math.max(box[1] - box[0], box[3] - box[2]), unit: (box[1] - box[0]) / 560,
+              origin: [c[0] * start.right[0] + c[1] * start.right[1] + c[2] * start.right[2],
+                       c[0] * start.up[0] + c[1] * start.up[1] + c[2] * start.up[2]] };
+    M.reach0 = coneReach(M, start);
+    return M;
+  }
+
+  // Where a label of a figure of light cones stands in the drawing, seen from the camera.
+  function labelPoint(place, cam) {
+    if (place.at) return place.at;
+    var phi = (cam.azimuth + place.angle) * RAD, rho = place.circle[0];
+    return [rho * Math.cos(phi), rho * Math.sin(phi), place.circle[1]];
+  }
+
+  // Every point a figure of light cones draws, seen from the camera.
+  function eachPoint(M, cam, f) {
+    var turn = M.turn;
+    turn.lines.forEach(function(L) { L.points.forEach(f); });
+    turn.cones.forEach(function(cone) { f(cone.apex); cone.rim.forEach(f); });
+    turn.labels.forEach(function(place) { f(labelPoint(place, cam)); });
+    turn.slices.forEach(function(mark) {
+      mark.lines.forEach(function(P) { P.forEach(f); });
+      mark.fills.forEach(function(rings) { rings.forEach(function(P) { P.forEach(f); }); });
+    });
+  }
+
+  // How far the figure reaches left, right, down and up of its centre on the page at scale 1.
+  function coneReach(M, cam) {
+    var c = M.centre, R = cam.right, U = cam.up, out = [Infinity, -Infinity, Infinity, -Infinity];
+    eachPoint(M, cam, function(P) {
+      var x = P[0] - c[0], y = P[1] - c[1], z = P[2] - c[2];
+      var u = x * R[0] + y * R[1] + z * R[2], v = x * U[0] + y * U[1] + z * U[2];
+      if (u < out[0]) out[0] = u;
+      if (u > out[1]) out[1] = u;
+      if (v < out[2]) out[2] = v;
+      if (v > out[3]) out[3] = v;
+    });
+    return out;
+  }
+
+  // The one scale, never above 1, and the move up or down, that keep the figure within the
+  // width it had at the start on each side of its axis and within the height it had.
+  function coneFitting(M, cam) {
+    var r0 = M.reach0, r = coneReach(M, cam), scale = 1;
+    if (r[3] - r[2] > r0[3] - r0[2]) scale = Math.min(scale, (r0[3] - r0[2]) / (r[3] - r[2]));
+    if (r[0] < r0[0]) scale = Math.min(scale, r0[0] / r[0]);
+    if (r[1] > r0[1]) scale = Math.min(scale, r0[1] / r[1]);
+    return { scale: scale, shift: Math.min(Math.max(0, r0[2] - scale * r[2]), r0[3] - scale * r[3]) };
+  }
+
+  /* The convex hull of points of the page, counterclockwise, by Andrew's monotone chain, each
+     point taken to twelve decimals, as the generator's hull() takes it. */
+  function hull(points) {
+    var P = points.map(function(p) { return [Math.round(p[0] * 1e12) / 1e12, Math.round(p[1] * 1e12) / 1e12]; });
+    P.sort(function(a, b) { return a[0] - b[0] || a[1] - b[1]; });
+    if (P.length < 3) return P;
+    function cross(o, a, b) { return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]); }
+    var lower = [], upper = [], i;
+    for (i = 0; i < P.length; i++) {
+      while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], P[i]) <= 0) lower.pop();
+      lower.push(P[i]);
+    }
+    for (i = P.length - 1; i >= 0; i--) {
+      while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], P[i]) <= 0) upper.pop();
+      upper.push(P[i]);
+    }
+    return lower.slice(0, -1).concat(upper.slice(0, -1));
+  }
+
+  // Where the apex a stands on the hull H, as numpy's isclose() finds it, or -1.
+  function onHull(H, a) {
+    var x = Math.round(a[0] * 1e12) / 1e12, y = Math.round(a[1] * 1e12) / 1e12;
+    for (var k = 0; k < H.length; k++) {
+      if (Math.abs(H[k][0] - x) <= 1e-8 + 1e-5 * Math.abs(x) && Math.abs(H[k][1] - y) <= 1e-8 + 1e-5 * Math.abs(y)) return k;
+    }
+    return -1;
+  }
+
+  /* A figure of light cones at the camera (azimuth, elevation), in the published figure's form:
+     layers painted in order, each cone's apex naming the cone's place in `turn.cones`, the
+     slices of the embedding diagram, which the page paints under them, and for each published
+     label where it stands and whether it is shown. */
+  function drawCones(M, azimuth, elevation, quick, sizes) {
+    var cam = camera(azimuth, elevation), fit = coneFitting(M, cam), s = fit.scale, c = M.centre, turn = M.turn;
+    var R = cam.right, U = cam.up, V = cam.toward, X0 = M.origin[0], Y0 = M.origin[1] + fit.shift;
+    function page(P) {
+      var x = P[0] - c[0], y = P[1] - c[1], z = P[2] - c[2];
+      return [X0 + s * (x * R[0] + y * R[1] + z * R[2]), Y0 + s * (x * U[0] + y * U[1] + z * U[2])];
+    }
+    function line(P) { return thin(P.map(page), 5e-4); }
+    var layers = turn.lines.map(function(L) { return { kind: 'line', 'class': L['class'], points: line(L.points) }; });
+    var tie = 1e-5 * M.size;
+    turn.cones.map(function(cone, i) {
+      var a = cone.apex;
+      return { cone: cone, i: i, depth: Math.round((a[0] * V[0] + a[1] * V[1] + a[2] * V[2]) / tie) };
+    }).sort(function(p, q) { return p.depth - q.depth || p.i - q.i; }).forEach(function(o) {
+      var cls = o.cone['class'], a = page(o.cone.apex), rim = o.cone.rim.map(page), n = rim.length, H = hull([a].concat(rim));
+      layers.push({ kind: 'fill', 'class': cls, points: H });
+      layers.push({ kind: 'line', 'class': cls + '-rim', points: rim.concat([rim[0]]) });
+      for (var i = 0; i < n; i += n / turn.ribs) layers.push({ kind: 'line', 'class': cls + '-rib', points: [a, rim[i]] });
+      var k = onHull(H, a);
+      if (k >= 0) layers.push({ kind: 'line', 'class': cls, points: [H[(k + H.length - 1) % H.length], a, H[(k + 1) % H.length]] });
+      layers.push({ kind: 'point', 'class': cls + '-apex', at: a, cone: o.i });
+    });
+    var slices = turn.slices.map(function(mark) {
+      return { lines: mark.lines.map(line), fills: mark.fills.map(function(rings) { return rings.map(line); }) };
+    });
+    var labels = giveWay(M.figure.labels, turn.labels.map(function(place) { return { at: page(labelPoint(place, cam)), shown: true }; }),
+                         M.unit, sizes, function(i) { return !!turn.labels[i].circle; });
+    return { layers: layers, slices: slices, labels: labels, scale: s };
+  }
+
+  /* ── The hand ──
+     How the reader turns every figure that turns: a drag across the drawing's whole width, of
+     `width` pixels, turns it half a turn round its axis, the way the hand moves, as far as the
+     reader likes, and a drag up or down as far tilts it as much, from looking straight down the
+     axis, elevation 90, to looking straight up it, -90, and never past, so the axis always
+     stands up the page. The arrow keys turn it by 15 degrees, as a drag their way would, and
+     Home and Escape bring back the figure's own camera, `start`, as a double click and a double
+     tap do. */
+  function aimed(azimuth, elevation) {
+    return { azimuth: azimuth, elevation: Math.max(-90, Math.min(90, elevation)) };
+  }
+  function dragged(from, dx, dy, width) {
+    var k = 180 / width;
+    return aimed(from.azimuth - k * dx, from.elevation + k * dy);
+  }
+  function keyed(at, key, start) {
+    if (key === 'ArrowLeft') return aimed(at.azimuth + 15, at.elevation);
+    if (key === 'ArrowRight') return aimed(at.azimuth - 15, at.elevation);
+    if (key === 'ArrowUp') return aimed(at.azimuth, at.elevation - 15);
+    if (key === 'ArrowDown') return aimed(at.azimuth, at.elevation + 15);
+    if (key === 'Home' || key === 'Escape') return aimed(start.azimuth, start.elevation);
+    return null;
+  }
+  // Whether the camera is anywhere but the figure's own, a whole number of turns apart being the same.
+  function turned(start, at) {
+    return at.elevation !== start.elevation || Math.abs((((at.azimuth - start.azimuth) % 360) + 540) % 360 - 180) > 1e-9;
+  }
+
+  // What draw() needs of a figure that does not depend on the camera: an embedding view, which
+  // carries its surfaces, or a figure of light cones, which carries `turn`.
+  function prepare(view) { return view.surfaces ? prepareSurfaces(view) : prepareCones(view); }
+
+  /* The figure at the camera (azimuth, elevation), coarser where `quick` while a drag goes on,
+     with the labels measured by `sizes`: its layers, the slices of the embedding diagram a
+     figure of light cones carries, its labels and the scale it is drawn at. */
+  function draw(M, azimuth, elevation, quick, sizes) {
+    return (M.kind === 'cones' ? drawCones : drawSurfaces)(M, azimuth, elevation, quick, sizes);
+  }
+
+  var api = { camera: camera, prepare: prepare, draw: draw, dragged: dragged, keyed: keyed, turned: turned,
+              fitting: fitting, hidden: hidden, isolines: isolines, labelBox: labelBox, hull: hull };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.MfsTurn = api;
 })(this);

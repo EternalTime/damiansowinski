@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-/* Measure MFS/assets/embedding-turn.js, which the page turns an embedding diagram with, against
-   every published embedding figure, for the tests in test_build_mfs_data.py to hold.
+/* Measure MFS/assets/turn.js, which the page turns a figure drawn in three dimensions with,
+   against every published embedding figure and every published figure of light cones, for the
+   tests in test_build_mfs_data.py to hold.
 
-     node _tools/embedding_turn_check.cjs
+     node _tools/turn_check.cjs
 
-   prints one JSON object. For every view it gives, at the figure's own camera, the length of
-   every line class and the area of every fill class as the page would draw them beside the
-   published ones, and how far each label lands from its published place; at a sweep of other
+   prints one JSON object. For every embedding view it gives, at the figure's own camera, the
+   length of every line class and the area of every fill class as the page would draw them beside
+   the published ones, and how far each label lands from its published place; at a sweep of other
    cameras, the scale, how far any drawn point or label falls outside the box, and any number
    that is not one; and what share of the lines that a turn round the axis must leave in place
    moves under one, for every view whose surfaces are surfaces of revolution. For Schwarzschild it
@@ -15,13 +16,26 @@
    from straight above and straight below, how much of its lines is hidden and how much of the page
    its tint covers against its rim at the drawn scale; seen from just above the plane, how much of
    its grid is hidden; and, turned all the way round, how far it strays from its box and the
-   least scale it is drawn at. */
+   least scale it is drawn at.
+
+   For every figure of light cones it gives, at the figure's own camera, whether the layers come
+   in the published order with the published kinds and classes, how far the drawn layers stray
+   from the published ones, the cones' separately from the lines the generator thins, how far
+   each label and slice lands from its published place and whether every label is shown; and at
+   a sweep of other cameras the same as for an embedding view.
+
+   For one figure of each kind, a surface of revolution, a height over a plane and a figure of
+   light cones, it drags the drawing as the page does, with dragged(), keyed() and turned(): a
+   quarter of its width across, a whole width up and down, a whole turn round and back home,
+   giving each camera reached, whether the page counts it turned, how much of the drawing moved,
+   how far the drawing strays from its box there, and for the light cones how far the cone
+   facing the reader at the start moved across the page. */
 'use strict';
 const fs = require('fs');
 const path = require('path');
 
 const root = path.resolve(__dirname, '..');
-const turn = require(path.join(root, 'MFS', 'assets', 'embedding-turn.js'));
+const turn = require(path.join(root, 'MFS', 'assets', 'turn.js'));
 const dir = path.join(root, 'MFS', 'assets', 'data', 'embedding');
 
 function length(lines) {
@@ -188,5 +202,111 @@ for (const [name, e] of [['above', 90], ['below', -90]]) {
     }
   }
   out.schwarzschild[name] = reach;
+}
+
+// The largest distance from a point of either polyline to the other.
+function apart(A, B) {
+  let far = 0;
+  for (const p of A) far = Math.max(far, distance(p, [B]));
+  for (const p of B) far = Math.max(far, distance(p, [A]));
+  return far;
+}
+// How far any drawn point, label or slice falls outside the box, as a share of its size, and how
+// many numbers are not numbers.
+function strays(d, box) {
+  const [x0, x1, y0, y1] = box, size = Math.max(x1 - x0, y1 - y0);
+  let outside = 0, bad = 0;
+  const check = p => {
+    if (!Number.isFinite(p[0]) || !Number.isFinite(p[1])) { bad++; return; }
+    outside = Math.max(outside, x0 - p[0], p[0] - x1, y0 - p[1], p[1] - y1);
+  };
+  for (const L of d.layers) (L.kind === 'point' ? [[L.at]] : [L.points, ...(L.holes || [])]).forEach(r => r.forEach(check));
+  for (const mark of d.slices) [...mark.lines, ...mark.fills.flat()].forEach(r => r.forEach(check));
+  d.labels.forEach(L => check(L.at));
+  return { outside: outside / size, bad };
+}
+
+const diagrams = path.join(root, 'MFS', 'assets', 'data', 'diagrams');
+out.figures = [];
+const figures = {};
+for (const file of fs.readdirSync(diagrams).filter(f => f.endsWith('.json')).sort()) {
+  const data = JSON.parse(fs.readFileSync(path.join(diagrams, file), 'utf8'));
+  for (const [system, views] of Object.entries(data.projections || {})) {
+    for (const fig of views) {
+      if (!fig.turn) continue;
+      figures[`${data.metric}/${fig.id}`] = fig;
+      const M = turn.prepare(fig), a0 = fig.camera.azimuth, e0 = fig.camera.elevation;
+      const at = turn.draw(M, a0, e0, false);
+      const order = fig.layers.length === at.layers.length &&
+        fig.layers.every((L, i) => L.kind === at.layers[i].kind && L['class'] === at.layers[i]['class']);
+      // The generator thins only the lines it draws before the cones.
+      const thinned = new Set(fig.turn.lines.map(L => L['class']));
+      let cones = 0, lines = 0;
+      if (order) {
+        fig.layers.forEach((L, i) => {
+          const D = at.layers[i];
+          const far = L.kind === 'point' ? Math.hypot(L.at[0] - D.at[0], L.at[1] - D.at[1]) : apart(L.points, D.points);
+          if (i < fig.turn.lines.length && thinned.has(L['class'])) lines = Math.max(lines, far);
+          else cones = Math.max(cones, far);
+        });
+      }
+      const labels = Math.max(0, ...at.labels.map((L, i) => Math.hypot(L.at[0] - fig.labels[i].at[0], L.at[1] - fig.labels[i].at[1])));
+      let slices = 0;
+      at.slices.forEach((mark, k) => {
+        mark.lines.forEach((L, j) => { slices = Math.max(slices, apart(L, fig.slices[k].lines[j])); });
+        mark.fills.forEach((rings, j) => rings.forEach((R, r) => { slices = Math.max(slices, apart(R, fig.slices[k].fills[j][r])); }));
+      });
+      const sweep = [];
+      for (const da of [0, 90, 200]) {
+        for (const e of [-90, -45, 0, e0, 45, 90]) {
+          const d = turn.draw(M, a0 + da, e, true);
+          sweep.push({ azimuth: a0 + da, elevation: e, scale: d.scale, ...strays(d, fig.box) });
+        }
+      }
+      const [x0, x1, y0, y1] = fig.box;
+      out.figures.push({ metric: data.metric, system, view: fig.id, size: Math.max(x1 - x0, y1 - y0), order,
+                         cones, lines, labels, slices, shown: at.labels.every(L => L.shown), sweep });
+    }
+  }
+}
+
+/* The hand, on one figure of each kind, the drawing `width` pixels wide as a page shows it. A
+   fifth of the width across turns the figure 36 degrees, which carries no meridian of Flamm's
+   paraboloid onto another, and a whole width up or down would tilt it past straight down or
+   straight up the axis, where it stops. The cone that faces the reader at the start, on the
+   circle r_c at phi = -90 degrees, is followed across the page. */
+out.hand = {};
+const embedding = name => JSON.parse(fs.readFileSync(path.join(dir, name + '.json'), 'utf8')).views[0];
+for (const [kind, view] of [['surface', embedding('schwarzschild')], ['height', embedding('krasnikov')],
+                            ['cones', figures['godel/tipping']]]) {
+  const fig = view.figure || view, M = turn.prepare(view), width = 600;
+  const start = { azimuth: fig.camera.azimuth, elevation: fig.camera.elevation };
+  const home = turn.draw(M, start.azimuth, start.elevation, false), before = byClass(home.layers).lines;
+  const size = Math.max(fig.box[1] - fig.box[0], fig.box[3] - fig.box[2]);
+  const steps = {
+    across: turn.dragged(start, width / 5, 0, width),
+    up: turn.dragged(start, 0, -width, width),
+    down: turn.dragged(start, 0, width, width),
+    round: turn.dragged(start, 2 * width, 0, width),
+  };
+  steps.home = turn.keyed(steps.across, 'Home', start);
+  steps.left = turn.keyed(start, 'ArrowLeft', start);
+  const entry = {};
+  for (const [name, cam] of Object.entries(steps)) {
+    const d = turn.draw(M, cam.azimuth, cam.elevation, false), after = byClass(d.layers).lines;
+    let moved = 0, total = 0;
+    for (const c of new Set([...Object.keys(before), ...Object.keys(after)])) {
+      moved += astray(before[c] || [], after[c] || [], 2e-3 * size);
+      total += length(before[c] || []) + length(after[c] || []);
+    }
+    entry[name] = { azimuth: cam.azimuth, elevation: cam.elevation, turned: turn.turned(start, cam),
+                    moved: moved / total, ...strays(d, fig.box) };
+    if (kind === 'cones') {
+      const facing = fig.turn.cones.findIndex(c => Math.abs(c.apex[0]) < 1e-6 && c.apex[1] < -0.5);
+      const apex = d => d.layers.find(L => L['class'] === 'cone-apex' && L.cone === facing).at[0];
+      entry[name].facing = apex(d) - apex(home);
+    }
+  }
+  out.hand[kind] = entry;
 }
 process.stdout.write(JSON.stringify(out) + '\n');
