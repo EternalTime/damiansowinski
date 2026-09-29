@@ -281,11 +281,11 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
     var list = box('mfs-search-panel'), coffee = box('mfs-coffee-panel'), right = box('mfs-content-panel');
     var sign = box('mfs-exit').bottom, foot = box('mfs-title').bottom, out = [];
     function near(what, a, b) { if (Math.abs(a - b) > 1) out.push(what + ' is at ' + a.toFixed(1) + ', not ' + b.toFixed(1)); }
-    near('the top of the list\'s panel', list.top, right.top);
+    near("the top of the list's panel", list.top, right.top);
     near('the bottom of the coffee panel', coffee.bottom, right.bottom);
-    near('the gap between the list\'s panel and the coffee panel', coffee.top - list.bottom, 6);
+    near("the gap between the list's panel and the coffee panel", coffee.top - list.bottom, 6);
     var old = Math.max(150, Math.ceil(foot + 60));
-    near('the top of the spacetime\'s panel', right.top, Math.max(sign + (old - sign) / 2, foot + 30));
+    near("the top of the spacetime's panel", right.top, Math.max(sign + (old - sign) / 2, foot + 30));
     return out;
   };
   window.__mfsSettled = function () {

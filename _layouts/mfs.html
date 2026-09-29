@@ -735,7 +735,7 @@
       // The coffee panel's height, which sets where the list's panel ends above it. Its clamp
       // follows --mfs-top, so placeTop() measures it again.
       function placeCoffee() {
-        document.documentElement.style.setProperty('--mfs-coffee-h', coffee.offsetHeight + 'px');
+        document.documentElement.style.setProperty('--mfs-coffee-h', coffee.getBoundingClientRect().height + 'px');
       }
 
       /* Set size and top; start off-screen left. The list's panel runs from the spacetime
