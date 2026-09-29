@@ -221,7 +221,7 @@ $$\frac{c^4}{8\pi G}G^{tt} = -\frac{c^4}{8\pi G}\frac{v_s^2}{4}\frac{y^2 + z^2}{
 
 checked on the plane against the declared profile to $3 \times 10^{-15}$: negative, zero on the path and largest at the sides of the wall, a ring about the direction of travel.
 On a flat slice that density is all extrinsic, $16\pi G\rho/c^4 = K^2 - K_{ij}K^{ij}$, since the scalar curvature of the slice vanishes; the drawing's flatness and the negative energy are two faces of one fact.
-Since 28 September 2026 the figure draws $\theta$ itself as a height over this plane, as Alcubierre did, which `alcubierre_expansion.md` derives.
+Since 28 September 2026 the figure draws $\theta$ itself as a height over this plane, as Alcubierre did, with the path along the drawing's $X$, which `alcubierre_expansion.md` derives.
 
 ### Natário's warp drive
 
@@ -241,7 +241,7 @@ Inside the bubble $n = 1/2$ and the level curves are lines along the path: space
 Outside $n = 0$ and nothing moves.
 In the wall $n\,r_s^2$ rises to $0.2802\,R^2$ at $r_s = 0.8837\,R$ and falls to zero, so every level curve below that closes: space runs forward through the bubble and back round it through the wall, compressed nowhere, as a fluid that cannot be squeezed.
 The lines drawn are found by following the declared field itself, from where each crosses the ship's plane $x = 0$ round until it crosses it again, and each is checked to close there to $10^{-8}$ and to hold $\Psi$, taken from the declared field as $\int y\,X_x\,dy$ out from the path, to one value to $10^{-8}$ of it.
-The path runs along the drawing's $Y$, as Alcubierre's does.
+The path runs along the drawing's $Y$, as Alcubierre's did until its height was drawn.
 The lines marked are the three pairs that cross the bubble at $y = \pm 0.2R$, $\pm 0.4R$ and $\pm 0.6R$, $\Psi = 0.04$, $0.16$ and $0.36$ in units of $R^2$ with $v_s = 2$, which come back through the wall at $y = \pm 1.5019R$, $\pm 1.2775R$ and $\pm 1.1111R$ on the plane $x = 0$.
 José Natário built the drive in 2002 to show that the expansion Alcubierre's drive turns on is not needed: with $\theta = 0$ everywhere the ship is carried by the sliding of space, and the energy density the riding observers measure is again $K^2 - K_{ij}K^{ij}$ over $16\pi G/c^4$, now $-K_{ij}K^{ij}$ alone, negative.
 

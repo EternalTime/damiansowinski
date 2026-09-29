@@ -277,6 +277,8 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 | TOV | line, line | none | line |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 
+As drawn in 4de26cc, the Krasnikov tube's slice is a line, Reissner-Nordström's are two lines, and Vaidya's ingoing view carries all four lines.
+
 ---
 
 ## The data
@@ -290,6 +292,8 @@ Each drawing draws its own slices with the map it draws everything else with, in
 - Each file records in `source` a stamp over the embedding file's moments, and `build_mfs_data.py` refuses a drawing whose stamp no longer matches, or whose slice names a view or surface the embedding file lacks, in `--check` and when writing, as it does for every other source.
 - A drawing on which a moment is not visible carries no entry for it, and `slices.py` says why in a sentence, which the tests read.
 - `_tools/README.md` defines `slices` in all three file contracts, since the application reads them.
+
+As built in 4de26cc, the stamp is on each slice rather than in the file's `source`: a slice's `version` is taken over the embedding view's settings and the surface's label, time and pieces by `embedding_moment_version` in `build_mfs_data.py`.
 
 The tests, which run without sympy, hold every slice drawn to where its embedding says it is, from the numbers in the files alone:
 
@@ -345,6 +349,9 @@ Each drawing's legend adds one entry, the green line, "the moment the embedding 
 Where the embedding has two views, as Reissner-Nordström's and Bertotti-Robinson's, the slices shown are those of the view its buttons have chosen, and the slices follow the buttons as a slider's moment would; in print every view is printed, so every slice is.
 The site's sequences stand side by side in one figure rather than behind a slider, so every moment of a sequence is drawn at once.
 
+As built in 9ce16f6, the legend reads "the slice of the embedding diagram", or "the slices of the embedding diagram" for a sequence, with the moment after it where the drawing does not name it.
+Since 4cd25e4 and 3fd8142 a label stands on whichever side `slices.place` chooses, from the right hand end of its line round to a point 85% of the way along, exactly on the edge of what it names, and `_tools/README.md` gives the order.
+
 ---
 
 ## What waits on the two changes before this one
@@ -352,3 +359,4 @@ The site's sequences stand side by side in one figure rather than behind a slide
 The font change to `_layouts/mfs.html` touches the stylesheet the run is laid out in, so the layout is built on it once it lands.
 The Alcubierre and Krasnikov height plots change `embedding.py`, `embedding-turn.js`, `_tools/README.md` and both spacetimes' embedding files: Alcubierre's moment stays the plane $z = 0$ at one $t$, drawn as the line of constant $t$ on its flat view and the floor of its figure, and Krasnikov's becomes the plane of $x$ and $\rho$ at one $t$, so its point on the flat view becomes a line.
 Both are drawn from the files as those changes leave them.
+Both landed before any slice was drawn, the font in 84167d9 and 3b0ff21 and the height plots in b912642.
