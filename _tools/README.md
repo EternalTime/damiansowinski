@@ -114,9 +114,18 @@ Any other file name is read, so a metric whose `id` does not match its file name
     bundle exec jekyll serve
     node _tools/page_timing.mjs http://127.0.0.1:4000
 
-It prints each chart's time and the longest task that held the page, slowest last, and exits non-zero when a chart takes longer than `--budget`, 10 seconds by default.
-`--metric <id>` times one spacetime, `--phone` lays the page out as an upright iPhone, and `--cpu 4` slows the processor four times over, as Chrome's own tools do to stand in for a slower phone.
+It prints each chart's time and the longest task that held the page, slowest last, then every page error and console error the page raised, and exits non-zero when a chart takes longer than `--budget`, 10 seconds by default, or when the page raised any error.
+`--metric <id>` times one spacetime, `--phone` lays the page out as an upright iPhone, `--text 48` sets the browser's default font size to 48px, as a reader who enlarges text does, and `--cpu 4` slows the processor four times over, as Chrome's own tools do to stand in for a slower phone.
 It needs Chrome and Node 22 or later, and nothing installed.
+Every change to the page is run at least as a desktop at the usual text and as a phone at three times it, with neither run raising an error:
+
+    node _tools/page_timing.mjs http://127.0.0.1:4000
+    node _tools/page_timing.mjs http://127.0.0.1:4000 --phone --text 48
+
+Chrome hands "ResizeObserver loop completed with undelivered notifications" to the page's error handlers and not to its console, so the page's errors are gathered by a handler installed before its scripts run.
+That error meant an observer's callback had changed the size of something observed, which the browser cannot report in the same frame.
+Opening any spacetime at three times the usual text on a phone raised it until 29 September 2026, since `fitWords` held a heading to its line and `fitProseMath` set a formula on a line of its own from inside the observers that watch them.
+Those two observers now only note what changed and fit it at the next frame through `nextFrame`, and the page fits at once where it changes what is set itself, once MathJax has set a spacetime and when a diagram's view is chosen, so no frame is drawn before its fit.
 
 Once the observers measured every line before marking any, what was left of a large chart's time went to laying out a whole tensor again and again.
 A tensor with room for one column only was a multicol container of one column, which the browser lays out whole whenever anything inside it changes, so each index toggle, each fade marked at a line's edge and each change in the width of the prose above laid out all of Natário's Weyl tensor once more.
