@@ -164,6 +164,20 @@ A noun is never handed back to what gives it: "every distance along it is the me
 Nor is the metric said to give anything; an equation is stated as it stands, "where $f = 1$, $ds^2 = -c^2dt^2$".
 The tests hold both rules over every prose field, every caption, label and declared input of every diagram, the templates and pages a reader sees, and the data in `/data` handed to agents.
 
+## The captain's voice
+
+Every paragraph of every history and convention, and every caption, note, restriction band and sentence stated in place of a drawing, is written in the captain's voice, which `~/VOICE.md` sets out in full.
+A convention or a caption takes his register for formal physics: an active "we" where an agentless passive would stand, as "we take components in the chart $x^0 = ct$", an equation introduced as it stands, and the Oxford comma in every list of three or more.
+A history takes his narrative register and names the people who did the work, with a full name at first mention.
+None of them casts a paper, a result, a field or a drawing as the actor, stages a reveal, as "what carries the curvature is the Kretschmann scalar" did, closes on an epigram, explains what is not drawn, says what a thing is not in order to say what it is, or leans on an absolute for emphasis.
+A figure of speech never stands in for the claim it points at: "so the spacetime does not stand on its own" became "so anti-de Sitter space is not globally hyperbolic", as the captain asked on 28 September 2026.
+
+`VOICE` and the class `Voice` in `_tools/test_build_mfs_data.py` hold the rules a pattern can catch over every one of those texts, with mathematics and quotations taken out first, since a quotation is its speaker's own words.
+They are tested to catch the phrases the captain flagged and to pass plain physics, so a new rule goes into the table together with an example of each kind.
+The same class holds every hyphen to joining two names, a name and a word, or a designation, or to one of the few established terms it lists, so an English compound such as "future directed" is written without one.
+Labels and legends name things rather than state them, and stand outside these rules.
+`_tools/derivations/voice_rewrites.md` records the rewrite of 28 September 2026 text by text, before and after.
+
 ## The shape of a history and a convention
 
 A history has at least five paragraphs, and every paragraph has three to six sentences, so no paragraph runs to more than twice the length of another.

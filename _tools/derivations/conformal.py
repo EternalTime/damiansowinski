@@ -1073,8 +1073,8 @@ def reissner_nordstrom(ck, src):
     v.legend("horizon", f"the horizons $r_+ = {rp:g}\\,r_s$ and $r_- = {rm:g}\\,r_s$")
     v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
     views.append(v)
-    settings = ("$r_q = 0.48\\,r_s$, so that $r_+ = 0.64\\,r_s$, $r_- = 0.36\\,r_s$ and "
-                "$\\kappa_-/\\kappa_+ = 3.2$; at $r_q = 0.4\\,r_s$ the ratio is 16 and every line "
+    settings = ("$r_q = 0.48\\,r_s$, so that $r_+ = 0.64\\,r_s$, $r_- = 0.36\\,r_s$, and "
+                "$\\kappa_-/\\kappa_+ = 3.2$; at $r_q = 0.4\\,r_s$ the ratio is 16, and every line "
                 "inside $r_-$ would lie within $10^{-6}$ of the singularity.")
     for view in views:
         view.set(settings=settings)
@@ -1731,8 +1731,8 @@ def frw(ck, src):
     v.legend("cover", "the whole spacetime, which $r$ covers with $t$ or with $\\eta$")
     views.append(v)
     for view in views:
-        view.set(input="Dust: $a \\propto \\eta^2$, $1 - \\cos\\eta$ and $\\cosh\\eta - 1$ for $k = 0$, $+1$ "
-                       "and $-1$, each solved from this spacetime's own $G^r{}_r = 0$, with lengths in "
+        view.set(input="Dust: $a \\propto \\eta^2$, $1 - \\cos\\eta$, and $\\cosh\\eta - 1$ for $k = 0$, "
+                       "$+1$, and $-1$, each solved from this spacetime's own $G^r{}_r = 0$, with lengths in "
                        "units of $1/\\sqrt{|k|}$ where $k$ is not zero.")
     return views
 
@@ -2006,8 +2006,8 @@ def tov(ck, src):
     the conservation law p' = -(rho + p) Phi', which the Bianchi identity makes the same
     statement as G^theta_theta = G^r_r, so the published G^theta_theta is checked along the
     solution rather than used. The equation of state is the polytrope p = K rho_0^2 with
-    energy density rho = rho_0 + p, at K = 100 and central rho_0 = 1.28e-3, the star
-    numerical relativity tests its codes on. Outside the surface, where p = 0, m = M and
+    energy density rho = rho_0 + p, at K = 100 and central rho_0 = 1.28e-3, the star on
+    which numerical relativists test their codes. Outside the surface, where p = 0, m = M and
     e^(2 Phi) = 1 - 2M/r, the Schwarzschild exterior in the same coordinates, and Phi inside
     is shifted to meet it. Then r* = int e^(-Phi) (1 - 2m/r)^(-1/2) dr runs from 0 at the
     centre to infinity and p, q = arctan((t -+ r*)/R) give Minkowski's triangle.
@@ -2078,7 +2078,7 @@ def tov(ck, src):
                 "$\\rho c^2 = \\rho_0c^2 + p$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$ in "
                 "units where $G = c = M_\\odot = 1$, solved from this spacetime's own $G^t{}_t$ and "
                 f"$G^r{{}}_r$: a star of $M = {M:.2f}\\,M_\\odot$ and $R = {R * km:.1f}$ km, "
-                "the one numerical relativity tests its codes on.")
+                "the star on which numerical relativists test their codes.")
     return [v]
 
 
@@ -2196,12 +2196,12 @@ CAPTIONS = {
     ],
     ("schwarzschild", "spherical"): [
         "This is the whole of the Schwarzschild spacetime, maximally extended, and each point of "
-        "the diagram stands for a sphere of radius $r$. Kruskal and Szekeres's "
-        "$U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$, with $u, v = ct \\mp r_*$ and "
-        "$r_* = r + r_s\\ln|r/r_s - 1|$, make the metric regular through $r = r_s$, where "
-        "$UV = (1 - r/r_s)e^{r/r_s}$ vanishes. With $p = \\arctan U$ and $q = \\arctan V$ the "
-        "singularity $UV = 1$ lies exactly on the straight lines $T = \\pm\\pi/2$, since "
-        "$\\tan(p + q) = (U + V)/(1 - UV)$ diverges there.",
+        "the diagram stands for a sphere of radius $r$. The coordinates of Martin Kruskal and "
+        "George Szekeres, $U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$, with $u, v = ct \\mp r_*$ and "
+        "$r_* = r + r_s\\ln|r/r_s - 1|$, make the metric regular through $r = r_s$, where $UV = (1 "
+        "- r/r_s)e^{r/r_s}$ vanishes. With $p = \\arctan U$ and $q = \\arctan V$ the singularity "
+        "$UV = 1$ lies exactly on the straight lines $T = \\pm\\pi/2$, since $\\tan(p + q) = (U + "
+        "V)/(1 - UV)$ diverges there.",
         "The coordinates $t$ and $r > r_s$ cover the right exterior alone. The horizon is the "
         "pair of null lines $U = 0$ and $V = 0$, crossing at the bifurcation sphere. The black "
         "hole above it ends at $r = 0$ on $T = \\pi/2$, the white hole below it begins at "
@@ -2228,18 +2228,17 @@ CAPTIONS = {
         "$r_* = r + \\frac{1}{2\\kappa_+}\\ln|r/r_+ - 1| - \\frac{1}{2\\kappa_-}\\ln|r/r_- - 1|$ "
         "with $\\kappa_\\pm = (r_+ - r_-)/2r_\\pm^2$, and each logarithm is made dimensionless by "
         "its own root, so that $r_*(0) = 0$.",
-        "Every region is placed by the Kruskal coordinate of the outer horizon, "
-        "$p = \\pm\\arctan e^{-\\kappa_+ u}$ and $q = \\pm\\arctan e^{\\kappa_+ v}$ with "
-        "$u, v = t \\mp r_*$, and the regions above the inner horizon are the reflection "
-        "$(p, q) \\to (\\pi - q, \\pi - p)$ of those below. This map is smooth across $r_+$ and puts "
-        "the singularity $r = 0$ exactly on the vertical lines $X = \\pm\\pi/2$, where it is "
-        "timelike. Across $r_-$ it is continuous and cannot also be smooth, because the late "
-        "light rays that reach $\\mathscr{I}^+$ are the rays that pile up at the Cauchy horizon "
-        "$r_-$, and one function of the ray has to serve both.",
+        "We place every region by the Kruskal coordinate of the outer horizon, $p = \\pm\\arctan "
+        "e^{-\\kappa_+ u}$ and $q = \\pm\\arctan e^{\\kappa_+ v}$ with $u, v = t \\mp r_*$, and the "
+        "regions above the inner horizon are the reflection $(p, q) \\to (\\pi - q, \\pi - p)$ of "
+        "those below. This map is smooth across $r_+$ and puts the singularity $r = 0$ exactly on the "
+        "vertical lines $X = \\pm\\pi/2$, where it is timelike. Across $r_-$ it is continuous and "
+        "cannot also be smooth, because the late light rays that reach $\\mathscr{I}^+$ are the rays "
+        "that pile up at the Cauchy horizon $r_-$, and one function of the ray has to serve both.",
         "The coordinates $t$ and $r > 0$ cover one region of each kind: an exterior, a region "
-        "between the horizons and a region inside $r_-$. Between the horizons their $t$ alone "
-        "cannot tell the black hole from the white hole, and the region is taken to be the "
-        "black hole an infalling observer enters.",
+        "between the horizons, and a region inside $r_-$. Between the horizons their $t$ alone "
+        "cannot tell the black hole from the white hole, and we take the region to be the black "
+        "hole an infalling observer enters.",
     ],
     ("rn_metric", "malament_hogarth"): [
         "This is the same tower with one event beyond the Cauchy horizon $r_-$ marked on it. "
@@ -2252,9 +2251,9 @@ CAPTIONS = {
     ("kerr", "axis"): [
         "This is the symmetry axis $\\theta = 0$ of the maximally extended Kerr spacetime, the "
         "surface the rotations leave fixed and so totally geodesic. On it the metric is "
-        "$-\\frac{\\Delta}{r^2 + a^2}c^2dt^2 + \\frac{r^2 + a^2}{\\Delta}dr^2$ with "
-        "$\\Delta = r^2 - 2GMr/c^2 + a^2$, and its two simple roots give it the tower of "
-        "Reissner-Nordström. Carter extended the axis this way in 1966.",
+        "$-\\frac{\\Delta}{r^2 + a^2}c^2dt^2 + \\frac{r^2 + a^2}{\\Delta}dr^2$ with $\\Delta = r^2 "
+        "- 2GMr/c^2 + a^2$, and its two simple roots give it the tower of Reissner-Nordström. "
+        "Brandon Carter extended the axis this way in 1966.",
         "Where Reissner-Nordström ends at $r = 0$, the axis runs on through the centre of the "
         "ring's disc, where the curvature is finite, into $r < 0$, a second asymptotically flat "
         "end with its own null infinity. The ring singularity itself is at $r = 0$ in the "
@@ -2271,11 +2270,11 @@ CAPTIONS = {
         "coordinates $t$ and $r > r_+$ cover the exterior.",
     ],
     ("de_sitter", "static"): [
-        "This is the whole of de Sitter spacetime, the hyperboloid "
-        "$-X_0^2 + X_1^2 + \\dots + X_4^2 = L^2$ with $L = \\sqrt{3/\\Lambda}$, and each point of "
-        "the diagram stands for a sphere. Its global coordinates give the metric "
-        "$\\frac{L^2}{\\cos^2 T}(-dT^2 + d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$ on the square "
-        "$|T| < \\pi/2$, $0 \\le \\chi \\le \\pi$, with $X = \\chi$ across.",
+        "This is the whole of de Sitter spacetime, the hyperboloid $-X_0^2 + X_1^2 + \\dots + "
+        "X_4^2 = L^2$ with $L = \\sqrt{3/\\Lambda}$, and each point of the diagram stands for a "
+        "sphere. In its global coordinates the metric is $\\frac{L^2}{\\cos^2 T}(-dT^2 + d\\chi^2 "
+        "+ \\sin^2\\chi\\,d\\Omega^2)$ on the square $|T| < \\pi/2$, $0 \\le \\chi \\le \\pi$, "
+        "with $X = \\chi$ across.",
         "The static coordinates enter the square as $\\tan p = \\tanh(u/2L)$ and "
         "$\\tan q = \\tanh(v/2L)$, with $u, v = ct \\mp L\\,\\mathrm{artanh}(r/L)$, and cover the "
         "triangle about the observer at $\\chi = 0$; their horizon $r = L$ is the pair of null "
@@ -2307,10 +2306,10 @@ CAPTIONS = {
         "is conformal to the strip $-\\pi/2 < \\sigma < \\pi/2$. The coordinates $t$ and $z$ "
         "enter the strip as "
         "$p = -\\pi/4 + \\arctan((ct + z)/L)$ and $q = \\pi/4 + \\arctan((ct - z)/L)$.",
-        "They cover a wedge of it. Their $z \\to 0$ is the conformal boundary, and "
-        "$z \\to \\infty$ is the Poincaré horizon, the pair of null lines from "
-        "$(\\sigma, ct/L) = (-\\pi/2, 0)$. The curvature there is the same as everywhere else, "
-        "and the global coordinates run smoothly across it.",
+        "The Poincaré coordinates cover a wedge of the strip. Their $z \\to 0$ is the conformal "
+        "boundary, and $z \\to \\infty$ is the Poincaré horizon, the pair of null lines from "
+        "$(\\sigma, ct/L) = (-\\pi/2, 0)$. The curvature there is the same as everywhere else, and "
+        "the global coordinates run smoothly across it.",
     ],
     ("bertotti_robinson", "static"): [
         "This is the whole of the Bertotti-Robinson spacetime, the product of an anti-de Sitter "
@@ -2375,11 +2374,11 @@ CAPTIONS = {
         "$r \\le R$ joined at $R = 1.5\\,r_s$ to the Schwarzschild exterior, and each point of the "
         "diagram stands for a sphere of radius $r$. That radius clears Buchdahl's bound, "
         "$R > \\frac{9}{8}r_s$, so there is no horizon.",
-        "Both sides give $g_{tt} = -(1 - r_s/R)$ at the surface, so $t$ is one coordinate "
+        "At the surface $g_{tt} = -(1 - r_s/R)$ on both sides, so $t$ is one coordinate "
         "throughout. The tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from "
-        "the centre through the surface, and $p, q = \\arctan((t \\mp r_*)/R)$ bring the "
-        "spacetime into Minkowski's triangle, the causal structure of empty space, with the star "
-        "a timelike tube from $i^-$ to $i^+$.",
+        "the centre through the surface, and $p, q = \\arctan((t \\mp r_*)/R)$ bring the spacetime "
+        "into Minkowski's triangle, the causal structure of empty space, with the star a timelike "
+        "tube from $i^-$ to $i^+$.",
     ],
     ("frw", "flat"): [
         "This is the whole of a flat universe of dust, and each point of the diagram stands for "

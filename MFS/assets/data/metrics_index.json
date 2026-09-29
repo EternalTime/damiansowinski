@@ -17,9 +17,9 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "4e5ff44ba738f647",
-    "diagrams": "a6bb5df8182d01bd",
-    "embedding": "fdfa6617f7d18f52"
+    "version": "3b4ffc7dea1922dd",
+    "diagrams": "1caa85bc812e4517",
+    "embedding": "1f7ada582913ae92"
   },
   {
     "id": "anti_de_sitter",
@@ -43,10 +43,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "34b9ad6c0ec8031f",
+    "version": "3893823158e5fed2",
     "diagrams": "23be9e80f68b43af",
-    "conformal": "f2230e949c7f2cca",
-    "embedding": "a40a43a31e6f3e32"
+    "conformal": "412deebec5fa1241",
+    "embedding": "5929dfda257648d8"
   },
   {
     "id": "bertotti_robinson",
@@ -67,7 +67,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ce33004a0f8f16e5",
+    "version": "ddd3c294a5f76d1c",
     "diagrams": "135e28c967b368b3",
     "conformal": "30e11e45b8741f63",
     "embedding": "0631465b5ced14f6"
@@ -90,9 +90,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c812feb6d807182d",
-    "diagrams": "43c8c6213c0ce506",
-    "embedding": "bd0ad4adbbc17d5a"
+    "version": "06d19fe47018ab45",
+    "diagrams": "b96ba121a1c99559",
+    "embedding": "0e42eb9c2b9d50fc"
   },
   {
     "id": "de_sitter",
@@ -117,9 +117,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "774d179cf8d84b9a",
+    "version": "f858fdf745ed2e9b",
     "diagrams": "98b8cfd5bac94a8d",
-    "conformal": "957a46dd985ab3cd",
+    "conformal": "d29d5be5d4049113",
     "embedding": "0abf8333d4b78826"
   },
   {
@@ -143,10 +143,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "26c76b677a23ea70",
-    "diagrams": "75ebef3369ae8edc",
+    "version": "132c6e32a5d30c3b",
+    "diagrams": "43632f80b4787f81",
     "conformal": "cb68c222d9ac3db6",
-    "embedding": "1e85889f25f6b1e8"
+    "embedding": "7a7750607fe9cd3b"
   },
   {
     "id": "frw",
@@ -167,9 +167,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ba34bf8132473424",
+    "version": "d4351fc05c9b9a88",
     "diagrams": "fcd93775e7e4477c",
-    "conformal": "e88e86a636276c55",
+    "conformal": "09f717c225b22fff",
     "embedding": "7e8514f366fb68e1"
   },
   {
@@ -192,8 +192,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4aa05b6df8ffd7fb",
-    "diagrams": "36c4ff3cb36e1e3e",
+    "version": "20b8e7c2048a9a5d",
+    "diagrams": "a10d784d719954b3",
     "embedding": "feb629cb614b6502"
   },
   {
@@ -216,9 +216,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f403b7576023723d",
+    "version": "70f8ce1cf4ef9333",
     "diagrams": "3a9790a368a1047c",
-    "embedding": "441fe9ebc9ae676e"
+    "embedding": "bc0df48bdb8067a3"
   },
   {
     "id": "kerr",
@@ -249,10 +249,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "04df1a40d4f6dcc7",
-    "diagrams": "f3b98996676dfb82",
-    "conformal": "d264e9591576e7a3",
-    "embedding": "647f1f82942fa065"
+    "version": "55c5e8ad01dd6cde",
+    "diagrams": "4dbde51c5b605ba9",
+    "conformal": "09c252245db35aa9",
+    "embedding": "bab4b15449e769d2"
   },
   {
     "id": "kerr_newman",
@@ -286,7 +286,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "aacdff39ea61de2f",
+    "version": "484c810d5b6a42ce",
     "diagrams": "744e71f9033ac46b",
     "conformal": "b0e5c277f0e91fb7",
     "embedding": "6450010dab705f18"
@@ -312,9 +312,9 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "af1adf10b1cb092f",
-    "diagrams": "37e31174b944590b",
-    "embedding": "06e483b5040c2018"
+    "version": "02a3b51f5b1363ab",
+    "diagrams": "f8632cf7c5b0266d",
+    "embedding": "3fe68008a15d23e5"
   },
   {
     "id": "stockum_dust",
@@ -336,8 +336,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "892fee3b8e4bef7e",
-    "diagrams": "d40de64d9ab7556d",
+    "version": "5aad68c9d04f3348",
+    "diagrams": "1f48066172ff69c6",
     "embedding": "f7f066fc47947a4b"
   },
   {
@@ -360,8 +360,8 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "f400453fb197f2b7",
-    "embedding": "cdedadda629a8c07"
+    "version": "f0ccae242dc8659e",
+    "embedding": "12874c7a8fcee004"
   },
   {
     "id": "malament_hogarth",
@@ -376,10 +376,10 @@
       "Lorentzian",
       "four-dimensional"
     ],
-    "version": "37cda43309e51a85",
+    "version": "02053b5866e8abc2",
     "diagrams": "b3698ce16028662c",
     "conformal": "cde1cac7cf5518bf",
-    "embedding": "9bd66a50fc92a233"
+    "embedding": "8a18ebbc35d1f054"
   },
   {
     "id": "minkowski",
@@ -398,10 +398,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9965ccaa223840e1",
-    "diagrams": "74a2f04afbc580af",
+    "version": "c3a3b11c0b0aee2e",
+    "diagrams": "85813a280f1033fd",
     "conformal": "93e885fc8fe5dc1f",
-    "embedding": "9e53c2d09ea0d332"
+    "embedding": "62372fa47e978974"
   },
   {
     "id": "mixmaster",
@@ -427,8 +427,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "510887f3a296a032",
-    "embedding": "7af55a64360a8d1a"
+    "version": "2048f112e1667a42",
+    "embedding": "29e3dfde6e3ffd38"
   },
   {
     "id": "morris_thorne",
@@ -450,8 +450,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0da21902388f01ef",
-    "diagrams": "b3e098f3fa69a786",
+    "version": "038498efc04bf2b8",
+    "diagrams": "c566676084182158",
     "conformal": "7e7019647c111ba0",
     "embedding": "2f317a5d5ba77ba2"
   },
@@ -475,9 +475,9 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "1be40ff0a3dcd37d",
-    "diagrams": "f9bbecde4af1033f",
-    "embedding": "0390fd0e3a5936ad"
+    "version": "9110be4e111191d0",
+    "diagrams": "c14f3690a4716566",
+    "embedding": "723b756d838c4496"
   },
   {
     "id": "oppenheimer_snyder",
@@ -502,8 +502,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9e6513bd98216c8f",
-    "diagrams": "a170bb986d60ee1c",
+    "version": "0c5750e98bcf208a",
+    "diagrams": "332dc8097661f324",
     "conformal": "705427e2a3c91f5b",
     "embedding": "167fc4877345f21b"
   },
@@ -524,9 +524,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4652851d4098b61d",
-    "diagrams": "8480afb9fc557712",
-    "embedding": "fe817ce75d8c57ca"
+    "version": "a8460021efd293ec",
+    "diagrams": "297a77849ab9ca17",
+    "embedding": "f5a370a6d9b3c1a5"
   },
   {
     "id": "rn_metric",
@@ -556,10 +556,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9ad8cd56b4e6dc0a",
-    "diagrams": "fbf4772e78759a72",
-    "conformal": "dc36ef07acaf44fe",
-    "embedding": "ba5fa98dbbe8c43b"
+    "version": "9e17ebc7774f5c9d",
+    "diagrams": "df10069804f81824",
+    "conformal": "1ee12c3b9a6517db",
+    "embedding": "5d81334d4ce81436"
   },
   {
     "id": "schwarzschild",
@@ -588,10 +588,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d40426d103725d8a",
-    "diagrams": "616546183cee8ce3",
-    "conformal": "20ac047d9b33eddd",
-    "embedding": "43888ed1a2da26ad"
+    "version": "d6998bfa9f515dec",
+    "diagrams": "9db0edce9fbbb093",
+    "conformal": "3914bea5f2b9bca9",
+    "embedding": "d408d142270f877b"
   },
   {
     "id": "interior_schwarzschild",
@@ -612,10 +612,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "87002f06ded702a8",
+    "version": "16e995ef71b0734a",
     "diagrams": "9c4e4f5a80fb393d",
-    "conformal": "87f9bebc30cdeb41",
-    "embedding": "643ef68fc27fa67c"
+    "conformal": "6fbe52a155be3e34",
+    "embedding": "b3e4dafcd0188731"
   },
   {
     "id": "taub_nut",
@@ -636,8 +636,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "251d1cf729c014a7",
-    "diagrams": "0d1ca4595d385adb",
+    "version": "eea3eb667aa95f98",
+    "diagrams": "6ae26c7d5a7eb8ab",
     "embedding": "9c3dd7ed8bcb5a2d"
   },
   {
@@ -661,9 +661,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b4e8b0c2e19a6c45",
-    "diagrams": "3845f1ea67eecea1",
-    "embedding": "9aab4ac7d3dc6ac5"
+    "version": "201d87186a924030",
+    "diagrams": "7e33d7dc12ab6db9",
+    "embedding": "5dce47770adfb5c4"
   },
   {
     "id": "tov",
@@ -687,10 +687,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "11f16b6d11ba52c3",
+    "version": "6c76689854e37520",
     "diagrams": "4a421b3540c0dad0",
-    "conformal": "703f6926638eb11b",
-    "embedding": "5484418991900b55"
+    "conformal": "fdce572e343f6ce6",
+    "embedding": "51388ea32153f39b"
   },
   {
     "id": "vaidya",
@@ -713,10 +713,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "64419709c90e50d4",
+    "version": "9130fa02bab7ad4e",
     "diagrams": "fca4cb3b4ad841a3",
     "conformal": "a295e124a9018a1d",
-    "embedding": "98ae252d37742878"
+    "embedding": "ea830ccad40ac31e"
   },
   {
     "id": "cosmic_string",
@@ -738,7 +738,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ee609cf76de38a04",
+    "version": "3338cf69352e018e",
     "diagrams": "306767efeaa58e4e",
     "conformal": "4f92692b2b30e867",
     "embedding": "08e36b58c54c7fdc"
