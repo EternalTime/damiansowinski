@@ -54,12 +54,24 @@ export const PAGE = `
       return (root || document.getElementById('mfs-content-panel'))
         .querySelector('.mfs-cd-drawing[data-turn="' + kind + '"][data-turn-metric="' + metric + '"]');
     },
-    // The part of the drawing a reader can reach, on the page's own coordinates.
+    // The part of the drawing a reader can reach, on the page's own coordinates: the drawing
+    // cut to the window and to every box around it that clips what it holds, such as its own
+    // frame, which scrolls sideways, and the panel, which scrolls down and at a large text
+    // size starts halfway down the window, below the page's title.
     reach: function (d) {
-      var r = d.getBoundingClientRect(), s = d.parentNode.getBoundingClientRect();
-      var left = Math.max(r.left, s.left, 0), right = Math.min(r.right, s.right, innerWidth);
-      var top = Math.max(r.top, 0), bottom = Math.min(r.bottom, innerHeight);
-      return { x: (left + right) / 2, y: (top + bottom) / 2, width: d.clientWidth, top: top, bottom: bottom };
+      var box = { left: 0, top: 0, right: innerWidth, bottom: innerHeight };
+      for (var e = d; e && e !== document.documentElement; e = e.parentElement) {
+        var cs = getComputedStyle(e);
+        if (e === d || cs.overflow !== 'visible') {
+          var r = e.getBoundingClientRect();
+          box = { left: Math.max(box.left, r.left), top: Math.max(box.top, r.top),
+                  right: Math.min(box.right, r.right), bottom: Math.min(box.bottom, r.bottom) };
+        }
+        // Nothing around a box fixed to the window, as the panel is, clips it.
+        if (cs.position === 'fixed') break;
+      }
+      return { x: (box.left + box.right) / 2, y: (box.top + box.bottom) / 2, width: d.clientWidth,
+               left: box.left, right: box.right, top: box.top, bottom: box.bottom };
     },
     state: function (d) {
       var svg = d.querySelector('svg'), figure = d.closest('.mfs-cd-figure'), reset = figure.querySelector('.mfs-turn-reset');
@@ -108,6 +120,25 @@ export async function run(driver, figure, report, phone) {
   const reach = async () => { await driver.show(figure); return evaluate(`window.__turn.reach(${q})`); };
   const settle = () => evaluate('new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); })');
   const at = `${figure.metric}, ${figure.name}`;
+  /* A drag of the whole (dx, dy) by `hand`, 'mouse' or 'touch', made as a reader makes a long
+     one, in as many strokes as it takes, each within the part of the drawing in reach, which
+     at a large text size is smaller than the drag: each stroke turns the figure on from where
+     the last one left it. */
+  async function drag(hand, dx, dy) {
+    for (let left = dx, up = dy, strokes = 0; Math.abs(left) > 0.5 || Math.abs(up) > 0.5; strokes++) {
+      const R = await reach(), wide = R.right - R.left - 12, tall = R.bottom - R.top - 12;
+      if (wide < 24 || tall < 24 || strokes >= 20) {
+        report(false, `${at}: a drag of ${dx.toFixed(0)}, ${dy.toFixed(0)} does not fit what is in reach, ` +
+               `${(R.right - R.left).toFixed(0)} by ${(R.bottom - R.top).toFixed(0)}px`);
+        return;
+      }
+      const sx = Math.sign(left) * Math.min(Math.abs(left), wide), sy = Math.sign(up) * Math.min(Math.abs(up), tall);
+      await driver[hand](R.x - sx / 2, R.y - sy / 2, sx, sy);
+      await settle();
+      left -= sx;
+      up -= sy;
+    }
+  }
 
   await driver.open(figure);
   if (!(await evaluate(`!!${q}`))) { report(false, `${at}: no drawing that turns`); return; }
@@ -126,8 +157,7 @@ export async function run(driver, figure, report, phone) {
            `${at}: ${what} brings back the published drawing and hides the reset button`);
   }
 
-  await driver.mouse(R.x, R.y, R.width / 5, 0);
-  await settle();
+  await drag('mouse', R.width / 5, 0);
   let s = await state();
   report(s.svg !== published.svg, `${at}: a mouse drag across turns the drawing`);
   report(s.reset, `${at}: the reset button shows once it is turned`);
@@ -137,15 +167,11 @@ export async function run(driver, figure, report, phone) {
   }
   held(s, 'turned');
 
-  R = await reach();
-  await driver.mouse(R.x, R.y, 0, -R.width);
-  await settle();
+  await drag('mouse', 0, -R.width);
   const below = await state();
   report(below.svg !== s.svg, `${at}: a drag up tilts it`);
   held(below, 'seen from straight below');
-  R = await reach();
-  await driver.mouse(R.x, R.y, 0, -R.width / 4);
-  await settle();
+  await drag('mouse', 0, -R.width / 4);
   report((await state()).svg === below.svg, `${at}: a drag further up leaves it seen from straight below`);
 
   R = await reach();
@@ -162,18 +188,23 @@ export async function run(driver, figure, report, phone) {
   await settle();
   home(await state(), 'Escape');
 
-  R = await reach();
-  await driver.mouse(R.x, R.y, -R.width / 7, R.width / 9);
-  await settle();
-  const button = await evaluate(`(function (b) { var r = b.getBoundingClientRect(); return { x: (r.left + r.right) / 2, y: (r.top + r.bottom) / 2 }; })(${q}.closest('.mfs-cd-figure').querySelector('.mfs-turn-reset'))`);
+  await drag('mouse', -R.width / 7, R.width / 9);
+  // The reader scrolls to the button where the drawing is taller than the screen, as at a large
+  // text size, and presses it where nothing covers it.
+  const button = await evaluate(`(function (b) {
+    b.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(function () {
+      var q = b.getBoundingClientRect(), x = (q.left + q.right) / 2, y = (q.top + q.bottom) / 2;
+      r({ x: x, y: y, top: document.elementFromPoint(x, y) === b });
+    }); }); });
+  })(${q}.closest('.mfs-cd-figure').querySelector('.mfs-turn-reset'))`);
+  report(button.top, `${at}: nothing covers the reset button`);
   await driver.click(button.x, button.y);
   await settle();
   home(await state(), 'the reset button');
 
   if (phone) {
-    R = await reach();
-    await driver.touch(R.x, R.y, R.width / 5, 0);
-    await settle();
+    await drag('touch', R.width / 5, 0);
     s = await state();
     report(s.svg !== published.svg, `${at}: a finger drawn across turns it`);
     held(s, 'turned by a finger');
@@ -192,9 +223,7 @@ export async function run(driver, figure, report, phone) {
   }
 
   // Turned, the print copy still holds the published drawing.
-  R = await reach();
-  await driver.mouse(R.x, R.y, R.width / 5, 0);
-  await settle();
+  await drag('mouse', R.width / 5, 0);
   const printed = await evaluate(`new Promise(function (resolve) {
     window.print = function () {
       var d = window.__turn.drawing(${JSON.stringify(figure.metric)}, ${JSON.stringify(figure.kind)}, document.getElementById('mfs-print-root'));
@@ -226,10 +255,13 @@ export function opener(evaluate, sleep) {
       if (await evaluate(`!!document.querySelector('.mfs-result[data-id="${figure.metric}"]')`)) break;
       await sleep(100);
     }
+    // Ready once the panel has slid in and takes the pointer again, which it does not while it
+    // slides, with its mathematics set and its fonts in.
     const ready = `(function () {
       var panel = document.getElementById('mfs-content-panel'), header = panel.querySelector('.mfs-header');
       return !!header && header.dataset.turnSeen !== '1' && !/\\\\[(\\[]/.test(panel.textContent) &&
-        !panel.classList.contains('mfs-fonts-wait');
+        !panel.classList.contains('mfs-fonts-wait') && /^translateX\\(0(px)?\\)$/.test(panel.style.transform) &&
+        panel.style.pointerEvents !== 'none' && !panel.style.transition;
     })()`;
     await evaluate(`(function (h) { if (h) h.dataset.turnSeen = '1'; })(document.querySelector('#mfs-content-panel .mfs-header'));
                     document.querySelector('.mfs-result[data-id="${figure.metric}"]').click();`);
