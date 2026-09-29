@@ -47,7 +47,7 @@ The repeated footer sits below the body's whole box, and closing space that push
 So printed sections are spaced from the section before them and never by a margin underneath, and the print stylesheet's comment beside that rule says why.
 
 A formula inside prose, in a `history`, a `convention` or a caption, is set inline and cannot break, so one wider than its paragraph is given a line of its own that scrolls in the same way, and the prose around it wraps as before.
-`fitProseMath` in `_layouts/mfs.html` measures that again whenever the paragraph changes width.
+`fitProseMath` in `_layouts/mfs.html` measures that again at the next frame after the paragraph changes width, never from inside the observer that sees the change, and passes over a displayed formula, which has its line already.
 Each of these observers measures everything it was handed before it changes any class, because a class changed between two measurements makes the second lay the whole page out again, and once per line that held Kerr-Newman still for seconds and Natario for nearly a minute.
 
 A chosen spacetime's panel waits off the screen until its mathematics is set and laid out, and only then slides in.
@@ -186,6 +186,11 @@ They are tested to catch the phrases the captain flagged and to pass plain physi
 The same class holds every hyphen to joining two names, a name and a word, or a designation, or to one of the few established terms it lists, so an English compound such as "future directed" is written without one.
 Labels and legends name things rather than state them, and stand outside these rules.
 `_tools/derivations/voice_rewrites.md` records the rewrite of 28 September 2026 text by text, before and after.
+A rewording is checked against the text it replaces with
+
+    python3 _tools/prose_math_check.py [revision]
+
+which reads every history, convention and diagram text from the working tree and from `revision`, `main` by default, and exits non-zero where one's mathematics, numbers written in digits or citations differ.
 
 ## The shape of a history and a convention
 
@@ -310,7 +315,7 @@ traces rays as the page's files are traced and measures, for every view with a c
 For the principal null rays it adds the checks the next section describes, and the closed forms $ct \mp r_*$ and $\phi \mp r_\sharp$ of Kerr and Kerr-Newman, which the drawing never uses.
 On each cylinder of $t$ and $\phi$, van Stockum's and Gödel's, it checks the straight lines against the slopes the captions state, and checks what light launched along each family does against what the caption says, from the published Christoffel symbols: stays on the cylinder as a null geodesic, or is turned toward the axis or away from it.
 It writes nothing and exits non-zero if anything fails; run it after changing the method.
-It took 958 seconds on 25 September 2026.
+It took 570 seconds on 29 September 2026.
 
 ### Rays that leave the plane
 
@@ -419,6 +424,9 @@ sympy never reads the typesetting, so this is the check that catches a value tha
 
     npm install --prefix /tmp/mfs-node mathjax-full
     node _tools/derivations/tex_check.cjs /tmp/mfs-node
+
+On 29 September 2026 it set all 24210 strings.
+It does not read the embedding files yet, so a caption, setting or label of an embedding diagram that MathJax cannot set shows only on the page.
 
 ## Embedding diagrams
 
@@ -629,7 +637,7 @@ The cosmic string's figure also lays the cone flat beside it, a flat drawing in 
 
 ### Turning the figure
 
-The page shows the published figure until a reader drags it, and then draws it again from the surfaces at the camera the drag has reached, with `MFS/assets/embedding-turn.js`, which is geometry alone and which the tests run against every published figure.
+The page shows the published figure until a reader drags it, and then draws it again from the surfaces at the camera the drag has reached, with `MFS/assets/embedding-turn.js`, which is geometry alone and which the tests run against every published figure through `_tools/embedding_turn_check.cjs`.
 The application turns its figures by the same rules, so the two agree, and at the figure's own camera the rules give back the published figure: the same lines split at the same points, the same labels at the same places, and the tint to within a point of its grid.
 
 `turn` holds:
@@ -676,8 +684,8 @@ The spacetime diagram and the conformal diagram each draw the slice the embeddin
 Every embedding diagram draws part of one moment of its spacetime, or of several moments in turn, and `_tools/derivations/embedding_slices.md` works out how each moment meets every other diagram of its spacetime.
 `_tools/derivations/slices.py` is that table in code.
 It reads each moment and how far the embedding reaches along it from the embedding file itself, and says what the moment is in the chart of each spacetime diagram's view: a line of constant time, the Eddington-Finkelstein curves of Schwarzschild's $t = 0$, de Sitter's static $t = 0$ in the flat slicing, the pp-wave's fronts $u = u_k$, Novikov's slice outside Oppenheimer and Snyder's dust, and the whole equator seen from above on Kerr's and Kerr-Newman's views of the principal rays.
-`/tmp/mfs-venv/bin/python _tools/derivations/slices.py` checks every chart transformation a moment is carried through by pulling one published metric back onto the other, and Novikov's shells against the published exterior.
-`HIDDEN` in it names the drawings on which a moment of the spacetime lies and is not drawn, each with the reason: FRW's flat universe and Tolman-Bondi's marginally bound cloud are other spacetimes than the ones embedded, Vaidya's outgoing chart draws the time reverse of the shell embedded, and beyond $r_c$ Gödel's and van Stockum's circles are closed timelike curves.
+`/tmp/mfs-venv/bin/python _tools/derivations/slices.py` checks every chart transformation a moment is carried through by pulling one published metric back onto the other, and Novikov's shells against the published exterior, sixteen checks in about a second.
+`HIDDEN` in it names the drawings on which a moment of the spacetime lies and is not drawn, each with the reason: FRW's flat and open universes and Tolman-Bondi's marginally bound cloud are other spacetimes than the ones embedded, Vaidya's outgoing chart draws the time reverse of the shell embedded, and beyond $r_c$ Gödel's and van Stockum's circles are closed timelike curves.
 
 Each drawing draws its slices with the map it draws everything else with: `null_rays.py` writes them into each flat view, `projections.py` into each figure and `conformal.py` into each conformal view.
 `null_rays.py --slices` rewrites only the slices of the diagram files, from the embedding files as they stand, tracing no ray, and redraws the figures, which take seconds; run it, and `conformal.py`, after an embedding diagram moves a moment.
@@ -730,7 +738,7 @@ sympy is not installed system wide, and the virtual environment does not belong 
     python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
 
-The whole collection took 259 seconds on 25 September 2026, and `--system <metric_id>/<system_id>` checks one system in seconds, which is what to use while editing a single entry.
+The whole collection took 160 seconds on 29 September 2026, and `--system <metric_id>/<system_id>` checks one system in seconds, which is what to use while editing a single entry.
 The slowest systems are the general flow chart of `natario` and the potential flow of `lentz`, each under a minute, then `mixmaster` at about forty seconds; Kerr takes about seven seconds and the interior Schwarzschild solution about two.
 `--budget <seconds>` changes how long sympy may spend on one tensor, and the default of 120 is several times what any tensor in the collection needs.
 `--dimensions-only` runs the dimensional pass alone, which takes about a second over the whole collection, so there is no reason not to run it on every edit.

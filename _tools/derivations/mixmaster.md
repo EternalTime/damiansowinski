@@ -63,3 +63,4 @@ That form has 1042 characters against 1666 for the expanded one, and `print_char
 
 A diagram of null rays needs the scale factors, and the only honest ones are numerical solutions of the equations of Step 2, which are chaotic.
 `_tools/README.md` records that with the other undrawn spacetimes.
+The Mixmaster's embedding diagram, drawn since 28 September 2026, needs no numerical solution: it is the great two sphere of the three sphere at five moments of Abraham Taub's universe, $a_1 = a_2$, which Taub solved in closed form in 1951, and `embedding_others.md` derives it.
