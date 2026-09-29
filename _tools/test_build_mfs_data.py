@@ -974,6 +974,35 @@ class WrittenAreas(unittest.TestCase):
         self.assertEqual(self.resolved("#mfs-print-root", "font-family", printed=True), "'EB Garamond', serif")
 
 
+class DividedWords(unittest.TestCase):
+    """hyphenateWords() in _layouts/mfs.html divides a word of the prose wider than its line, and
+    leaves whole all mathematics MathJax has yet to set, which MathJax finds only with both its
+    delimiters in one piece of text: on a phone at three times the usual text, the signature
+    (-,+,+,+) of the first spacetime opened, set as MathJax started, stood as TeX."""
+
+    def setUp(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        self.body = page[page.index("function hyphenateWords("):page.index("function buildMetricMatrix(")]
+        found = re.search(r"math = /(.+?)/g,", self.body)
+        self.assertIsNotNone(found, "hyphenateWords() looks for no mathematics")
+        self.math = re.compile(found.group(1))
+        # Every pair of delimiters MathJax is told to read, as the page's configuration spells them.
+        self.pairs = [(a.replace("\\\\", "\\"), b.replace("\\\\", "\\"))
+                      for line in re.findall(r"(?:inlineMath|displayMath): \[(.*)\]", page)
+                      for a, b in re.findall(r"\['([^']*)', '([^']*)'\]", line)]
+        self.assertEqual(len(self.pairs), 4)
+
+    def test_mathematics_in_every_delimiter_is_found_whole(self):
+        for opening, closing in self.pairs:
+            tex = opening + "(-,+,+,+)" + closing
+            with self.subTest(tex):
+                spans = [m.span() for m in self.math.finditer("the signature " + tex + " holds")]
+                self.assertEqual(spans, [(14, 14 + len(tex))])
+
+    def test_no_word_inside_mathematics_is_divided(self):
+        self.assertRegex(self.body, r"if \(tex\.some\(function\(t\) \{ return at < t\[1\] && to > t\[0\]; \}\)\) continue;")
+
+
 class FixedSizes(unittest.TestCase):
     """The spacetime's name, the word above it and every button keep one size in px at any
     text size, the size each had before the prose grew with the reader's text, and the prose's
