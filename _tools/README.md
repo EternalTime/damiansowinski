@@ -725,6 +725,14 @@ It stays where it is let go, and the reset button in the corner of the frame, a 
 The arrow keys turn it by 15 degrees once the drawing has the focus, which a click on it gives.
 `dragged()`, `keyed()` and `turned()` in `MFS/assets/turn.js` are those rules, and the tests drag a surface of revolution, a height over a plane and a figure of light cones with them.
 
+`_tools/turn_drag.mjs` turns one figure of each kind in headless Chrome as a reader does, Schwarzschild's surface, Krasnikov's height and Gödel's light cones, with the mouse, the keys, the reset button and, on a phone, a finger.
+It holds every point drawn to the box, every label shown to the drawing, the reset button to the top right corner at its one size, the figure to having no glow, a drag up to stopping at straight below the axis, a finger drawn up to scrolling the page, and the print copy, turned or not, to the published figure:
+
+    bundle exec jekyll serve
+    node _tools/turn_drag.mjs http://127.0.0.1:4000 --phone --text 48
+
+It starts Chrome with `_tools/chrome.mjs`, as `page_timing.mjs` does, and exports its checks, so a driver for another browser runs the same ones.
+
 ## The three diagrams together
 
 A spacetime's spacetime diagram, conformal diagram and embedding diagram stand together, in that order, after the geodesics and before the references, as the captain asked on 28 September 2026.
