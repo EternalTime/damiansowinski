@@ -287,8 +287,9 @@ A view of rays that leave the plane names the surface they lie on and the coordi
 Every curve drawn is a null curve; a caption calls it a null geodesic, the path light takes, only where no Christoffel symbol turns it out of the plane, and says so where one does, as for Gödel and for Kerr off the axis.
 
 A caption is prose in the register of the conventions and histories beside it, and it is read back whole, in the generator and on the page, since a sentence built from clauses that each keep the rules above can still read as machine prose.
-It says what a thing is rather than what it is not: "its points are points, not spheres" says nothing that "each point in the diagram a single event rather than a 2-sphere of them" does not say plainly.
-It gives the physics of a surface rather than how the figure lays it out, which the reader can see, and it ends on a fact rather than a flourish, so the lines inside Vaidya's shell crowd toward it because of the slope of $q$, not as "the price of a straight centre".
+It says what a thing is and does, plainly, as "each point in the diagram a single event", and never defines it by a contrast with what it is not, as the captain asked on 29 September 2026: no "X rather than Y", "instead of", "not a X but Y", "is X, not Y" or "less X, more Y" anywhere a reader of the spacetimes page sees, in a history, a convention, a description, a caption, a note, a restriction band or the page's own words.
+`Contrast` in `_tools/test_build_mfs_data.py` holds all of them to that, and a sentence where such a phrase states physics plainly may stand only as a named entry of its `ALLOWED`, with the reason.
+It gives the physics of a surface, and the reader sees how the figure lays it out; it ends on a fact, so the lines inside Vaidya's shell crowd toward it because of the slope of $q$.
 
 ### Labels are TeX
 
