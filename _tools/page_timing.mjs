@@ -27,6 +27,12 @@
    Bianchi's fraktur or Malament-Hogarth's small capitals, fitted its numbers in the face
    drawn in its place and moved them by up to 4 pixels when the font arrived.
 
+   In each of those states it holds every number, name of an axis and label of a spacetime
+   diagram shown to the margin of 1.5 em of the diagram's words that the page gives them, and
+   counts any that stands nearer the edge of the diagram's ground as an error. --print does the
+   same for the print copy of each chart, as the page lays it out for paper once its print
+   button is pressed, the browser's print dialog left closed.
+
    It prints one line per chart, slowest last, then every page error and console error the
    page raised and every label that moved, and exits non-zero if any chart missed the budget
    or never became ready, or if the page raised any error at all. */
@@ -48,6 +54,7 @@ const height = +option('--height', phone ? 844 : 900);
 const text = +option('--text', 16);
 const cpu = +option('--cpu', 1);
 const budget = +option('--budget', 10);
+const print = argv.includes('--print');
 const LIMIT_S = Math.max(300, budget * 10);
 
 const chromePath = process.env.CHROME ||
@@ -63,6 +70,9 @@ function finish(code) {
   try { rmSync(profile, { recursive: true, force: true }); } catch {}
   process.exit(code);
 }
+// Whatever stops the run, Chrome goes with it.
+process.on('uncaughtException', e => { console.error(e); finish(2); });
+process.on('unhandledRejection', e => { console.error(e); finish(2); });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // Chrome writes the port it chose into the profile once it listens.
@@ -181,6 +191,27 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
       return Object.keys(moved).map(function (k) { return moved[k]; });
     };
   };
+  /* Every number, name of an axis and label of each spacetime diagram shown in root that
+     stands nearer the edge of the diagram's ground than 1.5 em of its words, the margin
+     .mfs-nr-figure gives them, with how near it stands, in those ems. */
+  window.__mfsMargins = function (root) {
+    var out = [];
+    [].forEach.call(root.querySelectorAll('.mfs-nr-figure'), function (fig) {
+      if (!fig.getClientRects().length) return;
+      var b = fig.getBoundingClientRect(), em = parseFloat(getComputedStyle(fig).fontSize);
+      [].forEach.call(fig.querySelectorAll('.nr-tick, .nr-name, .nr-ref, .mfs-slice-label'), function (el) {
+        if (!el.getClientRects().length || getComputedStyle(el).visibility === 'hidden') return;
+        var r = el.getBoundingClientRect();
+        var near = Math.min(r.left - b.left, r.top - b.top, b.right - r.right, b.bottom - r.bottom);
+        // Less half a pixel, to which a browser may round where a turned or shifted box stands.
+        if (near < 1.5 * em - 0.5) {
+          out.push(el.className.split(' ')[0] + ' "' + el.textContent.trim().slice(0, 24) + '" stands ' +
+            (near / em).toFixed(2) + ' em from the edge of its diagram, inside the margin of 1.5 em');
+        }
+      });
+    });
+    return out;
+  };
   window.__mfsSettled = function () {
     return document.fonts.ready.then(function () {
       return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
@@ -229,7 +260,11 @@ function timed(action, chart) {
                        chart: on ? on.textContent : '',
                        lines: panel.querySelectorAll('.mfs-line').length,
                        elements: panel.getElementsByTagName('*').length };
-        window.__mfsSettled().then(function () { result.moved = stop(); resolve(result); });
+        window.__mfsSettled().then(function () {
+          result.moved = stop();
+          result.margins = window.__mfsMargins(panel);
+          resolve(result);
+        });
       }, 0); }); });
     })();
   })`);
@@ -250,10 +285,32 @@ async function views() {
       await window.__mfsSettled();
       await new Promise(function (r) { requestAnimationFrame(r); });
       stop().forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
+      window.__mfsMargins(panel).forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
     }
     return moved;
   })()`);
   for (const m of moved) errors.push(`${opened}: view ${m}`);
+}
+
+/* Press the print button with the browser's print dialog held closed, wait until the print
+   copy is set, and hold its spacetime diagrams to their margin as paper lays them out. */
+async function printCopy() {
+  const ready = await evaluate(`new Promise(function (resolve) {
+    var start = performance.now(), printed = false;
+    window.print = function () { printed = true; resolve(true); };
+    document.getElementById('mfs-print-btn').click();
+    (function wait() {
+      if (printed) return;
+      if (performance.now() - start > ${LIMIT_S * 1000}) { resolve(false); return; }
+      setTimeout(wait, 50);
+    })();
+  })`);
+  if (!ready) { errors.push(`${opened}: the print copy was never set`); return; }
+  await send('Emulation.setEmulatedMedia', { media: 'print' });
+  for (const m of await evaluate(`window.__mfsMargins(document.getElementById('mfs-print-root'))`)) {
+    errors.push(`${opened}: print: ${m}`);
+  }
+  await send('Emulation.setEmulatedMedia', { media: '' });
 }
 
 async function pageErrors() {
@@ -268,15 +325,17 @@ for (const id of ids) {
   const first = await timed(`document.querySelector('.mfs-result[data-id="${id}"]').click();`, 0);
   results.push({ id, ...(first || { chart: '?' }), failed: !first });
   if (!first) continue;
-  for (const m of first.moved) errors.push(`${opened} / ${first.chart}: ${m}`);
+  for (const m of first.moved.concat(first.margins)) errors.push(`${opened} / ${first.chart}: ${m}`);
   await views();
-  const charts = await evaluate(`document.querySelectorAll('.mfs-charts .mfs-choice').length || 1`);
+  if (print) await printCopy();
+  const charts = await evaluate(`document.querySelectorAll('#mfs-content-panel .mfs-charts .mfs-choice').length || 1`);
   for (let c = 1; c < charts; c++) {
-    const r = await timed(`document.querySelector('.mfs-charts [data-chart="${c}"]').click();`, c);
+    const r = await timed(`document.querySelector('#mfs-content-panel .mfs-charts [data-chart="${c}"]').click();`, c);
     results.push({ id, ...(r || { chart: String(c) }), failed: !r });
     if (!r) continue;
-    for (const m of r.moved) errors.push(`${opened} / ${r.chart}: ${m}`);
+    for (const m of r.moved.concat(r.margins)) errors.push(`${opened} / ${r.chart}: ${m}`);
     await views();
+    if (print) await printCopy();
   }
   await pageErrors();
 }
@@ -294,7 +353,7 @@ for (const r of results) {
 }
 for (const e of errors) console.log(e);
 console.log(`${results.length} charts at ${width} by ${height}${phone ? ' as a phone' : ''}` +
-  `${text !== 16 ? ` with ${text}px text` : ''}${cpu > 1 ? `, processor slowed ${cpu} times` : ''}: ` +
+  `${text !== 16 ? ` with ${text}px text` : ''}${print ? ' and their print copies' : ''}${cpu > 1 ? `, processor slowed ${cpu} times` : ''}: ` +
   (bad ? `${bad} over the ${budget}s budget` : `all within the ${budget}s budget`) +
   `, ${errors.length ? `${errors.length} errors` : 'no errors'}`);
 finish(bad || errors.length ? 1 : 0);
