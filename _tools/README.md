@@ -70,8 +70,12 @@ Nothing that starts on that drawing scrolls it sideways, so two fingers moving a
 
 ## The reader's text size
 
-Every size a reader reads on the spacetimes page is in rem, so a reader who enlarges text in the browser, by Chrome's font size, a larger default font, or Safari's and Firefox's zoom of text only, enlarges every word on it: the name, the headings, the buttons, the domains, the prose, the mathematics, the list and every word on both kinds of diagram.
-At the browser's usual 16px each is the pixel size it was when the page was set in pixels, and only the hairlines of borders stay in px.
+The prose of the spacetimes page and its headings are sized in rem, so a reader who enlarges text in the browser, by Chrome's font size, a larger default font, or Safari's and Firefox's zoom of text only, enlarges every word of it: the headings, the domains, the prose, the mathematics and every word on both kinds of diagram.
+At the browser's usual 16px each is the pixel size it was when the page was set in pixels.
+The spacetime's name, the word "metric" above it and every button keep one size in px at any text size, as the captain asked on 29 September 2026: "When I said I wanted the title and subtitle fonts to increase along with the text, I meant the font in the actual prose, not in the buttons."
+Those are the choices of a chart, a view and an index placement, the print button, the names in the list and the embedding diagram's reset, each at the size it had before the prose grew with the text: the name 40px, the word above it 21px, a choice and the print button 15px and a name in the list 18px, and on a phone 26px, 14px and 12px.
+The reset is drawn at the drawing's scale at the usual text size, as wide as its frame.
+`FixedSizes` in `_tools/test_build_mfs_data.py` holds those sizes and holds the headings of the prose in rem.
 The list's column grows with the text up to a quarter of the window, the panels start below the page's title however it wraps, the one-column layout's widths are in em so a large text size takes it on a narrower desktop window, and a sticky header that would cover more than a quarter of the view scrolls away instead.
 A spacetime diagram's numbers and axis names are laid out around its plot, so they take the room they need and the numbers thin out where they would touch.
 Every number, axis name and label of a spacetime diagram stands at least 1.5 em of the diagram's words from the edge of its ground, 21px at the usual text size, one em of the prose beside it, as the captain asked on 29 September 2026: "the spacetime diagrams need larger margins".

@@ -160,7 +160,7 @@
       }
 
       /* Every name in the list is set at one size, at most the size at which the widest word
-         of any of them fits the list's line, less an entry's 0.5rem of room at either side,
+         of any of them fits the list's line, less an entry's 8px of room at either side,
          so that the size does not change as the list is searched; and the hint in the
          search field, which cannot wrap, at most the size at which it fits the field, less
          the field's 0.5em of room at either side and its border. At three times the usual
@@ -172,7 +172,7 @@
         var entry = results.querySelector('.mfs-result');
         if (entry) {
           var names = mfsWidestWord(entry, index.map(function(m) { return m.name; }));
-          results.style.setProperty('--mfs-fit', 'calc((100cqw - 1rem) / ' + names.toFixed(3) + ')');
+          results.style.setProperty('--mfs-fit', 'calc((100cqw - 16px) / ' + names.toFixed(3) + ')');
         }
         var hint = mfsWidestWord(input, [input.placeholder.replace(/\s+/g, '\u00A0')]);
         input.style.setProperty('--mfs-fit', 'calc((100cqw - 1em - 2px) / ' + hint.toFixed(3) + ')');
@@ -192,10 +192,11 @@
   </script>
 
   <style>
-    /* Every size a reader reads is in rem, the reader's own text size, so that enlarging the
-       text in the browser (Chrome's font size, a larger default font, or Safari's and
-       Firefox's zoom of text only) enlarges every word on the page and not only the few that
-       were sized in em; at the browser's usual 16px each is the pixel size it always was. The
+    /* Every size of the prose and its headings is in rem, the reader's own text size, so that
+       enlarging the text in the browser (Chrome's font size, a larger default font, or
+       Safari's and Firefox's zoom of text only) enlarges them all; at the browser's usual 16px
+       each is the pixel size it always was. The spacetime's name, the word above it and every
+       button, the names in the list among them, keep one size in px at any text size. The
        geometry the text sits in follows it where the text needs the room: the column of the
        list, --mfs-left-w, grows with the text up to a quarter of the window, which leaves the
        spacetime three quarters of it at any size, and the panels start at --mfs-top, below
@@ -207,10 +208,11 @@
        search script measures as a width of these containers over ems. */
     #mfs-search-panel, #mfs-search-results { container-type: inline-size; }
     #mfs-search-input::placeholder { font-size: min(1em, var(--mfs-fit, 1em)); }
+    /* A name in the list is a button, and keeps its size whatever the reader's text size. */
     .mfs-result {
-      padding: 0.3125rem 0.5rem;
+      padding: 5px 8px;
       font-family: 'Source Code Pro', monospace;
-      font-size: min(1.125rem, var(--mfs-fit, 1.125rem));
+      font-size: min(18px, var(--mfs-fit, 18px));
       color: var(--teal-light);
       border-radius: 4px;
       cursor: pointer;
@@ -2478,23 +2480,25 @@
          a large text size on a phone. */
       var _emObserver = null;
       function wireEmbedding(root) {
-        // The reset button fills the drawing's top margin at the drawing's scale, as its labels
-        // do, so it covers nothing drawn at any width or text size: --em-u is the drawing's
-        // pixels to a unit of its 628, kept as the drawing changes size.
+        // The reset button fills the drawing's top margin as the drawing is at the usual text
+        // size, as wide as its frame, and keeps that size at any text size, as every button
+        // does, so it covers nothing drawn: the drawing is never narrower than its frame and
+        // is drawn larger with the text. --em-u is the frame's pixels to a unit of the
+        // drawing's 628, kept as the frame changes size.
         function unit(drawing) {
           var view = _embeddingCache[drawing.getAttribute('data-em-metric')];
           view = view && view.views[+drawing.getAttribute('data-em-view')];
           if (!view) return;
           drawing.closest('.mfs-cd-figure').style.setProperty('--em-u',
-            (drawing.getBoundingClientRect().width / cdFrame(view.figure).vw).toFixed(4) + 'px');
+            (drawing.parentElement.getBoundingClientRect().width / cdFrame(view.figure).vw).toFixed(4) + 'px');
         }
         if (_emObserver) _emObserver.disconnect();
         _emObserver = window.ResizeObserver ? new ResizeObserver(function(entries) {
-          entries.forEach(function(e) { unit(e.target); });
+          entries.forEach(function(e) { unit(e.target.querySelector(':scope > .mfs-cd-drawing')); });
         }) : null;
         root.querySelectorAll('.mfs-cd-drawing[data-em-view]').forEach(function(drawing) {
           unit(drawing);
-          if (_emObserver) _emObserver.observe(drawing);
+          if (_emObserver) _emObserver.observe(drawing.parentElement);
           var data = _embeddingCache[drawing.getAttribute('data-em-metric')];
           var view = data && data.views[+drawing.getAttribute('data-em-view')];
           if (!view || !view.figure.turn) return;
@@ -3269,22 +3273,28 @@
        times the usual text on a phone the button's side of a grid squeezed the word into
        "ME TRI C". The name takes the whole of the line below. */
     #mfs-content-panel .mfs-header .mfs-title { order: 2; flex-basis: 100%; min-width: 0; }
+    /* The spacetime's name, the word above it and every button keep one size in px whatever
+       the reader's text size, the size each had before the page's prose grew with it, as the
+       captain asked on 29 September 2026: "When I said I wanted the title and subtitle fonts
+       to increase along with the text, I meant the font in the actual prose, not in the
+       buttons." The headings of the prose grow with it. A name or a choice is still set
+       smaller where its widest word would not fit its line, which fitWords() measures. */
     #mfs-content-panel .mfs-label {
-      font-size: min(1.3125rem, var(--mfs-fit, 1.3125rem)); color: rgba(0,229,255,0.5);
+      font-size: min(21px, var(--mfs-fit, 21px)); color: rgba(0,229,255,0.5);
       letter-spacing: 0.12em; text-transform: uppercase;
     }
     #mfs-content-panel .mfs-title {
-      font-size: min(2.5rem, var(--mfs-fit, 2.5rem)); font-weight: 600;
-      letter-spacing: 0.05em; margin: 0.125rem 0 0.375rem;
+      font-size: min(40px, var(--mfs-fit, 40px)); font-weight: 600;
+      letter-spacing: 0.05em; margin: 2px 0 6px;
       color: var(--cyan);
     }
     #mfs-content-panel #mfs-print-btn {
       order: 1; margin-left: auto;
       font-family: 'Source Code Pro', monospace;
-      font-size: 0.9375rem; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--cyan); background: transparent;
       border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
-      padding: 0.1875rem 0.75rem; cursor: pointer;
+      padding: 3px 12px; cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
     #mfs-content-panel #mfs-print-btn:hover { border-color: var(--cyan); }
@@ -3314,12 +3324,11 @@
     /* The page's one control for a choice, built by choiceButton(): the chart the
        mathematics is written in, a tensor's index placement and a view of a diagram are all
        chosen with a row of these, the one chosen pink, and pressing another changes what is
-       shown below it in place. A choice's name is text the reader reads, so it takes the
-       reader's text size with everything else. */
-    #mfs-content-panel .mfs-choices { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+       shown below it in place. A button keeps its size whatever the reader's text size. */
+    #mfs-content-panel .mfs-choices { display: flex; flex-wrap: wrap; gap: 6px; }
     #mfs-content-panel .mfs-choice {
       font-family: 'Source Code Pro', monospace;
-      font-size: min(0.9375rem, var(--mfs-fit, 0.9375rem)); letter-spacing: 0.06em; line-height: 1.5;
+      font-size: min(15px, var(--mfs-fit, 15px)); letter-spacing: 0.06em; line-height: 1.5;
       color: rgba(0,229,255,0.6); background: transparent;
       border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
       padding: 0.2em 0.8em; cursor: pointer;
@@ -3725,9 +3734,9 @@
     .mfs-em-svg [class$="-far"] { stroke-opacity: 0.28; }
     /* The drawing takes a drag and leaves a swipe up or down to the page, and the button that
        brings back the published figure sits in the top corner of the frame while the surface
-       is turned, exactly as tall as the drawing's empty margin above its box and set at the
-       size of its small labels, in --em-u, the drawing's pixels to a unit of its 628, which
-       wireEmbedding() keeps and says the reasons for. */
+       is turned, exactly as tall as the drawing's empty margin above its box at the usual
+       text size and set at the size of its small labels there, in --em-u, the frame's pixels
+       to a unit of the drawing's 628, which wireEmbedding() keeps and says the reasons for. */
     #mfs-content-panel .mfs-em-figure .mfs-cd-drawing {
       cursor: grab; touch-action: pan-y; -webkit-user-select: none; user-select: none;
     }
@@ -3921,16 +3930,16 @@
          took two fifths of a 390px screen and left the mathematics and the drawings under
          eight ems to be set in, and the box nine letters to a line. */
       #mfs-content-panel .mfs-header { padding-left: min(0.375rem, 1.6vw); padding-right: min(0.375rem, 1.6vw); }
-      #mfs-content-panel .mfs-label { font-size: min(0.875rem, var(--mfs-fit, 0.875rem)); }
-      #mfs-content-panel .mfs-title { font-size: min(1.625rem, var(--mfs-fit, 1.625rem)); }
-      #mfs-content-panel #mfs-print-btn { font-size: 0.75rem; padding: 0.1875rem 0.5625rem; }
+      #mfs-content-panel .mfs-label { font-size: min(14px, var(--mfs-fit, 14px)); }
+      #mfs-content-panel .mfs-title { font-size: min(26px, var(--mfs-fit, 26px)); }
+      #mfs-content-panel #mfs-print-btn { font-size: 12px; padding: 3px 9px; }
       #mfs-content-panel .mfs-section { padding: 0.5rem min(0.375rem, 1.6vw); }
       #mfs-content-panel .mfs-cd-restriction { padding-left: min(0.625rem, 2.78vw); padding-right: min(0.625rem, 2.78vw); }
       #mfs-content-panel .mfs-section-label { font-size: min(0.875rem, var(--mfs-fit, 0.875rem)); }
       #mfs-content-panel .mfs-table th,
       #mfs-content-panel .mfs-table td { padding: 0.25rem 0.5rem; }
       #mfs-content-panel .mfs-component { font-size: 1.1875rem; }
-      #mfs-content-panel .mfs-choice { font-size: min(0.75rem, var(--mfs-fit, 0.75rem)); padding: 0.25em 0.75em; }
+      #mfs-content-panel .mfs-choice { font-size: min(12px, var(--mfs-fit, 12px)); padding: 0.25em 0.75em; }
       #mfs-content-panel .mfs-nr-k,
       #mfs-content-panel .mfs-convention-k { font-size: 0.6875rem; }
       #mfs-content-panel .mfs-reference { scroll-margin-top: calc(var(--mfs-head, 0px) + 8px); }

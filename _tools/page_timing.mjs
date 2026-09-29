@@ -41,6 +41,10 @@
    chosen button of each row and the spacetime shown in the list are pink, and every kind of
    button is pink while it is pressed and hovered over, which Chrome's own tools force on it.
 
+   The spacetime's name, the word above it and every button keep one size in px whatever the
+   reader's text size, as the captain asked on 29 September 2026, and in each state any of
+   them set larger than that size counts as an error.
+
    It prints one line per chart, slowest last, then every page error and console error the
    page raised and every label that moved, and exits non-zero if any chart missed the budget
    or never became ready, or if the page raised any error at all. */
@@ -298,6 +302,21 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
       return out;
     };
   })();
+  /* The name, the word above it or a button set larger than its one size in px, the
+     desktop's and then the phone's; fitWords() may set one smaller, never larger. */
+  window.__mfsSizes = function () {
+    var phone = getComputedStyle(document.documentElement).getPropertyValue('--mfs-phone').trim() === '1', out = [];
+    [['#mfs-content-panel .mfs-header .mfs-title', 40, 26], ['#mfs-content-panel .mfs-header .mfs-label', 21, 14],
+     ['#mfs-print-btn', 15, 12], ['#mfs-content-panel .mfs-choice', 15, 12], ['.mfs-result', 18, 18]].forEach(function (s) {
+      [].forEach.call(document.querySelectorAll(s[0]), function (el) {
+        var size = parseFloat(getComputedStyle(el).fontSize), fixed = phone ? s[2] : s[1];
+        if (el.getClientRects().length && size > fixed + 0.01) {
+          out.push(s[0] + ' "' + el.textContent.trim().slice(0, 24) + '" is set at ' + size + 'px, above its ' + fixed + 'px');
+        }
+      });
+    });
+    return out;
+  };
   window.__mfsSettled = function () {
     return document.fonts.ready.then(function () {
       return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
@@ -348,7 +367,8 @@ function timed(action, chart) {
                        elements: panel.getElementsByTagName('*').length };
         window.__mfsSettled().then(function () {
           result.moved = stop();
-          result.margins = window.__mfsMargins(panel).concat(window.__mfsGlow(document.documentElement), window.__mfsPink());
+          result.margins = window.__mfsMargins(panel).concat(window.__mfsGlow(document.documentElement), window.__mfsPink(),
+            window.__mfsSizes());
           resolve(result);
         });
       }, 0); }); });
@@ -371,7 +391,7 @@ async function views() {
       await window.__mfsSettled();
       await new Promise(function (r) { requestAnimationFrame(r); });
       stop().forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
-      window.__mfsMargins(panel).concat(window.__mfsGlow(panel), window.__mfsPink())
+      window.__mfsMargins(panel).concat(window.__mfsGlow(panel), window.__mfsPink(), window.__mfsSizes())
         .forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
     }
     return moved;
