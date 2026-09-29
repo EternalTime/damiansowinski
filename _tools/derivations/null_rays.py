@@ -823,7 +823,7 @@ CAPTIONS = {
         "each turning at $d\\phi/dr = \\pm a/\\Delta$ with $\\Delta = r^2 - 2GMr/c^2 + a^2 + r_Q^2$, "
         "so both families wind counterclockwise, the way the hole turns, and far out the turning "
         "dies away as $a/r^2$. The charge enters only through $\\Delta$: it pulls the horizon in "
-        "to $r_+ = 1.625\\,GM/c^2$, and the rays wind onto it without end, as $\\phi$ runs to "
+        "to $r_+ = 1.624\\,GM/c^2$, and the rays wind onto it without end, as $\\phi$ runs to "
         "infinity there.",
         "The winding is in the coordinate $\\phi$ alone: along an ingoing ray "
         "$\\tilde\\phi = \\phi + \\int a\\,dr/\\Delta$ stays fixed, and in it the ray crosses the "
