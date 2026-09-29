@@ -2725,6 +2725,43 @@
         _headObserver.observe(head);
       }
 
+      /* A browser fetches a font only once it lays out text set in it, and MathJax draws each
+         alphabet in a font of its own, fraktur, bold, small capitals and the rest. So the first
+         spacetime to use one, Bianchi's fraktur or Malament-Hogarth's small capitals, had its
+         numbers and slice labels fitted in the face drawn in its place and fitted again a frame
+         after the font arrived, and in Chrome they moved by up to 4 pixels as the panel slid
+         in, as measured on 29 September 2026. So once MathJax has set a
+         spacetime, every font its mathematics and its labels are set in, a hidden view's among
+         them, is loaded before anything is fitted, and the panel slides in only then; a chart
+         chosen in a panel already shown keeps its figures out of sight until they are fitted,
+         and the print copy is measured only once its fonts are in. The fonts are read once for
+         each kind of glyph MathJax makes, which its classes name, and once more for a glyph of
+         a stretched delimiter, which draws on several fonts. fontsLoading() is null when every
+         font is in already, so such a spacetime is fitted at once, before the browser draws it.
+         The wait ends after FONT_WAIT ms in any case, which is how long a browser itself shows
+         nothing in place of a font before it draws another face, and a font later still is
+         fitted to when it comes. */
+      var FONT_WAIT = 3000, _rendered = 0;
+      function fontsLoading(root) {
+        if (!document.fonts || !document.fonts.check) return null;
+        var seen = {}, wanted = {};
+        function add(el, key) {
+          if (seen[key]) return;
+          seen[key] = true;
+          var cs = getComputedStyle(el), font = cs.fontStyle + ' ' + cs.fontWeight + ' 16px ' + cs.fontFamily;
+          try { if (!document.fonts.check(font)) wanted[font] = true; } catch (e) {}
+        }
+        root.querySelectorAll('mjx-c').forEach(function(c) { add(c, c.className + ' ' + c.parentNode.tagName); });
+        root.querySelectorAll('.nr-tick, .mfs-slice-label, .cd-at').forEach(function(el) { add(el, el.className); });
+        var fonts = Object.keys(wanted);
+        if (!fonts.length) return null;
+        return Promise.race([
+          Promise.all(fonts.map(function(font) { return document.fonts.load(font).catch(function() {}); })),
+          new Promise(function(r) { setTimeout(r, FONT_WAIT); })
+        ]);
+      }
+      window._mfsFontsLoading = fontsLoading;
+
       function renderMetric(data, coordIdx) {
         _currentMetric  = data;
         _currentCoordIdx = coordIdx;
@@ -3058,8 +3095,12 @@
           });
         });
 
-        // Typeset MathJax; the promise is kept when it is set and its columns counted
+        // Typeset MathJax, and once the fonts it is drawn in have loaded, lay it out; the
+        // promise is kept when it is set and its columns counted
+        var rendered = ++_rendered;
         function laidOut() {
+          if (rendered !== _rendered) return;
+          contentPanel.classList.remove('mfs-fonts-wait');
           reflowColumns();
           var figures = [].slice.call(contentPanel.querySelectorAll('.mfs-nr-figure'));
           fitPlots(figures);
@@ -3070,7 +3111,12 @@
           fitLines(contentPanel, [].slice.call(contentPanel.querySelectorAll('.mfs-header, .mfs-section')));
         }
         if (window.MathJax && MathJax.typesetPromise) {
-          return MathJax.typesetPromise([contentPanel]).then(laidOut);
+          return MathJax.typesetPromise([contentPanel]).then(function() {
+            var loading = rendered === _rendered && fontsLoading(contentPanel);
+            if (!loading) { laidOut(); return; }
+            contentPanel.classList.add('mfs-fonts-wait');
+            return loading.then(laidOut);
+          });
         }
         laidOut();
         return Promise.resolve();
@@ -3688,6 +3734,8 @@
       overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
       scrollbar-width: thin; scrollbar-color: rgba(0,229,255,0.25) transparent;
     }
+    /* While the fonts of a chart chosen in a panel already shown load; see fontsLoading(). */
+    #mfs-content-panel.mfs-fonts-wait .mfs-fig-scroll { visibility: hidden; }
     .mfs-cd-drawing {
       position: relative; container-type: inline-size;
       width: max(100%, calc(min(100%, var(--cd-cap)) * var(--mfs-text, 1)));
@@ -4061,7 +4109,8 @@
         // Typeset the fresh (raw LaTeX) copy, then print
         var pb = root.querySelector('.mfs-print-body');
         if (window.MathJax && MathJax.typesetPromise) {
-          MathJax.typesetPromise([pb]).then(function() { printPrepare(root); window.print(); });
+          MathJax.typesetPromise([pb]).then(function() { return window._mfsFontsLoading(pb); })
+            .then(function() { printPrepare(root); window.print(); });
         } else {
           window.print();
         }

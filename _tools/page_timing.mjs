@@ -19,9 +19,17 @@
    slower phone; and --budget <seconds>, 10 by default, is the time past which a chart
    counts as failing. CHROME names the browser when it is not where macOS keeps it.
 
+   It also watches every number and label of every drawing shown, and the plot of each
+   spacetime diagram, from the first frame the reader sees them until two frames after the
+   last font has loaded, as each spacetime opens, as each chart is chosen and as each view of
+   a diagram is chosen, and counts any that moves or is shown or hidden after that first frame
+   as an error: until 29 September 2026 the first spacetime to use one of MathJax's fonts,
+   Bianchi's fraktur or Malament-Hogarth's small capitals, fitted its numbers in the face
+   drawn in its place and moved them by up to 4 pixels when the font arrived.
+
    It prints one line per chart, slowest last, then every page error and console error the
-   page raised, and exits non-zero if any chart missed the budget or never became ready, or
-   if the page raised any error at all. */
+   page raised and every label that moved, and exits non-zero if any chart missed the budget
+   or never became ready, or if the page raised any error at all. */
 import { spawn } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -126,7 +134,58 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
       return typeset.apply(this, arguments).then(function (v) { done(); return v; }, function (e) { done(); throw e; });
     };
     window.__mfsTiming.ready = true;
-  })();` });
+  })();
+  /* Where every number and label of every drawing shown stands, and each spacetime diagram's
+     plot, from the top left of its figure, since the panel slides in, and whether it is shown. */
+  window.__mfsLabels = function (panel) {
+    var out = {};
+    [].forEach.call(panel.querySelectorAll('.mfs-nr-figure, .mfs-cd-figure'), function (fig, i) {
+      if (!fig.getClientRects().length) return;
+      var b = fig.getBoundingClientRect();
+      [].forEach.call(fig.querySelectorAll('.nr-plot, .nr-tick, .mfs-slice-label, .cd-at'), function (el, j) {
+        if (!el.getClientRects().length) return;
+        var r = el.getBoundingClientRect();
+        out[i + ' ' + j] = { name: el.className.split(' ')[0] + ' "' + el.textContent.trim().slice(0, 24) + '"',
+          at: [r.left - b.left, r.top - b.top, r.right - b.left, r.bottom - b.top],
+          shown: getComputedStyle(el).visibility !== 'hidden' };
+      });
+    });
+    return out;
+  };
+  /* From the first frame at which shown() holds, every frame is held against that first one
+     until stop() is called, and each label that moved by more than a twentieth of a pixel, the
+     noise of the panel's slide, or was shown or hidden, is kept once with how far it went. */
+  window.__mfsWatch = function (panel, shown) {
+    var first = null, start = 0, moved = {}, on = true;
+    function compare() {
+      var now = window.__mfsLabels(panel);
+      Object.keys(now).forEach(function (k) {
+        var a = first[k], b = now[k];
+        if (!a || moved[k]) return;
+        var d = Math.max.apply(null, a.at.map(function (v, i) { return Math.abs(v - b.at[i]); }));
+        if (d > 0.05 || a.shown !== b.shown) {
+          moved[k] = a.name + (a.shown !== b.shown ? (b.shown ? ' shown' : ' hidden') : ' moved ' + d.toFixed(2) + 'px') +
+            ' at ' + Math.round(performance.now() - start) + 'ms after first shown';
+        }
+      });
+    }
+    (function frame() {
+      if (!on) return;
+      if (first) compare();
+      else if (shown()) { first = window.__mfsLabels(panel); start = performance.now(); }
+      requestAnimationFrame(frame);
+    })();
+    return function stop() {
+      on = false;
+      if (first) compare();
+      return Object.keys(moved).map(function (k) { return moved[k]; });
+    };
+  };
+  window.__mfsSettled = function () {
+    return document.fonts.ready.then(function () {
+      return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
+    });
+  };` });
 await send('Page.navigate', { url: `${base}/MFS/` });
 for (let i = 0; i < 600; i++) {
   if (await evaluate(`!!(window.__mfsTiming && window.__mfsTiming.ready && document.querySelector('.mfs-result'))`)) break;
@@ -140,11 +199,18 @@ for (const id of only) if (!ids.includes(id)) { console.error(`No spacetime ${id
    formula typeset and no typesetting outstanding, and two frames have passed, so the
    observers that run once MathJax is done have run too. Every wait is a timer inside the
    page, so while a task holds the page nothing here moves, and the time taken includes that
-   task. */
+   task. The labels are watched from the first frame at which the panel stands in place with
+   its mathematics set and its figures in sight, until the page has settled and the fonts are
+   in; that wait is not timed. */
 function timed(action, chart) {
   return evaluate(`new Promise(function (resolve) {
     var t = window.__mfsTiming, panel = document.getElementById('mfs-content-panel');
     var before = panel.querySelector('.mfs-header');
+    var stop = window.__mfsWatch(panel, function () {
+      var header = panel.querySelector('.mfs-header');
+      return header && header !== before && t.busy === 0 && !panel.classList.contains('mfs-fonts-wait') &&
+        /^translateX\\(0(px)?\\)$/.test(panel.style.transform);
+    });
     var start = performance.now();
     ${action}
     (function poll() {
@@ -152,20 +218,42 @@ function timed(action, chart) {
       var ready = header && header !== before && t.busy === 0 &&
         (!on || on.dataset.chart === '${chart}') && !/\\\\[(\\[]/.test(panel.textContent);
       if (!ready) {
-        if (performance.now() - start > ${LIMIT_S * 1000}) { resolve(null); return; }
+        if (performance.now() - start > ${LIMIT_S * 1000}) { stop(); resolve(null); return; }
         setTimeout(poll, 25); return;
       }
       requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(function () {
         var end = performance.now();
         var longest = t.long.filter(function (l) { return l[0] + l[1] > start; })
                             .reduce(function (m, l) { return Math.max(m, l[1]); }, 0);
-        resolve({ seconds: (end - start) / 1000, longest: longest / 1000,
-                  chart: on ? on.textContent : '',
-                  lines: panel.querySelectorAll('.mfs-line').length,
-                  elements: panel.getElementsByTagName('*').length });
+        var result = { seconds: (end - start) / 1000, longest: longest / 1000,
+                       chart: on ? on.textContent : '',
+                       lines: panel.querySelectorAll('.mfs-line').length,
+                       elements: panel.getElementsByTagName('*').length };
+        window.__mfsSettled().then(function () { result.moved = stop(); resolve(result); });
       }, 0); }); });
     })();
   })`);
+}
+
+/* Choose each view of each diagram but the one first shown, and watch its labels from the
+   frame after the choice until the page has settled. */
+async function views() {
+  const moved = await evaluate(`(async function () {
+    var panel = document.getElementById('mfs-content-panel'), moved = [];
+    var buttons = [].slice.call(panel.querySelectorAll('.mfs-diagram > .mfs-section-head .mfs-choice'));
+    for (var i = 0; i < buttons.length; i++) {
+      if (buttons[i].classList.contains('mfs-choice-on')) continue;
+      var button = buttons[i], clicked = false;
+      var stop = window.__mfsWatch(panel, function () { return clicked; });
+      button.click();
+      clicked = true;
+      await window.__mfsSettled();
+      await new Promise(function (r) { requestAnimationFrame(r); });
+      stop().forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
+    }
+    return moved;
+  })()`);
+  for (const m of moved) errors.push(`${opened}: view ${m}`);
 }
 
 async function pageErrors() {
@@ -180,10 +268,15 @@ for (const id of ids) {
   const first = await timed(`document.querySelector('.mfs-result[data-id="${id}"]').click();`, 0);
   results.push({ id, ...(first || { chart: '?' }), failed: !first });
   if (!first) continue;
+  for (const m of first.moved) errors.push(`${opened} / ${first.chart}: ${m}`);
+  await views();
   const charts = await evaluate(`document.querySelectorAll('.mfs-charts .mfs-choice').length || 1`);
   for (let c = 1; c < charts; c++) {
     const r = await timed(`document.querySelector('.mfs-charts [data-chart="${c}"]').click();`, c);
     results.push({ id, ...(r || { chart: String(c) }), failed: !r });
+    if (!r) continue;
+    for (const m of r.moved) errors.push(`${opened} / ${r.chart}: ${m}`);
+    await views();
   }
   await pageErrors();
 }
