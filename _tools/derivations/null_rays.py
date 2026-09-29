@@ -15,7 +15,9 @@ writes MFS/assets/data/diagrams/<metric_id>.json, one file per spacetime that ha
 diagram, removing the file of any spacetime that has none, and the second command stamps
 each file's version into the index. Pass
 --metric <metric_id> to redraw one spacetime, repeatable, and --verify to check the
-rays against closed forms the drawing never uses instead of writing anything.
+rays against closed forms the drawing never uses instead of writing anything. --slices
+rewrites only the slices below, from the embedding files as they stand, tracing no ray,
+which is what to run after an embedding diagram moves its moments.
 
 
 The null condition
@@ -147,6 +149,17 @@ a metric changes without its diagram being redrawn. It carries its ticks, and ev
 label as TeX in $...$, so the page and the application draw and set the same ones.
 to_display is the linear map's rows, or "polar". A view whose cones are not the future
 light cone says what they are in `cone`, and a marker that names itself carries `legend`.
+
+
+Slices
+------
+
+A view on which the spacetime's embedding diagram is cut from a moment that meets its plane
+carries that moment under `slices`, one entry for each surface of each embedding view it
+shows: the embedding view's id and the surface's place, the moment's label as TeX, a stamp
+over the embedding surface, and the moment as lines, points and regions in the view's unit
+square. slices.py declares what each moment is in the view's chart, and view_slices()
+carries it into the square with the view's own map and box.
 """
 
 import argparse
@@ -362,7 +375,7 @@ DIAGRAMS = [
     Diagram("anti_de_sitter", "poincare", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2),
             "$x/L$", "$ct/L$", {"L": 1}, {"y": "0", "z": "1"}, families=SIDEWAYS),
     Diagram("rn_metric", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
-            "$r/r_s$", "$t/r_s$", {"r_s": 1, "r_q": "2/5"}, EQUATOR, orient="ingoing",
+            "$r/r_s$", "$t/r_s$", {"r_s": 1, "r_q": "12/25"}, EQUATOR, orient="ingoing",
             areal=True),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
@@ -511,13 +524,13 @@ DIAGRAMS = [
     # A shell of null dust falls in along v = 0: flat inside, Schwarzschild outside, as the
     # conformal diagram declares it. The outgoing chart draws its time reverse.
     Diagram("vaidya", "eddington_finkelstein_ingoing", "shell", "an imploding shell", ("v", "r"),
-            (0, 4, -2.5, 1.5), "$r/r_s$", "$(cv - r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_IN,
+            (0, 4, -3, 1.5), "$r/r_s$", "$(cv - r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_IN,
             tau="v - r", areal=True, functions={"m": "Heaviside(v)/2"}, lines=(("shell", "x0", "0", "the shell, $v = 0$"),),
             marked=(("event", "1/1000", 1, "the event horizon"),), singular_runs=True,
             input="$m(v) = 0$ for $v < 0$ and $M$ for $v > 0$, with $r_s = 2GM/c^2$: a shell of null "
                   "dust of mass $M$ falling in along $v = 0$."),
     Diagram("vaidya", "eddington_finkelstein_outgoing", "shell", "an exploding shell", ("u", "r"),
-            (0, 4, -1.5, 2.5), "$r/r_s$", "$(cu + r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_OUT,
+            (0, 4, -1.5, 3), "$r/r_s$", "$(cu + r)/r_s$", {"G": 1}, EQUATOR, to_display=FINKELSTEIN_OUT,
             tau="u + r", areal=True, functions={"m": "Heaviside(-u)/2"}, lines=(("shell", "x0", "0", "the shell, $u = 0$"),),
             marked=(("event", "-1/1000", 0, "the white hole's horizon"),), singular_runs=True,
             input="$m(u) = M$ for $u < 0$ and $0$ for $u > 0$, with $r_s = 2GM/c^2$: a shell of null "
@@ -691,9 +704,9 @@ CAPTIONS = {
     ],
     ("rn_metric", "spherical", "radial"): [
         "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$, drawn for "
-        "$r_q = 0.4\\,r_s$, and spherical symmetry makes it the same at every other angle. There "
+        "$r_q = 0.48\\,r_s$, and spherical symmetry makes it the same at every other angle. There "
         "$g^{rr}$ vanishes twice, at $r_\\pm = (r_s \\pm \\sqrt{r_s^2 - 4r_q^2})/2$, which is "
-        "$0.8\\,r_s$ and $0.2\\,r_s$, and the cones close at both. Between them $r$ is the time "
+        "$0.64\\,r_s$ and $0.36\\,r_s$, and the cones close at both. Between them $r$ is the time "
         "and the cones point to smaller $r$. Inside $r_-$, $t$ is a time again.",
         "The chart alone does not fix which way is future in the two inner regions. An ingoing "
         "chart runs smoothly through both horizons, and we take the future from it, which makes "
@@ -2470,7 +2483,73 @@ def draw(spec):
     }
     if spec.areal_contours:
         view["areal"] = plot.level_sets("R", spec.areal_contours)
+    marks = view_slices(spec)
+    if marks:
+        view["slices"] = marks
     return view
+
+
+def view_slices(spec):
+    """The moments of the spacetime's embedding diagram that the view shows, which
+    slices.flat declares in the chart's (x^0, r), carried into the unit square by the view's
+    own map and box: lines cut where they leave the box and thinned as the rays are, points
+    inside it, and regions cut to it, each a list of rings filled by the even odd rule. A
+    mirrored view carries the half at r >= 0, as its rays do, and the page draws both."""
+    import slices
+    X0, X1, Y0, Y1 = spec.box
+    lo, span = np.array([X0, Y0], float), np.array([X1 - X0, Y1 - Y0], float)
+
+    def unit(P):
+        P = np.atleast_2d(np.asarray(P, float))
+        if spec.to_display == POLAR:
+            Q = np.column_stack([P[:, 1] * np.cos(P[:, 0]), P[:, 1] * np.sin(P[:, 0])])
+        else:
+            Q = P @ np.array(spec.to_display, float).T
+        return (Q - lo) / span
+
+    out = []
+    for mark in slices.flat(spec):
+        lines = [rounded(thin(run, 0.0006)) for line in mark.lines for run in slices.clip_runs(unit(line))]
+        points = [rounded(u) for p in mark.points for u in unit(p) if np.all((u >= 0) & (u <= 1))]
+        fills = []
+        for rings in mark.fills:
+            cut = [slices.clip_ring(unit(ring)) for ring in rings]
+            cut = [rounded(thin(np.vstack([ring, ring[:1]]), 0.0006)[:-1]) for ring in cut if ring is not None]
+            if cut:
+                fills.append(cut)
+        if not (lines or points or fills):
+            raise SystemExit(f"{key(spec)}: the moment {mark.label} of the embedding lies outside the box")
+        out.append({**mark.moment.json(), "label": mark.label, "lines": lines, "points": points, "fills": fills})
+    return out
+
+
+def rewrite_slices(metric_ids=None):
+    """Only the slices of every diagram file, from the embedding files as they stand, without
+    tracing a ray again: each flat view's slices are drawn anew with its row's map and box,
+    and each figure, which draws in seconds, is drawn anew whole."""
+    import projections as pj
+    for metric_id, (specs, figures) in by_metric().items():
+        if metric_ids and metric_id not in metric_ids:
+            continue
+        path = DIAGRAMS_DIR / f"{metric_id}.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        for spec in specs:
+            view = next(v for v in data["systems"][spec.system] if v["id"] == spec.view)
+            if (list(view["box"]) != list(spec.box) or view["mirror"] != spec.mirror
+                    or view["settings"] != settings(spec, load(spec.metric, spec.system)[1])):
+                raise SystemExit(f"{key(spec)}: the file was drawn with another box or other values; "
+                                 "redraw it whole")
+            view.pop("slices", None)
+            marks = view_slices(spec)
+            if marks:
+                view["slices"] = marks
+        for spec in figures:
+            views = data["projections"][spec.system]
+            i = next(i for i, v in enumerate(views) if v["id"] == spec.view)
+            views[i] = pj.draw(spec)
+        path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n",
+                        encoding="utf-8")
+        print(f"wrote the slices of {path.relative_to(build.ROOT)}")
 
 
 def by_metric():
@@ -2536,8 +2615,8 @@ CLOSED_FORMS = {
     ("schwarzschild", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
     ("rn_metric", "spherical", "radial"):
-        (lambda t, r: t + _rstar(r, [0.8, 0.2]), lambda t, r: t - _rstar(r, [0.8, 0.2]),
-         lambda t, r: (np.abs(r - 0.8) > 0.05) & (np.abs(r - 0.2) > 0.05)),
+        (lambda t, r: t + _rstar(r, [0.64, 0.36]), lambda t, r: t - _rstar(r, [0.64, 0.36]),
+         lambda t, r: (np.abs(r - 0.64) > 0.05) & (np.abs(r - 0.36) > 0.05)),
     ("de_sitter", "static_spherical", "radial"):
         (lambda t, r: t + 0.5 * np.log(np.abs((1 + r) / (1 - r))),
          lambda t, r: t - 0.5 * np.log(np.abs((1 + r) / (1 - r))), lambda t, r: np.abs(r - 1) > 0.05),
@@ -2798,12 +2877,17 @@ def main(argv=None):
     parser.add_argument("--metric", action="append", default=[], help="redraw only this spacetime, repeatable")
     parser.add_argument("--verify", action="store_true",
                         help="check the rays against closed forms instead of writing")
+    parser.add_argument("--slices", action="store_true",
+                        help="rewrite only the slices of the embedding diagrams, tracing no ray")
     args = parser.parse_args(argv)
     unknown = set(args.metric) - set(by_metric())
     if unknown:
         parser.error(f"no diagram is drawn for {sorted(unknown)}")
     if args.verify:
         return 1 if verify() else 0
+    if args.slices:
+        rewrite_slices(set(args.metric))
+        return 0
     write(set(args.metric))
     return 0
 

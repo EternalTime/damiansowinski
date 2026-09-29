@@ -119,6 +119,30 @@ def diagram_source_version(system, fields):
     return content_version(diagram_source(system, fields))
 
 
+def embedding_moment(view, index):
+    """What an embedding surface says of the moment it is cut from: the view, its settings,
+    the surface's label and time, and where each piece runs, which is the reach of the moment
+    every other diagram draws. A grid is its frame and the ends of its rows and columns."""
+    surface = view["surfaces"][index]
+    pieces = []
+    for piece in surface["pieces"]:
+        if "grid" in piece:
+            grid = piece["grid"]
+            pieces.append([piece["id"], grid["frame"], grid["u"][0], grid["u"][-1], grid["v"][0], grid["v"][-1]])
+        else:
+            pieces.append([piece["id"], piece["class"], piece["metric"], piece["system"], piece["coordinate"],
+                           piece["points"][0][0], piece["points"][-1][0]])
+    return {"view": view["id"], "settings": view.get("settings"), "label": surface.get("label"),
+            "time": surface.get("time"), "pieces": pieces,
+            "curves": [[c["class"], c["points"][0], c["points"][-1]] for c in surface.get("curves", [])
+                       if c["class"] == "path"]}
+
+
+def embedding_moment_version(view, index):
+    """The stamp a slice drawn on another diagram records of the embedding surface it marks."""
+    return content_version(embedding_moment(view, index))
+
+
 def check_diagram_stamp(path, system, what, source):
     if diagram_source_version(system, source["fields"]) != source["version"]:
         raise DataError(
@@ -320,6 +344,38 @@ def load_embedding(metrics):
     return embedding
 
 
+def check_slices(diagrams, conformal, embedding):
+    """Every slice a spacetime diagram, a figure or a conformal diagram draws marks a surface
+    of its spacetime's embedding diagram, by the view's id and the surface's place, and was
+    drawn from that surface as the embedding file stands: a redrawn embedding whose moments
+    or reach moved leaves the drawings that mark them unpublishable until they are redrawn."""
+    def drawings():
+        for metric_id, data in (diagrams or {}).items():
+            for part in ("systems", "projections"):
+                for system_id, views in data.get(part, {}).items():
+                    for view in views:
+                        yield (metric_id, f"diagrams/{metric_id}.json, the {system_id} view {view['id']!r}", view,
+                               "null_rays.py --slices")
+        for metric_id, data in (conformal or {}).items():
+            for view in data["views"]:
+                yield metric_id, f"conformal/{metric_id}.json, the view {view['id']!r}", view, "conformal.py"
+    for metric_id, where, view, script in drawings():
+        marks = view.get("slices", [])
+        if not marks:
+            continue
+        views = {v["id"]: v for v in (embedding or {}).get(metric_id, {}).get("views", [])}
+        for mark in marks:
+            target = views.get(mark.get("view"))
+            if target is None or not 0 <= mark.get("surface", -1) < len(target["surfaces"]):
+                raise DataError(f"{where} marks the surface {mark.get('surface')!r} of the embedding view "
+                                f"{mark.get('view')!r}, which embedding/{metric_id}.json does not draw")
+            if embedding_moment_version(target, mark["surface"]) != mark.get("version"):
+                raise DataError(f"{where} marks a moment of embedding/{metric_id}.json as it no longer "
+                                f"stands; redraw it with _tools/derivations/{script} --metric {metric_id}")
+            if not (mark.get("lines") or mark.get("points") or mark.get("fills")):
+                raise DataError(f"{where} marks the moment {mark.get('label')!r} and draws nothing of it")
+
+
 def build_index(metrics, diagrams=None, conformal=None, embedding=None):
     index = []
     for m in metrics:
@@ -502,6 +558,7 @@ def main(argv=None):
         diagrams = load_diagrams(metrics)
         conformal = load_conformal(metrics)
         embedding = load_embedding(metrics)
+        check_slices(diagrams, conformal, embedding)
         outputs = {
             INDEX_FILE: serialise(build_index(metrics, diagrams, conformal, embedding)),
             REFERENCES_FILE: serialise(references),
