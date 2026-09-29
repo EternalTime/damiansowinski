@@ -1049,7 +1049,10 @@
          ResizeObserver sees when MathJax sets it, when the window changes size and when a
          hidden diagram view is shown. As with the lines, every block is measured before
          any is marked, so the page is laid out a few times in all rather than a few times
-         for each block. */
+         for each block. A displayed formula already stands on a line of its own, and its box
+         is exactly as wide as its paragraph, so it is left out: measured while the panel
+         slid in, Reissner-Nordström's two in its history came to 1064.0001 pixels against a
+         paragraph of 1064 and were set as too wide for a frame, a line lower. */
       var PROSE = '.mfs-history, .mfs-convention, .mfs-nr-caption, .mfs-nr-note, .mfs-nr-itext, .mfs-cd-restriction';
       var _proseObserver = null;
 
@@ -1071,7 +1074,7 @@
 
       function fitProseMath(blocks) {
         var sets = blocks.filter(function(block) { return block.clientWidth; }).map(function(block) {
-          return { block: block, boxes: [].map.call(block.querySelectorAll('mjx-container'), function(m) {
+          return { block: block, boxes: [].map.call(block.querySelectorAll('mjx-container:not([display="true"])'), function(m) {
             var keep = m.parentElement;
             return keep.classList.contains('mfs-nr-keep') ? keep : m;
           }) };
