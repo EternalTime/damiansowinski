@@ -168,7 +168,6 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));
   margin-top: 0.5em;
 }
 

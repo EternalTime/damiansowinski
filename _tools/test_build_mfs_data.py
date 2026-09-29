@@ -912,6 +912,96 @@ class WrittenAreas(unittest.TestCase):
         self.assertEqual(self.resolved("#mfs-print-root", "font-family", printed=True), "'EB Garamond', serif")
 
 
+class NoGlow(unittest.TestCase):
+    """Nothing on the spacetimes page glows, and a button chosen or pressed turns pink, as the
+    captain asked on 29 September 2026: "Get rid of the glow on the pressed button in MFS.
+    Only turn it pink. I already said to get rid of the glow earlier. No glow anywhere."
+    `node _tools/page_timing.mjs` holds the page as drawn to the same rule."""
+
+    # Each way a stylesheet, a script or a drawing can make light, and what it looks like.
+    GLOW = (
+        (r"(?i)(?<![\w-])(?:text|box)-shadow\s*:(?!\s*none\b)", "a shadow"),
+        (r"\.style\.(?:textShadow|boxShadow)\s*=(?!\s*['\"]none['\"])", "a shadow set by script"),
+        (r"(?i)drop-shadow\s*\(", "a drop shadow"),
+        (r"(?i)(?<![\w-])filter\s*:[^;}\"]*blur\s*\(", "a blur"),
+        (r"\.style\.(?:filter|webkitFilter)\s*=\s*[^;]*(?:blur|drop-shadow)", "a blur set by script"),
+        (r"\bshadow(?:Blur|Color|OffsetX|OffsetY)\s*=", "a canvas shadow"),
+        (r"globalCompositeOperation\s*=\s*['\"](?:lighter|screen|plus-lighter)", "light added on a canvas"),
+        (r"(?i)<filter\b|\bfe(?:GaussianBlur|DropShadow|Morphology)\b", "an SVG filter"),
+        (r"(?i)mix-blend-mode\s*:\s*(?:screen|lighten|plus-lighter|color-dodge)", "light blended in"),
+        (r"(?i)(?:class(?:Name|List\.(?:add|toggle))?\s*[=(]\s*['\"][^'\"]*|[.#][\w-]*)(?:glow|neon|halo|bloom)",
+         "a glow by name"),
+    )
+
+    @classmethod
+    def setUpClass(cls):
+        root = build.ROOT
+        cls.sources = [root / "_layouts" / "mfs.html", root / "assets" / "css" / "mfs.css",
+                       root / "assets" / "css" / "palette.css"]
+        cls.sources += sorted((root / "MFS").glob("*.markdown")) + sorted((root / "MFS" / "assets").glob("*.js"))
+        cls.page, cls.rules = page_rules()
+
+    def glows(self, text):
+        return [what for pattern, what in self.GLOW if re.search(pattern, text)]
+
+    def test_no_source_of_the_page_makes_anything_glow(self):
+        for path in self.sources:
+            with self.subTest(str(path.relative_to(build.ROOT))):
+                found = [(what, text.strip()[:80]) for text in path.read_text(encoding="utf-8").splitlines()
+                         for what in self.glows(text)]
+                self.assertEqual(found, [])
+
+    def test_the_rules_catch_every_glow_the_page_carried(self):
+        for text in ("box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan);",
+                     "  box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan);",
+                     "a:hover { text-shadow: 0 0 8px var(--cyan), 0 0 20px var(--cyan); }",
+                     "span.style.textShadow = '0 0 6px ' + tealLight;",
+                     "span.style.textShadow =",
+                     "  filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.9));",
+                     "  filter: blur(6px) brightness(2);",
+                     "ctx.shadowBlur  = glowStrength * 18;",
+                     "ctx.shadowColor = 'rgba(' + tealRgb + ')';",
+                     "ctx.globalCompositeOperation = 'lighter';",
+                     '<filter id="g"><feGaussianBlur stdDeviation="3"/></filter>',
+                     ".mfs-choice-glow { color: red; }",
+                     "el.classList.add('neon');"):
+            with self.subTest(text):
+                self.assertTrue(self.glows(text))
+
+    def test_the_rules_leave_plain_colour_and_the_print_reset_alone(self):
+        for text in ("        text-shadow: none !important;",
+                     "        box-shadow: none !important;",
+                     "span.style.textShadow = 'none';",
+                     "  backdrop-filter: blur(4px);",
+                     ".mfs-choice.mfs-choice-on { color: var(--pink-light); border-color: var(--pink-light); }",
+                     "var shadow = ring.filter(function(p) { return p.hidden; });",
+                     "The Shadow of the Supermassive Black Hole"):
+            with self.subTest(text):
+                self.assertEqual(self.glows(text), [])
+
+    def last(self, selector, prop):
+        found = [d[prop] for selectors, d, printed in self.rules if selector in selectors and prop in d and not printed]
+        return found[-1] if found else None
+
+    def test_the_chosen_button_and_the_spacetime_shown_turn_pink(self):
+        self.assertEqual(self.last("#mfs-content-panel .mfs-choice.mfs-choice-on", "color"), "var(--pink-light)")
+        self.assertEqual(self.last("#mfs-content-panel .mfs-choice.mfs-choice-on", "border-color"), "var(--pink-light)")
+        self.assertEqual(self.last(".mfs-result.mfs-result-active", "color"), "var(--pink-light)")
+
+    def test_every_button_turns_pink_while_it_is_pressed(self):
+        # Each :active rule comes after the button's :hover, which a mouse holds while it presses.
+        for button, has_border in (("#mfs-content-panel .mfs-choice", True), ("#mfs-content-panel #mfs-print-btn", True),
+                                   ("#mfs-content-panel .mfs-em-reset", True), (".mfs-result", False)):
+            with self.subTest(button):
+                self.assertEqual(self.last(button + ":active", "color"), "var(--pink-light)")
+                if has_border:
+                    self.assertEqual(self.last(button + ":active", "border-color"), "var(--pink-light)")
+                places = [n for n, (selectors, _, printed) in enumerate(self.rules) if not printed
+                          for s in selectors if s in (button + ":hover", button + ":active")]
+                pressed = max(n for n, (selectors, _, _) in enumerate(self.rules) if button + ":active" in selectors)
+                self.assertEqual(max(places), pressed)
+
+
 class ConventionShape(unittest.TestCase):
     """Every convention is one paragraph or more, each of three to six sentences, broken
     only where a sentence ends."""

@@ -33,6 +33,14 @@
    same for the print copy of each chart, as the page lays it out for paper once its print
    button is pressed, the browser's print dialog left closed.
 
+   Nothing on the page glows, as the captain asked on 29 September 2026: "No glow anywhere".
+   In each of those states it counts as an error every element whose computed style carries
+   a text or box shadow or a filter that blurs or casts a shadow, every rule of the page's
+   stylesheets that gives one, whatever its selector, every shadow drawn on a canvas and every
+   one a script sets, even for a frame, such as the title's letters as they flicker in. The
+   chosen button of each row and the spacetime shown in the list are pink, and every kind of
+   button is pink while it is pressed and hovered over, which Chrome's own tools force on it.
+
    It prints one line per chart, slowest last, then every page error and console error the
    page raised and every label that moved, and exits non-zero if any chart missed the budget
    or never became ready, or if the page raised any error at all. */
@@ -212,6 +220,84 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
     });
     return out;
   };
+  /* Every glow on the page: an element whose computed style casts a shadow or blurs, a rule
+     of a stylesheet that gives one, and a canvas that draws one. What a script sets is caught
+     at the next frame, and a canvas as it is set, and both are kept in __mfsGlowSeen. */
+  (function () {
+    var seen = window.__mfsGlowSeen = [];
+    function name(el) {
+      return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') +
+        (typeof el.className === 'string' && el.className ? '.' + el.className.trim().split(/\s+/).join('.') : '') +
+        (el.textContent ? ' "' + el.textContent.trim().slice(0, 24) + '"' : '');
+    }
+    function glow(style) {
+      var out = [];
+      if (style.textShadow && style.textShadow !== 'none') out.push('text-shadow ' + style.textShadow);
+      if (style.boxShadow && style.boxShadow !== 'none') out.push('box-shadow ' + style.boxShadow);
+      if (/blur|drop-shadow/.test(style.filter || '')) out.push('filter ' + style.filter);
+      return out;
+    }
+    window.__mfsGlowOf = function (el) {
+      var out = glow(getComputedStyle(el));
+      if (/^(filter|fegaussianblur|fedropshadow)$/i.test(el.tagName)) out.push('an SVG ' + el.tagName);
+      return out.map(function (g) { return name(el) + ' has ' + g; });
+    };
+    window.__mfsGlow = function (root) {
+      var out = [];
+      [root].concat([].slice.call(root.getElementsByTagName('*'))).forEach(function (el) {
+        out = out.concat(window.__mfsGlowOf(el));
+      });
+      [].forEach.call(document.styleSheets, function (sheet) {
+        var where = sheet.href || 'the page', list;
+        try { list = sheet.cssRules; } catch (e) { return; }
+        (function rules(list) {
+          [].forEach.call(list, function (rule) {
+            if (rule.cssRules) rules(rule.cssRules);
+            if (rule.style) glow(rule.style).forEach(function (g) {
+              out.push('the rule ' + (rule.selectorText || rule.cssText.slice(0, 40)) + ' in ' + where + ' gives ' + g);
+            });
+          });
+        })(list);
+      });
+      return out.concat(seen.splice(0));
+    };
+    var ctx = CanvasRenderingContext2D.prototype;
+    ['shadowBlur', 'shadowOffsetX', 'shadowOffsetY', 'globalCompositeOperation'].forEach(function (k) {
+      var d = Object.getOwnPropertyDescriptor(ctx, k);
+      Object.defineProperty(ctx, k, { configurable: true, enumerable: d.enumerable, get: d.get, set: function (v) {
+        if (k === 'globalCompositeOperation' ? /lighter|screen/.test(v) : +v) {
+          var what = 'canvas' + (this.canvas.id ? '#' + this.canvas.id : '') + ' draws with ' + k + ' ' + v;
+          if (seen.indexOf(what) < 0) seen.push(what);
+        }
+        d.set.call(this, v);
+      } });
+    });
+    var changed = new Set(), frame = 0;
+    new MutationObserver(function (records) {
+      records.forEach(function (r) { changed.add(r.target); });
+      frame = frame || requestAnimationFrame(function () {
+        frame = 0;
+        changed.forEach(function (el) {
+          if (el.isConnected) window.__mfsGlowOf(el).forEach(function (g) { if (seen.indexOf(g) < 0) seen.push(g); });
+        });
+        changed.clear();
+      });
+    }).observe(document, { attributes: true, attributeFilter: ['style', 'class'], subtree: true });
+    /* The chosen button of every row, and the spacetime shown in the list, that is not pink. */
+    window.__mfsPink = function () {
+      var probe = document.body.appendChild(document.createElement('i'));
+      probe.style.color = 'var(--pink-light)';
+      var pink = getComputedStyle(probe).color, out = [];
+      probe.remove();
+      [].forEach.call(document.querySelectorAll('#mfs-content-panel .mfs-choice-on, .mfs-result-active'), function (el) {
+        var cs = getComputedStyle(el), border = el.classList.contains('mfs-choice');
+        if (cs.color !== pink || (border && cs.borderTopColor !== pink)) {
+          out.push(name(el) + ' is chosen and ' + cs.color + (border ? ' bordered ' + cs.borderTopColor : '') + ', not pink ' + pink);
+        }
+      });
+      return out;
+    };
+  })();
   window.__mfsSettled = function () {
     return document.fonts.ready.then(function () {
       return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
@@ -262,7 +348,7 @@ function timed(action, chart) {
                        elements: panel.getElementsByTagName('*').length };
         window.__mfsSettled().then(function () {
           result.moved = stop();
-          result.margins = window.__mfsMargins(panel);
+          result.margins = window.__mfsMargins(panel).concat(window.__mfsGlow(document.documentElement), window.__mfsPink());
           resolve(result);
         });
       }, 0); }); });
@@ -285,7 +371,8 @@ async function views() {
       await window.__mfsSettled();
       await new Promise(function (r) { requestAnimationFrame(r); });
       stop().forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
-      window.__mfsMargins(panel).forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
+      window.__mfsMargins(panel).concat(window.__mfsGlow(panel), window.__mfsPink())
+        .forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
     }
     return moved;
   })()`);
@@ -307,10 +394,45 @@ async function printCopy() {
   })`);
   if (!ready) { errors.push(`${opened}: the print copy was never set`); return; }
   await send('Emulation.setEmulatedMedia', { media: 'print' });
-  for (const m of await evaluate(`window.__mfsMargins(document.getElementById('mfs-print-root'))`)) {
+  for (const m of await evaluate(`window.__mfsMargins(document.getElementById('mfs-print-root'))
+      .concat(window.__mfsGlow(document.getElementById('mfs-print-root')))`)) {
     errors.push(`${opened}: print: ${m}`);
   }
   await send('Emulation.setEmulatedMedia', { media: '' });
+}
+
+/* Hold each kind of button hovered over and pressed, as Chrome's own tools do, the first time
+   a spacetime shows one, and count one that is not pink then, or that glows, as an error. */
+const BUTTONS = new Set(['#mfs-content-panel .mfs-choice:not(.mfs-choice-on)', '#mfs-content-panel .mfs-choice-on',
+  '#mfs-print-btn', '#mfs-content-panel .mfs-em-reset', '.mfs-result:not(.mfs-result-active)']);
+async function pressed() {
+  if (!BUTTONS.size) return;
+  await send('DOM.enable');
+  await send('CSS.enable');
+  const root = (await send('DOM.getDocument', { depth: 0 })).result.root.nodeId;
+  for (const selector of BUTTONS) {
+    const node = (await send('DOM.querySelector', { nodeId: root, selector })).result?.nodeId;
+    if (!node) continue;
+    BUTTONS.delete(selector);
+    await send('CSS.forcePseudoState', { nodeId: node, forcedPseudoClasses: ['hover', 'active'] });
+    const found = await evaluate(`(function () {
+      var el = document.querySelector(${JSON.stringify(selector)});
+      var probe = document.body.appendChild(document.createElement('i'));
+      probe.style.color = 'var(--pink-light)';
+      var pink = getComputedStyle(probe).color, cs = getComputedStyle(el);
+      probe.remove();
+      var out = window.__mfsGlowOf(el);
+      var border = el.matches('.mfs-result') ? pink : cs.borderTopColor;
+      if (cs.color !== pink || border !== pink) {
+        out.push(${JSON.stringify(selector)} + ' pressed is ' + cs.color + ' bordered ' + cs.borderTopColor + ', not pink ' + pink);
+      }
+      return out;
+    })()`);
+    await send('CSS.forcePseudoState', { nodeId: node, forcedPseudoClasses: [] });
+    for (const m of found) errors.push(`${opened}: ${m}`);
+  }
+  await send('CSS.disable');
+  await send('DOM.disable');
 }
 
 async function pageErrors() {
@@ -326,6 +448,7 @@ for (const id of ids) {
   results.push({ id, ...(first || { chart: '?' }), failed: !first });
   if (!first) continue;
   for (const m of first.moved.concat(first.margins)) errors.push(`${opened} / ${first.chart}: ${m}`);
+  await pressed();
   await views();
   if (print) await printCopy();
   const charts = await evaluate(`document.querySelectorAll('#mfs-content-panel .mfs-charts .mfs-choice').length || 1`);
@@ -352,6 +475,7 @@ for (const r of results) {
       `${String(r.lines).padStart(4)} lines ${String(r.elements).padStart(7)} elements${over ? '  OVER BUDGET' : ''}`);
 }
 for (const e of errors) console.log(e);
+for (const selector of BUTTONS) console.log(`No spacetime showed ${selector} to press.`);
 console.log(`${results.length} charts at ${width} by ${height}${phone ? ' as a phone' : ''}` +
   `${text !== 16 ? ` with ${text}px text` : ''}${print ? ' and their print copies' : ''}${cpu > 1 ? `, processor slowed ${cpu} times` : ''}: ` +
   (bad ? `${bad} over the ${budget}s budget` : `all within the ${budget}s budget`) +

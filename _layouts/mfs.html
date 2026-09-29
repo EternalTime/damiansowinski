@@ -72,7 +72,7 @@
 <div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
     width:var(--mfs-left-w);height:320px;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
-    box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
+    overflow:hidden;pointer-events:none;
     padding:min(1em, 16px); display:flex; flex-direction:column; gap:0.6em;">
   <input id="mfs-search-input" type="text" placeholder="Search spacetimes…"
     style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--cyan);border-radius:4px;
@@ -90,7 +90,7 @@
 <div id="mfs-coffee-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
     width:var(--mfs-left-w);
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
-    box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);overflow:hidden;pointer-events:none;
+    overflow:hidden;pointer-events:none;
     padding:min(1em, 16px); display:flex; flex-direction:column; align-items:center; gap:0.7em;">
   <div id="mfs-coffee-scroll" style="align-self:stretch;min-height:0;overflow-y:auto;">
     <p id="mfs-coffee-text" style="margin:0;font-size:0.72em;line-height:1.5;
@@ -217,10 +217,13 @@
       letter-spacing: 0.04em;
       flex-shrink: 0;
     }
-    .mfs-result:hover, .mfs-result-active {
+    .mfs-result:hover {
       background: rgba(0,229,255,0.1);
       color: var(--cyan);
     }
+    /* The spacetime shown, and a name being pressed, turn pink, and nothing on the page
+       glows, which the captain asked for on 29 September 2026: "No glow anywhere". */
+    .mfs-result.mfs-result-active, .mfs-result:active { color: var(--pink-light); }
   </style>
 
 
@@ -232,7 +235,6 @@
   <div id="mfs-content-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:12px 0 0 12px;
     top:var(--mfs-top);right:-100%;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-right:none;
-    box-shadow:0 0 2px var(--cyan),0 0 10px var(--cyan),0 0 20px var(--cyan),0 0 30px var(--cyan);
     overflow-y:auto;pointer-events:none;padding:1em;"></div>
 
   <script>
@@ -443,13 +445,6 @@
         grad.addColorStop(0, 'rgba(' + tealRgb + ', ' + _flickerOpacity + ')');
         grad.addColorStop(1, 'rgba(' + pinkRgb + ', ' + _flickerOpacity + ')');
         ctx.strokeStyle = grad;
-        var glowStrength = (_flickerOpacity - 0.10) / (0.28 + 1.2 - 0.10);
-        if (glowStrength > 0.01) {
-          ctx.shadowBlur  = glowStrength * 18;
-          ctx.shadowColor = 'rgba(' + tealRgb + ', ' + _flickerOpacity + ')';
-        } else {
-          ctx.shadowBlur = 0;
-        }
 
         for (var y = 0; y < canvas.height + SPACING; y += SPACING) {
           ctx.beginPath();
@@ -552,7 +547,8 @@
   </script>
 
   <script>
-    /* ── MFS neon flicker-in (title + exit sign) ── */
+    /* ── MFS flicker-in (title + exit sign): each letter flickers in teal and pink and
+       settles in teal, by colour and opacity alone, since nothing on the page glows. ── */
     (function() {
       var cs        = getComputedStyle(document.documentElement);
       var tealLight = cs.getPropertyValue('--teal-light').trim();
@@ -574,27 +570,20 @@
         if (elapsed < FLICKER_MS) {
           var r = Math.random();
           if (r < 0.45) {
-            span.style.opacity    = '1';
-            span.style.color      = tealLight;
-            span.style.textShadow =
-              '0 0 8px ' + tealLight + ', 0 0 20px ' + tealLight + ', 0 0 40px ' + tealLight;
+            span.style.opacity = '1';
+            span.style.color   = tealLight;
           } else if (r < 0.65) {
-            span.style.opacity    = '0.15';
-            span.style.textShadow = 'none';
+            span.style.opacity = '0.15';
           } else if (r < 0.85) {
-            span.style.opacity    = '1';
-            span.style.color      = pinkLight;
-            span.style.textShadow =
-              '0 0 8px ' + pinkLight + ', 0 0 20px ' + pinkLight;
+            span.style.opacity = '1';
+            span.style.color   = pinkLight;
           } else {
             span.style.opacity = '0.5';
           }
           setTimeout(function() { flickerLetter(span, startTime, elId, gen); }, 30 + Math.random() * 40);
         } else {
-          span.style.opacity    = '1';
-          span.style.color      = tealLight;
-          span.style.textShadow = '0 0 6px ' + tealLight + ', 0 0 14px ' + tealLight;
-          span.style.transition = 'text-shadow 0.4s ease';
+          span.style.opacity = '1';
+          span.style.color   = tealLight;
         }
       }
 
@@ -772,9 +761,8 @@
         });
       }
 
-      // Start off-screen right, and 30px further, which its glow reaches: at its own width
-      // out the glow lay along the right edge of the screen with no panel beside it.
-      var OFF_RIGHT = 'translateX(calc(100% + 30px))';
+      // Start off-screen right, exactly its own width out.
+      var OFF_RIGHT = 'translateX(100%)';
       el.style.right = '0';
       el.style.transform = OFF_RIGHT;
       syncPanel();
@@ -1338,7 +1326,7 @@
 
 
       /* Every choice the page offers is one control: a row of .mfs-choice buttons, the one
-         chosen lit. The chart is chosen with it, a diagram's view with it, and a tensor's
+         chosen pink. The chart is chosen with it, a diagram's view with it, and a tensor's
          index placement with it, which the captain asked for on 27 September 2026 ("Use
          buttons everywhere") where a column of bare boxes had stood. A placement's button
          carries the placement's own pattern as the entry writes it in its `note`, such as
@@ -3297,12 +3285,9 @@
       color: var(--cyan); background: transparent;
       border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
       padding: 0.1875rem 0.75rem; cursor: pointer;
-      transition: box-shadow 0.15s, border-color 0.15s;
+      transition: border-color 0.15s, color 0.15s;
     }
-    #mfs-content-panel #mfs-print-btn:hover {
-      border-color: var(--cyan);
-      box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan);
-    }
+    #mfs-content-panel #mfs-print-btn:hover { border-color: var(--cyan); }
     #mfs-content-panel .mfs-section {
       padding: 0.5rem 1rem;
       border-bottom: 1px solid rgba(0,229,255,0.12);
@@ -3328,7 +3313,7 @@
     }
     /* The page's one control for a choice, built by choiceButton(): the chart the
        mathematics is written in, a tensor's index placement and a view of a diagram are all
-       chosen with a row of these, the one chosen lit, and pressing another changes what is
+       chosen with a row of these, the one chosen pink, and pressing another changes what is
        shown below it in place. A choice's name is text the reader reads, so it takes the
        reader's text size with everything else. */
     #mfs-content-panel .mfs-choices { display: flex; flex-wrap: wrap; gap: 0.375rem; }
@@ -3338,14 +3323,14 @@
       color: rgba(0,229,255,0.6); background: transparent;
       border: 1px solid rgba(0,229,255,0.4); border-radius: 4px;
       padding: 0.2em 0.8em; cursor: pointer;
-      transition: box-shadow 0.15s, border-color 0.15s, color 0.15s;
+      transition: border-color 0.15s, color 0.15s;
     }
     #mfs-content-panel .mfs-choice:hover { border-color: var(--cyan); color: var(--cyan); }
     #mfs-content-panel .mfs-choice:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-    #mfs-content-panel .mfs-choice.mfs-choice-on {
-      color: var(--cyan); border-color: var(--cyan);
-      box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan);
-    }
+    #mfs-content-panel .mfs-choice.mfs-choice-on { color: var(--pink-light); border-color: var(--pink-light); }
+    /* A button being pressed turns pink, as the one chosen is. */
+    #mfs-content-panel .mfs-choice:active,
+    #mfs-content-panel #mfs-print-btn:active { color: var(--pink-light); border-color: var(--pink-light); }
     #mfs-content-panel .mfs-placeholder {
       color: var(--teal-light);
       line-height: 1.6;
@@ -3757,6 +3742,7 @@
       border: solid rgba(0,229,255,0.4); border-width: 0 0 1px 1px; border-radius: 0 0 0 4px; cursor: pointer;
     }
     #mfs-content-panel .mfs-em-reset:hover { color: var(--cyan); border-color: var(--cyan); }
+    #mfs-content-panel .mfs-em-reset:active { color: var(--pink-light); border-color: var(--pink-light); }
     #mfs-content-panel .mfs-em-reset:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
     #mfs-content-panel .mfs-em-reset[hidden] { display: none; }
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
@@ -3844,8 +3830,8 @@
        times the usual text on a phone, where the word it follows was wider than the line. */
     #mfs-content-panel a.mfs-cite       { color: var(--teal-light); text-decoration: none; font-size: 0.8em; white-space: nowrap; }
     #mfs-content-panel a.mfs-cite:hover { text-decoration: underline; }
-    #mfs-content-panel a.mfs-ref-link   { color: rgba(0,229,255,0.7) !important; text-decoration: underline; text-decoration-color: rgba(0,229,255,0.3); transition: color 0.15s, text-shadow 0.15s; }
-    #mfs-content-panel a.mfs-ref-link:hover { color: var(--cyan) !important; text-decoration-color: var(--teal-light); text-shadow: 0 0 8px var(--cyan), 0 0 20px var(--cyan); transition: color 0.15s, text-shadow 0.15s; }
+    #mfs-content-panel a.mfs-ref-link   { color: rgba(0,229,255,0.7) !important; text-decoration: underline; text-decoration-color: rgba(0,229,255,0.3); transition: color 0.15s; }
+    #mfs-content-panel a.mfs-ref-link:hover { color: var(--cyan) !important; text-decoration-color: var(--teal-light); }
   </style>
 
   <style>
@@ -3995,23 +3981,19 @@
           if (now < endTime) {
             var r = Math.random();
             if (r < 0.45) {
-              span.style.opacity    = '1';
-              span.style.color      = tealLight2;
-              span.style.textShadow = '0 0 8px ' + tealLight2 + ', 0 0 20px ' + tealLight2 + ', 0 0 40px ' + tealLight2;
+              span.style.opacity = '1';
+              span.style.color   = tealLight2;
             } else if (r < 0.65) {
-              span.style.opacity    = '0.15';
-              span.style.textShadow = 'none';
+              span.style.opacity = '0.15';
             } else if (r < 0.85) {
-              span.style.opacity    = '1';
-              span.style.color      = pinkLight2;
-              span.style.textShadow = '0 0 8px ' + pinkLight2 + ', 0 0 20px ' + pinkLight2;
+              span.style.opacity = '1';
+              span.style.color   = pinkLight2;
             } else {
               span.style.opacity = '0.5';
             }
             setTimeout(function() { flickerOutLetter(span, startTime, endTime); }, 30 + Math.random() * 40);
           } else {
-            span.style.opacity    = '0';
-            span.style.textShadow = 'none';
+            span.style.opacity = '0';
           }
         }
 
