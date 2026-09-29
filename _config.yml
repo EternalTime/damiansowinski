@@ -65,6 +65,7 @@ defaults:
 # Sphinx documentation subsites (pyCE/, pyCA/) use underscore-prefixed
 # directories that Jekyll would otherwise treat as special and drop.
 include:
+  - .well-known
   - _static
   - _sources
   - _modules
