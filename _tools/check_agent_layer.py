@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the agent layer of a built site: llms.txt, the JSON data, robots.txt and JSON-LD.
+"""Check the agent layer of a built site: llms.txt, the JSON data, robots.txt, rights and JSON-LD.
 
     bundle exec jekyll build
     python3 _tools/check_agent_layer.py _site
@@ -9,7 +9,10 @@ Every address on damiansowinski.com that llms.txt or llms-full.txt names must be
 the build, every outside address in llms.txt must answer when --external is given (those
 in llms-full.txt come from the pages and are only reported), both JSON files must parse
 and carry what agents query, the publications page must list the same publications in the
-same order, robots.txt must point at a sitemap that parses, and each JSON-LD block must use
+same order, robots.txt must let search engines and user-directed fetchers in, keep the AI
+training crawlers out and point at a sitemap that parses, /.well-known/tdmrep.json must
+reserve text and data mining for the whole site, every page outside the Python libraries'
+documentation must carry the copyright and TDMRep meta tags, and each JSON-LD block must use
 only types and properties that the schema.org vocabulary defines, each property on a type
 it belongs to. The vocabulary is downloaded once and kept in ~/.cache/damiansowinski/.
 """
@@ -28,11 +31,19 @@ from urllib.parse import unquote, urlsplit
 SITE_URL = "https://damiansowinski.com"
 VOCABULARY_URL = "https://schema.org/version/latest/schemaorg-current-https.jsonld"
 VOCABULARY_CACHE = Path.home() / ".cache" / "damiansowinski" / "schemaorg-current-https.jsonld"
+LIBRARIES = Path(__file__).resolve().parent.parent / "_data" / "libraries.json"
 MARKDOWN_LINK = re.compile(r"\]\(([^)\s]+)\)")
 PAGE_KEYS = re.compile(r"var KEYS = (\[.*?\]);", re.DOTALL)
 JSON_LD = re.compile(r'<script type="application/ld\+json">\s*(.*?)\s*</script>', re.DOTALL)
 # Pages whose JSON-LD the agent layer adds, and the types each must describe.
 JSON_LD_PAGES = {"index.html": "Person", "publications/index.html": "CollectionPage", "MFS/index.html": "Dataset"}
+# Crawlers that gather training data for AI models, which robots.txt keeps out, and the
+# search engines and user-directed fetchers it must let in.
+TRAINING_CRAWLERS = ("GPTBot", "ClaudeBot", "anthropic-ai", "Google-Extended", "Applebot-Extended", "CCBot",
+                     "Bytespider", "Meta-ExternalAgent", "Amazonbot", "cohere-ai", "Diffbot", "omgili")
+WELCOME_AGENTS = ("Googlebot", "Bingbot", "OAI-SearchBot", "ChatGPT-User", "Claude-User", "Claude-SearchBot",
+                  "PerplexityBot", "Perplexity-User")
+META = re.compile(r'<meta name="([^"]+)" content="([^"]*)"')
 # Sites that answer every script with a refusal, whatever the page.
 BOT_WALLS = {"www.linkedin.com": {999}, "x.com": {400, 403}, "doi.org": {403}}
 
@@ -132,10 +143,31 @@ def check_data(site, problems):
     return len(spacetimes["spacetimes"]), len(publications["publications"])
 
 
+def robots_groups(robots):
+    """Map each user agent to the Allow and Disallow rules of its group."""
+    groups, agents, rules = {}, [], []
+    for line in robots.splitlines():
+        field, _, value = line.partition(":")
+        field, value = field.strip().lower(), value.strip()
+        if field == "user-agent":
+            if rules:
+                agents, rules = [], []
+            agents.append(value.lower())
+            groups[value.lower()] = rules
+        elif field in ("allow", "disallow"):
+            rules.append((field, value))
+    return groups
+
+
 def check_robots(site, problems):
     robots = (site / "robots.txt").read_text(encoding="utf-8")
-    problems.check(re.search(r"(?m)^User-agent: \*\nAllow: /$", robots), "robots.txt: '*' is not allowed /")
-    problems.check(not re.search(r"(?mi)^Disallow: *\S", robots), "robots.txt: something is disallowed")
+    groups = robots_groups(robots)
+    problems.check(groups.get("*") == [("allow", "/")], "robots.txt: '*' is not allowed /")
+    for agent in TRAINING_CRAWLERS:
+        problems.check(groups.get(agent.lower()) == [("disallow", "/")], f"robots.txt: {agent} is not disallowed /")
+    for agent in WELCOME_AGENTS:
+        rules = groups.get(agent.lower(), groups["*"])
+        problems.check(("disallow", "/") not in rules, f"robots.txt: {agent} is disallowed")
     sitemap = re.search(r"(?m)^Sitemap: (\S+)$", robots)
     problems.check(sitemap, "robots.txt: no Sitemap line")
     if sitemap:
@@ -143,6 +175,24 @@ def check_robots(site, problems):
         problems.check(path.is_file(), f"robots.txt: {sitemap.group(1)} is not in the build")
         if path.is_file():
             ET.parse(path)
+
+
+def check_rights(site, problems):
+    tdmrep = site / ".well-known" / "tdmrep.json"
+    problems.check(tdmrep.is_file(), "/.well-known/tdmrep.json is not in the build")
+    if tdmrep.is_file():
+        rules = json.loads(tdmrep.read_text(encoding="utf-8"))
+        problems.check({"location": "/*", "tdm-reservation": 1} in rules,
+                       "tdmrep.json: text and data mining is not reserved for /*")
+    # The libraries' documentation is built by Sphinx and states each library's own licence.
+    libraries = [site / lib["docs"].strip("/") for lib in json.loads(LIBRARIES.read_text(encoding="utf-8"))]
+    pages = [p for p in site.rglob("*.html") if not any(p.is_relative_to(lib) for lib in libraries)]
+    for page in pages:
+        meta = dict(META.findall(page.read_text(encoding="utf-8")))
+        where = page.relative_to(site)
+        problems.check(meta.get("tdm-reservation") == "1", f"{where}: no tdm-reservation meta tag")
+        problems.check(meta.get("copyright", "").startswith("© Damian Sowinski"), f"{where}: no copyright meta tag")
+    return len(pages)
 
 
 def load_vocabulary():
@@ -224,13 +274,14 @@ def main(argv=None):
     links = check_llms(args.site, problems, args.external)
     spacetimes, publications = check_data(args.site, problems)
     check_robots(args.site, problems)
+    pages = check_rights(args.site, problems)
     blocks = check_json_ld(args.site, problems)
     for problem in problems:
         print(f"problem: {problem}", file=sys.stderr)
     if problems:
         return 1
-    print(f"{links} links, {spacetimes} spacetimes, {publications} publications and "
-          f"{blocks} JSON-LD blocks check out")
+    print(f"{links} links, {spacetimes} spacetimes, {publications} publications, {pages} pages' rights "
+          f"and {blocks} JSON-LD blocks check out")
     return 0
 
 
