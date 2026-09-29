@@ -679,6 +679,68 @@ class Voice(unittest.TestCase):
             self.assertEqual(caught(text), [], text)
 
 
+class Contrast(unittest.TestCase):
+    """No text a reader of the spacetimes page sees defines a thing by a contrast with what it is
+    not, as the captain asked on 29 September 2026: no "X rather than Y", "instead of", "not a X
+    but Y", "is X, not Y" or "less X, more Y". Each says what the thing is and does, plainly."""
+
+    CONTRAST = (r"(?i)\brather than\b|\binstead\b"
+                r"|\bnot (?:a|an|the|just|only|merely|simply)\b[^.;:]{0,80}?\bbut\b"
+                r"|\b(?:is|are|was|were)\b[^.;:,]{1,60},\s*not (?!long\b|yet\b)\w"
+                r"|\bless\b[^.;:,]{1,40},\s*more\b")
+    # A sentence where the phrase states physics plainly, by its place and the phrase, each with
+    # its reason. None is needed while every text says what a thing is.
+    ALLOWED = {}
+
+    @staticmethod
+    def layout_text():
+        """The words of the page's layout that reach a reader: its markup's text and the strings
+        its scripts set, with every comment left out."""
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        text = re.sub(r"<[^>]+>", " ", re.sub(r"<script\b.*?</script>|<style\b.*?</style>|<!--.*?-->", "", page, flags=re.S))
+        strings = []
+        for script in re.findall(r"<script\b[^>]*>(.*?)</script>", page, re.S):
+            script = re.sub(r"(?m)(^|[^:\\])//.*$", r"\1", re.sub(r"/\*.*?\*/", "", script, flags=re.S))
+            strings += re.findall(r"'((?:[^'\\\n]|\\.)*)'", script)
+        return " ".join(text.split()) + " | " + " | ".join(strings)
+
+    def texts(self):
+        fields = [(f"{m['id']}.json: {field}", value) for m in build.load_metrics() for field, value in prose(m)]
+        fields += [field for name, diagram in diagram_files().items() for field in diagram_prose(name, diagram)]
+        fields += [field for name, data in conformal_files().items() for field in conformal_prose(name, data)]
+        fields += [field for name, data in embedding_files().items() for field in embedding_prose(name, data)]
+        fields += [("_layouts/mfs.html", self.layout_text()), ("MFS/index.markdown",
+                    (build.ROOT / "MFS" / "index.markdown").read_text(encoding="utf-8"))]
+        return fields
+
+    def caught(self, text):
+        return [m.group(0) for m in re.finditer(self.CONTRAST, without_mathematics_or_quotations(text))]
+
+    def test_no_text_a_reader_sees_defines_a_thing_by_what_it_is_not(self):
+        fields = self.texts()
+        self.assertGreater(len(fields), 1000, "the texts were not all read")
+        for where, value in fields:
+            for phrase in self.caught(value):
+                with self.subTest(where, phrase=phrase):
+                    self.assertIn((where, phrase), self.ALLOWED, f"{where} has {phrase!r}: {value[:160]!r}")
+
+    def test_the_rule_catches_the_contrasts_and_leaves_plain_statements(self):
+        for text in ("It reads like a book you can search rather than a calculator you drive.",
+                     "the first warp geometries built from familiar matter rather than the forbidden kind",
+                     "slides space sideways instead of compressing it.", "They began instead from what a traveler would insist on.",
+                     "It is not a metric but a property of spacetimes.", "The solution is a laboratory, not a proposal.",
+                     "Less calculation, more reading."):
+            with self.subTest(text):
+                self.assertTrue(self.caught(text))
+        for text in ("Cornelius Lanczos wrote down the rotating dust cylinder in 1924, not long after Einstein's field "
+                     "equations had settled into their final form.",
+                     "It was a clean result, not yet joined to any other solution.",
+                     "the singularity theorems no longer apply", "each point in the diagram a single event.",
+                     "The quote \"rather than\" is his own.", "where $a \\neq b$, not $a = b$"):
+            with self.subTest(text):
+                self.assertEqual(self.caught(text), [])
+
+
 class HistoryShape(unittest.TestCase):
     """Every history has at least five paragraphs of three to six sentences each."""
 

@@ -600,7 +600,7 @@ def minkowski(ck, src):
     v.legend("r", "$x$ constant")
     v.legend("t", "$ct$ constant")
     v.set(restriction="The plane $y = z = 0$ only, totally geodesic, each point in the diagram a "
-                      "single event rather than a 2-sphere of them.")
+                      "single event.")
     v.slice(plane, [mink_pq(0 * along_x, along_x)])
     views.append(v)
 
@@ -616,7 +616,7 @@ def minkowski(ck, src):
     diamond_edges(v)
     v.legend("null", "$u$ constant and $v$ constant, every one a light ray")
     v.set(restriction="The plane $y = z = 0$ only, totally geodesic, each point in the diagram a "
-                      "single event rather than a 2-sphere of them.")
+                      "single event.")
     v.slice(plane, [null_map(-along_x, along_x)])
     views.append(v)
 
@@ -642,7 +642,7 @@ def minkowski(ck, src):
     v.legend("t", "$T$ constant")
     v.legend("horizon", "the horizon $X = 0$ and the null lines that continue it")
     v.set(restriction="The plane $Y = Z = 0$ only, totally geodesic, each point in the diagram a "
-                      "single event rather than a 2-sphere of them.")
+                      "single event.")
     # T = 0 in the wedge, where x = X, and its mirror x < 0 beyond the horizon, one line.
     wedge = np.linspace(1e-12, reach, 2)
     left = mink_pq(0 * wedge, -wedge[::-1])
@@ -1449,7 +1449,7 @@ def anti_de_sitter(ck, src):
     v.set(fade={"top": 0.7, "bottom": 0.7},
           restriction="The plane $x = y = 0$ of the Poincaré patch only, a totally geodesic "
                       "anti-de Sitter space of two dimensions, each point in the diagram a "
-                      "single event rather than a 2-sphere of them.")
+                      "single event.")
     v.legend("cover", "the wedge that $t$ and $z$ cover")
     v.legend("r", "$z$ constant")
     v.legend("t", "$ct$ constant")

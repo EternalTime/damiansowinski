@@ -398,7 +398,7 @@ A static, spherically symmetric traversable wormhole engineered to have no horiz
 
 ### Natário Warp Drive
 
-A warp bubble metric in which space flows around a stationary ship instead of expanding behind it and contracting ahead, so that volume elements are carried along unchanged. It shows that the expansion of space is inessential to warp travel, and that the requirement of negative energy density survives its removal.
+A warp bubble metric in which space flows around a stationary ship with no expansion or contraction anywhere, so that volume elements are carried along unchanged. It shows that the expansion of space is inessential to warp travel, and that the requirement of negative energy density survives its removal.
 
 - id: `natario`
 - tags: warp drive, faster-than-light, exotic matter, negative energy, energy condition violation, horizon, causal structure, causality violation, time-dependent, dynamical, non-vacuum, idealized model, Lorentzian, Einstein equations, four-dimensional

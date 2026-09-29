@@ -3358,7 +3358,7 @@ CAPTIONS = {
         "At $r = R$, $g_{rr} = 1/(1 - r_s/R)$ on both sides, so the cap meets the paraboloid in one "
         "circle with one tangent plane, and the surface is smooth across the surface of the star. The "
         "vacuum paraboloid would run on down to a throat at $r_s$. The star, at $R = 1.5\\,r_s$, ends it "
-        "above there, and its circles shrink to a point at the centre instead.",
+        "above there, and its circles shrink to a point at the centre.",
     ],
     ("tov", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a neutron star at one moment of $t$, drawn as a "
@@ -3412,7 +3412,7 @@ CAPTIONS = {
         "Boyer-Lindquist $t$, drawn as a surface in flat space with every distance along it the "
         "metric distance. The rotation's $g_{t\\phi}$ drops out at constant $t$, and the spin "
         "enters through the circles, whose circumference is $2\\pi\\sqrt{r^2 + a^2 + 2GMa^2/c^2r}$, so the "
-        "drawing's distance from the axis is this radius rather than $r$. As Schwarzschild's does, the "
+        "drawing's distance from the axis is this radius, which exceeds $r$. As Schwarzschild's does, the "
         "slice passes through the bifurcation sphere at $r_+$, its throat, into a second exterior.",
         "On the equator the throat's circumference is $4\\pi GM/c^2$ whatever the spin, since $r_+^2 + a^2 = "
         "2GMr_+/c^2$ there. The dotted circle is the edge of the ergosphere, $r = 2GM/c^2$ on the equator, "

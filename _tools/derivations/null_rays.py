@@ -853,7 +853,7 @@ CAPTIONS = {
     ("kasner", "cartesian", "tz"): [
         "The plane of $t$ and $z$ ($x = y = 0$). Along $z$ the scale factor $t^{6/7}$ "
         "goes to zero at the singularity, and the cones open out flat: $dz/dt = \\pm t^{-6/7}$. "
-        "In the plane of $t$ and $x$ the same singularity closes the cones instead, since the "
+        "In the plane of $t$ and $x$ the same singularity closes the cones, since the "
         "scale factor there, $t^{-2/7}$, grows as $t \\to 0$.",
     ],
     ("bianchi", "type_i_cartesian", "tx"): [
@@ -867,14 +867,13 @@ CAPTIONS = {
     ("godel", "cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$). The Gödel universe has no time function: "
         "its $g^{tt} = 2\\omega^2$ is positive, so the surfaces $t = $ const are not "
-        "spacelike, and the cones are oriented instead by $\\partial_t$, which is timelike "
+        "spacelike, and the cones are oriented by $\\partial_t$, which is timelike "
         "everywhere.",
         "The metric on this plane is $(-dt^2 + dx^2)/2\\omega^2$, so the curves drawn are null and "
         "run at 45°. They are not null geodesics, though. Since $\\Gamma^y{}_{tx} = -e^{-x}$ is not "
         "zero, a light ray launched along one of these curves is turned out of the plane into $y$. "
         "The closed timelike curves of the Gödel universe circle each world line of the dust beyond "
-        "a critical radius, through $y$ as well as $x$, so they cross this plane rather than lie in "
-        "it.",
+        "a critical radius, through $y$ as well as $x$, so they cross this plane.",
     ],
     ("alcubierre", "cartesian", "tx"): [
         "The plane of $t$ and $x$ on the bubble's axis of motion ($y = z = 0$), for a "
@@ -891,8 +890,8 @@ CAPTIONS = {
         "The plane of $t$ and $x$ on the axis of motion ($y = z = 0$). There the field "
         "reduces to $u = 2nv_s = v_s f$, which is Alcubierre's shift, so on this plane the two "
         "metrics are the same, and so are their light rays.",
-        "The drives differ only off the axis, where Natário's flow slides space sideways instead "
-        "of compressing it.",
+        "The drives differ only off the axis, where Natário's flow slides space sideways with no "
+        "compression.",
     ],
     ("krasnikov", "cylindrical", "tx"): [
         "The plane of $t$ and $x$ along the axis of the tube ($r = 0$). Outside the tube $k "
