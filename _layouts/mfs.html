@@ -1610,9 +1610,20 @@
         // A slice's label stands in the plot where its file places it; on a view through the
         // centre the unit square is the right half, and a label at a negative first
         // coordinate stands on the mirrored line in the left half.
+        function across(u) { return view.mirror ? 0.5 + 0.5 * u[0] : u[0]; }
         var sliceLabels = (view.slices || []).filter(function(mark) { return mark.place; }).map(function(mark) {
-          var u = mark.place.at;
-          return sliceLabel(mark, view.mirror ? 0.5 + 0.5 * u[0] : u[0], 1 - u[1], 'nr-slice-label');
+          // The end of the slice's lines farthest across from the label's point, on a view
+          // through the centre the mirror of the farthest out, which fitSliceLabels() tries
+          // when every side of the label's own point is taken.
+          var u = mark.place.at, ends = [];
+          mark.lines.forEach(function(line) { [line[0], line[line.length - 1]].forEach(function(q) {
+            ends.push(q);
+            if (view.mirror) ends.push([-q[0], q[1]]);
+          }); });
+          var far = ends.reduce(function(best, q) {
+            return !best || Math.abs(across(q) - across(u)) > Math.abs(across(best) - across(u)) ? q : best;
+          }, null);
+          return sliceLabel(mark, across(u), 1 - u[1], 'nr-slice-label', '', far && [across(far), 1 - far[1]]);
         });
         return '<div class="mfs-fig-scroll mfs-nr-scroll" style="--nr-aspect:' + (f.vw / f.vh).toFixed(4) + '"><div class="mfs-nr-figure">' +
           '<div class="nr-ylabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.ylabel) + '</span></div>' +
@@ -2258,10 +2269,11 @@
 
       // A slice's label at the point x, y of its drawing, as fractions of it, which is where
       // its file places it and where fitSliceLabels() starts from.
-      function sliceLabel(mark, x, y, cls, style) {
+      function sliceLabel(mark, x, y, cls, style, far) {
         var place = mark.place;
-        return '<span class="' + sliceClass(mark.view) + ' mfs-slice-label ' + cls + '" data-slice-view="' + nrEsc(mark.view) +
-          '" data-x="' + x.toFixed(5) + '" data-y="' + y.toFixed(5) + '" data-anchor="' + place.anchor +
+        return '<span class="' + sliceClass(mark.view) + ' mfs-slice-label ' + cls + '" aria-hidden="true" data-slice-view="' + nrEsc(mark.view) +
+          '" data-x="' + x.toFixed(5) + '" data-y="' + y.toFixed(5) +
+          (far ? '" data-far="' + far[0].toFixed(5) + ' ' + far[1].toFixed(5) : '') + '" data-anchor="' + place.anchor +
           '" data-dx="' + place.dx + '" data-dy="' + place.dy + '" style="left:' + (100 * x).toFixed(3) + '%;top:' +
           (100 * y).toFixed(3) + '%;transform:' + sliceShift(place.anchor, place.dx, place.dy) + (style || '') + '">' +
           nrEsc(mark.label) + '</span>';
@@ -2308,12 +2320,23 @@
          conformal diagram and a figure are drawn larger with the reader's text, their labels
          with them, so the place holds at every size; a spacetime diagram's words grow around
          a plot that does not, so a label set larger can reach another label or past the plot.
-         Then it takes the first of the other sides of its point that is clear, in the order
-         slices.py ranks them, and goes back to its own once the text is smaller again. Every
-         label is measured before any is moved, as the lines are. */
+         Then the labels of that plot take, together, the sides of their points and of the far
+         ends of their lines that leave none past the plot and fewest over another label, in
+         the order slices.py ranks the sides, the file's own first; a label wider than the room
+         beside its point slides along to stay in the plot. Where no choice keeps them clear,
+         as at three times the usual text on a phone, where Malament and Hogarth's four moments
+         lie within a sixth of a plot 265 pixels tall, the plot's labels are held smaller, a
+         tenth at a time, until one does, as fitWords() holds a heading to the size at which
+         its widest word fits, and never below their size at the usual text, at which the
+         file's places keep them clear. At the usual text size that is the file's place, and it
+         is again once the text is smaller. A plot holds four labels at most, which makes
+         trying every choice of sides cheap. Every label is measured before any is moved, as
+         the lines are. */
       var SLICE_SIDES = [['br', 0, -0.3], ['tr', 0, 0.3], ['bl', 0.3, -0.3], ['tl', 0.3, 0.3],
                          ['bl', 0, -0.3], ['tl', 0, 0.3], ['br', -0.3, -0.3], ['tr', -0.3, 0.3]];
+      var SLICE_FAR_SIDES = [['bl', 0, -0.3], ['tl', 0, 0.3], ['br', -0.3, -0.3], ['tr', -0.3, 0.3]];
       function fitSliceLabels(root) {
+        function overlaps(a, b) { return a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3]; }
         var plots = [].slice.call(root.querySelectorAll('.nr-plot')).map(function(plot) {
           var labels = [].slice.call(plot.querySelectorAll('.mfs-slice-label')).filter(function(el) {
             return el.getClientRects().length;
@@ -2326,36 +2349,68 @@
               var r = el.getBoundingClientRect();
               return [r.left - box.left, r.top - box.top, r.right - box.left, r.bottom - box.top];
             }),
+            // Each label as the stylesheet sets it, undoing any scale set before.
+            usual: 16 / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16),
             labels: labels.map(function(el) {
-              var r = el.getBoundingClientRect();
-              return { el: el, w: r.width, h: r.height, em: parseFloat(getComputedStyle(el).fontSize),
-                       x: +el.dataset.x * box.width, y: +el.dataset.y * box.height };
+              var r = el.getBoundingClientRect(), d = el.dataset, held = +(d.scale || 1);
+              return { el: el, w: r.width / held, h: r.height / held, em: parseFloat(getComputedStyle(el).fontSize) / held,
+                       at: [+d.x, +d.y], far: d.far ? d.far.split(' ').map(Number) : null,
+                       own: [d.anchor, +d.dx, +d.dy] };
             })
           };
         }).filter(Boolean);
-        plots.forEach(function(p) {
-          var taken = p.others.slice();
+        function arrange(p, scale) {
           p.labels.forEach(function(L) {
-            var sides = [[L.el.dataset.anchor, +L.el.dataset.dx, +L.el.dataset.dy]].concat(SLICE_SIDES);
-            var chosen = null;
-            sides.forEach(function(side) {
-              if (chosen && chosen.fits) return;
-              var a = CD_ANCHOR[side[0]];
-              var x0 = L.x + side[1] * L.em + a[0] / 100 * L.w, y0 = L.y + side[2] * L.em + a[1] / 100 * L.h;
-              var rect = [x0, y0, x0 + L.w, y0 + L.h];
-              var fits = rect[0] >= -0.5 && rect[1] >= -0.5 && rect[2] <= p.W + 0.5 && rect[3] <= p.H + 0.5 &&
-                !taken.some(function(o) { return rect[0] < o[2] && o[0] < rect[2] && rect[1] < o[3] && o[1] < rect[3]; });
-              if (!chosen || fits) chosen = { side: side, rect: rect, fits: fits };
+            var w = L.w * scale, h = L.h * scale, em = L.em * scale;
+            var sides = [L.own].concat(SLICE_SIDES).map(function(side) { return [side, L.at]; })
+              .concat(L.far ? SLICE_FAR_SIDES.map(function(side) { return [side, L.far]; }) : []);
+            L.options = sides.map(function(pair, order) {
+              var side = pair[0], a = CD_ANCHOR[side[0]];
+              var x0 = pair[1][0] * p.W + side[1] * em + a[0] / 100 * w;
+              var y0 = pair[1][1] * p.H + side[2] * em + a[1] / 100 * h;
+              var slide = w <= p.W ? Math.max(0, -x0) - Math.max(0, x0 + w - p.W) : 0;
+              var rect = [x0 + slide, y0, x0 + slide + w, y0 + h];
+              var inside = rect[0] >= -0.5 && rect[1] >= -0.5 && rect[2] <= p.W + 0.5 && rect[3] <= p.H + 0.5;
+              var cost = (inside ? 0 : 10000) + order +
+                100 * p.others.filter(function(o) { return overlaps(rect, o); }).length;
+              return { side: side, at: pair[1], slide: slide / scale, rect: rect, cost: cost };
             });
-            taken.push(chosen.rect);
-            L.transform = sliceShift(chosen.side[0], chosen.side[1], chosen.side[2]);
           });
+          var n = p.labels.length, best = null, pick = [];
+          (function search(i, total) {
+            if (best && total >= best.total) return;
+            if (i === n) { best = { total: total, pick: pick.slice() }; return; }
+            p.labels[i].options.forEach(function(option) {
+              var clash = pick.filter(function(other) { return overlaps(option.rect, other.rect); }).length;
+              pick.push(option);
+              search(i + 1, total + option.cost + 100 * clash);
+              pick.pop();
+            });
+          })(0, 0);
+          return best;
+        }
+        plots.forEach(function(p) {
+          var scale = 1, best = arrange(p, scale);
+          while (best.total >= 100 && scale * 0.9 >= p.usual - 1e-9) {
+            scale *= 0.9;
+            best = arrange(p, scale);
+          }
+          if (best.total >= 100 && scale > p.usual) best = arrange(p, scale = p.usual);
+          p.scale = scale;
+          p.labels.forEach(function(L, i) { L.chosen = best.pick[i]; });
         });
         plots.forEach(function(p) {
           p.labels.forEach(function(L) {
-            if (L.el.dataset.side === L.transform) return;
-            L.el.dataset.side = L.transform;
-            L.el.style.transform = L.transform;
+            var c = L.chosen, key = c.at.join(' ') + ' ' + c.side.join(' ') + ' ' + c.slide.toFixed(1) + ' ' + p.scale.toFixed(4);
+            if (L.el.dataset.side === key) return;
+            L.el.dataset.side = key;
+            L.el.dataset.scale = p.scale.toFixed(4);
+            L.el.style.fontSize = p.scale < 1 ? 'calc(' + p.scale.toFixed(4) + ' * 0.9286em)' : '';
+            L.el.style.left = (100 * c.at[0]).toFixed(3) + '%';
+            L.el.style.top = (100 * c.at[1]).toFixed(3) + '%';
+            // The slide is in the label's own ems, so it scales with it.
+            L.el.style.transform = sliceShift(c.side[0], c.side[1], c.side[2]) +
+              (c.slide ? ' translateX(' + (c.slide / L.em).toFixed(3) + 'em)' : '');
           });
         });
       }
