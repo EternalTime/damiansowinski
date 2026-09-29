@@ -1298,8 +1298,16 @@
           } });
           for (var text = walker.nextNode(); text; text = walker.nextNode()) {
             var limit = limitOf(text.parentElement), words = [], word, re = /[^\s\-\u2010\u2013\u2014\/]+[\-\u2010\u2013\u2014\/]?/g;
+            // Mathematics MathJax has yet to set is TeX, which it finds only with both its
+            // delimiters in one piece of text, so nothing inside it is divided: the signature
+            // (-,+,+,+) of the first spacetime opened stood as TeX on a phone at three times
+            // the usual text, which a slow MathJax left to be set after its words were divided.
+            var tex = [], math = /\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^$]*\$|\\\([\s\S]*?\\\)/g, m;
+            while ((m = math.exec(text.data))) tex.push([m.index, m.index + m[0].length]);
             while ((word = re.exec(text.data))) {
               if (word[0].length <= limit) continue;
+              var at = word.index, to = word.index + word[0].length;
+              if (tex.some(function(t) { return at < t[1] && to > t[0]; })) continue;
               var range = document.createRange();
               range.setStart(text, word.index);
               range.setEnd(text, word.index + word[0].length);
