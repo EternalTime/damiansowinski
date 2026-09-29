@@ -17,7 +17,8 @@
    sets the browser's default font size, 16 by default, as a reader who enlarges text does;
    --cpu <n> slows the processor n times over, as Chrome's own tools do to stand in for a
    slower phone; and --budget <seconds>, 10 by default, is the time past which a chart
-   counts as failing. CHROME names the browser when it is not where macOS keeps it.
+   counts as failing. _tools/chrome.mjs starts Chrome, and CHROME names the browser when it
+   is not where macOS keeps it.
 
    It also watches every number and label of every drawing shown, and the plot of each
    spacetime diagram, from the first frame the reader sees them until two frames after the
@@ -48,10 +49,7 @@
    It prints one line per chart, slowest last, then every page error and console error the
    page raised and every label that moved, and exits non-zero if any chart missed the budget
    or never became ready, or if the page raised any error at all. */
-import { spawn } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, existsSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { launch, sleep } from './chrome.mjs';
 
 const argv = process.argv.slice(2);
 function option(name, fallback) {
@@ -69,71 +67,18 @@ const budget = +option('--budget', 10);
 const print = argv.includes('--print');
 const LIMIT_S = Math.max(300, budget * 10);
 
-const chromePath = process.env.CHROME ||
-  ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/google-chrome', '/usr/bin/chromium']
-    .find(existsSync);
-if (!chromePath) { console.error('No Chrome found; set CHROME to its path.'); process.exit(2); }
-
-const profile = mkdtempSync(join(tmpdir(), 'mfs-page-timing-'));
-const chrome = spawn(chromePath, ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`,
-  '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'], { stdio: 'ignore' });
-function finish(code) {
-  chrome.kill('SIGKILL');
-  try { rmSync(profile, { recursive: true, force: true }); } catch {}
-  process.exit(code);
-}
-// Whatever stops the run, Chrome goes with it.
-process.on('uncaughtException', e => { console.error(e); finish(2); });
-process.on('unhandledRejection', e => { console.error(e); finish(2); });
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-// Chrome writes the port it chose into the profile once it listens.
-let port = null;
-for (let i = 0; i < 200 && !port; i++) {
-  try { port = readFileSync(join(profile, 'DevToolsActivePort'), 'utf8').split('\n')[0]; } catch { await sleep(50); }
-}
-if (!port) { console.error('Chrome did not start.'); finish(2); }
-const targets = await (await fetch(`http://127.0.0.1:${port}/json`)).json();
-const socket = new WebSocket(targets.find(t => t.type === 'page').webSocketDebuggerUrl);
-await new Promise(r => socket.addEventListener('open', r));
-let seq = 0;
-const pending = new Map();
+const { send, evaluate, finish, onError } = await launch({ width, height, phone, text, cpu });
 /* Every console.error and every error the browser logs itself, such as a file that failed to
    load, with the spacetime open when it came. The page's own errors are gathered in the page,
    below, since Chrome reports "ResizeObserver loop completed with undelivered notifications"
    to the page's error handlers alone. */
 const errors = [];
 let opened = 'the list';
-socket.addEventListener('message', e => {
-  const m = JSON.parse(e.data);
-  if (pending.has(m.id)) { pending.get(m.id)(m); pending.delete(m.id); }
-  if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') {
-    errors.push(`${opened}: console error: ${m.params.args.map(a => a.value ?? a.description).join(' ')}`);
-  } else if (m.method === 'Log.entryAdded' && m.params.entry.level === 'error') {
-    errors.push(`${opened}: console error: ${m.params.entry.text}${m.params.entry.url ? ` (${m.params.entry.url})` : ''}`);
-  }
-});
-function send(method, params = {}) {
-  return new Promise(r => { const id = ++seq; pending.set(id, r); socket.send(JSON.stringify({ id, method, params })); });
-}
-async function evaluate(expression) {
-  const m = await send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
-  const r = m.result || {};
-  if (r.exceptionDetails) throw new Error(r.exceptionDetails.exception?.description || r.exceptionDetails.text);
-  return r.result?.value;
-}
-
-await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: phone });
-if (phone) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
-if (cpu > 1) await send('Emulation.setCPUThrottlingRate', { rate: cpu });
-if (text !== 16) await send('Page.setFontSizes', { fontSizes: { standard: text } });
-await send('Runtime.enable');
-await send('Log.enable');
+onError(message => errors.push(`${opened}: ${message}`));
 
 /* Before the page's own scripts run: count the typesetting MathJax has in hand, keep every
    task that blocked the page for more than 50ms, which is what the browser calls a long task,
    and keep every error the page raises. */
-await send('Page.enable');
 await send('Page.addScriptToEvaluateOnNewDocument', { source: `
   window.__mfsTiming = { busy: 0, long: [], errors: [] };
   window.addEventListener('error', function (e) {
