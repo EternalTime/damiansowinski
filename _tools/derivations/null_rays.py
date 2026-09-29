@@ -2523,10 +2523,10 @@ def view_slices(spec, markers=()):
         # A mirrored view draws each line and its mirror, so either end may take the label.
         both = lines + ([[[-u[0], u[1]] for u in line] for line in lines] if spec.mirror else [])
         drawn.append(slices.Mark(mark.moment, both, points, fills, mark.label))
-    # The labels are placed on the plot as it is drawn at the usual text size, 520 pixels
-    # wide, a mirrored view's unit square its right half, at the size of a phone's labels
-    # against its narrower plot, the larger of the two; the reference line's label stands
-    # at the plot's right edge above its line.
+    # The labels are placed on the plot in the units the page draws it in, 520 wide, which are
+    # its pixels at the usual text size, a mirrored view's unit square its right half, at the
+    # size of a phone's labels against its narrower plot, the larger of the two; the
+    # reference line's label stands at the plot's right edge above its line.
     W = 520.0
     H = W * (Y1 - Y0) / ((X1 - X0) * (2 if spec.mirror else 1))
     size = 14.5

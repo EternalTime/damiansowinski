@@ -431,16 +431,19 @@ def clip_ring(P, lo=(0.0, 0.0), hi=(1.0, 1.0)):
 
 # ---------------------------------------------------------------- where a slice's label stands
 
-GAP = 0.3                       # between a label and the line it names, in ems of the label
+# A slice is drawn 2.6 wide, so its edge is 1.3 from its line, and its point is a dot of radius
+# 4.5 with an outline 1.2 wide, so its edge is 5.1 from its centre, both in the units the page
+# draws the drawing in: a spacetime diagram's plot 520 wide, a conformal diagram 628.
+EDGE, DOT = 1.3, 5.1
 
 
 def label_size(text):
-    """A label's box as the page sets it, in ems of its own size, a little large: mathematics
-    at 0.62 em a character and 0.3 em a space, which MathJax's letters and the room it leaves
-    about a relation come to, prose at the 0.6 em of Source Code Pro, the padding of its
-    ground, 0.3 em either side and 0.12 above and below, and room for a subscript. Measured in
-    Chrome on 29 September 2026, "$t = 0$" set 3.0 em wide and 1.25 em tall, estimated 3.1
-    and 1.5."""
+    """A label's box as the page sets it, in ems of its own size, no smaller than MathJax sets
+    it: mathematics at 0.62 em a character and 0.3 em a space, which its letters and the room
+    it leaves about a relation come to, prose at the 0.6 em of Source Code Pro, the padding of
+    its ground, 0.3 em either side and 0.12 above and below, and the height of one holding a
+    fraction or a subscript. Measured in Chrome on 29 September 2026, labels set from 3.0 to
+    7.1 em wide and from 1.25 to 1.49 em tall, "$t = 0$" 3.0 em by 1.25, estimated 3.1 by 1.5."""
     width = 0.6
     for part in re.split(r"(\$[^$]*\$)", text):
         if part.startswith("$"):
@@ -455,25 +458,26 @@ def label_size(text):
 
 
 def place(marks, px, box, size, others=()):
-    """Where each mark's label stands, beside the right hand end of its lines or at its point,
-    so that no two labels, and no label and another label of the drawing, overlap, and no
-    label covers a line of a mark or leaves the box. A mark that is a region alone names its
-    moment in the legend and gets none.
+    """Where each mark's label stands, on the edge of its line at the line's right hand end or
+    on the edge of its point, so that no label overlaps another label of the drawing, covers
+    a line of a mark or leaves the box. Labels may touch, and nothing is added between them.
+    A mark that is a region alone names its moment in the legend and gets none.
 
     marks   the Marks, their lines and points already in the drawing's own coordinates;
-    px      the map from those coordinates to the drawing's pixels, y down;
-    box     (width, height) of the drawing in pixels;
-    size    the size of a label in pixels;
+    px      the map from those coordinates to the units the page draws the drawing in, y down;
+    box     (width, height) of the drawing in those units;
+    size    the size of a label in those units;
     others  the boxes (x0, y0, x1, y1) of the drawing's other labels.
 
-    The sides are tried in order: at the right hand end of the lines above the line and
-    toward the rest of it, below it, above and past the end, below and past it; then the same
-    at the left hand end; then the four corners of the point 85% of the way along from the
-    left hand end; and for a point from above and to its right round to below and to its
-    left. The side that stays in the box, overlaps no label, covers none of its own line and
-    none of another mark's wins, in that order of what matters most, the earliest of equals.
-    Returns, for each mark, None or {"at": [x, y], "anchor": ..., "dx": ..., "dy": ...},
-    dx and dy in ems of the label, away from `at`."""
+    The sides are tried in order: at the right hand end of the lines on the line's upper edge
+    and over the rest of it, on its lower edge, past the end above the line and past it below;
+    then the same at the left hand end; then the four corners of the point 85% of the way
+    along from the left hand end; and for a point from above and to its right round to below
+    and to its left, each against the dot's edge. The side that stays in the box, overlaps no
+    label, covers none of its own line and none of another mark's wins, in that order of what
+    matters most, the earliest of equals. Returns, for each mark, None or
+    {"at": [x, y], "anchor": ..., "dx": ..., "dy": ...}: the label's corner `anchor` stands at
+    `at` moved by dx and dy in the drawing's units, to the edge of the line or the dot."""
     W, H = box
 
     def traced(mark):
@@ -496,7 +500,6 @@ def place(marks, px, box, size, others=()):
             out.append(None)
             continue
         w, h = (v * size for v in label_size(mark.label))
-        g, pad = GAP * size, 0.15 * size
         corners = (("bl", 1, -1), ("tl", 1, 1), ("br", -1, -1), ("tr", -1, 1))
         if mark.lines:
             ends = [q for line in mark.lines for q in (line[0], line[-1])]
@@ -506,27 +509,27 @@ def place(marks, px, box, size, others=()):
             P = np.array(line if px(line[-1])[0] >= px(line[0])[0] else line[::-1], dtype=float)
             arc = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(np.array([px(q) for q in P]), axis=0), axis=1))])
             along = np.array([np.interp(0.85 * arc[-1], arc, P[:, j]) for j in range(2)])
-            tries = ([(right, "br", 0, -1), (right, "tr", 0, 1), (right, "bl", 1, -1), (right, "tl", 1, 1),
-                      (left, "bl", 0, -1), (left, "tl", 0, 1), (left, "br", -1, -1), (left, "tr", -1, 1)]
-                     + [(along, a, sx, sy) for a, sx, sy in corners])
+            e = EDGE
+            tries = ([(right, "br", 0, -e), (right, "tr", 0, e), (right, "bl", e, -e), (right, "tl", e, e),
+                      (left, "bl", 0, -e), (left, "tl", 0, e), (left, "br", -e, -e), (left, "tr", -e, e)]
+                     + [(along, a, sx * e, sy * e) for a, sx, sy in corners])
         else:
-            tries = [(mark.points[0], a, sx, sy) for a, sx, sy in corners]
+            tries = [(mark.points[0], a, sx * DOT, sy * DOT) for a, sx, sy in corners]
         best = None
-        for order, (at, anchor, sx, sy) in enumerate(tries):
+        for order, (at, anchor, dx, dy) in enumerate(tries):
             x, y = px(at)
-            x0 = x + sx * g - (w if anchor[1] == "r" else 0)
-            y0 = y + sy * g - (h if anchor[0] == "b" else 0)
+            x0 = x + dx - (w if anchor[1] == "r" else 0)
+            y0 = y + dy - (h if anchor[0] == "b" else 0)
             rect = (x0, y0, x0 + w, y0 + h)
             score = (not (rect[0] >= 0 and rect[1] >= 0 and rect[2] <= W and rect[3] <= H),
-                     any(rect[0] - pad < o[2] and o[0] < rect[2] + pad and rect[1] - pad < o[3] and o[1] < rect[3] + pad
-                         for o in taken),
+                     any(rect[0] < o[2] and o[0] < rect[2] and rect[1] < o[3] and o[1] < rect[3] for o in taken),
                      covers(rect, traces[i]),
                      any(covers(rect, t) for j, t in enumerate(traces) if j != i), order)
             if best is None or score < best[0]:
-                best = (score, at, anchor, sx, sy, rect)
-        _, at, anchor, sx, sy, rect = best
+                best = (score, at, anchor, dx, dy, rect)
+        _, at, anchor, dx, dy, rect = best
         taken.append(rect)
-        out.append({"at": [round(float(v), 4) for v in at], "anchor": anchor, "dx": sx * GAP, "dy": sy * GAP})
+        out.append({"at": [round(float(v), 4) for v in at], "anchor": anchor, "dx": dx, "dy": dy})
     return out
 
 
