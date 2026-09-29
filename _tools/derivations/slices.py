@@ -435,11 +435,23 @@ GAP = 0.3                       # between a label and the line it names, in ems 
 
 
 def label_size(text):
-    """A label's box as TeX sets it, in ems of its own size, roughly and a little large: half
-    an em a character, a quarter for a space, the padding of its ground, 0.3 em either side
-    and 0.12 above and below, and room for a subscript."""
-    plain = re.sub(r"\\[a-zA-Z]+|[${}^_]|\\,|\\;", "", text)
-    return 0.5 * len(plain.replace(" ", "")) + 0.28 * plain.count(" ") + 0.6, 1.5
+    """A label's box as the page sets it, in ems of its own size, a little large: mathematics
+    at 0.62 em a character and 0.3 em a space, which MathJax's letters and the room it leaves
+    about a relation come to, prose at the 0.6 em of Source Code Pro, the padding of its
+    ground, 0.3 em either side and 0.12 above and below, and room for a subscript. Measured in
+    Chrome on 29 September 2026, "$t = 0$" set 3.0 em wide and 1.25 em tall, estimated 3.1
+    and 1.5."""
+    width = 0.6
+    for part in re.split(r"(\$[^$]*\$)", text):
+        if part.startswith("$"):
+            math = re.sub(r"\\[,;:!]", " ", part[1:-1])
+            math = re.sub(r"\\(bar|hat|tilde|vec|dot|mathrm|text|left|right)(?![a-zA-Z])", "", math)
+            math = re.sub(r"\\[a-zA-Z]+", "x", math)
+            math = re.sub(r"[{}^_]", "", math)
+            width += 0.62 * len(math.replace(" ", "")) + 0.3 * math.count(" ")
+        else:
+            width += 0.6 * len(part)
+    return width, 1.5
 
 
 def place(marks, px, box, size, others=()):
@@ -484,7 +496,7 @@ def place(marks, px, box, size, others=()):
             out.append(None)
             continue
         w, h = (v * size for v in label_size(mark.label))
-        g = GAP * size
+        g, pad = GAP * size, 0.15 * size
         corners = (("bl", 1, -1), ("tl", 1, 1), ("br", -1, -1), ("tr", -1, 1))
         if mark.lines:
             ends = [q for line in mark.lines for q in (line[0], line[-1])]
@@ -506,7 +518,8 @@ def place(marks, px, box, size, others=()):
             y0 = y + sy * g - (h if anchor[0] == "b" else 0)
             rect = (x0, y0, x0 + w, y0 + h)
             score = (not (rect[0] >= 0 and rect[1] >= 0 and rect[2] <= W and rect[3] <= H),
-                     any(rect[0] < o[2] and o[0] < rect[2] and rect[1] < o[3] and o[1] < rect[3] for o in taken),
+                     any(rect[0] - pad < o[2] and o[0] < rect[2] + pad and rect[1] - pad < o[3] and o[1] < rect[3] + pad
+                         for o in taken),
                      covers(rect, traces[i]),
                      any(covers(rect, t) for j, t in enumerate(traces) if j != i), order)
             if best is None or score < best[0]:
