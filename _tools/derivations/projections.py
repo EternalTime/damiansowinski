@@ -15,7 +15,10 @@ and projected orthographically from a camera at a fixed azimuth and elevation. W
 the file is the projection: polylines, polygons and points in the plane of the page, in the
 order they are painted, and TeX labels at points, the form a conformal diagram takes. So the
 page draws a figure as it draws every other one, it prints, and the application draws the
-same data with its own renderer; nothing is left for a reader to turn.
+same data with its own renderer. A figure of light cones, every piece of which stands in
+(X, Y, T), also carries those pieces under `turn`, from which the page, with
+MFS/assets/turn.js, draws it from the side a reader turns it to, by the rules its projection
+was made by.
 
 null_rays.py owns the diagram files and writes each figure into its spacetime's file under
 `projections`, keyed by coordinate system beside the flat views under `systems`, which an
@@ -56,6 +59,9 @@ A figure is written as
   legend          [kind, class, text] for every class it names, kind being fill, line,
                   point or cone;
   camera          the azimuth and elevation it was projected from, in degrees;
+  turn            for a figure of light cones, its lines, cones, labels and slices in
+                  (X, Y, T) at SOLID decimals, the number of ribs and the centre it turns
+                  about, as _tools/README.md, "Turning a figure of light cones", defines;
   slices          the moment the spacetime's embedding diagram is cut from, where it lies
                   on the figure's floor, as a flat view carries it, its regions and lines in
                   the page's plane: the floor tinted where the embedding reaches, and a rim
@@ -78,6 +84,7 @@ RIM = 96                    # generators per cone
 RIBS = 8                    # of them drawn from the apex to the rim
 NULL = 1e-12                # how far a drawn generator may miss null, against |g| |k|^2
 INVERSE = 1e-12             # how far g^-1 g may miss the identity on the slice
+SOLID = 6                   # decimals of the (X, Y, T) a figure that turns publishes
 
 
 class Camera:
@@ -284,12 +291,24 @@ def rounded(points):
     return np.round(np.asarray(points, dtype=float), 4).tolist()
 
 
+def solid(points):
+    """Points of the drawing's (X, Y, T) as a figure that turns publishes them."""
+    return np.round(np.asarray(points, dtype=float), SOLID).tolist()
+
+
 class Figure:
-    """A projected figure: layers painted in the order they are added, labels, a legend."""
+    """A projected figure: layers painted in the order they are added, labels, a legend, and,
+    for a figure every piece of which stands in the drawing's (X, Y, T), those pieces
+    themselves, which is what drawing it from another camera takes."""
 
     def __init__(self, vid, label, camera):
         self.id, self.name, self.camera = vid, label, camera
         self.layers, self.labels, self.legend_items, self.slices = [], [], [], []
+        self.turn = {"lines": [], "cones": [], "labels": [], "slices": []}
+
+    def flat(self):
+        """Something is drawn straight onto the page, so the figure has no other side."""
+        self.turn = None
 
     def slice(self, moment, fills=(), lines=()):
         """A moment of the embedding diagram on the figure, painted under everything else:
@@ -300,27 +319,39 @@ class Figure:
                             "points": [],
                             "fills": [[rounded(nr.thin(self.camera.screen(R), 0.0005)) for R in rings]
                                       for rings in fills]})
+        if self.turn is not None:
+            self.turn["slices"].append({"lines": [solid(L) for L in lines],
+                                        "fills": [[solid(R) for R in rings] for rings in fills]})
 
     def line(self, cls, P, closed=False):
-        """A polyline of the drawing's (X, Y, T), projected."""
+        """A polyline of the drawing's (X, Y, T), projected. Every line is painted before the
+        cones, as a figure that turns paints them."""
         S = self.camera.screen(P)
         if closed:
             S = np.vstack([S, S[:1]])
         self.layers.append({"kind": "line", "class": cls, "points": rounded(nr.thin(S, 0.0005))})
+        if self.turn is not None:
+            if self.turn["cones"]:
+                raise AssertionError(f"figure {self.id}: the line {cls} is drawn after a cone")
+            P = np.asarray(P, dtype=float)
+            self.turn["lines"].append({"class": cls, "points": solid(np.vstack([P, P[:1]]) if closed else P)})
 
     def fill(self, cls, S):
         """A polygon already in the plane of the page."""
+        self.flat()
         self.layers.append({"kind": "fill", "class": cls, "points": rounded(S)})
 
     def point(self, cls, P):
+        self.flat()
         self.layers.append({"kind": "point", "class": cls, "at": rounded(self.camera.screen(P))})
 
     def cone(self, apex, rim, cls="cone"):
         """A cone of its apex and rim, both in the drawing: the hull filled, the rim, RIBS
-        generators and the two generators that bound it in the projection drawn over it."""
+        generators and the two generators that bound it in the projection drawn over it.
+        Cones are painted in the order given, which is farthest first."""
         a, R = self.camera.screen(apex), self.camera.screen(rim)
         H = hull(np.vstack([a[None, :], R]))
-        self.fill(cls, H)
+        self.layers.append({"kind": "fill", "class": cls, "points": rounded(H)})
         self.layers.append({"kind": "line", "class": cls + "-rim",
                             "points": rounded(np.vstack([R, R[:1]]))})
         for i in range(0, len(R), len(R) // RIBS):
@@ -331,10 +362,28 @@ class Figure:
             sides = [H[i - 1], a, H[(i + 1) % len(H)]]
             self.layers.append({"kind": "line", "class": cls, "points": rounded(sides)})
         self.layers.append({"kind": "point", "class": cls + "-apex", "at": rounded(a)})
+        if self.turn is not None:
+            if len(rim) % RIBS:
+                raise AssertionError(f"figure {self.id}: a rim of {len(rim)} generators has no {RIBS} ribs")
+            self.turn["cones"].append({"class": cls, "apex": solid(apex), "rim": solid(rim)})
 
     def label(self, P, text, anchor="c", cls="lab", dx=0, dy=0):
+        """A label at the point P of the drawing, which it stays at from every camera."""
+        self._label(P, text, anchor, cls, dx, dy, {"at": solid(P)})
+
+    def circle_label(self, rho, t, phi, text, anchor="c", cls="lab", dx=0, dy=0):
+        """A label naming the circle of radius rho about the axis at height t, at its point at
+        the angle phi: from another camera it stands at the point of the circle as far round
+        from the camera's azimuth, so it stays as near the reader."""
+        P = np.array([rho * np.cos(phi), rho * np.sin(phi), t])
+        angle = round(float(np.degrees(phi)) - self.camera.azimuth, SOLID)
+        self._label(P, text, anchor, cls, dx, dy, {"circle": solid([rho, t]), "angle": angle})
+
+    def _label(self, P, text, anchor, cls, dx, dy, place):
         self.labels.append({"at": rounded(self.camera.screen(P)), "text": text, "anchor": anchor,
                             "class": cls, "dx": dx, "dy": dy})
+        if self.turn is not None:
+            self.turn["labels"].append(place)
 
     def legend(self, kind, cls, text):
         self.legend_items.append([kind, cls, text])
@@ -362,7 +411,19 @@ class Figure:
                "layers": self.layers, "labels": self.labels, "legend": self.legend_items}
         if self.slices:
             out["slices"] = self.slices
+        if self.turn is not None:
+            out["turn"] = {"centre": self.centre(), "ribs": RIBS, **self.turn}
         return out
+
+    def centre(self):
+        """The point the figure turns about: on the axis, halfway between the lowest and the
+        highest point of everything it draws."""
+        T = [p[2] for line in self.turn["lines"] for p in line["points"]]
+        T += [p[2] for cone in self.turn["cones"] for p in [cone["apex"]] + cone["rim"]]
+        T += [place["at"][2] if "at" in place else place["circle"][1] for place in self.turn["labels"]]
+        T += [p[2] for mark in self.turn["slices"]
+              for P in mark["lines"] + [ring for rings in mark["fills"] for ring in rings] for p in P]
+        return [0.0, 0.0, round((min(T) + max(T)) / 2, SOLID)]
 
 
 def circle(sl, t, r, n=240, phi=(0.0, 2 * np.pi)):
@@ -436,7 +497,7 @@ def about_axis(spec, sl, bracket, names, camera=Camera(-90, 30)):
     fig.slice(m, fills=[[circle(sl, 0.0, reach)]], lines=[circle(sl, 0.0, reach)])
     fig.label(np.array([0, 0, 0.875 * unit]), "$t$", "b", dy=-4)
     for r, name in ((critical, names[0]), (beyond, names[1])):
-        fig.label(sl.to_drawing((0.0, r, -7 * np.pi / 18)), f"${name}$", "tl", dx=6, dy=4)
+        fig.circle_label(float(sl.radius(r)), 0.0, -7 * np.pi / 18, f"${name}$", "tl", dx=6, dy=4)
     fig.legend("cone", "cone", "future light cone")
     fig.legend("line", "critical", f"${names[0]}$, where the circle of fixed $t$ and $r$ is null")
     fig.legend("line", "ctc", f"${names[1]}$, where it is timelike")
