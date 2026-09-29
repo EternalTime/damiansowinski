@@ -56,6 +56,10 @@ A figure is written as
   legend          [kind, class, text] for every class it names, kind being fill, line,
                   point or cone;
   camera          the azimuth and elevation it was projected from, in degrees;
+  slices          the moment the spacetime's embedding diagram is cut from, where it lies
+                  on the figure's floor, as a flat view carries it, its regions and lines in
+                  the page's plane: the floor tinted where the embedding reaches, and a rim
+                  where the embedding stops short of the floor's edge;
   caption, settings, input and source, as a flat view carries them.
 """
 
@@ -67,6 +71,7 @@ from scipy.integrate import solve_ivp
 
 import build_mfs_data as build
 import null_rays as nr
+import slices
 
 LENGTH = 0.32               # a cone's generators, as a fraction of the figure's slice radius
 RIM = 96                    # generators per cone
@@ -284,7 +289,17 @@ class Figure:
 
     def __init__(self, vid, label, camera):
         self.id, self.name, self.camera = vid, label, camera
-        self.layers, self.labels, self.legend_items = [], [], []
+        self.layers, self.labels, self.legend_items, self.slices = [], [], [], []
+
+    def slice(self, moment, fills=(), lines=()):
+        """A moment of the embedding diagram on the figure, painted under everything else:
+        regions of the drawing's (X, Y, T), each a list of rings filled by the even odd rule,
+        and the lines where the embedding stops short of the figure's edge, projected."""
+        self.slices.append({**moment.json(),
+                            "lines": [rounded(nr.thin(self.camera.screen(L), 0.0005)) for L in lines],
+                            "points": [],
+                            "fills": [[rounded(nr.thin(self.camera.screen(R), 0.0005)) for R in rings]
+                                      for rings in fills]})
 
     def line(self, cls, P, closed=False):
         """A polyline of the drawing's (X, Y, T), projected."""
@@ -335,10 +350,19 @@ class Figure:
         for kind, cls, _ in self.legend_items:
             if cls not in drawn:
                 raise AssertionError(f"figure {self.id}: the legend names {cls}, which is not drawn")
-        return {"id": self.id, "label": self.name,
-                "box": [round(float(v), 4) for v in (lo[0] - m, hi[0] + m, lo[1] - m, hi[1] + m)],
-                "camera": {"azimuth": self.camera.azimuth, "elevation": self.camera.elevation},
-                "layers": self.layers, "labels": self.labels, "legend": self.legend_items}
+        box = [round(float(v), 4) for v in (lo[0] - m, hi[0] + m, lo[1] - m, hi[1] + m)]
+        for mark in self.slices:
+            for P in mark["lines"] + [ring for rings in mark["fills"] for ring in rings]:
+                P = np.asarray(P)
+                if not (P[:, 0].min() >= box[0] and P[:, 0].max() <= box[1]
+                        and P[:, 1].min() >= box[2] and P[:, 1].max() <= box[3]):
+                    raise AssertionError(f"figure {self.id}: the slice {mark['label']} leaves the box")
+        out = {"id": self.id, "label": self.name, "box": box,
+               "camera": {"azimuth": self.camera.azimuth, "elevation": self.camera.elevation},
+               "layers": self.layers, "labels": self.labels, "legend": self.legend_items}
+        if self.slices:
+            out["slices"] = self.slices
+        return out
 
 
 def circle(sl, t, r, n=240, phi=(0.0, 2 * np.pi)):
@@ -403,6 +427,13 @@ def about_axis(spec, sl, bracket, names, camera=Camera(-90, 30)):
     drawn = [future_cone(sl, x, 0.187 * unit) for x in cones]
     for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
         fig.cone(apex, rim)
+    # The moment t = 0 is the floor out to where the embedding stops, inside r_c, and the rim
+    # stands there; beyond it no surface in flat space carries the slice.
+    m = slices.moments(spec.metric)[0]
+    reach = m.reach(spec.system, "r")[1]
+    if not reach < critical:
+        raise SystemExit(f"{key(spec)}: the embedding reaches past r_c")
+    fig.slice(m, fills=[[circle(sl, 0.0, reach)]], lines=[circle(sl, 0.0, reach)])
     fig.label(np.array([0, 0, 0.875 * unit]), "$t$", "b", dy=-4)
     for r, name in ((critical, names[0]), (beyond, names[1])):
         fig.label(sl.to_drawing((0.0, r, -7 * np.pi / 18)), f"${name}$", "tl", dx=6, dy=4)
@@ -471,6 +502,11 @@ def ergoregion(spec, camera=Camera(-90, 30)):
     drawn = [future_cone(sl, x, 0.32 * unit, orient="tau") for x in cones]
     for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
         fig.cone(apex, rim)
+    m = slices.moments(spec.metric)[0]
+    lo, hi = m.reach(spec.system, "r")
+    if not (abs(lo - horizon) < 1e-9 and hi > 1.75 * ergo):
+        raise SystemExit(f"{key(spec)}: the embedding does not run from r_+ past the floor's edge")
+    fig.slice(m, fills=[[circle(sl, 0.0, 1.75 * ergo), circle(sl, 0.0, horizon)]])
     fig.label(np.array([0, 0, 1.1 * unit]), "$t$", "b", dy=-4)
     fig.legend("cone", "cone", "future light cone")
     fig.legend("line", "horizon", "$r_+$, the horizon")
@@ -525,6 +561,10 @@ def bubble(spec, camera=Camera(-90, 30), later=0.75):
     drawn = [future_cone(sl, x, 0.3, orient="tau") for x in cones]
     for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
         fig.cone(apex, rim)
+    m = slices.moments(spec.metric)[0]
+    if not m.grid()["u"][-1] > 2.5:
+        raise SystemExit(f"{key(spec)}: the embedding's plane does not pass the floor's edge")
+    fig.slice(m, fills=[[ring(0.0, 2.5)]])
     fig.label(np.array([0, 0, 1.2]), "$t$", "b", dy=-4)
     fig.label(np.array([v * later, 0, later]), f"$x = {v:g}ct$", "bl", dx=4, dy=-2)
     fig.legend("cone", "cone", "future light cone")
@@ -731,6 +771,18 @@ def string_rays(spec, n=12, half_width=1.8, left=-3.0, right=3.0, height=2.1):
         for P in trace(b):
             fig.line("above" if b > 0 else "below", flat(P))
     fig.point("string", np.zeros(3))
+    # The ideal string's moment is the plane itself, the embedding's reference cone and the
+    # sheet outside Gott's core together, out to where the embedding stops: on the page the
+    # disc of that radius less the wedge the deficit removes, cut to the figure.
+    m = slices.moments(spec.metric)[0]
+    reach = m.reach("conical", "r", reference=True)
+    if not reach[0] == 0:
+        raise SystemExit(f"{key(spec)}: the embedding's cone does not reach the string")
+    a = np.linspace(wedge, 2 * np.pi - wedge, 721)
+    arc = np.column_stack([reach[1] * np.cos(a), reach[1] * np.sin(a)])
+    disc = clip_box(np.vstack([[0.0, 0.0], arc]), left, right, height)
+    rims = [flat(run) for run in slices.clip_runs(arc, (left, -height), (right, height))]
+    fig.slice(m, fills=[[flat(disc)]], lines=rims)
     fig.label(np.array([2.4, 0.0, 0.0]), "$\\delta$", "c")
     fig.label(np.array([0.0, -0.12, 0.0]), "the string", "t", cls="small", dy=4)
     fig.legend("line", "above", "light passing above the string")

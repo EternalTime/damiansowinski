@@ -79,7 +79,11 @@ fields changes without the file being redrawn. A view is
   restriction     on a view of a surface that is not the whole spacetime, what that
                   surface is, printed on the diagram itself;
   settings, input the parameter values and any declared function, as TeX prose;
-  fade            {top, bottom}: how far the drawing fades out where it continues.
+  fade            {top, bottom}: how far the drawing fades out where it continues;
+  slices          each moment of the spacetime's embedding diagram that the view shows, as a
+                  spacetime diagram's view carries it, its lines and points in (X, T), drawn
+                  by the view's own maps over the part of the moment the embedding reaches;
+                  slices.py reads the moments and their reach.
 """
 
 import argparse
@@ -92,6 +96,8 @@ from pathlib import Path
 import numpy as np
 import sympy as sp
 from scipy.integrate import cumulative_trapezoid, solve_ivp
+
+import slices
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -173,7 +179,14 @@ class View:
         self.d = {"id": vid, "label": label, "box": [round(float(b), 4) for b in box]}
         if system:
             self.d["system"] = system
-        self.layers, self.labels, self.legend_items = [], [], []
+        self.layers, self.labels, self.legend_items, self.slices = [], [], [], []
+
+    def slice(self, moment, lines=(), points=(), xt=(), label=None):
+        """A moment of the embedding diagram, drawn over the view's own lines: `lines` as
+        pairs of arrays (p, q), `xt` as polylines already in (X, T), and `points` as (p, q)."""
+        drawn = [run for p, q in lines for run in runs(p, q)] + [rounded(line) for line in xt]
+        self.slices.append({**moment.json(), "label": label or moment.label, "lines": drawn,
+                            "points": [rounded(point(*pq)) for pq in points], "fills": []})
 
     def fill(self, cls, pts):
         self.layers.append({"kind": "fill", "class": cls, "points": rounded(pts)})
@@ -223,6 +236,13 @@ class View:
         self.d["layers"] = sorted(self.layers, key=lambda layer: order[layer["kind"]])
         self.d["labels"] = self.labels
         self.d["legend"] = self.legend_items
+        if self.slices:
+            X0, X1, T0, T1 = self.d["box"]
+            for mark in self.slices:
+                for at in [p for line in mark["lines"] for p in line] + mark["points"]:
+                    if not (X0 <= at[0] <= X1 and T0 <= at[1] <= T1):
+                        raise AssertionError(f"view {self.d['id']}: the slice {mark['label']} leaves the box at {at}")
+            self.d["slices"] = self.slices
         return self.d
 
 
@@ -509,6 +529,12 @@ def minkowski(ck, src):
     v.legend("r", "$r$ constant, in units of $\\ell$")
     v.legend("t", "$ct$ constant")
     v.legend("centre", "$r = 0$, a regular centre")
+    # The embedding's moment t = 0, out to where it reaches, on every view: along r on the
+    # triangles, and through the centre along x on the diamonds of the plane y = z = 0.
+    plane = slices.moments("minkowski")[0]
+    reach = plane.reach("spherical", "r")[1]
+    along_r, along_x = np.linspace(0, reach, 2), np.linspace(-reach, reach, 3)
+    v.slice(plane, [mink_pq(0 * along_r, along_r)])
     views.append(v)
 
     null = Plane(src, "minkowski", "spherical_null", ("u", "v"), EQUATOR)
@@ -529,6 +555,7 @@ def minkowski(ck, src):
     v.legend("cover", "the whole spacetime, which $u$ and $v$ cover")
     v.legend("null", "$u$ constant and $v$ constant, every one a light ray")
     v.legend("centre", "$r = 0$, where $u = v$")
+    v.slice(plane, [null_map(-along_r, along_r)])
     views.append(v)
 
     cart = Plane(src, "minkowski", "cartesian", ("t", "x"), {"y": "0", "z": "0"})
@@ -543,6 +570,7 @@ def minkowski(ck, src):
     v.legend("t", "$ct$ constant")
     v.set(restriction="The plane $y = z = 0$ only, which is totally geodesic; each point of the "
                       "diagram is a single event rather than a sphere of them.")
+    v.slice(plane, [mink_pq(0 * along_x, along_x)])
     views.append(v)
 
     dn = Plane(src, "minkowski", "double_null", ("u", "v"), {"y": "0", "z": "0"})
@@ -558,6 +586,7 @@ def minkowski(ck, src):
     v.legend("null", "$u$ constant and $v$ constant, every one a light ray")
     v.set(restriction="The plane $y = z = 0$ only, which is totally geodesic; each point of the "
                       "diagram is a single event rather than a sphere of them.")
+    v.slice(plane, [null_map(-along_x, along_x)])
     views.append(v)
 
     rind = Plane(src, "minkowski", "rindler", ("T", "X"), {"Y": "0", "Z": "0"}, {"a": 1})
@@ -583,6 +612,11 @@ def minkowski(ck, src):
     v.legend("horizon", "the horizon $X = 0$ and the null lines that continue it")
     v.set(restriction="The plane $Y = Z = 0$ only, which is totally geodesic; each point of the "
                       "diagram is a single event rather than a sphere of them.")
+    # T = 0 in the wedge, where x = X, and its mirror x < 0 beyond the horizon, one line.
+    wedge = np.linspace(1e-12, reach, 2)
+    left = mink_pq(0 * wedge, -wedge[::-1])
+    right = rindler(0 * wedge, wedge)
+    v.slice(plane, [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))])
     views.append(v)
     return views
 
@@ -798,6 +832,14 @@ class TowerDrawing:
                 v.label_xt([sx * 2.2, PI], inner, cls="region")
 
 
+def through_bifurcation(T, cells, far, near):
+    """The moment t = 0 of a tower, from r = far in the first cell to the bifurcation point
+    at the horizon r = near and on to r = far in the second, as one line of (p, q)."""
+    r = np.linspace(far, near, 2)
+    a, b = T.pq(cells[0], 0 * r, r), T.pq(cells[1], 0 * r, r[::-1])
+    return (np.concatenate([a[0], b[0]]), np.concatenate([a[1], b[1]]))
+
+
 def nice(x, keep=()):
     """The fewest significant figures, two at least, that keep x clear of the values in keep."""
     if x == 0:
@@ -952,6 +994,11 @@ def schwarzschild(ck, src):
         v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
         v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
 
+    flamm = slices.moments("schwarzschild")[0]
+    lo, hi = flamm.reach("spherical", "r")
+    rr_moment = np.linspace(lo, hi, 2)
+    moment = [T.pq("I'", 0 * rr_moment, rr_moment[::-1]), T.pq("I", 0 * rr_moment, rr_moment)]
+    moment = [(np.concatenate([moment[0][0], moment[1][0]]), np.concatenate([moment[0][1], moment[1][1]]))]
     views = []
     t = spread(-np.inf, np.inf, 500, 9)
     v = View("spherical", "Spherical", box, "spherical")
@@ -968,6 +1015,7 @@ def schwarzschild(ck, src):
     v.legend("cover", "the region that $t$ and $r > r_s$ cover")
     v.legend("r", "$r$ constant")
     v.legend("t", "$ct$ constant, in units of $r_s$")
+    v.slice(flamm, moment)
     views.append(v)
 
     v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
@@ -982,6 +1030,7 @@ def schwarzschild(ck, src):
     v.legend("cover", "the region that $v$ and $r > 0$ cover")
     v.legend("r", "$r$ constant")
     v.legend("null", "$v$ constant, an ingoing light ray")
+    v.slice(flamm, moment)
     views.append(v)
 
     v = View("outgoing", "Outgoing Eddington-Finkelstein", box, "eddington_finkelstein_outgoing")
@@ -995,6 +1044,7 @@ def schwarzschild(ck, src):
     v.legend("cover", "the region that $u$ and $r > 0$ cover")
     v.legend("r", "$r$ constant")
     v.legend("null", "$u$ constant, an outgoing light ray")
+    v.slice(flamm, moment)
     views.append(v)
     return views
 
@@ -1044,6 +1094,13 @@ def reissner_nordstrom(ck, src):
     v.legend("horizon", f"the horizons $r_+ = {rp:g}\\,r_s$ and $r_- = {rm:g}\\,r_s$")
     v.legend("singular", "$r = 0$, a timelike singularity, where the Kretschmann scalar diverges")
     v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    outside, inside = slices.moments("rn_metric", "outside")[0], slices.moments("rn_metric", "inside")[0]
+    # Outside r_+ the moment runs in to the outer bifurcation sphere at r_+, and inside r_- out
+    # to the inner one at r_-.
+    moments = [(outside, through_bifurcation(T, ("I'", "I"), *outside.reach("spherical", "r")[::-1])),
+               (inside, through_bifurcation(T, ("III'", "III"), *inside.reach("spherical", "r")))]
+    for m, line in moments:
+        v.slice(m, [line])
     views.append(v)
 
     v = View("malament_hogarth", "Malament-Hogarth", box)
@@ -1072,6 +1129,8 @@ def reissner_nordstrom(ck, src):
     v.legend("mark", "an event beyond the Cauchy horizon $r_-$")
     v.legend("horizon", f"the horizons $r_+ = {rp:g}\\,r_s$ and $r_- = {rm:g}\\,r_s$")
     v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+    for m, line in moments:
+        v.slice(m, [line])
     views.append(v)
     settings = ("$r_q = 0.48\\,r_s$, so that $r_+ = 0.64\\,r_s$, $r_- = 0.36\\,r_s$, and "
                 "$\\kappa_-/\\kappa_+ = 3.2$; at $r_q = 0.4\\,r_s$ the ratio is 16, and every line "
@@ -1124,6 +1183,9 @@ def kerr_axis(ck, src, metric_id, params, name):
     v.legend("horizon", f"the horizons on the axis, $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,GM/c^2$")
     v.legend("centre", "$r = 0$ on the axis, the centre of the ring's disc, where the curvature is finite")
     v.legend("scri", "null infinity, of $r \\to +\\infty$ and of $r \\to -\\infty$")
+    # The moment of the embedding's equator meets the axis through the outer bifurcation point.
+    m = slices.moments(metric_id)[0]
+    v.slice(m, [through_bifurcation(T, ("I'", "I"), *m.reach("boyer_lindquist", "r")[::-1])])
     return [v]
 
 
@@ -1209,6 +1271,14 @@ def de_sitter(ck, src):
         v.legend("centre", "$r = 0$ of the observer and of its antipode")
         v.legend("horizon", "the cosmological horizons $r = \\sqrt{3/\\Lambda}$")
 
+    static_moment = slices.moments("de_sitter")[0]
+    lo, hi = static_moment.reach("static_spherical", "r")
+    r = np.linspace(lo, hi, 2)
+    p, q = static(0 * r, r)
+    X, T = xt(p, q)
+    # The observer's hemisphere out to its horizon, then the antipode's, the static patch's
+    # mirror X -> pi - X, back in to its centre.
+    moment_xt = [np.column_stack([np.concatenate([X, PI - X[::-1]]), np.concatenate([T, T[::-1]])])]
     views = []
     v = View("static", "Static spherical", box, "static_spherical")
     frame(v)
@@ -1223,6 +1293,7 @@ def de_sitter(ck, src):
     v.legend("cover", "the static patch, which $t$ and $r$ cover")
     v.legend("r", "$r$ constant, in units of $\\sqrt{3/\\Lambda}$")
     v.legend("t", "$ct$ constant")
+    v.slice(static_moment, xt=moment_xt)
     views.append(v)
 
     v = View("flat", "Flat slicing", box, "flat_slicing")
@@ -1237,6 +1308,7 @@ def de_sitter(ck, src):
     v.legend("r", "$\\rho = \\sqrt{x^2 + y^2 + z^2}$ constant, in units of $c/H$")
     v.legend("t", "$t$ constant")
     v.legend("chartedge", "$t \\to -\\infty$, the past edge of the flat slicing")
+    v.slice(static_moment, xt=moment_xt, label="static $t = 0$")
     views.append(v)
     return views
 
@@ -1328,6 +1400,10 @@ def anti_de_sitter(ck, src):
     v.legend("centre", "$r = 0$, a regular centre")
     v.legend("null", "a radial light ray from the centre")
     v.legend("world", "radial timelike geodesics from the centre, $\\sin\\sigma = k\\sin(ct/L)$ at $k = 0.5$ and $0.9$")
+    hyperboloid = slices.moments("anti_de_sitter")[0]
+    lo, hi = hyperboloid.reach("static_global", "r")
+    r = np.linspace(lo, hi, 2)
+    v.slice(hyperboloid, [global_pq(0 * r, r)])
     views.append(v)
 
     T0, T1 = -1.1 * PI, 1.1 * PI
@@ -1348,6 +1424,11 @@ def anti_de_sitter(ck, src):
     v.legend("t", "$ct$ constant")
     v.legend("boundary", "the conformal boundary, timelike")
     v.legend("chartedge", "$z \\to \\infty$, the Poincaré horizon, where $t$ and $z$ end")
+    # The static moment t = 0 is the Poincare moment t = 0, and on the plane x = y = 0 its
+    # static radius is |1 - z^2|/2z, so the embedding's reach r <= 4L runs from
+    # z = sqrt(17) - 4 through the centre z = L to z = sqrt(17) + 4.
+    z = np.array([np.sqrt(hi * hi + 1) - hi, np.sqrt(hi * hi + 1) + hi])
+    v.slice(hyperboloid, [poincare_pq(0 * z, z)])
     views.append(v)
     return views
 
@@ -1390,6 +1471,15 @@ def bertotti_robinson(ck, src):
         v.legend("t", "$ct$ constant")
         v.legend("boundary", "the conformal boundary, timelike")
         v.set(fade={"top": 0.7, "bottom": 0.7})
+        # The equator's moment t = 0 over the stretch the embedding reaches, and the sphere at
+        # the event r = b, x = b.
+        equator = slices.moments("bertotti_robinson", "equator")[0]
+        sphere = slices.moments("bertotti_robinson", "sphere")[0]
+        lo, hi = equator.reach("static", "r")
+        c = np.linspace(lo, hi, 2) if vid == "static" else 1 / np.linspace(hi, lo, 2)
+        v.slice(equator, [poincare_pq(0 * c, z_of(c))])
+        v.slice(sphere, points=[poincare_pq(0.0, 1.0)],
+                label="$t = 0$, $r = b$" if vid == "static" else "$t = 0$, $x = b$")
         views.append(v)
     return views
 
@@ -1417,6 +1507,9 @@ def ellis_bronnikov(ck, src):
     v.legend("r", "$r$ constant, a sphere of area $4\\pi(r^2 + \\ell^2)$")
     v.legend("t", "$ct$ constant")
     v.legend("throat", "the throat $r = 0$, where the spheres are smallest")
+    wormhole = slices.moments("ellis_bronnikov")[0]
+    r = np.linspace(*wormhole.reach("spherical", "r"), 2)
+    v.slice(wormhole, [mink_pq(0 * r, r)])
     return [v]
 
 
@@ -1463,6 +1556,10 @@ def morris_thorne(ck, src):
         v.legend("throat", "the throat, $r = b_0$ and $l = 0$")
         v.set(input="$\\Phi = 0$ and $b = b_0^2/r$, the member of the family that is the "
                     "Ellis-Bronnikov wormhole.")
+        wormhole = slices.moments("morris_thorne")[0]
+        ell = np.sqrt(wormhole.reach("spherical", "r")[1] ** 2 - 1)
+        ls = np.array([-ell, 0.0, ell])
+        v.slice(wormhole, [mink_pq(0 * ls, ls)])
         views.append(v)
     return views
 
@@ -1506,6 +1603,13 @@ def cosmic_string(ck, src):
                       "point of the diagram stands for a circle around the string times a line "
                       "along it, and the string's deficit angle $\\delta = 8\\pi G\\mu/c^2$ shows in "
                       "those circles.")
+    # The ideal string's moment is the embedding's reference cone and the sheet outside the
+    # core together, out from the string; with the core, its proper distance from the axis
+    # runs out to l chi_0 + r - l tan chi_0.
+    cone = slices.moments("cosmic_string")[0]
+    reach = cone.reach("conical", "r", reference=True)
+    r = np.linspace(*reach, 2)
+    v.slice(cone, [mink_pq(0 * r, r)])
     views.append(v)
 
     v = View("gott", "Gott's core", box, "interior_cap")
@@ -1532,6 +1636,10 @@ def cosmic_string(ck, src):
           restriction="The half plane of fixed $\\phi$ and $z$ only, in the proper distance $\\rho$ "
                       "from the axis; each point of the diagram stands for a circle around the "
                       "axis times a line along it.")
+    if abs(cone.reach("interior_cap", "\\chi")[1] - chi0) > 1e-12:
+        raise SystemExit("cosmic string: the embedding's core is not the core drawn here")
+    rho = np.array([0.0, chi0, reach[1] + shift])
+    v.slice(cone, [mink_pq(0 * rho, rho)])
     views.append(v)
     return views
 
@@ -1589,6 +1697,10 @@ def interior_schwarzschild(ck, src):
     v.legend("surface", "the surface $r = R$")
     v.legend("centre", "$r = 0$, a regular centre")
     v.set(settings="$R = 1.5\\,r_s$.")
+    star_moment = slices.moments("interior_schwarzschild")[0]
+    lo, hi = star_moment.reach("spherical", "r")
+    rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
+    v.slice(star_moment, [star(0 * rr, rr)])
     return [v]
 
 
@@ -1703,6 +1815,12 @@ def frw(ck, src):
     v.legend("singular", "the bang and the crunch, where the Kretschmann scalar diverges")
     v.legend("centre", "$\\chi = 0$ and its antipode $\\chi = \\pi$")
     v.legend("cover", "the hemisphere $\\chi < \\pi/2$, which $r$ covers, with $t$ or with $\\eta$")
+    for m in slices.moments("frw", "closed"):
+        eta = float(np.interp(m.time, etas - np.sin(etas), etas))
+        if not (m.reach("comoving_spherical", "r") == (0, 1) and abs(eta - np.sin(eta) - m.time) < 1e-9):
+            raise SystemExit(f"FRW: the moment {m.label} is not a whole moment of the closed universe")
+        # X = chi across the near hemisphere and the far one, as the view draws its lines of eta.
+        v.slice(m, xt=[[[0.0, eta], [PI, eta]]])
     views.append(v)
 
     v = View("open", "Open dust, $k = -1$", [-0.35, HALF + 0.35, -0.2, HALF + 0.2])
@@ -1912,6 +2030,22 @@ def oppenheimer_snyder(ck, src):
     v.legend("chartedge", "the moment of rest")
     v.set(settings="$R_0 = 2\\,r_s$, so that $\\chi_0 = \\pi/4$ and $a_m = 2\\sqrt{2}\\,r_s$; the collapse "
                    "starts at the moment of rest, $\\tau = 0$.")
+    # Each moment of the dust's proper time: inside, the line eta across the dust; outside,
+    # Novikov's slice, the shells released from rest with it at every R the embedding reaches,
+    # each at the same proper time, through Kruskal's U and V to P(U) and Q(V). The surface
+    # is the shell from R_0, so the two meet there, at (chi_0, eta).
+    ck.limit("Oppenheimer-Snyder: slices.novikov_kruskal puts the surface where the Collapse does",
+             [float(o.P(slices.novikov_kruskal(np.array([o.R0]), (o.am / 2) * (e + np.sin(e)))[0])[0])
+              for e in (0.5, 1.5, 2.5)], [(e - c) / 2 for e in (0.5, 1.5, 2.5)], 1e-6)
+    for m in slices.moments("oppenheimer_snyder"):
+        if abs(m.reach("interior_comoving", "\\chi")[1] - c) > 1e-12 or abs(slices.OS_AM - o.am) > 1e-12:
+            raise SystemExit("Oppenheimer-Snyder: the embedding's star is not the star drawn here")
+        e = float(eta_of(m.time))
+        chi = np.array([0.0, c])
+        lo, hi = m.reach("comoving_synchronous", "r")
+        U, V, _ = slices.novikov_kruskal(np.linspace(lo, hi, 401), m.time)
+        P, Q = o.P(U), o.Q(V)
+        v.slice(m, [(np.concatenate([(e - chi) / 2, P]), np.concatenate([(e + chi) / 2, Q]))])
     return [v]
 
 
@@ -1991,6 +2125,15 @@ def vaidya(ck, src):
     v.legend("centre", "$r = 0$ before it, a regular centre")
     v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
     v.set(input="$m(v) = 0$ for $v < 0$ and $M$ for $v > 0$, with $r_s = 2GM/c^2$.")
+    # Each moment v - r = w through each side's own map, meeting on the shell at r = -w.
+    for m in slices.moments("vaidya"):
+        lo, hi = m.reach("eddington_finkelstein_ingoing", "r")
+        w, cross = m.time, max(lo, -m.time)
+        r_in = np.linspace(lo, cross, 200) if cross > lo else np.zeros(0)
+        r_out = cross + (hi - cross) * np.linspace(0, 1, 400) ** 2
+        p_in, q_in = inside(w + r_in, r_in)
+        p_out, q_out = outside(w + r_out, r_out)
+        v.slice(m, [(np.concatenate([p_in, p_out]), np.concatenate([q_in, q_out]))])
     return [v]
 
 
@@ -2074,6 +2217,10 @@ def tov(ck, src):
     v.legend("t", "$ct$ constant, at $0$, $\\pm R$, $\\pm 2R$ and $\\pm 4R$")
     v.legend("surface", "the surface $r = R$, where the pressure falls to zero")
     v.legend("centre", "$r = 0$, a regular centre")
+    star_moment = slices.moments("tov")[0]
+    lo, hi = star_moment.reach("spherical", "r")
+    rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
+    v.slice(star_moment, [star(0 * rr, rr)])
     v.set(input="A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
                 "$\\rho c^2 = \\rho_0c^2 + p$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$ in "
                 "units where $G = c = M_\\odot = 1$, solved from this spacetime's own $G^t{}_t$ and "
@@ -2134,6 +2281,9 @@ def malament_hogarth(ck, src):
     v.legend("removed", "the removed event, the origin")
     v.legend("centre", "the axis $r = 0$ above it")
     v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    for m in slices.moments("malament_hogarth"):
+        x = np.linspace(*m.reach("cartesian", "x"), 400)
+        v.slice(m, [mink_pq(np.full_like(x, m.time), x)])
     return [v]
 
 
