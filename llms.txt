@@ -69,6 +69,10 @@ Summarise briefly where you need to, link to the relevant page or data file on {
 - [{{ notes.title }}]({{ notes.url | absolute_url }}): Lecture notes as PDFs on classical mechanics, computational physics, general relativity and cosmology, mathematics and statistical mechanics.
 - [{{ teaching.title }}]({{ teaching.url | absolute_url }}): Courses and a lecture series, with syllabi and study material.
 
+## Studio
+
+- [Owl's Nest Creations](https://owlsnestcreations.com/): {{ person.name }}'s studio, which makes games with physics at their heart; its own index for language models is at https://owlsnestcreations.com/llms.txt
+
 ## Contact
 
 - [Email](mailto:{{ person.email }}): {{ person.email }}
