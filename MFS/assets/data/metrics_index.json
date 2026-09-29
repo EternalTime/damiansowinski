@@ -18,8 +18,8 @@
       "causality violation"
     ],
     "version": "3b4ffc7dea1922dd",
-    "diagrams": "8ad446a9eca895c5",
-    "embedding": "1f7ada582913ae92"
+    "diagrams": "65f12999992e6a71",
+    "embedding": "4df721cabada780a"
   },
   {
     "id": "anti_de_sitter",
@@ -44,9 +44,9 @@
       "idealized model"
     ],
     "version": "3893823158e5fed2",
-    "diagrams": "af735f6d601e2e1c",
-    "conformal": "94f1bf82d57ced44",
-    "embedding": "5929dfda257648d8"
+    "diagrams": "3126b713e8a7ceb2",
+    "conformal": "9fa6ed91ed3360f2",
+    "embedding": "f206e9691162e00c"
   },
   {
     "id": "bertotti_robinson",
@@ -68,9 +68,9 @@
       "idealized model"
     ],
     "version": "ddd3c294a5f76d1c",
-    "diagrams": "aa6009c79ba26874",
-    "conformal": "e231e968960850c6",
-    "embedding": "0631465b5ced14f6"
+    "diagrams": "53330fcb52d2163e",
+    "conformal": "c761d921c8d595a0",
+    "embedding": "6f87bc862d55bdb8"
   },
   {
     "id": "bianchi",
@@ -91,8 +91,8 @@
       "idealized model"
     ],
     "version": "06d19fe47018ab45",
-    "diagrams": "a7ddcda8c30564d3",
-    "embedding": "0e42eb9c2b9d50fc"
+    "diagrams": "cb7186c27b09c25a",
+    "embedding": "f4b6c257a5010366"
   },
   {
     "id": "de_sitter",
@@ -118,9 +118,9 @@
       "idealized model"
     ],
     "version": "f858fdf745ed2e9b",
-    "diagrams": "2a0ae3fc788f8d20",
-    "conformal": "19338ec63ff2847c",
-    "embedding": "0abf8333d4b78826"
+    "diagrams": "cf2067d3dcac094d",
+    "conformal": "a9b4d2cfd8631019",
+    "embedding": "ba0bed728fc36061"
   },
   {
     "id": "ellis_bronnikov",
@@ -144,9 +144,9 @@
       "idealized model"
     ],
     "version": "132c6e32a5d30c3b",
-    "diagrams": "6fb4258d359ce7f7",
-    "conformal": "889613f4aa99ed83",
-    "embedding": "7a7750607fe9cd3b"
+    "diagrams": "7b3fbccc74f5b578",
+    "conformal": "f0835bc33ed9fd94",
+    "embedding": "8c16d5714cfa992a"
   },
   {
     "id": "frw",
@@ -168,9 +168,9 @@
       "idealized model"
     ],
     "version": "d4351fc05c9b9a88",
-    "diagrams": "fcd93775e7e4477c",
-    "conformal": "c5e133b30f5eff7e",
-    "embedding": "7e8514f366fb68e1"
+    "diagrams": "8ba167a0fd9be7b3",
+    "conformal": "690299be36af8c35",
+    "embedding": "10938eea49b57508"
   },
   {
     "id": "godel",
@@ -193,8 +193,8 @@
       "idealized model"
     ],
     "version": "20b8e7c2048a9a5d",
-    "diagrams": "66abe333b1a1e53b",
-    "embedding": "feb629cb614b6502"
+    "diagrams": "9925ca7645c9341d",
+    "embedding": "403b6a3bdc5df374"
   },
   {
     "id": "kasner",
@@ -217,8 +217,8 @@
       "idealized model"
     ],
     "version": "70f8ce1cf4ef9333",
-    "diagrams": "0a10596023c40aa5",
-    "embedding": "bc0df48bdb8067a3"
+    "diagrams": "a653287cace43163",
+    "embedding": "13b718edc27b8fa8"
   },
   {
     "id": "kerr",
@@ -250,9 +250,9 @@
       "idealized model"
     ],
     "version": "55c5e8ad01dd6cde",
-    "diagrams": "2136670891a24e21",
-    "conformal": "bcb035eece78e3c1",
-    "embedding": "bab4b15449e769d2"
+    "diagrams": "3840cad2960bc323",
+    "conformal": "610924fd3ed3db9a",
+    "embedding": "d8021f8ad28840ac"
   },
   {
     "id": "kerr_newman",
@@ -287,9 +287,9 @@
       "idealized model"
     ],
     "version": "484c810d5b6a42ce",
-    "diagrams": "93b474fd6d34ca32",
-    "conformal": "fb2d33b98f405254",
-    "embedding": "6450010dab705f18"
+    "diagrams": "cfd2899ad602a3eb",
+    "conformal": "4f88c10d28ad1aaa",
+    "embedding": "ae9ae4e7ebb9ac2e"
   },
   {
     "id": "krasnikov",
@@ -313,8 +313,8 @@
       "causality violation"
     ],
     "version": "02a3b51f5b1363ab",
-    "diagrams": "c1facdb811292e0e",
-    "embedding": "3fe68008a15d23e5"
+    "diagrams": "8465ef9c4b047da5",
+    "embedding": "166bc957997dd4b5"
   },
   {
     "id": "stockum_dust",
@@ -337,8 +337,8 @@
       "idealized model"
     ],
     "version": "5aad68c9d04f3348",
-    "diagrams": "5d22ae6361b3f49d",
-    "embedding": "f7f066fc47947a4b"
+    "diagrams": "1e7c37cc1458dc56",
+    "embedding": "7100c6333fe6ac84"
   },
   {
     "id": "lentz",
@@ -361,7 +361,7 @@
       "causality violation"
     ],
     "version": "f0ccae242dc8659e",
-    "embedding": "12874c7a8fcee004"
+    "embedding": "cd4d9ba73f0459f5"
   },
   {
     "id": "malament_hogarth",
@@ -377,9 +377,9 @@
       "four-dimensional"
     ],
     "version": "02053b5866e8abc2",
-    "diagrams": "bf991f8898137e5b",
-    "conformal": "ed1dfe4e550593e8",
-    "embedding": "8a18ebbc35d1f054"
+    "diagrams": "38ee5a21595bd0a6",
+    "conformal": "0e7497507d97447b",
+    "embedding": "656f2d780f151817"
   },
   {
     "id": "minkowski",
@@ -399,9 +399,9 @@
       "idealized model"
     ],
     "version": "c3a3b11c0b0aee2e",
-    "diagrams": "b8409279f4b85f4d",
-    "conformal": "62dca5793654a6cd",
-    "embedding": "62372fa47e978974"
+    "diagrams": "8682a860d329f091",
+    "conformal": "3ef9aae901575926",
+    "embedding": "399e851fbe2c9368"
   },
   {
     "id": "mixmaster",
@@ -428,7 +428,7 @@
       "idealized model"
     ],
     "version": "2048f112e1667a42",
-    "embedding": "29e3dfde6e3ffd38"
+    "embedding": "b433e75b0b01bb1c"
   },
   {
     "id": "morris_thorne",
@@ -451,9 +451,9 @@
       "idealized model"
     ],
     "version": "038498efc04bf2b8",
-    "diagrams": "b97529e52dd0d7f1",
-    "conformal": "763117f8a2a8bc86",
-    "embedding": "2f317a5d5ba77ba2"
+    "diagrams": "6a553e7d399d3c52",
+    "conformal": "dbf0f08be80bb2dc",
+    "embedding": "2fb2f35ad8d95922"
   },
   {
     "id": "natario",
@@ -476,8 +476,8 @@
       "four-dimensional"
     ],
     "version": "9110be4e111191d0",
-    "diagrams": "e0bed43045f7b0c5",
-    "embedding": "723b756d838c4496"
+    "diagrams": "22b965e256ee4995",
+    "embedding": "da5a4f2712be8435"
   },
   {
     "id": "oppenheimer_snyder",
@@ -503,9 +503,9 @@
       "idealized model"
     ],
     "version": "0c5750e98bcf208a",
-    "diagrams": "0c2138cfd23ff13f",
-    "conformal": "306277c33738a9a8",
-    "embedding": "167fc4877345f21b"
+    "diagrams": "d31b7b7b6c3dd2ef",
+    "conformal": "b029855dfdd8ce93",
+    "embedding": "785668735c3299af"
   },
   {
     "id": "pp_wave",
@@ -525,8 +525,8 @@
       "idealized model"
     ],
     "version": "a8460021efd293ec",
-    "diagrams": "00395a67876284d5",
-    "embedding": "f5a370a6d9b3c1a5"
+    "diagrams": "918bdc629a387541",
+    "embedding": "a93313234ded6243"
   },
   {
     "id": "rn_metric",
@@ -557,9 +557,9 @@
       "idealized model"
     ],
     "version": "9e17ebc7774f5c9d",
-    "diagrams": "a5d2f0ae123ef0b4",
-    "conformal": "2ab4c9b527852879",
-    "embedding": "5d81334d4ce81436"
+    "diagrams": "4565bff8ba921a42",
+    "conformal": "91e9cec2ecceaa0b",
+    "embedding": "986896435d0558eb"
   },
   {
     "id": "schwarzschild",
@@ -589,9 +589,9 @@
       "idealized model"
     ],
     "version": "d6998bfa9f515dec",
-    "diagrams": "376b27e1ff7774f2",
-    "conformal": "d5b1ed8b8901340a",
-    "embedding": "d408d142270f877b"
+    "diagrams": "60920c375eef2fab",
+    "conformal": "b6da61a89c363d47",
+    "embedding": "d953fc47f6782519"
   },
   {
     "id": "interior_schwarzschild",
@@ -613,9 +613,9 @@
       "idealized model"
     ],
     "version": "16e995ef71b0734a",
-    "diagrams": "ba049299b917fb77",
-    "conformal": "925cff585e143c32",
-    "embedding": "b3e4dafcd0188731"
+    "diagrams": "2c3a4f257a42be77",
+    "conformal": "576471fc7fb8c666",
+    "embedding": "f234ff5757296aaa"
   },
   {
     "id": "taub_nut",
@@ -637,8 +637,8 @@
       "idealized model"
     ],
     "version": "eea3eb667aa95f98",
-    "diagrams": "449f57f4d04b13b7",
-    "embedding": "9c3dd7ed8bcb5a2d"
+    "diagrams": "86d43f7abeacc5f4",
+    "embedding": "c6d1e703edd33a78"
   },
   {
     "id": "tolman_bondi",
@@ -662,8 +662,8 @@
       "idealized model"
     ],
     "version": "201d87186a924030",
-    "diagrams": "7e33d7dc12ab6db9",
-    "embedding": "5dce47770adfb5c4"
+    "diagrams": "a6afc8c8528a23f2",
+    "embedding": "ff09130d06eddfad"
   },
   {
     "id": "tov",
@@ -688,9 +688,9 @@
       "idealized model"
     ],
     "version": "6c76689854e37520",
-    "diagrams": "2e104a29a9915d27",
-    "conformal": "dd2f1600c3871bac",
-    "embedding": "51388ea32153f39b"
+    "diagrams": "bf41df64d4244e61",
+    "conformal": "553ea67b15fe0dd6",
+    "embedding": "30404847553e5754"
   },
   {
     "id": "vaidya",
@@ -714,9 +714,9 @@
       "idealized model"
     ],
     "version": "9130fa02bab7ad4e",
-    "diagrams": "1b988656e1c50209",
-    "conformal": "7d0c380d841a38a1",
-    "embedding": "ea830ccad40ac31e"
+    "diagrams": "87052dae566b6395",
+    "conformal": "177413af20facdf4",
+    "embedding": "d49fb374b774d259"
   },
   {
     "id": "cosmic_string",
@@ -739,8 +739,8 @@
       "idealized model"
     ],
     "version": "3338cf69352e018e",
-    "diagrams": "06412d58ded0c2b9",
-    "conformal": "e1651b3aa098b63d",
-    "embedding": "08e36b58c54c7fdc"
+    "diagrams": "775c15d603986370",
+    "conformal": "c9cba57f9e41d1e3",
+    "embedding": "4644c9ca19680dbb"
   }
 ]
