@@ -55,6 +55,12 @@ While it waits, "Spacetime data loading..." shows where the panel rests, centred
 Most of that wait holds the main thread, so the line cannot be shown once it starts; it is asked for as the wait begins and fades in by a CSS transition with a delay, which the browser runs off the main thread, so a spacetime set within that delay never shows it.
 `showNote` in `_layouts/mfs.html` carries the timings and why.
 
+## The panels on a desktop
+
+Wherever the list and the spacetime stand side by side, the list's panel starts on the spacetime panel's top and the coffee panel ends on its bottom, with 6px between the two on the left, as the captain asked on 29 September 2026.
+The spacetime panel's top is halfway between the foot of the Exit sign and 150px, or 30px below the title's foot where a large text size wraps the title lower.
+`placeTop` and `syncPanel` in `_layouts/mfs.html` carry that geometry in `--mfs-top`, `--mfs-bottom` and `--mfs-coffee-h`, and `page_timing.mjs` holds every state of the page to it within a pixel.
+
 ## The page on a phone
 
 A screen narrower than 600px, or a touch screen under 500px tall, gets the same panels in one column that the page scrolls through: the title, the list with the coffee panel, then the spacetime.
