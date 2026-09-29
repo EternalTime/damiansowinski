@@ -86,6 +86,11 @@ The print copy's sizes are points and its prose 12pt, so it prints the same what
 Reproduce a text size fault the way a reader meets it, with a larger default font size and not with page zoom, which scales everything and hides it.
 
 Every choice on the page, the chart, a view of a diagram and a tensor's index placement, is one control, a row of buttons built by `choiceButton`, and a row appears only where there is more than one thing to choose.
+Nothing on the spacetimes page glows, as the captain asked on 29 September 2026: "Get rid of the glow on the pressed button in MFS. Only turn it pink. I already said to get rid of the glow earlier. No glow anywhere."
+The chosen button of a row, the spacetime shown in the list and any button while it is pressed turn pink, `--pink-light`, and nothing else about them changes.
+The panels are drawn by their borders alone, the title and the exit sign flicker in by colour and opacity alone, and the grid behind the page is drawn without a shadow.
+No text shadow, box shadow, blurring or shadowing filter, canvas shadow or SVG filter appears anywhere on the page, open or not, on the screen or on paper.
+`NoGlow` in `_tools/test_build_mfs_data.py` holds the page's sources to that, and `page_timing.mjs` holds the page as drawn to it, including each kind of button pressed.
 Every drawing, a spacetime diagram, a conformal diagram and a figure in three dimensions, stands on one dark ground, `--mfs-ground`, across the whole figure with its words, and prints on white.
 
 Every written area of the spacetimes page is set in the history's font, Source Code Pro at its regular weight and upright, at the history's size, `--mfs-prose`, which is 21px at the usual text size and 15px in the phone layout.
