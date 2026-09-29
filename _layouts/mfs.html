@@ -1483,6 +1483,17 @@
           out.push(nrEl('line', { 'class': 'nr-axis', x1: m.l - 5, y1: Y, x2: m.l, y2: Y }));
         });
 
+        // A slice drawn as a region is tinted under the rays, and its lines drawn over them.
+        (view.slices || []).forEach(function(mark) {
+          if (!mark.fills.length) return;
+          out.push(nrEl('g', sliceAttrs(mark), mark.fills.map(function(rings) {
+            return sides.map(function(side) {
+              return nrEl('path', { 'class': 'nr-slice-fill', 'fill-rule': 'evenodd',
+                d: rings.map(function(ring) { return path(side, ring) + ' Z'; }).join(' ') });
+            }).join('');
+          }).join('')));
+        });
+
         // Cones at a fixed size on screen, whatever the proportions of the box.
         var L = 17;
         sides.forEach(function(side) {
@@ -1551,6 +1562,17 @@
             });
           });
         });
+        (view.slices || []).forEach(function(mark) {
+          if (!mark.lines.length && !mark.points.length) return;
+          var inner = '';
+          sides.forEach(function(side) {
+            mark.lines.forEach(function(line) { inner += nrEl('path', { 'class': 'nr-slice', d: path(side, line) }); });
+            mark.points.forEach(function(q) {
+              inner += nrEl('circle', { 'class': 'nr-slice', cx: side.px(q).toFixed(1), cy: py(q).toFixed(1), r: 4.5 });
+            });
+          });
+          out.push(nrEl('g', sliceAttrs(mark), inner));
+        });
         out.push(nrEl('rect', { 'class': 'nr-frame', x: m.l, y: m.t, width: W, height: H }));
 
         return nrEl('svg', {
@@ -1585,11 +1607,18 @@
         var refs = view.markers.filter(function(mk) { return mk.kind === 'reference'; }).map(function(mk) {
           return '<span class="nr-ref" aria-hidden="true" style="top:' + (100 * (1 - mk.y)).toFixed(3) + '%">' + nrEsc(mk.label) + '</span>';
         });
+        // A slice's label stands in the plot where its file places it; on a view through the
+        // centre the unit square is the right half, and a label at a negative first
+        // coordinate stands on the mirrored line in the left half.
+        var sliceLabels = (view.slices || []).filter(function(mark) { return mark.place; }).map(function(mark) {
+          var u = mark.place.at;
+          return sliceLabel(mark, view.mirror ? 0.5 + 0.5 * u[0] : u[0], 1 - u[1], 'nr-slice-label');
+        });
         return '<div class="mfs-fig-scroll mfs-nr-scroll" style="--nr-aspect:' + (f.vw / f.vh).toFixed(4) + '"><div class="mfs-nr-figure">' +
           '<div class="nr-ylabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.ylabel) + '</span></div>' +
           '<div class="nr-yticks" aria-hidden="true"><span class="nr-sizer">' +
             view.ticks.y.map(function(t) { return '<span>' + nrEsc(t.label) + '</span>'; }).join('') + '</span>' + ys.join('') + '</div>' +
-          '<div class="nr-plot">' + nrSvg(view, f) + refs.join('') +
+          '<div class="nr-plot">' + nrSvg(view, f) + refs.join('') + sliceLabels.join('') +
             '<div class="mfs-nr-readout"><span><span>' + nrEsc(view.xlabel) + '</span> = <span class="nr-rx"></span></span>' +
             '<span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></span></div></div>' +
           '<div class="nr-xticks" aria-hidden="true">' + xs.join('') + '</div>' +
@@ -1678,7 +1707,10 @@
           singular: '<path class="nr-singular" d="' + nrZigzag(2, 8, 32, 8, 5, 3) + '"/>',
           areal: '<line class="nr-areal" x1="2" y1="8" x2="32" y2="8"/>',
           reference: '<line class="nr-reference" x1="2" y1="8" x2="32" y2="8"/>',
-          hatch: '<rect class="nr-hatch-swatch" x="2" y="2" width="30" height="12"/>'
+          hatch: '<rect class="nr-hatch-swatch" x="2" y="2" width="30" height="12"/>',
+          'slice-line': '<line class="nr-slice" x1="2" y1="8" x2="32" y2="8"/>',
+          'slice-point': '<circle class="nr-slice" cx="17" cy="8" r="4"/>',
+          'slice-fill': '<rect class="nr-slice-swatch" x="2" y="2" width="30" height="12"/>'
         }[kind];
         return '<svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner + '</svg>';
       }
@@ -1706,7 +1738,7 @@
         if (view.hatch.length) items.push(['hatch', 'outside the domain of the chart']);
         return '<div class="mfs-nr-legend">' + items.map(function(item) {
           return '<span class="mfs-nr-item">' + nrSwatch(item[0]) + '<span class="mfs-nr-itext">' + item[1] + '</span></span>';
-        }).join('') + '</div>';
+        }).join('') + sliceLegend(view.slices, function(kind) { return nrSwatch('slice-' + kind); }) + '</div>';
       }
 
       // The flat views of a coordinate system and then its figures in three dimensions, each
@@ -1750,12 +1782,20 @@
          diagram's are. Nothing is turned here: a figure prints as it is seen, and the
          application draws the same data. Its frame and labels are the conformal diagram's. */
       function pjSvg(view, f) {
-        var out = view.layers.map(function(L) {
+        var under = (view.slices || []).map(function(mark) {
+          return nrEl('g', sliceAttrs(mark),
+            mark.fills.map(function(rings) {
+              return nrEl('path', { 'class': 'pj-slice-fill', 'fill-rule': 'evenodd',
+                d: rings.map(function(ring) { return cdPath(f, ring, true); }).join(' ') });
+            }).join('') +
+            mark.lines.map(function(line) { return nrEl('path', { 'class': 'pj-slice', d: cdPath(f, line, false) }); }).join(''));
+        });
+        var out = under.concat(view.layers.map(function(L) {
           var cls = 'pj-' + L['class'];
           if (L.kind === 'fill') return nrEl('path', { 'class': cls + '-fill', d: cdPath(f, L.points, true) });
           if (L.kind === 'line') return nrEl('path', { 'class': cls, d: cdPath(f, L.points, false) });
           return nrEl('circle', { 'class': cls, cx: f.x(L.at[0]).toFixed(1), cy: f.y(L.at[1]).toFixed(1), r: L['class'] === 'cone-apex' ? 1.6 : 4.5 });
-        });
+        }));
         return nrEl('svg', { 'class': 'mfs-cd-svg mfs-pj-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
           'aria-label': 'Light cones in three dimensions, ' + nrPlain(view.label) }, out.join(''));
       }
@@ -1775,7 +1815,7 @@
           else inner = '<line class="' + cls + '" x1="2" y1="8" x2="32" y2="8"/>';
           return '<span class="mfs-nr-item"><svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner +
             '</svg><span class="mfs-nr-itext">' + nrProse(nrEsc(item[2])) + '</span></span>';
-        }).join('') + '</div>';
+        }).join('') + sliceLegend(view.slices, function(kind) { return nrSwatch('slice-' + kind); }) + '</div>';
       }
 
       /* The view buttons, the axes' values under the pointer, and a watch on every figure's
@@ -1796,6 +1836,7 @@
                 b.classList.toggle('mfs-choice-on', i === j);
                 b.setAttribute('aria-pressed', String(i === j));
               });
+              if (button.hasAttribute('data-em-id')) showSlices(root, button.getAttribute('data-em-id'));
             });
           });
         });
@@ -1810,6 +1851,7 @@
           });
           fitPlots(figures);
           fitTicks(figures);
+          if (figures.length) fitSliceLabels(root);
           var edges = scrollers.map(edgesOf);
           scrollers.forEach(function(s, i) { setEdges(s, edges[i]); });
         }) : null;
@@ -1907,13 +1949,17 @@
       function cdSvg(view, f) {
         var id = 'mfs-cd-' + (_cdUid++), out = [];
         var order = { fill: 0, line: 1, zig: 2, point: 3 };
+        var slicesDrawn = false;
         view.layers.slice().sort(function(a, b) { return order[a.kind] - order[b.kind]; }).forEach(function(L) {
           var cls = 'cd-' + L['class'];
+          // The slices go over every line and under the points, which mark ends and events.
+          if (L.kind === 'point' && !slicesDrawn) { out.push(cdSlices(view, f)); slicesDrawn = true; }
           if (L.kind === 'fill') out.push(nrEl('path', { 'class': cls, d: cdPath(f, L.points, true) }));
           else if (L.kind === 'line') out.push(nrEl('path', { 'class': cls, d: cdPath(f, L.points, false) }));
           else if (L.kind === 'zig') out.push(nrEl('path', { 'class': cls, d: cdZig(f, L.points) }));
           else out.push(nrEl('circle', { 'class': cls, cx: f.x(L.at[0]).toFixed(1), cy: f.y(L.at[1]).toFixed(1), r: 3 }));
         });
+        if (!slicesDrawn) out.push(cdSlices(view, f));
         // Where the spacetime runs on past the drawing, it fades into the page.
         var defs = '';
         if (view.fade) {
@@ -1938,14 +1984,28 @@
                         tl: [0, 0], tr: [-100, 0], bl: [0, -100], br: [-100, -100] };
       var CD_SIZE = { lab: 15, small: 13, region: 13, coord: 12 };
 
+      function cdSlices(view, f) {
+        return (view.slices || []).map(function(mark) {
+          return nrEl('g', sliceAttrs(mark),
+            mark.lines.map(function(line) { return nrEl('path', { 'class': 'cd-slice', d: cdPath(f, line, false) }); }).join('') +
+            mark.points.map(function(q) {
+              return nrEl('circle', { 'class': 'cd-slice', cx: f.x(q[0]).toFixed(1), cy: f.y(q[1]).toFixed(1), r: 4.5 });
+            }).join(''));
+        }).join('');
+      }
+
       function cdLabels(view, f) {
+        var slices = (view.slices || []).filter(function(mark) { return mark.place; }).map(function(mark) {
+          return sliceLabel(mark, f.x(mark.place.at[0]) / f.vw, f.y(mark.place.at[1]) / f.vh, 'cd-at',
+            ';font-size:calc(100cqw * ' + CD_SIZE.small + ' / ' + f.vw + ')');
+        });
         var out = view.labels.map(function(L) {
           var x = f.x(L.at[0]) + (L.dx || 0), y = f.y(L.at[1]) + (L.dy || 0), a = CD_ANCHOR[L.anchor || 'c'];
           return '<span class="cd-at cd-lab-' + L['class'] + '" style="left:' + (100 * x / f.vw).toFixed(3) +
             '%;top:' + (100 * y / f.vh).toFixed(3) + '%;transform:translate(' + a[0] + '%,' + a[1] +
             '%);font-size:calc(100cqw * ' + (CD_SIZE[L['class']] || 14) + ' / ' + f.vw + ')">' + nrEsc(L.text) + '</span>';
         });
-        return '<div class="mfs-cd-labels" aria-hidden="true">' + out.join('') + '</div>';
+        return '<div class="mfs-cd-labels" aria-hidden="true">' + out.join('') + slices.join('') + '</div>';
       }
 
       function cdSwatch(kind, cls) {
@@ -2020,7 +2080,7 @@
                     '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
                     '<div class="mfs-nr-legend">' + view.legend.map(function(item) {
                       return '<span class="mfs-nr-item">' + cdSwatch(item[0], item[1]) + '<span class="mfs-nr-itext">' + nrProse(nrEsc(item[2])) + '</span></span>';
-                    }).join('') + '</div>',
+                    }).join('') + sliceLegend(view.slices, function(kind) { return nrSwatch('slice-' + kind); }) + '</div>',
                     view.settings ? '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn at</span> ' + nrProse(nrEsc(view.settings)) + '</div>' : '',
                     view.input ? '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn with</span> ' + nrProse(nrEsc(view.input)) + '</div>' : '',
                   '</div>',
@@ -2120,11 +2180,10 @@
             '</div>'
           ].join('');
         }
-        var views = data.views.filter(function(v) { return v.system === coordId; })
-          .concat(data.views.filter(function(v) { return !v.system; }));
+        var views = emViews(metricId, coordId);
         if (!views.length) return '';
         var buttons = views.length > 1 ? choices(views.map(function(v, i) {
-          return choiceButton(nrEsc(v.label), i === 0, {});
+          return choiceButton(nrEsc(v.label), i === 0, { 'data-em-id': v.id });
         }), 'view') : '';
         return [
           '<div class="mfs-section mfs-diagram mfs-embedding">',
@@ -2149,6 +2208,156 @@
             }).join(''),
           '</div>'
         ].join('');
+      }
+
+      /* ── The slice of the embedding diagram ──
+         A spacetime diagram's view, a figure in three dimensions and a conformal diagram's
+         view each carry under `slices` the moment the spacetime's embedding diagram is cut
+         from, where it lies on them, as the captain asked on 28 September 2026: lines, points
+         and regions in the drawing's own coordinates, each naming the embedding view and the
+         surface it marks, which _tools/derivations/slices.py works out and _tools/README.md
+         defines. The page draws them in the site's green, which marks nothing else on these
+         drawings but in dots, as a line 2.6 wide, and a region tinted with it, and sets each
+         moment's name beside its line where the file places it; a slice drawn as a region
+         alone is named in the legend instead, as on the floor of a figure. Only the slices of
+         the embedding view shown are drawn, so choosing Reissner-Nordström's inside r_- or
+         Bertotti-Robinson's sphere draws its slice in place of the other, as a slider's
+         moment would. The print copy prints every view of the embedding diagram, and so
+         every slice. */
+      var _sliceShown = null;  // the id of the embedding view whose slices are drawn
+
+      // The views the embedding diagram shows in the chart being read: those that name it,
+      // then those that name none, as the conformal diagram's.
+      function emViews(metricId, coordId) {
+        var data = _embeddingCache[metricId];
+        if (!data || !data.views) return [];
+        return data.views.filter(function(v) { return v.system === coordId; })
+          .concat(data.views.filter(function(v) { return !v.system; }));
+      }
+
+      function graphSections(metricId, coordId) {
+        var shown = emViews(metricId, coordId)[0];
+        _sliceShown = shown ? shown.id : null;
+        return (coordId ? diagramSection(metricId, coordId) : '') + conformalSection(metricId, coordId) +
+          embeddingSection(metricId, coordId);
+      }
+
+      function sliceClass(view) {
+        return 'mfs-slice' + (view === _sliceShown ? '' : ' mfs-slice-off');
+      }
+
+      function sliceAttrs(mark) {
+        return { 'class': sliceClass(mark.view), 'data-slice-view': mark.view };
+      }
+
+      // The corner of the label pinned at its point, and the gap, in ems of the label.
+      function sliceShift(anchor, dx, dy) {
+        var a = CD_ANCHOR[anchor];
+        return 'translate(calc(' + a[0] + '% + ' + dx + 'em),calc(' + a[1] + '% + ' + dy + 'em))';
+      }
+
+      // A slice's label at the point x, y of its drawing, as fractions of it, which is where
+      // its file places it and where fitSliceLabels() starts from.
+      function sliceLabel(mark, x, y, cls, style) {
+        var place = mark.place;
+        return '<span class="' + sliceClass(mark.view) + ' mfs-slice-label ' + cls + '" data-slice-view="' + nrEsc(mark.view) +
+          '" data-x="' + x.toFixed(5) + '" data-y="' + y.toFixed(5) + '" data-anchor="' + place.anchor +
+          '" data-dx="' + place.dx + '" data-dy="' + place.dy + '" style="left:' + (100 * x).toFixed(3) + '%;top:' +
+          (100 * y).toFixed(3) + '%;transform:' + sliceShift(place.anchor, place.dx, place.dy) + (style || '') + '">' +
+          nrEsc(mark.label) + '</span>';
+      }
+
+      // The legend's entry for the slices of each embedding view the drawing marks, shown with
+      // them, and one for all where they would read the same. A slice named on the drawing is
+      // "the slice of the embedding diagram"; one named nowhere else carries its moment here.
+      function sliceLegend(marks, swatch) {
+        if (!marks || !marks.length) return '';
+        var order = [], by = {};
+        marks.forEach(function(mark) {
+          if (!by[mark.view]) { by[mark.view] = []; order.push(mark.view); }
+          by[mark.view].push(mark);
+        });
+        var items = order.map(function(view) {
+          var group = by[view];
+          var kind = group.some(function(m) { return m.fills.length; }) ? 'fill'
+            : group.some(function(m) { return m.lines.length; }) ? 'line' : 'point';
+          var unnamed = group.filter(function(m) { return !m.place; }).map(function(m) { return m.label; });
+          var text = (group.length > 1 ? 'the slices' : 'the slice') + ' of the embedding diagram' +
+            (unnamed.length ? ', ' + unnamed.join(', ') : '');
+          return { view: view, kind: kind, text: text };
+        });
+        return items.map(function(item, i) {
+          var same = items.filter(function(other) { return other.kind === item.kind && other.text === item.text; });
+          if (same[0] !== item) return '';
+          var attrs = same.length > 1 ? '' : ' ' + sliceClass(item.view) + '" data-slice-view="' + nrEsc(item.view);
+          return '<span class="mfs-nr-item' + attrs + '">' + swatch(item.kind) +
+            '<span class="mfs-nr-itext">' + nrProse(nrEsc(item.text)) + '</span></span>';
+        }).join('');
+      }
+
+      // Draw the slices of the embedding view `view` and no other.
+      function showSlices(root, view) {
+        _sliceShown = view;
+        root.querySelectorAll('[data-slice-view]').forEach(function(el) {
+          el.classList.toggle('mfs-slice-off', el.getAttribute('data-slice-view') !== view);
+        });
+        fitSliceLabels(root);
+      }
+
+      /* A slice's label is placed in its file for the drawing at the usual text size. A
+         conformal diagram and a figure are drawn larger with the reader's text, their labels
+         with them, so the place holds at every size; a spacetime diagram's words grow around
+         a plot that does not, so a label set larger can reach another label or past the plot.
+         Then it takes the first of the other sides of its point that is clear, in the order
+         slices.py ranks them, and goes back to its own once the text is smaller again. Every
+         label is measured before any is moved, as the lines are. */
+      var SLICE_SIDES = [['br', 0, -0.3], ['tr', 0, 0.3], ['bl', 0.3, -0.3], ['tl', 0.3, 0.3],
+                         ['bl', 0, -0.3], ['tl', 0, 0.3], ['br', -0.3, -0.3], ['tr', -0.3, 0.3]];
+      function fitSliceLabels(root) {
+        var plots = [].slice.call(root.querySelectorAll('.nr-plot')).map(function(plot) {
+          var labels = [].slice.call(plot.querySelectorAll('.mfs-slice-label')).filter(function(el) {
+            return el.getClientRects().length;
+          });
+          if (!labels.length) return null;
+          var box = plot.getBoundingClientRect();
+          return {
+            W: box.width, H: box.height,
+            others: [].slice.call(plot.querySelectorAll('.nr-ref')).map(function(el) {
+              var r = el.getBoundingClientRect();
+              return [r.left - box.left, r.top - box.top, r.right - box.left, r.bottom - box.top];
+            }),
+            labels: labels.map(function(el) {
+              var r = el.getBoundingClientRect();
+              return { el: el, w: r.width, h: r.height, em: parseFloat(getComputedStyle(el).fontSize),
+                       x: +el.dataset.x * box.width, y: +el.dataset.y * box.height };
+            })
+          };
+        }).filter(Boolean);
+        plots.forEach(function(p) {
+          var taken = p.others.slice();
+          p.labels.forEach(function(L) {
+            var sides = [[L.el.dataset.anchor, +L.el.dataset.dx, +L.el.dataset.dy]].concat(SLICE_SIDES);
+            var chosen = null;
+            sides.forEach(function(side) {
+              if (chosen && chosen.fits) return;
+              var a = CD_ANCHOR[side[0]];
+              var x0 = L.x + side[1] * L.em + a[0] / 100 * L.w, y0 = L.y + side[2] * L.em + a[1] / 100 * L.h;
+              var rect = [x0, y0, x0 + L.w, y0 + L.h];
+              var fits = rect[0] >= -0.5 && rect[1] >= -0.5 && rect[2] <= p.W + 0.5 && rect[3] <= p.H + 0.5 &&
+                !taken.some(function(o) { return rect[0] < o[2] && o[0] < rect[2] && rect[1] < o[3] && o[1] < rect[3]; });
+              if (!chosen || fits) chosen = { side: side, rect: rect, fits: fits };
+            });
+            taken.push(chosen.rect);
+            L.transform = sliceShift(chosen.side[0], chosen.side[1], chosen.side[2]);
+          });
+        });
+        plots.forEach(function(p) {
+          p.labels.forEach(function(L) {
+            if (L.el.dataset.side === L.transform) return;
+            L.el.dataset.side = L.transform;
+            L.el.style.transform = L.transform;
+          });
+        });
       }
 
       /* Turning an embedding diagram, which the captain asked for on 28 September 2026: "Why
@@ -2512,10 +2721,11 @@
 
           /* The chart is chosen before anything that depends on it, which the captain asked
              for on 27 September 2026, so the coordinates open the mathematics, their buttons
-             and then the chart's domains, and everything below them is the chart's: the
-             conformal diagram shows its views, and every quantity is written in it. Only the
-             conventions below belong to the spacetime rather than to the chart, and they stand
-             between the domains and the diagram, which the application does too. */
+             and then the chart's domains, and everything below them is the chart's: every
+             quantity is written in it, and the diagrams after the geodesics show its views.
+             Only the conventions below belong to the spacetime rather than to the chart, and
+             they stand between the domains and the line element, which the application does
+             too. */
           (hasCoords ? [
             '<div class="mfs-section mfs-coordinates">',
               '<div class="mfs-section-head">',
@@ -2539,10 +2749,6 @@
           ].join('') : ''),
 
           conventionSection(data),
-
-          conformalSection(data.id, hasCoords ? coord.id : null),
-
-          embeddingSection(data.id, hasCoords ? coord.id : null),
 
           ((hasCoords && !coordHasContent) ? [
             '<div class="mfs-section"><div class="mfs-placeholder">',
@@ -2674,7 +2880,16 @@
             '</div>'
           ].join('') : '',
 
-          (hasCoords && coord.id) ? diagramSection(data.id, coord.id) : '',
+          /* A spacetime's three diagrams stand together, as the captain asked on 28 September
+             2026: "Put each spacetime's embedding diagram next to its spacetime diagram and
+             its conformal diagram, as one group." They close the mathematics, after the
+             geodesics and before the references, which is where the application's Graphs
+             section stands between its Maths and its References. The spacetime diagram comes
+             first, in the chart's own plane, then the conformal diagram of the whole
+             spacetime, both drawing the slice the embedding diagram is cut from, and the
+             embedding diagram last, so the eye meets the line and then the surface cut along
+             it. graphSections() says which slice is drawn. */
+          graphSections(data.id, hasCoords ? coord.id : null),
 
           (data.references && data.references.length) ? [
             '<div class="mfs-section mfs-references">',
@@ -2697,8 +2912,10 @@
 
         // Stash pre-typeset (raw LaTeX) body + name for the print/PDF handler
         // The print copy's diagrams get ids of their own, since the screen copy they would
-        // otherwise point into is hidden while printing.
-        window._mfsPrintBody = body.replace(/mfs-nr-(\d+)/g, 'mfs-nrp-$1').replace(/mfs-cd-(\d+)/g, 'mfs-cdp-$1');
+        // otherwise point into is hidden while printing, and it draws every slice, since it
+        // prints every view of the embedding diagram.
+        window._mfsPrintBody = body.replace(/mfs-nr-(\d+)/g, 'mfs-nrp-$1').replace(/mfs-cd-(\d+)/g, 'mfs-cdp-$1')
+          .replace(/ mfs-slice-off/g, '');
         window._mfsPrintName = data.name;
 
         // MathJax keeps every formula it has set until told to let go, and with it the page
@@ -2764,6 +2981,7 @@
           var figures = [].slice.call(contentPanel.querySelectorAll('.mfs-nr-figure'));
           fitPlots(figures);
           fitTicks(figures);
+          fitSliceLabels(contentPanel);
           markAllEdges(contentPanel);
         }
         if (window.MathJax && MathJax.typesetPromise) {
@@ -3305,6 +3523,25 @@
     .pj-wedge-fill { fill: rgba(10,14,18,0.95); stroke: none; }
     .pj-double-fill { fill: rgba(212,175,55,0.13); stroke: none; }
     .pj-string { fill: var(--text-bright); stroke: #000; stroke-width: 1; }
+    /* ── The slice of the embedding diagram ── on a spacetime diagram, a figure and a
+       conformal diagram alike: a solid line of the site's green, which no other mark on these
+       drawings is but in dots, a point of it, and a region tinted with it at 12%, as the
+       region a chart covers is tinted teal. A slice of an embedding view not shown is not
+       drawn, and its label, set on a ground of its own as a conformal diagram's small labels
+       are, is at the in-plot size of a reference line's on a spacetime diagram and of a small
+       label on a conformal diagram. */
+    .nr-slice, .cd-slice, .pj-slice {
+      fill: none; stroke: var(--green-light); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+    }
+    circle.nr-slice, circle.cd-slice { fill: var(--green-light); stroke: #000; stroke-width: 1.2; }
+    .nr-slice-fill, .pj-slice-fill { fill: rgba(77,184,74,0.12); stroke: none; }
+    .nr-slice-swatch { fill: rgba(77,184,74,0.12); stroke: var(--green-light); stroke-width: 1.6; }
+    .mfs-slice-off { display: none !important; }
+    .mfs-slice-label {
+      position: absolute; white-space: nowrap; line-height: 1; pointer-events: none;
+      color: var(--green-light); background: rgba(0,6,9,0.72); padding: 0.12em 0.3em; border-radius: 3px;
+    }
+    .mfs-nr-figure .nr-slice-label { font-size: 0.9286em; }
     /* ── Embedding diagrams ── The figure is a figure in three dimensions in the conformal
        diagram's frame; a surface is tinted where it is nearest the reader, and the part of a
        line the surface hides, its class with -far, is drawn faint. */
@@ -3938,6 +4175,14 @@
          gets a white one, or the lines would cross it on paper. */
       #mfs-print-root .mfs-em-figure .cd-lab-small { background: rgba(255,255,255,0.85) !important; }
       .mfs-print-body .mfs-em-reset { display: none !important; }
+      /* The slice of the embedding diagram in the palette's darker green, which holds on white
+         paper as the light one does on the dark ground, its label on a white ground of its own
+         and in the same green, which the print copy's black for every word would lose. */
+      .mfs-print-body .nr-slice, .mfs-print-body .cd-slice, .mfs-print-body .pj-slice { stroke: #2a6e2a; }
+      .mfs-print-body circle.nr-slice, .mfs-print-body circle.cd-slice { fill: #2a6e2a; stroke: #fff; }
+      .mfs-print-body .nr-slice-fill, .mfs-print-body .pj-slice-fill { fill: rgba(42,110,42,0.14); }
+      .mfs-print-body .nr-slice-swatch { fill: rgba(42,110,42,0.14); stroke: #2a6e2a; }
+      #mfs-print-root .mfs-slice-label { color: #2a6e2a !important; background: rgba(255,255,255,0.85) !important; }
       .mfs-print-body .mfs-table th,
       .mfs-print-body .mfs-table td { border: 1px solid #000 !important; }
     }

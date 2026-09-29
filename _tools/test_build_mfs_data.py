@@ -158,6 +158,8 @@ def conformal_prose(name, conformal):
             yield f"{where}.legend[{position}]", text
         for position, label in enumerate(view["labels"]):
             yield f"{where}.labels[{position}]", label["text"]
+        for position, mark in enumerate(view.get("slices", [])):
+            yield f"{where}.slices[{position}].label", mark["label"]
 
 
 def embedding_files():
@@ -262,6 +264,8 @@ def diagram_prose(name, diagram):
             for position, marker in enumerate(view["markers"]):
                 if marker.get("legend"):
                     yield f"{where}.markers[{position}].legend", marker["legend"]
+            for position, mark in enumerate(view.get("slices", [])):
+                yield f"{where}.slices[{position}].label", mark["label"]
     for system, figures in diagram.get("projections", {}).items():
         for figure in figures:
             where = f"diagrams/{name}.json {system}/{figure['id']}"
@@ -275,6 +279,8 @@ def diagram_prose(name, diagram):
                 yield f"{where}.legend[{position}]", text
             for position, label in enumerate(figure["labels"]):
                 yield f"{where}.labels[{position}]", label["text"]
+            for position, mark in enumerate(figure.get("slices", [])):
+                yield f"{where}.slices[{position}].label", mark["label"]
 
 
 class PublishedFilesAreCurrent(unittest.TestCase):
@@ -2028,6 +2034,286 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         self.assertIsNotNone(rule)
         self.assertIn("touch-action: pan-y", rule.group(1))
         self.assertIn(".mfs-print-body .mfs-em-reset { display: none", page)
+
+
+def bisect(f, lo, hi, steps=200):
+    """A root of f on [lo, hi], where f changes sign."""
+    flo = f(lo)
+    for _ in range(steps):
+        mid = 0.5 * (lo + hi)
+        if (f(mid) > 0) == (flo > 0):
+            lo, flo = mid, f(mid)
+        else:
+            hi = mid
+    return 0.5 * (lo + hi)
+
+
+def novikov_t(R, tau):
+    """A shell of dust released from rest at areal radius R, r_s = 1, at its proper time tau:
+    its r and Schwarzschild t, from the cycloid and Misner, Thorne and Wheeler's (31.10)."""
+    eta = bisect(lambda e: 0.5 * R * math.sqrt(R) * (e + math.sin(e)) - tau, 0.0, math.pi)
+    k, tan = math.sqrt(R - 1), math.tan(eta / 2)
+    r = 0.5 * R * (1 + math.cos(eta))
+    return r, math.log(abs((k + tan) / (k - tan))) + k * (eta + 0.5 * R * (eta + math.sin(eta)))
+
+
+class Slices(unittest.TestCase):
+    """Every moment an embedding diagram is cut from is drawn on its spacetime's other diagrams
+    where it lies, from the numbers in the files alone, and on nothing else."""
+
+    # The drawings on which no moment of the spacetime's embedding lies: other universes,
+    # another cloud, the time reversed shell, and cylinders where no surface of constant t is
+    # a moment of space.
+    HIDDEN = {"frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
+              "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
+              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "conformal frw/flat", "conformal frw/open"}
+
+    def setUp(self):
+        self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
+
+    def drawings(self):
+        """Every flat view, figure and conformal view, with its place and its spacetime."""
+        for metric_id, data in self.diagrams.items():
+            for part in ("systems", "projections"):
+                for system_id, views in data.get(part, {}).items():
+                    for view in views:
+                        yield metric_id, f"{metric_id}/{system_id}/{view['id']}", view
+        for metric_id, data in self.conformal.items():
+            for view in data["views"]:
+                yield metric_id, f"conformal {metric_id}/{view['id']}", view
+
+    def moment(self, metric_id, mark):
+        view = next(v for v in self.embedding[metric_id]["views"] if v["id"] == mark["view"])
+        return view, view["surfaces"][mark["surface"]]
+
+    def reach(self, surface, system=None, reference=False):
+        xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))
+              and (system is None or piece["system"] == system) for x in (piece["points"][0][0], piece["points"][-1][0])]
+        return min(xs), max(xs)
+
+    def test_every_moment_appears_on_every_drawing_it_lies_on_and_on_no_other(self):
+        drawn = 0
+        for metric_id, where, view in self.drawings():
+            marks = [(m["view"], m["surface"]) for m in view.get("slices", [])]
+            if where in self.HIDDEN:
+                self.assertEqual(marks, [], where)
+                continue
+            every = [(v["id"], i) for v in self.embedding[metric_id]["views"] for i in range(len(v["surfaces"]))]
+            self.assertEqual(marks, every, where)
+            drawn += len(marks)
+        self.assertGreater(drawn, 100)
+
+    def test_every_slice_is_stamped_with_the_surface_it_marks(self):
+        for metric_id, where, view in self.drawings():
+            for mark in view.get("slices", []):
+                target, _ = self.moment(metric_id, mark)
+                self.assertEqual(build.embedding_moment_version(target, mark["surface"]), mark["version"], where)
+                self.assertTrue(mark["lines"] or mark["points"] or mark["fills"], where)
+                self.assertTrue(mark["label"].count("$") % 2 == 0 and mark["label"], where)
+
+    def flat_expected(self, key, view, surface, mark):
+        """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
+        ends a line of it may have short of the box."""
+        t = surface.get("time")
+        if key.startswith("schwarzschild/eddington_finkelstein"):
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            return (lambda X: sign * math.log(X - 1) + (0 if finkelstein else sign * X)), None
+        if key == "de_sitter/flat_slicing/tx":
+            return (lambda X: -0.5 * math.log(1 + X * X)), None
+        if key == "pp_wave/exact_plane_wave/tz":
+            return (lambda X: X + t), None
+        if key == "oppenheimer_snyder/exterior_schwarzschild/radial":
+            lo, hi = self.reach(surface, "comoving_synchronous")
+
+            def ct(X):
+                R = bisect(lambda R: novikov_t(R, t)[0] - X, lo, hi) if t else X
+                return novikov_t(R, t)[1] if t else 0.0
+            # The curve runs from the star's surface, the shell released at lo, outward.
+            return ct, [novikov_t(lo, t)[0] if t else lo, novikov_t(hi, t)[0] if t else hi]
+        if key == "oppenheimer_snyder/interior_comoving/through":
+            return (lambda X: t / (2 * math.sqrt(2))), [0, math.pi / 4]
+        if key == "vaidya/eddington_finkelstein_ingoing/shell":
+            return (lambda X: t), list(self.reach(surface))
+        if key == "krasnikov/cylindrical/tx":
+            path = next(c for c in surface["curves"] if c["class"] == "path")
+            grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
+            return (lambda X: 5.0), [grid["u"][0] - path["points"][0][0], grid["u"][-1] - path["points"][0][0]]
+        if key.startswith(("kasner", "bianchi", "malament_hogarth")):
+            if key.startswith("malament_hogarth"):
+                lo, hi = self.reach(surface)
+                return (lambda X: t), [-hi, -lo, lo, hi]
+            return (lambda X: t), None
+        if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "minkowski/rindler")):
+            return (lambda X: 0.0), None
+        if key.startswith("bertotti_robinson"):
+            lo, hi = self.reach(surface) if mark["lines"] else (1, 1)
+            return (lambda X: 0.0), [lo, hi]
+        if key == "anti_de_sitter/poincare/tx":
+            hi = self.reach(surface)[1]
+            x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
+            return (lambda X: 0.0), [-x, x]
+        if key == "godel/cartesian/tx":
+            hi = self.reach(surface)[1]
+            return (lambda X: 0.0), [-2 * hi, 2 * hi]
+        if surface["pieces"][0].get("grid"):
+            u = surface["pieces"][0]["grid"]["u"][-1]
+            return (lambda X: 0.0), [-u, u]
+        lo, hi = self.reach(surface)
+        through = key.endswith("/tx") and not view["mirror"]
+        return (lambda X: 0.0), ([-hi, -lo, lo, hi] if through else [lo, hi])
+
+    def test_every_slice_on_a_spacetime_diagram_lies_on_its_moment_and_ends_where_the_embedding_does(self):
+        """Each point of a line or a point of a slice, carried back through the view's box and
+        axes, lies on its moment, and a line stops at the embedding's reach or at the box."""
+        checked = 0
+        for metric_id, data in self.diagrams.items():
+            for system_id, views in data["systems"].items():
+                for view in views:
+                    key = f"{metric_id}/{system_id}/{view['id']}"
+                    X0, X1, Y0, Y1 = view["box"]
+                    for mark in view.get("slices", []):
+                        _, surface = self.moment(metric_id, mark)
+                        if mark["fills"]:
+                            self.check_region_from_above(key, view, surface, mark)
+                            continue
+                        Y_of, ends = self.flat_expected(key, view, surface, mark)
+                        for line in mark["lines"] + [[p] for p in mark["points"]]:
+                            for u in line:
+                                X, Y = X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)
+                                h = 2e-4 * (X1 - X0)
+                                slope = (abs(Y_of(min(X + h, X1)) - Y_of(max(X - h, X0 + 1e-9 if key.startswith(
+                                    ("schwarzschild/edd", "oppenheimer_snyder/ext")) else X0))) / (2 * h)
+                                         if X0 < X < X1 else 0)
+                                tol = 1e-4 * (Y1 - Y0) + slope * 1e-4 * (X1 - X0) + 1e-9
+                                self.assertLess(abs(Y - Y_of(X)), 3 * tol, f"{key} {mark['label']} at {u}")
+                                checked += 1
+                            for u in (line[0], line[-1]):
+                                edge = min(u[0], 1 - u[0], u[1], 1 - u[1]) < 1.5e-4
+                                X = X0 + u[0] * (X1 - X0)
+                                at_reach = ends is not None and any(abs(X - e) < 1.5e-4 * (X1 - X0) for e in ends)
+                                self.assertTrue(edge or at_reach, f"{key} {mark['label']} stops at {u}")
+        self.assertGreater(checked, 200)
+
+    def check_region_from_above(self, key, view, surface, mark):
+        """Kerr's equator from above: the plane outside the horizon, the box less the disc of r_+."""
+        X0, X1, Y0, Y1 = view["box"]
+        lo = self.reach(surface)[0]
+        outer, hole = mark["fills"][0]
+        self.assertEqual(sorted(map(tuple, outer)), sorted([(0, 0), (1, 0), (1, 1), (0, 1)]), key)
+        for u in hole:
+            self.assertAlmostEqual(math.hypot(X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)), lo, delta=2e-3, msg=key)
+
+    def test_every_slice_on_a_figure_lies_on_its_floor(self):
+        """A figure's slice is a region of its floor, t = 0, carried back from the page through
+        its camera: a disc or a ring about the axis out to where the floor or the embedding
+        ends, and a rim where the embedding stops short of the floor's edge."""
+        for metric_id, data in self.diagrams.items():
+            for figure in [f for views in data.get("projections", {}).values() for f in views]:
+                a, e = (math.radians(figure["camera"][k]) for k in ("azimuth", "elevation"))
+
+                def floor(p):
+                    # (X, Y, 0) is seen at (-X sin a + Y cos a, -sin e (X cos a + Y sin a)).
+                    along = -p[1] / math.sin(e)
+                    return math.hypot(along * math.cos(a) - p[0] * math.sin(a), along * math.sin(a) + p[0] * math.cos(a))
+                for mark in figure.get("slices", []):
+                    _, surface = self.moment(metric_id, mark)
+                    rings = [[floor(p) for p in ring] for rings in mark["fills"] for ring in rings]
+                    rims = [[floor(p) for p in line] for line in mark["lines"]]
+                    where = f"{metric_id}/{figure['id']}"
+                    if metric_id == "cosmic_string":
+                        hi = self.reach(surface, "conical", reference=True)[1]
+                        self.assertLessEqual(max(max(r) for r in rings), hi + 1e-3, where)
+                        self.assertTrue(all(abs(r - hi) < 1e-3 for rim in rims for r in rim), where)
+                        continue
+                    for ring in rings + rims:
+                        self.assertLess(max(ring) - min(ring), 2e-3 * max(ring), where)
+                    if metric_id == "godel":
+                        self.assertAlmostEqual(rims[0][0], self.reach(surface)[1], delta=1e-3, msg=where)
+                    if metric_id in ("kerr", "kerr_newman"):
+                        self.assertAlmostEqual(min(r[0] for r in rings), self.reach(surface)[0], delta=1e-3, msg=where)
+
+    def test_every_slice_on_a_conformal_diagram_lies_on_its_moment(self):
+        """A moment of constant t through a bifurcation point or a centre is the line T = 0,
+        Reissner-Nordstrom's inside r_- the line T = pi, the closed universe's T = eta, and the
+        Malament-Hogarth moments ct = tan p + tan q over two, as p, q = arctan(ct -+ r) make
+        them; Vaidya's are carried back through each side of the shell's own map."""
+        for metric_id, data in self.conformal.items():
+            for view in data["views"]:
+                X0, X1, T0, T1 = view["box"]
+                for mark in view.get("slices", []):
+                    _, surface = self.moment(metric_id, mark)
+                    where = f"conformal {metric_id}/{view['id']} {mark['label']}"
+                    points = [p for line in mark["lines"] for p in line] + mark["points"]
+                    self.assertTrue(all(X0 <= X <= X1 and T0 <= T <= T1 for X, T in points), where)
+                    t = surface.get("time")
+                    if metric_id == "frw":
+                        eta = bisect(lambda e: e - math.sin(e) - t, 0, 2 * math.pi)
+                        self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
+                        self.assertEqual(sorted(X for X, _ in points), [0, round(math.pi, 4)], where)
+                    elif metric_id == "malament_hogarth":
+                        lo, hi = self.reach(surface)
+                        for X, T in points:
+                            p, q = (T - X) / 2, (T + X) / 2
+                            tp, tq = math.tan(p), math.tan(q)
+                            scale = 1 + tp * tp + tq * tq
+                            self.assertLess(abs((tp + tq) / 2 - t), 2e-4 * scale, where)
+                            self.assertLessEqual(lo - 2e-4 * scale, (tq - tp) / 2, where)
+                            self.assertLessEqual((tq - tp) / 2, hi + 2e-4 * scale, where)
+                    elif metric_id == "vaidya":
+                        for X, T in points:
+                            p, q = (T - X) / 2, (T + X) / 2
+                            if q < math.pi / 4 - 1e-3:        # inside the shell, v < 0, flat
+                                F = lambda u: math.atan((1 + u / 2) * math.exp(-u / 2))
+                                v = bisect(lambda u: F(u) - q, -60, 0)
+                                r = (v - bisect(lambda u: F(u) - p, -80, 0)) / 2
+                            elif q > math.pi / 4 + 1e-3:      # outside, Kruskal's p = arctan U, q = arctan V
+                                v = 2 * math.log(math.tan(q))
+                                # (1 - r) e^r falls from its greatest value at r = 0, which is where
+                                # the moment ends on the singularity.
+                                f = lambda r: (1 - r) * math.exp(r - v / 2) - math.tan(p)
+                                r = 0.0 if f(0) < 1e-4 else bisect(f, 0, 20)
+                            else:
+                                continue
+                            self.assertLess(abs(v - r - t), 2e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
+                    elif metric_id == "oppenheimer_snyder":
+                        chi0 = math.pi / 4
+                        eta = bisect(lambda e: math.sqrt(2) * (e + math.sin(e)) - t, 0, math.pi)
+                        dust = [(X, T) for X, T in points if X <= chi0 + 1e-4]
+                        self.assertTrue(dust and all(abs(T - eta) < 2e-4 for _, T in dust), where)
+                        # The line crosses the star's surface at (chi_0, eta), where Novikov's
+                        # slice outside meets the dust's moment.
+                        inside, outside = mark["lines"]
+                        self.assertEqual(inside, [[0, round(eta, 4)], [round(chi0, 4), round(eta, 4)]], where)
+                        self.assertLess(math.dist(outside[0], [chi0, eta]), 2e-4, where)
+                    elif metric_id == "rn_metric" and mark["view"] == "inside":
+                        self.assertTrue(all(abs(T - math.pi) < 2e-4 for _, T in points), where)
+                    else:
+                        self.assertTrue(all(abs(T) < 2e-4 for _, T in points), where)
+
+    def test_a_slice_of_a_view_or_surface_the_embedding_lacks_or_of_a_moved_moment_is_refused(self):
+        metrics = build.load_metrics()
+        diagrams, conformal, embedding = (build.load_diagrams(metrics), build.load_conformal(metrics),
+                                          build.load_embedding(metrics))
+        build.check_slices(diagrams, conformal, embedding)
+        stray = copy.deepcopy(diagrams)
+        stray["schwarzschild"]["systems"]["spherical"][0]["slices"][0]["view"] = "elsewhere"
+        with self.assertRaises(build.DataError) as raised:
+            build.check_slices(stray, conformal, embedding)
+        self.assertIn("'elsewhere'", str(raised.exception))
+        moved = copy.deepcopy(embedding)
+        moved["kasner"]["views"][0]["surfaces"][1]["time"] = 0.6
+        with self.assertRaises(build.DataError) as raised:
+            build.check_slices(diagrams, conformal, moved)
+        self.assertIn("kasner", str(raised.exception))
+        self.assertIn("null_rays.py --slices", str(raised.exception))
+
+    def test_every_slice_class_is_styled_on_the_page_and_in_print(self):
+        _, rules = page_rules()
+        for cls in (".nr-slice", ".cd-slice", ".pj-slice", ".nr-slice-fill", ".pj-slice-fill", ".mfs-slice-label"):
+            for printed in (False, True):
+                self.assertTrue(any(any(cls in selector for selector in selectors) and bool(p) == printed
+                                    for selectors, _, p in rules), f"{cls}, print {printed}")
 
 
 class Bibliography(unittest.TestCase):
