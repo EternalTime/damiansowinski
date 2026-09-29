@@ -1107,6 +1107,10 @@ class NoGlow(unittest.TestCase):
         self.assertEqual(self.last("#mfs-content-panel .mfs-choice.mfs-choice-on", "color"), "var(--pink-light)")
         self.assertEqual(self.last("#mfs-content-panel .mfs-choice.mfs-choice-on", "border-color"), "var(--pink-light)")
         self.assertEqual(self.last(".mfs-result.mfs-result-active", "color"), "var(--pink-light)")
+        # At once, so a press as short as a tap shows it whole.
+        for selector in ("#mfs-content-panel .mfs-choice.mfs-choice-on", "#mfs-content-panel .mfs-choice:active",
+                         "#mfs-content-panel #mfs-print-btn:active"):
+            self.assertEqual(self.last(selector, "transition"), "none", selector)
 
     def test_every_button_turns_pink_while_it_is_pressed(self):
         # Each :active rule comes after the button's :hover, which a mouse holds while it presses.
