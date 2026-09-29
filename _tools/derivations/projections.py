@@ -606,7 +606,7 @@ CAPTIONS = {
     ("kerr_newman", "boyer_lindquist", "dragging"): [
         "This is the equatorial plane $\\theta = \\pi/2$ with $t$ up and $r$ and $\\phi$ as polar "
         "coordinates about the axis, for $a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$, down to the "
-        "horizon $r_+ = 1.625\\,GM/c^2$, where the chart ends. As in Kerr, light moving in this plane "
+        "horizon $r_+ = 1.624\\,GM/c^2$, where the chart ends. As in Kerr, light moving in this plane "
         "stays in it. The cones stand at $t = 0$ at four places around each of three circles: $r = "
         "3r_E/2$, the outer ergosurface $r_E = 1.866\\,GM/c^2$, and halfway between $r_E$ and $r_+$. "
         "On the outer circle they stand nearly upright, and closer in the cross term $g_{t\\phi} = "
