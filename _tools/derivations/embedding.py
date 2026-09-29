@@ -1741,7 +1741,7 @@ def tov(ck, src):
                  input="A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
                        "$\\rho c^2 = \\rho_0c^2 + p$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$, "
                        f"solved from this spacetime's own $G^t{{}}_t$ and $G^r{{}}_r$: a star of $M = {M:.2f}\\,M_\\odot$ "
-                       f"and $R = {R * km:.1f}$ km, the one numerical relativity tests its codes on.")]
+                       f"and $R = {R * km:.1f}$ km, the star on which numerical relativists test their codes.")]
 
 
 def morris_thorne(ck, src):
@@ -1836,8 +1836,8 @@ def rn_metric(ck, src):
     fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     settings = "$r_s = 1$, the unit of every length, and $r_q = 0.48\\,r_s$, so that $r_+ = 0.64\\,r_s$ and $r_- = 0.36\\,r_s$."
-    between = ("Between the horizons, $r_- < r < r_+$, $g_{rr} < 0$: $r$ is a time there and a slice of "
-               "constant $t$ is not a moment of space, so nothing is drawn.")
+    between = ("Between the horizons, $r_- < r < r_+$, $g_{rr} < 0$: $r$ is a time there, and a slice of "
+               "constant $t$ is not a moment of space.")
     views = [view("outside", "Outside $r_+$", "$r_s$", [outside], fig.done(), settings=settings, stops=[between])]
 
     # Inside r-: each side from where the surface lies level up to the widest circle, r-.
@@ -2019,8 +2019,8 @@ def vaidya(ck, src):
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     return [view("shell", "The falling shell", "$r_s$", surfaces, fig.done(),
                  settings="$r_s = 2GM/c^2 = 1$, the unit of every length; each moment is a slice of constant $v - r$.",
-                 input="An imploding shell of radiation, $m = 0$ for $v < 0$ and $m = M$ for $v > 0$, as the "
-                       "conformal diagram draws it.")]
+                 input="An imploding shell of radiation, $m = 0$ for $v < 0$ and $m = M$ for $v > 0$, as in "
+                       "the conformal diagram.")]
 
 
 def einstein(src, metric_id, system_id, index):
@@ -2237,7 +2237,7 @@ def tolman_bondi(ck, src):
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     return [view("cloud", "The collapsing cloud", "$r_b$", surfaces, fig.done(),
                  settings="$r_b = 1$, the unit of every length, and $2GM/c^2 = r_b/2$.",
-                 input="The cloud the spacetime diagram draws, its density falling as $1 - r^2/r_b^2$ to zero at $r_b$ "
+                 input="The cloud of the spacetime diagram, its density falling as $1 - r^2/r_b^2$ to zero at $r_b$ "
                        "with $R(r, 0) = r$, but released from rest, $E = -GM(r)/c^2r$, each shell falling on its own "
                        "cycloid, checked to solve this spacetime's own $G^r{}_r = 0$ and to give its density.",
                  stops=["The spacetime diagram's cloud is marginally bound, $E = 0$, and then every slice of constant "
@@ -2726,9 +2726,9 @@ def krasnikov(ck, src):
                  settings="$ct = 5\\rho_0$, a unit after the ship reached the far end of the tube, with $\\rho_0 = 1$, "
                           "the unit of every length.",
                  input="A tube along $x$ from $0$ to $D = 4$, built by a ship that left $x = 0$ at $t = 0$ at the "
-                       "speed of light: $k = 1 - (2 - \\delta)\\,S(\\tfrac{\\rho_0^2 - r^2}{2\\rho_0})\\,S(ct - x)"
-                       "\\,S(x)\\,S(D - x)$ with $\\delta = 0.2$, $\\rho_0 = 1$ and $S$ a step of width $0.15$ built "
-                       "from $\\tanh$, as the spacetime diagram declares.",
+                       "speed of light: $k = 1 - (2 - \\delta)\\,S(\\tfrac{\\rho_0^2 - r^2}{2\\rho_0})\\,S(ct - "
+                       "x)\\,S(x)\\,S(D - x)$ with $\\delta = 0.2$, $\\rho_0 = 1$, and $S$ a step of width $0.15$ "
+                       "built from $\\tanh$, as in the spacetime diagram.",
                  height=f"$1 - k = 2g_{{tx}}$, a height of $\\rho_0$ for $1 - k = 1$, and ${deep:.4f}\\rho_0$ on the "
                         "axis in the middle of the tube.",
                  stops=["The slice of constant $t$ itself, which is no moment of space inside the curve $k = 0$, "
@@ -2847,9 +2847,8 @@ def alcubierre(ck, src):
     fig.legend("line", "expand", f"$\\theta = {most / 2:.2f}\\,c/R$, half the fastest expansion, behind it")
     return [view("plane", "The plane of the path", "$R$", [surface], fig.done(),
                  settings="$t = 0$, when the bubble is centred on $x = 0$, with $R = 1$, the unit of every length.",
-                 input="$v_s = 2$, and Alcubierre's own profile, "
-                       "$f = [\\tanh\\sigma(r_s + R) - \\tanh\\sigma(r_s - R)]/(2\\tanh\\sigma R)$ with $R = 1$ and "
-                       "$\\sigma = 4$, as the spacetime diagram declares.",
+                 input="$v_s = 2$, and Alcubierre's own profile, $f = [\\tanh\\sigma(r_s + R) - \\tanh\\sigma(r_s - "
+                       "R)]/(2\\tanh\\sigma R)$ with $R = 1$ and $\\sigma = 4$, as in the spacetime diagram.",
                  height=f"$\\theta$, a height of $R$ for $\\theta = 4c/R$, and ${most / 4:.4f}R$ where the expansion "
                         f"is fastest, $\\theta = {most:.4f}\\,c/R$.")]
 
@@ -2914,9 +2913,9 @@ def natario(ck, src):
     fig.legend("line", "meridian", "straight lines from the ship, every $15°$")
     return [view("plane", "The plane of the path", "$R$", [surface], fig.done(),
                  settings="$t = 0$, when the bubble is centred on $x = 0$, with $R = 1$, the unit of every length.",
-                 input="$v_s = 2$, $n = f/2$ with Alcubierre's profile, and the zero expansion field "
-                       "$X = v_s[(2n + \\rho n')\\,e_x - n'\\,x_r\\,(x_r, y, z)/\\rho]$, $x_r = x - v_s t$, as the "
-                       "spacetime diagram declares.")]
+                 input="$v_s = 2$, $n = f/2$ with Alcubierre's profile, and the zero expansion field $X = v_s[(2n + "
+                       "\\rho n')\\,e_x - n'\\,x_r\\,(x_r, y, z)/\\rho]$, $x_r = x - v_s t$, as in the spacetime "
+                       "diagram.")]
 
 
 def lentz(ck, src):
@@ -2989,10 +2988,10 @@ def kasner(ck, src):
                                     "marked: an ellipse reaching $t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$")
     fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
     return [view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(),
-                 settings="$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ and $t$ in the unit the powers are read in, with $\\ell$ "
-                          "the ring's radius at $t = 1$, the unit of every length.",
-                 input="Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, a point on the Kasner circle, as the spacetime "
-                       "diagrams declare.")]
+                 settings="$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ and $t$ in the unit of time in which the powers are "
+                          "evaluated, with $\\ell$ the ring's radius at $t = 1$, the unit of every length.",
+                 input="Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, a point on the Kasner circle, as in the "
+                       "spacetime diagrams.")]
 
 
 def bianchi(ck, src):
@@ -3023,8 +3022,8 @@ def bianchi(ck, src):
                  settings="$t$ in units of $1/\\bar H$ from the singularity, with $\\ell$ the ring's radius where "
                           "$a_1 = a_2 = a_3 = 1$, the unit of every length.",
                  input="Dust: the three scale factors solved from this spacetime's own $G^x{}_x = G^y{}_y = G^z{}_z = 0$, "
-                       "starting from $a_i = 1$ with rates $(-0.5, 1.5, 2.0)\\,\\bar H$, $\\bar H$ their mean, as the "
-                       "spacetime diagram declares.")]
+                       "starting from $a_i = 1$ with rates $(-0.5, 1.5, 2.0)\\,\\bar H$, $\\bar H$ their mean, as in the "
+                       "spacetime diagram.")]
 
 
 def pp_wave(ck, src):
@@ -3079,7 +3078,7 @@ def pp_wave(ck, src):
     fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
     return [view("ring", "A ring of particles", "$L$", surfaces, fig.done(),
                  settings="$L = 1$, the unit of every length and of $cu$; each moment is the wave front of one $u$.",
-                 input="A pulse of the plus polarisation, $A = e^{-u^2}/L^2$ and $B = 0$, as the spacetime diagram declares.")]
+                 input="A pulse of the plus polarisation, $A = e^{-u^2}/L^2$ and $B = 0$, as in the spacetime diagram.")]
 
 
 def malament_hogarth(ck, src):
@@ -3138,10 +3137,10 @@ def malament_hogarth(ck, src):
     fig.legend("line", "r", "$s$ constant, at $0.1$, $0.3$, $0.5$ and $1$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     return [view("plane", "Toward the removed event", "$1$", surfaces, fig.done(),
-                 settings="$c\\,t$ and every length in the unit the declared $\\Omega$ is written in, the radius of the "
-                          "region where $\\Omega > 1$; each moment is the plane $z = 0$ of one $t$.",
+                 settings="$c\\,t$ and every length in the unit in which the declared $\\Omega$ is written, the radius "
+                          "of the region where $\\Omega > 1$; each moment is the plane $z = 0$ of one $t$.",
                  input="$\\Omega = 1 + e^{1 - 1/(1 - \\varrho^2)}/\\varrho$ for $\\varrho^2 = c^2t^2 + x^2 + y^2 + z^2 < 1$ and "
-                       "$\\Omega = 1$ beyond, as the spacetime diagram declares.",
+                       "$\\Omega = 1$ beyond, as in the spacetime diagram.",
                  stops=["At $ct = 0$ the tube runs on without end toward the removed event, and is drawn down to "
                         "$s = 0.03$."])]
 
@@ -3181,8 +3180,8 @@ def anti_de_sitter(ck, src):
                           "$dX^2 + dY^2 - dZ^2$.",
                  space="minkowski",
                  stops=["At every $r > 0$ the circles grow faster than the distance out to them, $g_{rr} < "
-                        "(\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, so no surface of revolution in flat space carries the "
-                        "slice, and it is drawn in Minkowski space instead."])]
+                        "(\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat space carries the "
+                        "slice; Minkowski space carries it."])]
 
 
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
@@ -3275,7 +3274,7 @@ def mixmaster(ck, src):
                  stops=["When the three scale factors differ, as in every other Mixmaster universe, the great sphere's "
                         "metric depends on $\\phi$ as well as $\\theta$, and no surface of revolution carries it.",
                         "At the second moment $a_3$ is more than $2/\\sqrt{3}$ times $a_1$, the curvature about the poles "
-                        "is negative, and only the band about the equator is drawn."])]
+                        "is negative, and only the band about the equator has a surface of revolution in flat space."])]
 
 
 # ---------------------------------------------------------------- the spacetimes with nothing to draw
@@ -3338,17 +3337,17 @@ NOT_DRAWN = set()
 
 CAPTIONS = {
     ("schwarzschild", "flamm"): [
-        "This is the equatorial plane $\\theta = \\pi/2$ of the Schwarzschild spacetime at one moment "
-        "of $t$, drawn as a surface in flat space so that every distance along it is the metric "
-        "distance. On it the metric is $dr^2/(1 - r_s/r) + r^2d\\phi^2$: the circle of radius $r$ "
-        "has circumference $2\\pi r$, while the distance out to the next circle, $dr/\\sqrt{1 - r_s/r}$, "
-        "is longer than $dr$. The surface of revolution that carries both is the paraboloid $z^2 = "
-        "4r_s(r - r_s)$, which Ludwig Flamm found in 1916.",
+        "This is the equatorial plane $\\theta = \\pi/2$ of the Schwarzschild spacetime at one moment of "
+        "$t$, drawn as a surface in flat space so that every distance along it is the metric distance. On "
+        "it the metric is $dr^2/(1 - r_s/r) + r^2d\\phi^2$: the circle of radius $r$ has circumference "
+        "$2\\pi r$, while the distance out to the next circle, $dr/\\sqrt{1 - r_s/r}$, is longer than "
+        "$dr$. Both hold on the paraboloid $z^2 = 4r_s(r - r_s)$, a surface of revolution that Ludwig "
+        "Flamm found in 1916.",
         "Every slice of constant $t$ passes through the bifurcation sphere $r = r_s$, where the circles "
         "are smallest, and runs on through it into a second exterior, the same paraboloid turned over. "
-        "Einstein and Rosen took this bridge between the two sheets as a model of a particle in 1935. "
-        "Robert Fuller and John Wheeler showed in 1962 that its throat closes before light can cross "
-        "it, so nothing passes from one exterior to the other.",
+        "Albert Einstein and Nathan Rosen took this bridge between the two sheets as a model of a "
+        "particle in 1935. Robert Fuller and John Wheeler showed in 1962 that its throat closes before "
+        "light can cross it, so nothing passes from one exterior to the other.",
     ],
     ("interior_schwarzschild", "star"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of a static star of uniform density at one "
@@ -3356,7 +3355,7 @@ CAPTIONS = {
         "metric distance. Inside, $g_{rr} = 1/(1 - r^2r_s/R^3)$ is the metric of a sphere of "
         "radius $\\sqrt{R^3/r_s}$, so the slice is a cap of that sphere, curved alike at every point "
         "because the density is the same everywhere. Outside it is Flamm's paraboloid.",
-        "At $r = R$ both sides give $g_{rr} = 1/(1 - r_s/R)$, so the cap meets the paraboloid in one "
+        "At $r = R$, $g_{rr} = 1/(1 - r_s/R)$ on both sides, so the cap meets the paraboloid in one "
         "circle with one tangent plane, and the surface is smooth across the surface of the star. The "
         "vacuum paraboloid would run on down to a throat at $r_s$. The star, at $R = 1.5\\,r_s$, ends it "
         "above there, and its circles shrink to a point at the centre instead.",
@@ -3417,9 +3416,9 @@ CAPTIONS = {
         "slice passes through the bifurcation sphere at $r_+$, its throat, into a second exterior.",
         "On the equator the throat's circumference is $4\\pi GM/c^2$ whatever the spin, since $r_+^2 + a^2 = "
         "2GMr_+/c^2$ there. The dotted circle is the edge of the ergosphere, $r = 2GM/c^2$ on the equator, "
-        "inside which nothing can stand still against the rotation. Nothing in the shape of the slice marks "
-        "it: the ergosphere lies in how the slices are stacked, the rotation dragging each one round past "
-        "the next.",
+        "inside which nothing can stand still against the rotation. The ergosphere leaves the shape of the "
+        "slice unmarked and lies in how the slices are stacked, the rotation dragging each one round past the "
+        "next.",
     ],
     ("kerr_newman", "equator"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of a charged rotating black hole at one moment of "
@@ -3479,10 +3478,10 @@ CAPTIONS = {
         "the areal radius of the shell $r$, so in the areal radius the surface climbs at "
         "$dz/dR = \\sqrt{-2E/(1 + 2E)}$, set by the energy $E = -GM(r)/c^2r$ of the shell there alone. Every "
         "shell falls on its own clock, the centre first, and the surface follows the shells as they go.",
-        "Richard Tolman found these solutions in 1934 and Hermann Bondi took them up in 1947. The spacetime "
-        "diagram draws this cloud marginally bound, $E = 0$, falling from rest at infinity, and then every "
-        "slice of constant $t$ is flat; drawn here released from rest from the same density at $t = 0$, its "
-        "slices curve.",
+        "Richard Tolman found these solutions in 1934, and Hermann Bondi took them up in 1947. In the "
+        "spacetime diagram the cloud is marginally bound, $E = 0$, falling from rest at infinity, and then "
+        "every slice of constant $t$ is flat; released from rest from the same density at $t = 0$, as it is "
+        "here, its slices curve.",
     ],
     ("bertotti_robinson", "equator"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of the Bertotti-Robinson universe at one moment of "
@@ -3538,18 +3537,18 @@ CAPTIONS = {
         "its axis.",
     ],
     ("ellis_bronnikov", "wormhole"): [
-        "This is the equatorial plane $\\theta = \\pi/2$ of the Ellis-Bronnikov wormhole at one moment of "
-        "$t$, drawn as a surface in flat space so that every distance along it is the metric "
-        "distance. Its $r$ is the proper distance from the throat, running from $-\\infty$ on one side to "
-        "$\\infty$ on the other, so the circles of constant $r$ stand at equal steps along the surface, and "
-        "the circle at $r$ has circumference $2\\pi\\sqrt{r^2 + \\ell^2}$. The surface that carries both is "
-        "the catenoid $\\sqrt{r^2 + \\ell^2} = \\ell\\cosh(z/\\ell)$, one piece through the throat at $r = 0$, "
-        "where the circles are smallest and the surface stands vertical.",
-        "It is the surface the Morris-Thorne wormhole draws, and the same metric: Michael Morris and Kip "
-        "Thorne set it out in 1988 as the simplest traversable wormhole, with the shape function $b = "
+        "This is the equatorial plane $\\theta = \\pi/2$ of the Ellis-Bronnikov wormhole at one moment of $t$, "
+        "drawn as a surface in flat space so that every distance along it is the metric distance. Its $r$ is "
+        "the proper distance from the throat, running from $-\\infty$ on one side to $\\infty$ on the other, so "
+        "the circles of constant $r$ stand at equal steps along the surface, and the circle at $r$ has "
+        "circumference $2\\pi\\sqrt{r^2 + \\ell^2}$. Both hold on the catenoid $\\sqrt{r^2 + \\ell^2} = "
+        "\\ell\\cosh(z/\\ell)$, one piece through the throat at $r = 0$, where the circles are smallest and the "
+        "surface stands vertical.",
+        "The same surface, with the same metric, is the Morris-Thorne wormhole of Michael Morris and Kip "
+        "Thorne, who set it out in 1988 as the simplest traversable wormhole, with the shape function $b = "
         "\\ell^2/R$ of the areal radius $R = \\sqrt{r^2 + \\ell^2}$, unaware that Homer Ellis and Kirill "
         "Bronnikov had each found it in 1973. The areal radius turns back at the throat, so it covers one side "
-        "at a time; the proper $r$ runs straight through.",
+        "at a time, while the proper $r$ runs straight through.",
     ],
     ("cosmic_string", "cone"): [
         "This is the plane $z = 0$ across a straight cosmic string at one moment of $t$, drawn as a "
@@ -3566,11 +3565,11 @@ CAPTIONS = {
         "This is the equatorial plane $\\theta = \\pi/2$ of Minkowski space at one moment of $t$, drawn as a "
         "surface in flat space so that every distance along it is the metric distance. On it $g_{rr} = 1$ "
         "and the circle of radius $r$ has circumference $2\\pi r$, so the surface is the flat plane itself.",
-        "Every other embedding diagram is measured against this one. Where a circle's circumference falls short of "
+        "Every other slice is measured against this flat plane. Where a circle's circumference falls short of "
         "$2\\pi$ times the distance out to it, as around a star, the plane curves into a bowl; where it exceeds it, "
-        "as in anti-de Sitter space, no surface of revolution in flat space carries the plane at all. Hermann "
-        "Minkowski set out in 1908 the geometry in which space at one moment of any inertial observer is this flat "
-        "space of Euclid.",
+        "as in anti-de Sitter space, no surface of revolution in flat space carries the plane. Hermann Minkowski set "
+        "out in 1908 the geometry in which space at one moment of any inertial observer is this flat space of "
+        "Euclid.",
     ],
     ("anti_de_sitter", "hyperboloid"): [
         "This is the equatorial plane $\\theta = \\pi/2$ of anti-de Sitter space at the moment $t = 0$ of its static "
@@ -3579,8 +3578,8 @@ CAPTIONS = {
         "circle of radius $r$ has circumference $2\\pi r$, so every circle grows faster than the distance out to it, "
         "which no surface of revolution in flat space allows. In Minkowski space the plane is one sheet of the "
         "hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, and the whole hyperbolic plane of curvature $-1/L^2$ lies on it.",
-        "Where the sheet is steep a step along it is shorter than it looks: the circles at $L$, $2L$, $3L$ and $4L$ "
-        "stand $0.88$, $0.56$, $0.37$ and $0.28\\,L$ apart. The sheet nears the light cone of the space it is drawn "
+        "Where the sheet is steep a step along it is shorter than it looks: the circles at $L$, $2L$, $3L$, and $4L$ "
+        "stand $0.88$, $0.56$, $0.37$, and $0.28\\,L$ apart. The sheet nears the light cone of the space it is drawn "
         "in, dashed, without ever reaching it, and the conformal boundary of anti-de Sitter space lies along that "
         "cone at infinity. Wilhelm Killing in 1880 and Henri Poincaré in 1881 each described the hyperbolic plane as "
         "this sheet, and David Hilbert proved in 1901 that no surface in flat space carries the whole of it.",
@@ -3601,11 +3600,11 @@ CAPTIONS = {
     ],
     ("mixmaster", "sphere"): [
         "This is the great two sphere of the Mixmaster universe's three sphere at five moments of its proper time "
-        "$\\tau$, each drawn as a surface in flat space so that every distance along it is the metric "
-        "distance. Every great sphere of a Mixmaster slice is congruent to every other, and the three great circles in "
-        "which it meets its planes of symmetry have circumferences $4\\pi a_1$, $4\\pi a_2$ and $4\\pi a_3$, so the "
-        "scale factors can be read off it. When all three agree it is a round sphere of radius $2a$, the equator of "
-        "a round three sphere.",
+        "$\\tau$, each drawn as a surface in flat space so that every distance along it is the metric distance. Every "
+        "great sphere of a Mixmaster slice is congruent to every other, and the three great circles in which it meets "
+        "its planes of symmetry have circumferences $4\\pi a_1$, $4\\pi a_2$, and $4\\pi a_3$, so the sphere carries "
+        "all three scale factors. When all three agree it is a round sphere of radius $2a$, the equator of a round "
+        "three sphere.",
         "The moments are those of Abraham Taub's universe of 1951, the vacuum member of the family with $a_1 = a_2$, "
         "which is the region across the horizon of Taub-NUT space where its $r$ is a time. Its fibres, the circles "
         "of $\\psi$, open from nothing at its first horizon and close again at its last, so its great sphere, a "
@@ -3618,22 +3617,21 @@ CAPTIONS = {
     ],
     ("kasner", "ring"): [
         "This is the plane $y = 0$ of Kasner's universe at four moments of $t$, each drawn as a surface in flat space "
-        "so that every distance along it is the metric distance. At every moment the plane is flat, "
-        "$t^{2p_1}dx^2 + t^{2p_3}dz^2$ being Euclid's plane with its axes scaled, so the drawing is a flat disc, and "
-        "what the geometry does shows in a ring of particles at rest in the chart, which stay at rest because the "
-        "metric has no $\\Gamma^i{}_{tt}$.",
-        "The ring is the circle $x^2 + z^2 = \\ell^2$ at $t = 1$, and at time $t$ the ellipse reaching "
-        "$t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$. With $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ the "
-        "direction $x$ contracts while $y$ and $z$ expand, so toward the singularity at $t = 0$ every sphere of "
-        "particles is drawn out into a needle along $x$. Edward Kasner found the solution in 1921: its exponents sum "
-        "to $1$, so volumes grow as $t$, and the vacuum asks that their squares sum to $1$ as well.",
+        "so that every distance along it is the metric distance. At every moment the plane is flat, $t^{2p_1}dx^2 + "
+        "t^{2p_3}dz^2$ being Euclid's plane with its axes scaled, so the drawing is a flat disc, and the uneven "
+        "expansion shows in a ring of particles at rest in the chart, which stay at rest because the metric has no "
+        "$\\Gamma^i{}_{tt}$.",
+        "The ring is the circle $x^2 + z^2 = \\ell^2$ at $t = 1$, and at time $t$ the ellipse reaching $t^{p_1}\\ell$ "
+        "along $x$ and $t^{p_3}\\ell$ along $z$. With $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ the direction $x$ "
+        "contracts while $y$ and $z$ expand, so toward the singularity at $t = 0$ every sphere of particles is drawn "
+        "out into a needle along $x$. Edward Kasner found the solution in 1921: its exponents sum to $1$, so volumes "
+        "grow as $t$, and the vacuum field equations require their squares to sum to $1$ as well.",
     ],
     ("bianchi", "ring"): [
-        "This is the plane $y = 0$ of a Bianchi type I universe of dust at four moments of cosmic time, each drawn "
-        "as a surface in flat space so that every distance along it is the metric distance. At every "
-        "moment the plane is flat, $a_1^2dx^2 + a_3^2dz^2$ being Euclid's plane with its axes scaled, so the drawing "
-        "is a flat disc, and what the geometry does shows in a ring of the dust itself, whose grains stay at rest in "
-        "the chart.",
+        "This is the plane $y = 0$ of a Bianchi type I universe of dust at four moments of cosmic time, each drawn as "
+        "a surface in flat space so that every distance along it is the metric distance. At every moment the plane is "
+        "flat, $a_1^2dx^2 + a_3^2dz^2$ being Euclid's plane with its axes scaled, so the drawing is a flat disc, and "
+        "the uneven expansion shows in a ring of the dust itself, whose grains stay at rest in the chart.",
         "The ring is the circle $x^2 + z^2 = \\ell^2$ at the moment all three scale factors are $1$, and at every "
         "other moment the ellipse reaching $a_1\\ell$ along $x$ and $a_3\\ell$ along $z$. Near the singularity the dust "
         "behaves as Kasner's vacuum does, drawn out along $x$ and flattened along $z$, and then the contraction along "
@@ -3642,11 +3640,10 @@ CAPTIONS = {
         "in 1898, and type I is the one whose slices are flat.",
     ],
     ("pp_wave", "ring"): [
-        "This is the wave front of a plane gravitational wave at four values of its retarded time $u$, each drawn as "
-        "a surface in flat space so that every distance along it is the metric distance. A surface of "
-        "constant $u$ has the metric $dx^2 + dy^2$ whatever $v$ is on it, so the drawing is a flat disc, and what the "
-        "wave does shows in a ring of free particles at rest on the circle $x^2 + y^2 = L^2$ before the pulse "
-        "arrives.",
+        "This is the wave front of a plane gravitational wave at four values of its retarded time $u$, each drawn as a "
+        "surface in flat space so that every distance along it is the metric distance. A surface of constant $u$ has "
+        "the metric $dx^2 + dy^2$ whatever $v$ is on it, so the drawing is a flat disc, and the wave shows in a ring "
+        "of free particles at rest on the circle $x^2 + y^2 = L^2$ before the pulse arrives.",
         "The pulse, $A = e^{-u^2}/L^2$ of the plus polarisation, pulls the particles as $d^2x/d(cu)^2 = Ax$ and "
         "$d^2y/d(cu)^2 = -Ay$, stretching the ring along $x$ and squeezing it along $y$, and the area it encloses "
         "falls although the spacetime is a vacuum: the Weyl curvature shears the ring, and the shear alone focuses "
@@ -3656,11 +3653,11 @@ CAPTIONS = {
     ],
     ("krasnikov", "plane"): [
         "This is the tilt of the light cone in the Krasnikov tube, $1 - k$, drawn as a height over the plane of the "
-        "tube's axis at the moment $ct = 5\\rho_0$: a height of $\\rho_0$ for $1 - k = 1$, and no surface of the "
-        "spacetime. Along the back edge of the light cone $c\\,dt = -k\\,dx$, so a light signal "
-        "sent home over a length $L$ arrives $(1 - k)L/c$ sooner than in flat space: $1 - k$ is $0$ outside the tube, "
-        "$1$ on the curve $k = 0$, where the signal arrives at the moment it left, and close to $1.8$ deep inside, "
-        "where it arrives $0.8L/c$ before it left.",
+        "tube's axis at the moment $ct = 5\\rho_0$, a height of $\\rho_0$ for $1 - k = 1$; the height stands for the "
+        "tilt alone. Along the back edge of the light cone $c\\,dt = -k\\,dx$, so a light signal sent home over a "
+        "length $L$ arrives $(1 - k)L/c$ sooner than in flat space: $1 - k$ is $0$ outside the tube, $1$ on the curve "
+        "$k = 0$, where the signal arrives at the moment it left, and close to $1.8$ deep inside, where it arrives "
+        "$0.8L/c$ before it left.",
         "The ship left $x = 0$ at $t = 0$ at the speed of light and reached the far end, $x = D = 4\\rho_0$, a unit "
         "of $ct$ before this moment, so the whole tube stands behind it as a ridge along the path; at any earlier "
         "moment the ridge ends at the ship, since nothing is built ahead of it. Inside the curve $k = 0$ the "
@@ -3672,11 +3669,11 @@ CAPTIONS = {
     ],
     ("alcubierre", "plane"): [
         "This is the expansion $\\theta$ of the observers who ride the slices of Alcubierre's warp drive, drawn as a "
-        "height over the plane $z = 0$ of the ship's path at the moment $t = 0$: the height is $\\theta$, a height of "
-        "$R$ for an expansion of $4c/R$, and no surface of the spacetime, whose slices are flat. The observers are "
-        "carried along $x$ at $v_sf$ times the speed of light, faster than light inside the circle $v_sf = 1$, and "
-        "a small volume of them changes at the rate $\\theta = c\\,v_s\\,\\partial_xf = c\\,v_s\\,\\frac{x - x_s}"
-        "{r_s}\\frac{df}{dr_s}$.",
+        "height over the plane $z = 0$ of the ship's path at the moment $t = 0$: the height stands for $\\theta$ "
+        "alone, a height of $R$ for an expansion of $4c/R$, and the slices themselves are flat. The observers are "
+        "carried along $x$ at $v_sf$ times the speed of light, faster than light inside the circle $v_sf = 1$, and a "
+        "small volume of them changes at the rate $\\theta = c\\,v_s\\,\\partial_xf = c\\,v_s\\,\\frac{x - "
+        "x_s}{r_s}\\frac{df}{dr_s}$.",
         "Ahead of the ship $f$ falls toward the front, so the observers behind catch up with those ahead and space "
         "contracts, a trough; behind it they draw apart and space expands, a crest. Each is deepest or highest on "
         "the path one $R$ from the ship, $4.00\\,c/R$, and the level lines mark half of that. Miguel Alcubierre "
@@ -3691,21 +3688,20 @@ CAPTIONS = {
         "past the next, whose divergence vanishes, so that no volume of space grows or shrinks anywhere.",
         "The lines marked are lines of that flow. Inside the bubble space moves forward at $v_s$ with the ship, "
         "outside it is at rest, and every line closes back through the wall, as the flow of a fluid that cannot be "
-        "compressed closes round an obstacle. José Natário built the drive in 2002 to show that Alcubierre's "
-        "contraction ahead and expansion behind are not what carries the ship; the energy density the riding "
-        "observers measure is still negative, $-c^4K_{ij}K^{ij}/16\\pi G$, since the trace $K$ vanishes with the "
-        "expansion.",
+        "compressed closes round an obstacle. José Natário built the drive in 2002 to show that the ship is carried "
+        "without Alcubierre's contraction ahead and expansion behind; the energy density measured by the riding "
+        "observers is still negative, $-c^4K_{ij}K^{ij}/16\\pi G$, since the trace $K$ vanishes with the expansion.",
     ],
     ("lentz", "plane"): [
         "This is the plane $y = 0$ of the path of Lentz's soliton at one moment, drawn as a surface in flat space so "
-        "that every distance along it is the metric distance. Every slice of constant $t$ is flat, "
-        "$dx^2 + dy^2 + dz^2$, for every potential $\\phi$, because flat slices are one of the three things Erik "
-        "Lentz fixed in 2021 to define his class, with a unit lapse and a shift that is the gradient of $\\phi$.",
-        "His soliton exists only as a numerical integral over rhomboid cells of source, so no potential is drawn in "
-        "its place and the plane carries only its path. On a flat slice the energy density the riding observers "
-        "measure is $\\sigma_2(\\partial_i\\partial_j\\phi)\\,c^4/8\\pi G$, the sum of the principal minors of the "
-        "Hessian of $\\phi$, which Lentz arranged to be positive; Jessica Santiago, Sebastian Schuster and Matt "
-        "Visser showed in 2022 that an observer moving fast enough through the slices measures it negative.",
+        "that every distance along it is the metric distance. Every slice of constant $t$ is flat, $dx^2 + dy^2 + "
+        "dz^2$, for every potential $\\phi$, because flat slices are one of the three conditions Erik Lentz imposed "
+        "in 2021 to define his class, with a unit lapse and a shift that is the gradient of $\\phi$.",
+        "His soliton exists only as a numerical integral over rhomboid cells of source, and the plane carries its "
+        "path alone. On a flat slice the energy density measured by the riding observers is "
+        "$\\sigma_2(\\partial_i\\partial_j\\phi)\\,c^4/8\\pi G$, the sum of the principal minors of the Hessian of "
+        "$\\phi$, which Lentz arranged to be positive; Jessica Santiago, Sebastian Schuster, and Matt Visser showed "
+        "in 2022 that an observer moving fast enough through the slices measures it negative.",
     ],
     ("frw", "closed"): [
         "This is the equator $\\theta = \\pi/2$ of space in a closed universe of dust at five moments "

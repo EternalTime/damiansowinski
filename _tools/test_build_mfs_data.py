@@ -58,6 +58,48 @@ GIVES = rf"(?i)\bthe {_WORD}{{1,2}}the {_WORD}{{0,2}}(?:gives?|yields?|provides?
 # $ds^2 = -c^2dt^2$", never "where $f = 1$ and the metric gives $ds^2 = -c^2dt^2$".
 METRIC_GIVES = r"(?i)\bthe metric gives?\b"
 
+# The captain's voice, ~/VOICE.md, as far as a pattern can hold it, over every paragraph of every
+# history and convention and every caption, note, restriction band and sentence stated in place
+# of a drawing. Mathematics and quotations are left out first: a quotation is its speaker's own
+# words. _tools/README.md carries the rules these stand for.
+_NOUN = r"(?:(?!(?:of|and|or|against|to|in|on|at|by)\b)[\w'-]+ )"
+VOICE = (
+    ("an em dash", r"—"),
+    ("a dash standing alone as punctuation", r"(?:^|\s)-(?:\s|$)"),
+    ("a noun handed back to what gives it", rf"(?i)\bthe {_NOUN}{{1,2}}the {_NOUN}{{0,2}}"
+                                            r"(?:gives?|yields?|provides?|returns?|affords?|supplies|supply"
+                                            r"|produces?|delivers?|offers?|draws?|declares?)\b"),
+    ("a paper, a result or a field cast as the actor",
+     r"(?i)\b(?:papers?|articles?|literature|results?|stud(?:y|ies)|textbooks?|numerical relativity)\b "
+     r"(?:reports?|shows?|landed|lands|argues?|finds?|reads?|tests?|demonstrates?|tells?|writes?|is written)\b"
+     r"|\breads? as\b|\bwere read\b"),
+    ("a drawing cast as the actor", r"(?i)\b(?:diagrams?|drawing|figure|caption|section|page)\b "
+                                    r"(?:declares?|draws?|shows?|says|tells)\b"),
+    ("a staged reveal", r"(?i)(?:^|[.;:,] |\b(?:and|but|so) )what\b[^.;:$]*?\b(?:is|are|was)\b"
+                        r"|\bwhat comes out\b"),
+    ("a sentence explaining what is not drawn",
+     r"(?i)\b(?:is|are) (?:not|never) (?:drawn|shown|plotted)\b|\bnothing (?:is |are )?(?:drawn|shown|plotted)\b"
+     r"|\b(?:drawn|shown) instead\b|\bno \w+(?: \w+)? (?:is|are) (?:drawn|shown|given|plotted)\b"),
+    ("a thing said to be what it is not", r"(?i)\b(?:is|are) not\b[^.;:,]{1,80}\bbut\b"),
+    ("an absolute for emphasis", r"(?i)\bevery single\b|\bat all\b|\bnever fails\b|\beach and every\b|\bwhatsoever\b"
+                                 r"|\bactual(?:ly)?\b"),
+    ("a machine's tell", r"(?i)\bit is important to note\b|\bit(?:'s| is) worth not(?:ing|e)\b|\bin essence\b"
+                         r"|\binteresting question\b|\bdive in\b|\bfascinating\b"
+                         r"|(?:^|\. )(?:Crucially|Importantly|Notably|Interestingly),|\bdelve\b|\butili[sz]e\b"
+                         r"|\bleverage\b|\bbookkeeping\b|\bfunctionals?\b|\bin today's world\b|\bin modern times\b"
+                         r"|\badditionally\b"),
+    ("stacked transitions", r"(?i)\b(?:moreover|furthermore),? (?:moreover|furthermore)\b"),
+    ("a sentence about the page", r"(?i)\bas (?:noted|shown|mentioned|described|stated|discussed) "
+                                  r"(?:above|below|earlier)\b|\bthis (?:section|caption|note|page|entry)\b"),
+    ("a slide into the future tense", r"(?i)\bwe will\b|\bwe'll\b"),
+    ("a list without its Oxford comma", r"\$M\$, \$M\$ (?:and|or) \$M\$"),
+    ("a figure of speech standing in for the claim",
+     r"(?i)\bstands? on its own\b|\bhas its say\b|\bkeeps? its secrets\b|\ba question with answers\b"),
+)
+# A hyphen joins two names, a name and a word, or a designation; beyond those it is part of a
+# spelling only in these terms, and an ordinary compound is rewritten without it.
+HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "scalar-tensor"}
+
 # The templates and pages whose words reach a reader, beside the generated files, and the
 # data the site hands to agents.
 TEMPLATES = ("_layouts/*.html", "_includes/*.html", "_includes/*.txt", "MFS/*.markdown", "*.markdown", "llms*.txt",
@@ -503,6 +545,75 @@ class Prose(unittest.TestCase):
                         "Write a full stop, a semicolon or a comma instead, "
                         "or rewrite the sentence so it does not want the break."
                     )
+
+
+def voiced_prose():
+    """Yield every text held to the captain's voice, each with its place: the paragraphs of every
+    history and convention, and every caption, note, restriction band and sentence stated in place
+    of a drawing. Labels and legends name things and are not sentences."""
+    for metric in build.load_metrics():
+        for field in ("history", "convention"):
+            for number, paragraph in build.prose_paragraphs(metric.get(field) or ""):
+                yield f"{metric['id']}.json: {field} paragraph {number}", paragraph
+    sentences = re.compile(r"\.(?:caption\[\d+\]|input|settings|height|restriction|stops\[\d+\]|start|end|edge)$")
+    fields = [field for name, diagram in diagram_files().items() for field in diagram_prose(name, diagram)]
+    fields += [field for name, data in conformal_files().items() for field in conformal_prose(name, data)]
+    fields += [field for name, data in embedding_files().items() for field in embedding_prose(name, data)]
+    for where, value in fields:
+        if sentences.search(where) or " stops[" in where:
+            yield where, value
+
+
+def without_mathematics_or_quotations(text):
+    return re.sub(r'"[^"]*"', '"Q"', re.sub(r"\$\$.+?\$\$|\$[^$]+\$", "$M$", text, flags=re.DOTALL))
+
+
+class Voice(unittest.TestCase):
+    """Every history, convention and caption keeps to the rules of the captain's voice that a
+    pattern can hold."""
+
+    def test_every_voiced_text_keeps_to_the_rules(self):
+        fields = list(voiced_prose())
+        self.assertGreater(len(fields), 600, "the voiced prose was not all read")
+        for where, value in fields:
+            text = without_mathematics_or_quotations(value)
+            for rule, pattern in VOICE:
+                found = re.search(pattern, text)
+                self.assertIsNone(found, f"{where} has {rule}: {found and text[max(0, found.start() - 40):found.end() + 40]!r}")
+
+    def test_every_hyphen_joins_names_or_an_established_term(self):
+        for where, value in voiced_prose():
+            text = without_mathematics_or_quotations(value)
+            for word in re.findall(r"[\w'’]+(?:-[\w'’]+)+", re.sub(r"\[[^\]]*\]", " ", text)):
+                parts = word.split("-")
+                named = any(part[0].isupper() or part[0].isdigit() for part in parts)
+                self.assertTrue(named or word.lower() in HYPHENATED_TERMS,
+                                f"{where} spells {word!r} with a hyphen; rewrite the compound without it")
+
+    def test_the_rules_catch_what_he_flagged_and_leave_plain_physics_alone(self):
+        def caught(text):
+            text = without_mathematics_or_quotations(text)
+            return [rule for rule, pattern in VOICE if re.search(pattern, text)]
+        for text in ("What comes out is a soliton you can build in pieces.",
+                     "Three papers landed in the same window and were read together.", "each paper reports",
+                     "That reads as a refutation,", "and that is a question with answers",
+                     "so the spacetime does not stand on its own.", "every distance is the distance the metric gives",
+                     "It is the surface the Morris-Thorne wormhole draws, and the same metric.",
+                     "as the spacetime diagram declares.", "no conformal diagram is given because the tube is free",
+                     "so nothing is drawn.", "so the Weyl tensor is not the Riemann tensor but its trace free part",
+                     "every single time", "It is worth noting that $r = 0$ is regular.", "Crucially, $k$ is free.",
+                     "as noted above", "we will take the chart $x^0 = ct$", "with $x$, $y$ and $z$ lengths",
+                     "the mass actually inside it", "What carries the curvature is the Kretschmann scalar",
+                     "a dash - trailing"):
+            self.assertTrue(caught(text), text)
+        for text in ("so anti-de Sitter space is not globally hyperbolic.", "every distance is the metric distance",
+                     "the Einstein tensor returns the density", "with $x$, $y$, and $z$ lengths",
+                     "the energy density measured by the observers who ride the slices",
+                     "they differ from it in what the geometry does with the traveller",
+                     "stationary black holes \"are all, every single one of them, described exactly\"",
+                     "$R = -\\left(g_{\\mu\\rho}g_{\\nu\\sigma} - g_{\\mu\\sigma}g_{\\nu\\rho}\\right)/L^2$",
+                     "the one parameter is the anti-de Sitter radius $L$", "whether it holds at every event"):
+            self.assertEqual(caught(text), [], text)
 
 
 class HistoryShape(unittest.TestCase):

@@ -550,23 +550,23 @@ CAPTIONS = {
         "twice, at equal brightness and $\\delta$ apart.",
     ],
     ("stockum_dust", "cylindrical", "tipping"): [
-        "This is the slice $z = 0$ of $t$, $r$ and $\\phi$, with $t$ up and the proper distance from "
+        "This is the slice $z = 0$ of $t$, $r$, and $\\phi$, with $t$ up and the proper distance from "
         "the axis, $\\int e^{-r^2/2R^2}dr$, as the radius, which puts the null directions straight out "
-        "from the axis at 45°. The cones stand at $t = 0$ on the axis and around the circles "
-        "$r = R/2$, $R$ and $3R/2$. On the axis they are upright, and farther out the cross term "
-        "$g_{t\\phi} = -r^2/R$ tips them over toward $+\\phi$, counterclockwise seen from above.",
+        "from the axis at 45°. The cones stand at $t = 0$ on the axis and around the circles $r = R/2$, "
+        "$R$, and $3R/2$. On the axis they are upright, and farther out the cross term $g_{t\\phi} = "
+        "-r^2/R$ tips them over toward $+\\phi$, counterclockwise seen from above.",
         "At $r = R$, where $g_{\\phi\\phi}$ vanishes, one edge of every cone lies along the circle of "
         "constant $t$ and $r$, which is a closed null curve. Beyond it the cones have tipped past the "
         "horizontal, and the circle $r = 3R/2$, run counterclockwise as its arrows point, lies inside "
         "every one of them: a closed timelike curve through each of its events.",
     ],
     ("godel", "cylindrical", "tipping"): [
-        "This is the slice $z = 0$ of $t$, $r$ and $\\phi$ about the axis $r = 0$, the world line of one "
-        "particle of the dust, with $t$ up and $r$ as the radius, which puts the null directions "
-        "$dt = \\pm dr$ at 45°. The cones stand at $t = 0$ on the axis and around the circles "
-        "$r = r_c/2$, $r_c$ and $3r_c/2$, with $\\sinh r_c = 1$. On the axis they are upright, and "
-        "farther out the cross term $g_{t\\phi} = -2\\sqrt{2}\\sinh^2 r/\\omega^2$ tips them over toward "
-        "$+\\phi$, counterclockwise seen from above.",
+        "This is the slice $z = 0$ of $t$, $r$, and $\\phi$ about the axis $r = 0$, the world line of one "
+        "particle of the dust, with $t$ up and $r$ as the radius, which puts the null directions $dt = "
+        "\\pm dr$ at 45°. The cones stand at $t = 0$ on the axis and around the circles $r = r_c/2$, "
+        "$r_c$, and $3r_c/2$, with $\\sinh r_c = 1$. On the axis they are upright, and farther out the "
+        "cross term $g_{t\\phi} = -2\\sqrt{2}\\sinh^2 r/\\omega^2$ tips them over toward $+\\phi$, "
+        "counterclockwise seen from above.",
         "At $r = r_c$, where $g_{\\phi\\phi}$ vanishes, one edge of every cone lies along the circle of "
         "constant $t$ and $r$, which is a closed null curve. Beyond it the cones have tipped past the "
         "horizontal, and the circle $r = 3r_c/2$, run counterclockwise as its arrows point, lies inside "
@@ -574,13 +574,13 @@ CAPTIONS = {
         "dust is equivalent to every other, so the cones tip over in the same way about each one.",
     ],
     ("alcubierre", "cartesian", "bubble"): [
-        "This is the slice $z = 0$ of $t$, $x$ and $y$ through a bubble moving at twice the speed of "
+        "This is the slice $z = 0$ of $t$, $x$, and $y$ through a bubble moving at twice the speed of "
         "light along $x$, with $t$ up, $ct$ and $x$ drawn at one scale, at the moment $t = 0$ when the "
         "bubble is centred on $x = 0$. Far from the bubble $f = 0$ and the cones stand upright, as "
         "Minkowski's do. Inside it $f$ is close to 1, and the shift $v_sf$ tips every cone forward along "
         "$x$ so far that the vertical lies outside it: nothing inside can stay at fixed $x$. The tilt is "
-        "along $x$ everywhere, since the shift points along $x$, and it depends only on the distance "
-        "from the centre, as $f$ does, so the cones tip over in a ball about the centre.",
+        "along $x$ everywhere, since the shift points along $x$, and it depends only on the distance from "
+        "the centre, as $f$ does, so the cones tip over in a ball about the centre.",
         "On the dotted circle $v_sf = 1$, where $g_{tt} = -(1 - v_s^2f^2)$ vanishes, one edge of every "
         "cone stands vertical. The centre runs along $x = 2ct$, at 63° to the vertical, outside the "
         "upright cones far from the bubble and through the middle of the cone at the centre, where "
