@@ -99,6 +99,16 @@ VOICE = (
     ("a figure of speech standing in for the claim",
      r"(?i)\bstands? on its own\b|\bhas its say\b|\bkeeps? its secrets\b|\ba question with answers\b"),
 )
+# A caption, note or restriction band is a compact noun phrase with its values in parentheses, as in
+# the captain's own "A spherically symmetric distribution of dust collapsing from rest ($R_0 = 2\,r_s$),
+# each point in the diagram a 2-sphere." It never opens "This is", never says "This is the whole of",
+# and nothing in it "stands for" anything. _tools/README.md carries the rule these stand for.
+CAPTION_VOICE = (
+    ("\"This is the whole of\"", r"(?i)\bthis is the whole of\b"),
+    ("\"stands for a sphere\"", r"(?i)\bstands? for (?:a|one|one such) (?:\w+ )?sphere\b"),
+    ("\"stands for\"", r"(?i)\bstands? for\b"),
+    ("a sentence opening \"This is\" in place of a noun phrase", r"^This is\b"),
+)
 # A hyphen joins two names, a name and a word, or a designation; beyond those it is part of a
 # spelling only in these terms, and an ordinary compound is rewritten without it.
 HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "scalar-tensor"}
@@ -466,7 +476,7 @@ class Prose(unittest.TestCase):
                     for view in drawn:
                         views += 1
                         where = f"diagrams/{name}.json {system}/{view['id']}"
-                        self.assertTrue(view["caption"][0].startswith("This is the "), where)
+                        self.assertTrue(opens_with_a_noun_phrase(view["caption"][0]), where)
                         one = {"systems": {}, part: {system: [view]}}
                         for field, value in diagram_prose(name, one):
                             self.assertNotRegex(value, r"(?i)\bblocks?\b", field)
@@ -577,6 +587,16 @@ def without_mathematics_or_quotations(text):
     return re.sub(r'"[^"]*"', '"Q"', re.sub(r"\$\$.+?\$\$|\$[^$]+\$", "$M$", text, flags=re.DOTALL))
 
 
+def opens_with_a_noun_phrase(caption):
+    """Whether a caption opens with a noun phrase naming what is drawn, as "The plane of $t$ and
+    $r$ ($\\theta = \\pi/2$, $\\phi = 0$)" does: it starts with a capital, never with "This", and
+    its head, up to the first comma, parenthesis, stop or clause of its own, holds no "is" or "are"."""
+    text = without_mathematics_or_quotations(caption)
+    head = re.split(r"[,(.:;]|\b(?:which|where|when|that|as|whose|who|so|since)\b", text, maxsplit=1)[0]
+    return (bool(re.match(r"[A-Z]", text)) and not text.startswith("This ")
+            and not re.search(r"\b(?:is|are|was|were)\b", head))
+
+
 class Voice(unittest.TestCase):
     """Every history, convention and caption keeps to the rules of the captain's voice that a
     pattern can hold."""
@@ -589,6 +609,40 @@ class Voice(unittest.TestCase):
             for rule, pattern in VOICE:
                 found = re.search(pattern, text)
                 self.assertIsNone(found, f"{where} has {rule}: {found and text[max(0, found.start() - 40):found.end() + 40]!r}")
+
+    def test_every_caption_is_a_compact_noun_phrase(self):
+        fields = [(where, value) for where, value in voiced_prose() if ".json: " not in where]
+        self.assertGreater(len(fields), 300, "the captions were not all read")
+        for where, value in fields:
+            text = without_mathematics_or_quotations(value)
+            for rule, pattern in CAPTION_VOICE:
+                found = re.search(pattern, text)
+                self.assertIsNone(found, f"{where} has {rule}: {found and text[max(0, found.start() - 40):found.end() + 40]!r}")
+
+    def test_the_caption_rules_catch_the_old_openings_and_leave_the_compact_ones(self):
+        def caught(text):
+            text = without_mathematics_or_quotations(text)
+            return [rule for rule, pattern in CAPTION_VOICE if re.search(pattern, text)]
+        for text in ("This is the whole of a ball of dust collapsing from rest at $R_0 = 2\\,r_s$, and each point of "
+                     "the diagram stands for a sphere.",
+                     "This is the plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$.",
+                     "and each point of this plane stands for one such sphere.",
+                     "the height stands for the tilt alone.", "so that the axes stand for $t$ and $z$"):
+            self.assertTrue(caught(text), text)
+        for text in ("A spherically symmetric distribution of dust collapsing from rest ($R_0 = 2\\,r_s$), each "
+                     "point in the diagram a 2-sphere.",
+                     "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every other angle "
+                     "by spherical symmetry.",
+                     "The whole Schwarzschild spacetime with the ingoing Eddington-Finkelstein coordinates $v$ "
+                     "and $r$ on it.",
+                     "Inside $r_s$ both edges of every future cone point to larger $r$: this is the white hole.",
+                     "no surface in flat space carries the whole of it."):
+            self.assertEqual(caught(text), [], text)
+        self.assertFalse(opens_with_a_noun_phrase("This is the plane of $t$ and $x$ at $y = z = 0$."))
+        self.assertFalse(opens_with_a_noun_phrase("The metric on this plane is $-dt^2 + dx^2$."))
+        self.assertTrue(opens_with_a_noun_phrase("The plane of $t$ and $x$ ($y = z = 0$). The metric on it is flat."))
+        self.assertTrue(opens_with_a_noun_phrase("The static chart along a line through the observer: $x = r$ on the "
+                                                 "right is $\\phi = 0$."))
 
     def test_every_hyphen_joins_names_or_an_established_term(self):
         for where, value in voiced_prose():
@@ -1279,7 +1333,7 @@ class ConformalDiagrams(unittest.TestCase):
         for metric_id, data in self.conformal.items():
             for view in data["views"]:
                 self.assertTrue(view["caption"], f"{metric_id} {view['id']}")
-                self.assertTrue(view["caption"][0].startswith("This is the "), f"{metric_id} {view['id']}")
+                self.assertTrue(opens_with_a_noun_phrase(view["caption"][0]), f"{metric_id} {view['id']}")
 
     def test_the_spacetimes_drawn_on_a_slice_say_so_on_the_diagram(self):
         """A view of a surface that is not the whole spacetime carries its restriction, and the
@@ -1704,7 +1758,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         for metric_id, data in self.embedding.items():
             for view in data["views"]:
                 self.assertTrue(view["caption"], f"{metric_id} {view['id']}")
-                self.assertTrue(view["caption"][0].startswith("This is the "), f"{metric_id} {view['id']}")
+                self.assertTrue(opens_with_a_noun_phrase(view["caption"][0]), f"{metric_id} {view['id']}")
 
     def test_every_text_is_tex_with_its_mathematics_closed(self):
         for name, data in self.embedding.items():

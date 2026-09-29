@@ -266,14 +266,15 @@ The second command stamps each diagram file's version into the index, as it does
 `CAPTIONS` beside it carries each view's caption, which is prose, and the tests hold the captions, the labels and the declared inputs to the rules for prose as they hold the metrics.
 A new view is a row in each, and the script refuses to run while one lacks the other.
 
-A caption opens by naming its plane: the two coordinates drawn and the value of every coordinate held fixed, as "the plane of $t$ and $r$ at $\theta = \pi/2$ and $\phi = 0$".
+A caption opens with a noun phrase naming its plane: the two coordinates drawn, with the value of every coordinate held fixed in parentheses, as "The plane of $t$ and $r$ ($\theta = \pi/2$, $\phi = 0$)".
+It never opens "This is", and nothing in it "stands for" anything; `CAPTION_VOICE` in `_tools/test_build_mfs_data.py` holds every caption, note and restriction band on the site to that.
 It says what the drawing shows, and where the feature a reader comes looking for lies off the plane, it says where that feature is, as the Ellis-Bronnikov caption places the throat in $g_{\theta\theta}$ and the Gödel caption places the closed timelike curves.
 A caption never stops at saying what a diagram leaves out.
-A view of rays that leave the plane names the surface they lie on and the coordinate left out of the drawing, as "the equatorial plane $\theta = \pi/2$ drawn in $t$ and $r$, with $\phi$ left out".
+A view of rays that leave the plane names the surface they lie on and the coordinate left out of the drawing, as "The equatorial plane ($\theta = \pi/2$) drawn in $t$ and $r$, with $\phi$ left out".
 Every curve drawn is a null curve; a caption calls it a null geodesic, the path light takes, only where no Christoffel symbol turns it out of the plane, and says so where one does, as for Gödel and for Kerr off the axis.
 
 A caption is prose in the register of the conventions and histories beside it, and it is read back whole, in the generator and on the page, since a sentence built from clauses that each keep the rules above can still read as machine prose.
-It says what a thing is rather than what it is not: "its points are points, not spheres" says nothing that "each point of the diagram is a single event rather than a sphere of them" does not say plainly.
+It says what a thing is rather than what it is not: "its points are points, not spheres" says nothing that "each point in the diagram a single event rather than a 2-sphere of them" does not say plainly.
 It gives the physics of a surface rather than how the figure lays it out, which the reader can see, and it ends on a fact rather than a flourish, so the lines inside Vaidya's shell crowd toward it because of the slope of $q$, not as "the price of a straight centre".
 
 ### Labels are TeX
@@ -421,8 +422,10 @@ A view of a surface that is not the whole spacetime carries `restriction`, which
 Kerr and Kerr-Newman are drawn on the symmetry axis and the cosmic string on the half plane of fixed $\phi$ and $z$, and the tests hold those three to carrying a restriction on every view.
 
 Every text in a view is TeX in `$...$`: the labels on the drawing, the buttons, the legend, the caption, the restriction and the parameter values.
-A caption opens by naming what is drawn, "This is the whole of ..." or "This is the plane ...", and its prose is for the reader of "Whom the prose is for" above; the tests hold every text in these files to that rule's words and to the dash rule.
-It keeps the register the spacetime diagrams' captions keep, and it says what each point of the diagram stands for: a sphere of radius $r$ for the whole of a spherical spacetime, a single event on a slice such as Minkowski's plane $y = z = 0$, and a circle about the string times a line along it on the cosmic string's half plane.
+A caption opens with a compact noun phrase naming what is drawn, its values in parentheses, in the captain's model: "A spherically symmetric distribution of dust collapsing from rest ($R_0 = 2\,r_s$), each point in the diagram a 2-sphere."
+Its prose is for the reader of "Whom the prose is for" above; the tests hold every text in these files to that rule's words and to the dash rule.
+It keeps the register the spacetime diagrams' captions keep, and it names what each point in the diagram is in that same construction: "each point in the diagram a 2-sphere of radius $r$" for a spherical spacetime, "each point in the diagram a single event rather than a 2-sphere of them" on a slice such as Minkowski's plane $y = z = 0$, and "each point in the diagram a circle around the string times a line along it" on the cosmic string's half plane.
+No caption says "This is the whole of" or "stands for".
 
 `_tools/derivations/tex_check.cjs` typesets every TeX string the page sets, in the metrics, the diagram files and the conformal files, a published value together with its negation, through the TeX input MathJax loads on the page, and exits non-zero naming each one it cannot set.
 sympy never reads the typesetting, so this is the check that catches a value that is right and prints as an error box:

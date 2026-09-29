@@ -575,7 +575,7 @@ def bubble(spec, camera=Camera(-90, 30), later=0.75):
 
 CAPTIONS = {
     ("cosmic_string", "conical", "beam"): [
-        "This is the plane $z = 0$ around the string seen from above, $t$ left out, drawn with $r$ as "
+        "The plane $z = 0$ around the string seen from above, $t$ left out, drawn with $r$ as "
         "the radius and the angle $(1 - 4G\\mu/c^2)\\phi$, in which the plane is flat and every light "
         "ray straight. That angle runs short of a full turn by the deficit $\\delta = 8\\pi G\\mu/c^2$, "
         "so a wedge of $\\delta$ is missing from the plane. With $\\phi$ measured from the direction the "
@@ -590,7 +590,7 @@ CAPTIONS = {
         "twice, at equal brightness and $\\delta$ apart.",
     ],
     ("stockum_dust", "cylindrical", "tipping"): [
-        "This is the slice $z = 0$ of $t$, $r$, and $\\phi$, with $t$ up and the proper distance from "
+        "The slice $z = 0$ of $t$, $r$, and $\\phi$, with $t$ up and the proper distance from "
         "the axis, $\\int e^{-r^2/2R^2}dr$, as the radius, which puts the null directions straight out "
         "from the axis at 45°. The cones stand at $t = 0$ on the axis and around the circles $r = R/2$, "
         "$R$, and $3R/2$. On the axis they are upright, and farther out the cross term $g_{t\\phi} = "
@@ -601,7 +601,7 @@ CAPTIONS = {
         "every one of them: a closed timelike curve through each of its events.",
     ],
     ("godel", "cylindrical", "tipping"): [
-        "This is the slice $z = 0$ of $t$, $r$, and $\\phi$ about the axis $r = 0$, the world line of one "
+        "The slice $z = 0$ of $t$, $r$, and $\\phi$ about the axis $r = 0$, the world line of one "
         "particle of the dust, with $t$ up and $r$ as the radius, which puts the null directions $dt = "
         "\\pm dr$ at 45°. The cones stand at $t = 0$ on the axis and around the circles $r = r_c/2$, "
         "$r_c$, and $3r_c/2$, with $\\sinh r_c = 1$. On the axis they are upright, and farther out the "
@@ -614,7 +614,7 @@ CAPTIONS = {
         "dust is equivalent to every other, so the cones tip over in the same way about each one.",
     ],
     ("alcubierre", "cartesian", "bubble"): [
-        "This is the slice $z = 0$ of $t$, $x$, and $y$ through a bubble moving at twice the speed of "
+        "The slice $z = 0$ of $t$, $x$, and $y$ through a bubble moving at twice the speed of "
         "light along $x$, with $t$ up, $ct$ and $x$ drawn at one scale, at the moment $t = 0$ when the "
         "bubble is centred on $x = 0$. Far from the bubble $f = 0$ and the cones stand upright, as "
         "Minkowski's do. Inside it $f$ is close to 1, and the shift $v_sf$ tips every cone forward along "
@@ -628,7 +628,7 @@ CAPTIONS = {
         "keeps $t$.",
     ],
     ("kerr", "boyer_lindquist", "dragging"): [
-        "This is the equatorial plane $\\theta = \\pi/2$ with $t$ up and $r$ and $\\phi$ as polar "
+        "The equatorial plane ($\\theta = \\pi/2$) with $t$ up and $r$ and $\\phi$ as polar "
         "coordinates about the axis, for $a = 0.9\\,GM/c^2$, down to the horizon $r_+ = "
         "1.436\\,GM/c^2$, where the chart ends. Light moving in this plane stays in it, since the "
         "reflection $\\theta \\to \\pi - \\theta$ leaves it fixed. The cones stand at $t = 0$ at four "
@@ -644,7 +644,7 @@ CAPTIONS = {
         "2GMr/c^2 + a^2$ falls to zero.",
     ],
     ("kerr_newman", "boyer_lindquist", "dragging"): [
-        "This is the equatorial plane $\\theta = \\pi/2$ with $t$ up and $r$ and $\\phi$ as polar "
+        "The equatorial plane ($\\theta = \\pi/2$) with $t$ up and $r$ and $\\phi$ as polar "
         "coordinates about the axis, for $a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$, down to the "
         "horizon $r_+ = 1.624\\,GM/c^2$, where the chart ends. As in Kerr, light moving in this plane "
         "stays in it. The cones stand at $t = 0$ at four places around each of three circles: $r = "

@@ -599,8 +599,8 @@ def minkowski(ck, src):
     diamond_edges(v)
     v.legend("r", "$x$ constant")
     v.legend("t", "$ct$ constant")
-    v.set(restriction="The plane $y = z = 0$ only, which is totally geodesic; each point of the "
-                      "diagram is a single event rather than a sphere of them.")
+    v.set(restriction="The plane $y = z = 0$ only, totally geodesic, each point in the diagram a "
+                      "single event rather than a 2-sphere of them.")
     v.slice(plane, [mink_pq(0 * along_x, along_x)])
     views.append(v)
 
@@ -615,8 +615,8 @@ def minkowski(ck, src):
         v.curve("null", *null_map(s, np.full_like(s, c)))
     diamond_edges(v)
     v.legend("null", "$u$ constant and $v$ constant, every one a light ray")
-    v.set(restriction="The plane $y = z = 0$ only, which is totally geodesic; each point of the "
-                      "diagram is a single event rather than a sphere of them.")
+    v.set(restriction="The plane $y = z = 0$ only, totally geodesic, each point in the diagram a "
+                      "single event rather than a 2-sphere of them.")
     v.slice(plane, [null_map(-along_x, along_x)])
     views.append(v)
 
@@ -641,8 +641,8 @@ def minkowski(ck, src):
     v.legend("r", "$X$ constant, a uniformly accelerated observer, in units of $c^2/a$")
     v.legend("t", "$T$ constant")
     v.legend("horizon", "the horizon $X = 0$ and the null lines that continue it")
-    v.set(restriction="The plane $Y = Z = 0$ only, which is totally geodesic; each point of the "
-                      "diagram is a single event rather than a sphere of them.")
+    v.set(restriction="The plane $Y = Z = 0$ only, totally geodesic, each point in the diagram a "
+                      "single event rather than a 2-sphere of them.")
     # T = 0 in the wedge, where x = X, and its mirror x < 0 beyond the horizon, one line.
     wedge = np.linspace(1e-12, reach, 2)
     left = mink_pq(0 * wedge, -wedge[::-1])
@@ -1448,8 +1448,8 @@ def anti_de_sitter(ck, src):
     v.label_xt([0.05, 1.75], "Poincaré horizon", "br", "small", dx=-4, dy=-2)
     v.set(fade={"top": 0.7, "bottom": 0.7},
           restriction="The plane $x = y = 0$ of the Poincaré patch only, a totally geodesic "
-                      "anti-de Sitter space of two dimensions; each point of the diagram is a "
-                      "single event rather than a sphere of them.")
+                      "anti-de Sitter space of two dimensions, each point in the diagram a "
+                      "single event rather than a 2-sphere of them.")
     v.legend("cover", "the wedge that $t$ and $z$ cover")
     v.legend("r", "$z$ constant")
     v.legend("t", "$ct$ constant")
@@ -1630,10 +1630,9 @@ def cosmic_string(ck, src):
     v.legend("r", "$r$ constant, the proper distance from the string")
     v.legend("t", "$ct$ constant")
     v.legend("surface", "the string, a conical singularity at $r = 0$")
-    v.set(restriction="The half plane of fixed $\\phi$ and $z$ only, which is totally geodesic. Each "
-                      "point of the diagram stands for a circle around the string times a line "
-                      "along it, and the string's deficit angle $\\delta = 8\\pi G\\mu/c^2$ shows in "
-                      "those circles.")
+    v.set(restriction="The half plane of fixed $\\phi$ and $z$ only, totally geodesic, each point in "
+                      "the diagram a circle around the string times a line along it, the string's "
+                      "deficit angle $\\delta = 8\\pi G\\mu/c^2$ showing in those circles.")
     # The ideal string's moment is the embedding's reference cone and the sheet outside the
     # core together, out from the string; with the core, its proper distance from the axis
     # runs out to l chi_0 + r - l tan chi_0.
@@ -1665,8 +1664,8 @@ def cosmic_string(ck, src):
     v.legend("centre", "$\\chi = 0$, a regular axis")
     v.set(settings="$4G\\mu/c^2 = 0.1$, so that $\\cos\\chi_0 = 0.9$.",
           restriction="The half plane of fixed $\\phi$ and $z$ only, in the proper distance $\\rho$ "
-                      "from the axis; each point of the diagram stands for a circle around the "
-                      "axis times a line along it.")
+                      "from the axis, each point in the diagram a circle around the axis times a "
+                      "line along it.")
     if abs(cone.reach("interior_cap", "\\chi")[1] - chi0) > 1e-12:
         raise SystemExit("cosmic string: the embedding's core is not the core drawn here")
     rho = np.array([0.0, chi0, reach[1] + shift])
@@ -2336,8 +2335,7 @@ DRAWN = {
 # opens by naming what is drawn, the whole spacetime or the surface in it.
 CAPTIONS = {
     ("minkowski", "spherical"): [
-        "This is the whole of Minkowski spacetime, and each point of the diagram stands for a "
-        "sphere of radius $r$. With $u = ct - r$ and $v = ct + r$ the metric on the plane of $t$ "
+        "Minkowski spacetime, each point in the diagram a 2-sphere of radius $r$. With $u = ct - r$ and $v = ct + r$ the metric on the plane of $t$ "
         "and $r$ is $-du\\,dv$, and for any length $\\ell$ the maps $p = \\arctan(u/\\ell)$ and "
         "$q = \\arctan(v/\\ell)$ bring all of it into a finite triangle, drawn with $T = p + q$ up "
         "and $X = q - p$ across. Lines of constant $p$ or $q$ are light rays, and they run at "
@@ -2347,28 +2345,27 @@ CAPTIONS = {
         "and ends on $\\mathscr{I}^+$.",
     ],
     ("minkowski", "spherical_null"): [
-        "This is the whole of Minkowski spacetime in its spherical null coordinates, "
-        "$u = t - r/c$ and $v = t + r/c$, and each point of the diagram stands for a sphere of "
-        "radius $c(v - u)/2$. The lines of constant $u$ and of constant $v$ are light rays, the "
+        "Minkowski spacetime in its spherical null coordinates ($u = t - r/c$, $v = t + r/c$), "
+        "each point in the diagram a 2-sphere of radius $c(v - u)/2$. The lines of constant $u$ and of constant $v$ are light rays, the "
         "45° lines of the triangle, with $p = \\arctan(cu/\\ell)$ and $q = \\arctan(cv/\\ell)$, and "
         "the centre is the line $u = v$.",
     ],
     ("minkowski", "cartesian"): [
-        "This is the plane $y = z = 0$, which is flat and totally geodesic, brought by "
+        "The plane $y = z = 0$, flat and totally geodesic, brought by "
         "$p, q = \\arctan((ct \\mp x)/\\ell)$ into the whole diamond. It has two ends, "
         "$x \\to +\\infty$ and $x \\to -\\infty$, each with its own null infinity.",
         "Turned about the line $x = 0$, each half of the diamond sweeps out the spherical "
         "triangle, which is the whole spacetime.",
     ],
     ("minkowski", "double_null"): [
-        "This is the plane $y = z = 0$ in the coordinates $u = t - x/c$ and $v = t + x/c$, in "
-        "which the metric on the plane is $-c^2\\,du\\,dv$. The lines of constant $u$ and of "
+        "The plane $y = z = 0$ in the coordinates $u = t - x/c$ and $v = t + x/c$, the metric "
+        "on it $-c^2\\,du\\,dv$. The lines of constant $u$ and of "
         "constant $v$ are light rays, the 45° lines of the diamond, with $p = \\arctan(cu/\\ell)$ "
         "and $q = \\arctan(cv/\\ell)$.",
     ],
     ("minkowski", "rindler"): [
-        "This is the plane $Y = Z = 0$ in Rindler's coordinates, $ct = X\\sinh(aT/c)$ and "
-        "$x = X\\cosh(aT/c)$, so that $ct - x = -Xe^{-aT/c}$ and $ct + x = Xe^{aT/c}$. They cover "
+        "The plane $Y = Z = 0$ in Rindler's coordinates ($ct = X\\sinh(aT/c)$, "
+        "$x = X\\cosh(aT/c)$), with $ct - x = -Xe^{-aT/c}$ and $ct + x = Xe^{aT/c}$. They cover "
         "the wedge $x > c|t|$, and $X = 0$, where $g_{TT}$ vanishes, is the pair of null lines "
         "through the origin.",
         "An observer at constant $X$ accelerates uniformly, at $c^2/X$, and the null line "
@@ -2376,8 +2373,8 @@ CAPTIONS = {
         "wedge, as nothing inside $r_s$ can reach a static observer outside a black hole.",
     ],
     ("schwarzschild", "spherical"): [
-        "This is the whole of the Schwarzschild spacetime, maximally extended, and each point of "
-        "the diagram stands for a sphere of radius $r$. The coordinates of Martin Kruskal and "
+        "The Schwarzschild spacetime, maximally extended, each point in the diagram a 2-sphere "
+        "of radius $r$. The coordinates of Martin Kruskal and "
         "George Szekeres, $U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$, with $u, v = ct \\mp r_*$ and "
         "$r_* = r + r_s\\ln|r/r_s - 1|$, make the metric regular through $r = r_s$, where $UV = (1 "
         "- r/r_s)e^{r/r_s}$ vanishes. With $p = \\arctan U$ and $q = \\arctan V$ the singularity "
@@ -2389,22 +2386,22 @@ CAPTIONS = {
         "$r = 0$ on $T = -\\pi/2$, and both singularities are spacelike.",
     ],
     ("schwarzschild", "ingoing"): [
-        "This is the whole Schwarzschild spacetime with the ingoing Eddington-Finkelstein "
+        "The whole Schwarzschild spacetime with the ingoing Eddington-Finkelstein "
         "coordinates $v$ and $r$ on it. From $V = e^{v/2r_s}$ and $U = (1 - r/r_s)e^{r/r_s}/V$, "
         "one formula for every $r > 0$, they cover the exterior and the black hole together, "
         "and their lines of constant $v$ are ingoing light rays, which cross the horizon at "
         "45° and end at $r = 0$.",
     ],
     ("schwarzschild", "outgoing"): [
-        "This is the whole Schwarzschild spacetime with the outgoing Eddington-Finkelstein "
+        "The whole Schwarzschild spacetime with the outgoing Eddington-Finkelstein "
         "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From "
         "$U = -e^{-u/2r_s}$ and $V = (r/r_s - 1)e^{r/r_s}/(-U)$ they cover the exterior and the "
         "white hole, and their lines of constant $u$ are outgoing light rays, which leave $r = 0$ "
         "and cross the horizon outward.",
     ],
     ("rn_metric", "tower"): [
-        "This is the Reissner-Nordström spacetime maximally extended, and each point of the "
-        "diagram stands for a sphere of radius $r$. The extension is a tower of regions that "
+        "The Reissner-Nordström spacetime, maximally extended, each point in the diagram a "
+        "2-sphere of radius $r$. The extension is a tower of regions that "
         "repeats up and down without end. Its tortoise coordinate is "
         "$r_* = r + \\frac{1}{2\\kappa_+}\\ln|r/r_+ - 1| - \\frac{1}{2\\kappa_-}\\ln|r/r_- - 1|$ "
         "with $\\kappa_\\pm = (r_+ - r_-)/2r_\\pm^2$, and each logarithm is made dimensionless by "
@@ -2422,7 +2419,7 @@ CAPTIONS = {
         "hole an infalling observer enters.",
     ],
     ("rn_metric", "malament_hogarth"): [
-        "This is the same tower with one event beyond the Cauchy horizon $r_-$ marked on it. "
+        "The same tower with one event beyond the Cauchy horizon $r_-$ marked on it. "
         "Every point of the exterior below it has $p \\le p_e$ and $q \\le q_e$, so the whole "
         "exterior lies in the event's causal past. A static observer at $r = 1.2\\,r_s$ lives "
         "from $i^-$ to $i^+$ for an infinite proper time, and every moment of that life can send "
@@ -2430,7 +2427,7 @@ CAPTIONS = {
         "blueshifted.",
     ],
     ("kerr", "axis"): [
-        "This is the symmetry axis $\\theta = 0$ of the maximally extended Kerr spacetime, the "
+        "The symmetry axis $\\theta = 0$ of the maximally extended Kerr spacetime, the "
         "surface the rotations leave fixed and so totally geodesic. On it the metric is "
         "$-\\frac{\\Delta}{r^2 + a^2}c^2dt^2 + \\frac{r^2 + a^2}{\\Delta}dr^2$ with $\\Delta = r^2 "
         "- 2GMr/c^2 + a^2$, and its two simple roots give it the tower of Reissner-Nordström. "
@@ -2442,7 +2439,7 @@ CAPTIONS = {
         "exterior.",
     ],
     ("kerr_newman", "axis"): [
-        "This is the symmetry axis $\\theta = 0$ of the maximally extended Kerr-Newman spacetime, "
+        "The symmetry axis $\\theta = 0$ of the maximally extended Kerr-Newman spacetime, "
         "totally geodesic as Kerr's is. On it the metric is again "
         "$-\\frac{\\Delta}{r^2 + a^2}c^2dt^2 + \\frac{r^2 + a^2}{\\Delta}dr^2$, now with "
         "$\\Delta = r^2 - 2GMr/c^2 + a^2 + r_Q^2$, and its two simple roots give the same tower.",
@@ -2451,9 +2448,8 @@ CAPTIONS = {
         "coordinates $t$ and $r > r_+$ cover the exterior.",
     ],
     ("de_sitter", "static"): [
-        "This is the whole of de Sitter spacetime, the hyperboloid $-X_0^2 + X_1^2 + \\dots + "
-        "X_4^2 = L^2$ with $L = \\sqrt{3/\\Lambda}$, and each point of the diagram stands for a "
-        "sphere. In its global coordinates the metric is $\\frac{L^2}{\\cos^2 T}(-dT^2 + d\\chi^2 "
+        "De Sitter spacetime, the hyperboloid $-X_0^2 + X_1^2 + \\dots + X_4^2 = L^2$ "
+        "($L = \\sqrt{3/\\Lambda}$), each point in the diagram a 2-sphere. In its global coordinates the metric is $\\frac{L^2}{\\cos^2 T}(-dT^2 + d\\chi^2 "
         "+ \\sin^2\\chi\\,d\\Omega^2)$ on the square $|T| < \\pi/2$, $0 \\le \\chi \\le \\pi$, "
         "with $X = \\chi$ across.",
         "The static coordinates enter the square as $\\tan p = \\tanh(u/2L)$ and "
@@ -2464,7 +2460,7 @@ CAPTIONS = {
         "$(\\pi, -\\pi/2)$ ever reaches the observer at $\\chi = 0$.",
     ],
     ("de_sitter", "flat"): [
-        "This is the whole of de Sitter spacetime with the flat slicing on it. Its conformal "
+        "The whole de Sitter spacetime with the flat slicing on it. Its conformal "
         "time $\\eta = -e^{-Ht}/H$ makes the metric "
         "$\\frac{1}{H^2\\eta^2}(-c^2d\\eta^2 + d\\rho^2 + \\rho^2d\\Omega^2)$, conformal to half of "
         "Minkowski space, which enters the square as $p = \\pi/4 + \\arctan(H\\eta - H\\rho/c)$ and "
@@ -2473,8 +2469,8 @@ CAPTIONS = {
         "is a null line where the coordinates end, and the spacetime goes on below it.",
     ],
     ("anti_de_sitter", "global"): [
-        "This is the whole of anti-de Sitter spacetime, its universal cover, and each point of "
-        "the diagram stands for a sphere. With $\\sigma = \\arctan(r/L)$ the metric on the plane "
+        "Anti-de Sitter spacetime, its universal cover, each point in the diagram a 2-sphere. "
+        "With $\\sigma = \\arctan(r/L)$ the metric on the plane "
         "of $t$ and $r$ is $\\frac{1}{\\cos^2\\sigma}(-c^2dt^2 + L^2d\\sigma^2)$, already conformal "
         "to the strip $0 \\le \\sigma < \\pi/2$, which is unbounded in $t$. Its edge "
         "$\\sigma = \\pi/2$ is a timelike boundary.",
@@ -2483,8 +2479,8 @@ CAPTIONS = {
         "$k < 1$, all return to the centre at the same $ct = \\pi L$, whatever their energy.",
     ],
     ("anti_de_sitter", "poincare"): [
-        "This is the plane $x = y = 0$ of the Poincaré patch, which passes through the centre and "
-        "is conformal to the strip $-\\pi/2 < \\sigma < \\pi/2$. The coordinates $t$ and $z$ "
+        "The plane $x = y = 0$ of the Poincaré patch, through the centre and conformal to the "
+        "strip $-\\pi/2 < \\sigma < \\pi/2$. The coordinates $t$ and $z$ "
         "enter the strip as "
         "$p = -\\pi/4 + \\arctan((ct + z)/L)$ and $q = \\pi/4 + \\arctan((ct - z)/L)$.",
         "The Poincaré coordinates cover a wedge of the strip. Their $z \\to 0$ is the conformal "
@@ -2493,23 +2489,23 @@ CAPTIONS = {
         "the global coordinates run smoothly across it.",
     ],
     ("bertotti_robinson", "static"): [
-        "This is the whole of the Bertotti-Robinson spacetime, the product of an anti-de Sitter "
-        "space of two dimensions and radius $b$ with a sphere of radius $b$. Its conformal "
-        "diagram is the strip of the first factor, and since the sphere has the same radius "
-        "everywhere, each point of the strip stands for a sphere of radius $b$.",
+        "The Bertotti-Robinson spacetime, the product of an anti-de Sitter space of two "
+        "dimensions and radius $b$ with a sphere of radius $b$. Its conformal diagram is the "
+        "strip of the first factor, each point in the strip a 2-sphere of radius $b$, the same "
+        "radius everywhere.",
         "The throat coordinates $t$ and $r$ cover a Poincaré wedge of the strip. Under "
         "$x = b^2/r$ their $-\\frac{r^2}{b^2}c^2dt^2 + \\frac{b^2}{r^2}dr^2$ becomes "
         "$\\frac{b^2}{x^2}(-c^2dt^2 + dx^2)$, so the throat's $r = 0$ is the Poincaré horizon, a "
         "horizon of the coordinates alone, across which the spacetime continues.",
     ],
     ("bertotti_robinson", "poincare"): [
-        "This is the whole of the Bertotti-Robinson spacetime with the Poincaré coordinates $t$ "
+        "The whole Bertotti-Robinson spacetime with the Poincaré coordinates $t$ "
         "and $x$ on it. They cover the same wedge as the throat coordinates, with "
         "$x = b^2/r$.",
     ],
     ("ellis_bronnikov", "spherical"): [
-        "This is the whole of the Ellis-Bronnikov wormhole, and each point of the diagram stands "
-        "for a sphere of area $4\\pi(r^2 + \\ell^2)$. The metric on the plane of $t$ and $r$ is "
+        "The Ellis-Bronnikov wormhole, each point in the diagram a 2-sphere of area "
+        "$4\\pi(r^2 + \\ell^2)$. The metric on the plane of $t$ and $r$ is "
         "$-c^2dt^2 + dr^2$ with $r$ over the whole line, which is Minkowski space of two "
         "dimensions, and $p, q = \\arctan((ct \\mp r)/\\ell)$ bring it into the full diamond.",
         "The two ends, $r \\to +\\infty$ and $r \\to -\\infty$, are two asymptotically flat "
@@ -2518,8 +2514,8 @@ CAPTIONS = {
         "else, so the wormhole has no horizon.",
     ],
     ("morris_thorne", "spherical"): [
-        "This is the whole of the Morris-Thorne wormhole with $\\Phi = 0$ and $b = b_0^2/r$, and "
-        "each point of the diagram stands for a sphere of radius $r$. The proper radial distance "
+        "The Morris-Thorne wormhole ($\\Phi = 0$, $b = b_0^2/r$), each point in the diagram a "
+        "2-sphere of radius $r$. The proper radial distance "
         "is $l = \\pm\\sqrt{r^2 - b_0^2}$, and $p, q = \\arctan((ct \\mp l)/b_0)$ bring the plane "
         "of $t$ and $l$ into the full diamond, with the throat $r = b_0$ on its axis.",
         "Every $\\Phi$ and $b$ that give no horizon and two flat ends give the same diamond. With "
@@ -2529,14 +2525,13 @@ CAPTIONS = {
         "side and end at the throat, where $g_{rr}$ diverges.",
     ],
     ("morris_thorne", "proper_radial"): [
-        "This is the same wormhole in the proper distance coordinates $t$ and $l$, which cover "
+        "The same wormhole in the proper distance coordinates $t$ and $l$, which cover "
         "both sides and run smoothly through the throat at $l = 0$. With $\\Phi = 0$ the metric "
         "on the plane is $-c^2dt^2 + dl^2$, and $p, q = \\arctan((ct \\mp l)/b_0)$ bring it into "
         "the diamond.",
     ],
     ("cosmic_string", "conical"): [
-        "This is the half plane of $t$ and $r$ at fixed $\\phi$ and $z$, which is totally "
-        "geodesic. The metric on it is $-c^2dt^2 + dr^2$, so "
+        "The half plane of $t$ and $r$ at fixed $\\phi$ and $z$, totally geodesic. The metric on it is $-c^2dt^2 + dr^2$, so "
         "$p, q = \\arctan((ct \\mp r)/\\ell)$ bring it into Minkowski's half diamond, with the "
         "string at $r = 0$ in place of a regular centre.",
         "The string's gravity is its deficit angle $\\delta = 8\\pi G\\mu/c^2$, which shows in "
@@ -2544,16 +2539,16 @@ CAPTIONS = {
         "short of $2\\pi r$ by $\\delta r$.",
     ],
     ("cosmic_string", "gott"): [
-        "This is the same half plane with Gott's core, which makes the axis regular. Inside the "
+        "The same half plane with Gott's core, which makes the axis regular. Inside the "
         "core the proper distance from the axis is $\\rho = \\ell\\chi$, and outside it is "
         "$\\ell\\chi_0 + r - \\ell\\tan\\chi_0$; the edge of the core, $r = \\ell\\tan\\chi_0$, is "
         "where the circumferences inside and outside agree. In $\\rho$ the metric on the whole "
         "half plane is $-c^2dt^2 + d\\rho^2$.",
     ],
     ("interior_schwarzschild", "spherical"): [
-        "This is the whole of a static star of uniform density, the interior solution for "
-        "$r \\le R$ joined at $R = 1.5\\,r_s$ to the Schwarzschild exterior, and each point of the "
-        "diagram stands for a sphere of radius $r$. That radius clears Buchdahl's bound, "
+        "A static star of uniform density, the interior solution for $r \\le R$ joined at "
+        "$R = 1.5\\,r_s$ to the Schwarzschild exterior, each point in the diagram a 2-sphere of "
+        "radius $r$. That radius clears Buchdahl's bound, "
         "$R > \\frac{9}{8}r_s$, so there is no horizon.",
         "At the surface $g_{tt} = -(1 - r_s/R)$ on both sides, so $t$ is one coordinate "
         "throughout. The tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from "
@@ -2562,8 +2557,7 @@ CAPTIONS = {
         "tube from $i^-$ to $i^+$.",
     ],
     ("frw", "flat"): [
-        "This is the whole of a flat universe of dust, and each point of the diagram stands for "
-        "a sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "
+        "A flat universe of dust, each point in the diagram a 2-sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "
         "$a^2(-d\\eta^2 + dr^2 + r^2d\\Omega^2)$ is conformal to the half $\\eta > 0$ of Minkowski "
         "space, which $p, q = \\arctan((\\eta \\mp r)/\\eta_0)$ bring into a triangle, with "
         "$\\eta_0$ the conformal time today.",
@@ -2573,8 +2567,7 @@ CAPTIONS = {
         "reached us yet.",
     ],
     ("frw", "closed"): [
-        "This is the whole of a closed universe of dust, and each point of the diagram stands "
-        "for a sphere. With $k = +1$, dust gives $a \\propto 1 - \\cos\\eta$, with $\\eta$ from "
+        "A closed universe of dust, each point in the diagram a 2-sphere. With $k = +1$, dust gives $a \\propto 1 - \\cos\\eta$, with $\\eta$ from "
         "$0$ to $2\\pi$, and with $r = \\sin\\chi$ the metric is already conformal to the Einstein "
         "static universe, the rectangle $0 \\le \\chi \\le \\pi$ with the bang along its bottom "
         "and the crunch along its top.",
@@ -2584,16 +2577,15 @@ CAPTIONS = {
         "vanishes.",
     ],
     ("frw", "open"): [
-        "This is the whole of an open universe of dust, and each point of the diagram stands for "
-        "a sphere. With $k = -1$, dust gives $a \\propto \\cosh\\eta - 1$, and with "
+        "An open universe of dust, each point in the diagram a 2-sphere. With $k = -1$, dust gives $a \\propto \\cosh\\eta - 1$, and with "
         "$r = \\sinh\\chi$ the map $\\tan((T \\pm X)/2) = \\tanh((\\eta \\pm \\chi)/2)$ sends it into "
         "the Einstein static universe. It has the causal structure of the flat universe, a "
         "triangle with the bang along its base and null infinity above, and differs from it only "
         "in where its surfaces of constant $\\eta$ and $\\chi$ lie.",
     ],
     ("oppenheimer_snyder", "collapse"): [
-        "This is the whole of a ball of dust collapsing from rest at $R_0 = 2\\,r_s$, and each "
-        "point of the diagram stands for a sphere. Inside, the dust is a closed universe, "
+        "A spherically symmetric distribution of dust collapsing from rest ($R_0 = 2\\,r_s$), "
+        "each point in the diagram a 2-sphere. Inside, the dust is a closed universe, "
         "$a^2(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$ with $a = \\frac{a_m}{2}(1 + \\cos\\eta)$, "
         "already conformal to the Einstein static universe in $\\eta$ and $\\chi$. Outside, "
         "$p = P(U)$ and $q = Q(V)$ are functions of the Kruskal coordinates, and three conditions "
@@ -2608,8 +2600,8 @@ CAPTIONS = {
         "outside it are one spacelike line.",
     ],
     ("tov", "spherical"): [
-        "This is the whole of a static star of fluid with a polytrope for its equation of state, "
-        "and each point of the diagram stands for a sphere of radius $r$. Its mass and redshift "
+        "A static star of fluid with a polytrope for its equation of state, each point in the "
+        "diagram a 2-sphere of radius $r$. Its mass and redshift "
         "functions come from $G^t{}_t = -8\\pi G\\rho/c^2$ and $G^r{}_r = 8\\pi Gp/c^4$ and its "
         "pressure from $\\partial_r p = -(\\rho c^2 + p)\\,\\partial_r\\Phi$. Where the pressure falls "
         "to zero, the same coordinates carry on as Schwarzschild's exterior, with $m = GM/c^2$ and "
@@ -2622,11 +2614,11 @@ CAPTIONS = {
         "equation of state moves only the surfaces of constant $t$ and $r$ inside the triangle.",
     ],
     ("malament_hogarth", "cartesian"): [
-        "This is the whole of the Malament-Hogarth toy spacetime, Minkowski space with one event "
+        "The Malament-Hogarth toy spacetime, Minkowski space with one event "
         "removed and its metric multiplied by $\\Omega^2$. A conformal factor changes no null "
         "direction, so for every $\\Omega$ the causal structure is Minkowski's less that event. "
-        "It is symmetric about the $t$ axis through the event, so each point of the triangle is "
-        "the sphere of events at one $t$ and one distance $r = \\sqrt{x^2 + y^2 + z^2}$ from the "
+        "It is symmetric about the $t$ axis through the event, so each point in the triangle is "
+        "a 2-sphere of events at one $t$ and one distance $r = \\sqrt{x^2 + y^2 + z^2}$ from the "
         "axis, and $p, q = \\arctan((ct \\mp r)/\\ell)$ bring it into Minkowski's triangle with one "
         "point of its axis removed.",
         "The computer's world line runs up the axis into the removed event, and every event above "
@@ -2638,8 +2630,8 @@ CAPTIONS = {
         "blueshifted by $\\Omega$, without bound.",
     ],
     ("vaidya", "shell"): [
-        "This is the whole of a spacetime into which a spherical shell of null dust of mass $M$ "
-        "falls along $v = 0$, and each point of the diagram stands for a sphere. With $m = 0$ for "
+        "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, "
+        "each point in the diagram a 2-sphere. With $m = 0$ for "
         "$v < 0$ the metric inside the shell is flat, and with $m = M$ for $v > 0$ it is "
         "Schwarzschild's in ingoing coordinates, placed outside the shell by $p = \\arctan U$ and "
         "$q = \\arctan V$. Inside, each outgoing light ray keeps the $p$ it has where it crosses "
