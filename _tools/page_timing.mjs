@@ -13,13 +13,15 @@
      node _tools/page_timing.mjs http://127.0.0.1:4000
 
    --metric <id> times one spacetime and is repeatable; --phone lays the page out as an
-   iPhone held upright, 390 by 844; --width and --height set another screen; --cpu <n> slows
-   the processor n times over, as Chrome's own tools do to stand in for a slower phone; and
-   --budget <seconds>, 10 by default, is the time past which a chart counts as failing.
-   CHROME names the browser when it is not where macOS keeps it.
+   iPhone held upright, 390 by 844; --width and --height set another screen; --text <px>
+   sets the browser's default font size, 16 by default, as a reader who enlarges text does;
+   --cpu <n> slows the processor n times over, as Chrome's own tools do to stand in for a
+   slower phone; and --budget <seconds>, 10 by default, is the time past which a chart
+   counts as failing. CHROME names the browser when it is not where macOS keeps it.
 
-   It prints one line per chart, slowest last, and exits non-zero if any chart missed the
-   budget or never became ready. */
+   It prints one line per chart, slowest last, then every page error and console error the
+   page raised, and exits non-zero if any chart missed the budget or never became ready, or
+   if the page raised any error at all. */
 import { spawn } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -35,6 +37,7 @@ const only = argv.flatMap((a, i) => (a === '--metric' ? [argv[i + 1]] : []));
 const phone = argv.includes('--phone');
 const width = +option('--width', phone ? 390 : 1440);
 const height = +option('--height', phone ? 844 : 900);
+const text = +option('--text', 16);
 const cpu = +option('--cpu', 1);
 const budget = +option('--budget', 10);
 const LIMIT_S = Math.max(300, budget * 10);
@@ -65,9 +68,20 @@ const socket = new WebSocket(targets.find(t => t.type === 'page').webSocketDebug
 await new Promise(r => socket.addEventListener('open', r));
 let seq = 0;
 const pending = new Map();
+/* Every console.error and every error the browser logs itself, such as a file that failed to
+   load, with the spacetime open when it came. The page's own errors are gathered in the page,
+   below, since Chrome reports "ResizeObserver loop completed with undelivered notifications"
+   to the page's error handlers alone. */
+const errors = [];
+let opened = 'the list';
 socket.addEventListener('message', e => {
   const m = JSON.parse(e.data);
   if (pending.has(m.id)) { pending.get(m.id)(m); pending.delete(m.id); }
+  if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') {
+    errors.push(`${opened}: console error: ${m.params.args.map(a => a.value ?? a.description).join(' ')}`);
+  } else if (m.method === 'Log.entryAdded' && m.params.entry.level === 'error') {
+    errors.push(`${opened}: console error: ${m.params.entry.text}${m.params.entry.url ? ` (${m.params.entry.url})` : ''}`);
+  }
 });
 function send(method, params = {}) {
   return new Promise(r => { const id = ++seq; pending.set(id, r); socket.send(JSON.stringify({ id, method, params })); });
@@ -82,12 +96,22 @@ async function evaluate(expression) {
 await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: phone });
 if (phone) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
 if (cpu > 1) await send('Emulation.setCPUThrottlingRate', { rate: cpu });
+if (text !== 16) await send('Page.setFontSizes', { fontSizes: { standard: text } });
+await send('Runtime.enable');
+await send('Log.enable');
 
-/* Before the page's own scripts run: count the typesetting MathJax has in hand and keep every
-   task that blocked the page for more than 50ms, which is what the browser calls a long task. */
+/* Before the page's own scripts run: count the typesetting MathJax has in hand, keep every
+   task that blocked the page for more than 50ms, which is what the browser calls a long task,
+   and keep every error the page raises. */
 await send('Page.enable');
 await send('Page.addScriptToEvaluateOnNewDocument', { source: `
-  window.__mfsTiming = { busy: 0, long: [] };
+  window.__mfsTiming = { busy: 0, long: [], errors: [] };
+  window.addEventListener('error', function (e) {
+    window.__mfsTiming.errors.push(e.message + (e.filename ? ' (' + e.filename + ':' + e.lineno + ')' : ''));
+  });
+  window.addEventListener('unhandledrejection', function (e) {
+    window.__mfsTiming.errors.push('unhandled rejection: ' + (e.reason && e.reason.stack || e.reason));
+  });
   try {
     new PerformanceObserver(function (list) {
       list.getEntries().forEach(function (e) { window.__mfsTiming.long.push([e.startTime, e.duration]); });
@@ -144,9 +168,15 @@ function timed(action, chart) {
   })`);
 }
 
+async function pageErrors() {
+  for (const e of await evaluate(`window.__mfsTiming.errors.splice(0)`)) errors.push(`${opened}: page error: ${e}`);
+}
+await pageErrors();
+
 const results = [];
 for (const id of ids) {
   if (only.length && !only.includes(id)) continue;
+  opened = id;
   const first = await timed(`document.querySelector('.mfs-result[data-id="${id}"]').click();`, 0);
   results.push({ id, ...(first || { chart: '?' }), failed: !first });
   if (!first) continue;
@@ -155,6 +185,7 @@ for (const id of ids) {
     const r = await timed(`document.querySelector('.mfs-charts [data-chart="${c}"]').click();`, c);
     results.push({ id, ...(r || { chart: String(c) }), failed: !r });
   }
+  await pageErrors();
 }
 
 results.sort((a, b) => (a.failed - b.failed) || (a.seconds - b.seconds));
@@ -168,7 +199,9 @@ for (const r of results) {
     : `${name} ${r.seconds.toFixed(2).padStart(6)}s  longest task ${r.longest.toFixed(2).padStart(5)}s  ` +
       `${String(r.lines).padStart(4)} lines ${String(r.elements).padStart(7)} elements${over ? '  OVER BUDGET' : ''}`);
 }
+for (const e of errors) console.log(e);
 console.log(`${results.length} charts at ${width} by ${height}${phone ? ' as a phone' : ''}` +
-  `${cpu > 1 ? `, processor slowed ${cpu} times` : ''}: ` +
-  (bad ? `${bad} over the ${budget}s budget` : `all within the ${budget}s budget`));
-finish(bad ? 1 : 0);
+  `${text !== 16 ? ` with ${text}px text` : ''}${cpu > 1 ? `, processor slowed ${cpu} times` : ''}: ` +
+  (bad ? `${bad} over the ${budget}s budget` : `all within the ${budget}s budget`) +
+  `, ${errors.length ? `${errors.length} errors` : 'no errors'}`);
+finish(bad || errors.length ? 1 : 0);

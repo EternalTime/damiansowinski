@@ -829,9 +829,10 @@ class WrittenAreas(unittest.TestCase):
                           "the page's script sets a font")
 
     def test_every_prose_the_page_fits_is_a_written_area(self):
-        watched = re.search(r"root\.querySelectorAll\('([^']*)'\)\.forEach\(function\(block\) \{\s*"
-                            r"_proseObserver", self.page)
-        self.assertIsNotNone(watched, "wireProse() no longer names the prose it fits")
+        watched = re.search(r"var PROSE = '([^']*)';", self.page)
+        self.assertIsNotNone(watched, "PROSE no longer names the prose the page fits")
+        self.assertRegex(self.page, r"root\.querySelectorAll\(PROSE\)\.forEach\(function\(block\) \{ _proseObserver",
+                         "wireProse() no longer observes PROSE")
         for cls in (c.strip() for c in watched.group(1).split(",")):
             with self.subTest(cls):
                 self.assertIn(cls, self.PROSE_HELD_BY, f"{cls} is prose; add its rule to WRITTEN")
