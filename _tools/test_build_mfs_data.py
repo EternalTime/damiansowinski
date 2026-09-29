@@ -912,6 +912,64 @@ class WrittenAreas(unittest.TestCase):
         self.assertEqual(self.resolved("#mfs-print-root", "font-family", printed=True), "'EB Garamond', serif")
 
 
+class FixedSizes(unittest.TestCase):
+    """The spacetime's name, the word above it and every button keep one size in px at any
+    text size, the size each had before the prose grew with the reader's text, and the prose's
+    headings grow with it, as the captain asked on 29 September 2026: "When I said I wanted
+    the title and subtitle fonts to increase along with the text, I meant the font in the
+    actual prose, not in the buttons." Each fixed size is the desktop's and then the phone's."""
+
+    FIXED = {
+        "#mfs-content-panel .mfs-title": ("min(40px, var(--mfs-fit, 40px))", "min(26px, var(--mfs-fit, 26px))"),
+        "#mfs-content-panel .mfs-label": ("min(21px, var(--mfs-fit, 21px))", "min(14px, var(--mfs-fit, 14px))"),
+        "#mfs-content-panel #mfs-print-btn": ("15px", "12px"),
+        "#mfs-content-panel .mfs-choice": ("min(15px, var(--mfs-fit, 15px))", "min(12px, var(--mfs-fit, 12px))"),
+        ".mfs-result": ("min(18px, var(--mfs-fit, 18px))",),
+    }
+    HEADINGS = "#mfs-content-panel .mfs-section-label"
+
+    @classmethod
+    def setUpClass(cls):
+        cls.page, cls.rules = page_rules()
+
+    def sizes(self, selector, prop="font-size"):
+        return tuple(d[prop].replace("!important", "").strip() for selectors, d, printed in self.rules
+                     if selector in selectors and prop in d and not printed)
+
+    def test_the_name_and_every_button_keep_their_size_at_any_text_size(self):
+        for selector, sizes in self.FIXED.items():
+            with self.subTest(selector):
+                self.assertEqual(self.sizes(selector), sizes)
+
+    def test_nothing_on_the_screen_sizes_a_button_or_the_name_by_the_text(self):
+        # A rule that reaches a button or the name, a hover or a phone's among them, may give
+        # it no size or spacing that follows the reader's text.
+        names = [re.findall(r"[.#][\w-]+", s)[-1] for s in self.FIXED]
+        for selectors, declarations, printed in self.rules:
+            for selector in selectors:
+                # The element a selector sizes is named in its last compound, as in .mfs-choice:hover.
+                target = re.findall(r"[.#][\w-]+", selector.split()[-1]) if selector.split() else []
+                if printed or not set(target) & set(names):
+                    continue
+                for prop in ("font-size", "padding", "margin", "gap", "height", "width"):
+                    with self.subTest(selector, prop=prop):
+                        self.assertNotRegex(declarations.get(prop, ""), r"rem\b|--mfs-prose|--mfs-text")
+        for selector in ("#mfs-content-panel .mfs-choices",):
+            self.assertEqual(self.sizes(selector, "gap"), ("6px",))
+
+    def test_the_reset_is_drawn_at_the_usual_text_size(self):
+        self.assertRegex(self.page, r"drawing\.parentElement\.getBoundingClientRect\(\)\.width / cdFrame\(view\.figure\)\.vw")
+        self.assertEqual(self.sizes("#mfs-content-panel .mfs-em-reset"), ("calc(13 * var(--em-u, 1px))",))
+
+    def test_the_headings_of_the_prose_grow_with_the_text(self):
+        sizes = self.sizes(self.HEADINGS)
+        self.assertEqual(sizes, ("min(1.3125rem, var(--mfs-fit, 1.3125rem))", "min(0.875rem, var(--mfs-fit, 0.875rem))"))
+        for selector in WrittenAreas.WRITTEN[1:]:
+            for size in self.sizes(selector):
+                with self.subTest(selector, size=size):
+                    self.assertRegex(size, r"rem\b|--mfs-prose|^1em$")
+
+
 class NoGlow(unittest.TestCase):
     """Nothing on the spacetimes page glows, and a button chosen or pressed turns pink, as the
     captain asked on 29 September 2026: "Get rid of the glow on the pressed button in MFS.
