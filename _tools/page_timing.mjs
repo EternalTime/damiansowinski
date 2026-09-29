@@ -46,6 +46,12 @@
    reader's text size, as the captain asked on 29 September 2026, and in each state any of
    them set larger than that size counts as an error.
 
+   Wherever the list and the spacetime stand side by side, in each state the list's panel
+   starts on the spacetime panel's top and the coffee panel ends on its bottom, with 6px
+   between the two on the left, and the space between the Exit sign and the spacetime panel
+   is half what it was before 29 September 2026, as the captain asked that day; any of them a
+   pixel out counts as an error.
+
    It prints one line per chart, slowest last, then every page error and console error the
    page raised and every label that moved, and exits non-zero if any chart missed the budget
    or never became ready, or if the page raised any error at all. */
@@ -264,6 +270,24 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
     });
     return out;
   };
+  /* Wherever the panels stand side by side: the top of the list's panel on the top of the
+     spacetime's panel and the bottom of the coffee panel on its bottom, within a pixel, the
+     list's panel 6px above the coffee panel, and the spacetime panel's top halfway between
+     the foot of the Exit sign and where it stood before 29 September 2026, 150px down or 60px
+     below the title's foot, or 30px below the title's foot, whichever is lower. */
+  window.__mfsPanelEdges = function () {
+    if (getComputedStyle(document.documentElement).getPropertyValue('--mfs-phone').trim() === '1') return [];
+    function box(id) { return document.getElementById(id).getBoundingClientRect(); }
+    var list = box('mfs-search-panel'), coffee = box('mfs-coffee-panel'), right = box('mfs-content-panel');
+    var sign = box('mfs-exit').bottom, foot = box('mfs-title').bottom, out = [];
+    function near(what, a, b) { if (Math.abs(a - b) > 1) out.push(what + ' is at ' + a.toFixed(1) + ', not ' + b.toFixed(1)); }
+    near('the top of the list\'s panel', list.top, right.top);
+    near('the bottom of the coffee panel', coffee.bottom, right.bottom);
+    near('the gap between the list\'s panel and the coffee panel', coffee.top - list.bottom, 6);
+    var old = Math.max(150, Math.ceil(foot + 60));
+    near('the top of the spacetime\'s panel', right.top, Math.max(sign + (old - sign) / 2, foot + 30));
+    return out;
+  };
   window.__mfsSettled = function () {
     return document.fonts.ready.then(function () {
       return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
@@ -315,7 +339,7 @@ function timed(action, chart) {
         window.__mfsSettled().then(function () {
           result.moved = stop();
           result.margins = window.__mfsMargins(panel).concat(window.__mfsGlow(document.documentElement), window.__mfsPink(),
-            window.__mfsSizes());
+            window.__mfsSizes(), window.__mfsPanelEdges());
           resolve(result);
         });
       }, 0); }); });

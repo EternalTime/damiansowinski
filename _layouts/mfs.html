@@ -104,10 +104,11 @@
   <div id="mfs-search-results" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;"></div>
   </div>
 
-<!-- Buy Me a Coffee panel. Sits flush against the bottom edge of #mfs-search-panel with no gap
-     between them, which is deliberate: the two borders are meant to meet. Its top, width and
-     max height come from syncPanel() in the panel animation script below, never from here, and
-     its height is left to its content so the panel stays as small as its contents need.
+<!-- Buy Me a Coffee panel. Its bottom edge lies on the bottom edge of the spacetime's panel,
+     and #mfs-search-panel ends 6px above its top, so the two borders stand apart by that much.
+     Its top, width and max height come from syncPanel() in the panel animation script below,
+     never from here, and its height is left to its content so the panel stays as small as
+     its contents need.
      #mfs-coffee-scroll takes the overflow when the viewport is short, so only the copy scrolls
      and the button below it stays visible as a non-scrolling bottom row. -->
 <div id="mfs-coffee-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
@@ -224,8 +225,12 @@
        list, --mfs-left-w, grows with the text up to a quarter of the window, which leaves the
        spacetime three quarters of it at any size, and the panels start at --mfs-top, below
        the title however large it is set and however it wraps, which the panel script
-       measures. */
-    :root { --mfs-left-w: clamp(280px, 17.5rem, 25vw); --mfs-top: 150px; }
+       measures. Every panel ends at --mfs-bottom, 20px above the foot of the window: the
+       spacetime's panel on the right and the coffee panel on the left end on one line, and
+       the list's panel fills the column between --mfs-top and the coffee panel. The list
+       keeps --mfs-list-h at the least, which is its whole height on a phone. */
+    :root { --mfs-left-w: clamp(280px, 17.5rem, 25vw); --mfs-top: 150px; --mfs-bottom: calc(100vh - 20px);
+            --mfs-list-h: 320px; --mfs-coffee-h: 0px; }
     #mfs-banner { display: contents; }
     /* The list and the search field are held to sizes at which their words fit, which the
        search script measures as a width of these containers over ems. */
@@ -693,11 +698,10 @@
       var coffee = document.getElementById('mfs-coffee-panel');
       if (!el) return;
 
-      var PANEL_TOP   = 150;   // px from top of viewport, at the least; see placeTop()
-      var TITLE_GAP   = 60;    // px at the least between the title and the panels below it
+      var PANEL_TOP   = 150;   // px from top of viewport; see placeTop()
+      var TITLE_GAP   = 60;    // px between the title and the panels below it; see placeTop()
       var PANEL_LEFT  = 0;     // flush with left edge of window
-      var PANEL_H     = 320;
-      var BOTTOM_GAP  = 20;    // same bottom clearance the content panel leaves
+      var PANEL_GAP   = 6;     // px between the list's panel and the coffee panel
       var SLIDE_DELAY = 800;   // ms after flicker-in starts
       var SLIDE_DUR   = 500;   // ms for the slide
 
@@ -709,37 +713,61 @@
       // text size as it changes.
       var OFF_LEFT = 'calc(-1 * var(--mfs-left-w) - 20px)';
 
-      /* The panels start 150px down, below the title, until the title needs more: set large
-         enough it wraps onto a second line, which at twice the usual text size it does on a
-         1440px screen, and its last line would otherwise lie over the panels. So they start
-         TITLE_GAP below the title's foot, which takes in the rise the grid makes under it.
-         The title is fixed on the desktop, so its box is its place on the screen; on a phone
-         it is in the flow and the phone stylesheet places the panels. The title's size is
-         watched, since it changes when the reader's text size does and when it wraps anew. */
+      /* The panels start halfway between the foot of the Exit sign and PANEL_TOP, as the
+         captain asked on 29 September 2026: "closing the space between its top and the exit
+         text by 50%". Where the title needs more, set large enough it wraps onto a second
+         line, which at twice the usual text size it does on a 1440px screen, the space closed
+         by half is the one below the title, so the panels start half TITLE_GAP below the
+         title's foot and its last line never lies over them. The title and the sign are fixed
+         on the desktop, so their boxes are their places on the screen; on a phone they are in
+         the flow and the phone stylesheet places the panels. Both are watched, since their
+         sizes change when the reader's text size does and the title's when it wraps anew. */
+      var title = document.getElementById('mfs-title');
+      var exit  = document.getElementById('mfs-exit');
       function placeTop() {
-        var foot = document.getElementById('mfs-title').getBoundingClientRect().bottom;
-        var top = Math.max(PANEL_TOP, Math.ceil(foot + TITLE_GAP));
-        document.documentElement.style.setProperty('--mfs-top', top + 'px');
+        var foot = title.getBoundingClientRect().bottom;
+        var sign = exit.getBoundingClientRect().bottom;
+        var top = Math.max((sign + PANEL_TOP) / 2, foot + TITLE_GAP / 2);
+        document.documentElement.style.setProperty('--mfs-top', Math.round(top) + 'px');
+        placeCoffee();
       }
 
-      // Set size and top; start off-screen left
+      // The coffee panel's height, which sets where the list's panel ends above it. Its clamp
+      // follows --mfs-top, so placeTop() measures it again.
+      function placeCoffee() {
+        document.documentElement.style.setProperty('--mfs-coffee-h', coffee.offsetHeight + 'px');
+      }
+
+      /* Set size and top; start off-screen left. The list's panel runs from the spacetime
+         panel's top, --mfs-top, to PANEL_GAP above the coffee panel, whose bottom is the
+         spacetime panel's bottom, --mfs-bottom, so the three edges lie on those two lines at
+         any size of window and text. */
       function syncPanel() {
-        placeTop();
         el.style.top    = 'var(--mfs-top)';
         el.style.width  = 'var(--mfs-left-w)';
-        el.style.height = PANEL_H + 'px';
-        coffee.style.top       = 'calc(var(--mfs-top) + ' + PANEL_H + 'px)';
+        el.style.height = 'calc(var(--mfs-bottom) - var(--mfs-coffee-h) - ' + PANEL_GAP + 'px - var(--mfs-top))';
+        coffee.style.top       = 'calc(var(--mfs-bottom) - var(--mfs-coffee-h))';
         coffee.style.width     = 'var(--mfs-left-w)';
-        // No height: the panel is content sized. The clamp only stops it running past the
-        // bottom of a short viewport, where a fixed, overflow:hidden panel would put the
+        // No height: the panel is content sized. The clamp only stops it taking the list below
+        // --mfs-list-h in a short viewport, where a fixed, overflow:hidden panel would put the
         // button out of reach; past that point #mfs-coffee-scroll scrolls the copy instead.
-        coffee.style.maxHeight = 'max(0px, calc(100vh - var(--mfs-top) - ' + (PANEL_H + BOTTOM_GAP) + 'px))';
+        coffee.style.maxHeight = 'max(0px, calc(var(--mfs-bottom) - var(--mfs-top) - var(--mfs-list-h) - ' + PANEL_GAP + 'px))';
+        placeTop();
       }
       panels.forEach(function(p) { p.style.left = OFF_LEFT; });
       syncPanel();
       window._mfsSyncPanel = syncPanel;
       window.addEventListener('resize', placeTop);
-      if (window.ResizeObserver) new ResizeObserver(placeTop).observe(document.getElementById('mfs-title'));
+      /* The title and the sign are measured at the next frame, never inside the observer
+         that sees them change: a new --mfs-top can change the coffee panel's height, and the
+         coffee panel lies nearer the root than the title, so an observer told of it within
+         the same frame would report a loop. */
+      if (window.ResizeObserver) {
+        var watchTop = new ResizeObserver(function() { requestAnimationFrame(placeTop); });
+        watchTop.observe(title);
+        watchTop.observe(exit);
+        new ResizeObserver(placeCoffee).observe(coffee);
+      }
 
       // Slide in after delay
       setTimeout(function() {
@@ -782,7 +810,7 @@
         [el, note].forEach(function(box) {
           box.style.top    = 'var(--mfs-top)';
           box.style.width  = 'calc(100vw - var(--mfs-left-w) - ' + GAP + 'px)';
-          box.style.height = 'calc(100vh - var(--mfs-top) - 20px)';
+          box.style.height = 'calc(var(--mfs-bottom) - var(--mfs-top))';
         });
       }
 
@@ -3971,7 +3999,7 @@
         position: relative !important; top: auto !important;
         width: auto !important; margin-right: 20px;
       }
-      #mfs-search-panel { margin-top: 40px; }
+      #mfs-search-panel { margin-top: 40px; height: var(--mfs-list-h) !important; }
       #mfs-coffee-panel { max-height: none !important; }
       #mfs-search-input { font-size: max(1rem, 16px) !important; }
 
