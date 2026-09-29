@@ -94,7 +94,7 @@ application builds against it: the surface itself, as profiles of surfaces of
 revolution with their units, marked circles and the kind of each end, and the page's
 drawing of it, projected here from a fixed camera into the form a figure in three
 dimensions takes in the diagram files, with what a client needs to draw it again from
-another camera, as the page does with MFS/assets/embedding-turn.js when a reader turns it.
+another camera, as the page does with MFS/assets/turn.js when a reader turns it.
 """
 
 import argparse
@@ -931,7 +931,7 @@ def grid_isolines(F, ni, nj):
     """The polylines where F = 0 on a grid of ni rows and nj columns, F[i * nj + j], by marching
     squares with a zero counted as positive and a saddle settled by the mean of its corners, each
     a list of (i, j) in grid units, a closed one repeating its first point at its end: the
-    isolines() of MFS/assets/embedding-turn.js, step for step, so the page draws the outline of a
+    isolines() of MFS/assets/turn.js, step for step, so the page draws the outline of a
     grid as the figure is written."""
     H = ni * nj
     at, links = {}, {}

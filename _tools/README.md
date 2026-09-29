@@ -73,7 +73,7 @@ Nothing that starts on that drawing scrolls it sideways, so two fingers moving a
 The prose of the spacetimes page and its headings are sized in rem, so a reader who enlarges text in the browser, by Chrome's font size, a larger default font, or Safari's and Firefox's zoom of text only, enlarges every word of it: the headings, the domains, the prose, the mathematics and every word on both kinds of diagram.
 At the browser's usual 16px each is the pixel size it was when the page was set in pixels.
 The spacetime's name, the word "metric" above it and every button keep one size in px at any text size, as the captain asked on 29 September 2026: "When I said I wanted the title and subtitle fonts to increase along with the text, I meant the font in the actual prose, not in the buttons."
-Those are the choices of a chart, a view and an index placement, the print button, the names in the list and the embedding diagram's reset, each at the size it had before the prose grew with the text: the name 40px, the word above it 21px, a choice and the print button 15px and a name in the list 18px, and on a phone 26px, 14px and 12px.
+Those are the choices of a chart, a view and an index placement, the print button, the names in the list and the reset of a figure that turns, each at the size it had before the prose grew with the text: the name 40px, the word above it 21px, a choice and the print button 15px and a name in the list 18px, and on a phone 26px, 14px and 12px.
 The reset is drawn at the drawing's scale at the usual text size, as wide as its frame.
 `FixedSizes` in `_tools/test_build_mfs_data.py` holds those sizes and holds the headings of the prose in rem.
 The list's column grows with the text up to a quarter of the window, the panels start below the page's title however it wraps, the one-column layout's widths are in em so a large text size takes it on a narrower desktop window, and a sticky header that would cover more than a quarter of the view scrolls away instead.
@@ -365,7 +365,8 @@ van Stockum's Weyl tensor has four distinct principal directions and no repeated
 
 Where the causal structure a reader comes for turns in a direction no plane of two coordinates holds, a coordinate system also gets a figure in three dimensions: a slice of one time and two spatial coordinates, every other coordinate held fixed, drawn from the published metric by `_tools/derivations/projections.py` and projected once from a fixed camera.
 The file holds the projection, polylines, polygons and points of the page's own plane in the order they are painted, farthest first, with TeX labels, which is the form a conformal diagram takes.
-So the page draws a figure with the conformal diagram's frame and labels, it prints, and the application can draw the same data with its own renderer; nothing is left for a reader to turn, and there is no scene in the browser.
+So the page draws a figure with the conformal diagram's frame and labels, it prints, and an application can draw the same data with its own renderer.
+A figure of light cones also carries its pieces in three dimensions under `turn`, from which the page draws it again from whatever side the reader turns it to.
 `FIGURES` and `CAPTIONS` in that script are its table, and `null_rays.py` writes each figure into its spacetime's diagram file under `projections`, keyed by coordinate system beside the flat views under `systems`, which an application that reads only the flat views passes over.
 A figure is stamped with the fields it was drawn from, as a flat view is.
 
@@ -392,6 +393,32 @@ Every class a figure paints needs a style in `_layouts/mfs.html`, as `.pj-<class
 A path the stylesheet does not know is painted as nothing at all, so a test holds every class of every figure to having both.
 
 A coordinate system with neither a flat view nor a figure has no section on the page, and a spacetime with neither has no diagram file, which a full redraw removes if one is left behind; `build_mfs_data.py` refuses a diagram file that draws nothing.
+
+### Turning a figure of light cones
+
+The figures of Gödel, van Stockum, Kerr, Kerr-Newman and Alcubierre carry `turn`, every piece of the figure in the drawing's $(X, Y, T)$, $T$ up, at six decimals, and the page turns them by the same hand as an embedding diagram.
+The cosmic string's beam lies in the plane $T = 0$ seen from straight above, in the plane's own flat coordinates, so it has no other side and no `turn`.
+`turn` holds:
+
+- `lines`: every line the figure draws before its cones, in the order painted, each `{"class", "points"}`, a closed curve ending on its first point.
+- `cones`: every future light cone, each `{"class", "apex", "rim"}`, its apex and the ends of its generators, all of one Euclidean length, in the order the figure paints them at its own camera, farthest first.
+- `ribs`: how many of each cone's generators are drawn from the apex to the rim, evenly round it; every rim's length is a multiple of it.
+- `labels`: where each of `labels` stands, in order: `{"at": [X, Y, T]}`, a point it keeps from every side, or `{"circle": [rho, T], "angle": delta}`, the circle of radius $\rho$ about the axis at height $T$ that it names, at the point of that circle $\delta$ degrees round from the camera's azimuth, counterclockwise seen from above, so it keeps to the side of the circle nearest the reader.
+- `slices`: each of `slices` in three dimensions, in order, its `lines` and `fills` as the published slice has them.
+- `centre`: the point the figure turns about, on the axis halfway between the lowest and the highest point it draws.
+
+At another camera, azimuth $a$ and elevation $e$, with the vectors `right`, `up` and `toward` of `projections.Camera`:
+
+- Every line is projected and thinned by Ramer-Douglas-Peucker to 0.0005 of the box's units.
+- Every cone is painted after the lines, farthest first by `toward` at its apex, two cones whose apexes lie within $10^{-5}$ of the box's larger side of each other in depth keeping their order in `cones`.
+  A cone is the convex hull of its projected apex and rim, each point taken to twelve decimals, filled as `cone`; its rim, closed, as `cone-rim`; every generator from the first round to the last a `ribs`th of the rim apart, from the apex, as `cone-rib`; where the apex is a corner of the hull, the two edges of the hull that meet there, as `cone`; and its apex, as the point `cone-apex`.
+- Each slice's lines and rings are projected and thinned as a line is, and drawn under everything else, as the published slice is.
+- A label stands at its point, or on its circle at $\phi = a + \delta$, with its anchor and offset as published; a label on a circle gives way while it would overlap a label before it, as a label with `ring` does on an embedding diagram.
+- The figure turns about `centre`, which stays where the figure's own camera puts it on the page.
+  It is drawn at one scale $s$, never above 1, the largest that keeps it within the height it had at its own camera and within the width it had on each side of its axis, and moved up or down only as far as that height needs; the `box` stays as it is, and every point drawn stays inside it.
+
+At the figure's own camera these rules give back the published figure, the same layers in the same order, every point of a cone and every label to the published rounding and every line within its thinning.
+`_tools/turn_check.cjs` holds the page's drawing of every figure to that, and to its box from every side.
 
 ### What is not drawn
 
@@ -660,7 +687,7 @@ The cosmic string's figure also lays the cone flat beside it, a flat drawing in 
 
 ### Turning the figure
 
-The page shows the published figure until a reader drags it, and then draws it again from the surfaces at the camera the drag has reached, with `MFS/assets/embedding-turn.js`, which is geometry alone and which the tests run against every published figure through `_tools/embedding_turn_check.cjs`.
+The page shows the published figure until a reader drags it, and then draws it again from the surfaces at the camera the drag has reached, with `MFS/assets/turn.js`, which is geometry alone and which the tests run against every published figure through `_tools/turn_check.cjs`.
 The application turns its figures by the same rules, so the two agree, and at the figure's own camera the rules give back the published figure: the same lines split at the same points, the same labels at the same places, and the tint to within a point of its grid.
 
 `turn` holds:
@@ -692,9 +719,11 @@ At another camera, azimuth $a$ and elevation $e$, with the vectors `right`, `up`
   It names its circle whether the circle runs in front of the surface or behind it, as the published labels do, and gives way only while it would overlap a label that stays put or a label before it in `labels`.
 - The layers keep the published order: the flat fills, the tint, every line hidden and then every line seen, each in the order of the legend, and the points.
 
-The page turns a figure round its axis as far as the reader drags it, the drawing's width being half a turn, and tilts it from looking straight down the axis, $e = 90°$, to looking straight up it, $e = -90°$, never past, so the axis always stands up the page.
+The page turns an embedding diagram and a figure of light cones by the same hand.
+It turns a figure round its axis as far as the reader drags it, the drawing's width being half a turn, and tilts it from looking straight down the axis, $e = 90°$, to looking straight up it, $e = -90°$, never past, so the axis always stands up the page.
 It stays where it is let go, and the reset button in the corner of the frame, a double click or a double tap, Home and Escape bring back the published figure, which is also what prints.
 The arrow keys turn it by 15 degrees once the drawing has the focus, which a click on it gives.
+`dragged()`, `keyed()` and `turned()` in `MFS/assets/turn.js` are those rules, and the tests drag a surface of revolution, a height over a plane and a figure of light cones with them.
 
 ## The three diagrams together
 

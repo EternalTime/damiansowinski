@@ -1020,8 +1020,9 @@ class FixedSizes(unittest.TestCase):
             self.assertEqual(self.sizes(selector, "gap"), ("6px",))
 
     def test_the_reset_is_drawn_at_the_usual_text_size(self):
-        self.assertRegex(self.page, r"drawing\.parentElement\.getBoundingClientRect\(\)\.width / cdFrame\(view\.figure\)\.vw")
-        self.assertEqual(self.sizes("#mfs-content-panel .mfs-em-reset"), ("calc(13 * var(--em-u, 1px))",))
+        self.assertTrue(re.search(r"drawing\.parentElement\.getBoundingClientRect\(\)\.width / cdFrame\(it\.figure\)\.vw",
+                                  self.page), "the reset is not drawn at the frame's scale")
+        self.assertEqual(self.sizes("#mfs-content-panel .mfs-turn-reset"), ("calc(13 * var(--em-u, 1px))",))
 
     def test_the_headings_of_the_prose_grow_with_the_text(self):
         sizes = self.sizes(self.HEADINGS)
@@ -1115,7 +1116,7 @@ class NoGlow(unittest.TestCase):
     def test_every_button_turns_pink_while_it_is_pressed(self):
         # Each :active rule comes after the button's :hover, which a mouse holds while it presses.
         for button, has_border in (("#mfs-content-panel .mfs-choice", True), ("#mfs-content-panel #mfs-print-btn", True),
-                                   ("#mfs-content-panel .mfs-em-reset", True), (".mfs-result", False)):
+                                   ("#mfs-content-panel .mfs-turn-reset", True), (".mfs-result", False)):
             with self.subTest(button):
                 self.assertEqual(self.last(button + ":active", "color"), "var(--pink-light)")
                 if has_border:
@@ -2144,14 +2145,29 @@ class EmbeddingDiagrams(unittest.TestCase):
                 return build.load_embedding(metrics)
 
 
-class TurningEmbeddingDiagrams(unittest.TestCase):
-    """The page turns an embedding diagram with MFS/assets/embedding-turn.js, which draws it again
-    from the view's surfaces by what the figure's `turn`, its labels' `ring` and `clear` and its
-    layers' `flat` say, as _tools/README.md, "Turning the figure", defines them. At the figure's
-    own camera it must give back the published figure, and at any other it must keep inside the
-    box, draw a surface of revolution the same from every side and hide what lies behind."""
+_turn_check = None
 
-    _check = None
+
+def turn_check(test):
+    """One run of the page's own turning geometry in Node over every published figure that
+    turns, _tools/turn_check.cjs, shared by every test that reads it."""
+    global _turn_check
+    if shutil.which("node") is None:
+        test.skipTest("Node is not installed, so the page's geometry cannot be run")
+    if _turn_check is None:
+        run = subprocess.run(["node", str(build.ROOT / "_tools" / "turn_check.cjs")],
+                             capture_output=True, text=True, timeout=600)
+        test.assertEqual(run.returncode, 0, run.stderr[-2000:])
+        _turn_check = json.loads(run.stdout)
+    return _turn_check
+
+
+class TurningEmbeddingDiagrams(unittest.TestCase):
+    """The page turns an embedding diagram with MFS/assets/turn.js, which draws it again from the
+    view's surfaces by what the figure's `turn`, its labels' `ring` and `clear` and its layers'
+    `flat` say, as _tools/README.md, "Turning the figure", defines them. At the figure's own
+    camera it must give back the published figure, and at any other it must keep inside the box,
+    draw a surface of revolution the same from every side and hide what lies behind."""
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -2159,16 +2175,7 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         self.assertTrue(self.views)
 
     def check(self):
-        # One run of the page's own geometry in Node over every published figure, shared by the
-        # tests that read it.
-        if shutil.which("node") is None:
-            self.skipTest("Node is not installed, so the page's geometry cannot be run")
-        if TurningEmbeddingDiagrams._check is None:
-            run = subprocess.run(["node", str(build.ROOT / "_tools" / "embedding_turn_check.cjs")],
-                                 capture_output=True, text=True, timeout=600)
-            self.assertEqual(run.returncode, 0, run.stderr[-2000:])
-            TurningEmbeddingDiagrams._check = json.loads(run.stdout)
-        return TurningEmbeddingDiagrams._check
+        return turn_check(self)
 
     def test_every_figure_carries_what_turning_it_needs(self):
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
@@ -2298,11 +2305,142 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
 
     def test_the_drawing_turns_under_a_drag_and_leaves_a_vertical_swipe_to_the_page(self):
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
-        self.assertIn("{{ '/MFS/assets/embedding-turn.js' | relative_url }}", page)
-        rule = re.search(r"\.mfs-em-figure \.mfs-cd-drawing \{([^}]*)\}", page)
+        self.assertTrue("{{ '/MFS/assets/turn.js' | relative_url }}" in page, "the page does not load turn.js")
+        rule = re.search(r"\.mfs-turn \.mfs-cd-drawing \{([^}]*)\}", page)
         self.assertIsNotNone(rule)
         self.assertIn("touch-action: pan-y", rule.group(1))
-        self.assertIn(".mfs-print-body .mfs-em-reset { display: none", page)
+        self.assertTrue(".mfs-print-body .mfs-turn-reset { display: none" in page, "print shows the reset button")
+        # Both kinds of figure that turn are framed to turn, and the one controller wires them.
+        for frame in ("emFigure", "pjFigure"):
+            self.assertTrue(re.search(r"function " + frame + r"\([\s\S]*?'mfs-(em|pj)-figure mfs-turn'", page),
+                            f"{frame}() does not frame its figure to turn")
+        self.assertTrue("function wireTurning(root)" in page, "no wireTurning()")
+        self.assertFalse("wireEmbedding" in page, "wireEmbedding() is left")
+
+
+class TurningLightConeFigures(unittest.TestCase):
+    """The page turns a figure of light cones in three dimensions with MFS/assets/turn.js, which
+    draws it again from the figure's `turn`, its lines, cones, labels and slices in the drawing's
+    (X, Y, T), as _tools/README.md, "Turning a figure of light cones", defines them. At the
+    figure's own camera it must give back the published figure, layer for layer in the published
+    order, and at any other it must keep inside the box at one scale."""
+
+    def setUp(self):
+        self.figures = {f"{name}/{figure['id']}": figure for name, data in diagram_files().items()
+                        for figures in data.get("projections", {}).values() for figure in figures if "turn" in figure}
+        self.assertTrue(self.figures)
+
+    def test_every_figure_of_light_cones_turns(self):
+        checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
+        self.assertEqual(checked, set(self.figures))
+        self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "kerr/dragging", "kerr_newman/dragging",
+                                   "stockum_dust/tipping"})
+
+    def test_at_its_own_camera_the_page_draws_the_published_figure(self):
+        # Every point the generator does not thin is the published point to the published
+        # rounding, a ten thousandth; a line it thins, 0.0005 across, may keep other points of
+        # the same curve, so it lies within that of the published line, and a label is where
+        # it was published to the rounding.
+        for v in turn_check(self)["figures"]:
+            where = f"{v['metric']}/{v['view']}"
+            self.assertTrue(v["order"], f"{where}: the layers are not the published layers in the published order")
+            self.assertLess(v["cones"], 1.5e-4, f"{where}: a cone strays {v['cones']:.1e} from its published place")
+            self.assertLess(v["lines"], 7e-4, f"{where}: a line strays {v['lines']:.1e} from its published place")
+            self.assertLess(v["slices"], 7e-4, f"{where}: a slice strays {v['slices']:.1e} from its published place")
+            self.assertLess(v["labels"], 1e-4, f"{where}: a label strays {v['labels']:.1e} from its published place")
+            self.assertTrue(v["shown"], f"{where}: a label is hidden at the start")
+
+    def test_a_turned_figure_keeps_to_its_box_at_one_scale(self):
+        for v in turn_check(self)["figures"]:
+            where = f"{v['metric']}/{v['view']}"
+            for step in v["sweep"]:
+                at = f"{where} at azimuth {step['azimuth']}, elevation {step['elevation']}"
+                self.assertEqual(step["bad"], 0, f"{at}: a point is not a number")
+                self.assertLessEqual(step["outside"], 1e-9, f"{at}: drawn outside the box")
+                self.assertGreater(step["scale"], 0, at)
+                self.assertLessEqual(step["scale"], 1, at)
+            self.assertEqual(v["sweep"][3]["scale"], 1, f"{where} is not at its own scale at its own camera")
+
+    def test_the_turn_projects_onto_the_published_figure(self):
+        # Independently of the page: the published apexes, in the order the cones are painted,
+        # and the published labels are the figure's points seen from its own camera.
+        for where, figure in self.figures.items():
+            turn, camera = figure["turn"], figure["camera"]
+            a, e = math.radians(camera["azimuth"]), math.radians(camera["elevation"])
+            right = (-math.sin(a), math.cos(a), 0.0)
+            up = (-math.sin(e) * math.cos(a), -math.sin(e) * math.sin(a), math.cos(e))
+
+            def seen(P):
+                return (sum(p * r for p, r in zip(P, right)), sum(p * u for p, u in zip(P, up)))
+            apexes = [layer["at"] for layer in figure["layers"] if layer["class"] == "cone-apex"]
+            self.assertEqual(len(apexes), len(turn["cones"]), where)
+            for cone, at in zip(turn["cones"], apexes):
+                self.assertLess(math.dist(seen(cone["apex"]), at), 1e-4, where)
+                self.assertEqual(len(cone["rim"]) % turn["ribs"], 0, where)
+            self.assertEqual(len(turn["labels"]), len(figure["labels"]), where)
+            for place, label in zip(turn["labels"], figure["labels"]):
+                self.assertEqual(len(set(place) & {"at", "circle"}), 1, f"{where} {label['text']}")
+                if "circle" in place:
+                    rho, t = place["circle"]
+                    phi = math.radians(camera["azimuth"] + place["angle"])
+                    P = (rho * math.cos(phi), rho * math.sin(phi), t)
+                else:
+                    P = place["at"]
+                self.assertLess(math.dist(seen(P), label["at"]), 1e-4, f"{where} {label['text']}")
+            # The figure turns about the axis, halfway up everything it draws.
+            T = [p[2] for line in turn["lines"] for p in line["points"]]
+            T += [p[2] for cone in turn["cones"] for p in [cone["apex"]] + cone["rim"]]
+            self.assertEqual(turn["centre"][:2], [0, 0], where)
+            self.assertAlmostEqual(turn["centre"][2], (min(T) + max(T)) / 2, delta=1e-6, msg=where)
+            self.assertEqual([len(mark["fills"]) for mark in turn["slices"]],
+                             [len(mark["fills"]) for mark in figure["slices"]], where)
+            self.assertEqual([len(mark["lines"]) for mark in turn["slices"]],
+                             [len(mark["lines"]) for mark in figure["slices"]], where)
+
+    def test_only_the_cosmic_strings_flat_beam_does_not_turn(self):
+        # The beam lies in the plane t = 0 seen from straight above, drawn in the plane's own
+        # flat coordinates, so it has no other side.
+        still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
+                 for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
+        self.assertEqual(still, {"cosmic_string/beam"})
+
+
+class TurningUnderTheHand(unittest.TestCase):
+    """The page turns every figure by one hand, MfsTurn.dragged(), keyed() and turned(), which
+    _tools/turn_check.cjs drags across a surface of revolution, a height over a plane and a
+    figure of light cones as the page does: a fifth of the drawing's width across is 36 degrees
+    round the axis the way the hand moves, a whole width up or down stops looking straight up
+    or straight down the axis, a whole turn and the Home key bring back the published figure,
+    and the left arrow turns it 15 degrees."""
+
+    def test_a_drag_turns_every_kind_of_figure(self):
+        hand = turn_check(self)["hand"]
+        self.assertEqual(set(hand), {"surface", "height", "cones"})
+        for kind, steps in hand.items():
+            home = steps["home"]
+            start = (home["azimuth"], home["elevation"])
+            for name, step in steps.items():
+                self.assertEqual(step["bad"], 0, f"{kind} {name}")
+                self.assertLessEqual(step["outside"], 1e-9, f"{kind} {name}: drawn outside the box")
+            across, up, down = steps["across"], steps["up"], steps["down"]
+            self.assertAlmostEqual(across["azimuth"], start[0] - 36, places=9, msg=kind)
+            self.assertEqual(across["elevation"], start[1], kind)
+            self.assertTrue(across["turned"], kind)
+            self.assertGreater(across["moved"], 0.1, f"{kind}: a drag across left the drawing where it was")
+            self.assertEqual((up["azimuth"], up["elevation"]), (start[0], -90), kind)
+            self.assertEqual((down["azimuth"], down["elevation"]), (start[0], 90), kind)
+            for tilt in (up, down):
+                self.assertTrue(tilt["turned"], kind)
+                self.assertGreater(tilt["moved"], 0.1, f"{kind}: a tilt left the drawing where it was")
+            self.assertFalse(steps["round"]["turned"], f"{kind}: a whole turn is not the published figure")
+            self.assertFalse(home["turned"], kind)
+            self.assertEqual(home["moved"], 0, kind)
+            self.assertEqual((steps["left"]["azimuth"], steps["left"]["elevation"]), (start[0] + 15, start[1]), kind)
+        # The cone facing the reader goes the way the hand goes, by r_c sin 36 degrees, and the
+        # left arrow takes it the other way.
+        cones = hand["cones"]
+        self.assertAlmostEqual(cones["across"]["facing"], math.asinh(1) * math.sin(math.radians(36)), delta=2e-3)
+        self.assertLess(cones["left"]["facing"], 0)
 
 
 def bisect(f, lo, hi, steps=200):

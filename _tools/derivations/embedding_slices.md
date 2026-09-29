@@ -357,6 +357,6 @@ Since 4cd25e4 and 3fd8142 a label stands on whichever side `slices.place` choose
 ## What waits on the two changes before this one
 
 The font change to `_layouts/mfs.html` touches the stylesheet the run is laid out in, so the layout is built on it once it lands.
-The Alcubierre and Krasnikov height plots change `embedding.py`, `embedding-turn.js`, `_tools/README.md` and both spacetimes' embedding files: Alcubierre's moment stays the plane $z = 0$ at one $t$, drawn as the line of constant $t$ on its flat view and the floor of its figure, and Krasnikov's becomes the plane of $x$ and $\rho$ at one $t$, so its point on the flat view becomes a line.
+The Alcubierre and Krasnikov height plots change `embedding.py`, `turn.js`, `_tools/README.md` and both spacetimes' embedding files: Alcubierre's moment stays the plane $z = 0$ at one $t$, drawn as the line of constant $t$ on its flat view and the floor of its figure, and Krasnikov's becomes the plane of $x$ and $\rho$ at one $t$, so its point on the flat view becomes a line.
 Both are drawn from the files as those changes leave them.
 Both landed before any slice was drawn, the font in 84167d9 and 3b0ff21 and the height plots in b912642.

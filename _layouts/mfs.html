@@ -57,8 +57,9 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <!-- The geometry that turns an embedding diagram, which wireEmbedding() uses once a reader drags one. -->
-  <script defer src="{{ '/MFS/assets/embedding-turn.js' | relative_url }}"></script>
+  <!-- The geometry that turns a figure drawn in three dimensions, an embedding diagram or a figure
+       of light cones, which wireTurning() uses once a reader drags one. -->
+  <script defer src="{{ '/MFS/assets/turn.js' | relative_url }}"></script>
 </head>
 <body>
 
@@ -1812,6 +1813,7 @@
       function diagramSection(metricId, coordId) {
         var data = _diagramCache[metricId];
         var views = ((data && data.systems[coordId]) || []).concat((data && data.projections && data.projections[coordId]) || []);
+        var flat = ((data && data.systems[coordId]) || []).length;
         if (!views.length) return '';
         var buttons = views.length > 1 ? choices(views.map(function(v, i) {
           return choiceButton(nrEsc(v.label), i === 0, {});
@@ -1826,7 +1828,7 @@
               var figure = !!view.layers;
               return [
                 '<div class="mfs-nr-view' + (i ? ' mfs-nr-hidden' : '') + '">',
-                  figure ? pjFigure(view) : nrFigure(view),
+                  figure ? pjFigure(view, metricId, coordId, i - flat) : nrFigure(view),
                   '<div class="mfs-nr-text">',
                     '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(figure ? nrEsc(p) : p) + '</p>'; }).join(''), '</div>',
                     figure ? pjLegend(view) : nrLegend(view),
@@ -1845,30 +1847,55 @@
          _tools/derivations/projections.py and projected once from a fixed point of view, so
          the file holds polylines, polygons and points of the page's own plane in the order
          they are painted, farthest first, with TeX labels laid over them as a conformal
-         diagram's are. Nothing is turned here: a figure prints as it is seen, and the
-         application draws the same data. Its frame and labels are the conformal diagram's. */
-      function pjSvg(view, f) {
-        var under = (view.slices || []).map(function(mark) {
+         diagram's are. A figure of light cones also carries its pieces in three dimensions
+         under `turn`, and turns under the reader's hand as an embedding diagram does, as
+         wireTurning() says; it prints as it was published, and the application draws the same
+         data. Its frame and labels are the conformal diagram's. */
+
+      // The paths of a figure's drawing: the slices of the embedding diagram under everything
+      // else and then its layers, in the order given. A turned figure gives each slice's lines
+      // and regions, in the order of the published slices, as `shapes`.
+      function pjPaths(view, layers, shapes, f) {
+        var under = (view.slices || []).map(function(mark, k) {
+          var shape = shapes ? shapes[k] : mark;
           return nrEl('g', sliceAttrs(mark),
-            mark.fills.map(function(rings) {
+            shape.fills.map(function(rings) {
               return nrEl('path', { 'class': 'pj-slice-fill', 'fill-rule': 'evenodd',
                 d: rings.map(function(ring) { return cdPath(f, ring, true); }).join(' ') });
             }).join('') +
-            mark.lines.map(function(line) { return nrEl('path', { 'class': 'pj-slice', d: cdPath(f, line, false) }); }).join(''));
+            shape.lines.map(function(line) { return nrEl('path', { 'class': 'pj-slice', d: cdPath(f, line, false) }); }).join(''));
         });
-        var out = under.concat(view.layers.map(function(L) {
+        return under.concat(layers.map(function(L) {
           var cls = 'pj-' + L['class'];
           if (L.kind === 'fill') return nrEl('path', { 'class': cls + '-fill', d: cdPath(f, L.points, true) });
           if (L.kind === 'line') return nrEl('path', { 'class': cls, d: cdPath(f, L.points, false) });
           return nrEl('circle', { 'class': cls, cx: f.x(L.at[0]).toFixed(1), cy: f.y(L.at[1]).toFixed(1), r: L['class'] === 'cone-apex' ? 1.6 : 4.5 });
-        }));
-        return nrEl('svg', { 'class': 'mfs-cd-svg mfs-pj-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
-          'aria-label': 'Light cones in three dimensions, ' + nrPlain(view.label) }, out.join(''));
+        })).join('');
       }
 
-      function pjFigure(view) {
+      function pjName(view) {
+        return (view.turn ? 'Light cones in three dimensions, ' : 'Spacetime diagram, ') + nrPlain(view.label);
+      }
+
+      function pjSvg(view, f) {
+        return nrEl('svg', { 'class': 'mfs-cd-svg mfs-pj-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
+          'aria-label': pjName(view) }, pjPaths(view, view.layers, null, f));
+      }
+
+      // A figure that turns, a figure of light cones or an embedding diagram, names the figure
+      // it draws, which wireTurning() turns, and the button that brings the published figure
+      // back stands hidden in the corner of its frame.
+      var TURN_RESET = '<button type="button" class="mfs-turn-reset" hidden>reset</button>';
+      function turnAttrs(kind, metricId, place, name) {
+        return ' data-turn="' + kind + '" data-turn-metric="' + nrEsc(metricId) + '" data-turn-view="' + nrEsc(place) + '"' +
+          ' tabindex="0" role="group" aria-label="' + nrEsc(name) + ', turned by dragging it or with the arrow keys"';
+      }
+
+      function pjFigure(view, metricId, coordId, index) {
         var f = cdFrame(view);
-        return cdFrameAround(f, '', pjSvg(view, f) + cdLabels(view, f), 'mfs-pj-figure');
+        if (!view.turn) return cdFrameAround(f, '', pjSvg(view, f) + cdLabels(view, f), 'mfs-pj-figure');
+        return cdFrameAround(f, TURN_RESET, pjSvg(view, f) + cdLabels(view, f), 'mfs-pj-figure mfs-turn',
+          turnAttrs('cones', metricId, coordId + ' ' + index, pjName(view)));
       }
 
       function pjLegend(view) {
@@ -2172,7 +2199,7 @@
          application draws. The page draws the projection, in the
          conformal diagram's frame with its labels, so it follows the reader's text size and
          prints as the conformal diagram does, and draws the surface again from the reader's
-         own point of view once the reader turns it, as wireEmbedding() says. Views follow the
+         own point of view once the reader turns it, as wireTurning() says. Views follow the
          chart chosen above as the conformal diagram's do. _tools/README.md defines the file. */
       var _embeddingCache = {};  // id → parsed JSON, or null where the spacetime has none
 
@@ -2209,14 +2236,11 @@
           'aria-label': 'Embedding diagram, ' + nrPlain(view.label) }, emPaths(view.figure.layers, f));
       }
 
-      // The drawing names the view it draws, which wireEmbedding() turns, and the button that
-      // brings the published figure back stands hidden in the corner of its frame.
+      // The drawing names the view it draws, which wireTurning() turns, as pjFigure() says.
       function emFigure(view, metricId, index) {
         var f = cdFrame(view.figure);
-        var reset = '<button type="button" class="mfs-em-reset" hidden>reset</button>';
-        return cdFrameAround(f, reset, emSvg(view, f) + cdLabels(view.figure, f), 'mfs-em-figure',
-          ' data-em-metric="' + nrEsc(metricId) + '" data-em-view="' + index + '" tabindex="0" role="group"' +
-          ' aria-label="Embedding diagram, ' + nrEsc(nrPlain(view.label)) + ', turned by dragging it or with the arrow keys"');
+        return cdFrameAround(f, TURN_RESET, emSvg(view, f) + cdLabels(view.figure, f), 'mfs-em-figure mfs-turn',
+          turnAttrs('surfaces', metricId, String(index), 'Embedding diagram, ' + nrPlain(view.label)));
       }
 
       function emLegend(view) {
@@ -2479,62 +2503,83 @@
         });
       }
 
-      /* Turning an embedding diagram, which the captain asked for on 28 September 2026: "Why
-         are the embedding diagrams not rotatable?" The drawing shows the published figure until
-         the reader drags it with a mouse, a finger or a pen, and from then on MfsTurn, which
-         MFS/assets/embedding-turn.js defines, draws it again from the view's surfaces at each
-         step of the drag. A drag across turns the surface round its axis, as far as the reader
-         likes, the drawing's whole width being half a turn, and a drag up or down tilts it
-         toward the reader or away, from looking straight down the axis to looking straight up
-         it and never past, so the axis always stands up the page. The surface stays where it
-         is let go, since one that drifted on would carry off the labels the reader turned it
-         to read. While a drag goes on the drawing is made more coarsely, and in full when it
-         ends. The arrow keys turn it by 15 degrees, as a drag their way would, once the drawing
-         has the focus. The reset button in the corner of the frame, which shows only while the
-         surface is turned, a double click or a double tap and the Home or Escape key bring back
-         the published figure exactly, and that is also what prints, since the print copy is
-         made from the page as it was first drawn.
+      /* Turning a figure drawn in three dimensions, which the captain asked for on 28 September
+         2026 for the embedding diagrams, "Why are the embedding diagrams not rotatable?", and on
+         29 September for every figure in three dimensions, the light cones about Gödel's axis
+         among them. An embedding diagram and a figure of light cones turn alike. The drawing
+         shows the published figure until the reader drags it with a mouse, a finger or a pen,
+         and from then on MfsTurn, which MFS/assets/turn.js defines, draws it again from its
+         pieces in three dimensions at each step of the drag: an embedding diagram from its
+         view's surfaces and a figure of light cones from its `turn`. A drag across turns the
+         figure round its axis, as far as the reader likes, the drawing's whole width being half
+         a turn, and a drag up or down tilts it toward the reader or away, from looking straight
+         down the axis to looking straight up it and never past, so the axis always stands up the
+         page. The figure stays where it is let go, since one that drifted on would carry off the
+         labels the reader turned it to read. While a drag goes on an embedding diagram is made
+         more coarsely, and in full when it ends. The arrow keys turn it by 15 degrees, as a drag
+         their way would, once the drawing has the focus. The reset button in the corner of the
+         frame, which shows only while the figure is turned, a double click or a double tap and
+         the Home or Escape key bring back the published figure exactly, and that is also what
+         prints, since the print copy is made from the page as it was first drawn. MfsTurn's
+         dragged(), keyed() and turned() are those rules, which the tests hold.
 
          A finger that sets off across the drawing turns it and may then tilt it, while one that
          sets off up or down scrolls the page, which touch-action: pan-y leaves to the browser,
          so a phone still scrolls past the figure. Nothing that starts on the drawing scrolls it
          sideways, so two fingers moving across it scroll a drawing wider than its frame, as at
          a large text size on a phone. */
-      var _emObserver = null;
-      function wireEmbedding(root) {
+      var _turnObserver = null;
+      function wireTurning(root) {
+        // What a drawing turns: the figure with its box, camera and labels, the view MfsTurn
+        // prepares, and the paths of the SVG for a drawing MfsTurn made, the published one
+        // without it.
+        function figureOf(drawing) {
+          var metric = drawing.getAttribute('data-turn-metric'), place = drawing.getAttribute('data-turn-view');
+          if (drawing.getAttribute('data-turn') === 'surfaces') {
+            var data = _embeddingCache[metric], view = data && data.views[+place];
+            return view && view.figure.turn && { figure: view.figure, view: view, paths: function(f, out) {
+              return emPaths(out ? out.layers : view.figure.layers, f);
+            } };
+          }
+          var at = place.split(' '), figures = _diagramCache[metric] && _diagramCache[metric].projections;
+          var figure = figures && figures[at[0]] && figures[at[0]][+at[1]];
+          return figure && figure.turn && { figure: figure, view: figure, paths: function(f, out) {
+            return out ? pjPaths(figure, out.layers, out.slices, f) : pjPaths(figure, figure.layers, null, f);
+          } };
+        }
         // The reset button fills the drawing's top margin as the drawing is at the usual text
         // size, as wide as its frame, and keeps that size at any text size, as every button
         // does, so it covers nothing drawn: the drawing is never narrower than its frame and
         // is drawn larger with the text. --em-u is the frame's pixels to a unit of the
         // drawing's 628, kept as the frame changes size.
         function unit(drawing) {
-          var view = _embeddingCache[drawing.getAttribute('data-em-metric')];
-          view = view && view.views[+drawing.getAttribute('data-em-view')];
-          if (!view) return;
+          var it = figureOf(drawing);
+          if (!it) return;
           drawing.closest('.mfs-cd-figure').style.setProperty('--em-u',
-            (drawing.parentElement.getBoundingClientRect().width / cdFrame(view.figure).vw).toFixed(4) + 'px');
+            (drawing.parentElement.getBoundingClientRect().width / cdFrame(it.figure).vw).toFixed(4) + 'px');
         }
-        if (_emObserver) _emObserver.disconnect();
-        _emObserver = window.ResizeObserver ? new ResizeObserver(function(entries) {
+        if (_turnObserver) _turnObserver.disconnect();
+        _turnObserver = window.ResizeObserver ? new ResizeObserver(function(entries) {
           entries.forEach(function(e) { unit(e.target.querySelector(':scope > .mfs-cd-drawing')); });
         }) : null;
-        root.querySelectorAll('.mfs-cd-drawing[data-em-view]').forEach(function(drawing) {
+        root.querySelectorAll('.mfs-cd-drawing[data-turn]').forEach(function(drawing) {
+          var it = figureOf(drawing);
+          if (!it) return;
           unit(drawing);
-          if (_emObserver) _emObserver.observe(drawing.parentElement);
-          var data = _embeddingCache[drawing.getAttribute('data-em-metric')];
-          var view = data && data.views[+drawing.getAttribute('data-em-view')];
-          if (!view || !view.figure.turn) return;
-          var f = cdFrame(view.figure), svg = drawing.querySelector('svg'), scroller = drawing.parentNode;
-          var reset = drawing.closest('.mfs-cd-figure').querySelector('.mfs-em-reset');
-          var spans = [].slice.call(drawing.querySelectorAll('.mfs-cd-labels .cd-at'));
-          var published = svg.innerHTML, places = spans.map(function(s) { return [s.style.left, s.style.top]; });
-          var start = view.figure.camera, az = start.azimuth, el = start.elevation, turned = false;
+          if (_turnObserver) _turnObserver.observe(drawing.parentElement);
+          var figure = it.figure, f = cdFrame(figure), svg = drawing.querySelector('svg'), scroller = drawing.parentNode;
+          var reset = drawing.closest('.mfs-cd-figure').querySelector('.mfs-turn-reset');
+          var spans = [].slice.call(drawing.querySelectorAll('.mfs-cd-labels .cd-at:not(.mfs-slice-label)'));
+          var places = spans.map(function(s) { return [s.style.left, s.style.top]; });
+          var start = { azimuth: figure.camera.azimuth, elevation: figure.camera.elevation }, at = start, turned = false;
           var model = null, sizes = null, frame = 0, quick = false, pointers = new Map(), drag = null, pan = null, tap = null;
 
           function render() {
             frame = 0;
             if (!turned) {
-              svg.innerHTML = published;
+              // Drawn again from the file, so the slices shown are those of the embedding view
+              // chosen now.
+              svg.innerHTML = it.paths(f, null);
               spans.forEach(function(span, i) {
                 span.style.left = places[i][0];
                 span.style.top = places[i][1];
@@ -2548,17 +2593,17 @@
               // Each label's width and height as MathJax set it, in the units of the figure's
               // box, which is what keeps two labels off each other; they grow with the drawing,
               // so they are measured once.
-              model = MfsTurn.prepare(view);
+              model = MfsTurn.prepare(it.view);
               var across = drawing.getBoundingClientRect().width / f.vw * f.s;
               sizes = spans.map(function(span) {
                 var r = span.getBoundingClientRect();
                 return [r.width / across, r.height / across];
               });
             }
-            var out = MfsTurn.draw(model, az, el, quick, sizes);
-            svg.innerHTML = emPaths(out.layers, f);
+            var out = MfsTurn.draw(model, at.azimuth, at.elevation, quick, sizes);
+            svg.innerHTML = it.paths(f, out);
             out.labels.forEach(function(L, i) {
-              var label = view.figure.labels[i];
+              var label = figure.labels[i];
               spans[i].style.left = (100 * (f.x(L.at[0]) + (label.dx || 0)) / f.vw).toFixed(3) + '%';
               spans[i].style.top = (100 * (f.y(L.at[1]) + (label.dy || 0)) / f.vh).toFixed(3) + '%';
               spans[i].style.visibility = L.shown ? '' : 'hidden';
@@ -2569,15 +2614,13 @@
             quick = coarse;
             if (!frame) frame = requestAnimationFrame(render);
           }
-          function turn(a, e, coarse) {
-            az = a;
-            el = Math.max(-90, Math.min(90, e));
-            turned = el !== start.elevation || Math.abs((((az - start.azimuth) % 360) + 540) % 360 - 180) > 1e-9;
+          function turn(to, coarse) {
+            at = to;
+            turned = MfsTurn.turned(start, at);
             show(coarse);
           }
           function back() {
-            az = start.azimuth;
-            el = start.elevation;
+            at = start;
             turned = false;
             show(false);
           }
@@ -2597,10 +2640,10 @@
             }
             pointers.set(e.pointerId, [e.clientX, e.clientY]);
             if (pointers.size === 1) {
-              drag = { id: e.pointerId, x: e.clientX, y: e.clientY, az: az, el: el, on: false, touch: e.pointerType === 'touch' };
+              drag = { id: e.pointerId, x: e.clientX, y: e.clientY, from: at, on: false, touch: e.pointerType === 'touch' };
             } else {
               if (drag && drag.on) {
-                drawing.classList.remove('mfs-em-turning');
+                drawing.classList.remove('mfs-turning');
                 show(false);
               }
               drag = null;
@@ -2620,10 +2663,9 @@
               if (drag.touch ? Math.abs(dx) < 6 || Math.abs(dx) <= Math.abs(dy) : Math.hypot(dx, dy) < 3) return;
               drag.on = true;
               try { drawing.setPointerCapture(e.pointerId); } catch (err) {}
-              drawing.classList.add('mfs-em-turning');
+              drawing.classList.add('mfs-turning');
             }
-            var k = 180 / drawing.clientWidth;
-            turn(drag.az - k * dx, drag.el + k * dy, true);
+            if (window.MfsTurn) turn(MfsTurn.dragged(drag.from, dx, dy, drawing.clientWidth), true);
           });
           // Two taps of one finger close together, which is a phone's double click.
           function tapped(e) {
@@ -2640,7 +2682,7 @@
             if (pointers.size < 2) pan = null;
             if (drag && drag.id === e.pointerId) {
               if (drag.on) {
-                drawing.classList.remove('mfs-em-turning');
+                drawing.classList.remove('mfs-turning');
                 show(false);
               } else if (drag.touch && e.type === 'pointerup') {
                 tapped(e);
@@ -2652,12 +2694,9 @@
           drawing.addEventListener('pointercancel', end);
           drawing.addEventListener('dblclick', back);
           drawing.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft') turn(az + 15, el, false);
-            else if (e.key === 'ArrowRight') turn(az - 15, el, false);
-            else if (e.key === 'ArrowUp') turn(az, el - 15, false);
-            else if (e.key === 'ArrowDown') turn(az, el + 15, false);
-            else if (e.key === 'Home' || e.key === 'Escape') back();
-            else return;
+            var to = window.MfsTurn && MfsTurn.keyed(at, e.key, start);
+            if (!to) return;
+            turn(to, false);
             e.preventDefault();
           });
           reset.addEventListener('click', function() {
@@ -3082,7 +3121,7 @@
         contentPanel.innerHTML = header + body;
         wireHeader(contentPanel.querySelector('.mfs-header'));
         wireDiagrams(contentPanel);
-        wireEmbedding(contentPanel);
+        wireTurning(contentPanel);
         if (_lineObserver) _lineObserver.disconnect();
         _lineObserver = null;
         wireLines(contentPanel);
@@ -3755,28 +3794,29 @@
     .em-particles, .em-particles-far { fill: none; stroke: var(--green-light); stroke-width: 2; stroke-linejoin: round; }
     circle.em-particles { fill: var(--green-light); stroke: none; }
     .mfs-em-svg [class$="-far"] { stroke-opacity: 0.28; }
-    /* The drawing takes a drag and leaves a swipe up or down to the page, and the button that
-       brings back the published figure sits in the top corner of the frame while the surface
-       is turned, exactly as tall as the drawing's empty margin above its box at the usual
-       text size and set at the size of its small labels there, in --em-u, the frame's pixels
-       to a unit of the drawing's 628, which wireEmbedding() keeps and says the reasons for. */
-    #mfs-content-panel .mfs-em-figure .mfs-cd-drawing {
+    /* A figure that turns, an embedding diagram or a figure of light cones: the drawing takes
+       a drag and leaves a swipe up or down to the page, and the button that brings back the
+       published figure sits in the top corner of the frame while the figure is turned, exactly
+       as tall as the drawing's empty margin above its box at the usual text size and set at
+       the size of its small labels there, in --em-u, the frame's pixels to a unit of the
+       drawing's 628, which wireTurning() keeps and says the reasons for. */
+    #mfs-content-panel .mfs-turn .mfs-cd-drawing {
       cursor: grab; touch-action: pan-y; -webkit-user-select: none; user-select: none;
     }
-    #mfs-content-panel .mfs-em-figure .mfs-cd-drawing.mfs-em-turning { cursor: grabbing; }
-    #mfs-content-panel .mfs-em-figure .mfs-cd-drawing:focus { outline: none; }
-    #mfs-content-panel .mfs-em-figure .mfs-cd-drawing:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
-    #mfs-content-panel .mfs-em-reset {
+    #mfs-content-panel .mfs-turn .mfs-cd-drawing.mfs-turning { cursor: grabbing; }
+    #mfs-content-panel .mfs-turn .mfs-cd-drawing:focus { outline: none; }
+    #mfs-content-panel .mfs-turn .mfs-cd-drawing:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+    #mfs-content-panel .mfs-turn-reset {
       position: absolute; top: 0; right: 0; z-index: 1; box-sizing: border-box;
       height: calc(34 * var(--em-u, 1px)); padding: 0 calc(10 * var(--em-u, 1px));
       font-family: 'Source Code Pro', monospace; font-size: calc(13 * var(--em-u, 1px)); line-height: 1; letter-spacing: 0.06em;
       color: rgba(0,229,255,0.75); background: rgba(0,0,0,0.8);
       border: solid rgba(0,229,255,0.4); border-width: 0 0 1px 1px; border-radius: 0 0 0 4px; cursor: pointer;
     }
-    #mfs-content-panel .mfs-em-reset:hover { color: var(--cyan); border-color: var(--cyan); }
-    #mfs-content-panel .mfs-em-reset:active { color: var(--pink-light); border-color: var(--pink-light); }
-    #mfs-content-panel .mfs-em-reset:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
-    #mfs-content-panel .mfs-em-reset[hidden] { display: none; }
+    #mfs-content-panel .mfs-turn-reset:hover { color: var(--cyan); border-color: var(--cyan); }
+    #mfs-content-panel .mfs-turn-reset:active { color: var(--pink-light); border-color: var(--pink-light); }
+    #mfs-content-panel .mfs-turn-reset:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+    #mfs-content-panel .mfs-turn-reset[hidden] { display: none; }
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
        diagrams'; the figure, its labels and its lines are these. A label is sized in units
        of the figure's width, n being n units of the SVG's 628 unit wide viewBox. */
@@ -4365,7 +4405,7 @@
          a ground of its own on the screen; the print copy clears every ground, so here it
          gets a white one, or the lines would cross it on paper. */
       #mfs-print-root .mfs-em-figure .cd-lab-small { background: rgba(255,255,255,0.85) !important; }
-      .mfs-print-body .mfs-em-reset { display: none !important; }
+      .mfs-print-body .mfs-turn-reset { display: none !important; }
       /* The slice of the embedding diagram in the palette's darker green, which holds on white
          paper as the light one does on the dark ground, its label on a white ground of its own
          and in the same green, which the print copy's black for every word would lose. */

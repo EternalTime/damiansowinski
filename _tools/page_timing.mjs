@@ -426,7 +426,7 @@ async function printCopy() {
 /* Hold each kind of button hovered over and pressed, as Chrome's own tools do, the first time
    a spacetime shows one, and count one that is not pink then, or that glows, as an error. */
 const BUTTONS = new Set(['#mfs-content-panel .mfs-choice:not(.mfs-choice-on)', '#mfs-content-panel .mfs-choice-on',
-  '#mfs-print-btn', '#mfs-content-panel .mfs-em-reset', '.mfs-result:not(.mfs-result-active)']);
+  '#mfs-print-btn', '#mfs-content-panel .mfs-turn-reset', '.mfs-result:not(.mfs-result-active)']);
 async function pressed() {
   if (!BUTTONS.size) return;
   await send('DOM.enable');

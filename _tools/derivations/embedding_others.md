@@ -329,7 +329,7 @@ Four things are new, and each is small.
 
 A curve on a surface: the ellipses, crescents and loops on the flat slices are not circles about the axis, so each is written under the surface's `curves` as a polyline of points `[X, Y, Z]` in the surface's own frame, with a class, and is checked to lie on its piece.
 A point on a surface: the twelve particles of each ring, under `dots`.
-Both turn with the surface when a reader turns the drawing, and `MFS/assets/embedding-turn.js` draws them again at every camera by the rules the generator draws them by.
+Both turn with the surface when a reader turns the drawing, and `MFS/assets/turn.js` draws them again at every camera by the rules the generator draws them by.
 A surface in Minkowski space: anti-de Sitter's view carries `"space": "minkowski"`, and every length along it is measured with $dX^2 + dY^2 - dZ^2$, with the checks and the rounding changed to match.
 A slice whose angle is not a chart coordinate: the Malament-Hogarth plane turns $x$ into $y$ about the removed event, and the Mixmaster great sphere moves $\psi$ with $\phi$, so the slice reads the published metric along the turn, as Vaidya's slice already reads it along $v = T + r$.
 The Mixmaster great sphere's $g_{\phi\phi}$ and defect are also written in half angles before they are evaluated, since the forms sympy gives subtract numbers that agree at the poles and lose every digit there.
