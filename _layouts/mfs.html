@@ -1056,14 +1056,16 @@
       var PROSE = '.mfs-history, .mfs-convention, .mfs-nr-caption, .mfs-nr-note, .mfs-nr-itext, .mfs-cd-restriction';
       var _proseObserver = null;
 
-      /* Setting a formula on a line of its own makes its prose taller, and holding a heading to
-         its line or dividing a word makes the heading or the section shorter, and a change an
-         observer's own callback makes to the size of anything observed is one the browser
-         cannot report in that frame: it reported "ResizeObserver loop completed with
-         undelivered notifications" as a page error on every spacetime at three times the usual
-         text on a phone. So these two observers only note what changed and fit it at the next
-         frame, and where the page itself changes what is set, once MathJax has set a spacetime
-         and when a diagram's view is chosen, it fits at once, before the browser draws it. */
+      /* Setting a formula on a line of its own makes its prose taller, holding a heading to its
+         line or dividing a word makes the heading or the section shorter, and holding a plot to
+         its width makes it wider, and a change an observer's own callback makes to the size of
+         anything observed is one the browser cannot report in that frame: it reported
+         "ResizeObserver loop completed with undelivered notifications" as a page error on every
+         spacetime at three times the usual text on a phone, and in WebKit on choosing a view
+         of a spacetime diagram there. So the observers of the prose, the lines and the figures
+         only note what changed and fit it at the next frame, and where the page itself changes
+         what is set, once MathJax has set a spacetime and when a diagram's view is chosen, it
+         fits at once, before the browser draws it. */
       function nextFrame(fit) {
         var targets = [];
         return function(entries) {
@@ -1864,15 +1866,14 @@
                 b.classList.toggle('mfs-choice-on', i === j);
                 b.setAttribute('aria-pressed', String(i === j));
               });
+              fitFigures([].slice.call(views[i].querySelectorAll('.nr-plot, .mfs-fig-scroll')));
               fitProseMath([].slice.call(views[i].querySelectorAll(PROSE)));
               fitLines(root, [section]);
               if (button.hasAttribute('data-em-id')) showSlices(root, button.getAttribute('data-em-id'));
             });
           });
         });
-        if (_figureObserver) _figureObserver.disconnect();
-        _figureObserver = window.ResizeObserver ? new ResizeObserver(function(entries) {
-          var targets = entries.map(function(e) { return e.target; });
+        function fitFigures(targets) {
           var figures = [], scrollers = [];
           targets.forEach(function(t) {
             var scroller = t.closest('.mfs-fig-scroll'), frame = t.closest('.mfs-nr-scroll');
@@ -1884,7 +1885,9 @@
           if (figures.length) fitSliceLabels(root);
           var edges = scrollers.map(edgesOf);
           scrollers.forEach(function(s, i) { setEdges(s, edges[i]); });
-        }) : null;
+        }
+        if (_figureObserver) _figureObserver.disconnect();
+        _figureObserver = window.ResizeObserver ? new ResizeObserver(nextFrame(fitFigures)) : null;
         root.querySelectorAll('.nr-plot').forEach(function(plot) { if (_figureObserver) _figureObserver.observe(plot); });
         root.querySelectorAll('.mfs-fig-scroll').forEach(function(scroller) {
           scroller.addEventListener('scroll', function() { markEdges(scroller); }, { passive: true });

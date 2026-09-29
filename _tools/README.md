@@ -124,8 +124,8 @@ Every change to the page is run at least as a desktop at the usual text and as a
 
 Chrome hands "ResizeObserver loop completed with undelivered notifications" to the page's error handlers and not to its console, so the page's errors are gathered by a handler installed before its scripts run.
 That error meant an observer's callback had changed the size of something observed, which the browser cannot report in the same frame.
-Opening any spacetime at three times the usual text on a phone raised it until 29 September 2026, since `fitWords` held a heading to its line and `fitProseMath` set a formula on a line of its own from inside the observers that watch them.
-Those two observers now only note what changed and fit it at the next frame through `nextFrame`, and the page fits at once where it changes what is set itself, once MathJax has set a spacetime and when a diagram's view is chosen, so no frame is drawn before its fit.
+Opening any spacetime at three times the usual text on a phone raised it until 29 September 2026, since `fitWords` held a heading to its line and `fitProseMath` set a formula on a line of its own from inside the observers that watch them, and so did choosing a view of a spacetime diagram there in WebKit, since `fitPlots` held the plot to its width from inside the observer of the plot.
+Those observers now only note what changed and fit it at the next frame through `nextFrame`, and the page fits at once where it changes what is set itself, once MathJax has set a spacetime and when a diagram's view is chosen, so no frame is drawn before its fit.
 
 Once the observers measured every line before marking any, what was left of a large chart's time went to laying out a whole tensor again and again.
 A tensor with room for one column only was a multicol container of one column, which the browser lays out whole whenever anything inside it changes, so each index toggle, each fade marked at a line's edge and each change in the width of the prose above laid out all of Natário's Weyl tensor once more.
