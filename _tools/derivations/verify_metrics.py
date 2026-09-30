@@ -288,6 +288,19 @@ DIMENSIONS = {
     },
     # Minkowski's inertial chart with its metric multiplied by the square of a conformal
     # factor, which multiplies proper time and so has to be a pure number.
+    # Aichelburg and Sexl keep G and the energy E of the source explicit, so 8GE/c^4 is the one
+    # length of the geometry and rho_0 an arbitrary second one; u = ct - z and v = ct + z are
+    # lengths, and each Dirac delta carries the inverse of its argument.
+    ("aichelburg_sexl", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2", "\\rho_0": "L",
+    },
+    ("aichelburg_sexl", "null_cartesian"): {
+        "u": "L", "v": "L", "x": "L", "y": "L", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2", "\\rho_0": "L",
+    },
+    ("aichelburg_sexl", "null_cylindrical"): {
+        "u": "L", "v": "L", "\\rho": "L", "\\phi": "1", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2",
+        "\\rho_0": "L",
+    },
     ("malament_hogarth", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1",
     },
@@ -468,6 +481,9 @@ GREEK = [
     "epsilon", "kappa", "xi", "zeta", "Lambda", "Phi", "Theta", "Psi", "Sigma",
 ]
 
+# The Dirac delta and its derivatives the reader reads, as \delta, \delta' and \delta''.
+DIRAC_ORDERS = 3
+
 TRIG = ["sinh", "cosh", "tanh", "coth", "sin", "cos", "tan", "cot", "sec", "csc"]
 
 FUNCTIONS = {
@@ -564,6 +580,10 @@ def _canonical(expression):
             expression = expression.replace(function, rewrite)
     if any(not atom.args[0].is_Symbol for atom in expression.atoms(sp.sin, sp.cos)):
         expression = sp.expand_trig(expression)
+    # A logarithm's argument is put in one form, since expand spreads (x^2 + y^2)/rho_0^2 into two
+    # fractions and the logarithm of each spelling would otherwise be a generator of its own.
+    if expression.has(sp.log):
+        expression = expression.replace(lambda x: isinstance(x, sp.log), lambda x: sp.log(sp.factor(x.args[0])))
     # The reader writes a mixed partial in the order the coordinates are listed and diff
     # writes it in its own; doit puts both in diff's, so they become one generator.
     if expression.has(sp.Derivative):
@@ -1055,6 +1075,13 @@ class Reader:
         self.local = {str(s): s for s in self.allowed}
         self.local.update(self.parameters)
         self.local.update(FUNCTIONS)
+        # \delta(u) is the Dirac delta, and each prime on it one derivative with respect to its
+        # argument, unless the system names a parameter \delta of its own, as the cosmic
+        # string names its deficit angle.
+        self.dirac = "delta" not in self.parameters
+        if self.dirac:
+            for order in range(DIRAC_ORDERS):
+                self.local[f"DIRAC{order}"] = lambda argument, k=order: sp.DiracDelta(argument, k)
         self.known = set(self.local)
         self.transforms = standard_transformations + (
             split_symbols_custom(lambda name, _=None: name not in self.known),
@@ -1155,6 +1182,8 @@ class Reader:
         text = re.sub(r"\\[,;:!>]", " ", text)
         text = re.sub(r"\\ ", " ", text)
         text = text.replace("\\cdot", "*")
+        if self.dirac:
+            text = re.sub(r"\\delta\s*('*)\s*\(", lambda m: f" DIRAC{len(m.group(1))}(", text)
         for name in sorted(self.primed, key=len, reverse=True):
             text = re.sub(re.escape(name) + r"''", f" {name}_pprime ", text)
             text = re.sub(re.escape(name) + r"'", f" {name}_prime ", text)
@@ -1285,6 +1314,10 @@ class Dimensions:
             for variable, order in expression.variable_count:
                 out /= self(variable) ** order
             return out
+        if isinstance(expression, sp.DiracDelta):
+            # The delta carries the inverse of its argument, and each derivative one more.
+            order = expression.args[1] if len(expression.args) > 1 else 0
+            return self(expression.args[0]) ** -(order + 1)
         if isinstance(expression, sp.Function):
             for argument in expression.args:
                 if self(argument) != 1:
