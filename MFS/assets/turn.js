@@ -64,7 +64,9 @@
     var e0 = figure.camera.elevation * RAD, a0 = figure.camera.azimuth * RAD, classes = [];
     Object.keys(turn.tint).forEach(function(k) { if (classes.indexOf(turn.tint[k]) < 0) classes.push(turn.tint[k]); });
     classes.sort();
-    var surfaces = view.surfaces.map(function(s, k) {
+    // A movie's frames are drawn one at a time, each on its axis at the one place.
+    var movie = view.movie || null;
+    var surfaces = (movie ? movie.frames : view.surfaces).map(function(s, k) {
       var low = Infinity, high = -Infinity, byId = {}, grids = [];
       var pieces = s.pieces.filter(function(p) {
         if (!p.grid) return true;
@@ -104,26 +106,44 @@
         }
       });
       var S = { pieces: pieces, grids: grids, byId: byId, rings: s.rings, curves: s.curves || [], dots: s.dots || [],
-                zc: (low + high) / 2,
+                axis: s.axis || null, low: low, high: high, zc: (low + high) / 2,
                 r1: new Float64Array(r1), dr: new Float64Array(dr), z1: new Float64Array(z1), dz: new Float64Array(dz),
                 code: new Uint8Array(code) };
-      var o = turn.origins[k];
-      S.at = [o[0], o[1] + S.zc * Math.cos(e0)];
+      S.origin = turn.origins[movie ? 0 : k];
+      return S;
+    });
+    // Every frame of a movie turns about one centre, halfway between the lowest and the highest
+    // point any frame reaches, and keeps within the height and width every frame takes together,
+    // so the frames keep one size and one place as they change and as the reader turns them.
+    if (movie) {
+      var low = Math.min.apply(null, surfaces.map(function(S) { return S.low; }));
+      var high = Math.max.apply(null, surfaces.map(function(S) { return S.high; }));
+      surfaces.forEach(function(S) { S.zc = (low + high) / 2; });
+    }
+    surfaces.forEach(function(S) {
+      S.at = [S.origin[0], S.origin[1] + S.zc * Math.cos(e0)];
       var h = height(S, e0, a0);
       S.top0 = h[0];
       S.bottom0 = h[1];
-      if (grids.length) {
+      if (S.grids.length) {
         var w = width(S, a0);
         S.left0 = w[0];
         S.right0 = w[1];
       }
-      return S;
     });
+    if (movie) {
+      var top0 = Math.max.apply(null, surfaces.map(function(S) { return S.top0; }));
+      var bottom0 = Math.min.apply(null, surfaces.map(function(S) { return S.bottom0; }));
+      surfaces.forEach(function(S) { S.top0 = top0; S.bottom0 = bottom0; });
+    }
     var order = {};
     figure.legend.forEach(function(item, i) { order[item[1]] = i; });
     return { kind: 'surfaces', figure: figure, turn: turn, box: box, size: size, surfaces: surfaces, order: order, classes: classes,
-             eps: 1e-7 * size, unit: (box[1] - box[0]) / 560 };
+             eps: 1e-7 * size, unit: (box[1] - box[0]) / 560, movie: movie, frame: 0 };
   }
+
+  // Which frame of a movie draw() draws, the first until another is chosen.
+  function frame(M, k) { M.frame = k; }
 
   /* A grid piece: a quantity drawn as a height over a plane, sampled on a grid and drawn as flat
      triangles, as _tools/README.md defines it. Its nodes in the surface's own frame, the node of
@@ -134,14 +154,21 @@
      each node the normal pointing up, the sum of the normals of the triangles that meet there,
      each as long as twice its area, as the generator's grid_normals() takes it. */
   function gridPiece(p) {
-    var G = p.grid, m = G.u.length, n = G.v.length, wrap = G.frame === 'polar', N = m * n;
+    var G = p.grid, m = G.u.length, n = G.v.length, N = m * n, ellipses = G.frame === 'ellipses';
+    var wrap = G.frame === 'polar' || (ellipses && !G.open);
     var X = new Float64Array(N), Y = new Float64Array(N), Z = new Float64Array(N), i, j, k;
     for (i = 0; i < m; i++) {
       for (j = 0; j < n; j++) {
         k = i * n + j;
-        X[k] = wrap ? G.u[i] * Math.cos(G.v[j]) : G.u[i];
-        Y[k] = wrap ? G.u[i] * Math.sin(G.v[j]) : G.v[j];
-        Z[k] = G.z[i][j];
+        if (ellipses) {
+          X[k] = G.a[i] * Math.cos(G.v[j]);
+          Y[k] = G.b[i] * Math.sin(G.v[j]);
+          Z[k] = G.z[i];
+        } else {
+          X[k] = G.frame === 'polar' ? G.u[i] * Math.cos(G.v[j]) : G.u[i];
+          Y[k] = G.frame === 'polar' ? G.u[i] * Math.sin(G.v[j]) : G.v[j];
+          Z[k] = G.z[i][j];
+        }
       }
     }
     var cols = wrap ? n : n - 1, half = (m - 1) * cols, T = 2 * half;
@@ -158,8 +185,21 @@
       var ex = X[B[t]] - X[A[t]], ey = Y[B[t]] - Y[A[t]], ez = Z[B[t]] - Z[A[t]];
       var fx = X[C[t]] - X[A[t]], fy = Y[C[t]] - Y[A[t]], fz = Z[C[t]] - Z[A[t]];
       var cx = ey * fz - ez * fy, cy = ez * fx - ex * fz, cz = ex * fy - ey * fx;
-      if (cz < 0) { cx = -cx; cy = -cy; cz = -cz; }
+      // A height's normal points up; a stack of ellipses turns every triangle one way, rows up
+      // and columns round, and its normal points away from the axis.
+      if (ellipses ? true : cz < 0) { cx = -cx; cy = -cy; cz = -cz; }
       [A[t], B[t], C[t]].forEach(function(q) { nx[q] += cx; ny[q] += cy; nz[q] += cz; });
+    }
+    // A node that no triangle with any area meets, as a cone's apex at the end of its cut, takes
+    // the normal of the node before it in its row, or after it at the row's start.
+    for (i = 0; i < m; i++) {
+      for (j = 0; j < n; j++) {
+        k = i * n + j;
+        if (nx[k] === 0 && ny[k] === 0 && nz[k] === 0) {
+          var o = j > 0 ? k - 1 : k + 1;
+          nx[k] = nx[o]; ny[k] = ny[o]; nz[k] = nz[o];
+        }
+      }
     }
     for (k = 0; k < N; k++) {
       var L = Math.sqrt(nx[k] * nx[k] + ny[k] * ny[k] + nz[k] * nz[k]);
@@ -173,7 +213,7 @@
       lo[1] = Math.min(lo[1], Y[k]); hi[1] = Math.max(hi[1], Y[k]);
     }
     var extent = Math.max(hi[0] - lo[0], hi[1] - lo[1]);
-    return { id: p.id, cls: p['class'], grid: true, m: m, n: n, wrap: wrap, X: X, Y: Y, Z: Z,
+    return { id: p.id, cls: p['class'], grid: true, ellipses: ellipses, lines: G.lines, m: m, n: n, wrap: wrap, X: X, Y: Y, Z: Z,
              A: A, B: B, C: C, nx: nx, ny: ny, nz: nz, eps: 1e-7 * extent, lift: 1e-5 * extent };
   }
 
@@ -345,6 +385,23 @@
   function fitting(M, cam) {
     var e = cam.elevation * RAD, a = cam.azimuth * RAD, scale = 1;
     var reach = M.surfaces.map(function(S) { return height(S, e, a); });
+    if (M.movie) {
+      // A movie's frames reach as far as all of them together.
+      var all = [Math.max.apply(null, reach.map(function(r) { return r[0]; })), Math.min.apply(null, reach.map(function(r) { return r[1]; }))];
+      reach = reach.map(function() { return all; });
+      if (M.surfaces.some(function(S) { return S.grids.length; })) {
+        var w = M.surfaces.map(function(S) { return S.grids.length ? width(S, a) : [0, 0]; });
+        var left0 = Math.max.apply(null, M.surfaces.map(function(S) { return S.left0 || 0; }));
+        var right0 = Math.max.apply(null, M.surfaces.map(function(S) { return S.right0 || 0; }));
+        var left = Math.max.apply(null, w.map(function(x) { return x[0]; })), right = Math.max.apply(null, w.map(function(x) { return x[1]; }));
+        if (left > left0) scale = Math.min(scale, left0 / left);
+        if (right > right0) scale = Math.min(scale, right0 / right);
+      }
+      var need = all[0] - all[1], have = M.surfaces[0].top0 - M.surfaces[0].bottom0;
+      if (need > have) scale = Math.min(scale, have / need);
+      var move = Math.min(Math.max(0, M.surfaces[0].bottom0 - scale * all[1]), M.surfaces[0].top0 - scale * all[0]);
+      return { scale: scale, shift: M.surfaces.map(function() { return move; }) };
+    }
     M.surfaces.forEach(function(S, k) {
       var need = reach[k][0] - reach[k][1], have = S.top0 - S.bottom0;
       if (need > have) scale = Math.min(scale, have / need);
@@ -562,11 +619,17 @@
     return runs;
   }
 
-  // The points of a line on a grid piece, each to be judged from a hundred thousandth of the
-  // grid's width above and below it.
+  /* The points of a line on a grid piece, each to be judged from a hundred thousandth of the
+     grid's width to either side of it: above and below a height, and straight out from the axis
+     and back for a stack of ellipses, which that crosses wherever it is not flat, or above and
+     below on the axis itself, as the generator's sides() takes them. */
   var UP = [0, 0, 1];
   function upright(P, g) {
-    P.forEach(function(q) { q.normal = UP; q.lift = g.lift; });
+    P.forEach(function(q) {
+      var r = Math.sqrt(q[0] * q[0] + q[1] * q[1]);
+      q.normal = g.ellipses && r > 0 ? [q[0] / r, q[1] / r, 0] : UP;
+      q.lift = g.lift;
+    });
     return P;
   }
 
@@ -581,6 +644,21 @@
       }
     }
     out.push(P[P.length - 1]);
+    return out;
+  }
+
+  // A polyline with each segment cut into as few equal pieces as keep every piece shorter than
+  // `most`, as the generator's finely().
+  function finely(P, most) {
+    var out = [P[0]];
+    for (var i = 0; i + 1 < P.length; i++) {
+      var a = P[i], b = P[i + 1], d = Math.sqrt(Math.pow(b[0] - a[0], 2) + Math.pow(b[1] - a[1], 2) + Math.pow(b[2] - a[2], 2));
+      var n = Math.max(1, Math.ceil(d / most));
+      for (var k = 1; k <= n; k++) {
+        var t = k / n;
+        out.push([a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1]), a[2] + t * (b[2] - a[2])]);
+      }
+    }
     return out;
   }
 
@@ -614,6 +692,7 @@
     var tol = 4e-4 * M.size;
 
     M.surfaces.forEach(function(S, k) {
+      if (M.movie && k !== M.frame) return;
       var X0 = S.at[0], Y0 = S.at[1] + fit.shift[k] - s * S.zc * ce;
       S.camera = cam;
       S.grids.forEach(function(g) { g.frame = facetFrame(g, cam); });
@@ -667,7 +746,12 @@
         G.v.forEach(function(j) { line(G['class'], upright(densify(gridColumn(g, j), Q.densify), g)); });
       });
       S.grids.forEach(function(g) {
-        line('outline', upright(densify(gridRim(g), Q.densify), g));
+        // A stack of ellipses draws only the lines it names itself, and its outline.
+        (g.lines || []).forEach(function(G) {
+          G.u.forEach(function(i) { line(G['class'], upright(densify(gridRow(g, i), Q.densify), g)); });
+          G.v.forEach(function(j) { line(G['class'], upright(densify(gridColumn(g, j), Q.densify), g)); });
+        });
+        if (!g.ellipses) line('outline', upright(densify(gridRim(g), Q.densify), g));
         gridOutline(g, cam).forEach(function(run) { line('outline', upright(run, g)); });
       });
       // A curve marked on the surface is drawn through its own points, and back to the first
@@ -679,6 +763,8 @@
         line(c['class'], P);
       });
       S.dots.forEach(function(d) { dots.push({ kind: 'point', 'class': d['class'], at: page(d.at) }); });
+      // The axis of time a stack of moments stands on, hidden where the surface lies in front.
+      if (S.axis) line('axis', finely([[0, 0, S.axis.from], [0, 0, S.axis.to]], M.size / 360));
     });
 
     var layers = M.figure.layers.filter(function(L) { return L.flat && L.kind === 'fill'; });
@@ -729,6 +815,7 @@
     }
 
     M.surfaces.forEach(function(S, k) {
+      if (M.movie && k !== M.frame) return;
       var X0 = places[k][0], Y0 = places[k][1];
       S.pieces.forEach(function(p) {
         if (p.reference) return;
@@ -769,6 +856,7 @@
     function exact(at) {
       var X = x0 + (at % nx) * step, Y = y0 + Math.floor(at / nx) * step, best = 0, near = -Infinity;
       M.surfaces.forEach(function(S, k) {
+        if (M.movie && k !== M.frame) return;
         var a = (X - places[k][0]) / s, b = (Y - places[k][1]) / s, back = 4 * M.size / s;
         var i = cast(S, a * R[0] + b * U[0] - back * V[0], a * R[1] + b * U[1] - back * V[1], b * U[2] - back * V[2],
                      V, M.eps, false);
@@ -853,10 +941,32 @@
      set it. Every other label stays where it is and is always shown. */
   function labels(M, cam, fit, outlines, sizes) {
     var s = fit.scale, ce = Math.cos(cam.elevation * RAD);
+    function place(k) { return M.movie ? M.frame : k; }
     var out = M.figure.labels.map(function(L) {
-      var at = L.at;
+      var at = L.at, S, X0, Y0, k;
+      function page(P) {
+        return [X0 + s * (P[0] * cam.right[0] + P[1] * cam.right[1]),
+                Y0 + s * (P[0] * cam.up[0] + P[1] * cam.up[1] + P[2] * cam.up[2])];
+      }
+      if (L.curve || L.axis) {
+        k = place((L.curve || L.axis).surface);
+        S = M.surfaces[k];
+        X0 = S.at[0];
+        Y0 = S.at[1] + fit.shift[k] - s * S.zc * ce;
+      }
+      if (L.curve) {
+        // Beside the end of the curve on its side, its point farthest right or left on the page,
+        // the first of them where two tie.
+        var P = S.curves[L.curve.curve].points, best = -Infinity;
+        P.forEach(function(q) {
+          var p = page(q), x = L.curve.side * p[0];
+          if (x > best) { best = x; at = p; }
+        });
+      } else if (L.axis) {
+        at = page([0, 0, S.axis.to]);
+      }
       if (L.ring) {
-        var k = L.ring.surface, S = M.surfaces[k], ring = S.rings[L.ring.ring], side = L.ring.side;
+        var k = place(L.ring.surface), S = M.surfaces[k], ring = S.rings[L.ring.ring], side = L.ring.side;
         at = [S.at[0] + s * side * ring.rho, S.at[1] + fit.shift[k] + s * (ring.z - S.zc) * ce];
         if (L.clear) {
           var band = L.clear;
@@ -874,7 +984,10 @@
       }
       return { at: at, shown: true };
     });
-    return giveWay(M.figure.labels, out, M.unit, sizes, function(i) { return !!M.figure.labels[i].ring; });
+    return giveWay(M.figure.labels, out, M.unit, sizes, function(i) {
+      var L = M.figure.labels[i];
+      return !!(L.ring || L.curve || L.axis);
+    });
   }
 
   /* Labels at their places `out`, each shown unless `moves` says it follows the figure round and
@@ -1071,7 +1184,7 @@
     return (M.kind === 'cones' ? drawCones : drawSurfaces)(M, azimuth, elevation, quick, sizes);
   }
 
-  var api = { camera: camera, prepare: prepare, draw: draw, dragged: dragged, keyed: keyed, turned: turned,
+  var api = { camera: camera, prepare: prepare, draw: draw, frame: frame, dragged: dragged, keyed: keyed, turned: turned,
               fitting: fitting, hidden: hidden, isolines: isolines, labelBox: labelBox, hull: hull };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.MfsTurn = api;

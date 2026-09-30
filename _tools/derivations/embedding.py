@@ -605,13 +605,17 @@ class Curve:
     particles stretched into an ellipse or a line of flow: points (X, Y, Z) in the surface's own
     frame, the axis along Z, closed or open."""
 
-    def __init__(self, piece, cls, points, closed=False):
+    def __init__(self, piece, cls, points, closed=False, label=None, time=None):
         self.piece, self.cls, self.closed = piece, cls, closed
         self.points = np.asarray(points, dtype=float)
+        self.label, self.time = label, time
 
     def data(self):
         d = self.piece.decimals
         out = {"piece": self.piece.id, "class": self.cls}
+        if self.label:
+            out["label"] = self.label
+            out["time"] = fixed(self.time, 6)
         if self.closed:
             out["closed"] = True
         out["points"] = [[fixed(v, d) for v in P] for P in self.points]
@@ -623,10 +627,11 @@ class Surface:
     curves and points marked on it that are no circles. In a sequence, one surface per moment,
     with its `label` and `time`."""
 
-    def __init__(self, pieces, label=None, time=None, curves=(), dots=()):
+    def __init__(self, pieces, label=None, time=None, curves=(), dots=(), axis=None):
         self.pieces, self.label, self.time = pieces, label, time
         self.curves = list(curves)
         self.dots = list(dots)          # (piece, class, (X, Y, Z))
+        self.axis = axis                # (z from, z to): the axis of time a stack of moments stands on
 
     def rings(self):
         out = []
@@ -644,7 +649,8 @@ class Surface:
         out = {}
         if self.label:
             out["label"] = self.label
-            out["time"] = fixed(self.time, 6)
+            if self.time is not None:
+                out["time"] = fixed(self.time, 6)
         out["pieces"] = [p.data() for p in self.pieces]
         out["rings"] = self.rings()
         if self.curves:
@@ -652,6 +658,9 @@ class Surface:
         if self.dots:
             out["dots"] = [{"piece": p.id, "class": cls, "at": [fixed(v, p.decimals) for v in P]}
                            for p, cls, P in self.dots]
+        if self.axis:
+            d = max(p.decimals for p in self.pieces)
+            out["axis"] = {"from": fixed(self.axis[0], d), "to": fixed(self.axis[1], d)}
         return out
 
 
@@ -871,6 +880,145 @@ class GridPiece:
                 "edge": end_data(("edge", self.edge))}
 
 
+class EllipsesPiece(GridPiece):
+    """A surface drawn as a stack of ellipses about a vertical axis, the row at u the ellipse
+    (a(u) cos v, b(u) sin v) at the height z(u), v the angle of its columns, sampled on a grid
+    and drawn as flat triangles as a height over a plane is. It carries two kinds of surface:
+
+      a tube, the ellipses of one ring of free particles at every moment between its first and
+      its last, each at the height of its time, so that the height is time and nothing is
+      measured along it but round each row, one moment of a flat plane;
+      a cone cut along one meridian and opened, a = b = r sin(alpha) and z = r cos(alpha) with r
+      the distance from its apex, running round only part of the axis, `open`, as a cone unrolls
+      onto the plane, every distance along it the distance on the cone.
+
+    rows(u) gives (a, b, z) for an array of u; u is halved until every triangle lies within
+    GRID_SAG of the drawing's size of the surface rows() describes, measured in space, which is
+    the parametric miss at points spread over each triangle, at least the distance to the
+    surface. `lines` names the lines drawn on it, [(class, "u" or "v", values)], each a value
+    of the grid. The heights and axes are rounded as they are written, and every triangle and
+    check is taken from the rounded numbers."""
+
+    def __init__(self, pid, cls, u, v, rows, metric_id, system_id, edge, size, lines, open_=False):
+        self.id, self.cls, self.frame, self.size = pid, cls, "ellipses", size
+        self.metric_id, self.system_id, self.edge = metric_id, system_id, edge
+        self.reference, self.marks = False, []
+        self.open = open_
+        self.wrap = not open_
+        self.rows = rows
+        self.u = np.array(sorted(set(float(x) for x in u)))
+        self.v = np.array(sorted(set(float(x) for x in v)))
+        while True:
+            err = self._errors()
+            bad = np.flatnonzero(err.max(axis=1) > GRID_SAG * size)
+            if not len(bad):
+                break
+            if len(self.u) > 20000:
+                raise AssertionError(f"piece {pid}: the rows cannot hold the surface within GRID_SAG by halving")
+            self.u = np.sort(np.concatenate([self.u, 0.5 * (self.u[bad] + self.u[bad + 1])]))
+        a, b, z = (np.asarray(w, dtype=float) for w in rows(self.u))
+        self.decimals = decimals(max(2 * float(np.max(a)), 2 * float(np.max(b)), float(np.ptp(z)), 1e-9))
+        self.A, self.B, self.Zr = (np.round(w, self.decimals) + 0.0 for w in (a, b, z))
+        self.Z = np.repeat(self.Zr[:, None], len(self.v), axis=1)
+        self.drawn = [(c, which, [self.index(which, x) for x in values]) for c, which, values in lines]
+        self.lines = {"u": [], "v": []}
+        self.facets = Facets(*self.triangles())
+        X, Y = self.plane()
+        self.extent = self.facets.extent = max(float(np.ptp(X)), float(np.ptp(Y)))
+
+    def plane(self, u=None, v=None):
+        if u is None and v is None:
+            return np.outer(self.A, np.cos(self.v)), np.outer(self.B, np.sin(self.v))
+        a, b, _ = self.rows(self.u if u is None else u)
+        v = self.v if v is None else v
+        return np.outer(a, np.cos(v)), np.outer(b, np.sin(v))
+
+    def _errors(self, Z=None):
+        """The distance in space from each cell's triangles to the surface at the same place of
+        the grid, the worst of samples over each, from the unrounded rows."""
+        u, v = self.u, self.v
+        vv = np.append(v, v[0] + 2 * math.pi) if self.wrap else v
+        a, b, z = (np.asarray(w, dtype=float) for w in self.rows(u))
+        P = np.stack([np.outer(a, np.cos(vv)), np.outer(b, np.sin(vv)), np.repeat(z[:, None], len(vv), axis=1)], -1)
+        g = np.linspace(0, 1, 9)
+        s, t = (w.ravel() for w in np.meshgrid(g, g))
+        keep = s + t <= 1 + 1e-12
+        s, t = s[keep], t[keep]
+        du, dv = np.diff(u), np.diff(vv)
+        worst = np.zeros((len(u) - 1, len(vv) - 1))
+        A, B, C, D = P[:-1, :-1], P[1:, :-1], P[1:, 1:], P[:-1, 1:]
+        for (Pa, Pb, Pc), (fu, fv) in (((A, B, C), (s + t, t)), ((A, C, D), (s, s + t))):
+            Q = Pa[..., None, :] + s[:, None] * (Pb - Pa)[..., None, :] + t[:, None] * (Pc - Pa)[..., None, :]
+            uu = u[:-1, None, None] + du[:, None, None] * fu[None, None, :]
+            ww = np.broadcast_to(vv[None, :-1, None] + dv[None, :, None] * fv[None, None, :],
+                                 (len(u) - 1, len(vv) - 1, len(fv)))
+            ra, rb, rz = (np.asarray(w, dtype=float).reshape(uu.shape[0], 1, -1) for w in self.rows(uu[:, 0, :].ravel()))
+            T = np.stack([ra * np.cos(ww), rb * np.sin(ww), np.broadcast_to(rz, ww.shape)], -1)
+            worst = np.maximum(worst, np.linalg.norm(Q - T, axis=-1).max(axis=-1))
+        return worst
+
+    def sag(self):
+        return float(self._errors().max())
+
+    def nodes(self):
+        X, Y = self.plane()
+        return np.stack([X, Y, self.Z], -1)
+
+    def normals(self):
+        """The unit normal at each node, pointing away from the axis: the sum of the normals of
+        the triangles that meet there, each as long as twice its area, taken from the grid's own
+        order, rows up and columns round, which turns every triangle the same way."""
+        P = self.nodes()
+        m, n = P.shape[:2]
+        Q = np.concatenate([P, P[:, :1]], axis=1) if self.wrap else P
+        a, b, c, d = Q[:-1, :-1], Q[1:, :-1], Q[1:, 1:], Q[:-1, 1:]
+        N = np.zeros((m, Q.shape[1], 3))
+        for A, B, C, corners in ((a, b, c, ((0, 0), (1, 0), (1, 1))), (a, c, d, ((0, 0), (1, 1), (0, 1)))):
+            f = -np.cross(B - A, C - A)
+            for di, dj in corners:
+                N[di:di + m - 1, dj:dj + Q.shape[1] - 1] += f
+        if self.wrap:
+            N[:, 0] += N[:, -1]
+            N = N[:, :-1]
+        # A node that no triangle with any area meets, as a cone's apex at the end of its cut,
+        # takes the normal of the node before it in its row, or after it at the row's start.
+        L = np.linalg.norm(N, axis=-1)
+        for i, j in zip(*np.nonzero(L == 0)):
+            N[i, j] = N[i, j - 1] if j > 0 else N[i, j + 1]
+        return N / np.linalg.norm(N, axis=-1, keepdims=True)
+
+    def rim(self):
+        raise AssertionError(f"piece {self.id}: a stack of ellipses draws only the lines it names")
+
+    def data(self):
+        d = self.decimals
+        grid = {"frame": "ellipses", "u": [significant(x) for x in self.u], "v": [significant(x) for x in self.v],
+                "a": [fixed(x, d) for x in self.A], "b": [fixed(x, d) for x in self.B], "z": [fixed(x, d) for x in self.Zr]}
+        if self.open:
+            grid["open"] = True
+        grid["lines"] = [{"class": c, "u": idx if which == "u" else [], "v": idx if which == "v" else []}
+                         for c, which, idx in self.drawn]
+        return {"id": self.id, "class": self.cls, "metric": self.metric_id, "system": self.system_id,
+                "grid": grid, "edge": end_data(("edge", self.edge))}
+
+
+def sides(piece, P, size):
+    """The direction each point of a line on a grid piece is judged along, as long as the piece's
+    extent is a part of the drawing's size: up, for a height over a plane, whose two sides are
+    above and below it; and straight out from the axis for a stack of ellipses, which that
+    crosses wherever it is not flat, or up on the axis itself."""
+    P = np.asarray(P, dtype=float)
+    k = piece.extent / size
+    if not isinstance(piece, EllipsesPiece):
+        return np.tile([0.0, 0.0, k], (len(P), 1))
+    r = np.hypot(P[:, 0], P[:, 1])
+    out = np.zeros((len(P), 3))
+    on = r > 0
+    out[on, 0], out[on, 1] = P[on, 0] / r[on], P[on, 1] / r[on]
+    out[~on, 2] = 1.0
+    return out * k
+
+
 def level_curves(piece, level):
     """The curves on which the triangles of a grid piece stand at the height `level`, each a list of
     points on the edges of the triangles, closed where it closes, a corner at the level counted
@@ -1014,7 +1162,7 @@ def grid_outline(piece, cam):
     carried linearly along each edge of the grid, is square to the line of sight, found by
     marching squares over the grid, each point on an edge of the grid and so on the triangles."""
     P = piece.nodes()
-    N = grid_normals(piece)
+    N = piece.normals() if isinstance(piece, EllipsesPiece) else grid_normals(piece)
     F = N @ cam.toward
     if piece.wrap:
         P = np.concatenate([P, P[:, :1]], axis=1)
@@ -1094,6 +1242,15 @@ class Checks:
         within the piece's circles, and its height the profile's there, between the two points of
         the profile it falls between, whose chord follows the profile to SAG of the size."""
         P = np.asarray(points, dtype=float).reshape(-1, 3)
+        if isinstance(piece, EllipsesPiece):
+            # Each point is a node of the row at its height.
+            N = piece.nodes()
+            worst = 0.0
+            for q in P:
+                i = int(np.argmin(np.abs(piece.Zr - q[2])))
+                worst = max(worst, abs(piece.Zr[i] - q[2]), float(np.min(np.linalg.norm(N[i] - q, axis=1))))
+            self.add(f"{where}: on the nodes of its row", worst / piece.size, FORM)
+            return
         if isinstance(piece, GridPiece):
             off = np.abs(P[:, 2] - piece.facets.height(P[:, 0], P[:, 1]))
             self.add(f"{where}: on the triangles of the grid", float(np.max(np.where(np.isnan(off), np.inf, off))) / piece.size,
@@ -1312,15 +1469,24 @@ class Figure:
         S = self.screen(np.asarray(P, dtype=float)[None, :])[0]
         self.dots.append((cls, S))
 
-    def label(self, S, text, anchor="l", cls="lab", dx=0, dy=0, ring=None, clear=None):
+    def label(self, S, text, anchor="l", cls="lab", dx=0, dy=0, ring=None, clear=None, curve=None, axis=None,
+              frame=False):
         """TeX at a point of the page, with an anchor and an offset in units of a figure 628 wide;
         `ring` names the circle it stands beside, and `clear` how far above and below the
-        circle's end it looks for the outline to stand past."""
+        circle's end it looks for the outline to stand past; `curve` names the curve it stands
+        beside the end of, `axis` the surface whose axis of time it names at its top, and
+        `frame` says it names the frame of a movie shown."""
         L = {"at": S, "text": text, "anchor": anchor, "class": cls, "dx": dx, "dy": dy}
         if ring:
             L["ring"] = ring
         if clear:
             L["clear"] = fixed(clear, 4)
+        if curve:
+            L["curve"] = curve
+        if axis:
+            L["axis"] = axis
+        if frame:
+            L["frame"] = True
         self.labels.append(L)
 
     def legend(self, kind, cls, text):
@@ -1358,7 +1524,7 @@ class Figure:
                     layers.append({"kind": "line", "class": cls, "points": rounded(S), **({"flat": True} if flat else {})})
         for cls, S in self.dots:
             layers.append({"kind": "point", "class": cls, "at": rounded(S)})
-        drawn = {layer["class"].removesuffix("-far") for layer in layers}
+        drawn = {layer["class"].removesuffix("-far") for layer in layers} | getattr(self, "later", set())
         for _, cls, _ in self.legend_items:
             if cls not in drawn:
                 raise AssertionError(f"the legend names {cls}, which is not drawn")
@@ -1431,11 +1597,15 @@ def draw_surface(fig, surface, offset=(0.0, 0.0, 0.0), meridians=24):
     for c in surface.curves:
         if isinstance(c.piece, GridPiece):
             Q = np.vstack([c.points, c.points[:1]]) if c.closed else c.points
-            fig.line(c.cls, off + Q, normals=np.tile([0.0, 0.0, c.piece.extent / fig.scene.size], (len(Q), 1)))
+            fig.line(c.cls, off + Q, normals=sides(c.piece, Q, fig.scene.size))
         else:
             fig.line(c.cls, off + c.points, closed=c.closed)
     for _, cls, P in surface.dots:
         fig.dot(cls, off + np.asarray(P, dtype=float))
+    if surface.axis:
+        # The axis of time, straight up the surface's axis, hidden where the surface lies in front.
+        fig.line("axis", off + finely(np.array([[0.0, 0.0, surface.axis[0]], [0.0, 0.0, surface.axis[1]]]),
+                                      fig.scene.size / 360))
 
 
 def draw_grid(fig, surface, piece, off):
@@ -1443,22 +1613,32 @@ def draw_grid(fig, surface, piece, off):
     rim and its outline, each densified as a meridian is. Every point of every line on it is
     judged by the two points OUTLINE of the grid's extent above and below it, and hidden only if
     both are: a line lies on the triangles, and above and below them are the two sides of a
-    height, as the two sides of an outline are."""
+    height, as the two sides of an outline are. A stack of ellipses draws the lines it names in
+    their own classes and no rim, each point judged straight out from the axis and back, the two
+    sides of a tube or a cone."""
     k = next(i for i, (s, _) in enumerate(fig.surfaces) if s is surface)
-    P = piece.nodes() + off
-    up = np.array([0.0, 0.0, piece.extent / fig.scene.size])
+    P = piece.nodes()
 
     def line(cls, Q, closed=False):
         Q = densify(np.vstack([Q, Q[:1]]) if closed else Q, 4)
-        fig.line(cls, Q, normals=np.tile(up, (len(Q), 1)))
-    for i in piece.lines["u"]:
-        line("grid", P[i], closed=piece.wrap)
-    for j in piece.lines["v"]:
-        line("grid", P[:, j])
-    line("outline", piece.rim() + off, closed=True)
+        fig.line(cls, Q + off, normals=sides(piece, Q, fig.scene.size))
+    if isinstance(piece, EllipsesPiece):
+        for cls, which, idx in piece.drawn:
+            for i in idx:
+                if which == "u":
+                    line(cls, P[i], closed=piece.wrap)
+                else:
+                    line(cls, P[:, i])
+    else:
+        for i in piece.lines["u"]:
+            line("grid", P[i], closed=piece.wrap)
+        for j in piece.lines["v"]:
+            line("grid", P[:, j])
+        line("outline", piece.rim(), closed=True)
     for run in grid_outline(piece, fig.camera):
-        fig.line("outline", run + off, normals=np.tile(up, (len(run), 1)))
-    fig.grids.append({"class": "grid", "surface": k, "piece": piece.id, "u": piece.lines["u"], "v": piece.lines["v"]})
+        fig.line("outline", run + off, normals=sides(piece, run, fig.scene.size))
+    if not isinstance(piece, EllipsesPiece):
+        fig.grids.append({"class": "grid", "surface": k, "piece": piece.id, "u": piece.lines["u"], "v": piece.lines["v"]})
 
 
 def densify(P, n):
@@ -1548,6 +1728,73 @@ def ring_label(fig, off, rho, z, text, side=1, cls="small", dx=8, dy=0, clear=Fa
     (k, i), = found
     fig.label(S, text, "l" if side > 0 else "r", cls, dx=side * dx, dy=dy,
               ring={"surface": k, "ring": i, "side": side}, clear=band if clear else None)
+
+
+def curve_label(fig, k, i, text, side=1, cls="small", dx=8, dy=0):
+    """A label beside the end of the curve i of the figure's surface k, its point farthest right
+    (side 1) or left on the page, the first of them where two tie, as a client turning the
+    figure finds it again from the curve's points as the file holds them."""
+    surface, off = fig.surfaces[k]
+    P = np.array(surface.curves[i].data()["points"], dtype=float)
+    S = fig.screen(np.asarray(off, dtype=float) + P)
+    j = int(np.argmax(side * S[:, 0]))
+    fig.label(S[j], text, "l" if side > 0 else "r", cls, dx=side * dx, dy=dy,
+              curve={"surface": k, "curve": i, "side": side})
+
+
+def axis_label(fig, k, text):
+    """The name of the axis of time of the figure's surface k, at its top, as a figure of light
+    cones names its axis."""
+    surface, off = fig.surfaces[k]
+    top = np.asarray(off, dtype=float) + [0.0, 0.0, surface.data()["axis"]["to"]]
+    fig.label(fig.screen(top), text, "b", "lab", dy=-4, axis={"surface": k})
+
+
+def movie_values(keys, step):
+    """The values a movie's frames stand at: each interval between neighbouring key values cut
+    into as many equal steps as come nearest `step`, so that every key value is a frame. Returns
+    the values and the index of each key among them."""
+    out, at = [keys[0]], [0]
+    for a, b in zip(keys, keys[1:]):
+        n = max(1, round((b - a) / step))
+        out += [a + (b - a) * k / n for k in range(1, n)] + [b]
+        at.append(len(out) - 1)
+    return out, at
+
+
+def movie_figure(frames, fills, size, camera=CAMERA, meridians=12):
+    """A movie's drawing: its first frame, on its own axis at the origin, in a box that holds
+    every frame, since every frame is drawn in turn at one scale about one place, with a label
+    below the lowest point any frame reaches that names the frame shown."""
+    fig = figure_of(frames[:1], fills, size, camera, meridians=meridians)
+    phi = np.linspace(0, 2 * math.pi, 73)
+    for s in frames:
+        for p in s.pieces:
+            if isinstance(p, GridPiece):
+                fig.extent.append(fig.screen(p.nodes().reshape(-1, 3)))
+            elif not p.reference:
+                fig.extent.append(fig.screen(np.column_stack([np.outer(p.rho, np.cos(phi)).ravel(),
+                                                              np.outer(p.rho, np.sin(phi)).ravel(),
+                                                              np.repeat(p.z, len(phi))])))
+    E = np.vstack(fig.extent)
+    fig.label(np.array([float(fig.screen(np.zeros(3))[0]), float(E[:, 1].min())]), frames[0].label, "t", "small",
+              dy=8, frame=True)
+    # What later frames mark, which the legend may name though the first frame lacks it.
+    fig.later = {cls for s in frames for p in s.pieces for _, cls, _ in p.marks} | {c.cls for s in frames for c in s.curves}
+    return fig
+
+
+def movie(frames, variable, values, seconds=5, turns=True):
+    """What a view carries to play its frames in turn, each with its label and its value of the
+    movie's `variable`, one pass taking `seconds`."""
+    out = {"variable": variable, "seconds": seconds, "frames": []}
+    for s, v in zip(frames, values):
+        d = s.data()
+        d.pop("time", None)
+        out["frames"].append({"label": d.pop("label"), "value": fixed(v, 6), **d})
+    if not turns:
+        out["turns"] = False
+    return out
 
 
 # ---------------------------------------------------------------- the spacetimes
@@ -1981,9 +2228,9 @@ def vaidya(ck, src):
     def slice_at(T, m):
         return Slice(src, "vaidya", "eddington_finkelstein_ingoing", "r", "\\phi", {"theta": "pi/2"}, {"G": 1},
                      {"m": m}, along={"v": f"{T} + r"})
-    surfaces = []
     rim = ("edge", "the surface runs on, as Flamm's paraboloid moved in by $r_s$, to $r \\to \\infty$")
-    for T in (-3.0, -1.5, -0.5, 1.0):
+
+    def moment(T):
         where = f"Vaidya, v - r = {T:g}"
         hole = slice_at(T, "1/2")
         rings = [(r, "r", None) for r in (2.0, 3.0, top)]
@@ -1998,20 +2245,29 @@ def vaidya(ck, src):
             outside = Piece("outside", "sheet", hole, R, top, 0.0, 1, (("crease", "the shell"), rim),
                             ([(1.0, "horizon", None)] if R < 1 else []) + [m for m in rings if m[0] > R], size)
             pieces = [inside, outside]
+            # The rim of the drawing, r = 4 r_s, stands at z = 0 at every moment.
+            shift = -outside.z[-1]
+            inside.z, outside.z = inside.z + shift, outside.z + shift
             ck.add(f"{where}, the two sides meet at the shell: one point",
                    float(np.max(np.abs(np.array(inside.at(R)) - outside.at(R)))), JOIN)
             ck.form(f"{where}, outside the shell z = 2 sqrt(r_s r) - 2 sqrt(r_s R)", outside,
-                    lambda r, R=R: 2 * (np.sqrt(r) - np.sqrt(R)), size)
+                    lambda r, R=R, shift=shift: 2 * (np.sqrt(r) - np.sqrt(R)) + shift, size)
         else:
             whole = Piece("whole", "sheet", hole, 0.0, top, 0.0, 1,
                           (("apex", "the singularity $r = 0$, where the surface closes in a spike"), rim),
                           [(1.0, "horizon", None)] + rings, size)
+            shift = -whole.z[-1]
+            whole.z = whole.z + shift
             pieces = [whole]
-            ck.form(f"{where}, z = 2 sqrt(r_s r)", whole, lambda r: 2 * np.sqrt(r), size)
+            ck.form(f"{where}, z = 2 sqrt(r_s r)", whole, lambda r, shift=shift: 2 * np.sqrt(r) + shift, size)
         for p in pieces:
             ck.isometry(f"{where}, {p.id}", p)
-        surfaces.append(Surface(pieces, label=f"$v - r = {T:g}\\,r_s$", time=T))
-    fig = sequence_figure(surfaces, {"sheet": "cover"}, size, columns=2)
+        return Surface(pieces, label=f"$v - r = {T:g}\\,r_s$", time=T)
+
+    # A frame every r_s/16 of v - r, which holds each moment of the flat views.
+    frames = [moment(-3.0 + k / 16) for k in range(65)]
+    surfaces = [frames[k] for k in (0, 24, 40, 64)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
     fig.legend("fill", "cover", "the slice of constant $v - r$, which $v$ and $r$ cover")
     fig.legend("line", "r", "$r$ constant, at $2$, $3$ and $4\\,r_s$")
     fig.legend("line", "surface", "the shell of radiation, where the surface folds")
@@ -2019,6 +2275,7 @@ def vaidya(ck, src):
                                   "space to meet the shell at $r_s$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     return [view("shell", "The falling shell", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$v - r$", [f.time for f in frames]),
                  settings="$r_s = 2GM/c^2 = 1$, the unit of every length; each moment is a slice of constant $v - r$.",
                  input="An imploding shell of radiation, $m = 0$ for $v < 0$ and $m = M$ for $v > 0$, as in "
                        "the conformal diagram.")]
@@ -2147,12 +2404,12 @@ def oppenheimer_snyder(ck, src):
     cloud.check(ck, src, "Oppenheimer-Snyder outside", np.linspace(R0, 8, 60), [0.0, 1.0, 2.0, 3.0, 4.0])
     top = 4.0
     size = 2 * top
-    surfaces = []
-    for f in (0.0, 0.3, 0.6, 0.8):
-        eta = f * math.pi
+    from scipy.optimize import brentq
+
+    def moment(eta):
         a = am * (1 + math.cos(eta)) / 2
         tau = am * (eta + math.sin(eta)) / 2
-        where = f"Oppenheimer-Snyder, eta = {f:g} pi"
+        where = f"Oppenheimer-Snyder, eta = {eta / math.pi:.4f} pi"
         inner = Slice(src, "oppenheimer_snyder", "interior_comoving", "\\chi", "\\phi", {"tau": "0", **EQUATOR},
                       {"chi_0": "pi/4", "a_m": repr(am)}, {"a": repr(a)})
         outer = cloud.slice(src, tau, "-1/(2*r)")
@@ -2169,15 +2426,28 @@ def oppenheimer_snyder(ck, src):
                      (("axis", "the centre $\\chi = 0$, where the cap is smooth"), ("join", "the surface $\\chi = \\chi_0$")),
                      dust_marks, size)
         dust.z = dust.z + (ext.z[0] - dust.z[-1])
+        # The rim of the drawing, the clocks released at r = 4 r_s, stands at z = 0 at every
+        # moment, and the dust sinks below it.
+        shift = -ext.z[-1]
+        ext.z, dust.z = ext.z + shift, dust.z + shift
         ck.isometry(f"{where}, the dust", dust)
         ck.isometry(f"{where}, outside", ext)
         ck.join(f"{where}, the dust meets the outside", dust, chi0, ext, R0)
         ck.form(f"{where}, the dust is a cap of a sphere of radius a", dust,
                 lambda c, a=a, z0=dust.z[0]: z0 + a * (1 - np.cos(c)), size)
-        if f == 0:
-            ck.form(f"{where}, outside it is Flamm's paraboloid", ext, lambda r: 2 * np.sqrt(r - 1) - 2, size)
-        surfaces.append(Surface([dust, ext], label=f"$c\\tau = {tau:.2f}\\,r_s$", time=tau))
-    fig = sequence_figure(surfaces, {"star": "star", "sheet": "cover"}, size, columns=2)
+        if eta == 0:
+            ck.form(f"{where}, outside it is Flamm's paraboloid", ext, lambda r: 2 * np.sqrt(r - 1) - 2 + shift, size)
+        return Surface([dust, ext], label=f"$c\\tau = {tau:.2f}\\,r_s$", time=tau)
+
+    # The movie runs through the moments at a steady proper time of the dust, a frame about every
+    # 0.07 r_s of c tau.
+    etas = [f * math.pi for f in (0.0, 0.3, 0.6, 0.8)]
+    taus, keys = movie_values([am * (e + math.sin(e)) / 2 for e in etas], 0.07)
+    frames = [moment(etas[keys.index(i)] if i in keys else
+                     brentq(lambda e, t=t: am * (e + math.sin(e)) / 2 - t, 0.0, math.pi, xtol=1e-15))
+              for i, t in enumerate(taus)]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"star": "star", "sheet": "cover"}, size)
     fig.legend("fill", "star", "the dust, a cap of a sphere of radius $a(\\tau)$, which $\\tau$ and $\\chi$ cover")
     fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the dust")
     fig.legend("line", "r", "$\\chi$ constant in the dust, at $\\chi_0/3$ and $2\\chi_0/3$, and outside the clocks "
@@ -2186,6 +2456,7 @@ def oppenheimer_snyder(ck, src):
     fig.legend("line", "horizon", "the apparent horizon, $R = 2GM/c^2$ for the mass inside it")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     return [view("collapse", "The collapse", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
                  settings="$R_0 = 2\\,r_s$, so that $\\chi_0 = \\pi/4$ and $a_m = 2\\sqrt{2}\\,r_s$, with $r_s = 1$ the "
                           "unit of every length; the moments are the dust's proper time $\\tau$ since the release.",
                  input="Outside the dust, the slices of Tolman-Bondi's comoving chart with no dust in it, $1 + 2E = "
@@ -2524,9 +2795,72 @@ def cosmic_string(ck, src):
     fig.legend("line", "surface", "the edge of the core, $\\chi = \\chi_0$ and $r = \\ell\\tan\\chi_0$")
     fig.legend("line", "reference", "the cone inside the core, down to its apex, where an ideal string lies")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
-    return [view("cone", "The cone", "$\\ell$", [surface], fig.done(),
-                 settings="$4G\\mu/c^2 = 0.1$, so that $\\cos\\chi_0 = 0.9$ and $\\delta = 36°$, and "
-                          "$\\ell = 1$, the unit of every length.")]
+    settings = ("$4G\\mu/c^2 = 0.1$, so that $\\cos\\chi_0 = 0.9$ and $\\delta = 36°$, and $\\ell = 1$, the unit "
+                "of every length.")
+    return [unrolling(ck, cone, fold, top, size, settings),
+            view("cone", "Gott's core", "$\\ell$", [surface], fig.done(), settings=settings)]
+
+
+def unrolling(ck, cone, fold, top, size, settings):
+    """The cone of an ideal string, cut along the meridian phi = 0 and unrolled onto the plane: a
+    movie of cones of half angle alpha, sin(alpha) = 2 pi fold/(2 pi - d), each carrying the whole
+    cone, every circle of it running round the axis through 2 pi - d, so that the cut's two
+    edges stand d apart, from d = 0, the cone itself, to d = delta = 2 pi (1 - fold) = 8 pi G mu/c^2,
+    where alpha = 90 degrees and the cone lies flat, a disc missing the wedge delta. The point at r
+    and chart angle phi stands at the distance r from the apex and the angle d/2 + phi (2 pi -
+    d)/2 pi round the axis, so each frame is the cone moved without stretching: along each
+    straight line from the apex every distance is r, and each circle is as long as the published
+    g_phiphi makes it, which is checked on every frame, as is the wedge of the last."""
+    phi = np.linspace(0, 2 * math.pi, 361)
+    delta = 2 * math.pi * (1 - fold)
+    ck.add("cosmic string: the deficit angle 2 pi (1 - 4G mu/c^2) is 8 pi G mu/c^2 at mu = 1/40, G = 1",
+           abs(delta - 8 * math.pi / 40), 1e-15)
+    whole = Piece("cone", "sheet", cone, 0.0, top, 0.0, 1,
+                  (("apex", "the string itself, a conical singularity at $r = 0$"), ("edge", "the cone runs on to $r \\to \\infty$")),
+                  [(1.0, "r", None), (2.0, "r", None)], size)
+    ck.isometry("cosmic string, the ideal string's cone", whole)
+    rs = np.array([0.0, 1.0, 2.0, top])
+    frames, openings = [], [math.radians(k) for k in range(37)]
+    openings[-1] = delta
+    for d in openings:
+        sin_a = 1.0 if d == delta else 2 * math.pi * fold / (2 * math.pi - d)
+        cos_a = math.sqrt(1 - sin_a * sin_a)
+        v = d / 2 + phi * (2 * math.pi - d) / (2 * math.pi)
+        v[0], v[-1] = d / 2, 2 * math.pi - d / 2
+
+        def rows(u, s=sin_a, c=cos_a):
+            u = np.asarray(u, dtype=float)
+            return s * u, s * u, c * u
+        piece = EllipsesPiece("cone", "sheet", rs, v, rows, "cosmic_string", "conical",
+                              "the cone runs on to $r \\to \\infty$", size,
+                              [("cut", "v", [v[0], v[-1]]), ("meridian", "v", list(v[15:-1:15])),
+                               ("r", "u", [1.0, 2.0]), ("outline", "u", [top])], open_=True)
+        where = f"cosmic string, unrolled by {math.degrees(d):.2f} degrees"
+        N = piece.nodes()
+        along = np.linalg.norm(np.diff(N, axis=0), axis=-1)
+        ck.add(f"{where}: along each line from the apex, every distance is r", float(np.max(np.abs(along - np.diff(piece.u)[:, None]))),
+               1e-6)
+        arc = piece.A[:, None] * np.diff(piece.v)[None, :]
+        want = np.array([float(cone.rho_at(r)) for r in piece.u])[:, None] * np.diff(phi)[None, :]
+        ck.add(f"{where}: round each circle, as long as sqrt(g_phiphi) makes it", float(np.max(np.abs(arc - want))), 1e-6)
+        ck.add(f"{where}: the cut's edges stand d apart", abs(2 * math.pi - (piece.v[-1] - piece.v[0]) - d), 1e-12)
+        label = f"$\\Delta\\phi = {math.degrees(d):.0f}°" + (" = \\delta$" if d == delta else "$")
+        frames.append(Surface([piece], label=label, time=d))
+    first, last = frames[0].pieces[0], frames[-1].pieces[0]
+    ck.add("cosmic string, unrolled: the first frame is the cone, rho = (1 - 4G mu/c^2) r and z = sqrt(1 - (1 - 4G mu/c^2)^2) r",
+           float(max(np.max(np.abs(first.A - fold * first.u)), np.max(np.abs(first.Zr - math.sqrt(1 - fold ** 2) * first.u)))),
+           1e-6)
+    ck.add("cosmic string, unrolled: the last frame lies flat", float(np.max(np.abs(last.Zr))), 0.0)
+    ck.add("cosmic string, unrolled: the wedge the last frame lacks is the deficit angle 8 pi G mu/c^2",
+           abs(2 * math.pi - (last.v[-1] - last.v[0]) - 8 * math.pi / 40), 1e-12)
+    fig = movie_figure(frames, {"sheet": "cover"}, size, Camera(-90, 30))
+    fig.legend("fill", "cover", "the cone of an ideal string, cut along $\\phi = 0$ and unrolling onto the plane")
+    fig.legend("line", "cut", "the two edges of the cut, which part by $\\Delta\\phi$, to the deficit angle $\\delta = "
+                              "8\\pi G\\mu/c^2$ where the cone lies flat")
+    fig.legend("line", "r", "$r$ constant, at $\\ell$ and $2\\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return view("unroll", "The cone unrolled", "$\\ell$", [Surface([whole])], fig.done(),
+                movie=movie(frames, "$\\Delta\\phi$", [math.degrees(d) for d in openings]), settings=settings)
 
 
 def frw(ck, src):
@@ -2548,8 +2882,10 @@ def frw(ck, src):
     ck.exact("FRW: a = 1 - cos eta makes the published G^r_r vanish, k = 1", sp.simplify(G) == 0)
 
     moments = [math.pi * f for f in (1 / 3, 2 / 3, 1, 4 / 3, 5 / 3)]
-    surfaces, size = [], 4.0
-    for e in moments:
+    size = 4.0
+    from scipy.optimize import brentq
+
+    def moment(e):
         a = 1 - math.cos(e)
         sl = Slice(src, "frw", "comoving_spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"k": 1}, {"a": repr(a)})
         near = Piece("near", "sheet", sl, 0.0, 1.0, -a, 1,
@@ -2558,7 +2894,7 @@ def frw(ck, src):
         far = Piece("far", "sheet2", sl, 0.0, 1.0, a, -1,
                     (("axis", "the antipode $\\chi = \\pi$"), ("join", "the equator")),
                     [(0.5, "r2", None), (math.sqrt(3) / 2, "r2", None)], size)
-        where = f"FRW closed, eta = {e / math.pi:.3f} pi"
+        where = f"FRW closed, eta = {e / math.pi:.4f} pi"
         ck.isometry(f"{where}, near hemisphere", near)
         ck.isometry(f"{where}, far hemisphere", far)
         ck.join(f"{where}, the hemispheres meet at the equator", near, 1.0, far, 1.0)
@@ -2566,7 +2902,14 @@ def frw(ck, src):
                 lambda r, a=a: a * (1 - np.sqrt(np.maximum(1 - r * r, 0))) - a, size)
         ck.radius(f"{where}, the sphere rho = a r", near, lambda r, a=a: a * r, size)
         t = e - math.sin(e)
-        surfaces.append(Surface([near, far], label=f"$ct = {t:.2f}$", time=t))
+        return Surface([near, far], label=f"$ct = {t:.2f}$", time=t)
+
+    # The movie runs through the moments at a steady cosmic time, a frame about every 0.1 of ct.
+    times, keys = movie_values([e - math.sin(e) for e in moments], 0.1)
+    etas = [moments[keys.index(i)] if i in keys else brentq(lambda e, t=t: e - math.sin(e) - t, 1e-9, 2 * math.pi, xtol=1e-15)
+            for i, t in enumerate(times)]
+    frames = [moment(e) for e in etas]
+    surfaces = [frames[i] for i in keys]
     for k, name, a_of in ((0, "flat", lambda e: e * e), (-1, "open", lambda e: math.cosh(e) - 1)):
         for e in moments:
             sl = Slice(src, "frw", "comoving_spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"k": k},
@@ -2577,21 +2920,14 @@ def frw(ck, src):
             else:
                 ck.stops(f"FRW open, eta = {e / math.pi:.3f} pi", sl, xs)
 
-    offsets, x, gap = [], 0.0, 0.6
-    for s in surfaces:
-        a = -s.pieces[0].z[0]
-        offsets.append((x + a, 0.0, 0.0))
-        x += 2 * a + gap
-    fig = figure_of(surfaces, {"sheet": "cover"}, 12.0, offsets=offsets, meridians=12)
-    base = min(fig.screen(np.asarray(off) + [0, 0, 0])[1] - (-s.pieces[0].z[0]) for s, off in zip(surfaces, offsets))
-    for s, off in zip(surfaces, offsets):
-        fig.label(np.array([fig.screen(np.asarray(off))[0], base]), s.label, "t", "small", dy=8)
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
     fig.legend("fill", "cover", "the hemisphere $\\chi < \\pi/2$ that $r = \\sin\\chi$ covers")
     fig.legend("line", "r", "$\\chi$ constant, at $\\pi/6$ and $\\pi/3$")
     fig.legend("line", "r2", "$\\chi$ constant on the far hemisphere, at $2\\pi/3$ and $5\\pi/6$")
     fig.legend("line", "chartedge", "the equator $\\chi = \\pi/2$, where $r = 1$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     return [view("closed", "Closed dust, $k = +1$", "$1/\\sqrt{k}$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", [f.time for f in frames], turns=False),
                  settings="$k = 1$, with $1/\\sqrt{k}$ the unit of every length.",
                  input="Dust: $a = 1 - \\cos\\eta$ with $ct = \\eta - \\sin\\eta$, solved from this "
                        "spacetime's own $G^r{}_r = 0$.",
@@ -3032,6 +3368,62 @@ def ring_sequence(ck, src, name, metric_id, system_id, moments, top, params=None
     return surfaces
 
 
+STACK_CAMERA = Camera(-60, 18)   # a stack of moments seen from low and across both axes of its ellipses
+
+
+def stack(ck, name, surfaces, rows, lift, planes, size, edge):
+    """The moments of a ring of particles on a flat plane stacked up the axis of time into its
+    world tube: at every time u from the first moment to the last, the ellipse rows(u) = (a, b)
+    of semi-axes along X and Y, at the height lift * u, as an EllipsesPiece whose columns are the
+    ring's particles, one every degree, so that the tube's rows at the moments are the rings of
+    `surfaces`, which is checked, and its columns their world lines. planes(u) gives the plane of
+    each row as a FlatPlane, or the ring's own points, whose semi-axes are checked against the row
+    it stands at. The axis of time runs from the first moment to a quarter of the tube's length
+    past the last."""
+    alpha = np.linspace(0, 2 * math.pi, 361)[:-1]
+    times = [s.time for s in surfaces]
+
+    def at(u):
+        a, b = rows(np.asarray(u, dtype=float))
+        return a, b, lift * np.asarray(u, dtype=float)
+    tube = EllipsesPiece("tube", "sheet", times, alpha, at, surfaces[0].pieces[0].sl.metric_id,
+                         surfaces[0].pieces[0].sl.system_id, edge, size, [("worldline", "v", alpha[::30])])
+    ck.add(f"{name}, the tube's triangles against its ellipses, in space", tube.sag() / size, GRID_SAG)
+    worst = 0.0
+    for u, a, b in zip(tube.u, tube.A, tube.B):
+        worst = max(worst, planes(u, a, b))
+    # Within the rounding of the file, and for rings run as geodesics the 1e-9 they are run to.
+    ck.add(f"{name}, every row of the tube is the ring at its time", worst, 0.5 * 10.0 ** -tube.decimals + 1e-9)
+    N = tube.nodes()
+    curves, dots = [], []
+    for s in surfaces:
+        i = tube.index("u", s.time)
+        ring = s.curves[0].points[:360]
+        ck.add(f"{name}, {s.label}: the tube's row is the ring of the flat moment, at the height of its time",
+               float(max(np.max(np.abs(N[i][:, :2] - ring[:, :2])), abs(N[i][0, 2] - lift * s.time))) / size, FORM)
+        curves.append(Curve(tube, "particles", N[i], closed=True, label=s.label, time=s.time))
+        dots += [(tube, "particles", Q) for Q in N[i][::30]]
+    surface = Surface([tube], curves=curves, dots=dots,
+                      axis=(tube.Zr[0], tube.Zr[-1] + (tube.Zr[-1] - tube.Zr[0]) / 4))
+    for c in curves:
+        ck.on_piece(f"{name}, the ring at {c.label}", tube, c.points)
+    ck.on_piece(f"{name}, the particles marked", tube, [Q for _, _, Q in dots])
+    return surface
+
+
+def stack_figure(surface, size, axis_name, legend):
+    """A stack of moments on its axis of time, each moment named beside an end of its ring, the
+    right and the left in turn from the first up, so that moments close in time stand apart, and
+    the axis named at its top."""
+    fig = figure_of([surface], {"sheet": "cover"}, size, STACK_CAMERA)
+    for i, c in enumerate(surface.curves):
+        curve_label(fig, 0, i, c.label, side=1 if i % 2 == 0 else -1)
+    axis_label(fig, 0, axis_name)
+    for item in legend:
+        fig.legend(*item)
+    return fig.done()
+
+
 def kasner(ck, src):
     """The plane y = 0 at t = 1/4, 1/2, 1 and 2, at the exponents (-2/7, 3/7, 6/7) the spacetime
     diagrams declare, each flat, t^(2 p_1) dx^2 + t^(2 p_3) dz^2, with the ring of particles at
@@ -3049,12 +3441,28 @@ def kasner(ck, src):
         a = np.linspace(0, 2 * math.pi, 361)
         want = np.column_stack([time ** (-2 / 7) * np.cos(a), time ** (6 / 7) * np.sin(a)])
         ck.add(f"Kasner, t = {time}: the ellipse of semi-axes t^p_1 and t^p_3", float(np.max(np.abs(P[:, :2] - want))), 1e-12)
+    def kasner_plane(u, a, b):
+        sl = FlatPlane(src, "kasner", "cartesian", "x", "z", {"t": repr(float(u)), "y": 0}, params)
+        return float(np.max(np.abs(sl.scale - [a, b])))
+    tube = stack(ck, "Kasner", surfaces, lambda u: (u ** (-2 / 7), u ** (6 / 7)), 1.5, kasner_plane, 5.0,
+                 "the ring's world tube runs on before $t = 1/4$ and after $t = 2$")
+    tube_fig = stack_figure(tube, 5.0, "$t$", [
+        ("fill", "cover", "the ring at every moment from $t = 1/4$ to $t = 2$, each at the height of its time"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of time, through the centre of the ring")])
     fig = sequence_figure(surfaces, {"sheet": "cover"}, 4.0, columns=2, camera=FLAT_CAMERA, meridians=12)
     fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
     fig.legend("line", "particles", "a ring of particles at rest in the chart on $x^2 + z^2 = \\ell^2$, with twelve of them "
                                     "marked: an ellipse reaching $t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$")
     fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
-    return [view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(),
+    settings = ("$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ and $t$ in the unit of time in which the powers are evaluated, "
+                "with $\\ell$ the ring's radius at $t = 1$, the unit of every length.")
+    given = ("Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, a point on the Kasner circle, as in the spacetime "
+             "diagrams.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings, input=given,
+                 height="$t$, a height of $1.5\\,\\ell$ for each unit of $t$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(),
                  settings="$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ and $t$ in the unit of time in which the powers are "
                           "evaluated, with $\\ell$ the ring's radius at $t = 1$, the unit of every length.",
                  input="Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, a point on the Kasner circle, as in the "
@@ -3080,17 +3488,36 @@ def bianchi(ck, src):
         a = np.linspace(0, 2 * math.pi, 361)
         want = np.column_stack([float(fn["a_1"]) * np.cos(a), float(fn["a_3"]) * np.sin(a)])
         ck.add(f"Bianchi I, t = {t:.4f}: the ellipse of semi-axes a_1 and a_3", float(np.max(np.abs(P[:, :2] - want))), 1e-12)
+    def bianchi_rows(u):
+        y = solver.state(np.atleast_1d(u))
+        return y[0], y[4]
+
+    def bianchi_plane(u, a, b):
+        y = solver.state(np.array([u]))[:, 0]
+        sl = FlatPlane(src, "bianchi", "type_i_cartesian", "x", "z", {"t": repr(float(u)), "y": 0}, None,
+                       {"a_1": repr(float(y[0])), "a_2": repr(float(y[2])), "a_3": repr(float(y[4]))})
+        return float(np.max(np.abs(sl.scale - [a, b])))
+    tube = stack(ck, "Bianchi I", surfaces, bianchi_rows, 2.5, bianchi_plane, 7.0,
+                 "the world tube of the ring runs on before $c\\bar Ht = 0.10$ and after $c\\bar Ht = 2.00$")
+    tube_fig = stack_figure(tube, 7.0, "$c\\bar Ht$", [
+        ("fill", "cover", "the ring of dust at every moment from $c\\bar Ht = 0.10$ to $2.00$, each at the height of its "
+                          "time"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its grains marked"),
+        ("line", "worldline", "the world lines of the twelve grains, at rest in the chart"),
+        ("line", "axis", "the axis of time, through the centre of the ring")])
     fig = sequence_figure(surfaces, {"sheet": "cover"}, 7.0, columns=2, camera=FLAT_CAMERA, meridians=12)
     fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
     fig.legend("line", "particles", "a ring of the dust on $x^2 + z^2 = \\ell^2$, with twelve of its grains marked: an "
                                     "ellipse reaching $a_1\\ell$ along $x$ and $a_3\\ell$ along $z$")
     fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
-    return [view("ring", "A ring of dust", "$\\ell$", surfaces, fig.done(),
-                 settings="$t$ in units of $1/\\bar H$ from the singularity, with $\\ell$ the ring's radius where "
-                          "$a_1 = a_2 = a_3 = 1$, the unit of every length.",
-                 input="Dust: the three scale factors solved from this spacetime's own $G^x{}_x = G^y{}_y = G^z{}_z = 0$, "
-                       "starting from $a_i = 1$ with rates $(-0.5, 1.5, 2.0)\\,\\bar H$, $\\bar H$ their mean, as in the "
-                       "spacetime diagram.")]
+    settings = ("$t$ in units of $1/\\bar H$ from the singularity, with $\\ell$ the ring's radius where "
+                "$a_1 = a_2 = a_3 = 1$, the unit of every length.")
+    given = ("Dust: the three scale factors solved from this spacetime's own $G^x{}_x = G^y{}_y = G^z{}_z = 0$, "
+             "starting from $a_i = 1$ with rates $(-0.5, 1.5, 2.0)\\,\\bar H$, $\\bar H$ their mean, as in the "
+             "spacetime diagram.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings, input=given,
+                 height="$c\\bar Ht$, a height of $2.5\\,\\ell$ for each $1/\\bar H$"),
+            view("ring", "A ring of dust", "$\\ell$", surfaces, fig.done(), settings=settings, input=given)]
 
 
 def pp_wave(ck, src):
@@ -3138,14 +3565,32 @@ def pp_wave(ck, src):
         ring, dots = particles(ck, where, sl, plane, cx, cy)
         label = "$cu = " + (f"{u:g}" if u != focus else f"{u:.2f}") + "\\,L$"
         surfaces.append(Surface([plane], label=label, time=u, curves=[ring], dots=dots))
+    def pp_rows(u):
+        w = run.sol(np.atleast_1d(u))
+        return w[0], w[n + 90]
+
+    def pp_ring(u, a, b):
+        # Every particle of the ring, run with the published Christoffel symbols, on the row.
+        w = run.sol(u)
+        return float(np.max(np.abs(np.column_stack([w[:n], w[n:2 * n]]) - np.column_stack([a * np.cos(alpha),
+                                                                                        b * np.sin(alpha)]))))
+    tube = stack(ck, "pp-wave", surfaces, pp_rows, 0.5, pp_ring, 2 * top,
+                 "the world tube of the ring runs on before $cu = -3\\,L$, and past the focus the ring turns inside out")
+    tube_fig = stack_figure(tube, 2 * top, "$cu$", [
+        ("fill", "cover", "the ring at every wave front from $cu = -3\\,L$ to the focus, each at the height of its $u$"),
+        ("line", "particles", "the ring at the four wave fronts of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles"),
+        ("line", "axis", "the axis of retarded time, through the centre of the ring")])
     fig = sequence_figure(surfaces, {"sheet": "cover"}, 2 * top, columns=2, camera=FLAT_CAMERA, meridians=12)
     fig.legend("fill", "cover", "the wave front at each moment, flat")
     fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = L^2$ before the pulse, with twelve of them "
                                     "marked")
     fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
-    return [view("ring", "A ring of particles", "$L$", surfaces, fig.done(),
-                 settings="$L = 1$, the unit of every length and of $cu$; each moment is the wave front of one $u$.",
-                 input="A pulse of the plus polarisation, $A = e^{-u^2}/L^2$ and $B = 0$, as in the spacetime diagram.")]
+    settings = "$L = 1$, the unit of every length and of $cu$; each moment is the wave front of one $u$."
+    given = "A pulse of the plus polarisation, $A = e^{-u^2}/L^2$ and $B = 0$, as in the spacetime diagram."
+    return [view("tube", "The ring's world tube", "$L$", [tube], tube_fig, settings=settings, input=given,
+                 height="$cu$, a height of $L/2$ for each $L$"),
+            view("ring", "A ring of particles", "$L$", surfaces, fig.done(), settings=settings, input=given)]
 
 
 def malament_hogarth(ck, src):
@@ -3159,8 +3604,8 @@ def malament_hogarth(ck, src):
     fn = {"Omega": nr._MH_FACTOR}
     top = 1.5
     size = 2 * top
-    surfaces = []
-    for T in ("-7/10", "-3/10", "-1/10", "0"):
+
+    def moment(T):
         t = float(sp.Rational(T))
         sl = Slice(src, "malament_hogarth", "cartesian", "x", None, {"t": T, "z": 0}, functions=fn, turn="y")
         # The edge of the region where Omega > 1, sqrt(1 - c^2t^2) correctly rounded, moved on by
@@ -3177,14 +3622,15 @@ def malament_hogarth(ck, src):
         marks = [(s, "r", None) for s in (0.1, 0.3, 0.5) if lo < s < rim] + [(rim, "surface", None)]
         well = Piece("well", "star", sl, lo, rim, 0.0, 1, (start, ("join", "the edge of the region where $\\Omega > 1$")),
                      marks, size)
-        flat = Piece("flat", "sheet", sl, rim, top, well.z[-1], 1,
+        # The flat plane beyond the unit ball stands at z = 0 at every moment, and the well sinks below it.
+        well.z = well.z - well.z[-1]
+        flat = Piece("flat", "sheet", sl, rim, top, 0.0, 1,
                      (("join", "the edge of the region where $\\Omega > 1$"), ("edge", "the plane runs on, flat")),
                      [(1.0, "r", None)] if rim < 1.0 - 1e-9 else [], size)
         ck.isometry(f"{where}, the well", well)
         ck.isometry(f"{where}, the flat plane", flat)
         ck.join(f"{where}, the well meets the flat plane", well, rim, flat, rim)
         ck.plane(f"{where}, beyond the region where Omega > 1", sl, np.linspace(rim + 1e-6, 3, 300))
-        surfaces.append(Surface([well, flat], label=f"$ct = {t:g}$", time=t))
         if t == 0:
             _, entry, R = nr.load("malament_hogarth", "cartesian")
             g = nr.published_matrix(R, entry, "metric_components")
@@ -3197,13 +3643,30 @@ def malament_hogarth(ck, src):
                 ticks = integrate(lambda v: float(clock(v)), -1.0, -s)
                 ck.add(f"Malament-Hogarth: the tube from its rim down to s = {s} is as long as the computer's clock "
                        f"runs from ct = -1 to -{s}", abs(length - ticks) / ticks, 1e-10)
-    fig = sequence_figure(surfaces, {"star": "star", "sheet": "cover"}, 4.0, columns=2, camera=Camera(-90, 22), meridians=12)
+        return Surface([well, flat], label=f"$ct = {t:g}$", time=t)
+
+    # A frame every 1/80 of ct from -0.7, which holds each moment of the flat views, up to the last
+    # whose well is no deeper than the tube is drawn at ct = 0: the wells just before it reach
+    # deeper still, while the bottomless tube is drawn only to s = 0.03.
+    last = moment("0")
+    depth = -last.pieces[0].z[0]
+    frames = []
+    for k in range(-56, 0):
+        f = moment(str(sp.Rational(k, 80)))
+        if -f.pieces[0].z[0] > depth:
+            break
+        frames.append(f)
+    frames.append(last)
+    surfaces = [f for f in frames if f.time in (-0.7, -0.3, -0.1, 0.0)]
+    ck.exact("Malament-Hogarth: the movie holds every moment of the flat views", len(surfaces) == 4)
+    fig = movie_figure(frames, {"star": "star", "sheet": "cover"}, size, Camera(-90, 22), meridians=12)
     fig.legend("fill", "star", "inside the unit ball about the removed event, where $\\Omega > 1$")
     fig.legend("fill", "cover", "outside it, where $\\Omega = 1$ and the plane is flat")
     fig.legend("line", "surface", "the edge of the region where $\\Omega > 1$")
     fig.legend("line", "r", "$s$ constant, at $0.1$, $0.3$, $0.5$ and $1$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     return [view("plane", "Toward the removed event", "$1$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", [f.time for f in frames]),
                  settings="$c\\,t$ and every length in the unit in which the declared $\\Omega$ is written, the radius "
                           "of the region where $\\Omega > 1$; each moment is the plane $z = 0$ of one $t$.",
                  input="$\\Omega = 1 + e^{1 - 1/(1 - \\varrho^2)}/\\varrho$ for $\\varrho^2 = c^2t^2 + x^2 + y^2 + z^2 < 1$ and "
@@ -3292,11 +3755,15 @@ def mixmaster(ck, src):
     from scipy.optimize import brentq
     round_T = brentq(lambda s: float(sp.N((a - b).subs(T, s))), 0.9, 0.95, xtol=1e-15)
     moments = [sp.Rational(-1, 10), sp.Rational(1, 5), sp.Rational(repr(round_T)), sp.Rational(3, 2), sp.Integer(2)]
-    surfaces, size = [], 8.0
-    for Tm in moments:
+    size = 8.0
+
+    def proper(Tm):
+        return integrate(lambda s: 1 / math.sqrt(Uf(s)), lo, float(Tm))
+
+    def moment(Tm):
         A, B = a.subs(T, Tm), b.subs(T, Tm)
         af, bf = float(A), float(B)
-        c_tau = integrate(lambda s: 1 / math.sqrt(Uf(s)), lo, float(Tm))
+        c_tau = proper(Tm)
         halves = [Slice(src, "mixmaster", "euler_angles", "\\theta", "\\phi", {"t": 0},
                         functions={"a_1": str(A), "a_2": str(A), "a_3": str(B)}, swept={"psi": sweep}, rewrite=half_angles)
                   for sweep in ("-phi", "2*pi - phi")]
@@ -3325,14 +3792,24 @@ def mixmaster(ck, src):
         if abs(af - bf) < 1e-12:
             ck.form(f"{where}, the round sphere z = -2a cos(theta/2)", near, lambda th: -2 * af * np.cos(th / 2), size)
             ck.radius(f"{where}, the round sphere rho = 2a sin(theta/2)", near, lambda th: 2 * af * np.sin(th / 2), size)
-        surfaces.append(Surface([near, far], label=f"$c\\tau = {c_tau:.2f}\\,m$", time=c_tau))
-    fig = sequence_figure(surfaces, {"sheet": "cover"}, size, columns=3, meridians=12)
+        return Surface([near, far], label=f"$c\\tau = {c_tau:.2f}\\,m$", time=c_tau)
+
+    # The movie runs through the moments at a steady proper time, a frame about every 0.05 of c tau,
+    # each at the T whose proper time it is.
+    taus, keys = movie_values([proper(Tm) for Tm in moments], 0.05)
+    Ts = [moments[keys.index(i)] if i in keys else
+          sp.Rational(repr(brentq(lambda x, c=c: proper(x) - c, float(moments[0]), float(moments[-1]), xtol=1e-14)))
+          for i, c in enumerate(taus)]
+    frames = [moment(Tm) for Tm in Ts]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
     fig.legend("fill", "cover", "the great sphere through the identity, which the Euler angles cover but for its poles and "
                                 "equator")
     fig.legend("line", "r", "$\\theta$ constant, at $\\pi/3$ and $2\\pi/3$ on each hemisphere")
     fig.legend("line", "chartedge", "the equator $\\theta = \\pi$, a fibre of $\\psi$ of circumference $4\\pi a_3$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$, running on through the equator into the other hemisphere")
     return [view("sphere", "The great sphere", "$m$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
                  settings="$m = 1$, the unit of every length, and $l = m/2$; each moment is labelled by the proper time "
                           "$c\\tau$ from Taub's first horizon.",
                  input="Taub's universe, $a_1 = a_2 = \\sqrt{T^2 + l^2}$ and $a_3 = 2l\\sqrt{U}$ with $U = (-T^2 + 2mT + "
@@ -3340,7 +3817,7 @@ def mixmaster(ck, src):
                        "this spacetime vanish.",
                  stops=["When the three scale factors differ, as in every other Mixmaster universe, the great sphere's "
                         "metric depends on $\\phi$ as well as $\\theta$, and no surface of revolution carries it.",
-                        "At the second moment $a_3$ is more than $2/\\sqrt{3}$ times $a_1$, the curvature about the poles "
+                        "While $a_3$ is more than $2/\\sqrt{3}$ times $a_1$, the curvature about the poles "
                         "is negative, and only the band about the equator has a surface of revolution in flat space."])]
 
 
@@ -3514,8 +3991,8 @@ CAPTIONS = {
         "never exchange light: each hemisphere lies outside the other observer's past and future alike.",
     ],
     ("vaidya", "shell"): [
-        "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, at four "
-        "moments, each drawn as a surface in flat space with every distance along it "
+        "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, from "
+        "$v - r = -3\\,r_s$ to $r_s$, each moment drawn as a surface in flat space with every distance along it "
         "the metric distance. A slice of constant $v$ is a light cone, so the moments are slices "
         "of constant $v - r$, which are spacelike everywhere, inside the horizon as well, and carry the metric "
         "$(1 + 2Gm/c^2r)\\,dr^2 + r^2d\\phi^2$. Inside the shell $m = 0$ and the surface is a flat disc. "
@@ -3527,8 +4004,9 @@ CAPTIONS = {
         "on through the horizon to close in a spike at the singularity $r = 0$.",
     ],
     ("oppenheimer_snyder", "collapse"): [
-        "The equatorial plane ($\\theta = \\pi/2$) of a star of dust collapsing from rest, at four moments of "
-        "the dust's own time $\\tau$, each drawn as a surface in flat space with every distance along it the "
+        "The equatorial plane ($\\theta = \\pi/2$) of a star of dust collapsing from rest, as the dust's own time "
+        "$\\tau$ runs from the release to $c\\tau = 4.39\\,r_s$, each moment drawn as a surface in flat space with "
+        "every distance along it the "
         "metric distance. The dust is a piece of a closed universe, and its slice is "
         "a cap of a sphere of radius $a(\\tau)$ out to $\\chi = \\chi_0$, which shrinks as the dust falls while "
         "keeping its angle $\\chi_0$. Outside, the moment carries on as the moment of clocks released from rest "
@@ -3619,6 +4097,11 @@ CAPTIONS = {
         "Bronnikov had each found it in 1973. The areal radius turns back at the throat, so it covers one side "
         "at a time, while the proper $r$ runs straight through.",
     ],
+    ("cosmic_string", "unroll"): [
+        "The cone of an ideal cosmic string ($4G\\mu/c^2 = 0.1$) cut along $\\phi = 0$ and unrolled onto the plane "
+        "without stretching, every distance from the apex and every circle keeping its length. Laid flat it is a "
+        "plane missing the wedge between the cut's two edges, the deficit angle $\\delta = 8\\pi G\\mu/c^2 = 36°$.",
+    ],
     ("cosmic_string", "cone"): [
         "The plane $z = 0$ across a straight cosmic string at one moment of $t$, drawn as a surface in flat "
         "space with every distance along it the metric distance. The "
@@ -3654,8 +4137,9 @@ CAPTIONS = {
         "this sheet, and David Hilbert proved in 1901 that no surface in flat space carries the whole of it.",
     ],
     ("malament_hogarth", "plane"): [
-        "The plane $z = 0$ about the removed event of a Malament-Hogarth spacetime at four moments of $t$, each drawn "
-        "as a surface in flat space with every distance along it the metric distance. "
+        "The plane $z = 0$ about the removed event of a Malament-Hogarth spacetime as $t$ runs from $ct = -0.7$ up to "
+        "the removed event, each moment drawn as a surface in flat space with every distance along it the metric "
+        "distance. "
         "The metric is $\\Omega^2$ times Minkowski's, so the circle of radius $s$ has circumference $2\\pi s\\Omega$ "
         "and every distance is $\\Omega$ times its flat value: where $\\Omega$ grows toward the removed event the "
         "plane sinks into a well, flat again beyond the unit ball where $\\Omega = 1$.",
@@ -3668,8 +4152,9 @@ CAPTIONS = {
         "of the tube.",
     ],
     ("mixmaster", "sphere"): [
-        "The great two sphere of the Mixmaster universe's three sphere at five moments of its proper time $\\tau$, "
-        "each drawn as a surface in flat space with every distance along it the metric distance. Every "
+        "The great two sphere of the Mixmaster universe's three sphere as its proper time runs from $c\\tau = "
+        "0.09\\,m$ to $2.83\\,m$, each moment drawn as a surface in flat space with every distance along it the "
+        "metric distance. Every "
         "great sphere of a Mixmaster slice is congruent to every other, and the three great circles in which it meets "
         "its planes of symmetry have circumferences $4\\pi a_1$, $4\\pi a_2$, and $4\\pi a_3$, so the sphere carries "
         "all three scale factors. When all three agree it is a round sphere of radius $2a$, the equator of a round "
@@ -3679,10 +4164,27 @@ CAPTIONS = {
         "of $\\psi$, open from nothing at its first horizon and close again at its last, so its great sphere, a "
         "surface of revolution about the axis through the identity with a fibre as its equator, runs from a sphere "
         "squeezed about its equator, through a wide band and a round sphere, to two lobes joined at a narrow waist. "
-        "At the second moment $a_3$ is $2.69$ times $a_1$, the curvature about the poles is negative, and only the "
+        "While $a_3$ is more than $2/\\sqrt{3}$ times $a_1$, as at $c\\tau = 0.39\\,m$, where it is $2.69$ times, the "
+        "curvature about the poles is negative, and only the "
         "band about the equator has a surface of revolution in flat space. Charles Misner let all three scale "
         "factors differ in 1969 and found them oscillating without end toward the singularity; the great sphere of "
         "such a moment has no axis.",
+    ],
+    ("kasner", "tube"): [
+        "The world tube of a ring of particles at rest in the chart ($(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$), each "
+        "moment from $t = 1/4$ to $t = 2$ an ellipse at the height of its time. Its cross section reaches "
+        "$t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$, so the tube narrows along $x$ as it widens along $z$.",
+    ],
+    ("bianchi", "tube"): [
+        "The world tube of a ring of dust at rest in the chart (rates $(-0.5, 1.5, 2.0)\\,\\bar H$ where "
+        "$a_1 = a_2 = a_3 = 1$), each moment from $c\\bar Ht = 0.10$ to $2.00$ an ellipse at the height of its "
+        "time. Its cross section reaches $a_1\\ell$ along $x$ and $a_3\\ell$ along $z$: squeezed along $z$ near the "
+        "singularity, narrowest along $x$ at $c\\bar Ht = 1.18$, and widening along both afterwards.",
+    ],
+    ("pp_wave", "tube"): [
+        "The world tube of a ring of free particles at rest before the pulse ($A = e^{-u^2}/L^2$), each wave front "
+        "from $cu = -3\\,L$ to the focus at $cu = 0.66\\,L$ an ellipse at the height of its $u$. The pulse stretches "
+        "the tube along $x$ and squeezes it along $y$ until it closes on a segment of the $x$ axis at the focus.",
     ],
     ("kasner", "ring"): [
         "The plane $y = 0$ of Kasner's universe at four moments of $t$, each drawn as a surface in flat space with "
@@ -3764,8 +4266,8 @@ CAPTIONS = {
         "contraction of space ahead of it and no expansion behind.",
     ],
     ("frw", "closed"): [
-        "The equator ($\\theta = \\pi/2$) of space in a closed universe of dust at five moments of cosmic "
-        "time, each drawn as a surface in flat space with every distance along it the "
+        "The equator ($\\theta = \\pi/2$) of space in a closed universe of dust as cosmic time runs from $ct = 0.18$ "
+        "to $6.10$, each moment drawn as a surface in flat space with every distance along it the "
         "metric distance. Each slice of constant $t$ is a three sphere, and its equator is a "
         "sphere of radius $a(t)/\\sqrt{k}$. The comoving circles of constant $\\chi$ keep their places on "
         "it while every distance between them grows and shrinks with $a$, from zero at the bang to the "

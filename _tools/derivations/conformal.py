@@ -1636,10 +1636,12 @@ def cosmic_string(ck, src):
     # The ideal string's moment is the embedding's reference cone and the sheet outside the
     # core together, out from the string; with the core, its proper distance from the axis
     # runs out to l chi_0 + r - l tan chi_0.
-    cone = slices.moments("cosmic_string")[0]
+    # The ideal string's cone unrolled is the same moment, out from the string.
+    for m in slices.moments("cosmic_string"):
+        r = np.linspace(*m.reach("conical", "r", reference=True), 2)
+        v.slice(m, [mink_pq(0 * r, r)])
+    cone = slices.moments("cosmic_string", "cone")[0]
     reach = cone.reach("conical", "r", reference=True)
-    r = np.linspace(*reach, 2)
-    v.slice(cone, [mink_pq(0 * r, r)])
     views.append(v)
 
     v = View("gott", "Gott's core", box, "interior_cap")

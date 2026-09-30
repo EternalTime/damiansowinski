@@ -56,16 +56,22 @@ def embedding(metric_id):
 
 
 class Moment:
-    """One surface of one embedding view, and the moment of the spacetime it is cut from."""
+    """One surface of one embedding view, or one ring of a stack of moments, and the moment of the
+    spacetime it is cut from."""
 
-    def __init__(self, metric_id, view, index, label=None):
-        self.metric, self.view, self.index = metric_id, view, index
+    def __init__(self, metric_id, view, index, label=None, curve=None):
+        self.metric, self.view, self.index, self.curve = metric_id, view, index, curve
         self.surface = view["surfaces"][index]
-        self.time = self.surface.get("time")
-        # A sequence names each moment on its surface; a single moment is drawn at t = 0 of
-        # the chart the embedding read it in, save where the view names another.
-        self.label = self.surface.get("label") or label or "$t = 0$"
-        self.version = build.embedding_moment_version(view, index)
+        if curve is not None:
+            # A stack names each moment on the ring it marks at the height of its time.
+            ring = self.surface["curves"][curve]
+            self.time, self.label = ring["time"], ring["label"]
+        else:
+            self.time = self.surface.get("time")
+            # A sequence names each moment on its surface; a single moment is drawn at t = 0 of
+            # the chart the embedding read it in, save where the view names another.
+            self.label = self.surface.get("label") or label or "$t = 0$"
+        self.version = build.embedding_moment_version(view, index, curve)
 
     def reach(self, system=None, coordinate=None, reference=False):
         """The least and greatest value of the coordinate over the pieces of the surface read
@@ -94,15 +100,21 @@ class Moment:
         return pieces[0]["grid"]
 
     def json(self):
-        return {"view": self.view["id"], "surface": self.index, "label": self.label, "version": self.version}
+        out = {"view": self.view["id"], "surface": self.index}
+        if self.curve is not None:
+            out["curve"] = self.curve
+        return dict(out, label=self.label, version=self.version)
 
 
 def moments(metric_id, view_id=None, label=None):
-    """Every moment of a spacetime's embedding views, in the order of views and surfaces."""
+    """Every moment of a spacetime's embedding views, in the order of views and surfaces, a
+    stack's in the order of the rings it marks at their times."""
     out = []
     for view in embedding(metric_id)["views"]:
         if view_id is None or view["id"] == view_id:
-            out += [Moment(metric_id, view, i, label) for i in range(len(view["surfaces"]))]
+            for i, surface in enumerate(view["surfaces"]):
+                rings = [k for k, c in enumerate(surface.get("curves", [])) if "time" in c]
+                out += [Moment(metric_id, view, i, label, k) for k in rings] or [Moment(metric_id, view, i, label)]
     if not out:
         raise ValueError(f"{metric_id}: no embedding view {view_id!r}")
     return out
