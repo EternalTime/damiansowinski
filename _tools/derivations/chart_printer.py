@@ -23,7 +23,7 @@ import sympy as sp
 import verify_metrics as vm
 
 GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell", "alpha",
-         "Lambda", "gamma", "sigma", "Delta"}
+         "Lambda", "gamma", "sigma", "Delta", "kappa"}
 # A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
 ACCENTED = {"tildephi": "\\tilde\\phi"}
 TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
@@ -204,6 +204,10 @@ class Printer:
                         out.append((cc, body))
                     continue
                 out.append((c, _num(abs(c)) + "\\left(" + self.sum_text(inner) + "\\right)"))
+                continue
+            if rest in self.named and c != 1:
+                # A named sum under a coefficient or a minus sign keeps its brackets.
+                out.append((c, ("" if abs(c) == 1 else _num(abs(c))) + "\\left(" + self.named[rest] + "\\right)"))
                 continue
             body = self.term(abs(c) * rest)
             if body.startswith("-"):
