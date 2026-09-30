@@ -1,0 +1,147 @@
+{
+  "id": "domain_wall",
+  "name": "Vilenkin-Ipser-Sikivie Domain Wall",
+  "short_name": "Vilenkin-Ipser-Sikivie",
+  "description": "The gravitational field of an infinitely thin domain wall, whose tension equals its surface energy density, found by Alexander Vilenkin in 1983 and by James Ipser and Pierre Sikivie in 1984. Spacetime is flat on either side of the wall, the wall repels test bodies, and at each moment it is a sphere with both sides inside it, so space is closed.",
+  "tags": [
+    "domain wall",
+    "topological defect",
+    "repulsive gravity",
+    "thin shell",
+    "locally flat",
+    "planar symmetry",
+    "reflection symmetry",
+    "de Sitter world volume",
+    "event horizon",
+    "closed universe",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\delta$ is the Dirac delta.",
+  "history": "Yakov Zel'dovich, Igor Kobzarev and Lev Okun worked out in 1974 what a spontaneously broken discrete symmetry does to the universe, in a model with two vacua of equal energy, $\\varphi = \\pm\\eta$ [zeldovich1974, zeldovich1975]. As the universe cools, causally disjoint regions fall into one vacuum or the other at random, and a wall of field energy parts neighbouring domains, its tension equal to its surface energy density [zeldovich1975]. A volume holding many such walls at rest, oriented at random, has the pressure $p = -2\\varepsilon/3$, and since $\\varepsilon + 3p = -\\varepsilon$ is negative, a universe filled with them expands with acceleration [zeldovich1975]. Walls with a surface energy density of order $m_p^3$, with $m_p$ the proton mass and $\\hbar = c = 1$, as their model makes them, would make the background radiation more anisotropic than the observed $\\delta T/T < 10^{-3}$ unless something removed them early [zeldovich1975]. Tom Kibble showed in 1976 that whether walls, strings or monopoles form depends on the topology of the manifold of degenerate vacua, and argued that theories with walls could probably be ruled out for their \"unacceptable gravitational effects\" [kibble1976].¶Alexander Vilenkin solved the linearized field equations for a wall and for a string in 1981, and found that test particles near the wall are repelled by it [vilenkin1981, cvetic1997]. No static solution of Einstein's equations corresponds to that linear field [cvetic1997]. The exact field of a plane wall, which Vilenkin found in 1983, depends on time, has event horizons and no true geometric singularities, and is locally flat everywhere except on the wall itself [vilenkin1983, cvetic1997]. The wall repels because its stress-energy violates the strong energy condition, as Vilenkin pointed out, and test bodies near it accelerate away from it at $2\\pi G\\sigma/c^2$, with $\\sigma$ its surface energy density [vilenkin1983, caldwell1996].¶Axion models have discretely degenerate vacua, whose walls are incompatible with the standard cosmology unless a small interaction breaking the symmetry makes them disappear some time after they form, as Pierre Sikivie showed in 1982 [sikivie1982]. With James Ipser he took up the gravity of walls in 1984, using the Gauss-Codazzi formalism, in which the surface energy and tension of a thin wall fix the jump in extrinsic curvature across it, as Werner Israel had set out in 1966 [ipser1984, cvetic1997, israel1966]. Ipser and Sikivie showed that domain walls repel, found the most general solution for a planar wall, and derived the motion of a spherical wall in an asymptotically flat spacetime [ipser1984]. Ipser and Sikivie found a transformation that takes each side of Vilenkin's wall to Minkowski coordinates, in which the wall is the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$ with $k = 2\\pi G\\sigma/c^4$ [ipser1984, caldwell1996]. The metric induced on the hyperboloid is that of de Sitter space in $2 + 1$ dimensions, so at each moment the wall is a sphere [caldwell1996]. Ipser extended the method in 1984 to walls whose tension is a constant fraction, at most one, of their surface energy density, and found that repulsion gives way to attraction as that fraction falls below one half [ipser1984walls].¶Robert Caldwell, Andrew Chamblin and Gary Gibbons described the whole spacetime in 1996 as two copies of the inside of that hyperboloid in Minkowski space, matched to each other across it, flat on both sides with \"a ridge of curvature\" along the wall [caldwell1996]. An inertial observer on either side sees the wall as a sphere that accelerates toward them, stops at radius $1/k$ at $T = 0$, and accelerates away [caldwell1996]. The plane symmetric form of the metric is geodesically incomplete and describes only part of a spherical bubble, and space closes up, with both sides inside the wall, as Mirjam Cvetič and Harald Soleng stressed in 1997 [cvetic1997]. The Euclidean section, two flat four-balls glued back to back, describes the creation from nothing of such a closed universe of two domains parted by a wall [caldwell1996].¶A wall made of a real scalar field repels matter inside it and outside it, as Lawrence Widrow found in 1989 by solving the full Einstein scalar field equations for an infinite wall [widrow1989]. Far from a thick wall the metric approaches that of the thin wall, so the thin wall fixes the global structure of the spacetime [cvetic1997]. Static walls exist in $N = 1$ supergravity, with an energy per unit area that saturates a Bogomol'nyi bound, as Cvetič, Stephen Griffies and Soo-Jong Rey found in 1992 [cvetic1992]. One such wall stands between a Minkowski vacuum and an anti-de Sitter vacuum, whose positive gravitational mass cancels the negative gravitational mass of the wall, so that nothing on the Minkowski side feels a force [cvetic1997]. Vilenkin's wall, with Minkowski space on both sides, is the reflection symmetric case of the walls whose energy per unit area exceeds that of a static wall, which accelerate as bubbles [cvetic1997].¶Caldwell, Chamblin and Gibbons expected the repulsion of a wall to create pairs of black holes, as the repulsion of de Sitter space does [caldwell1996]. Uncharged black holes can be created only at rest with respect to one another, and a pair of Schwarzschild black holes of mass $m$ is held in equilibrium by a wall at radius $3m$, in units with $G = c = 1$, where its repulsion balances their attraction [caldwell1996]. Charged black holes can also be created accelerating away from one another, by an instanton with no counterpart in Einstein-Maxwell theory with a cosmological constant [caldwell1996]. Euclidean instantons can also mediate the creation of what they call \"non-orientable black hole solutions\" [caldwell1996].¶The energy density of a network of walls falls as $1/t$, more slowly than that of matter or of radiation, so the walls come to dominate the universe, at $t_\\mathrm{dom} \\simeq 2.93 \\times 10^3\\,\\mathrm{s}\\,A^{-1}(\\sigma/\\mathrm{TeV}^3)^{-1}$ with $A \\simeq 0.8$ from simulations [saikawa2017]. Walls made unstable by a small explicit breaking of the discrete symmetry collapse before that, as Sikivie proposed for axion walls [saikawa2017, sikivie1982]. Walls that collide and annihilate in the early universe leave a stochastic background of gravitational waves [saikawa2017]. Pulsar timing arrays and direct detection experiments already exclude part of the parameters of such models, and the next generation of gravitational wave observatories can cover much more of them [saikawa2017].",
+  "references": [
+    "zeldovich1974",
+    "zeldovich1975",
+    "kibble1976",
+    "vilenkin1981",
+    "cvetic1997",
+    "vilenkin1983",
+    "caldwell1996",
+    "sikivie1982",
+    "ipser1984",
+    "israel1966",
+    "ipser1984walls",
+    "widrow1989",
+    "cvetic1992",
+    "saikawa2017"
+  ],
+  "coordinates": [
+    {
+      "id": "planar",
+      "name": "Planar",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-1/k, 1/k)",
+        "z = 0 \\;\\text{(the wall)}",
+        "z = \\pm 1/k \\;\\text{(the two horizons)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Inverse length $2\\pi G\\sigma/c^4$, with $\\sigma$ the surface energy density of the wall, equal to its tension; the wall has radius $1/k$ at the moment it stops"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of an observer at rest on the wall, $x$ and $y$ lengths along the wall, and $z$ the proper distance from it, and $\\mathrm{sgn}(z)$ is the sign of $z$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-c^2dt^2 + e^{2kct}\\left(dx^2 + dy^2\\right)\\right) + dz^2"
+    },
+    {
+      "id": "global",
+      "name": "Global",
+      "coords": [
+        "t",
+        "z",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "z \\in (-1/k, 1/k)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "z = 0 \\;\\text{(the wall)}",
+        "z = \\pm 1/k \\;\\text{(the two horizons)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Inverse length $2\\pi G\\sigma/c^4$, with $\\sigma$ the surface energy density of the wall, equal to its tension; the wall has radius $1/k$ at the moment it stops"
+        }
+      ],
+      "convention": "We use coordinates $(t, z, \\theta, \\phi)$, with $t$ the proper time of an observer at rest on the wall, $z$ the proper distance from the wall, and $\\theta$ and $\\phi$ angles on the sphere the wall is at each moment, and $\\mathrm{sgn}(z)$ is the sign of $z$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-c^2dt^2 + \\dfrac{\\cosh^2(kct)}{k^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + dz^2"
+    },
+    {
+      "id": "conformal",
+      "name": "Conformal",
+      "coords": [
+        "t",
+        "w",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "w \\in (-\\infty, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "w = 0 \\;\\text{(the wall)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Inverse length $2\\pi G\\sigma/c^4$, with $\\sigma$ the surface energy density of the wall, equal to its tension; the wall has radius $1/k$ at the moment it stops"
+        }
+      ],
+      "convention": "We use coordinates $(t, w, \\theta, \\phi)$, with $t$ the proper time of an observer at rest on the wall, $w$ the length with $e^{-k|w|} = 1 - k|z|$, where $z$ is the proper distance from the wall, and $\\theta$ and $\\phi$ angles on the sphere the wall is at each moment, and $\\mathrm{sgn}(w)$ is the sign of $w$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = e^{-2k|w|}\\left(-c^2dt^2 + dw^2 + \\dfrac{\\cosh^2(kct)}{k^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)"
+    },
+    {
+      "id": "inertial",
+      "name": "Inertial",
+      "coords": [
+        "T",
+        "R",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "T \\in (-\\infty, \\infty)",
+        "R \\in [0, \\sqrt{1/k^2 + c^2T^2}]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "R = \\sqrt{1/k^2 + c^2T^2} \\;\\text{(the wall, where this side meets its mirror image)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Inverse length $2\\pi G\\sigma/c^4$, with $\\sigma$ the surface energy density of the wall, equal to its tension; the wall has radius $1/k$ at the moment it stops"
+        }
+      ],
+      "convention": "We use the inertial coordinates $(T, R, \\theta, \\phi)$ of one side of the wall, with $T$ carrying dimensions of time and $R$ the distance from the centre of the sphere the wall is at each moment. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dT^2 + dR^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    }
+  ]
+}
