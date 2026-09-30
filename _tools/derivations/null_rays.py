@@ -277,7 +277,8 @@ class Diagram:
                                     # or of both, through a point, drawn and named; see Plot.marked
     points: tuple = ()              # (kind, (x^0, r), legend): an event drawn and named
     lines: tuple = ()               # (kind, "x0" or "r", value, legend): a line of constant
-                                    # coordinate drawn and named, such as where a declared function jumps
+                                    # coordinate drawn and named, such as where a declared function jumps;
+                                    # legend None for a marker the page names itself, as grr
     surface: str = None             # r at which a star's surface is released from rest; see Surface
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     singular_where_claimed: bool = False  # judge a singular edge only inside the published domains
@@ -391,6 +392,12 @@ AS_RHO = {"half": "1/2", "eighth": "1/8", "thirtysecond": "1/32"}
 GM = {"Delta": "19/100", "r_s": 1}
 GM_CONE = {"Delta": "19/100"}
 GM_RH = 100 / 81
+
+# Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m.
+MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
+MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
+MP_TWO_INPUT = ("Two holes, each of mass parameter $m$, on the axis at $z = \\pm 2m$: "
+                "$U = 1 + m/\\sqrt{x^2 + y^2 + (z - 2m)^2} + m/\\sqrt{x^2 + y^2 + (z + 2m)^2}$.")
 
 # Every view the page draws, in the order it shows them. Plot ranges are chosen with
 # equal scales on both axes, so light in flat space runs at 45 degrees, and cone
@@ -529,6 +536,20 @@ DIAGRAMS = [
     Diagram("rn_metric", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r/r_s$", "$t/r_s$", {"r_s": 1, "r_q": "12/25"}, EQUATOR, orient="ingoing",
             areal=True),
+    # Majumdar and Papapetrou's two holes, each of mass parameter m = 1, at z = +-2 on the axis,
+    # the pair the embedding diagram's midplane is cut between; and one hole alone, U = 1 + m/r.
+    Diagram("majumdar_papapetrou", "cartesian", "tz", "the axis", ("t", "z"), (-5, 5, -5, 5),
+            "$z/m$", "$ct/m$", {}, {"x": "0", "y": "0"}, families=SIDEWAYS,
+            functions={"U": MP_TWO}, input=MP_TWO_INPUT,
+            lines=(("grr", "r", "2", None), ("grr", "r", "-2", None))),
+    Diagram("majumdar_papapetrou", "cartesian", "tx", "the midplane", ("t", "x"), (-5, 5, -5, 5),
+            "$x/m$", "$ct/m$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS,
+            functions={"U": MP_TWO}, input=MP_TWO_INPUT),
+    Diagram("majumdar_papapetrou", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 5, -2.5, 2.5),
+            "$\\rho/m$", "$ct/m$", {}, {"phi": "0", "z": "0"},
+            functions={"U": MP_TWO_CYLINDRICAL}, input=MP_TWO_INPUT),
+    Diagram("majumdar_papapetrou", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", {"m": 1}, EQUATOR, areal=True),
     Diagram("btz", "stationary", "static", "$J = 0$", ("t", "r"), (0, 3, -1.5, 1.5),
             "$r/\\ell$", "$ct/\\ell$", {"ell": 1, "M": 1, "J": 0}, {"phi": "0"}, orient="ingoing"),
     Diagram("btz", "stationary", "rotating", "$J = 4\\ell/5$", ("t", "r"), (0, 2, -1, 1),
@@ -1133,6 +1154,35 @@ CAPTIONS = {
         "chart runs smoothly through both horizons, and we take the future from it, which makes "
         "the region between the horizons the black hole. The Kretschmann scalar diverges at $r = "
         "0$.",
+    ],
+    ("majumdar_papapetrou", "cartesian", "tz"): [
+        "The plane of $t$ and $z$ on the axis through both holes ($x = y = 0$), which light launched along "
+        "the axis never leaves, since $U$ is symmetric about it. Its rays are null geodesics with "
+        "$dz/dt = \\pm c/U^2$. Near a hole $U \\approx m/|z \\mp 2m|$, so a ray slows as $(z \\mp 2m)^2/m^2$ and "
+        "reaches the horizon only as $t \\to \\pm\\infty$; each horizon is a sphere of area $4\\pi m^2$ at the "
+        "single coordinate point $z = \\pm 2m$, where $g^{zz} = 1/U^2$ vanishes.",
+        "Between the holes $U \\ge 2$, with its least value at $z = 0$, so light crosses the gap no faster "
+        "than $c/4$ in $t$. The Kretschmann scalar stays finite on the whole axis, the horizons included.",
+    ],
+    ("majumdar_papapetrou", "cartesian", "tx"): [
+        "The plane of $t$ and $x$ midway between the holes ($y = z = 0$), which light launched in it never "
+        "leaves, by the reflection $z \\to -z$ and the rotation about the axis. There "
+        "$U = 1 + 2m/\\sqrt{x^2 + 4m^2}$ is greatest on the axis, where it is $2$, so the cones are narrowest "
+        "there, with $dx/dt = \\pm c/4$, and open toward $45°$ far out.",
+    ],
+    ("majumdar_papapetrou", "cylindrical", "radial"): [
+        "The plane of $t$ and $\\rho$ midway between the holes ($z = 0$, $\\phi = 0$), the same at every "
+        "$\\phi$ by the symmetry about the axis. There $U = 1 + 2m/\\sqrt{\\rho^2 + 4m^2}$ and "
+        "$d\\rho/dt = \\pm c/U^2$, which is $\\pm c/4$ on the axis and tends to $\\pm c$ far out.",
+    ],
+    ("majumdar_papapetrou", "isotropic", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) about a single hole, the same at every "
+        "other angle by spherical symmetry. There $dt/dr = \\pm(1 + m/r)^2/c$ diverges at $r = 0$, where "
+        "$g^{rr} = r^2/(r + m)^2$ vanishes, so the cones close there and an ingoing ray reaches $r = 0$ only "
+        "as $t \\to +\\infty$.",
+        "$r = 0$ is the horizon, a sphere of areal radius $m$, since $g_{\\theta\\theta} = (r + m)^2$. Beyond it "
+        "lies the interior of the extremal Reissner-Nordström black hole, $0 < R < m$ in the areal radius "
+        "$R = r + m$. The Kretschmann scalar $8m^2(6r^2 + m^2)/(r + m)^8$ is finite at the horizon.",
     ],
     ("btz", "stationary", "static"): [
         "The plane of $t$ and $r$ ($\\phi = 0$) of the hole without rotation ($M = 1$, $J = 0$), the "
@@ -2813,7 +2863,8 @@ class Plot:
             pairs = [(at, v) for v in ends] if which == "x0" else [(v, at) for v in ends]
             line = clip_unit(np.array([self.to_unit(self.to_display(*pair)) for pair in pairs]))
             if line is not None:
-                out.append({"kind": kind, "lines": [rounded(line)], "legend": legend})
+                # A line of a marker the page names itself, as g^rr = 0, carries no legend.
+                out.append({"kind": kind, "lines": [rounded(line)], **({"legend": legend} if legend else {})})
         for kind, (x0, r), legend in spec.points:
             u = self.to_unit(self.to_display(float(number(x0)), float(number(r))))
             out.append({"kind": kind, "points": [rounded(u)], "legend": legend})
@@ -3408,6 +3459,25 @@ def _sds_away(x, r):
     return (np.abs(r - 1.0852) > 0.05) & (np.abs(r - 3.2146) > 0.05)
 
 
+def _mp_axis(z):
+    """The integral of U^2 along the axis for two holes of m = 1 at z = +-2, U = 1 + 1/|z - 2| +
+    1/|z + 2|, up to a constant in each of the three intervals the holes cut the axis into:
+    z - 1/(z - 2) - 1/(z + 2) + 2 sgn(z - 2) ln|z - 2| + 2 sgn(z + 2) ln|z + 2|, plus
+    (1/2) ln|(z + 2)/(2 - z)| between the holes and (1/2) ln|(z - 2)/(z + 2)| outside them."""
+    z = np.asarray(z, dtype=float)
+    a, b = z - 2, z + 2
+    with np.errstate(divide="ignore", invalid="ignore"):
+        cross = np.where(np.abs(z) < 2, 0.5 * np.log(np.abs(b / a)), 0.5 * np.log(np.abs(a / b)))
+        return z - 1 / a - 1 / b + 2 * np.sign(a) * np.log(np.abs(a)) + 2 * np.sign(b) * np.log(np.abs(b)) + cross
+
+
+def _mp_midplane(x):
+    """The integral of U^2 across the midplane of the same two holes, U = 1 + 2/sqrt(x^2 + 4):
+    x + 4 arcsinh(x/2) + 2 arctan(x/2)."""
+    x = np.asarray(x, dtype=float)
+    return x + 4 * np.arcsinh(x / 2) + 2 * np.arctan(x / 2)
+
+
 # (metric, system, view): (what P conserves, what M conserves, where to compare). None
 # where a family has no closed form. P moves toward smaller r or x, M toward larger.
 CLOSED_FORMS = {
@@ -3447,6 +3517,15 @@ CLOSED_FORMS = {
     ("rn_metric", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [0.64, 0.36]), lambda t, r: t - _rstar(r, [0.64, 0.36]),
          lambda t, r: (np.abs(r - 0.64) > 0.05) & (np.abs(r - 0.36) > 0.05)),
+    ("majumdar_papapetrou", "cartesian", "tz"):
+        (lambda t, z: t + _mp_axis(z), lambda t, z: t - _mp_axis(z), lambda t, z: np.abs(np.abs(z) - 2) > 0.05),
+    ("majumdar_papapetrou", "cartesian", "tx"):
+        (lambda t, x: t + _mp_midplane(x), lambda t, x: t - _mp_midplane(x), None),
+    ("majumdar_papapetrou", "cylindrical", "radial"):
+        (lambda t, r: t + _mp_midplane(r), lambda t, r: t - _mp_midplane(r), None),
+    ("majumdar_papapetrou", "isotropic", "radial"):
+        (lambda t, r: t + r + 2 * np.log(r) - 1 / r, lambda t, r: t - r - 2 * np.log(r) + 1 / r,
+         lambda t, r: r > 0.05),
     ("de_sitter", "static_spherical", "radial"):
         (lambda t, r: t + 0.5 * np.log(np.abs((1 + r) / (1 - r))),
          lambda t, r: t - 0.5 * np.log(np.abs((1 + r) / (1 - r))), lambda t, r: np.abs(r - 1) > 0.05),

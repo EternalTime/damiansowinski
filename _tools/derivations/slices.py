@@ -418,6 +418,13 @@ def _nariai(chart):
     return out + [Mark(sphere, points=[(0.0, 0.0)])]
 
 
+def _mp_axis():
+    """The midplane z = 0 between Majumdar and Papapetrou's two holes, at t = 0, meets the axis
+    through them at one event, t = 0 and z = 0."""
+    m = moments("majumdar_papapetrou", "two_holes", label="$t = 0$, $z = 0$")[0]
+    return [Mark(m, points=[(0.0, 0.0)])]
+
+
 FLAT = {
     ("btz", "stationary", "static"): lambda: _btz(),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
@@ -480,6 +487,16 @@ FLAT = {
     ("anti_de_sitter", "static_global", "through"): lambda: one("anti_de_sitter", lambda m: along(0.0, *m.reach("static_global", "r"))),
     ("anti_de_sitter", "poincare", "tx"): _ads_poincare,
     ("rn_metric", "spherical", "radial"): lambda: _rn("outside") + _rn("inside"),
+    # One hole's equator lies on the plane of t and r about it; the two holes' midplane z = 0 is
+    # the plane of t and x through its centre, the plane of t and rho out from the axis, and one
+    # event of the axis.
+    ("majumdar_papapetrou", "isotropic", "radial"): lambda: one(
+        "majumdar_papapetrou", lambda m: along(0.0, *m.reach("isotropic", "r")), view_id="one_hole"),
+    ("majumdar_papapetrou", "cartesian", "tx"): lambda: one(
+        "majumdar_papapetrou", lambda m: across(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_holes"),
+    ("majumdar_papapetrou", "cylindrical", "radial"): lambda: one(
+        "majumdar_papapetrou", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_holes"),
+    ("majumdar_papapetrou", "cartesian", "tz"): _mp_axis,
     ("taub_nut", "spherical", "radial"): lambda: one("taub_nut", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("bertotti_robinson", "static", "radial"): lambda: _br("static"),
     ("bertotti_robinson", "poincare", "tx"): lambda: _br("poincare"),

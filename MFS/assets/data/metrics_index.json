@@ -573,6 +573,41 @@
     "version": "40afe2794224ede4"
   },
   {
+    "id": "majumdar_papapetrou",
+    "name": "Majumdar-Papapetrou",
+    "tags": [
+      "electrovacuum",
+      "non-vacuum",
+      "static",
+      "stationary",
+      "charged",
+      "charged black hole",
+      "black hole",
+      "extremal",
+      "multiple black holes",
+      "electric charge",
+      "mass",
+      "electromagnetic field",
+      "horizon",
+      "event horizon",
+      "degenerate horizon",
+      "asymptotically flat",
+      "harmonic function",
+      "superposition",
+      "supersymmetric",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8593d0d4e7f3054f",
+    "diagrams": "c6edded6cce52897",
+    "conformal": "334186f800f59252",
+    "embedding": "b9bf3c95064c40a7"
+  },
+  {
     "id": "malament_hogarth",
     "name": "Malament-Hogarth",
     "tags": [

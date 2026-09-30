@@ -410,6 +410,17 @@ DIMENSIONS = {
     ("pp_wave", "exact_plane_wave"): {
         "u": "T", "v": "L", "x": "L", "y": "L", "A": "1/L**2", "B": "1/L**2",
     },
+    # Majumdar and Papapetrou's potential U multiplies proper length and divides proper time,
+    # so it is a pure number, and so is 1 + m/r, whose mass parameter m = GM/c^2 is a length.
+    ("majumdar_papapetrou", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "U": "1",
+    },
+    ("majumdar_papapetrou", "cylindrical"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "U": "1",
+    },
+    ("majumdar_papapetrou", "isotropic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
+    },
     ("rn_metric", "spherical"): {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L",
     },

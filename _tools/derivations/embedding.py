@@ -2833,6 +2833,80 @@ def bertotti_robinson(ck, src):
     return views
 
 
+# Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m on the
+# axis, as their spacetime diagrams declare.
+MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
+
+
+def mp_throat(r):
+    """z(r) of one hole's equator, m = 1, from r = 1/50: the quadrature of
+    sqrt((1 + 1/r)^2 - 1) = sqrt(2r + 1)/r, which is 2w + ln((w - 1)/(w + 1)) with w = sqrt(2r + 1)."""
+    def F(x):
+        w = np.sqrt(2 * np.asarray(x, dtype=float) + 1)
+        return 2 * w + np.log((w - 1) / (w + 1))
+    return F(r) - F(MP_THROAT_LO)
+
+
+MP_THROAT_LO = 1 / 50
+
+
+def majumdar_papapetrou(ck, src):
+    """Two moments t = 0, in two views. One hole, m = 1, in the isotropic chart: the equator's
+    g_rr = (1 + 1/r)^2 and circumference radius rho = r + 1, so dz/dr = sqrt(2r + 1)/r, which
+    grows as 1/r toward the horizon r = 0, where z falls as ln r without end while rho closes on
+    m: an infinitely long throat, drawn from r = 1/50 out to 4m. Two holes at z = +-2m, in the
+    cylindrical chart: the plane z = 0 midway between them, U = 1 + 2/sqrt(rho^2 + 4), a surface of
+    revolution about the axis with rho_emb = rho U and dz/drho = sqrt(U^2 - (U + rho U')^2), which
+    is real since U + rho U' = 1 + 8/(rho^2 + 4)^(3/2) lies between 0 and U; it is flat at the
+    axis, where U' = 0, and drawn out to rho = 4m."""
+    sl = Slice(src, "majumdar_papapetrou", "isotropic", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1})
+    lo, top = MP_THROAT_LO, 4.0
+    size = 2 * (top + 1)
+    radii = (0.1, 0.25, 0.5, 1.0, 2.0, 3.0)
+    throat = Piece("one_hole", "sheet", sl, lo, top, 0.0, 1,
+                   (("edge", "the throat runs on without end toward the horizon $r = 0$, its circles closing on "
+                             "the circumference radius $m$"),
+                    ("edge", "the surface runs on to $r \\to \\infty$")),
+                   [(lo, "r", None)] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry("Majumdar-Papapetrou, one hole", throat)
+    ck.radius("Majumdar-Papapetrou, one hole, rho = r + m", throat, lambda r: r + 1, size)
+    ck.form("Majumdar-Papapetrou, one hole, z = 2w + ln((w - 1)/(w + 1)), w = sqrt(2r/m + 1)", throat, mp_throat, size)
+    one = Surface([throat])
+    fig = figure_of([one], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *throat.at(lo), "$r = m/50$")
+    ring_label(fig, [0, 0, 0], *throat.at(1.0), "$r = m$")
+    ring_label(fig, [0, 0, 0], *throat.at(top), "$4m$")
+    fig.legend("fill", "cover", "the equator at one moment, which $t$ and $r > 0$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1/50$, $1/10$, $1/4$, $1/2$, $1$, $2$, $3$ and $4$ times $m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("one_hole", "One hole", "$m$", [one], fig.done(),
+                  settings="$m = 1$, the unit of every length, and $U = 1 + m/r$.")]
+
+    sl = Slice(src, "majumdar_papapetrou", "cylindrical", "\\rho", "\\phi", {"t": 0, "z": 0},
+               functions={"U": MP_TWO_CYLINDRICAL})
+    top = 4.0
+    size = 2 * float(sl.rho_at(top))
+    radii = (1.0, 2.0, 3.0)
+    plane = Piece("two_holes", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the axis $\\rho = 0$, midway between the holes"),
+                   ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                  [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry("Majumdar-Papapetrou, two holes, the midplane", plane)
+    ck.radius("Majumdar-Papapetrou, two holes, rho = rho U", plane,
+              lambda r: r * (1 + 2 / np.sqrt(r * r + 4)), size)
+    two = Surface([plane])
+    fig = figure_of([two], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *plane.at(2.0), "$\\rho = 2m$")
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$4m$")
+    fig.legend("fill", "cover", "the plane $z = 0$ at one moment, which $t$, $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $1$, $2$, $3$ and $4$ times $m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("two_holes", "Two holes", "$m$", [two], fig.done(),
+                      settings="$m = 1$, the unit of every length, and two holes of mass parameter $m$ on the axis at "
+                               "$z = \\pm 2m$, so that $U = 1 + 2m/\\sqrt{\\rho^2 + 4m^2}$ on the plane $z = 0$."))
+    return views
+
+
 def stockum_dust(ck, src):
     """The plane z = 0 at one moment, R = 1: g_rr = e^(-r^2), g_phiphi = r^2 (1 - r^2). The
     circles grow out to r = R/sqrt(2) and shrink after, so the surface curls back toward the
@@ -4750,6 +4824,7 @@ DRAWN = {
     "einstein_rosen_waves": einstein_rosen_waves,
     "nariai": nariai,
     "global_monopole": global_monopole,
+    "majumdar_papapetrou": majumdar_papapetrou,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -4989,6 +5064,24 @@ CAPTIONS = {
         "spacetime diagram the cloud is marginally bound, $E = 0$, falling from rest at infinity, and then "
         "every slice of constant $t$ is flat; released from rest from the same density at $t = 0$, as it is "
         "here, its slices curve.",
+    ],
+    ("majumdar_papapetrou", "one_hole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a single hole ($U = 1 + m/r$) at one moment of $t$, drawn as a "
+        "surface in flat space with every distance along it the metric distance. On it $g_{rr} = (1 + m/r)^2$ and "
+        "the circumference radius is $r + m$, so $dz/dr = \\sqrt{2m/r + m^2/r^2}$, which grows as $m/r$ toward the "
+        "horizon $r = 0$.",
+        "The surface falls as $m\\ln r$ without end while its circles close on the radius $m$: the throat of the "
+        "extremal Reissner-Nordström black hole is infinitely long, and it is drawn down to $r = m/50$. Down the "
+        "throat the equator tends to Bertotti-Robinson's cylinder of radius $m$, $m^2dr^2/r^2 + m^2d\\phi^2$.",
+    ],
+    ("majumdar_papapetrou", "two_holes"): [
+        "The plane $z = 0$ midway between two holes of mass parameter $m$ at $z = \\pm 2m$, at one moment of $t$, "
+        "drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "$U = 1 + 2m/\\sqrt{\\rho^2 + 4m^2}$, the circle of coordinate radius $\\rho$ has the circumference radius "
+        "$\\rho U$, and $dz/d\\rho = \\sqrt{U^2 - (U + \\rho\\,\\partial_\\rho U)^2}$ is real, since "
+        "$U + \\rho\\,\\partial_\\rho U = 1 + 8m^3/(\\rho^2 + 4m^2)^{3/2}$ lies between $0$ and $U$.",
+        "The surface is flat where it crosses the axis, halfway between the horizons, and far out it rises as "
+        "Flamm's paraboloid of the total mass $2m$ does, $dz/d\\rho \\to \\sqrt{4m/\\rho}$.",
     ],
     ("bertotti_robinson", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Bertotti-Robinson universe at one moment of $t$, drawn "

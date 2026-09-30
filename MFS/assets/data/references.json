@@ -1,5 +1,5 @@
 {
-  "version": "64d01c1c6ca94f92",
+  "version": "27629f5f26209a2f",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -5092,6 +5092,7 @@
         "volume": "72",
         "pages": "390--398",
         "year": "1947",
+        "doi": "10.1103/PhysRev.72.390",
         "url": "https://doi.org/10.1103/PhysRev.72.390"
       }
     },
@@ -5104,6 +5105,7 @@
         "volume": "26",
         "pages": "87--101",
         "year": "1972",
+        "doi": "10.1007/BF01645696",
         "url": "https://doi.org/10.1007/BF01645696"
       }
     },
@@ -7730,6 +7732,260 @@
         "eprint": "astro-ph/9704165",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/astro-ph/9704165"
+      }
+    },
+    "papapetrou1947": {
+      "type": "article",
+      "fields": {
+        "title": "A static solution of the equations of the gravitational field for an arbitrary charge-distribution",
+        "author": "Papapetrou, Achilles",
+        "journal": "Proceedings of the Royal Irish Academy. Section A: Mathematical and Physical Sciences",
+        "volume": "51",
+        "pages": "191--204",
+        "year": "1947",
+        "url": "https://www.jstor.org/stable/20488481"
+      }
+    },
+    "de1968": {
+      "type": "article",
+      "fields": {
+        "title": "Static distribution of charged dust in general relativity",
+        "author": "De, Utpal Kumar and Raychaudhuri, A. K.",
+        "journal": "Proceedings of the Royal Society of London. Series A. Mathematical and Physical Sciences",
+        "volume": "303",
+        "number": "1472",
+        "pages": "97--101",
+        "year": "1968",
+        "doi": "10.1098/rspa.1968.0041",
+        "url": "https://doi.org/10.1098/rspa.1968.0041"
+      }
+    },
+    "perjes1971": {
+      "type": "article",
+      "fields": {
+        "title": "Solutions of the coupled Einstein-Maxwell equations representing the fields of spinning sources",
+        "author": "Perj\\'es, Zolt\\'an",
+        "journal": "Physical Review Letters",
+        "volume": "27",
+        "number": "24",
+        "pages": "1668--1670",
+        "year": "1971",
+        "doi": "10.1103/PhysRevLett.27.1668",
+        "url": "https://doi.org/10.1103/PhysRevLett.27.1668"
+      }
+    },
+    "israel1972": {
+      "type": "article",
+      "fields": {
+        "title": "A class of stationary electromagnetic vacuum fields",
+        "author": "Israel, Werner and Wilson, Gordon A.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "13",
+        "number": "6",
+        "pages": "865--867",
+        "year": "1972",
+        "doi": "10.1063/1.1666066",
+        "url": "https://doi.org/10.1063/1.1666066"
+      }
+    },
+    "bonnor1980dust": {
+      "type": "article",
+      "fields": {
+        "title": "Equilibrium of charged dust in general relativity",
+        "author": "Bonnor, W. B.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "12",
+        "number": "6",
+        "pages": "453--465",
+        "year": "1980",
+        "doi": "10.1007/BF00756176",
+        "url": "https://doi.org/10.1007/BF00756176"
+      }
+    },
+    "gibbons1982": {
+      "type": "article",
+      "fields": {
+        "title": "A Bogomolny bound for general relativity and solitons in N=2 supergravity",
+        "author": "Gibbons, G. W. and Hull, C. M.",
+        "journal": "Physics Letters B",
+        "volume": "109",
+        "number": "3",
+        "pages": "190--194",
+        "year": "1982",
+        "doi": "10.1016/0370-2693(82)90751-1",
+        "url": "https://doi.org/10.1016/0370-2693(82)90751-1"
+      }
+    },
+    "ferrell1987": {
+      "type": "article",
+      "fields": {
+        "title": "Slow-motion scattering and coalescence of maximally charged black holes",
+        "author": "Ferrell, Robert C. and Eardley, Douglas M.",
+        "journal": "Physical Review Letters",
+        "volume": "59",
+        "number": "14",
+        "pages": "1617--1620",
+        "year": "1987",
+        "doi": "10.1103/PhysRevLett.59.1617",
+        "url": "https://doi.org/10.1103/PhysRevLett.59.1617"
+      }
+    },
+    "contopoulos1990": {
+      "type": "article",
+      "fields": {
+        "title": "Periodic orbits and chaos around two black holes",
+        "author": "Contopoulos, G.",
+        "journal": "Proceedings of the Royal Society of London. Series A. Mathematical and Physical Sciences",
+        "volume": "431",
+        "number": "1881",
+        "pages": "183--202",
+        "year": "1990",
+        "doi": "10.1098/rspa.1990.0126",
+        "url": "https://doi.org/10.1098/rspa.1990.0126"
+      }
+    },
+    "kastor1993": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmological multi-black-hole solutions",
+        "author": "Kastor, David and Traschen, Jennie",
+        "journal": "Physical Review D",
+        "volume": "47",
+        "number": "12",
+        "pages": "5370--5375",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.47.5370",
+        "eprint": "hep-th/9212035",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9212035"
+      }
+    },
+    "brill1994": {
+      "type": "article",
+      "fields": {
+        "title": "Testing cosmic censorship with black hole collisions",
+        "author": "Brill, Dieter R. and Horowitz, Gary T. and Kastor, David and Traschen, Jennie",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "2",
+        "pages": "840--852",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.840",
+        "eprint": "gr-qc/9307014",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9307014"
+      }
+    },
+    "chrusciel1995": {
+      "type": "article",
+      "fields": {
+        "title": "All electrovacuum Majumdar-Papapetrou spacetimes with non-singular black holes",
+        "author": "Chru\\'sciel, Piotr T. and Nadirashvili, Nikolai S.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "12",
+        "number": "3",
+        "pages": "L17--L23",
+        "year": "1995",
+        "doi": "10.1088/0264-9381/12/3/001",
+        "eprint": "gr-qc/9412044",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9412044"
+      }
+    },
+    "welch1995": {
+      "type": "article",
+      "fields": {
+        "title": "Smoothness of the horizons of multi-black-hole solutions",
+        "author": "Welch, Dean L.",
+        "journal": "Physical Review D",
+        "volume": "52",
+        "number": "2",
+        "pages": "985--991",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.52.985",
+        "eprint": "hep-th/9502146",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9502146"
+      }
+    },
+    "heusler1997": {
+      "type": "article",
+      "fields": {
+        "title": "On the uniqueness of the Papapetrou-Majumdar metric",
+        "author": "Heusler, Markus",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "14",
+        "number": "7",
+        "pages": "L129--L134",
+        "year": "1997",
+        "doi": "10.1088/0264-9381/14/7/001",
+        "eprint": "gr-qc/9607001",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9607001"
+      }
+    },
+    "chrusciel2006": {
+      "type": "article",
+      "fields": {
+        "title": "On Israel-Wilson-Perj\\'es black holes",
+        "author": "Chru\\'sciel, Piotr T. and Reall, Harvey S. and Tod, Paul",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "7",
+        "pages": "2519--2540",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/7/018",
+        "eprint": "gr-qc/0512116",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0512116"
+      }
+    },
+    "chrusciel2007": {
+      "type": "article",
+      "fields": {
+        "title": "The classification of static electro-vacuum space-times containing an asymptotically flat spacelike hypersurface with compact interior",
+        "author": "Chru\\'sciel, Piotr T. and Tod, Paul",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "271",
+        "number": "3",
+        "pages": "577--589",
+        "year": "2007",
+        "doi": "10.1007/s00220-007-0191-9",
+        "eprint": "gr-qc/0512043",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0512043"
+      }
+    },
+    "candlish2007": {
+      "type": "article",
+      "fields": {
+        "title": "On the smoothness of static multi-black hole solutions of higher-dimensional Einstein-Maxwell theory",
+        "author": "Candlish, Graeme N. and Reall, Harvey S.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "24",
+        "number": "23",
+        "pages": "6025--6039",
+        "year": "2007",
+        "doi": "10.1088/0264-9381/24/23/022",
+        "eprint": "0707.4420",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0707.4420"
+      }
+    },
+    "shipley2016": {
+      "type": "article",
+      "fields": {
+        "title": "Binary black hole shadows, chaotic scattering and the Cantor set",
+        "author": "Shipley, Jake O. and Dolan, Sam R.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "33",
+        "number": "17",
+        "pages": "175001",
+        "year": "2016",
+        "doi": "10.1088/0264-9381/33/17/175001",
+        "eprint": "1603.04469",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1603.04469"
       }
     }
   }
