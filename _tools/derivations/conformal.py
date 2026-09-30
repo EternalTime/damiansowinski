@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the twenty-six spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the twenty-seven spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -3961,6 +3961,134 @@ def nariai(ck, src):
     return views
 
 
+def kp_pq(x):
+    """Khan and Penrose's u or v into the drawing: itself where it is positive, where a wave has
+    passed, and its arctangent where it is negative, ahead of the wave. The map is continuous
+    with its first derivative across the front, and sends the past edge to -pi/2."""
+    x = np.asarray(x, dtype=float)
+    return np.where(x >= 0, x, np.arctan(x))
+
+
+class KPFlatRegion:
+    """The published metric on the plane of u and v with u, or v, or both, set to zero, which
+    is the metric ahead of that wave, as the chart's convention states."""
+
+    def __init__(self, plane, zero_u, zero_v):
+        self.plane, self.zero_u, self.zero_v = plane, zero_u, zero_v
+
+    def metric(self, u, v, fvals=None):
+        u, v = np.asarray(u, dtype=float), np.asarray(v, dtype=float)
+        return self.plane.metric(0 * u if self.zero_u else u, 0 * v if self.zero_v else v)
+
+
+def khan_penrose(ck, src):
+    """The plane x = y = 0, totally geodesic, since x -> -x and y -> -y are isometries that fix
+    it, drawn in p, q = kp_pq(u), kp_pq(v). Where both waves have passed, the published double
+    null and cosmological charts are checked, the second through p, q = sin((tau +- sigma)/2),
+    and the published Kretschmann scalar is checked to diverge on u^2 + v^2 = 1. Ahead of one
+    wave or both the metric is the published one with u or v set to zero, checked through the
+    same maps, and its Riemann tensor, computed from those components, is checked to vanish:
+    each of those regions is flat, up to the fold singularities u = 1 and v = 1, where the
+    metric degenerates with the curvature still zero."""
+    params = {"L": 1}
+    fixed = {"x": "0", "y": "0"}
+    null = Plane(src, "khan_penrose", "double_null", ("u", "v"), fixed, params)
+    r, th = np.sqrt(ck.uniform(0, 0.999)), ck.uniform(0, HALF)
+    u, w = r * np.cos(th), r * np.sin(th)
+    ck.chart("Khan-Penrose double null, both waves passed", null, lambda a, b: (kp_pq(a), kp_pq(b)), u, w,
+             lambda a, b: (1, 1))
+    cos = Plane(src, "khan_penrose", "cosmological", ("\\tau", "\\sigma"), fixed, params)
+    tau = ck.uniform(0.001, HALF - 0.001)
+    sigma = tau * ck.uniform(-0.999, 0.999)
+    ck.chart("Khan-Penrose cosmological", cos, lambda t, s: (np.sin((t + s) / 2), np.sin((t - s) / 2)), tau, sigma,
+             lambda t, s: (1, 0))
+    for name, zu, zv, a, b in (("ahead of both waves", True, True, ck.uniform(-30, 0), ck.uniform(-30, 0)),
+                               ("behind the wave on u = 0 alone", False, True, ck.uniform(0, 0.999), ck.uniform(-30, 0)),
+                               ("behind the wave on v = 0 alone", True, False, ck.uniform(-30, 0), ck.uniform(0, 0.999))):
+        ck.chart(f"Khan-Penrose {name}", KPFlatRegion(null, zu, zv), lambda a, b: (kp_pq(a), kp_pq(b)), a, b,
+                 lambda a, b: (1, 1))
+    # The Riemann tensor of the published metric with v, or u, set to zero, from its components.
+    _, entry, reader = nr.load("khan_penrose", "double_null")
+    g = nr.published_matrix(reader, entry, "metric_components").subs({reader.parameters["L"]: 1})
+    symbols = [reader.symbol[c] for c in entry["coords"]]
+    for name, zero in (("u = 0", symbols[0]), ("v = 0", symbols[1])):
+        geo = vm.Geometry(g.subs(zero, 0), symbols, 10 ** 6)
+        riemann = geo.riemann_llll()
+        nonzero = sum(1 for i in vm._indices(4, 4) if vm.norm(vm._at(riemann, i)) != 0)
+        ck.limit(f"Khan-Penrose: flat behind one wave, the published metric at {name}", nonzero, 0, tol=0.5)
+    th = ck.uniform(0.01, HALF - 0.01, 200)
+    d = 1e-4
+    near, nearer = ((1 - d) * np.cos(th), (1 - d) * np.sin(th)), ((1 - d / 10) * np.cos(th), (1 - d / 10) * np.sin(th))
+    ck.diverges("Khan-Penrose: u^2 + v^2 = 1 is a curvature singularity", null.kretschmann(*near),
+                null.kretschmann(*nearer))
+    edge_sigma = ck.uniform(-HALF, HALF, 200)
+    ck.limit("Khan-Penrose: tau = pi/2 is u^2 + v^2 = 1",
+             np.sin((HALF + edge_sigma) / 2) ** 2 + np.sin((HALF - edge_sigma) / 2) ** 2, 1.0, tol=1e-12)
+
+    edge = 1 + HALF
+    box = [-edge, edge, -PI, math.sqrt(2)]
+    arc = np.linspace(0, HALF, 181)
+    s_neg = spread(-np.inf, 0, 400, 9)[:-1]
+    whole = ([point(p, -HALF) for p in (-HALF, 1)] + [point(1, 0)]
+             + [point(np.cos(a), np.sin(a)) for a in arc] + [point(-HALF, 1)])
+    region_iv = [point(0, 0)] + [point(np.cos(a), np.sin(a)) for a in arc]
+    restriction = "The plane $x = y = 0$ only, totally geodesic, each point in the diagram a single event."
+    moments = slices.moments("khan_penrose")
+    views = []
+    for system in ("double_null", "cosmological"):
+        v = View(system, {"double_null": "Double Null", "cosmological": "Cosmological"}[system], box, system)
+        v.fill("region", whole)
+        v.fill("cover", region_iv)
+        if system == "double_null":
+            for c in (0.2, 0.4, 0.6, 0.8):
+                top = math.sqrt(1 - c * c)
+                v.curve("null", np.full(2, c), np.array([0, top]))
+                v.curve("null", np.array([0, top]), np.full(2, c))
+            v.legend("cover", "the region where both waves have passed, which $u$ and $v$ cover")
+            v.legend("null", "$u$ constant and $v$ constant, every one a light ray")
+        else:
+            for c in (0.3, 0.6, 0.9, 1.2):
+                s = np.linspace(-c, c, 200)
+                v.curve("t", np.sin((c + s) / 2), np.sin((c - s) / 2))
+            for c in (-0.9, -0.45, 0.45, 0.9):
+                t = np.linspace(abs(c), HALF, 200)
+                v.curve("r", np.sin((t + c) / 2), np.sin((t - c) / 2))
+            v.legend("cover", "the region where both waves have passed, which $\\tau$ and $\\sigma$ cover")
+            v.legend("t", "$\\tau$ constant, spacelike")
+            v.legend("r", "$\\sigma$ constant")
+        v.curve("surface", np.zeros_like(s_neg), kp_pq(s_neg))
+        v.curve("surface", kp_pq(s_neg), np.zeros_like(s_neg))
+        v.segment("surface", (0, 0), (0, 1))
+        v.segment("surface", (0, 0), (1, 0))
+        v.segment("singular", (1, -HALF), (1, 0), zig=True)
+        v.segment("singular", (-HALF, 1), (0, 1), zig=True)
+        v.curve("singular", np.cos(arc), np.sin(arc), zig=True)
+        v.segment("scri", (-HALF, -HALF), (1, -HALF))
+        v.segment("scri", (-HALF, -HALF), (-HALF, 1))
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(point(-HALF, -HALF))})
+        v.point("mark", (0, 0))
+        v.label_xt(point(-HALF, -HALF), "$i^-$", "b", dy=-6)
+        v.label((1, -HALF / 2), "$u = 1$", "l", "small", dx=6)
+        v.label((-HALF / 2, 1), "$v = 1$", "r", "small", dx=-6)
+        v.label((math.sqrt(0.5), math.sqrt(0.5)), "$u^2 + v^2 = 1$", "t", "small", dy=6)
+        v.label((0.25 * -HALF, -HALF), "$\\mathscr{I}^-$", "bl", dx=5, dy=-3)
+        v.label((-HALF, 0.25 * -HALF), "$\\mathscr{I}^-$", "br", dx=-5, dy=-3)
+        v.legend("surface", "the fronts of the two waves, $u = 0$ and $v = 0$, where the Riemann tensor has a "
+                            "delta singularity")
+        v.legend("mark", "the collision, $u = v = 0$")
+        v.legend("singular", "$u^2 + v^2 = 1$, a spacelike curvature singularity, where the Kretschmann scalar "
+                             "diverges")
+        v.legend("singular", "$u = 1$ and $v = 1$ behind one wave alone, fold singularities, where the curvature "
+                             "is zero")
+        v.legend("scri", "past null infinity $\\mathscr{I}^-$")
+        v.set(restriction=restriction)
+        for m in moments:
+            c = math.sin(m.time / 2)
+            v.slice(m, points=[(c, c)])
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Aichelburg-Sexl
 
 AS_JUMP = float(np.log(8.0))    # the jump of a ray moving left at rho = rho_0/8, in units of 8GE/c^4
@@ -4041,7 +4169,7 @@ DRAWN = {
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "einstein_rosen_waves": einstein_rosen_waves,
-    "nariai": nariai,
+    "nariai": nariai, "khan_penrose": khan_penrose,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -4591,6 +4719,36 @@ CAPTIONS = {
         "has this causal structure: by Buchdahl's theorem a static ball of fluid whose density "
         "does not grow outward has $2GM/c^2R \\le 8/9$, so it has no horizon, and another "
         "equation of state moves only the surfaces of constant $t$ and $r$ inside the triangle.",
+    ],
+    ("khan_penrose", "double_null"): [
+        "The plane $x = y = 0$ of the Khan-Penrose spacetime, totally geodesic, each point in the diagram a single "
+        "event. Two impulsive plane waves travel toward each other through flat space and collide at $u = v = 0$, and "
+        "on their fronts, $u = 0$ and $v = 0$, the Riemann tensor has a delta singularity. Maps $p$ and $q$ of $u$ and "
+        "$v$, each the coordinate itself where it is positive and its arctangent where it is negative, bring the "
+        "whole plane into a finite drawing with $T = p + q$ up and $X = q - p$ across, and light at 45°.",
+        "Ahead of both waves the spacetime is flat, and its past edges are null infinity, $u \\to -\\infty$ and "
+        "$v \\to -\\infty$. Behind one wave alone it is flat again, $-2L^2du\\,dv + (1 + u)^2dx^2 + (1 - u)^2dy^2$ "
+        "behind the wave on $u = 0$, and ends at $u = 1$ in a fold singularity, where the curvature is zero, as the "
+        "region behind the other wave ends at $v = 1$. Where both waves have passed each focuses the other, and the "
+        "region ends on the spacelike curvature singularity $u^2 + v^2 = 1$, where the Kretschmann scalar diverges.",
+        "The coordinates $u$ and $v$ cover the region where both waves have passed, $0 \\le v < \\sqrt{1 - u^2}$ "
+        "with $0 \\le u < 1$, where the published metric holds; ahead of either wave the metric is the same with "
+        "that wave's coordinate set to zero.",
+    ],
+    ("khan_penrose", "cosmological"): [
+        "The plane $x = y = 0$ of the Khan-Penrose spacetime, totally geodesic, each point in the diagram a single "
+        "event. Two impulsive plane waves travel toward each other through flat space and collide at $u = v = 0$, and "
+        "on their fronts, $u = 0$ and $v = 0$, the Riemann tensor has a delta singularity. Maps $p$ and $q$ of $u$ and "
+        "$v$, each the coordinate itself where it is positive and its arctangent where it is negative, bring the "
+        "whole plane into a finite drawing with $T = p + q$ up and $X = q - p$ across, and light at 45°.",
+        "Ahead of both waves the spacetime is flat, and its past edges are null infinity, $u \\to -\\infty$ and "
+        "$v \\to -\\infty$. Behind one wave alone it is flat again, $-2L^2du\\,dv + (1 + u)^2dx^2 + (1 - u)^2dy^2$ "
+        "behind the wave on $u = 0$, and ends at $u = 1$ in a fold singularity, where the curvature is zero, as the "
+        "region behind the other wave ends at $v = 1$. Where both waves have passed each focuses the other, and the "
+        "region ends on the spacelike curvature singularity $u^2 + v^2 = 1$, where the Kretschmann scalar diverges.",
+        "The coordinates $\\tau = \\arcsin u + \\arcsin v$ and $\\sigma = \\arcsin u - \\arcsin v$ cover the "
+        "region where both waves have passed, $|\\sigma| \\le \\tau < \\pi/2$, each surface of constant $\\tau$ "
+        "spacelike, and the curvature singularity is $\\tau = \\pi/2$.",
     ],
     ("einstein_rosen_waves", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ at fixed $\\phi$ and $z$, totally geodesic. The metric on it is "

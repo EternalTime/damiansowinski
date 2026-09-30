@@ -3222,6 +3222,10 @@ class Slices(unittest.TestCase):
             return (lambda X: t), None
         if key == "misner/misner/plane":
             return (lambda X: -t * t / 4), None
+        if key.startswith("khan_penrose/"):
+            # The event on sigma = 0 at tau = t, u = v = sin(t/2): drawn against v - u and u + v, or
+            # against sigma and tau.
+            return (lambda X: 2 * math.sin(t / 2) if "/double_null/" in key else t), [0.0]
         if key == "misner/milne/plane":
             return (lambda X: t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "minkowski/rindler")):
@@ -3414,6 +3418,10 @@ class Slices(unittest.TestCase):
                     elif metric_id == "aichelburg_sexl":
                         # The wave front u = u_k is the null line p = arctan u_k.
                         self.assertTrue(all(abs((T - X) / 2 - math.atan(t)) < 2e-4 for X, T in points), where)
+                    elif metric_id == "khan_penrose":
+                        # The event u = v = sin(t/2) where both waves have passed, drawn with p, q = u, v.
+                        for X, T in points:
+                            self.assertLess(abs(X) + abs(T - 2 * math.sin(t / 2)), 2e-4, where)
                     elif metric_id == "rn_metric" and mark["view"] == "inside":
                         self.assertTrue(all(abs(T - math.pi) < 2e-4 for _, T in points), where)
                     else:

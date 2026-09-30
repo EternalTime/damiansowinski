@@ -3582,15 +3582,15 @@ def at_rest(ck, src, metric_id, system_id):
              not any(ix[1:] == ("t", "t") and ix[0] != "t" for ix in gamma))
 
 
-def ring_sequence(ck, src, name, metric_id, system_id, moments, top, params=None):
-    """A flat plane of x and z at each moment, (label, time, fixed, functions), with a ring of
-    particles at rest on the unit circle of the chart, which each moment stretches into an
-    ellipse of semi-axes sqrt(g_xx) and sqrt(g_zz), checked."""
+def ring_sequence(ck, src, name, metric_id, system_id, moments, top, params=None, axes=("x", "z")):
+    """A flat plane of the two axes, x and z unless named, at each moment, (label, time, fixed,
+    functions), with a ring of particles at rest on the unit circle of the chart, which each
+    moment stretches into an ellipse of semi-axes sqrt(g_xx) and sqrt(g_zz), checked."""
     size = 2 * top
     alpha = np.linspace(0, 2 * math.pi, 361)
     surfaces = []
     for label, time, fixed_at, functions in moments:
-        sl = FlatPlane(src, metric_id, system_id, "x", "z", fixed_at, params, functions)
+        sl = FlatPlane(src, metric_id, system_id, *axes, fixed_at, params, functions)
         where = f"{name}, {label}"
         plane = disc(sl, "plane", top, "the centre of the ring", "the plane runs on, flat, to infinity", [], size)
         ck.isometry(where, plane)
@@ -3910,6 +3910,58 @@ def aichelburg_sexl(ck, src):
     return [view("tube", "The ring's world tube", "$8GE/c^4$", [tube], tube_fig, settings=settings, input=given,
                  height="$u$, a height of $1/2$ for each unit of $u$"),
             view("ring", "A ring of particles", "$8GE/c^4$", surfaces, fig.done(), settings=settings, input=given)]
+
+
+def khan_penrose(ck, src):
+    """The wave front, the plane of x and y, at the four events tau = 0, 0.6, 1.0 and 1.3 on
+    sigma = 0 of the cosmological chart, where u = v, at L = 1: each flat, g_xx dx^2 + g_yy dy^2
+    with g_xx = (1 + sin tau)^2/cos tau and g_yy = (1 - sin tau)^2/cos tau, with the ring of free
+    particles at rest on x^2 + y^2 = l^2, which the published Christoffel symbols keep at rest
+    on sigma = 0: they have no Gamma^x_tautau or Gamma^y_tautau, and Gamma^sigma_tautau vanishes
+    there. At tau = 0, the collision, the ring is the circle, and toward the singularity at
+    tau = pi/2 it is drawn out along x and squeezed along y."""
+    gamma, R = published_christoffel(src, "khan_penrose", "cosmological")
+    ck.exact("Khan-Penrose: no published Gamma^x_tautau or Gamma^y_tautau",
+             not any(ix[0] in ("x", "y") and ix[1:] == ("\\tau", "\\tau") for ix in gamma))
+    sigma_tt = gamma.get(("\\sigma", "\\tau", "\\tau"), sp.Integer(0))
+    ck.exact("Khan-Penrose: Gamma^sigma_tautau vanishes on sigma = 0", sigma_tt.subs(R.symbol["\\sigma"], 0) == 0)
+    times = (0.0, 0.6, 1.0, 1.3)
+    moments = [(f"$\\tau = {t:g}$", t, {"tau": repr(t), "sigma": 0}, None) for t in times]
+    surfaces = ring_sequence(ck, src, "Khan-Penrose", "khan_penrose", "cosmological", moments, 4.0, {"L": 1},
+                             axes=("x", "y"))
+
+    def rows(tau):
+        tau = np.asarray(tau, dtype=float)
+        return (1 + np.sin(tau)) / np.sqrt(np.cos(tau)), (1 - np.sin(tau)) / np.sqrt(np.cos(tau))
+    a = np.linspace(0, 2 * math.pi, 361)
+    for s, t in zip(surfaces, times):
+        A, B = rows(t)
+        ck.add(f"Khan-Penrose, tau = {t}: the ellipse of semi-axes (1 +- sin tau)/sqrt(cos tau)",
+               float(np.max(np.abs(s.curves[0].points[:, :2] - np.column_stack([A * np.cos(a), B * np.sin(a)])))), 1e-12)
+
+    def plane(tau, A, B):
+        sl = FlatPlane(src, "khan_penrose", "cosmological", "x", "y", {"tau": repr(float(tau)), "sigma": 0}, {"L": 1})
+        return float(np.max(np.abs(sl.scale - [A, B])))
+    tube = stack(ck, "Khan-Penrose", surfaces, rows, 3.0, plane, 8.0,
+                 "the world tube of the ring runs on before the collision, a cylinder, and after $\\tau = 1.3$ to the "
+                 "singularity")
+    tube_fig = stack_figure(tube, 8.0, "$\\tau$", [
+        ("fill", "cover", "the ring at every moment from the collision, $\\tau = 0$, to $\\tau = 1.3$, each at the height "
+                          "of its $\\tau$"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of $\\tau$, through the centre of the ring")])
+    fig = sequence_figure(surfaces, {"sheet": "cover"}, 8.0, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig.legend("fill", "cover", "the wave front at each moment, flat")
+    fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = \\ell^2$, with twelve of them marked: an "
+                                    "ellipse reaching $(1 + \\sin\\tau)\\ell/\\sqrt{\\cos\\tau}$ along $x$ and "
+                                    "$(1 - \\sin\\tau)\\ell/\\sqrt{\\cos\\tau}$ along $y$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$L = 1$, each moment the wave front at one $\\tau$ on $\\sigma = 0$, where $u = v$, with $\\ell$ the "
+                "ring's radius before the collision, the unit of every length.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings,
+                 height="$\\tau$, a height of $3\\,\\ell$ for each unit of $\\tau$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), settings=settings)]
 
 
 def malament_hogarth(ck, src):
@@ -4550,7 +4602,7 @@ DRAWN = {
     "mixmaster": mixmaster,
     "kasner": kasner,
     "bianchi": bianchi,
-    "pp_wave": pp_wave,
+    "pp_wave": pp_wave, "khan_penrose": khan_penrose,
     "krasnikov": krasnikov,
     "alcubierre": alcubierre,
     "natario": natario,
@@ -4977,6 +5029,25 @@ CAPTIONS = {
         "The world tube of a ring of free particles at rest before the pulse ($A = e^{-u^2}/L^2$), each wave front "
         "from $cu = -3\\,L$ to the focus at $cu = 0.66\\,L$ an ellipse at the height of its $u$. The pulse stretches "
         "the tube along $x$ and squeezes it along $y$ until it closes on a segment of the $x$ axis at the focus.",
+    ],
+    ("khan_penrose", "tube"): [
+        "The world tube of a ring of free particles at rest on the wave front where both waves have passed ($L = 1$), "
+        "each moment on $\\sigma = 0$ from the collision at $\\tau = 0$ to $\\tau = 1.3$ an ellipse at the height of "
+        "its $\\tau$. The two waves stretch the tube along $x$ and squeeze it along $y$, and toward the singularity "
+        "at $\\tau = \\pi/2$ it flattens without bound onto the plane of $x$ and $\\tau$.",
+    ],
+    ("khan_penrose", "ring"): [
+        "The wave front, the plane of $x$ and $y$, at four moments on $\\sigma = 0$ where both waves have passed, "
+        "each drawn as a surface in flat space with every distance along it the metric distance. At each moment the "
+        "front has the metric $g_{xx}dx^2 + g_{yy}dy^2$ with constant coefficients, so the drawing is a flat disc, "
+        "and the waves show in a ring of free particles at rest on the circle $x^2 + y^2 = \\ell^2$ before they "
+        "arrive.",
+        "At the collision, $\\tau = 0$, the ring is still that circle, and afterwards it is the ellipse reaching "
+        "$(1 + \\sin\\tau)\\ell/\\sqrt{\\cos\\tau}$ along $x$ and $(1 - \\sin\\tau)\\ell/\\sqrt{\\cos\\tau}$ "
+        "along $y$. The area it encloses falls as $\\pi\\ell^2\\cos\\tau$ and vanishes at the curvature "
+        "singularity $\\tau = \\pi/2$, where the ring is drawn out without bound along $x$ and closes along $y$. "
+        "K. A. Khan and Roger Penrose found this spacetime in 1971, the exact vacuum solution for two impulsive plane "
+        "waves colliding head on.",
     ],
     ("kasner", "ring"): [
         "The plane $y = 0$ of Kasner's universe at four moments of $t$, each drawn as a surface in flat space with "

@@ -475,6 +475,10 @@ FLAT = {
     ("pp_wave", "exact_plane_wave", "tz"): lambda: one("pp_wave", lambda m: [[(m.time, -BIG), (m.time, BIG)]]),
     **{("aichelburg_sexl", "null_cartesian", view): lambda: one("aichelburg_sexl", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
        for view in ("half", "eighth", "thirtysecond")},
+    # Each moment is the plane of x and y at one event, on sigma = 0 at tau = t: u = v = sin(t/2).
+    ("khan_penrose", "double_null", "plane"): lambda: [
+        Mark(m, points=[(math.sin(m.time / 2), math.sin(m.time / 2))]) for m in moments("khan_penrose")],
+    ("khan_penrose", "cosmological", "plane"): lambda: [Mark(m, points=[(m.time, 0.0)]) for m in moments("khan_penrose")],
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("malament_hogarth", "cartesian", "tx"): lambda: one("malament_hogarth", lambda m: across(m.time, *m.reach("cartesian", "x"))),
