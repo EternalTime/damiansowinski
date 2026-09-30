@@ -4622,6 +4622,73 @@ def nariai(ck, src):
     return views
 
 
+# ct in units of 1/k. Beyond |kct| = 1.1 the cones tip so near the light cone, |drho/dz| = cosh(kct),
+# that a chord turned 0.02 round the axis beside the apex misses the surface by more than ACROSS.
+WALL_MOMENTS = (-1.0, -0.5, 0.0, 0.5, 1.0)
+
+
+def domain_wall(ck, src):
+    """The equator of a moment of the global chart, g_zz = 1 and g_phiphi = (1 - k|z|)^2
+    cosh^2(kct)/k^2, at k = 1, from the centre of one side, z = -1/k, through the wall at z = 0 to
+    the centre of the other, z = 1/k. Its circles grow at |drho/dz| = cosh(kct), faster than the
+    distance out to them at every moment but ct = 0, which is checked, so it is drawn in three
+    dimensional Minkowski space, dX^2 + dY^2 - dZ^2, where it climbs at dZ/dz = sqrt(cosh^2(kct) - 1)
+    = |sinh(kct)|: rho = (1 - |z|) cosh(kct) and Z = z sinh(kct), two cones joined rim to rim at the
+    wall. The side z < 0 is then its own moment where it lies in its own inertial chart, Z = cT and
+    rho = R, the cone cT = R tanh(kct) from the centre at T = 0 out to the wall, moved so that the
+    wall stands at Z = 0; the side z > 0, the same cone of the second copy, is its mirror image in
+    the wall, which is an isometry of Minkowski space. At ct = 0 both cones are the flat disc of
+    radius 1/k, and the moment is the disc taken twice, joined at its rim. Drawn at five moments
+    from ct = -1/k to 1/k and played as a movie with a frame every 0.05/k of ct."""
+    size = 4.0
+    rings = (0.25, 0.5, 0.75)
+
+    def moment(t):
+        sl = Slice(src, "domain_wall", "global", "z", "\\phi", {"t": repr(t), **EQUATOR}, {"k": 1}, space="minkowski")
+        sense = -1 if t < 0 else 1
+        where = f"domain wall, ct = {t:+.2f}/k"
+        near = Piece("near", "sheet", sl, -1.0, 0.0, 0.0, sense,
+                     (("apex", "the centre of the side $z < 0$ at $T = 0$, where the horizon meets it"),
+                      ("crease", "the wall, where the surface folds")),
+                     [(-x, "r", None) for x in rings] + [(0.0, "surface", None)], size)
+        far = Piece("far", "sheet2", sl, 0.0, 1.0, float(near.z[-1]), sense,
+                    (("crease", "the wall"), ("apex", "the centre of the side $z > 0$ at $T = 0$")),
+                    [(x, "r2", None) for x in rings], size)
+        shift = -float(near.z[-1])
+        near.z, far.z = near.z + shift, far.z + shift
+        ck.add(f"{where}, the two sides meet at the wall: one point",
+               float(np.max(np.abs(np.array(near.at(0.0)) - far.at(0.0)))), JOIN)
+        flat = Slice(src, "domain_wall", "global", "z", "\\phi", {"t": repr(t), **EQUATOR}, {"k": 1})
+        xs = np.concatenate([np.linspace(-0.999, -1e-3, 200), np.linspace(1e-3, 0.999, 200)])
+        if t == 0:
+            ck.plane(f"{where}, the equator is a plane", flat, xs)
+        else:
+            ck.stops(f"{where}, the equator in flat space", flat, xs)
+        for piece in (near, far):
+            ck.isometry(f"{where}, {piece.id}", piece)
+            ck.radius(f"{where}, {piece.id}: rho = (1 - k|z|) cosh(kct)/k", piece,
+                      lambda z: (1 - np.abs(z)) * math.cosh(t), size)
+            ck.form(f"{where}, {piece.id}: Z = z sinh(kct)", piece, lambda z: z * math.sinh(t), size)
+        return Surface([near, far], label=f"$kct = {t:.2f}$", time=t)
+
+    values, keys = movie_values(list(WALL_MOMENTS), 0.05)
+    frames = [moment(t) for t in values]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the side $z < 0$ of the equator of the moment, which $z$ and $\\phi$ cover")
+    fig.legend("line", "r", "$z$ constant on the side $z < 0$, at $-1/4k$, $-1/2k$ and $-3/4k$")
+    fig.legend("line", "r2", "the same on the side $z > 0$, at $1/4k$, $1/2k$ and $3/4k$")
+    fig.legend("line", "surface", "the wall, $z = 0$, where the surface folds")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("moments", "The closed moments", "$1/k$", surfaces, fig.done(),
+                 movie=movie(frames, "$kct$", values),
+                 settings="$k = 1$, so that $1/k$, the radius of the wall when it stops, is the unit of every length "
+                          "and of $ct$, and every length along the surface measured with $dX^2 + dY^2 - dZ^2$.",
+                 stops=["At every moment but $ct = 0$ the circles grow faster than the distance out to them, "
+                        "$g_{zz} < (\\partial_z\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat "
+                        "space carries the slice; Minkowski space carries it."])]
+
+
 def flat_slices(ck, src, metric_id, system_id, time="t"):
     """Check that every slice of constant `time` of a coordinate system is flat: its spatial
     metric has no cross term and no component that depends on a spatial coordinate, so at
@@ -4667,6 +4734,7 @@ DRAWN = {
     "cosmic_string": cosmic_string,
     "frw": frw,
     "milne": milne,
+    "domain_wall": domain_wall,
     "minkowski": minkowski,
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
@@ -5221,6 +5289,18 @@ CAPTIONS = {
         "marked are lines of the flow, each closing back through the wall, as the flow of a fluid that cannot be "
         "compressed closes round an obstacle. José Natário built the drive in 2002, carrying the ship with no "
         "contraction of space ahead of it and no expansion behind.",
+    ],
+    ("domain_wall", "moments"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the global chart as $kct$ runs from $-1$ to $1$, from the "
+        "centre of one side through the wall to the centre of the other, each moment drawn as a surface in three "
+        "dimensional Minkowski space with every distance along it, measured with $dX^2 + dY^2 - dZ^2$, the metric "
+        "distance. On it $g_{zz} = 1$ while the circle at $z$ has radius $(1 - k|z|)\\cosh(kct)/k$, so away from "
+        "$ct = 0$ every circle grows faster than the distance out to it, and each side is a cone, "
+        "$Z = z\\sinh(kct)$.",
+        "The two cones meet rim to rim in a fold along the wall, the circle of radius $\\cosh(kct)/k$, and each "
+        "closes at its apex, the centre of its side at $T = 0$, where the horizon meets it. At $ct = 0$ both are the "
+        "flat disc of radius $1/k$, the moment the wall stops, and the whole equator is that disc taken twice, "
+        "joined at its rim.",
     ],
     ("milne", "hyperboloids"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Milne universe as cosmic time runs from $ct = 0.5$ to $3$, "

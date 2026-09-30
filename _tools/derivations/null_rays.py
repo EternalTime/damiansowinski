@@ -510,6 +510,15 @@ DIAGRAMS = [
             (0, 3, -2, 1.5), "$\\chi$", "$c\\tau\\;[ct_0]$", {"t_0": 1}, EQUATOR, tau="tau"),
     Diagram("milne", "inertial", "through", "through the observer", ("T", "R"), (0, 4, 0, 5),
             "$x$", "$cT$", {}, EQUATOR, mirror=True, tau="T", families=SIDEWAYS, cones=(4, 8), areal=True),
+    # The domain wall at k = 1: Rindler's plane on either side of the wall at z = 0, out to the
+    # horizons z = +-1/k, and the inertial chart of one side, the inside of the hyperbola the wall is.
+    Diagram("domain_wall", "planar", "tz", "$t$ and $z$", ("t", "z"), (-1, 1, -1.5, 1.5),
+            "$kz$", "$kct$", {"k": 1}, {"x": "0", "y": "0"}, families=SIDEWAYS, cones=(6, 7),
+            lines=(("shell", "r", "0", "the wall, $z = 0$"),)),
+    Diagram("domain_wall", "inertial", "through", "through the centre", ("T", "R"), (0, 2, -2, 2),
+            "$kx$", "$kcT$", {"k": 1}, EQUATOR, mirror=True, tau="T", families=SIDEWAYS, cones=(4, 8),
+            areal=True, marked=(("shell", {"x0": "0", "r": "0"}, "both", "the rays $R = c|T|$ through the centre at "
+                                "$T = 0$, the horizons of the planar and global charts"),)),
     Diagram("anti_de_sitter", "static_global", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/L$", "$ct/L$", {"L": 1}, EQUATOR, areal=True),
     Diagram("anti_de_sitter", "static_global", "through", "through the centre", ("t", "r"),
@@ -1073,6 +1082,27 @@ CAPTIONS = {
         "the chart covers the inside $R < cT$ of the future light cone of the event $T = R = 0$.",
         "Each comoving particle moves along the straight line $R = cT\\tanh\\chi$ from that event, and "
         "each moment of constant $t$ is the hyperbola $c^2T^2 - R^2 = c^2t^2$.",
+    ],
+    ("domain_wall", "planar", "tz"): [
+        "The plane of $t$ and $z$ ($x = y = 0$), the same at every $x$ and $y$, in units of $1/k$. The "
+        "metric on it is $-(1 - k|z|)^2c^2dt^2 + dz^2$, Rindler's on either side of the wall at $z = 0$, so "
+        "the edges of the cones are $dz/d(ct) = \\pm(1 - k|z|)$, and a ray crosses the wall with the "
+        "slope it had.",
+        "The cones close toward the horizons $z = \\pm 1/k$, where $g_{tt}$ vanishes, and a ray takes an "
+        "infinite time $t$ to reach either, running along $kct \\mp \\mathrm{sgn}(z)\\ln(1 - k|z|) = $ "
+        "const. No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null "
+        "geodesic, and the only curvature is on the wall, $R_{tztz} = -2k\\,\\delta(z)$.",
+    ],
+    ("domain_wall", "inertial", "through"): [
+        "One side of the wall in its inertial chart, along a line through the centre in the plane "
+        "$\\theta = \\pi/2$: $x = R$ on the right is $\\phi = 0$ and $x = -R$ on the left is $\\phi = \\pi$, "
+        "in units of $1/k$. The metric is Minkowski's, so every ray is a straight 45° line, and the chart "
+        "covers the inside of the wall, the hyperbola $R^2 - c^2T^2 = 1/k^2$, which falls in, stops at "
+        "$R = 1/k$ at $T = 0$, and recedes.",
+        "Across the wall lies the same region of a second copy of Minkowski space, and a ray that reaches "
+        "the wall runs on into it. The rays $R = c|T|$ through the centre at $T = 0$ bound the region "
+        "the planar and global charts cover, between them and the wall, and are the horizons $|z| = 1/k$ "
+        "of those charts.",
     ],
     ("anti_de_sitter", "static_global", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the global "
@@ -3432,6 +3462,10 @@ CLOSED_FORMS = {
     ("milne", "inertial", "through"): (lambda T, R: T + R, lambda T, R: T - R, None),
     ("anti_de_sitter", "static_global", "radial"):
         (lambda t, r: t + np.arctan(r), lambda t, r: t - np.arctan(r), None),
+    ("domain_wall", "planar", "tz"):
+        (lambda t, z: t - np.sign(z) * np.log(1 - np.abs(z)), lambda t, z: t + np.sign(z) * np.log(1 - np.abs(z)),
+         lambda t, z: np.abs(z) < 0.95),
+    ("domain_wall", "inertial", "through"): (lambda T, R: T + R, lambda T, R: T - R, None),
     ("ellis_bronnikov", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("morris_thorne", "spherical", "radial"):
         (lambda t, r: t + np.sqrt(r ** 2 - 1), lambda t, r: t - np.sqrt(r ** 2 - 1), lambda t, r: r > 1.0005),

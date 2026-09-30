@@ -2451,6 +2451,9 @@ class EmbeddingDiagrams(unittest.TestCase):
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
         flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose"}
+        # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
+        # twice and joined at its rim; the moments either side of it are the cones it opens into.
+        flat_moments = {("domain_wall", "moments", 2)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -2459,6 +2462,8 @@ class EmbeddingDiagrams(unittest.TestCase):
             for view in data["views"]:
                 for k, surface in enumerate(view["surfaces"]):
                     where = f"{name} {view['id']} surface {k}"
+                    if (name, view["id"], k) in flat_moments:
+                        continue
                     heights, widths = [], []
                     for piece in surface["pieces"]:
                         if piece.get("reference"):
@@ -2769,7 +2774,7 @@ class StacksAndMovies(unittest.TestCase):
     STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0}   # the height of a unit of time
     MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
               "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$",
-              "einstein_rosen_waves": "$ct$", "nariai": "$ct$"}
+              "einstein_rosen_waves": "$ct$", "nariai": "$ct$", "domain_wall": "$kct$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -3247,6 +3252,13 @@ class Slices(unittest.TestCase):
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * (X / 0.81 + math.log(abs(0.81 * X - 1)) / 0.81 ** 2 - (X if finkelstein else 0))), \
                 list(self.reach(surface))
+        if key == "domain_wall/planar/tz":
+            # A moment kct of the global chart meets the plane x = y = 0 along t = const, every z.
+            return (lambda X: t), None
+        if key == "domain_wall/inertial/through":
+            # In the inertial chart of the side z < 0 it is cT = |R| tanh(kct), out to the wall at
+            # R = cosh(kct), k = 1.
+            return (lambda X: abs(X) * math.tanh(t)), [-math.cosh(t), math.cosh(t)]
         if key == "de_sitter/flat_slicing/tx":
             return (lambda X: -0.5 * math.log(1 + X * X)), None
         if key == "pp_wave/exact_plane_wave/tz" or key.startswith("aichelburg_sexl/null_cartesian"):
@@ -3429,6 +3441,15 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp + tq) / 2 - t), 2e-4 * scale, where)
                             self.assertLessEqual(lo - 2e-4 * scale, (tq - tp) / 2, where)
                             self.assertLessEqual((tq - tp) / 2, hi + 2e-4 * scale, where)
+                    elif metric_id == "domain_wall":
+                        # Each side is Minkowski's triangle cut at the wall X = pi/2, the side z > 0
+                        # mirrored in it, and the moment kct runs along cT = R tanh(kct) on both.
+                        for X, T in points:
+                            p, q = (T - X) / 2, (T + X) / 2
+                            a, b = (math.tan(p), math.tan(q)) if X <= math.pi / 2 else (math.tan(q - math.pi / 2),
+                                                                                        math.tan(p + math.pi / 2))
+                            cT, R = (a + b) / 2, (b - a) / 2
+                            self.assertLess(abs(cT - R * math.tanh(t)), 2e-4 * (1 + a * a + b * b), f"{where} at {(X, T)}")
                     elif metric_id == "misner":
                         # The hyperbola (ct - x)(ct + x) = c^2t^2 of the covering plane, every copy.
                         for X, T in points:

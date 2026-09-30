@@ -4341,8 +4341,145 @@ def aichelburg_sexl(ck, src):
     return [v]
 
 
+def domain_wall(ck, src):
+    """The domain wall at k = 1, so that 1/k is the unit. Each side is the inside of the
+    hyperbola R^2 - c^2T^2 = 1 of Minkowski's plane of T and R, and Minkowski's own maps
+    p = arctan(cT - R) and q = arctan(cT + R) send the hyperbola, tan p tan q = -1, to the
+    vertical line X = q - p = pi/2, which runs from the middle of I- at T = -pi/2 to the middle
+    of I+ at T = pi/2, so each side is the part 0 <= X <= pi/2 of Minkowski's triangle. The side
+    z < 0 is drawn so, and the side z > 0 is its mirror image in the wall, X -> pi - X, which is
+    p = arctan(cT + R) - pi/2, q = arctan(cT - R) + pi/2; the two meet along the wall with the
+    same T, so a ray reaching the wall runs on as one line. In the planar, global and conformal
+    charts the point of each side at (t, z) is at R = (1 - |z|) cosh(ct), cT = (1 - |z|) sinh(ct),
+    with 1 - |z| = e^{-|w|} in the conformal chart: the region R > c|T| between the wall and the
+    light cone of the centre at T = 0, whose edges R = c|T| are the horizons z = -+1."""
+    def left(T, R):
+        return mink_pq(T, R)
+
+    def right(T, R):
+        T, R = np.asarray(T, dtype=float), np.asarray(R, dtype=float)
+        return np.arctan(T + R) - HALF, np.arctan(T - R) + HALF
+
+    def sides(T, R, z):
+        pl, ql = left(T, R)
+        pr, qr = right(T, R)
+        z = np.asarray(z, dtype=float)
+        return np.where(z > 0, pr, pl), np.where(z > 0, qr, ql)
+
+    def planar(t, z):
+        t, z = np.asarray(t, dtype=float), np.asarray(z, dtype=float)
+        zeta = 1 - np.abs(z)
+        return sides(zeta * np.sinh(t), zeta * np.cosh(t), z)
+
+    def conformal(t, w):
+        w = np.asarray(w, dtype=float)
+        return planar(t, np.sign(w) * (1 - np.exp(-np.abs(w))))
+
+    pl = Plane(src, "domain_wall", "planar", ("t", "z"), {"x": "0", "y": "0"}, {"k": 1})
+    gl = Plane(src, "domain_wall", "global", ("t", "z"), EQUATOR, {"k": 1})
+    cf = Plane(src, "domain_wall", "conformal", ("t", "w"), EQUATOR, {"k": 1})
+    ip = Plane(src, "domain_wall", "inertial", ("T", "R"), EQUATOR, {"k": 1})
+    for name, plane, fmap, lo, hi, x in (("planar", pl, planar, 0.001, 0.999, "z"),
+                                         ("global", gl, planar, 0.001, 0.999, "z"),
+                                         ("conformal", cf, conformal, 0.001, 8, "w")):
+        for side, sign in (("<", -1), (">", 1)):
+            ck.chart(f"domain wall {name}, {x} {side} 0", plane, fmap, ck.uniform(-4, 4), sign * ck.uniform(lo, hi),
+                     lambda t, z: (1, 0))
+    T = ck.uniform(-10, 10)
+    ck.chart("domain wall inertial", ip, left, T, np.sqrt(1 + T ** 2) * ck.uniform(0.001, 0.999), lambda T, R: (1, 0))
+    ck.chart("domain wall inertial, mirrored", ip, right, T, np.sqrt(1 + T ** 2) * ck.uniform(0.001, 0.999),
+             lambda T, R: (1, 0))
+    T = np.linspace(-20, 20, 81)
+    ck.limit("domain wall: the wall R^2 - c^2T^2 = 1 is the line X = pi/2 on both sides",
+             np.concatenate([xt(*left(T, np.sqrt(1 + T ** 2)))[0], xt(*right(T, np.sqrt(1 + T ** 2)))[0]]),
+             np.full(162, HALF), 1e-12)
+    t = np.linspace(-4, 4, 81)
+    ck.limit("domain wall: both sides reach the wall at one T for every t",
+             np.concatenate(xt(*planar(t, np.full(81, -1e-15)))), np.concatenate(xt(*planar(t, np.full(81, 1e-15)))),
+             1e-12)
+    ck.limit("domain wall: the wall ends at the middle of I+ and I-, (X, T) = (pi/2, +-pi/2)",
+             np.concatenate([xt(*left(np.array([1e9, -1e9]), np.sqrt(1 + 1e18)))[1]]), [HALF, -HALF], 1e-8)
+    X, Tz = xt(*planar(t, np.full(81, -1 + 1e-12)))
+    ck.limit("domain wall: the horizon z = -1 is the light cone |T| = X of the centre at T = 0",
+             np.abs(Tz) - X, np.zeros(81), 1e-9)
+    X, Tz = xt(*planar(t, np.full(81, 1 - 1e-12)))
+    ck.limit("domain wall: the horizon z = 1 is the light cone |T| = pi - X of the other centre",
+             np.abs(Tz) - (PI - X), np.zeros(81), 1e-9)
+    ck.finite("domain wall: the centre R = 0 is regular", ip.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    region = [[0, -PI], [0, PI], [HALF, HALF], [PI, PI], [PI, -PI], [HALF, -HALF]]
+    diamond = [[0, 0], [HALF, HALF], [PI, 0], [HALF, -HALF]]
+    pentagon = [[0, -PI], [0, PI], [HALF, HALF], [HALF, -HALF]]
+    S = spread(-np.inf, np.inf, 600, 10)
+
+    def frame(v, cover, legend):
+        v.fill("region", region)
+        v.fill("cover", cover)
+        v.line("centre", [[[0, -PI], [0, PI]], [[PI, -PI], [PI, PI]]])
+        v.line("scri", [[[0, PI], [HALF, HALF]], [[HALF, HALF], [PI, PI]],
+                        [[0, -PI], [HALF, -HALF]], [[HALF, -HALF], [PI, -PI]]])
+        v.line("horizon", [[[0, 0], [HALF, HALF]], [[0, 0], [HALF, -HALF]],
+                           [[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]]])
+        v.line("surface", [[[HALF, -HALF], [HALF, HALF]]])
+        for at, text, anchor, dy in (((0, PI), "$i^+$", "b", -6), ((PI, PI), "$i^+$", "b", -6),
+                                     ((0, -PI), "$i^-$", "t", 6), ((PI, -PI), "$i^-$", "t", 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(at, text, anchor, dy=dy)
+        v.label_xt([Q4, 3 * Q4], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([3 * Q4, 3 * Q4], "$\\mathscr{I}^+$", "br", dx=-5, dy=-3)
+        v.label_xt([Q4, -3 * Q4], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([3 * Q4, -3 * Q4], "$\\mathscr{I}^-$", "tr", dx=-5, dy=3)
+        v.label_xt([HALF, 0.3], "the wall", "l", "small", dx=5)
+        v.legend("cover", legend)
+        v.legend("centre", "the centre of each side, where its spheres shrink to a point")
+        v.legend("horizon", "the horizons $z = \\pm 1/k$, the light cones of the two centres at $T = 0$")
+        v.legend("surface", "the wall, the hyperbola $R^2 - c^2T^2 = 1/k^2$ of each side")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    views = []
+    for vid, label, plane_map, coord, values, ts in (
+            ("planar", "Planar", planar, "z", (-0.75, -0.5, -0.25, 0.25, 0.5, 0.75), (-1, 0, 1)),
+            ("global", "Global", planar, "z", (-0.75, -0.5, -0.25, 0.25, 0.5, 0.75), (-1, 0, 1)),
+            ("conformal", "Conformal", conformal, "w", (-2, -1, -0.5, 0.5, 1, 2), (-1, 0, 1))):
+        v = View(vid, label, box, vid)
+        grid(v, "r", lambda c, s: plane_map(s, c), values, S)
+        span = np.linspace(-0.999999, 0.999999, 801) if coord == "z" else np.sinh(np.linspace(-6, 6, 801))
+        for t0 in ts:
+            for half in (span[span < 0], span[span > 0]):
+                v.curve("t", *plane_map(np.full_like(half, t0), half))
+        frame(v, diamond, f"the region between the horizons, which $t$ and ${coord}$ cover")
+        v.legend("r", f"${coord}$ constant, at " + {"z": "$\\pm 1/4k$, $\\pm 1/2k$, and $\\pm 3/4k$",
+                                                   "w": "$\\pm 1/2k$, $\\pm 1/k$, and $\\pm 2/k$"}[coord])
+        v.legend("t", "$ct$ constant, at $-1/k$, $0$, and $1/k$")
+        views.append(v)
+
+    v = View("inertial", "Inertial", box, "inertial")
+    for R0 in (0.5, 1, 2):
+        T = np.sinh(np.linspace(-8, 8, 1200))
+        inside = np.where(R0 <= np.sqrt(1 + T ** 2), T, np.nan)
+        v.curve("r", *left(inside, np.full_like(T, R0)))
+    for T0 in (-1, 0, 1):
+        R = np.linspace(0, math.sqrt(1 + T0 ** 2), 400)
+        v.curve("t", *left(np.full_like(R, T0), R))
+    frame(v, pentagon, "the side $z < 0$, inside the wall, which $T$ and $R$ cover")
+    v.label_xt([0, 0.25], "$R = 0$", "r", dx=-6)
+    v.legend("r", "$R$ constant, at $1/2k$, $1/k$, and $2/k$")
+    v.legend("t", "$cT$ constant, at $-1/k$, $0$, and $1/k$")
+    views.append(v)
+    # Each moment of the embedding, kct = t_k from the centre of one side through the wall to the
+    # centre of the other, drawn by the planar map, which is the global chart's on this plane.
+    z = np.concatenate([np.linspace(-1 + 1e-9, -1e-12, 400), np.linspace(1e-12, 1 - 1e-9, 400)])
+    for v in views:
+        v.set(settings="$1/k$, the radius of the wall when it stops, the unit of every length and of $ct$.")
+        for m in slices.moments("domain_wall"):
+            v.slice(m, [planar(np.full_like(z, m.time), z)])
+    return views
+
+
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
+    "domain_wall": domain_wall,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "anti_de_sitter": anti_de_sitter,
@@ -4369,6 +4506,40 @@ CAPTIONS = {
         "either side of it.",
         "Every ray moving left keeps its $q$ across the shock, and every line of constant $v$ breaks there, its part "
         "behind the shock moved along it by $\\Delta v$. The rays moving right never meet the shock.",
+    ],
+    ("domain_wall", "planar"): [
+        "The whole spacetime of the wall, each point in the diagram a 2-sphere, two copies of the inside of the "
+        "hyperbola $R^2 - c^2T^2 = 1/k^2$ in Minkowski's triangle joined along it, the second drawn as the mirror "
+        "image of the first. The wall is the vertical line in the middle, from the middle of $\\mathscr{I}^-$ to "
+        "the middle of $\\mathscr{I}^+$, and each side has its own centre, $i^\\pm$, and null infinity, and no "
+        "spatial infinity.",
+        "The planar chart reaches the diamond between the wall and the horizons $z = \\pm 1/k$, the light cones of "
+        "the two centres at $T = 0$, where $(1 - k|z|)\\cosh(kct)$ and $(1 - k|z|)\\sinh(kct)$ are $kR$ and $kcT$. "
+        "A light ray crosses the wall as one straight line.",
+    ],
+    ("domain_wall", "global"): [
+        "The whole spacetime of the wall, each point in the diagram a 2-sphere, two copies of the inside of the "
+        "hyperbola $R^2 - c^2T^2 = 1/k^2$ in Minkowski's triangle joined along it, the second drawn as the mirror "
+        "image of the first. The global chart reaches the diamond between the wall and the horizons $z = \\pm 1/k$, "
+        "where the spheres of constant $t$ and $z$ have radius $(1 - k|z|)\\cosh(kct)/k$.",
+        "Each line of constant $t$ runs from the centre of one side at $T = 0$ through the wall to the centre of the "
+        "other, and together with its spheres it closes up into a 3-sphere, the whole of space at one moment.",
+    ],
+    ("domain_wall", "conformal"): [
+        "The whole spacetime of the wall, each point in the diagram a 2-sphere, two copies of the inside of the "
+        "hyperbola $R^2 - c^2T^2 = 1/k^2$ in Minkowski's triangle joined along it, the second drawn as the mirror "
+        "image of the first. The conformal chart reaches the diamond between the wall and the horizons, which lie "
+        "at $w \\to \\pm\\infty$, and on its plane of $t$ and $w$ the metric is $e^{-2k|w|}(-c^2dt^2 + dw^2)$, so "
+        "its light rays are $ct \\pm w = $ const.",
+    ],
+    ("domain_wall", "inertial"): [
+        "The whole spacetime of the wall, each point in the diagram a 2-sphere of radius $R$ on the side the inertial "
+        "chart covers, two copies of the inside of the hyperbola $R^2 - c^2T^2 = 1/k^2$ in Minkowski's triangle "
+        "joined along it, the second drawn as the mirror image of the first. The chart is Minkowski's spherical "
+        "chart inside the wall, drawn with Minkowski's own maps $p = \\arctan(k(cT - R))$ and "
+        "$q = \\arctan(k(cT + R))$, which send the hyperbola to the vertical line $q - p = \\pi/2$.",
+        "Its lines of constant $R$ beyond $1/k$ start and end on the wall, which reaches them only for $c|T| > "
+        "\\sqrt{R^2 - 1/k^2}$.",
     ],
     ("c_metric", "inner_spherical"): [
         "The half axis $\\theta = 0$ between the black holes of the maximally extended C-metric ($\\alpha m = 1/6$), "

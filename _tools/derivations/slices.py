@@ -339,6 +339,15 @@ def _milne_inertial(m):
     return [np.column_stack([np.sqrt(m.time ** 2 + R * R), R])]
 
 
+def _wall_inertial(m):
+    """A moment kct of the domain wall's global chart in the inertial chart of the side z < 0, k = 1:
+    cT = (1 - |z|) sinh(kct) and R = (1 - |z|) cosh(kct), the line cT = |R| tanh(kct) through the
+    centre out to the wall at R = cosh(kct) on either side."""
+    hi = math.cosh(m.time)
+    R = np.linspace(-hi, hi, N)
+    return [np.column_stack([np.abs(R) * math.tanh(m.time), R])]
+
+
 def _ads_poincare():
     """Anti-de Sitter's static moment t = 0 is the Poincare moment t = 0; on the plane y = 0,
     z = L its static radius is r^2 = x^2 + x^4/4L^2, so the embedding's reach r <= 4L is
@@ -462,6 +471,11 @@ FLAT = {
     ("milne", "comoving_spherical", "radial"): lambda: one("milne", lambda m: along(m.time, 0.0, math.sinh(m.reach("comoving_hyperbolic", "\\chi")[1]))),
     ("milne", "logarithmic_time", "radial"): lambda: one("milne", lambda m: along(math.log(m.time), *m.reach("comoving_hyperbolic", "\\chi"))),
     ("milne", "inertial", "through"): lambda: one("milne", _milne_inertial),
+    # A moment kct of the domain wall's global chart meets the plane x = y = 0 of the planar chart
+    # along t = const, every z, and in the inertial chart of the side z < 0 it is the cone
+    # cT = R tanh(kct) from the centre at T = 0 out to the wall, across the centre on either side.
+    ("domain_wall", "planar", "tz"): lambda: one("domain_wall", lambda m: across(m.time, 0.0, 1.0)),
+    ("domain_wall", "inertial", "through"): lambda: one("domain_wall", _wall_inertial),
     ("anti_de_sitter", "static_global", "radial"): lambda: one("anti_de_sitter", lambda m: along(0.0, *m.reach("static_global", "r"))),
     ("anti_de_sitter", "static_global", "through"): lambda: one("anti_de_sitter", lambda m: along(0.0, *m.reach("static_global", "r"))),
     ("anti_de_sitter", "poincare", "tx"): _ads_poincare,

@@ -6917,6 +6917,282 @@
           "kretschmann": "K = \\dfrac{4}{\\ell^4}"
         }
       ]
+    },
+    {
+      "id": "domain_wall",
+      "name": "Vilenkin-Ipser-Sikivie Domain Wall",
+      "short_name": "Vilenkin-Ipser-Sikivie",
+      "description": "The gravitational field of an infinitely thin domain wall, whose tension equals its surface energy density, found by Alexander Vilenkin in 1983 and by James Ipser and Pierre Sikivie in 1984. Spacetime is flat on either side of the wall, the wall repels test bodies, and at each moment it is a sphere with both sides inside it, so space is closed.",
+      "tags": [
+        "domain wall",
+        "topological defect",
+        "repulsive gravity",
+        "thin shell",
+        "locally flat",
+        "planar symmetry",
+        "reflection symmetry",
+        "de Sitter world volume",
+        "event horizon",
+        "closed universe",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\delta$ is the Dirac delta.",
+      "references": [
+        "zeldovich1974",
+        "zeldovich1975",
+        "kibble1976",
+        "vilenkin1981",
+        "cvetic1997",
+        "vilenkin1983",
+        "caldwell1996",
+        "sikivie1982",
+        "ipser1984",
+        "israel1966",
+        "ipser1984walls",
+        "widrow1989",
+        "cvetic1992",
+        "saikawa2017"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",
+      "charts": [
+        {
+          "id": "planar",
+          "name": "Planar",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-1/k, 1/k)",
+            "z = 0 \\;\\text{(the wall)}",
+            "z = \\pm 1/k \\;\\text{(the two horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Inverse length $2\\pi G\\sigma/c^4$, with $\\sigma$ the surface energy density of the wall, equal to its tension; the wall has radius $1/k$ at the moment it stops"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of an observer at rest on the wall, $x$ and $y$ lengths along the wall, and $z$ the proper distance from it, and $\\mathrm{sgn}(z)$ is the sign of $z$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-c^2dt^2 + e^{2kct}\\left(dx^2 + dy^2\\right)\\right) + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - k|z|\\right)^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\left(1 - k|z|\\right)^2e^{2kct}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\left(1 - k|z|\\right)^2e^{2kct}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 12k\\,\\delta(z)",
+          "kretschmann": "K = 0 \\;\\text{for}\\; z \\neq 0"
+        },
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "t",
+            "z",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "z \\in (-1/k, 1/k)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "z = 0 \\;\\text{(the wall)}",
+            "z = \\pm 1/k \\;\\text{(the two horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Inverse length $2\\pi G\\sigma/c^4$, with $\\sigma$ the surface energy density of the wall, equal to its tension; the wall has radius $1/k$ at the moment it stops"
+            }
+          ],
+          "convention": "We use coordinates $(t, z, \\theta, \\phi)$, with $t$ the proper time of an observer at rest on the wall, $z$ the proper distance from the wall, and $\\theta$ and $\\phi$ angles on the sphere the wall is at each moment, and $\\mathrm{sgn}(z)$ is the sign of $z$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-c^2dt^2 + \\dfrac{\\cosh^2(kct)}{k^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - k|z|\\right)^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\cosh^2\\left(kct\\right)}{k^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k^2}"
+            }
+          ],
+          "ricci_scalar": "R = 12k\\,\\delta(z)",
+          "kretschmann": "K = 0 \\;\\text{for}\\; z \\neq 0"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal",
+          "coordinates": [
+            "t",
+            "w",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "w = 0 \\;\\text{(the wall)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Inverse length $2\\pi G\\sigma/c^4$, with $\\sigma$ the surface energy density of the wall, equal to its tension; the wall has radius $1/k$ at the moment it stops"
+            }
+          ],
+          "convention": "We use coordinates $(t, w, \\theta, \\phi)$, with $t$ the proper time of an observer at rest on the wall, $w$ the length with $e^{-k|w|} = 1 - k|z|$, where $z$ is the proper distance from the wall, and $\\theta$ and $\\phi$ angles on the sphere the wall is at each moment, and $\\mathrm{sgn}(w)$ is the sign of $w$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = e^{-2k|w|}\\left(-c^2dt^2 + dw^2 + \\dfrac{\\cosh^2(kct)}{k^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{-2k|w|}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "e^{-2k|w|}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{e^{-2k|w|}\\cosh^2\\left(kct\\right)}{k^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{e^{-2k|w|}\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k^2}"
+            }
+          ],
+          "ricci_scalar": "R = 12k\\,\\delta(w)",
+          "kretschmann": "K = 0 \\;\\text{for}\\; w \\neq 0"
+        },
+        {
+          "id": "inertial",
+          "name": "Inertial",
+          "coordinates": [
+            "T",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "R \\in [0, \\sqrt{1/k^2 + c^2T^2}]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "R = \\sqrt{1/k^2 + c^2T^2} \\;\\text{(the wall, where this side meets its mirror image)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Inverse length $2\\pi G\\sigma/c^4$, with $\\sigma$ the surface energy density of the wall, equal to its tension; the wall has radius $1/k$ at the moment it stops"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(T, R, \\theta, \\phi)$ of one side of the wall, with $T$ carrying dimensions of time and $R$ the distance from the centre of the sphere the wall is at each moment. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dR^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
     }
   ]
 }
