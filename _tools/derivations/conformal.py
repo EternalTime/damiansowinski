@@ -4213,7 +4213,7 @@ CAPTIONS = {
         "$(-d\\eta^2 + d\\chi^2)/(\\Lambda\\cos^2\\eta)$ on the strip $|\\eta| < \\pi/2$, with $X = \\chi$ across "
         "and its edges $\\chi = 0$ and $2\\pi$ one line.",
         "The static chart covers the diamond about $\\chi = \\pi/2$, and its horizons $r = \\pm 1/\\sqrt{\\Lambda}$ "
-        "are the diamond's four edges, which meet the antipode's at $\\chi = 0$ and $\\pi$. Infinity is spacelike, "
+        "are the diamond's four edges, two for each, which meet the antipode's at $\\chi = 0$ and $\\pi$. Infinity is spacelike, "
         "past and future, and a light ray crosses half the circle between them, so the observers at "
         "$\\chi = \\pi/2$ and $3\\pi/2$ never exchange a signal.",
     ],
@@ -4225,7 +4225,7 @@ CAPTIONS = {
     ],
     ("nariai", "conformal"): [
         "The Nariai universe in its conformal chart, $(-d\\eta^2 + d\\chi^2)/(\\Lambda\\cos^2\\eta) + "
-        "d\\Omega^2/\\Lambda$, drawn as it stands on the strip $|\\eta| < \\pi/2$ with $X = \\chi$, each point in the "
+        "d\\Omega^2/\\Lambda$, drawn with $X = \\chi$ and $T = \\eta$ on the strip $|\\eta| < \\pi/2$, each point in the "
         "diagram a 2-sphere of radius $1/\\sqrt{\\Lambda}$. The light rays are the lines of constant "
         "$\\eta \\pm \\chi$, at 45°, and $\\eta = \\pm\\pi/2$ is the infinite future and past, where "
         "$1/\\cos^2\\eta$ diverges.",

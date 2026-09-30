@@ -1082,9 +1082,9 @@ CAPTIONS = {
         "the plane a 2-sphere of radius $1/\\sqrt{\\Lambda}$. The cones close at both edges, the horizons $r = "
         "\\pm 1/\\sqrt{\\Lambda}$, where $g^{rr} = 1 - \\Lambda r^2$ vanishes, and a ray takes infinite $t$ to "
         "reach either, $ct\\sqrt{\\Lambda} = \\pm\\mathrm{artanh}(r\\sqrt{\\Lambda}) + $ const.",
-        "The patch is the same under $r \\to -r$. In the limit of the Schwarzschild-de Sitter black hole that "
-        "makes this spacetime, one horizon is the black hole's and the other the cosmological horizon, at the "
-        "same radius and the same temperature.",
+        "The patch is the same under $r \\to -r$. The Nariai universe is the limit of the Schwarzschild-de Sitter "
+        "black hole as its black hole and cosmological horizons reach one radius, $1/\\sqrt{\\Lambda}$, and its two "
+        "horizons are those two, at that radius and the same temperature.",
     ],
     ("nariai", "global", "circle"): [
         "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) in the global chart, $-c^2dt^2 + "
