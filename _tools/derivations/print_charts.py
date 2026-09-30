@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
-schwarzschild_de_sitter, milne and einstein_rosen_waves, and Godel's cylindrical chart.
+schwarzschild_de_sitter, milne, einstein_rosen_waves and nariai, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -651,13 +651,82 @@ def schwarzschild_de_sitter(system_id):
 SDS_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
 
 
+# -- Nariai ----------------------------------------------------------------------------
+
+NARIAI_SPHERE = "\\dfrac{1}{\\Lambda}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+NARIAI_DOMAINS = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def nariai(system):
+    """The three charts of the Nariai universe, dS2 x S2 with both radii a = 1/sqrt(Lambda):
+    the static patch between the horizons r = +-a, the global chart in which the circle of chi
+    has the radius a cosh(ct/a), and its conformal chart, tan eta = sinh(ct/a). Each is checked,
+    slot by slot, to be the metric of the surfaces -Z0^2 + Z1^2 + Z2^2 = a^2 and
+    Z3^2 + Z4^2 + Z5^2 = a^2 in flat space of six dimensions, pulled back to the chart."""
+    charts = {
+        "static": {
+            "name": "Static", "coords": ["t", "r", "\\theta", "\\phi"],
+            "domains": ["t \\in (-\\infty, \\infty)",
+                        "r \\in \\left(-1/\\sqrt{\\Lambda},\\, 1/\\sqrt{\\Lambda}\\right)"] + NARIAI_DOMAINS
+                       + ["r = \\pm 1/\\sqrt{\\Lambda} \\;\\text{(the two horizons)}"],
+            "line": lambda c2: (f"ds^2 = -\\left(1 - \\Lambda r^2\\right){c2}dt^2 + \\dfrac{{dr^2}}{{1 - \\Lambda r^2}}"
+                                f" + {NARIAI_SPHERE}")},
+        "global": {
+            "name": "Global", "coords": ["t", "\\chi", "\\theta", "\\phi"],
+            "domains": ["t \\in (-\\infty, \\infty)", "\\chi \\in [0, 2\\pi)"] + NARIAI_DOMAINS,
+            "line": lambda c2: (f"ds^2 = -{c2}dt^2 + \\dfrac{{1}}{{\\Lambda}}\\left(\\cosh^2\\left(\\sqrt{{\\Lambda}}\\,"
+                                f"{'c' if c2 else ''}t\\right)d\\chi^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")},
+        "conformal": {
+            "name": "Conformal", "coords": ["\\eta", "\\chi", "\\theta", "\\phi"],
+            "domains": ["\\eta \\in (-\\pi/2, \\pi/2)", "\\chi \\in [0, 2\\pi)"] + NARIAI_DOMAINS,
+            "line": lambda c2: ("ds^2 = \\dfrac{1}{\\Lambda}\\left(\\dfrac{-d\\eta^2 + d\\chi^2}{\\cos^2\\eta}"
+                                " + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")},
+    }
+    chart = charts[system]
+    return {
+        "metric_id": "nariai",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": ["\\Lambda"], "line_element": chart["line"]("c^2")},
+        "chart_line_element": chart["line"](""),
+        "printer": {"lead": [sp.Symbol("Lambda", real=True)]},
+        "check": lambda c: nariai_embedding(c, system),
+    }
+
+
+def nariai_embedding(chart, system):
+    """J^T eta J for the embedding (Z0, Z1, Z2) of the de Sitter factor, plus a^2 times the
+    round sphere, against the chart's metric, with the chart's time already ct."""
+    x0, x1, theta, _ = chart.symbols
+    L = chart.reader.parameters["Lambda"]
+    a = 1 / sp.sqrt(L)
+    if system == "static":
+        s = sp.sqrt(a ** 2 - x1 ** 2)
+        Z = [s * sp.sinh(x0 / a), s * sp.cosh(x0 / a), x1]
+    elif system == "global":
+        Z = [a * sp.sinh(x0 / a), a * sp.cosh(x0 / a) * sp.cos(x1), a * sp.cosh(x0 / a) * sp.sin(x1)]
+    else:
+        Z = [a * sp.tan(x0), a * sp.cos(x1) / sp.cos(x0), a * sp.sin(x1) / sp.cos(x0)]
+    J = sp.Matrix([[sp.diff(z, v) for v in (x0, x1)] for z in Z])
+    pulled = sp.zeros(4, 4)
+    pulled[:2, :2] = J.T * sp.diag(-1, 1, 1) * J
+    pulled[2, 2], pulled[3, 3] = a ** 2, a ** 2 * sp.sin(theta) ** 2
+    positive = sp.Symbol("Lambda_", positive=True)
+    for i in range(4):
+        for j in range(i, 4):
+            diff = (pulled[i, j] - chart.geo.g[i, j]).subs(L, positive)
+            if sp.simplify(sp.expand_trig(diff.rewrite(sp.exp))) != 0:
+                raise AssertionError(f"nariai: the embedding pulled back misses the {system} chart "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
           "c_metric": c_metric,
           "schwarzschild_de_sitter": [lambda s=s: schwarzschild_de_sitter(s) for s in SDS_CHARTS],
           "milne": [lambda s=s: milne(s) for s in ("comoving_hyperbolic", "comoving_spherical", "logarithmic_time", "inertial")],
-          "einstein_rosen_waves": [lambda s=s: einstein_rosen(s) for s in ("cylindrical", "null")]}
+          "einstein_rosen_waves": [lambda s=s: einstein_rosen(s) for s in ("cylindrical", "null")],
+          "nariai": [lambda s=s: nariai(s) for s in ("static", "global", "conformal")]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------
