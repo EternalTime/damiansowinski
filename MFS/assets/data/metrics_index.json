@@ -46,7 +46,7 @@
     "version": "9d17efa38abadfe7",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "92b6eb7611a849b5",
-    "embedding": "f206e9691162e00c"
+    "embedding": "96edc6eed56d68df"
   },
   {
     "id": "btz",
@@ -82,9 +82,9 @@
       "idealized model"
     ],
     "version": "e7d31c4b24f4e95c",
-    "diagrams": "71771a115f41067b",
-    "conformal": "a9535eb60d159665",
-    "embedding": "0d2288ff5645d75b"
+    "diagrams": "10c155d35564a631",
+    "conformal": "da58ba7f313c1373",
+    "embedding": "11587df66e12aa02"
   },
   {
     "id": "bertotti_robinson",
@@ -528,7 +528,7 @@
     "version": "ac2f2b26f2173f28",
     "diagrams": "fd25dd652b32e2d9",
     "conformal": "65162ce0392363df",
-    "embedding": "2152487c58d8b99c"
+    "embedding": "9d1ab7ca4c68db9d"
   },
   {
     "id": "minkowski",

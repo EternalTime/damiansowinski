@@ -4061,7 +4061,6 @@ def milne(ck, src):
                  movie=movie(frames, "$ct$", times, turns=False),
                  settings="$\\ell$, any length, the unit of every length and of $ct$, and every length along a "
                           "sheet measured with $dX^2 + dY^2 - dZ^2$.",
-                 space="minkowski",
                  stops=["At every $\\chi > 0$ the circles grow faster than the distance out to them, "
                         "$g_{\\chi\\chi} < (\\partial_\\chi\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution "
                         "in flat space carries the slice; Minkowski space carries it."])]
