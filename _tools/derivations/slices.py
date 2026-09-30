@@ -308,7 +308,33 @@ def _ads_poincare():
     return [Mark(m, across(0.0, 0.0, x))]
 
 
+BTZ_LABEL = {"throat": "$t = 0$, $N^2 < 1$", "outside": "$t = 0$, $N^2 > 1$"}
+
+
+def btz_rstar(r):
+    """The BTZ hole's r_* = (1/2) ln|(r - 1)/(r + 1)| at M = 1, l = 1, vanishing as r -> infinity,
+    which fixes the Eddington-Finkelstein charts' v = ct + r_* and u = ct - r_*."""
+    r = np.asarray(r, dtype=float)
+    return 0.5 * np.log(np.abs((r - 1) / (r + 1)))
+
+
+def _btz(sign=0):
+    """Both moments t = 0 of the BTZ hole without rotation: along r in its stationary chart
+    (sign 0), and in its ingoing (1) or outgoing (-1) chart as v = r_* or u = -r_*, crowding
+    toward the horizon, where the curve runs off."""
+    out = []
+    for m in moments("btz"):
+        lo, hi = m.reach("stationary", "r")
+        r = near(lo, hi) if lo <= 1.0 else np.linspace(lo, hi, N)
+        line = along(0.0, lo, hi) if not sign else [np.column_stack([sign * btz_rstar(r), r])]
+        out.append(Mark(m, line, label=BTZ_LABEL[m.view["id"]]))
+    return out
+
+
 FLAT = {
+    ("btz", "stationary", "static"): lambda: _btz(),
+    ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
+    ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),
     ("schwarzschild", "spherical", "radial"): lambda: one("schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"): lambda: schwarzschild_t(1),
     ("schwarzschild", "eddington_finkelstein_ingoing", "chart"): lambda: schwarzschild_t(1),
@@ -375,6 +401,10 @@ FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
 HIDDEN = {
+    ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
+    ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
+    ("btz", "eddington_finkelstein_outgoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
+    ("btz", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("frw", "comoving_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "comoving_spherical", "through"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "conformal_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",

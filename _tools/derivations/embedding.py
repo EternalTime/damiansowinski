@@ -3745,6 +3745,82 @@ def anti_de_sitter(ck, src):
                         "slice; Minkowski space carries it."])]
 
 
+def btz(ck, src):
+    """The moment t = 0 of the hole without rotation, M = 1 and J = 0 at l = 1, as its conformal
+    diagram's square draws it. g_rr = 1/N^2 with N^2 = r^2 - 1 and g_phiphi = r^2, so in flat
+    space dz/dr = sqrt(1/N^2 - 1) = sqrt((2 - r^2)/(r^2 - 1)): the slice runs through the
+    bifurcation circle r_+ = 1, its throat, into a second exterior, and lies level at r = sqrt 2,
+    where N^2 = 1. Farther out 1/N^2 < 1, the circles grow faster than the distance out to them,
+    which is checked, and the slice is drawn in three dimensional Minkowski space, climbing at
+    dZ/dr = sqrt(1 - 1/N^2) from level at sqrt 2 toward a light cone of that space, as anti-de
+    Sitter space's own static slice does; between r_+ and sqrt 2 no surface of Minkowski space
+    carries it, since there 1/N^2 > 1, which is checked as well."""
+    params = {"ell": 1, "M": 1, "J": 0}
+    sl = Slice(src, "btz", "stationary", "r", "\\phi", {"t": 0}, params)
+    rp = sl.horizons()[0]
+    level = math.sqrt(2.0)
+    ck.add("BTZ: the horizon is at r_+ = l", abs(rp - 1.0), 1e-12)
+    ck.add("BTZ: the surface lies level where N^2 = 1, at r = sqrt(1 + M) l",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-12)
+    ck.stops("BTZ, beyond r = sqrt(1 + M) l in flat space", sl, np.linspace(level, 40, 402)[1:])
+    settings = "$\\ell = 1$, the unit of every length, $M = 1$ and $J = 0$, so that $r_+ = \\ell$."
+    size = 2 * level
+    level_text = "at $r = \\sqrt{1 + M}\\,\\ell$ the surface lies level, and farther out the circles grow faster than the distance out to them"
+    near = Piece("exterior", "sheet", sl, rp, level, 0.0, 1,
+                 (("throat", "the throat $r = r_+$, the bifurcation circle, where the other exterior begins"),
+                  ("stops", level_text)),
+                 [(rp, "horizon", "$r = r_+$"), (1.2, "r", None), (level, "chartedge", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rp, level, 0.0, -1,
+                (("throat", "the throat $r = r_+$"), ("stops", level_text)),
+                [(1.2, "r2", None), (level, "chartedge", None)], size)
+    for p in (near, far):
+        ck.isometry(f"BTZ, {p.id}", p)
+    ck.join("BTZ, the two sheets at the throat", near, rp, far, rp)
+    throat = Surface([near, far])
+    fig = figure_of([throat], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rp, 0.0, "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(level), "$\\sqrt{2}\\,\\ell$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.2\\,\\ell$")
+    fig.legend("line", "r2", "the same radius on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "chartedge", "$r = \\sqrt{2}\\,\\ell$, where $N^2 = 1$, the surface lies level and the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    beyond = ("Beyond $r = \\sqrt{1 + M}\\,\\ell$, $g_{rr} = 1/N^2 < 1$: the circles grow faster than the distance "
+              "out to them, and no surface in flat space carries that part of the slice; Minkowski space carries it.")
+    views = [view("throat", "Through the throat", "$\\ell$", [throat], fig.done(), settings=settings, stops=[beyond])]
+
+    msl = Slice(src, "btz", "stationary", "r", "\\phi", {"t": 0}, params, space="minkowski")
+    inward = np.linspace(rp, level, 402)[1:-1]
+    ck.add("BTZ: between r_+ and sqrt(1 + M) l no surface in Minkowski space carries the slice, (drho/dr)^2 - g_rr < 0",
+           float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+    if not np.all(msl.defect_at(inward) > 0):
+        ck.items[-1]["ok"] = False
+    top = 4.0
+    size = 2 * top
+    sheet = Piece("exterior", "sheet", msl, level, top, 0.0, 1,
+                  (("stops", "at $r = \\sqrt{1 + M}\\,\\ell$ the surface lies level, and nearer the horizon no surface "
+                             "in Minkowski space carries the slice"),
+                   ("edge", "the sheet runs on toward a light cone, to $r \\to \\infty$")),
+                  [(level, "chartedge", None), (2.0, "r", None), (3.0, "r", None), (top, "r", None)], size)
+    ck.isometry("BTZ, the sheet in Minkowski space", sheet)
+    ck.radius("BTZ, rho = r in Minkowski space", sheet, lambda r: r, size)
+    outside = Surface([sheet])
+    fig = figure_of([outside], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(level), "$\\sqrt{2}\\,\\ell$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$4\\ell$")
+    fig.legend("fill", "cover", "the exterior beyond $r = \\sqrt{2}\\,\\ell$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2\\ell$, $3\\ell$ and $4\\ell$")
+    fig.legend("line", "chartedge", "$r = \\sqrt{2}\\,\\ell$, where $N^2 = 1$ and the surface lies level")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("outside", "In Minkowski space", "$\\ell$", [outside], fig.done(),
+                      settings=settings + " Every length along the sheet is measured with $dX^2 + dY^2 - dZ^2$.",
+                      space="minkowski",
+                      stops=["Nearer the horizon than $r = \\sqrt{1 + M}\\,\\ell$, $g_{rr} = 1/N^2 > 1$, and no surface in "
+                             "Minkowski space carries that part of the slice; flat space carries it."]))
+    return views
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -3905,6 +3981,7 @@ DRAWN = {
     "krasnikov": krasnikov,
     "alcubierre": alcubierre,
     "natario": natario,
+    "btz": btz,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -3914,6 +3991,22 @@ DRAWN = {
 NOT_DRAWN = {"lentz"}
 
 CAPTIONS = {
+    ("btz", "throat"): [
+        "The moment $t = 0$ of the hole without rotation ($M = 1$, $J = 0$) near its horizon, drawn as a surface "
+        "in flat space with every distance along it the metric distance, each circle one of the circles of $\\phi$. "
+        "On it the metric is $dr^2/N^2 + r^2d\\phi^2$ with $N^2 = r^2/\\ell^2 - M$, so $dz/dr = \\sqrt{1/N^2 - 1}$, "
+        "and the slice passes through the bifurcation circle $r = r_+$, its throat, into a second exterior, as "
+        "Schwarzschild's does through $r_s$.",
+        "At $r = \\sqrt{1 + M}\\,\\ell$, where $N^2 = 1$, the surface lies level. Farther out the circles grow "
+        "faster than the distance out to them, as on the static slice of anti-de Sitter space, and the rest of "
+        "the moment lies in Minkowski space.",
+    ],
+    ("btz", "outside"): [
+        "The same moment beyond $r = \\sqrt{1 + M}\\,\\ell$, drawn as a surface in three dimensional Minkowski "
+        "space, $dX^2 + dY^2 - dZ^2$, with every distance along it the metric distance. It climbs at $dZ/dr = "
+        "\\sqrt{1 - 1/N^2}$ from level at $r = \\sqrt{1 + M}\\,\\ell$, and far out, where $N^2 \\to r^2/\\ell^2$, "
+        "it nears a light cone of that space, as the hyperboloid of anti-de Sitter space does.",
+    ],
     ("schwarzschild", "flamm"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Schwarzschild spacetime at one moment of $t$, "
         "drawn as a surface in flat space with every distance along it the metric distance. On "

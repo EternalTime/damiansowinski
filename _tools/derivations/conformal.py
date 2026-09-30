@@ -1722,6 +1722,15 @@ def btz(ck, src):
     views.append(v)
     for view in views:
         view.set(settings="$M = 1$ and $J = 0$, so that $r_+ = \\ell$.")
+    # The embedded moment t = 0: through the bifurcation circle into both exteriors out to
+    # where N^2 = 1, and on in the right exterior as far as the sheet in Minkowski space reaches.
+    throat, outside = slices.moments("btz", "throat")[0], slices.moments("btz", "outside")[0]
+    lo, hi = throat.reach("stationary", "r")
+    far_lo, far_hi = outside.reach("stationary", "r")
+    rr = np.linspace(far_lo, far_hi, 2)
+    for view in views:
+        view.slice(throat, [through_bifurcation(T, ("I'", "I"), hi, lo)], label=slices.BTZ_LABEL["throat"])
+        view.slice(outside, [T.pq("I", 0 * rr, rr)], label=slices.BTZ_LABEL["outside"])
 
     # The rotating hole: one period of the strip, from the exteriors at T = 0 to those at 2 pi.
     T0, T1 = -0.45, 2 * PI + 0.45
