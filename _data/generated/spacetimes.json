@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 31,
+  "count": 32,
   "spacetimes": [
     {
       "id": "alcubierre",
@@ -811,6 +811,195 @@
           ],
           "ricci_scalar": "R = 2\\left(\\dfrac{a_1''}{a_1} + \\dfrac{a_2''}{a_2} + \\dfrac{a_3''}{a_3} + \\dfrac{a_1'\\,a_2'}{a_1\\,a_2} + \\dfrac{a_1'\\,a_3'}{a_1\\,a_3} + \\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)",
           "kretschmann": "K = 4\\left(\\left(\\dfrac{a_1''}{a_1}\\right)^2 + \\left(\\dfrac{a_2''}{a_2}\\right)^2 + \\left(\\dfrac{a_3''}{a_3}\\right)^2 + \\left(\\dfrac{a_1'\\,a_2'}{a_1\\,a_2}\\right)^2 + \\left(\\dfrac{a_1'\\,a_3'}{a_1\\,a_3}\\right)^2 + \\left(\\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "c_metric",
+      "name": "C-Metric Accelerating Black Holes",
+      "short_name": "C-Metric",
+      "description": "An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "static",
+        "axisymmetric",
+        "black hole",
+        "accelerating black hole",
+        "acceleration horizon",
+        "event horizon",
+        "horizon",
+        "Killing horizon",
+        "boost symmetry",
+        "cosmic string",
+        "conical singularity",
+        "Petrov type D",
+        "gravitational radiation",
+        "singularity",
+        "curvature singularity",
+        "maximal extension",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, the mass parameter is the geometric mass $m = GM/c^2$, and the acceleration $\\alpha$ carries an inverse length, with $0 < 2\\alpha m < 1$. The constant $C$ is a pure number that scales the angle $\\phi$ about the axis. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "references": [
+        "griffiths2009",
+        "bini2004",
+        "weyl1917",
+        "griffiths2006",
+        "weyl1919",
+        "newman1961",
+        "robinson1962",
+        "ehlerskundt1962",
+        "kinnersley1970",
+        "plebanski1976",
+        "ernst1976",
+        "ashtekar1981",
+        "bonnor1983",
+        "dowker1994",
+        "hawking1995",
+        "eardley1995",
+        "gregory1995",
+        "hong2003",
+        "griffiths2005"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "1 + \\alpha r\\cos\\theta > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, which is a length; the black hole horizon sits at $r = 2m$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Acceleration, an inverse length, with $2\\alpha m < 1$; the acceleration horizon sits at $r = 1/\\alpha$"
+            },
+            {
+              "symbol": "C",
+              "description": "A pure number scaling the angle about the axis; $C = 1/(1 + 2\\alpha m)$ makes the half axis $\\theta = 0$ regular and leaves a cosmic string along $\\theta = \\pi$"
+            }
+          ],
+          "convention": "We use the coordinates of Jerry Griffiths, Pavel Krtouš, and Jiří Podolský, $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{1}{\\left(1 + \\alpha r\\cos\\theta\\right)^2}\\left(-\\left(1 - \\alpha^2r^2\\right)\\left(1 - \\dfrac{2m}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{\\left(1 - \\alpha^2r^2\\right)\\left(1 - \\dfrac{2m}{r}\\right)} + \\dfrac{r^2d\\theta^2}{1 + 2\\alpha m\\cos\\theta} + C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{\\left(2m - r\\right)\\left(1 - \\alpha^2r^2\\right)}{r\\left(1 + \\alpha r\\cos\\theta\\right)^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)^2\\left(1 - \\alpha^2r^2\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{\\left(1 + \\alpha r\\cos\\theta\\right)^2\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2\\left(1 + \\alpha r\\cos\\theta\\right)^6}{r^6}"
+        },
+        {
+          "id": "hong_teo",
+          "name": "Hong-Teo",
+          "coordinates": [
+            "\\tau",
+            "y",
+            "x",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x \\in [-1, 1]",
+            "\\phi \\in [0, 2\\pi)",
+            "x + y > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, which is a length; the black hole horizon sits at $y = 1/(2\\alpha m)$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Acceleration, an inverse length, with $2\\alpha m < 1$; the acceleration horizon sits at $y = 1$"
+            },
+            {
+              "symbol": "C",
+              "description": "A pure number scaling the angle about the axis; $C = 1/(1 + 2\\alpha m)$ makes the half axis $x = 1$ regular and leaves a cosmic string along $x = -1$"
+            }
+          ],
+          "convention": "We use the coordinates of Kenneth Hong and Edward Teo, $(\\tau, y, x, \\phi)$, all dimensionless and related to the spherical coordinates by $\\tau = \\alpha ct$, $y = 1/(\\alpha r)$, and $x = \\cos\\theta$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{1}{\\alpha^2\\left(x + y\\right)^2}\\left(\\left(1 - y^2\\right)\\left(1 - 2\\alpha m y\\right)d\\tau^2 - \\dfrac{dy^2}{\\left(1 - y^2\\right)\\left(1 - 2\\alpha m y\\right)} + \\dfrac{dx^2}{\\left(1 - x^2\\right)\\left(1 + 2\\alpha m x\\right)} + C^2\\left(1 - x^2\\right)\\left(1 + 2\\alpha m x\\right)d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha^2\\left(x + y\\right)^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "-\\dfrac{1}{\\alpha^2\\left(x + y\\right)^2\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{1}{\\alpha^2\\left(x + y\\right)^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha^2\\left(x + y\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 48\\alpha^6\\,m^2\\left(x + y\\right)^6"
         }
       ]
     },
