@@ -373,6 +373,8 @@ GODEL_RC = math.asinh(1.0)
 # Kottler's black hole at Lambda r_s^2 = 1/5, so that r_h = 1.085 r_s and r_c = 3.215 r_s, and the
 # radius (3r_s/2Lambda)^(1/3) of its static observer in free fall, where f is greatest.
 SDS = {"r_s": 1, "Lambda": "1/5"}
+# Visser's thin shell wormhole with its throat at a = 5r_s/4, inside the photon sphere 3r_s/2.
+TSW = {"r_s": 1, "a": "5/4"}
 SDS_STATIC = 7.5 ** (1 / 3)
 
 # The Aichelburg-Sexl shock on the plane of u and v at three distances from the source, in units
@@ -467,6 +469,12 @@ DIAGRAMS = [
     Diagram("ellis_bronnikov", "spherical", "radial", "$t$ and $r$", ("t", "r"), (-3, 3, -3, 3),
             "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, families=SIDEWAYS, areal=True,
             areal_contours=(1.5, 2.0, 3.0)),
+    Diagram("thin_shell_wormhole", "throat", "radial", "$t$ and $\\ell$", ("t", "\\ell"), (-3, 3, -3, 3),
+            "$\\ell/r_s$", "$ct/r_s$", TSW, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(1.5, 2.0, 3.0),
+            lines=(("shell", "r", "0", "the shell at the throat, $\\ell = 0$"),)),
+    Diagram("thin_shell_wormhole", "spherical", "radial", "$t$ and $r$", ("t", "r"), (1.25, 4.25, -1.5, 1.5),
+            "$r/r_s$", "$ct/r_s$", TSW, EQUATOR, areal=True,
+            lines=(("shell", "r", "5/4", "the shell at the throat, $r = a$"),)),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -970,6 +978,27 @@ CAPTIONS = {
         "lines are the spheres $R = 1.5\\ell$, $2\\ell$, and $3\\ell$, one of each size on either "
         "side of the throat. The Kretschmann scalar $12\\ell^4/(r^2 + \\ell^2)^4$ is finite "
         "everywhere.",
+    ],
+    ("thin_shell_wormhole", "throat", "radial"): [
+        "The plane of $t$ and $\\ell$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = 1.25\\,r_s$, with "
+        "$\\ell < 0$ on one side of the throat and $\\ell > 0$ on the other. The edges of the cones are "
+        "$d\\ell/d(ct) = \\pm\\left(1 - r_s/(a + |\\ell|)\\right)$, so $ct \\mp \\ell_*$ is constant along a ray, "
+        "with $\\ell_* = \\ell + r_s\\ln\\left(1 + |\\ell|/(a - r_s)\\right)\\operatorname{sgn}\\ell$. The cones "
+        "are narrowest at the throat, where $d\\ell/d(ct) = \\pm(1 - r_s/a) = \\pm 0.2$, and every ray crosses it "
+        "in a finite time.",
+        "The throat carries the shell. There the slope of a ray is continuous and its rate of change jumps "
+        "sign, since $r = a + |\\ell|$ has a kink at $\\ell = 0$. The faint vertical lines are the spheres of areal "
+        "radius $1.5\\,r_s$, $2\\,r_s$, and $3\\,r_s$, one of each on either side. Off the throat the "
+        "Kretschmann scalar is $12r_s^2/(a + |\\ell|)^6$, at most $12r_s^2/a^6$.",
+    ],
+    ("thin_shell_wormhole", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one side of the throat, drawn for "
+        "$a = 1.25\\,r_s$, the same on the other side and at every other angle. The edges of the cones are "
+        "$dr/d(ct) = \\pm(1 - r_s/r)$, so $ct \\mp r_*$ is constant along a ray, with "
+        "$r_* = r + r_s\\ln(r/r_s - 1)$, as outside a Schwarzschild black hole.",
+        "The chart stops at the throat $r = a$, before the cones close at $r_s$, so there is no horizon. A ray "
+        "moving in reaches the throat at a finite $t$ and goes on into the other side, where $r$ grows again. "
+        "The Kretschmann scalar $12r_s^2/r^6$ is at most $12r_s^2/a^6$.",
     ],
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). "
@@ -3503,6 +3532,12 @@ def _mp_midplane(x):
 
 # (metric, system, view): (what P conserves, what M conserves, where to compare). None
 # where a family has no closed form. P moves toward smaller r or x, M toward larger.
+def _tsw_lstar(l):
+    """The tortoise coordinate of the thin shell wormhole's chart through the throat, r_s = 1 and
+    a = 5/4, zero at the throat: dl_*/dl = (a + |l|)/(a + |l| - r_s)."""
+    return l + np.sign(l) * np.log(1 + 4 * np.abs(l))
+
+
 CLOSED_FORMS = {
     ("btz", "stationary", "static"):
         (lambda t, r: t + _btz_rstar(r, BTZ_STATIC), lambda t, r: t - _btz_rstar(r, BTZ_STATIC), _away(1.0)),
@@ -3571,6 +3606,11 @@ CLOSED_FORMS = {
     ("ellis_bronnikov", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("morris_thorne", "spherical", "radial"):
         (lambda t, r: t + np.sqrt(r ** 2 - 1), lambda t, r: t - np.sqrt(r ** 2 - 1), lambda t, r: r > 1.0005),
+    # With r_s = 1 and a = 5/4, l_* = l + ln(1 + 4|l|) sgn l on the throat's chart and r_* = r + ln(r - 1).
+    ("thin_shell_wormhole", "throat", "radial"):
+        (lambda t, l: t + _tsw_lstar(l), lambda t, l: t - _tsw_lstar(l), None),
+    ("thin_shell_wormhole", "spherical", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),

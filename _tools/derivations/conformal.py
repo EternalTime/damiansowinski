@@ -2755,6 +2755,62 @@ def morris_thorne(ck, src):
     return views
 
 
+def _tsw_lstar(l):
+    """The tortoise coordinate of the thin shell wormhole's chart through the throat at r_s = 1 and
+    a = 5/4, zero at the throat: l_* = l + r_s ln(1 + |l|/(a - r_s)) sgn l."""
+    l = np.asarray(l, dtype=float)
+    return l + np.sign(l) * np.log(1 + 4 * np.abs(l))
+
+
+def thin_shell_wormhole(ck, src):
+    """Two Schwarzschild exteriors r >= a joined at the throat, drawn at r_s = 1 and a = 5/4. On the
+    plane of t and l, with r = a + |l|, the metric is (1 - r_s/r)(-c^2dt^2 + dl_*^2), and l_* runs
+    over the whole line, so p, q = arctan((ct -+ l_*)/r_s) give the full diamond, the throat on its
+    axis. Schwarzschild's coordinates on one side have l = r - a and cover the right half."""
+    params = {"r_s": 1, "a": "5/4"}
+    throat = Plane(src, "thin_shell_wormhole", "throat", ("t", "\\ell"), EQUATOR, params)
+    areal = Plane(src, "thin_shell_wormhole", "spherical", ("t", "r"), EQUATOR, params)
+    through = lambda t, l: mink_pq(t, _tsw_lstar(l))
+    ck.chart("thin shell wormhole through the throat", throat, through, ck.uniform(-20, 20), ck.uniform(-20, 20),
+             lambda t, l: (1, 0))
+    ck.chart("thin shell wormhole, Schwarzschild's side", areal, lambda t, r: through(t, np.asarray(r) - 1.25),
+             ck.uniform(-20, 20), ck.uniform(1.2501, 20), lambda t, r: (1, 0))
+    ck.finite("thin shell wormhole: the curvature is finite beside the throat l = 0",
+              throat.kretschmann(ck.uniform(-5, 5, 50), ck.uniform(-0.01, 0.01, 50)))
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    wormhole = slices.moments("thin_shell_wormhole")[0]
+    lo, hi = wormhole.reach("spherical", "r")
+    ls = np.array([lo - hi, 0.0, hi - lo])
+    views = []
+    for vid, label, system in (("throat", "Through the throat", "throat"), ("spherical", "Schwarzschild", "spherical")):
+        v = View(vid, label, box, system)
+        v.fill("region", DIAMOND)
+        if vid == "throat":
+            v.fill("cover", DIAMOND)
+            grid(v, "r", lambda l, t: through(t, l), (-4, -2, -1, -0.5, 0.5, 1, 2, 4), S_ALL)
+            label_on(v, through(0, 1), "$\\ell = r_s$")
+            v.legend("cover", "the whole spacetime, which $t$ and $\\ell$ cover")
+            v.legend("r", "$\\ell$ constant, a sphere of radius $a + |\\ell|$")
+        else:
+            v.fill("cover", TRIANGLE)
+            for r in (1.5, 2.0, 3.0, 5.0):
+                v.curve("r", *through(S_ALL, r - 1.25))
+                v.curve("r2", *through(S_ALL, 1.25 - r))
+            label_on(v, through(0, 2.0 - 1.25), "$r = 2\\,r_s$")
+            v.legend("cover", "the side $\\ell > 0$, which $t$ and $r$ cover")
+            v.legend("r", "$r$ constant, the areal radius")
+            v.legend("r2", "the same radii on the other side, $\\ell < 0$")
+        grid(v, "t", mink_pq, (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+        v.line("throat", [[[0, -PI], [0, PI]]])
+        diamond_edges(v)
+        v.label_xt([0, 0.3], "throat", "l", "small", dx=6)
+        v.legend("t", "$ct$ constant")
+        v.legend("throat", "the throat $r = a$, $\\ell = 0$, where the shell sits")
+        v.slice(wormhole, [through(0 * ls, ls)])
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- the cosmic string
 
 def cosmic_string(ck, src):
@@ -4749,6 +4805,7 @@ DRAWN = {
     "nariai": nariai, "khan_penrose": khan_penrose,
     "majumdar_papapetrou": majumdar_papapetrou,
     "melvin": melvin,
+    "thin_shell_wormhole": thin_shell_wormhole,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -5279,6 +5336,20 @@ CAPTIONS = {
         "universes, each with its own $i^0$ and $\\mathscr{I}^\\pm$, joined at the throat $r = 0$, "
         "where the spheres are smallest. Light crosses the throat at 45°, as it does everywhere "
         "else, so the wormhole has no horizon.",
+    ],
+    ("thin_shell_wormhole", "throat"): [
+        "Visser's thin shell wormhole ($a = 1.25\\,r_s$), each point in the diagram a 2-sphere of radius "
+        "$a + |\\ell|$. The metric on the plane of $t$ and $\\ell$ is $(1 - r_s/r)\\left(-c^2dt^2 + d\\ell_*^2\\right)$, "
+        "with $\\ell_* = \\ell + r_s\\ln\\left(1 + |\\ell|/(a - r_s)\\right)\\operatorname{sgn}\\ell$ running over "
+        "the whole line, and $p, q = \\arctan((ct \\mp \\ell_*)/r_s)$ bring it into the full diamond.",
+        "The two ends are two asymptotically flat universes, each with its own $i^0$ and $\\mathscr{I}^\\pm$, "
+        "joined at the throat $\\ell = 0$, where the shell sits. The factor $1 - r_s/r$ is at least "
+        "$1 - r_s/a$ everywhere, so light crosses the throat and there is no horizon.",
+    ],
+    ("thin_shell_wormhole", "spherical"): [
+        "The same wormhole in Schwarzschild's coordinates on one side of the throat, where $\\ell = r - a$. "
+        "They cover the right half of the diamond and end at the throat $r = a$, and the same coordinates "
+        "on the other side cover the left half.",
     ],
     ("morris_thorne", "spherical"): [
         "The Morris-Thorne wormhole ($\\Phi = 0$, $b = b_0^2/r$), each point in the diagram a "

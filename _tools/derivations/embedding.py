@@ -2118,6 +2118,55 @@ def morris_thorne(ck, src):
                        "wormhole; $\\Phi$ does not enter the surface.")]
 
 
+def thin_shell_wormhole(ck, src):
+    """Flamm's paraboloid cut at the throat r = a and joined to its mirror image, drawn at r_s = 1
+    and a = 5/4. On either side dz/dr = sqrt(r_s/(r - r_s)), so z = +-2(sqrt(r_s(r - r_s)) -
+    sqrt(r_s(a - r_s))) from the throat, where both sides climb at sqrt(r_s/(a - r_s)) = 2 and
+    so meet at a crease: the tangent turns through 2 arctan(sqrt((a - r_s)/r_s)) there, the shell.
+    The chart through the throat, r = a + |l|, is checked to give the same surface."""
+    params = {"r_s": 1, "a": "5/4"}
+    a, top, radii = 1.25, 5.0, (1.5, 2, 3, 4)
+    size = 2 * top
+    sl = Slice(src, "thin_shell_wormhole", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    near = Piece("near", "sheet", sl, a, top, 0.0, 1,
+                 (("throat", "the throat $r = a$, where the two sides meet at the shell"),
+                  ("edge", "the side runs on, flattening, to $r \\to \\infty$")),
+                 [(a, "throat", "$r = a$")] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    far = Piece("far", "sheet2", sl, a, top, 0.0, -1,
+                (("throat", "the throat $r = a$"), ("edge", "the other side runs on, flattening, to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    for p in (near, far):
+        ck.isometry(f"thin shell wormhole, {p.id} side", p)
+        ck.form(f"thin shell wormhole, {p.id} side, Flamm's z = 2 sqrt(r_s (r - r_s)) less its value at a", p,
+                lambda r, s=p.sense: s * 2 * (np.sqrt(np.maximum(r - 1, 0)) - 0.5), size)
+    # The two sides meet in one circle, and each leaves it climbing away at dz/drho = 2, so the
+    # tangents pointing into them are mirror images across the plane of the throat.
+    pa, pb = np.array(near.at(a)), np.array(far.at(a))
+    ck.add("thin shell wormhole, the two sides at the throat: one circle", float(np.max(np.abs(pa - pb))), JOIN)
+    ta, tb = near.inward(a), far.inward(a)
+    ck.add("thin shell wormhole, the crease: each side leaves the throat at dz/drho = 2",
+           float(max(abs(ta[1] / ta[0] - 2), abs(tb[1] / tb[0] + 2))), JOIN)
+    through = Slice(src, "thin_shell_wormhole", "throat", "\\ell", "\\phi", {"t": 0, **EQUATOR}, params)
+    whole = Piece("through", "sheet", through, 1e-9, top - a, 0.0, 1, size=size)
+    ck.isometry("thin shell wormhole, the chart through the throat", whole)
+    heights = np.array([near.sl.rise(a, r) for r in whole.rho])
+    ck.add("thin shell wormhole, the chart through the throat gives the same surface",
+           float(np.max(np.abs(heights - whole.z))) / size, FORM)
+    surface = Surface([near, far])
+
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(a), "$r = a$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *far.at(3.0), "$3\\,r_s$")
+    fig.legend("fill", "cover", "the side $\\ell > 0$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$ and $5\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other side, $\\ell < 0$")
+    fig.legend("line", "throat", "the throat $r = a$, the smallest circle, where the shell sits")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("wormhole", "The wormhole", "$r_s$", [surface], fig.done(),
+                 settings="$r_s = 1$, the unit of every length, and $a = 1.25$.")]
+
+
 def two_sheets(ck, name, sl, throat, top, radii, size, near_marks=(), texts=("", "")):
     """A slice of constant t through a bifurcation sphere, as Schwarzschild's: the exterior from
     the throat out to `top`, tinted, and the same surface turned over on the other side."""
@@ -4892,6 +4941,7 @@ DRAWN = {
     "global_monopole": global_monopole,
     "majumdar_papapetrou": majumdar_papapetrou,
     "melvin": melvin,
+    "thin_shell_wormhole": thin_shell_wormhole,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -5006,6 +5056,16 @@ CAPTIONS = {
         "density, which observers passing through it fast measure as a negative energy density. With "
         "$b = b_0^2/r$ the surface is the catenoid $r = b_0\\cosh(z/b_0)$, the shape of a soap film "
         "stretched between two rings.",
+    ],
+    ("thin_shell_wormhole", "wormhole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Visser's thin shell wormhole at one moment of $t$ "
+        "($a = 1.25\\,r_s$), drawn as a surface in flat space with every distance along it the metric distance. "
+        "On either side of the throat it is Flamm's paraboloid, $z = \\pm 2\\left(\\sqrt{r_s(r - r_s)} - "
+        "\\sqrt{r_s(a - r_s)}\\right)$, cut at $r = a$ before it reaches the horizon.",
+        "The two halves meet at the throat with a crease: each climbs away from it at "
+        "$dz/dr = \\sqrt{r_s/(a - r_s)} = 2$, so the surface turns through a finite angle there. The crease "
+        "is the shell, whose surface energy density $-(c^4/2\\pi Ga)\\sqrt{1 - r_s/a}$ is negative, since the "
+        "throat flares out on both sides.",
     ],
     ("rn_metric", "outside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a charged black hole at one moment of $t$ outside its "
