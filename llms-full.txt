@@ -338,6 +338,19 @@ The Friedmann-Lemaître-Robertson-Walker metric describing a homogeneous, isotro
 - chart Comoving Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + a^2\left(\dfrac{dr^2}{1-kr^2} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2\right)$$
 - chart Conformal Time Spherical: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + \dfrac{dr^2}{1-kr^2} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2\right)$$
 
+### Global Monopole and Letelier's Cloud of Strings
+
+The static, spherically symmetric field of a global monopole, a hedgehog of three scalar fields that forms where a global O(3) symmetry breaks, and of Letelier's cloud of strings running out from a centre. Every sphere about the centre misses the same fraction of its solid angle, so light passing it is bent through one angle whatever its impact parameter, and with a mass at the centre it holds a black hole.
+
+- id: `global_monopole`
+- tags: topological defect, global monopole, cloud of strings, angular deficit, solid angle deficit, static, stationary, spherically symmetric, non-vacuum, scalar field, symmetry breaking, gravitational lensing, black hole, mass, horizon, event horizon, singularity, curvature singularity, coordinate singularity, causal structure, inflation, structure formation, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/global_monopole.json
+- chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \Delta - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \Delta - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Barriola-Vilenkin: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + dr^2 + \left(1 - \Delta\right)r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \Delta - \dfrac{r_s}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \Delta - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Gödel Rotating Universe
 
 An exact solution of Einstein's field equations describing a rotating dust universe with closed timelike curves.

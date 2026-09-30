@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
-schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl
-and khan_penrose, and Godel's cylindrical chart.
+schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
+khan_penrose and global_monopole, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -654,6 +654,87 @@ def schwarzschild_de_sitter(system_id):
 SDS_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
 
 
+# -- Global monopole -------------------------------------------------------------------
+
+def global_monopole(system_id):
+    """The field of a global monopole, which is Letelier's cloud of strings about a mass, in
+    the static chart f = 1 - Delta - r_s/r and the two Eddington-Finkelstein charts built on its
+    tortoise coordinate dr_*/dr = 1/f, and Barriola and Vilenkin's conical chart, the static
+    chart at r_s = 0 with t and r rescaled by sqrt(1 - Delta). Every value is printed around
+    rf = (1 - Delta)r - r_s, so that each chart reduces to Schwarzschild's at Delta = 0 term by
+    term. The Kretschmann scalar is written as Schwarzschild's 12r_s^2/r^6 plus the terms in
+    Delta, and the conical chart is checked, slot by slot, to be the static chart at r_s = 0
+    pulled back through t = T/sqrt(1 - Delta), r = sqrt(1 - Delta) R."""
+    f = "\\left(1 - \\Delta - \\dfrac{r_s}{r}\\right)"
+    bare = "1 - \\Delta - \\dfrac{r_s}{r}"
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    horizon = ["r = r_s/(1 - \\Delta) \;\\text{(the horizon, for}\; r_s > 0\\text{)}"]
+    parameters = ["\\Delta", "r_s"]
+    kretschmann = "\\dfrac{12r_s^2 + 8\\Delta\\,r_s\\,r + 4\\Delta^2r^2}{r^6}"
+    if system_id == "conical":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        parameters = ["\\Delta"]
+        cone = " + \\left(1 - \\Delta\\right)r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+        line, chart_line = "ds^2 = -c^2dt^2 + dr^2" + cone, "ds^2 = -dt^2 + dr^2" + cone
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles
+        extra = {"check": global_monopole_cone}
+        name = "Barriola-Vilenkin"
+    elif system_id == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles + horizon
+        extra = {"components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                                "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+                 "kretschmann": kretschmann}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = chart_line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        one = "-1" if null == "u" else "1"
+        domains = [null + " \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles + horizon
+        extra = {"components": {"metric_components": {(null, null): "-" + f, (null, "r"): one, ("r", null): one},
+                                "inverse_metric_components": {(null, "r"): one, ("r", null): one, ("r", "r"): bare}},
+                 "kretschmann": kretschmann}
+    probe = vm.Reader(coords, parameters, ())
+    r, D = probe.symbol["r"], probe.parameters["Delta"]
+    lead = [D, r] + ([probe.parameters["r_s"]] if "r_s" in parameters else [])
+    return {
+        "metric_id": "global_monopole",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"rising": [D] + lead[2:], "lead": lead, "flip": False},
+        **extra,
+    }
+
+
+def global_monopole_cone(chart):
+    """J^T g J, with g the static chart at r_s = 0 and J the Jacobian of ct = cT/sqrt(1 - Delta),
+    r = sqrt(1 - Delta) R, against the conical chart's metric, in every slot."""
+    spec = global_monopole("static")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    D = chart.reader.parameters["Delta"]
+    k = sp.sqrt(1 - D)
+    T, R = chart.symbols[:2]
+    at = {source.reader.parameters["Delta"]: D, source.reader.parameters["r_s"]: 0,
+          source.symbols[0]: T / k, source.symbols[1]: k * R}
+    at.update(dict(zip(source.symbols[2:], chart.symbols[2:])))
+    J = sp.diag(1 / k, k, 1, 1)
+    pulled = J.T * source.geo.g.subs(at) * J
+    for a in range(4):
+        for b in range(a, 4):
+            if sp.simplify(pulled[a, b] - chart.geo.g[a, b]) != 0:
+                raise AssertionError(f"global_monopole: the static chart pulled back misses the conical "
+                                     f"chart in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+
+
+GM_CHARTS = ["static", "conical", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+
+
 # -- Nariai ----------------------------------------------------------------------------
 
 NARIAI_SPHERE = "\\dfrac{1}{\\Lambda}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
@@ -1139,7 +1220,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "einstein_rosen_waves": [lambda s=s: einstein_rosen(s) for s in ("cylindrical", "null")],
           "nariai": [lambda s=s: nariai(s) for s in ("static", "global", "conformal")],
           "aichelburg_sexl": [lambda s=s: aichelburg_sexl(s) for s in AS_CHARTS],
-          "khan_penrose": khan_penrose}
+          "khan_penrose": khan_penrose,
+          "global_monopole": [lambda s=s: global_monopole(s) for s in GM_CHARTS]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------

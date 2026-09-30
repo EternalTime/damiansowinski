@@ -321,6 +321,40 @@
     "embedding": "288fc546b8f93c07"
   },
   {
+    "id": "global_monopole",
+    "name": "Global Monopole",
+    "tags": [
+      "topological defect",
+      "global monopole",
+      "cloud of strings",
+      "angular deficit",
+      "solid angle deficit",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "non-vacuum",
+      "scalar field",
+      "symmetry breaking",
+      "gravitational lensing",
+      "black hole",
+      "mass",
+      "horizon",
+      "event horizon",
+      "singularity",
+      "curvature singularity",
+      "coordinate singularity",
+      "causal structure",
+      "inflation",
+      "structure formation",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "a8bbfbc785b2430d"
+  },
+  {
     "id": "godel",
     "name": "Gödel",
     "tags": [
