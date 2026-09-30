@@ -40,6 +40,16 @@
    width it had at the start as well as the height, a rectangle turned toward its diagonal drawn
    smaller.
 
+   A stack of ellipses, the world tube of a ring of particles or a cone cut open and unrolling,
+   is a grid piece whose rows are ellipses about the axis. It draws the lines it names itself and
+   its outline, and a point on it is judged from just outside and just inside it, straight out
+   from the axis and back. A stack also stands on its axis of time, drawn up the axis and named
+   at its top, and names each moment beside the end of its ring.
+
+   A movie is drawn one frame at a time, the frame frame() chooses, and every frame turns about
+   one centre and keeps with the others within the height and width they take together, so the
+   frames keep one size and place as they change and as the reader turns them.
+
    A figure of light cones is drawn as drawCones() says. */
 (function(root) {
   'use strict';
