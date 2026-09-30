@@ -352,7 +352,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1ccce925f3c48d99"
+    "version": "1ccce925f3c48d99",
+    "diagrams": "fa2f1e08173abce4",
+    "conformal": "5f360e629f92fb00",
+    "embedding": "364e0217d4805443"
   },
   {
     "id": "godel",

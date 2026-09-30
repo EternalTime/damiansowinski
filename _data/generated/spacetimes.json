@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 39,
+  "count": 40,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -2145,6 +2145,316 @@
           ],
           "ricci_scalar": "R = 6\\dfrac{a''}{a^3}+6\\dfrac{k}{a^2}",
           "kretschmann": "K = 12\\dfrac{a''^2}{a^6} + 24\\dfrac{a'^4}{a^8} + 24\\dfrac{k\\,a'^2}{a^6} - 24\\dfrac{a'^2 a''}{a^7} + 12\\dfrac{k^2}{a^4}"
+        }
+      ]
+    },
+    {
+      "id": "global_monopole",
+      "name": "Global Monopole and Letelier's Cloud of Strings",
+      "short_name": "Global Monopole",
+      "description": "The static, spherically symmetric field of a global monopole, a hedgehog of three scalar fields that forms where a global O(3) symmetry breaks, and of Letelier's cloud of strings running out from a centre. Every sphere about the centre misses the same fraction of its solid angle, so light passing it is bent through one angle whatever its impact parameter, and with a mass at the centre it holds a black hole.",
+      "tags": [
+        "topological defect",
+        "global monopole",
+        "cloud of strings",
+        "angular deficit",
+        "solid angle deficit",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "non-vacuum",
+        "scalar field",
+        "symmetry breaking",
+        "gravitational lensing",
+        "black hole",
+        "mass",
+        "horizon",
+        "event horizon",
+        "singularity",
+        "curvature singularity",
+        "coordinate singularity",
+        "causal structure",
+        "inflation",
+        "structure formation",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The deficit $\\Delta$ is dimensionless and $r_s$ a length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "kibble1976",
+        "barriola1989",
+        "guendelman1991",
+        "harari1990",
+        "letelier1979",
+        "stachel1980",
+        "vilenkin1981",
+        "vilenkin1994",
+        "linde1994",
+        "maison1999",
+        "liebling2000",
+        "bennett1990",
+        "pen1994",
+        "pen1997"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/global_monopole.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s/(1 - \\Delta) \\;\\text{(the horizon, for}\\; r_s > 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Delta",
+              "description": "Solid angle deficit, the fraction of $4\\pi$ missing from every sphere about the centre, $0 \\le \\Delta < 1$: $8\\pi G\\eta^2$ in units with $\\hbar = c = 1$ for a global monopole of symmetry breaking scale $\\eta$, and Letelier's $a$ for a cloud of strings"
+            },
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre, $r_s = 2GM/c^2$: positive for a black hole in a cloud of strings, negative and small outside a global monopole's core"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\Delta - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\Delta - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\Delta - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\Delta - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\Delta}{r^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2 + 8\\Delta\\,r_s\\,r + 4\\Delta^2r^2}{r^6}"
+        },
+        {
+          "id": "conical",
+          "name": "Barriola-Vilenkin",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Delta",
+              "description": "Solid angle deficit, the fraction of $4\\pi$ missing from every sphere about the centre, $0 \\le \\Delta < 1$: $8\\pi G\\eta^2$ in units with $\\hbar = c = 1$ for a global monopole of symmetry breaking scale $\\eta$, and Letelier's $a$ for a cloud of strings"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the proper distance from the centre, with no mass at the centre, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dr^2 + \\left(1 - \\Delta\\right)r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\left(1 - \\Delta\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\left(1 - \\Delta\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\Delta}{r^2\\left(1 - \\Delta\\right)}",
+          "kretschmann": "K = \\dfrac{4\\Delta^2}{r^4\\left(1 - \\Delta\\right)^2}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s/(1 - \\Delta) \\;\\text{(the horizon, for}\\; r_s > 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Delta",
+              "description": "Solid angle deficit, the fraction of $4\\pi$ missing from every sphere about the centre, $0 \\le \\Delta < 1$: $8\\pi G\\eta^2$ in units with $\\hbar = c = 1$ for a global monopole of symmetry breaking scale $\\eta$, and Letelier's $a$ for a cloud of strings"
+            },
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre, $r_s = 2GM/c^2$: positive for a black hole in a cloud of strings, negative and small outside a global monopole's core"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $r_* = r/(1 - \\Delta) + r_s\\ln\\left|(1 - \\Delta)r/r_s - 1\\right|/(1 - \\Delta)^2$.",
+          "line_element": "ds^2 = -\\left(1 - \\Delta - \\dfrac{r_s}{r}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\Delta - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\Delta}{r^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2 + 8\\Delta\\,r_s\\,r + 4\\Delta^2r^2}{r^6}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s/(1 - \\Delta) \\;\\text{(the horizon, for}\\; r_s > 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Delta",
+              "description": "Solid angle deficit, the fraction of $4\\pi$ missing from every sphere about the centre, $0 \\le \\Delta < 1$: $8\\pi G\\eta^2$ in units with $\\hbar = c = 1$ for a global monopole of symmetry breaking scale $\\eta$, and Letelier's $a$ for a cloud of strings"
+            },
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre, $r_s = 2GM/c^2$: positive for a black hole in a cloud of strings, negative and small outside a global monopole's core"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $r_* = r/(1 - \\Delta) + r_s\\ln\\left|(1 - \\Delta)r/r_s - 1\\right|/(1 - \\Delta)^2$.",
+          "line_element": "ds^2 = -\\left(1 - \\Delta - \\dfrac{r_s}{r}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\Delta - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\Delta}{r^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2 + 8\\Delta\\,r_s\\,r + 4\\Delta^2r^2}{r^6}"
         }
       ]
     },
