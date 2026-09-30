@@ -459,10 +459,10 @@ def check_citations(metrics, entries):
                 )
 
 
-# Prose set in paragraphs reads evenly: every paragraph of a history or a convention has
-# three to six sentences, and the longest is no more than twice the length of the shortest.
-# A history tells a story, so it runs to at least five paragraphs; a convention may be a
-# single paragraph. A table is not a paragraph of prose and is left out of the count.
+# Prose set in paragraphs reads evenly: every paragraph of a history has three to six
+# sentences, and the longest is no more than twice the length of the shortest. A history
+# tells a story, so it runs to at least five paragraphs. A table is not a paragraph of prose
+# and is left out of the count.
 HISTORY_PARAGRAPHS = 5
 PARAGRAPH_SENTENCES = (3, 6)
 PARAGRAPH_SPREAD = 2
@@ -496,17 +496,17 @@ def sentences(paragraph):
 
 
 def prose_paragraphs(text):
-    """Each paragraph of a history or a convention that is prose, with its place among all of them."""
+    """Each paragraph of a history that is prose, with its place among all of them."""
     return [(n, p) for n, p in enumerate(text.split("¶"), 1) if not p.startswith("TABLE::")]
 
 
 def paragraph_shape(text):
-    """The number of sentences in each paragraph of a history or a convention, tables left out."""
+    """The number of sentences in each paragraph of a history, tables left out."""
     return [len(sentences(p)) for _, p in prose_paragraphs(text)]
 
 
 def shape_problems(metric_id, field, text, fewest):
-    """Each way one history or convention fails to read evenly, naming the paragraph at fault."""
+    """Each way one history fails to read evenly, naming the paragraph at fault."""
     low, high = PARAGRAPH_SENTENCES
     paragraphs = prose_paragraphs(text)
     shape = [len(sentences(p)) for _, p in paragraphs]
@@ -525,18 +525,73 @@ def shape_problems(metric_id, field, text, fewest):
 
 
 def check_prose_shape(metrics):
-    """Refuse a history or a convention with paragraphs of uneven length, or a history too
-    short to read as a story.
+    """Refuse a history with paragraphs of uneven length, or one too short to read as a story.
 
-    Every one out of shape is named at once, with each paragraph that breaks the rule. A
-    spacetime may carry no convention, and then there is nothing to count.
+    Every one out of shape is named at once, with each paragraph that breaks the rule.
     """
     problems = []
     for metric in metrics:
         problems += shape_problems(metric["id"], "history", metric.get("history") or "",
                                    HISTORY_PARAGRAPHS)
-        if metric.get("convention"):
-            problems += shape_problems(metric["id"], "convention", metric["convention"], 1)
+    if problems:
+        raise DataError("\n".join(problems))
+
+
+# A convention says only what a reader needs to read the mathematics: the coordinates and
+# their units, what each parameter and function is, the factors of c and G, and any choice
+# of chart, index, sign or normalisation the components depend on. Each chart carries its
+# own, and the spacetime's `convention` holds what is true in every chart and names no
+# coordinate. The reader sees the chart's text followed by the spacetime's, as one paragraph
+# of at most five sentences. The captain cut every convention down to that on 29 September
+# 2026, and named the words below, which never come back.
+CONVENTION_SENTENCES = 5
+CONVENTION_BANNED = (
+    r"(?i)\bcost",
+    r"(?i)nowhere does the geometry break",
+    r"(?i)standing objection",
+    r"(?i)the Riemann tensor with the traces removed",
+    r"(?i)\bslots?\b",
+)
+
+
+def chart_conventions(metric):
+    """Each chart's convention as the reader sees it, with the chart's id: the chart's own
+    text, then the text the spacetime shares across its charts. A spacetime with no charts
+    has the shared text alone, under no id."""
+    shared = metric.get("convention") or ""
+    charts = metric.get("coordinates") or [{"id": None}]
+    return [(chart["id"], " ".join(text for text in (chart.get("convention") or "", shared) if text))
+            for chart in charts]
+
+
+def convention_problems(metric):
+    """Each way one spacetime's conventions break the rule, naming the chart at fault."""
+    where = f"{metric['id']}.json"
+    problems = []
+    if not isinstance(metric.get("convention"), str):
+        problems.append(f"{where} has no convention shared by its charts")
+    for chart in metric.get("coordinates") or []:
+        if not isinstance(chart.get("convention"), str) or not chart["convention"].strip():
+            problems.append(f"{where}: the chart {chart['id']!r} has no convention of its own")
+    for chart_id, text in chart_conventions(metric):
+        at = f"{where}: the convention" + (f" of the chart {chart_id!r}" if chart_id else "")
+        if "¶" in text:
+            problems.append(f"{at} runs to more than one paragraph")
+        count = len(sentences(text))
+        if count > CONVENTION_SENTENCES:
+            problems.append(f"{at} has {count} sentences, where a convention takes at most "
+                            f"{CONVENTION_SENTENCES}")
+        for pattern in CONVENTION_BANNED:
+            found = re.search(pattern, text)
+            if found:
+                problems.append(f"{at} says {found.group(0)!r}")
+    return problems
+
+
+def check_conventions(metrics):
+    """Refuse a convention that says more than a reader needs to read the mathematics, as far
+    as a count and a list of words can tell, naming every one at once."""
+    problems = [problem for metric in metrics for problem in convention_problems(metric)]
     if problems:
         raise DataError("\n".join(problems))
 
@@ -555,6 +610,7 @@ def main(argv=None):
         metrics = load_metrics()
         check_citations(metrics, references["entries"])
         check_prose_shape(metrics)
+        check_conventions(metrics)
         diagrams = load_diagrams(metrics)
         conformal = load_conformal(metrics)
         embedding = load_embedding(metrics)

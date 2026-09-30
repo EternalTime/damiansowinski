@@ -85,6 +85,7 @@ def spacetime_entry(metric):
             "coordinates": chart["coords"],
             "domains": chart["domains"],
             "parameters": chart["parameters"],
+            "convention": chart.get("convention"),
             "line_element": chart["line_element"],
             "metric_components": chart["metric_components"],
             "ricci_scalar": chart["ricci_scalar"],
@@ -110,9 +111,10 @@ def build_spacetimes(metrics):
         "name": "My Favorite Spacetimes",
         "description": (
             "A catalogue of exact solutions of Einstein's field equations. For each spacetime: "
-            "its name, a description, tags, signature and conventions, and for each coordinate "
-            "chart the coordinates, their domains, the parameters, the line element, the "
-            "nonzero metric components and the curvature invariants. Mathematics is LaTeX."
+            "its name, a description, tags, signature and the conventions shared by its charts, "
+            "and for each coordinate chart the coordinates, their domains, the parameters, the "
+            "chart's own conventions, the line element, the nonzero metric components and the "
+            "curvature invariants. Mathematics is LaTeX."
         ),
         "page_url": absolute("/MFS/"),
         "references_url": absolute("/MFS/assets/data/references.json"),

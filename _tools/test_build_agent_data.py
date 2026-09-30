@@ -49,6 +49,15 @@ class Spacetimes(unittest.TestCase):
                 for chart in s["charts"]:
                     self.assertTrue(chart["coordinates"] and chart["line_element"] and chart["metric_components"])
 
+    def test_each_chart_carries_its_own_convention_beside_the_shared_one(self):
+        metrics = {m["id"]: m for m in mfs.load_metrics()}
+        for s in self.data["spacetimes"]:
+            with self.subTest(s["id"]):
+                metric = metrics[s["id"]]
+                self.assertEqual(s["convention"], metric["convention"])
+                self.assertEqual([c["convention"] for c in s["charts"]],
+                                 [c["convention"] for c in metric["coordinates"]])
+
 
 class Publications(unittest.TestCase):
     def setUp(self):
