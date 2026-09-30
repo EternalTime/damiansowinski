@@ -2743,29 +2743,30 @@
       }
 
       /* The conventions a spacetime is written in: its signature, and the paragraph that says
-         what range each coordinate takes, what each parameter means, which chart the
-         components are printed in and which contraction the Ricci tensor is. The captain moved
+         what the chosen chart's coordinates are, what each parameter means, which chart the
+         components are taken in and which contraction the Ricci tensor is. The captain moved
          them into the mathematics from the history on 23 September 2026, and they stand just
          under the coordinates, since he asked on 27 September for the chart to be chosen
          before anything, and above everything else, since nothing below can be read without
-         them. They belong to the spacetime rather than to a chart, since an entry carries one
-         signature and one convention and none per chart, so choosing a chart leaves them
-         standing. The application reads them in the same place, under the heading it gives
-         them. They are prose with inline TeX, set in the one MathJax pass with the
-         rest of the page, and they wrap as the diagram captions do rather than scroll as a
-         line of mathematics does. The text is escaped, since it is never HTML and a TeX
-         `k < 0` must reach MathJax as it is written. An entry that carries neither field
-         gets no section at all. */
-      function conventionSection(data) {
-        if (!data.signature && !data.convention) return '';
+         them. The paragraph follows the chart, as he asked on 29 September 2026: each chart
+         carries its own convention, the spacetime one more that holds in every chart, and the
+         reader sees the chart's text and then the spacetime's, so choosing a chart, which
+         draws the whole panel again, changes it with the tensors. The application reads them
+         in the same place, under the heading it gives them. They are prose with inline TeX,
+         set in the one MathJax pass with the rest of the page, and they wrap as the diagram
+         captions do rather than scroll as a line of mathematics does. The text is escaped,
+         since it is never HTML and a TeX `k < 0` must reach MathJax as it is written. An
+         entry that carries neither a signature nor a convention gets no section at all. */
+      function conventionSection(data, coord) {
+        var text = [coord.convention, data.convention].filter(function(t) { return t && t.trim(); })
+          .map(function(t) { return t.trim(); }).join(' ');
+        if (!data.signature && !text) return '';
         return [
           '<div class="mfs-section">',
             '<div class="mfs-section-label">conventions</div>',
             '<div class="mfs-convention">',
               data.signature ? '<p><span class="mfs-convention-k">signature</span> ' + tex(nrEsc(data.signature)) + '</p>' : '',
-              (data.convention || '').split('¶').map(function(p) {
-                return p.trim() ? '<p>' + nrProse(nrEsc(p.trim())) + '</p>' : '';
-              }).join(''),
+              text ? '<p>' + nrProse(nrEsc(text)) + '</p>' : '',
             '</div>',
           '</div>'
         ].join('');
@@ -2956,9 +2957,8 @@
              for on 27 September 2026, so the coordinates open the mathematics, their buttons
              and then the chart's domains, and everything below them is the chart's: every
              quantity is written in it, and the diagrams after the geodesics show its views.
-             Only the conventions below belong to the spacetime rather than to the chart, and
-             they stand between the domains and the line element, which the application does
-             too. */
+             The conventions below follow the chart as well, and they stand between the
+             domains and the line element, which the application does too. */
           (hasCoords ? [
             '<div class="mfs-section mfs-coordinates">',
               '<div class="mfs-section-head">',
@@ -2981,7 +2981,7 @@
             '</div>'
           ].join('') : ''),
 
-          conventionSection(data),
+          conventionSection(data, coord),
 
           ((hasCoords && !coordHasContent) ? [
             '<div class="mfs-section"><div class="mfs-placeholder">',
