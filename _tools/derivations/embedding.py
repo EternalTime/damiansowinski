@@ -3930,6 +3930,92 @@ def mixmaster(ck, src):
 
 # ---------------------------------------------------------------- the spacetimes with nothing to draw
 
+def c_metric(ck, src):
+    """The C-metric at alpha m = 1/6 and C = 1/(1 + 2 alpha m) = 3/4, as its other diagrams
+    declare, m = 1, in its spherical chart. Two views.
+
+    The equator of the moment t = 0: there 1 + alpha r cos(theta) and 1 + 2 alpha m cos(theta)
+    are both 1, so the slice is dr^2/Q + C^2 r^2 dphi^2 with Q = (1 - alpha^2 r^2)(1 - 2m/r),
+    and rho = C r. Q < 1 between the horizons, so the profile climbs from the black hole
+    horizon r = 2m, where it is vertical, to the acceleration horizon r = 1/alpha, where it is
+    vertical again at its widest circle. Through the acceleration horizon's bifurcation the
+    moment runs on into the second black hole's exterior, the same surface turned over, and the
+    two meet there with one tangent.
+
+    The black hole horizon itself, r = 2m at one moment, its bifurcation sphere: there
+    1 + alpha r cos(theta) = 1 + 2 alpha m cos(theta) = P, so the metric is
+    4m^2 dtheta^2/P^3 + 4m^2 C^2 sin^2(theta) dphi^2/P and rho = 2mC sin(theta)/sqrt(P). The
+    pole theta = 0 is smooth, since drho/ds = C(1 + 2 alpha m) = 1 there, and theta = pi is the
+    apex of a cone, drho/ds = C(1 - 2 alpha m) = 1/2, where the cosmic string meets the horizon,
+    the deficit angle 8 pi alpha m/(1 + 2 alpha m) being 2 pi times what that rate falls short
+    of 1. Its area is checked against Griffiths, Krtous and Podolsky's eq. (21),
+    16 pi C m^2/(1 - 4 alpha^2 m^2) = 13.5 pi."""
+    params = {"m": 1, "alpha": "1/6", "C": "3/4"}
+    C, alpha = 0.75, 1 / 6
+    sl = Slice(src, "c_metric", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    found = sorted(h for h in sl.horizons() if h > 0)
+    ck.add("C-metric: the horizons on the equator are at r = 2m and 1/alpha = 6m",
+           abs(found[0] - 2) + abs(found[-1] - 6) + abs(len(found) - 2), 1e-12)
+    inner, outer = 2.0, 6.0
+    size = 2 * C * outer
+    near = Piece("near", "sheet", sl, inner, outer, 0.0, 1,
+                 (("throat", "the black hole horizon $r = 2m$, its bifurcation sphere"),
+                  ("join", "the acceleration horizon $r = 1/\\alpha$, the widest circle, where the moment runs on "
+                           "into the second black hole's exterior")),
+                 [(inner, "horizon", "$r = 2m$")] + [(r, "r", None) for r in (3.0, 4.0, 5.0)]
+                 + [(outer, "horizon", "$r = 1/\\alpha$")], size)
+    top = float(near.z[-1])
+    far = Piece("far", "sheet2", sl, inner, outer, 2 * top, -1,
+                (("throat", "the second black hole's horizon, $r = 2m$"), ("join", "the acceleration horizon")),
+                [(inner, "horizon", None)] + [(r, "r2", None) for r in (3.0, 4.0, 5.0)], size)
+    for p in (near, far):
+        ck.isometry(f"C-metric equator, {p.id}", p)
+        ck.radius(f"C-metric equator, {p.id}, rho = C r", p, lambda r: C * r, size)
+    ck.join("C-metric equator, the two exteriors at the acceleration horizon", near, outer, far, outer)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(inner), "$r = 2m$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(outer), "$r = 1/\\alpha = 6m$")
+    fig.legend("fill", "cover", "the exterior $2m < r < 1/\\alpha$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3m$, $4m$ and $5m$")
+    fig.legend("line", "r2", "the same radii in the second black hole's exterior")
+    fig.legend("line", "horizon", "the horizons: the throats $r = 2m$ and the widest circle $r = 1/\\alpha$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = ("$m = 1$, the unit of every length, $\\alpha = 1/(6m)$, and $C = 1/(1 + 2\\alpha m) = 3/4$, "
+                "which leaves the half axis $\\theta = 0$ regular.")
+    views = [view("equator", "The equator", "$m$", [surface], fig.done(), settings=settings)]
+
+    hz = Slice(src, "c_metric", "spherical", "\\theta", "\\phi", {"t": 0, "r": 2}, params)
+    hsize = 4 * C
+    horizon = Piece("horizon", "sheet", hz, 0.0, math.pi, 0.0, -1,
+                    (("axis", "the pole $\\theta = 0$, on the half axis between the black holes, where the "
+                              "horizon is smooth"),
+                     ("apex", "the pole $\\theta = \\pi$, where the cosmic string meets the horizon")),
+                    [(math.pi / 4, "r", None), (math.pi / 2, "r", "$\\theta = \\pi/2$"), (3 * math.pi / 4, "r", None)],
+                    hsize)
+    ck.isometry("C-metric horizon", horizon)
+    ck.radius("C-metric horizon, rho = 2mC sin(theta)/sqrt(1 + 2 alpha m cos(theta))", horizon,
+              lambda th: 2 * C * np.sin(th) / np.sqrt(1 + np.cos(th) / 3), hsize)
+    for pole, want in ((0.0, 1.0), (math.pi, 0.5)):
+        h = 1e-6 if pole == 0 else -1e-6
+        rate = abs(float(hz.rho_at(pole + h)) - float(hz.rho_at(pole))) / hz.proper(min(pole, pole + h), max(pole, pole + h))
+        ck.add(f"C-metric horizon: drho/ds at theta = {pole:.4f} is C(1 {'+' if pole == 0 else '-'} 2 alpha m)",
+               abs(rate - want), 1e-5)
+    pts = np.array(horizon.data()["points"])
+    ds = np.hypot(np.diff(pts[:, 1]), np.diff(pts[:, 2]))
+    area = float(np.sum(2 * math.pi * 0.5 * (pts[1:, 1] + pts[:-1, 1]) * ds))
+    ck.add("C-metric horizon: the area is 16 pi C m^2/(1 - 4 alpha^2 m^2), Griffiths, Krtous and Podolsky's (21)",
+           abs(area - 16 * math.pi * C / (1 - 4 * alpha ** 2)) / (13.5 * math.pi), 1e-4)
+    hsurface = Surface([horizon])
+    fig = figure_of([hsurface], {"sheet": "cover"}, hsize)
+    ring_label(fig, [0, 0, 0], *horizon.at(math.pi / 2), "$\\theta = \\pi/2$")
+    fig.legend("fill", "cover", "the black hole horizon $r = 2m$ at one moment")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("horizon", "The black hole horizon", "$m$", [hsurface], fig.done(), settings=settings))
+    return views
+
+
 def flat_slices(ck, src, metric_id, system_id, time="t"):
     """Check that every slice of constant `time` of a coordinate system is flat: its spatial
     metric has no cross term and no component that depends on a spatial coordinate, so at
@@ -3982,6 +4068,7 @@ DRAWN = {
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
+    "c_metric": c_metric,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -4006,6 +4093,31 @@ CAPTIONS = {
         "space, $dX^2 + dY^2 - dZ^2$, with every distance along it the metric distance. It climbs at $dZ/dr = "
         "\\sqrt{1 - 1/N^2}$ from level at $r = \\sqrt{1 + M}\\,\\ell$, and far out, where $N^2 \\to r^2/\\ell^2$, "
         "it nears a light cone of that space, as the hyperboloid of anti-de Sitter space does.",
+    ],
+    ("c_metric", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the C-metric at one moment of $t$ ($\\alpha m = 1/6$, "
+        "$C = 3/4$), drawn as a surface in flat space with every distance along it the metric distance. On the "
+        "equator $1 + \\alpha r\\cos\\theta$ and $1 + 2\\alpha m\\cos\\theta$ are both 1, so the slice is "
+        "$dr^2/Q + C^2r^2\\,d\\phi^2$ with $Q = (1 - \\alpha^2r^2)(1 - 2m/r)$, and the circle of coordinate $r$ "
+        "has radius $Cr$. Between the horizons $Q < 1$, so the surface climbs from the black hole horizon at "
+        "$r = 2m$, where it stands vertical, out to the acceleration horizon at $r = 1/\\alpha = 6m$, where it "
+        "stands vertical again at its widest circle.",
+        "Through the bifurcation of the acceleration horizon the moment runs on into the exterior of the second "
+        "black hole, the same surface turned over, and closes in on that black hole's horizon. Each throat is "
+        "the bifurcation sphere of a black hole horizon, through which the extension of Jerry Griffiths, Pavel "
+        "Krtouš, and Jiří Podolský continues into a further exterior.",
+    ],
+    ("c_metric", "horizon"): [
+        "The black hole horizon $r = 2m$ at one moment of $t$, its bifurcation sphere ($\\alpha m = 1/6$, "
+        "$C = 3/4$), drawn as a surface in flat space with every distance along it the metric distance. There "
+        "$1 + \\alpha r\\cos\\theta$ equals $P = 1 + 2\\alpha m\\cos\\theta$, so the metric is "
+        "$4m^2\\,d\\theta^2/P^3 + 4m^2C^2\\sin^2\\theta\\,d\\phi^2/P$, and the circle of latitude $\\theta$ has "
+        "radius $2mC\\sin\\theta/\\sqrt{P}$.",
+        "With $C = 1/(1 + 2\\alpha m)$ the surface is smooth at the pole $\\theta = 0$, on the half axis between "
+        "the black holes, and comes to the apex of a cone at $\\theta = \\pi$, where the cosmic string meets the "
+        "horizon. There the radius grows with distance from the pole at the rate $(1 - 2\\alpha m)/(1 + 2\\alpha m)$, "
+        "one half here, and the rate falls short of 1 by the deficit angle $8\\pi\\alpha m/(1 + 2\\alpha m)$ "
+        "divided by $2\\pi$. The area is $16\\pi Cm^2/(1 - 4\\alpha^2m^2) = 13.5\\pi m^2$.",
     ],
     ("schwarzschild", "flamm"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Schwarzschild spacetime at one moment of $t$, "

@@ -3019,6 +3019,14 @@ class Slices(unittest.TestCase):
             return (lambda X: t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "minkowski/rindler")):
             return (lambda X: 0.0), None
+        if key.startswith("c_metric"):
+            # The equator's t = 0 along the axis, and the horizon's bifurcation sphere as a point,
+            # at r = 2m, or y = 1/(alpha r) = 3 on the Hong-Teo plane.
+            hong_teo = "/hong_teo/" in key
+            if not mark["lines"]:
+                return (lambda X: 0.0), [3.0 if hong_teo else 2.0]
+            lo, hi = self.reach(surface, "spherical")
+            return (lambda X: 0.0), ([6 / hi, 6 / lo] if hong_teo else [lo, hi])
         if key.startswith("bertotti_robinson"):
             lo, hi = self.reach(surface) if mark["lines"] else (1, 1)
             return (lambda X: 0.0), [lo, hi]

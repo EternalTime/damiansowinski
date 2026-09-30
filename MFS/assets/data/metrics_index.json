@@ -162,7 +162,9 @@
       "idealized model"
     ],
     "version": "fbdadecf18598b24",
-    "diagrams": "a8099bc8c3a71f58"
+    "diagrams": "b374f21777b0d1f9",
+    "conformal": "310629bb98ac7dcd",
+    "embedding": "e8d2d40a968ae2e1"
   },
   {
     "id": "de_sitter",

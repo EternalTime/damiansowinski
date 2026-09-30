@@ -331,6 +331,20 @@ def _btz(sign=0):
     return out
 
 
+def _c_metric(y):
+    """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
+    axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
+    the bifurcation sphere at t = 0 and r = 2m, whose poles lie on the axis. On the Hong-Teo
+    plane the same is tau = 0 over y = 1/(alpha r), alpha = 1/6."""
+    equator = moments("c_metric", "equator")[0]
+    horizon = moments("c_metric", "horizon", label="$t = 0$, $r = 2m$")[0]
+    lo, hi = equator.reach("spherical", "r")
+    if y:
+        lo, hi = 6 / hi, 6 / lo
+        horizon.label = "$\\tau = 0$, $y = 3$"
+    return [Mark(equator, along(0.0, lo, hi)), Mark(horizon, points=[(0.0, 3.0 if y else 2.0)])]
+
+
 FLAT = {
     ("btz", "stationary", "static"): lambda: _btz(),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
@@ -394,6 +408,9 @@ FLAT = {
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
     ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): os_exterior,
     # v - r = w, every r the embedding reaches.
+    ("c_metric", "spherical", "inner"): lambda: _c_metric(False),
+    ("c_metric", "spherical", "outer"): lambda: _c_metric(False),
+    ("c_metric", "hong_teo", "inner"): lambda: _c_metric(True),
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
         "vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),
 }
