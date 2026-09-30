@@ -333,9 +333,6 @@ def _ads_poincare():
     return [Mark(m, across(0.0, 0.0, x))]
 
 
-BTZ_LABEL = {"throat": "$t = 0$, $N^2 < 1$", "outside": "$t = 0$, $N^2 > 1$"}
-
-
 def btz_rstar(r):
     """The BTZ hole's r_* = (1/2) ln|(r - 1)/(r + 1)| at M = 1, l = 1, vanishing as r -> infinity,
     which fixes the Eddington-Finkelstein charts' v = ct + r_* and u = ct - r_*."""
@@ -344,16 +341,16 @@ def btz_rstar(r):
 
 
 def _btz(sign=0):
-    """Both moments t = 0 of the BTZ hole without rotation: along r in its stationary chart
-    (sign 0), and in its ingoing (1) or outgoing (-1) chart as v = r_* or u = -r_*, crowding
-    toward the horizon, where the curve runs off."""
-    out = []
-    for m in moments("btz"):
-        lo, hi = m.reach("stationary", "r")
-        r = near(lo, hi) if lo <= 1.0 else np.linspace(lo, hi, N)
-        line = along(0.0, lo, hi) if not sign else [np.column_stack([sign * btz_rstar(r), r])]
-        out.append(Mark(m, line, label=BTZ_LABEL[m.view["id"]]))
-    return out
+    """The moment t = 0 of the BTZ hole without rotation, from the throat r_+ = 1 out: along r
+    in its stationary chart (sign 0), and in its ingoing (1) or outgoing (-1) chart as v = r_* or
+    u = -r_*, crowding toward the horizon, where the curve runs off. Each chart covers one
+    exterior, and the moment's other exterior lies over the same r."""
+    m, = moments("btz")
+    lo, hi = m.reach("stationary", "r")
+    if not sign:
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([sign * btz_rstar(r), r])])]
 
 
 def _c_metric(y):
