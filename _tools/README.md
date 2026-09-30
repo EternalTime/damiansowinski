@@ -813,7 +813,7 @@ The arrow keys turn it by 15 degrees once the drawing has the focus, which a cli
 
 The page plays a movie as `wireMovie()` in `_layouts/mfs.html` says: it plays once drawn and only while it is on the screen, keeping each frame once drawn at the figure's own camera, and a reader who asks for reduced motion finds it paused on its first frame.
 The button in the top left corner of its frame, in the reset's size and colours and pink while pressed, plays and pauses it, and the label below the drawing names the frame shown.
-FRW's sphere does not turn under the hand, and every other movie turns while it plays.
+The movies of FRW and the Milne universe do not turn under the hand, and every other movie turns while it plays.
 The print copy prints the first frame.
 
 `_tools/turn_drag.mjs` turns one figure of each kind in headless Chrome as a reader does, Schwarzschild's surface, Krasnikov's height and Gödel's light cones, with the mouse, the keys, the reset button and, on a phone, a finger.

@@ -467,6 +467,18 @@ A static, spherically symmetric traversable wormhole engineered to have no horiz
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{2\Phi}c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -e^{2\Phi}c^2dt^2 + dl^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Nariai Universe
+
+A vacuum solution with a positive cosmological constant, geometrically the product of a two dimensional de Sitter space and a sphere of the same radius (dS₂ × S²). It is the limit of the Schwarzschild-de Sitter black hole as its horizon meets the cosmological horizon, the largest black hole a de Sitter universe can hold.
+
+- id: `nariai`
+- tags: vacuum, vacuum solution, positive cosmological constant, cosmological constant, de Sitter, product spacetime, homogeneous, spherically symmetric, static, cosmology, cosmological, horizon, cosmological horizon, Killing horizon, extremal, Schwarzschild-de Sitter, black hole pair creation, instanton, Birkhoff theorem, Petrov type D, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/nariai.json
+- chart Static: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \Lambda r^2\right)c^2dt^2 + \dfrac{dr^2}{1 - \Lambda r^2} + \dfrac{1}{\Lambda}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Global: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \dfrac{1}{\Lambda}\left(\cosh^2\left(\sqrt{\Lambda}\,ct\right)d\chi^2 + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Conformal: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = \dfrac{1}{\Lambda}\left(\dfrac{-d\eta^2 + d\chi^2}{\cos^2\eta} + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Natário Warp Drive
 
 A warp bubble metric in which space flows around a stationary ship with no expansion or contraction anywhere, so that volume elements are carried along unchanged. It shows that the expansion of space is inessential to warp travel, and that the requirement of negative energy density survives its removal.

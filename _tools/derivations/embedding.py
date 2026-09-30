@@ -4386,7 +4386,7 @@ def nariai(ck, src):
     fig.legend("line", "meridian", "$\\chi$ constant, every $30°$")
     settings = "$\\Lambda = 1$, so that $1/\\sqrt{\\Lambda}$ is the unit of every length."
     views = [view("universe", "The circle and a great circle", "$1/\\sqrt{\\Lambda}$", surfaces, fig.done(),
-                  movie=movie(frames, "$ct$", [f.time for f in frames], turns=False), settings=settings)]
+                  movie=movie(frames, "$ct$", [f.time for f in frames]), settings=settings)]
 
     sphere_slice = Slice(src, "nariai", "static", "\\theta", "\\phi", {"t": 0, "r": 0}, {"Lambda": 1})
     ball = Piece("sphere", "sheet", sphere_slice, 0.0, math.pi, 0.0, 1,
