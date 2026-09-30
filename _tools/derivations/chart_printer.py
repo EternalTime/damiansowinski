@@ -382,9 +382,10 @@ class Printer:
             if len(numerator) == 1 and isinstance(numerator[0][0], Sum) and numerator[0][1] == 1 and head:
                 # A lone bracket with a minus in front: the sign goes into the sum as well.
                 return self.sum_text(numerator[0][0].negated())
-            body = self.product(numerator)
+            # A named sum standing alone is bracketed once a coefficient or a sign stands before it.
+            body = self.product(numerator, alone=(len(numerator) == 1 and p == 1 and not head))
             return head + (str(p) if p != 1 else "") + body
-        top_text = self.product(numerator) if numerator else ""
+        top_text = self.product(numerator, alone=(len(numerator) == 1 and p == 1)) if numerator else ""
         if p != 1 or not top_text:
             top_text = str(p) + top_text
         bottom = self.product(denominator, alone=(q == 1 and len(denominator) == 1)) if denominator else ""

@@ -186,6 +186,14 @@ DIMENSIONS = {
     ("einstein_rosen_waves", "null"): {
         "u": "L", "v": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\gamma": "1",
     },
+    # B = sqrt(G) B_0/c^2 folds the field in Gaussian units into an inverse length, so B rho and
+    # B r sin(theta) are pure numbers; Ernst's hole keeps Schwarzschild's r_s = 2GM/c^2.
+    ("melvin", "cylindrical"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "B": "1/L",
+    },
+    ("melvin", "ernst"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "B": "1/L",
+    },
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
