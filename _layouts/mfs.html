@@ -89,7 +89,7 @@
        has no box of its own and each is fixed in its corner. -->
   <div id="mfs-banner">
   <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 7em);"></div>
-  <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--teal-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
+  <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--mfs-cyan-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
   </div>
 
 <div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
@@ -118,7 +118,7 @@
     padding:min(1em, 16px); display:flex; flex-direction:column; align-items:center; gap:0.7em;">
   <div id="mfs-coffee-scroll" style="align-self:stretch;min-height:0;overflow-y:auto;">
     <p id="mfs-coffee-text" style="margin:0;font-size:0.72em;line-height:1.5;
-      color:var(--teal-light);letter-spacing:0.02em;text-align:left;">
+      color:var(--mfs-cyan-light);letter-spacing:0.02em;text-align:left;">
       Please let me know if you would like any other spacetimes added to the collection, or if (gasp) you see an error somewhere.
       General relativity calculations are best fueled by coffee, so if you find this site useful lend me a hand in the endless struggle of keeping myself caffeinated.
     </p>
@@ -247,7 +247,7 @@
       padding: 5px 8px;
       font-family: 'Source Code Pro', monospace;
       font-size: min(18px, var(--mfs-fit, 18px));
-      color: var(--teal-light);
+      color: var(--mfs-cyan-light);
       border-radius: 4px;
       cursor: pointer;
       letter-spacing: 0.04em;
@@ -332,7 +332,7 @@
       var t      = 0;
 
       var cs      = getComputedStyle(document.documentElement);
-      var tealRgb = cs.getPropertyValue('--teal-dark-rgb').trim();
+      var cyanRgb = cs.getPropertyValue('--mfs-cyan-dark-rgb').trim();
       var pinkRgb = cs.getPropertyValue('--pink-dark-rgb').trim();
       canvas.style.backgroundColor = cs.getPropertyValue('--bg-black').trim();
 
@@ -478,7 +478,7 @@
         }
 
         var grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-        grad.addColorStop(0, 'rgba(' + tealRgb + ', ' + _flickerOpacity + ')');
+        grad.addColorStop(0, 'rgba(' + cyanRgb + ', ' + _flickerOpacity + ')');
         grad.addColorStop(1, 'rgba(' + pinkRgb + ', ' + _flickerOpacity + ')');
         ctx.strokeStyle = grad;
 
@@ -583,11 +583,11 @@
   </script>
 
   <script>
-    /* ── MFS flicker-in (title + exit sign): each letter flickers in teal and pink and
-       settles in teal, by colour and opacity alone, since nothing on the page glows. ── */
+    /* ── MFS flicker-in (title + exit sign): each letter flickers in cyan and pink and
+       settles in cyan, by colour and opacity alone, since nothing on the page glows. ── */
     (function() {
       var cs        = getComputedStyle(document.documentElement);
-      var tealLight = cs.getPropertyValue('--teal-light').trim();
+      var cyanLight = cs.getPropertyValue('--mfs-cyan-light').trim();
       var pinkLight = cs.getPropertyValue('--pink-light').trim();
 
       var STAGGER_MS = 60;
@@ -607,7 +607,7 @@
           var r = Math.random();
           if (r < 0.45) {
             span.style.opacity = '1';
-            span.style.color   = tealLight;
+            span.style.color   = cyanLight;
           } else if (r < 0.65) {
             span.style.opacity = '0.15';
           } else if (r < 0.85) {
@@ -619,7 +619,7 @@
           setTimeout(function() { flickerLetter(span, startTime, elId, gen); }, 30 + Math.random() * 40);
         } else {
           span.style.opacity = '1';
-          span.style.color   = tealLight;
+          span.style.color   = cyanLight;
         }
       }
 
@@ -3694,7 +3694,7 @@
     #mfs-content-panel .mfs-choice:active,
     #mfs-content-panel #mfs-print-btn:active { color: var(--pink-light); border-color: var(--pink-light); transition: none; }
     #mfs-content-panel .mfs-placeholder {
-      color: var(--teal-light);
+      color: var(--mfs-cyan-light);
       line-height: 1.6;
       letter-spacing: 0.03em; padding: 1.2em 0;
     }
@@ -3709,7 +3709,7 @@
       position: fixed; right: 0; z-index: 14; box-sizing: border-box;
       display: flex; align-items: center; justify-content: center;
       padding: 1em; text-align: center;
-      color: var(--teal-light);
+      color: var(--mfs-cyan-light);
       line-height: 1.6; letter-spacing: 0.03em;
       pointer-events: none; opacity: 0; will-change: opacity;
       transition: opacity 150ms ease-in;
@@ -3727,7 +3727,7 @@
     #mfs-content-panel .mfs-table-scroll { overflow-x: auto; margin: 1em 0; }
     #mfs-content-panel .mfs-table {
       border-collapse: collapse; width: 100%;
-      color: var(--teal-light);
+      color: var(--mfs-cyan-light);
     }
     #mfs-content-panel .mfs-table th,
     #mfs-content-panel .mfs-table td {
@@ -3742,11 +3742,11 @@
        captions, is set, and they wrap: nothing of a line of mathematics' scrolling applies. */
     #mfs-content-panel .mfs-convention p {
       line-height: 1.65;
-      color: var(--teal-light); margin: 0 0 0.8em;
+      color: var(--mfs-cyan-light); margin: 0 0 0.8em;
     }
     #mfs-content-panel .mfs-convention p:last-child { margin-bottom: 0.3em; }
     #mfs-content-panel .mfs-component {
-      font-size: 1.6875rem; color: var(--teal-light);
+      font-size: 1.6875rem; color: var(--mfs-cyan-light);
       line-height: 1.8; padding: 1px 0;
     }
     /* A line of mathematics, as mathLine() builds it: the label that stays, then the
@@ -3822,11 +3822,11 @@
        dimmed its words, formulae and tables below everything else on the page, the longest
        prose in the collection the hardest to read. */
     #mfs-content-panel .mfs-history {
-      font-size: var(--mfs-prose) !important; color: var(--teal-light) !important;
+      font-size: var(--mfs-prose) !important; color: var(--mfs-cyan-light) !important;
       line-height: 1.7 !important;
     }
     #mfs-content-panel .mfs-history p {
-      color: var(--teal-light) !important;
+      color: var(--mfs-cyan-light) !important;
       line-height: 1.7 !important;
       margin: 0 0 0.9em !important;
     }
@@ -3877,7 +3877,7 @@
       margin-bottom: 0 !important;
     }
     #mfs-content-panel .mfs-history .mfs-math {
-      color: var(--teal-light) !important;
+      color: var(--mfs-cyan-light) !important;
     }
     #mfs-content-panel .mfs-zero { color: rgba(0,229,255,0.35); }
     /* ── Spacetime diagrams ── */
@@ -3979,7 +3979,7 @@
     #mfs-content-panel .mfs-nr-text { flex: 1 1 21.25rem; min-width: 0; }
     #mfs-content-panel .mfs-nr-caption p {
       line-height: 1.65;
-      color: var(--teal-light); margin: 0 0 0.8em;
+      color: var(--mfs-cyan-light); margin: 0 0 0.8em;
     }
     #mfs-content-panel .mfs-nr-legend { display: flex; flex-wrap: wrap; gap: 0.375rem 1.375rem; margin: 0.25rem 0 0.75rem; }
     /* An entry of a legend is never wider than the legend, its words wrapping beside its
@@ -4013,7 +4013,7 @@
     .mfs-nr-swatch .nr-hatch-swatch { fill: rgba(168,192,208,0.12); stroke: rgba(168,192,208,0.35); }
     .nr-ray { fill: none; stroke-width: 1.25; stroke-linejoin: round; stroke-opacity: 0.8; }
     .mfs-nr-swatch .nr-ray { stroke-width: 2; stroke-opacity: 1; }
-    .nr-M { stroke: var(--teal-light); }
+    .nr-M { stroke: var(--mfs-cyan-light); }
     .nr-P { stroke: var(--pink-light); }
     .nr-areal { fill: none; stroke: rgba(238,242,245,0.34); stroke-width: 1; }
     .nr-cone-fill { fill: rgba(212,175,55,0.12); stroke: none; }
@@ -4050,7 +4050,7 @@
     .pj-cone-apex { fill: var(--gold); }
     .pj-above, .pj-below { fill: none; stroke-width: 1.4; stroke-linecap: round; }
     .pj-above { stroke: var(--pink-light); }
-    .pj-below { stroke: var(--teal-light); }
+    .pj-below { stroke: var(--mfs-cyan-light); }
     .pj-edge { fill: none; stroke: var(--text-dim); stroke-width: 1.4; stroke-dasharray: 6 4; }
     .pj-wedge-fill { fill: rgba(10,14,18,0.95); stroke: none; }
     .pj-double-fill { fill: rgba(212,175,55,0.13); stroke: none; }
@@ -4058,7 +4058,7 @@
     /* ── The slice of the embedding diagram ── on a spacetime diagram, a figure and a
        conformal diagram alike: a solid line of the site's green, which no other mark on these
        drawings is but in dots, a point of it, and a region tinted with it at 12%, as the
-       region a chart covers is tinted teal. A slice of an embedding view not shown is not
+       region a chart covers is tinted cyan. A slice of an embedding view not shown is not
        drawn, and its label, set on a ground of its own as a conformal diagram's small labels
        are, is white and at the size of every other word of its drawing, the caption's. */
     .nr-slice, .cd-slice, .pj-slice {
@@ -4075,7 +4075,7 @@
     /* ── Embedding diagrams ── The figure is a figure in three dimensions in the conformal
        diagram's frame; a surface is tinted where it is nearest the reader, and the part of a
        line the surface hides, its class with -far, is drawn faint. */
-    .em-cover-fill { fill: rgba(37,217,200,0.13); stroke: none; }
+    .em-cover-fill { fill: rgba(55,223,255,0.13); stroke: none; }
     .em-star-fill { fill: rgba(249,180,80,0.16); stroke: none; }
     /* The part of the moment a region of the conformal diagram covers, in the site's pink, as
        the captain asked on 30 September 2026, shown only while that region's view is. */
@@ -4186,7 +4186,7 @@
       padding: 0.375rem 0.625rem; margin: 0 0 0.25rem;
     }
     .cd-region { fill: rgba(0,229,255,0.035); stroke: none; }
-    .cd-cover { fill: rgba(37,217,200,0.13); stroke: none; }
+    .cd-cover { fill: rgba(55,223,255,0.13); stroke: none; }
     .cd-cover2 { fill: rgba(212,175,55,0.13); stroke: none; }
     .cd-star { fill: rgba(249,180,80,0.10); stroke: none; }
     .cd-past { fill: rgba(122,173,224,0.14); stroke: none; }
@@ -4194,7 +4194,7 @@
     .cd-r, .cd-r2, .cd-t, .cd-t2, .cd-null { fill: none; stroke-width: 1.1; stroke-opacity: 0.75; }
     .cd-null { stroke-width: 1.3; stroke-opacity: 0.9; }
     .cd-r, .cd-r2 { stroke: var(--pink-light); }
-    .cd-t, .cd-t2 { stroke: var(--teal-light); }
+    .cd-t, .cd-t2 { stroke: var(--mfs-cyan-light); }
     .cd-r2, .cd-t2 { stroke-dasharray: 4 3; }
     .cd-null { stroke: var(--gold); }
     .cd-scri { fill: none; stroke: var(--text-mid); stroke-width: 1.6; }
@@ -4223,18 +4223,18 @@
       line-height: 1.7; margin-bottom: 0.75rem;
       word-break: break-word;
     }
-    #mfs-content-panel .mfs-ref-author  { color: var(--teal-light); }
+    #mfs-content-panel .mfs-ref-author  { color: var(--mfs-cyan-light); }
     #mfs-content-panel .mfs-ref-year    { color: rgba(0,229,255,0.4); }
     #mfs-content-panel .mfs-ref-title   { font-style: italic; color: rgba(0,229,255,0.7); }
     #mfs-content-panel .mfs-ref-journal { color: rgba(0,229,255,0.5); }
     #mfs-content-panel .mfs-ref-volume  { color: rgba(0,229,255,0.4); }
-    #mfs-content-panel .mfs-ref-num     { color: var(--teal-light); margin-right: 0.3em; font-size: 0.85em; }
+    #mfs-content-panel .mfs-ref-num     { color: var(--mfs-cyan-light); margin-right: 0.3em; font-size: 0.85em; }
     /* A citation's number is never divided between two lines, as "[1" and "2]" were at three
        times the usual text on a phone, where the word it follows was wider than the line. */
-    #mfs-content-panel a.mfs-cite       { color: var(--teal-light); text-decoration: none; font-size: 0.8em; white-space: nowrap; }
+    #mfs-content-panel a.mfs-cite       { color: var(--mfs-cyan-light); text-decoration: none; font-size: 0.8em; white-space: nowrap; }
     #mfs-content-panel a.mfs-cite:hover { text-decoration: underline; }
     #mfs-content-panel a.mfs-ref-link   { color: rgba(0,229,255,0.7) !important; text-decoration: underline; text-decoration-color: rgba(0,229,255,0.3); transition: color 0.15s; }
-    #mfs-content-panel a.mfs-ref-link:hover { color: var(--cyan) !important; text-decoration-color: var(--teal-light); }
+    #mfs-content-panel a.mfs-ref-link:hover { color: var(--cyan) !important; text-decoration-color: var(--mfs-cyan-light); }
   </style>
 
   <style>
@@ -4375,7 +4375,7 @@
         var titleEl      = document.getElementById('mfs-title');
         var exitEl       = document.getElementById('mfs-exit');
         var cs2          = getComputedStyle(document.documentElement);
-        var tealLight2   = cs2.getPropertyValue('--teal-light').trim();
+        var cyanLight2   = cs2.getPropertyValue('--mfs-cyan-light').trim();
         var pinkLight2   = cs2.getPropertyValue('--pink-light').trim();
         var FLICKER_MS2  = 180;
 
@@ -4385,7 +4385,7 @@
             var r = Math.random();
             if (r < 0.45) {
               span.style.opacity = '1';
-              span.style.color   = tealLight2;
+              span.style.color   = cyanLight2;
             } else if (r < 0.65) {
               span.style.opacity = '0.15';
             } else if (r < 0.85) {
@@ -4670,7 +4670,7 @@
       #mfs-print-root .nr-tickmark { background: #000 !important; }
       .mfs-print-body .nr-hatch-bg { fill: #fff; }
       .mfs-print-body .nr-hatch-line { stroke: #bbb; }
-      .mfs-print-body .nr-M { stroke: #168f84; }
+      .mfs-print-body .nr-M { stroke: #238ba6; }
       .mfs-print-body .nr-P { stroke: #d81b60; }
       .mfs-print-body .nr-cone { stroke: #a8841f; }
       .mfs-print-body .nr-cone-dot { fill: #a8841f; }
@@ -4693,7 +4693,7 @@
       .mfs-print-body .pj-cone, .mfs-print-body .pj-cone-rim, .mfs-print-body .pj-cone-rib { stroke: #a8841f; }
       .mfs-print-body .pj-cone-apex { fill: #a8841f; }
       .mfs-print-body .pj-above { stroke: #d81b60; }
-      .mfs-print-body .pj-below { stroke: #168f84; }
+      .mfs-print-body .pj-below { stroke: #238ba6; }
       .mfs-print-body .pj-edge { stroke: #333; }
       .mfs-print-body .pj-wedge-fill { fill: #d8d8d8; }
       .mfs-print-body .pj-double-fill { fill: #f3e9c8; }
@@ -4705,12 +4705,12 @@
       .mfs-print-body .mfs-fig-scroll { overflow: visible; }
       .mfs-print-body .mfs-cd-restriction { border: 1px solid #000 !important; margin: 0 0 4pt; padding: 3pt 6pt; }
       .mfs-print-body .cd-region { fill: #f3f3f3; }
-      .mfs-print-body .cd-cover { fill: #d8efec; }
+      .mfs-print-body .cd-cover { fill: #d9eef4; }
       .mfs-print-body .cd-cover2 { fill: #f3e9c8; }
       .mfs-print-body .cd-star { fill: #f7e6cf; }
       .mfs-print-body .cd-past { fill: #dce8f5; }
       .mfs-print-body .cd-r, .mfs-print-body .cd-r2 { stroke: #d81b60; }
-      .mfs-print-body .cd-t, .mfs-print-body .cd-t2 { stroke: #168f84; }
+      .mfs-print-body .cd-t, .mfs-print-body .cd-t2 { stroke: #238ba6; }
       .mfs-print-body .cd-null, .mfs-print-body .cd-world { stroke: #a8841f; }
       .mfs-print-body .cd-scri, .mfs-print-body .cd-chartedge { stroke: #333; }
       .mfs-print-body .cd-centre { stroke: #666; }
@@ -4722,7 +4722,7 @@
       .mfs-print-body .cd-mark { fill: #a8841f; }
       .mfs-print-body .cd-removed { fill: #fff; stroke: #c2185b; }
       .mfs-print-body .cd-fade-edge, .mfs-print-body .cd-fade-clear { stop-color: #fff; }
-      .mfs-print-body .em-cover-fill { fill: #d8efec; }
+      .mfs-print-body .em-cover-fill { fill: #d9eef4; }
       .mfs-print-body .em-star-fill { fill: #f7e6cf; }
       .mfs-print-body .em-wedge-fill { fill: #d8d8d8; }
       .mfs-print-body .em-outline, .mfs-print-body .em-outline-far { stroke: #000; }

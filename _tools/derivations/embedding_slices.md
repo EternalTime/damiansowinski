@@ -373,9 +373,9 @@ In print the three follow one another as they do on the screen.
                                                 +--------------------+
 
 The slice is drawn in `--green-light`, #4db84a, a solid line of 2.6 pixels on the screen, and `--green-dark`, #2a6e2a, in print.
-Every other colour of the palette already stands for something on these drawings: teal for the rays of one family and for lines of constant $t$, pink for the other family and for lines of constant $r$, gold for cones and light rays, cyan for horizons, amber for the surfaces of matter, pale blue for the apparent horizon and pink red for singularities.
+Every other colour of the palette already stands for something on these drawings: the bright cyan `--mfs-cyan-light`, #37dfff, solid, for the rays of one family and for lines of constant $t$, pink for the other family and for lines of constant $r$, gold for cones and light rays, the site's `--cyan`, #2abed9, dashed, for horizons, amber for the surfaces of matter, pale blue for the apparent horizon and pink red for singularities.
 Green appears on them only dotted, for Kerr's ergosurface, so a solid green line is the one mark that reads as new at a glance.
-A floor or a whole drawing that is the moment is tinted the same green at 12%, as the covered region is tinted teal, with its rim in the solid green.
+A floor or a whole drawing that is the moment is tinted the same green at 12%, as the covered region is tinted the bright cyan, with its rim in the solid green.
 
 Each slice carries its moment as a label beside its right hand end or its point, in the same green: "$t = 0$", or for a sequence the label its surface carries in the embedding diagram, "$ct = 0.18$", "$v - r = -1.5\,r_s$", so a line and its surface are matched by the same words.
 Each drawing's legend adds one entry, the green line, "the moment the embedding diagram draws", or "the moments the embedding diagram draws" for a sequence.

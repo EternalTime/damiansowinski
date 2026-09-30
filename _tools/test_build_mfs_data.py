@@ -1285,6 +1285,33 @@ class NoGlow(unittest.TestCase):
                 self.assertEqual(max(places), pressed)
 
 
+class CyanNotTeal(unittest.TestCase):
+    """The spacetimes page is drawn in VoidFlux's cyans, #29a3c3 and #37dfff, where the rest of
+    the site keeps its teal, as the captain asked on 30 September 2026: mfs.css sets them for the
+    page alone, and nothing the page loads names the teal, as a token, a hex or an rgb, but
+    palette.css, which the whole site shares."""
+
+    TEAL = r"(?i)--teal-|--bg-active-teal|#23bbad|#25d9c8|\b35,\s*187,\s*173\b|\b37,\s*217,\s*200\b"
+
+    def test_the_page_names_no_teal(self):
+        root = build.ROOT
+        sources = [root / "_layouts" / "mfs.html", root / "assets" / "css" / "mfs.css"]
+        sources += sorted((root / "MFS").glob("*.markdown")) + sorted((root / "MFS" / "assets").glob("*.js"))
+        sources += sorted((root / "MFS" / "assets" / "data").rglob("*.json"))
+        for path in sources:
+            with self.subTest(str(path.relative_to(root))):
+                self.assertIsNone(re.search(self.TEAL, path.read_text(encoding="utf-8")))
+
+    def test_mfs_css_sets_the_cyans(self):
+        sheet = (build.ROOT / "assets" / "css" / "mfs.css").read_text(encoding="utf-8")
+        root = re.search(r":root\s*\{([^}]*)\}", sheet).group(1)
+        tokens = dict(re.findall(r"(--[\w-]+)\s*:\s*([^;]+);", root))
+        self.assertEqual(tokens["--mfs-cyan-dark"], "#29a3c3")
+        self.assertEqual(tokens["--mfs-cyan-light"], "#37dfff")
+        self.assertEqual(tokens["--mfs-cyan-dark-rgb"], "41, 163, 195")
+        self.assertEqual(tokens["--mfs-cyan-light-rgb"], "55, 223, 255")
+
+
 class ConventionShape(unittest.TestCase):
     """Every convention says only what a reader needs to read the mathematics: each chart has
     its own, the reader sees it with the text its spacetime shares across its charts as one
