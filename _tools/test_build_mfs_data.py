@@ -2911,7 +2911,9 @@ class Slices(unittest.TestCase):
     # The drawings on which no moment of the spacetime's embedding lies: other universes,
     # another cloud, the time reversed shell, and cylinders where no surface of constant t is
     # a moment of space.
-    HIDDEN = {"frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
+    HIDDEN = {"btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
+              "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
+              "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
               "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "conformal frw/flat", "conformal frw/open"}
 
@@ -2986,6 +2988,10 @@ class Slices(unittest.TestCase):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * math.log(X - 1) + (0 if finkelstein else sign * X)), None
+        if key.startswith("btz/eddington_finkelstein"):
+            # v = ct + r_* and u = ct - r_*, r_* = (1/2) ln|(r - 1)/(r + 1)|, drawn against v - r and u + r.
+            sign = 1 if "ingoing" in key else -1
+            return (lambda X: sign * (0.5 * math.log(abs((X - 1) / (X + 1))) - X)), list(self.reach(surface))
         if key == "de_sitter/flat_slicing/tx":
             return (lambda X: -0.5 * math.log(1 + X * X)), None
         if key == "pp_wave/exact_plane_wave/tz":

@@ -81,9 +81,10 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "edf43ee92b313d66",
-    "diagrams": "5e7b87723127924b",
-    "conformal": "778b929ca519e247"
+    "version": "e7d31c4b24f4e95c",
+    "diagrams": "71771a115f41067b",
+    "conformal": "a9535eb60d159665",
+    "embedding": "0d2288ff5645d75b"
   },
   {
     "id": "bertotti_robinson",
