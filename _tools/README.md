@@ -118,6 +118,11 @@ The coordinates come first in the mathematics, right after the history, since th
 The page prints a spacetime's `signature` and its conventions under the heading "conventions" just below them, which is where the application reads them.
 The conventions follow the chart, as the captain asked on 29 September 2026: each chart in `coordinates` carries its own `convention`, the spacetime's top level `convention` holds what is true in every chart and names no coordinate, and the page shows the chosen chart's text followed by the spacetime's as one paragraph, drawn again with the tensors whenever the chart changes.
 A spacetime with one chart reads the same way, and the top level field is present in every file, empty where nothing is shared, since the application reads it.
+A spacetime has one chosen chart, its first until the reader chooses another and kept while the page stays open, and the buttons, domains, conventions, tensors and diagrams all read it.
+`node _tools/chart_conventions.mjs http://127.0.0.1:4000`, and again with `--phone`, walks every chart of every spacetime with more than one through each control and holds each of those to the chart chosen.
+
+GitHub Pages lets a browser keep a file for ten minutes, so the page fetches each spacetime's files at the stamp its index entry gives them, and the index and `references.bib` at the time the site was built.
+A page therefore reads only the files of its own build, and a file that did not change stays in the browser's cache across publishes.
 A `convention` is one string of prose with inline TeX between dollar signs, and never carries a citation, a table, a `¶` or HTML.
 An entry with neither field shows no conventions section at all.
 

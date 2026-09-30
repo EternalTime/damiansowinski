@@ -202,7 +202,13 @@
         input.style.setProperty('--mfs-fit', 'calc((100cqw - 1em - 2px) / ' + hint.toFixed(3) + ')');
       }
 
-      fetch('{{ "/MFS/assets/data/metrics_index.json" | relative_url }}')
+      /* Every file the page reads is fetched at an address of its own build, since GitHub
+         Pages lets a browser keep each file for ten minutes: the index and the bibliography
+         carry the time the site was built, and each spacetime's files the stamp its index
+         entry gives them, which changes with the file and not otherwise. So a page never
+         reads a file kept from an earlier build, which on 30 September 2026 gave the
+         captain the conventions the Minkowski file carried before each chart had its own. */
+      fetch('{{ "/MFS/assets/data/metrics_index.json" | relative_url }}?v={{ site.time | date: "%s" }}')
         .then(function(r) { return r.json(); })
         .then(function(index) {
           window._mfsIndex = index;  // shared with the renderer, which reads the diagram stamps
@@ -836,13 +842,12 @@
 
       var _metricCache = {};  // id → parsed JSON
       var _bibCache = null;   // cite key → parsed entry
-      var _currentMetric = null;
-      var _currentCoordIdx = 0;
+      var _chartOf = {};      // id → the index of the chart chosen in that spacetime
 
       // Fetch and parse the global .bib file into a lookup table
       function fetchBib(cb) {
         if (_bibCache) { cb(_bibCache); return; }
-        var url = '{{ "/assets/data/references.bib" | relative_url }}';
+        var url = '{{ "/assets/data/references.bib" | relative_url }}?v={{ site.time | date: "%s" }}';
         fetch(url)
           .then(function(r) { return r.text(); })
           .then(function(text) {
@@ -860,13 +865,19 @@
           .catch(function(e) { console.error('Failed to load references.bib', e); cb({}); });
       }
 
+      // A spacetime's file, at the address its index entry's stamp gives it.
       function fetchMetric(id, cb) {
         if (_metricCache[id]) { cb(_metricCache[id]); return; }
-        var url = '{{ "/MFS/assets/data/metrics/" | relative_url }}' + id + '.json';
-        fetch(url)
-          .then(function(r) { return r.json(); })
-          .then(function(data) { _metricCache[id] = data; cb(data); })
-          .catch(function(e) { console.error('Failed to load metric:', id, e); });
+        withIndex(function(index) {
+          var entry = index.filter(function(e) { return e.id === id; })[0];
+          fetch(stamped('{{ "/MFS/assets/data/metrics/" | relative_url }}' + id + '.json', entry && entry.version))
+            .then(function(r) { return r.json(); })
+            .then(function(data) { _metricCache[id] = data; cb(data); })
+            .catch(function(e) { console.error('Failed to load metric:', id, e); });
+        });
+      }
+      function stamped(url, stamp) {
+        return url + '?v=' + encodeURIComponent(stamp || '{{ site.time | date: "%s" }}');
       }
 
       function tex(str) {
@@ -1436,7 +1447,7 @@
 
       function withIndex(cb) {
         if (window._mfsIndex) { cb(window._mfsIndex); return; }
-        fetch('{{ "/MFS/assets/data/metrics_index.json" | relative_url }}')
+        fetch('{{ "/MFS/assets/data/metrics_index.json" | relative_url }}?v={{ site.time | date: "%s" }}')
           .then(function(r) { return r.json(); })
           .then(function(index) { window._mfsIndex = index; cb(index); })
           .catch(function(e) { console.error('Failed to load the index', e); cb([]); });
@@ -1448,7 +1459,7 @@
         withIndex(function(index) {
           var entry = index.filter(function(e) { return e.id === id; })[0];
           if (!entry || !entry.diagrams) { _diagramCache[id] = null; cb(null); return; }
-          fetch('{{ "/MFS/assets/data/diagrams/" | relative_url }}' + id + '.json')
+          fetch(stamped('{{ "/MFS/assets/data/diagrams/" | relative_url }}' + id + '.json', entry.diagrams))
             .then(function(r) { return r.json(); })
             .then(function(data) { _diagramCache[id] = data; cb(data); })
             .catch(function(e) {
@@ -2032,7 +2043,7 @@
         withIndex(function(index) {
           var entry = index.filter(function(e) { return e.id === id; })[0];
           if (!entry || !entry.conformal) { _conformalCache[id] = null; cb(null); return; }
-          fetch('{{ "/MFS/assets/data/conformal/" | relative_url }}' + id + '.json')
+          fetch(stamped('{{ "/MFS/assets/data/conformal/" | relative_url }}' + id + '.json', entry.conformal))
             .then(function(r) { return r.json(); })
             .then(function(data) { _conformalCache[id] = data; cb(data); })
             .catch(function(e) {
@@ -2244,7 +2255,7 @@
         withIndex(function(index) {
           var entry = index.filter(function(e) { return e.id === id; })[0];
           if (!entry || !entry.embedding) { _embeddingCache[id] = null; cb(null); return; }
-          fetch('{{ "/MFS/assets/data/embedding/" | relative_url }}' + id + '.json')
+          fetch(stamped('{{ "/MFS/assets/data/embedding/" | relative_url }}' + id + '.json', entry.embedding))
             .then(function(r) { return r.json(); })
             .then(function(data) { _embeddingCache[id] = data; cb(data); })
             .catch(function(e) {
@@ -2876,9 +2887,13 @@
       }
       window._mfsFontsLoading = fontsLoading;
 
-      function renderMetric(data, coordIdx) {
-        _currentMetric  = data;
-        _currentCoordIdx = coordIdx;
+      /* A spacetime is drawn in the one chart chosen in it, its first until the reader chooses
+         another, and kept when the reader opens another spacetime and comes back to it. Its
+         buttons, domains, conventions, tensors and diagrams all read that one choice, and
+         choosing a chart draws them all again at once. */
+      function renderMetric(data) {
+        var coordIdx = _chartOf[data.id] || 0;
+        if (!data.coordinates || coordIdx >= data.coordinates.length) coordIdx = 0;
 
         // Render whatever is constructed, field by field. Coordinates may be
         // absent (entry only has name/tags/history) — in that case coord is a
@@ -3170,7 +3185,8 @@
           button.addEventListener('click', function() {
             var chart = parseInt(button.dataset.chart), focused = document.activeElement === button;
             if (chart === coordIdx) return;
-            renderMetric(data, chart);
+            _chartOf[data.id] = chart;
+            renderMetric(data);
             if (focused) contentPanel.querySelector('.mfs-charts [data-chart="' + chart + '"]').focus({ preventScroll: true });
           });
         });
@@ -3303,7 +3319,7 @@
             fetchMetric(id, function(data) {
               fetchDiagrams(id, function() { fetchConformal(id, function() { fetchEmbedding(id, function() {
                 if (seq !== _shown) return;
-                renderMetric(data, 0).then(afterFrame).then(function() {
+                renderMetric(data).then(afterFrame).then(function() {
                   if (seq !== _shown) return;
                   hideNote();
                   el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
