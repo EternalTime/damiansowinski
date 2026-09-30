@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 29,
+  "count": 30,
   "spacetimes": [
     {
       "id": "alcubierre",
@@ -696,6 +696,266 @@
           ],
           "ricci_scalar": "R = \\dfrac{12H^2}{c^2}",
           "kretschmann": "K = \\dfrac{24H^4}{c^4}"
+        }
+      ]
+    },
+    {
+      "id": "einstein_static",
+      "name": "Einstein Static Universe",
+      "short_name": "Einstein Static",
+      "description": "Albert Einstein's cosmology of 1917: dust spread uniformly through a round three sphere of fixed radius and held at rest by a positive cosmological constant. Minkowski, de Sitter, and anti-de Sitter space are each conformal to a region of it.",
+      "tags": [
+        "cosmology",
+        "cosmological",
+        "static",
+        "closed universe",
+        "three sphere",
+        "dust",
+        "non-vacuum",
+        "cosmological constant",
+        "positive cosmological constant",
+        "Einstein cylinder",
+        "conformally flat",
+        "homogeneous",
+        "isotropic",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the one parameter is the radius $R$ of the three sphere, a length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "einstein1917",
+        "oraifeartaigh2017",
+        "harvey2000",
+        "desitter1917",
+        "lemaitre1927",
+        "eddington1930",
+        "oraifeartaigh2014",
+        "harrison1967",
+        "barrow2003",
+        "gibbons1987",
+        "ellis2004",
+        "ellis2004explicit",
+        "penrose1964conformal",
+        "hawking1973"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
+      "charts": [
+        {
+          "id": "hyperspherical",
+          "name": "Hyperspherical",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Radius of the three sphere, a length; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\chi$, $\\theta$, and $\\phi$ angles on the three sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + R^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "\\dfrac{6}{R^2}",
+          "kretschmann": "K = \\dfrac{12}{R^4}"
+        },
+        {
+          "id": "static_areal",
+          "name": "Areal",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, R)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the equator of } S^3\\text{; the coordinates cover one hemisphere)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Radius of the three sphere, a length; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r = R\\sin\\chi$ the areal radius, which covers the hemisphere $\\chi < \\pi/2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{R^2\\,dr^2}{R^2 - r^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{R^2}{R^2 - r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "\\dfrac{6}{R^2}",
+          "kretschmann": "K = \\dfrac{12}{R^4}"
+        },
+        {
+          "id": "einstein_cartesian",
+          "name": "Einstein's Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-R, R)",
+            "y \\in (-R, R)",
+            "z \\in (-R, R)",
+            "x^2 + y^2 + z^2 < R^2 \\;\\text{(one hemisphere of } S^3\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Radius of the three sphere, a length; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
+            }
+          ],
+          "convention": "We use Albert Einstein's coordinates of 1917, $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ the lengths of the projection of the hemisphere $\\chi < \\pi/2$ onto its equatorial plane. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + \\dfrac{\\left(x\\,dx + y\\,dy + z\\,dz\\right)^2}{R^2 - x^2 - y^2 - z^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{R^2 - y^2 - z^2}{R^2 - x^2 - y^2 - z^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "\\dfrac{x\\,y}{R^2 - x^2 - y^2 - z^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "\\dfrac{x\\,y}{R^2 - x^2 - y^2 - z^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "z"
+              ],
+              "value": "\\dfrac{x\\,z}{R^2 - x^2 - y^2 - z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "x"
+              ],
+              "value": "\\dfrac{x\\,z}{R^2 - x^2 - y^2 - z^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{R^2 - x^2 - z^2}{R^2 - x^2 - y^2 - z^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "z"
+              ],
+              "value": "\\dfrac{y\\,z}{R^2 - x^2 - y^2 - z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "y"
+              ],
+              "value": "\\dfrac{y\\,z}{R^2 - x^2 - y^2 - z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{R^2 - x^2 - y^2}{R^2 - x^2 - y^2 - z^2}"
+            }
+          ],
+          "ricci_scalar": "\\dfrac{6}{R^2}",
+          "kretschmann": "K = \\dfrac{12}{R^4}"
         }
       ]
     },

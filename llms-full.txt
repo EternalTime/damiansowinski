@@ -259,6 +259,18 @@ The maximally symmetric vacuum solution with constant positive curvature, driven
 - chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda r^2}{3}\right)c^2 dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda r^2}{3}} + r^2 d\Omega^2$$
 - chart Flat Slicing: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + e^{2Ht}\left(dx^2 + dy^2 + dz^2\right)$$
 
+### Einstein Static Universe
+
+Albert Einstein's cosmology of 1917: dust spread uniformly through a round three sphere of fixed radius and held at rest by a positive cosmological constant. Minkowski, de Sitter, and anti-de Sitter space are each conformal to a region of it.
+
+- id: `einstein_static`
+- tags: cosmology, cosmological, static, closed universe, three sphere, dust, non-vacuum, cosmological constant, positive cosmological constant, Einstein cylinder, conformally flat, homogeneous, isotropic, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json
+- chart Hyperspherical: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + R^2\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Areal: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \dfrac{R^2\,dr^2}{R^2 - r^2} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Einstein's Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + \dfrac{\left(x\,dx + y\,dy + z\,dz\right)^2}{R^2 - x^2 - y^2 - z^2}$$
+
 ### Ellis-Bronnikov Traversable Wormhole
 
 A static, spherically symmetric traversable wormhole with zero redshift function, also known as the drainhole metric.
