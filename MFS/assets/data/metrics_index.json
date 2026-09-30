@@ -629,6 +629,41 @@
     "embedding": "2fb2f35ad8d95922"
   },
   {
+    "id": "nariai",
+    "name": "Nariai",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "positive cosmological constant",
+      "cosmological constant",
+      "de Sitter",
+      "product spacetime",
+      "homogeneous",
+      "spherically symmetric",
+      "static",
+      "cosmology",
+      "cosmological",
+      "horizon",
+      "cosmological horizon",
+      "Killing horizon",
+      "extremal",
+      "Schwarzschild-de Sitter",
+      "black hole pair creation",
+      "instanton",
+      "Birkhoff theorem",
+      "Petrov type D",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "ff4655501b0f71c6",
+    "diagrams": "e4e7eed203e64de1",
+    "conformal": "d86f05117c2fb4d2",
+    "embedding": "369a9466d306ff86"
+  },
+  {
     "id": "natario",
     "name": "Natário",
     "tags": [
