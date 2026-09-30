@@ -258,6 +258,8 @@ class Diagram:
     areal_contours: tuple = ()
     functions: dict = field(default_factory=dict)   # a declared function -> its expression
     delta: str = None               # the Dirac delta drawn as this pulse, an expression in s; see smoothed
+    step: float = 0.0025            # the tracing step, in the unit square; a view whose metric changes
+                                    # across a narrow pulse takes a finer one
     dust: dict = None               # scale factors solved as dust, see DustSolver
     reference: str = None           # label of the line where a dust solution starts, as TeX
     kretschmann: bool = True
@@ -373,7 +375,8 @@ SDS_STATIC = 7.5 ** (1 / 3)
 # The Aichelburg-Sexl shock on the plane of u and v at three distances from the source, in units
 # of 8GE/c^4 with rho_0 = 8GE/c^4: each ray moving left jumps along the shock by -ln(rho/rho_0),
 # ln 2, ln 8 and ln 32, the same step of ln 4 between neighbours. The delta is drawn as a pulse of
-# width 1/20, which moves every such ray by the same amount. The box stands half a unit higher in ct
+# width 1/20, which moves every such ray by the same amount, traced at a fifth of the usual step so
+# that a ray turning into the pulse and out of it keeps its closed form to 1e-5. The box stands half a unit higher in ct
 # than it is wide in z, so that no cone of the lattice falls within seven widths of the shock.
 AS_PULSE = "20*exp(-400*s**2)/sqrt(pi)"
 AS_INPUT = ("$\\delta(u)$ drawn as the pulse $e^{-u^2/w^2}/(w\\sqrt{\\pi})$ with $w = 0.05$, the field of a pulse "
@@ -386,7 +389,7 @@ AS_RHO = {"half": "1/2", "eighth": "1/8", "thirtysecond": "1/32"}
 DIAGRAMS = [
     *[Diagram("aichelburg_sexl", "null_cartesian", view, f"$\\rho = \\rho_0/{rho[2:]}$", ("u", "v"), (-3, 3, -2.5, 3.5),
               "$z\\;[8GE/c^4]$", "$ct\\;[8GE/c^4]$", {"G": 1, "E": "1/8", "rho_0": 1}, {"x": rho, "y": "0"},
-              to_display=NULL_TO_TR, tau="u + v", families=SIDEWAYS, delta=AS_PULSE,
+              to_display=NULL_TO_TR, tau="u + v", families=SIDEWAYS, delta=AS_PULSE, step=0.0005,
               lines=(("shell", "x0", "0", "the shock, $u = 0$"),), input=AS_INPUT)
       for view, rho in AS_RHO.items()],
     Diagram("schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
@@ -2324,7 +2327,10 @@ class Plot:
 
     # ---- rays
 
-    def trace(self, u0, family, sign, h=0.0025, steps=5000):
+    def trace(self, u0, family, sign):
+        # Every ray may run as far as 5000 steps of the usual 0.0025 take it.
+        h = self.c.spec.step
+        steps = round(5000 * 0.0025 / h)
         u = np.array(u0, float)
         points = [u.copy()]
 
