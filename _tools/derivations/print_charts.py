@@ -683,14 +683,35 @@ def nariai(system):
                                 " + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")},
     }
     chart = charts[system]
+    probe = vm.Reader(chart["coords"], ["\\Lambda"], ())
+    L = probe.parameters["Lambda"]
+    printing = {
+        "static": lambda: {"printer": {"lead": [L], "rising": [probe.symbol["r"]], "flip": False}},
+        "global": lambda: {"printer": {"lead": [L]}, "time": "t",
+                           "pretty": nariai_hyperbolic(sp.sqrt(L) * probe.c * probe.symbol["t"])},
+        "conformal": lambda: {"printer": {"lead": [L]}, "pretty": nariai_conformal(probe.symbol["\\eta"])},
+    }[system]()
     return {
         "metric_id": "nariai",
         "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
                    "parameters": ["\\Lambda"], "line_element": chart["line"]("c^2")},
         "chart_line_element": chart["line"](""),
-        "printer": {"lead": [sp.Symbol("Lambda", real=True)]},
         "check": lambda c: nariai_embedding(c, system),
+        **printing,
     }
+
+
+def nariai_hyperbolic(r):
+    """cp.hyperbolic, with -(sinh^2 r + 1), which sympy leaves a sum, written as -cosh^2 r."""
+    pretty = cp.hyperbolic(r)
+    return lambda value: pretty(value).replace(lambda e: e.is_Add and sp.expand(e + sp.sinh(r) ** 2 + 1) == 0,
+                                               lambda e: -sp.cosh(r) ** 2)
+
+
+def nariai_conformal(eta):
+    """Each value of the de Sitter factor in eta simplified by trigonometry, so
+    (sin eta + 1)(sin eta - 1) reads as -cos^2 eta; the sphere's values stay as sympy factors them."""
+    return lambda value: sp.factor(sp.trigsimp(sp.factor(value))) if sp.sympify(value).has(eta) else sp.factor(value)
 
 
 def nariai_embedding(chart, system):
