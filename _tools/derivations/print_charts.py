@@ -1470,6 +1470,130 @@ def thin_shell_pullback(chart):
         if vm.norm(pulled - mine) != sp.zeros(4, 4):
             raise AssertionError(f"thin_shell_wormhole: the chart through the throat misses Schwarzschild's "
                                  f"on the side sgn ell = {side}")
+# -- Kantowski-Sachs -------------------------------------------------------------------
+
+def kantowski_sachs(system):
+    """The three charts of the Kantowski-Sachs cosmologies, whose moments are cylinders of
+    spheres: the comoving chart with both scale factors free, the vacuum member, which is the
+    inside of Schwarzschild's horizon with the areal radius T as its time, and the dust
+    solution in the parametric time eta, c dt = 2 b_0 cos^2 eta d eta. The last two are checked
+    to be the first with a and b as their conventions state them."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    if system == "comoving":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["a = a(t)", "b = b(t)"]
+        probe = vm.Reader(coords, parameters, ())
+        a, b = probe.parameters["a"], probe.parameters["b"]
+        return {
+            "metric_id": "kantowski_sachs",
+            "system": {"id": system, "name": "Comoving", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in (-\\infty, \\infty)"] + angles,
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2dr^2 + b^2" + sphere},
+            "chart_line_element": "ds^2 = -dt^2 + a^2dr^2 + b^2" + sphere,
+            "printer": {"primed": ["a", "b"], "lead": [a, b]},
+            # The sphere's own curvature, which the printer leaves as a bracketed difference.
+            "rewrite": [("-\\left(-\\left(b'\\right)^2\\,\\sin^2\\theta - \\sin^2\\theta\\right)",
+                         "\\left(\\left(b'\\right)^2 + 1\\right)\\sin^2\\theta"),
+                        ("\\left(-\\left(b'\\right)^2\\,\\sin^2\\theta - \\sin^2\\theta\\right)",
+                         "-\\left(\\left(b'\\right)^2 + 1\\right)\\sin^2\\theta")],
+            # The scalars term by term over the four frame curvatures a''/a, b''/b, a'b'/(ab)
+            # and (b'^2 + 1)/b^2, the last the sphere's own curvature plus its expansion.
+            "ricci_scalar": ("2\\left(\\dfrac{a''}{a} + \\dfrac{2b''}{b} + \\dfrac{2a'\\,b'}{a\\,b}"
+                             " + \\dfrac{\\left(b'\\right)^2 + 1}{b^2}\\right)"),
+            "kretschmann": ("4\\left(\\dfrac{a''}{a}\\right)^2 + 8\\left(\\dfrac{b''}{b}\\right)^2"
+                            " + 8\\left(\\dfrac{a'\\,b'}{a\\,b}\\right)^2"
+                            " + 4\\left(\\dfrac{\\left(b'\\right)^2 + 1}{b^2}\\right)^2"),
+        }
+    if system == "schwarzschild_interior":
+        coords, parameters = ["T", "r", "\\theta", "\\phi"], ["r_s"]
+        f = "\\left(\\dfrac{r_s}{T} - 1\\right)"
+        line = "ds^2 = -\\dfrac{dT^2}{\\dfrac{r_s}{T} - 1} + " + f + "dr^2 + T^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "kantowski_sachs",
+            "system": {"id": system, "name": "Vacuum (Schwarzschild Interior)", "coords": coords,
+                       "domains": ["T \\in (0, r_s)", "r \\in (-\\infty, \\infty)"] + angles,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.parameters["r_s"], probe.symbol["T"]]},
+            "components": {"metric_components": {("T", "T"): "-" + f + "^{-1}", ("r", "r"): "\\dfrac{r_s}{T} - 1"},
+                           "inverse_metric_components": {("T", "T"): "-" + f, ("r", "r"): f + "^{-1}"}},
+            "check": lambda c: kantowski_sachs_member(c, lambda T, p: (
+                sp.sqrt(p["r_s"] / T - 1), T, 1 / sp.sqrt(p["r_s"] / T - 1))),
+        }
+    coords, parameters = ["\\eta", "r", "\\theta", "\\phi"], ["b_0", "\\kappa"]
+    a = "\\left(1 + \\left(\\eta + \\kappa\\right)\\tan\\eta\\right)"
+    line = "ds^2 = b_0^2\\cos^4\\eta\\left(-4\\,d\\eta^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + " + a + "^2dr^2"
+    probe = vm.Reader(coords, parameters, ())
+    eta = probe.symbol["\\eta"]
+    return {
+        "metric_id": "kantowski_sachs",
+        "system": {"id": system, "name": "Dust, Parametric Time", "coords": coords,
+                   "domains": ["\\eta \\in (-\\pi/2, \\pi/2)", "r \\in (-\\infty, \\infty)"] + angles,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [probe.parameters["b_0"], KS_Q, sp.tan(eta)],
+                    "named": {KS_A: "1 + \\left(\\eta + \\kappa\\right)\\tan\\eta", KS_Q: "\\eta + \\kappa"}},
+        "pretty": kantowski_sachs_dust(eta, probe.parameters["kappa"]),
+        "check": lambda c: kantowski_sachs_member(c, lambda eta, p: (
+            1 + (eta + p["kappa"]) * sp.tan(eta), p["b_0"] * sp.cos(eta) ** 2, 2 * p["b_0"] * sp.cos(eta) ** 2)),
+    }
+
+
+KS_A, KS_Q = sp.symbols("KSA KSQ")
+
+
+def kantowski_sachs_dust(eta, kappa):
+    """A `pretty` for the dust chart, every value of which is a rational function of
+    t = tan eta and Q = eta + kappa, since cos^4 eta = 1/(1 + t^2)^2, dt/d eta = 1 + t^2 and
+    a = 1 + Q t. Each value is factored there, which is unique, and printed with 1 + t^2 as
+    1/cos^2 eta, the factor 1 + Q t as the scale factor the line element writes, and Q as
+    eta + kappa."""
+    t, C = sp.symbols("_t _C")
+
+    def pretty(value):
+        x = sp.sympify(value).subs({sp.tan(eta): t, sp.sin(eta): t * C, sp.cos(eta): C})
+        num, den = (sp.expand(p) for p in sp.fraction(sp.together(x.subs(kappa, KS_Q - eta))))
+        if num.has(eta) or den.has(eta):
+            raise AssertionError(f"kantowski_sachs: eta stands outside eta + kappa in {value}")
+
+        def even(p):
+            # C stands only in even powers, and C^2 = 1/(1 + t^2).
+            poly = sp.Poly(sp.expand(p), C)
+            if any(k % 2 for (k,) in poly.monoms()):
+                raise AssertionError(f"kantowski_sachs: an odd power of cos eta in {value}")
+            return sum(c * (1 + t ** 2) ** (-k // 2) for (k,), c in poly.terms())
+
+        out = sp.factor(sp.cancel(even(num) / even(den)))
+        result = sp.Integer(1)
+        for f in sp.Mul.make_args(out):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            # sympy leaves -(t^2 + 1) alone as a sum, so each factor is matched up to its sign.
+            named = [(s, to) for poly, to in ((t ** 2 + 1, sp.cos(eta) ** -2), (KS_Q * t + 1, KS_A))
+                     for s in (1, -1) if sp.expand(base - s * poly) == 0]
+            if named:
+                (s, to), = named
+                result *= s ** k * to ** k
+            else:
+                result *= base.subs(t, sp.tan(eta)) ** k
+        return result
+
+    return pretty
+
+
+def kantowski_sachs_member(chart, member):
+    """The chart's metric is -(lapse d time)^2 + a^2 dr^2 + b^2 dOmega^2 with (a, b, lapse) as
+    `member` states them, so it is the comoving chart with c dt = lapse d time."""
+    time, r, theta = chart.symbols[0], chart.symbols[1], chart.symbols[2]
+    a, b, lapse = member(time, chart.reader.parameters)
+    expected = sp.diag(-lapse ** 2, a ** 2, b ** 2, b ** 2 * sp.sin(theta) ** 2)
+    for i, j in itertools.product(range(4), repeat=2):
+        if vm.norm(chart.geo.g[i, j] - expected[i, j]) != 0:
+            raise AssertionError(f"kantowski_sachs: slot {i}{j} is {chart.geo.g[i, j]}, not {expected[i, j]}")
+
+
+KS_CHARTS = ["comoving", "schwarzschild_interior", "dust"]
 
 
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
@@ -1485,7 +1609,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "global_monopole": [lambda s=s: global_monopole(s) for s in GM_CHARTS],
           "domain_wall": [lambda s=s: domain_wall(s) for s in DW_CHARTS],
           "majumdar_papapetrou": [lambda s=s: majumdar_papapetrou(s) for s in MP_CHARTS],
-          "thin_shell_wormhole": [lambda s=s: thin_shell_wormhole(s) for s in ("spherical", "throat")]}
+          "thin_shell_wormhole": [lambda s=s: thin_shell_wormhole(s) for s in ("spherical", "throat")],
+          "kantowski_sachs": [lambda s=s: kantowski_sachs(s) for s in KS_CHARTS]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------

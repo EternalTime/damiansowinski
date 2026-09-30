@@ -323,6 +323,18 @@ DIMENSIONS = {
     ("mixmaster", "euler_angles"): {
         "t": "T", "\\psi": "1", "\\theta": "1", "\\phi": "1", "a_1": "L", "a_2": "L", "a_3": "L",
     },
+    # The Kantowski-Sachs cylinder: r is a length along its axis, so a is a pure number, and
+    # the spheres' radius b carries the length. Inside Schwarzschild's horizon the time T is
+    # the areal radius, a length, and the dust's parametric time eta is a pure number.
+    ("kantowski_sachs", "comoving"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1", "b": "L",
+    },
+    ("kantowski_sachs", "schwarzschild_interior"): {
+        "T": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("kantowski_sachs", "dust"): {
+        "\\eta": "1", "r": "L", "\\theta": "1", "\\phi": "1", "b_0": "L", "\\kappa": "1",
+    },
     # Minkowski's inertial chart with its metric multiplied by the square of a conformal
     # factor, which multiplies proper time and so has to be a pure number.
     # Aichelburg and Sexl keep G and the energy E of the source explicit, so 8GE/c^4 is the one
