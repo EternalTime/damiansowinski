@@ -166,9 +166,12 @@ for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) 
     // it that is no circle turns with it, as its meridians do.
     const curves = new Set(view.surfaces.flatMap(s => (s.curves || []).map(c => c['class'])));
     const still = c => !/^(meridian|cut|reference)(-far)?$/.test(c) && !curves.has(c.replace(/-far$/, ''));
-    const grids = view.surfaces.some(s => s.pieces.some(p => p.grid));
+    // A height over a plane, and a stack of ellipses, which need not look the same from every side.
+    const grids = view.surfaces.some(s => s.pieces.some(p => p.grid && p.grid.frame !== 'ellipses'));
+    const stacks = [...view.surfaces, ...(view.movie ? view.movie.frames : [])]
+      .some(s => s.pieces.some(p => p.grid && p.grid.frame === 'ellipses'));
     let moved = null;
-    if (!grids) {
+    if (!grids && !stacks) {
       let total = 0;
       moved = 0;
       for (const e of [e0, 60, -30]) {
@@ -183,6 +186,32 @@ for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) 
     const entry = { metric: data.metric, view: view.id, size, boxArea: (x1 - x0) * (y1 - y0),
                     lines, fills, labels, shown, sweep, moved };
     if (grids) entry.height = heights(M, view, a0, e0);
+    if (stacks) entry.stack = true;
+    /* A movie draws every frame at one scale about one place: at the figure's own camera every
+       frame keeps to the box at scale 1, and turned, every frame keeps to it at the one scale the
+       camera gives all of them. */
+    if (view.movie) {
+      const frames = view.movie.frames.length, cams = [[a0, e0], [a0 + 90, 45], [a0 + 200, -45], [a0 + 30, 90], [a0, -90]];
+      let outside = 0, bad = 0, scales = new Set(), home = 1;
+      for (const [a, e] of cams) {
+        const seen = new Set();
+        for (let k = 0; k < frames; k++) {
+          turn.frame(M, k);
+          const d = turn.draw(M, a, e, true);
+          seen.add(d.scale.toFixed(12));
+          if (a === a0 && e === e0) home = Math.min(home, d.scale);
+          const check = p => {
+            if (!Number.isFinite(p[0]) || !Number.isFinite(p[1])) { bad++; return; }
+            outside = Math.max(outside, x0 - p[0], p[0] - x1, y0 - p[1], p[1] - y1);
+          };
+          for (const L of d.layers) (L.kind === 'point' ? [[L.at]] : [L.points, ...(L.holes || [])]).forEach(r => r.forEach(check));
+          d.labels.forEach(L => check(L.at));
+        }
+        scales.add(seen.size);
+      }
+      turn.frame(M, 0);
+      entry.movie = { frames, outside: outside / size, bad, home, scalesPerCamera: Math.max(...scales) };
+    }
     out.views.push(entry);
   }
 }

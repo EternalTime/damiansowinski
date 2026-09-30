@@ -835,15 +835,16 @@ def string_rays(spec, n=12, half_width=1.8, left=-3.0, right=3.0, height=2.1):
     # The ideal string's moment is the plane itself, the embedding's reference cone and the
     # sheet outside Gott's core together, out to where the embedding stops: on the page the
     # disc of that radius less the wedge the deficit removes, cut to the figure.
-    m = slices.moments(spec.metric)[0]
-    reach = m.reach("conical", "r", reference=True)
-    if not reach[0] == 0:
-        raise SystemExit(f"{key(spec)}: the embedding's cone does not reach the string")
-    a = np.linspace(wedge, 2 * np.pi - wedge, 721)
-    arc = np.column_stack([reach[1] * np.cos(a), reach[1] * np.sin(a)])
-    disc = clip_box(np.vstack([[0.0, 0.0], arc]), left, right, height)
-    rims = [flat(run) for run in slices.clip_runs(arc, (left, -height), (right, height))]
-    fig.slice(m, fills=[[flat(disc)]], lines=rims)
+    # The cone unrolled is the same moment, the ideal string's cone alone.
+    for m in slices.moments(spec.metric):
+        reach = m.reach("conical", "r", reference=True)
+        if not reach[0] == 0:
+            raise SystemExit(f"{key(spec)}: the embedding's cone does not reach the string")
+        a = np.linspace(wedge, 2 * np.pi - wedge, 721)
+        arc = np.column_stack([reach[1] * np.cos(a), reach[1] * np.sin(a)])
+        disc = clip_box(np.vstack([[0.0, 0.0], arc]), left, right, height)
+        rims = [flat(run) for run in slices.clip_runs(arc, (left, -height), (right, height))]
+        fig.slice(m, fills=[[flat(disc)]], lines=rims)
     fig.label(np.array([2.4, 0.0, 0.0]), "$\\delta$", "c")
     fig.label(np.array([0.0, -0.12, 0.0]), "the string", "t", cls="small", dy=4)
     fig.legend("line", "above", "light passing above the string")

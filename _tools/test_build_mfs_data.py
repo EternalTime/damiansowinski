@@ -182,6 +182,10 @@ def grid_nodes(piece):
     """The nodes (X, Y, Z) of a grid piece, row i of u and column j of v, a polar grid's X and Y
     being u cos v and u sin v, as _tools/README.md defines them."""
     grid = piece["grid"]
+    if grid["frame"] == "ellipses":
+        # Row i the ellipse (a_i cos v, b_i sin v) at the height z_i.
+        return [[(a * math.cos(v), b * math.sin(v), z) for v in grid["v"]]
+                for a, b, z in zip(grid["a"], grid["b"], grid["z"])]
     polar = grid["frame"] == "polar"
     return [[(u * math.cos(v), u * math.sin(v), z) if polar else (u, v, z)
              for v, z in zip(grid["v"], row)] for u, row in zip(grid["u"], grid["z"])]
@@ -245,10 +249,17 @@ def embedding_prose(name, data):
             yield f"{where}.figure.legend[{position}]", text
         for position, label in enumerate(view["figure"]["labels"]):
             yield f"{where}.figure.labels[{position}]", label["text"]
-        for number, surface in enumerate(view["surfaces"]):
-            at = f"{where}.surfaces[{number}]"
+        frames = view.get("movie", {}).get("frames", [])
+        if frames:
+            yield f"{where}.movie.variable", view["movie"]["variable"]
+        for number, surface in [(f"surfaces[{k}]", x) for k, x in enumerate(view["surfaces"])] + \
+                [(f"movie.frames[{k}]", x) for k, x in enumerate(frames)]:
+            at = f"{where}.{number}"
             if surface.get("label"):
                 yield f"{at}.label", surface["label"]
+            for k, curve in enumerate(surface.get("curves", [])):
+                if curve.get("label"):
+                    yield f"{at}.curves[{k}].label", curve["label"]
             for piece in surface["pieces"]:
                 for end in ("start", "end", "edge"):
                     if piece.get(end, {}).get("text"):
@@ -1791,6 +1802,14 @@ class EmbeddingDiagrams(unittest.TestCase):
                         points = mark["points"] if "points" in mark else [mark["at"]]
                         self.assertGreaterEqual(len(points), 1 if "at" in mark else 2, where)
                         self.assertIn(mark.get("closed", False), (False, True), where)
+                        if pieces[mark["piece"]].get("grid", {}).get("frame") == "ellipses":
+                            # A mark on a stack of ellipses is a node of the row at its height.
+                            nodes = grid_nodes(pieces[mark["piece"]])
+                            for X, Y, Z in points:
+                                row = next(r for r in nodes if r[0][2] == Z)
+                                self.assertLess(min(math.dist((X, Y, Z), q) for q in row), 1e-6, f"{where} at {X}, {Y}")
+                            marked += 1
+                            continue
                         if "grid" in pieces[mark["piece"]]:
                             for X, Y, Z in points:
                                 z = grid_height(pieces[mark["piece"]], X, Y)
@@ -1842,9 +1861,12 @@ class EmbeddingDiagrams(unittest.TestCase):
                     for piece in surface["pieces"]:
                         if "grid" in piece:
                             grid = piece["grid"]
-                            self.assertIn(grid["frame"], ("polar", "cartesian"), where)
+                            self.assertIn(grid["frame"], ("polar", "cartesian", "ellipses"), where)
                             self.assertEqual(len(grid["z"]), len(grid["u"]), where)
-                            self.assertTrue(all(len(row) == len(grid["v"]) for row in grid["z"]), where)
+                            if grid["frame"] == "ellipses":
+                                self.assertEqual((len(grid["a"]), len(grid["b"])), (len(grid["u"]), len(grid["u"])), where)
+                            else:
+                                self.assertTrue(all(len(row) == len(grid["v"]) for row in grid["z"]), where)
                             self.assertEqual(piece["edge"]["kind"], "edge", where)
                             self.assertIn("height", view, f"{where}: a grid says what its height is")
                             continue
@@ -1929,15 +1951,19 @@ class EmbeddingDiagrams(unittest.TestCase):
         # paraboloid moved in by r_s, z = 2 sqrt(r), from the shell at z = 0 or from the axis.
         for number, surface in enumerate(self.embedding["vaidya"]["views"][0]["surfaces"]):
             ids = [p["id"] for p in surface["pieces"]]
+            # The rim of the drawing, r = 4 r_s, stands at z = 0 at every moment.
             if "inside" in ids:
-                self.assertTrue(all(z == 0 for _, _, z in piece("vaidya", "inside", number)))
+                inside = piece("vaidya", "inside", number)
+                self.assertTrue(all(z == inside[0][2] for _, _, z in inside))
                 outside = piece("vaidya", "outside", number)
                 shell = outside[0][0]
                 for r, rho, z in outside:
-                    near(z, 2 * (math.sqrt(r) - math.sqrt(shell)), f"Vaidya z at {r}")
+                    near(z - outside[0][2], 2 * (math.sqrt(r) - math.sqrt(shell)), f"Vaidya z at {r}")
+                self.assertEqual(outside[-1][2], 0)
             else:
-                for r, rho, z in piece("vaidya", "whole", number):
-                    near(z, 2 * math.sqrt(r), f"Vaidya z at {r}")
+                whole = piece("vaidya", "whole", number)
+                for r, rho, z in whole:
+                    near(z, 2 * math.sqrt(r) - 4, f"Vaidya z at {r}")
         # Oppenheimer-Snyder's dust is a cap of a sphere of radius a out to chi0 = pi/4 at every
         # moment, and at the release, the first moment, the outside is Flamm's paraboloid.
         for number in range(len(self.embedding["oppenheimer_snyder"]["views"][0]["surfaces"])):
@@ -1946,8 +1972,10 @@ class EmbeddingDiagrams(unittest.TestCase):
             for chi, rho, z in dust:
                 near(rho, a * math.sin(chi), f"Oppenheimer-Snyder cap rho at {chi}")
                 near(z - dust[0][2], a * (1 - math.cos(chi)), f"Oppenheimer-Snyder cap z at {chi}")
-        for r, rho, z in piece("oppenheimer_snyder", "exterior"):
-            near(z, 2 * math.sqrt(r - 1) - 2, f"Oppenheimer-Snyder release z at {r}")
+        release = piece("oppenheimer_snyder", "exterior")
+        for r, rho, z in release:
+            near(z - release[0][2], 2 * math.sqrt(r - 1) - 2, f"Oppenheimer-Snyder release z at {r}")
+        self.assertEqual(release[-1][2], 0, "the rim of the drawing stands at z = 0")
         # Tolman-Bondi's cloud at its release: every shell at its label, R = r, and outside it
         # Flamm's paraboloid of 2GM/c^2 = r_b/2 from the surface, drawn twice as tall.
         vertical = self.embedding["tolman_bondi"]["views"][0]["vertical"]
@@ -1979,10 +2007,13 @@ class EmbeddingDiagrams(unittest.TestCase):
             s = math.sinh(r)
             near(rho, math.sqrt(2) * s * math.sqrt(max(1 - s * s, 0)), f"Godel rho at {r}")
         self.assertAlmostEqual(dust[-1][0], math.asinh(2 ** -0.25), places=12)
-        for r, rho, z in piece("cosmic_string", "exterior"):
+        for r, rho, z in piece("cosmic_string", "exterior", view=1):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
-        core = piece("cosmic_string", "core")
+        for r, rho, z in piece("cosmic_string", "cone"):
+            near(rho, 0.9 * r, f"the ideal string's cone rho at {r}")
+            near(z, math.sqrt(0.19) * r, f"the ideal string's cone z at {r}")
+        core = piece("cosmic_string", "core", view=1)
         for chi, rho, z in core:
             near(rho, math.sin(chi), f"Gott rho at {chi}")
             near(z - core[0][2], 1 - math.cos(chi), f"Gott z at {chi}")
@@ -2043,17 +2074,19 @@ class EmbeddingDiagrams(unittest.TestCase):
             self.assertEqual(piece(surface, "far")[-1][0], math.pi)
         # Kasner's ring at t: the ellipse reaching t^(-2/7) along x and t^(6/7) along z. The dust's
         # and the wave's rings are ellipses on the axes, and the wave's last a segment on x.
-        for surface in view("kasner")["surfaces"]:
+        def rings(metric_id):
+            return next(v for v in self.embedding[metric_id]["views"] if v["id"] == "ring")
+        for surface in rings("kasner")["surfaces"]:
             t = surface["time"]
             for X, Y, Z in surface["curves"][0]["points"]:
                 near((X / t ** (-2 / 7)) ** 2 + (Y / t ** (6 / 7)) ** 2, 1, f"Kasner's ring at t = {t}", 1e-5)
         for metric_id in ("bianchi", "pp_wave"):
-            for surface in view(metric_id)["surfaces"]:
+            for surface in rings(metric_id)["surfaces"]:
                 P = surface["curves"][0]["points"]
                 A, B = max(abs(p[0]) for p in P), max(abs(p[1]) for p in P)
                 for X, Y, Z in P:
                     near((X / A) ** 2 + ((Y / B) ** 2 if B else 1 - (X / A) ** 2), 1, f"{metric_id}'s ring", 1e-5)
-        self.assertEqual(max(abs(p[1]) for p in view("pp_wave")["surfaces"][-1]["curves"][0]["points"]), 0)
+        self.assertEqual(max(abs(p[1]) for p in rings("pp_wave")["surfaces"][-1]["curves"][0]["points"]), 0)
 
         # Natario's lines of flow, closed, each on one level of the stream function n(r_s) y^2,
         # y being the drawing's Y, and each on the triangles of the height.
@@ -2100,6 +2133,10 @@ class EmbeddingDiagrams(unittest.TestCase):
                 for label in figure["labels"]:
                     x, y = label["at"]
                     self.assertTrue(x0 <= x <= x1 and y0 <= y <= y1, f"{where} label {label['text']}")
+                # A movie's legend names what any of its frames marks.
+                for frame in view.get("movie", {}).get("frames", []):
+                    for mark in frame["rings"] + frame.get("curves", []):
+                        drawn.setdefault(mark["class"], "line")
                 for kind, cls, _ in figure["legend"]:
                     self.assertEqual(drawn.get(cls), kind, f"{where} legend {cls}")
 
@@ -2341,7 +2378,8 @@ class EmbeddingDiagrams(unittest.TestCase):
                 grids = any("grid" in p for s in view["surfaces"] for p in s["pieces"])
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
-                          if any("height" in view for view in data["views"])}, {"alcubierre", "krasnikov", "natario"})
+                          if any("height" in view for view in data["views"])},
+                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -2401,7 +2439,8 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         for name, view in self.views:
             figure, where = view["figure"], f"{name} {view['id']}"
             turn = figure["turn"]
-            self.assertEqual(len(turn["origins"]), len(view["surfaces"]), where)
+            # A movie draws one frame at a time, all at one place.
+            self.assertEqual(len(turn["origins"]), 1 if "movie" in view else len(view["surfaces"]), where)
             for origin in turn["origins"]:
                 self.assertEqual(len(origin), 2, where)
             self.assertIsInstance(turn["meridians"], int, where)
@@ -2415,8 +2454,19 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
                 surface = view["surfaces"][mark["surface"]]
                 self.assertIn(mark["piece"], {p["id"] for p in surface["pieces"]}, where)
                 self.assertRegex(page, r"\.em-" + re.escape(mark["class"]) + r"\b", where)
-            # Every grid piece names the lines of its grid the figure draws, by index.
-            grids = {(k, p["id"]): p["grid"] for k, s in enumerate(view["surfaces"]) for p in s["pieces"] if "grid" in p}
+            # Every grid piece names the lines of its grid the figure draws, by index, a stack of
+            # ellipses in its own grid, since each frame of a movie holds its own rows.
+            grids = {(k, p["id"]): p["grid"] for k, s in enumerate(view["surfaces"]) for p in s["pieces"]
+                     if "grid" in p and p["grid"]["frame"] != "ellipses"}
+            for surface in view["surfaces"] + view.get("movie", {}).get("frames", []):
+                for p in surface["pieces"]:
+                    if p.get("grid", {}).get("frame") != "ellipses":
+                        continue
+                    self.assertTrue(p["grid"]["lines"], where)
+                    for line in p["grid"]["lines"]:
+                        self.assertTrue(all(0 <= i < len(p["grid"]["u"]) for i in line["u"]), where)
+                        self.assertTrue(all(0 <= j < len(p["grid"]["v"]) for j in line["v"]), where)
+                        self.assertRegex(page, r"\.em-" + re.escape(line["class"]) + r"\b", where)
             self.assertEqual({(g["surface"], g["piece"]) for g in turn.get("grid", [])}, set(grids), where)
             for g in turn.get("grid", []):
                 grid = grids[(g["surface"], g["piece"])]
@@ -2487,7 +2537,7 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         # A height over a plane is no surface of revolution, and turns as the next test holds it.
         for v in self.check()["views"]:
             if v["moved"] is None:
-                self.assertIn("height", v, f"{v['metric']} {v['view']}")
+                self.assertTrue("height" in v or v.get("stack"), f"{v['metric']} {v['view']}")
                 continue
             self.assertLess(v["moved"], 1e-3, f"{v['metric']} {v['view']}: {v['moved']:.2e} of the lines moved")
 
@@ -2528,13 +2578,180 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         rule = re.search(r"\.mfs-turn \.mfs-cd-drawing \{([^}]*)\}", page)
         self.assertIsNotNone(rule)
         self.assertIn("touch-action: pan-y", rule.group(1))
-        self.assertTrue(".mfs-print-body .mfs-turn-reset { display: none" in page, "print shows the reset button")
+        self.assertTrue(".mfs-print-body .mfs-turn-reset, .mfs-print-body .mfs-movie-play { display: none" in page,
+                        "print shows the reset or the play button")
         # Both kinds of figure that turn are framed to turn, and the one controller wires them.
-        for frame in ("emFigure", "pjFigure"):
-            self.assertTrue(re.search(r"function " + frame + r"\([\s\S]*?'mfs-(em|pj)-figure mfs-turn'", page),
-                            f"{frame}() does not frame its figure to turn")
+        self.assertTrue(re.search(r"function pjFigure\([\s\S]*?'mfs-pj-figure mfs-turn'", page),
+                        "pjFigure() does not frame its figure to turn")
+        self.assertTrue(re.search(r"function emFigure\([\s\S]*?'mfs-em-figure' \+ \(turns \? ' mfs-turn'", page),
+                        "emFigure() does not frame its figure to turn")
         self.assertTrue("function wireTurning(root)" in page, "no wireTurning()")
         self.assertFalse("wireEmbedding" in page, "wireEmbedding() is left")
+
+
+class StacksAndMovies(unittest.TestCase):
+    """The ring views of Kasner's universe, Bianchi type I and the pp-wave stacked up their axis of
+    time into the ring's world tube, each ellipse at the height of its time, and the embedding
+    diagrams that change through a run of moments played as movies, as the captain asked on 30
+    September 2026, from the numbers written and nothing else."""
+
+    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5}   # the height of a unit of time
+    MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
+              "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$"}
+
+    def setUp(self):
+        self.embedding = embedding_files()
+
+    def views(self, metric_id):
+        return {v["id"]: v for v in self.embedding[metric_id]["views"]}
+
+    def test_the_stacks_come_first_with_their_flat_rings_beside_them(self):
+        for metric_id in self.STACKS:
+            self.assertEqual([v["id"] for v in self.embedding[metric_id]["views"]], ["tube", "ring"], metric_id)
+        stacked = {name for name, data in self.embedding.items() for v in data["views"]
+                   for s in v["surfaces"] for p in s["pieces"] if p.get("grid", {}).get("frame") == "ellipses"}
+        self.assertEqual(stacked, set(self.STACKS))
+
+    def test_every_ellipse_of_a_stack_stands_at_the_height_of_its_time(self):
+        for metric_id, lift in self.STACKS.items():
+            views = self.views(metric_id)
+            tube, = views["tube"]["surfaces"]
+            grid = tube["pieces"][0]["grid"]
+            rows = grid_nodes(tube["pieces"][0])
+            # Every row is one moment, at the height of its time.
+            for u, z in zip(grid["u"], grid["z"]):
+                self.assertAlmostEqual(z, lift * u, delta=1e-6, msg=f"{metric_id} row at {u}")
+            rings = [c for c in tube["curves"] if "time" in c]
+            flat = views["ring"]["surfaces"]
+            self.assertEqual([(c["label"], c["time"]) for c in rings], [(f["label"], f["time"]) for f in flat], metric_id)
+            for ring, moment in zip(rings, flat):
+                where = f"{metric_id} {ring['label']}"
+                # The time is written to six decimals and the row at the double it was drawn at.
+                i = min(range(len(grid["u"])), key=lambda k: abs(grid["u"][k] - ring["time"]))
+                self.assertLess(abs(grid["u"][i] - ring["time"]), 1e-6, where)
+                self.assertTrue(all(Z == grid["z"][i] for _, _, Z in ring["points"]), where)
+                self.assertEqual(len(ring["points"]), len(grid["v"]), where)
+                for P, Q in zip(ring["points"], rows[i]):
+                    self.assertLess(math.dist(P, Q), 1e-6, where)
+                # The same ellipse as the flat view's ring at that moment, only raised to its time.
+                for P, Q in zip(ring["points"], moment["curves"][0]["points"]):
+                    self.assertLess(math.hypot(P[0] - Q[0], P[1] - Q[1]), 1e-6, where)
+            dots = tube["dots"]
+            self.assertEqual(len(dots), 12 * len(rings), metric_id)
+            axis = tube["axis"]
+            self.assertEqual(axis["from"], grid["z"][0], metric_id)
+            self.assertAlmostEqual(axis["to"], grid["z"][-1] + (grid["z"][-1] - grid["z"][0]) / 4, delta=1e-6, msg=metric_id)
+            # The world lines of the twelve marked particles, every 30 degrees round the ring.
+            self.assertEqual(grid["lines"], [{"class": "worldline", "u": [], "v": list(range(0, 360, 30))}], metric_id)
+        # Kasner's rows reach t^p_1 along x and t^p_3 along z; the wave's close on a segment at the focus.
+        kasner = self.views("kasner")["tube"]["surfaces"][0]["pieces"][0]["grid"]
+        for u, a, b in zip(kasner["u"], kasner["a"], kasner["b"]):
+            self.assertAlmostEqual(a, u ** (-2 / 7), delta=1e-6)
+            self.assertAlmostEqual(b, u ** (6 / 7), delta=1e-6)
+        wave = self.views("pp_wave")["tube"]["surfaces"][0]["pieces"][0]["grid"]
+        self.assertEqual(wave["b"][-1], 0)
+
+    def test_every_moment_label_of_a_stack_follows_its_ring_and_the_axis_is_named(self):
+        for metric_id in self.STACKS:
+            view = self.views(metric_id)["tube"]
+            labels = view["figure"]["labels"]
+            named = [L for L in labels if "curve" in L]
+            self.assertEqual([L["curve"]["curve"] for L in named], list(range(len(named))), metric_id)
+            self.assertEqual([L["text"] for L in named], [c["label"] for c in view["surfaces"][0]["curves"]], metric_id)
+            self.assertEqual([L["curve"]["side"] for L in named], [1, -1] * (len(named) // 2), metric_id)
+            axis, = [L for L in labels if "axis" in L]
+            self.assertEqual(axis["axis"], {"surface": 0}, metric_id)
+            self.assertIn(("line", "axis"), [(k, c) for k, c, _ in view["figure"]["legend"]], metric_id)
+
+    def test_the_movies_are_these(self):
+        movies = {name: v["movie"]["variable"] for name, data in self.embedding.items() for v in data["views"] if "movie" in v}
+        self.assertEqual(movies, self.MOVIES)
+        self.assertEqual({name for name, data in self.embedding.items() for v in data["views"]
+                          if v.get("movie", {}).get("turns") is False}, {"frw"})
+
+    def test_every_movie_runs_through_its_frames_in_order_and_holds_its_moments(self):
+        for metric_id in self.MOVIES:
+            view = next(v for v in self.embedding[metric_id]["views"] if "movie" in v)
+            movie, where = view["movie"], metric_id
+            values = [f["value"] for f in movie["frames"]]
+            self.assertGreater(len(values), 30, where)
+            self.assertTrue(all(b > a for a, b in zip(values, values[1:])), where)
+            self.assertGreater(movie["seconds"], 0, where)
+            self.assertEqual(len({f["label"] for f in movie["frames"]}), len(values), f"{where}: two frames share a name")
+            frame_label, = [L for L in view["figure"]["labels"] if L.get("frame")]
+            self.assertEqual(frame_label["text"], movie["frames"][0]["label"], where)
+            if metric_id == "cosmic_string":
+                continue
+            # A movie in time passes through every moment of its flat views, which are its frames.
+            for surface in view["surfaces"]:
+                frame = next(f for f in movie["frames"] if f["value"] == surface["time"])
+                self.assertEqual(frame["label"], surface["label"], where)
+                self.assertEqual(frame["pieces"], surface["pieces"], where)
+                self.assertEqual(frame["rings"], surface["rings"], where)
+            self.assertEqual((values[0], values[-1]), (view["surfaces"][0]["time"], view["surfaces"][-1]["time"]), where)
+
+    def test_the_closed_universe_plays_every_frame_as_its_sphere(self):
+        # At ct = eta - sin(eta) the equator is the sphere of radius a = 1 - cos(eta).
+        view = self.views("frw")["closed"]
+        for frame in view["movie"]["frames"]:
+            eta = bisect(lambda e: e - math.sin(e) - frame["value"], 0, 2 * math.pi)
+            a = 1 - math.cos(eta)
+            for piece, sign in (("near", -1), ("far", 1)):
+                points = next(p for p in frame["pieces"] if p["id"] == piece)["points"]
+                for r, rho, z in points:
+                    self.assertLess(abs(rho - a * r), 1e-5, f"ct = {frame['value']}")
+                    self.assertLess(abs(z - sign * a * math.sqrt(max(1 - r * r, 0))), 1e-5, f"ct = {frame['value']}")
+
+    def test_each_movie_with_a_rim_holds_it_still_while_the_rest_moves(self):
+        # The flat plane beyond the Malament-Hogarth ball, the clocks released at 4 r_s outside
+        # the collapsing dust and Vaidya's r = 4 r_s stand at z = 0 in every frame, and the
+        # Malament-Hogarth well only deepens as the removed event nears.
+        for metric_id, piece in (("malament_hogarth", "flat"), ("oppenheimer_snyder", "exterior"), ("vaidya", None)):
+            view = self.embedding[metric_id]["views"][0]
+            for frame in view["movie"]["frames"]:
+                outer = frame["pieces"][-1] if piece is None else next(p for p in frame["pieces"] if p["id"] == piece)
+                self.assertEqual(outer["points"][-1][2], 0, f"{metric_id} at {frame['value']}")
+        depths = [-f["pieces"][0]["points"][0][2] for f in self.embedding["malament_hogarth"]["views"][0]["movie"]["frames"]]
+        self.assertTrue(all(b >= a for a, b in zip(depths, depths[1:])), "the Malament-Hogarth well rises")
+
+    def test_the_cone_unrolls_without_stretching_to_the_deficit_angle(self):
+        view = self.views("cosmic_string")["unroll"]
+        frames = view["movie"]["frames"]
+        delta = 8 * math.pi * (1 / 40)          # 8 pi G mu/c^2 at 4G mu/c^2 = 0.1
+        for frame in frames:
+            piece, = frame["pieces"]
+            grid, where = piece["grid"], f"the cone at {frame['label']}"
+            self.assertTrue(grid["open"], where)
+            nodes = grid_nodes(piece)
+            gap = 2 * math.pi - (grid["v"][-1] - grid["v"][0])
+            self.assertAlmostEqual(gap, math.radians(frame["value"]), delta=1e-12, msg=where)
+            # Along each line from the apex every distance is r, and round each circle every arc
+            # is as long as on the cone, 0.9 r for each radian of phi.
+            for i in range(len(grid["u"]) - 1):
+                for j in range(len(grid["v"])):
+                    self.assertAlmostEqual(math.dist(nodes[i][j], nodes[i + 1][j]), grid["u"][i + 1] - grid["u"][i],
+                                           delta=1e-6, msg=where)
+            step = 2 * math.pi / (len(grid["v"]) - 1)
+            for u, a, b in zip(grid["u"], grid["a"], grid["b"]):
+                self.assertEqual(a, b, where)
+                for dv in (y - x for x, y in zip(grid["v"], grid["v"][1:])):
+                    self.assertAlmostEqual(a * dv, 0.9 * u * step, delta=1e-6, msg=where)
+        first, last = frames[0]["pieces"][0]["grid"], frames[-1]["pieces"][0]["grid"]
+        self.assertEqual((first["v"][0], first["v"][-1]), (0, 2 * math.pi))
+        self.assertAlmostEqual(first["a"][-1], 0.9 * first["u"][-1], delta=1e-6)
+        # Laid flat, the cone is a plane missing the wedge of the deficit angle between its cut's edges.
+        self.assertTrue(all(z == 0 for z in last["z"]))
+        self.assertAlmostEqual(2 * math.pi - (last["v"][-1] - last["v"][0]), delta, delta=1e-12)
+        self.assertAlmostEqual(math.degrees(delta), 36, delta=1e-12)
+        self.assertEqual(frames[-1]["label"], "$\\Delta\\phi = 36° = \\delta$")
+
+    def test_the_page_plays_a_movie_and_holds_it_still_for_a_reader_who_asks(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        player = re.search(r"function wireMovie\([\s\S]*?\n      \}\n", page)
+        self.assertIsNotNone(player, "no wireMovie()")
+        self.assertIn("prefers-reduced-motion: reduce", player.group(0))
+        self.assertIn("IntersectionObserver", player.group(0))
+        self.assertRegex(page, r"\.mfs-movie-play:active \{ color: var\(--pink-light\); border-color: var\(--pink-light\); \}")
 
 
 class TurningLightConeFigures(unittest.TestCase):
@@ -2709,8 +2926,27 @@ class Slices(unittest.TestCase):
                 yield metric_id, f"conformal {metric_id}/{view['id']}", view
 
     def moment(self, metric_id, mark):
+        """The embedding view a slice marks and its surface, a ring of a stack standing for the
+        surface at that ring's time."""
         view = next(v for v in self.embedding[metric_id]["views"] if v["id"] == mark["view"])
-        return view, view["surfaces"][mark["surface"]]
+        surface = view["surfaces"][mark["surface"]]
+        if "curve" in mark:
+            ring = surface["curves"][mark["curve"]]
+            surface = dict(surface, time=ring["time"], label=ring["label"])
+        return view, surface
+
+    # The moments of a spacetime's embedding views, a stack's each ring it marks at a time.
+    def every(self, metric_id):
+        out = []
+        for v in self.embedding[metric_id]["views"]:
+            for i, surface in enumerate(v["surfaces"]):
+                timed = [k for k, c in enumerate(surface.get("curves", [])) if "time" in c]
+                out += [(v["id"], i, k) for k in timed] or [(v["id"], i, None)]
+        return out
+
+    # The embedding views a drawing does not mark though it marks others: Gott's core replaces
+    # the apex of the ideal string's cone, which is another spacetime than Gott's.
+    HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"}}
 
     def reach(self, surface, system=None, reference=False):
         xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))
@@ -2720,11 +2956,11 @@ class Slices(unittest.TestCase):
     def test_every_moment_appears_on_every_drawing_it_lies_on_and_on_no_other(self):
         drawn = 0
         for metric_id, where, view in self.drawings():
-            marks = [(m["view"], m["surface"]) for m in view.get("slices", [])]
+            marks = [(m["view"], m["surface"], m.get("curve")) for m in view.get("slices", [])]
             if where in self.HIDDEN:
                 self.assertEqual(marks, [], where)
                 continue
-            every = [(v["id"], i) for v in self.embedding[metric_id]["views"] for i in range(len(v["surfaces"]))]
+            every = [m for m in self.every(metric_id) if m[0] not in self.HIDDEN_VIEWS.get(where, set())]
             self.assertEqual(marks, every, where)
             drawn += len(marks)
         self.assertGreater(drawn, 100)
@@ -2733,7 +2969,8 @@ class Slices(unittest.TestCase):
         for metric_id, where, view in self.drawings():
             for mark in view.get("slices", []):
                 target, _ = self.moment(metric_id, mark)
-                self.assertEqual(build.embedding_moment_version(target, mark["surface"]), mark["version"], where)
+                self.assertEqual(build.embedding_moment_version(target, mark["surface"], mark.get("curve")),
+                                 mark["version"], where)
                 self.assertTrue(mark["lines"] or mark["points"] or mark["fills"], where)
                 self.assertTrue(mark["label"].count("$") % 2 == 0 and mark["label"], where)
 
@@ -2928,7 +3165,7 @@ class Slices(unittest.TestCase):
             build.check_slices(stray, conformal, embedding)
         self.assertIn("'elsewhere'", str(raised.exception))
         moved = copy.deepcopy(embedding)
-        moved["kasner"]["views"][0]["surfaces"][1]["time"] = 0.6
+        moved["kasner"]["views"][1]["surfaces"][1]["time"] = 0.6
         with self.assertRaises(build.DataError) as raised:
             build.check_slices(diagrams, conformal, moved)
         self.assertIn("kasner", str(raised.exception))

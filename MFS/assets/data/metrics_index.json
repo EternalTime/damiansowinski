@@ -91,8 +91,8 @@
       "idealized model"
     ],
     "version": "227938ced993dec8",
-    "diagrams": "cb7186c27b09c25a",
-    "embedding": "f4b6c257a5010366"
+    "diagrams": "cd878a503f2704e7",
+    "embedding": "1e642ab59830c7db"
   },
   {
     "id": "de_sitter",
@@ -170,7 +170,7 @@
     "version": "5590f05784977de3",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "690299be36af8c35",
-    "embedding": "10938eea49b57508"
+    "embedding": "1362b625c07c2e0f"
   },
   {
     "id": "godel",
@@ -217,8 +217,8 @@
       "idealized model"
     ],
     "version": "89819b3d261872f4",
-    "diagrams": "e3cff4a7ae3e1e60",
-    "embedding": "13b718edc27b8fa8"
+    "diagrams": "620b49dfc9b9ff71",
+    "embedding": "7869458c3f578bef"
   },
   {
     "id": "kerr",
@@ -378,7 +378,7 @@
     "version": "faa3edf6a4830237",
     "diagrams": "38ee5a21595bd0a6",
     "conformal": "0e7497507d97447b",
-    "embedding": "656f2d780f151817"
+    "embedding": "4c55f429abb61a19"
   },
   {
     "id": "minkowski",
@@ -427,7 +427,7 @@
       "idealized model"
     ],
     "version": "d7720a5dc73fb84d",
-    "embedding": "b433e75b0b01bb1c"
+    "embedding": "343cec638a0f6210"
   },
   {
     "id": "morris_thorne",
@@ -504,7 +504,7 @@
     "version": "3e930091ee742096",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "b029855dfdd8ce93",
-    "embedding": "785668735c3299af"
+    "embedding": "21cc1350dbfe975e"
   },
   {
     "id": "pp_wave",
@@ -524,8 +524,8 @@
       "idealized model"
     ],
     "version": "de0877bcf7d5128a",
-    "diagrams": "918bdc629a387541",
-    "embedding": "a93313234ded6243"
+    "diagrams": "235e5c59806fef92",
+    "embedding": "2879f8a33dddb5c5"
   },
   {
     "id": "rn_metric",
@@ -715,7 +715,7 @@
     "version": "a4e33e75c55b9e93",
     "diagrams": "87052dae566b6395",
     "conformal": "177413af20facdf4",
-    "embedding": "d49fb374b774d259"
+    "embedding": "a0880c6b579bce9e"
   },
   {
     "id": "cosmic_string",
@@ -738,8 +738,8 @@
       "idealized model"
     ],
     "version": "27122febe6085b2e",
-    "diagrams": "775c15d603986370",
-    "conformal": "c9cba57f9e41d1e3",
-    "embedding": "4644c9ca19680dbb"
+    "diagrams": "a5eedeb1a3fee9e3",
+    "conformal": "aec3d8d98916b294",
+    "embedding": "6229263e9be04cb6"
   }
 ]

@@ -1933,9 +1933,10 @@
       // it draws, which wireTurning() turns, and the button that brings the published figure
       // back stands hidden in the corner of its frame.
       var TURN_RESET = '<button type="button" class="mfs-turn-reset" hidden>reset</button>';
-      function turnAttrs(kind, metricId, place, name) {
+      function turnAttrs(kind, metricId, place, name, still) {
         return ' data-turn="' + kind + '" data-turn-metric="' + nrEsc(metricId) + '" data-turn-view="' + nrEsc(place) + '"' +
-          ' tabindex="0" role="group" aria-label="' + nrEsc(name) + ', turned by dragging it or with the arrow keys"';
+          (still ? ' data-still role="img" aria-label="' + nrEsc(name) + '"'
+                 : ' tabindex="0" role="group" aria-label="' + nrEsc(name) + ', turned by dragging it or with the arrow keys"');
       }
 
       function pjFigure(view, metricId, coordId, index) {
@@ -2137,7 +2138,7 @@
         }).join('');
       }
 
-      function cdLabels(view, f) {
+      function cdLabels(view, f, inner) {
         var slices = (view.slices || []).filter(function(mark) { return mark.place; }).map(function(mark) {
           return sliceLabel(mark, f.x(mark.place.at[0]) / f.vw, f.y(mark.place.at[1]) / f.vh, f.vw, f.vh, 'cd-at',
             ';font-size:calc(100cqw * ' + CD_SIZE.small + ' / ' + f.vw + ')');
@@ -2146,7 +2147,8 @@
           var x = f.x(L.at[0]) + (L.dx || 0), y = f.y(L.at[1]) + (L.dy || 0), a = CD_ANCHOR[L.anchor || 'c'];
           return '<span class="cd-at cd-lab-' + L['class'] + '" style="left:' + (100 * x / f.vw).toFixed(3) +
             '%;top:' + (100 * y / f.vh).toFixed(3) + '%;transform:translate(' + a[0] + '%,' + a[1] +
-            '%);font-size:calc(100cqw * ' + (CD_SIZE[L['class']] || 14) + ' / ' + f.vw + ')">' + nrEsc(L.text) + '</span>';
+            '%);font-size:calc(100cqw * ' + (CD_SIZE[L['class']] || 14) + ' / ' + f.vw + ')">' +
+            (inner && inner(L) || nrEsc(L.text)) + '</span>';
         });
         return '<div class="mfs-cd-labels" aria-hidden="true">' + out.join('') + slices.join('') + '</div>';
       }
@@ -2283,11 +2285,23 @@
           'aria-label': 'Embedding diagram, ' + nrPlain(view.label) }, emPaths(view.figure.layers, f));
       }
 
-      // The drawing names the view it draws, which wireTurning() turns, as pjFigure() says.
+      /* The drawing names the view it draws, which wireTurning() turns, as pjFigure() says. A
+         view with a movie plays its frames in turn, as wireTurning() says, with the button that
+         plays and pauses it in the other top corner of its frame, and its label naming the frame
+         shown holds every frame's name, set once with the page's mathematics, of which it shows
+         one. A movie whose file says it does not turn is still under the hand. */
+      var MOVIE_PLAY = '<button type="button" class="mfs-movie-play">pause</button>';
       function emFigure(view, metricId, index) {
-        var f = cdFrame(view.figure);
-        return cdFrameAround(f, TURN_RESET, emSvg(view, f) + cdLabels(view.figure, f), 'mfs-em-figure mfs-turn',
-          turnAttrs('surfaces', metricId, String(index), 'Embedding diagram, ' + nrPlain(view.label)));
+        var f = cdFrame(view.figure), movie = view.movie, turns = !movie || movie.turns !== false;
+        var name = 'Embedding diagram, ' + nrPlain(view.label);
+        var frames = movie && function(L) {
+          return L.frame && movie.frames.map(function(fr, k) {
+            return '<span class="mfs-frame-label"' + (k ? ' hidden' : '') + '>' + nrEsc(fr.label) + '</span>';
+          }).join('');
+        };
+        return cdFrameAround(f, (turns ? TURN_RESET : '') + (movie ? MOVIE_PLAY : ''), emSvg(view, f) + cdLabels(view.figure, f, frames),
+          'mfs-em-figure' + (turns ? ' mfs-turn' : '') + (movie ? ' mfs-movie' : ''),
+          turnAttrs('surfaces', metricId, String(index), name, !turns));
       }
 
       function emLegend(view) {
@@ -2620,10 +2634,15 @@
           var places = spans.map(function(s) { return [s.style.left, s.style.top]; });
           var start = { azimuth: figure.camera.azimuth, elevation: figure.camera.elevation }, at = start, turned = false;
           var model = null, sizes = null, frame = 0, quick = false, pointers = new Map(), drag = null, pan = null, tap = null;
+          // A movie's frame shown, each frame's drawing at the figure's own camera once made, and
+          // the names of the frames in its label.
+          var movie = it.view.movie || null, still = drawing.hasAttribute('data-still'), shown = 0, cache = [];
+          var names = [].slice.call(drawing.querySelectorAll('.mfs-frame-label'));
 
           function render() {
             frame = 0;
-            if (!turned) {
+            names.forEach(function(el, k) { el.hidden = k !== shown; });
+            if (!turned && !shown) {
               // Drawn again from the file, so the slices shown are those of the embedding view
               // chosen now.
               svg.innerHTML = it.paths(f, null);
@@ -2632,7 +2651,7 @@
                 span.style.top = places[i][1];
                 span.style.visibility = '';
               });
-              reset.hidden = true;
+              if (reset) reset.hidden = true;
               return;
             }
             if (!window.MfsTurn) return;
@@ -2647,7 +2666,9 @@
                 return [r.width / across, r.height / across];
               });
             }
-            var out = MfsTurn.draw(model, at.azimuth, at.elevation, quick, sizes);
+            if (movie) MfsTurn.frame(model, shown);
+            var out = !turned && cache[shown] || MfsTurn.draw(model, at.azimuth, at.elevation, quick, sizes);
+            if (movie && !turned && !quick) cache[shown] = out;
             svg.innerHTML = it.paths(f, out);
             out.labels.forEach(function(L, i) {
               var label = figure.labels[i];
@@ -2655,7 +2676,7 @@
               spans[i].style.top = (100 * (f.y(L.at[1]) + (label.dy || 0)) / f.vh).toFixed(3) + '%';
               spans[i].style.visibility = L.shown ? '' : 'hidden';
             });
-            reset.hidden = false;
+            if (reset) reset.hidden = !turned;
           }
           function show(coarse) {
             quick = coarse;
@@ -2676,6 +2697,12 @@
             pointers.forEach(function(p) { x += p[0]; });
             return x / pointers.size;
           }
+
+          if (movie) wireMovie(drawing, movie, function(k) {
+            shown = k;
+            show(turned);
+          }, function() { show(false); });
+          if (still) return;
 
           drawing.addEventListener('pointerdown', function(e) {
             if (e.pointerType === 'mouse' && e.button !== 0) return;
@@ -2751,6 +2778,59 @@
             drawing.focus({ preventScroll: true });
           });
         });
+      }
+
+      /* A movie of an embedding diagram, which the captain asked for on 30 September 2026 for
+         the moments of a closed universe and of other spacetimes whose embedding changes in time:
+         its frames drawn live in turn, each by MfsTurn at the camera the reader has turned the
+         figure to, and at the figure's own camera kept once drawn. Each frame's value, its time or
+         how far a cone is unrolled, runs at a steady rate, one pass taking the
+         movie's `seconds`, the last frame held one step, and then the movie starts again. It plays
+         once the page has drawn it and only while it is on the screen, and a reader who asks for
+         reduced motion finds it paused on its first frame. The button in its top left corner
+         plays and pauses it. `go(k)` draws frame k and `settle()` the frame shown in full. */
+      var _movieObserver = null, _movieSeen = new Map();
+      function wireMovie(drawing, movie, go, settle) {
+        var play = drawing.closest('.mfs-cd-figure').querySelector('.mfs-movie-play');
+        var values = movie.frames.map(function(fr) { return fr.value; }), n = values.length;
+        var span = values[n - 1] - values[0], period = 1000 * movie.seconds, cycle = period * n / (n - 1);
+        var playing = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        var elapsed = 0, last = null, tick = 0, seen = false, shown = 0;
+        function frameAt(ms) {
+          var v = values[0] + span * (ms % cycle) / period, k = 0;
+          while (k + 1 < n && values[k + 1] <= v) k++;
+          return k;
+        }
+        function step(now) {
+          tick = 0;
+          if (!drawing.isConnected || !playing || !seen) { last = null; return; }
+          if (last !== null) elapsed += now - last;
+          last = now;
+          var k = frameAt(elapsed);
+          if (k !== shown) {
+            shown = k;
+            go(k);
+          }
+          tick = requestAnimationFrame(step);
+        }
+        function run() { if (playing && seen && !tick) tick = requestAnimationFrame(step); }
+        function name() { play.textContent = playing ? 'pause' : 'play'; }
+        name();
+        play.addEventListener('click', function() {
+          playing = !playing;
+          name();
+          if (playing) run();
+          else settle();
+        });
+        if (!window.IntersectionObserver) { seen = true; run(); return; }
+        if (!_movieObserver) {
+          _movieObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) { var f = _movieSeen.get(e.target); if (f) f(e.isIntersecting); });
+          });
+        }
+        _movieSeen.forEach(function(_, el) { if (!el.isConnected) { _movieObserver.unobserve(el); _movieSeen.delete(el); } });
+        _movieSeen.set(drawing, function(on) { seen = on; run(); });
+        _movieObserver.observe(drawing);
       }
 
       /* The conventions a spacetime is written in: its signature, and the paragraph that says
@@ -3844,6 +3924,8 @@
     .em-expand, .em-expand-far { fill: none; stroke: var(--pink-dark); stroke-width: 2.2; stroke-linejoin: round; }
     .em-flow, .em-flow-far { fill: none; stroke: var(--cyan); stroke-width: 1.4; stroke-linejoin: round; }
     .em-particles, .em-particles-far { fill: none; stroke: var(--green-light); stroke-width: 2; stroke-linejoin: round; }
+    .em-worldline, .em-worldline-far { fill: none; stroke: var(--green-light); stroke-width: 0.9; stroke-opacity: 0.6; }
+    .em-axis, .em-axis-far { fill: none; stroke: var(--text-dim); stroke-width: 1.4; stroke-dasharray: 2 4; stroke-linecap: round; }
     circle.em-particles { fill: var(--green-light); stroke: none; }
     .mfs-em-svg [class$="-far"] { stroke-opacity: 0.28; }
     /* A figure that turns, an embedding diagram or a figure of light cones: the drawing takes
@@ -3869,6 +3951,19 @@
     #mfs-content-panel .mfs-turn-reset:active { color: var(--pink-light); border-color: var(--pink-light); }
     #mfs-content-panel .mfs-turn-reset:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
     #mfs-content-panel .mfs-turn-reset[hidden] { display: none; }
+    /* A movie's button plays and pauses it, in the top left corner of its frame as the reset
+       stands in the right, and in the reset's size and colours. */
+    #mfs-content-panel .mfs-movie-play {
+      position: absolute; top: 0; left: 0; z-index: 1; box-sizing: border-box;
+      height: calc(34 * var(--em-u, 1px)); padding: 0 calc(10 * var(--em-u, 1px));
+      font-family: 'Source Code Pro', monospace; font-size: calc(13 * var(--em-u, 1px)); line-height: 1; letter-spacing: 0.06em;
+      color: rgba(0,229,255,0.75); background: rgba(0,0,0,0.8);
+      border: solid rgba(0,229,255,0.4); border-width: 0 1px 1px 0; border-radius: 0 0 4px 0; cursor: pointer;
+    }
+    #mfs-content-panel .mfs-movie-play:hover { color: var(--cyan); border-color: var(--cyan); }
+    #mfs-content-panel .mfs-movie-play:active { color: var(--pink-light); border-color: var(--pink-light); }
+    #mfs-content-panel .mfs-movie-play:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+    #mfs-content-panel .mfs-frame-label[hidden] { display: none; }
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
        diagrams'; the figure, its labels and its lines are these. A label is sized in units
        of the figure's width, n being n units of the SVG's 628 unit wide viewBox. */
@@ -4452,12 +4547,14 @@
       .mfs-print-body .em-expand, .mfs-print-body .em-expand-far { stroke: #c2185b; }
       .mfs-print-body .em-flow, .mfs-print-body .em-flow-far { stroke: #0a6e82; }
       .mfs-print-body .em-particles, .mfs-print-body .em-particles-far { stroke: #2a6e2a; }
+      .mfs-print-body .em-worldline, .mfs-print-body .em-worldline-far { stroke: #2a6e2a; }
+      .mfs-print-body .em-axis, .mfs-print-body .em-axis-far { stroke: #666; }
       .mfs-print-body circle.em-particles { fill: #2a6e2a; stroke: none; }
       /* A figure's label stands on the surface beside the circle it names, over its lines, on
          a ground of its own on the screen; the print copy clears every ground, so here it
          gets a white one, or the lines would cross it on paper. */
       #mfs-print-root .mfs-em-figure .cd-lab-small { background: rgba(255,255,255,0.85) !important; }
-      .mfs-print-body .mfs-turn-reset { display: none !important; }
+      .mfs-print-body .mfs-turn-reset, .mfs-print-body .mfs-movie-play { display: none !important; }
       /* The slice of the embedding diagram in the palette's darker green, which holds on white
          paper as the light one does on the dark ground, its label on a white ground of its own
          and in the same green, which the print copy's black for every word would lose. */

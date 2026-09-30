@@ -119,10 +119,11 @@ def diagram_source_version(system, fields):
     return content_version(diagram_source(system, fields))
 
 
-def embedding_moment(view, index):
+def embedding_moment(view, index, curve=None):
     """What an embedding surface says of the moment it is cut from: the view, its settings,
     the surface's label and time, and where each piece runs, which is the reach of the moment
-    every other diagram draws. A grid is its frame and the ends of its rows and columns."""
+    every other diagram draws. A grid is its frame and the ends of its rows and columns. A moment
+    of a stack is the ring `curve` it marks at its time, with that ring's label and time."""
     surface = view["surfaces"][index]
     pieces = []
     for piece in surface["pieces"]:
@@ -132,15 +133,19 @@ def embedding_moment(view, index):
         else:
             pieces.append([piece["id"], piece["class"], piece["metric"], piece["system"], piece["coordinate"],
                            piece["points"][0][0], piece["points"][-1][0]])
-    return {"view": view["id"], "settings": view.get("settings"), "label": surface.get("label"),
-            "time": surface.get("time"), "pieces": pieces,
-            "curves": [[c["class"], c["points"][0], c["points"][-1]] for c in surface.get("curves", [])
-                       if c["class"] == "path"]}
+    out = {"view": view["id"], "settings": view.get("settings"), "label": surface.get("label"),
+           "time": surface.get("time"), "pieces": pieces,
+           "curves": [[c["class"], c["points"][0], c["points"][-1]] for c in surface.get("curves", [])
+                      if c["class"] == "path"]}
+    if curve is not None:
+        ring = surface["curves"][curve]
+        out["ring"] = [curve, ring["label"], ring["time"]]
+    return out
 
 
-def embedding_moment_version(view, index):
+def embedding_moment_version(view, index, curve=None):
     """The stamp a slice drawn on another diagram records of the embedding surface it marks."""
-    return content_version(embedding_moment(view, index))
+    return content_version(embedding_moment(view, index, curve))
 
 
 def check_diagram_stamp(path, system, what, source):
@@ -234,8 +239,11 @@ def check_grid(at, piece):
     turn, a height at every node, one height where a polar grid meets its axis, and an edge that
     says what lies beyond it, with no profile beside it."""
     grid = piece["grid"]
+    if grid.get("frame") == "ellipses":
+        check_ellipses(at, piece)
+        return
     if grid.get("frame") not in ("polar", "cartesian"):
-        raise DataError(f"{at} is a grid in neither a polar nor a Cartesian frame")
+        raise DataError(f"{at} is a grid in neither a polar nor a Cartesian frame, nor a stack of ellipses")
     u, v, z = grid.get("u") or [], grid.get("v") or [], grid.get("z") or []
     for name, values in (("u", u), ("v", v)):
         if len(values) < 2 or not all(b > a for a, b in zip(values, values[1:])):
@@ -252,6 +260,53 @@ def check_grid(at, piece):
         raise DataError(f"{at} is a grid and a profile at once")
     if piece.get("edge", {}).get("kind") != "edge":
         raise DataError(f"{at} does not say what lies beyond its edge")
+
+
+def check_ellipses(at, piece):
+    """A stack of ellipses, as _tools/README.md defines it: its rows u and its angles v each
+    strictly increasing, the angles within one turn, or up to a whole turn where it is `open`,
+    each row's semi-axes a and b, never negative, and height z, and the lines it names by the
+    index of a row or an angle, with an edge that says what lies beyond it."""
+    grid = piece["grid"]
+    u, v = grid.get("u") or [], grid.get("v") or []
+    for name, values in (("u", u), ("v", v)):
+        if len(values) < 2 or not all(b > a for a, b in zip(values, values[1:])):
+            raise DataError(f"{at} does not run one way along its {name}")
+    if v[0] < 0 or (v[-1] > 2 * math.pi if grid.get("open") else v[-1] >= 2 * math.pi) or len(v) < 3:
+        raise DataError(f"{at} runs round beyond one turn")
+    rows = [grid.get(k) or [] for k in ("a", "b", "z")]
+    if any(len(row) != len(u) for row in rows):
+        raise DataError(f"{at} does not give each row its ellipse and height")
+    if not all(isinstance(h, (int, float)) and math.isfinite(h) for row in rows for h in row):
+        raise DataError(f"{at} gives a semi-axis or a height that is not a number")
+    if any(h < 0 for row in rows[:2] for h in row):
+        raise DataError(f"{at} has a semi-axis below zero")
+    for line in grid.get("lines", []):
+        if not (all(0 <= i < len(u) for i in line["u"]) and all(0 <= j < len(v) for j in line["v"])):
+            raise DataError(f"{at} names a line its grid does not hold")
+    if any(key in piece for key in ("points", "start", "end", "coordinate")):
+        raise DataError(f"{at} is a grid and a profile at once")
+    if piece.get("edge", {}).get("kind") != "edge":
+        raise DataError(f"{at} does not say what lies beyond its edge")
+
+
+def check_movie(where, view):
+    """A movie, as _tools/README.md defines it: at least two frames, each a surface with its label
+    and a value of the movie's variable, the values strictly increasing, and one pass taking a
+    positive number of seconds."""
+    movie = view["movie"]
+    frames = movie.get("frames") or []
+    values = [f.get("value") for f in frames]
+    if len(frames) < 2 or not all(isinstance(x, (int, float)) for x in values) or \
+            not all(b > a for a, b in zip(values, values[1:])):
+        raise DataError(f"{where}: the movie of the view {view['id']!r} does not run through its frames in order")
+    if not all(isinstance(f.get("label"), str) and f["label"] for f in frames) or not movie.get("variable"):
+        raise DataError(f"{where}: the movie of the view {view['id']!r} leaves a frame or its variable unnamed")
+    if not (isinstance(movie.get("seconds"), (int, float)) and movie["seconds"] > 0):
+        raise DataError(f"{where}: the movie of the view {view['id']!r} takes no time")
+    if movie.get("turns", False) is not False:
+        raise DataError(f"{where}: the movie of the view {view['id']!r} says it turns, which every figure does unless "
+                        "it says otherwise")
 
 
 def load_embedding(metrics):
@@ -307,7 +362,9 @@ def load_embedding(metrics):
             if view.get("system") and view["system"] not in {s["id"] for s in by_id[path.stem]["coordinates"]}:
                 raise DataError(f"{where}: the view {view['id']!r} names {view['system']!r}, which "
                                 f"{path.stem}.json has no coordinate system for")
-            for surface in view["surfaces"]:
+            if "movie" in view:
+                check_movie(where, view)
+            for surface in view["surfaces"] + view.get("movie", {}).get("frames", []):
                 for piece in surface["pieces"]:
                     at = f"{where}: the view {view['id']!r}, piece {piece['id']!r}"
                     if (piece["metric"], piece["system"]) not in read:
@@ -369,7 +426,11 @@ def check_slices(diagrams, conformal, embedding):
             if target is None or not 0 <= mark.get("surface", -1) < len(target["surfaces"]):
                 raise DataError(f"{where} marks the surface {mark.get('surface')!r} of the embedding view "
                                 f"{mark.get('view')!r}, which embedding/{metric_id}.json does not draw")
-            if embedding_moment_version(target, mark["surface"]) != mark.get("version"):
+            rings = target["surfaces"][mark["surface"]].get("curves", [])
+            if "curve" in mark and not (0 <= mark["curve"] < len(rings) and "time" in rings[mark["curve"]]):
+                raise DataError(f"{where} marks the ring {mark['curve']!r} of the embedding view {mark['view']!r}, "
+                                f"which embedding/{metric_id}.json does not mark at a time")
+            if embedding_moment_version(target, mark["surface"], mark.get("curve")) != mark.get("version"):
                 raise DataError(f"{where} marks a moment of embedding/{metric_id}.json as it no longer "
                                 f"stands; redraw it with _tools/derivations/{script} --metric {metric_id}")
             if not (mark.get("lines") or mark.get("points") or mark.get("fills")):
