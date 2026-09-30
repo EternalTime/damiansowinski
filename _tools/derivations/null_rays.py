@@ -15,7 +15,8 @@ writes MFS/assets/data/diagrams/<metric_id>.json, one file per spacetime that ha
 diagram, removing the file of any spacetime that has none, and the second command stamps
 each file's version into the index. Pass
 --metric <metric_id> to redraw one spacetime, repeatable, and --verify to check the
-rays against closed forms the drawing never uses instead of writing anything. --slices
+rays against closed forms the drawing never uses instead of writing anything, with --metric
+checking only those spacetimes' closed forms. --slices
 rewrites only the slices below, from the embedding files as they stand, tracing no ray,
 which is what to run after an embedding diagram moves its moments.
 
@@ -3071,6 +3072,17 @@ CYLINDERS = {
 }
 CLOSED_FORMS.update({where: (lambda t, phi, k=left: t - k * phi, lambda t, phi, k=right: t - k * phi, None)
                      for where, (left, right) in CYLINDERS.items()})
+# Misner space: in Misner's plane one family keeps psi and the other T e^(psi/2), read through
+# arcsinh so that the drift is measured on a scale the winding does not blow up; in the Milne and
+# Rindler planes each family keeps ln|t| -+ chi or ln xi +- eta, the logarithms of the covering
+# plane's null coordinates.
+CLOSED_FORMS.update({
+    ("misner", "misner", "plane"): (lambda T, psi: psi, lambda T, psi: np.arcsinh(T * np.exp(psi / 2)), None),
+    ("misner", "milne", "plane"): (lambda t, chi: np.log(-t) - chi, lambda t, chi: np.log(-t) + chi,
+                                   lambda t, chi: t < -0.02),
+    ("misner", "rindler", "plane"): (lambda eta, xi: np.log(xi) + eta, lambda eta, xi: np.log(xi) - eta,
+                                     lambda eta, xi: xi > 0.02),
+})
 # What light launched along each family of a cylinder does, as its caption says: stays on the
 # cylinder as a null geodesic, or is turned toward or away from the axis.
 TURNING = {
@@ -3105,20 +3117,24 @@ for _metric, _forms in (("kerr", _kerr_forms(0.9)), ("kerr_newman", _kerr_forms(
     CLOSED_FORMS[(_metric, "boyer_lindquist", "above")] = _forms[1]
 
 
-def verify():
+def verify(metrics=()):
     """Trace rays as the page does and measure how far each family's closed form drifts.
-    Returns the number of failures."""
+    Given metric ids, check only their closed forms and dust, skipping the checks of turning
+    and of the principal null rays. Returns the number of failures."""
     failures = 0
     specs = {(s.metric, s.system, s.view): s for s in DIAGRAMS}
-    frw = specs[("frw", "comoving_spherical", "radial")]
-    solver = Chart(frw).solver
 
-    def eta(t):
-        return np.array([quad(lambda s: 1 / solver.values("a", np.array([s]))[0][0], 1e-12, x, limit=400)[0]
-                         for x in np.atleast_1d(t)])
-    forms = dict(CLOSED_FORMS)
-    forms[("frw", "comoving_spherical", "radial")] = (lambda t, r: eta(t) + r, lambda t, r: eta(t) - r,
-                                                      lambda t, r: t > 0.02)
+    def wanted(metric_id):
+        return not metrics or metric_id in metrics
+    forms = {where: form for where, form in CLOSED_FORMS.items() if wanted(where[0])}
+    if wanted("frw"):
+        solver = Chart(specs[("frw", "comoving_spherical", "radial")]).solver
+
+        def eta(t):
+            return np.array([quad(lambda s: 1 / solver.values("a", np.array([s]))[0][0], 1e-12, x, limit=400)[0]
+                             for x in np.atleast_1d(t)])
+        forms[("frw", "comoving_spherical", "radial")] = (lambda t, r: eta(t) + r, lambda t, r: eta(t) - r,
+                                                          lambda t, r: t > 0.02)
     print(f"{'view':56s} {'P drift':>9s} {'M drift':>9s}  other family spread")
     traced = {}
     for where, (own_P, own_M, keep) in forms.items():
@@ -3151,27 +3167,32 @@ def verify():
         ok = worst < 1e-5 and (math.isnan(separated) or separated > 1.0)
         failures += not ok
         print(f"{'/'.join(where):56s} {drift[0]:9.1e} {drift[1]:9.1e}  {separated:6.2f}  {'ok' if ok else 'FAILED'}")
-    t_sing = solver.t_sing
-    t = np.linspace(0.01, 2.0, 400)
-    eds = float(np.max(np.abs(solver.values("a", t)[0] / (t / -t_sing) ** (2 / 3) - 1)))
-    ok = abs(t_sing + 2 / 3) < 1e-8 and eds < 1e-7
-    failures += not ok
-    print(f"FRW dust: the bang {t_sing:.9f} from a = 1, Einstein-de Sitter -2/3; "
-          f"a(t) against (t/t0)^(2/3) to {eds:.1e}  {'ok' if ok else 'FAILED'}")
-    bianchi = Chart(specs[("bianchi", "type_i_cartesian", "tx")]).solver
-    y = bianchi.state(np.array([1e-4, 2e-4]))
-    p = [float(np.log(y[2 * i][1] / y[2 * i][0]) / np.log(2)) for i in range(3)]
-    ok = abs(sum(p) - 1) < 1e-3 and abs(sum(q * q for q in p) - 1) < 1e-3
-    failures += not ok
-    print(f"Bianchi I dust: exponents at the singularity {', '.join(f'{q:.4f}' for q in p)}, "
-          f"on the Kasner circle  {'ok' if ok else 'FAILED'}")
-    alcubierre = Chart(specs[("alcubierre", "cartesian", "tx")])
-    natario = Chart(specs[("natario", "cartesian_flow", "tx")])
-    T, X = np.meshgrid(np.linspace(-2, 2, 201), np.linspace(-3, 3, 301))
-    gap = max(float(np.nanmax(np.abs(alcubierre.fn[k](T, X) - natario.fn[k](T, X)))) for k in ("g00", "g0r", "grr"))
-    ok = gap < 1e-12
-    failures += not ok
-    print(f"Natario against Alcubierre on the axis: the metrics on the plane differ by {gap:.1e}  {'ok' if ok else 'FAILED'}")
+    if wanted("frw"):
+        t_sing = solver.t_sing
+        t = np.linspace(0.01, 2.0, 400)
+        eds = float(np.max(np.abs(solver.values("a", t)[0] / (t / -t_sing) ** (2 / 3) - 1)))
+        ok = abs(t_sing + 2 / 3) < 1e-8 and eds < 1e-7
+        failures += not ok
+        print(f"FRW dust: the bang {t_sing:.9f} from a = 1, Einstein-de Sitter -2/3; "
+              f"a(t) against (t/t0)^(2/3) to {eds:.1e}  {'ok' if ok else 'FAILED'}")
+    if wanted("bianchi"):
+        bianchi = Chart(specs[("bianchi", "type_i_cartesian", "tx")]).solver
+        y = bianchi.state(np.array([1e-4, 2e-4]))
+        p = [float(np.log(y[2 * i][1] / y[2 * i][0]) / np.log(2)) for i in range(3)]
+        ok = abs(sum(p) - 1) < 1e-3 and abs(sum(q * q for q in p) - 1) < 1e-3
+        failures += not ok
+        print(f"Bianchi I dust: exponents at the singularity {', '.join(f'{q:.4f}' for q in p)}, "
+              f"on the Kasner circle  {'ok' if ok else 'FAILED'}")
+    if wanted("alcubierre") or wanted("natario"):
+        alcubierre = Chart(specs[("alcubierre", "cartesian", "tx")])
+        natario = Chart(specs[("natario", "cartesian_flow", "tx")])
+        T, X = np.meshgrid(np.linspace(-2, 2, 201), np.linspace(-3, 3, 301))
+        gap = max(float(np.nanmax(np.abs(alcubierre.fn[k](T, X) - natario.fn[k](T, X)))) for k in ("g00", "g0r", "grr"))
+        ok = gap < 1e-12
+        failures += not ok
+        print(f"Natario against Alcubierre on the axis: the metrics on the plane differ by {gap:.1e}  {'ok' if ok else 'FAILED'}")
+    if metrics:
+        return failures
     return failures + verify_turning(specs) + verify_principal(specs, traced)
 
 
@@ -3302,7 +3323,7 @@ def main(argv=None):
     if unknown:
         parser.error(f"no diagram is drawn for {sorted(unknown)}")
     if args.verify:
-        return 1 if verify() else 0
+        return 1 if verify(set(args.metric)) else 0
     if args.slices:
         rewrite_slices(set(args.metric))
         return 0
