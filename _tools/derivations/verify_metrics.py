@@ -278,6 +278,10 @@ DIMENSIONS = {
     # cylindrical about the axis the tube is laid along, so r is the distance from that axis
     # rather than an areal radius. The solution names no length of its own: the radius of the
     # tube and the thickness of its wall are both left to k.
+    # Khan and Penrose's null coordinates, and tau and sigma, are pure numbers, measured in units
+    # of the waves' focal length L, which multiplies the part of the metric along them.
+    ("khan_penrose", "double_null"): {"u": "1", "v": "1", "x": "L", "y": "L", "L": "L"},
+    ("khan_penrose", "cosmological"): {"\\tau": "1", "\\sigma": "1", "x": "L", "y": "L", "L": "L"},
     ("krasnikov", "cylindrical"): {
         "t": "T", "x": "L", "r": "L", "\\phi": "1", "k": "1",
     },
