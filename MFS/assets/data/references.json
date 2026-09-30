@@ -1,5 +1,5 @@
 {
-  "version": "69b2fb63548e8381",
+  "version": "da69f5d257331092",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -5958,6 +5958,71 @@
         "doi": "10.1088/0264-9381/23/23/008",
         "eprint": "arXiv:gr-qc/0609056",
         "url": "https://doi.org/10.1088/0264-9381/23/23/008"
+      }
+    },
+    "weyl1919": {
+      "type": "article",
+      "fields": {
+        "title": "Bemerkung \\\"uber die axialsymmetrischen L\\\"osungen der Einsteinschen Gravitationsgleichungen",
+        "author": "Weyl, Hermann",
+        "journal": "Annalen der Physik",
+        "volume": "364",
+        "pages": "185--188",
+        "year": "1919",
+        "doi": "10.1002/andp.19193641006",
+        "url": "https://doi.org/10.1002/andp.19193641006"
+      }
+    },
+    "griffiths2009": {
+      "type": "book",
+      "fields": {
+        "title": "Exact Space-Times in Einstein's General Relativity",
+        "author": "Griffiths, Jerry B. and Podolsk\\'y, Jiř\\'i",
+        "publisher": "Cambridge University Press",
+        "address": "Cambridge",
+        "year": "2009",
+        "doi": "10.1017/CBO9780511635397",
+        "url": "https://doi.org/10.1017/CBO9780511635397"
+      }
+    },
+    "newman1961": {
+      "type": "article",
+      "fields": {
+        "title": "New approach to Einstein's empty space field equations",
+        "author": "Newman, Ezra T. and Tamburino, Louis A.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "2",
+        "pages": "667--674",
+        "year": "1961",
+        "doi": "10.1063/1.1703754",
+        "url": "https://doi.org/10.1063/1.1703754"
+      }
+    },
+    "robinson1962": {
+      "type": "article",
+      "fields": {
+        "title": "Some spherical gravitational waves in general relativity",
+        "author": "Robinson, Ivor and Trautman, Andrzej",
+        "journal": "Proceedings of the Royal Society of London A",
+        "volume": "265",
+        "pages": "463--473",
+        "year": "1962",
+        "doi": "10.1098/rspa.1962.0036",
+        "url": "https://doi.org/10.1098/rspa.1962.0036"
+      }
+    },
+    "bini2004": {
+      "type": "article",
+      "fields": {
+        "title": "Vacuum C metric and the gravitational Stark effect",
+        "author": "Bini, Donato and Cherubini, Christian and Mashhoon, Bahram",
+        "journal": "Physical Review D",
+        "volume": "70",
+        "pages": "044020",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.70.044020",
+        "eprint": "arXiv:gr-qc/0401071",
+        "url": "https://doi.org/10.1103/PhysRevD.70.044020"
       }
     }
   }
