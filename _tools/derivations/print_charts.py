@@ -322,11 +322,6 @@ GEODESICS = {
 }
 
 
-CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
-          "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
-          "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)]}
-
-
 def rewritten(value, substitutions, chart):
     """Every string in `value` with each (old, new) of `substitutions` applied in turn, each
     changed string read back and compared with the one it replaces, so a rewrite that changed a
@@ -409,6 +404,158 @@ BTZ_LEAD = [sp.Symbol("r", real=True), sp.Symbol("M", real=True), sp.Symbol("J",
             sp.Symbol("ell", real=True)]
 
 
+# -- C-metric ----------------------------------------------------------------------------
+
+def named_factors(named, merges=()):
+    """A pretty printer that factors a value and prints the factors the chart names as the
+    sums it writes them as. `named` is [(placeholder, polynomial, text)]; `merges` is
+    [(a, b, product)], two polynomials whose product is written as one expression, as
+    (1 + alpha r)(1 - alpha r) as 1 - alpha^2 r^2. Each factor is matched up to its sign."""
+
+    def matched(base, poly):
+        if sp.expand(base - poly) == 0:
+            return 1
+        if sp.expand(base + poly) == 0:
+            return -1
+        return 0
+
+    def pretty(value):
+        powers = {}
+        sign = sp.Integer(1)
+        for f in sp.Mul.make_args(sp.factor(value)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        for a, b, product in merges:
+            found = {}
+            for base in list(powers):
+                for key, poly in (("a", a), ("b", b)):
+                    s = matched(base, poly)
+                    if s and powers[base].is_Integer and key not in found:
+                        found[key] = (base, s)
+            if len(found) < 2:
+                continue
+            (ba, sa), (bb, sb) = found["a"], found["b"]
+            ka, kb = powers[ba], powers[bb]
+            k = min(ka, kb) if ka > 0 and kb > 0 else max(ka, kb) if ka < 0 and kb < 0 else 0
+            if k == 0:
+                continue
+            powers[ba] -= k
+            powers[bb] -= k
+            sign *= (sa * sb) ** k
+            powers[product] = powers.get(product, 0) + k
+        out = sign
+        for base, k in powers.items():
+            if k == 0:
+                continue
+            if base.is_Add:
+                for placeholder, poly, _ in named:
+                    s = matched(base, poly)
+                    if s:
+                        base, out = placeholder, out * s ** k
+                        break
+            out *= base ** k
+        return out
+
+    return pretty
+
+
+def c_metric():
+    """The C-metric in the two charts of J. B. Griffiths, P. Krtous and J. Podolsky, Class.
+    Quantum Grav. 23, 6745 (2006): their spherical chart, eq. (6)-(7), and the form of K. Hong
+    and E. Teo, their eq. (3)-(4), in which conformal infinity is x + y = 0. Both write the
+    period of phi as 2 pi C; here phi runs over 2 pi and C stands in g_phiphi, as in their
+    eq. (20). The spherical chart's cos^2 theta is kept against sin^2 theta so that
+    1 + alpha r cos(theta) survives as a factor, and before the Hong-Teo chart is written its
+    metric is pulled back through tau = alpha t, y = 1/(alpha r), x = cos(theta) and checked
+    equal to the spherical chart's, slot by slot."""
+    coords = ["t", "r", "\\theta", "\\phi"]
+    parameters = ["m", "\\alpha", "C"]
+    probe = vm.Reader(coords, parameters, ())
+    r, th = probe.symbol["r"], probe.symbol["\\theta"]
+    m, al = probe.parameters["m"], probe.parameters["alpha"]
+    s, c = sp.sin(th), sp.cos(th)
+    named = [(sp.Symbol("CW"), 1 + al * r * c, "1 + \\alpha r\\cos\\theta"),
+             (sp.Symbol("CP"), 1 + 2 * al * m * c, "1 + 2\\alpha m\\cos\\theta"),
+             (sp.Symbol("CQ"), 1 - al ** 2 * r ** 2, "1 - \\alpha^2r^2"),
+             (sp.Symbol("CA"), 1 - al * r, "1 - \\alpha r"),
+             (sp.Symbol("CB"), 1 + al * r, "1 + \\alpha r")]
+    factors = named_factors(named, [(1 + al * r, 1 - al * r, named[2][0]), (1 + c, 1 - c, s ** 2)])
+
+    def pretty(value):
+        # sin^2 as 1 - cos^2, so that cos(theta) is the one angle every factor is written in.
+        def cos_only(e):
+            n = int(e.exp)
+            return s ** (n % 2) * (1 - c ** 2) ** (n // 2)
+        return factors(value.replace(lambda e: e.is_Pow and e.base == s and e.exp.is_Integer, cos_only))
+
+    spherical_body = ("\\left(-\\left(1 - \\alpha^2r^2\\right)\\left(1 - \\dfrac{2m}{r}\\right){}dt^2"
+                      " + \\dfrac{dr^2}{\\left(1 - \\alpha^2r^2\\right)\\left(1 - \\dfrac{2m}{r}\\right)}"
+                      " + \\dfrac{r^2d\\theta^2}{1 + 2\\alpha m\\cos\\theta}"
+                      " + C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)r^2\\sin^2\\theta\\,d\\phi^2\\right)")
+    spherical_line = "ds^2 = \\dfrac{1}{\\left(1 + \\alpha r\\cos\\theta\\right)^2}" + spherical_body
+    spherical = {
+        "metric_id": "c_metric",
+        "system": {"id": "spherical", "name": "Spherical", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]",
+                               "\\phi \\in [0, 2\\pi)", "1 + \\alpha r\\cos\\theta > 0"],
+                   "parameters": parameters,
+                   "line_element": spherical_line.replace("{}dt", "c^2dt")},
+        "chart_line_element": spherical_line.replace("{}dt", "dt"),
+        "printer": {"lead": [al, r, m, c, s], "named": {p: text for p, _, text in named}},
+        "pretty": pretty,
+    }
+
+    xy = ["\\tau", "y", "x", "\\phi"]
+    xprobe = vm.Reader(xy, parameters, ())
+    x, y = xprobe.symbol["x"], xprobe.symbol["y"]
+    xm, xal = xprobe.parameters["m"], xprobe.parameters["alpha"]
+    xnamed = [(sp.Symbol("CS"), x + y, "x + y"),
+              (sp.Symbol("CG"), 1 + 2 * xal * xm * x, "1 + 2\\alpha m x"),
+              (sp.Symbol("CF"), 1 - 2 * xal * xm * y, "1 - 2\\alpha m y"),
+              (sp.Symbol("CX"), 1 - x ** 2, "1 - x^2"),
+              (sp.Symbol("CY"), 1 - y ** 2, "1 - y^2")]
+    xy_line = ("ds^2 = \\dfrac{1}{\\alpha^2\\left(x + y\\right)^2}\\left(\\left(1 - y^2\\right)\\left(1 - 2\\alpha m y\\right)d\\tau^2"
+               " - \\dfrac{dy^2}{\\left(1 - y^2\\right)\\left(1 - 2\\alpha m y\\right)}"
+               " + \\dfrac{dx^2}{\\left(1 - x^2\\right)\\left(1 + 2\\alpha m x\\right)}"
+               " + C^2\\left(1 - x^2\\right)\\left(1 + 2\\alpha m x\\right)d\\phi^2\\right)")
+    hong_teo = {
+        "metric_id": "c_metric",
+        "system": {"id": "hong_teo", "name": "Hong-Teo", "coords": xy,
+                   "domains": ["\\tau \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "x \\in [-1, 1]",
+                               "\\phi \\in [0, 2\\pi)", "x + y > 0"],
+                   "parameters": parameters, "line_element": xy_line},
+        "chart_line_element": xy_line,
+        "printer": {"lead": [xal, xm, y, x], "named": {p: text for p, _, text in xnamed}},
+        "pretty": named_factors(xnamed, [(1 + x, 1 - x, xnamed[3][0]), (1 + y, 1 - y, xnamed[4][0])]),
+        "check": lambda chart: c_metric_pullback(chart, spherical["chart_line_element"]),
+    }
+    return [spherical, hong_teo]
+
+
+def c_metric_pullback(chart, spherical_line):
+    """J^T g J, with g the Hong-Teo metric of `chart` and J the Jacobian of tau = alpha t,
+    y = 1/(alpha r), x = cos(theta), phi = phi, minus the spherical chart's metric, in every slot."""
+    coords = ["t", "r", "\\theta", "\\phi"]
+    reader = vm.Reader(coords, ["m", "\\alpha", "C"], ())
+    g = vm.metric_from_line_element(reader, spherical_line, coords)
+    t, r, th, ph = (reader.symbol[n] for n in coords)
+    at = {chart.reader.parameters[k]: reader.parameters[k] for k in ("m", "alpha", "C")}
+    al = reader.parameters["alpha"]
+    image = [al * t, 1 / (al * r), sp.cos(th), ph]
+    J = sp.Matrix(4, 4, lambda a, b: sp.diff(image[a], [t, r, th, ph][b]))
+    at.update(dict(zip(chart.symbols, image)))
+    pulled = J.T * chart.geo.g.subs(at) * J
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm(pulled[a, b] - g[a, b]) != 0:
+                raise AssertionError(f"c_metric: the Hong-Teo metric pulled back misses the spherical one "
+                                     f"in slot {coords[a]}{coords[b]}")
+
+
+CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
+          "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
+          "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
+          "c_metric": c_metric}
 
 
 def write(spec):
@@ -472,9 +619,12 @@ def main():
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])
     for metric_id in parser.parse_args().metric or sorted(CHARTS):
         print(metric_id, flush=True)
-        # A spacetime with several charts printed by machine lists one builder per chart.
+        # A spacetime with several charts printed by machine lists one builder per chart, or has
+        # one builder that returns every chart, when the charts are checked against each other.
         for build in CHARTS[metric_id] if isinstance(CHARTS[metric_id], list) else [CHARTS[metric_id]]:
-            write(build())
+            specs = build()
+            for spec in specs if isinstance(specs, list) else [specs]:
+                write(spec)
 
 
 if __name__ == "__main__":
