@@ -2858,29 +2858,24 @@
          the moments of a closed universe and of other spacetimes whose embedding changes in time:
          its frames drawn live in turn, each by MfsTurn at the camera the reader has turned the
          figure to, and at the figure's own camera kept once drawn. Each frame's value, its time or
-         how far a cone is unrolled, runs at a steady rate, one pass taking the
-         movie's `seconds`, the last frame held one step, and then the movie starts again. It plays
+         how far a cone is unrolled, runs at a steady rate, one pass taking the movie's `seconds`,
+         and MfsTurn.movieFrame() says which frame is shown: played once, the last frame is held
+         one step and the movie starts again, and played "pingpong", as the cosmic string's cone,
+         it runs forward, back and forward again, each end shown once at its turnaround. It plays
          once the page has drawn it and only while it is on the screen, and a reader who asks for
          reduced motion finds it paused on its first frame. The button in its top left corner
          plays and pauses it. `go(k)` draws frame k and `settle()` the frame shown in full. */
       var _movieObserver = null, _movieSeen = new Map();
       function wireMovie(drawing, movie, go, settle) {
         var play = drawing.closest('.mfs-cd-figure').querySelector('.mfs-movie-play');
-        var values = movie.frames.map(function(fr) { return fr.value; }), n = values.length;
-        var span = values[n - 1] - values[0], period = 1000 * movie.seconds, cycle = period * n / (n - 1);
         var playing = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
         var elapsed = 0, last = null, tick = 0, seen = false, shown = 0;
-        function frameAt(ms) {
-          var v = values[0] + span * (ms % cycle) / period, k = 0;
-          while (k + 1 < n && values[k + 1] <= v) k++;
-          return k;
-        }
         function step(now) {
           tick = 0;
           if (!drawing.isConnected || !playing || !seen) { last = null; return; }
           if (last !== null) elapsed += now - last;
           last = now;
-          var k = frameAt(elapsed);
+          var k = MfsTurn.movieFrame(movie, elapsed);
           if (k !== shown) {
             shown = k;
             go(k);
