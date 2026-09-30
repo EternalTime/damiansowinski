@@ -461,6 +461,36 @@ def hyperbolic(r):
     return pretty
 
 
+# -- a kink -----------------------------------------------------------------------------
+
+def kink(x, then=sp.factor):
+    """A `pretty` for a metric with a kink at x = 0, as the domain wall's (1 - k|x|)^2, and the
+    placeholders it prints with, as (pretty, overrides).
+
+    The checker hands every value back in x and sgn(x), its denominators cleared of the sign;
+    here x is written sgn(x)|x|, the sign's powers are reduced by sgn(x)^2 = 1, inside every
+    exponential too, and the value is split into A(|x|) + sgn(x) B(|x|), each part put in
+    the form `then` gives it, so that 1/(1 - k|x|) is printed as it is written and not as
+    (1 + k|x|)/(1 - k^2x^2). The delta of x is held aside while x is replaced."""
+    a, s, d = sp.Symbol("_abs" + x.name, positive=True), sp.Symbol("_sgn" + x.name), sp.Symbol("_delta" + x.name)
+    name = tex_name(x.name)
+    overrides = {a: "|" + name + "|", s: "\\mathrm{sgn}(" + name + ")", d: "\\delta(" + name + ")"}
+
+    def reduce(e):
+        return e.replace(lambda f: f.is_Pow and f.base == s and f.exp.is_Integer, lambda f: s ** (int(f.exp) % 2))
+
+    def pretty(value):
+        v = sp.sympify(value).replace(lambda e: isinstance(e, sp.Abs) and e.args[0] == x, lambda e: a)
+        v = v.xreplace({sp.DiracDelta(x): d, sp.sign(x): s}).subs(x, s * a)
+        v = reduce(v.replace(lambda e: isinstance(e, sp.exp), lambda e: sp.exp(reduce(sp.expand(e.args[0])))))
+        numerator, denominator = (reduce(sp.expand(side)) for side in sp.fraction(sp.together(v)))
+        if denominator.has(s):
+            raise ValueError(f"{value} keeps sgn({x}) below the line")
+        even, odd = numerator.subs(s, 0), sp.expand((numerator - numerator.subs(s, 0)) / s)
+        return then(even / denominator) + s * then(odd / denominator)
+    return pretty, overrides
+
+
 # -- regrouping a numerator ------------------------------------------------------------
 
 def symbolize(expr):

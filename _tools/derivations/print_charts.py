@@ -390,8 +390,9 @@ def rewritten(value, substitutions, chart):
     if text != value:
         # A side the rewrite left alone, as the R of "R = ...", is not read again.
         for side, original in zip(text.split("="), value.split("="), strict=True):
-            if side != original:
-                chart.check(side, chart.reader(original))
+            # Both are printed texts, so both already carry a named time as c times it.
+            if side != original and vm.norm(chart.reader(side) - chart.reader(original)) != 0:
+                raise AssertionError(f"the rewrite {side!r} does not read back as {original!r}")
     return text
 
 
@@ -1211,6 +1212,59 @@ def khan_penrose_pullback(chart, points=24):
         checked += 1
 
 
+# -- Domain wall -----------------------------------------------------------------------
+
+def domain_wall(system):
+    """The four charts of the domain wall of Vilenkin and of Ipser and Sikivie, flat on either
+    side of the wall and with a kink across it: the planar chart with the de Sitter world
+    volume of the wall in flat slices, the global chart with it in closed slices, the global
+    chart in the conformal form of Cvetic and Soleng, and the inertial chart of one side, in
+    which the wall is the hyperboloid R^2 - c^2T^2 = 1/k^2. The curvature of the first three
+    is a delta on the wall, which the checker reads as a distribution, and their Kretschmann
+    scalar, the square of that delta, is stated where the wall is not; domain_wall.md derives
+    each chart."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    charts = {
+        "planar": {"coords": ["t", "x", "y", "z"], "kink": "z",
+                   "chart": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-dt^2 + e^{2kt}\\left(dx^2 + dy^2\\right)\\right) + dz^2"},
+        "global": {"coords": ["t", "z", "\\theta", "\\phi"], "kink": "z",
+                   "chart": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-dt^2 + \\dfrac{\\cosh^2(kt)}{k^2}" + sphere + "\\right) + dz^2"},
+        "conformal": {"coords": ["t", "w", "\\theta", "\\phi"], "kink": "w",
+                      "chart": "ds^2 = e^{-2k|w|}\\left(-dt^2 + dw^2 + \\dfrac{\\cosh^2(kt)}{k^2}" + sphere + "\\right)"},
+        "inertial": {"coords": ["T", "R", "\\theta", "\\phi"],
+                     "chart": "ds^2 = -dT^2 + dR^2 + R^2" + sphere},
+    }
+    chart = charts[system]
+    path = METRICS / "domain_wall.json"
+    published = next(c for c in json.loads(path.read_text(encoding="utf-8"))["coordinates"] if c["id"] == system)
+    probe = vm.Reader(chart["coords"], ["k"], ())
+    k, c, time_ = probe.parameters["k"], probe.c, probe.symbol[chart["coords"][0]]
+    spec = {
+        "metric_id": "domain_wall",
+        "system": {"id": system, "name": published["name"], "coords": chart["coords"], "domains": published["domains"],
+                   "parameters": ["k"], "line_element": published["line_element"]},
+        "chart_line_element": chart["chart"],
+        "time": chart["coords"][0],
+        "printer": {"lead": [k, c, time_]},
+    }
+    if "kink" in chart:
+        x = probe.symbol[chart["kink"]]
+        then = cp.hyperbolic(k * c * time_) if system != "planar" else sp.factor
+        pretty, overrides = cp.kink(x, then)
+        absolute = next(p for p in overrides if p.name.startswith("_abs"))
+        spec["pretty"] = pretty
+        spec["printer"] = {"lead": [k, c, time_], "rising": [absolute], "overrides": overrides}
+        spec["kretschmann_where"] = chart["kink"]
+    # kct and k|z| are set as the line element sets them, and sinh over cosh as tanh.
+    hyperbolic_tangent = [(f"\\dfrac{{{n}k\\sinh\\left(kct\\right)}}{{\\cosh\\left(kct\\right)}}",
+                           f"{n}k\\tanh\\left(kct\\right)") for n in ("", "2")]
+    spec["rewrite"] = [("k\\,c\\,t", "kct"), ("k\\,c\\,T", "kcT"), ("k\\,|", "k|")] + hyperbolic_tangent
+    return spec
+
+
+DW_CHARTS = ["planar", "global", "conformal", "inertial"]
+
+
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
@@ -1221,7 +1275,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "nariai": [lambda s=s: nariai(s) for s in ("static", "global", "conformal")],
           "aichelburg_sexl": [lambda s=s: aichelburg_sexl(s) for s in AS_CHARTS],
           "khan_penrose": khan_penrose,
-          "global_monopole": [lambda s=s: global_monopole(s) for s in GM_CHARTS]}
+          "global_monopole": [lambda s=s: global_monopole(s) for s in GM_CHARTS],
+          "domain_wall": [lambda s=s: domain_wall(s) for s in DW_CHARTS]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------
@@ -1412,6 +1467,12 @@ def write(spec):
         computed = chart.geo.ricci_scalar() if field == "ricci_scalar" else chart.geo.kretschmann()
         if field in spec:
             math[field] = ("R = " if field == "ricci_scalar" else "K = ") + chart.check(spec[field], computed)
+        elif field == "kretschmann" and "kretschmann_where" in spec:
+            # A square of a delta is no distribution, so the scalar is stated where the kink is not.
+            where = spec["kretschmann_where"]
+            off = vm.off_support(computed, chart.reader.symbol[where])
+            math[field] = ("K = " + chart.text(off)
+                           + " \\;\\text{for}\\; " + where + " \\neq 0")
         elif field == "kretschmann" and "kretschmann_text" in spec:
             math[field] = "K = " + chart.check(spec["kretschmann_text"](chart), computed)
         elif field == "kretschmann":

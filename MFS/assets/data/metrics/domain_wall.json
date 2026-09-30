@@ -23,7 +23,7 @@
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\delta$ is the Dirac delta.",
-  "history": "Yakov Zel'dovich, Igor Kobzarev and Lev Okun worked out in 1974 what a spontaneously broken discrete symmetry does to the universe, in a model with two vacua of equal energy, $\\varphi = \\pm\\eta$ [zeldovich1974, zeldovich1975]. As the universe cools, causally disjoint regions fall into one vacuum or the other at random, and a wall of field energy parts neighbouring domains, its tension equal to its surface energy density [zeldovich1975]. A volume holding many such walls at rest, oriented at random, has the pressure $p = -2\\varepsilon/3$, and since $\\varepsilon + 3p = -\\varepsilon$ is negative, a universe filled with them expands with acceleration [zeldovich1975]. Walls with a surface energy density of order $m_p^3$, with $m_p$ the proton mass and $\\hbar = c = 1$, as their model makes them, would make the background radiation more anisotropic than the observed $\\delta T/T < 10^{-3}$ unless something removed them early [zeldovich1975]. Tom Kibble showed in 1976 that whether walls, strings or monopoles form depends on the topology of the manifold of degenerate vacua, and argued that theories with walls could probably be ruled out for their \"unacceptable gravitational effects\" [kibble1976].¶Alexander Vilenkin solved the linearized field equations for a wall and for a string in 1981, and found that test particles near the wall are repelled by it [vilenkin1981, cvetic1997]. No static solution of Einstein's equations corresponds to that linear field [cvetic1997]. The exact field of a plane wall, which Vilenkin found in 1983, depends on time, has event horizons and no true geometric singularities, and is locally flat everywhere except on the wall itself [vilenkin1983, cvetic1997]. The wall repels because its stress-energy violates the strong energy condition, as Vilenkin pointed out, and test bodies near it accelerate away from it at $2\\pi G\\sigma/c^2$, with $\\sigma$ its surface energy density [vilenkin1983, caldwell1996].¶Axion models have discretely degenerate vacua, whose walls are incompatible with the standard cosmology unless a small interaction breaking the symmetry makes them disappear some time after they form, as Pierre Sikivie showed in 1982 [sikivie1982]. With James Ipser he took up the gravity of walls in 1984, using the Gauss-Codazzi formalism, in which the surface energy and tension of a thin wall fix the jump in extrinsic curvature across it, as Werner Israel had set out in 1966 [ipser1984, cvetic1997, israel1966]. Ipser and Sikivie showed that domain walls repel, found the most general solution for a planar wall, and derived the motion of a spherical wall in an asymptotically flat spacetime [ipser1984]. Ipser and Sikivie found a transformation that takes each side of Vilenkin's wall to Minkowski coordinates, in which the wall is the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$ with $k = 2\\pi G\\sigma/c^4$ [ipser1984, caldwell1996]. The metric induced on the hyperboloid is that of de Sitter space in $2 + 1$ dimensions, so at each moment the wall is a sphere [caldwell1996]. Ipser extended the method in 1984 to walls whose tension is a constant fraction, at most one, of their surface energy density, and found that repulsion gives way to attraction as that fraction falls below one half [ipser1984walls].¶Robert Caldwell, Andrew Chamblin and Gary Gibbons described the whole spacetime in 1996 as two copies of the inside of that hyperboloid in Minkowski space, matched to each other across it, flat on both sides with \"a ridge of curvature\" along the wall [caldwell1996]. An inertial observer on either side sees the wall as a sphere that accelerates toward them, stops at radius $1/k$ at $T = 0$, and accelerates away [caldwell1996]. The plane symmetric form of the metric is geodesically incomplete and describes only part of a spherical bubble, and space closes up, with both sides inside the wall, as Mirjam Cvetič and Harald Soleng stressed in 1997 [cvetic1997]. The Euclidean section, two flat four-balls glued back to back, describes the creation from nothing of such a closed universe of two domains parted by a wall [caldwell1996].¶A wall made of a real scalar field repels matter inside it and outside it, as Lawrence Widrow found in 1989 by solving the full Einstein scalar field equations for an infinite wall [widrow1989]. Far from a thick wall the metric approaches that of the thin wall, so the thin wall fixes the global structure of the spacetime [cvetic1997]. Static walls exist in $N = 1$ supergravity, with an energy per unit area that saturates a Bogomol'nyi bound, as Cvetič, Stephen Griffies and Soo-Jong Rey found in 1992 [cvetic1992]. One such wall stands between a Minkowski vacuum and an anti-de Sitter vacuum, whose positive gravitational mass cancels the negative gravitational mass of the wall, so that nothing on the Minkowski side feels a force [cvetic1997]. Vilenkin's wall, with Minkowski space on both sides, is the reflection symmetric case of the walls whose energy per unit area exceeds that of a static wall, which accelerate as bubbles [cvetic1997].¶Caldwell, Chamblin and Gibbons expected the repulsion of a wall to create pairs of black holes, as the repulsion of de Sitter space does [caldwell1996]. Uncharged black holes can be created only at rest with respect to one another, and a pair of Schwarzschild black holes of mass $m$ is held in equilibrium by a wall at radius $3m$, in units with $G = c = 1$, where its repulsion balances their attraction [caldwell1996]. Charged black holes can also be created accelerating away from one another, by an instanton with no counterpart in Einstein-Maxwell theory with a cosmological constant [caldwell1996]. Euclidean instantons can also mediate the creation of what they call \"non-orientable black hole solutions\" [caldwell1996].¶The energy density of a network of walls falls as $1/t$, more slowly than that of matter or of radiation, so the walls come to dominate the universe, at $t_\\mathrm{dom} \\simeq 2.93 \\times 10^3\\,\\mathrm{s}\\,A^{-1}(\\sigma/\\mathrm{TeV}^3)^{-1}$ with $A \\simeq 0.8$ from simulations [saikawa2017]. Walls made unstable by a small explicit breaking of the discrete symmetry collapse before that, as Sikivie proposed for axion walls [saikawa2017, sikivie1982]. Walls that collide and annihilate in the early universe leave a stochastic background of gravitational waves [saikawa2017]. Pulsar timing arrays and direct detection experiments already exclude part of the parameters of such models, and the next generation of gravitational wave observatories can cover much more of them [saikawa2017].",
+  "history": "Yakov Zel'dovich, Igor Kobzarev and Lev Okun worked out in 1974 what a spontaneously broken discrete symmetry does to the universe, in a model with two vacua of equal energy, $\\varphi = \\pm\\eta$ [zeldovich1974, zeldovich1975]. As the universe cools, causally disjoint regions fall into one vacuum or the other at random, and a wall of field energy parts neighbouring domains, its tension equal to its surface energy density [zeldovich1975]. A volume holding many such walls at rest, oriented at random, has the pressure $p = -2\\varepsilon/3$, and since $\\varepsilon + 3p = -\\varepsilon$ is negative, a universe filled with them expands with acceleration [zeldovich1975]. Walls with a surface energy density of order $m_p^3$, with $m_p$ the proton mass and $\\hbar = c = 1$, as their model makes them, would make the background radiation more anisotropic than the observed $\\delta T/T < 10^{-3}$ unless something removed them early [zeldovich1975]. Tom Kibble showed in 1976 that whether walls, strings or monopoles form depends on the topology of the manifold of degenerate vacua, and argued that theories with walls could probably be ruled out for their \"unacceptable gravitational effects\" [kibble1976].¶Alexander Vilenkin solved the linearized field equations for a wall and for a string in 1981, and found that test particles near the wall are repelled by it [vilenkin1981, cvetic1997]. No static solution of Einstein's equations corresponds to that linear field [cvetic1997]. The exact field of a plane wall, which Vilenkin found in 1983, depends on time, has event horizons and no true geometric singularities, and is locally flat everywhere except on the wall itself [vilenkin1983, cvetic1997]. The wall repels because its stress energy tensor violates the strong energy condition, as Vilenkin pointed out, and test bodies near it accelerate away from it at $2\\pi G\\sigma/c^2$, with $\\sigma$ its surface energy density [vilenkin1983, caldwell1996].¶Axion models have discretely degenerate vacua, whose walls are incompatible with the standard cosmology unless a small interaction breaking the symmetry makes them disappear some time after they form, as Pierre Sikivie showed in 1982 [sikivie1982]. With James Ipser he took up the gravity of walls in 1984, using the Gauss-Codazzi formalism, in which the surface energy and tension of a thin wall fix the jump in extrinsic curvature across it, as Werner Israel had set out in 1966 [ipser1984, cvetic1997, israel1966]. Ipser and Sikivie found the most general solution for a planar wall and derived the motion of a spherical wall in an asymptotically flat spacetime [ipser1984]. Ipser and Sikivie found a transformation that takes each side of Vilenkin's wall to Minkowski coordinates, in which the wall is the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$ with $k = 2\\pi G\\sigma/c^4$ [ipser1984, caldwell1996]. The metric induced on the hyperboloid is that of de Sitter space in $2 + 1$ dimensions, so at each moment the wall is a sphere [caldwell1996]. Ipser extended the method in 1984 to walls whose tension is a constant fraction, at most one, of their surface energy density, and found that repulsion gives way to attraction as that fraction falls below one half [ipser1984walls].¶Robert Caldwell, Andrew Chamblin and Gary Gibbons described the whole spacetime in 1996 as two copies of the inside of that hyperboloid in Minkowski space, matched to each other across it, flat on both sides with \"a ridge of curvature\" along the wall [caldwell1996]. An inertial observer on either side sees the wall as a sphere that accelerates toward them, stops at radius $1/k$ at $T = 0$, and accelerates away [caldwell1996]. The plane symmetric form of the metric is geodesically incomplete and describes \"only a part of a spherical bubble\", and the whole spacetime is two regions, each lying inside the bubble, glued along it, as Mirjam Cvetič and Harald Soleng stressed in 1997 [cvetic1997]. The Euclidean section, two flat four-balls glued back to back, describes the creation from nothing of such a closed universe of two domains parted by a wall [caldwell1996].¶A wall made of a real scalar field repels matter inside it and outside it, as Lawrence Widrow found in 1989 by solving the full Einstein scalar field equations for an infinite wall [widrow1989]. Far from a thick wall the metric approaches that of the thin wall, so the thin wall fixes the global structure of the spacetime [cvetic1997]. Static walls exist in $N = 1$ supergravity, with an energy per unit area that saturates a Bogomol'nyi bound, as Cvetič, Stephen Griffies and Soo-Jong Rey found in 1992 [cvetic1992]. One such wall stands between a Minkowski vacuum and an anti-de Sitter vacuum, whose positive gravitational mass cancels the negative gravitational mass of the wall, so that nothing on the Minkowski side feels a force [cvetic1997]. Vilenkin's wall, with Minkowski space on both sides, is the reflection symmetric case of the walls whose energy per unit area exceeds that of a static wall, which accelerate as bubbles [cvetic1997].¶Caldwell, Chamblin and Gibbons expected the repulsion of a wall to create pairs of black holes, as the repulsion of de Sitter space does [caldwell1996]. Uncharged black holes can be created only at rest with respect to one another, and a pair of Schwarzschild black holes of mass $m$ is held in equilibrium by a wall at radius $3m$, in units with $G = c = 1$, where its repulsion balances their attraction [caldwell1996]. Charged black holes can also be created accelerating away from one another, by an instanton with no counterpart in Einstein-Maxwell theory with a cosmological constant [caldwell1996]. Euclidean instantons can also mediate the creation of what they call \"non-orientable black hole solutions\" [caldwell1996].¶The energy density of a network of walls falls as $1/t$, more slowly than that of matter or of radiation, so the walls come to dominate the universe unless they are removed [saikawa2017]. Walls made unstable by a small explicit breaking of the discrete symmetry collapse before they dominate, as Sikivie proposed for axion walls [saikawa2017, sikivie1982]. Walls that collide and annihilate in the early universe leave a stochastic background of gravitational waves [saikawa2017]. Pulsar timing arrays and direct detection experiments already exclude part of the parameters of such models, and the next generation of gravitational wave observatories can cover much more of them [saikawa2017].",
   "references": [
     "zeldovich1974",
     "zeldovich1975",
@@ -65,7 +65,761 @@
         }
       ],
       "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of an observer at rest on the wall, $x$ and $y$ lengths along the wall, and $z$ the proper distance from it, and $\\mathrm{sgn}(z)$ is the sign of $z$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
-      "line_element": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-c^2dt^2 + e^{2kct}\\left(dx^2 + dy^2\\right)\\right) + dz^2"
+      "line_element": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-c^2dt^2 + e^{2kct}\\left(dx^2 + dy^2\\right)\\right) + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 - k|z|\\right)^2"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\left(1 - k|z|\\right)^2e^{2kct}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\left(1 - k|z|\\right)^2e^{2kct}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{\\left(1 - k|z|\\right)^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{e^{-2kct}}{\\left(1 - k|z|\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{e^{-2kct}}{\\left(1 - k|z|\\right)^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "k\\,e^{2kct}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "k\\,e^{2kct}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "k"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "k"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "k"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "k"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)^2e^{2kct}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)^2e^{2kct}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "k\\left(1 - k|z|\\right)^2e^{2kct}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "k\\left(1 - k|z|\\right)^2e^{2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "k\\left(1 - k|z|\\right)^2e^{2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "k\\left(1 - k|z|\\right)^2e^{2kct}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "2k\\,\\delta(z)e^{2kct}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "2k\\,\\delta(z)e^{2kct}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "2k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "6k\\,\\delta(z)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "6k\\,\\delta(z)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2k\\,\\delta(z)e^{-2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "2k\\,\\delta(z)e^{-2kct}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "6k\\,\\delta(z)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 12k\\,\\delta(z)",
+      "kretschmann": "K = 0 \\;\\text{for}\\; z \\neq 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "4k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-4k\\,\\delta(z)e^{2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-4k\\,\\delta(z)e^{2kct}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-4k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-4k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-4k\\,\\delta(z)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "4k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-4k\\,\\delta(z)e^{-2kct}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-4k\\,\\delta(z)e^{-2kct}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{2k\\,\\mathrm{sgn}(z)}{1 - k|z|}\\dot{t}\\dot{z} + k\\,e^{2kct}\\dot{x}^2 + k\\,e^{2kct}\\dot{y}^2 = 0",
+        "\\ddot{x} + 2k\\,\\dot{t}\\dot{x} - \\dfrac{2k\\,\\mathrm{sgn}(z)}{1 - k|z|}\\dot{x}\\dot{z} = 0",
+        "\\ddot{y} + 2k\\,\\dot{t}\\dot{y} - \\dfrac{2k\\,\\mathrm{sgn}(z)}{1 - k|z|}\\dot{y}\\dot{z} = 0",
+        "\\ddot{z} - k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\dot{t}^2 + k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}\\dot{x}^2 + k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)e^{2kct}\\dot{y}^2 = 0"
+      ]
     },
     {
       "id": "global",
@@ -91,7 +845,809 @@
         }
       ],
       "convention": "We use coordinates $(t, z, \\theta, \\phi)$, with $t$ the proper time of an observer at rest on the wall, $z$ the proper distance from the wall, and $\\theta$ and $\\phi$ angles on the sphere the wall is at each moment, and $\\mathrm{sgn}(z)$ is the sign of $z$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
-      "line_element": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-c^2dt^2 + \\dfrac{\\cosh^2(kct)}{k^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + dz^2"
+      "line_element": "ds^2 = \\left(1 - k|z|\\right)^2\\left(-c^2dt^2 + \\dfrac{\\cosh^2(kct)}{k^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 - k|z|\\right)^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\cosh^2\\left(kct\\right)}{k^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{\\left(1 - k|z|\\right)^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{k^2}{\\left(1 - k|z|\\right)^2\\cosh^2\\left(kct\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{k^2\\csc^2\\theta}{\\left(1 - k|z|\\right)^2\\cosh^2\\left(kct\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(z)}{1 - k|z|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "k\\tanh\\left(kct\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "k\\tanh\\left(kct\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "k\\tanh\\left(kct\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "k\\tanh\\left(kct\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(1 - k|z|\\right)^2\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(1 - k|z|\\right)^2\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(1 - k|z|\\right)^2\\cosh^2\\left(kct\\right)\\sin\\theta\\cos\\theta}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\cosh^2\\left(kct\\right)\\sin\\theta\\cos\\theta}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(1 - k|z|\\right)^2\\cosh^2\\left(kct\\right)\\sin\\theta\\cos\\theta}{k^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "6k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\delta(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "6k\\,\\delta(z)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "6k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2k^3\\,\\delta(z)}{\\cosh^2\\left(kct\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2k^3\\,\\delta(z)\\csc^2\\theta}{\\cosh^2\\left(kct\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 12k\\,\\delta(z)",
+      "kretschmann": "K = 0 \\;\\text{for}\\; z \\neq 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "4k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4\\delta(z)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\delta(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-4k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-4k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-4k\\,\\delta(z)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "4k\\,\\delta(z)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4k^3\\,\\delta(z)}{\\cosh^2\\left(kct\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4k^3\\,\\delta(z)\\csc^2\\theta}{\\cosh^2\\left(kct\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{2k\\,\\mathrm{sgn}(z)}{1 - k|z|}\\dot{t}\\dot{z} + \\dfrac{\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}\\dot{\\theta}^2 + \\dfrac{\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}\\dot{\\phi}^2 = 0",
+        "\\ddot{z} - k\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\dot{t}^2 + \\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)}{k}\\dot{\\theta}^2 + \\dfrac{\\left(1 - k|z|\\right)\\mathrm{sgn}(z)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + 2k\\tanh\\left(kct\\right)\\dot{t}\\dot{\\theta} - \\dfrac{2k\\,\\mathrm{sgn}(z)}{1 - k|z|}\\dot{z}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + 2k\\tanh\\left(kct\\right)\\dot{t}\\dot{\\phi} - \\dfrac{2k\\,\\mathrm{sgn}(z)}{1 - k|z|}\\dot{z}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
     },
     {
       "id": "conformal",
@@ -116,7 +1672,825 @@
         }
       ],
       "convention": "We use coordinates $(t, w, \\theta, \\phi)$, with $t$ the proper time of an observer at rest on the wall, $w$ the length with $e^{-k|w|} = 1 - k|z|$, where $z$ is the proper distance from the wall, and $\\theta$ and $\\phi$ angles on the sphere the wall is at each moment, and $\\mathrm{sgn}(w)$ is the sign of $w$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
-      "line_element": "ds^2 = e^{-2k|w|}\\left(-c^2dt^2 + dw^2 + \\dfrac{\\cosh^2(kct)}{k^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)"
+      "line_element": "ds^2 = e^{-2k|w|}\\left(-c^2dt^2 + dw^2 + \\dfrac{\\cosh^2(kct)}{k^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{-2k|w|}"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "e^{-2k|w|}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{e^{-2k|w|}\\cosh^2\\left(kct\\right)}{k^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{e^{-2k|w|}\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{2k|w|}"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "e^{2k|w|}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{k^2e^{2k|w|}}{\\cosh^2\\left(kct\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{k^2e^{2k|w|}\\csc^2\\theta}{\\cosh^2\\left(kct\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w",
+                  "w"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(w)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "k\\tanh\\left(kct\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "k\\tanh\\left(kct\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "k\\tanh\\left(kct\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "k\\tanh\\left(kct\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "k\\,\\mathrm{sgn}(w)e^{-2k|w|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "k\\,\\mathrm{sgn}(w)e^{-2k|w|}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)e^{-2k|w|}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w",
+                  "w"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(w)e^{-2k|w|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{e^{-2k|w|}\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{e^{-2k|w|}\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{-2k|w|}\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{-2k|w|}\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{e^{-2k|w|}\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{-2k|w|}\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(w)e^{-2k|w|}\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\mathrm{sgn}(w)e^{-2k|w|}\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\mathrm{sgn}(w)e^{-2k|w|}\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(w)e^{-2k|w|}\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\mathrm{sgn}(w)e^{-2k|w|}\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\mathrm{sgn}(w)e^{-2k|w|}\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{-2k|w|}\\cosh^2\\left(kct\\right)\\sin\\theta\\cos\\theta}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{e^{-2k|w|}\\cosh^2\\left(kct\\right)\\sin\\theta\\cos\\theta}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{e^{-2k|w|}\\cosh^2\\left(kct\\right)\\sin\\theta\\cos\\theta}{k^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "-2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "-\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "-2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "-\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "6k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\delta(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "6k\\,\\delta(w)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "6k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2k^3\\,\\delta(w)}{\\cosh^2\\left(kct\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2k^3\\,\\delta(w)\\csc^2\\theta}{\\cosh^2\\left(kct\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 12k\\,\\delta(w)",
+      "kretschmann": "K = 0 \\;\\text{for}\\; w \\neq 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "4k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4\\delta(w)\\cosh^2\\left(kct\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\delta(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-4k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-4k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-4k\\,\\delta(w)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "4k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4k^3\\,\\delta(w)}{\\cosh^2\\left(kct\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4k^3\\,\\delta(w)\\csc^2\\theta}{\\cosh^2\\left(kct\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - 2k\\,\\mathrm{sgn}(w)\\dot{t}\\dot{w} + \\dfrac{\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)}{k}\\dot{\\theta}^2 + \\dfrac{\\sinh\\left(kct\\right)\\cosh\\left(kct\\right)\\sin^2\\theta}{k}\\dot{\\phi}^2 = 0",
+        "\\ddot{w} - k\\,\\mathrm{sgn}(w)\\dot{t}^2 - k\\,\\mathrm{sgn}(w)\\dot{w}^2 + \\dfrac{\\mathrm{sgn}(w)\\cosh^2\\left(kct\\right)}{k}\\dot{\\theta}^2 + \\dfrac{\\mathrm{sgn}(w)\\cosh^2\\left(kct\\right)\\sin^2\\theta}{k}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + 2k\\tanh\\left(kct\\right)\\dot{t}\\dot{\\theta} - 2k\\,\\mathrm{sgn}(w)\\dot{w}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + 2k\\tanh\\left(kct\\right)\\dot{t}\\dot{\\phi} - 2k\\,\\mathrm{sgn}(w)\\dot{w}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
     },
     {
       "id": "inertial",
@@ -141,7 +2515,294 @@
         }
       ],
       "convention": "We use the inertial coordinates $(T, R, \\theta, \\phi)$ of one side of the wall, with $T$ carrying dimensions of time and $R$ the distance from the centre of the sphere the wall is at each moment. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
-      "line_element": "ds^2 = -c^2dT^2 + dR^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+      "line_element": "ds^2 = -c^2dT^2 + dR^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "R",
+            "R"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "R^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "R^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "R",
+            "R"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{R^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{R^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-R"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-R"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "R"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "R"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "R\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "R\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "R^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "R^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} = 0",
+        "\\ddot{R} - R\\,\\dot{\\theta}^2 - R\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{R}\\dot{R}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{R}\\dot{R}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
     }
   ]
 }
