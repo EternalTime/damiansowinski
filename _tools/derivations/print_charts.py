@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
-charts of tov, malament_hogarth, mixmaster and lentz, and Godel's cylindrical chart.
+charts of tov, malament_hogarth, mixmaster, lentz and einstein_static, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -262,7 +262,87 @@ def godel_pullback(chart):
                                      f"one in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
 
 
-CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel}
+# -- Einstein static universe ----------------------------------------------------------
+
+def einstein_static(system):
+    """The three charts of Einstein's static universe, whose one parameter is the radius R of
+    its three sphere. Their Ricci scalar is written bare, as the stellar interior's is, since
+    "R = 6/R^2" would read as an equation for the radius; einstein_static.md derives each chart."""
+    parameters = ["R"]
+    charts = {
+        "hyperspherical": {
+            "name": "Hyperspherical", "coords": ["t", "\\chi", "\\theta", "\\phi"],
+            "domains": ["t \\in (-\\infty, \\infty)", "\\chi \\in [0, \\pi]", "\\theta \\in [0, \\pi]",
+                        "\\phi \\in [0, 2\\pi)"],
+            "space": "R^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)"},
+        "static_areal": {
+            "name": "Areal", "coords": ["t", "r", "\\theta", "\\phi"],
+            "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, R)", "\\theta \\in [0, \\pi]",
+                        "\\phi \\in [0, 2\\pi)",
+                        "r = R \\;\\text{(the equator of } S^3\\text{; the coordinates cover one hemisphere)}"],
+            "space": "\\dfrac{R^2\\,dr^2}{R^2 - r^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"},
+        "einstein_cartesian": {
+            "name": "Einstein's Cartesian", "coords": ["t", "x", "y", "z"],
+            "domains": ["t \\in (-\\infty, \\infty)", "x \\in (-R, R)", "y \\in (-R, R)", "z \\in (-R, R)",
+                        "x^2 + y^2 + z^2 < R^2 \\;\\text{(one hemisphere of } S^3\\text{)}"],
+            "space": ("dx^2 + dy^2 + dz^2 + \\dfrac{\\left(x\\,dx + y\\,dy + z\\,dz\\right)^2}"
+                      "{R^2 - x^2 - y^2 - z^2}")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], parameters, ())
+    return {
+        "metric_id": "einstein_static",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": parameters, "line_element": "ds^2 = -c^2dt^2 + " + chart["space"]},
+        "chart_line_element": "ds^2 = -dt^2 + " + chart["space"],
+        "printer": {"lead": [probe.parameters["R"]]},
+        "bare_scalar": True,
+        # The printer factors R^2 - r^2 into its two linear factors; the areal chart keeps it whole.
+        "rewrite": [("{\\left(R + r\\right)\\left(R - r\\right)}", "{R^2 - r^2}"),
+                    ("\\left(R + r\\right)\\left(R - r\\right)", "\\left(R^2 - r^2\\right)")],
+        **({"geodesics": GEODESICS[system]} if system in GEODESICS else {}),
+    }
+
+
+# The geodesic equations of the two charts whose printed Christoffel symbols collect into a
+# shorter form: the areal chart's angular terms share one factor, and in Einstein's projection
+# Gamma^i_{jk} = x^i gamma_{jk}/R^2, so every equation is x^i/R^2 times the spatial speed squared.
+_SPEED = ("\\dot{x}^2 + \\dot{y}^2 + \\dot{z}^2 + \\dfrac{\\left(x\\dot{x} + y\\dot{y} + z\\dot{z}\\right)^2}"
+          "{R^2 - x^2 - y^2 - z^2}")
+GEODESICS = {
+    "static_areal": [
+        "\\ddot{t} = 0",
+        "\\ddot{r} + \\dfrac{r}{R^2 - r^2}\\dot{r}^2 - \\dfrac{r\\left(R^2 - r^2\\right)}{R^2}"
+        "\\left(\\dot{\\theta}^2 + \\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0",
+    ],
+    "einstein_cartesian": ["\\ddot{t} = 0"] + [
+        f"\\ddot{{{c}}} + \\dfrac{{{c}}}{{R^2}}\\left({_SPEED}\\right) = 0" for c in "xyz"],
+}
+
+
+CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
+          "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")]}
+
+
+def rewritten(value, substitutions, chart):
+    """Every string in `value` with each (old, new) of `substitutions` applied in turn, each
+    changed string read back and compared with the one it replaces, so a rewrite that changed a
+    value stops the script."""
+    if isinstance(value, dict):
+        return {k: rewritten(v, substitutions, chart) for k, v in value.items()}
+    if isinstance(value, list):
+        return [rewritten(v, substitutions, chart) for v in value]
+    if not isinstance(value, str):
+        return value
+    text = value
+    for old, new in substitutions:
+        text = text.replace(old, new)
+    if text != value:
+        for side, original in zip(text.split("="), value.split("="), strict=True):
+            chart.check(side, chart.reader(original))
+    return text
 
 
 def write(spec):
@@ -278,6 +358,15 @@ def write(spec):
             math[field] = ("R = " if field == "ricci_scalar" else "K = ") + chart.check(spec[field], computed)
         elif field == "kretschmann":
             math[field] = "K = " + chart.text(computed)
+    if spec.get("bare_scalar"):
+        math["ricci_scalar"] = math["ricci_scalar"].removeprefix("R = ")
+    if "rewrite" in spec:
+        math = rewritten(math, spec["rewrite"], chart)
+    if "geodesics" in spec:
+        # Each equation written by hand is read back against the one printed from the Christoffel symbols.
+        for text, printed in zip(spec["geodesics"], math["geodesics"], strict=True):
+            chart.check(text.partition("=")[0], chart.reader(printed.partition("=")[0]))
+        math["geodesics"] = list(spec["geodesics"])
 
     path = METRICS / f"{spec['metric_id']}.json"
     metric = json.loads(path.read_text(encoding="utf-8"))
@@ -317,7 +406,9 @@ def main():
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])
     for metric_id in parser.parse_args().metric or sorted(CHARTS):
         print(metric_id, flush=True)
-        write(CHARTS[metric_id]())
+        # A spacetime with several charts printed by machine lists one builder per chart.
+        for build in CHARTS[metric_id] if isinstance(CHARTS[metric_id], list) else [CHARTS[metric_id]]:
+            write(build())
 
 
 if __name__ == "__main__":

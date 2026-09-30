@@ -1,0 +1,3083 @@
+{
+  "id": "einstein_static",
+  "name": "Einstein Static Universe",
+  "short_name": "Einstein Static",
+  "description": "Albert Einstein's cosmology of 1917: dust spread uniformly through a round three sphere of fixed radius and held at rest by a positive cosmological constant. Minkowski, de Sitter, and anti-de Sitter space are each conformal to a region of it.",
+  "tags": [
+    "cosmology",
+    "cosmological",
+    "static",
+    "closed universe",
+    "three sphere",
+    "dust",
+    "non-vacuum",
+    "cosmological constant",
+    "positive cosmological constant",
+    "Einstein cylinder",
+    "conformally flat",
+    "homogeneous",
+    "isotropic",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the one parameter is the radius $R$ of the three sphere, a length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Albert Einstein presented the first relativistic cosmology to the Prussian Academy of Sciences on 8 February 1917 [einstein1917]. He opened with Newton's theory, in which a static universe can only be a finite island of stars in an infinite empty space, an island that by Boltzmann's statistics slowly evaporates, and he wrote down the modified equation $\\nabla^2\\phi - \\lambda\\phi = 4\\pi G\\rho$, which allows a uniform distribution of matter through an infinite space [einstein1917, oraifeartaigh2017]. He took the small relative velocities of the stars as the decisive fact and assumed a frame in which matter is permanently at rest, spread uniformly through a space closed into a three sphere of radius $R$, so that there is no boundary at infinity to set conditions on [einstein1917]. His field equations of 1915 admit no such world, so he added the term $\\lambda g_{\\mu\\nu}$, with $\\lambda$ a universal constant \"at present unknown\", and found every equation satisfied when $\\lambda = \\kappa\\rho/2 = 1/R^2$, where $\\kappa = 8\\pi G/c^2$ [einstein1917]. The constant $\\lambda$ fixes the density, the radius, and the total mass $M = 2\\pi^2R^3\\rho$ at once [einstein1917].¶Einstein made no estimate of $R$ in the paper [einstein1917, oraifeartaigh2017]. In letters of February and March 1917 to Paul Ehrenfest, Erwin Freundlich, Michele Besso, and Willem de Sitter he took a density of about $10^{-22}$ g/cm$^3$ from star counts and found a radius of about $10^7$ light years, against the $10^4$ light years astronomers could see [oraifeartaigh2017]. Freundlich, Felix Klein, and de Sitter pointed out that the antipodal points of the three sphere can be identified, giving elliptic space of half the volume, and Einstein agreed, noting that his relation between $R$ and $\\rho$ was unchanged [oraifeartaigh2017]. Erwin Schrödinger showed in 1918 that the same world solves the field equations without the new term if the matter carries a constant negative pressure, and Einstein answered that the two formulations are equivalent [oraifeartaigh2017]. Alex Harvey and Engelbert Schucking found in 2000 that in the Newtonian limit the new term gives $\\nabla^2\\phi + c^2\\lambda = 4\\pi G\\rho$, a repulsion growing in proportion to distance, where Einstein had claimed a perfect analogy with his modified Poisson equation [harvey2000, oraifeartaigh2017].¶Within months de Sitter found a second solution of the amended equations, empty of matter, and in the Monthly Notices of 1917 he called Einstein's world Solution A and his own Solution B [desitter1917, oraifeartaigh2017]. He estimated the radius of Einstein's world in several ways, one of them the absence of an image of the Sun at its antipode, where the light the Sun sends out in every direction comes together again [oraifeartaigh2017]. Georges Lemaître found in 1927 an expanding universe that begins in the infinite past as an Einstein world of radius $R_0 = 1/\\sqrt{\\lambda}$, and read the recession of the spiral nebulae as its expansion [lemaitre1927, oraifeartaigh2017]. Arthur Eddington showed in 1930 that Einstein's world is unstable: a small fall in the density, with $\\lambda$ held fixed, starts an expansion that runs away, and a small rise starts a collapse [eddington1930, oraifeartaigh2017]. He favoured a universe that had expanded from an Einstein world, the model known since as the Eddington-Lemaître universe [oraifeartaigh2017]. Einstein gave up the static world in April 1931, on the grounds that it is unstable and that Edwin Hubble's measurements of the recession of the nebulae left the assumption of a static space without justification, and dropped the cosmological constant with it [oraifeartaigh2014, oraifeartaigh2017].¶Eddington's perturbation was the same everywhere in space; Edward Harrison showed in 1967 that in an Einstein static universe filled with radiation every physical inhomogeneous mode oscillates, and Gary Gibbons showed in 1987 that one filled with a fluid is stable against conformal perturbations of its metric whenever the sound speed obeys $c_s^2 > c^2/5$ [harrison1967, gibbons1987, barrow2003]. John Barrow, George Ellis, Roy Maartens, and Christos Tsagas extended the analysis in 2003 to every scalar, vector, and tensor perturbation of a perfect fluid: the universe is neutrally stable against small vector and tensor inhomogeneities, and against adiabatic density inhomogeneities as long as $c_s^2 > c^2/5$, while homogeneous modes of Bianchi type IX destabilise it [barrow2003]. The stability comes from the closed space, which holds no wavelength longer than a maximum set by $R$, with the Jeans length a sizeable fraction of that maximum [barrow2003].¶George Ellis and Roy Maartens proposed in 2004 that our universe began as an Einstein static universe in the infinite past, then inflated and reheated into a hot big bang [ellis2004]. Such a universe has no singularity, no beginning of time, and no horizon problem, and if its initial radius lies above the Planck scale it has no era of quantum gravity, and classical general relativity describes it throughout [ellis2004]. Ellis, Jeff Murugan, and Christos Tsagas built one explicitly the same year, driven by a single scalar field with a physically based potential, which leaves the Einstein static state, inflates, reheats, and joins a standard hot big bang [ellis2004explicit]. Their model is the Eddington-Lemaître universe with inflation added [oraifeartaigh2017].¶Roger Penrose showed in his lectures at Les Houches in 1963, published in 1964, that Minkowski space is conformal to a bounded region of the Einstein static universe, so that its infinity becomes a boundary at a finite place, which light rays reach [penrose1964conformal]. Stephen Hawking and George Ellis gave the corresponding conformal embeddings in 1973, in the conformal time $\\eta = ct/R$, for de Sitter space, conformal to the region $-\\pi/2 < \\eta < \\pi/2$ of the Einstein static universe, and for anti-de Sitter space, conformal to its half $0 \\le \\chi < \\pi/2$, whose boundary is timelike [hawking1973]. On the strip $0 \\le \\chi \\le \\pi$ of the Einstein static universe, with light at 45°, the conformal diagram of Minkowski space is a triangle, that of de Sitter space a square, and that of anti-de Sitter space the half strip $\\chi < \\pi/2$ [hawking1973].",
+  "references": [
+    "einstein1917",
+    "oraifeartaigh2017",
+    "harvey2000",
+    "desitter1917",
+    "lemaitre1927",
+    "eddington1930",
+    "oraifeartaigh2014",
+    "harrison1967",
+    "gibbons1987",
+    "barrow2003",
+    "ellis2004",
+    "ellis2004explicit",
+    "penrose1964conformal",
+    "hawking1973"
+  ],
+  "coordinates": [
+    {
+      "id": "hyperspherical",
+      "name": "Hyperspherical",
+      "coords": [
+        "t",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "R",
+          "description": "Radius of the three sphere, a length; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\chi$, $\\theta$, and $\\phi$ angles on the three sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + R^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "R^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "R^2\\sin^2\\chi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "R^2\\sin^2\\chi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{R^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi}{R^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\csc^2\\theta}{R^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-R^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "R^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "R^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "R^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "R^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "R^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "R^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "1"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "R^2\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-R^2\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-R^2\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "R^2\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "R^2\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-R^2\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-R^2\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "R^2\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "R^2\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-R^2\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-R^2\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "R^2\\sin^4\\chi\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "2\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2}{R^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\csc^2\\chi}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\csc^2\\chi\\csc^2\\theta}{R^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "\\dfrac{6}{R^2}",
+      "kretschmann": "K = \\dfrac{12}{R^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{1}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{1}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{R^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{1}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\csc^2\\chi}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\csc^2\\chi\\csc^2\\theta}{R^4}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\theta}^2 - \\sin\\chi\\cos\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "static_areal",
+      "name": "Areal",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in [0, R)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r = R \\;\\text{(the equator of } S^3\\text{; the coordinates cover one hemisphere)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "R",
+          "description": "Radius of the three sphere, a length; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r = R\\sin\\chi$ the areal radius, which covers the hemisphere $\\chi < \\pi/2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + \\dfrac{R^2\\,dr^2}{R^2 - r^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{R^2}{R^2 - r^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{R^2 - r^2}{R^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r\\left(R^2 - r^2\\right)}{R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(R^2 - r^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{R^2\\,r}{\\left(R + r\\right)^2\\left(R - r\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^2\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{1}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{R^2 - r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^2}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^2}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\sin^2\\theta}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2\\sin^2\\theta}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\sin^2\\theta}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2\\sin^2\\theta}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^4\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^4\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^4\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^4\\sin^2\\theta}{R^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^2\\sin^2\\theta}{R^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2}{R^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(R^2 - r^2\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2}{R^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\csc^2\\theta}{R^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "\\dfrac{6}{R^2}",
+      "kretschmann": "K = \\dfrac{12}{R^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{R^2 - r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\sin^2\\theta}{R^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3}{R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{1}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{R^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{R^2 - r^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{1}{R^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\csc^2\\theta}{R^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{r} + \\dfrac{r}{R^2 - r^2}\\dot{r}^2 - \\dfrac{r\\left(R^2 - r^2\\right)}{R^2}\\left(\\dot{\\theta}^2 + \\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "einstein_cartesian",
+      "name": "Einstein's Cartesian",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-R, R)",
+        "y \\in (-R, R)",
+        "z \\in (-R, R)",
+        "x^2 + y^2 + z^2 < R^2 \\;\\text{(one hemisphere of } S^3\\text{)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "R",
+          "description": "Radius of the three sphere, a length; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
+        }
+      ],
+      "convention": "We use Albert Einstein's coordinates of 1917, $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ the lengths of the projection of the hemisphere $\\chi < \\pi/2$ onto its equatorial plane. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + \\dfrac{\\left(x\\,dx + y\\,dy + z\\,dz\\right)^2}{R^2 - x^2 - y^2 - z^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{R^2 - y^2 - z^2}{R^2 - x^2 - y^2 - z^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "\\dfrac{x\\,y}{R^2 - x^2 - y^2 - z^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "\\dfrac{x\\,y}{R^2 - x^2 - y^2 - z^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "z"
+          ],
+          "value": "\\dfrac{x\\,z}{R^2 - x^2 - y^2 - z^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "x"
+          ],
+          "value": "\\dfrac{x\\,z}{R^2 - x^2 - y^2 - z^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{R^2 - x^2 - z^2}{R^2 - x^2 - y^2 - z^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "z"
+          ],
+          "value": "\\dfrac{y\\,z}{R^2 - x^2 - y^2 - z^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "y"
+          ],
+          "value": "\\dfrac{y\\,z}{R^2 - x^2 - y^2 - z^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{R^2 - x^2 - y^2}{R^2 - x^2 - y^2 - z^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{\\left(R + x\\right)\\left(R - x\\right)}{R^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "-\\dfrac{x\\,y}{R^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "-\\dfrac{x\\,y}{R^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "z"
+          ],
+          "value": "-\\dfrac{x\\,z}{R^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "x"
+          ],
+          "value": "-\\dfrac{x\\,z}{R^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{\\left(R + y\\right)\\left(R - y\\right)}{R^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "z"
+          ],
+          "value": "-\\dfrac{y\\,z}{R^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "y"
+          ],
+          "value": "-\\dfrac{y\\,z}{R^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{\\left(R + z\\right)\\left(R - z\\right)}{R^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\left(R^2 - y^2 - z^2\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x^2\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x^2\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{x^2\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x^2\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\left(R^2 - x^2 - z^2\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\left(R^2 - x^2 - y^2\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{y\\left(R^2 - y^2 - z^2\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\left(R^2 - x^2 - z^2\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{y^2\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{y^2\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{y\\left(R^2 - x^2 - y^2\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{z\\left(R^2 - y^2 - z^2\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{z\\left(R^2 - x^2 - z^2\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{y\\,z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\,z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{z\\left(R^2 - x^2 - y^2\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\left(R^2 - y^2 - z^2\\right)}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x^2\\,y}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x^2\\,y}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{x^2\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x^2\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\left(R^2 - x^2 - z^2\\right)}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\left(R^2 - x^2 - y^2\\right)}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{y\\left(R^2 - y^2 - z^2\\right)}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y^2}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y^2}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\left(R^2 - x^2 - z^2\\right)}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{y^2\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{y^2\\,z}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{y\\left(R^2 - x^2 - y^2\\right)}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{z\\left(R^2 - y^2 - z^2\\right)}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,z^2}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,z^2}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{z\\left(R^2 - x^2 - z^2\\right)}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{y\\,z^2}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\,z^2}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{z\\left(R^2 - x^2 - y^2\\right)}{\\left(R^2 - x^2 - y^2 - z^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{R^2 - x^2 - z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{R^2 - x^2 - z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{R^2 - x^2 - z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{R^2 - x^2 - z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{R^2 - x^2 - y^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{R^2 - x^2 - y^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{R^2 - x^2 - y^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{R^2 - x^2 - y^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{z^2 + y^2 - R^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{z^2 + y^2 - R^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{z^2 + y^2 - R^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{z^2 + y^2 - R^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(R + z\\right)\\left(R - z\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(R + z\\right)\\left(R - z\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(R + z\\right)\\left(R - z\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(R + z\\right)\\left(R - z\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(R + y\\right)\\left(R - y\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(R + y\\right)\\left(R - y\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(R + y\\right)\\left(R - y\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(R + y\\right)\\left(R - y\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(R + x\\right)\\left(R - x\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(R + x\\right)\\left(R - x\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(R + x\\right)\\left(R - x\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(R + x\\right)\\left(R - x\\right)}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2R^2 - 2y^2 - 2z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2R^2 - 2x^2 - 2z^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2R^2 - 2x^2 - 2y^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{R^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{R^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{R^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\left(R + x\\right)\\left(R - x\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2x\\,y}{R^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2x\\,y}{R^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2x\\,z}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2x\\,z}{R^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\left(R + y\\right)\\left(R - y\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2y\\,z}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2y\\,z}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(R + z\\right)\\left(R - z\\right)}{R^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "\\dfrac{6}{R^2}",
+      "kretschmann": "K = \\dfrac{12}{R^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{R^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{z^2 + y^2 - R^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{x\\,y}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{x\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{z^2 + x^2 - R^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{y\\,z}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{y^2 + x^2 - R^2}{R^2\\left(R^2 - x^2 - y^2 - z^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3}{R^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{R^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{R^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{R^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{R^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(R + x\\right)\\left(R - x\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\,y}{R^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,y}{R^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{x\\,z}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\,z}{R^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(R + y\\right)\\left(R - y\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{y\\,z}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\,z}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(R + z\\right)\\left(R - z\\right)}{R^4}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{x} + \\dfrac{x}{R^2}\\left(\\dot{x}^2 + \\dot{y}^2 + \\dot{z}^2 + \\dfrac{\\left(x\\dot{x} + y\\dot{y} + z\\dot{z}\\right)^2}{R^2 - x^2 - y^2 - z^2}\\right) = 0",
+        "\\ddot{y} + \\dfrac{y}{R^2}\\left(\\dot{x}^2 + \\dot{y}^2 + \\dot{z}^2 + \\dfrac{\\left(x\\dot{x} + y\\dot{y} + z\\dot{z}\\right)^2}{R^2 - x^2 - y^2 - z^2}\\right) = 0",
+        "\\ddot{z} + \\dfrac{z}{R^2}\\left(\\dot{x}^2 + \\dot{y}^2 + \\dot{z}^2 + \\dfrac{\\left(x\\dot{x} + y\\dot{y} + z\\dot{z}\\right)^2}{R^2 - x^2 - y^2 - z^2}\\right) = 0"
+      ]
+    }
+  ]
+}

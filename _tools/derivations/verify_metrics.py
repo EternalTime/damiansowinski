@@ -189,6 +189,17 @@ DIMENSIONS = {
     ("de_sitter", "flat_slicing"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "H": "1/T",
     },
+    # The one length is the radius R of the three sphere; the hyperspherical angles are pure
+    # numbers, and the areal r and Einstein's projected x, y and z are lengths below R.
+    ("einstein_static", "hyperspherical"): {
+        "t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "R": "L",
+    },
+    ("einstein_static", "static_areal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "R": "L",
+    },
+    ("einstein_static", "einstein_cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "R": "L",
+    },
     ("ellis_bronnikov", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L",
     },

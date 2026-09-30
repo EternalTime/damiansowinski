@@ -123,6 +123,31 @@
     "embedding": "ba0bed728fc36061"
   },
   {
+    "id": "einstein_static",
+    "name": "Einstein Static",
+    "tags": [
+      "cosmology",
+      "cosmological",
+      "static",
+      "closed universe",
+      "three sphere",
+      "dust",
+      "non-vacuum",
+      "cosmological constant",
+      "positive cosmological constant",
+      "Einstein cylinder",
+      "conformally flat",
+      "homogeneous",
+      "isotropic",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "a98f8dcec8d803c0"
+  },
+  {
     "id": "ellis_bronnikov",
     "name": "Ellis-Bronnikov",
     "tags": [
