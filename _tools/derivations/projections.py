@@ -496,8 +496,10 @@ def about_axis(spec, sl, bracket, names, camera=Camera(-90, 30)):
         raise SystemExit(f"{key(spec)}: the embedding reaches past r_c")
     fig.slice(m, fills=[[circle(sl, 0.0, reach)]], lines=[circle(sl, 0.0, reach)])
     fig.label(np.array([0, 0, 0.875 * unit]), "$t$", "b", dy=-4)
-    for r, name in ((critical, names[0]), (beyond, names[1])):
-        fig.circle_label(float(sl.radius(r)), 0.0, -7 * np.pi / 18, f"${name}$", "tl", dx=6, dy=4)
+    # Each circle is named at its own angle, so the two names, at the size the page sets them
+    # at, stand clear of each other.
+    for r, name, phi in ((critical, names[0], -7 * np.pi / 18), (beyond, names[1], -4 * np.pi / 18)):
+        fig.circle_label(float(sl.radius(r)), 0.0, phi, f"${name}$", "tl", dx=6, dy=4)
     fig.legend("cone", "cone", "future light cone")
     fig.legend("line", "critical", f"${names[0]}$, where the circle of fixed $t$ and $r$ is null")
     fig.legend("line", "ctc", f"${names[1]}$, where it is timelike")

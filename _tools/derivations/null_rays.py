@@ -3127,13 +3127,14 @@ def view_slices(spec, markers=()):
         # A mirrored view draws each line and its mirror, so either end may take the label.
         both = lines + ([[[-u[0], u[1]] for u in line] for line in lines] if spec.mirror else [])
         drawn.append(slices.Mark(mark.moment, both, points, fills, mark.label))
-    # The labels are placed on the plot in the units the page draws it in, 520 wide, which are
-    # its pixels at the usual text size, a mirrored view's unit square its right half, at the
-    # size of a phone's labels against its narrower plot, the larger of the two; the
+    # The labels are placed on the plot in the units the page draws it in, 520 wide, a mirrored
+    # view's unit square its right half, at the size the page sets them at on a desktop at the
+    # usual text, the caption's 21px on a plot about 458px wide; where the page draws them
+    # larger against the plot, as on a phone, its fitSliceLabels() moves them from there. The
     # reference line's label stands at the plot's right edge above its line.
     W = 520.0
     H = W * (Y1 - Y0) / ((X1 - X0) * (2 if spec.mirror else 1))
-    size = 14.5
+    size = 24.0
 
     def px(u):
         x = (0.5 + 0.5 * u[0]) * W if spec.mirror else u[0] * W
@@ -3142,8 +3143,8 @@ def view_slices(spec, markers=()):
     for marker in markers:
         if marker["kind"] == "reference":
             y = (1 - marker["y"]) * H
-            w, h = (v * 13 for v in slices.label_size(marker["label"]))
-            others.append((W - 0.45 * 13 - w, y - 0.35 * 13 - h, W - 0.45 * 13, y - 0.35 * 13))
+            w, h = (v * size for v in slices.label_size(marker["label"]))
+            others.append((W - 0.45 * size - w, y - 0.35 * size - h, W - 0.45 * size, y - 0.35 * size))
     for entry, place in zip(out, slices.place(drawn, px, (W, H), size, others)):
         if place:
             entry["place"] = place

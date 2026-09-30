@@ -1555,12 +1555,10 @@
         view.ticks.x.forEach(function(t) {
           var X = f.x(t.at);
           out.push(nrEl('line', { 'class': 'nr-grid', x1: X, y1: m.t, x2: X, y2: m.t + H }));
-          out.push(nrEl('line', { 'class': 'nr-axis', x1: X, y1: m.t + H, x2: X, y2: m.t + H + 5 }));
         });
         view.ticks.y.forEach(function(t) {
           var Y = f.y(t.at);
           out.push(nrEl('line', { 'class': 'nr-grid', x1: m.l, y1: Y, x2: m.l + W, y2: Y }));
-          out.push(nrEl('line', { 'class': 'nr-axis', x1: m.l - 5, y1: Y, x2: m.l, y2: Y }));
         });
 
         // A slice drawn as a region is tinted under the rays, and its lines drawn over them.
@@ -1679,8 +1677,10 @@
          figure scrolls sideways in its own frame, as a conformal diagram does. */
       function nrFigure(view) {
         var f = nrFrame(view);
+        // Each number with its tick mark, which stays when fitTicks() hides the number.
         function tick(t, style) {
-          return '<span class="nr-tick" data-at="' + t.at + '" style="' + style + '">' + nrEsc(t.label) + '</span>';
+          return '<span class="nr-tickmark" style="' + style + '"></span>' +
+            '<span class="nr-tick" data-at="' + t.at + '" style="' + style + '">' + nrEsc(t.label) + '</span>';
         }
         var xs = view.ticks.x.map(function(t) { return tick(t, 'left:' + (100 * (t.at - f.X0) / (f.X1 - f.X0)).toFixed(3) + '%'); });
         // The last number along the bottom, the one that reaches farthest past the plot.
@@ -1724,21 +1724,42 @@
          the width the figure takes there, its frame's or its own basis of 38.75rem, whichever
          is less, less the room its words take there, which is the room they take now over
          the reader's text size, since every one of them is set in ems, and to at least the
-         width of the name of its horizontal axis, which stands centred under it. The figure is then as
+         width of the name of its horizontal axis, which stands centred under it, to at least the
+         height of the name of its vertical axis, which stands centred beside it, and to what
+         fitSliceLabels() finds its slices' labels need. The figure is then as
          wide as that plot and its words at least, and a figure wider than its frame scrolls.
-         Every figure is measured before any is set, as the lines are. */
+         Every figure is measured before any is set, as the lines are. Words wider than the
+         figure as it stood are measured squeezed, as a view first shown at three times the
+         usual text on a phone has them, so the figures are measured again once set, until
+         none changes, within the same frame, three times at most. */
       function fitPlots(figures) {
         fitAxisNames(figures);
         var s = parseFloat(getComputedStyle(document.documentElement).fontSize) / 16 || 1;
-        var widths = figures.map(function(fig) {
-          var frame = fig.parentNode;
-          if (!frame.clientWidth) return null;
-          var words = fig.getBoundingClientRect().width - fig.querySelector('.nr-plot').getBoundingClientRect().width;
-          var usual = Math.min(frame.clientWidth, parseFloat(getComputedStyle(frame).flexBasis) / s || Infinity);
-          var name = fig.querySelector('.nr-xlabel .nr-name').getBoundingClientRect().width;
-          return Math.ceil(Math.max(0, usual - words / s, name) + words);
-        });
-        figures.forEach(function(fig, i) { if (widths[i] !== null) fig.style.minWidth = widths[i] + 'px'; });
+        for (var pass = 0; pass < 3; pass++) {
+          var widths = figures.map(function(fig) {
+            var frame = fig.parentNode;
+            if (!frame.clientWidth) return null;
+            var words = fig.getBoundingClientRect().width - fig.querySelector('.nr-plot').getBoundingClientRect().width;
+            var usual = Math.min(frame.clientWidth, parseFloat(getComputedStyle(frame).flexBasis) / s || Infinity);
+            var name = fig.querySelector('.nr-xlabel .nr-name').getBoundingClientRect().width;
+            // The plot is never shorter than the name of its vertical axis, which stands centred
+            // beside it, turned on its side.
+            var box = fig.querySelector('.nr-plot').getBoundingClientRect();
+            var side = box.height ? fig.querySelector('.nr-ylabel .nr-name').getBoundingClientRect().height * box.width / box.height : 0;
+            var plot = Math.max(0, usual - words / s, name, side);
+            // The plot as it is without what its slices' labels need, which fitSliceLabels()
+            // grows from, and at least what they need.
+            fig._mfsPlot = Math.max(plot, frame.clientWidth - words);
+            return Math.ceil(Math.max(plot, +fig.dataset.slicePlot || 0) + words);
+          });
+          var changed = false;
+          figures.forEach(function(fig, i) {
+            if (widths[i] === null || fig.style.minWidth === widths[i] + 'px') return;
+            fig.style.minWidth = widths[i] + 'px';
+            changed = true;
+          });
+          if (!changed) break;
+        }
       }
 
       /* The name of the vertical axis is mathematics, a square root or a bar taller than a
@@ -2056,12 +2077,59 @@
         });
       }
 
-      // The drawing's frame in the SVG's own units: CD_W wide, in a margin CD_M all round.
+      /* The drawing's frame in the SVG's own units: its box CD_W wide, in a margin of CD_M
+         on each side, or more on a side where a label needs it. Every label is set at the size
+         of the caption beside the drawing, which cdFrameAround() never lets be more than
+         CD_LAB of these units, and stands at least 1.5 of its ems from the edge of the
+         drawing's ground, the margin a spacetime diagram gives its words, as the captain asked
+         on 30 September 2026: "keep the 1.5 em margin rule so bigger labels still clear the
+         edge". So a side's margin is CD_M, or as far past the farthest label's box, at CD_LAB,
+         as puts that box 1.5 CD_LAB from the edge, whichever is more: the box is
+         _tools/derivations/slices.py's label_size(), which is never smaller than MathJax sets
+         a label, so a label stands at least that far in. m holds the four margins. */
+      var CD_LAB = 21;
+      var CD_RELATION = /=|<|>|\\to(?![a-zA-Z])|\\leq?(?![a-zA-Z])|\\geq?(?![a-zA-Z])|\\approx|\\neq?(?![a-zA-Z])|\\sim(?![a-zA-Z])|\\equiv|\\in(?![a-zA-Z])|\\rightarrow|\\mapsto/g;
+      var CD_FUNCTION = /\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z])/g;
+      function cdLabelSize(text) {
+        var width = 0.6, tall = false;
+        text.split(/(\$[^$]*\$)/).forEach(function(part) {
+          if (part.charAt(0) !== '$') { width += 0.6 * part.length; return; }
+          var math = part.slice(1, -1).replace(/\\[,;:!]/g, ' ');
+          tall = tall || math.indexOf('^') >= 0 || math.indexOf('\\sqrt') >= 0;
+          width += 0.5 * (math.match(CD_FUNCTION) || []).reduce(function(n, f) { return n + f.length - 1; }, 0);
+          math = math.replace(CD_FUNCTION, '');
+          width += 1.1 * (math.match(CD_RELATION) || []).length;
+          math = math.replace(CD_RELATION, '')
+            .replace(/\\(bar|hat|tilde|vec|dot|mathrm|text|left|right|mathscr|mathcal|mathfrak|operatorname)(?![a-zA-Z])/g, '');
+          width += 1.0 * (math.match(/\\[a-zA-Z]+/g) || []).length;
+          math = math.replace(/\\[a-zA-Z]+/g, '').replace(/[{}^_]/g, '');
+          width += 0.7 * math.replace(/ /g, '').length + 0.3 * (math.split(' ').length - 1);
+        });
+        return [width, tall ? 1.75 : 1.5];
+      }
       function cdFrame(view) {
         var b = view.box, s = CD_W / (b[1] - b[0]), H = s * (b[3] - b[2]);
-        return { s: s, H: H, vw: CD_W + 2 * CD_M, vh: H + 2 * CD_M,
-                 x: function(X) { return CD_M + (X - b[0]) * s; },
-                 y: function(T) { return CD_M + (b[3] - T) * s; } };
+        var m = { l: CD_M, t: CD_M, r: CD_M, b: CD_M }, reach = 1.5 * CD_LAB;
+        function hold(x, y, text, anchor) {
+          var size = cdLabelSize(text), w = size[0] * CD_LAB, h = size[1] * CD_LAB, a = CD_ANCHOR[anchor || 'c'];
+          var x0 = x + a[0] / 100 * w, y0 = y + a[1] / 100 * h;
+          m.l = Math.max(m.l, reach - x0);
+          m.t = Math.max(m.t, reach - y0);
+          m.r = Math.max(m.r, x0 + w + reach - CD_W);
+          m.b = Math.max(m.b, y0 + h + reach - H);
+        }
+        // Each label's place in the box, from its top left corner, y down.
+        (view.labels || []).forEach(function(L) {
+          hold((L.at[0] - b[0]) * s + (L.dx || 0), (b[3] - L.at[1]) * s + (L.dy || 0), L.text, L.anchor);
+        });
+        (view.slices || []).forEach(function(mark) {
+          if (mark.place) hold((mark.place.at[0] - b[0]) * s + mark.place.dx, (b[3] - mark.place.at[1]) * s + mark.place.dy,
+                               mark.label, mark.place.anchor);
+        });
+        ['l', 't', 'r', 'b'].forEach(function(k) { m[k] = Math.ceil(m[k]); });
+        return { s: s, H: H, m: m, vw: CD_W + m.l + m.r, vh: H + m.t + m.b,
+                 x: function(X) { return m.l + (X - b[0]) * s; },
+                 y: function(T) { return m.t + (b[3] - T) * s; } };
       }
 
       function cdPath(f, pts, close) {
@@ -2112,7 +2180,7 @@
             '<stop offset="0" class="cd-fade-edge"/><stop offset="1" class="cd-fade-clear"/></linearGradient></defs>';
           ['top', 'bottom'].forEach(function(edge) {
             if (!view.fade[edge]) return;
-            var h = CD_M + view.fade[edge] * f.s, y = edge === 'top' ? 0 : f.vh - h;
+            var h = (edge === 'top' ? f.m.t : f.m.b) + view.fade[edge] * f.s, y = edge === 'top' ? 0 : f.vh - h;
             out.push(nrEl('rect', { 'class': 'cd-fade', x: 0, y: y.toFixed(1), width: f.vw, height: h.toFixed(1),
               fill: 'url(#' + id + '-fade)',
               transform: edge === 'top' ? '' : 'rotate(180 ' + (f.vw / 2) + ' ' + (y + h / 2).toFixed(1) + ')' }));
@@ -2122,12 +2190,11 @@
           'aria-label': 'Conformal diagram, ' + nrPlain(view.label) }, defs + out.join(''));
       }
 
-      // A label's anchor is the point of its box pinned to its place, and its size is in
-      // units of the drawing's width, so it scales with the drawing and never moves off it;
-      // cdFrameAround() says how the drawing follows the reader's text size.
+      // A label's anchor is the point of its box pinned to its place, as a fraction of the
+      // drawing, and it is set at the caption's size, 1em of the drawing; cdFrameAround()
+      // says how the drawing follows the reader's text size.
       var CD_ANCHOR = { c: [-50, -50], l: [0, -50], r: [-100, -50], t: [-50, 0], b: [-50, -100],
                         tl: [0, 0], tr: [-100, 0], bl: [0, -100], br: [-100, -100] };
-      var CD_SIZE = { lab: 15, small: 13, region: 13, coord: 12 };
 
       function cdSlices(view, f) {
         return (view.slices || []).map(function(mark) {
@@ -2141,14 +2208,12 @@
 
       function cdLabels(view, f, inner) {
         var slices = (view.slices || []).filter(function(mark) { return mark.place; }).map(function(mark) {
-          return sliceLabel(mark, f.x(mark.place.at[0]) / f.vw, f.y(mark.place.at[1]) / f.vh, f.vw, f.vh, 'cd-at',
-            ';font-size:calc(100cqw * ' + CD_SIZE.small + ' / ' + f.vw + ')');
+          return sliceLabel(mark, f.x(mark.place.at[0]) / f.vw, f.y(mark.place.at[1]) / f.vh, f.vw, f.vh, 'cd-at');
         });
         var out = view.labels.map(function(L) {
           var x = f.x(L.at[0]) + (L.dx || 0), y = f.y(L.at[1]) + (L.dy || 0), a = CD_ANCHOR[L.anchor || 'c'];
           return '<span class="cd-at cd-lab-' + L['class'] + '" style="left:' + (100 * x / f.vw).toFixed(3) +
-            '%;top:' + (100 * y / f.vh).toFixed(3) + '%;transform:translate(' + a[0] + '%,' + a[1] +
-            '%);font-size:calc(100cqw * ' + (CD_SIZE[L['class']] || 14) + ' / ' + f.vw + ')">' +
+            '%;top:' + (100 * y / f.vh).toFixed(3) + '%;transform:translate(' + a[0] + '%,' + a[1] + '%)">' +
             (inner && inner(L) || nrEsc(L.text)) + '</span>';
         });
         return '<div class="mfs-cd-labels" aria-hidden="true">' + out.join('') + slices.join('') + '</div>';
@@ -2166,23 +2231,32 @@
       /* A conformal diagram's labels, and a figure's, stand at points inside the drawing beside
          the lines they name, so they cannot be moved out of its way as a spacetime diagram's
          numbers are: set larger than the drawing was composed for, they run into each other
-         and off its edge, as the label on FRW's flat universe does at a tenth larger. So the
-         drawing keeps its proportion to its labels, which are sized in units of its width, and
-         it is the drawing that follows the reader's text size: it is drawn as wide as it is at
-         the usual size on this screen, times --mfs-text, its lines thickening with it. Where
-         that is wider than the panel, as at twice the usual size on a desktop or at any size
-         above the usual on a phone, it scrolls sideways inside its own frame, .mfs-fig-scroll,
-         and fades at the edge it continues past, as a line of mathematics does, while the band
-         above it and the caption beside or below it wrap at the panel's width. Its width at
-         the usual size is --cd-cap or the panel's, whichever is less: --cd-wide is the width a
-         tall diagram is held to, so that none is taller than CD_MAXH at the usual size, and
-         the phone stylesheet holds it to the screen's height as well. A view of a surface that
-         is not the whole spacetime says what that surface is in a band across the top of the
-         figure, where it hides nothing that is drawn. */
+         and off its edge. Every label is set at the size of the caption beside it, as the
+         captain asked on 30 September 2026, and every drawing is composed with its labels at
+         CD_LAB of its units, 21 in the 628 of a drawing whose box is 560 wide, which
+         _tools/derivations/conformal.py and embedding.py hold them clear of each other at. So a
+         drawing is never drawn narrower than its width in units over CD_LAB, in ems of its
+         labels, --cd-min, at which a label is CD_LAB units; drawn wider, a label is smaller
+         against the drawing, so what is clear at CD_LAB stays clear. That is 628px beside a
+         desktop's caption of 21px, the width a drawing had, and wider than a phone's screen,
+         where the drawing scrolls sideways inside its own frame, .mfs-fig-scroll, and fades at
+         the edge it continues past, as a line of mathematics does: labels of the caption's
+         15px on a drawing the phone's 326px wide would be 29 units, a label such as "white
+         hole" a third of Schwarzschild's diagram, and would cover one another and the lines
+         they name. Otherwise the drawing follows the reader's text size: it is drawn as wide
+         as it is at the usual size on this screen, times --mfs-text, its lines thickening with
+         it, and scrolls where that is wider than the panel, as at twice the usual size on a
+         desktop, while the band above it and the caption beside or below it wrap at the
+         panel's width. Its width at the usual size is --cd-cap or the panel's, whichever is
+         less: --cd-wide is the width a tall diagram is held to, so that none is taller than
+         CD_MAXH at the usual size unless --cd-min needs it, and the phone stylesheet holds it
+         to the screen's height as well. A view of a surface that is not the whole spacetime
+         says what that surface is in a band across the top of the figure, where it hides
+         nothing that is drawn. */
       function cdFrameAround(f, above, drawing, extra, attrs) {
         var wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
         return '<div class="mfs-cd-figure' + (extra ? ' ' + extra : '') + '" style="--cd-wide:' + wide.toFixed(0) +
-          'px;--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + above +
+          'px;--cd-min:' + (f.vw / CD_LAB).toFixed(4) + ';--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + above +
           '<div class="mfs-fig-scroll"><div class="mfs-cd-drawing"' + (attrs || '') + '>' + drawing + '</div></div></div>';
       }
 
@@ -2538,11 +2612,11 @@
          the order slices.py ranks the sides, the file's own first; a label wider than the room
          beside its point slides along to stay in the plot. Where no choice keeps them clear,
          as at three times the usual text on a phone, where Malament and Hogarth's four moments
-         lie within a sixth of a plot 265 pixels tall, the plot's labels are held smaller, a
-         tenth at a time, until one does, as fitWords() holds a heading to the size at which
-         its widest word fits, and never below their size at the usual text, at which the
-         file's places keep them clear. At the usual text size that is the file's place, and it
-         is again once the text is smaller. A plot holds four labels at most, which makes
+         lie within a sixth of a plot 265 pixels tall, the plot is drawn larger, a tenth at a
+         time, up to four times, until one does, and fitPlots() holds it there: Milne's four
+         moments in its inertial chart need 3.8 times there, since a label is
+         never set smaller than the caption beside the drawing, the size the captain set for
+         every word of a drawing on 30 September 2026. A plot holds four labels at most, which makes
          trying every choice of sides cheap. A label stands on the edge of what it names, the
          edge of its line's stroke or of its dot, and labels may touch; nothing is added between
          them. Every label is measured before any is moved, as the lines are. */
@@ -2558,26 +2632,33 @@
             return el.getClientRects().length;
           });
           if (!labels.length) return null;
-          var box = plot.getBoundingClientRect();
+          var box = plot.getBoundingClientRect(), fig = plot.closest('.mfs-nr-figure');
           return {
-            W: box.width, H: box.height,
-            others: [].slice.call(plot.querySelectorAll('.nr-ref')).map(function(el) {
+            fig: fig, base: fig._mfsPlot || box.width, aspect: box.height / box.width,
+            // A reference line's label, at the plot's right hand edge and above its line, which
+            // stands at a fraction of the plot's height.
+            refs: [].slice.call(plot.querySelectorAll('.nr-ref')).map(function(el) {
               var r = el.getBoundingClientRect();
-              return [r.left - box.left, r.top - box.top, r.right - box.left, r.bottom - box.top];
+              return { w: r.width, h: r.height, right: box.right - r.right, bottom: (r.bottom - box.top) / box.height };
             }),
-            // Each label as the stylesheet sets it, undoing any scale set before.
-            usual: 16 / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16),
             labels: labels.map(function(el) {
-              var r = el.getBoundingClientRect(), d = el.dataset, held = +(d.scale || 1);
-              return { el: el, w: r.width / held, h: r.height / held, unit: box.width / +d.vw,
+              var r = el.getBoundingClientRect(), d = el.dataset;
+              return { el: el, w: r.width, h: r.height, vw: +d.vw,
                        at: [+d.x, +d.y], far: d.far ? d.far.split(' ').map(Number) : null,
                        own: [d.anchor, +d.dx, +d.dy], point: !!d.point };
             })
           };
         }).filter(Boolean);
-        function arrange(p, scale) {
+        // The labels' best places on the plot drawn W wide.
+        function arrange(p, W) {
+          p.W = W;
+          p.H = W * p.aspect;
+          p.others = p.refs.map(function(o) {
+            return [W - o.right - o.w, o.bottom * p.H - o.h, W - o.right, o.bottom * p.H];
+          });
           p.labels.forEach(function(L) {
-            var w = L.w * scale, h = L.h * scale, edge = L.point ? SLICE_DOT : SLICE_EDGE;
+            var w = L.w, h = L.h, edge = L.point ? SLICE_DOT : SLICE_EDGE;
+            L.unit = W / L.vw;
             function offsets(side) { return [side[0], side[1] * edge, side[2] * edge]; }
             var sides = [[L.own, L.at]]
               .concat((L.point ? SLICE_POINT_SIDES : SLICE_SIDES).map(function(side) { return [offsets(side), L.at]; }))
@@ -2607,29 +2688,38 @@
           })(0, 0);
           return best;
         }
+        var grown = [];
         plots.forEach(function(p) {
-          var scale = 1, best = arrange(p, scale);
-          while (best.total >= 100 && scale * 0.9 >= p.usual - 1e-9) {
-            scale *= 0.9;
-            best = arrange(p, scale);
+          var best = null, grow = 1;
+          for (var g = 1; g <= 4 + 1e-9; g *= 1.1) {
+            var tried = arrange(p, p.base * g);
+            if (!best || tried.total < best.total) { best = tried; grow = g; }
+            if (tried.total < 100) break;
           }
-          if (best.total >= 100 && scale > p.usual) best = arrange(p, scale = p.usual);
-          p.scale = scale;
+          arrange(p, p.base * grow);
           p.labels.forEach(function(L, i) { L.chosen = best.pick[i]; });
+          var need = grow > 1 ? String(Math.ceil(p.base * grow)) : '';
+          if ((p.fig.dataset.slicePlot || '') !== need) {
+            if (need) p.fig.dataset.slicePlot = need; else delete p.fig.dataset.slicePlot;
+            grown.push(p.fig);
+          }
         });
+        if (grown.length) {
+          fitPlots(grown);
+          fitTicks(grown);
+        }
         plots.forEach(function(p) {
           p.labels.forEach(function(L) {
-            var c = L.chosen, key = c.at.join(' ') + ' ' + c.side.join(' ') + ' ' + c.slide.toFixed(1) + ' ' + p.scale.toFixed(4);
+            var c = L.chosen, key = c.at.join(' ') + ' ' + c.side.join(' ') + ' ' + c.slide.toFixed(1);
             if (L.el.dataset.side === key) return;
             L.el.dataset.side = key;
-            L.el.dataset.scale = p.scale.toFixed(4);
-            L.el.style.fontSize = p.scale < 1 ? 'calc(' + p.scale.toFixed(4) + ' * 0.9286em)' : '';
             L.el.style.left = (100 * (c.at[0] + c.side[1] * L.unit / p.W)).toFixed(3) + '%';
             L.el.style.top = (100 * (c.at[1] + c.side[2] * L.unit / p.H)).toFixed(3) + '%';
             L.el.style.transform = sliceShift(c.side[0]) + (c.slide ? ' translateX(' + c.slide.toFixed(1) + 'px)' : '');
           });
         });
       }
+      window._mfsFitSliceLabels = fitSliceLabels;
 
       /* Turning a figure drawn in three dimensions, which the captain asked for on 28 September
          2026 for the embedding diagrams, "Why are the embedding diagrams not rotatable?", and on
@@ -3812,10 +3902,14 @@
     #mfs-content-panel .mfs-nr-scroll { flex: 0 1 38.75rem; min-width: min(17.5rem, 100%); }
     /* A spacetime diagram as nrFigure() lays it out: the name of the vertical axis, its
        numbers and the plot, with the horizontal axis's numbers and name under the plot. Its
-       words are set at two thirds of the text around them, 14px beside the panel's 21px at the
-       usual size, the names of the axes a little larger and a reference line's label a little
-       smaller, and the room between them is in the same ems, so the frame grows with the
-       reader's text and the plot takes what is left of the width. Print sets it in points.
+       words are white and set at the size of the caption beside it, --mfs-prose, 21px on a
+       desktop and 15px on a phone at the usual text, the names of the axes a little larger,
+       as the captain asked on 30 September 2026 of every drawing: "Set one readable minimum
+       for every diagram kind: tick numbers and axis labels no smaller than the page's
+       caption text at the reader's size". Until then they were set at two thirds of the
+       prose, 14px on a desktop and 10px on a phone, in the grey of --text-dim. The room
+       between them is in the same ems, so the frame grows with the reader's text and the
+       plot takes what is left of the width. Print sets it at the print copy's 12pt.
        Every word of the figure stands at least 1.5 em of its words from the edge of the
        figure's ground, 21px at the usual text size, one em of the prose beside it, and in the
        same proportion at every size, as the captain asked on 29 September 2026: "the
@@ -3831,8 +3925,8 @@
       grid-template-columns: auto auto minmax(0, 1fr) auto;
       grid-template-areas: "yname yticks plot xreach" ". . xticks ." ". . xname .";
       padding: 2em 1.5em 1.5em;
-      font-family: 'Source Code Pro', monospace; font-size: 0.6667em; line-height: 1;
-      color: var(--text-dim);
+      font-family: 'Source Code Pro', monospace; font-size: var(--mfs-prose); line-height: 1;
+      color: var(--text-bright);
     }
     .mfs-nr-figure .nr-name { font-size: 1.0714em; white-space: nowrap; }
     .mfs-nr-figure .nr-ylabel { grid-area: yname; position: relative; width: calc(var(--nr-yname, 1.0714) * 1em); margin-right: 0.5643em; }
@@ -3846,15 +3940,27 @@
     .mfs-nr-figure .nr-tick { position: absolute; white-space: nowrap; height: 1em; }
     .mfs-nr-figure .nr-yticks .nr-tick { right: 0.65em; transform: translateY(-50%); }
     .mfs-nr-figure .nr-xticks { grid-area: xticks; position: relative; height: 1.75em; }
-    .mfs-nr-figure .nr-xticks .nr-tick { top: 0.57em; transform: translateX(-50%); }
+    .mfs-nr-figure .nr-xticks .nr-tick { top: 0.65em; transform: translateX(-50%); }
     .mfs-nr-figure .nr-tick-off { visibility: hidden; }
+    /* A tick mark runs from the plot's edge half an em of the numbers out and is a tenth of
+       one thick, in the colour of the plot's frame, so it grows with the numbers it marks:
+       drawn in the plot's SVG until 30 September 2026, it was 5 of the plot's 520 units long
+       and 1 thick, about 5px by 1px at every text size. The number beside it keeps its place,
+       0.15 em clear of its end. It is a box filled with its colour, which prints as it is
+       drawn, since a border's width is rounded down to a whole pixel. */
+    .mfs-nr-figure .nr-tickmark {
+      position: absolute; background: rgba(0,229,255,0.45);
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .mfs-nr-figure .nr-yticks .nr-tickmark { right: 0; width: 0.5em; height: 0.1em; transform: translateY(-50%); }
+    .mfs-nr-figure .nr-xticks .nr-tickmark { top: 0; width: 0.1em; height: 0.5em; transform: translateX(-50%); }
     .mfs-nr-figure .nr-xlabel { grid-area: xname; text-align: center; padding-top: 0.15em; }
     /* A box of its own, so the name's letters, taller than its line, stand inside the row. */
     .mfs-nr-figure .nr-xlabel .nr-name { display: inline-block; }
     .mfs-nr-figure .nr-plot { grid-area: plot; position: relative; }
     .mfs-nr-figure .nr-ref {
       position: absolute; right: 0.45em; transform: translateY(calc(-100% - 0.35em));
-      font-size: 0.9286em; white-space: nowrap;
+      white-space: nowrap;
     }
     /* The plot's own frame and the marks on its edges are drawn just outside its box. */
     .mfs-nr-svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -3865,8 +3971,8 @@
       position: absolute; right: 0.3rem; top: 0.3rem; pointer-events: none;
       max-width: calc(100% - 0.6rem); box-sizing: border-box;
       display: flex; flex-wrap: wrap; justify-content: flex-end; column-gap: 2em;
-      font-family: 'Source Code Pro', monospace; font-size: 0.8125rem; line-height: 1.3;
-      color: var(--text-dim); background: rgba(0,0,0,0.8); padding: 1px 6px; border-radius: 3px;
+      font-family: 'Source Code Pro', monospace; font-size: 1em; line-height: 1.3;
+      color: var(--text-bright); background: rgba(0,0,0,0.8); padding: 1px 6px; border-radius: 3px;
       opacity: 0; transition: opacity 0.12s;
     }
     #mfs-content-panel .mfs-nr-readout > span { white-space: nowrap; }
@@ -3901,7 +4007,6 @@
       margin-right: 0.4em;
     }
     .mfs-nr-svg .nr-grid { stroke: rgba(0,229,255,0.07); stroke-width: 1; }
-    .mfs-nr-svg .nr-axis { stroke: rgba(0,229,255,0.45); stroke-width: 1; }
     .mfs-nr-svg .nr-frame { fill: none; stroke: rgba(0,229,255,0.45); stroke-width: 1.2; }
     .mfs-nr-svg .nr-hatch-bg { fill: rgba(10,14,18,0.55); }
     .mfs-nr-svg .nr-hatch-line { stroke: rgba(168,192,208,0.28); stroke-width: 1.4; }
@@ -3955,8 +4060,7 @@
        drawings is but in dots, a point of it, and a region tinted with it at 12%, as the
        region a chart covers is tinted teal. A slice of an embedding view not shown is not
        drawn, and its label, set on a ground of its own as a conformal diagram's small labels
-       are, is at the in-plot size of a reference line's on a spacetime diagram and of a small
-       label on a conformal diagram. */
+       are, is white and at the size of every other word of its drawing, the caption's. */
     .nr-slice, .cd-slice, .pj-slice {
       fill: none; stroke: var(--green-light); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
     }
@@ -3966,9 +4070,8 @@
     .mfs-slice-off { display: none !important; }
     .mfs-slice-label {
       position: absolute; white-space: nowrap; line-height: 1; pointer-events: none;
-      color: var(--green-light); background: rgba(0,6,9,0.72); padding: 0.12em 0.3em; border-radius: 3px;
+      color: var(--text-bright); background: rgba(0,6,9,0.72); padding: 0.12em 0.3em; border-radius: 3px;
     }
-    .mfs-nr-figure .nr-slice-label { font-size: 0.9286em; }
     /* ── Embedding diagrams ── The figure is a figure in three dimensions in the conformal
        diagram's frame; a surface is tinted where it is nearest the reader, and the part of a
        line the surface hides, its class with -far, is drawn faint. */
@@ -4039,11 +4142,13 @@
     #mfs-content-panel .mfs-movie-play:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
     #mfs-content-panel .mfs-frame-label[hidden] { display: none; }
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
-       diagrams'; the figure, its labels and its lines are these. A label is sized in units
-       of the figure's width, n being n units of the SVG's 628 unit wide viewBox. */
+       diagrams'; the figure, its labels and its lines are these. Every label is white and at
+       the caption's size, --mfs-prose, and the drawing is at least --cd-min of those ems
+       wide, as cdFrameAround() says. */
     .mfs-cd-figure { --cd-cap: var(--cd-wide); position: relative; width: 100%; }
     #mfs-content-panel .mfs-cd-figure {
-      flex: 0 1 calc(var(--cd-cap) * var(--mfs-text, 1)); min-width: min(16.25rem, 100%); max-width: 100%;
+      flex: 0 1 max(calc(var(--cd-cap) * var(--mfs-text, 1)), calc(var(--cd-min) * var(--mfs-prose)));
+      min-width: min(16.25rem, 100%); max-width: 100%;
     }
     /* The frame a drawing scrolls sideways in when it is wider than the panel, a conformal
        diagram's or a figure's as cdFrameAround() says and a spacetime diagram's as nrFigure()
@@ -4055,21 +4160,26 @@
     /* While the fonts of a chart chosen in a panel already shown load; see fontsLoading(). */
     #mfs-content-panel.mfs-fonts-wait .mfs-fig-scroll { visibility: hidden; }
     .mfs-cd-drawing {
-      position: relative; container-type: inline-size;
-      width: max(100%, calc(min(100%, var(--cd-cap)) * var(--mfs-text, 1)));
+      position: relative; font-size: var(--mfs-prose);
+      width: max(100%, calc(min(100%, var(--cd-cap)) * var(--mfs-text, 1)), calc(var(--cd-min) * 1em));
     }
     .mfs-cd-svg { display: block; width: 100%; height: auto; }
     .mfs-cd-labels {
       position: absolute; inset: 0; pointer-events: none;
       font-family: 'Source Code Pro', monospace; line-height: 1; color: var(--text-bright);
     }
+    /* Every label is in the page's white, as the captain asked on 30 September 2026, "Make all
+       diagram label text white, matching the spacetime and conformal diagrams", the small
+       labels among them, which an embedding diagram's are, in cyan until then, the names of
+       coordinates in grey and of regions in a lighter grey. A label that names a line or a
+       circle it stands over has a ground of its own, and a region's name is in italics, its
+       letters at Source Code Pro's own spacing, 0.6 em apart, which the box slices.py's
+       label_size() gives a label assumes. */
     .mfs-cd-labels .cd-at { position: absolute; white-space: nowrap; }
     .mfs-cd-labels .cd-lab-small,
     .mfs-cd-labels .cd-lab-coord,
     .mfs-cd-labels .cd-lab-region { background: rgba(0,6,9,0.72); padding: 0.12em 0.3em; border-radius: 3px; }
-    .mfs-cd-labels .cd-lab-small { color: var(--cyan); }
-    .mfs-cd-labels .cd-lab-coord { color: var(--text-dim); }
-    .mfs-cd-labels .cd-lab-region { color: var(--text-mid); letter-spacing: 0.06em; font-style: italic; }
+    .mfs-cd-labels .cd-lab-region { font-style: italic; }
     #mfs-content-panel .mfs-cd-restriction {
       line-height: 1.5; color: var(--amber);
       background: rgba(249,180,80,0.06); border: 1px solid rgba(249,180,80,0.55); border-radius: 4px;
@@ -4383,6 +4493,8 @@
         });
         gathered.forEach(function(g) { g.line.style.setProperty('--mfs-fit', g.need.toFixed(3)); });
         window._mfsFitAxisNames([].slice.call(root.querySelectorAll('.mfs-nr-figure')));
+        // The slices' labels at the size they print at, set on the plot as on the screen.
+        window._mfsFitSliceLabels(root);
         root.style.cssText = '';
       }
 
@@ -4437,8 +4549,14 @@
     #mfs-print-root { display: none; }
     /* The size of a spacetime diagram on paper, outside the print rules, so printPrepare()
        measures the names of its axes at the size they print at: MathJax rounds a formula's
-       height at so small a size, and "ct/R" stands 1.4 em tall there and 1.27 at 30px. */
-    .mfs-print-body .mfs-nr-figure { max-width: 12cm; font-size: 8pt; }
+       height at a small size, and "ct/R" stood 1.4 em tall at 8pt and 1.27 at 30px. Every
+       word of every drawing prints at the size of the print copy's captions, 12pt, as it is
+       set at the caption's size on the screen. */
+    #mfs-print-root { --mfs-prose: 12pt; }
+    .mfs-print-body .mfs-nr-figure { max-width: 12cm; }
+    /* Nothing is under a pointer on paper, and the values it would show would otherwise stand
+       in the plot's flow while printPrepare() fits its slices' labels, 16px taller than it prints. */
+    #mfs-print-root .mfs-nr-readout { display: none; }
 
     @media print {
       @page { margin: 1.6cm 2cm; }
@@ -4548,7 +4666,8 @@
       .mfs-print-body .mfs-convention-k { text-transform: uppercase; letter-spacing: 0.08em; font-size: 8pt; margin-right: 0.4em; }
       .mfs-print-body .mfs-convention p { line-height: 1.45; margin: 0 0 6pt; }
       .mfs-print-body .nr-grid { stroke: #e4e4e4; }
-      .mfs-print-body .nr-axis, .mfs-print-body .nr-frame { stroke: #000; }
+      .mfs-print-body .nr-frame { stroke: #000; }
+      #mfs-print-root .nr-tickmark { background: #000 !important; }
       .mfs-print-body .nr-hatch-bg { fill: #fff; }
       .mfs-print-body .nr-hatch-line { stroke: #bbb; }
       .mfs-print-body .nr-M { stroke: #168f84; }
@@ -4579,9 +4698,10 @@
       .mfs-print-body .pj-wedge-fill { fill: #d8d8d8; }
       .mfs-print-body .pj-double-fill { fill: #f3e9c8; }
       .mfs-print-body .pj-string { fill: #000; stroke: #fff; }
-      /* Every view of the conformal diagram prints too, at most 12cm wide, a tall one still
-         held to its screen height, with its lines in the print copy's darker inks. */
-      .mfs-print-body .mfs-cd-figure { width: 12cm; max-width: var(--cd-wide); }
+      /* Every view of the conformal diagram prints too, 12cm wide, a tall one still held to
+         its screen height, or --cd-min of the 12pt of its labels where that is wider, as
+         cdFrameAround() says, with its lines in the print copy's darker inks. */
+      .mfs-print-body .mfs-cd-figure { width: max(min(12cm, var(--cd-wide)), calc(var(--cd-min) * 12pt)); max-width: none; }
       .mfs-print-body .mfs-fig-scroll { overflow: visible; }
       .mfs-print-body .mfs-cd-restriction { border: 1px solid #000 !important; margin: 0 0 4pt; padding: 3pt 6pt; }
       .mfs-print-body .cd-region { fill: #f3f3f3; }
@@ -4631,13 +4751,13 @@
       #mfs-print-root .mfs-em-figure .cd-lab-small { background: rgba(255,255,255,0.85) !important; }
       .mfs-print-body .mfs-turn-reset, .mfs-print-body .mfs-movie-play { display: none !important; }
       /* The slice of the embedding diagram in the palette's darker green, which holds on white
-         paper as the light one does on the dark ground, its label on a white ground of its own
-         and in the same green, which the print copy's black for every word would lose. */
+         paper as the light one does on the dark ground, and its label on a white ground of its
+         own in the print copy's black, as every word of every drawing is. */
       .mfs-print-body .nr-slice, .mfs-print-body .cd-slice, .mfs-print-body .pj-slice { stroke: #2a6e2a; }
       .mfs-print-body circle.nr-slice, .mfs-print-body circle.cd-slice { fill: #2a6e2a; stroke: #fff; }
       .mfs-print-body .nr-slice-fill, .mfs-print-body .pj-slice-fill { fill: rgba(42,110,42,0.14); }
       .mfs-print-body .nr-slice-swatch { fill: rgba(42,110,42,0.14); stroke: #2a6e2a; }
-      #mfs-print-root .mfs-slice-label { color: #2a6e2a !important; background: rgba(255,255,255,0.85) !important; }
+      #mfs-print-root .mfs-slice-label { background: rgba(255,255,255,0.85) !important; }
       .mfs-print-body .mfs-table th,
       .mfs-print-body .mfs-table td { border: 1px solid #000 !important; }
     }

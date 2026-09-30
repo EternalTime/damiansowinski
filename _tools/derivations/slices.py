@@ -583,24 +583,38 @@ def clip_ring(P, lo=(0.0, 0.0), hi=(1.0, 1.0)):
 EDGE, DOT = 1.3, 5.1
 
 
+# The parts of a label's mathematics that MathJax sets wider than a letter: a relation, with
+# the room it leaves on either side, and a function's name, set upright letter by letter.
+RELATION = r"=|<|>|\\to(?![a-zA-Z])|\\leq?(?![a-zA-Z])|\\geq?(?![a-zA-Z])|\\approx|\\neq?(?![a-zA-Z])|\\sim(?![a-zA-Z])|\\equiv|\\in(?![a-zA-Z])|\\rightarrow|\\mapsto"
+FUNCTION = r"\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z])"
+
+
 def label_size(text):
     """A label's box as the page sets it, in ems of its own size, no smaller than MathJax sets
-    it: mathematics at 0.62 em a character and 0.3 em a space, which its letters and the room
-    it leaves about a relation come to, prose at the 0.6 em of Source Code Pro, the padding of
-    its ground, 0.3 em either side and 0.12 above and below, and the height of one holding a
-    fraction or a subscript. Measured in Chrome on 29 September 2026, labels set from 3.0 to
-    7.1 em wide and from 1.25 to 1.49 em tall, "$t = 0$" 3.0 em by 1.25, estimated 3.1 by 1.5."""
-    width = 0.6
+    it: in mathematics 0.7 em a letter, 1.1 a relation with its room, 1.0 any other command,
+    0.5 a letter of a function's name and 0.3 a space in the source; prose at the 0.6 em of
+    Source Code Pro; the padding of its ground, 0.3 em either side; and 1.5 em tall, or 1.75
+    with a root or a superscript. Measured in Chrome on 30 September 2026 against every label
+    of every drawing, 632 of them set at the page's caption size, it is never smaller, and on
+    average 1.5 em wider: "$r \\to \\infty$" 3.9 em wide, estimated 4.0, and "$R/\\sqrt{2}$"
+    1.66 em tall, estimated 1.75. _layouts/mfs.html carries the same function as cdLabelSize()."""
+    width, tall = 0.6, False
     for part in re.split(r"(\$[^$]*\$)", text):
         if part.startswith("$"):
             math = re.sub(r"\\[,;:!]", " ", part[1:-1])
-            math = re.sub(r"\\(bar|hat|tilde|vec|dot|mathrm|text|left|right)(?![a-zA-Z])", "", math)
-            math = re.sub(r"\\[a-zA-Z]+", "x", math)
-            math = re.sub(r"[{}^_]", "", math)
-            width += 0.62 * len(math.replace(" ", "")) + 0.3 * math.count(" ")
+            tall = tall or "^" in math or "\\sqrt" in math
+            width += 0.5 * sum(len(f) for f in re.findall(FUNCTION, math))
+            math = re.sub(FUNCTION, "", math)
+            width += 1.1 * len(re.findall(RELATION, math))
+            math = re.sub(RELATION, "", math)
+            math = re.sub(r"\\(bar|hat|tilde|vec|dot|mathrm|text|left|right|mathscr|mathcal|mathfrak|operatorname)(?![a-zA-Z])",
+                          "", math)
+            width += 1.0 * len(re.findall(r"\\[a-zA-Z]+", math))
+            math = re.sub(r"[{}^_]", "", re.sub(r"\\[a-zA-Z]+", "", math))
+            width += 0.7 * len(math.replace(" ", "")) + 0.3 * math.count(" ")
         else:
             width += 0.6 * len(part)
-    return width, 1.5
+    return width, 1.75 if tall else 1.5
 
 
 def place(marks, px, box, size, others=()):

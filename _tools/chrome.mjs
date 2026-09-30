@@ -10,7 +10,7 @@
    that failed to load, and finish(), which quits Chrome, removes its profile and exits. Whatever
    stops the run, Chrome goes with it. */
 import { spawn } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, existsSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -22,12 +22,15 @@ export async function launch({ width = 1440, height = 900, phone = false, text =
       .find(existsSync);
   if (!chromePath) { console.error('No Chrome found; set CHROME to its path.'); process.exit(2); }
 
-  const profile = mkdtempSync(join(tmpdir(), 'mfs-chrome-'));
+  // The profile's folder ends in .noindex, which keeps Spotlight from indexing what Chrome
+  // writes there while it runs.
+  const home = mkdtempSync(join(tmpdir(), 'mfs-chrome-')), profile = join(home, 'profile.noindex');
+  mkdirSync(profile);
   const chrome = spawn(chromePath, ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`,
     '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'], { stdio: 'ignore' });
   function finish(code) {
     chrome.kill('SIGKILL');
-    try { rmSync(profile, { recursive: true, force: true }); } catch {}
+    try { rmSync(home, { recursive: true, force: true }); } catch {}
     process.exit(code);
   }
   process.on('uncaughtException', e => { console.error(e); finish(2); });

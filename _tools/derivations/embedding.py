@@ -140,7 +140,7 @@ OUTLINE = 1e-5      # how far off the surface a point of its outline is judged, 
 
 CAMERA = Camera(-90, 22)
 RING = 720          # points round a circle of the drawing
-LAB = {"lab": 15, "small": 13}  # label sizes, in units of a figure 628 wide, as on the page
+LAB = {"lab": 21, "small": 21}  # label sizes, in units of a figure 628 wide, the most the page sets them at
 GRID_SAG = 5e-4     # how far a facet of a height over a plane may lie from the height, in space, as a part of the drawing's size
 HEIGHT_CAMERA = Camera(-90, 30)  # a height over a plane seen from low enough that its relief shows
 
@@ -3151,7 +3151,9 @@ def misner(ck, src):
         ck.radius(f"{where}, rho = c|t|", tube, lambda y, ct=ct: np.full_like(y, abs(ct)), size)
         ck.form(f"{where}, z = y", tube, lambda y: y, size)
         surfaces.append(Surface([tube], label=f"$ct = {ct:g}$", time=ct))
-    offsets, x, gap = [], 0.0, 0.8
+    # The cylinders stand far enough apart that their names under them, at the size the page
+    # sets them at, stand clear of each other.
+    offsets, x, gap = [], 0.0, 2.0
     for s in surfaces:
         rho = float(s.pieces[0].rho[0])
         offsets.append((x + rho, 0.0, 0.0))

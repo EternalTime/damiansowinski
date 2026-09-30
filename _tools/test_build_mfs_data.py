@@ -1126,6 +1126,71 @@ class FixedSizes(unittest.TestCase):
                     self.assertRegex(size, r"rem\b|--mfs-prose|^1em$")
 
 
+class ReadableDrawings(unittest.TestCase):
+    """Every word of every drawing is white and no smaller than the caption beside it, as the
+    captain asked on 30 September 2026: "Make all diagram label text white, matching the
+    spacetime and conformal diagrams" and "Set one readable minimum for every diagram kind:
+    tick numbers and axis labels no smaller than the page's caption text at the reader's size".
+    The page sets a spacetime diagram's words and a drawing's labels at --mfs-prose, the
+    caption's size, and draws a conformal diagram, a figure or an embedding diagram no narrower
+    than keeps a label at CD_LAB of its 628 units, which the generators compose them at.
+    `node _tools/page_timing.mjs` holds the page as drawn to the same rule."""
+
+    # The rules that set a drawing's words, and the elements a word of a drawing is.
+    GROUNDS = (".mfs-nr-figure", ".mfs-cd-drawing")
+    WORDS = (".mfs-nr-figure", ".nr-tick", ".nr-name", ".nr-ref", ".mfs-slice-label", ".mfs-nr-readout",
+             ".mfs-cd-labels", ".cd-at", ".cd-lab-small", ".cd-lab-coord", ".cd-lab-region", ".cd-lab-lab")
+
+    @classmethod
+    def setUpClass(cls):
+        cls.page, cls.rules = page_rules()
+
+    def screen(self):
+        for selectors, declarations, printed in self.rules:
+            if printed:
+                continue
+            for selector in selectors:
+                last = selector.split()[-1] if selector.split() else ""
+                if any(word in last for word in self.WORDS):
+                    yield selector, declarations
+
+    def test_every_word_of_a_drawing_is_white(self):
+        coloured = [(selector, d["color"]) for selector, d in self.screen() if "color" in d]
+        for base in (".mfs-nr-figure", ".mfs-cd-labels", ".mfs-slice-label", "#mfs-content-panel .mfs-nr-readout"):
+            self.assertIn((base, "var(--text-bright)"), coloured)
+        for selector, colour in coloured:
+            with self.subTest(selector):
+                self.assertEqual(colour, "var(--text-bright)")
+
+    def test_every_word_of_a_drawing_is_set_at_the_caption_size(self):
+        for ground in self.GROUNDS:
+            sizes = [d["font-size"] for selectors, d, printed in self.rules
+                     if ground in selectors and "font-size" in d and not printed]
+            self.assertEqual(sizes, ["var(--mfs-prose)"], ground)
+        for selector, declarations in self.screen():
+            size = declarations.get("font-size")
+            if size is None or selector in self.GROUNDS:
+                continue
+            with self.subTest(selector, size=size):
+                self.assertRegex(size, r"^(inherit|1(\.\d+)?em)$")
+        self.assertNotIn("100cqw * ", self.page)
+
+    def test_the_label_size_a_drawing_is_composed_at_is_one_size_everywhere(self):
+        page = int(re.search(r"var CD_LAB = (\d+);", self.page).group(1))
+        derivations = build.ROOT / "_tools" / "derivations"
+        conformal = (derivations / "conformal.py").read_text(encoding="utf-8")
+        embedding = (derivations / "embedding.py").read_text(encoding="utf-8")
+        turn = (build.ROOT / "MFS" / "assets" / "turn.js").read_text(encoding="utf-8")
+        found = {
+            "conformal.py": re.search(r"^CD_LABEL_SIZE = \{([^}]*)\}", conformal, re.M).group(1),
+            "embedding.py": re.search(r"^LAB = \{([^}]*)\}", embedding, re.M).group(1),
+            "turn.js": re.search(r"var LAB = \{([^}]*)\}", turn).group(1),
+        }
+        for name, sizes in found.items():
+            with self.subTest(name):
+                self.assertEqual({int(v) for v in re.findall(r":\s*(\d+)", sizes)}, {page})
+
+
 class NoGlow(unittest.TestCase):
     """Nothing on the spacetimes page glows, and a button chosen or pressed turns pink, as the
     captain asked on 29 September 2026: "Get rid of the glow on the pressed button in MFS.
