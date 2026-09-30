@@ -4478,6 +4478,7 @@ CAPTIONS = {
         "turned over, and through its throat at $r_h$ into another, a chain of throats and widest circles "
         "without end, one period of which is drawn. Identifying the two throats closes the slice into a space "
         "of topology $S^1 \\times S^2$.",
+    ],
     ("einstein_rosen_waves", "pulse"): [
         "The plane $z = 0$ of space around a pulse of Weber, Wheeler, and Bonnor ($C = a$) going out from the axis, "
         "from $ct = a$ to $8a$, each moment drawn as a surface in flat space with every distance along it the metric "

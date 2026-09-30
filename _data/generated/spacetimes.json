@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 35,
+  "count": 36,
   "spacetimes": [
     {
       "id": "alcubierre",
@@ -1423,6 +1423,176 @@
           ],
           "ricci_scalar": "\\dfrac{6}{R^2}",
           "kretschmann": "K = \\dfrac{12}{R^4}"
+        }
+      ]
+    },
+    {
+      "id": "einstein_rosen_waves",
+      "name": "Einstein-Rosen Cylindrical Gravitational Waves",
+      "short_name": "Einstein-Rosen",
+      "description": "Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and a single polarisation, converging on an axis, passing through it and spreading out again. Einstein's equations for them reduce to the flat cylindrical wave equation for one function and a quadrature for a second.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "gravitational wave",
+        "cylindrical symmetry",
+        "exact solution",
+        "time-dependent",
+        "dynamical",
+        "radiating",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "beck1925",
+        "bicak2000",
+        "kennefick2005",
+        "einstein1937",
+        "rosen1956",
+        "kennefick1999",
+        "weber1957",
+        "bonnor1957",
+        "rosen1958",
+        "virbhadra1995",
+        "thorne1965",
+        "ashtekar1994",
+        "stachel1966",
+        "jordan1960",
+        "kompaneets1958",
+        "piran1985",
+        "berger1995",
+        "ashtekar1997",
+        "kuchar1971",
+        "ashtekar1996"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\gamma = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(t,\\rho)",
+              "description": "Wave amplitude, a dimensionless function of $t$ and $\\rho$, with $e^{2\\psi} = g_{zz}$; the spacetime is a vacuum exactly where it solves the flat cylindrical wave equation $\\partial_\\rho^2\\psi + \\partial_\\rho\\psi/\\rho - \\partial_t^2\\psi = 0$ and $\\gamma$ solves the two equations beside it; the pulse of Weber, Wheeler, and Bonnor, of width $a$ and amplitude $C$, is $\\psi = \\sqrt{2}\\,C\\sqrt{D_+ + a^2 + \\rho^2 - c^2t^2}/D_+$ with $D_+^2 = (a^2 + \\rho^2 - c^2t^2)^2 + 4a^2c^2t^2$"
+            },
+            {
+              "symbol": "\\gamma = \\gamma(t,\\rho)",
+              "description": "Dimensionless function of $t$ and $\\rho$ fixed by $\\psi$ through $\\partial_\\rho\\gamma = \\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 + \\left(\\partial_t\\psi\\right)^2\\right)$ and $\\partial_t\\gamma = 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_t\\psi$, and zero on a regular axis"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time, $\\rho$ a length fixed by $g_{\\phi\\phi}\\,g_{zz} = \\rho^2$, and $z$ a length along the axis. We take components in the chart $x^0 = ct$, so $\\partial_t\\psi = c^{-1}\\partial\\psi/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = e^{2(\\gamma - \\psi)}\\left(-c^2dt^2 + d\\rho^2\\right) + \\rho^2e^{-2\\psi}d\\phi^2 + e^{2\\psi}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2e^{-2\\psi}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(\\rho\\,\\partial_t^2\\gamma - \\rho\\,\\partial_\\rho^2\\gamma - \\rho\\,\\partial_t^2\\psi + \\rho\\,\\partial_\\rho^2\\psi + \\rho\\left(\\partial_t\\psi\\right)^2 + \\partial_\\rho\\psi - \\rho\\left(\\partial_\\rho\\psi\\right)^2\\right)e^{2\\psi - 2\\gamma}}{\\rho}",
+          "kretschmann": "K = 4e^{4\\psi - 4\\gamma}\\left(\\left(\\partial_\\rho^2\\psi - \\partial_t^2\\psi - \\partial_\\rho^2\\gamma + \\partial_t^2\\gamma\\right)^2 + \\left(\\dfrac{\\rho\\,\\partial_t^2\\psi - \\partial_\\rho\\psi + \\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\rho\\,\\partial_t\\gamma\\,\\partial_t\\psi + \\partial_\\rho\\gamma - \\rho\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi}{\\rho}\\right)^2 + \\left(\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi + \\partial_t\\gamma\\,\\partial_t\\psi - \\left(\\partial_\\rho\\psi\\right)^2 - 2\\left(\\partial_t\\psi\\right)^2 - \\partial_t^2\\psi\\right)^2 + \\left(\\dfrac{\\rho\\,\\partial_\\rho^2\\psi + \\rho\\left(\\partial_t\\psi\\right)^2 + \\partial_\\rho\\psi - \\rho\\,\\partial_t\\gamma\\,\\partial_t\\psi + \\partial_\\rho\\gamma - \\rho\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi}{\\rho}\\right)^2 + \\left(\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi + \\partial_t\\gamma\\,\\partial_t\\psi - 2\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_t\\psi\\right)^2 - \\partial_\\rho^2\\psi\\right)^2 + \\left(\\dfrac{\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi - \\rho\\left(\\partial_t\\psi\\right)^2}{\\rho}\\right)^2 - 2\\left(\\dfrac{\\rho\\,\\partial_t\\partial_\\rho\\psi + \\rho\\,\\partial_\\rho\\psi\\,\\partial_t\\psi + \\partial_t\\gamma - \\rho\\,\\partial_t\\gamma\\,\\partial_\\rho\\psi - \\rho\\,\\partial_\\rho\\gamma\\,\\partial_t\\psi}{\\rho}\\right)^2 - 2\\left(\\partial_\\rho\\gamma\\,\\partial_t\\psi + \\partial_t\\gamma\\,\\partial_\\rho\\psi - 3\\partial_\\rho\\psi\\,\\partial_t\\psi - \\partial_t\\partial_\\rho\\psi\\right)^2\\right)"
+        },
+        {
+          "id": "null",
+          "name": "Null",
+          "coordinates": [
+            "u",
+            "v",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in [u, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\gamma = 0 \\;\\text{at}\\; v = u \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(u,v)",
+              "description": "Wave amplitude, a dimensionless function of $u$ and $v$, with $e^{2\\psi} = g_{zz}$; the spacetime is a vacuum exactly where it solves the flat cylindrical wave equation $2(v - u)\\,\\partial_u\\partial_v\\psi = \\partial_v\\psi - \\partial_u\\psi$ and $\\gamma$ solves the two equations beside it"
+            },
+            {
+              "symbol": "\\gamma = \\gamma(u,v)",
+              "description": "Dimensionless function of $u$ and $v$ fixed by $\\psi$ through $\\partial_u\\gamma = -(v - u)\\left(\\partial_u\\psi\\right)^2$ and $\\partial_v\\gamma = (v - u)\\left(\\partial_v\\psi\\right)^2$, and zero on a regular axis"
+            }
+          ],
+          "convention": "We use the retarded coordinate $u = ct - \\rho$ and the advanced coordinate $v = ct + \\rho$ of the cylindrical chart, both lengths, and $z$ a length along the axis. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -e^{2(\\gamma - \\psi)}du\\,dv + \\dfrac{(v - u)^2}{4}e^{-2\\psi}d\\phi^2 + e^{2\\psi}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{e^{2\\gamma - 2\\psi}}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{e^{2\\gamma - 2\\psi}}{2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(v - u\\right)^2e^{-2\\psi}}{4}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\left(2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\partial_v\\psi - \\partial_u\\psi - 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + 2\\left(v - u\\right)\\partial_u\\partial_v\\gamma\\right)e^{2\\psi - 2\\gamma}}{v - u}",
+          "kretschmann": "K = 4e^{4\\psi - 4\\gamma}\\left(\\left(4\\partial_u\\partial_v\\psi - 4\\partial_u\\partial_v\\gamma\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)\\partial_u^2\\psi + 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + \\left(v - u\\right)\\partial_v^2\\psi + 2\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 - 2\\partial_v\\psi - 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 - 2\\partial_u\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi + 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi}{v - u}\\right)^2 + \\left(2\\partial_v\\gamma\\,\\partial_v\\psi + 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 - 2\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi - 2\\partial_u\\partial_v\\psi - \\partial_u^2\\psi\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)\\partial_u^2\\psi - 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + \\left(v - u\\right)\\partial_v^2\\psi - 2\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 + 2\\partial_v\\psi + 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 - 2\\partial_u\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi + 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi}{v - u}\\right)^2 + \\left(2\\partial_v\\gamma\\,\\partial_v\\psi + 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 + 2\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi + 2\\partial_u\\partial_v\\psi - \\partial_u^2\\psi\\right)^2 + \\left(\\dfrac{2\\partial_u\\psi - 2\\partial_v\\psi - 4\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi}{v - u}\\right)^2 - 2\\left(\\dfrac{2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi - 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi - 2\\partial_u\\gamma - \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 - \\left(v - u\\right)\\partial_v^2\\psi + \\left(v - u\\right)\\partial_u^2\\psi}{v - u}\\right)^2 - 2\\left(2\\partial_v\\gamma\\,\\partial_v\\psi - 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 + 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi + \\partial_u^2\\psi\\right)^2\\right)"
         }
       ]
     },

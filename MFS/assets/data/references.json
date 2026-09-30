@@ -1,5 +1,5 @@
 {
-  "version": "383aef04aa7b5ca7",
+  "version": "fbe338002efc95a8",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -2994,6 +2994,254 @@
         "year": "2005",
         "doi": "10.1063/1.2117822",
         "url": "https://doi.org/10.1063/1.2117822"
+      }
+    },
+    "beck1925": {
+      "type": "article",
+      "fields": {
+        "title": "Zur Theorie bin\\\"arer Gravitationsfelder",
+        "author": "Beck, Guido",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "33",
+        "number": "1",
+        "pages": "713--728",
+        "year": "1925",
+        "doi": "10.1007/BF01328358",
+        "url": "https://doi.org/10.1007/BF01328358"
+      }
+    },
+    "rosen1956": {
+      "type": "incollection",
+      "fields": {
+        "title": "On Cylindrical Gravitational Waves",
+        "author": "Rosen, Nathan",
+        "booktitle": "Jubilee of Relativity Theory",
+        "editor": "Mercier, A. and Kervaire, M.",
+        "series": "Helvetica Physica Acta, Supplementum",
+        "volume": "4",
+        "publisher": "Birkhäuser",
+        "address": "Basel",
+        "pages": "171--175",
+        "year": "1956"
+      }
+    },
+    "rosen1958": {
+      "type": "article",
+      "fields": {
+        "title": "Energy and Momentum of Cylindrical Gravitational Waves",
+        "author": "Rosen, Nathan",
+        "journal": "Physical Review",
+        "volume": "110",
+        "number": "1",
+        "pages": "291--292",
+        "year": "1958",
+        "doi": "10.1103/PhysRev.110.291",
+        "url": "https://doi.org/10.1103/PhysRev.110.291"
+      }
+    },
+    "virbhadra1995": {
+      "type": "article",
+      "fields": {
+        "title": "Energy and momentum of cylindrical gravitational waves. II",
+        "author": "Virbhadra, K. S.",
+        "journal": "Pramana",
+        "volume": "45",
+        "number": "2",
+        "pages": "215--219",
+        "year": "1995",
+        "doi": "10.1007/BF02848265",
+        "eprint": "gr-qc/9509034",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/BF02848265"
+      }
+    },
+    "kennefick1999": {
+      "type": "incollection",
+      "fields": {
+        "title": "Controversies in the History of the Radiation Reaction Problem in General Relativity",
+        "author": "Kennefick, Daniel",
+        "booktitle": "The Expanding Worlds of General Relativity",
+        "editor": "Goenner, Hubert and Renn, Jürgen and Ritter, Jim and Sauer, Tilman",
+        "publisher": "Birkhäuser",
+        "address": "Boston",
+        "pages": "207--234",
+        "year": "1999",
+        "doi": "10.1007/978-1-4612-0639-2_6",
+        "eprint": "gr-qc/9704002",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/978-1-4612-0639-2_6"
+      }
+    },
+    "weber1957": {
+      "type": "article",
+      "fields": {
+        "title": "Reality of the Cylindrical Gravitational Waves of Einstein and Rosen",
+        "author": "Weber, Joseph and Wheeler, John A.",
+        "journal": "Reviews of Modern Physics",
+        "volume": "29",
+        "number": "3",
+        "pages": "509--515",
+        "year": "1957",
+        "doi": "10.1103/RevModPhys.29.509",
+        "url": "https://doi.org/10.1103/RevModPhys.29.509"
+      }
+    },
+    "bonnor1957": {
+      "type": "article",
+      "fields": {
+        "title": "Non-Singular Fields in General Relativity",
+        "author": "Bonnor, W. B.",
+        "journal": "Journal of Mathematics and Mechanics",
+        "volume": "6",
+        "number": "2",
+        "pages": "203--214",
+        "year": "1957",
+        "doi": "10.1512/iumj.1957.6.56008",
+        "url": "https://doi.org/10.1512/iumj.1957.6.56008"
+      }
+    },
+    "thorne1965": {
+      "type": "article",
+      "fields": {
+        "title": "Energy of Infinitely Long, Cylindrically Symmetric Systems in General Relativity",
+        "author": "Thorne, Kip S.",
+        "journal": "Physical Review",
+        "volume": "138",
+        "number": "1B",
+        "pages": "B251--B266",
+        "year": "1965",
+        "doi": "10.1103/PhysRev.138.B251",
+        "url": "https://doi.org/10.1103/PhysRev.138.B251"
+      }
+    },
+    "ashtekar1994": {
+      "type": "article",
+      "fields": {
+        "title": "Striking property of the gravitational Hamiltonian",
+        "author": "Ashtekar, Abhay and Varadarajan, Madhavan",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "8",
+        "pages": "4944--4956",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.4944",
+        "eprint": "gr-qc/9406040",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.50.4944"
+      }
+    },
+    "stachel1966": {
+      "type": "article",
+      "fields": {
+        "title": "Cylindrical Gravitational News",
+        "author": "Stachel, John J.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "7",
+        "number": "7",
+        "pages": "1321--1331",
+        "year": "1966",
+        "doi": "10.1063/1.1705036",
+        "url": "https://doi.org/10.1063/1.1705036"
+      }
+    },
+    "jordan1960": {
+      "type": "article",
+      "fields": {
+        "title": "Strenge Lösungen der Feldgleichungen der allgemeinen Relativitätstheorie",
+        "author": "Jordan, Pascual and Ehlers, Jürgen and Kundt, Wolfgang",
+        "journal": "Abhandlungen der Akademie der Wissenschaften und der Literatur in Mainz, Mathematisch-Naturwissenschaftliche Klasse",
+        "number": "2",
+        "pages": "21--105",
+        "year": "1960"
+      }
+    },
+    "kompaneets1958": {
+      "type": "article",
+      "fields": {
+        "title": "Strong Gravitational Waves in Free Space",
+        "author": "Kompaneets, A. S.",
+        "journal": "Soviet Physics JETP",
+        "volume": "7",
+        "number": "4",
+        "pages": "659--660",
+        "year": "1958",
+        "url": "http://jetp.ras.ru/cgi-bin/e/index/e/7/4/p659?a=list"
+      }
+    },
+    "piran1985": {
+      "type": "article",
+      "fields": {
+        "title": "General numerical solution of cylindrical gravitational waves",
+        "author": "Piran, Tsvi and Safier, Pedro N. and Stark, Richard F.",
+        "journal": "Physical Review D",
+        "volume": "32",
+        "number": "12",
+        "pages": "3101--3107",
+        "year": "1985",
+        "doi": "10.1103/PhysRevD.32.3101",
+        "url": "https://doi.org/10.1103/PhysRevD.32.3101"
+      }
+    },
+    "berger1995": {
+      "type": "article",
+      "fields": {
+        "title": "On \"Asymptotically Flat\" Space-Times with G₂-Invariant Cauchy Surfaces",
+        "author": "Berger, Beverly K. and Chruściel, Piotr T. and Moncrief, Vincent",
+        "journal": "Annals of Physics",
+        "volume": "237",
+        "number": "2",
+        "pages": "322--354",
+        "year": "1995",
+        "doi": "10.1006/aphy.1995.1012",
+        "eprint": "gr-qc/9404005",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1006/aphy.1995.1012"
+      }
+    },
+    "ashtekar1997": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotic structure of symmetry-reduced general relativity",
+        "author": "Ashtekar, Abhay and Bičák, Jiří and Schmidt, Bernd G.",
+        "journal": "Physical Review D",
+        "volume": "55",
+        "number": "2",
+        "pages": "669--686",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.55.669",
+        "eprint": "gr-qc/9608042",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.55.669"
+      }
+    },
+    "kuchar1971": {
+      "type": "article",
+      "fields": {
+        "title": "Canonical Quantization of Cylindrical Gravitational Waves",
+        "author": "Kuchař, Karel",
+        "journal": "Physical Review D",
+        "volume": "4",
+        "number": "4",
+        "pages": "955--986",
+        "year": "1971",
+        "doi": "10.1103/PhysRevD.4.955",
+        "url": "https://doi.org/10.1103/PhysRevD.4.955"
+      }
+    },
+    "ashtekar1996": {
+      "type": "article",
+      "fields": {
+        "title": "Probing quantum gravity through exactly soluble midi-superspaces I",
+        "author": "Ashtekar, Abhay and Pierri, Monica",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "37",
+        "number": "12",
+        "pages": "6250--6270",
+        "year": "1996",
+        "doi": "10.1063/1.531774",
+        "eprint": "gr-qc/9606085",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1063/1.531774"
       }
     },
     "pirani1956": {

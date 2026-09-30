@@ -682,7 +682,7 @@ def einstein_rosen(system):
         spec_line, chart_line = line("c^2", "\\rho^2"), line("", "\\rho^2")
         domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
                    "z \\in (-\\infty, \\infty)",
-                   "\\gamma = 0 \;\\text{at}\; \\rho = 0 \;\\text{(a regular axis)}"]
+                   "\\gamma = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"]
         name = "Cylindrical"
     else:
         coords = ["u", "v", "\\phi", "z"]
@@ -693,7 +693,7 @@ def einstein_rosen(system):
         spec_line = chart_line = line("", "\\dfrac{(v - u)^2}{4}")
         domains = ["u \\in (-\\infty, \\infty)", "v \\in [u, \\infty)", "\\phi \\in [0, 2\\pi)",
                    "z \\in (-\\infty, \\infty)",
-                   "\\gamma = 0 \;\\text{at}\; v = u \;\\text{(a regular axis)}"]
+                   "\\gamma = 0 \\;\\text{at}\\; v = u \\;\\text{(a regular axis)}"]
         name = "Null"
     probe = vm.Reader(coords, parameters, ())
     x, y = probe.symbol[coords[0]], probe.symbol[coords[1]]
