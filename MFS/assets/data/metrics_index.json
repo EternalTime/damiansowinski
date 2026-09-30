@@ -1073,5 +1073,31 @@
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "aec3d8d98916b294",
     "embedding": "61bc15046da68ece"
+  },
+  {
+    "id": "domain_wall",
+    "name": "Vilenkin-Ipser-Sikivie",
+    "tags": [
+      "domain wall",
+      "topological defect",
+      "repulsive gravity",
+      "thin shell",
+      "locally flat",
+      "planar symmetry",
+      "reflection symmetry",
+      "de Sitter world volume",
+      "event horizon",
+      "closed universe",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "514f575b3f93d82c",
+    "diagrams": "2a5ce4366ce96379",
+    "conformal": "3c01aaab5232dd02",
+    "embedding": "760ee0a5afd97b77"
   }
 ]
