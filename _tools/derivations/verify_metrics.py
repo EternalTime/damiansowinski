@@ -293,6 +293,12 @@ DIMENSIONS = {
     ("minkowski", "double_null"): {"u": "T", "v": "T", "y": "L", "z": "L"},
     ("minkowski", "spherical_null"): {"u": "T", "v": "T", "\\theta": "1", "\\phi": "1"},
     ("minkowski", "rindler"): {"T": "T", "X": "L", "Y": "L", "Z": "L", "a": "L/T**2"},
+    # Misner space names no length of its own, since Minkowski space identified under a boost
+    # is identified under every dilation too. Misner's T is then an area and psi a pure number;
+    # the rapidity chi of the Milne chart and eta of the Rindler chart are pure numbers as well.
+    ("misner", "misner"): {"T": "L**2", "\\psi": "1", "y": "L", "z": "L", "\\psi_0": "1"},
+    ("misner", "milne"): {"t": "T", "\\chi": "1", "y": "L", "z": "L", "\\psi_0": "1"},
+    ("misner", "rindler"): {"\\eta": "1", "\\xi": "L", "y": "L", "z": "L", "\\psi_0": "1"},
     # The redshift function sits inside an exponential and so is dimensionless, and the
     # shape function is a length beside r, which is what leaves 1 - b/r dimensionless.
     # In the proper distance chart l is the radial coordinate and the areal radius r is
