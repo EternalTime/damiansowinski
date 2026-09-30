@@ -185,6 +185,23 @@ for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) 
     }
     const entry = { metric: data.metric, view: view.id, size, boxArea: (x1 - x0) * (y1 - y0),
                     lines, fills, labels, shown, sweep, moved };
+    /* Each shade, drawn at the figure's own camera, covers what its published layers cover, class
+       by class, and turned to the other side it still paints its class and keeps to the box; the
+       figure without a shade is the published one again once the shade is taken away. */
+    if (view.shades) {
+      entry.shades = view.shades.map(sh => {
+        turn.shade(M, sh);
+        const drawn = byClass(turn.draw(M, a0, e0, false).layers).fills, published = byClass(sh.layers).fills, fills = {};
+        for (const c of new Set([...Object.keys(published), ...Object.keys(drawn)])) {
+          fills[c] = [area(published[c] || []), area(drawn[c] || [])];
+        }
+        const away = turn.draw(M, a0 + 180, -e0, false);
+        return { view: sh.view, fills, away: area(byClass(away.layers).fills.shade || []), ...strays(away, fig.box) };
+      });
+      turn.shade(M, null);
+      const back = byClass(turn.draw(M, a0, e0, false).layers).fills;
+      entry.unshaded = Object.fromEntries(Object.keys(back).map(c => [c, area(back[c])]));
+    }
     if (grids) entry.height = heights(M, view, a0, e0);
     if (stacks) entry.stack = true;
     /* A movie draws every frame at one scale about one place: at the figure's own camera every

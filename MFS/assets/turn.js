@@ -50,6 +50,10 @@
    one centre and keeps with the others within the height and width they take together, so the
    frames keep one size and place as they change and as the reader turns them.
 
+   A view's shade, which the page shows while the view of the conformal diagram it answers is
+   shown, tints part of one piece in the class shade in place of the piece's tint, as shade()
+   says, at every camera.
+
    A figure of light cones is drawn as drawCones() says. */
 (function(root) {
   'use strict';
@@ -73,6 +77,7 @@
     var size = Math.max(box[1] - box[0], box[3] - box[2]);
     var e0 = figure.camera.elevation * RAD, a0 = figure.camera.azimuth * RAD, classes = [];
     Object.keys(turn.tint).forEach(function(k) { if (classes.indexOf(turn.tint[k]) < 0) classes.push(turn.tint[k]); });
+    if ((view.shades || []).length) classes.push('shade');
     classes.sort();
     // A movie's frames are drawn one at a time, each on its axis at the one place.
     var movie = view.movie || null;
@@ -90,35 +95,36 @@
         grids.push(g);
         return false;
       }).map(function(p) {
-        var n = p.points.length, rho = new Float64Array(n), z = new Float64Array(n);
+        var n = p.points.length, x = new Float64Array(n), rho = new Float64Array(n), z = new Float64Array(n);
         for (var i = 0; i < n; i++) {
+          x[i] = p.points[i][0];
           rho[i] = p.points[i][1];
           z[i] = p.points[i][2];
           if (z[i] < low) low = z[i];
           if (z[i] > high) high = z[i];
         }
-        var piece = { id: p.id, cls: p['class'], reference: !!p.reference, rho: rho, z: z,
+        var piece = { id: p.id, cls: p['class'], reference: !!p.reference, x: x, rho: rho, z: z,
                       ends: [p.start.kind, p.end.kind] };
         byId[p.id] = piece;
         return piece;
       });
       // The scene: every cone between two neighbouring circles of a piece of the slice, with
-      // what its piece is tinted, 1 for a piece left clear and 2 on for the fill classes in
-      // order. A reference piece is not part of the slice and hides nothing.
-      var r1 = [], dr = [], z1 = [], dz = [], code = [];
+      // what it is tinted, which shade() sets. A reference piece is not part of the slice and
+      // hides nothing.
+      var r1 = [], dr = [], z1 = [], dz = [];
       pieces.forEach(function(p) {
         if (p.reference) return;
-        p.code = turn.tint[p.cls] ? 2 + classes.indexOf(turn.tint[p.cls]) : 1;
+        p.first = r1.length;
+        p.codes = new Uint8Array(p.rho.length - 1);
         for (var i = 0; i + 1 < p.rho.length; i++) {
           r1.push(p.rho[i]); dr.push(p.rho[i + 1] - p.rho[i]);
           z1.push(p.z[i]); dz.push(p.z[i + 1] - p.z[i]);
-          code.push(p.code);
         }
       });
       var S = { pieces: pieces, grids: grids, byId: byId, rings: s.rings, curves: s.curves || [], dots: s.dots || [],
                 axis: s.axis || null, low: low, high: high, zc: (low + high) / 2,
                 r1: new Float64Array(r1), dr: new Float64Array(dr), z1: new Float64Array(z1), dz: new Float64Array(dz),
-                code: new Uint8Array(code) };
+                code: new Uint8Array(r1.length) };
       S.origin = turn.origins[movie ? 0 : k];
       return S;
     });
@@ -148,12 +154,37 @@
     }
     var order = {};
     figure.legend.forEach(function(item, i) { order[item[1]] = i; });
-    return { kind: 'surfaces', figure: figure, turn: turn, box: box, size: size, surfaces: surfaces, order: order, classes: classes,
-             eps: 1e-7 * size, unit: (box[1] - box[0]) / 560, movie: movie, frame: 0 };
+    var M = { kind: 'surfaces', figure: figure, turn: turn, box: box, size: size, surfaces: surfaces, order: order, classes: classes,
+              eps: 1e-7 * size, unit: (box[1] - box[0]) / 560, movie: movie, frame: 0, shade: null };
+    shade(M, null);
+    return M;
   }
 
   // Which frame of a movie draw() draws, the first until another is chosen.
   function frame(M, k) { M.frame = k; }
+
+  /* What each cone of the scene is tinted: 1 for one left clear and 2 on for the fill classes in
+     order. Every cone takes its piece's tint from `turn.tint`, until `s`, one of the view's
+     `shades` or null for none, is shown: then the cones of its piece between the circles at its
+     `from` and `to` take the class shade, and the rest of that piece is left clear, as the
+     generator's Figure.shaded() tints them. */
+  function shade(M, s) {
+    M.shade = s || null;
+    var shaded = 2 + M.classes.indexOf('shade');
+    M.surfaces.forEach(function(S, k) {
+      S.pieces.forEach(function(p) {
+        if (p.reference) return;
+        var tint = M.turn.tint[p.cls] ? 2 + M.classes.indexOf(M.turn.tint[p.cls]) : 1;
+        var on = s && !M.movie && s.surface === k && s.piece === p.id;
+        var lo = on ? Math.min(s.from, s.to) : 0, hi = on ? Math.max(s.from, s.to) : 0;
+        for (var i = 0; i < p.codes.length; i++) {
+          var c = !on ? tint : Math.min(p.x[i], p.x[i + 1]) >= lo && Math.max(p.x[i], p.x[i + 1]) <= hi ? shaded : 1;
+          p.codes[i] = c;
+          S.code[p.first + i] = c;
+        }
+      });
+    });
+  }
 
   /* A grid piece: a quantity drawn as a height over a plane, sampled on a grid and drawn as flat
      triangles, as _tools/README.md defines it. Its nodes in the surface's own frame, the node of
@@ -841,8 +872,8 @@
         for (i = 0; i + 1 < m; i++) {
           for (j = 0; j < n; j++) {
             var a = i * (n + 1) + j, b = a + 1, d = a + n + 1, e = d + 1;
-            triangle(X[a], Y[a], D[a], X[b], Y[b], D[b], X[d], Y[d], D[d], p.code);
-            triangle(X[b], Y[b], D[b], X[e], Y[e], D[e], X[d], Y[d], D[d], p.code);
+            triangle(X[a], Y[a], D[a], X[b], Y[b], D[b], X[d], Y[d], D[d], p.codes[i]);
+            triangle(X[b], Y[b], D[b], X[e], Y[e], D[e], X[d], Y[d], D[d], p.codes[i]);
           }
         }
       });
@@ -1194,7 +1225,7 @@
     return (M.kind === 'cones' ? drawCones : drawSurfaces)(M, azimuth, elevation, quick, sizes);
   }
 
-  var api = { camera: camera, prepare: prepare, draw: draw, frame: frame, dragged: dragged, keyed: keyed, turned: turned,
+  var api = { camera: camera, prepare: prepare, draw: draw, frame: frame, shade: shade, dragged: dragged, keyed: keyed, turned: turned,
               fitting: fitting, hidden: hidden, isolines: isolines, labelBox: labelBox, hull: hull };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.MfsTurn = api;

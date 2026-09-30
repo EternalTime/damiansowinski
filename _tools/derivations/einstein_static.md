@@ -79,6 +79,15 @@ The other three maps are the ones the collection's own conformal diagrams use, a
 The equator of one moment of the hyperspherical chart is $R^2(d\chi^2 + \sin^2\chi\,d\phi^2)$: $\rho = R\sin\chi$, $d\rho/d\chi = R\cos\chi$ and $dz/d\chi = R\sin\chi$, the sphere $z = -R\cos\chi$ of radius $R$, the same at every moment.
 The areal chart's slice, $R^2dr^2/(R^2 - r^2) + r^2d\phi^2$, is checked to be its lower hemisphere, $z = -\sqrt{R^2 - r^2}$.
 
+## Step 9. The regions on the sphere
+
+At the conformal time $\eta$ each spacetime drawn inside the strip covers the values of $\chi$ its map reaches from its own chart, and `conformal.covered()` finds them by bisection in that chart's time at every radius.
+Minkowski space, through $ct \pm r = R\tan((\eta \pm \chi)/2)$, covers $\chi < \pi - |\eta|$, all of the sphere but the antipode, spatial infinity $i^0$, at $\eta = 0$.
+De Sitter space enters by its closed slicing, $X_0 = \ell\sinh(ct/\ell)$ on its hyperboloid, whose global coordinates put $\tan\eta = X_0/\ell$ with $\chi$ unchanged, so it covers the whole sphere for $|\eta| < \pi/2$ and none of it beyond; its static patch alone covers only $|\eta| + \chi < \pi/2$.
+Anti-de Sitter space, through $r = L\tan\chi$ and $ct = L\eta$, covers the hemisphere $\chi < \pi/2$ at every $\eta$.
+These are Hawking and Ellis's regions, and `embedding.py` checks them at $\eta$ from $-3$ to $3$ in steps of $1/2$, while `conformal.py` checks the region each view draws in the strip against the same map.
+The embedding diagram's sphere is the moment $t = 0$, $\eta = 0$, the slice both diagrams draw, and it is shaded there while the conformal diagram shows the region.
+
 ## Checking
 
     <venv>/bin/python _tools/derivations/print_charts.py --metric einstein_static

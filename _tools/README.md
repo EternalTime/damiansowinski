@@ -652,6 +652,7 @@ A view is:
 - `height`, present exactly when a surface of the view has a grid piece: TeX prose saying what the height stands for and at what scale, printed after "height", as "$\theta$, a height of $R$ for $\theta = 4c/R$".
 - `vertical`, optional: a whole number greater than 1, present when every `z` of the view's surfaces is that many times the embedding's height, so the surface stands out where the metric makes it too shallow to read on the page; the first sentence of the caption says "(vertical scale $\times N$)", and a client draws the numbers as they stand. Only Tolman-Bondi's cloud carries it, at 2.
 - `movie`, optional: the surface played as a movie, described below.
+- `shades`, optional: the parts of a piece tinted while a view of the conformal diagram is shown, described under "The shade of a conformal region" below. Only the Einstein static universe's sphere carries them.
 - `space`, optional: `"minkowski"` for a view drawn in three dimensional Minkowski space, as anti-de Sitter's, where every length along a surface is measured with $dX^2 + dY^2 - dZ^2$. A client draws such a surface as any other and tells the reader how its lengths are measured, as the view's `settings` and caption do. A view without it is drawn in flat space.
 
 A surface is:
@@ -791,6 +792,7 @@ At another camera, azimuth $a$ and elevation $e$, with the vectors `right`, `up`
   The normal at a node is the sum of the normals of the triangles that meet there, each pointing up and as long as twice the triangle's area, and the outline is found by marching squares over the grid as `isolines` finds it, a polar grid's first column repeated after its last, so each of its points lies on an edge of the grid.
   What hides a point is found from the triangles that cover its point of the page seen along `toward`, which a ray toward the camera meets after the difference of their depths, the triangles sorted into bins over the page by their boxes; every point of a line on a grid piece is judged by the two points $10^{-5}$ of the drawing above and below it and is hidden only if both are, since above and below are the two sides of a height.
 - Each tinted piece is filled where it is the surface nearest the camera, found on a grid of 420 points across the longer side of the `box`, a grid piece by its triangles.
+  While a shade is shown, the cones of its piece between the circles at its `from` and `to` are tinted `shade` and the rest of that piece is left clear, as `shade()` in `MFS/assets/turn.js` says.
 - A label with `ring` stands beside the end of its circle on its side, $(\pm s\rho, s(z - z_c)\cos e)$ from the surface's centre, with its offset as published; one with `curve` beside its curve's point farthest to its side on the page, and one with `axis` at the top of the axis, each with its offset as published.
 - A stack of ellipses is drawn as the script draws it: the lines it names, each from node to node and round to its first node where it runs round, its outline, and its axis of time, split at every point where a ray toward the camera meets its triangles; a point of a line on it is judged a hundred thousandth of its width straight out from the axis and back, the two sides of a tube or a cone, or above and below on the axis itself.
 - A movie draws one frame at a time, the first until the client chooses another, and every frame turns about one centre, halfway between the lowest and the highest point any frame reaches, at one scale and one move up or down that keep all the frames together within the height and width they had at the figure's camera, so the frames keep one size and place as they change and as the reader turns them.
@@ -865,6 +867,31 @@ Only the slices of the embedding view shown are drawn, so choosing another view 
 A sequence's moments stand side by side in the embedding diagram, so all of them are drawn at once, and so are a movie's, whose frames pass through every one of them, and a stack's, which marks each moment as a ring at its time.
 A moment of a stack is a slice that carries `curve` beside `surface`, the ring the stack marks at that time, and its stamp is taken over that ring's label and time as well.
 The ideal string's cone unrolled is the same moment as the cone about Gott's core, marked on each drawing of the conical chart; Gott's own conformal diagram, a spacetime whose core replaces the apex of the ideal string's cone, marks only its own.
+
+### The shade of a conformal region
+
+The captain asked on 30 September 2026 that choosing Minkowski space, de Sitter space or anti-de Sitter space on the Einstein static universe's conformal diagram shade the part of the embedding diagram's sphere that region covers, in pink and without glow.
+Each region is Hawking and Ellis's, found from the map each conformal view draws with and never written by hand: `conformal.covered()` takes the map from the other spacetime's own chart into the strip, finds by bisection in time the point of each radius at the conformal time $\eta$, and keeps the values of $\chi$ reached.
+Minkowski space enters by its spherical chart through `mink_pq`, anti-de Sitter space by its static global chart through `ads_global_pq`, and de Sitter space by its closed slicing through `ds_closed_pq`, its hyperboloid embedding read backwards, since the static patch covers only the diamond $|\eta| + \chi < \pi/2$ about the pole.
+`embedding.py` checks each region against Hawking and Ellis's, $\chi < \pi - |\eta|$, the whole sphere for $|\eta| < \pi/2$ and $\chi < \pi/2$, at $\eta$ from $-3$ to $3$ in steps of $1/2$, and `conformal.py` checks each region the strip draws against the same map, so the two diagrams agree.
+The conformal diagram has no slider, so the shade is the region at the moment both diagrams draw, $t = 0$, which is $\eta = 0$, and its caption paragraph says so.
+
+An embedding view's `shades` is a list with one entry for each view of the conformal diagram whose region the view shades, in the order of the conformal file's views:
+
+- `view`: the `id` of the view in the spacetime's conformal file that the shade answers; the conformal file carries nothing new, and `build_mfs_data.py` refuses a shade whose view, surface, piece or circles do not exist.
+- `surface` and `piece`: the surface's place in `surfaces` and the `id` of the piece shaded, a profile and never a grid piece.
+- `from` and `to`: the values of the piece's `x` between which the moment is shaded, each written as the double of a point of its profile, so the shade ends on circles of the surface; at $\eta = 0$ Minkowski space shades $0$ to $\pi$, the sphere but its antipode $i^0$, which is one point, de Sitter space $0$ to $\pi$ and anti-de Sitter space $0$ to $\pi/2$.
+- `T`: the conformal time of the moment shaded, the conformal view's own $T$, $0$ for the Einstein static universe.
+- `reach`: the region at other conformal times, each `[T, from, to]` rounded to seven decimals, or `[T, null, null]` where the region covers none of the moment, as de Sitter space beyond $|\eta| = \pi/2$; a client with a slider of time can shade from it, and the tests hold it to Hawking and Ellis's.
+- `layers`: the figure's fills with the shade in place of its piece's tint, at the figure's camera, in the form of the figure's own fill layers; the page paints them in place of the figure's fills and under all of its lines, and a client that draws the surfaces itself can ignore them.
+- `legend`: the shade's legend entry, `["fill", "shade", text]`.
+- `caption`: one TeX paragraph, read after the view's caption while the shade is shown.
+
+While the conformal diagram shows a view that a shade answers, draw the shade and no other: the cones of its piece between `from` and `to` in `--pink-light`, #ff6da2, at 16% on the dark ground, the rest of that piece clear, every other piece as `tint` says, its legend entry first and every fill entry whose class the shade's `layers` do not paint hidden, and its caption paragraph after the view's caption.
+Nothing about the shade glows, and it is shown at once with the view, with no transition.
+A view the conformal diagram shows with no shade answering it leaves the figure as published.
+A turned figure keeps its camera and takes the shade, as `shade()` in `MFS/assets/turn.js` draws it, and `turn_check.cjs` holds every shade drawn at the figure's camera to its published `layers`.
+The print copy prints the page as it was first drawn, with the chart's own conformal view shown and so no shade.
 
 ## Checking the physics
 
