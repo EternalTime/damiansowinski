@@ -2612,7 +2612,7 @@ class StacksAndMovies(unittest.TestCase):
 
     STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5}   # the height of a unit of time
     MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
-              "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$"}
+              "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -2682,7 +2682,7 @@ class StacksAndMovies(unittest.TestCase):
         movies = {name: v["movie"]["variable"] for name, data in self.embedding.items() for v in data["views"] if "movie" in v}
         self.assertEqual(movies, self.MOVIES)
         self.assertEqual({name for name, data in self.embedding.items() for v in data["views"]
-                          if v.get("movie", {}).get("turns") is False}, {"frw"})
+                          if v.get("movie", {}).get("turns") is False}, {"frw", "milne"})
 
     def test_every_movie_runs_through_its_frames_in_order_and_holds_its_moments(self):
         for metric_id in self.MOVIES:

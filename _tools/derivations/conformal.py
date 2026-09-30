@@ -3539,7 +3539,7 @@ def milne(ck, src):
     T = ck.uniform(0.01, 20)
     ck.chart("Milne inertial", ip, inertial, T, T * ck.uniform(0.001, 0.999), lambda T, R: (1, 0))
     chis = np.linspace(0, 8, 41)
-    ck.limit("Milne: t -> 0 at every chi is the event p = q = 0", np.concatenate(hyper(np.full(41, 1e-12), chis)),
+    ck.limit("Milne: t -> 0 at every chi is the event p = q = 0", np.concatenate(hyper(np.full(41, 1e-15), chis)),
              np.zeros(82), 1e-9)
     p, q = hyper(np.linspace(0.1, 10, 41), np.full(41, 40.0))
     ck.limit("Milne: chi -> infinity at fixed t is I+, q = pi/2", q, np.full(41, HALF), 1e-9)
