@@ -23,12 +23,14 @@ malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md and schwarzschild_
 beside this file.
 """
 import argparse
+import itertools
 import json
 import sys
 import time
 from pathlib import Path
 
 import sympy as sp
+from sympy.core.mul import _keep_coeff
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -835,6 +837,217 @@ KP_COSMOLOGICAL_LINE = (
     " + \\left(1 - \\sin\\tau\\right)^2dy^2\\right)")
 
 
+def _factor_powers(expr, factor=True):
+    """(numeric coefficient, {base: exponent}) of a product, factored first unless told not to."""
+    coefficient, powers = sp.Integer(1), {}
+    for f in sp.Mul.make_args(sp.factor(expr) if factor else expr):
+        base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+        if base.is_Number:
+            coefficient *= f
+        else:
+            powers[base] = powers.get(base, 0) + k
+    return coefficient, powers
+
+
+def _merge_pair(powers, one, other, product):
+    """one^p other^q with one * other = product: the common power written as product^k, and
+    the rest left as it is. Returns k, so the caller can carry a sign."""
+    p, q = powers.pop(one, 0), powers.pop(other, 0)
+    k = min(p, q) if p > 0 and q > 0 else max(p, q) if p < 0 and q < 0 else 0
+    for base, e in ((one, p - k), (other, q - k), (product, k)):
+        if e != 0:
+            powers[base] = powers.get(base, 0) + e
+    return k
+
+
+def trig_pairs(expr, pairs):
+    """expr factored, with each (s, c, plus, minus) of pairs, where c^2 = 1 - s^2: every pair
+    (1 + s)(1 - s) written as c^2, every 1 + s or 1 - s left in a denominator cleared by its
+    conjugate, the survivors written as the placeholders plus and minus, and every factor that
+    is a sum written with s^2 as 1 - c^2 wherever that has fewer terms. So the cosmological
+    chart's g_xx prints as its line element writes it, (1 + sin tau)^2 cos sigma/cos tau."""
+    coefficient, powers = _factor_powers(expr)
+    for s, c, plus, minus in pairs:
+        p = q = 0
+        for base in list(powers):
+            if sp.expand(base - (1 + s)) == 0:
+                p += powers.pop(base)
+            elif sp.expand(base - (1 - s)) == 0:
+                q += powers.pop(base)
+            elif sp.expand(base + (1 - s)) == 0:
+                k = powers.pop(base)
+                q += k
+                coefficient *= (-1) ** k
+        k = min(p, q) if p > 0 and q > 0 else max(p, q) if p < 0 and q < 0 else 0
+        p, q, ce = p - k, q - k, 2 * k
+        if p < 0:
+            q, ce, p = q - p, ce + 2 * p, 0
+        if q < 0:
+            p, ce, q = p - q, ce + 2 * q, 0
+        for base, e in ((plus, p), (minus, q), (c, ce)):
+            if e != 0:
+                powers[base] = powers.get(base, 0) + e
+    sines = [s for s, _, _, _ in pairs]
+    for base in list(powers):
+        if not base.is_Add or not base.has(*sines):
+            continue
+        best = base
+        for chosen in itertools.product((False, True), repeat=len(pairs)):
+            alt = base
+            for use, (s, c, _, _) in zip(chosen, pairs):
+                if use and alt.has(s):
+                    alt = sp.expand(sum(k * s ** (m[0] % 2) * (1 - c ** 2) ** (m[0] // 2)
+                                        for m, k in sp.Poly(alt, s).terms()))
+            if len(sp.Add.make_args(alt)) < len(sp.Add.make_args(best)):
+                best = alt
+        if best is not base:
+            e = powers.pop(base)
+            b_coefficient, b_powers = _factor_powers(best)
+            coefficient *= b_coefficient ** e
+            for b, k in b_powers.items():
+                powers[b] = powers.get(b, 0) + k * e
+    return _keep_coeff(coefficient, sp.Mul(*[b ** k for b, k in powers.items()]))
+
+
+class KhanPenroseForms:
+    """The double null chart's values built from the cosmological chart's by the law of
+    transformation, and a pretty printer that prints a computed value as the one it equals.
+
+    With u = sin(alpha) and v = sin(beta), tau = alpha + beta and sigma = alpha - beta, so
+    cos tau = sqrt(1 - u^2) sqrt(1 - v^2) - uv, cos sigma = sqrt(1 - u^2) sqrt(1 - v^2) + uv,
+    sin tau = u sqrt(1 - v^2) + v sqrt(1 - u^2) and sin sigma = u sqrt(1 - v^2) - v sqrt(1 - u^2),
+    and the cosmological values, compact in these, carry over through the Jacobian
+    d(tau, sigma)/d(u, v), whose entries are 1/sqrt(1 - u^2) and +-1/sqrt(1 - v^2), and for the
+    Christoffel symbols the second derivatives u/(1 - u^2)^{3/2} and +-v/(1 - v^2)^{3/2}. Each of
+    those four is a named placeholder, and so are 1 +- sin tau and 1 +- sin sigma. A half power
+    of cos tau comes with one of cos sigma and their product is 1 - u^2 - v^2, and a sum of at
+    most six terms in u, v and the two roots is written out and factored over them.
+
+    The printed value is matched to its form at two points to 1e-25 and read back by the chart
+    exactly, so a form that differs is refused twice. The checker reads sqrt(1 - u^2) as
+    i sqrt(u - 1) sqrt(u + 1), which is -sqrt(1 - u^2) in principal roots, so the value is read
+    in the real roots before it is matched."""
+
+    POINTS = ((sp.Rational(3, 10), sp.Rational(11, 20), sp.Rational(7, 5)),
+              (sp.Rational(-1, 7), sp.Rational(2, 5), sp.Rational(9, 4)))
+
+    def __init__(self, null_symbols, L):
+        u, v = null_symbols[:2]
+        self.u, self.v, self.L = u, v, L
+        Cm, Cp, S, Sp, Tp, Tm, Up, Um = sp.symbols("KPCm KPCp KPS KPSp KPTp KPTm KPUp KPUm", positive=True)
+        self.PA, self.PB, self.PC = sp.symbols("KPA KPB KPC", positive=True)
+        self.atoms = (Cm, Cp, S, Sp, Tp, Tm, Up, Um)
+        a, b = sp.sqrt(1 - u ** 2), sp.sqrt(1 - v ** 2)
+        self.value_of = {Cm: a * b - u * v, Cp: a * b + u * v, S: u * b + v * a, Sp: u * b - v * a,
+                         Tp: 1 + u * b + v * a, Tm: 1 - u * b - v * a, Up: 1 + u * b - v * a, Um: 1 - u * b + v * a,
+                         self.PA: 1 - u ** 2, self.PB: 1 - v ** 2, self.PC: 1 - u ** 2 - v ** 2}
+        roots = "\\sqrt{1 - u^2}\\sqrt{1 - v^2}"
+        self.named = {Cm: roots + " - u\\,v", Cp: roots + " + u\\,v", S: "u\\sqrt{1 - v^2} + v\\sqrt{1 - u^2}",
+                      Sp: "u\\sqrt{1 - v^2} - v\\sqrt{1 - u^2}", Tp: "1 + u\\sqrt{1 - v^2} + v\\sqrt{1 - u^2}",
+                      Tm: "1 - u\\sqrt{1 - v^2} - v\\sqrt{1 - u^2}", Up: "1 + u\\sqrt{1 - v^2} - v\\sqrt{1 - u^2}",
+                      Um: "1 - u\\sqrt{1 - v^2} + v\\sqrt{1 - u^2}", self.PA: "1 - u^2", self.PB: "1 - v^2",
+                      self.PC: "1 - u^2 - v^2"}
+        self.pairs = [(S, Cm, Tp, Tm), (Sp, Cp, Up, Um)]
+        self.real_roots = {sp.sqrt(u - 1): -sp.I * a / sp.sqrt(u + 1), sp.sqrt(v - 1): -sp.I * b / sp.sqrt(v + 1),
+                           sp.sqrt(u ** 2 + v ** 2 - 1): -sp.I * sp.sqrt(1 - u ** 2 - v ** 2)}
+        cosmological = cp.Chart(["\\tau", "\\sigma", "x", "y"], ["L"], KP_COSMOLOGICAL_LINE)
+        tau, sigma = cosmological.symbols[:2]
+        to_atoms = {sp.sin(tau): S, sp.cos(tau): Cm, sp.sin(sigma): Sp, sp.cos(sigma): Cp,
+                    cosmological.reader.parameters["L"]: L}
+        geo = cosmological.geo
+
+        def at(e):
+            return sp.sympify(e).subs(to_atoms)
+        P, Q, n, zero = sp.sqrt(self.PA), sp.sqrt(self.PB), 4, sp.Integer(0)
+        # J[a][b] = d(tau, sigma, x, y)^a/d(u, v, x, y)^b, K its inverse, H the second derivatives.
+        J = [[zero] * n for _ in range(n)]
+        J[0][0], J[0][1], J[1][0], J[1][1], J[2][2], J[3][3] = 1 / P, 1 / Q, 1 / P, -1 / Q, 1, 1
+        K = [[zero] * n for _ in range(n)]
+        K[0][0], K[0][1], K[1][0], K[1][1], K[2][2], K[3][3] = P / 2, P / 2, Q / 2, -Q / 2, 1, 1
+        H = [[[zero] * n for _ in range(n)] for _ in range(n)]
+        H[0][0][0], H[0][1][1], H[1][0][0], H[1][1][1] = u / P ** 3, v / Q ** 3, u / P ** 3, -v / Q ** 3
+        N = range(n)
+        g = [[at(geo.g[i, j]) for j in N] for i in N]
+        gi = [[at(geo.ginv[i, j]) for j in N] for i in N]
+        G = [[[at(c) for c in row] for row in plane] for plane in geo.christoffel_ull()]
+        lower = geo.riemann_llll()
+        upper = geo.raise_indices(lower, 4, (0,))
+        gn = [[sum(J[a][b] * J[d][c] * g[a][d] for a in N for d in N) for c in N] for b in N]
+        gin = [[sum(K[b][a] * K[c][d] * gi[a][d] for a in N for d in N) for c in N] for b in N]
+        Gn = [[[sum(K[a][d] * (sum(G[d][e][f] * J[e][b] * J[f][c] for e in N for f in N) + H[d][b][c]) for d in N)
+                for c in N] for b in N] for a in N]
+        Gl = [[[sum(gn[a][d] * Gn[d][b][c] for d in N) for c in N] for b in N] for a in N]
+        forms = [T[i][j] for T in (gn, gin) for i in N for j in N]
+        # A geodesic equation carries twice each Christoffel symbol with two different indices.
+        forms += [T[i][j][k] * m for T in (Gn, Gl) for i in N for j in N for k in N for m in (1, 2)]
+        down = [[i for i in N if J[i][b] != 0] for b in N]
+        for a, b, c, d in itertools.product(N, repeat=4):
+            forms.append(sum(J[p][a] * J[q][b] * J[r][c] * J[s][d] * at(vm._at(lower, (p, q, r, s)))
+                             for p in down[a] for q in down[b] for r in down[c] for s in down[d]))
+            forms.append(sum(K[a][p] * J[q][b] * J[r][c] * J[s][d] * at(vm._at(upper, (p, q, r, s)))
+                             for p in N if K[a][p] != 0 for q in down[b] for r in down[c] for s in down[d]))
+        forms.append(at(geo.kretschmann()))
+        self.forms = [(self.numbers(f, self.value_of), f) for f in {sp.together(f) for f in forms if f != 0}]
+
+    def numbers(self, e, values):
+        e = e.subs(values)
+        return [complex(sp.N(e.subs({self.u: pu, self.v: pv, self.L: pL}), 40)) for pu, pv, pL in self.POINTS]
+
+    def pretty(self, value):
+        if value == 0:
+            return value
+        want = self.numbers(value, self.real_roots)
+        for got, form in self.forms:
+            for sign in (1, -1):
+                if all(abs(w - sign * m) <= 1e-25 * (1 + abs(w)) for w, m in zip(want, got)):
+                    return self.shape(sign * form)
+        raise AssertionError(f"khan_penrose: no transformed form equals {value}")
+
+    def shape(self, form):
+        Cm, Cp = self.atoms[:2]
+        coefficient, powers = _factor_powers(trig_pairs(form, self.pairs), factor=False)
+        km, kp = powers.get(Cm, 0), powers.get(Cp, 0)
+        if (2 * km) % 2 or (2 * kp) % 2:
+            if not ((2 * km) % 2 and (2 * kp) % 2):
+                raise AssertionError(f"khan_penrose: an unpaired half power of a cosine in {form}")
+            powers[Cm], powers[Cp] = km - sp.Rational(1, 2), kp - sp.Rational(1, 2)
+            powers[self.PC] = powers.get(self.PC, 0) + sp.Rational(1, 2)
+        _merge_pair(powers, Cm, Cp, self.PC)
+        rest = []
+        for base, k in powers.items():
+            written = self.written_out(base) if base.is_Add else None
+            if written is None:
+                rest.append(base ** k)
+                continue
+            w_coefficient, w_powers = written
+            coefficient *= w_coefficient ** k
+            rest += [b ** (e * k) for b, e in w_powers]
+        return _keep_coeff(coefficient, sp.Mul(*rest))
+
+    def written_out(self, base):
+        """A sum in u, v, sqrt(1 - u^2) and sqrt(1 - v^2), factored over them, as (coefficient,
+        [(base, exponent)]), or None where it has more than six terms."""
+        u, v = self.u, self.v
+        a, b = sp.symbols("KPa KPb", positive=True)
+        values = {s: self.value_of[s].subs({sp.sqrt(1 - u ** 2): a, sp.sqrt(1 - v ** 2): b}) for s in self.atoms}
+        values.update({self.PA: a ** 2, self.PB: b ** 2, self.PC: 1 - u ** 2 - v ** 2})
+        e = sp.expand(base.subs(values))
+        e = sp.expand(sum(k * (1 - u ** 2) ** (i // 2) * a ** (i % 2) * (1 - v ** 2) ** (j // 2) * b ** (j % 2)
+                          for (i, j), k in sp.Poly(e, a, b).terms()))
+        if len(sp.Add.make_args(e)) > 6:
+            return None
+        coefficient, powers = _factor_powers(e)
+        for one, other, name in ((u + 1, u - 1, self.PA), (v + 1, v - 1, self.PB)):
+            coefficient *= (-1) ** _merge_pair(powers, one, other, name)
+        for base in list(powers):
+            if sp.expand(base - (u ** 2 + v ** 2 - 1)) == 0:
+                k = powers.pop(base)
+                powers[self.PC] = powers.get(self.PC, 0) + k
+                coefficient *= (-1) ** k
+        back = {a: sp.sqrt(self.PA), b: sp.sqrt(self.PB)}
+        return coefficient, [(base.subs(back), k) for base, k in powers.items()]
+
+
 def khan_penrose():
     """The Khan-Penrose spacetime where both waves have passed, in two charts. The first is
     Khan and Penrose's null chart, in the form J. Frauendiener, C. Stevens and B. Whale give as
@@ -846,44 +1059,13 @@ def khan_penrose():
     Grav. 19, 4273 (2002); before it is written, its metric pulled back through that map is
     checked equal to the null chart's at random points.
 
-    Every radicand of the null chart is positive where the chart is claimed, but each of its
-    irreducible factors, u - 1 among them, is normalised by the checker to the sign that is
-    negative there, so the checker reads sqrt(1 - u^2) as i sqrt(u - 1) sqrt(u + 1). That is
-    a consistent choice of root, and the values it computes are printed back in real radicals:
-    i sqrt(u - 1) sqrt(u + 1) as sqrt(1 - u^2), and the same for v and for 1 - u^2 - v^2."""
+    The cosmological chart's values are printed by trig_pairs, and the null chart's as the
+    transformed cosmological ones by KhanPenroseForms, whose docstring says how."""
     null_coords = ["u", "v", "x", "y"]
     parameters = ["L"]
     probe = vm.Reader(null_coords, parameters, ())
     u, v, L = probe.symbol["u"], probe.symbol["v"], probe.parameters["L"]
-    a, b, c = sp.symbols("KPa KPb KPc", positive=True)
-    PA, PB, PC = sp.Symbol("KPA"), sp.Symbol("KPB"), sp.Symbol("KPC")
-    named = [(PA, 1 - u ** 2, "1 - u^2"), (PB, 1 - v ** 2, "1 - v^2"), (PC, 1 - u ** 2 - v ** 2, "1 - u^2 - v^2")]
-    factors = named_factors(named, [(1 + u, 1 - u, PA), (1 + v, 1 - v, PB)])
-    reduce_to = {a: 1 - u ** 2, b: 1 - v ** 2, c: 1 - u ** 2 - v ** 2}
-
-    def real_radicals(value):
-        value = value.subs({sp.sqrt(u - 1): -sp.I * a / sp.sqrt(u + 1), sp.sqrt(v - 1): -sp.I * b / sp.sqrt(v + 1),
-                            sp.sqrt(u ** 2 + v ** 2 - 1): -sp.I * c})
-        numerator, denominator = sp.fraction(sp.together(sp.expand(value)))
-        gens = (a, b, c)
-
-        def reduced(poly):
-            poly = sp.Poly(sp.expand(poly), *gens)
-            out = 0
-            for (i, j, k), coefficient in poly.terms():
-                out += coefficient * (reduce_to[a] ** (i // 2) * a ** (i % 2) * reduce_to[b] ** (j // 2) * b ** (j % 2)
-                                      * reduce_to[c] ** (k // 2) * c ** (k % 2))
-            return sp.expand(out)
-
-        value = reduced(numerator) / reduced(denominator)
-        if value.has(sp.I):
-            raise AssertionError(f"khan_penrose: a value stays complex in real radicals: {value}")
-        return value
-
-    def pretty(value):
-        out = factors(real_radicals(value))
-        return out.subs({a: sp.sqrt(PA), b: sp.sqrt(PB), c: sp.sqrt(PC)})
-
+    forms = KhanPenroseForms([u, v], L)
     domains = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)"]
     null = {
         "metric_id": "khan_penrose",
@@ -891,10 +1073,14 @@ def khan_penrose():
                    "domains": ["u \\in [0, 1)", "v \\in [0, 1)"] + domains + ["u^2 + v^2 < 1"],
                    "parameters": parameters, "line_element": KP_NULL_LINE},
         "chart_line_element": KP_NULL_LINE,
-        "printer": {"lead": [L, u, v], "named": {p: text for p, _, text in named}},
-        "pretty": pretty,
+        "printer": {"lead": [L, u, v], "named": forms.named},
+        "pretty": forms.pretty,
     }
     cosmological_coords = ["\\tau", "\\sigma", "x", "y"]
+    cr = vm.Reader(cosmological_coords, parameters, ())
+    tau, sigma = cr.symbol["\\tau"], cr.symbol["\\sigma"]
+    Tp, Tm, Up, Um = sp.symbols("KPTp KPTm KPUp KPUm", positive=True)
+    pairs = [(sp.sin(tau), sp.cos(tau), Tp, Tm), (sp.sin(sigma), sp.cos(sigma), Up, Um)]
     cosmological = {
         "metric_id": "khan_penrose",
         "system": {"id": "cosmological", "name": "Cosmological", "coords": cosmological_coords,
@@ -902,7 +1088,9 @@ def khan_penrose():
                    + ["|\\sigma| \\le \\tau"],
                    "parameters": parameters, "line_element": KP_COSMOLOGICAL_LINE},
         "chart_line_element": KP_COSMOLOGICAL_LINE,
-        "printer": {"lead": [vm.Reader(cosmological_coords, parameters, ()).parameters["L"]]},
+        "printer": {"lead": [cr.parameters["L"]], "named": {Tp: "1 + \\sin\\tau", Tm: "1 - \\sin\\tau",
+                                                             Up: "1 + \\sin\\sigma", Um: "1 - \\sin\\sigma"}},
+        "pretty": lambda value: trig_pairs(value, pairs),
         "check": khan_penrose_pullback,
     }
     return [null, cosmological]
