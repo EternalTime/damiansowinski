@@ -503,6 +503,27 @@
     "embedding": "399e851fbe2c9368"
   },
   {
+    "id": "misner",
+    "name": "Misner",
+    "tags": [
+      "flat",
+      "vacuum",
+      "vacuum solution",
+      "closed timelike curves",
+      "causality violation",
+      "chronology horizon",
+      "time machine",
+      "topology",
+      "boost",
+      "Taub-NUT",
+      "exact solution",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "bb5b26e2fb463a2c"
+  },
+  {
     "id": "mixmaster",
     "name": "Mixmaster",
     "tags": [

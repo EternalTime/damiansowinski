@@ -1,5 +1,5 @@
 {
-  "version": "da69f5d257331092",
+  "version": "06206746ea281455",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -3351,6 +3351,155 @@
         "year": "1992",
         "doi": "10.1103/PhysRevD.46.603",
         "url": "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.46.603"
+      }
+    },
+    "misner1967": {
+      "type": "incollection",
+      "fields": {
+        "title": "Taub-NUT space as a counterexample to almost anything",
+        "author": "Misner, Charles W.",
+        "booktitle": "Relativity Theory and Astrophysics I: Relativity and Cosmology",
+        "editor": "Ehlers, J\\\"urgen",
+        "series": "Lectures in Applied Mathematics",
+        "publisher": "American Mathematical Society",
+        "address": "Providence",
+        "pages": "160",
+        "year": "1967",
+        "url": "https://ntrs.nasa.gov/citations/19660007407"
+      }
+    },
+    "hiscock1982": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum vacuum energy in Taub-NUT (Newman-Unti-Tamburino)-type cosmologies",
+        "author": "Hiscock, William A. and Konkowski, Deborah A.",
+        "journal": "Physical Review D",
+        "volume": "26",
+        "pages": "1225--1230",
+        "year": "1982",
+        "doi": "10.1103/PhysRevD.26.1225",
+        "url": "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.26.1225"
+      }
+    },
+    "sushkov1997": {
+      "type": "article",
+      "fields": {
+        "title": "Chronology protection and quantized fields: complex automorphic scalar field in Misner space",
+        "author": "Sushkov, Sergey V.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "14",
+        "pages": "523--533",
+        "year": "1997",
+        "doi": "10.1088/0264-9381/14/2/025",
+        "eprint": "gr-qc/9509056",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9509056"
+      }
+    },
+    "cramer1996": {
+      "type": "article",
+      "fields": {
+        "title": "Stress-energy must be singular on the Misner space horizon even for automorphic fields",
+        "author": "Cramer, Claes R. and Kay, Bernard S.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "pages": "L143--L149",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/12/002",
+        "eprint": "gr-qc/9606027",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9606027"
+      }
+    },
+    "kay1997": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum field theory on spacetimes with a compactly generated Cauchy horizon",
+        "author": "Kay, Bernard S. and Radzikowski, Marek J. and Wald, Robert M.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "183",
+        "pages": "533--556",
+        "year": "1997",
+        "doi": "10.1007/s002200050042",
+        "eprint": "gr-qc/9603012",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9603012"
+      }
+    },
+    "li1998": {
+      "type": "article",
+      "fields": {
+        "title": "Self-consistent vacuum for Misner space and the chronology protection conjecture",
+        "author": "Li, Li-Xin and Gott, J. Richard",
+        "journal": "Physical Review Letters",
+        "volume": "80",
+        "pages": "2980--2983",
+        "year": "1998",
+        "doi": "10.1103/PhysRevLett.80.2980",
+        "eprint": "gr-qc/9711074",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9711074"
+      }
+    },
+    "grant1993": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic strings and chronology protection",
+        "author": "Grant, James D. E.",
+        "journal": "Physical Review D",
+        "volume": "47",
+        "pages": "2388--2394",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.47.2388",
+        "eprint": "hep-th/9209102",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9209102"
+      }
+    },
+    "thorne1993misner": {
+      "type": "incollection",
+      "fields": {
+        "title": "Misner space as a prototype for almost any pathology",
+        "author": "Thorne, Kip S.",
+        "booktitle": "Directions in General Relativity",
+        "editor": "Hu, B. L. and Ryan, M. P. and Vishveshwara, C. V.",
+        "volume": "1",
+        "publisher": "Cambridge University Press",
+        "pages": "333--346",
+        "year": "1993",
+        "doi": "10.1017/CBO9780511628863.029",
+        "url": "https://doi.org/10.1017/CBO9780511628863.029"
+      }
+    },
+    "levanony2011": {
+      "type": "article",
+      "fields": {
+        "title": "Extended time-travelling objects in Misner space",
+        "author": "Levanony, Dana and Ori, Amos",
+        "journal": "Physical Review D",
+        "volume": "83",
+        "pages": "044043",
+        "year": "2011",
+        "doi": "10.1103/PhysRevD.83.044043",
+        "eprint": "1102.0907",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1102.0907"
+      }
+    },
+    "berkooz2004": {
+      "type": "article",
+      "fields": {
+        "title": "Closed strings in Misner space: cosmological production of winding strings",
+        "author": "Berkooz, Micha and Pioline, Boris and Rozali, Moshe",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2004",
+        "number": "08",
+        "pages": "004",
+        "year": "2004",
+        "doi": "10.1088/1475-7516/2004/08/004",
+        "eprint": "hep-th/0405126",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0405126"
       }
     },
     "friedman1993": {

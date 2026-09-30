@@ -1,0 +1,714 @@
+{
+  "id": "misner",
+  "name": "Misner Space",
+  "short_name": "Misner",
+  "description": "Minkowski space identified under a boost, flat everywhere. A contracting universe whose closed direction turns from space into time across a horizon of closed null geodesics, with closed timelike curves through every event beyond it.",
+  "tags": [
+    "flat",
+    "vacuum",
+    "vacuum solution",
+    "closed timelike curves",
+    "causality violation",
+    "chronology horizon",
+    "time machine",
+    "topology",
+    "boost",
+    "Taub-NUT",
+    "exact solution",
+    "Lorentzian",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit.",
+  "history": "Charles Misner showed in 1963 that the empty universe Abraham Taub had found and the space of Ezra Newman, Louis Tamburino, and Theodore Unti are two regions of one vacuum spacetime, joined across a horizon [misner1963]. Its curvature stays finite at that horizon, yet some of its geodesics are incomplete, winding round and round as they approach it, and beyond it closed timelike curves pass through every event [misner1963, hawking1973]. In a lecture on Taub-NUT space as \"a counterexample to almost anything\", written up as a University of Maryland technical report in November 1965, Misner gave a flat spacetime with a horizon of the same kind [misner1967]. The American Mathematical Society printed the lecture in 1967, in the proceedings of its 1965 summer seminar at Cornell University, edited by Jürgen Ehlers [misner1967].¶Misner space is Minkowski space with each event identified with its images under repeated boosts along one direction, $x$ [li1998]. In Misner's coordinates $T$ and $\\psi$, periodic in $\\psi$ with period $\\psi_0$, the boost has rapidity $\\psi_0/2$, and the coordinates cover half the plane of $t$ and $x$: the past light cone of the origin, where $T < 0$, and the wedge $x > c|t|$ beside it, where $T > 0$ [levanony2011]. Where $T < 0$ the circles of constant $T$, $y$, and $z$ are spacelike, and space is a flat universe whose closed direction, of circumference $\\psi_0\\sqrt{-T}$, shrinks as $T$ climbs toward zero. At $T = 0$ the same circles are closed null geodesics, which form the chronology horizon, and where $T > 0$ they are closed timelike curves, one through every event. Every curvature tensor vanishes, so the closed timelike curves come from the identification alone.¶Stephen Hawking and George Ellis took Misner space as an example in their monograph of 1973 [hawking1973]. Its region $T < 0$ extends across the horizon in two inequivalent ways, into the wedge $x > c|t|$ or into its mirror image $x < -c|t|$, each extension flat and Hausdorff [misner1967, hawking1973]. Extending across both horizons at once gives a flat spacetime that is not Hausdorff [hawking1973]. The observers at rest in the covering Minkowski space split into two families at the horizon: those at $x > 0$ cross it at a finite $\\psi$ into the region of closed timelike curves, while those at $x < 0$ wind round the closed direction without end and reach $T = 0$ only as $\\psi \\to \\infty$, after a finite proper time [levanony2011]. In the other extension the two families exchange these roles [levanony2011].¶William Hiscock and Deborah Konkowski put a quantum field on Misner space in 1982, taking it as the flat archetype of the Taub-NUT cosmologies [hiscock1982]. For a conformally coupled scalar field in the Minkowski vacuum summed over its images, they found the renormalized stress energy diverging on the chronology horizon, and argued that in a better approximation to quantum gravity the horizon would give way to a curvature singularity [hiscock1982, li1998]. Sung-Won Kim and Kip Thorne found a divergence of the same kind in 1991 at the horizon of a wormhole whose mouths make closed timelike curves by their relative motion, and conjectured that quantum gravity cuts it off while it is still far too small to matter [kim1991]. Hawking conjectured the opposite in 1992: the expectation value of the stress energy tensor grows large as timelike curves become almost closed, its back reaction prevents them from forming, and the laws of physics do not allow closed timelike curves to appear [hawking1992].¶James Grant showed in 1993 that J. Richard Gott's time machine of two cosmic strings passing each other [gott1991] is, away from the strings, a generalised Misner space, identified under a boost combined with a shift across the direction of the boost [grant1993, li1998]. On it a conformally coupled scalar field has a vacuum stress energy that diverges only weakly at the chronology horizon and more strongly on the polarised hypersurfaces inside it [grant1993]. Grant found the second divergence strong enough to alter the spacetime before quantum gravity comes into play, and took it as support for Hawking's conjecture where the chronology horizon is not compactly generated [grant1993]. Thorne titled his contribution to the symposium held at the University of Maryland in May 1993 for the sixtieth birthdays of Misner and Dieter Brill \"Misner space as a prototype for almost any pathology\" [thorne1993misner].¶Li-Xin Li and Gott found in 1998 a state of the same field on Misner space whose renormalized stress energy vanishes at every event off the chronology horizon [li1998]. It is the Rindler vacuum of the covering space, the vacuum of observers at constant acceleration, summed over its images, and its stress energy vanishes exactly when the boost has rapidity $2\\pi$, that is when $\\psi_0 = 4\\pi$ [li1998]. A particle detector moving along a geodesic in that state registers nothing, and Li and Gott concluded that Misner space in it poses no problem for time travel on its own [li1998]. Sergey Sushkov had found a state of a complex scalar field, twisted by a phase as it goes round the closed direction, whose stress energy stays regular on the horizon for one value of the twist [sushkov1997]. Claes Cramer and Bernard Kay proved in 1996 that for every value of the twist the stress energy of Sushkov's states is singular on the chronology horizon itself, applying to them the conclusions of a theorem of Kay, Marek Radzikowski, and Robert Wald, published in 1997, on quantum fields near a compactly generated Cauchy horizon [cramer1996, kay1997]. Li and Gott agreed that their own stress energy stays formally ill defined on the horizon, a set of measure zero [li1998].¶Dana Levanony and Amos Ori followed rigid bodies into Misner space in 2011 [levanony2011]. In two dimensions a rigid object carried into the region of closed timelike curves collides with itself, while in four dimensions an object moving across the direction of the boost has a wide range of orbits free of any self collision [levanony2011]. In string theory Misner space is the Lorentzian orbifold of the plane by a boost, one of the simplest cosmological singularities strings can propagate on [berkooz2004]. Micha Berkooz, Boris Pioline, and Moshe Rozali found in 2004 two kinds of winding string there, short strings wound round the spacelike circles of the contracting region and long strings wound round the timelike circles beyond it, and found tunnelling between them to be pair production of winding strings, as in the Schwinger effect [berkooz2004].",
+  "references": [
+    "misner1963",
+    "hawking1973",
+    "misner1967",
+    "li1998",
+    "levanony2011",
+    "hiscock1982",
+    "kim1991",
+    "hawking1992",
+    "gott1991",
+    "grant1993",
+    "thorne1993misner",
+    "sushkov1997",
+    "cramer1996",
+    "kay1997",
+    "berkooz2004"
+  ],
+  "coordinates": [
+    {
+      "id": "misner",
+      "name": "Misner",
+      "coords": [
+        "T",
+        "\\psi",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "T \\in (-\\infty, \\infty)",
+        "\\psi \\in [0, \\psi_0)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "T = 0 \\;\\text{(chronology horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\psi_0",
+          "description": "Period of $\\psi$; each event is identified with its images under a boost of rapidity $\\psi_0/2$"
+        }
+      ],
+      "convention": "We use coordinates $(T, \\psi, y, z)$, with $T$ carrying dimensions of area, $\\psi$ dimensionless and periodic with period $\\psi_0$, and $y$ and $z$ lengths. No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -2\\,dT\\,d\\psi - T\\,d\\psi^2 + dy^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "\\psi"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\psi",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\psi",
+            "\\psi"
+          ],
+          "value": "-T"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "T"
+        },
+        {
+          "indices": [
+            "T",
+            "\\psi"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\psi",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\psi",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{T}{2}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "T",
+                  "\\psi"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} + \\dot{T}\\dot{\\psi} + \\dfrac{T}{2}\\dot{\\psi}^2 = 0",
+        "\\ddot{\\psi} - \\dfrac{1}{2}\\dot{\\psi}^2 = 0",
+        "\\ddot{y} = 0",
+        "\\ddot{z} = 0"
+      ]
+    },
+    {
+      "id": "milne",
+      "name": "Milne",
+      "coords": [
+        "t",
+        "\\chi",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, 0)",
+        "\\chi \\in [0, \\psi_0/2)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "t = 0 \\;\\text{(chronology horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\psi_0",
+          "description": "Twice the period of $\\chi$; each event is identified with its images under a boost of rapidity $\\psi_0/2$"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\chi, y, z)$, with $t$ carrying dimensions of time, $\\chi$ dimensionless and periodic with period $\\psi_0/2$, and $y$ and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2 dt^2 + c^2t^2\\,d\\chi^2 + dy^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "c^2 t^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{c^2 t^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "ct"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{ct}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{ct}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-ct"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "ct"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "ct"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + ct\\,\\dot{\\chi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2}{ct}\\dot{t}\\dot{\\chi} = 0",
+        "\\ddot{y} = 0",
+        "\\ddot{z} = 0"
+      ]
+    },
+    {
+      "id": "rindler",
+      "name": "Rindler",
+      "coords": [
+        "\\eta",
+        "\\xi",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "\\eta \\in [0, \\psi_0/2)",
+        "\\xi \\in (0, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "\\xi = 0 \\;\\text{(chronology horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\psi_0",
+          "description": "Twice the period of $\\eta$; each event is identified with its images under a boost of rapidity $\\psi_0/2$"
+        }
+      ],
+      "convention": "We use coordinates $(\\eta, \\xi, y, z)$, with $\\eta$ dimensionless and periodic with period $\\psi_0/2$, and $\\xi$, $y$, and $z$ lengths. No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\xi^2 d\\eta^2 + d\\xi^2 + dy^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\xi^2"
+        },
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\dfrac{1}{\\xi^2}"
+        },
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\xi"
+                ],
+                "value": "\\dfrac{1}{\\xi}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\xi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{1}{\\xi}"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\xi"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\xi"
+                ],
+                "value": "-\\xi"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\xi",
+                  "\\eta"
+                ],
+                "value": "-\\xi"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\xi"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\eta} + \\dfrac{2}{\\xi}\\dot{\\xi}\\dot{\\eta} = 0",
+        "\\ddot{\\xi} + \\xi\\dot{\\eta}^2 = 0",
+        "\\ddot{y} = 0",
+        "\\ddot{z} = 0"
+      ]
+    }
+  ]
+}
