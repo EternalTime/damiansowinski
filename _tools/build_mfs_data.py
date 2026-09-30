@@ -437,6 +437,31 @@ def check_slices(diagrams, conformal, embedding):
                 raise DataError(f"{where} marks the moment {mark.get('label')!r} and draws nothing of it")
 
 
+def check_shades(conformal, embedding):
+    """Every shade of an embedding view answers a view of its spacetime's conformal diagram, by
+    that view's id, and tints a piece of the view's own surfaces between two points of its
+    profile, so the page never shades for a conformal view it cannot show or a circle the surface
+    does not have."""
+    for metric_id, data in (embedding or {}).items():
+        where = f"embedding/{metric_id}.json"
+        views = {v["id"] for v in (conformal or {}).get(metric_id, {}).get("views", [])}
+        for view in data.get("views", []):
+            for shade in view.get("shades", []):
+                at = f"{where}, the shade of the view {view['id']!r} for {shade.get('view')!r}"
+                if shade.get("view") not in views:
+                    raise DataError(f"{at} answers a view that conformal/{metric_id}.json does not draw")
+                surfaces = view["surfaces"]
+                if not 0 <= shade.get("surface", -1) < len(surfaces):
+                    raise DataError(f"{at} names the surface {shade.get('surface')!r}, which the view does not draw")
+                piece = {p["id"]: p for p in surfaces[shade["surface"]]["pieces"]}.get(shade.get("piece"))
+                if piece is None or "points" not in piece:
+                    raise DataError(f"{at} names the piece {shade.get('piece')!r}, which is no profile of its surface")
+                xs = [point[0] for point in piece["points"]]
+                if shade.get("from") not in xs or shade.get("to") not in xs:
+                    raise DataError(f"{at} ends at {shade.get('from')!r} and {shade.get('to')!r}, "
+                                    f"which are not both points of the profile {piece['id']!r}")
+
+
 def build_index(metrics, diagrams=None, conformal=None, embedding=None):
     index = []
     for m in metrics:
@@ -676,6 +701,7 @@ def main(argv=None):
         conformal = load_conformal(metrics)
         embedding = load_embedding(metrics)
         check_slices(diagrams, conformal, embedding)
+        check_shades(conformal, embedding)
         outputs = {
             INDEX_FILE: serialise(build_index(metrics, diagrams, conformal, embedding)),
             REFERENCES_FILE: serialise(references),
