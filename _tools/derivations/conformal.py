@@ -309,11 +309,14 @@ class Plane:
                derivatives, becomes a plain symbol, and every evaluation is handed a
                callable (x0, x1) -> {name: (value, first, second)};
     axis       (coordinate, value) reached as a limit, for a surface where the coordinates
-               degenerate, as the axis of Kerr does at theta = 0.
+               degenerate, as the axis of Kerr does at theta = 0;
+    quotient   a coordinate the metric does not depend on, divided out: the surface's metric is
+               g_ab - g_ak g_bk/g_kk, orthogonal to its orbits, as null_rays.py's rays of no
+               angular momentum take it, and the published inverse's block is its inverse.
     """
 
     def __init__(self, sources, metric_id, system_id, plane, fixed=None, params=None,
-                 functions=None, numeric=(), axis=None):
+                 functions=None, numeric=(), axis=None, quotient=None):
         metric, entry, reader = nr.load(metric_id, system_id)
         sources.note(metric_id, system_id, BASE_FIELDS)
         self.sources, self.metric_id, self.system_id = sources, metric_id, system_id
@@ -335,6 +338,12 @@ class Plane:
         i, j = coords.index(plane[0]), coords.index(plane[1])
         g = nr.published_matrix(R, entry, "metric_components")
         gi = nr.published_matrix(R, entry, "inverse_metric_components")
+        if quotient:
+            k = [R._plain(c) for c in coords].index(quotient)
+            if any(R.symbol[coords[k]] in self.prep(value).free_symbols for value in g):
+                raise SystemExit(f"{metric_id}/{system_id}: the published metric depends on {quotient}, "
+                                 "which the surface divides out")
+            g = sp.Matrix(len(coords), len(coords), lambda a, b: g[a, b] - g[a, k] * g[b, k] / g[k, k])
         self.g = sp.Matrix([[self.prep(g[i, i]), self.prep(g[i, j])], [self.prep(g[j, i]), self.prep(g[j, j])]])
         self.gi = sp.Matrix([[self.prep(gi[i, i]), self.prep(gi[i, j])], [self.prep(gi[j, i]), self.prep(gi[j, j])]])
         self._metric = self.lambdify([self.g[0, 0], self.g[0, 1], self.g[1, 1],
@@ -1464,6 +1473,317 @@ def anti_de_sitter(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the BTZ black hole
+
+class BTZTower(Tower):
+    """A Tower for f = N^2 = r^2/l^2 - M + J^2/(4r^2), which grows as r^2 and so is no Tower's
+    1 plus simple poles: 1/f is a sum of simple poles alone, at every root of the numerator of
+    f, the negative ones included,
+
+        r* = sum_i A_i ln|r/r_i - 1|,      A_i = 1/f'(r_i),
+
+    so that r*(0) = 0 as before and now also r* -> 0 as r -> infinity, since the terms of each
+    pair of roots +-r_i cancel there. Both identities, and dr*/dr = 1/f, are checked in sympy
+    on construction. The horizons are the positive roots, largest first, and every cell is
+    written as a Tower's, in G(u) = arctan exp(-k+ u). The conformal boundary r -> infinity has
+    u = v = t, which puts it on X = q - p = G(-t) + G(t) = pi/2 in cell I, and r = 0 has
+    r* = 0 as well, which puts it on the same vertical line in cell III.
+    """
+
+    def __init__(self, f, r):
+        self.f_sym = sp.simplify(f)
+        poles = sp.solve(sp.numer(sp.together(self.f_sym)), r)
+        self.roots = sorted((x for x in poles if x.is_positive), reverse=True)
+        self.A = [sp.simplify(sp.limit((r - ri) / self.f_sym, r, ri)) for ri in poles]
+        rest = sp.simplify(sp.apart(sp.together(1 / self.f_sym), r, full=True).doit()
+                           - sum(Ai / (r - ri) for Ai, ri in zip(self.A, poles)))
+        assert rest == 0, f"1/f is not a sum of simple poles: the remainder is {rest}"
+        rstar = sum(Ai * sp.log(r / ri - 1) for Ai, ri in zip(self.A, poles))
+        assert sp.simplify(sp.diff(rstar, r) - 1 / self.f_sym) == 0, "dr*/dr is not 1/f"
+        fp = sp.diff(self.f_sym, r)
+        self.kappa = [sp.simplify(sp.Abs(fp.subs(r, ri)) / 2) for ri in self.roots]
+        self.kp = float(self.kappa[0])
+        self.rf = [float(x) for x in self.roots]
+        self.poles = [float(x) for x in poles]
+        self.Ap = [float(a) for a in self.A]
+
+    def rstar(self, r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(divide="ignore"):
+            return sum(A * np.log(np.abs(r / ri - 1)) for A, ri in zip(self.Ap, self.poles))
+
+
+# The cells of the BTZ tower in (p, q). An exterior is the half of a Tower's cell inside the
+# boundary X = pi/2, and the region inside r_- the half inside r = 0, on the same line.
+BTZ_CELL = {
+    "I": [(0, 0), (-HALF, 0), (0, HALF)],
+    "I'": [(0, 0), (0, -HALF), (HALF, 0)],
+    "II": [(0, 0), (HALF, 0), (HALF, HALF), (0, HALF)],
+    "IV": [(0, 0), (0, -HALF), (-HALF, -HALF), (-HALF, 0)],
+    "III": [(0, HALF), (HALF, HALF), (HALF, PI)],
+    "III'": [(HALF, 0), (HALF, HALF), (PI, HALF)],
+}
+
+
+def clip_in_t(v, T0, T1):
+    """Cut every fill and line of a view to T0 <= T <= T1, where a drawing that continues
+    up and down fades out: a fill against the two horizontal lines by Sutherland and Hodgman,
+    since every fill cut so is convex, and a line into the runs that stay between them."""
+    def cross(a, b, T):
+        s = (T - a[1]) / (b[1] - a[1])
+        return [a[0] + s * (b[0] - a[0]), T]
+
+    def polygon(pts):
+        for T, inside in ((T0, lambda P: P[1] >= T0), (T1, lambda P: P[1] <= T1)):
+            out = []
+            for i, b in enumerate(pts):
+                a = pts[i - 1]
+                if inside(b):
+                    if not inside(a):
+                        out.append(cross(a, b, T))
+                    out.append(b)
+                elif inside(a):
+                    out.append(cross(a, b, T))
+            pts = out
+            if not pts:
+                break
+        return pts
+
+    def polyline(pts):
+        runs_, run = [], []
+        for i, b in enumerate(pts):
+            ok = T0 <= b[1] <= T1
+            if i and (ok != (T0 <= pts[i - 1][1] <= T1)):
+                a = pts[i - 1]
+                edge = T0 if min(a[1], b[1]) < T0 else T1
+                run.append(cross(a, b, edge))
+                if not ok:
+                    runs_.append(run)
+                    run = []
+            if ok:
+                run.append(list(b))
+        if run:
+            runs_.append(run)
+        return [r for r in runs_ if len(r) > 1]
+
+    layers = []
+    for layer in v.layers:
+        if layer["kind"] == "fill":
+            pts = polygon([list(x) for x in layer["points"]])
+            if len(pts) > 2:
+                layers.append({**layer, "points": rounded(pts)})
+        elif layer["kind"] in ("line", "zig"):
+            layers += [{**layer, "points": rounded(r)} for r in polyline(layer["points"])]
+        elif T0 <= layer["at"][1] <= T1:
+            layers.append(layer)
+    v.layers = layers
+
+
+def btz(ck, src):
+    """The hole without rotation, J = 0, and the rotating hole, J = 4l/5, at M = 1 and l = 1.
+
+    Without rotation f = r^2 - 1 and r* = (1/2) ln|(r - 1)/(r + 1)|, so Kruskal's U = -exp(-u),
+    V = exp(v) of the exterior, with k = 1, give UV = (1 - r)/(1 + r): -1 on the conformal
+    boundary, 0 on the horizon and 1 at r = 0. With p = arctan U and q = arctan V, tan(q - p) =
+    (V - U)/(1 + UV) puts the boundary on X = +-pi/2 and tan(p + q) = (U + V)/(1 - UV) puts r = 0
+    on T = +-pi/2: the square of Banados, Henneaux, Teitelboim and Zanelli. The ingoing chart's
+    V = exp(v), U = (1 - r)/((1 + r)V) is one formula for every r > 0, and the outgoing chart
+    is its time reverse.
+
+    The rotating hole is drawn on its plane of t and r with phi divided out, the metric
+    -N^2 dt^2 + dr^2/N^2 its rays of no angular momentum follow, with horizons at r_+^2 = 4/5
+    and r_-^2 = 1/5 and k_-/k_+ = r_+/r_- = 2. Its cells are a Tower's, cut by the boundary and
+    by r = 0 on the vertical lines X = +-pi/2, and they repeat up the strip between them.
+    r = 0 is where the circles of phi shrink to nothing, and the curvature is finite there.
+    """
+    J0, JR = {"ell": 1, "M": 1, "J": 0}, {"ell": 1, "M": 1, "J": "4/5"}
+    st = Plane(src, "btz", "stationary", ("t", "r"), {"phi": "0"}, J0)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = BTZTower(st.gi[1, 1], st.x1)
+    ck.limit("BTZ, J = 0: the horizon is the root of the published g^rr, at r_+ = l", T.rf, [1.0], 1e-12)
+    ck.chart("BTZ stationary J = 0, exterior", st, lambda t, r: T.pq("I", t, r),
+             ck.uniform(-15, 15), ck.uniform(1.001, 40), lambda t, r: (1, 0))
+    ck.chart("BTZ stationary J = 0, black hole", st, lambda t, r: T.pq("II", t, r),
+             ck.uniform(-15, 15), ck.uniform(0.01, 0.999), lambda t, r: (0, -1))
+    ck.chart("BTZ stationary J = 0, white hole", st, lambda t, r: T.pq("IV", t, r),
+             ck.uniform(-15, 15), ck.uniform(0.01, 0.999), lambda t, r: (0, 1))
+    ck.chart("BTZ stationary J = 0, other exterior", st, lambda t, r: T.pq("I'", t, r),
+             ck.uniform(-15, 15), ck.uniform(1.001, 40), lambda t, r: (-1, 0))
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan((1 - r) / (1 + r) * np.exp(-w)), atan_exp(w)
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        return -atan_exp(-u), np.arctan((r - 1) / (r + 1) * np.exp(u))
+    ein = Plane(src, "btz", "eddington_finkelstein_ingoing", ("v", "r"), {"tildephi": "0"}, J0)
+    ck.chart("BTZ ingoing Eddington-Finkelstein J = 0", ein, ingoing,
+             ck.uniform(-15, 15), ck.uniform(0.01, 40), lambda w, r: (1, -60))
+    eout = Plane(src, "btz", "eddington_finkelstein_outgoing", ("u", "r"), {"tildephi": "0"}, J0)
+    ck.chart("BTZ outgoing Eddington-Finkelstein J = 0", eout, outgoing,
+             ck.uniform(-15, 15), ck.uniform(0.01, 40), lambda u, r: (1, 60))
+
+    p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit("BTZ, J = 0: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = T.pq("I", np.array([-5.0, 0, 5]), np.full(3, 1e9))
+    ck.limit("BTZ, J = 0: r -> infinity lands on the boundary X = pi/2", q - p, [HALF] * 3, 1e-8)
+    p, q = T.pq("I", np.array([3.0]), np.array([1 + 1e-12]))
+    ck.limit("BTZ, J = 0: r -> r_+ at fixed t lands on the bifurcation circle", point(p[0], q[0]), [0, 0], 1e-4)
+    rr = np.linspace(0.05, 5, 50)
+    for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
+        pp, qq = T.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
+        ck.limit(f"BTZ, J = 0, {cell}: tan p tan q is Kruskal's UV = (1 - r)/(1 + r)",
+                 np.tan(pp) * np.tan(qq), (1 - rr[sel]) / (1 + rr[sel]), 1e-8)
+    ck.limit("BTZ, J = 0: the ingoing and stationary coordinates put one event at one point",
+             ingoing(2.0 + T.rstar(3.0), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.finite("BTZ, J = 0: the Kretschmann scalar is finite at r = 0 and at r_+",
+              st.kretschmann(np.zeros(3), np.array([1e-9, 1.0, 5.0])))
+
+    rot = Plane(src, "btz", "stationary", ("t", "r"), None, JR, quotient="phi")
+    assert rot.g[0, 1] == 0 and sp.simplify(rot.g[0, 0] * rot.g[1, 1] + 1) == 0
+    R = BTZTower(rot.gi[1, 1], rot.x1)
+    rp, rm = R.rf
+    tower_checks(ck, "BTZ stationary J = 4l/5", rot, R, 0.01, 15)
+    ck.limit("BTZ, J = 4l/5: the horizons are the roots of the published g^rr",
+             [rp * rp, rm * rm], [0.8, 0.2], 1e-12)
+    ck.limit("BTZ, J = 4l/5: k_-/k_+ = r_+/r_- = 2", float(R.kappa[1] / R.kappa[0]), 2.0, 1e-12)
+    p, q = R.pq("III", np.array([-6.0, 0, 6]), np.full(3, 1e-12))
+    ck.limit("BTZ, J = 4l/5: r -> 0 lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-9)
+    p, q = R.pq("I", np.array([-6.0, 0, 6]), np.full(3, 1e9))
+    ck.limit("BTZ, J = 4l/5: r -> infinity lands on the boundary X = pi/2", q - p, [HALF] * 3, 1e-8)
+    ck.finite("BTZ, J = 4l/5: the Kretschmann scalar is finite at r = 0 and at both horizons",
+              rot.kretschmann(np.zeros(3), np.array([1e-9, rm, rp])))
+
+    views = []
+    box = [-HALF - 0.55, HALF + 0.55, -HALF - 0.25, HALF + 0.25]
+    square = [[HALF, -HALF], [HALF, HALF], [-HALF, HALF], [-HALF, -HALF]]
+    R_OUT, R_IN, TS = (1.25, 1.5, 2, 3), (0.25, 0.5, 0.75), (-2, -1, 0, 1, 2)
+
+    def edges(v):
+        v.line("boundary", [[[HALF, -HALF], [HALF, HALF]], [[-HALF, -HALF], [-HALF, HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([HALF, 0.9], "$r \\to \\infty$", "l", "small", dx=6)
+        v.label_xt([-HALF, 0.9], "$r \\to \\infty$", "r", "small", dx=-6)
+        v.label_xt([-Q4, Q4], "$r_+$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([0.3, -0.62], "exterior", cls="region")
+        v.label_xt([-0.3, 0.62], "exterior", cls="region")
+        v.label_xt([0, 1.2], "black hole", cls="region")
+        v.label_xt([0, -1.2], "white hole", cls="region")
+        v.legend("horizon", "the horizon $r_+ = \\sqrt{M}\\,\\ell$")
+        v.legend("boundary", "the conformal boundary, timelike")
+        v.legend("singular", "$r = 0$, a singularity in the causal structure, where the curvature is finite")
+
+    t = spread(-np.inf, np.inf, 500, 9)
+    v = View("static", "$J = 0$", box, "stationary")
+    v.fill("region", square)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [HALF, HALF]])
+    for r in R_OUT:
+        v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+    rr = spread(1, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+    edges(v)
+    for r, text in ((1.25, "$1.25\\,r_+$"), (2, "$2\\,r_+$")):
+        label_on(v, T.pq("I", 0.0, r), text)
+    v.legend("cover", "the region that $t$ and $r > r_+$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("t", "$ct$ constant, in units of $\\ell$")
+    views.append(v)
+
+    v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
+    v.fill("region", square)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [HALF, HALF], [-HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    rr = spread(0, np.inf, 600, 14)
+    for w in (-3, -2, -1, 0, 1, 2, 3):
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
+    edges(v)
+    v.legend("cover", "the region that $v$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$v$ constant, an ingoing light ray")
+    views.append(v)
+
+    v = View("outgoing", "Outgoing Eddington-Finkelstein", box, "eddington_finkelstein_outgoing")
+    v.fill("region", square)
+    v.fill("cover", [[0, 0], [HALF, HALF], [HALF, -HALF], [-HALF, -HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *outgoing(t, np.full_like(t, r)))
+    for w in (-3, -2, -1, 0, 1, 2, 3):
+        v.curve("null", *outgoing(np.full_like(rr, w), rr))
+    edges(v)
+    v.legend("cover", "the region that $u$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$u$ constant, an outgoing light ray")
+    views.append(v)
+    for view in views:
+        view.set(settings="$M = 1$ and $J = 0$, so that $r_+ = \\ell$.")
+
+    # The rotating hole: one period of the strip, from the exteriors at T = 0 to those at 2 pi.
+    T0, T1 = -0.45, 2 * PI + 0.45
+    v = View("rotating", "$J = 4\\ell/5$", [-HALF - 0.55, HALF + 0.55, T0, T1], "stationary")
+    cells = [("I", False), ("I'", False), ("II", False), ("III", False), ("III'", False),
+             ("II", True), ("I", True), ("I'", True), ("IV", False), ("IV", True)]
+    for cell, up in cells:
+        v.fill("region", [point(*reflect(p, q, up)) for p, q in BTZ_CELL[cell]])
+    for cell, up in (("I", False), ("II", False), ("III", False)):
+        v.fill("cover", [point(*reflect(p, q, up)) for p, q in BTZ_CELL[cell]])
+    radii = {"I": (1.25, 2, 4), "II": (0.55, 0.7, 0.8), "III": (0.15, 0.3)}
+    lo_hi = {"I": (rp, np.inf), "II": (rm, rp), "III": (0, rm)}
+    times = [c / R.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    for cell, up in cells:
+        key = cell.rstrip("'")
+        if key == "IV":
+            key = "II"
+        for r in radii[key]:
+            v.curve("r", *reflect(*R.pq(cell, t, np.full_like(t, r)), up))
+        rr = spread(*lo_hi[key], 600, 16)
+        for tt in times:
+            v.curve("t", *reflect(*R.pq(cell, np.full_like(rr, tt), rr), up))
+    for base, top in ((0, False), (2 * PI, True)):
+        for sx in (1, -1):
+            v.segment("boundary", reflect(*((0, HALF) if sx > 0 else (HALF, 0)), top),
+                      reflect(*((-HALF, 0) if sx > 0 else (0, -HALF)), top))
+    for sx in (1, -1):
+        a, b = ((0, HALF), (HALF, PI)) if sx > 0 else ((HALF, 0), (PI, HALF))
+        v.segment("singular", a, b, zig=True)
+    for up in (False, True):
+        for a, b in (((0, 0), (HALF, 0)), ((HALF, 0), (HALF, HALF)), ((HALF, HALF), (0, HALF)), ((0, HALF), (0, 0)),
+                     ((0, 0), (-HALF, 0)), ((0, 0), (0, -HALF))):
+            v.segment("horizon", reflect(*a, up), reflect(*b, up))
+    for base in (0, 2 * PI):
+        for sx in (1, -1):
+            v.label_xt([sx * 0.33, base], "exterior", cls="region")
+    v.label_xt([0, HALF + 0.1], "black hole", cls="region")
+    v.label_xt([0, 1.5 * PI - 0.1], "white hole", cls="region")
+    for sx in (1, -1):
+        v.label_xt([sx * 0.22, PI], "$r < r_-$", cls="region")
+        v.label_xt([sx * HALF, PI], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
+        for base in (0, 2 * PI):
+            v.label_xt([sx * HALF, base + (0.25 if base == 0 else -0.25)], "$r \\to \\infty$",
+                       "l" if sx > 0 else "r", "small", dx=6 * sx)
+    v.label_xt([Q4, Q4], "$r_+$", "tl", "small", dx=5, dy=1)
+    v.label_xt([Q4, 3 * Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
+    clip_in_t(v, T0, T1)
+    v.set(fade={"top": 0.9, "bottom": 0.9},
+          settings="$M = 1$ and $J = 4\\ell/5$, so that $r_+ = 2\\ell/\\sqrt{5}$, $r_- = \\ell/\\sqrt{5}$, "
+                   "and $\\kappa_-/\\kappa_+ = 2$.")
+    v.legend("cover", "one exterior, one region between the horizons and one inside $r_-$, which $t$ and "
+                      "$r > 0$ cover")
+    v.legend("r", f"$r$ constant: {listed(radii['I'])} outside, {listed(radii['II'])} between, "
+                  f"{listed(radii['III'])} inside $r_-$, in units of $\\ell$")
+    v.legend("t", "$t$ constant")
+    v.legend("horizon", "the horizons $r_+ = 2\\ell/\\sqrt{5}$ and $r_- = \\ell/\\sqrt{5}$")
+    v.legend("boundary", "the conformal boundary, timelike")
+    v.legend("singular", "$r = 0$, a singularity in the causal structure, where the curvature is finite")
+    views.append(v)
+    return views
+
+
 def bertotti_robinson(ck, src):
     """AdS2 of radius b times a sphere of radius b: the strip of AdS2 is the whole diagram.
     Both coordinate systems are the Poincare patch of it, the throat's r becoming the
@@ -2512,7 +2832,7 @@ DRAWN = {
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
-    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static,
+    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -2585,6 +2905,52 @@ CAPTIONS = {
         "$U = -e^{-u/2r_s}$ and $V = (r/r_s - 1)e^{r/r_s}/(-U)$ they cover the exterior and the "
         "white hole, and their lines of constant $u$ are outgoing light rays, which leave $r = 0$ "
         "and cross the horizon outward.",
+    ],
+    ("btz", "static"): [
+        "The black hole without rotation ($M = 1$, $J = 0$), maximally extended, each point in the "
+        "diagram a circle of circumference $2\\pi r$. With $r_* = \\frac{\\ell}{2\\sqrt{M}}\\ln|(r - r_+)/(r + "
+        "r_+)|$, which vanishes as $r \\to \\infty$, the Kruskal coordinates $U = -e^{-\\kappa u}$ and $V = "
+        "e^{\\kappa v}$, with $u, v = ct \\mp r_*$ and $\\kappa = \\sqrt{M}/\\ell$, make the metric regular "
+        "through $r_+$, where $UV = (r_+ - r)/(r_+ + r)$ vanishes. With $p = \\arctan U$ and $q = \\arctan V$ "
+        "the conformal boundary, $UV = -1$, lies on the vertical lines $X = \\pm\\pi/2$, and $r = 0$, where "
+        "$UV = 1$, on the horizontal lines $T = \\pm\\pi/2$: the square of Máximo Bañados, Marc Henneaux, "
+        "Claudio Teitelboim, and Jorge Zanelli.",
+        "The coordinates $t$ and $r > r_+$ cover the right exterior alone. The horizon is the pair of null "
+        "lines $U = 0$ and $V = 0$, crossing at the bifurcation circle. The black hole above it ends at $r = "
+        "0$ on $T = \\pi/2$ and the white hole below it begins at $r = 0$ on $T = -\\pi/2$, where the circles "
+        "shrink to zero length while the curvature stays $R = -6/\\ell^2$; continued past $r = 0$, the "
+        "circles would be closed timelike curves.",
+    ],
+    ("btz", "ingoing"): [
+        "The black hole without rotation ($M = 1$, $J = 0$) with the ingoing Eddington-Finkelstein "
+        "coordinates $v$ and $r$ on it. From $V = e^{\\kappa v}$ and $U = (r_+ - r)/((r_+ + r)V)$, one "
+        "formula for every $r > 0$, they cover the exterior and the black hole together, and their lines of "
+        "constant $v$ are ingoing light rays, which cross the horizon at 45° and end at $r = 0$.",
+    ],
+    ("btz", "outgoing"): [
+        "The black hole without rotation ($M = 1$, $J = 0$) with the outgoing Eddington-Finkelstein "
+        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa u}$ and "
+        "$V = (r - r_+)/((r + r_+)(-U))$ they cover the exterior and the white hole, and their lines of "
+        "constant $u$ are outgoing light rays, which leave $r = 0$ and cross the horizon outward.",
+    ],
+    ("btz", "rotating"): [
+        "The rotating black hole ($M = 1$, $J = 4\\ell/5$), maximally extended on its plane of $t$ and $r$ "
+        "with $\\phi$ divided out, $-N^2c^2dt^2 + dr^2/N^2$, each point in the diagram a circle of "
+        "circumference $2\\pi r$. The extension is a tower of regions that repeats up and down without end. "
+        "Its tortoise coordinate is $r_* = \\frac{1}{2\\kappa_+}\\ln\\left|\\frac{r - r_+}{r + r_+}\\right| - "
+        "\\frac{1}{2\\kappa_-}\\ln\\left|\\frac{r - r_-}{r + r_-}\\right|$ with $\\kappa_\\pm = (r_+^2 - "
+        "r_-^2)/(\\ell^2r_\\pm)$, which vanishes both at $r = 0$ and as $r \\to \\infty$.",
+        "We place every region by the Kruskal coordinate of the outer horizon, $p = \\pm\\arctan "
+        "e^{-\\kappa_+u}$ and $q = \\pm\\arctan e^{\\kappa_+v}$ with $u, v = ct \\mp r_*$, and the regions above "
+        "the inner horizon are the reflection $(p, q) \\to (\\pi - q, \\pi - p)$ of those below. Since $r_*$ "
+        "vanishes at both ends, the conformal boundary beside each exterior and $r = 0$ beside each region "
+        "inside $r_-$ lie on the same vertical lines $X = \\pm\\pi/2$, and both are timelike. Across $r_-$ "
+        "the map is continuous and cannot also be smooth, because the late light rays that reach the "
+        "boundary are the rays that pile up at the inner horizon, and one function of the ray has to serve "
+        "both.",
+        "The coordinates $t$ and $r > 0$ cover one region of each kind: an exterior, the black hole between "
+        "the horizons, and a region inside $r_-$. At $r = 0$ the circles shrink to zero length while the "
+        "curvature stays $R = -6/\\ell^2$, and continued past it they would be closed timelike curves.",
     ],
     ("rn_metric", "tower"): [
         "The Reissner-Nordström spacetime, maximally extended, each point in the diagram a "
