@@ -440,6 +440,28 @@
     "embedding": "21f2586270043652"
   },
   {
+    "id": "khan_penrose",
+    "name": "Khan-Penrose",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "plane wave",
+      "gravitational wave",
+      "colliding plane waves",
+      "impulsive wave",
+      "curvature singularity",
+      "fold singularity",
+      "nonlinear",
+      "exact solution",
+      "time-dependent",
+      "dynamical",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "a93a6e0c780022f9"
+  },
+  {
     "id": "krasnikov",
     "name": "Krasnikov",
     "tags": [
