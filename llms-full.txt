@@ -644,6 +644,19 @@ The conical spacetime around an infinitely thin, straight topological defect, lo
 - chart Conical Exterior: coordinates $(t, r, \phi, z)$, $$ds^2 = -c^2 dt^2 + dr^2 + \left(1 - \dfrac{4G\mu}{c^2}\right)^2 r^2 d\phi^2 + dz^2$$
 - chart Gott Interior: coordinates $(t, \chi, \phi, z)$, $$ds^2 = -c^2 dt^2 + \ell^2 d\chi^2 + \ell^2\sin^2\chi\, d\phi^2 + dz^2$$
 
+### Vilenkin-Ipser-Sikivie Domain Wall
+
+The gravitational field of an infinitely thin domain wall, whose tension equals its surface energy density, found by Alexander Vilenkin in 1983 and by James Ipser and Pierre Sikivie in 1984. Spacetime is flat on either side of the wall, the wall repels test bodies, and at each moment it is a sphere with both sides inside it, so space is closed.
+
+- id: `domain_wall`
+- tags: domain wall, topological defect, repulsive gravity, thin shell, locally flat, planar symmetry, reflection symmetry, de Sitter world volume, event horizon, closed universe, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json
+- chart Planar: coordinates $(t, x, y, z)$, $$ds^2 = \left(1 - k|z|\right)^2\left(-c^2dt^2 + e^{2kct}\left(dx^2 + dy^2\right)\right) + dz^2$$
+- chart Global: coordinates $(t, z, \theta, \phi)$, $$ds^2 = \left(1 - k|z|\right)^2\left(-c^2dt^2 + \dfrac{\cosh^2(kct)}{k^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right) + dz^2$$
+- chart Conformal: coordinates $(t, w, \theta, \phi)$, $$ds^2 = e^{-2k|w|}\left(-c^2dt^2 + dw^2 + \dfrac{\cosh^2(kct)}{k^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Inertial: coordinates $(T, R, \theta, \phi)$, $$ds^2 = -c^2dT^2 + dR^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ## Code
 
 URL: https://damiansowinski.com/code.html
