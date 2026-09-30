@@ -536,6 +536,10 @@ FLAT = {
     ("khan_penrose", "double_null", "plane"): lambda: [
         Mark(m, points=[(math.sin(m.time / 2), math.sin(m.time / 2))]) for m in moments("khan_penrose")],
     ("khan_penrose", "cosmological", "plane"): lambda: [Mark(m, points=[(m.time, 0.0)]) for m in moments("khan_penrose")],
+    # Melvin's plane z = 0 at t = 0 and Ernst's equator at t = 0, each on its own chart's plane.
+    ("melvin", "cylindrical", "radial"): lambda: one(
+        "melvin", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="universe"),
+    ("melvin", "ernst", "radial"): lambda: one("melvin", lambda m: along(0.0, *m.reach("ernst", "r")), view_id="ernst"),
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("malament_hogarth", "cartesian", "tx"): lambda: one("malament_hogarth", lambda m: across(m.time, *m.reach("cartesian", "x"))),

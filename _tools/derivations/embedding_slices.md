@@ -173,6 +173,14 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `cartesian`, the triangle, each point a sphere: four curves.
   With $p, q = \arctan(ct \mp r)$ a moment of $t \ne 0$ bows from the axis toward $i^0$, and the moment $ct = 0$ is the line $T = 0$ from $r = 0.03$ to $1.5$, ending short of the removed event on the axis.
 
+### Melvin
+
+- The embedding has two views, each one moment: `universe`, Melvin's plane $z = 0$ at $t = 0$ from the axis to $\rho = 4/B$, and `ernst`, the equator of Ernst's hole at $t = 0$ from the throat $r = r_s$ to $5\,r_s$ on both sheets.
+- `cylindrical/radial`, the plane of $t$ and $\rho$: the line $ct = 0$ from $\rho = 0$ to $4/B$, the edge of the box.
+- `ernst/radial`, the equator's plane of $t$ and $r$: the line $ct = 0$ from $r = r_s$ to $5\,r_s$; the other sheet lies in the other exterior, which the chart does not cover.
+- `cylindrical`, the half diamond: the curve $p, q = \arctan(\mp B\rho)$ from the axis to $\rho = 4/B$.
+- `ernst`, the hexagon: the line $T = 0$ through the bifurcation point, from $r = 5\,r_s$ in one exterior to $5\,r_s$ in the other.
+
 ### Milne
 
 - The embedding is the equator of the comoving hyperbolic chart at $ct = 0.5$, $1$, $2$ and $3$, each out to $\chi = \operatorname{arcsinh}(4/ct)$, where it is $4$ from the axis, in any length $\ell$; the reference cone is no part of any moment.

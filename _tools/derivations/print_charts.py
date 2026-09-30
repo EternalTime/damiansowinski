@@ -2,7 +2,7 @@
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
-khan_penrose, global_monopole, domain_wall and majumdar_papapetrou, and Godel's cylindrical chart.
+khan_penrose, global_monopole, domain_wall, majumdar_papapetrou and melvin, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -1571,8 +1571,8 @@ def melvin(system):
     Ernst's Schwarzschild black hole inside it in Schwarzschild's coordinates, with
     Lambda = 1 + B^2 r^2 sin^2(theta)/4. Every value is printed around 4 + B^2 rho^2, or
     4 + B^2 r^2 sin^2(theta), which is 4 Lambda, and 4 - B^2 rho^2, which vanishes on the widest circle,
-    and the metric and its inverse as the line element writes them. melvin.md beside this file
-    checks both against the Einstein-Maxwell equations with A_phi = B rho^2/(2 Lambda)."""
+    and the metric and its inverse as the line element writes them. melvin_maxwell checks both
+    against the Einstein-Maxwell equations, and melvin.md beside this file is the derivation."""
     if system == "cylindrical":
         coords, parameters = ["t", "\\rho", "\\phi", "z"], ["B"]
         L = "\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)"
@@ -1625,7 +1625,35 @@ def melvin(system):
         "pretty": named_factors(named, merges),
         "components": {"metric_components": metric, "inverse_metric_components": inverse},
         **({"geodesics": MELVIN_GEODESICS} if system == "cylindrical" else {}),
+        "check": melvin_maxwell,
     }
+
+
+def melvin_maxwell(chart):
+    """G_mu nu = 2(F_mu a F_nu^a - g_mu nu F^2/4) with F = dA and A_phi = 2B s^2/(4 + B^2 s^2), s the
+    distance from the axis, rho or r sin(theta), in every slot, and d(sqrt(-g) F^mu nu) = 0: Einstein's
+    equations with Maxwell's field in units where B is an inverse length, and Maxwell's equations."""
+    x = chart.symbols
+    B = chart.reader.parameters["B"]
+    s = x[1] if chart.coords_tex[1] == "\\rho" else x[1] * sp.sin(x[2])
+    A = [0, 0, 0, 0]
+    A[chart.coords_tex.index("\\phi")] = 2 * B * s ** 2 / (4 + B ** 2 * s ** 2)
+    g, ginv = chart.geo.g, chart.geo.ginv
+    F = sp.Matrix(4, 4, lambda a, b: sp.diff(A[b], x[a]) - sp.diff(A[a], x[b]))
+    Fup = ginv * F * ginv
+    F2 = sum(F[a, b] * Fup[a, b] for a in range(4) for b in range(4))
+    G = chart.geo.einstein_ll()
+    for a in range(4):
+        for b in range(a, 4):
+            T = 2 * (sum(F[a, c] * F[b, d] * ginv[c, d] for c in range(4) for d in range(4)) - g[a, b] * F2 / 4)
+            if vm.norm(vm._at(G, (a, b)) - T) != 0:
+                raise AssertionError(f"melvin: the Einstein tensor misses Maxwell's stress in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    # sqrt(-g) is rho Lambda^2 or r^2 sin(theta) Lambda^2, each factor positive on the chart.
+    root = sp.powdenest(sp.sqrt(sp.factor(-g.det())), force=True)
+    for b in range(4):
+        if sp.simplify(sum(sp.diff(root * Fup[a, b], x[a]) for a in range(4))) != 0:
+            raise AssertionError(f"melvin: Maxwell's equations fail along {chart.coords_tex[b]}")
 
 
 # The cylindrical geodesics with the three terms that share 2B^2 rho/(4 + B^2 rho^2) gathered.
