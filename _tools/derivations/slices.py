@@ -291,6 +291,13 @@ def _ds_flat():
     return [Mark(m, [np.column_stack([-0.5 * np.log1p(x * x), x])])]
 
 
+def _es_areal(m):
+    """The Einstein static universe's moment in its areal chart, R = 1: r = sin chi over the
+    near hemisphere the embedding reaches, chi from 0 to pi/2."""
+    lo, hi = m.reach("hyperspherical", "\\chi")
+    return along(0.0, math.sin(lo), math.sin(min(hi, math.pi / 2)))
+
+
 def _ads_poincare():
     """Anti-de Sitter's static moment t = 0 is the Poincare moment t = 0; on the plane y = 0,
     z = L its static radius is r^2 = x^2 + x^4/4L^2, so the embedding's reach r <= 4L is
@@ -319,6 +326,11 @@ FLAT = {
     ("de_sitter", "static_spherical", "radial"): lambda: one("de_sitter", lambda m: along(0.0, *m.reach("static_spherical", "r"))),
     ("de_sitter", "static_spherical", "through"): lambda: one("de_sitter", lambda m: along(0.0, *m.reach("static_spherical", "r"))),
     ("de_sitter", "flat_slicing", "tx"): _ds_flat,
+    # The moment t = 0 runs from the pole to the antipode, chi from 0 to pi, and the areal chart
+    # carries its near hemisphere, r = R sin chi from 0 to R.
+    ("einstein_static", "hyperspherical", "radial"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
+    ("einstein_static", "hyperspherical", "through"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
+    ("einstein_static", "static_areal", "radial"): lambda: one("einstein_static", _es_areal),
     ("anti_de_sitter", "static_global", "radial"): lambda: one("anti_de_sitter", lambda m: along(0.0, *m.reach("static_global", "r"))),
     ("anti_de_sitter", "static_global", "through"): lambda: one("anti_de_sitter", lambda m: along(0.0, *m.reach("static_global", "r"))),
     ("anti_de_sitter", "poincare", "tx"): _ads_poincare,

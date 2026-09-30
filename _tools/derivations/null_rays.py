@@ -367,6 +367,13 @@ DIAGRAMS = [
             EQUATOR, mirror=True, orient="outgoing", families=SIDEWAYS, cones=(4, 8), areal=True),
     Diagram("de_sitter", "flat_slicing", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -1, 3),
             "$x\\;[c/H]$", "$ct\\;[c/H]$", {"H": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    Diagram("einstein_static", "hyperspherical", "radial", "$t$ and $\\chi$", ("t", "\\chi"),
+            (0, math.pi, 0, math.pi), "$\\chi$", "$ct/R$", {"R": 1}, EQUATOR),
+    Diagram("einstein_static", "hyperspherical", "through", "through the pole", ("t", "\\chi"),
+            (0, math.pi, 0, 2 * math.pi), "$\\chi$", "$ct/R$", {"R": 1}, EQUATOR, mirror=True,
+            families=SIDEWAYS, cones=(4, 8)),
+    Diagram("einstein_static", "static_areal", "radial", "$t$ and $r$", ("t", "r"), (0, 1.2, -0.6, 0.6),
+            "$r/R$", "$ct/R$", {"R": 1}, EQUATOR, areal=True),
     Diagram("anti_de_sitter", "static_global", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/L$", "$ct/L$", {"L": 1}, EQUATOR, areal=True),
     Diagram("anti_de_sitter", "static_global", "through", "through the centre", ("t", "r"),
@@ -682,6 +689,30 @@ CAPTIONS = {
         "toward the past.",
         "A ray covers only a finite comoving distance however long it runs, $x = \\pm(c/H)e^{-Ht} "
         "+ $ const, so an observer at $x = 0$ has an event horizon.",
+    ],
+    ("einstein_static", "hyperspherical", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every other angle by "
+        "spherical symmetry about the pole. The metric on it is $-c^2dt^2 + R^2d\\chi^2$, exactly flat, so "
+        "every ray is a straight 45° line, $ct = \\pm R\\chi + $ const, and every cone is the same.",
+        "The line $\\chi = 0$ is the pole and $\\chi = \\pi$ its antipode, where the spheres of constant "
+        "$\\chi$, of area $4\\pi R^2\\sin^2\\chi$, shrink to points; a ray that reaches either passes "
+        "through it and comes back as a ray of the other family. The Kretschmann scalar $12/R^4$ is the "
+        "same everywhere.",
+    ],
+    ("einstein_static", "hyperspherical", "through"): [
+        "The Einstein static universe along a great circle through the pole, in the plane $\\theta = "
+        "\\pi/2$: $x = \\chi$ on the right is $\\phi = 0$ and $x = -\\chi$ on the left is $\\phi = \\pi$, "
+        "and the two edges $x = \\pm\\pi$ are one line, the world line of the antipode.",
+        "Light sent out from the pole at $t = 0$ reaches the antipode after $\\pi R/c$, where the rays "
+        "sent out in every direction meet again, and is back at the pole after $2\\pi R/c$.",
+    ],
+    ("einstein_static", "static_areal", "radial"): [
+        "The plane of $t$ and the areal radius $r = R\\sin\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$). The "
+        "cones narrow toward $r = R$ because $g_{rr} = R^2/(R^2 - r^2)$ diverges there, and a ray "
+        "reaches it in the finite time $\\pi R/2c$, as $ct = \\pm R\\arcsin(r/R) + $ const.",
+        "The line $r = R$ is the equator of the three sphere, its largest sphere, where the chart ends. "
+        "The rays run on through it into the far hemisphere, which the hyperspherical chart covers, and "
+        "the Kretschmann scalar $12/R^4$ is the same on both sides.",
     ],
     ("anti_de_sitter", "static_global", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the global "
@@ -2642,6 +2673,10 @@ CLOSED_FORMS = {
     ("de_sitter", "static_spherical", "radial"):
         (lambda t, r: t + 0.5 * np.log(np.abs((1 + r) / (1 - r))),
          lambda t, r: t - 0.5 * np.log(np.abs((1 + r) / (1 - r))), lambda t, r: np.abs(r - 1) > 0.05),
+    ("einstein_static", "hyperspherical", "radial"): (lambda t, c: t + c, lambda t, c: t - c, None),
+    ("einstein_static", "hyperspherical", "through"): (lambda t, c: t + c, lambda t, c: t - c, None),
+    ("einstein_static", "static_areal", "radial"):
+        (lambda t, r: t + np.arcsin(r), lambda t, r: t - np.arcsin(r), lambda t, r: r < 0.999),
     ("anti_de_sitter", "static_global", "radial"):
         (lambda t, r: t + np.arctan(r), lambda t, r: t - np.arctan(r), None),
     ("ellis_bronnikov", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),

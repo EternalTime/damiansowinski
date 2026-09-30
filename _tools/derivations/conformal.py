@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the seventeen spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the eighteen spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -2319,6 +2319,191 @@ def malament_hogarth(ck, src):
     return [v]
 
 
+def published_gthth(src, metric_id, system_id, params):
+    """The published g_thetatheta of a spherical chart, c = 1, as a numpy function of (t, r) on
+    the equator."""
+    _, entry, reader = nr.load(metric_id, system_id)
+    src.note(metric_id, system_id, BASE_FIELDS)
+    g = nr.published_matrix(reader, entry, "metric_components")
+    i = entry["coords"].index("\\theta")
+    names = {reader._plain(n): s for n, s in reader.symbol.items()}
+    e = g[i, i].subs({reader.c: 1, **{reader.parameters[k]: sp.sympify(v) for k, v in params.items()}})
+    e = e.subs(names["theta"], sp.pi / 2)
+    x0, x1 = (reader.symbol[c] for c in entry["coords"][:2])
+    return sp.lambdify((x0, x1), e, "numpy")
+
+
+def einstein_static(ck, src):
+    """The strip. In the hyperspherical chart the metric on the plane of t and chi is
+    -c^2dt^2 + R^2dchi^2, flat as it stands, so with eta = ct/R the map p, q = (eta -+ chi)/2 draws
+    it with X = chi and T = eta: the strip 0 <= chi <= pi, the pole on X = 0 and its antipode on
+    X = pi, each point a 2-sphere of radius R sin chi. The areal chart, r = R sin chi, and
+    Einstein's projection, |x| = R sin chi on the plane y = z = 0, enter it through
+    chi = arcsin(r/R) and cover the half chi < pi/2.
+
+    Minkowski space, de Sitter space and anti-de Sitter space are drawn inside it by the maps
+    their own conformal diagrams use, whose X and T are this chi and eta. For each, the published
+    metric of the Einstein static universe pulled back through the map is checked to be Omega^2
+    times the other spacetime's published metric on its plane of t and r, with the one Omega^2
+    that also carries the sphere, sin^2 chi = Omega^2 g_thetatheta, so that the whole of the other
+    spacetime is conformal to the region drawn.
+    """
+    es = Plane(src, "einstein_static", "hyperspherical", ("t", "\\chi"), EQUATOR, {"R": 1})
+    ar = Plane(src, "einstein_static", "static_areal", ("t", "r"), EQUATOR, {"R": 1})
+    ca = Plane(src, "einstein_static", "einstein_cartesian", ("t", "x"), {"y": "0", "z": "0"}, {"R": 1})
+
+    def hyper(t, chi):
+        t, chi = np.asarray(t, dtype=float), np.asarray(chi, dtype=float)
+        return (t - chi) / 2, (t + chi) / 2
+
+    def areal(t, r):
+        return hyper(t, np.arcsin(np.abs(np.asarray(r, dtype=float))))
+    ck.chart("Einstein static hyperspherical", es, hyper, ck.uniform(-10, 10), ck.uniform(0.001, PI - 0.001),
+             lambda t, c: (1, 0))
+    ck.chart("Einstein static areal", ar, areal, ck.uniform(-10, 10), ck.uniform(0.001, 0.999), lambda t, r: (1, 0))
+    ck.chart("Einstein static, Einstein's projection", ca, areal, ck.uniform(-10, 10), ck.uniform(0.001, 0.999),
+             lambda t, x: (1, 0))
+    ck.finite("Einstein static: the pole chi = 0 is regular", es.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    ck.finite("Einstein static: the antipode chi = pi is regular",
+              es.kretschmann(ck.uniform(-5, 5, 50), np.full(50, PI - 1e-6)))
+    ck.finite("Einstein static: the equator r = R is regular",
+              ar.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1 - 1e-9)))
+
+    def conformal(name, metric_id, system_id, params, fmap, r_lo, r_hi):
+        other = Plane(src, metric_id, system_id, ("t", "r"), EQUATOR, params)
+        ck.chart(f"{name} in the Einstein static universe", other, fmap, ck.uniform(-5, 5), ck.uniform(r_lo, r_hi),
+                 lambda t, r: (1, 0))
+        t, r = ck.uniform(-5, 5), ck.uniform(r_lo, r_hi)
+        h = 1e-6
+
+        def image(t, r):
+            p, q = fmap(t, r)
+            return p + q, q - p
+        eta, chi = image(t, r)
+        e0, c0 = [(a - b) / (2 * h) for a, b in zip(image(t + h, r), image(t - h, r))]
+        e1, c1 = [(a - b) / (2 * h) for a, b in zip(image(t, r + h), image(t, r - h))]
+        G00, G01, G11, *_ = es.metric(eta, chi)
+
+        def pull(a0, a1, b0, b1):
+            return G00 * a0 * b0 + G01 * (a0 * b1 + a1 * b0) + G11 * a1 * b1
+        g00, g01, g11, *_ = other.metric(t, r)
+        omega2 = np.sin(chi) ** 2 / published_gthth(src, metric_id, system_id, params)(t, r)
+        scale = omega2 * np.maximum.reduce([np.abs(g00), np.abs(g01), np.abs(g11)])
+        err = np.maximum.reduce([np.abs(pull(e0, c0, e0, c0) - omega2 * g00), np.abs(pull(e0, c0, e1, c1) - omega2 * g01),
+                                 np.abs(pull(e1, c1, e1, c1) - omega2 * g11)]) / scale
+        ck.limit(f"Einstein static: {name} is conformal to the region drawn, plane and sphere with one factor",
+                 float(np.max(err)), 0, 1e-6)
+
+    def ds_static(t, r):
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        rs = np.arctanh(r)
+        return np.arctan(np.tanh((t - rs) / 2)), np.arctan(np.tanh((t + rs) / 2))
+
+    def ads_global(t, r):
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        return (t - np.arctan(r)) / 2, (t + np.arctan(r)) / 2
+    conformal("Minkowski space", "minkowski", "spherical", {}, mink_pq, 0.001, 20)
+    conformal("de Sitter space", "de_sitter", "static_spherical", {"Lambda": 3}, ds_static, 0.001, 0.999)
+    conformal("anti-de Sitter space", "anti_de_sitter", "static_global", {"L": 1}, ads_global, 0.001, 50)
+
+    T0, T1 = -PI - 0.3, PI + 0.3
+    box = [-0.35, PI + 0.35, T0, T1]
+    strip_ = [[0, T0], [PI, T0], [PI, T1], [0, T1]]
+    half = [[0, T0], [HALF, T0], [HALF, T1], [0, T1]]
+    moment = slices.moments("einstein_static")[0]
+    if moment.reach("hyperspherical", "\\chi") != (0, PI):
+        raise SystemExit("Einstein static: the embedding is not the whole moment, pole to antipode")
+
+    def frame(v, times=True):
+        v.fill("region", strip_)
+        v.line("centre", [[[0, T0], [0, T1]], [[PI, T0], [PI, T1]]])
+        if times:
+            for k in (-2, -1, 1, 2):
+                v.line("t", [[[0, k * HALF], [PI, k * HALF]]])
+        v.slice(moment, xt=[[[0.0, 0.0], [PI, 0.0]]])
+        v.set(fade={"top": 0.7, "bottom": 0.7})
+
+    views = []
+    v = View("hyperspherical", "Hyperspherical", box, "hyperspherical")
+    frame(v)
+    v.fill("cover", strip_)
+    for chi in (Q4, HALF, 3 * Q4):
+        v.line("r", [[[chi, T0], [chi, T1]]])
+    v.line("null", [[[0, -PI], [PI, 0], [0, PI]]])
+    v.label_xt([0, 2.3], "pole", "r", "coord", dx=-6)
+    v.label_xt([PI, 2.3], "antipode", "l", "coord", dx=6)
+    v.legend("cover", "the whole spacetime, which $t$ and $\\chi$ cover")
+    v.legend("r", "$\\chi$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    v.legend("t", "$ct$ constant, every $\\pi R/2$")
+    v.legend("null", "a light ray from the pole, at the antipode after $\\pi R/c$ and back after $2\\pi R/c$")
+    v.legend("centre", "the pole $\\chi = 0$ and its antipode $\\chi = \\pi$")
+    views.append(v)
+
+    for vid, label, system, what, edge in (
+            ("areal", "Areal", "static_areal", "$r$", "$r = R$, the equator, where the areal chart ends"),
+            ("einstein_cartesian", "Einstein's Cartesian", "einstein_cartesian", "$\\sqrt{x^2 + y^2 + z^2}$",
+             "$x^2 + y^2 + z^2 = R^2$, the equator, where Einstein's coordinates end")):
+        v = View(vid, label, box, system)
+        frame(v)
+        v.fill("cover", half)
+        for r in (0.5, math.sqrt(3) / 2):
+            chi = float(np.arcsin(r))
+            v.line("r", [[[chi, T0], [chi, T1]]])
+            v.line("r2", [[[PI - chi, T0], [PI - chi, T1]]])
+        v.line("chartedge", [[[HALF, T0], [HALF, T1]]])
+        v.label_xt([0, 2.3], "pole", "r", "coord", dx=-6)
+        v.label_xt([PI, 2.3], "antipode", "l", "coord", dx=6)
+        v.legend("cover", "the hemisphere $\\chi < \\pi/2$, which " + what + " covers")
+        v.legend("r", what + " constant, at $R/2$ and $\\sqrt{3}\\,R/2$")
+        v.legend("r2", "the same spheres on the far hemisphere, $\\chi > \\pi/2$")
+        v.legend("t", "$ct$ constant, every $\\pi R/2$")
+        v.legend("chartedge", edge)
+        v.legend("centre", "the pole $\\chi = 0$ and its antipode $\\chi = \\pi$")
+        views.append(v)
+
+    v = View("minkowski", "Minkowski space", box)
+    frame(v, times=False)
+    v.fill("cover", TRIANGLE)
+    rr = spread(0, np.inf, 500, 12)
+    s = S_ALL
+    for r in (0.5, 1, 2):
+        v.curve("r", *mink_pq(s, np.full_like(s, r)))
+    for tm in (-1, 1):
+        v.curve("t", *mink_pq(np.full_like(rr, tm), rr))
+    triangle_edges(v, centre=None)
+    v.legend("cover", "Minkowski space, conformal to the triangle $|\\eta| + \\chi < \\pi$")
+    v.legend("r", "Minkowski's $r$ constant, at $R/2$, $R$ and $2R$")
+    v.legend("t", "Minkowski's $ct$ constant, at $\\pm R$")
+    v.legend("centre", "the pole $\\chi = 0$, Minkowski's $r = 0$, and the antipode")
+    views.append(v)
+
+    v = View("de_sitter", "de Sitter space", box)
+    frame(v, times=False)
+    v.fill("cover", [[0, -HALF], [PI, -HALF], [PI, HALF], [0, HALF]])
+    v.line("scri", [[[0, HALF], [PI, HALF]], [[0, -HALF], [PI, -HALF]]])
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "t", dy=5)
+    v.legend("cover", "de Sitter space, conformal to $-\\pi/2 < \\eta < \\pi/2$")
+    v.legend("centre", "the pole $\\chi = 0$ and its antipode $\\chi = \\pi$")
+    v.legend("scri", "de Sitter's future and past infinity $\\mathscr{I}^\\pm$, spacelike")
+    views.append(v)
+
+    v = View("anti_de_sitter", "anti-de Sitter space", box)
+    frame(v, times=False)
+    v.fill("cover", half)
+    for r in (0.5, 1, 2):
+        X = float(np.arctan(r))
+        v.line("r", [[[X, T0], [X, T1]]])
+    v.line("boundary", [[[HALF, T0], [HALF, T1]]])
+    v.label_xt([HALF, 2.3], "$\\mathscr{I}$", "l", dx=6)
+    v.legend("cover", "anti-de Sitter space, conformal to the half $\\chi < \\pi/2$")
+    v.legend("r", "anti-de Sitter's $r$ constant, at $L/2$, $L$ and $2L$, with $L = R$")
+    v.legend("boundary", "the conformal boundary of anti-de Sitter space, timelike")
+    v.legend("centre", "the pole $\\chi = 0$ and its antipode $\\chi = \\pi$")
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- the table
 
 DRAWN = {
@@ -2327,7 +2512,7 @@ DRAWN = {
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
-    "malament_hogarth": malament_hogarth,
+    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -2479,6 +2664,53 @@ CAPTIONS = {
         "A radial light ray from the centre reaches the boundary at $ct = \\pi L/2$ and is back "
         "at $ct = \\pi L$. The radial timelike geodesics, $\\sin\\sigma = k\\sin(ct/L)$ with "
         "$k < 1$, all return to the centre at the same $ct = \\pi L$, whatever their energy.",
+    ],
+    ("einstein_static", "hyperspherical"): [
+        "The Einstein static universe, each point in the diagram a 2-sphere of radius $R\\sin\\chi$. The "
+        "metric on the plane of $t$ and $\\chi$ is $-c^2dt^2 + R^2d\\chi^2$, flat as it stands, so with the "
+        "conformal time $\\eta = ct/R$ the maps $p = (\\eta - \\chi)/2$ and $q = (\\eta + \\chi)/2$ draw it as "
+        "the strip $0 \\le \\chi \\le \\pi$, infinite in both directions of time, with light at 45°.",
+        "The strip is the Einstein cylinder, $\\mathbb{R} \\times S^3$, with each of its 2-spheres about the "
+        "pole drawn as a point. A light ray from the pole reaches the antipode after $\\pi R/c$ and returns "
+        "to the pole every $2\\pi R/c$.",
+    ],
+    ("einstein_static", "areal"): [
+        "The Einstein static universe in the strip of its hyperspherical chart, each point in the diagram "
+        "a 2-sphere of radius $r = R\\sin\\chi$. The areal chart covers the half $\\chi < \\pi/2$ and ends "
+        "at the equator $r = R$, where $g_{rr} = R^2/(R^2 - r^2)$ diverges and the curvature is the same as "
+        "everywhere else.",
+        "Each value of $r$ below $R$ names two spheres, one on either hemisphere, and the areal chart "
+        "takes the one about the pole.",
+    ],
+    ("einstein_static", "einstein_cartesian"): [
+        "The Einstein static universe in the strip of its hyperspherical chart, each point in the diagram "
+        "a 2-sphere of radius $R\\sin\\chi$. Albert Einstein's coordinates of 1917 project the hemisphere "
+        "$\\chi < \\pi/2$ onto its equatorial plane, with $x^2 + y^2 + z^2 = R^2\\sin^2\\chi$, and end at the "
+        "equator.",
+    ],
+    ("einstein_static", "minkowski"): [
+        "Minkowski space inside the Einstein static universe, each point in the diagram a 2-sphere. With "
+        "$ct \\pm r = R\\tan((\\eta \\pm \\chi)/2)$ the metric of Minkowski space is "
+        "$\\Omega^{-2}$ times the metric of the Einstein static universe, with "
+        "$\\Omega = 2\\cos((\\eta + \\chi)/2)\\cos((\\eta - \\chi)/2)$, on the triangle $|\\eta| + \\chi < \\pi$.",
+        "Null infinity $\\mathscr{I}^\\pm$ is the pair of light cones from the antipode's point $i^0$, and "
+        "$i^\\pm$ lie on the pole at $\\eta = \\pm\\pi$.",
+    ],
+    ("einstein_static", "de_sitter"): [
+        "De Sitter space inside the Einstein static universe, each point in the diagram a 2-sphere. "
+        "De Sitter space of radius $\\ell = R$ is $\\ell^2/\\cos^2\\eta$ times the metric of the Einstein "
+        "static universe on the band $-\\pi/2 < \\eta < \\pi/2$, which fills the whole three sphere at every "
+        "$\\eta$.",
+        "Its future and past infinity $\\mathscr{I}^\\pm$ are the spacelike lines $\\eta = \\pm\\pi/2$, and a "
+        "light ray from the pole at $\\mathscr{I}^-$ reaches the antipode just at $\\mathscr{I}^+$.",
+    ],
+    ("einstein_static", "anti_de_sitter"): [
+        "Anti-de Sitter space inside the Einstein static universe, each point in the diagram a 2-sphere. "
+        "With $r = L\\tan\\chi$ and $L = R$, anti-de Sitter space is $1/\\cos^2\\chi$ times the metric of the "
+        "Einstein static universe on the half $\\chi < \\pi/2$, the hemisphere about the pole at every "
+        "moment.",
+        "Its conformal boundary $\\mathscr{I}$ is the equator $\\chi = \\pi/2$, a timelike line of the strip, "
+        "which light from the pole reaches after $\\pi R/2c$.",
     ],
     ("anti_de_sitter", "poincare"): [
         "The plane $x = y = 0$ of the Poincaré patch, through the centre and conformal to the "
