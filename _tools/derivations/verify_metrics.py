@@ -353,6 +353,18 @@ DIMENSIONS = {
     ("schwarzschild", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
     },
+    # Kottler's metric keeps the two lengths of its parents: Schwarzschild's r_s = 2GM/c^2 and
+    # de Sitter's Lambda, a curvature, which is what leaves 1 - r_s/r - Lambda r^2/3 a pure
+    # number. The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
+    ("schwarzschild_de_sitter", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\Lambda": "1/L**2",
+    },
+    ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\Lambda": "1/L**2",
+    },
+    ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\Lambda": "1/L**2",
+    },
     ("stockum_dust", "cylindrical"): {
         "t": "L", "r": "L", "\\phi": "1", "z": "L", "R": "L",
     },

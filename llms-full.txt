@@ -508,6 +508,18 @@ The unique static, spherically symmetric solution for an incompressible perfect 
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\frac{1}{4}\!\left(\sqrt{1 - \frac{r^2 r_s}{R^3}} - 3\sqrt{1 - \frac{r_s}{R}}\right)^{\!2} dt^2 + \frac{dr^2}{1 - \frac{r^2 r_s}{R^3}} + r^2 d\Omega^2$$
 
+### Schwarzschild-de Sitter Black Hole
+
+A black hole in a universe with a positive cosmological constant, the static, spherically symmetric vacuum solution Friedrich Kottler found in 1918. A black hole horizon and a cosmological horizon enclose a static region between them, and the two radiate at different temperatures.
+
+- id: `schwarzschild_de_sitter`
+- tags: vacuum, vacuum solution, static, stationary, spherically symmetric, black hole, mass, cosmological constant, positive cosmological constant, de Sitter, singularity, curvature singularity, coordinate singularity, horizon, event horizon, cosmological horizon, white hole, maximal extension, causal structure, extremal, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_de_sitter.json
+- chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} - \dfrac{\Lambda r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r} - \dfrac{\Lambda r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} - \dfrac{\Lambda r^2}{3}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} - \dfrac{\Lambda r^2}{3}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Taub-Newman-Unti-Tamburino Vacuum Spacetime
 
 A vacuum solution with unusual topology and a "gravitomagnetic" NUT parameter, often called a counterexample to many GR conjectures. It exhibits closed timelike curves and a fibered structure that is far from trivial.

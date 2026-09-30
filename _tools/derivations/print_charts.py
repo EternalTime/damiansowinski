@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
-charts of tov, malament_hogarth, mixmaster, lentz, einstein_static and btz, and Godel's cylindrical chart.
+charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric and
+schwarzschild_de_sitter, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
 
 Each chart below names its coordinates, its parameters, the line element it publishes, the
 same line element in the chart x^0 = ct that the components are printed in, and how its values
-are to be grouped for reading. The script computes every tensor from that line element with
+are to be grouped for reading, and any component written by hand. The script computes every tensor from that line element with
 the checker's own Geometry, prints each component through chart_printer.py, reads every
 printed value back and compares it with what it was printed from, and writes the result into
 the metric file. It writes only the mathematics: the entry's prose, its conventions, the
@@ -17,7 +18,8 @@ yet give a convention, stops the script rather than being written without one. T
 reads better than an expanded one, and each of those is checked against sympy here too.
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
-malament_hogarth.md, mixmaster.md, lentz.md, godel.md and btz.md beside this file.
+malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md and schwarzschild_de_sitter.md
+beside this file.
 """
 import argparse
 import json
@@ -552,10 +554,59 @@ def c_metric_pullback(chart, spherical_line):
                                      f"in slot {coords[a]}{coords[b]}")
 
 
+# -- Schwarzschild-de Sitter -------------------------------------------------------------
+
+def schwarzschild_de_sitter(system_id):
+    """Kottler's static chart and the two Eddington-Finkelstein charts built on its tortoise
+    coordinate, dr_*/dr = 1/f with f = 1 - r_s/r - Lambda r^2/3. Every value is printed around
+    3rf = 3r - 3r_s - Lambda r^3, in the order of f itself, so that each chart reduces to
+    Schwarzschild's at Lambda = 0 and to de Sitter's static chart at r_s = 0 term by term. The
+    metric and its inverse are written as the line element writes f, and the Kretschmann
+    scalar as Schwarzschild's 12r_s^2/r^6 plus de Sitter's 8Lambda^2/3, which it is."""
+    f = "\\left(1 - \\dfrac{r_s}{r} - \\dfrac{\\Lambda r^2}{3}\\right)"
+    bare = "1 - \\dfrac{r_s}{r} - \\dfrac{\\Lambda r^2}{3}"
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    domains = ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "r = r_h \\;\\text{(black hole horizon)}", "r = r_c \\;\\text{(cosmological horizon)}"]
+    if system_id == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    parameters = ["r_s", "\\Lambda"]
+    probe = vm.Reader(coords, parameters, ())
+    r, rs, L = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["Lambda"]
+    return {
+        "metric_id": "schwarzschild_de_sitter",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"rising": [L, rs], "lead": [L, r, rs], "flip": False},
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "kretschmann": "\\dfrac{12r_s^2}{r^6} + \\dfrac{8\\Lambda^2}{3}",
+    }
+
+
+SDS_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+
+
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
-          "c_metric": c_metric}
+          "c_metric": c_metric,
+          "schwarzschild_de_sitter": [lambda s=s: schwarzschild_de_sitter(s) for s in SDS_CHARTS]}
 
 
 def write(spec):
@@ -565,6 +616,14 @@ def write(spec):
     if "check" in spec:
         spec["check"](chart)
     math = chart.mathematics()
+    # A component written by hand replaces the printed one, checked against the same value.
+    tensors = {"metric_components": chart.geo.g, "inverse_metric_components": chart.geo.ginv}
+    for field, by_hand in spec.get("components", {}).items():
+        for entry in math[field]:
+            text = by_hand.get(tuple(entry["indices"]))
+            if text is not None:
+                i, j = (spec["system"]["coords"].index(x) for x in entry["indices"])
+                entry["value"] = chart.check(text, tensors[field][i, j])
     for field in ("ricci_scalar", "kretschmann"):
         computed = chart.geo.ricci_scalar() if field == "ricci_scalar" else chart.geo.kretschmann()
         if field in spec:
