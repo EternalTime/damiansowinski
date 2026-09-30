@@ -1761,8 +1761,9 @@ class EmbeddingDiagrams(unittest.TestCase):
             self.assertIn("draws nothing", str(raised.exception))
 
     def test_every_spacetime_draws_and_a_file_that_draws_nothing_says_why(self):
-        # Every spacetime has a surface drawn, and none says beside its views that it draws nothing.
-        self.assertEqual(set(self.embedding), {m["id"] for m in self.metrics})
+        # Every spacetime but Lentz's has a surface drawn, and none says beside its views that it
+        # draws nothing.
+        self.assertEqual(set(self.embedding), {m["id"] for m in self.metrics} - {"lentz"})
         for name, data in self.embedding.items():
             self.assertTrue(data["views"], name)
             self.assertNotIn("stops", data, f"{name} keeps what it does not draw in its views")
@@ -2003,8 +2004,8 @@ class EmbeddingDiagrams(unittest.TestCase):
 
         def near(a, b, where, tol=2e-6):
             self.assertLess(abs(a - b), tol, where)
-        # The flat planes: every point level, and rho the distance along the profile.
-        for metric_id, piece_id in (("minkowski", "plane"), ("natario", "plane"), ("lentz", "plane")):
+        # The flat plane: every point level, and rho the distance along the profile.
+        for metric_id, piece_id in (("minkowski", "plane"),):
             for x, rho, z in piece(view(metric_id)["surfaces"][0], piece_id):
                 near(rho, x, f"{metric_id} rho at {x}")
                 self.assertEqual(z, 0, f"{metric_id} z at {x}")
@@ -2053,15 +2054,19 @@ class EmbeddingDiagrams(unittest.TestCase):
                     near((X / A) ** 2 + ((Y / B) ** 2 if B else 1 - (X / A) ** 2), 1, f"{metric_id}'s ring", 1e-5)
         self.assertEqual(max(abs(p[1]) for p in view("pp_wave")["surfaces"][-1]["curves"][0]["points"]), 0)
 
-        # Natario's lines of flow, closed and each on one level of the stream function n(r_s) y^2,
-        # y being the drawing's X.
+        # Natario's lines of flow, closed, each on one level of the stream function n(r_s) y^2,
+        # y being the drawing's Y, and each on the triangles of the height.
         n = lambda r: (math.tanh(4 * (r + 1)) - math.tanh(4 * (r - 1))) / (4 * math.tanh(4))  # noqa: E731
-        flows = [c for c in view("natario")["surfaces"][0]["curves"] if c["class"] == "flow"]
+        natario = view("natario")["surfaces"][0]
+        flows = [c for c in natario["curves"] if c["class"] == "flow"]
         self.assertEqual(len(flows), 6)
         for curve in flows:
             self.assertTrue(curve["closed"])
-            levels = [n(math.hypot(X, Y)) * X * X for X, Y, Z in curve["points"]]
+            levels = [n(math.hypot(X, Y)) * Y * Y for X, Y, Z in curve["points"]]
             self.assertLess(max(levels) - min(levels), 1e-6 * max(levels), "a line of Natario's flow")
+            for X, Y, Z in curve["points"][::7]:
+                self.assertLess(abs(grid_height(natario["pieces"][0], X, Y) - Z), 1e-6,
+                                f"a line of Natario's flow at {X}, {Y}")
 
     def test_every_caption_names_what_is_drawn(self):
         for metric_id, data in self.embedding.items():
@@ -2170,6 +2175,98 @@ class EmbeddingDiagrams(unittest.TestCase):
                             f"the circle v_s f = 1 at {X}, {Y}")
         self.assertIn("4c/R", view["height"])
 
+    def test_natario_draws_the_energy_density_as_a_height(self):
+        """epsilon = -c^4 K_ij K^ij/16 pi G of the observers who ride the slices, with the zero
+        expansion field of Natario's drive for Alcubierre's profile at R = 1 and sigma = 4, n = f/2
+        and v_s = 2, drawn as the height G^tt R^2/16 = -K_ij K^ij R^2/32 over the plane of the
+        path: zero at the ship and far outside, negative everywhere else, and deepest in the
+        wall beside the ship. K_ij is taken here from the declared field by differences, with
+        no sympy, and the height checked against it."""
+        view, piece = self.grid("natario")
+        grid = piece["grid"]
+        self.assertEqual(grid["frame"], "polar")
+
+        def n(r):
+            return (math.tanh(4 * (r + 1)) - math.tanh(4 * (r - 1))) / (4 * math.tanh(4))
+
+        def dn(r):
+            return (1 / math.cosh(4 * (r + 1)) ** 2 - 1 / math.cosh(4 * (r - 1)) ** 2) / math.tanh(4)
+
+        def field(x, y, z):
+            rho = math.sqrt(x * x + y * y + z * z)
+            return (2 * (2 * n(rho) + rho * dn(rho) - dn(rho) * x * x / rho),
+                    -2 * dn(rho) * x * y / rho, -2 * dn(rho) * x * z / rho)
+
+        def height(X, Y, h=1e-5):
+            if math.hypot(X, Y) < 1e-3:
+                return 0.0
+            d = []
+            for axis in range(3):
+                e = [0.0, 0.0, 0.0]
+                e[axis] = h
+                a, b = field(X + e[0], Y + e[1], e[2]), field(X - e[0], Y - e[1], -e[2])
+                d.append([(p - q) / (2 * h) for p, q in zip(a, b)])
+            KK = sum(((d[i][j] + d[j][i]) / 2) ** 2 for i in range(3) for j in range(3))
+            self.assertLess(abs(d[0][0] + d[1][1] + d[2][2]), 1e-6, f"the divergence at {X}, {Y}")
+            return -KK / 32
+        nodes = [P for row in grid_nodes(piece) for P in row]
+        for X, Y, Z in nodes:
+            self.assertLess(abs(Z - height(X, Y)), 1e-5, f"Natario's height at {X}, {Y}")
+            self.assertLessEqual(Z, 0, f"Natario's height at {X}, {Y}")
+        # The deepest point, -1.0614 R, beside the ship at r_s = 0.878 R across the path, is
+        # below every node, and a node lies within a few thousandths of it.
+        deepest = min(nodes, key=lambda P: P[2])
+        self.assertGreater(deepest[2], -1.06139)
+        self.assertLess(deepest[2], -1.05)
+        self.assertLess(abs(deepest[0]), 1e-9)
+        self.assertLess(abs(abs(deepest[1]) - 0.878), 0.13)
+        u, v, z = grid["u"], grid["v"], grid["z"]
+        self.assertEqual(z[0], [0.0] * len(v), "the ship's own place is level")
+        self.assertLess(max(abs(h) for h in z[-1]), 1e-6, "the rim at 3R is level")
+        on_path = min(z[u.index(1.0)][v.index(0.0)], z[u.index(1.0)][min(range(len(v)), key=lambda j: abs(v[j] - math.pi))])
+        self.assertAlmostEqual(on_path, -12.016102 / 16, places=5)
+        curves = {c["class"]: c for c in view["surfaces"][0]["curves"]}
+        for X, Y, Z in curves["wall"]["points"]:
+            r = math.hypot(X, Y)
+            self.assertTrue(math.cos(math.pi / 72) - 1e-6 <= r <= 1 + 1e-6, f"the circle r_s = R at {X}, {Y}")
+        path = curves["path"]["points"]
+        self.assertEqual((path[0][0], path[-1][0]), (-3.0, 3.0))
+        self.assertTrue(all(abs(Y) < 1e-12 for _, Y, _ in path))
+        self.assertIn("K_{ij}K^{ij}", view["height"])
+
+    def test_every_embedding_diagram_stands_in_relief_but_the_planes_of_flat_slices(self):
+        """No drawing is a bare flat plane: every surface of revolution rises or falls by at least
+        RELIEF of its width and every height over a plane by RELIEF of its extent, save the flat
+        planes that carry what their spacetime does on them, Minkowski's and the rings of free
+        particles. Lentz's class has flat slices for every potential and no soliton that can be
+        computed, so it has no embedding diagram."""
+        RELIEF = 0.05
+        flat = {"minkowski", "kasner", "bianchi", "pp_wave"}
+        self.assertNotIn("lentz", self.embedding)
+        self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
+        for name, data in self.embedding.items():
+            if name in flat:
+                continue
+            for view in data["views"]:
+                for k, surface in enumerate(view["surfaces"]):
+                    where = f"{name} {view['id']} surface {k}"
+                    heights, widths = [], []
+                    for piece in surface["pieces"]:
+                        if piece.get("reference"):
+                            continue
+                        if "grid" in piece:
+                            nodes = [P for row in grid_nodes(piece) for P in row]
+                            heights += [P[2] for P in nodes]
+                            widths.append(max(max(P[0] for P in nodes) - min(P[0] for P in nodes),
+                                              max(P[1] for P in nodes) - min(P[1] for P in nodes)))
+                        else:
+                            heights += [P[2] for P in piece["points"]]
+                            widths.append(2 * max(P[1] for P in piece["points"]))
+                    self.assertTrue(all(math.isfinite(h) for h in heights), f"{where}: a height is not a number")
+                    self.assertGreater(max(widths), 0, f"{where}: no width")
+                    self.assertGreaterEqual((max(heights) - min(heights)) / max(widths), RELIEF,
+                                            f"{where}: flatter than {RELIEF} of its width")
+
     def test_krasnikov_draws_how_far_the_tube_tips_the_light_cone_as_a_height(self):
         """1 - k, twice the published g_tx, of the tube the spacetime diagram declares, at
         ct = 5 rho_0, drawn over the plane of the tube's axis: 0 outside the tube, 1 where k = 0
@@ -2216,7 +2313,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                 grids = any("grid" in p for s in view["surfaces"] for p in s["pieces"])
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
-                          if any("height" in view for view in data["views"])}, {"alcubierre", "krasnikov"})
+                          if any("height" in view for view in data["views"])}, {"alcubierre", "krasnikov", "natario"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -2372,7 +2469,7 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         # and turned all the way round it keeps to its box, the Krasnikov tube's rectangle drawn
         # smaller where it would stand wider or taller than it was published.
         heights = {v["metric"]: v["height"] for v in self.check()["views"] if "height" in v}
-        self.assertEqual(set(heights), {"alcubierre", "krasnikov"})
+        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario"})
         for metric_id, h in heights.items():
             for side in ("above", "below"):
                 seen = h[side]

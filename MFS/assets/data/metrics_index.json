@@ -360,8 +360,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "40afe2794224ede4",
-    "embedding": "cd4d9ba73f0459f5"
+    "version": "40afe2794224ede4"
   },
   {
     "id": "malament_hogarth",
@@ -476,8 +475,8 @@
       "four-dimensional"
     ],
     "version": "5571be1787cdf61a",
-    "diagrams": "4b6c4921b6b646f7",
-    "embedding": "da5a4f2712be8435"
+    "diagrams": "de53e29b699604e4",
+    "embedding": "4c0e51ef2c48920b"
   },
   {
     "id": "oppenheimer_snyder",

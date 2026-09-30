@@ -26,11 +26,12 @@ construction stops and why rather than drawing past it; where every circle does,
 hyperbolic plane of anti-de Sitter space, the slice is drawn in three dimensional Minkowski
 space instead, dX^2 + dY^2 - dZ^2, where it climbs at dZ/dx = sqrt((drho/dx)^2 - g_xx).
 A flat slice is drawn as the plane it is, with what the spacetime does marked on it as
-curves and points that are no circles: a ring of free particles, the wall of a warp bubble,
-the lines of its flow. Two spacetimes whose slices are flat draw a quantity as a height over
-a plane instead, a GridPiece: Alcubierre's drive the expansion of the observers who ride its
-slices, and the Krasnikov tube 1 - k, how far it tips the light cone. The height is sampled on
-a grid and drawn as flat triangles, each within GRID_SAG of the drawing's size of it in space.
+curves and points that are no circles: a ring of free particles. Three spacetimes whose slices
+are flat draw a quantity as a height over a plane instead, a GridPiece: Alcubierre's drive the
+expansion of the observers who ride its slices, Natario's the energy density they measure,
+with the lines of its flow on it, and the Krasnikov tube 1 - k, how far it tips the light
+cone. The height is sampled on a grid and drawn as flat triangles, each within GRID_SAG of the
+drawing's size of it in space.
 
     python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy numpy scipy contourpy
     /tmp/mfs-venv/bin/python _tools/derivations/embedding.py
@@ -2854,20 +2855,89 @@ def alcubierre(ck, src):
 
 
 def natario(ck, src):
-    """The plane z = 0 of the ship's path at t = 0 in Natario's flow chart, with the zero
-    expansion field the spacetime diagram declares: flat, a disc about the ship out to 3R, with
-    the circle r_s = R, the middle of the wall, and three pairs of the lines along which the
-    declared field carries space, found by following the field from where each crosses the ship's
-    plane x = 0 at y = +-0.2, 0.4 and 0.6 R until it returns there. Inside the bubble they run along
-    the path, and every one closes through the wall, since the field is divergence free and zero
-    outside."""
+    """The energy density of the observers who ride the slices, drawn as a height over the plane
+    z = 0 of the ship's path at t = 0, with the zero expansion field the spacetime diagram
+    declares: Alcubierre's profile with R = 1 and sigma = 4, n = f/2 and v_s = 2. It is read from
+    the published G^tt, which for these observers, n_mu = (-1, 0, 0, 0), is 8 pi G/c^4 times the
+    energy density epsilon they measure, and checked against -K_ij K^ij/2 from the published
+    shift, K_ij = (d_i g_tj + d_j g_ti)/2 on the flat slice, whose trace, the expansion, is checked
+    to vanish. So epsilon = -c^4 K_ij K^ij/16 pi G, negative wherever space shears and zero inside
+    the bubble and far outside it. The height is G^tt R^2/16 over the disc of radius 3R about the
+    ship, the path along the drawing's X with the ship heading toward +X, as Alcubierre's, on a
+    polar grid of 72 angles with its circles every R/4 and its lines from the ship every 15
+    degrees. Marked on it, lifted onto the triangles, the circle r_s = R, the middle of the wall,
+    and three pairs of the lines along which the declared field carries space, found by following
+    the field from where each crosses the ship's plane x = 0 at y = +-0.2, 0.4 and 0.6 R until it
+    returns there. Inside the bubble they run along the path, and every one closes through the
+    wall, since the field is divergence free and zero outside. The slice itself is flat, which is
+    checked."""
     fns = nr._natario_field()
-    # The path along the drawing's Y, as Alcubierre's.
-    sl = FlatPlane(src, "natario", "cartesian_flow", "y", "x", {"t": 0, "z": 0}, functions=fns)
-    tt, xx, yy, zz = sp.symbols("t x y z", real=True)
-    loc = {"t": tt, "x": xx, "y": yy, "z": zz}
-    U = sp.lambdify((xx, yy), sp.sympify(fns["u"], locals=loc).subs({tt: 0, zz: 0}), "numpy")
-    V = sp.lambdify((xx, yy), sp.sympify(fns["v"], locals=loc).subs({tt: 0, zz: 0}), "numpy")
+    # The slice is flat, dx^2 + dy^2, which FlatPlane checks as it reads it.
+    FlatPlane(src, "natario", "cartesian_flow", "x", "y", {"t": 0, "z": 0}, functions=fns)
+    _, entry, R = nr.load("natario", "cartesian_flow")
+    src.note("natario", "cartesian_flow", ["einstein_tensor"])
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    names.update(R.parameters)
+    tt, xx, yy, zz = (R.symbol[c] for c in "txyz")
+
+    def declared(e):
+        for k, v in fns.items():
+            e = e.subs(R.parameters[k], sp.sympify(v, locals=names))
+        return e.doit().subs(R.c, 1)
+    on_plane = {tt: 0, zz: 0}
+    uu = entry["einstein_tensor"]["variants"]["uu"]["nonzero"]
+    gtt_up = declared(R(next(c["value"] for c in uu if c["indices"] == ["t", "t"])))
+    G = sp.lambdify((xx, yy), gtt_up.subs(on_plane), "numpy")
+    # K_ij from the published shift, the metric's g_ti, on the flat slice of unit lapse.
+    g = nr.published_matrix(R, entry, "metric_components")
+    ck.exact("Natario: the published g_tt is -1 + g_ti g_ti, a unit lapse, and g_ij = delta_ij",
+             sp.simplify(g[0, 0] + 1 - sum(g[0, i] ** 2 for i in (1, 2, 3))) == 0
+             and all(sp.simplify(g[i, j] - (1 if i == j else 0)) == 0 for i in (1, 2, 3) for j in (1, 2, 3)))
+    X3 = (xx, yy, zz)
+    shift = [declared(g[0, i]) for i in (1, 2, 3)]
+    K = [[(sp.diff(shift[j], X3[i]) + sp.diff(shift[i], X3[j])) / 2 for j in range(3)] for i in range(3)]
+    trace = sp.lambdify((xx, yy), sum(K[i][i] for i in range(3)).subs(on_plane), "numpy")
+    KK = sp.lambdify((xx, yy), sum(K[i][j] ** 2 for i in range(3) for j in range(3)).subs(on_plane), "numpy")
+    pts = np.random.default_rng(3).uniform(-3, 3, (2000, 2))
+    ck.add("Natario: the expansion of the riding observers, the trace of K_ij, vanishes",
+           float(np.max(np.abs(trace(pts[:, 0], pts[:, 1])))), 1e-12)
+    ck.add("Natario: the published G^tt is -K_ij K^ij/2 from the published shift",
+           float(np.max(np.abs(G(pts[:, 0], pts[:, 1]) + KK(pts[:, 0], pts[:, 1]) / 2))), 1e-10)
+    ck.add("Natario: G^tt runs to 0 at the centre of the bubble, where the flow is uniform",
+           abs(float(G(1e-6, 1e-6))), 1e-9)
+
+    def height(X, Y):
+        with np.errstate(invalid="ignore", divide="ignore"):
+            z = G(X, Y) / 16
+        # G^tt is 0/0 as written at the centre, where it runs to 0.
+        return np.where(np.hypot(X, Y) > 0, z, 0.0)
+    top = 3.0
+    size = 2 * top
+    angles = 2 * math.pi * np.arange(72) / 72
+    circles = [0.25 * n for n in range(1, 12)]
+    plane = GridPiece("plane", "sheet", "polar", [0.0, *circles, top], angles, height, "natario",
+                      "cartesian_flow", "the plane runs on to $r_s \\to \\infty$, where $\\varepsilon$ vanishes", size,
+                      {"u": circles, "v": angles[::3]})
+    Xn, Yn = plane.plane()
+    ck.add("Natario: the height at every node is G^tt R^2/16", float(np.max(np.abs(plane.Z - height(Xn, Yn)))), 1e-7)
+    ck.add("Natario: every triangle of the grid lies on the height, in space", plane.sag() / size, GRID_SAG)
+    ck.add("Natario: the energy density is nowhere positive", float(max(0.0, np.max(plane.Z))), 0.0)
+    ck.items[-1]["ok"] = bool(np.all(plane.Z <= 0))
+    # The wall is deepest beside the ship, across the path, and one R ahead and behind on it.
+    from scipy.optimize import minimize_scalar
+    side = minimize_scalar(lambda y: float(G(0.0, y)), bounds=(0.5, 1.5), method="bounded", options={"xatol": 1e-12})
+    on_path = minimize_scalar(lambda x: float(G(x, 0.0)), bounds=(0.5, 1.5), method="bounded",
+                              options={"xatol": 1e-12})
+    least = float(side.fun)
+    ck.exact(f"Natario: no node is deeper than the wall beside the ship, epsilon = {least / (8 * math.pi):.4f} c^4/GR^2 "
+             f"at r_s = {side.x:.4f} R", bool(np.min(plane.Z) >= least / 16 - 1e-7))
+    ck.add("Natario: on the path the wall is deepest one R ahead of the ship", abs(on_path.x - 1.0), 1e-6)
+    for text, value in (("0.68", least), ("0.48", float(on_path.fun))):
+        ck.exact(f"Natario: the caption's {text} c^4/GR^2 is {value / (8 * math.pi):.4f}",
+                 f"{-value / (8 * math.pi):.2f}" == text)
+    ck.exact(f"Natario: the caption's 0.88R is {side.x:.4f} R", f"{side.x:.2f}" == "0.88")
+    U = sp.lambdify((xx, yy), sp.sympify(fns["u"], locals=names).subs(on_plane), "numpy")
+    V = sp.lambdify((xx, yy), sp.sympify(fns["v"], locals=names).subs(on_plane), "numpy")
     from scipy.integrate import solve_ivp
 
     def flow(_, P):
@@ -2892,52 +2962,41 @@ def natario(ck, src):
         psi = [integrate(lambda w, x=x: w * float(U(x, w)), 0.0, y) for x, y in P[::20]]
         ck.add(f"Natario, the flow line through y = {y0}: Stokes's stream function holds one value on it",
                float(np.ptp(psi) / abs(np.mean(psi))), 1e-8)
-        lines.append(np.column_stack([P[:, 1], P[:, 0], np.zeros(len(P))]))
-    top = 3.0
-    size = 2 * top
-    plane = disc(sl, "plane", top, "the ship, at the centre of the bubble", "the plane runs on, flat, to $r_s \\to \\infty$",
-                 [(1.0, "wall", "$r_s = R$")], size)
-    ck.isometry("Natario, the plane of the path", plane)
-    for k, P in enumerate(lines):
-        ck.on_piece(f"Natario, flow line {k}", plane, P)
-    path = np.column_stack([np.zeros(241), np.linspace(-top, top, 241), np.zeros(241)])
-    ck.on_piece("Natario, the path", plane, path)
-    surface = Surface([plane], curves=[Curve(plane, "flow", P, closed=True) for P in lines]
-                      + [Curve(plane, "path", path)])
-    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
-    ring_label(fig, [0, 0, 0], *plane.at(1.0), "$r_s = R$")
-    fig.legend("fill", "cover", "the plane $z = 0$ of the ship's path at $t = 0$, flat")
-    fig.legend("line", "path", "the ship's path, along $x$")
+        lines.append(P[:-1])
+
+    def lifted(P, closed=False):
+        """Chart points (x, y) of the plane, cut finely and set on the triangles of the grid."""
+        Q = np.column_stack([P, np.zeros(len(P))])
+        Q = finely(np.vstack([Q, Q[:1]]) if closed else Q, size / 360)
+        Q = Q[:-1] if closed else Q
+        Q[:, 2] = plane.facets.height(Q[:, 0], Q[:, 1])
+        return Q
+    flows = [lifted(P, closed=True) for P in lines]
+    P = plane.nodes()
+    back_, ahead = plane.index("v", math.pi), plane.index("v", 0.0)
+    path = finely(np.vstack([P[::-1, back_], P[1:, ahead]]), size / 360)
+    ring = plane.index("u", 1.0)
+    wall = finely(np.vstack([P[ring], P[ring, :1]]), size / 360)[:-1]
+    for k, Q in enumerate(flows):
+        ck.on_piece(f"Natario, flow line {k}", plane, Q)
+    for where, Q in (("the path", path), ("the circle r_s = R", wall)):
+        ck.on_piece(f"Natario, {where}", plane, Q)
+    surface = Surface([plane], curves=[Curve(plane, "path", path), Curve(plane, "wall", wall, closed=True)]
+                      + [Curve(plane, "flow", Q, closed=True) for Q in flows])
+    fig = figure_of([surface], {"sheet": "cover"}, size, HEIGHT_CAMERA)
+    fig.legend("fill", "cover", "$\\varepsilon$ as a height over the plane $z = 0$ of the ship's path at $t = 0$")
+    fig.legend("line", "grid", "circles about the ship every $R/4$, and lines from it every $15°$")
+    fig.legend("line", "path", "the ship's path, along $x$, the ship heading toward $+x$")
     fig.legend("line", "wall", "$r_s = R$, the middle of the wall")
     fig.legend("line", "flow", "lines of the flow, forward through the bubble and back round it through the wall")
-    fig.legend("line", "meridian", "straight lines from the ship, every $15°$")
     return [view("plane", "The plane of the path", "$R$", [surface], fig.done(),
                  settings="$t = 0$, when the bubble is centred on $x = 0$, with $R = 1$, the unit of every length.",
                  input="$v_s = 2$, $n = f/2$ with Alcubierre's profile, and the zero expansion field $X = v_s[(2n + "
                        "\\rho n')\\,e_x - n'\\,x_r\\,(x_r, y, z)/\\rho]$, $x_r = x - v_s t$, as in the spacetime "
-                       "diagram.")]
-
-
-def lentz(ck, src):
-    """The plane y = 0 of the soliton's path along z, at one moment: flat, dz^2 + dx^2, for every
-    potential phi, since Lentz fixed flat slices to define the class. His soliton exists only as a
-    numerical integral over his rhomboid sources, so no potential is written in its place, and
-    the disc about the soliton's centre carries its path alone, in any unit."""
-    sl = FlatPlane(src, "lentz", "cartesian", "x", "z", {"t": 0, "y": 0})
-    top = 3.0
-    size = 2 * top
-    plane = disc(sl, "plane", top, "the soliton's centre", "the plane runs on, flat, to infinity", [], size)
-    ck.isometry("Lentz, the plane of the path", plane)
-    path = np.column_stack([np.zeros(241), np.linspace(-top, top, 241), np.zeros(241)])
-    ck.on_piece("Lentz, the path", plane, path)
-    surface = Surface([plane], curves=[Curve(plane, "path", path)])
-    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
-    fig.legend("fill", "cover", "the plane $y = 0$ of the soliton's path, flat for every potential $\\phi$")
-    fig.legend("line", "path", "the soliton's path, along $z$")
-    fig.legend("line", "meridian", "straight lines from the centre, every $15°$")
-    return [view("plane", "The plane of the path", "$\\ell$", [surface], fig.done(),
-                 settings="$\\ell$, any length, the unit of every length, since without a potential the metric "
-                          "has none.")]
+                       "diagram.",
+                 height=f"$\\varepsilon = -c^4K_{{ij}}K^{{ij}}/16\\pi G$, a height of $-R$ for $\\varepsilon = "
+                        f"-2c^4/\\pi GR^2$, and ${least / 16:.4f}R$ where it is most negative, "
+                        f"$\\varepsilon = {least / (8 * math.pi):.4f}\\,c^4/GR^2$.")]
 
 
 def at_rest(ck, src, metric_id, system_id):
@@ -3329,11 +3388,13 @@ DRAWN = {
     "krasnikov": krasnikov,
     "alcubierre": alcubierre,
     "natario": natario,
-    "lentz": lentz,
 }
 
-# The spacetimes with no embedding diagram, for which nothing is written.
-NOT_DRAWN = set()
+# The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
+# t in Lentz's class is flat, h_ij = delta_ij, for every potential phi, and his soliton exists only
+# as a numerical integral over rhomboid sources whose sizes, charges and places his paper does not
+# give, so the plane of its path could carry nothing of the soliton.
+NOT_DRAWN = {"lentz"}
 
 CAPTIONS = {
     ("schwarzschild", "flamm"): [
@@ -3682,26 +3743,17 @@ CAPTIONS = {
         "negative in the wall except on the path, where it vanishes.",
     ],
     ("natario", "plane"): [
-        "The plane $z = 0$ of the path of Natário's warp bubble at the moment $t = 0$, drawn as a surface in flat "
-        "space with every distance along it the metric distance. Every slice of constant $t$ "
-        "is flat, so the drawing is a flat disc, and the drive is in the flow of space $X$ that carries each slice "
-        "past the next, whose divergence vanishes, so that no volume of space grows or shrinks anywhere.",
-        "The lines marked are lines of that flow. Inside the bubble space moves forward at $v_s$ with the ship, "
-        "outside it is at rest, and every line closes back through the wall, as the flow of a fluid that cannot be "
-        "compressed closes round an obstacle. José Natário built the drive in 2002 to show that the ship is carried "
-        "without Alcubierre's contraction ahead and expansion behind; the energy density measured by the riding "
-        "observers is still negative, $-c^4K_{ij}K^{ij}/16\\pi G$, since the trace $K$ vanishes with the expansion.",
-    ],
-    ("lentz", "plane"): [
-        "The plane $y = 0$ of the path of Lentz's soliton at one moment, drawn as a surface in flat space with every "
-        "distance along it the metric distance. Every slice of constant $t$ is flat, $dx^2 + dy^2 + "
-        "dz^2$, for every potential $\\phi$, because flat slices are one of the three conditions Erik Lentz imposed "
-        "in 2021 to define his class, with a unit lapse and a shift that is the gradient of $\\phi$.",
-        "His soliton exists only as a numerical integral over rhomboid cells of source, and the plane carries its "
-        "path alone. On a flat slice the energy density measured by the riding observers is "
-        "$\\sigma_2(\\partial_i\\partial_j\\phi)\\,c^4/8\\pi G$, the sum of the principal minors of the Hessian of "
-        "$\\phi$, which Lentz arranged to be positive; Jessica Santiago, Sebastian Schuster, and Matt Visser showed "
-        "in 2022 that an observer moving fast enough through the slices measures it negative.",
+        "The energy density $\\varepsilon$ measured by the observers who ride the slices of Natário's warp bubble, "
+        "drawn as a height over the plane $z = 0$ of the ship's path at the moment $t = 0$, the height $\\varepsilon$ "
+        "alone ($-R$ for $\\varepsilon = -2c^4/\\pi GR^2$) and the slices themselves flat. The observers are carried "
+        "by the flow of space $X$, whose divergence vanishes, so no volume of them grows or shrinks anywhere, and "
+        "$\\varepsilon = -c^4K_{ij}K^{ij}/16\\pi G$, negative wherever the flow shears space.",
+        "Inside the bubble space moves forward at $v_s$ with the ship and outside it is at rest, so $\\varepsilon$ "
+        "vanishes in both, and the wall between them is a moat, deepest beside the ship, $-0.68\\,c^4/GR^2$ at "
+        "$r_s = 0.88R$ across the path, and $-0.48\\,c^4/GR^2$ on the path one $R$ ahead and behind. The lines "
+        "marked are lines of the flow, each closing back through the wall, as the flow of a fluid that cannot be "
+        "compressed closes round an obstacle. José Natário built the drive in 2002, carrying the ship with no "
+        "contraction of space ahead of it and no expansion behind.",
     ],
     ("frw", "closed"): [
         "The equator ($\\theta = \\pi/2$) of space in a closed universe of dust at five moments of cosmic "
