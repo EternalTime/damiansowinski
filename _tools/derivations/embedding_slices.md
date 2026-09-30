@@ -205,6 +205,14 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u + r = -r_s\ln(r/r_s - 1)$ from $3\,r_s$ at $1.050\,r_s$ down to $-1.609\,r_s$ at $6\,r_s$, and $u = -r - r_s\ln(r/r_s - 1)$ from $0$ at $1.278\,r_s$ to $-6\,r_s$ at $4.693\,r_s$.
 - `spherical`, `ingoing` and `outgoing`, Kruskal's diagram with $p = \arctan U$ and $q = \arctan V$: the moment $t = 0$ is $U = -V$, the line $T = 0$ through the bifurcation point across both exteriors, $r$ from $r_s$ to $6\,r_s$ on each side, the same on all three, since all three are the whole spacetime.
 
+### Schwarzschild-de Sitter
+
+- The embedding is the equator of Kottler's static moment $t = 0$ at $\Lambda = 0.2/r_s^2$, $r$ from the throat $r_h = 1.085\,r_s$ to the widest circle $r_c = 3.215\,r_s$ and back to the next throat, through the cosmological bifurcation sphere into the next static region.
+- `static/radial`: the line $ct = 0$ from $r_h$ to $r_c$; inside $r_h$ and beyond $r_c$ the surfaces of constant $t$ are timelike.
+- `eddington_finkelstein_ingoing/finkelstein` and `/chart`: with $v = ct + r_*$ and $r_*(0) = 0$ the moment is the curve $v = r_*$ between the horizons, which runs off to $v \to -\infty$ at $r_h$ and to $v \to +\infty$ at $r_c$, since the ingoing chart crosses only the future half of the black hole horizon and the past half of the cosmological one.
+- `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u = -r_*$.
+- `static`, `ingoing` and `outgoing`, the chain of the maximal extension: the moment is the line $T = 0$ from the black hole's bifurcation point at $X = 0$ through the static region, the cosmological bifurcation point at $X = \pi$ and the next static region to the next black hole's bifurcation point at $X = 2\pi$, the same on all three.
+
 ### van Stockum
 
 - The embedding is the plane $z = 0$ at one moment of $t$, drawn at $t = 0$, $r$ from $0$ to $0.834\,R$, where it stops.
@@ -270,6 +278,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 | pp-wave | four null lines | none | none drawn |
 | Reissner-Nordström | two lines once redrawn at $r_q = 0.48\,r_s$ | none | two lines, twice |
 | Schwarzschild | line, four curves | none | line, three times |
+| Schwarzschild-de Sitter | line, four curves | none | line, three times |
 | van Stockum | line, not visible | floor | none drawn |
 | Taub-NUT | line | none | none drawn |
 | Tolman-Bondi | not visible | none | none drawn |

@@ -162,6 +162,23 @@ def schwarzschild_t(sign):
     return [Mark(m, [np.column_stack([sign * (r + np.log(r - 1)), r])])]
 
 
+def kottler_rstar(r):
+    """Kottler's tortoise coordinate at r_s = 1 and Lambda = 1/5, as the Eddington-Finkelstein
+    charts fix it, r_* = sum_i ln|1 - r/r_i|/f'(r_i) over the three roots of 3r - 3 - r^3/5,
+    which vanishes at r = 0."""
+    roots = np.roots([-0.2, 0, 3, -3]).real
+    return sum(np.log(np.abs(1 - r / ri)) / (1 / ri ** 2 - 0.4 * ri / 3) for ri in roots)
+
+
+def kottler_t(sign):
+    """Kottler's static t = 0 in an Eddington-Finkelstein chart: v = r_* in the ingoing chart and
+    u = -r_* in the outgoing one, between the horizons, as far as the embedding reaches."""
+    m = moments("schwarzschild_de_sitter")[0]
+    lo, hi = m.reach("static", "r")
+    r = np.concatenate([near(lo, 0.5 * (lo + hi)), near(hi, 0.5 * (lo + hi))[::-1]])
+    return [Mark(m, [np.column_stack([sign * kottler_rstar(r), r])])]
+
+
 def novikov(R, tau):
     """A shell of dust released from rest at areal radius R at t = 0, r_s = 1, at its proper
     time tau: its areal radius r and its Schwarzschild t, from the cycloid
@@ -363,6 +380,11 @@ FLAT = {
     ("minkowski", "cartesian", "tx"): lambda: one("minkowski", lambda m: across(0.0, 0.0, m.reach("spherical", "r")[1])),
     # ct = X sinh(aT/c) vanishes in the wedge only at T = 0, where x = X.
     ("minkowski", "rindler", "tx"): lambda: one("minkowski", lambda m: along(0.0, 0.0, m.reach("spherical", "r")[1])),
+    ("schwarzschild_de_sitter", "static", "radial"): lambda: one("schwarzschild_de_sitter", lambda m: along(0.0, *m.reach("static", "r"))),
+    ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"): lambda: kottler_t(1),
+    ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "chart"): lambda: kottler_t(1),
+    ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"): lambda: kottler_t(-1),
+    ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart"): lambda: kottler_t(-1),
     ("de_sitter", "static_spherical", "radial"): lambda: one("de_sitter", lambda m: along(0.0, *m.reach("static_spherical", "r"))),
     ("de_sitter", "static_spherical", "through"): lambda: one("de_sitter", lambda m: along(0.0, *m.reach("static_spherical", "r"))),
     ("de_sitter", "flat_slicing", "tx"): _ds_flat,

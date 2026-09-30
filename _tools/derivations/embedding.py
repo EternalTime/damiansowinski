@@ -286,7 +286,14 @@ class Slice:
     def horizons(self):
         """The real roots of 1/g_xx where it is a rational function, largest first, as floats,
         each remembered exactly, so that slope() takes its limit at the root itself."""
-        roots = [z for z in sp.solve(sp.numer(sp.together(1 / self.gxx)), self.x) if z.is_real]
+        numerator = sp.numer(sp.together(1 / self.gxx))
+        solved = sp.solve(numerator, self.x)
+        roots = [z for z in solved if z.is_real]
+        if any(z.is_real is None for z in solved):
+            # An irreducible cubic with three real roots, as Kottler's f, comes back from solve
+            # in radicals of complex numbers whose reality sympy cannot decide; its real roots
+            # are then taken as exact algebraic numbers.
+            roots = sp.Poly(numerator, self.x).real_roots()
         roots = sorted(roots, key=float, reverse=True)
         for z in roots:
             self.exact[float(z)] = z
@@ -342,7 +349,18 @@ class Slice:
             u = sp.Symbol("u")
 
             def near(e):
-                n, d = sp.fraction(sp.together(e.subs(self.x, self.exact[root] + u)))
+                exact = self.exact[root]
+                if exact.has(sp.CRootOf):
+                    # A root with no form in radicals: each coefficient in u is reduced modulo
+                    # the root's minimal polynomial, so that the terms which cancel at the root
+                    # are exactly zero, and only then evaluated, to forty digits.
+                    a = sp.Symbol("a")
+                    lowest = sp.minimal_polynomial(exact, a)
+                    parts = sp.fraction(sp.together(e.subs(self.x, a + u)))
+                    coeffs = [[float(sp.rem(c, lowest, a).subs(a, exact).evalf(40))
+                               for c in sp.Poly(sp.expand(part), u).all_coeffs()] for part in parts]
+                    return lambda v: float(np.polyval(coeffs[0], v) / np.polyval(coeffs[1], v))
+                n, d = sp.fraction(sp.together(e.subs(self.x, exact + u)))
                 f = sp.lambdify(u, sp.expand(n) / sp.expand(d), "numpy")
                 return lambda v: float(Slice._at(f, v))
             self._near[root] = [near(e) for e in (self.gxx, self.gpp, self.defect)]
@@ -2243,6 +2261,51 @@ def einstein_static(ck, src):
                  settings="$R = 1$, the unit of every length.")]
 
 
+def schwarzschild_de_sitter(ck, src):
+    """Kottler's static slice t = 0 at r_s = 1 and Lambda = 1/5, so that the horizons, the two
+    positive roots of the published g^rr, sit at r_h = 1.085 and r_c = 3.215. g_rr = 1/f with
+    f = 1 - 1/r - r^2/15 < 1, so dz/dr = sqrt(1/f - 1) is real from r_h to r_c and diverges at
+    both ends: the surface stands vertical at the throat r_h, its smallest circle, and at r_c,
+    its widest. The slice of the maximal extension runs through the bifurcation sphere at r_c
+    into the next static region, the same surface turned over, and through each throat into
+    another, without end; one period, from a throat to the next, is drawn. z(r) is an elliptic
+    integral and is drawn by quadrature, checked against the published metric."""
+    sl = Slice(src, "schwarzschild_de_sitter", "static", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1, "Lambda": "1/5"})
+    rc, rh, rn = sl.horizons()
+    ck.add("Schwarzschild-de Sitter: the horizons are the roots of 3r - 3 - r^3/5", 
+           abs(rh - 1.0851996154371) + abs(rc - 3.2146274073952) + abs(rn + 4.2998270228323), 1e-12)
+    size = 2 * rc
+    radii = (1.5, 2.0, 2.5, 3.0)
+    near = Piece("static", "sheet", sl, rh, rc, 0.0, 1,
+                 (("throat", "the throat $r = r_h$, the bifurcation sphere of the black hole horizon, where the "
+                             "slice runs on into another static region"),
+                  ("join", "the widest circle $r = r_c$, the bifurcation sphere of the cosmological horizon, "
+                           "where the slice runs on into the next static region")),
+                 [(rh, "horizon", "$r = r_h$")] + [(r, "r", None) for r in radii] + [(rc, "horizon", "$r = r_c$")],
+                 size)
+    top = 2 * near.z[-1]
+    far = Piece("next", "sheet2", sl, rh, rc, top, -1,
+                (("throat", "the throat $r = r_h$ of the next black hole horizon"),
+                 ("join", "the widest circle $r = r_c$")),
+                [(rh, "horizon", None)] + [(r, "r2", None) for r in radii], size)
+    for p in (near, far):
+        ck.isometry(f"Schwarzschild-de Sitter, the {p.id} region", p)
+        ck.radius(f"Schwarzschild-de Sitter, the {p.id} region, rho = r", p, lambda r: r, size)
+    ck.join("Schwarzschild-de Sitter, the two static regions at r_c", near, rc, far, rc)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rh), "$r = r_h$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(rc), "$r = r_c$", dx=10)
+    fig.legend("fill", "cover", "the static region $r_h < r < r_c$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $2.5$ and $3\\,r_s$")
+    fig.legend("line", "r2", "the same radii in the next static region")
+    fig.legend("line", "horizon", "the throats $r = r_h$ and the widest circle $r = r_c$, where the slice crosses the horizons")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("static", "Between the horizons", "$r_s$", [surface], fig.done(),
+                 settings="$r_s = 1$, the unit of every length, and $\\Lambda = 0.2/r_s^2$, so that "
+                          "$r_h = 1.085\\,r_s$ and $r_c = 3.215\\,r_s$.")]
+
+
 def vaidya(ck, src):
     """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
     for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
@@ -4084,6 +4147,7 @@ DRAWN = {
     "rn_metric": rn_metric,
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
+    "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "vaidya": vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "tolman_bondi": tolman_bondi,
@@ -4272,6 +4336,17 @@ CAPTIONS = {
         "the same at every moment.",
         "The areal radius $r = R\\sin\\chi$ and Einstein's projected coordinates cover the hemisphere "
         "$\\chi < \\pi/2$ and end at the equator $r = R$, where the surface stands vertical.",
+    ],
+    ("schwarzschild_de_sitter", "static"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Kottler's spacetime at the moment $t = 0$ of its static chart, "
+        "drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "$g_{rr} = (1 - r_s/r - \\Lambda r^2/3)^{-1}$, larger than 1 everywhere between the horizons, so the "
+        "surface climbs at $dz/dr = \\sqrt{g_{rr} - 1}$ from the throat $r_h$, its smallest circle, to $r_c$, its "
+        "widest, and stands vertical at both.",
+        "The slice runs through the bifurcation sphere at $r_c$ into the next static region, the same surface "
+        "turned over, and through its throat at $r_h$ into another, a chain of throats and widest circles "
+        "without end, one period of which is drawn. Identifying the two throats closes the slice into a space "
+        "of topology $S^1 \\times S^2$.",
     ],
     ("vaidya", "shell"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, from "

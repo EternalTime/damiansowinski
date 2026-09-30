@@ -4593,10 +4593,11 @@
       "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the cosmological constant $\\Lambda$ carries an inverse length squared. The horizons $r_h < r_c$ are the two positive roots of $1 - r_s/r - \\Lambda r^2/3$. We keep factors of $c$ explicit.",
       "references": [
         "einstein1917",
-        "kottler1916",
         "kottler1918",
         "goenner2016",
         "trefftz1922",
+        "desitter1917",
+        "podolsky1999",
         "lake1977",
         "stuchlik1999",
         "gibbons1977",
@@ -4604,9 +4605,7 @@
         "nariai1950",
         "bousso1996",
         "bousso1998",
-        "podolsky1999",
         "schleich2010",
-        "carter1968separable",
         "islam1983",
         "rindler2007"
       ],
@@ -4702,7 +4701,7 @@
               "description": "Cosmological constant, $0 < \\Lambda < 4/(9r_s^2)$, carrying an inverse length squared"
             }
           ],
-          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r - \\Lambda r^2/3\\right)^{-1}$.",
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r - \\Lambda r^2/3\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
           "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} - \\dfrac{\\Lambda r^2}{3}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
           "metric_components": [
             {
@@ -4771,7 +4770,7 @@
               "description": "Cosmological constant, $0 < \\Lambda < 4/(9r_s^2)$, carrying an inverse length squared"
             }
           ],
-          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r - \\Lambda r^2/3\\right)^{-1}$.",
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r - \\Lambda r^2/3\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
           "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} - \\dfrac{\\Lambda r^2}{3}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
           "metric_components": [
             {

@@ -139,6 +139,10 @@ Every cone is a future cone, oriented by the rule the table names:
               orientation through horizons the chart's t cannot, reading the region inside
               r_s as the black hole, as an ingoing Eddington-Finkelstein chart does.
   'outgoing'  the outgoing family future directed toward larger r or x.
+  'split'     'ingoing' below the radius the row names in `split`, and 'outgoing' above it,
+              for a static region between a black hole horizon and a cosmological one: both
+              agree with t inside that region, and together they carry the orientation
+              through each horizon into the black hole and into the expanding region beyond.
   'vector'    the chart's time direction: future where g(k, d_0) < 0. Godel needs it,
               since its published g^tt is positive and no time function exists.
 
@@ -244,7 +248,8 @@ class Diagram:
     fixed: dict = field(default_factory=dict)       # every other coordinate -> value
     to_display: tuple = ((0, 1), (1, 0))            # rows: X = a.(x^0, r), Y = b.(x^0, r), or POLAR
     mirror: bool = False            # a line through the centre: x = r and its reflection x = -r
-    orient: str = "tau"             # tau, ingoing, outgoing or vector; see the header
+    orient: str = "tau"             # tau, ingoing, outgoing, split or vector; see the header
+    split: float = None             # the radius where orient="split" turns from ingoing to outgoing
     tau: str = "t"                  # the time function, in the Reader's plain names
     families: tuple = RADIAL        # the names of P and M on the page
     cones: tuple = (7, 7)
@@ -341,6 +346,11 @@ BIANCHI_DUST = {"funcs": ["a_1", "a_2", "a_3"], "eqs": [["x", "x"], ["y", "y"], 
 # turn from spacelike to timelike; the views read it off the published g_phiphi as well.
 GODEL_RC = math.asinh(1.0)
 
+# Kottler's black hole at Lambda r_s^2 = 1/5, so that r_h = 1.085 r_s and r_c = 3.215 r_s, and the
+# radius (3r_s/2Lambda)^(1/3) of its static observer in free fall, where f is greatest.
+SDS = {"r_s": 1, "Lambda": "1/5"}
+SDS_STATIC = 7.5 ** (1 / 3)
+
 # Every view the page draws, in the order it shows them. Plot ranges are chosen with
 # equal scales on both axes, so light in flat space runs at 45 degrees, and cone
 # lattices so that no cone sits exactly on a line where the chart is singular.
@@ -359,6 +369,18 @@ DIAGRAMS = [
     Diagram("schwarzschild", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 6, -6, 0), "$r/r_s$", "$u/r_s$", {"r_s": 1}, EQUATOR,
             tau="u + r", areal=True),
+    Diagram("schwarzschild_de_sitter", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_s$", "$ct/r_s$", SDS, EQUATOR, orient="split", split=SDS_STATIC, areal=True),
+    Diagram("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 4, -2, 2), "$r/r_s$", "$(v - r)/r_s$", SDS, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 4, 0, 4), "$r/r_s$", "$v/r_s$", SDS, EQUATOR, tau="v - r", areal=True),
+    Diagram("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 4, -2, 2), "$r/r_s$", "$(u + r)/r_s$", SDS, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 4, -4, 0), "$r/r_s$", "$u/r_s$", SDS, EQUATOR, tau="u + r", areal=True),
     Diagram("frw", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 3, 0, 2),
             "$r\\;[c/H_0]$", "$ct\\;[c/H_0]$", {"k": 0}, EQUATOR, areal=True, dust=FRW_DUST,
             reference="$a = 1$",
@@ -669,6 +691,49 @@ CAPTIONS = {
         "against the chart's own coordinates. The outgoing family is $u = $ const and runs "
         "horizontally here, since $u$ is itself a null coordinate. The ingoing family turns "
         "vertical at $r_s$ and leans toward larger $r$ inside it.",
+    ],
+    ("schwarzschild_de_sitter", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\Lambda = 0.2/r_s^2$, "
+        "the same at every other angle by spherical symmetry. There $g^{rr} = 1 - r_s/r - \\Lambda r^2/3$ "
+        "vanishes at the black hole horizon $r_h = 1.085\\,r_s$ and at the cosmological horizon "
+        "$r_c = 3.215\\,r_s$, and the cones close at both, since $dt/dr = \\pm(1 - r_s/r - \\Lambda r^2/3)^{-1}$ "
+        "diverges there. Between them the cones are widest at $r = (3r_s/2\\Lambda)^{1/3} = 1.957\\,r_s$, "
+        "where $g^{rr}$ is greatest.",
+        "Inside $r_h$ and beyond $r_c$, $t$ is a spacelike coordinate, and the components alone do not fix "
+        "which way is future. We take it from the ingoing Eddington-Finkelstein chart inside $r_h$, which "
+        "makes that region the black hole, where every cone points to $r = 0$, and from the outgoing one "
+        "beyond $r_c$, which makes that region the expanding universe, where every cone points to larger $r$. "
+        "The Kretschmann scalar $12r_s^2/r^6 + 8\\Lambda^2/3$ diverges only at $r = 0$.",
+    ],
+    ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\Lambda = 0.2/r_s^2$ with "
+        "$v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family "
+        "has $dv/dr = 2(1 - r_s/r - \\Lambda r^2/3)^{-1}$, so it stands vertical at both horizons: each horizon "
+        "is an outgoing ray that stays where it is.",
+        "The chart crosses the black hole horizon $r_h = 1.085\\,r_s$ into the black hole, where both edges of "
+        "every future cone point to smaller $r$. It crosses the cosmological horizon $r_c = 3.215\\,r_s$ into "
+        "the contracting region in the past of the static one, where both edges point to smaller $r$ as well.",
+    ],
+    ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a "
+        "null coordinate. The outgoing family turns vertical at both horizons and leans back toward smaller "
+        "$r$ inside $r_h$ and beyond $r_c$.",
+    ],
+    ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\Lambda = 0.2/r_s^2$ with "
+        "$u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family "
+        "stands vertical at both horizons. Inside $r_h$ both edges of every future cone point to larger $r$: "
+        "this is the white hole, which nothing from outside can enter. Beyond $r_c$ they point to larger $r$ "
+        "as well, into the expanding region that the static observers' light goes on to reach.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
+        "null coordinate. The ingoing family turns vertical at both horizons and leans toward larger $r$ "
+        "inside $r_h$ and beyond $r_c$.",
     ],
     ("frw", "comoving_spherical", "radial"): [
         "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at "
@@ -1671,6 +1736,8 @@ class Chart:
             return g00 * p[0] * q[0] + g0r * (p[0] * q[1] + p[1] * q[0]) + grr * p[1] * q[1]
 
         mode = self.spec.orient
+        if mode == "split":
+            mode = "ingoing" if r < self.spec.split else "outgoing"
         if mode == "ingoing":
             sP = -np.sign(P[1])
             return sP, -np.sign(dot(sP * P, M))
@@ -2986,6 +3053,18 @@ def _away(*radii):
 
 BTZ_STATIC, BTZ_ROTATING = (1.0, 0.0), (0.8, 0.2)
 
+
+def _sds_rstar(r):
+    """Kottler's tortoise coordinate at r_s = 1 and Lambda = 1/5, sum_i ln|r - r_i|/f'(r_i) over the
+    three roots of Lambda r^3 - 3r + 3r_s, the negative one included, since 1/f has no polynomial part."""
+    roots = np.roots([0.2, 0, -3, 3]).real
+    return sum(np.log(np.abs(r - ri)) / (1 / ri ** 2 - 0.4 * ri / 3) for ri in roots)
+
+
+def _sds_away(x, r):
+    return (np.abs(r - 1.0852) > 0.05) & (np.abs(r - 3.2146) > 0.05)
+
+
 # (metric, system, view): (what P conserves, what M conserves, where to compare). None
 # where a family has no closed form. P moves toward smaller r or x, M toward larger.
 CLOSED_FORMS = {
@@ -3008,6 +3087,12 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), lambda v, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
+    ("schwarzschild_de_sitter", "static", "radial"):
+        (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
+    ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _sds_rstar(r), _sds_away),
+    ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _sds_rstar(r), lambda u, r: u, _sds_away),
     ("rn_metric", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [0.64, 0.36]), lambda t, r: t - _rstar(r, [0.64, 0.36]),
          lambda t, r: (np.abs(r - 0.64) > 0.05) & (np.abs(r - 0.36) > 0.05)),

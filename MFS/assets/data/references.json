@@ -1,5 +1,5 @@
 {
-  "version": "cd5c3a0f7d030184",
+  "version": "f511fae3262c5820",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -6159,20 +6159,6 @@
         "url": "https://doi.org/10.1103/PhysRevD.70.044020"
       }
     },
-    "kottler1916": {
-      "type": "article",
-      "fields": {
-        "title": "\\\"Uber Einsteins \\\"Aquivalenzhypothese und die Gravitation",
-        "author": "Kottler, Friedrich",
-        "journal": "Annalen der Physik",
-        "volume": "355",
-        "number": "16",
-        "pages": "955--972",
-        "year": "1916",
-        "doi": "10.1002/andp.19163551605",
-        "url": "https://doi.org/10.1002/andp.19163551605"
-      }
-    },
     "kottler1918": {
       "type": "article",
       "fields": {
@@ -6331,20 +6317,6 @@
         "eprint": "0908.4110",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/0908.4110"
-      }
-    },
-    "carter1968separable": {
-      "type": "article",
-      "fields": {
-        "title": "Hamilton-Jacobi and Schrodinger separable solutions of Einstein's equations",
-        "author": "Carter, Brandon",
-        "journal": "Communications in Mathematical Physics",
-        "volume": "10",
-        "number": "4",
-        "pages": "280--310",
-        "year": "1968",
-        "doi": "10.1007/BF03399503",
-        "url": "https://doi.org/10.1007/BF03399503"
       }
     },
     "islam1983": {
