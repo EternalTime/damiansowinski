@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
-schwarzschild_de_sitter and milne, and Godel's cylindrical chart.
+schwarzschild_de_sitter, milne and einstein_rosen_waves, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -385,8 +385,10 @@ def rewritten(value, substitutions, chart):
     for old, new in substitutions:
         text = text.replace(old, new)
     if text != value:
+        # A side the rewrite left alone, as the R of "R = ...", is not read again.
         for side, original in zip(text.split("="), value.split("="), strict=True):
-            chart.check(side, chart.reader(original))
+            if side != original:
+                chart.check(side, chart.reader(original))
     return text
 
 
@@ -654,7 +656,177 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
           "c_metric": c_metric,
           "schwarzschild_de_sitter": [lambda s=s: schwarzschild_de_sitter(s) for s in SDS_CHARTS],
-          "milne": [lambda s=s: milne(s) for s in ("comoving_hyperbolic", "comoving_spherical", "logarithmic_time", "inertial")]}
+          "milne": [lambda s=s: milne(s) for s in ("comoving_hyperbolic", "comoving_spherical", "logarithmic_time", "inertial")],
+          "einstein_rosen_waves": [lambda s=s: einstein_rosen(s) for s in ("cylindrical", "null")]}
+
+
+# -- Einstein-Rosen ------------------------------------------------------------------
+
+ER_PARAMETERS = {"cylindrical": ["\\psi = \\psi(t,\\rho)", "\\gamma = \\gamma(t,\\rho)"],
+                 "null": ["\\psi = \\psi(u,v)", "\\gamma = \\gamma(u,v)"]}
+
+
+def einstein_rosen(system):
+    """The Einstein-Rosen waves in the cylindrical chart of Einstein and Rosen, with psi and
+    gamma free functions of t and rho, and in the null chart u = ct - rho, v = ct + rho, both
+    lengths. The null chart is checked, slot by slot, to be the cylindrical metric pulled back
+    through ct = (v + u)/2 and rho = (v - u)/2, with psi and gamma carried along as functions of
+    the same event. No component assumes a field equation."""
+    parameters = ER_PARAMETERS[system]
+    if system == "cylindrical":
+        coords = ["t", "\\rho", "\\phi", "z"]
+
+        def line(c2, rho2):
+            return (f"ds^2 = e^{{2(\\gamma - \\psi)}}\\left(-{c2}dt^2 + d\\rho^2\\right)"
+                    f" + {rho2}e^{{-2\\psi}}d\\phi^2 + e^{{2\\psi}}dz^2")
+        spec_line, chart_line = line("c^2", "\\rho^2"), line("", "\\rho^2")
+        domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)",
+                   "\\gamma = 0 \;\\text{at}\; \\rho = 0 \;\\text{(a regular axis)}"]
+        name = "Cylindrical"
+    else:
+        coords = ["u", "v", "\\phi", "z"]
+
+        def line(c2, rho2):
+            return (f"ds^2 = -e^{{2(\\gamma - \\psi)}}{c2}du\\,dv"
+                    f" + {rho2}e^{{-2\\psi}}d\\phi^2 + e^{{2\\psi}}dz^2")
+        spec_line = chart_line = line("", "\\dfrac{(v - u)^2}{4}")
+        domains = ["u \\in (-\\infty, \\infty)", "v \\in [u, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)",
+                   "\\gamma = 0 \;\\text{at}\; v = u \;\\text{(a regular axis)}"]
+        name = "Null"
+    probe = vm.Reader(coords, parameters, ())
+    x, y = probe.symbol[coords[0]], probe.symbol[coords[1]]
+    psi, gam = probe.parameters["psi"], probe.parameters["gamma"]
+    D = sp.Derivative
+    lead = [gam, psi, D(gam, y), D(gam, x), D(psi, y), D(psi, x), D(psi, (y, 2)), D(psi, x, y), D(psi, (x, 2)),
+            D(gam, (y, 2)), D(gam, x, y), D(gam, (x, 2))]
+    if system == "cylindrical":
+        lead.append(probe.symbol["\\rho"])
+        overrides, width = {}, {}
+    else:
+        # Twice the radius, v - u, is printed whole wherever it stands, and never as v and u apart.
+        W = sp.Symbol("W", positive=True)
+        lead.append(W)
+        overrides, width = {W: "\\left(v - u\\right)"}, {y: x + W}
+    spec = {
+        "metric_id": "einstein_rosen_waves",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": spec_line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": lead, "overrides": overrides, "factors": list(overrides) + lead},
+        "pretty": lambda value: sp.powsimp(sp.factor(outside_functions(sp.sympify(value), width)), combine="exp"),
+        "rewrite": ER_REWRITES,
+        "kretschmann_text": einstein_rosen_kretschmann,
+        "geodesics": ER_GEODESICS[system],
+    }
+    if system == "null":
+        spec["check"] = einstein_rosen_pullback
+    return spec
+
+
+def einstein_rosen_kretschmann(chart):
+    """K in the orthonormal frame e^{psi - gamma} d_t, e^{psi - gamma} d_rho, (e^psi/rho) d_phi,
+    e^{-psi} d_z, with d_t = d_u + d_v and d_rho = d_v - d_u in the null chart: every nonzero
+    frame component of Riemann is e^{2(psi - gamma)} times a bracket, six pair a bivector with
+    itself and two, R_{0 phi 1 phi} and R_{0 z 1 z}, pair a time bivector with a space one, so
+    K = 4e^{4(psi - gamma)} times the six brackets squared less twice the two squared."""
+    riemann = chart.geo.riemann_llll()
+    psi, gam = chart.reader.parameters["psi"], chart.reader.parameters["gamma"]
+    a, b = chart.symbols[:2]
+    if chart.coords_tex[0] == "t":
+        rho, plane = b, [[1, 0], [0, 1]]
+    else:
+        rho, plane = (b - a) / 2, [[1, 1], [-1, 1]]
+    lapse = sp.exp(psi - gam)
+    frame = [[lapse * plane[0][0], lapse * plane[0][1], 0, 0], [lapse * plane[1][0], lapse * plane[1][1], 0, 0],
+             [0, 0, sp.exp(psi) / rho, 0], [0, 0, 0, sp.exp(-psi)]]
+
+    def component(A, B, C, E):
+        total = 0
+        for i in range(4):
+            for j in range(4):
+                for k in range(4):
+                    for m in range(4):
+                        w = frame[A][i] * frame[B][j] * frame[C][k] * frame[E][m]
+                        if w != 0:
+                            total += w * vm._at(riemann, (i, j, k, m))
+        return vm.norm(sp.expand(total * sp.exp(2 * gam - 2 * psi)))
+
+    diagonal = [(0, 1, 0, 1), (0, 2, 0, 2), (0, 3, 0, 3), (1, 2, 1, 2), (1, 3, 1, 3), (2, 3, 2, 3)]
+    mixed = [(0, 2, 1, 2), (0, 3, 1, 3)]
+
+    def square(index):
+        value = component(*index)
+        text = chart.text(value)
+        if text.startswith("-"):
+            text = chart.text(-value)
+        return "\\left(" + text + "\\right)^2"
+
+    body = " + ".join(square(i) for i in diagonal) + " - 2" + " - 2".join(square(i) for i in mixed)
+    return "4e^{4\\psi - 4\\gamma}\\left(" + body + "\\right)"
+
+
+def outside_functions(value, substitutions):
+    """`value` with `substitutions` made in the bare coordinates only, every function and
+    derivative of one held apart, so psi(u, v) keeps its arguments."""
+    held = {f: sp.Dummy() for f in value.atoms(sp.Derivative) | value.atoms(sp.core.function.AppliedUndef)}
+    back = {d: f for f, d in held.items()}
+    return value.xreplace(held).subs(substitutions).xreplace(back)
+
+
+# e^{2 psi - 2 gamma} as the files write a difference, leading with its positive term.
+ER_REWRITES = [("e^{-2\\gamma + 2\\psi}", "e^{2\\psi - 2\\gamma}"), ("e^{-4\\gamma + 4\\psi}", "e^{4\\psi - 4\\gamma}"),
+               ("e^{-2\\gamma + 4\\psi}", "e^{4\\psi - 2\\gamma}"), ("e^{-4\\gamma + 2\\psi}", "e^{2\\psi - 4\\gamma}"),
+               ("}{\\left(v - u\\right)}", "}{v - u}")]
+
+# Each geodesic equation with the terms the printed Christoffel symbols share gathered.
+ER_GEODESICS = {
+    "cylindrical": [
+        "\\ddot{t} + \\left(\\partial_t\\gamma - \\partial_t\\psi\\right)\\left(\\dot{t}^2 + \\dot{\\rho}^2\\right)"
+        " + 2\\left(\\partial_\\rho\\gamma - \\partial_\\rho\\psi\\right)\\dot{t}\\dot{\\rho}"
+        " - \\rho^2e^{-2\\gamma}\\partial_t\\psi\\,\\dot{\\phi}^2 + e^{4\\psi - 2\\gamma}\\partial_t\\psi\\,\\dot{z}^2 = 0",
+        "\\ddot{\\rho} + \\left(\\partial_\\rho\\gamma - \\partial_\\rho\\psi\\right)\\left(\\dot{t}^2 + \\dot{\\rho}^2\\right)"
+        " + 2\\left(\\partial_t\\gamma - \\partial_t\\psi\\right)\\dot{t}\\dot{\\rho}"
+        " + \\rho\\left(\\rho\\,\\partial_\\rho\\psi - 1\\right)e^{-2\\gamma}\\dot{\\phi}^2 - e^{4\\psi - 2\\gamma}\\partial_\\rho\\psi\\,\\dot{z}^2 = 0",
+        "\\ddot{\\phi} - 2\\partial_t\\psi\\,\\dot{t}\\dot{\\phi}"
+        " + \\dfrac{2\\left(1 - \\rho\\,\\partial_\\rho\\psi\\right)}{\\rho}\\dot{\\rho}\\dot{\\phi} = 0",
+        "\\ddot{z} + 2\\partial_t\\psi\\,\\dot{t}\\dot{z} + 2\\partial_\\rho\\psi\\,\\dot{\\rho}\\dot{z} = 0",
+    ],
+    "null": [
+        "\\ddot{u} + 2\\left(\\partial_u\\gamma - \\partial_u\\psi\\right)\\dot{u}^2"
+        " - \\dfrac{\\left(v - u\\right)\\left(\\left(v - u\\right)\\partial_v\\psi - 1\\right)e^{-2\\gamma}}{2}\\dot{\\phi}^2"
+        " + 2e^{4\\psi - 2\\gamma}\\partial_v\\psi\\,\\dot{z}^2 = 0",
+        "\\ddot{v} + 2\\left(\\partial_v\\gamma - \\partial_v\\psi\\right)\\dot{v}^2"
+        " - \\dfrac{\\left(v - u\\right)\\left(\\left(v - u\\right)\\partial_u\\psi + 1\\right)e^{-2\\gamma}}{2}\\dot{\\phi}^2"
+        " + 2e^{4\\psi - 2\\gamma}\\partial_u\\psi\\,\\dot{z}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{2\\left(1 + \\left(v - u\\right)\\partial_u\\psi\\right)}{v - u}\\dot{u}\\dot{\\phi}"
+        " + \\dfrac{2\\left(1 - \\left(v - u\\right)\\partial_v\\psi\\right)}{v - u}\\dot{v}\\dot{\\phi} = 0",
+        "\\ddot{z} + 2\\partial_u\\psi\\,\\dot{u}\\dot{z} + 2\\partial_v\\psi\\,\\dot{v}\\dot{z} = 0",
+    ],
+}
+
+
+def einstein_rosen_pullback(chart):
+    spec = einstein_rosen("cylindrical")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    u, v = chart.symbols[:2]
+    P, Q = sp.symbols("P Q")
+    # The metric components carry psi and gamma undifferentiated, so each is one value at an event.
+    values = {source.reader.parameters["psi"]: P, source.reader.parameters["gamma"]: Q}
+    target = {chart.reader.parameters["psi"]: P, chart.reader.parameters["gamma"]: Q}
+    t, rho = source.symbols[:2]
+    jacobian = sp.Matrix([[sp.Rational(1, 2), sp.Rational(1, 2), 0, 0], [-sp.Rational(1, 2), sp.Rational(1, 2), 0, 0],
+                          [0, 0, 1, 0], [0, 0, 0, 1]])
+    at = {t: (u + v) / 2, rho: (v - u) / 2}
+    at.update(dict(zip(source.symbols[2:], chart.symbols[2:])))
+    pulled = jacobian.T * source.geo.g.subs(values).subs(at) * jacobian
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm(pulled[a, b] - chart.geo.g[a, b].subs(target)) != 0:
+                raise AssertionError(f"einstein_rosen_waves: the pullback of the cylindrical metric misses the "
+                                     f"null chart in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+
 
 
 def write(spec):
@@ -676,6 +848,8 @@ def write(spec):
         computed = chart.geo.ricci_scalar() if field == "ricci_scalar" else chart.geo.kretschmann()
         if field in spec:
             math[field] = ("R = " if field == "ricci_scalar" else "K = ") + chart.check(spec[field], computed)
+        elif field == "kretschmann" and "kretschmann_text" in spec:
+            math[field] = "K = " + chart.check(spec["kretschmann_text"](chart), computed)
         elif field == "kretschmann":
             math[field] = "K = " + chart.text(computed)
     if spec.get("bare_scalar"):

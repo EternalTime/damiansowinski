@@ -22,7 +22,7 @@ import sympy as sp
 import verify_metrics as vm
 
 GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell", "alpha",
-         "Lambda"}
+         "Lambda", "gamma"}
 # A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
 ACCENTED = {"tildephi": "\\tilde\\phi"}
 TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
@@ -287,7 +287,8 @@ class Printer:
         if base.is_Number:
             return (0,)
         if base in self.overrides:
-            return (3, 100)
+            # An override the chart lists among its factors is written where a symbol would be.
+            return (1, self.rank_of(base), "") if base in self.factors else (3, 100)
         if base in self.named:
             return (3, 50 + list(self.named).index(base))
         if isinstance(base, sp.Symbol):
