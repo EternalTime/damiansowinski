@@ -2027,6 +2027,16 @@ class EmbeddingDiagrams(unittest.TestCase):
         for theta, rho, z in piece("bertotti_robinson", "sphere", view=1):
             near(rho, math.sin(theta), f"Bertotti-Robinson sphere rho at {theta}")
             near(z, 1 - math.cos(theta), f"Bertotti-Robinson sphere z at {theta}")
+        # The Nariai universe's moments are cylinders of radius cosh(ct) and height 2 pi, a = 1, and
+        # its sphere has radius a.
+        for number, t in enumerate((-1.5, -0.75, 0.0, 0.75, 1.5)):
+            for pid, z_of in (("near", lambda th: th), ("far", lambda th: 2 * math.pi - th)):
+                for theta, rho, z in piece("nariai", pid, number):
+                    near(rho, math.cosh(t), f"Nariai rho at ct = {t}, theta = {theta}")
+                    near(z, z_of(theta), f"Nariai z at ct = {t}, theta = {theta}")
+        for theta, rho, z in piece("nariai", "sphere", view=1):
+            near(rho, math.sin(theta), f"Nariai sphere rho at {theta}")
+            near(z, 1 - math.cos(theta), f"Nariai sphere z at {theta}")
         # Van Stockum's circles grow to r = R/sqrt(2) and shrink after, and the drawing stops at 0.83 R.
         dust = piece("stockum_dust", "dust")
         for r, rho, z in dust:
@@ -3093,6 +3103,16 @@ class Slices(unittest.TestCase):
                 return (lambda X: 0.0), [3.0 if hong_teo else 2.0]
             lo, hi = self.reach(surface, "spherical")
             return (lambda X: 0.0), ([6 / hi, 6 / lo] if hong_teo else [lo, hi])
+        if key.startswith("nariai"):
+            # A global moment runs round the whole circle of chi, and on the static patch it is
+            # sinh(ct) = sinh(ct_k)/sqrt(1 - r^2), Lambda = 1, from horizon to horizon; the sphere is
+            # the event t = 0, r = 0, which is chi = pi/2 of the global chart.
+            static = "/static/" in key
+            if not mark["lines"]:
+                return (lambda X: 0.0), [0.0 if static else math.pi / 2]
+            if static:
+                return (lambda X: math.asinh(math.sinh(t) / math.sqrt(max(1 - X * X, 1e-300)))), None
+            return (lambda X: t), None
         if key.startswith("bertotti_robinson"):
             lo, hi = self.reach(surface) if mark["lines"] else (1, 1)
             return (lambda X: 0.0), [lo, hi]
@@ -3255,6 +3275,11 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - t * t), 2e-3 * (1 + tp * tp) * (1 + tq * tq), f"{where} at {(X, T)}")
+                    elif metric_id == "nariai":
+                        # A global moment is the line tan(eta) = sinh(ct), Lambda = 1; the sphere
+                        # is the event at eta = 0.
+                        eta = 0.0 if t is None else math.atan(math.sinh(t))
+                        self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
                     elif metric_id == "rn_metric" and mark["view"] == "inside":
                         self.assertTrue(all(abs(T - math.pi) < 2e-4 for _, T in points), where)
                     else:
