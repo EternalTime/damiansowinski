@@ -3978,7 +3978,7 @@ def milne(ck, src):
 
 
 def einstein_rosen_waves(ck, src):
-    """The pulse of Weber, Wheeler and Bonnor at C = a = 1, going out from the axis, at the moments
+    """The pulse of Weber, Wheeler, and Bonnor at C = a = 1, going out from the axis, at the moments
     ct = a to 8a of the cylindrical chart, on the plane z = 0: g_rhorho = e^{2(gamma - psi)} and
     g_phiphi = rho^2 e^{-2psi}, so the circle at rho has radius rho e^{-psi} and the surface climbs
     at dz/drho = e^{-psi} sqrt(e^{2gamma} - (1 - rho d_rho psi)^2). psi and gamma enter as numbers,
@@ -4479,7 +4479,7 @@ CAPTIONS = {
         "without end, one period of which is drawn. Identifying the two throats closes the slice into a space "
         "of topology $S^1 \\times S^2$.",
     ("einstein_rosen_waves", "pulse"): [
-        "The plane $z = 0$ of space around a pulse of Weber, Wheeler and Bonnor ($C = a$) going out from the axis, "
+        "The plane $z = 0$ of space around a pulse of Weber, Wheeler, and Bonnor ($C = a$) going out from the axis, "
         "from $ct = a$ to $8a$, each moment drawn as a surface in flat space with every distance along it the metric "
         "distance. The metric on it is $e^{2(\\gamma - \\psi)}d\\rho^2 + \\rho^2e^{-2\\psi}d\\phi^2$, so the circle at "
         "$\\rho$ has radius $\\rho e^{-\\psi}$, and on the axis $\\gamma = 0$ and the surface starts level.",
