@@ -17,7 +17,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "fb772b5255b0239a",
+    "version": "318f218a37af8709",
     "diagrams": "a0c6ac73f99ce279",
     "embedding": "4df721cabada780a"
   },
@@ -43,7 +43,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3893823158e5fed2",
+    "version": "9d17efa38abadfe7",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "92b6eb7611a849b5",
     "embedding": "f206e9691162e00c"
@@ -67,7 +67,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ddd3c294a5f76d1c",
+    "version": "3d750f9bf9c74578",
     "diagrams": "53330fcb52d2163e",
     "conformal": "c761d921c8d595a0",
     "embedding": "6f87bc862d55bdb8"
@@ -90,7 +90,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cdf8e51eb8edf7be",
+    "version": "227938ced993dec8",
     "diagrams": "cb7186c27b09c25a",
     "embedding": "f4b6c257a5010366"
   },
@@ -117,7 +117,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f858fdf745ed2e9b",
+    "version": "93f4dd46157ca779",
     "diagrams": "cf2067d3dcac094d",
     "conformal": "a9b4d2cfd8631019",
     "embedding": "ba0bed728fc36061"
@@ -143,7 +143,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "132c6e32a5d30c3b",
+    "version": "0bb10f2ad1c6ef64",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "f0835bc33ed9fd94",
     "embedding": "8c16d5714cfa992a"
@@ -167,7 +167,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d4351fc05c9b9a88",
+    "version": "5590f05784977de3",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "690299be36af8c35",
     "embedding": "10938eea49b57508"
@@ -192,7 +192,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "20b8e7c2048a9a5d",
+    "version": "293d98b778a60c36",
     "diagrams": "efbfd28bf9742580",
     "embedding": "403b6a3bdc5df374"
   },
@@ -216,7 +216,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "82a6a7bdf415615c",
+    "version": "89819b3d261872f4",
     "diagrams": "e3cff4a7ae3e1e60",
     "embedding": "13b718edc27b8fa8"
   },
@@ -249,7 +249,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "499dd79c0794d4d6",
+    "version": "d3ba38bd0c59ae6e",
     "diagrams": "2bebc0757ae1bb04",
     "conformal": "610924fd3ed3db9a",
     "embedding": "6bb56d3913ec75d1"
@@ -286,7 +286,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "484c810d5b6a42ce",
+    "version": "dc5153939a9def01",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "4f88c10d28ad1aaa",
     "embedding": "ae9ae4e7ebb9ac2e"
@@ -312,7 +312,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "02a3b51f5b1363ab",
+    "version": "0e121b566c9e4e2d",
     "diagrams": "8465ef9c4b047da5",
     "embedding": "166bc957997dd4b5"
   },
@@ -336,7 +336,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cc2cb6902eb04b3f",
+    "version": "b33b8c147ee9f264",
     "diagrams": "ddc56257da0795ee",
     "embedding": "7100c6333fe6ac84"
   },
@@ -360,7 +360,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "f0ccae242dc8659e",
+    "version": "40afe2794224ede4",
     "embedding": "cd4d9ba73f0459f5"
   },
   {
@@ -376,7 +376,7 @@
       "Lorentzian",
       "four-dimensional"
     ],
-    "version": "e7da3e75a953b230",
+    "version": "faa3edf6a4830237",
     "diagrams": "38ee5a21595bd0a6",
     "conformal": "0e7497507d97447b",
     "embedding": "656f2d780f151817"
@@ -398,7 +398,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c3a3b11c0b0aee2e",
+    "version": "c50396e0f3bdf432",
     "diagrams": "8682a860d329f091",
     "conformal": "a9e34cf1c120e37d",
     "embedding": "399e851fbe2c9368"
@@ -427,7 +427,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9e1a5368c653fc68",
+    "version": "402c85b2784aa8ef",
     "embedding": "b433e75b0b01bb1c"
   },
   {
@@ -450,7 +450,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3b6151ccd4e90878",
+    "version": "092310c7b0645f6f",
     "diagrams": "6a553e7d399d3c52",
     "conformal": "dbf0f08be80bb2dc",
     "embedding": "2fb2f35ad8d95922"
@@ -475,7 +475,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "02f9cf13215ac7f6",
+    "version": "5571be1787cdf61a",
     "diagrams": "4b6c4921b6b646f7",
     "embedding": "da5a4f2712be8435"
   },
@@ -502,7 +502,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5113bc988286a96a",
+    "version": "3e930091ee742096",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "b029855dfdd8ce93",
     "embedding": "785668735c3299af"
@@ -524,7 +524,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a8460021efd293ec",
+    "version": "de0877bcf7d5128a",
     "diagrams": "918bdc629a387541",
     "embedding": "a93313234ded6243"
   },
@@ -556,7 +556,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9e17ebc7774f5c9d",
+    "version": "1d242d4092320c98",
     "diagrams": "4565bff8ba921a42",
     "conformal": "91e9cec2ecceaa0b",
     "embedding": "986896435d0558eb"
@@ -588,7 +588,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d6998bfa9f515dec",
+    "version": "4ac7d2343bca858c",
     "diagrams": "60920c375eef2fab",
     "conformal": "b6da61a89c363d47",
     "embedding": "d953fc47f6782519"
@@ -612,7 +612,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "16e995ef71b0734a",
+    "version": "a0224161ce10c44e",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "4181f245af34d03e"
@@ -636,7 +636,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eea3eb667aa95f98",
+    "version": "28dbf21f0d9da62b",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "c6d1e703edd33a78"
   },
@@ -661,7 +661,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4076fb11624d9f6d",
+    "version": "c1ad76001c3acb8e",
     "diagrams": "a6afc8c8528a23f2",
     "embedding": "ff09130d06eddfad"
   },
@@ -687,7 +687,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0e6136298904b88f",
+    "version": "964c52441dbbc8fa",
     "diagrams": "bf41df64d4244e61",
     "conformal": "553ea67b15fe0dd6",
     "embedding": "30404847553e5754"
@@ -713,7 +713,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "24894c9634dae45b",
+    "version": "a4e33e75c55b9e93",
     "diagrams": "87052dae566b6395",
     "conformal": "177413af20facdf4",
     "embedding": "d49fb374b774d259"
@@ -738,7 +738,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6c9d50b906f9330c",
+    "version": "27122febe6085b2e",
     "diagrams": "775c15d603986370",
     "conformal": "c9cba57f9e41d1e3",
     "embedding": "4644c9ca19680dbb"

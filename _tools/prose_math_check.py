@@ -56,6 +56,9 @@ def collect(read, names):
                 for number, paragraph in enumerate((data.get(field) or "").split("¶")):
                     if paragraph:
                         found[f"{name} {field} paragraph {number + 1}"] = paragraph
+            for chart in data.get("coordinates") or []:
+                if chart.get("convention"):
+                    found[f"{name} {chart['id']} convention"] = chart["convention"]
         else:
             for where, text in texts(data, name):
                 found[where] = text

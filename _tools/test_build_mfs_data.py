@@ -132,6 +132,8 @@ def prose(metric):
         where = f"coordinates[{system.get('id') or position}]"
         if system.get("name"):
             yield f"{where}.name", system["name"]
+        if system.get("convention"):
+            yield f"{where}.convention", system["convention"]
         for parameter in system.get("parameters") or []:
             if parameter.get("description"):
                 yield f"{where}.parameters[{parameter.get('symbol')}].description", parameter["description"]
@@ -571,9 +573,10 @@ def voiced_prose():
     history and convention, and every caption, note, restriction band and sentence stated in place
     of a drawing. Labels and legends name things and are not sentences."""
     for metric in build.load_metrics():
-        for field in ("history", "convention"):
-            for number, paragraph in build.prose_paragraphs(metric.get(field) or ""):
-                yield f"{metric['id']}.json: {field} paragraph {number}", paragraph
+        for number, paragraph in build.prose_paragraphs(metric.get("history") or ""):
+            yield f"{metric['id']}.json: history paragraph {number}", paragraph
+        for chart_id, convention in build.chart_conventions(metric):
+            yield f"{metric['id']}.json: convention of {chart_id}", convention
     sentences = re.compile(r"\.(?:caption\[\d+\]|input|settings|height|restriction|stops\[\d+\]|start|end|edge)$")
     fields = [field for name, diagram in diagram_files().items() for field in diagram_prose(name, diagram)]
     fields += [field for name, data in conformal_files().items() for field in conformal_prose(name, data)]
@@ -1157,61 +1160,108 @@ class NoGlow(unittest.TestCase):
 
 
 class ConventionShape(unittest.TestCase):
-    """Every convention is one paragraph or more, each of three to six sentences, broken
-    only where a sentence ends."""
-
-    HISTORY = "¶".join(HistoryShape.paragraph(3) for _ in range(5))
-
-    @classmethod
-    def metric(cls, convention, metric_id="x"):
-        return dict(HistoryShape.metric(cls.HISTORY, metric_id), convention=convention)
+    """Every convention says only what a reader needs to read the mathematics: each chart has
+    its own, the reader sees it with the text its spacetime shares across its charts as one
+    paragraph of at most five sentences, and none of it says the words the captain named on
+    29 September 2026."""
 
     @staticmethod
-    def convention(*counts):
-        return "¶".join(HistoryShape.paragraph(count, "Signature") for count in counts)
+    def metric(shared="We keep factors of $c$ explicit.", charts=None, metric_id="x"):
+        charts = {"one": "We use coordinates $(t, r)$."} if charts is None else charts
+        coordinates = [{"id": chart_id, "convention": text} if text is not None else {"id": chart_id}
+                       for chart_id, text in charts.items()]
+        metric = dict(HistoryShape.metric("¶".join(HistoryShape.paragraph(3) for _ in range(5)), metric_id),
+                      coordinates=coordinates)
+        if shared is not None:
+            metric["convention"] = shared
+        return metric
 
-    def test_every_convention_on_disk_keeps_its_shape(self):
+    @staticmethod
+    def sentences(count):
+        return " ".join(f"Coordinate {n} is a length." for n in range(count))
+
+    def test_every_convention_on_disk_keeps_the_rule(self):
         for metric in build.load_metrics():
-            if metric.get("convention"):
-                with self.subTest(metric["id"]):
-                    self.assertEqual(
-                        build.shape_problems(metric["id"], "convention", metric["convention"], 1), [])
+            with self.subTest(metric["id"]):
+                self.assertEqual(build.convention_problems(metric), [])
 
-    def test_a_convention_may_be_a_single_paragraph(self):
-        for counts in ((3,), (6,), (3, 6), (4, 4, 5, 3)):
-            self.assertIsNone(build.check_prose_shape([self.metric(self.convention(*counts))]))
+    def test_every_chart_on_disk_carries_its_own_convention(self):
+        charts = [(m["id"], c) for m in build.load_metrics() for c in m["coordinates"]]
+        self.assertGreater(len(charts), 40, "the charts were not all read")
+        for metric_id, chart in charts:
+            with self.subTest(f"{metric_id}/{chart['id']}"):
+                self.assertTrue(chart.get("convention", "").strip())
 
-    def test_a_spacetime_may_carry_no_convention(self):
-        self.assertIsNone(build.check_prose_shape([HistoryShape.metric(self.HISTORY)]))
+    def test_no_convention_on_disk_runs_past_five_sentences_or_says_what_the_captain_named(self):
+        for metric in build.load_metrics():
+            for chart_id, text in build.chart_conventions(metric):
+                with self.subTest(f"{metric['id']}/{chart_id}"):
+                    self.assertLessEqual(len(build.sentences(text)), 5)
+                    for phrase in ("cost", "nowhere does the geometry break", "standing objection",
+                                   "the Riemann tensor with the traces removed", "slots"):
+                        self.assertNotIn(phrase, text.lower())
 
-    def test_a_paragraph_too_short_or_too_long_is_refused_by_its_place(self):
-        for counts, place in (((2,), 1), ((7,), 1), ((4, 4, 2), 3), ((5, 7, 4), 2)):
-            with self.assertRaises(build.DataError) as raised:
-                build.check_prose_shape([self.metric(self.convention(*counts))])
-            self.assertIn(f"the convention, {list(counts)}, has", str(raised.exception))
-            self.assertIn(f"paragraph {place}", str(raised.exception))
+    def test_the_reader_sees_the_charts_text_then_the_shared_text(self):
+        metric = self.metric("We keep factors of $c$ explicit.",
+                             {"a": "We use coordinates $(t, r)$.", "b": "We use coordinates $(u, r)$."})
+        self.assertEqual(build.chart_conventions(metric),
+                         [("a", "We use coordinates $(t, r)$. We keep factors of $c$ explicit."),
+                          ("b", "We use coordinates $(u, r)$. We keep factors of $c$ explicit.")])
 
-    def test_the_longest_paragraph_may_be_at_most_twice_the_shortest(self):
-        with mock.patch.object(build, "PARAGRAPH_SENTENCES", (1, 10)):
-            self.assertIsNone(build.check_prose_shape([self.metric(self.convention(2, 4))]))
-            with self.assertRaises(build.DataError) as raised:
-                build.check_prose_shape([self.metric(self.convention(2, 5))])
-        self.assertIn("the convention, [2, 5], has a longest paragraph more than 2 times",
-                      str(raised.exception))
+    def test_one_to_five_sentences_in_all_are_taken(self):
+        for chart, shared in ((1, 0), (1, 1), (3, 2), (5, 0), (1, 4)):
+            metric = self.metric(self.sentences(shared), {"one": self.sentences(chart)})
+            self.assertIsNone(build.check_conventions([metric]))
 
-    def test_every_convention_out_of_shape_is_named_at_once(self):
+    def test_six_sentences_in_all_are_refused_by_chart(self):
+        metric = self.metric(self.sentences(2), {"short": self.sentences(3), "long": self.sentences(4)})
         with self.assertRaises(build.DataError) as raised:
-            build.check_prose_shape([self.metric(self.convention(9), "one"),
-                                     self.metric(self.convention(4, 4), "fine"),
-                                     self.metric(self.convention(3, 1), "two")])
+            build.check_conventions([metric])
+        self.assertIn("x.json: the convention of the chart 'long' has 6 sentences", str(raised.exception))
+        self.assertNotIn("'short'", str(raised.exception))
+
+    def test_the_words_the_captain_named_are_refused(self):
+        for text in ("A thin, fast bubble costs so much.", "The cost of the throat is exotic matter.",
+                     "It has no singularity, since nowhere does the geometry break.",
+                     "This is the standing objection to the drive.",
+                     "Its Weyl tensor is the Riemann tensor with the traces removed.",
+                     "Thirty six slots of $C_{\\mu\\nu\\rho\\sigma}$ behave the same way."):
+            with self.subTest(text):
+                with self.assertRaises(build.DataError):
+                    build.check_conventions([self.metric("We keep factors of $c$ explicit.", {"one": text})])
+        for text in ("We use coordinates $(t, r)$, with $t$ carrying dimensions of time.",
+                     "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$."):
+            self.assertIsNone(build.check_conventions([self.metric(text)]))
+
+    def test_a_chart_without_its_own_convention_is_refused(self):
+        for text in (None, "", "  "):
+            with self.assertRaises(build.DataError) as raised:
+                build.check_conventions([self.metric(charts={"one": "We use $t$.", "bare": text})])
+            self.assertIn("the chart 'bare' has no convention of its own", str(raised.exception))
+
+    def test_a_spacetime_keeps_its_shared_convention_even_when_empty(self):
+        self.assertIsNone(build.check_conventions([self.metric("")]))
+        with self.assertRaises(build.DataError) as raised:
+            build.check_conventions([self.metric(None)])
+        self.assertIn("x.json has no convention shared by its charts", str(raised.exception))
+
+    def test_a_convention_is_one_paragraph(self):
+        with self.assertRaises(build.DataError) as raised:
+            build.check_conventions([self.metric("We keep $c$.¶We keep $G$.")])
+        self.assertIn("runs to more than one paragraph", str(raised.exception))
+
+    def test_every_convention_out_of_rule_is_named_at_once(self):
+        with self.assertRaises(build.DataError) as raised:
+            build.check_conventions([self.metric(self.sentences(6), metric_id="one"), self.metric(metric_id="fine"),
+                                     self.metric(charts={"a": "The standing objection."}, metric_id="two")])
         self.assertIn("one.json: the convention", str(raised.exception))
         self.assertIn("two.json: the convention", str(raised.exception))
         self.assertNotIn("fine.json", str(raised.exception))
 
-    def test_a_convention_out_of_shape_leaves_both_published_files_alone(self):
+    def test_a_convention_out_of_rule_leaves_both_published_files_alone(self):
         before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
         broken = build.load_metrics()
-        broken[0] = dict(broken[0], convention=self.convention(8))
+        broken[0] = dict(broken[0], convention=self.sentences(8))
         for argv in (["--check"], []):
             with mock.patch.object(build, "load_metrics", return_value=broken), \
                     contextlib.redirect_stderr(io.StringIO()):
@@ -1219,55 +1269,24 @@ class ConventionShape(unittest.TestCase):
         for path, text in before.items():
             self.assertEqual(path.read_text(encoding="utf-8"), text)
 
-    def test_every_break_stands_where_a_sentence_ends(self):
+    def test_every_break_of_a_history_stands_where_a_sentence_ends(self):
         # A break takes the place of the space between two sentences, so turning every break
         # back into a space gives the prose as it reads unbroken, and splitting at the breaks
         # gives each paragraph with nothing to trim. A paragraph that leads into a table may
         # end on a colon, since the table is not prose.
         for metric in build.load_metrics():
-            for field in ("history", "convention"):
-                text = metric.get(field)
-                if not text:
-                    continue
-                with self.subTest(f"{metric['id']}.json {field}"):
-                    self.assertNotRegex(text, r"\s¶|¶\s|^¶|¶$|¶¶")
-                    paragraphs = text.split("¶")
-                    for before, after in zip(paragraphs, paragraphs[1:]):
-                        if "TABLE::" in (before[:7], after[:7]):
-                            continue
-                        self.assertEqual(len(build.sentences(f"{before} {after}")),
-                                         len(build.sentences(before)) + len(build.sentences(after)),
-                                         f"a break inside a sentence, before {after[:40]!r}")
-
-    def test_the_breaks_change_no_word_of_main(self):
-        """With every break turned back into a space, each convention reads exactly as main's.
-
-        Cutting main's running conventions into paragraphs moves no word of them, and this
-        holds the cut to that. Once main's own conventions are in paragraphs, the shape check
-        holds them there and a later change may reword a convention on purpose, so this has
-        nothing left to guard and stands aside.
-        """
-        def main_text(path):
-            shown = subprocess.run(["git", "show", f"main:{path.relative_to(build.ROOT).as_posix()}"],
-                                   cwd=build.ROOT, capture_output=True, text=True)
-            return shown.stdout if shown.returncode == 0 else None
-
-        if shutil.which("git") is None or subprocess.run(
-                ["git", "rev-parse", "--verify", "--quiet", "main^{commit}"],
-                cwd=build.ROOT, capture_output=True).returncode != 0:
-            self.skipTest("no main to compare with")
-        on_main = {}
-        for metric in build.load_metrics():
-            text = main_text(build.METRICS_DIR / f"{metric['id']}.json")
-            if text is not None and json.loads(text).get("convention"):
-                on_main[metric["id"]] = json.loads(text)["convention"]
-        if not any(build.shape_problems(i, "convention", c, 1) for i, c in on_main.items()):
-            self.skipTest("main's conventions are already in paragraphs")
-        for metric in build.load_metrics():
-            if metric["id"] in on_main:
-                with self.subTest(metric["id"]):
-                    self.assertEqual(metric.get("convention", "").replace("¶", " "),
-                                     on_main[metric["id"]].replace("¶", " "))
+            text = metric.get("history")
+            if not text:
+                continue
+            with self.subTest(f"{metric['id']}.json history"):
+                self.assertNotRegex(text, r"\s¶|¶\s|^¶|¶$|¶¶")
+                paragraphs = text.split("¶")
+                for before, after in zip(paragraphs, paragraphs[1:]):
+                    if "TABLE::" in (before[:7], after[:7]):
+                        continue
+                    self.assertEqual(len(build.sentences(f"{before} {after}")),
+                                     len(build.sentences(before)) + len(build.sentences(after)),
+                                     f"a break inside a sentence, before {after[:40]!r}")
 
 
 class Diagrams(unittest.TestCase):

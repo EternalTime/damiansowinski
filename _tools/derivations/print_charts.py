@@ -10,10 +10,10 @@ same line element in the chart x^0 = ct that the components are printed in, and 
 are to be grouped for reading. The script computes every tensor from that line element with
 the checker's own Geometry, prints each component through chart_printer.py, reads every
 printed value back and compares it with what it was printed from, and writes the result into
-the metric file. It writes only the mathematics: the entry's prose, its convention, and the
-description of each parameter stay in the metric file and are carried over untouched, and a
-parameter the file does not yet describe stops the script rather than being written without
-one. The Ricci scalar and the Kretschmann scalar are written by hand where a structured form
+the metric file. It writes only the mathematics: the entry's prose, its conventions, the
+chart's own among them, and the description of each parameter stay in the metric file and are
+carried over untouched, and a parameter the file does not yet describe, or a chart it does not
+yet give a convention, stops the script rather than being written without one. The Ricci scalar and the Kretschmann scalar are written by hand where a structured form
 reads better than an expanded one, and each of those is checked against sympy here too.
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
@@ -33,7 +33,7 @@ import chart_printer as cp  # noqa: E402
 import verify_metrics as vm  # noqa: E402
 
 METRICS = vm.METRICS_DIR
-SYSTEM_ORDER = ["id", "name", "coords", "domains", "parameters", "line_element", "metric_components",
+SYSTEM_ORDER = ["id", "name", "coords", "domains", "parameters", "convention", "line_element", "metric_components",
                 "inverse_metric_components", "christoffel", "riemann", "ricci_tensor", "ricci_scalar",
                 "kretschmann", "einstein_tensor", "weyl_tensor", "geodesics"]
 
@@ -291,8 +291,14 @@ def write(spec):
     missing = [s for s in spec["system"]["parameters"] if s not in described]
     if missing:
         raise SystemExit(f"{path.name}: describe the parameters {missing} in the file before writing it")
+    # The chart keeps the convention the file gives it, which says what its own coordinates are.
+    convention = next((chart.get("convention") for chart in charts if chart["id"] == spec["system"]["id"]), None)
+    if not convention:
+        raise SystemExit(f"{path.name}: write the convention of the chart {spec['system']['id']!r} "
+                         "in the file before writing it")
     system = dict(spec["system"])
     system["parameters"] = [{"symbol": s, "description": described[s]} for s in spec["system"]["parameters"]]
+    system["convention"] = convention
     system.update(math)
     # The chart replaces the one of its id, or joins the spacetime's others after them.
     written = {k: system[k] for k in SYSTEM_ORDER}

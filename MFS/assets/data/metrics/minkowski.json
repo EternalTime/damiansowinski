@@ -18,7 +18,7 @@
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "We keep factors of $c$ explicit throughout. The Cartesian and spherical charts use a time coordinate $t$, the null charts a retarded time $u$ and an advanced time $v$, and the Rindler chart a time $T$; all four carry dimensions of time, and $a$ is a proper acceleration. We take components in the chart $x^0 = ct$, so a component whose index we write with one of those letters is a component of that chart and not of the bare coordinate. A dot in the geodesic equations is a derivative of that chart's coordinates with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$ and $\\dot{u}$ means $d(cu)/d\\lambda$, and every term of every equation carries the dimensions of its left hand side.",
+  "convention": "We keep factors of $c$ explicit.",
   "history": "Hermann Minkowski was Einstein's former mathematics professor at Zürich, and he understood what Einstein had done in 1905 better than Einstein did, at least geometrically. In 1908 he showed that the Lorentz transformations of special relativity, which had looked like ad hoc kinematic rules, are rotations in a pseudo-Riemannian manifold of four dimensions with metric signature $(-,+,+,+)$ [minkowski1908]. \"Henceforth,\" he declared in his famous Cologne lecture [minkowski1909], \"space by itself and time by itself are doomed to fade away into mere shadows, and only a kind of union of the two will preserve an independent reality.\" Greg Egan built the universe of his Orthogonal trilogy by turning the one minus sign in Minkowski's signature into a plus [egan2010plusminus, egan2011clockwork, egan2012eternal, egan2013arrows].¶Henri Poincaré had already treated $x, y, z, t\\sqrt{-1}$ as coordinates in a space of four dimensions, in a paper received in Palermo in July 1905, and remarked that the Lorentz transformation is a rotation of that space about the origin [poincare1906]. Minkowski cited Poincaré in his Göttingen lecture of November 1907 but not at Cologne [damour2008]. He died suddenly a few months after the Cologne lecture, at 44 [damour2008].¶Einstein initially dismissed the geometric reformulation as superfluous erudition [noreika2021minkowski]. He came to regard it as indispensable only when he began wrestling with general relativity. Arnold Sommerfeld recast Minkowski's matrix calculus in 1910 as an algebra of vectors with four components and with six, and through him and Max von Laue physicists took up Minkowski's formalism [sommerfeld1910, damour2008]. In the opening of his 1916 account of general relativity Einstein wrote that the generalization had been made much easier by the form Minkowski gave the special theory, Minkowski being the first to recognize clearly the formal equivalence of the space and time coordinates [einstein1916].¶The Rindler coordinates, introduced by Wolfgang Rindler in 1966, provide the natural reference frame for a uniformly accelerating observer in flat spacetime [rindler1966]. They cover only the right wedge of Minkowski spacetime, bounded by a null surface, the Rindler horizon, that marks the boundary beyond which signals can never reach the accelerating observer. The geometry is locally identical to the limit of the Schwarzschild metric near its horizon, making Rindler spacetime an important toy model in black hole thermodynamics. The world line of such an observer is already in the Cologne lecture, where Minkowski described a branch of a hyperbola as the motion of a point whose velocity rises asymptotically to that of light in the far past and the far future [minkowski1909]. Rindler had himself named event horizons and particle horizons ten years before, for cosmology [rindler1956].¶This horizon turned out to be thermal, through the Unruh effect, derived independently by Paul Davies in 1975 and William Unruh in 1976 [davies1975, unruh1976]: an observer accelerating through the Minkowski vacuum detects a thermal bath of particles at temperature $T = \\hbar a / 2\\pi c k_B$. This result, which ties temperature to acceleration, established the connection between horizons and thermodynamics that continues to shape our understanding of quantum gravity. Stephen Fulling had shown in 1973 that quantizing a field in the Rindler wedge, where the metric is static in the accelerated coordinates, gives a particle interpretation different from the standard one of flat spacetime [fulling1973]. Geoffrey Sewell proved in 1982, from an analogue of a theorem of Joseph Bisognano and Eyvind Wichmann, that any quantum field, interacting or not, restricted to a region bounded by event horizons is in thermal equilibrium, a rigorous and model independent proof of a generalized Hawking-Unruh effect [bisognano1976, sewell1982].",
   "references": [
     "minkowski1908",
@@ -57,6 +57,7 @@
         "z \\in (-\\infty, \\infty)"
       ],
       "parameters": [],
+      "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -c^2 dt^2 + dx^2 + dy^2 + dz^2",
       "metric_components": [
         {
@@ -216,6 +217,7 @@
         "\\phi \\in [0, 2\\pi)"
       ],
       "parameters": [],
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the distance from the origin. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -c^2 dt^2 + dr^2 + r^2 d\\theta^2 + r^2 \\sin^2\\theta\\, d\\phi^2",
       "metric_components": [
         {
@@ -521,6 +523,7 @@
         "z \\in (-\\infty, \\infty)"
       ],
       "parameters": [],
+      "convention": "We use the retarded time $u = t - x/c$ and the advanced time $v = t + x/c$, both carrying dimensions of time, with $y$ and $z$ lengths. We take components in the chart $x^0 = cu$, $x^1 = cv$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
       "line_element": "ds^2 = -c^2\\,du\\,dv + dy^2 + dz^2",
       "metric_components": [
         {
@@ -680,6 +683,7 @@
         "\\phi \\in [0, 2\\pi)"
       ],
       "parameters": [],
+      "convention": "We use the retarded time $u = t - r/c$ and the advanced time $v = t + r/c$, both carrying dimensions of time, with $r$ the distance from the origin. We take components in the chart $x^0 = cu$, $x^1 = cv$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
       "line_element": "ds^2 = -c^2\\,du\\,dv + \\dfrac{c^2(v-u)^2}{4}\\left(d\\theta^2 + \\sin^2\\theta\\, d\\phi^2\\right)",
       "metric_components": [
         {
@@ -1086,6 +1090,7 @@
           "description": "Proper acceleration of the Rindler observer"
         }
       ],
+      "convention": "We use coordinates $(T, X, Y, Z)$, with $T$ carrying dimensions of time and $X$, $Y$, and $Z$ lengths, and $a$ is the proper acceleration of the observer at $X = c^2/a$. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
       "line_element": "ds^2 = -\\dfrac{a^2}{c^4}X^2 c^2 dT^2 + dX^2 + dY^2 + dZ^2",
       "metric_components": [
         {

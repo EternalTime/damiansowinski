@@ -113,13 +113,10 @@ The page declares Source Code Pro itself, in `assets/css/mfs.css`, since it does
 The print copy is set whole in EB Garamond at 12pt, the history with it.
 
 The coordinates come first in the mathematics, right after the history, since the chart is chosen before anything that depends on it: their buttons, then each coordinate with its domain.
-The page prints a spacetime's `signature` and `convention` under the heading "conventions" just below them, which is where the application reads them.
-They belong to the spacetime and not to a chart, so choosing a chart leaves them standing.
-A `convention` is one string of prose with inline TeX between dollar signs, and never carries a citation, a table or HTML.
-Its paragraphs are marked as a history's are, by `¶`, which stands in place of the space between the last sentence of one paragraph and the first sentence of the next, as in `taken in that chart.¶The Ricci tensor`.
-So splitting the string at every `¶` gives the paragraphs in order, each whole, with no space to trim and no empty piece, and a convention of one paragraph carries no `¶`.
-The page sets each piece as a paragraph of its own under the signature, and the application does the same.
-Turning every `¶` back into a space gives the prose unbroken.
+The page prints a spacetime's `signature` and its conventions under the heading "conventions" just below them, which is where the application reads them.
+The conventions follow the chart, as the captain asked on 29 September 2026: each chart in `coordinates` carries its own `convention`, the spacetime's top level `convention` holds what is true in every chart and names no coordinate, and the page shows the chosen chart's text followed by the spacetime's as one paragraph, drawn again with the tensors whenever the chart changes.
+A spacetime with one chart reads the same way, and the top level field is present in every file, empty where nothing is shared, since the application reads it.
+A `convention` is one string of prose with inline TeX between dollar signs, and never carries a citation, a table, a `¶` or HTML.
 An entry with neither field shows no conventions section at all.
 
 A cloud-sync conflict copy dropped into the metrics folder, named like `kerr 2.json`, is passed over rather than read.
@@ -210,7 +207,7 @@ A figure of speech never stands in for the claim it points at: "so the spacetime
 They are tested to catch the phrases the captain flagged and to pass plain physics, so a new rule goes into the table together with an example of each kind.
 The same class holds every hyphen to joining two names, a name and a word, or a designation, or to one of the few established terms it lists, so an English compound such as "future directed" is written without one.
 Labels and legends name things rather than state them, and stand outside these rules.
-`_tools/derivations/voice_rewrites.md` records the rewrite of 28 September 2026 text by text, before and after.
+`_tools/derivations/voice_rewrites.md` records the rewrite of 28 September 2026 of the histories and captions text by text, before and after.
 A rewording is checked against the text it replaces with
 
     python3 _tools/prose_math_check.py [revision]
@@ -223,17 +220,20 @@ A history has at least five paragraphs, and every paragraph has three to six sen
 A table, the paragraph written as a `TABLE::` line, is not prose and is left out of the count.
 Where an entry is too thin for five paragraphs, it wants more history, sourced and cited like the rest, never filler.
 
-A convention keeps the same paragraphs of three to six sentences, the longest no more than twice the shortest, but it may be a single paragraph.
-Each paragraph keeps to one subject, and most conventions take their subjects in the same order: the coordinates and the parameters, then the chart the components are taken in with its derivatives and the contraction of the Ricci tensor, then the physics the spacetime turns on.
-A break falls only where a sentence ends, and wherever the sentences allow it a paragraph opens on what it is about rather than on a word that points back across the break, such as "it" or "the second", since the break parts the word from what it names.
-The tests hold every break of a history and a convention to the end of a sentence, with no space on either side of the `¶`.
+A convention says only what a reader needs to read the mathematics, with Schwarzschild's as the model: "We use coordinates $(t, r, \theta, \phi)$, with $t$ carrying dimensions of time. The Schwarzschild radius is $r_s = 2GM/c^2$. We keep factors of $c$ explicit."
+That is the coordinates and their units, what each parameter and function is in a clause, the factors of $c$ and $G$, and any choice of chart, index, sign or normalisation the components depend on, such as $x^0 = ct$ or the Riemann and Ricci conventions.
+The domains stand just above it, so it does not repeat the ranges.
+It never describes what the tensors or diagrams show, explains a standard object such as the Weyl tensor, or carries physics, history, energy conditions or counts of components, and it never uses the word "cost"; the captain cut every convention down to that on 29 September 2026.
+Each chart's text and the shared text together make one paragraph of at most five sentences.
+The tests hold every break of a history to the end of a sentence, with no space on either side of the `¶`.
 
 `sentences` in `build_mfs_data.py` does the counting.
 A sentence ends at a full stop, a question mark or an exclamation mark, after any closing quote or bracket, where the next word begins with a capital or a digit.
 A capital standing alone before a full stop is an initial, as in J. Robert Oppenheimer, and ends nothing.
 Mathematics between dollar signs counts as one word, and ends a sentence only when the stop is inside it, as when a displayed equation closes one.
 
-The command refuses to write anything, and `--check` fails, while any history or convention is out of shape, naming each with the sentences in each of its paragraphs and the paragraph that breaks the rule.
+The command refuses to write anything, and `--check` fails, while any history is out of shape, naming each with the sentences in each of its paragraphs and the paragraph that breaks the rule.
+It refuses in the same way a chart with no convention of its own, a spacetime with no shared `convention` field, and a chart whose convention, shared text included, runs past five sentences, runs to a second paragraph, or says "cost", "slots", "nowhere does the geometry break", "standing objection" or "the Riemann tensor with the traces removed", naming the chart at fault.
 
 ## What the command writes
 
