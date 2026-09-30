@@ -744,6 +744,52 @@ class Contrast(unittest.TestCase):
                 self.assertEqual(self.caught(text), [])
 
 
+def strings(value, where):
+    """Yield every string held anywhere in a parsed JSON value, each with its place."""
+    if isinstance(value, str):
+        yield where, value
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            yield from strings(item, f"{where}.{key}")
+    elif isinstance(value, list):
+        for position, item in enumerate(value):
+            yield from strings(item, f"{where}[{position}]")
+
+
+class NoCost(unittest.TestCase):
+    """No text a reader of the spacetimes page sees says what physics requires in the words of
+    money, as the captain asked on 29 September 2026: a shortcut that stays open requires exotic
+    matter, and no field of any spacetime or diagram, nor the page, says cost, costs, costly or
+    costing."""
+
+    COST = r"(?i)\bcost(?:s|ly|ing)?\b"
+
+    def texts(self):
+        fields = Contrast().texts()
+        for folder in (build.METRICS_DIR, build.DIAGRAMS_DIR, build.CONFORMAL_DIR, build.EMBEDDING_DIR):
+            for path in sorted(folder.glob("*.json")):
+                fields += strings(read(path), path.name)
+        return fields
+
+    def test_no_text_a_reader_sees_says_cost(self):
+        fields = self.texts()
+        self.assertGreater(len(fields), 10000, "the texts were not all read")
+        for where, value in fields:
+            found = re.search(self.COST, value)
+            self.assertIsNone(found, f"{where} has {found and found.group(0)!r}; state what is required, "
+                                     "what grows or what was spent")
+
+    def test_the_rule_catches_every_form_and_leaves_other_words_alone(self):
+        for text in ("a shortcut that stays open costs exotic matter", "at the cost of seven years of work",
+                     "what the trip would cost", "a costly bubble", "Costing the trip in fuel"):
+            with self.subTest(text):
+                self.assertRegex(text, self.COST)
+        for text in ("$\\cos t$", "the coast of the Baltic", "a cosmic string", "Costa Rica", "accosted",
+                     "a shortcut that stays open requires exotic matter"):
+            with self.subTest(text):
+                self.assertNotRegex(text, self.COST)
+
+
 class HistoryShape(unittest.TestCase):
     """Every history has at least five paragraphs of three to six sentences each."""
 
