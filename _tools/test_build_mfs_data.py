@@ -2612,7 +2612,8 @@ class StacksAndMovies(unittest.TestCase):
 
     STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5}   # the height of a unit of time
     MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
-              "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$"}
+              "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$",
+              "einstein_rosen_waves": "$ct$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -3160,8 +3161,8 @@ class Slices(unittest.TestCase):
     def test_every_slice_on_a_conformal_diagram_lies_on_its_moment(self):
         """A moment of constant t through a bifurcation point or a centre is the line T = 0,
         Reissner-Nordstrom's inside r_- the line T = pi, the closed universe's T = eta, and the
-        Malament-Hogarth moments ct = tan p + tan q over two, as p, q = arctan(ct -+ r) make
-        them; Vaidya's are carried back through each side of the shell's own map."""
+        Malament-Hogarth and Einstein-Rosen moments ct = tan p + tan q over two, as
+        p, q = arctan(ct -+ r) make them; Vaidya's are carried back through each side of the shell's own map."""
         for metric_id, data in self.conformal.items():
             for view in data["views"]:
                 X0, X1, T0, T1 = view["box"]
@@ -3175,7 +3176,7 @@ class Slices(unittest.TestCase):
                         eta = bisect(lambda e: e - math.sin(e) - t, 0, 2 * math.pi)
                         self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
                         self.assertEqual(sorted(X for X, _ in points), [0, round(math.pi, 4)], where)
-                    elif metric_id == "malament_hogarth":
+                    elif metric_id in ("malament_hogarth", "einstein_rosen_waves"):
                         lo, hi = self.reach(surface)
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2

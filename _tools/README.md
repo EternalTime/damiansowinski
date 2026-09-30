@@ -666,7 +666,7 @@ A surface is:
 Every piece but a grid piece, defined below, is a profile curve in a half plane through the vertical axis $z$, and a surface of such pieces is a surface of revolution about it.
 Its `points` are `[x, rho, z]`, running from its `start` to its `end` with `x` strictly increasing or strictly decreasing, at least two of them:
 
-- `rho` is the distance from the axis, never negative, and `z` the height, both in `unit`, rounded to below $10^{-7}$ of the piece's own extent and to at least six decimals, so a small piece, as a collapsing star's shrinking cap, keeps the precision of a large one;
+- `rho` is the distance from the axis, never negative, and `z` the height, both in `unit`, rounded to below $10^{-7}$ of the piece's own extent and to at least six decimals, so a small piece, as a collapsing star's shrinking cap, keeps the precision of a large one; the Einstein-Rosen pulse, which at $ct = a$ bends its surface by the axis on a scale of $a/4$ against a drawing $20\,a$ across, is rounded to below $10^{-8}$;
 - `x` is the value of the piece's `coordinate` at the point, as that coordinate system writes it with the view's `settings`, a length in `unit`, an angle in radians such as $\chi$, or a number such as FRW's comoving $r$, written as the double it was computed at, the shortest decimal that reads back as it, since next to an irrational horizon a rounded $x$ would fall inside it; a client needs it only to label a point or to find one.
 
 No number is written as `-0.0`.
