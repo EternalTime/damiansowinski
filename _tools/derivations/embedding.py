@@ -4340,6 +4340,71 @@ def c_metric(ck, src):
     return views
 
 
+NARIAI_MOMENTS = (-1.5, -0.75, 0.0, 0.75, 1.5)     # ct in units of 1/sqrt(Lambda)
+
+
+def nariai(ck, src):
+    """dS2 x S2 with both radii a = 1/sqrt(Lambda) = 1. A moment ct of the global chart is a
+    circle of chi of radius a cosh(ct/a) times the round sphere of radius a, and its surface of
+    chi and a great circle of the sphere, theta at phi = 0 down from the north pole and back up
+    at phi = pi, has g_thetatheta = a^2 and g_chichi = a^2 cosh^2(ct/a): a cylinder of radius
+    a cosh(ct/a) turned about by chi, z = a theta on the first half and a(2 pi - theta) on the
+    second, its top and bottom edges one circle, the north pole times the circle of chi. Drawn at
+    five moments from ct = -1.5 a to 1.5 a, the circle contracting to a at ct = 0 and expanding
+    after, played as a movie with a frame every 0.1 a of ct. The sphere of theta and phi at one
+    event is the second view, the same at every event."""
+    size = 2 * math.pi
+    top = 2 * math.pi
+
+    def moment(t):
+        near_sl = Slice(src, "nariai", "global", "\\theta", "\\chi", {"t": repr(t), "phi": "0"}, {"Lambda": 1})
+        far_sl = Slice(src, "nariai", "global", "\\theta", "\\chi", {"t": repr(t), "phi": "pi"}, {"Lambda": 1})
+        near = Piece("near", "sheet", near_sl, 0.0, math.pi, 0.0, 1,
+                     (("edge", "the north pole, $\\theta = 0$, one circle with the top edge"),
+                      ("join", "the south pole, $\\theta = \\pi$, where the great circle turns to $\\phi = \\pi$")),
+                     [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)], size)
+        far = Piece("far", "sheet2", far_sl, 0.0, math.pi, top, -1,
+                    (("edge", "the north pole, $\\theta = 0$, one circle with the bottom edge"),
+                     ("join", "the south pole")),
+                    [(math.pi / 4, "r2", None), (math.pi / 2, "r2", None), (3 * math.pi / 4, "r2", None)], size)
+        where = f"Nariai, ct = {t:+.2f} a"
+        radius = math.cosh(t)
+        for p, z_of in ((near, lambda th: th), (far, lambda th: top - th)):
+            ck.isometry(f"{where}, the half great circle at phi = {'0' if p is near else 'pi'}", p)
+            ck.radius(f"{where}, {p.id}: the cylinder rho = a cosh(ct/a)", p, lambda th, k=radius: np.full_like(th, k), size)
+            ck.form(f"{where}, {p.id}: z = a theta along the great circle", p, z_of, size)
+        ck.join(f"{where}, the halves meet at the south pole", near, math.pi, far, math.pi)
+        return Surface([near, far], label=f"$ct = {t:.2f}$", time=t)
+
+    values, keys = movie_values(list(NARIAI_MOMENTS), 0.1)
+    frames = [moment(t) for t in values]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the half great circle $\\phi = 0$ times the circle of $\\chi$")
+    fig.legend("line", "r", "$\\theta$ constant at $\\phi = 0$, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "r2", "the same at $\\phi = \\pi$")
+    fig.legend("line", "meridian", "$\\chi$ constant, every $30°$")
+    settings = "$\\Lambda = 1$, so that $1/\\sqrt{\\Lambda}$ is the unit of every length."
+    views = [view("universe", "The circle and a great circle", "$1/\\sqrt{\\Lambda}$", surfaces, fig.done(),
+                  movie=movie(frames, "$ct$", [f.time for f in frames], turns=False), settings=settings)]
+
+    sphere_slice = Slice(src, "nariai", "static", "\\theta", "\\phi", {"t": 0, "r": 0}, {"Lambda": 1})
+    ball = Piece("sphere", "sheet", sphere_slice, 0.0, math.pi, 0.0, 1,
+                 (("axis", "the pole $\\theta = 0$"), ("axis", "the pole $\\theta = \\pi$")),
+                 [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)], 2.0)
+    ck.isometry("Nariai, the sphere", ball)
+    ck.form("Nariai, the sphere z = a(1 - cos theta)", ball, lambda c: 1 - np.cos(c), 2.0)
+    ck.radius("Nariai, the sphere rho = a sin theta", ball, np.sin, 2.0)
+    sphere = Surface([ball])
+    fig = figure_of([sphere], {"sheet": "cover"}, 2.0)
+    ring_label(fig, [0, 0, 0], *ball.at(math.pi / 2), "$\\theta = \\pi/2$")
+    fig.legend("fill", "cover", "the sphere, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("sphere", "The sphere", "$1/\\sqrt{\\Lambda}$", [sphere], fig.done(), settings=settings))
+    return views
+
+
 def flat_slices(ck, src, metric_id, system_id, time="t"):
     """Check that every slice of constant `time` of a coordinate system is flat: its spatial
     metric has no cross term and no component that depends on a spatial coordinate, so at
@@ -4397,6 +4462,7 @@ DRAWN = {
     "btz": btz,
     "c_metric": c_metric,
     "einstein_rosen_waves": einstein_rosen_waves,
+    "nariai": nariai,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -4443,6 +4509,23 @@ CAPTIONS = {
         "horizon. There the radius grows with distance from the pole at the rate $(1 - 2\\alpha m)/(1 + 2\\alpha m)$, "
         "one half here, and the rate falls short of 1 by the deficit angle $8\\pi\\alpha m/(1 + 2\\alpha m)$ "
         "divided by $2\\pi$. The area is $16\\pi Cm^2/(1 - 4\\alpha^2m^2) = 13.5\\pi m^2$.",
+    ],
+    ("nariai", "universe"): [
+        "The circle of $\\chi$ times a great circle of the sphere ($\\phi = 0$ and $\\pi$) at moments of the "
+        "global chart from $ct = -1.5/\\sqrt{\\Lambda}$ to $1.5/\\sqrt{\\Lambda}$, each drawn as a surface in flat "
+        "space with every distance along it the metric distance. On it the metric is "
+        "$\\left(\\cosh^2(\\sqrt{\\Lambda}\\,ct)\\,d\\chi^2 + d\\theta^2\\right)/\\Lambda$, a cylinder of radius "
+        "$\\cosh(\\sqrt{\\Lambda}\\,ct)/\\sqrt{\\Lambda}$ and height $2\\pi/\\sqrt{\\Lambda}$, its top and bottom "
+        "edges one circle, the north pole of the sphere times the circle of $\\chi$.",
+        "The circle of $\\chi$ contracts to its least radius, $1/\\sqrt{\\Lambda}$, at $ct = 0$ and expands after, "
+        "and every sphere keeps the radius $1/\\sqrt{\\Lambda}$, so the cylinder widens at a fixed height. At "
+        "$ct = 0$ the static chart covers the half $0 < \\chi < \\pi$, between its two horizons, and a second "
+        "static patch covers the other half.",
+    ],
+    ("nariai", "sphere"): [
+        "The sphere of $\\theta$ and $\\phi$ of the Nariai universe at one event, drawn as a surface in flat space "
+        "with every distance along it the metric distance. It is the product's second factor, a sphere of radius "
+        "$1/\\sqrt{\\Lambda}$, the same at every event.",
     ],
     ("schwarzschild", "flamm"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Schwarzschild spacetime at one moment of $t$, "

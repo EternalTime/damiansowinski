@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the twenty-four spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the twenty-five spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -3783,6 +3783,114 @@ def milne(ck, src):
     return views
 
 
+def nariai(ck, src):
+    """dS2 x S2, both radii a = 1/sqrt(Lambda), drawn at a = 1. The de Sitter factor is the
+    hyperboloid -Z0^2 + Z1^2 + Z2^2 = a^2; with Z0 = a tan(eta), Z1 = a sin(chi)/cos(eta) and
+    Z2 = -a cos(chi)/cos(eta) its metric is a^2(-deta^2 + dchi^2)/cos^2(eta), conformal to the strip
+    |eta| < pi/2 with chi running round a circle, so p, q = (eta -+ chi)/2 draw it with X = chi and
+    T = eta, the edges X = 0 and 2 pi one line. The conformal chart is that map as it stands, the
+    global chart enters through tan(eta) = sinh(ct/a), and the static chart, with
+    Z0 = sqrt(a^2 - r^2) sinh(ct/a), Z1 = sqrt(a^2 - r^2) cosh(ct/a) and Z2 = r, through
+    tan(eta) = sqrt(1 - r^2) sinh(ct) and chi = atan2(sqrt(1 - r^2) cosh(ct), -r) at a = 1, which
+    covers the diamond about (chi, eta) = (pi/2, 0) whose edges are its horizons r = -+a. Every point
+    is a 2-sphere of radius a."""
+    st = Plane(src, "nariai", "static", ("t", "r"), EQUATOR, {"Lambda": 1})
+    gl = Plane(src, "nariai", "global", ("t", "\\chi"), EQUATOR, {"Lambda": 1})
+    co = Plane(src, "nariai", "conformal", ("\\eta", "\\chi"), EQUATOR, {"Lambda": 1})
+
+    def conformal_pq(eta, chi):
+        eta, chi = np.asarray(eta, dtype=float), np.asarray(chi, dtype=float)
+        return (eta - chi) / 2, (eta + chi) / 2
+
+    def global_pq(t, chi):
+        return conformal_pq(np.arctan(np.sinh(np.asarray(t, dtype=float))), chi)
+
+    def static_pq(t, r):
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        s = np.sqrt(1 - r * r)
+        return conformal_pq(np.arctan(s * np.sinh(t)), np.arctan2(s * np.cosh(t), -r))
+    ck.chart("Nariai conformal", co, conformal_pq, ck.uniform(-HALF + 1e-3, HALF - 1e-3), ck.uniform(0, 2 * PI),
+             lambda e, c: (1, 0))
+    ck.chart("Nariai global", gl, global_pq, ck.uniform(-8, 8), ck.uniform(0, 2 * PI), lambda t, c: (1, 0))
+    ck.chart("Nariai static", st, static_pq, ck.uniform(-8, 8), ck.uniform(-0.999, 0.999), lambda t, r: (1, 0))
+
+    t, r = ck.uniform(-4, 4, 2000), ck.uniform(-0.999, 0.999, 2000)
+    p, q = static_pq(t, r)
+    eta, chi = p + q, q - p
+    scale = 1 + np.cosh(t)
+    ck.limit("Nariai: the static chart lands where the hyperboloid puts it",
+             np.concatenate([(np.tan(eta) - np.sqrt(1 - r * r) * np.sinh(t)) / scale,
+                             (np.sin(chi) / np.cos(eta) - np.sqrt(1 - r * r) * np.cosh(t)) / scale,
+                             (-np.cos(chi) / np.cos(eta) - r) / scale]), 0, 1e-10)
+    p, q = static_pq(np.array([0.0, 2.0, -2.0]), np.array([1 - 1e-14, -1 + 1e-14, 1 - 1e-14]))
+    ck.limit("Nariai: r -> +-1/sqrt(Lambda) at fixed t lands on the bifurcation points chi = pi and 0, eta = 0",
+             np.concatenate([q - p, p + q]), [PI, 0, PI, 0, 0, 0], 1e-6)
+    p, q = static_pq(np.array([60.0, -60.0]), np.array([0.3, 0.3]))
+    ck.limit("Nariai: t -> +-infinity in the static chart lands on the corners (pi/2, +-pi/2)",
+             np.concatenate([q - p, p + q]), [HALF, HALF, HALF, -HALF], 1e-6)
+    p, q = global_pq(np.array([60.0, -60.0]), np.array([1.0, 1.0]))
+    ck.limit("Nariai: t -> +-infinity in the global chart lands on eta = +-pi/2", p + q, [HALF, -HALF], 1e-6)
+    ck.finite("Nariai: the curvature is the same everywhere",
+              gl.kretschmann(ck.uniform(-5, 5, 50), ck.uniform(0, 2 * PI, 50)))
+
+    box = [-0.35, 2 * PI + 0.35, -HALF - 0.3, HALF + 0.3]
+    strip_ = [[0, -HALF], [2 * PI, -HALF], [2 * PI, HALF], [0, HALF]]
+    diamond = [[0, 0], [HALF, HALF], [PI, 0], [HALF, -HALF]]
+    universe = slices.moments("nariai", "universe")
+    sphere = slices.moments("nariai", "sphere")[0]
+
+    def frame(v):
+        v.fill("region", strip_)
+        v.line("scri", [[[0, HALF], [2 * PI, HALF]], [[0, -HALF], [2 * PI, -HALF]]])
+        # The horizons of the observer at chi = pi/2 and of the antipode at 3 pi/2.
+        v.line("horizon", [[[0, 0], [HALF, HALF]], [[HALF, HALF], [PI, 0]], [[PI, 0], [HALF, -HALF]],
+                           [[HALF, -HALF], [0, 0]], [[PI, 0], [3 * HALF, HALF]], [[3 * HALF, HALF], [2 * PI, 0]],
+                           [[2 * PI, 0], [3 * HALF, -HALF]], [[3 * HALF, -HALF], [PI, 0]]])
+        v.label_xt([PI, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
+        v.label_xt([PI, -HALF], "$\\mathscr{I}^-$", "t", dy=5)
+        v.label_xt([0, -1.25], "$\\chi = 0$", "r", "coord", dx=-6)
+        v.label_xt([2 * PI, -1.25], "$\\chi = 2\\pi$", "l", "coord", dx=6)
+        v.label_xt([3 * HALF, -0.28], "the antipode's static patch", cls="region")
+        v.label_xt([PI, 1.05], "expanding", cls="region")
+        v.label_xt([PI, -1.05], "contracting", cls="region")
+        v.legend("scri", "future and past infinity $\\mathscr{I}^\\pm$, spacelike")
+        v.legend("horizon", "the horizons $r = \\pm 1/\\sqrt{\\Lambda}$ of two antipodal static patches")
+        for m in universe:
+            eta = float(np.arctan(np.sinh(m.time)))
+            v.slice(m, xt=[[[0.0, eta], [2 * PI, eta]]])
+        v.slice(sphere, points=[conformal_pq(0.0, HALF)], label="$t = 0$, $\\chi = \\pi/2$")
+
+    views = []
+    v = View("static", "Static", box, "static")
+    frame(v)
+    v.fill("cover", diamond)
+    grid(v, "r", lambda r, t: static_pq(t, r), (-0.9, -0.6, -0.3, 0, 0.3, 0.6, 0.9), S_ALL)
+    grid(v, "t", static_pq, (-2, -1, 0, 1, 2), np.tanh(np.linspace(-14, 14, 1001)))
+    label_on(v, static_pq(0, 0), "$r = 0$")
+    v.legend("cover", "the static patch, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, from $-0.9$ to $0.9$ in units of $1/\\sqrt{\\Lambda}$")
+    v.legend("t", "$ct$ constant, every $1/\\sqrt{\\Lambda}$")
+    views.append(v)
+
+    for vid, label, system, time, name, values in (
+            ("global", "Global", "global", "$t$", "$ct$ constant, every $1/\\sqrt{\\Lambda}$", (-2, -1, 0, 1, 2)),
+            ("conformal", "Conformal", "conformal", "$\\eta$", "$\\eta$ constant, every $\\pi/8$",
+             (-3 * PI / 8, -PI / 4, -PI / 8, 0, PI / 8, PI / 4, 3 * PI / 8))):
+        v = View(vid, label, box, system)
+        frame(v)
+        v.fill("cover", strip_)
+        for chi in (HALF, PI, 3 * HALF):
+            v.line("r", [[[chi, -HALF], [chi, HALF]]])
+        for c in values:
+            eta = float(np.arctan(np.sinh(c))) if vid == "global" else c
+            v.line("t", [[[0, eta], [2 * PI, eta]]])
+        v.legend("cover", f"the whole spacetime, which {time} and $\\chi$ cover")
+        v.legend("r", "$\\chi$ constant, at $\\pi/2$, $\\pi$ and $3\\pi/2$")
+        v.legend("t", name)
+        views.append(v)
+    return views
+
+
 DRAWN = {
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
@@ -3793,6 +3901,7 @@ DRAWN = {
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "einstein_rosen_waves": einstein_rosen_waves,
+    "nariai": nariai,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -4096,6 +4205,30 @@ CAPTIONS = {
         "The axis runs through the centre of the ring's disc into $r < 0$ as Kerr's does, and "
         "the ring singularity is at $r = 0$ in the equatorial plane $\\theta = \\pi/2$. The "
         "coordinates $t$ and $r > r_+$ cover the exterior.",
+    ],
+    ("nariai", "static"): [
+        "The Nariai universe, the product of the hyperboloid $-Z_0^2 + Z_1^2 + Z_2^2 = 1/\\Lambda$ with a sphere of "
+        "radius $1/\\sqrt{\\Lambda}$, each point in the diagram a 2-sphere of that radius. With "
+        "$\\tan\\eta = \\sqrt{\\Lambda}\\,Z_0$ the metric of the first factor is "
+        "$(-d\\eta^2 + d\\chi^2)/(\\Lambda\\cos^2\\eta)$ on the strip $|\\eta| < \\pi/2$, with $X = \\chi$ across "
+        "and its edges $\\chi = 0$ and $2\\pi$ one line.",
+        "The static chart covers the diamond about $\\chi = \\pi/2$, and its horizons $r = \\pm 1/\\sqrt{\\Lambda}$ "
+        "are the diamond's four edges, which meet the antipode's at $\\chi = 0$ and $\\pi$. Infinity is spacelike, "
+        "past and future, and a light ray crosses half the circle between them, so the observers at "
+        "$\\chi = \\pi/2$ and $3\\pi/2$ never exchange a signal.",
+    ],
+    ("nariai", "global"): [
+        "The Nariai universe in its global chart, on the strip $|\\eta| < \\pi/2$ with $X = \\chi$ and "
+        "$\\tan\\eta = \\sinh(\\sqrt{\\Lambda}\\,ct)$, each point in the diagram a 2-sphere of radius "
+        "$1/\\sqrt{\\Lambda}$. The chart covers the whole spacetime, and on each line of constant $t$ the circle of "
+        "$\\chi$ has the radius $\\cosh(\\sqrt{\\Lambda}\\,ct)/\\sqrt{\\Lambda}$.",
+    ],
+    ("nariai", "conformal"): [
+        "The Nariai universe in its conformal chart, $(-d\\eta^2 + d\\chi^2)/(\\Lambda\\cos^2\\eta) + "
+        "d\\Omega^2/\\Lambda$, drawn as it stands on the strip $|\\eta| < \\pi/2$ with $X = \\chi$, each point in the "
+        "diagram a 2-sphere of radius $1/\\sqrt{\\Lambda}$. The light rays are the lines of constant "
+        "$\\eta \\pm \\chi$, at 45°, and $\\eta = \\pm\\pi/2$ is the infinite future and past, where "
+        "$1/\\cos^2\\eta$ diverges.",
     ],
     ("de_sitter", "static"): [
         "De Sitter spacetime, the hyperboloid $-X_0^2 + X_1^2 + \\dots + X_4^2 = L^2$ "

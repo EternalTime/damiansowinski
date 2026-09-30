@@ -500,6 +500,12 @@ DIAGRAMS = [
             "$r/b$", "$ct/b$", {"b": 1}, EQUATOR),
     Diagram("bertotti_robinson", "poincare", "tx", "$t$ and $x$", ("t", "x"), (0, 4, -2, 2),
             "$x/b$", "$ct/b$", {"b": 1}, EQUATOR, families=SIDEWAYS),
+    # The Nariai universe's static patch reaches from one horizon, r = -1/sqrt(Lambda), to the other,
+    # and its global chart runs round the whole circle of chi, the static patch the half 0 < chi < pi.
+    Diagram("nariai", "static", "patch", "$t$ and $r$", ("t", "r"), (-1, 1, -2, 2),
+            "$r\\sqrt{\\Lambda}$", "$ct\\sqrt{\\Lambda}$", {"Lambda": 1}, EQUATOR, families=SIDEWAYS),
+    Diagram("nariai", "global", "circle", "$t$ and $\\chi$", ("t", "\\chi"), (0, 2 * math.pi, -2, 2),
+            "$\\chi$", "$ct\\sqrt{\\Lambda}$", {"Lambda": 1}, EQUATOR, families=SIDEWAYS, periodic=("\\chi",)),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -1069,6 +1075,27 @@ CAPTIONS = {
         "$b$. The first factor is conformal to flat, so the rays are at 45°. "
         "Here $x$ is a coordinate on the AdS₂ factor, with the boundary at $x \\to 0$ and the "
         "Poincaré horizon at $x \\to \\infty$.",
+    ],
+    ("nariai", "static", "patch"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the static chart, the two dimensional "
+        "de Sitter factor of the product, $-(1 - \\Lambda r^2)\\,c^2dt^2 + dr^2/(1 - \\Lambda r^2)$, each point in "
+        "the plane a 2-sphere of radius $1/\\sqrt{\\Lambda}$. The cones close at both edges, the horizons $r = "
+        "\\pm 1/\\sqrt{\\Lambda}$, where $g^{rr} = 1 - \\Lambda r^2$ vanishes, and a ray takes infinite $t$ to "
+        "reach either, $ct\\sqrt{\\Lambda} = \\pm\\mathrm{artanh}(r\\sqrt{\\Lambda}) + $ const.",
+        "The patch is the same under $r \\to -r$. In the limit of the Schwarzschild-de Sitter black hole that "
+        "makes this spacetime, one horizon is the black hole's and the other the cosmological horizon, at the "
+        "same radius and the same temperature.",
+    ],
+    ("nariai", "global", "circle"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) in the global chart, $-c^2dt^2 + "
+        "\\cosh^2(\\sqrt{\\Lambda}\\,ct)\\,d\\chi^2/\\Lambda$, each point in the plane a 2-sphere of radius "
+        "$1/\\sqrt{\\Lambda}$, with $\\chi = 0$ and $2\\pi$ one line. The cones narrow as "
+        "$1/\\cosh(\\sqrt{\\Lambda}\\,ct)$ toward the future and the past, and along a ray $\\chi \\pm "
+        "\\arctan(\\sinh(\\sqrt{\\Lambda}\\,ct))$ is constant.",
+        "A ray therefore crosses half the circle, $\\Delta\\chi = \\pi$, between the infinite past and the "
+        "infinite future, so observers at opposite points of the circle can never exchange a signal. The static "
+        "patch is the region $\\sin\\chi > |\\tanh(\\sqrt{\\Lambda}\\,ct)|$, bounded by the four rays that leave $\\chi = 0$ and "
+        "$\\chi = \\pi$ at $t = 0$.",
     ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the "
@@ -3235,6 +3262,10 @@ CLOSED_FORMS = {
         (lambda T, X: T + np.log(X), lambda T, X: T - np.log(X), lambda T, X: X > 1e-3),
     ("frw", "conformal_spherical", "radial"): (lambda e, r: e + r, lambda e, r: e - r, None),
     ("de_sitter", "flat_slicing", "tx"): (lambda t, x: x - np.exp(-t), lambda t, x: x + np.exp(-t), None),
+    ("nariai", "static", "patch"):
+        (lambda t, r: t + np.arctanh(r), lambda t, r: t - np.arctanh(r), lambda t, r: np.abs(r) < 0.95),
+    ("nariai", "global", "circle"):
+        (lambda t, c: c + np.arctan(np.sinh(t)), lambda t, c: c - np.arctan(np.sinh(t)), None),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("godel", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),

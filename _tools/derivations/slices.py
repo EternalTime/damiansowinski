@@ -367,6 +367,32 @@ def _c_metric(y):
     return [Mark(equator, along(0.0, lo, hi)), Mark(horizon, points=[(0.0, 3.0 if y else 2.0)])]
 
 
+def nariai_static_t(tau, r):
+    """The Nariai universe's global moment ct = tau, Lambda = 1, in the static chart: with the static
+    patch 0 < chi < pi, r = -cosh(tau) cos(chi) and sinh(t) = sinh(tau)/sqrt(1 - r^2), both from the
+    embedding -Z0^2 + Z1^2 + Z2^2 = 1 of the de Sitter factor, Z0 = sinh(tau) = sqrt(1 - r^2) sinh(t)."""
+    r = np.asarray(r, dtype=float)
+    return np.arcsinh(math.sinh(tau) / np.sqrt(1 - r * r))
+
+
+def _nariai(chart):
+    """The Nariai universe's moments: each global moment of the movie, the whole circle of chi,
+    which on the static plane is the curve nariai_static_t across the patch from horizon to
+    horizon, and the sphere at the event t = 0, r = 0, which is chi = pi/2 of the global chart."""
+    out = []
+    for m in moments("nariai", "universe"):
+        if chart == "global":
+            out.append(Mark(m, [[(m.time, 0.0), (m.time, 2 * math.pi)]]))
+        else:
+            r = np.tanh(np.linspace(-12, 12, N))
+            out.append(Mark(m, [np.column_stack([nariai_static_t(m.time, r), r])]))
+    sphere = moments("nariai", "sphere", label="$t = 0$, $r = 0$")[0]
+    if chart == "global":
+        sphere.label = "$t = 0$, $\\chi = \\pi/2$"
+        return out + [Mark(sphere, points=[(0.0, math.pi / 2)])]
+    return out + [Mark(sphere, points=[(0.0, 0.0)])]
+
+
 FLAT = {
     ("btz", "stationary", "static"): lambda: _btz(),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
@@ -417,6 +443,8 @@ FLAT = {
     ("taub_nut", "spherical", "radial"): lambda: one("taub_nut", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("bertotti_robinson", "static", "radial"): lambda: _br("static"),
     ("bertotti_robinson", "poincare", "tx"): lambda: _br("poincare"),
+    ("nariai", "static", "patch"): lambda: _nariai("static"),
+    ("nariai", "global", "circle"): lambda: _nariai("global"),
     ("interior_schwarzschild", "spherical", "radial"): lambda: one("interior_schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("interior_schwarzschild", "spherical", "through"): lambda: one("interior_schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # On the axis the moment meets the plane of t and r off its equator, along the whole axis
@@ -762,6 +790,23 @@ def checks():
                float(np.max(np.abs(np.log(V[out]) - v / 2))), 1e-10)
         report(f"Novikov: U V = (1 - r) e^r along the shell from R = {R:g} r_s",
                float(np.max(np.abs(U * V - (1 - r) * np.exp(r)))), 1e-12)
+
+    # Nariai: r = -cosh(tau) cos(chi) and sinh(t) = sinh(tau)/sqrt(1 - r^2) carry the global plane
+    # into the static patch 0 < chi < pi, sin(chi) > |tanh(tau)|, pulling the static metric back onto
+    # the global one, and nariai_static_t is the same map at fixed tau.
+    g_s, (ts, rs, *_) = metric("nariai", "static", {"Lambda": 1})
+    g_g, (tg, cg, *_) = metric("nariai", "global", {"Lambda": 1})
+    R_s = -sp.cosh(tg) * sp.cos(cg)
+    T_s = sp.asinh(sp.sinh(tg) / sp.sqrt(1 - R_s ** 2))
+    J = sp.Matrix([[sp.diff(T_s, tg), sp.diff(T_s, cg)], [sp.diff(R_s, tg), sp.diff(R_s, cg)]])
+    pulled = J.T * g_s[:2, :2].subs({rs: R_s}, simultaneous=True) * J
+    pts = [(a, b) for a, b in zip(rng.uniform(-1.5, 1.5, 40), rng.uniform(0.05, math.pi - 0.05, 40))
+           if math.sin(b) > abs(math.tanh(a)) + 0.05]
+    miss = max(abs(float((pulled - g_g[:2, :2]).subs({tg: a, cg: b})[i, j])) for a, b in pts for i in range(2) for j in range(2))
+    report("Nariai: the static chart pulls back onto the global plane over the patch 0 < chi < pi", miss, 1e-12)
+    miss = max(abs(float(T_s.subs({tg: a, cg: b})) - float(nariai_static_t(a, float(R_s.subs({tg: a, cg: b})))))
+               for a, b in pts)
+    report("Nariai: nariai_static_t is the global moment in the static chart", miss, 1e-12)
     return failures
 
 
