@@ -245,6 +245,21 @@ DIMENSIONS = {
     ("frw", "conformal_spherical"): {
         "\\eta": "L", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1", "k": "1/L**2",
     },
+    # The global monopole keeps Schwarzschild's length r_s = 2GM/c^2 beside the solid angle
+    # deficit Delta, a pure number, so 1 - Delta - r_s/r is one too. The Eddington-Finkelstein
+    # times u = ct - r_* and v = ct + r_* are lengths.
+    ("global_monopole", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Delta": "1", "r_s": "L",
+    },
+    ("global_monopole", "conical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Delta": "1",
+    },
+    ("global_monopole", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "\\Delta": "1", "r_s": "L",
+    },
+    ("global_monopole", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "\\Delta": "1", "r_s": "L",
+    },
     # e^x forces x dimensionless, and with it the other three coordinates, so the whole
     # length of the Godel solution sits in 1/omega.
     ("godel", "cartesian"): {
@@ -482,7 +497,7 @@ PARAMETER_RELATIONS = {
 GREEK = [
     "theta", "phi", "eta", "omega", "Omega", "ell", "pi", "lambda", "mu", "nu",
     "rho", "sigma", "tau", "chi", "psi", "alpha", "beta", "gamma", "delta",
-    "epsilon", "kappa", "xi", "zeta", "Lambda", "Phi", "Theta", "Psi", "Sigma",
+    "epsilon", "kappa", "xi", "zeta", "Lambda", "Phi", "Theta", "Psi", "Sigma", "Delta",
 ]
 
 # The Dirac delta and its derivatives the reader reads, as \delta, \delta' and \delta''.
