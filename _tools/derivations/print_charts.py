@@ -1070,7 +1070,7 @@ def khan_penrose():
     null = {
         "metric_id": "khan_penrose",
         "system": {"id": "double_null", "name": "Double Null", "coords": null_coords,
-                   "domains": ["u \\in [0, 1)", "v \\in [0, 1)"] + domains + ["u^2 + v^2 < 1"],
+                   "domains": ["u \\in [0, 1)", "v \\in [0, \\sqrt{1 - u^2})"] + domains,
                    "parameters": parameters, "line_element": KP_NULL_LINE},
         "chart_line_element": KP_NULL_LINE,
         "printer": {"lead": [L, u, v], "named": forms.named},
@@ -1084,8 +1084,7 @@ def khan_penrose():
     cosmological = {
         "metric_id": "khan_penrose",
         "system": {"id": "cosmological", "name": "Cosmological", "coords": cosmological_coords,
-                   "domains": ["\\tau \\in [0, \\pi/2)", "\\sigma \\in (-\\pi/2, \\pi/2)"] + domains
-                   + ["|\\sigma| \\le \\tau"],
+                   "domains": ["\\tau \\in [0, \\pi/2)", "\\sigma \\in [-\\tau, \\tau]"] + domains,
                    "parameters": parameters, "line_element": KP_COSMOLOGICAL_LINE},
         "chart_line_element": KP_COSMOLOGICAL_LINE,
         "printer": {"lead": [cr.parameters["L"]], "named": {Tp: "1 + \\sin\\tau", Tm: "1 - \\sin\\tau",

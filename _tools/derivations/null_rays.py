@@ -223,6 +223,7 @@ BASE_FIELDS = ["coords", "parameters", "metric_components", "inverse_metric_comp
 FINKELSTEIN_IN = ((0, 1), (1, -1))      # X = r, Y = v - r
 FINKELSTEIN_OUT = ((0, 1), (1, 1))      # X = r, Y = u + r
 NULL_TO_TR = ((-0.5, 0.5), (0.5, 0.5))  # (u, v) of Minkowski to X = (v - u)/2, Y = (u + v)/2
+NULL_TO_SUM = ((-1, 1), (1, 1))         # (u, v) of Khan and Penrose to X = v - u, Y = u + v
 UV_TO_TZ = ((-0.5, 1), (0.5, 1))        # (u, v) of the plane wave to z = v - u/2, t = v + u/2
 RADIAL = ("ingoing", "outgoing")
 SIDEWAYS = ("moving left", "moving right")
@@ -600,6 +601,14 @@ DIAGRAMS = [
                   "at the speed of light: $k = 1 - (2 - \\delta)\\,S(\\tfrac{\\rho_0^2 - "
                   "r^2}{2\\rho_0})\\,S(t - x)\\,S(x)\\,S(D - x)$ with $\\delta = 0.2$, $\\rho_0 = 1$, "
                   "and $S$ a step of width $0.15$ built from $\\tanh$."),
+    # Where both waves have passed; the chart's domain ends on the two wave fronts, and above it
+    # the metric stops being finite on the curvature singularity u^2 + v^2 = 1.
+    Diagram("khan_penrose", "double_null", "plane", "$u$ and $v$", ("u", "v"), (-1, 1, 0, 1.5),
+            "$v - u$", "$u + v$", {"L": 1}, {"x": "0", "y": "0"}, to_display=NULL_TO_SUM, tau="u + v",
+            families=SIDEWAYS, crunch=True),
+    Diagram("khan_penrose", "cosmological", "plane", "$\\tau$ and $\\sigma$", ("\\tau", "\\sigma"),
+            (-math.pi / 2, math.pi / 2, 0, math.pi / 2), "$\\sigma$", "$\\tau$", {"L": 1}, {"x": "0", "y": "0"},
+            tau="tau", families=SIDEWAYS),
     Diagram("pp_wave", "exact_plane_wave", "tz", "$t$ and $z$ on the axis", ("u", "v"), (-2, 2, -2, 2),
             "$z$", "$ct$", {}, {"x": "0", "y": "0"}, to_display=UV_TO_TZ, tau="u + 2*v",
             families=SIDEWAYS, functions={"A": "exp(-u**2)", "B": "0"},
@@ -1299,6 +1308,27 @@ CAPTIONS = {
         "The dash dot line is $g^{tt} = 0$, where $k = 0$ and the surfaces $t = $ const stop being "
         "spacelike. On the axis the expression for the Kretschmann scalar is $0/0$; the tube's "
         "curvature is concentrated in its thin walls.",
+    ],
+    ("khan_penrose", "double_null", "plane"): [
+        "The plane of $u$ and $v$ ($x = y = 0$) where both waves have passed, drawn with $u + v$ up and $v - u$ "
+        "across, each point in the diagram a single event. Only $g_{uv}$ is nonzero on it, so the light rays are "
+        "the lines $u = $ const and $v = $ const at 45°, and no Christoffel symbol turns a ray along them out of the "
+        "plane, so each is a null geodesic.",
+        "The region is bounded below by the fronts of the two impulsive waves, $u = 0$ and $v = 0$, which met at "
+        "$u = v = 0$ and on which the Riemann tensor has a delta singularity, and above by the spacelike curvature "
+        "singularity $u^2 + v^2 = 1$, where the Kretschmann scalar diverges. Every ray and every observer in the "
+        "region ends on it. Its two ends, $u = 1$ on $v = 0$ and $v = 1$ on $u = 0$, are where the fold "
+        "singularities behind each wave alone meet it.",
+    ],
+    ("khan_penrose", "cosmological", "plane"): [
+        "The plane of $\\tau$ and $\\sigma$ ($x = y = 0$) where both waves have passed, each point in the diagram "
+        "a single event. The metric on it is $L^2(\\cos\\tau)^{3/2}(-d\\tau^2 + d\\sigma^2)/(2\\sqrt{\\cos\\sigma})$, "
+        "a multiple of Minkowski's, so the light rays are the lines of constant $\\tau + \\sigma = 2\\arcsin u$ "
+        "and constant $\\tau - \\sigma = 2\\arcsin v$, at 45°, and each is a null geodesic.",
+        "The fronts of the two waves are the lines $\\sigma = \\pm\\tau$, which leave the collision at "
+        "$\\tau = \\sigma = 0$, and the curvature singularity $u^2 + v^2 = 1$ is the line $\\tau = \\pi/2$, where "
+        "$g_{xx}$ grows as $1/\\cos\\tau$ and $g_{yy}$ falls as $\\cos^3\\tau$. Each surface of constant "
+        "$\\tau$ is spacelike, and every observer in the region reaches $\\tau = \\pi/2$.",
     ],
     ("pp_wave", "exact_plane_wave", "tz"): [
         "The plane the wave travels in, on its axis ($x = y = 0$), drawn with $u = t - z$ and $v = "
@@ -3332,6 +3362,8 @@ CLOSED_FORMS = {
     **{("aichelburg_sexl", "null_cartesian", view):
        (lambda u, v, n=float(sp.Rational(rho)): v + math.log(n) * (1 + scipy_erf(20 * u)) / 2, lambda u, v: u, None)
        for view, rho in AS_RHO.items()},
+    ("khan_penrose", "double_null", "plane"): (lambda u, v: v, lambda u, v: u, None),
+    ("khan_penrose", "cosmological", "plane"): (lambda tau, s: tau + s, lambda tau, s: tau - s, None),
     ("krasnikov", "cylindrical", "tx"): (None, lambda t, x: t - x, None),
 }
 
