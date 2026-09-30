@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 32,
+  "count": 33,
   "spacetimes": [
     {
       "id": "alcubierre",
@@ -3018,6 +3018,229 @@
               "indices": [
                 "Z",
                 "Z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "misner",
+      "name": "Misner Space",
+      "short_name": "Misner",
+      "description": "Minkowski space identified under a boost, flat everywhere. A contracting universe whose closed direction turns from space into time across a horizon of closed null geodesics, with closed timelike curves through every event beyond it.",
+      "tags": [
+        "flat",
+        "vacuum",
+        "vacuum solution",
+        "closed timelike curves",
+        "causality violation",
+        "chronology horizon",
+        "time machine",
+        "topology",
+        "boost",
+        "Taub-NUT",
+        "exact solution",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit.",
+      "references": [
+        "misner1963",
+        "hawking1973",
+        "misner1967",
+        "li1998",
+        "levanony2011",
+        "hiscock1982",
+        "kim1991",
+        "hawking1992",
+        "gott1991",
+        "grant1993",
+        "thorne1993misner",
+        "sushkov1997",
+        "cramer1996",
+        "kay1997",
+        "berkooz2004"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
+      "charts": [
+        {
+          "id": "misner",
+          "name": "Misner",
+          "coordinates": [
+            "T",
+            "\\psi",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "\\psi \\in [0, \\psi_0)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "T = 0 \\;\\text{(chronology horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi_0",
+              "description": "Period of $\\psi$; each event is identified with its images under a boost of rapidity $\\psi_0/2$"
+            }
+          ],
+          "convention": "We use coordinates $(T, \\psi, y, z)$, with $T$ carrying dimensions of area, $\\psi$ dimensionless and periodic with period $\\psi_0$, and $y$ and $z$ lengths. No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -2\\,dT\\,d\\psi - T\\,d\\psi^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "\\psi"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "-T"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "milne",
+          "name": "Milne",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, 0)",
+            "\\chi \\in [0, \\psi_0/2)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "t = 0 \\;\\text{(chronology horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi_0",
+              "description": "Twice the period of $\\chi$; each event is identified with its images under a boost of rapidity $\\psi_0/2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\chi, y, z)$, with $t$ carrying dimensions of time, $\\chi$ dimensionless and periodic with period $\\psi_0/2$, and $y$ and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2 dt^2 + c^2t^2\\,d\\chi^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "c^2 t^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rindler",
+          "name": "Rindler",
+          "coordinates": [
+            "\\eta",
+            "\\xi",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in [0, \\psi_0/2)",
+            "\\xi \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\xi = 0 \\;\\text{(chronology horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi_0",
+              "description": "Twice the period of $\\eta$; each event is identified with its images under a boost of rapidity $\\psi_0/2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, \\xi, y, z)$, with $\\eta$ dimensionless and periodic with period $\\psi_0/2$, and $\\xi$, $y$, and $z$ lengths. No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\xi^2 d\\eta^2 + d\\xi^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\xi^2"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
               ],
               "value": "1"
             }
