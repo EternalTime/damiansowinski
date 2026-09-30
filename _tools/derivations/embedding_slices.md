@@ -275,6 +275,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `spherical/radial`: the line $ct = 0$ from $r_+$ to the box's edge at $6\,m$.
 - No conformal diagram.
 
+### Thin shell wormhole
+
+- The embedding is the equator at one moment of $t$, drawn at $t = 0$ at $a = 1.25\,r_s$, $r$ from the throat $a$ to $5\,r_s$ on both sides.
+- `spherical/radial`, one side of the throat: the line $ct = 0$ from $r = a$ to the box's edge, $4.25\,r_s$.
+- `throat/radial`, both sides through the throat with $\ell = \pm(r - a)$: the line $ct = 0$ from $\ell = -3.75\,r_s$ to $3.75\,r_s$, cut to the box at $|\ell| = 3\,r_s$.
+- `throat` and `spherical`, the diamond in $\ell_*$: the line $T = 0$ from $\ell = -3.75\,r_s$ to $3.75\,r_s$, both sides through the throat, the same on both.
+
 ### Tolman-Bondi
 
 - The embedding is a cloud released from rest, $E = -GM(r)/c^2r$, at $ct = 0$, $0.6$, $1$ and $1.3\,r_b$.
@@ -333,6 +340,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 | Schwarzschild-de Sitter | line, four curves | none | line, three times |
 | van Stockum | line, not visible | floor | none drawn |
 | Taub-NUT | line | none | none drawn |
+| thin shell wormhole | line, line | none | line, line |
 | Tolman-Bondi | not visible | none | none drawn |
 | TOV | line, line | none | line |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
