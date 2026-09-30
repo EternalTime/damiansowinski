@@ -288,6 +288,20 @@ DIMENSIONS = {
     ("lentz", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "\\phi": "L",
     },
+    # The Milne universe has no length of its own: the comoving chi and r are pure numbers and
+    # ct carries the length, and the logarithmic time tau needs the time t_0 at which it is zero.
+    ("milne", "comoving_hyperbolic"): {
+        "t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1",
+    },
+    ("milne", "comoving_spherical"): {
+        "t": "T", "r": "1", "\\theta": "1", "\\phi": "1",
+    },
+    ("milne", "logarithmic_time"): {
+        "\\tau": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "t_0": "T",
+    },
+    ("milne", "inertial"): {
+        "T": "T", "R": "L", "\\theta": "1", "\\phi": "1",
+    },
     ("minkowski", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L"},
     ("minkowski", "spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1"},
     ("minkowski", "double_null"): {"u": "T", "v": "T", "y": "L", "z": "L"},

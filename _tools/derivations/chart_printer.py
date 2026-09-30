@@ -167,6 +167,19 @@ class Printer:
             return self.sum_text(self.sum_of(e))
         return self.term(e)
 
+    def exponent(self, e):
+        """An exponent set inline, as the files write $e^{r^2/R^2}$: a single term over a
+        denominator is printed with a slash, since a built fraction in a superscript is unreadable."""
+        num, den = sp.fraction(e)
+        if den == 1 or sp.sympify(num).is_Add or sp.sympify(den).is_Add:
+            return self.expr(e)
+        head = "-" if sp.sympify(num).could_extract_minus_sign() else ""
+        num = -num if head else num
+        bottom = self.expr(den)
+        if len(sp.Mul.make_args(den)) > 1:
+            bottom = "(" + bottom + ")"
+        return head + self.expr(num) + "/" + bottom
+
     def sum_text(self, s):
         out = []
         for c, rest in s.terms:
@@ -315,7 +328,7 @@ class Printer:
         if exponent == sp.Rational(1, 2):
             return "\\sqrt{" + (_num(base) if base.is_Number else self.expr(base)) + "}"
         if isinstance(base, sp.exp):
-            return "e^{" + self.expr(base.args[0]) + "}"
+            return "e^{" + self.exponent(base.args[0]) + "}"
         if isinstance(base, TRIG):
             head = "\\" + base.func.__name__
             if exponent != 1:
@@ -601,24 +614,28 @@ def is_single_term(text):
 
 
 class Chart:
-    def __init__(self, coords_tex, parameters, chart_line_element, printer_options=None, pretty=None):
-        # Time is already the chart coordinate here, so no coordinate is scaled by c.
+    def __init__(self, coords_tex, parameters, chart_line_element, printer_options=None, pretty=None, time=None):
+        # Time is already the chart coordinate here, so no coordinate is scaled by c. A chart
+        # whose components depend on the time names it as `time`: its symbol then stands for
+        # x^0 = ct in the geometry, and every value is printed and read back with it written
+        # as c times the time the file prints, as Milne's comoving c^2t^2 is.
         self.coords_tex = coords_tex
         self.reader = vm.Reader(coords_tex, parameters, ())
         self.symbols = [self.reader.symbol[name] for name in coords_tex]
+        self.bare = {self.reader.symbol[time]: self.reader.c * self.reader.symbol[time]} if time else {}
         g = vm.metric_from_line_element(self.reader, chart_line_element, coords_tex)
         self.geo = vm.Geometry(g, self.symbols, 10 ** 6)
         self.printer = Printer(self.symbols, **(printer_options or {}))
         self.pretty = pretty or sp.factor
 
     def check(self, text, value):
-        if vm.norm(self.reader(text) - value) != 0:
+        if vm.norm(self.reader(text) - sp.sympify(value).subs(self.bare, simultaneous=True)) != 0:
             raise AssertionError(f"printed {text!r} does not read back as {value}")
         return text
 
     def text(self, value):
         """The printed form of a value, checked by reading it back."""
-        return self.check(self.printer(self.pretty(value)), value)
+        return self.check(self.printer(self.pretty(sp.sympify(value).subs(self.bare, simultaneous=True))), value)
 
     def single_term(self, value):
         """A printed form of the value with no top level sum, so a leading minus negates it.

@@ -2054,6 +2054,17 @@ class EmbeddingDiagrams(unittest.TestCase):
             near(z, math.sqrt(1 + r * r) - 1, f"anti-de Sitter z at {r}")
         for r, rho, z in piece(ads["surfaces"][0], "cone"):
             near(z, rho - 1, f"the light cone at {r}")
+        # The Milne universe's moments on the hyperboloids Z = ct cosh chi, rho = ct sinh chi, the
+        # moment itself in its inertial chart, nested inside the light cone Z = rho of their apex.
+        milne = view("milne")
+        self.assertEqual(milne["space"], "minkowski")
+        for surface in milne["surfaces"] + milne["movie"]["frames"]:
+            t = surface.get("time", surface.get("value"))
+            for chi, rho, z in piece(surface, "sheet"):
+                near(rho, t * math.sinh(chi), f"Milne rho at ct = {t}, chi = {chi}")
+                near(z, t * math.cosh(chi), f"Milne z at ct = {t}, chi = {chi}")
+            for chi, rho, z in piece(surface, "cone"):
+                near(z, rho, f"Milne's light cone at ct = {t}")
         # The Malament-Hogarth plane at ct = 0: the circle through s has radius s Omega, s plus
         # e^(1 - 1/(1 - s^2)), which closes in on 1 down the tube, and it is flat beyond s = 1.
         tube = view("malament_hogarth")["surfaces"][-1]
@@ -3050,6 +3061,15 @@ class Slices(unittest.TestCase):
         if key == "einstein_static/static_areal/radial":
             # r = R sin chi carries the near hemisphere of the moment, out to the equator r = R.
             return (lambda X: 0.0), [0.0, 1.0]
+        if key.startswith("milne/"):
+            # The moment ct: level in the comoving charts, at c tau = ln(ct) in the logarithmic one
+            # and the hyperbola cT = sqrt(c^2t^2 + R^2) in the inertial one, out to the chi reached.
+            hi = self.reach(surface)[1]
+            if key == "milne/inertial/through":
+                return (lambda X: math.sqrt(t * t + X * X)), [0.0, t * math.sinh(hi)]
+            if key == "milne/logarithmic_time/radial":
+                return (lambda X: math.log(t)), [0.0, hi]
+            return (lambda X: t), [0.0, math.sinh(hi) if "spherical" in key else hi]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
@@ -3192,6 +3212,11 @@ class Slices(unittest.TestCase):
                         inside, outside = mark["lines"]
                         self.assertEqual(inside, [[0, round(eta, 4)], [round(chi0, 4), round(eta, 4)]], where)
                         self.assertLess(math.dist(outside[0], [chi0, eta]), 2e-4, where)
+                    elif metric_id == "milne":
+                        # p, q = arctan(ct e^-chi), arctan(ct e^chi), so tan p tan q = c^2t^2.
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs(tp * tq - t * t), 2e-3 * (1 + tp * tp) * (1 + tq * tq), f"{where} at {(X, T)}")
                     elif metric_id == "rn_metric" and mark["view"] == "inside":
                         self.assertTrue(all(abs(T - math.pi) < 2e-4 for _, T in points), where)
                     else:
