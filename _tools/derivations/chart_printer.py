@@ -21,11 +21,15 @@ import sympy as sp
 
 import verify_metrics as vm
 
-GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho"}
+GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell"}
+# A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
+ACCENTED = {"tildephi": "\\tilde\\phi"}
 TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
 
 
 def tex_name(name):
+    if name in ACCENTED:
+        return ACCENTED[name]
     return "\\" + name if name in GREEK else name
 
 
@@ -49,16 +53,18 @@ class Sum:
 
 
 class Printer:
-    def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None):
+    def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None, factors=None):
         """coords: coordinate symbols in chart order.
         primed: names of functions of one variable printed with primes.
         lead: generators, most significant first, that order the terms of a sum.
         overrides: {placeholder symbol: its printed text}.
         collect: a function turning the polynomial numerator of a value into a Sum.
+        factors: generators in the order they are written within a product, lead by default.
         """
         self.coords = list(coords)
         self.primed = set(primed)
         self.lead = list(lead)
+        self.factors = list(lead if factors is None else factors)
         self.overrides = dict(overrides or {})
         self.collect = collect
 
@@ -244,7 +250,7 @@ class Printer:
         return numerator, denominator
 
     def rank_of(self, g):
-        return self.lead.index(g) if g in self.lead else 99
+        return self.factors.index(g) if g in self.factors else 99
 
     def factor_key(self, item):
         base, _ = item

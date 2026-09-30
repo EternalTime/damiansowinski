@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
-charts of tov, malament_hogarth, mixmaster, lentz and einstein_static, and Godel's cylindrical chart.
+charts of tov, malament_hogarth, mixmaster, lentz, einstein_static and btz, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -17,7 +17,7 @@ yet give a convention, stops the script rather than being written without one. T
 reads better than an expanded one, and each of those is checked against sympy here too.
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
-malament_hogarth.md, mixmaster.md, lentz.md and godel.md beside this file.
+malament_hogarth.md, mixmaster.md, lentz.md, godel.md and btz.md beside this file.
 """
 import argparse
 import json
@@ -323,7 +323,8 @@ GEODESICS = {
 
 
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
-          "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")]}
+          "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
+          "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)]}
 
 
 def rewritten(value, substitutions, chart):
@@ -343,6 +344,71 @@ def rewritten(value, substitutions, chart):
         for side, original in zip(text.split("="), value.split("="), strict=True):
             chart.check(side, chart.reader(original))
     return text
+
+
+# -- Banados-Teitelboim-Zanelli ------------------------------------------------------
+
+BTZ_PARAMETERS = ["\\ell", "M", "J"]
+BTZ_LAPSE = "\\dfrac{r^2}{\\ell^2} - M + \\dfrac{J^2}{4r^2}"
+
+
+def btz_stationary():
+    """The chart of Banados, Teitelboim and Zanelli, -N^2 c^2dt^2 + dr^2/N^2 + r^2(dphi + N^phi c dt)^2
+    with N^phi = -J/(2r^2), written out so that every term is a parameter or a coordinate."""
+    def line(c, c2):
+        return (f"ds^2 = -\\left({BTZ_LAPSE}\\right){c2}dt^2 + \\dfrac{{dr^2}}{{{BTZ_LAPSE}}}"
+                f" + r^2\\left(d\\phi - \\dfrac{{J}}{{2r^2}}{c}dt\\right)^2")
+    return {
+        "metric_id": "btz",
+        "system": {"id": "stationary", "name": "Stationary", "coords": ["t", "r", "\\phi"],
+                   "domains": ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)"],
+                   "parameters": BTZ_PARAMETERS, "line_element": line("c\\,", "c^2")},
+        "chart_line_element": line("", ""),
+        "printer": {"lead": BTZ_LEAD, "factors": BTZ_LEAD[1:] + BTZ_LEAD[:1]},
+    }
+
+
+def btz_null(sign):
+    """An Eddington-Finkelstein chart, ingoing for sign 1 and outgoing for sign -1:
+    -N^2 dw^2 + 2 sign dw dr + r^2(dphi~ - J dw/(2r^2))^2 with w = v or u a length. It is checked,
+    slot by slot, to be the stationary chart pulled back through d(ct) = dw - sign dr/N^2 and
+    dphi = dphi~ - sign J dr/(2r^2N^2)."""
+    w, name, system = ("v", "Ingoing", "eddington_finkelstein_ingoing") if sign == 1 else \
+        ("u", "Outgoing", "eddington_finkelstein_outgoing")
+    line = (f"ds^2 = -\\left({BTZ_LAPSE}\\right)d{w}^2 {'+' if sign == 1 else '-'} 2\\,d{w}\\,dr"
+            f" + r^2\\left(d\\tilde\\phi - \\dfrac{{J}}{{2r^2}}d{w}\\right)^2")
+    return {
+        "metric_id": "btz",
+        "system": {"id": system, "name": f"{name} Eddington-Finkelstein", "coords": [w, "r", "\\tilde\\phi"],
+                   "domains": [f"{w} \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\tilde\\phi \\in [0, 2\\pi)"],
+                   "parameters": BTZ_PARAMETERS, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": BTZ_LEAD, "factors": BTZ_LEAD[1:] + BTZ_LEAD[:1]},
+        "check": lambda chart: btz_pullback(chart, sign),
+    }
+
+
+def btz_pullback(chart, sign):
+    spec = btz_stationary()
+    source = cp.Chart(spec["system"]["coords"], BTZ_PARAMETERS, spec["chart_line_element"])
+    w, r, psi = chart.symbols
+    ell, M, J = (chart.reader.parameters[n] for n in ("ell", "M", "J"))
+    N2 = r ** 2 / ell ** 2 - M + J ** 2 / (4 * r ** 2)
+    jacobian = sp.Matrix([[1, -sign / N2, 0], [0, 1, 0], [0, -sign * J / (2 * r ** 2 * N2), 1]])
+    at = dict(zip(source.symbols, (w, r, psi)))
+    at.update({source.reader.parameters[n]: chart.reader.parameters[n] for n in ("ell", "M", "J")})
+    pulled = jacobian.T * source.geo.g.subs(at) * jacobian
+    for a in range(3):
+        for b in range(a, 3):
+            if vm.norm(pulled[a, b] - chart.geo.g[a, b]) != 0:
+                raise AssertionError(f"btz: the pullback of the stationary metric misses the "
+                                     f"{chart.coords_tex[0]} chart in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+
+
+BTZ_LEAD = [sp.Symbol("r", real=True), sp.Symbol("M", real=True), sp.Symbol("J", real=True),
+            sp.Symbol("ell", real=True)]
+
+
 
 
 def write(spec):

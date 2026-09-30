@@ -165,6 +165,19 @@ DIMENSIONS = {
     ("bertotti_robinson", "poincare"): {
         "t": "T", "x": "L", "\\theta": "1", "\\phi": "1", "b": "L",
     },
+    # Three dimensions, where Newton's constant carries L^2/(M T^2): the entry's M = 8Gm/c^2
+    # is dimensionless and J = 8Gj/c^3 a length, which is what lets N^2 = r^2/l^2 - M + J^2/(4r^2)
+    # be a sum of numbers. The advanced and retarded times of the Eddington-Finkelstein charts
+    # are lengths, as Schwarzschild's are.
+    ("btz", "stationary"): {
+        "t": "T", "r": "L", "\\phi": "1", "\\ell": "L", "M": "1", "J": "L",
+    },
+    ("btz", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\tilde\\phi": "1", "\\ell": "L", "M": "1", "J": "L",
+    },
+    ("btz", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\tilde\\phi": "1", "\\ell": "L", "M": "1", "J": "L",
+    },
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
@@ -1070,8 +1083,9 @@ class Reader:
         text = expand_braced_call(text, "sqrt", "sqrt")
         text = expand_braced_call(text, "ddot", "DDOT")
         text = expand_braced_call(text, "dot", "DOT")
-        text = re.sub(r"DDOT\s*\(\s*\\?([A-Za-z]+)\s*\)", r" \1_ddot ", text)
-        text = re.sub(r"DOT\s*\(\s*\\?([A-Za-z]+)\s*\)", r" \1_dot ", text)
+        # A dotted name may be accented, as \dot{\tilde\phi} is, and reads as the name tildephi.
+        text = re.sub(r"DDOT\s*\(\s*((?:\\?[A-Za-z]+)+)\s*\)", lambda m: f" {self._plain(m.group(1))}_ddot ", text)
+        text = re.sub(r"DOT\s*\(\s*((?:\\?[A-Za-z]+)+)\s*\)", lambda m: f" {self._plain(m.group(1))}_dot ", text)
         # d\Omega^2 is the unit two sphere, written out so the reader sees differentials.
         text = re.sub(r"d\\Omega\s*\^\s*2", "(dtheta**2 + sin(theta)**2*dphi**2)", text)
         # Differentials become single atoms before anything is allowed to pad with spaces.
@@ -1091,6 +1105,8 @@ class Reader:
         # 3R\sqrt{..} leaves 3Rsqrt(..), whose one name token would be split letter by letter.
         for name in FUNCTIONS:
             text = re.sub(r"(?<=[A-Za-z0-9_])(" + name + r")\s*\(", r" \1(", text)
+        # Python reads 2J as the imaginary number 2j, so a number is parted from a J it multiplies.
+        text = re.sub(r"(?<![A-Za-z_])(\d+)([jJ])", r"\1 \2", text)
         if "\\" in text:
             raise LatexError(f"unhandled LaTeX in {latex!r}: {text!r}")
         return text
