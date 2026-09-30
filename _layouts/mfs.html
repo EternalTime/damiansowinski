@@ -1981,6 +1981,7 @@
               fitProseMath([].slice.call(views[i].querySelectorAll(PROSE)));
               fitLines(root, [section]);
               if (button.hasAttribute('data-em-id')) showSlices(root, button.getAttribute('data-em-id'));
+              if (button.hasAttribute('data-cd-view')) showShade(root, button.getAttribute('data-cd-view'));
             });
           });
         });
@@ -2201,15 +2202,21 @@
          and shows nothing, as a spacetime with no conformal diagram shows nothing: Vaidya's one
          view is the shell imploding in its ingoing chart, and its outgoing chart's own
          spacetime diagram draws the time reverse of that shell. */
-      function conformalSection(metricId, coordId) {
+      // The views the conformal diagram shows in the chart being read: those that name it, then
+      // those that name none.
+      function cdViews(metricId, coordId) {
         var data = _conformalCache[metricId];
-        if (!data || !data.views) return '';
-        var views = data.views.filter(function(v) { return v.system === coordId; })
+        if (!data || !data.views) return [];
+        return data.views.filter(function(v) { return v.system === coordId; })
           .concat(data.views.filter(function(v) { return !v.system; }));
+      }
+
+      function conformalSection(metricId, coordId) {
+        var views = cdViews(metricId, coordId);
         if (!views.length) return '';
         var shown = 0;
         var buttons = views.length > 1 ? choices(views.map(function(v, i) {
-          return choiceButton(nrEsc(v.label), i === shown, {});
+          return choiceButton(nrEsc(v.label), i === shown, { 'data-cd-view': v.id });
         }), 'view') : '';
         return [
           '<div class="mfs-section mfs-diagram mfs-conformal">',
@@ -2282,7 +2289,47 @@
 
       function emSvg(view, f) {
         return nrEl('svg', { 'class': 'mfs-cd-svg mfs-em-svg', viewBox: '0 0 ' + f.vw + ' ' + f.vh.toFixed(1), role: 'img',
-          'aria-label': 'Embedding diagram, ' + nrPlain(view.label) }, emPaths(view.figure.layers, f));
+          'aria-label': 'Embedding diagram, ' + nrPlain(view.label) }, emPaths(emLayers(view), f));
+      }
+
+      /* ── The shade of the conformal diagram's region ──
+         An embedding view may carry `shades`, each answering a view of the conformal diagram by
+         its id, as the captain asked on 30 September 2026 for the Einstein static universe:
+         while the conformal diagram shows Minkowski space, de Sitter space or anti-de Sitter
+         space inside the strip, the sphere is tinted pink where that region covers the moment
+         drawn, the moment of the slice both diagrams draw, since the conformal diagram has no
+         slider. The shade takes the place of its piece's tint, its fills painted in place of
+         the figure's own, and its legend entry and caption paragraph show with it, while a
+         legend entry for a fill the shade paints over is hidden. A turned figure takes the
+         shade through MfsTurn.shade(). _tools/README.md defines the file. */
+      var _shadeShown = null;  // the id of the conformal view shown, whose shade is drawn
+
+      function emShade(view) {
+        return (view.shades || []).filter(function(sh) { return sh.view === _shadeShown; })[0] || null;
+      }
+
+      // The published figure's layers, with the shade shown's fills in place of its own.
+      function emLayers(view) {
+        var shade = emShade(view), layers = view.figure.layers;
+        return shade ? shade.layers.concat(layers.filter(function(L) { return L.kind !== 'fill'; })) : layers;
+      }
+
+      function shadeClass(id) {
+        return 'mfs-shade' + (id === _shadeShown ? '' : ' mfs-shade-off');
+      }
+
+      // Draw the shades that answer the conformal view `id` and no other.
+      function showShade(root, id) {
+        _shadeShown = id;
+        root.querySelectorAll('[data-shade-view]').forEach(function(el) {
+          el.classList.toggle('mfs-shade-off', el.getAttribute('data-shade-view') !== id);
+        });
+        root.querySelectorAll('[data-shade-hide]').forEach(function(el) {
+          el.classList.toggle('mfs-shade-off', el.getAttribute('data-shade-hide').split(' ').indexOf(id) >= 0);
+        });
+        root.querySelectorAll('.mfs-em-figure .mfs-cd-drawing[data-turn]').forEach(function(drawing) {
+          drawing.dispatchEvent(new CustomEvent('mfs-shade'));
+        });
       }
 
       /* The drawing names the view it draws, which wireTurning() turns, as pjFigure() says. A
@@ -2305,13 +2352,28 @@
       }
 
       function emLegend(view) {
-        return '<div class="mfs-nr-legend">' + view.figure.legend.map(function(item) {
+        var shades = view.shades || [];
+        function entry(item, attrs) {
           var cls = 'em-' + item[1], inner;
           if (item[0] === 'fill') inner = '<rect class="' + cls + '-fill cd-swatch-fill" x="2" y="2" width="30" height="12"/>';
           else if (item[0] === 'point') inner = '<circle class="' + cls + '" cx="17" cy="8" r="3"/>';
           else inner = '<line class="' + cls + '" x1="2" y1="8" x2="32" y2="8"/>';
-          return '<span class="mfs-nr-item"><svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner +
+          return '<span class="mfs-nr-item' + (attrs || '"') + '><svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner +
             '</svg><span class="mfs-nr-itext">' + nrProse(nrEsc(item[2])) + '</span></span>';
+        }
+        // A fill's entry is hidden while a shade that paints no fill of its class is shown.
+        function hiders(item) {
+          if (item[0] !== 'fill') return [];
+          return shades.filter(function(sh) {
+            return !sh.layers.some(function(L) { return L['class'] === item[1]; });
+          }).map(function(sh) { return sh.view; });
+        }
+        return '<div class="mfs-nr-legend">' + shades.map(function(sh) {
+          return entry(sh.legend, ' ' + shadeClass(sh.view) + '" data-shade-view="' + nrEsc(sh.view) + '"');
+        }).join('') + view.figure.legend.map(function(item) {
+          var hide = hiders(item);
+          return entry(item, hide.length ? (hide.indexOf(_shadeShown) >= 0 ? ' mfs-shade-off' : '') +
+            '" data-shade-hide="' + nrEsc(hide.join(' ')) + '"' : '"');
         }).join('') + '</div>';
       }
 
@@ -2350,7 +2412,11 @@
                 '<div class="mfs-nr-view' + (i ? ' mfs-nr-hidden' : '') + '">',
                   emFigure(view, metricId, data.views.indexOf(view)),
                   '<div class="mfs-nr-text">',
-                    '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
+                    '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''),
+                      (view.shades || []).map(function(sh) {
+                        return '<p class="' + shadeClass(sh.view) + '" data-shade-view="' + nrEsc(sh.view) + '">' + nrProse(nrEsc(sh.caption)) + '</p>';
+                      }).join(''),
+                    '</div>',
                     emLegend(view),
                     view.height ? note('height', view.height) : '',
                     view.settings ? note('drawn at', view.settings) : '',
@@ -2390,8 +2456,9 @@
       }
 
       function graphSections(metricId, coordId) {
-        var shown = emViews(metricId, coordId)[0];
+        var shown = emViews(metricId, coordId)[0], region = cdViews(metricId, coordId)[0];
         _sliceShown = shown ? shown.id : null;
+        _shadeShown = region ? region.id : null;
         return (coordId ? diagramSection(metricId, coordId) : '') + conformalSection(metricId, coordId) +
           embeddingSection(metricId, coordId);
       }
@@ -2599,7 +2666,7 @@
           if (drawing.getAttribute('data-turn') === 'surfaces') {
             var data = _embeddingCache[metric], view = data && data.views[+place];
             return view && view.figure.turn && { figure: view.figure, view: view, paths: function(f, out) {
-              return emPaths(out ? out.layers : view.figure.layers, f);
+              return emPaths(out ? out.layers : emLayers(view), f);
             } };
           }
           var at = place.split(' '), figures = _diagramCache[metric] && _diagramCache[metric].projections;
@@ -2660,6 +2727,7 @@
               // box, which is what keeps two labels off each other; they grow with the drawing,
               // so they are measured once.
               model = MfsTurn.prepare(it.view);
+              if (it.view.shades) MfsTurn.shade(model, emShade(it.view));
               var across = drawing.getBoundingClientRect().width / f.vw * f.s;
               sizes = spans.map(function(span) {
                 var r = span.getBoundingClientRect();
@@ -2692,6 +2760,12 @@
             turned = false;
             show(false);
           }
+          // The shade of the conformal view shown, drawn at the camera the figure stands at.
+          drawing.addEventListener('mfs-shade', function() {
+            if (model) MfsTurn.shade(model, emShade(it.view));
+            cache = [];
+            show(false);
+          });
           function across() {
             var x = 0;
             pointers.forEach(function(p) { x += p[0]; });
@@ -3905,6 +3979,10 @@
        line the surface hides, its class with -far, is drawn faint. */
     .em-cover-fill { fill: rgba(37,217,200,0.13); stroke: none; }
     .em-star-fill { fill: rgba(249,180,80,0.16); stroke: none; }
+    /* The part of the moment a region of the conformal diagram covers, in the site's pink, as
+       the captain asked on 30 September 2026, shown only while that region's view is. */
+    .em-shade-fill { fill: var(--pink-light); fill-opacity: 0.16; stroke: none; }
+    .mfs-shade-off { display: none !important; }
     .em-wedge-fill { fill: rgba(10,14,18,0.95); stroke: none; }
     .em-outline, .em-outline-far { fill: none; stroke: var(--text-bright); stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; }
     .em-meridian, .em-meridian-far { fill: none; stroke: var(--text-dim); stroke-width: 0.8; stroke-opacity: 0.55; }

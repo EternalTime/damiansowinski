@@ -249,6 +249,9 @@ def embedding_prose(name, data):
             yield f"{where}.figure.legend[{position}]", text
         for position, label in enumerate(view["figure"]["labels"]):
             yield f"{where}.figure.labels[{position}]", label["text"]
+        for position, shade in enumerate(view.get("shades", [])):
+            yield f"{where}.shades[{position}].legend", shade["legend"][2]
+            yield f"{where}.shades[{position}].caption", shade["caption"]
         frames = view.get("movie", {}).get("frames", [])
         if frames:
             yield f"{where}.movie.variable", view["movie"]["variable"]
@@ -3249,6 +3252,121 @@ class Slices(unittest.TestCase):
             for printed in (False, True):
                 self.assertTrue(any(any(cls in selector for selector in selectors) and bool(p) == printed
                                     for selectors, _, p in rules), f"{cls}, print {printed}")
+
+
+class ShadedRegions(unittest.TestCase):
+    """While the Einstein static universe's conformal diagram shows Minkowski space, de Sitter
+    space or anti-de Sitter space in its strip, the embedding diagram's sphere is shaded where
+    that region covers it, as the captain asked on 30 September 2026. The region is Hawking and
+    Ellis's at every conformal time the file carries, it is the region the conformal diagram
+    draws, and the shade drawn is the part of the sphere between its circles, from the numbers in
+    the files alone. _tools/README.md, "The shade of a conformal region", defines the fields."""
+
+    # Hawking and Ellis's regions, the values of chi each spacetime covers at the conformal
+    # time eta, or None where it covers none of the moment.
+    HAWKING_ELLIS = {
+        "minkowski": lambda eta: (0.0, math.pi - abs(eta)) if abs(eta) < math.pi else None,
+        "de_sitter": lambda eta: (0.0, math.pi) if abs(eta) < math.pi / 2 else None,
+        "anti_de_sitter": lambda eta: (0.0, math.pi / 2),
+    }
+
+    def setUp(self):
+        self.conformal, self.embedding = conformal_files(), embedding_files()
+        self.view = self.embedding["einstein_static"]["views"][0]
+        self.shades = {sh["view"]: sh for sh in self.view.get("shades", [])}
+
+    @staticmethod
+    def across(polygon, T):
+        """The least and greatest X at which the line of constant T crosses a convex polygon."""
+        xs = []
+        for (x0, t0), (x1, t1) in zip(polygon, polygon[1:] + polygon[:1]):
+            if min(t0, t1) <= T <= max(t0, t1):
+                xs += [x0, x1] if t0 == t1 else [x0 + (T - t0) * (x1 - x0) / (t1 - t0)]
+        return (min(xs), max(xs)) if xs else None
+
+    def test_each_region_drawn_inside_the_strip_has_its_shade(self):
+        views = [v["id"] for v in self.conformal["einstein_static"]["views"] if not v.get("system")]
+        self.assertEqual(views, ["minkowski", "de_sitter", "anti_de_sitter"])
+        self.assertEqual(list(self.shades), views)
+        # Only the Einstein static universe's sphere is shaded, and every shade names a view its
+        # spacetime's conformal diagram draws.
+        for name, data in self.embedding.items():
+            conformal = {v["id"] for v in self.conformal.get(name, {}).get("views", [])}
+            for view in data["views"]:
+                if name != "einstein_static":
+                    self.assertNotIn("shades", view, name)
+                for shade in view.get("shades", []):
+                    self.assertIn(shade["view"], conformal, name)
+
+    def test_the_shaded_region_matches_each_map_at_several_eta(self):
+        for vid, shade in self.shades.items():
+            times = [T for T, *_ in shade["reach"]]
+            self.assertGreaterEqual(len(set(times)), 13, vid)
+            self.assertIn(shade["T"], times, vid)
+            cover = [L for L in next(v for v in self.conformal["einstein_static"]["views"] if v["id"] == vid)["layers"]
+                     if L["kind"] == "fill" and L["class"] == "cover"]
+            self.assertEqual(len(cover), 1, vid)
+            for T, lo, hi in shade["reach"]:
+                want = self.HAWKING_ELLIS[vid](T)
+                drawn = self.across(cover[0]["points"], T)
+                where = f"{vid} at eta = {T}"
+                if want is None:
+                    self.assertEqual((lo, hi), (None, None), where)
+                    self.assertIsNone(drawn, where)
+                    continue
+                # Hawking and Ellis's region, and the region the conformal diagram draws.
+                self.assertAlmostEqual(lo, want[0], delta=1e-7, msg=where)
+                self.assertAlmostEqual(hi, want[1], delta=1e-7, msg=where)
+                self.assertAlmostEqual(lo, drawn[0], delta=1e-4, msg=where)
+                self.assertAlmostEqual(hi, drawn[1], delta=1e-4, msg=where)
+
+    def test_the_shade_drawn_is_the_region_at_the_moment_drawn(self):
+        surface = self.view["surfaces"][0]
+        for vid, shade in self.shades.items():
+            self.assertEqual(shade["T"], 0, vid)
+            _, lo, hi = next(r for r in shade["reach"] if r[0] == shade["T"])
+            self.assertAlmostEqual(shade["from"], lo, delta=1e-6, msg=vid)
+            self.assertAlmostEqual(shade["to"], hi, delta=1e-6, msg=vid)
+            piece = next(p for p in surface["pieces"] if p["id"] == shade["piece"])
+            xs = [point[0] for point in piece["points"]]
+            self.assertIn(shade["from"], xs, vid)
+            self.assertIn(shade["to"], xs, vid)
+            self.assertEqual(shade["legend"][:2], ["fill", "shade"], vid)
+            self.assertTrue(shade["caption"].strip(), vid)
+            # The shade takes the place of the sphere's tint: its fills are the shade alone.
+            self.assertEqual({L["class"] for L in shade["layers"]}, {"shade"}, vid)
+            self.assertTrue(all(L["kind"] == "fill" for L in shade["layers"]), vid)
+        # The whole sphere, the sphere but one point and the hemisphere about the pole.
+        self.assertEqual((self.shades["minkowski"]["from"], self.shades["minkowski"]["to"]), (0, math.pi))
+        self.assertEqual((self.shades["de_sitter"]["from"], self.shades["de_sitter"]["to"]), (0, math.pi))
+        self.assertEqual((self.shades["anti_de_sitter"]["from"], self.shades["anti_de_sitter"]["to"]), (0, math.pi / 2))
+
+    def test_the_caption_says_the_moment_shaded(self):
+        for vid, shade in self.shades.items():
+            self.assertIn("pink, $\\eta = 0$", shade["caption"], vid)
+
+    def test_the_page_turns_the_shade_as_it_was_published(self):
+        views = {(v["metric"], v["view"]): v for v in turn_check(self)["views"]}
+        v = views[("einstein_static", self.view["id"])]
+        self.assertEqual([sh["view"] for sh in v["shades"]], list(self.shades))
+        for sh in v["shades"]:
+            for cls, (published, drawn) in sh["fills"].items():
+                self.assertLessEqual(abs(published - drawn), 3e-3 * v["boxArea"], f"{sh['view']} {cls}")
+            self.assertGreater(sh["away"], 0, sh["view"])
+            self.assertEqual(sh["bad"], 0, sh["view"])
+            self.assertLessEqual(sh["outside"], 1e-9, sh["view"])
+        # Taking the shade away gives back the published tint.
+        self.assertAlmostEqual(v["unshaded"]["cover"], v["fills"]["cover"][1], places=9)
+
+    def test_the_page_shades_in_the_sites_pink_without_glow(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        rule = re.search(r"\.em-shade-fill \{([^}]*)\}", page)
+        self.assertIsNotNone(rule)
+        self.assertIn("fill: var(--pink-light)", rule.group(1))
+        self.assertNotRegex(rule.group(1), r"shadow|filter|transition")
+        # The conformal diagram's buttons name their view, and choosing one shows its shade.
+        self.assertIn("'data-cd-view': v.id", page)
+        self.assertIn("showShade(root, button.getAttribute('data-cd-view'))", page)
 
 
 class Bibliography(unittest.TestCase):
