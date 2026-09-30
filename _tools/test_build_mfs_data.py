@@ -2993,6 +2993,18 @@ class Slices(unittest.TestCase):
             # v = ct + r_* and u = ct - r_*, r_* = (1/2) ln|(r - 1)/(r + 1)|, drawn against v - r and u + r.
             sign = 1 if "ingoing" in key else -1
             return (lambda X: sign * (0.5 * math.log(abs((X - 1) / (X + 1))) - X)), list(self.reach(surface))
+        if key.startswith("schwarzschild_de_sitter/eddington_finkelstein"):
+            # At r_s = 1 and Lambda = 1/5 the roots of f are those of r^3 - 15r + 15, by Viete's
+            # trigonometric solution, and r_* = sum_i ln|1 - r/r_i|/f'(r_i), which vanishes at r = 0.
+            # Static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            angle = math.acos(-1.5 * math.sqrt(0.2)) / 3
+            roots = [2 * math.sqrt(5) * math.cos(angle - 2 * math.pi * k / 3) for k in range(3)]
+
+            def rstar(r):
+                return sum(math.log(abs(1 - r / ri)) / (1 / ri ** 2 - 0.4 * ri / 3) for ri in roots)
+            return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key == "de_sitter/flat_slicing/tx":
             return (lambda X: -0.5 * math.log(1 + X * X)), None
         if key == "pp_wave/exact_plane_wave/tz":
