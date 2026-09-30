@@ -433,6 +433,18 @@ A superluminal soliton whose energy density is positive everywhere for the obser
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/lentz.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + \left(dx - \partial_x\phi\,c\,dt\right)^2 + \left(dy - \partial_y\phi\,c\,dt\right)^2 + \left(dz - \partial_z\phi\,c\,dt\right)^2$$
 
+### Majumdar-Papapetrou Extremal Black Holes
+
+Any number of extremal charged black holes at rest, the static electrovacuum solution Sudhansu Datta Majumdar and Achilles Papapetrou found independently in 1947. Between every pair of holes the electric repulsion balances the gravitational attraction exactly, so the holes stay at rest in any arrangement.
+
+- id: `majumdar_papapetrou`
+- tags: electrovacuum, non-vacuum, static, stationary, charged, charged black hole, black hole, extremal, multiple black holes, electric charge, mass, electromagnetic field, horizon, event horizon, degenerate horizon, asymptotically flat, harmonic function, superposition, supersymmetric, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(d\rho^2 + \rho^2d\phi^2 + dz^2\right)$$
+- chart Isotropic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{m}{r}\right)^{-2}c^2dt^2 + \left(1 + \dfrac{m}{r}\right)^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Malament-Hogarth Super-Turing Spacetimes
 
 A spacetime construction containing a worldline of infinite proper length that lies within the past of a single event reachable in finite proper time. It provides a relativistic model for hypercomputation that could complete infinite tasks.

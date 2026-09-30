@@ -2,7 +2,7 @@
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
-khan_penrose, global_monopole and domain_wall, and Godel's cylindrical chart.
+khan_penrose, global_monopole, domain_wall and majumdar_papapetrou, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -19,8 +19,8 @@ yet give a convention, stops the script rather than being written without one. T
 reads better than an expanded one, and each of those is checked against sympy here too.
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
-malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md and schwarzschild_de_sitter.md
-beside this file.
+malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md and
+majumdar_papapetrou.md beside this file.
 """
 import argparse
 import itertools
@@ -1265,6 +1265,121 @@ def domain_wall(system):
 DW_CHARTS = ["planar", "global", "conformal", "inertial"]
 
 
+# -- Majumdar-Papapetrou -----------------------------------------------------------------
+
+def majumdar_papapetrou(system_id):
+    """Majumdar's and Papapetrou's static metric, -U^{-2}c^2dt^2 + U^2 times flat space, in
+    the three charts its literature uses: the Cartesian chart of Majumdar, Papapetrou and Hartle
+    and Hawking with U = U(x,y,z) left free, the cylindrical chart of holes strung along one
+    axis with U = U(rho,z), and the isotropic chart of one hole, U = 1 + m/r. The free U is left
+    free in every tensor, so no component assumes Laplace's equation, which the Einstein-Maxwell
+    equations impose away from the holes, as majumdar_papapetrou_check confirms before anything is written;
+    majumdar_papapetrou.md records the choices."""
+    flat = {"cartesian": "dx^2 + dy^2 + dz^2", "cylindrical": "d\\rho^2 + \\rho^2d\\phi^2 + dz^2",
+            "isotropic": "dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"}[system_id]
+    if system_id == "isotropic":
+        U = "\\left(1 + \\dfrac{m}{r}\\right)"
+        line = "ds^2 = -" + U + "^{-2}{}dt^2 + " + U + "^2\\left(" + flat + "\\right)"
+    else:
+        line = "ds^2 = -\\dfrac{{}dt^2}{U^2} + U^2\\left(" + flat + "\\right)"
+    if system_id == "cartesian":
+        coords, name, parameters = ["t", "x", "y", "z"], "Cartesian", ["U = U(x,y,z)"]
+        domains = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)",
+                   "(x, y, z) \\neq \\mathbf{x}_i \\;\\text{(the horizons)}"]
+    elif system_id == "cylindrical":
+        coords, name, parameters = ["t", "\\rho", "\\phi", "z"], "Cylindrical", ["U = U(\\rho,z)"]
+        domains = ["\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in (-\\infty, \\infty)",
+                   "(\\rho, z) \\neq (0, z_i) \\;\\text{(the horizons)}"]
+    else:
+        coords, name, parameters = ["t", "r", "\\theta", "\\phi"], "Isotropic", ["m"]
+        domains = ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "r = 0 \\;\\text{(the horizon)}"]
+    probe = vm.Reader(coords, parameters, ())
+    spec = {
+        "metric_id": "majumdar_papapetrou",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line.replace("{}dt", "c^2dt")},
+        "chart_line_element": line.replace("{}dt", "dt"),
+        "check": majumdar_papapetrou_check,
+    }
+    if system_id == "isotropic":
+        r, m = probe.symbol["r"], probe.parameters["m"]
+        spec["printer"] = {"lead": [r, m], "factors": [m, r]}
+        spec["components"] = {"metric_components": {("t", "t"): "-" + U + "^{-2}", ("r", "r"): U + "^2"},
+                              "inverse_metric_components": {("t", "t"): "-" + U + "^2", ("r", "r"): U + "^{-2}"}}
+    else:
+        Uf = probe.parameters["U"]
+        spec["printer"] = {"lead": [Uf], "flip": False,
+                           "collect": lambda poly, printer: cp.collect_by(poly, [Uf], printer)}
+    return spec
+
+
+def majumdar_papapetrou_check(chart):
+    """The Cartesian chart against the Einstein-Maxwell equations: with A = U^{-1} dt in units
+    where G = c = 4 pi epsilon_0 = 1, the Einstein tensor equals 2(F_ma F_n^a - g_mn F^2/4) once
+    d_z^2 U is replaced by -d_x^2 U - d_y^2 U, and Maxwell's equations div F = 0 reduce to
+    Laplace's for U. Every other chart against the Cartesian one."""
+    if chart.coords_tex[1] == "x":
+        X, U = chart.symbols, chart.reader.parameters["U"]
+        g, gi = chart.geo.g, chart.geo.ginv
+        A = [1 / U, 0, 0, 0]
+        F = sp.Matrix(4, 4, lambda a, b: sp.diff(A[b], X[a]) - sp.diff(A[a], X[b]))
+        Fu = gi * F * gi
+        F2 = sum(F[a, b] * Fu[a, b] for a in range(4) for b in range(4))
+        stress = sp.Matrix(4, 4, lambda a, b: 2 * (sum(F[a, c] * F[b, d] * gi[c, d] for c in range(4) for d in range(4))
+                                                  - g[a, b] * F2 / 4))
+        einstein = sp.Matrix(chart.geo.einstein_ll())
+        laplace = sp.Derivative(U, (X[1], 2)) + sp.Derivative(U, (X[2], 2)) + sp.Derivative(U, (X[3], 2))
+        harmonic = {sp.Derivative(U, (X[3], 2)): sp.Derivative(U, (X[3], 2)) - laplace}
+        for a in range(4):
+            for b in range(a, 4):
+                if vm.norm((einstein[a, b] - stress[a, b]).subs(harmonic)) != 0:
+                    raise AssertionError(f"majumdar_papapetrou: G_{a}{b} is not the Maxwell stress for harmonic U")
+        root = sp.sqrt(-g.det())
+        for b in range(4):
+            divergence = sum(sp.diff(root * Fu[a, b], X[a]) for a in range(4)) / root
+            if vm.norm(divergence - (laplace / U ** 2 if b == 0 else 0)) != 0:
+                raise AssertionError(f"majumdar_papapetrou: Maxwell's equation {b} is not Laplace's for U")
+        return
+    majumdar_papapetrou_pullback(chart)
+
+
+def majumdar_papapetrou_pullback(chart):
+    """Each chart against the Cartesian one: the Cartesian metric with U = U(rho cos phi,
+    rho sin phi, z) pulled back to cylindrical coordinates, and with U = 1 + m/sqrt(x^2 + y^2 + z^2)
+    pulled back to spherical ones, minus the chart's own metric, vanish in every slot."""
+    cart = ["t", "x", "y", "z"]
+    reader = vm.Reader(cart, ["U = U(x,y,z)"], ())
+    g = vm.metric_from_line_element(
+        reader, "ds^2 = -\\dfrac{dt^2}{U^2} + U^2\\left(dx^2 + dy^2 + dz^2\\right)", cart)
+    X = [reader.symbol[c] for c in cart]
+    Uc = reader.parameters["U"]
+    t, a, b, c = chart.symbols
+    if chart.coords_tex[1] == "\\rho":
+        image = [t, a * sp.cos(b), a * sp.sin(b), c]
+        U_on_chart = chart.reader.parameters["U"]
+        g = g.subs(Uc, sp.Function("V")(*X))
+        at = {sp.Function("V")(*image): U_on_chart}
+    else:
+        image = [t, a * sp.sin(b) * sp.cos(c), a * sp.sin(b) * sp.sin(c), a * sp.cos(b)]
+        at = {}
+        g = g.subs(Uc, 1 + chart.reader.parameters["m"] / sp.sqrt(X[1] ** 2 + X[2] ** 2 + X[3] ** 2))
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = (J.T * g.subs(dict(zip(X, image))) * J).subs(at)
+    # The radius and rho are positive on the chart, which is what takes sqrt(r^2) to r.
+    positive = sp.Symbol("positive_radius", positive=True)
+    for i in range(4):
+        for j in range(i, 4):
+            miss = sp.simplify((pulled[i, j] - chart.geo.g[i, j]).subs(a, positive)).subs(positive, a)
+            if vm.norm(miss) != 0:
+                raise AssertionError(f"majumdar_papapetrou: the Cartesian metric pulled back misses the "
+                                     f"{chart.coords_tex[1]} chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+MP_CHARTS = ["cartesian", "cylindrical", "isotropic"]
+
+
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
@@ -1276,7 +1391,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "aichelburg_sexl": [lambda s=s: aichelburg_sexl(s) for s in AS_CHARTS],
           "khan_penrose": khan_penrose,
           "global_monopole": [lambda s=s: global_monopole(s) for s in GM_CHARTS],
-          "domain_wall": [lambda s=s: domain_wall(s) for s in DW_CHARTS]}
+          "domain_wall": [lambda s=s: domain_wall(s) for s in DW_CHARTS],
+          "majumdar_papapetrou": [lambda s=s: majumdar_papapetrou(s) for s in MP_CHARTS]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------

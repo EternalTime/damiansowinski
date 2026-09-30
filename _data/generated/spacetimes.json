@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 41,
+  "count": 42,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3541,6 +3541,239 @@
           ],
           "ricci_scalar": "R = 2\\left(\\partial_x\\partial_y^2\\phi + \\partial_x\\partial_z^2\\phi + \\partial_x^3\\phi\\right)\\partial_x\\phi + 2\\left(\\partial_x^2\\partial_y\\phi + \\partial_y\\partial_z^2\\phi + \\partial_y^3\\phi\\right)\\partial_y\\phi + 2\\left(\\partial_x^2\\partial_z\\phi + \\partial_y^2\\partial_z\\phi + \\partial_z^3\\phi\\right)\\partial_z\\phi + 2\\left(\\partial_x^2\\phi\\,\\partial_y^2\\phi + \\partial_x^2\\phi\\,\\partial_z^2\\phi + \\partial_y^2\\phi\\,\\partial_z^2\\phi + \\left(\\partial_x\\partial_y\\phi\\right)^2 + \\left(\\partial_x\\partial_z\\phi\\right)^2 + \\left(\\partial_x^2\\phi\\right)^2 + \\left(\\partial_y\\partial_z\\phi\\right)^2 + \\left(\\partial_y^2\\phi\\right)^2 + \\left(\\partial_z^2\\phi\\right)^2 + \\partial_t\\partial_x^2\\phi + \\partial_t\\partial_y^2\\phi + \\partial_t\\partial_z^2\\phi\\right)",
           "kretschmann": "K = 4\\left(\\left(\\partial_y^2\\phi\\,\\partial_z^2\\phi - \\partial_y\\partial_z\\phi\\,\\partial_y\\partial_z\\phi\\right)^2 + \\left(\\partial_x^2\\phi\\,\\partial_z^2\\phi - \\partial_x\\partial_z\\phi\\,\\partial_x\\partial_z\\phi\\right)^2 + \\left(\\partial_x^2\\phi\\,\\partial_y^2\\phi - \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_y\\phi\\right)^2 + 2\\left(\\partial_x\\partial_y\\phi\\,\\partial_z^2\\phi - \\partial_x\\partial_z\\phi\\,\\partial_y\\partial_z\\phi\\right)^2 + 2\\left(\\partial_x\\partial_y\\phi\\,\\partial_y\\partial_z\\phi - \\partial_x\\partial_z\\phi\\,\\partial_y^2\\phi\\right)^2 + 2\\left(\\partial_x^2\\phi\\,\\partial_y\\partial_z\\phi - \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_z\\phi\\right)^2\\right) + 4\\left(\\left(\\partial_t\\partial_x^2\\phi + \\partial_x\\phi\\,\\partial_x^3\\phi + \\partial_y\\phi\\,\\partial_x^2\\partial_y\\phi + \\partial_z\\phi\\,\\partial_x^2\\partial_z\\phi + \\left(\\partial_x^2\\phi\\right)^2 + \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_y\\phi + \\partial_x\\partial_z\\phi\\,\\partial_x\\partial_z\\phi\\right)^2 + \\left(\\partial_t\\partial_y^2\\phi + \\partial_x\\phi\\,\\partial_x\\partial_y^2\\phi + \\partial_y\\phi\\,\\partial_y^3\\phi + \\partial_z\\phi\\,\\partial_y^2\\partial_z\\phi + \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_y\\phi + \\left(\\partial_y^2\\phi\\right)^2 + \\partial_y\\partial_z\\phi\\,\\partial_y\\partial_z\\phi\\right)^2 + \\left(\\partial_t\\partial_z^2\\phi + \\partial_x\\phi\\,\\partial_x\\partial_z^2\\phi + \\partial_y\\phi\\,\\partial_y\\partial_z^2\\phi + \\partial_z\\phi\\,\\partial_z^3\\phi + \\partial_x\\partial_z\\phi\\,\\partial_x\\partial_z\\phi + \\partial_y\\partial_z\\phi\\,\\partial_y\\partial_z\\phi + \\left(\\partial_z^2\\phi\\right)^2\\right)^2 + 2\\left(\\partial_t\\partial_x\\partial_y\\phi + \\partial_x\\phi\\,\\partial_x^2\\partial_y\\phi + \\partial_y\\phi\\,\\partial_x\\partial_y^2\\phi + \\partial_z\\phi\\,\\partial_x\\partial_y\\partial_z\\phi + \\partial_x\\partial_y\\phi\\,\\partial_x^2\\phi + \\partial_x\\partial_y\\phi\\,\\partial_y^2\\phi + \\partial_x\\partial_z\\phi\\,\\partial_y\\partial_z\\phi\\right)^2 + 2\\left(\\partial_t\\partial_x\\partial_z\\phi + \\partial_x\\phi\\,\\partial_x^2\\partial_z\\phi + \\partial_y\\phi\\,\\partial_x\\partial_y\\partial_z\\phi + \\partial_z\\phi\\,\\partial_x\\partial_z^2\\phi + \\partial_x\\partial_z\\phi\\,\\partial_x^2\\phi + \\partial_x\\partial_y\\phi\\,\\partial_y\\partial_z\\phi + \\partial_x\\partial_z\\phi\\,\\partial_z^2\\phi\\right)^2 + 2\\left(\\partial_t\\partial_y\\partial_z\\phi + \\partial_x\\phi\\,\\partial_x\\partial_y\\partial_z\\phi + \\partial_y\\phi\\,\\partial_y^2\\partial_z\\phi + \\partial_z\\phi\\,\\partial_y\\partial_z^2\\phi + \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_z\\phi + \\partial_y\\partial_z\\phi\\,\\partial_y^2\\phi + \\partial_y\\partial_z\\phi\\,\\partial_z^2\\phi\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "majumdar_papapetrou",
+      "name": "Majumdar-Papapetrou Extremal Black Holes",
+      "short_name": "Majumdar-Papapetrou",
+      "description": "Any number of extremal charged black holes at rest, the static electrovacuum solution Sudhansu Datta Majumdar and Achilles Papapetrou found independently in 1947. Between every pair of holes the electric repulsion balances the gravitational attraction exactly, so the holes stay at rest in any arrangement.",
+      "tags": [
+        "electrovacuum",
+        "non-vacuum",
+        "static",
+        "stationary",
+        "charged",
+        "charged black hole",
+        "black hole",
+        "extremal",
+        "multiple black holes",
+        "electric charge",
+        "mass",
+        "electromagnetic field",
+        "horizon",
+        "event horizon",
+        "degenerate horizon",
+        "asymptotically flat",
+        "harmonic function",
+        "superposition",
+        "supersymmetric",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. Each hole carries the mass parameter $m_i = GM_i/c^2$, a length, and a charge $Q_i$ of one common sign with $GQ_i^2/(4\\pi\\epsilon_0c^4) = m_i^2$.",
+      "references": [
+        "weyl1917",
+        "griffiths2009",
+        "majumdar1947",
+        "papapetrou1947",
+        "hartle1972",
+        "de1968",
+        "bonnor1980dust",
+        "perjes1971",
+        "israel1972",
+        "chrusciel1995",
+        "heusler1997",
+        "chrusciel2006",
+        "chrusciel2007",
+        "gibbons1982",
+        "welch1995",
+        "candlish2007",
+        "ferrell1987",
+        "kastor1993",
+        "brill1994",
+        "contopoulos1990",
+        "shipley2016"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(x, y, z) \\neq \\mathbf{x}_i \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "U = U(x,y,z)",
+              "description": "Dimensionless potential, $U = 1 + \\sum_i m_i/|\\mathbf{x} - \\mathbf{x}_i|$ for holes at the points $\\mathbf{x}_i$, harmonic away from them; no component assumes it harmonic"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{U^2} + U^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "U^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\partial_x^2 U + 2\\partial_y^2 U + 2\\partial_z^2 U}{U^3}",
+          "kretschmann": "K = \\dfrac{4U^2\\left(2\\partial_x^2 U\\,\\partial_y^2 U + 2\\partial_x^2 U\\,\\partial_z^2 U + 2\\partial_y^2 U\\,\\partial_z^2 U + 4\\left(\\partial_x\\partial_y U\\right)^2 + 4\\left(\\partial_x\\partial_z U\\right)^2 + 3\\left(\\partial_x^2 U\\right)^2 + 4\\left(\\partial_y\\partial_z U\\right)^2 + 3\\left(\\partial_y^2 U\\right)^2 + 3\\left(\\partial_z^2 U\\right)^2\\right) - 8U\\left(12\\partial_x U\\,\\partial_x\\partial_y U\\,\\partial_y U + 12\\partial_x U\\,\\partial_x\\partial_z U\\,\\partial_z U + 12\\partial_y U\\,\\partial_y\\partial_z U\\,\\partial_z U + 5\\left(\\partial_x U\\right)^2\\,\\partial_x^2 U - \\left(\\partial_x U\\right)^2\\,\\partial_y^2 U - \\left(\\partial_x U\\right)^2\\,\\partial_z^2 U + 5\\left(\\partial_y U\\right)^2\\,\\partial_y^2 U - \\left(\\partial_y U\\right)^2\\,\\partial_z^2 U + 5\\left(\\partial_z U\\right)^2\\,\\partial_z^2 U - \\partial_x^2 U\\left(\\partial_y U\\right)^2 - \\partial_x^2 U\\left(\\partial_z U\\right)^2 - \\partial_y^2 U\\left(\\partial_z U\\right)^2\\right) + 56\\left(\\left(\\partial_x U\\right)^2 + \\left(\\partial_y U\\right)^2 + \\left(\\partial_z U\\right)^2\\right)^2}{U^8}"
+        },
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "(\\rho, z) \\neq (0, z_i) \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "U = U(\\rho,z)",
+              "description": "Dimensionless potential, $U = 1 + \\sum_i m_i/\\sqrt{\\rho^2 + (z - z_i)^2}$ for holes at the points $z = z_i$ of the axis, harmonic away from them; no component assumes it harmonic"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time, $\\rho$ and $z$ lengths, and every hole on the axis $\\rho = 0$, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{U^2} + U^2\\left(d\\rho^2 + \\rho^2d\\phi^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "U^2\\,\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\rho\\,\\partial_\\rho^2 U + 2\\rho\\,\\partial_z^2 U + 2\\partial_\\rho U}{U^3\\,\\rho}",
+          "kretschmann": "K = \\dfrac{4U^2\\left(2\\rho^2\\,\\partial_\\rho^2 U\\,\\partial_z^2 U + 2\\rho\\,\\partial_\\rho U\\,\\partial_\\rho^2 U + 2\\rho\\,\\partial_\\rho U\\,\\partial_z^2 U + 4\\rho^2\\left(\\partial_\\rho\\partial_z U\\right)^2 + 3\\rho^2\\left(\\partial_\\rho^2 U\\right)^2 + 3\\rho^2\\left(\\partial_z^2 U\\right)^2 + 3\\left(\\partial_\\rho U\\right)^2\\right) - 8U\\,\\rho\\left(12\\rho\\,\\partial_\\rho U\\,\\partial_\\rho\\partial_z U\\,\\partial_z U - \\rho\\,\\partial_\\rho^2 U\\left(\\partial_z U\\right)^2 + 5\\rho\\left(\\partial_\\rho U\\right)^2\\,\\partial_\\rho^2 U - \\rho\\left(\\partial_\\rho U\\right)^2\\,\\partial_z^2 U + 5\\rho\\left(\\partial_z U\\right)^2\\,\\partial_z^2 U - \\partial_\\rho U\\left(\\partial_z U\\right)^2 - \\left(\\partial_\\rho U\\right)^3\\right) + 56\\rho^2\\left(\\left(\\partial_\\rho U\\right)^2 + \\left(\\partial_z U\\right)^2\\right)^2}{U^8\\,\\rho^2}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the single hole, $m = GM/c^2$, equal to its charge radius"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ centred on a single hole, with $t$ carrying dimensions of time and $r$ a length, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 + \\dfrac{m}{r}\\right)^{-2}c^2dt^2 + \\left(1 + \\dfrac{m}{r}\\right)^2\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 + \\dfrac{m}{r}\\right)^{-2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 + \\dfrac{m}{r}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r + m\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r + m\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8m^2\\left(6r^2 + m^2\\right)}{\\left(r + m\\right)^8}"
         }
       ]
     },

@@ -3183,7 +3183,8 @@ class Slices(unittest.TestCase):
         return out
 
     # The embedding views a drawing does not mark though it marks others: Gott's core replaces
-    # the apex of the ideal string's cone, which is another spacetime than Gott's.
+    # the apex of the ideal string's cone, which is another spacetime than Gott's, and one of
+    # Majumdar and Papapetrou's holes alone is another spacetime than two of them.
     # Letelier's black hole, r_s > 0, and the monopole with no mass at its centre are two spacetimes of
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
@@ -3193,7 +3194,12 @@ class Slices(unittest.TestCase):
                         "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
                     **{f"conformal global_monopole/{v}": {"monopole"} for v in ("static", "ingoing", "outgoing")},
                     "global_monopole/conical/radial": {"black_hole"},
-                    "conformal global_monopole/conical": {"black_hole"}}
+                    "conformal global_monopole/conical": {"black_hole"},
+                    "majumdar_papapetrou/cartesian/tz": {"one_hole"},
+                    "majumdar_papapetrou/cartesian/tx": {"one_hole"},
+                    "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
+                    "majumdar_papapetrou/isotropic/radial": {"two_holes"},
+                    "conformal majumdar_papapetrou/one_hole": {"two_holes"}}
 
     def reach(self, surface, system=None, reference=False):
         xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))

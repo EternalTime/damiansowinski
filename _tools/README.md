@@ -355,6 +355,7 @@ The cosmic string is drawn at the deficit its conformal diagram uses, $4G\mu/c^2
 The C-metric is drawn at $\alpha m = 1/6$ and $C = 3/4$, on the two halves of its axis, where $\sin\theta$ kills $\Gamma^\theta{}_{tt}$ and $\Gamma^\theta{}_{rr}$; beyond each horizon its time function is $r$, piecewise, taking the future as Griffiths, Krtouš and Podolský's extensions do, the black hole inside $2m$ and the region to the future of the acceleration horizon beyond $1/\alpha$.
 The Einstein-Rosen waves are drawn with the pulse of Weber, Wheeler, and Bonnor at $C = a$, checked to solve the published $G^t{}_t$, $G^t{}_\rho$, $G^\phi{}_\phi$ and $G^z{}_z = 0$; on the plane of $t$ and $\rho$ the metric is conformally flat, so the rays are the same for every wave.
 The global monopole is drawn at $\Delta = 0.19$, so that $\sqrt{1 - \Delta} = 0.9$ as for the cosmic string, with Letelier's black hole at $r_s = 1$ on its static and Eddington-Finkelstein planes, its horizon at $r_s/(1 - \Delta) = 1.235\,r_s$, and the monopole with no mass at its centre on the Barriola-Vilenkin plane, where every ray runs at 45°.
+Majumdar and Papapetrou's Cartesian and cylindrical charts are drawn for two holes of mass parameter $m$ at $z = \pm 2m$, on the axis through them and on the midplane $z = 0$ between them, where the symmetry keeps every ray a null geodesic; the isotropic chart is one hole, $U = 1 + m/r$.
 
 ### Checking the rays
 
@@ -493,7 +494,8 @@ A file records every coordinate system it read and a stamp over the fields it re
 A diagram can read another spacetime's metric, as the interior Schwarzschild star reads the exterior of `schwarzschild.json`, and `build_mfs_data.py` refuses the file when any of those fields changes, naming the system and the command that redraws it.
 The domains are not among the fields, since no conformal diagram reads one.
 
-`DRAWN` in the script names the twenty-nine spacetimes that have a diagram and `NOT_DRAWN` the twelve that have none: every event's future is the whole spacetime for Gödel and van Stockum, the diagram is whatever a free function makes it for the warp drives, the Krasnikov tube, Tolman-Bondi and Bianchi, the Mixmaster has no surface that carries its causal structure, and so on.
+`DRAWN` in the script names the thirty spacetimes that have a diagram and `NOT_DRAWN` the twelve that have none: every event's future is the whole spacetime for Gödel and van Stockum, the diagram is whatever a free function makes it for the warp drives, the Krasnikov tube, Tolman-Bondi and Bianchi, the Mixmaster has no surface that carries its causal structure, and so on.
+Majumdar and Papapetrou's diagram is one hole's, the extremal Reissner-Nordström tower, its exteriors read from the isotropic chart and its interiors from `rn_metric.json` at $r_q = r_s/2$; its horizon has no surface gravity, so each region is placed by $p, q = \arctan$ of $u$ and $v$, shifted by $\pi$ from region to region, and the two-hole charts show no conformal diagram.
 Misner space is drawn in the plane $y = z = 0$ of the Minkowski space that covers it, one view per chart, each tinting one copy of the spacetime between two lines the boost carries onto one another; its views are drawn at $\psi_0 = 2$, since at the $\psi_0 = 4\pi$ of its other diagrams one copy stretches by $e^{2\pi}$ along each light ray and fills the drawing to within a pixel.
 The Aichelburg-Sexl shock is drawn on the plane $x = \rho_0/8$, $y = 0$ of its null Cartesian chart as Minkowski's diamond with the shock on $p = 0$, where $q = \arctan(v - \Delta v\,\theta(u))$ carries each ray moving left across the shock as one line and breaks each line of constant $v$ by the jump $\Delta v = (8GE/c^4)\ln 8$, which is checked against the published $\Gamma^v{}_{uu}$; `Plane(..., off_shock=True)` reads the delta as zero, since the maps are checked only off the shock.
 The Khan-Penrose spacetime is drawn on its plane $x = y = 0$ in Khan and Penrose's four regions, one view per chart, with $p$ and $q$ each $u$ or $v$ itself where it is positive and its arctangent where it is negative.
@@ -649,6 +651,8 @@ The Nariai universe, at $\Lambda = 1$, has two views: the circle of $\chi$ times
 The global monopole, at $\Delta = 0.19$, has two views: the monopole with no mass at its centre, the equator of the Barriola-Vilenkin chart at $t = 0$, a cone of half angle $\arcsin 0.9$ out to $r = 3\ell$ whose apex is the singular centre, $\rho = 0.9r$ and $z = \sqrt{0.19}\,r$ checked; and Letelier's black hole at $r_s = 1$, the equator of the static chart at $t = 0$ through the throat $r_h = 100/81$ into a second exterior out to $6\,r_s$, checked against its closed form $z = (w\sqrt{\Delta w^2 + 1} + \mathrm{arsinh}(\sqrt{\Delta}\,w)/\sqrt{\Delta})/(1 - \Delta)^{3/2}$ with $w = \sqrt{(1 - \Delta)r/r_s - 1}$, which opens far out into the monopole's cone.
 The two are two spacetimes of one line element, so the static and Eddington-Finkelstein drawings mark the black hole's moment and the Barriola-Vilenkin drawings the monopole's, which `HIDDEN_VIEWS` in the tests records.
 On its static plane each global moment is the curve $\sinh(ct) = \sinh(ct_k)/\sqrt{1 - r^2}$ from horizon to horizon, and `slices.py` checks that map by pulling the static metric back onto the global one.
+Majumdar and Papapetrou's spacetime has two views, each belonging to every chart: one hole's equator at $t = 0$ in the isotropic chart, $m = 1$, from $r = m/50$ to $4m$, an infinitely long throat whose circumference radius $r + m$ closes on $m$, checked against $\rho = r + m$ and $z = 2w + \ln((w - 1)/(w + 1))$ with $w = \sqrt{2r/m + 1}$; and the midplane $z = 0$ of two holes at $z = \pm 2m$ in the cylindrical chart, out to $\rho = 4m$, flat at the axis, checked against $\rho U$.
+One hole alone is another spacetime than two, so each drawing marks only its own moment, which the `Slices` tests list in `HIDDEN_VIEWS`.
 FRW is its closed universe of dust at five moments, played as a movie with a frame about every $0.1$ of $ct$, $a = 1 - \cos\eta$ as its conformal diagram declares, checked to make the published $G^r{}_r$ vanish; its flat slices are planes and its open slices have no surface of revolution in flat space, and no surface at all as a whole, which the view states under `stops` and the script checks at the scale factors of dust.
 
 ### The file, which the application reads
@@ -971,7 +975,7 @@ Nothing is ever passed in silence. A value that cannot be parsed, a system with 
 
 ## Printing a chart by machine
 
-`tov`, `malament_hogarth`, `mixmaster`, `lentz`, `einstein_static`, `schwarzschild_de_sitter`, `milne`, `aichelburg_sexl` and `domain_wall`, the cylindrical chart of `godel`, both charts of `c_metric`, the three charts of `nariai`, and the four charts of `global_monopole` have their mathematics written by `_tools/derivations/print_charts.py`, which defines each of those charts, computes every tensor with the checker's own `Geometry`, and prints each value through `chart_printer.py` beside it:
+`tov`, `malament_hogarth`, `mixmaster`, `lentz`, `einstein_static`, `schwarzschild_de_sitter`, `milne`, `aichelburg_sexl` and `domain_wall`, the cylindrical chart of `godel`, both charts of `c_metric`, the three charts of `nariai`, the four charts of `global_monopole`, and the three charts of `majumdar_papapetrou` have their mathematics written by `_tools/derivations/print_charts.py`, which defines each of those charts, computes every tensor with the checker's own `Geometry`, and prints each value through `chart_printer.py` beside it:
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py --metric tov
 
@@ -981,7 +985,7 @@ A chart can pass a function that regroups the numerator of each value, which is 
 A chart can instead pass a whole `pretty`, as Gödel's cylindrical chart passes `chart_printer.hyperbolic`, which rewrites the exponentials the checker's `Geometry` hands back in $\sinh r$ and $\cosh r$.
 A chart the script writes replaces the chart of its id, or joins the spacetime's other charts after them, so Gödel's Cartesian chart stays as it was written.
 A parameter keeps the description it has in that chart, or in another chart of the same spacetime.
-`tov.md`, `malament_hogarth.md`, `mixmaster.md`, `lentz.md`, `godel.md` and `schwarzschild_de_sitter.md` in the same folder record why each chart is the one published; `godel.md` also records the transformation from the Cartesian chart, whose pullback sympy checks symbolically.
+`tov.md`, `malament_hogarth.md`, `mixmaster.md`, `lentz.md`, `godel.md`, `schwarzschild_de_sitter.md` and `majumdar_papapetrou.md` in the same folder record why each chart is the one published; `godel.md` also records the transformation from the Cartesian chart, whose pullback sympy checks symbolically.
 The other charts were written by hand and are not touched by the script.
 
 ## The three conventions the checker encodes

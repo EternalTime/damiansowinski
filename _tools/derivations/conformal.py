@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the twenty-nine spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the thirty spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -1609,6 +1609,154 @@ def reissner_nordstrom(ck, src):
     for view in views:
         view.set(settings=settings)
     return views
+
+
+# ---------------------------------------------------------------- Majumdar-Papapetrou
+
+def clip_polygon(pts, T0, T1):
+    """The part of a convex polygon, given in (X, T), between the lines T = T0 and T = T1."""
+    def cut(poly, keep, T):
+        out = []
+        for a, b in zip(poly, poly[1:] + poly[:1]):
+            ina, inb = keep(a[1]), keep(b[1])
+            if ina:
+                out.append(a)
+            if ina != inb:
+                s = (T - a[1]) / (b[1] - a[1])
+                out.append([a[0] + s * (b[0] - a[0]), T])
+        return out
+    return cut(cut([list(p) for p in pts], lambda T: T >= T0, T0), lambda T: T <= T1, T1)
+
+
+def majumdar_papapetrou(ck, src):
+    """One hole alone, U = 1 + m/r at m = 1: the extremal Reissner-Nordstrom black hole in
+    isotropic coordinates, R = r + m the areal radius. f = (1 - m/R)^2 has a double root at R = m,
+    so the surface gravity vanishes and Kruskal's exponential, which needs one, is not available. The tortoise
+    coordinate outside, in the published isotropic chart, is r_* = r + 2 ln r - 1/r, and inside,
+    in Reissner-Nordstrom's published chart at r_s = 2m and r_q = m, R_* = R + 2 ln|R - 1| -
+    1/(R - 1) - 1, which vanishes at R = 0; each is checked against the published g^rr. With
+    u, v = t -+ r_*, every region is a copy of one of two cells, shifted by (k pi, k pi):
+
+        E_k   exterior        p = k pi + arctan u,        q = k pi + arctan v
+        B_k   inside R = m    p = (k + 1) pi + arctan u,  q = k pi + arctan v
+
+    Each null coordinate runs on across a horizon, v from E_k into B_k and u from B_k into
+    E_(k+1), so the map is continuous there; the horizon is at u -> +-infinity or v -> +infinity,
+    where the arctangent reaches pi/2. R = 0 is u = v in B_k, the vertical line X = -pi. The
+    moment t = 0 of the embedding diagram, p = -q = -arctan r_*, runs across E_0 at T = 0, from
+    X = -pi at the horizon's end of the throat to i^0."""
+    ext = Plane(src, "majumdar_papapetrou", "isotropic", ("t", "r"), EQUATOR, {"m": 1})
+    inner = Plane(src, "rn_metric", "spherical", ("t", "r"), EQUATOR, {"r_s": 2, "r_q": 1})
+    r, R = ext.x1, inner.x1
+    for pl, rstar, name in ((ext, r + 2 * sp.log(r) - 1 / r, "r_*"),
+                            (inner, R + 2 * sp.log(1 - R) - 1 / (R - 1) - 1, "R_*")):
+        assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+        # g_tt g_rr = -1, so a radial light ray has dr_*/dr = g_rr.
+        ck.limit(f"Majumdar-Papapetrou: d{name}/dr is the published g_rr",
+                 0.0 if sp.simplify(sp.diff(rstar, pl.x1) - pl.g[1, 1]) == 0 else 1.0, 0.0, 1e-12)
+    ck.limit("Majumdar-Papapetrou: the horizon is the double root r = 0 of the published isotropic g^rr",
+             [float(x) for x in sp.roots(sp.numer(sp.together(ext.gi[1, 1])), r, multiple=True)], [0.0, 0.0], 1e-12)
+    ck.limit("Majumdar-Papapetrou: inside, the horizon is the double root R = m of Reissner-Nordstrom's g^rr at r_q = r_s/2",
+             [float(x) for x in sp.roots(sp.numer(sp.together(inner.gi[1, 1])), R, multiple=True)], [1.0, 1.0], 1e-12)
+
+    def rs_out(x):
+        x = np.asarray(x, dtype=float)
+        return x + 2 * np.log(x) - 1 / x
+
+    def rs_in(x):
+        x = np.asarray(x, dtype=float)
+        with np.errstate(divide="ignore"):
+            return x + 2 * np.log(np.abs(1 - x)) - 1 / (x - 1) - 1
+
+    def E(k):
+        return lambda t, x: (k * PI + np.arctan(np.asarray(t, dtype=float) - rs_out(x)),
+                             k * PI + np.arctan(np.asarray(t, dtype=float) + rs_out(x)))
+
+    def B(k):
+        return lambda t, x: ((k + 1) * PI + np.arctan(np.asarray(t, dtype=float) - rs_in(x)),
+                             k * PI + np.arctan(np.asarray(t, dtype=float) + rs_in(x)))
+
+    span = 20
+    ck.chart("Majumdar-Papapetrou, exterior", ext, E(0), ck.uniform(-span, span), ck.uniform(1e-3, 40), lambda t, x: (1, 0))
+    ck.chart("Majumdar-Papapetrou, inside the horizon", inner, B(0), ck.uniform(-span, span), ck.uniform(1e-3, 1 - 1e-3),
+             lambda t, x: (1, 0))
+    ts = np.array([-6.0, 0.0, 6.0])
+    p, q = E(0)(ts, np.full(3, 1e-9))
+    ck.limit("Majumdar-Papapetrou: r -> 0 lands on the horizon p = pi/2", p, [HALF] * 3, 1e-6)
+    p, q = B(0)(ts, np.full(3, 1 - 1e-9))
+    ck.limit("Majumdar-Papapetrou: R -> m from inside lands on the same horizon p = pi/2", p, [HALF] * 3, 1e-6)
+    p, q = B(0)(ts, np.full(3, 1e-12))
+    ck.limit("Majumdar-Papapetrou: R -> 0 lands on the vertical line X = -pi", q - p, [-PI] * 3, 1e-9)
+    ck.diverges("Majumdar-Papapetrou: the Kretschmann scalar diverges at R = 0",
+                inner.kretschmann(0, 1e-2), inner.kretschmann(0, 1e-3))
+    ck.finite("Majumdar-Papapetrou: the Kretschmann scalar is finite at the horizon, from outside and inside",
+              np.concatenate([ext.kretschmann(np.zeros(2), np.array([1e-6, 1e-3])),
+                              inner.kretschmann(np.zeros(2), np.array([1 - 1e-6, 1 - 1e-3]))]))
+
+    box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    T0, T1 = box[2], box[3]
+    v = View("one_hole", "One hole", box, "isotropic")
+
+    def cell_polygon(kind, k):
+        base = 2 * k * PI
+        if kind == "E":
+            pts = [[0, base - PI], [-PI, base], [0, base + PI], [PI, base]]
+        else:
+            pts = [[-PI, base], [0, base + PI], [-PI, base + 2 * PI]]
+        return clip_polygon(pts, T0, T1)
+
+    def clipped(p, q):
+        X, T = xt(p, q)
+        bad = (T < T0) | (T > T1)
+        return np.where(bad, np.nan, p), np.where(bad, np.nan, q)
+
+    cells = [("B", -1), ("E", 0), ("B", 0), ("E", 1), ("B", 1)]
+    for kind, k in cells:
+        v.fill("region", cell_polygon(kind, k))
+    v.fill("cover", cell_polygon("E", 0))
+    times = (-3.0, -1.0, 0.0, 1.0, 3.0)
+    r_out, r_in = (0.2, 0.5, 1.0, 2.0), (0.25, 0.5, 0.75)
+    t = spread(-np.inf, np.inf, 500, 10)
+    for kind, k in cells:
+        fmap, radii, lo, hi = (E(k), r_out, 0.0, np.inf) if kind == "E" else (B(k), r_in, 0.0, 1.0)
+        for x in radii:
+            v.curve("r", *clipped(*fmap(t, np.full_like(t, x))))
+        xs = spread(lo, hi, 600, 16)
+        for tt in times:
+            v.curve("t", *clipped(*fmap(np.full_like(xs, tt), xs)))
+    # The horizons, null infinity and the singularity, each an edge of a cell.
+    for k in (0, 1):
+        base = 2 * k * PI
+        v.line("horizon", [[[-PI, base], [0, base + PI]], [[0, base - PI], [-PI, base]]])
+        v.line("scri", [[[0, base + PI], [PI, base]], [[PI, base], [0, base - PI]]])
+    v.line("singular", [[[-PI, T0], [-PI, T1]]], zig=True)
+    for k in (0, 1):
+        base = 2 * k * PI
+        v.layers.append({"kind": "point", "class": "infinity", "at": [round(PI, 4), round(base, 4)]})
+        v.label_xt([PI, base], "$i^0$", "l", dx=6)
+        v.label_xt([3 * Q4, base + Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+        v.label_xt([3 * Q4, base - Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=3)
+        v.label_xt([HALF, base + 0.45], "exterior", cls="region")
+        v.label_xt([-2.1, base + PI], "$R < m$", cls="region")
+    for at, text, anchor in (((0, PI), "$i^\\pm$", "l"), ((0, -PI), "$i^-$", "l"), ((0, 3 * PI), "$i^+$", "l")):
+        v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+        v.label_xt(list(at), text, anchor, dx=6)
+    v.label_xt([-PI, 2 * PI], "$R = 0$", "r", dx=-6)
+    v.set(fade={"top": 0.9, "bottom": 0.9})
+    v.legend("cover", "the exterior $r > 0$, which $t$ and $r$ cover")
+    v.legend("r", f"$r$ constant outside, at {listed(r_out)}, and $R$ constant inside, at {listed(r_in)}, "
+                  "in units of $m$")
+    v.legend("t", "$t$ constant")
+    v.legend("horizon", "the horizon $r = 0$, where $R = m$")
+    v.legend("singular", "$R = 0$, a timelike singularity, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    moment = slices.moments("majumdar_papapetrou", "one_hole")[0]
+    lo, hi = moment.reach("isotropic", "r")
+    rr = np.geomspace(lo, hi, 400)
+    v.slice(moment, [E(0)(np.zeros_like(rr), rr)])
+    v.set(settings="$m = 1$, the unit of every length; inside the horizon, Reissner-Nordström's own chart at "
+                   "$r_s = 2m$ and $r_q = m$, where its $r$ is the areal radius $R$.")
+    return [v]
 
 
 # ---------------------------------------------------------------- Schwarzschild-de Sitter
@@ -4490,6 +4638,7 @@ DRAWN = {
     "misner": misner, "milne": milne,
     "einstein_rosen_waves": einstein_rosen_waves,
     "nariai": nariai, "khan_penrose": khan_penrose,
+    "majumdar_papapetrou": majumdar_papapetrou,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -4821,6 +4970,20 @@ CAPTIONS = {
         "reverse of the ingoing ones. With $p = -\\arctan W(u)$ and $v = u + 2r_*$ they cover the white hole, the "
         "static region and the expanding region, and their lines of constant $u$ are outgoing light rays, which "
         "leave $r = 0$, cross both horizons outward and end on $\\mathscr{I}^+$.",
+    ],
+    ("majumdar_papapetrou", "one_hole"): [
+        "One hole alone ($U = 1 + m/r$), which is the extremal Reissner-Nordström black hole, maximally "
+        "extended, each point in the diagram a 2-sphere of areal radius $R = r + m$. The extension is a "
+        "tower of exteriors and interiors that repeats up and down without end. Outside the horizon the "
+        "tortoise coordinate is $r_* = r + 2m\\ln(r/m) - m^2/r$, and inside it "
+        "$R_* = R + 2m\\ln|R/m - 1| - m^2/(R - m) - m$, which vanishes at $R = 0$.",
+        "We place each region by $p = \\arctan(u/m)$ and $q = \\arctan(v/m)$ with $u, v = ct \\mp r_*$, "
+        "shifted by $\\pi$ from one region to the next. The horizon is a double root of $g^{rr}$, where the "
+        "surface gravity vanishes, and the map is continuous across it. The singularity $R = 0$ is timelike "
+        "and lies on the vertical line $X = -\\pi$.",
+        "The coordinates $t$ and $r > 0$ cover one exterior. Its moment $t = 0$ runs from spatial infinity "
+        "down the infinitely long throat toward the corner $X = -\\pi$, $T = 0$, where the past and future "
+        "horizons meet at an infinite distance.",
     ],
     ("rn_metric", "tower"): [
         "The Reissner-Nordström spacetime, maximally extended, each point in the diagram a "
