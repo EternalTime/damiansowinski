@@ -392,6 +392,18 @@ DIAGRAMS = [
     Diagram("minkowski", "rindler", "tx", "$T$ and $X$", ("T", "X"), (0, 3, -1.5, 1.5),
             "$X\\;[c^2/a]$", "$cT\\;[c^2/a]$", {"a": 1}, {"Y": "0", "Z": "0"}, tau="T",
             families=SIDEWAYS),
+    # Misner space at Li and Gott's psi_0 = 4 pi, a boost of rapidity 2 pi, where the Milne chart's
+    # chi and the Rindler chart's eta each run once round 2 pi. Misner's own plane is drawn against
+    # psi/2, that rapidity, so that it stands as wide as the Milne chart's.
+    Diagram("misner", "misner", "plane", "$T$ and $\\psi$", ("T", "\\psi"), (0, 2 * math.pi, -2, 2),
+            "$\\psi/2$", "$T$", {"psi_0": "4*pi"}, {"y": "0", "z": "0"}, to_display=((0, 0.5), (1, 0)),
+            orient="outgoing", families=SIDEWAYS, mark_g00=True, periodic=("\\psi",)),
+    Diagram("misner", "milne", "plane", "$t$ and $\\chi$", ("t", "\\chi"), (0, 2 * math.pi, -2.5, 0.5),
+            "$\\chi$", "$ct$", {"psi_0": "4*pi"}, {"y": "0", "z": "0"}, families=SIDEWAYS,
+            periodic=("\\chi",)),
+    Diagram("misner", "rindler", "plane", "$\\eta$ and $\\xi$", ("\\eta", "\\xi"), (0, 2 * math.pi, 0, 2 * math.pi),
+            "$\\xi$", "$\\eta$", {"psi_0": "4*pi"}, {"y": "0", "z": "0"}, tau="eta", families=SIDEWAYS,
+            periodic=("\\eta",)),
     Diagram("de_sitter", "static_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r\\sqrt{\\Lambda/3}$", "$ct\\sqrt{\\Lambda/3}$", {"Lambda": 3}, EQUATOR,
             orient="outgoing", cones=(8, 7), areal=True),
@@ -709,6 +721,29 @@ CAPTIONS = {
         "edge of this chart. The rays reach the throat in finite $t$ and pass into the other "
         "mouth, which the Ellis-Bronnikov chart, running through the throat, covers in full. Below "
         "$b_0$ the formula gives a metric on this plane with no null directions.",
+    ],
+    ("misner", "misner", "plane"): [
+        "The plane of $T$ and $\\psi$ ($y = z = 0$), a cylinder drawn unrolled, its edges $\\psi = 0$ and "
+        "$\\psi = \\psi_0$ one line. One family of light rays runs straight up at constant $\\psi$ and "
+        "crosses $T = 0$, and the other follows $dT/d\\psi = -T/2$, so the cones tip over as $T$ climbs.",
+        "Below $T = 0$ the circles of constant $T$ are spacelike, and the rays of the second family wind round "
+        "the cylinder toward $T = 0$ without reaching it. The circle $T = 0$ is itself a light ray, the "
+        "chronology horizon, and above it every circle of constant $T$ is a closed timelike curve.",
+    ],
+    ("misner", "milne", "plane"): [
+        "The plane of $t$ and $\\chi$ ($y = z = 0$) in the region $T < 0$, a cylinder drawn unrolled, its edges "
+        "$\\chi = 0$ and $\\chi = \\psi_0/2$ one line, with $g_{\\chi\\chi} = c^2t^2$. The circles of "
+        "constant $t$ shrink as $t$ climbs toward $0$, and the cones close up against them.",
+        "Both families of light rays wind round the cylinder, $c\\,dt = \\pm ct\\,d\\chi$, and reach "
+        "$t = 0$ only as $\\chi \\to \\pm\\infty$. One family is the rays of constant $\\psi$ in "
+        "Misner's coordinates, which cross the chronology horizon.",
+    ],
+    ("misner", "rindler", "plane"): [
+        "The plane of $\\eta$ and $\\xi$ ($y = z = 0$) in the region $T > 0$, its edges $\\eta = 0$ and "
+        "$\\eta = \\psi_0/2$ one line, with $g_{\\eta\\eta} = -\\xi^2$. Every vertical line is a closed "
+        "timelike curve, of proper length $\\xi\\psi_0/2$.",
+        "The light rays run as $\\xi = \\xi_0e^{\\pm\\eta}$, and the cones close toward $\\xi = 0$, the "
+        "chronology horizon, where the closed curves turn into closed null geodesics.",
     ],
     ("minkowski", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in flat spacetime. "

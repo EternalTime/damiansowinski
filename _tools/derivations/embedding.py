@@ -2971,6 +2971,43 @@ def frw(ck, src):
 
 
 
+def misner(ck, src):
+    """The contracting region T < 0 of Misner space in the Milne chart, at Li and Gott's
+    psi_0 = 4 pi, where chi runs once round 2 pi. The slice z = 0 of one moment t has the metric
+    dy^2 + c^2t^2 dchi^2: a flat cylinder of radius c|t| about the axis y, z = y. Drawn at four
+    moments as the closed direction shrinks toward the chronology horizon t = 0, each over
+    -2 <= y <= 2 in any length l, since flat space names none."""
+    moments = (-2.0, -1.5, -1.0, -0.5)
+    surfaces, size = [], 4.0
+    for ct in moments:
+        sl = Slice(src, "misner", "milne", "y", "\\chi", {"t": repr(ct), "z": 0}, {"psi_0": "4*pi"})
+        tube = Piece("tube", "sheet", sl, -2.0, 2.0, -2.0, 1,
+                     (("edge", "the cylinder runs on for ever toward $y \\to -\\infty$"),
+                      ("edge", "the cylinder runs on for ever toward $y \\to \\infty$")),
+                     [(-1.0, "r", None), (0.0, "r", None), (1.0, "r", None)], size)
+        where = f"Misner, the cylinder at ct = {ct}"
+        ck.isometry(where, tube)
+        ck.radius(f"{where}, rho = c|t|", tube, lambda y, ct=ct: np.full_like(y, abs(ct)), size)
+        ck.form(f"{where}, z = y", tube, lambda y: y, size)
+        surfaces.append(Surface([tube], label=f"$ct = {ct:g}$", time=ct))
+    offsets, x, gap = [], 0.0, 0.8
+    for s in surfaces:
+        rho = float(s.pieces[0].rho[0])
+        offsets.append((x + rho, 0.0, 0.0))
+        x += 2 * rho + gap
+    fig = figure_of(surfaces, {"sheet": "cover"}, 8.0, offsets=offsets, meridians=12)
+    base = min(fig.screen(np.asarray(off) + [0, 0, -2.0])[1] for off in offsets)
+    for s, off in zip(surfaces, offsets):
+        fig.label(np.array([fig.screen(np.asarray(off))[0], base]), s.label, "t", "small", dy=8)
+    fig.legend("fill", "cover", "the slice $z = 0$ of a moment of constant $t$, which $\\chi$ and $y$ cover")
+    fig.legend("line", "r", "$y$ constant, at $-\\ell$, $0$ and $\\ell$, each a circle of circumference $2\\pi c|t|$")
+    fig.legend("line", "meridian", "$\\chi$ constant, every $30°$")
+    return [view("cylinders", "The contracting region", "$\\ell$", surfaces, fig.done(),
+                 settings="$\\psi_0 = 4\\pi$, and $\\ell$, any length, the unit of every length, since flat space "
+                          "has none of its own.")]
+
+
+
 
 # ---------------------------------------------------------------- the eleven drawn last
 
@@ -4039,6 +4076,7 @@ STATED = {}
 
 DRAWN = {
     "schwarzschild": schwarzschild,
+    "misner": misner,
     "interior_schwarzschild": interior_schwarzschild,
     "tov": tov,
     "morris_thorne": morris_thorne,
@@ -4357,6 +4395,14 @@ CAPTIONS = {
         "Richard Gott's core, a cylinder of uniform density, rounds the apex off. Its slice is a cap of "
         "a sphere of radius $\\ell$, and it meets the cone where their tangents agree, at $\\cos\\chi_0 = "
         "1 - 4G\\mu/c^2$. The cone of an ideal string runs on below the cap to its apex.",
+    ],
+    ("misner", "cylinders"): [
+        "The slice $z = 0$ of Misner space at four moments of the Milne time $t$ in the region $T < 0$, each "
+        "drawn as a surface in flat space with every distance along it the metric distance. On it the metric "
+        "is $dy^2 + c^2t^2d\\chi^2$ with $\\chi$ periodic in $\\psi_0/2$, so each moment is a flat cylinder of "
+        "circumference $\\psi_0c|t|/2$, here $2\\pi c|t|$.",
+        "The cylinders narrow as $t$ climbs toward $0$, where the circles become the closed null geodesics of "
+        "the chronology horizon. Beyond it, where $T > 0$, the same circles are closed timelike curves.",
     ],
     ("minkowski", "plane"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Minkowski space at one moment of $t$, drawn as a "

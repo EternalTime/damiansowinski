@@ -2915,7 +2915,8 @@ class Slices(unittest.TestCase):
               "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
-              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "conformal frw/flat", "conformal frw/open"}
+              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "conformal frw/flat", "conformal frw/open",
+              "misner/rindler/plane", "conformal misner/rindler"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
@@ -3016,6 +3017,10 @@ class Slices(unittest.TestCase):
             if key.startswith("malament_hogarth"):
                 lo, hi = self.reach(surface)
                 return (lambda X: t), [-hi, -lo, lo, hi]
+            return (lambda X: t), None
+        if key == "misner/misner/plane":
+            return (lambda X: -t * t / 4), None
+        if key == "misner/milne/plane":
             return (lambda X: t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "minkowski/rindler")):
             return (lambda X: 0.0), None
