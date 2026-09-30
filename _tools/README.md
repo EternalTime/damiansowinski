@@ -102,6 +102,8 @@ The panels are drawn by their borders alone, the title and the exit sign flicker
 No text shadow, box shadow, blurring or shadowing filter, canvas shadow or SVG filter appears anywhere on the page, open or not, on the screen or on paper.
 MathJax's right-click menu brings a stylesheet whose menus cast a grey 20px shadow, and `mfsMenuWithoutShadow` in `_layouts/mfs.html` sets every such rule to none once MathJax is ready.
 `NoGlow` in `_tools/test_build_mfs_data.py` holds the page's sources to that, and `page_timing.mjs` holds the page as drawn to it, including each kind of button pressed.
+No text a reader of the spacetimes page sees says cost, costs, costly or costing, as the captain asked on 29 September 2026: "Don't use the word cost."
+Each such sentence states the physical fact itself, as in "a shortcut that stays open requires exotic matter", and `NoCost` in `_tools/test_build_mfs_data.py` holds every string of every metric and diagram file and the page to that.
 Every drawing, a spacetime diagram, a conformal diagram and a figure in three dimensions, stands on one dark ground, `--mfs-ground`, across the whole figure with its words, and prints on white.
 
 Every written area of the spacetimes page is set in the history's font, Source Code Pro at its regular weight and upright, at the history's size, `--mfs-prose`, which is 21px at the usual text size and 15px in the phone layout.
