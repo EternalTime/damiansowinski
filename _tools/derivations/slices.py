@@ -315,6 +315,14 @@ def _es_areal(m):
     return along(0.0, math.sin(lo), math.sin(min(hi, math.pi / 2)))
 
 
+def _milne_inertial(m):
+    """A moment ct of the Milne universe in its inertial chart: T = t cosh chi and R = ct sinh chi,
+    the hyperbola cT = sqrt(c^2t^2 + R^2) through the centre, out to the chi the embedding reaches."""
+    hi = m.time * math.sinh(m.reach("comoving_hyperbolic", "\\chi")[1])
+    R = np.linspace(-hi, hi, N)
+    return [np.column_stack([np.sqrt(m.time ** 2 + R * R), R])]
+
+
 def _ads_poincare():
     """Anti-de Sitter's static moment t = 0 is the Poincare moment t = 0; on the plane y = 0,
     z = L its static radius is r^2 = x^2 + x^4/4L^2, so the embedding's reach r <= 4L is
@@ -393,6 +401,12 @@ FLAT = {
     ("einstein_static", "hyperspherical", "radial"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "hyperspherical", "through"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "static_areal", "radial"): lambda: one("einstein_static", _es_areal),
+    # A moment ct of the Milne universe reaches chi from 0 to its edge: r = sinh chi, c tau = ln(ct)
+    # in units of ct_0, and in the inertial chart the hyperbola c^2T^2 - R^2 = c^2t^2 across the centre.
+    ("milne", "comoving_hyperbolic", "through"): lambda: one("milne", lambda m: across(m.time, 0.0, m.reach("comoving_hyperbolic", "\\chi")[1])),
+    ("milne", "comoving_spherical", "radial"): lambda: one("milne", lambda m: along(m.time, 0.0, math.sinh(m.reach("comoving_hyperbolic", "\\chi")[1]))),
+    ("milne", "logarithmic_time", "radial"): lambda: one("milne", lambda m: along(math.log(m.time), *m.reach("comoving_hyperbolic", "\\chi"))),
+    ("milne", "inertial", "through"): lambda: one("milne", _milne_inertial),
     ("anti_de_sitter", "static_global", "radial"): lambda: one("anti_de_sitter", lambda m: along(0.0, *m.reach("static_global", "r"))),
     ("anti_de_sitter", "static_global", "through"): lambda: one("anti_de_sitter", lambda m: along(0.0, *m.reach("static_global", "r"))),
     ("anti_de_sitter", "poincare", "tx"): _ads_poincare,

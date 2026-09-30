@@ -3502,6 +3502,115 @@ def c_metric(ck, src):
     return views
 
 
+def milne(ck, src):
+    """The Milne universe as the wedge of Minkowski's triangle above the future light cone of the
+    event T = R = 0. With T = t cosh chi and R = ct sinh chi, the null coordinates of Minkowski's
+    own diagram are u = cT - R = ct e^-chi and v = cT + R = ct e^chi, so p = arctan(u/l) and
+    q = arctan(v/l) draw the comoving hyperbolic chart with Minkowski's map for any length l,
+    drawn as 1: u > 0 and v > 0 are p > 0 and q > 0, the wedge under the centre and I+ with
+    corners (X, T) = (0, 0), (pi/2, pi/2) and (0, pi). The comoving spherical chart enters through
+    chi = arcsinh r, the logarithmic time through t = t_0 e^(tau/t_0) at t_0 = 1, and the inertial
+    chart is Minkowski's spherical chart inside R < cT. Every point of the line t = 0 goes to the
+    event p = q = 0, and chi -> infinity at fixed t goes to I+, which the limits check."""
+    views = []
+    tri_box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    wedge = [[0, 0], [HALF, HALF], [0, PI]]
+
+    def hyper(t, chi):
+        t, chi = np.asarray(t, dtype=float), np.asarray(chi, dtype=float)
+        return np.arctan(t * np.exp(-chi)), np.arctan(t * np.exp(chi))
+
+    def spherical(t, r):
+        return hyper(t, np.arcsinh(np.asarray(r, dtype=float)))
+
+    def logarithmic(tau, chi):
+        return hyper(np.exp(np.asarray(tau, dtype=float)), chi)
+
+    def inertial(T, R):
+        return mink_pq(T, R)
+
+    hp = Plane(src, "milne", "comoving_hyperbolic", ("t", "\\chi"), EQUATOR)
+    sp_ = Plane(src, "milne", "comoving_spherical", ("t", "r"), EQUATOR)
+    lp = Plane(src, "milne", "logarithmic_time", ("\\tau", "\\chi"), EQUATOR, {"t_0": 1})
+    ip = Plane(src, "milne", "inertial", ("T", "R"), EQUATOR)
+    ck.chart("Milne comoving hyperbolic", hp, hyper, ck.uniform(0.01, 20), ck.uniform(0.001, 6), lambda t, c: (1, 0))
+    ck.chart("Milne comoving spherical", sp_, spherical, ck.uniform(0.01, 20), ck.uniform(0.001, 50), lambda t, r: (1, 0))
+    ck.chart("Milne logarithmic time", lp, logarithmic, ck.uniform(-4, 3), ck.uniform(0.001, 6), lambda tau, c: (1, 0))
+    T = ck.uniform(0.01, 20)
+    ck.chart("Milne inertial", ip, inertial, T, T * ck.uniform(0.001, 0.999), lambda T, R: (1, 0))
+    chis = np.linspace(0, 8, 41)
+    ck.limit("Milne: t -> 0 at every chi is the event p = q = 0", np.concatenate(hyper(np.full(41, 1e-12), chis)),
+             np.zeros(82), 1e-9)
+    p, q = hyper(np.linspace(0.1, 10, 41), np.full(41, 40.0))
+    ck.limit("Milne: chi -> infinity at fixed t is I+, q = pi/2", q, np.full(41, HALF), 1e-9)
+    p, q = inertial(np.linspace(0.1, 10, 41), np.linspace(0.1, 10, 41))
+    ck.limit("Milne: the light cone R = cT is the edge p = 0 of the wedge", p, np.zeros(41), 1e-12)
+    ck.finite("Milne: the centre chi = 0 is regular", hp.kretschmann(ck.uniform(0.1, 5, 50), np.full(50, 1e-6)))
+    ck.finite("Milne: the curvature vanishes toward t = 0", hp.kretschmann(np.full(50, 1e-6), ck.uniform(0, 5, 50)))
+
+    moments = slices.moments("milne")
+
+    def frame(v, legend):
+        v.fill("region", TRIANGLE)
+        v.fill("cover", wedge)
+        triangle_edges(v, centre="$R = 0$")
+        v.line("chartedge", [[[0, 0], [HALF, HALF]]])
+        v.point("mark", (0, 0))
+        v.label_xt([Q4, Q4], "$cT = R$", "tl", "small", dx=6, dy=2)
+        v.legend("cover", legend)
+        v.legend("chartedge", "the future light cone $cT = R$ of the event $T = R = 0$, where the Milne universe ends")
+        v.legend("mark", "the event $T = R = 0$, from which every comoving particle moves off")
+        v.legend("centre", "$R = 0$, the world line of the comoving particle at $\\chi = 0$")
+        for m in moments:
+            hi = m.reach("comoving_hyperbolic", "\\chi")[1]
+            chi = np.linspace(0, hi, 400)
+            v.slice(m, [hyper(np.full_like(chi, m.time), chi)])
+
+    S_T = spread(0, np.inf, 500, 12)
+    S_CHI = np.linspace(0, 40, 2000)
+    TIMES, CHIS = (0.25, 0.5, 1, 2, 4), (0.5, 1, 1.5, 2, 3)
+
+    v = View("comoving_hyperbolic", "Comoving hyperbolic", tri_box, "comoving_hyperbolic")
+    grid(v, "r", lambda c, t: hyper(t, c), CHIS, S_T)
+    grid(v, "t", hyper, TIMES, S_CHI)
+    frame(v, "the Milne universe, which $t$ and $\\chi$ cover")
+    v.legend("r", "$\\chi$ constant, a comoving particle, at $1/2$, $1$, $3/2$, $2$, and $3$")
+    v.legend("t", "$ct$ constant, at $1/4$, $1/2$, $1$, $2$, and $4$ in units of $\\ell$")
+    views.append(v)
+
+    v = View("comoving_spherical", "Comoving spherical", tri_box, "comoving_spherical")
+    RS = tuple(float(np.sinh(c)) for c in CHIS)
+    grid(v, "r", lambda r, t: spherical(t, r), RS, S_T)
+    grid(v, "t", spherical, TIMES, np.sinh(S_CHI))
+    frame(v, "the Milne universe, which $t$ and $r$ cover")
+    v.legend("r", "$r = \\sinh\\chi$ constant, a comoving particle, at $\\chi = 1/2$, $1$, $3/2$, $2$, and $3$")
+    v.legend("t", "$ct$ constant, at $1/4$, $1/2$, $1$, $2$, and $4$ in units of $\\ell$")
+    views.append(v)
+
+    v = View("logarithmic_time", "Logarithmic time", tri_box, "logarithmic_time")
+    grid(v, "r", lambda c, tau: logarithmic(tau, c), CHIS, np.linspace(-30, 12, 2000))
+    grid(v, "t", logarithmic, (-2, -1, 0, 1, 2), S_CHI)
+    frame(v, "the Milne universe, which $\\tau$ and $\\chi$ cover")
+    v.legend("r", "$\\chi$ constant, a comoving particle, at $1/2$, $1$, $3/2$, $2$, and $3$")
+    v.legend("t", "$\\tau$ constant, at $-2t_0$, $-t_0$, $0$, $t_0$, and $2t_0$, with $ct_0 = \\ell$")
+    views.append(v)
+
+    v = View("inertial", "Inertial", tri_box, "inertial")
+    for R in (0.5, 1, 2, 4):
+        T = np.concatenate([[R], R + spread(0, np.inf, 500, 12)[1:]])
+        v.curve("r", *inertial(T, np.full_like(T, R)))
+    for T0 in (0.5, 1, 2, 4):
+        R = np.linspace(0, T0, 400)
+        v.curve("t", *inertial(np.full_like(R, T0), R))
+    frame(v, "the Milne universe, $R < cT$, which $T$ and $R$ cover")
+    v.legend("r", "$R$ constant, at $\\ell/2$, $\\ell$, $2\\ell$, and $4\\ell$")
+    v.legend("t", "$cT$ constant, at $\\ell/2$, $\\ell$, $2\\ell$, and $4\\ell$")
+    views.append(v)
+    for v in views:
+        v.set(settings="$\\ell$, any length, the scale of $p = \\arctan((cT - R)/\\ell)$ and $q = \\arctan((cT + R)/\\ell)$.")
+    return views
+
+
 DRAWN = {
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
@@ -3510,7 +3619,7 @@ DRAWN = {
     "cosmic_string": cosmic_string, "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "c_metric": c_metric,
-    "misner": misner,
+    "misner": misner, "milne": milne,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -3576,6 +3685,33 @@ CAPTIONS = {
         "the right. With $C = 1/(1 + 2\\alpha m)$ this half of the axis carries the cosmic string, whose deficit "
         "angle lies in the angle about the axis and leaves this surface unchanged.",
         "The coordinates $\\tau$ and $y > 1$ cover the static region and its black hole.",
+    ],
+    ("milne", "comoving_hyperbolic"): [
+        "The Milne universe, each point in the diagram a 2-sphere of radius $ct\\sinh\\chi$. With $T = "
+        "t\\cosh\\chi$ and $R = ct\\sinh\\chi$ it is the inside of the future light cone of the event $T = R = 0$ "
+        "of Minkowski spacetime, and Minkowski's own maps $p = \\arctan(ct\\,e^{-\\chi}/\\ell)$ and $q = "
+        "\\arctan(ct\\,e^{\\chi}/\\ell)$ draw it as the wedge above that cone, with $T = p + q$ up and $X = q - p$ "
+        "across.",
+        "Every comoving particle runs from the event at the foot of the wedge to $i^+$, and every moment of "
+        "constant $t$ runs from the centre to the corner where the cone meets $\\mathscr{I}^+$. Light crosses the "
+        "cone into the Milne universe from the rest of Minkowski spacetime and leaves it through $\\mathscr{I}^+$.",
+    ],
+    ("milne", "comoving_spherical"): [
+        "The Milne universe in its comoving spherical chart, each point in the diagram a 2-sphere of radius $ctr$. "
+        "With $r = \\sinh\\chi$ the chart is the hyperbolic one, and Minkowski's maps draw it as the same wedge "
+        "above the future light cone of the event $T = R = 0$.",
+    ],
+    ("milne", "logarithmic_time"): [
+        "The Milne universe in its logarithmic time, each point in the diagram a 2-sphere of radius "
+        "$ct_0e^{\\tau/t_0}\\sinh\\chi$. The metric is $e^{2\\tau/t_0}$ times that of a static universe whose "
+        "space is the hyperbolic space of radius $ct_0$, and the whole line $\\tau \\to -\\infty$ goes to the "
+        "event at the foot of the wedge, where $t = t_0e^{\\tau/t_0}$ vanishes.",
+    ],
+    ("milne", "inertial"): [
+        "The Milne universe in the inertial chart of the comoving particle at $\\chi = 0$, each point in the "
+        "diagram a 2-sphere of radius $R$. The chart is Minkowski's spherical chart inside $R < cT$, drawn with "
+        "Minkowski's own maps, and its lines of constant $R$ enter the Milne universe across the light cone $cT = R$ "
+        "and run on to $i^+$.",
     ],
     ("minkowski", "spherical"): [
         "Minkowski spacetime, each point in the diagram a 2-sphere of radius $r$. With $u = ct - r$ and $v = ct + r$ the metric on the plane of $t$ "

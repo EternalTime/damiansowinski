@@ -3921,6 +3921,62 @@ def btz(ck, src):
     return views
 
 
+MILNE = (0.5, 1.0, 2.0, 3.0)    # the moments of ct drawn, in any unit of length l
+
+
+def milne(ck, src):
+    """The equator of a moment of the comoving hyperbolic chart, g_chichi = c^2t^2 and g_phiphi =
+    c^2t^2 sinh^2 chi, at ct = 0.5, 1, 2 and 3 in any unit of length and as a movie with a frame
+    every 0.05 of ct. At every chi > 0 its circles grow faster than the distance out to them,
+    which is checked, so it is drawn in three dimensional Minkowski space, dX^2 + dY^2 - dZ^2,
+    where it climbs at dZ/dchi = sqrt((drho/dchi)^2 - g_chichi) = ct sinh chi from Z = ct on the
+    axis: rho = ct sinh chi and Z = ct cosh chi, the sheet Z^2 - rho^2 = c^2t^2 of a hyperboloid.
+    With Z = cT and rho = R that is the moment itself on the plane theta = pi/2 of the inertial
+    chart, T = t cosh chi and R = ct sinh chi, so every moment is drawn where it lies in spacetime
+    and all of them nest inside the light cone Z = rho of the event T = R = 0, drawn in every frame
+    as a reference. Each runs out to rho = 4, where chi = arcsinh(4/ct)."""
+    top = 4.0
+    size = 2 * top
+    rings = (0.5, 1.0, 1.5, 2.0, 2.5)
+
+    def moment(t, check):
+        sl = Slice(src, "milne", "comoving_hyperbolic", "\\chi", "\\phi", {"t": repr(t), **EQUATOR}, space="minkowski")
+        hi = math.asinh(top / t)
+        sheet = Piece("sheet", "sheet", sl, 0.0, hi, t, 1,
+                      (("axis", "the comoving particle at $\\chi = 0$"),
+                       ("edge", "the sheet runs on toward the light cone, to $\\chi \\to \\infty$")),
+                      [(x, "r", None) for x in rings if x < hi], size)
+        cone = FormPiece("cone", sl, np.linspace(0.0, hi, 81), lambda x: t * np.sinh(x), lambda x: t * np.sinh(x),
+                         (("apex", "the event $T = R = 0$, where every comoving particle starts"),
+                          ("edge", "the cone runs on")), size)
+        where = f"Milne, ct = {t:g}"
+        if check:
+            flat = Slice(src, "milne", "comoving_hyperbolic", "\\chi", "\\phi", {"t": repr(t), **EQUATOR})
+            ck.stops(f"{where}, the equator in flat space", flat, np.linspace(1e-3, 20, 400))
+            ck.isometry(f"{where}, the sheet", sheet)
+            ck.form(f"{where}, the hyperboloid Z = ct cosh chi", sheet, lambda x: t * np.cosh(x), size)
+            ck.radius(f"{where}, rho = ct sinh chi", sheet, lambda x: t * np.sinh(x), size)
+        return Surface([sheet, cone], label=f"$ct = {t:g}$", time=t)
+
+    times, keys = movie_values(list(MILNE), 0.05)
+    frames = [moment(t, True) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the equator of the moment, which $\\chi$ and $\\phi$ cover whole")
+    fig.legend("line", "r", "$\\chi$ constant, every $1/2$, the circle of comoving particles at that $\\chi$")
+    fig.legend("line", "reference", "the light cone of the event $T = R = 0$, which every moment nears as "
+                                    "$\\chi \\to \\infty$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("hyperboloids", "In Minkowski space", "$\\ell$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", times, turns=False),
+                 settings="$\\ell$, any length, the unit of every length and of $ct$, and every length along a "
+                          "sheet measured with $dX^2 + dY^2 - dZ^2$.",
+                 space="minkowski",
+                 stops=["At every $\\chi > 0$ the circles grow faster than the distance out to them, "
+                        "$g_{\\chi\\chi} < (\\partial_\\chi\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution "
+                        "in flat space carries the slice; Minkowski space carries it."])]
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -4159,6 +4215,7 @@ DRAWN = {
     "kerr_newman": kerr_newman,
     "cosmic_string": cosmic_string,
     "frw": frw,
+    "milne": milne,
     "minkowski": minkowski,
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
@@ -4630,6 +4687,18 @@ CAPTIONS = {
         "marked are lines of the flow, each closing back through the wall, as the flow of a fluid that cannot be "
         "compressed closes round an obstacle. José Natário built the drive in 2002, carrying the ship with no "
         "contraction of space ahead of it and no expansion behind.",
+    ],
+    ("milne", "hyperboloids"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Milne universe as cosmic time runs from $ct = 0.5$ to $3$, "
+        "each moment drawn as a surface in three dimensional Minkowski space with every distance along it, measured "
+        "with $dX^2 + dY^2 - dZ^2$, the metric distance. On it $g_{\\chi\\chi} = c^2t^2$ while the circle at $\\chi$ "
+        "has circumference $2\\pi ct\\sinh\\chi$, so every circle grows faster than the distance out to it, and the "
+        "moment is the hyperbolic plane of curvature $-1/c^2t^2$. It lies whole on one sheet of the hyperboloid "
+        "$Z^2 - X^2 - Y^2 = c^2t^2$.",
+        "That Minkowski space is the plane $\\theta = \\pi/2$ of the inertial chart, with $Z = cT$, so each sheet "
+        "stands where its moment lies in spacetime. The sheets nest inside the light cone of the event $T = R = 0$, "
+        "dashed, and each nears it as $\\chi$ grows. The circle of comoving particles at each $\\chi$ moves out along "
+        "the straight line $Z = \\rho\\coth\\chi$ through the apex of the cone, at the speed $c\\tanh\\chi$.",
     ],
     ("frw", "closed"): [
         "The equator ($\\theta = \\pi/2$) of space in a closed universe of dust as cosmic time runs from $ct = 0.18$ "

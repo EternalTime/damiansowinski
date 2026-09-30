@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
-charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric and
-schwarzschild_de_sitter, and Godel's cylindrical chart.
+charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
+schwarzschild_de_sitter and milne, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -324,6 +324,53 @@ GEODESICS = {
 }
 
 
+# -- Milne universe --------------------------------------------------------------------
+
+def milne(system):
+    """The four charts of the Milne universe, the inside of the future light cone of one event
+    of Minkowski space. The comoving charts depend on the cosmic time, so they name it as the
+    chart's `time`, and every value carries it as ct; milne.md derives each chart."""
+    hyperbolic = "\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)"
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    charts = {
+        "comoving_hyperbolic": {
+            "name": "Comoving Hyperbolic", "coords": ["t", "\\chi", "\\theta", "\\phi"], "parameters": [],
+            "domains": ["t \\in (0, \\infty)", "\\chi \\in [0, \\infty)", "\\theta \\in [0, \\pi]",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line_element": "ds^2 = -c^2dt^2 + c^2t^2" + hyperbolic,
+            "chart": "ds^2 = -dt^2 + t^2" + hyperbolic, "time": "t"},
+        "comoving_spherical": {
+            "name": "Comoving Spherical", "coords": ["t", "r", "\\theta", "\\phi"], "parameters": [],
+            "domains": ["t \\in (0, \\infty)", "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line_element": "ds^2 = -c^2dt^2 + c^2t^2\\left(\\dfrac{dr^2}{1 + r^2} + r^2" + sphere + "\\right)",
+            "chart": "ds^2 = -dt^2 + t^2\\left(\\dfrac{dr^2}{1 + r^2} + r^2" + sphere + "\\right)", "time": "t"},
+        "logarithmic_time": {
+            "name": "Logarithmic Time", "coords": ["\\tau", "\\chi", "\\theta", "\\phi"], "parameters": ["t_0"],
+            "domains": ["\\tau \\in (-\\infty, \\infty)", "\\chi \\in [0, \\infty)", "\\theta \\in [0, \\pi]",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line_element": "ds^2 = e^{2\\tau/t_0}\\left(-c^2d\\tau^2 + c^2t_0^2" + hyperbolic + "\\right)",
+            "chart": "ds^2 = e^{2\\tau/(c t_0)}\\left(-d\\tau^2 + c^2t_0^2" + hyperbolic + "\\right)", "time": "\\tau"},
+        "inertial": {
+            "name": "Inertial", "coords": ["T", "R", "\\theta", "\\phi"], "parameters": [],
+            "domains": ["T \\in (0, \\infty)", "R \\in [0, cT)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"],
+            "line_element": "ds^2 = -c^2dT^2 + dR^2 + R^2" + sphere,
+            "chart": "ds^2 = -dT^2 + dR^2 + R^2" + sphere},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    return {
+        "metric_id": "milne",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line_element"]},
+        "chart_line_element": chart["chart"],
+        "printer": {"lead": [probe.c, probe.symbol[chart["coords"][0]], *probe.parameters.values()]},
+        "bare_scalar": True,
+        **({"time": chart["time"]} if "time" in chart else {}),
+        **({"pretty": cp.hyperbolic(probe.symbol["\\chi"])} if "\\chi" in chart["coords"] else {}),
+    }
+
+
 def rewritten(value, substitutions, chart):
     """Every string in `value` with each (old, new) of `substitutions` applied in turn, each
     changed string read back and compared with the one it replaces, so a rewrite that changed a
@@ -606,13 +653,14 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
           "c_metric": c_metric,
-          "schwarzschild_de_sitter": [lambda s=s: schwarzschild_de_sitter(s) for s in SDS_CHARTS]}
+          "schwarzschild_de_sitter": [lambda s=s: schwarzschild_de_sitter(s) for s in SDS_CHARTS],
+          "milne": [lambda s=s: milne(s) for s in ("comoving_hyperbolic", "comoving_spherical", "logarithmic_time", "inertial")]}
 
 
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
-                     spec["printer"], spec.get("pretty"))
+                     spec["printer"], spec.get("pretty"), spec.get("time"))
     if "check" in spec:
         spec["check"](chart)
     math = chart.mathematics()

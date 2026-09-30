@@ -442,6 +442,14 @@ DIAGRAMS = [
             families=SIDEWAYS, cones=(4, 8)),
     Diagram("einstein_static", "static_areal", "radial", "$t$ and $r$", ("t", "r"), (0, 1.2, -0.6, 0.6),
             "$r/R$", "$ct/R$", {"R": 1}, EQUATOR, areal=True),
+    Diagram("milne", "comoving_hyperbolic", "through", "through the observer", ("t", "\\chi"),
+            (0, 3, 0, 3), "$\\chi$", "$ct$", {}, EQUATOR, mirror=True, families=SIDEWAYS, cones=(4, 8)),
+    Diagram("milne", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, 0, 3),
+            "$r$", "$ct$", {}, EQUATOR, areal=True),
+    Diagram("milne", "logarithmic_time", "radial", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"),
+            (0, 3, -2, 1.5), "$\\chi$", "$c\\tau\\;[ct_0]$", {"t_0": 1}, EQUATOR, tau="tau"),
+    Diagram("milne", "inertial", "through", "through the observer", ("T", "R"), (0, 4, 0, 5),
+            "$x$", "$cT$", {}, EQUATOR, mirror=True, tau="T", families=SIDEWAYS, cones=(4, 8), areal=True),
     Diagram("anti_de_sitter", "static_global", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/L$", "$ct/L$", {"L": 1}, EQUATOR, areal=True),
     Diagram("anti_de_sitter", "static_global", "through", "through the centre", ("t", "r"),
@@ -881,6 +889,40 @@ CAPTIONS = {
         "The line $r = R$ is the equator of the three sphere, its largest sphere, where the chart ends. "
         "The rays run on through it into the far hemisphere, which the hyperspherical chart covers, and "
         "the Kretschmann scalar $12/R^4$ is the same on both sides.",
+    ],
+    ("milne", "comoving_hyperbolic", "through"): [
+        "The Milne universe along a line through the comoving particle at $\\chi = 0$, in the plane "
+        "$\\theta = \\pi/2$: $x = \\chi$ on the right is $\\phi = 0$ and $x = -\\chi$ on the left is "
+        "$\\phi = \\pi$. The edges of the cones are $d\\chi/d(ct) = \\pm 1/ct$, so a ray that crosses "
+        "$\\chi = 0$ at $t_1$ runs along $\\chi = \\pm\\ln(t/t_1)$, and the cones open out toward $t = 0$.",
+        "The whole line $t = 0$ is one event, $T = R = 0$ in the inertial chart, where every comoving "
+        "particle starts, since $g_{\\chi\\chi} = c^2t^2$ vanishes there. The Kretschmann scalar is zero "
+        "everywhere, and the past light cone of every event reaches every $\\chi$, so the Milne universe "
+        "has no particle horizon.",
+    ],
+    ("milne", "comoving_spherical", "radial"): [
+        "The plane of $t$ and the comoving radius $r = \\sinh\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$), "
+        "the same at every other angle by spherical symmetry. The edges of the cones are $dr/d(ct) = "
+        "\\pm\\sqrt{1 + r^2}/ct$, so $\\ln t \\pm \\chi$ is constant along a ray, as in the hyperbolic "
+        "chart, and the cones widen toward $t = 0$ and toward large $r$.",
+        "The areal radius is $ctr$, and the square of its gradient is $1$ everywhere, so no sphere is "
+        "trapped. The Kretschmann scalar is zero everywhere.",
+    ],
+    ("milne", "logarithmic_time", "radial"): [
+        "The plane of the logarithmic time $\\tau = t_0\\ln(t/t_0)$ and $\\chi$ ($\\theta = \\pi/2$, "
+        "$\\phi = 0$). The metric on it is $e^{2\\tau/t_0}\\left(-c^2d\\tau^2 + c^2t_0^2d\\chi^2\\right)$, flat "
+        "up to the factor $e^{2\\tau/t_0}$, so every ray is a straight 45° line, $\\tau = \\pm t_0\\chi + $ "
+        "const, and every cone is the same.",
+        "The moment $t = t_0$ is $\\tau = 0$, and the event $t = 0$ lies at $\\tau \\to -\\infty$. The "
+        "Kretschmann scalar is zero everywhere.",
+    ],
+    ("milne", "inertial", "through"): [
+        "The Milne universe in the inertial chart of the comoving particle at $\\chi = 0$, along a line "
+        "through it in the plane $\\theta = \\pi/2$: $x = R$ on the right is $\\phi = 0$ and $x = -R$ on "
+        "the left is $\\phi = \\pi$. The metric is Minkowski's, so every ray is a straight 45° line, and "
+        "the chart covers the inside $R < cT$ of the future light cone of the event $T = R = 0$.",
+        "Each comoving particle moves along the straight line $R = cT\\tanh\\chi$ from that event, and "
+        "each moment of constant $t$ is the hyperbola $c^2T^2 - R^2 = c^2t^2$.",
     ],
     ("anti_de_sitter", "static_global", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the global "
@@ -2146,6 +2188,8 @@ class Plot:
         """For inside=True, the published domain of the drawn r pulled in by a thousandth of
         the drawing: a ray is traced up to it and no further."""
         lo, hi, _, _ = parse_domains(self.c).get(self.c.spec.plane[1], (None, None, False, False))
+        if callable(lo) or callable(hi):
+            raise SystemExit(f"{key(self.c.spec)}: inside=True needs a domain of fixed ends")
         margin = 1e-3 * float(np.max(self.span))
         return (None if lo is None else lo + margin, None if hi is None else hi - margin)
 
@@ -2440,9 +2484,10 @@ class Plot:
             return []
         UU, VV, x0, r = self.grid(161)
         outside = np.zeros_like(UU, dtype=bool)
-        for name, values in ((self.c.spec.plane[0], x0), (self.c.spec.plane[1], r)):
+        for name, values, others in ((self.c.spec.plane[0], x0, r), (self.c.spec.plane[1], r, x0)):
             if name in domains and name not in self.c.spec.periodic:
                 lo, hi, lo_open, hi_open = domains[name]
+                lo, hi = at(lo, others), at(hi, others)
                 if lo is not None:
                     outside |= (values < lo) | ((values == lo) & lo_open)
                 if hi is not None:
@@ -2700,9 +2745,29 @@ def parse_domains(chart):
                 try:
                     ends.append(float(sp.N(chart.reader(s).subs(subs))))
                 except (vm.LatexError, TypeError, ValueError):
-                    ends.append(None)
+                    ends.append(bound_along(chart, name, s, subs))
         out[name] = (ends[0], ends[1], interval[0] == "(", interval[-1] == ")")
     return out
+
+
+def bound_along(chart, name, text, subs):
+    """An end of a domain that is a function of the plane's other coordinate, as Milne's
+    R \\in [0, cT) inside the light cone, as a function of that coordinate's values; None
+    where the end names anything else, and it is then not hatched."""
+    other = chart.x0 if name == chart.spec.plane[1] else chart.xr
+    try:
+        expr = chart.reader(text).subs(subs)
+    except (vm.LatexError, TypeError, ValueError):
+        return None
+    if expr.free_symbols != {other}:
+        return None
+    f = sp.lambdify(other, expr, "numpy")
+    return lambda values: np.asarray(f(np.asarray(values, dtype=float)), dtype=float)
+
+
+def at(end, values):
+    """A domain's end at the plane's other coordinate: a number, or a bound_along."""
+    return end(values) if callable(end) else end
 
 
 # ---------------------------------------------------------------- the published file
@@ -3103,6 +3168,12 @@ CLOSED_FORMS = {
     ("einstein_static", "hyperspherical", "through"): (lambda t, c: t + c, lambda t, c: t - c, None),
     ("einstein_static", "static_areal", "radial"):
         (lambda t, r: t + np.arcsin(r), lambda t, r: t - np.arcsin(r), lambda t, r: r < 0.999),
+    ("milne", "comoving_hyperbolic", "through"):
+        (lambda t, c: np.log(t) + c, lambda t, c: np.log(t) - c, lambda t, c: t > 0.02),
+    ("milne", "comoving_spherical", "radial"):
+        (lambda t, r: np.log(t) + np.arcsinh(r), lambda t, r: np.log(t) - np.arcsinh(r), lambda t, r: t > 0.02),
+    ("milne", "logarithmic_time", "radial"): (lambda tau, c: tau + c, lambda tau, c: tau - c, None),
+    ("milne", "inertial", "through"): (lambda T, R: T + R, lambda T, R: T - R, None),
     ("anti_de_sitter", "static_global", "radial"):
         (lambda t, r: t + np.arctan(r), lambda t, r: t - np.arctan(r), None),
     ("ellis_bronnikov", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
