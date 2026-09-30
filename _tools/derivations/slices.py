@@ -400,6 +400,10 @@ FLAT = {
     ("alcubierre", "cartesian", "tx"): lambda: one("alcubierre", lambda m: across(0.0, 0.0, m.grid()["u"][-1])),
     ("natario", "cartesian_flow", "tx"): lambda: one("natario", lambda m: across(0.0, 0.0, m.grid()["u"][-1])),
     ("krasnikov", "cylindrical", "tx"): _krasnikov,
+    # Misner space's moments are the Milne chart's t = t_k, every chi, and in Misner's
+    # coordinates T = -c^2t_k^2/4, every psi; checks() carries the one chart onto the other.
+    ("misner", "misner", "plane"): lambda: one("misner", lambda m: across(-m.time * m.time / 4, 0.0, BIG)),
+    ("misner", "milne", "plane"): lambda: one("misner", lambda m: across(m.time, 0.0, BIG)),
     # The wave front u = u_k, every v.
     ("pp_wave", "exact_plane_wave", "tz"): lambda: one("pp_wave", lambda m: [[(m.time, -BIG), (m.time, BIG)]]),
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
@@ -430,6 +434,8 @@ HIDDEN = {
     ("tolman_bondi", "comoving_synchronous", "collapse"): "the marginally bound cloud, E = 0, whose moments are planes; the cloud embedded is released from rest",
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): "the exploding shell, the time reverse of the imploding shell embedded",
     ("frw", "flat"): "the flat universe's conformal diagram; the moments embedded are the closed universe's",
+    ("misner", "rindler", "plane"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
+    ("misner", "rindler"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
     ("frw", "open"): "the open universe's conformal diagram; the moments embedded are the closed universe's",
 }
 
@@ -682,6 +688,18 @@ def checks():
     hi = moments("anti_de_sitter")[0].reach("static_global", "r")[1]
     xm = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
     report("anti-de Sitter: the reach r = 4L is |x| = sqrt(2(sqrt 17 - 1)) L", abs(xm ** 2 + xm ** 4 / 4 - hi * hi), 1e-12)
+
+    # Misner: T = -t^2/4 and psi = 2 chi - ln(t^2/4) carry the Milne plane of t and chi onto
+    # Misner's plane of T and psi, both being the covering Minkowski plane's t - x = t e^(-chi) =
+    # -2 e^(-psi/2) and t + x = t e^chi = 2T e^(psi/2), so the moment t = t_k is T = -t_k^2/4.
+    g_m, (Tm, pm, *_) = metric("misner", "misner", {"psi_0": "4*pi"})
+    g_n, (tn, cn, *_) = metric("misner", "milne", {"psi_0": "4*pi"})
+    new = [-tn ** 2 / 4, 2 * cn - sp.log(tn ** 2 / 4)]
+    J = sp.Matrix([[sp.diff(f, v) for v in (tn, cn)] for f in new])
+    pulled = J.T * g_m[:2, :2].subs({Tm: new[0], pm: new[1]}, simultaneous=True) * J
+    miss = max(abs(float((pulled - g_n[:2, :2]).subs({tn: a, cn: b})[i, j]))
+               for a, b in zip(rng.uniform(-3, -0.1, 20), rng.uniform(-3, 3, 20)) for i in range(2) for j in range(2))
+    report("Misner: T = -t^2/4, psi = 2 chi - ln(t^2/4) pulls Misner's plane back onto the Milne plane", miss, 1e-12)
 
     # Novikov: each shell at its proper time is a radial geodesic from rest of the exterior,
     # which keeps its energy E = sqrt(1 - r_s/R) = (1 - r_s/r) dt/dtau, and the same shell in
