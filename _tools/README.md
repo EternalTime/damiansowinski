@@ -469,7 +469,7 @@ A file records every coordinate system it read and a stamp over the fields it re
 A diagram can read another spacetime's metric, as the interior Schwarzschild star reads the exterior of `schwarzschild.json`, and `build_mfs_data.py` refuses the file when any of those fields changes, naming the system and the command that redraws it.
 The domains are not among the fields, since no conformal diagram reads one.
 
-`DRAWN` in the script names the seventeen spacetimes that have a diagram and `NOT_DRAWN` the twelve that have none: every event's future is the whole spacetime for Gödel and van Stockum, the diagram is whatever a free function makes it for the warp drives, the Krasnikov tube, Tolman-Bondi and Bianchi, the Mixmaster has no surface that carries its causal structure, and so on.
+`DRAWN` in the script names the eighteen spacetimes that have a diagram and `NOT_DRAWN` the twelve that have none: every event's future is the whole spacetime for Gödel and van Stockum, the diagram is whatever a free function makes it for the warp drives, the Krasnikov tube, Tolman-Bondi and Bianchi, the Mixmaster has no surface that carries its causal structure, and so on.
 A free function does not by itself rule a diagram out: where every choice of it gives the same shape, as for the Tolman-Oppenheimer-Volkoff star and the Morris-Thorne wormhole, the diagram is drawn with a declared choice that moves only the lines inside, and the Malament-Hogarth toy is drawn for every conformal factor at once, since a conformal factor changes no null direction.
 Those twelve have no file, which a full redraw removes if one is left behind, so the page has no conformal diagram section for them; `build_mfs_data.py` refuses a file that draws nothing, and the script stops if a metric file is in neither table, so a new spacetime needs a decision.
 
@@ -593,6 +593,8 @@ The cosmic string is its cone at $4G\mu/c^2 = 0.1$ with Gott's core rounding the
 Its first view is a movie of the ideal string's cone unrolling onto the plane, as the captain asked on 30 September 2026, cut along $\phi = 0$: in each frame the cone of half angle $\alpha$ with $\sin\alpha = 2\pi(1 - 4G\mu/c^2)/(2\pi - \Delta\phi)$ carries the whole of it round $2\pi - \Delta\phi$ of the axis, so the cut's edges stand $\Delta\phi$ apart, from $0$, the cone, to the deficit angle $8\pi G\mu/c^2 = 36°$, where it lies flat.
 Every distance from the apex and every circle keeps its length in every frame, which the script checks, as it checks the wedge of the last.
 Gott's core is a cap of a sphere and does not unroll without stretching, so it stays on the second view.
+The Einstein static universe is the equator of one moment of its hyperspherical chart, the sphere $\rho = R\sin\chi$, $z = -R\cos\chi$ from the pole to the antipode, the same at every moment, with the equator where the areal chart and Einstein's projection end marked as `chartedge`; the areal chart's slice is checked to be its lower hemisphere.
+Its conformal diagram is the strip $0 \le \chi \le \pi$ of $\eta = ct/R$, and three views draw Minkowski, de Sitter and anti-de Sitter space inside it by the maps their own diagrams use, each checked to make the pulled back metric of the Einstein static universe one conformal factor times the other's, on its plane of $t$ and $r$ and on its spheres; `_tools/derivations/einstein_static.md` is the derivation.
 FRW is its closed universe of dust at five moments, played as a movie with a frame about every $0.1$ of $ct$, $a = 1 - \cos\eta$ as its conformal diagram declares, checked to make the published $G^r{}_r$ vanish; its flat slices are planes and its open slices have no surface of revolution in flat space, and no surface at all as a whole, which the view states under `stops` and the script checks at the scale factors of dust.
 
 ### The file, which the application reads
@@ -883,7 +885,7 @@ Nothing is ever passed in silence. A value that cannot be parsed, a system with 
 
 ## Printing a chart by machine
 
-`tov`, `malament_hogarth`, `mixmaster` and `lentz`, and the cylindrical chart of `godel`, have their mathematics written by `_tools/derivations/print_charts.py`, which defines each of those charts, computes every tensor with the checker's own `Geometry`, and prints each value through `chart_printer.py` beside it:
+`tov`, `malament_hogarth`, `mixmaster`, `lentz` and `einstein_static`, and the cylindrical chart of `godel`, have their mathematics written by `_tools/derivations/print_charts.py`, which defines each of those charts, computes every tensor with the checker's own `Geometry`, and prints each value through `chart_printer.py` beside it:
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py --metric tov
 
