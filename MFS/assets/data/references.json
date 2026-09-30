@@ -1,5 +1,5 @@
 {
-  "version": "06206746ea281455",
+  "version": "ff9c8177c24e87a1",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -3409,21 +3409,6 @@
         "eprint": "gr-qc/9606027",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/9606027"
-      }
-    },
-    "kay1997": {
-      "type": "article",
-      "fields": {
-        "title": "Quantum field theory on spacetimes with a compactly generated Cauchy horizon",
-        "author": "Kay, Bernard S. and Radzikowski, Marek J. and Wald, Robert M.",
-        "journal": "Communications in Mathematical Physics",
-        "volume": "183",
-        "pages": "533--556",
-        "year": "1997",
-        "doi": "10.1007/s002200050042",
-        "eprint": "gr-qc/9603012",
-        "archiveprefix": "arXiv",
-        "url": "https://arxiv.org/abs/gr-qc/9603012"
       }
     },
     "li1998": {
