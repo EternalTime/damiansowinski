@@ -280,6 +280,7 @@ class Diagram:
                                     # coordinate drawn and named, such as where a declared function jumps
     surface: str = None             # r at which a star's surface is released from rest; see Surface
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
+    singular_where_claimed: bool = False  # judge a singular edge only inside the published domains
     star: dict = None               # a declared polytrope, {"K": ..., "rho_c": ...}; see StarSolver
     any_factor: str = None          # a declared conformal factor the drawing holds for every value of
     crunch: bool = False            # mark where the metric stops being finite as a singular curve,
@@ -608,7 +609,7 @@ DIAGRAMS = [
             families=SIDEWAYS, crunch=True),
     Diagram("khan_penrose", "cosmological", "plane", "$\\tau$ and $\\sigma$", ("\\tau", "\\sigma"),
             (-math.pi / 2, math.pi / 2, 0, math.pi / 2), "$\\sigma$", "$\\tau$", {"L": 1}, {"x": "0", "y": "0"},
-            tau="tau", families=SIDEWAYS),
+            tau="tau", families=SIDEWAYS, singular_where_claimed=True),
     Diagram("pp_wave", "exact_plane_wave", "tz", "$t$ and $z$ on the axis", ("u", "v"), (-2, 2, -2, 2),
             "$z$", "$ct$", {}, {"x": "0", "y": "0"}, to_display=UV_TO_TZ, tau="u + 2*v",
             families=SIDEWAYS, functions={"A": "exp(-u**2)", "B": "0"},
@@ -2525,7 +2526,12 @@ class Plot:
                 for level in levels]
 
     def singular_edges(self):
-        """Edges along which the published Kretschmann scalar diverges."""
+        """Edges along which the published Kretschmann scalar diverges. A row with
+        singular_where_claimed judges each edge only on its part inside the published domains,
+        for a chart whose formula runs on past its domain into no part of the spacetime, as
+        Khan and Penrose's cosmological chart does beyond the wave fronts, where it diverges on
+        sigma = +-pi/2; every other row judges the whole edge, since Schwarzschild's r = 0 is
+        a singularity of the spacetime although the spherical chart claims only r > r_s."""
         t = np.linspace(0.01, 0.99, 99)
         edges = {"left": lambda e: np.stack([np.full_like(t, e), t], -1),
                  "right": lambda e: np.stack([np.full_like(t, 1 - e), t], -1),
@@ -2538,8 +2544,10 @@ class Plot:
             # close to a singularity.
             lorentzian = (True if self.c.principal
                           else self.c.null_dirs(*self.to_chart(self.from_unit(at(1e-4))))[2] > 0)
+            claimed = (self.claimed(*self.to_chart(self.from_unit(at(1e-4)))) if self.c.spec.singular_where_claimed
+                       else np.ones(t.shape, dtype=bool))
             with np.errstate(all="ignore"):
-                if ((near > 1e8) & (near / far > 50) & lorentzian).mean() > 0.5:
+                if claimed.any() and ((near > 1e8) & (near / far > 50) & lorentzian)[claimed].mean() > 0.5:
                     out.append(name)
         return out
 
@@ -2635,21 +2643,30 @@ class Plot:
     def to_unit(self, q):
         return (np.asarray(q, dtype=float) - self.lo) / self.span
 
+    def claimed(self, x0, r, domains=None):
+        """Where chart points lie inside the entry's published domains of the plane's two
+        coordinates."""
+        domains = parse_domains(self.c) if domains is None else domains
+        x0, r = np.broadcast_arrays(np.asarray(x0, dtype=float), np.asarray(r, dtype=float))
+        outside = np.zeros(x0.shape, dtype=bool)
+        with np.errstate(invalid="ignore"):
+            for name, values, others in ((self.c.spec.plane[0], x0, r), (self.c.spec.plane[1], r, x0)):
+                if name in domains and name not in self.c.spec.periodic:
+                    lo, hi, lo_open, hi_open = domains[name]
+                    lo, hi = at(lo, others), at(hi, others)
+                    if lo is not None:
+                        outside |= (values < lo) | ((values == lo) & lo_open)
+                    if hi is not None:
+                        outside |= (values > hi) | ((values == hi) & hi_open)
+        return ~outside
+
     def hatch(self):
         """Where a chart point lies outside the entry's published domains, as polygons."""
         domains = parse_domains(self.c)
         if not domains and self.c.surface is None and not self.c.spec.crunch:
             return []
         UU, VV, x0, r = self.grid(161)
-        outside = np.zeros_like(UU, dtype=bool)
-        for name, values, others in ((self.c.spec.plane[0], x0, r), (self.c.spec.plane[1], r, x0)):
-            if name in domains and name not in self.c.spec.periodic:
-                lo, hi, lo_open, hi_open = domains[name]
-                lo, hi = at(lo, others), at(hi, others)
-                if lo is not None:
-                    outside |= (values < lo) | ((values == lo) & lo_open)
-                if hi is not None:
-                    outside |= (values > hi) | ((values == hi) & hi_open)
+        outside = ~self.claimed(x0, r, domains)
         outside |= self.c.outside(x0, r)
         if self.c.spec.crunch:
             outside |= ~self.finite(x0, r)
@@ -2920,7 +2937,12 @@ def bound_along(chart, name, text, subs):
     if expr.free_symbols != {other}:
         return None
     f = sp.lambdify(other, expr, "numpy")
-    return lambda values: np.asarray(f(np.asarray(values, dtype=float)), dtype=float)
+
+    def end(values):
+        # A bound such as sqrt(1 - u^2) has no value past u = 1, where the other bound hatches.
+        with np.errstate(invalid="ignore"):
+            return np.asarray(f(np.asarray(values, dtype=float)), dtype=float)
+    return end
 
 
 def at(end, values):
