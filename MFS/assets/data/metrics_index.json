@@ -770,7 +770,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1a23e0f133593166"
+    "version": "1a23e0f133593166",
+    "diagrams": "01986085179076c1",
+    "conformal": "fd05ccc81399a71c",
+    "embedding": "6a1693e24b89d0d9"
   },
   {
     "id": "taub_nut",

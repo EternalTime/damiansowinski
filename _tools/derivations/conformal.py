@@ -1446,11 +1446,11 @@ def schwarzschild_de_sitter(ck, src):
                  {"r_s": 1, "Lambda": "1/5"})
     for name, plane, fmap, sign in (("ingoing", ein, ingoing, 1), ("outgoing", eout, outgoing, -1)):
         for lo, hi in ((0.01, rh - 1e-3), (rh + 1e-3, rc - 1e-3), (rc + 1e-3, 60)):
-            # d(v - r) for the ingoing chart and d(u + r) for the outgoing one are timelike
-            # everywhere, since f < 2, and raise T.
+            # d_v - (1 + |f|) d_r for the ingoing chart and d_u + (1 + |f|) d_r for the outgoing
+            # one are timelike wherever f < 2, which is everywhere, and raise T.
             ck.chart(f"Schwarzschild-de Sitter {name} Eddington-Finkelstein, {lo:.2f} < r < {hi:.2f}",
                      plane, fmap, ck.uniform(-span, span), ck.uniform(lo, hi),
-                     lambda w, r, s=sign: (1, -s * 60))
+                     lambda w, r, s=sign: (1, -s * (1 + np.abs(K.f(r)))))
 
     ck.limit("Schwarzschild-de Sitter: the ingoing and static coordinates put one event at one point",
              np.concatenate([ingoing(2.0 + K.rstar(r), r) for r in (0.5, 2.0, 5.0)]),
@@ -1526,9 +1526,12 @@ def schwarzschild_de_sitter(ck, src):
 
     moment = slices.moments("schwarzschild_de_sitter")[0]
     lo, hi = moment.reach("static", "r")
-    rr = np.linspace(lo, hi, 2)
+    # The moment ends on the bifurcation spheres, where the map of the static chart is 0/0; the
+    # limits above place them at (p, q) = (0, 0) and (-pi/2, pi/2), and the next static
+    # region's black hole sphere at (-pi, pi).
+    rr = np.linspace(lo, hi, 9)[1:-1]
     a, b = K.pq("S", 0 * rr, rr), K.pq("S''", 0 * rr, rr[::-1])
-    moment_line = [(np.concatenate([a[0], b[0]]), np.concatenate([a[1], b[1]]))]
+    moment_line = [(np.concatenate([[0], a[0], [-H], b[0], [-PI]]), np.concatenate([[0], a[1], [H], b[1], [PI]]))]
     box = [-PI - 0.3, 2 * PI + 0.3, -HALF - 0.45, HALF + 0.45]
     R_S, R_IN, R_OUT = (1.2, 1.5, 2.0, 2.5, 3.0), (0.4, 0.7, 0.95), (4.0, 6.0, 12.0)
     TS = (-8, -4, -2, 0, 2, 4, 8)
@@ -1577,7 +1580,7 @@ def schwarzschild_de_sitter(ck, src):
         v.slice(moment, moment_line)
         views.append(v)
     for view in views:
-        view.set(settings=f"$\\Lambda = 0.2/r_s^2$, so that $r_h = {rh:.4g}\\,r_s$, $r_c = {rc:.4g}\\,r_s$ and "
+        view.set(settings=f"$\\Lambda = 0.2/r_s^2$, so that $r_h = {rh:.4g}\\,r_s$, $r_c = {rc:.4g}\\,r_s$, and "
                           f"$\\kappa_c/\\kappa_h = {K.kc / K.kh:.3g}$.")
     return views
 
