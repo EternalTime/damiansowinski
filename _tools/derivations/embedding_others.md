@@ -5,10 +5,10 @@ Eleven had none.
 Eight were stated in sentences, because their slices are flat or hyperbolic or not spacelike everywhere: Alcubierre, anti-de Sitter, Bianchi I, Kasner, Krasnikov, Lentz, Minkowski and Natário.
 Three had no file at all, because their slices were thought to carry no one surface that says anything: the Malament-Hogarth toy, the Mixmaster universe and the pp-wave.
 
-Each of the eleven now gets a drawing, and the drawings fall into three kinds.
+Ten of the eleven now get a drawing, Lentz's soliton alone none, and the drawings fall into three kinds.
 Where a slice is curved and has an axis, it is drawn as the other eighteen are, a surface of revolution in flat space, and where the construction runs out the drawing stops at the circle where it does: the Malament-Hogarth toy and the Mixmaster universe.
 Where a slice is curved the other way at every point, as the hyperbolic plane is, no surface in flat space carries it, and it is drawn in three dimensional Minkowski space instead, where the whole of it lies on one sheet of a hyperboloid: anti-de Sitter.
-Where a slice is flat, the surface is a plane, and what makes the spacetime what it is lies in how the slices are stacked, not in the shape of any one; the plane is drawn with that feature marked on it, a ring of free particles as it is stretched, the wall of a warp bubble and the flow of space through it, or the circle inside which the direction along a tube is a time.
+Where a slice is flat, the surface is a plane, and what makes the spacetime what it is lies in how the slices are stacked, not in the shape of any one; the plane is drawn with that feature marked on it, a ring of free particles as it is stretched, or a quantity is drawn as a height over it: the expansion of Alcubierre's riding observers, the energy density Natário's measure, with the flow of space on it, or how far the Krasnikov tube tips the light cone.
 
 Every number was computed from the published metric components through the checker's `Reader`, with `null_rays.load` and `published_matrix` as the other diagrams read them, and every declared function is the one a diagram of the same spacetime already declares, unless it says otherwise.
 `embedding.py` recomputes every one of them and checks it before it writes a file.
@@ -230,7 +230,20 @@ The published metric is Natário's flow chart, flat slices with the shift $(u, v
 $$X = v_s\left[(2n + r_sn')\,e_x - n'\,x_r\,(x_r, y, z)/r_s\right],\qquad x_r = x - v_st,$$
 
 whose divergence is checked to vanish.
-The drawing is the plane $z = 0$ at $t = 0$, a flat disc of radius $3R$ about the ship, with the circle $r_s = R$ marked, the middle of the wall.
+The slice of constant $t$ is flat, and the plane $z = 0$ at $t = 0$ as a surface would be a flat disc.
+What the drive does to that plane shows in the energy density the observers who ride the slices measure, and the drawing is that energy density as a height over the plane, as Alcubierre's is his expansion, over a disc of radius $3R$ about the ship on a polar grid of 72 angles with its circles every $R/4$, with the circle $r_s = R$ marked, the middle of the wall.
+
+The observers have $n_\mu = (-1, 0, 0, 0)$ in the chart $x^0 = ct$, so the energy density they measure is $\varepsilon = c^4G^{tt}/8\pi G$, and $G^{tt}$ is read from the published Einstein tensor with the declared field put in.
+On a flat slice of unit lapse the extrinsic curvature is the symmetrised gradient of the shift, $K_{ij} = \tfrac12(\partial_ig_{tj} + \partial_jg_{ti})$ up to its sign, and the constraint gives $G^{tt} = \tfrac12(K^2 - K_{ij}K^{ij})$.
+The trace $K$ is the expansion, which vanishes for this field, checked to $3 \times 10^{-15}$, so
+
+$$G^{tt} = -\tfrac12K_{ij}K^{ij},\qquad \varepsilon = -\frac{c^4}{16\pi G}K_{ij}K^{ij},$$
+
+and the published $G^{tt}$ is checked against $-K_{ij}K^{ij}/2$ from the published shift at 2000 points of the disc, to $2 \times 10^{-15}$.
+$K_{ij}K^{ij}$ is a sum of squares, so $\varepsilon$ is nowhere positive.
+Inside the bubble the flow is uniform and outside it is zero, so $\varepsilon$ vanishes in both, and at the ship itself, where the published $G^{tt}$ is $0/0$ as written, it runs to zero, checked at $10^{-6}R$ from the ship.
+The wall is a moat: deepest beside the ship, $G^{tt} = -16.982/R^2$ at $r_s = 0.8781R$ across the path, $\varepsilon = -0.6757\,c^4/GR^2$, and on the path one $R$ ahead and behind, $G^{tt} = -12.016/R^2$, $\varepsilon = -0.4781\,c^4/GR^2$.
+The height is $G^{tt}R^2/16$, so a height of $-R$ stands for $\varepsilon = -2c^4/\pi GR^2$ and the deepest point stands at $-1.0614R$, a sixth of the disc's width.
 
 The field is axisymmetric about the path and divergence free, so in the plane $z = 0$ it flows along the level curves of Stokes's stream function,
 
@@ -241,18 +254,16 @@ Inside the bubble $n = 1/2$ and the level curves are lines along the path: space
 Outside $n = 0$ and nothing moves.
 In the wall $n\,r_s^2$ rises to $0.2802\,R^2$ at $r_s = 0.8837\,R$ and falls to zero, so every level curve below that closes: space runs forward through the bubble and back round it through the wall, compressed nowhere, as a fluid that cannot be squeezed.
 The lines drawn are found by following the declared field itself, from where each crosses the ship's plane $x = 0$ round until it crosses it again, and each is checked to close there to $10^{-8}$ and to hold $\Psi$, taken from the declared field as $\int y\,X_x\,dy$ out from the path, to one value to $10^{-8}$ of it.
-The path runs along the drawing's $Y$, as Alcubierre's did until its height was drawn.
+The path runs along the drawing's $X$, as Alcubierre's does, and each line of flow is cut into chords shorter than $1/360$ of the drawing and set on the triangles of the grid.
 The lines marked are the three pairs that cross the bubble at $y = \pm 0.2R$, $\pm 0.4R$ and $\pm 0.6R$, $\Psi = 0.04$, $0.16$ and $0.36$ in units of $R^2$ with $v_s = 2$, which come back through the wall at $y = \pm 1.5019R$, $\pm 1.2775R$ and $\pm 1.1111R$ on the plane $x = 0$.
-José Natário built the drive in 2002 to show that the expansion Alcubierre's drive turns on is not needed: with $\theta = 0$ everywhere the ship is carried by the sliding of space, and the energy density the riding observers measure is again $K^2 - K_{ij}K^{ij}$ over $16\pi G/c^4$, now $-K_{ij}K^{ij}$ alone, negative.
+José Natário built the drive in 2002 with $\theta = 0$ everywhere, the ship carried by the sliding of space, and the energy density the riding observers measure is $-K_{ij}K^{ij}$ over $16\pi G/c^4$, negative wherever space shears.
 
 ### Lentz's soliton
 
 The published metric is Lentz's, unit lapse, flat slices and the shift a gradient, $N_i = \partial_i\phi$, with $\phi$ left free, and the flat slices are one of the three things Lentz fixed to define the class.
-His soliton exists only as a numerical integral of the wave equation $\partial_x^2\phi + \partial_y^2\phi - (2/v_h^2)\partial_z^2\phi = \rho_h$ over his rhomboid cells of source, so no member of the class can be written down, and a potential written in its place would draw another soliton, as the spacetime diagrams already say.
-What the drawing holds for every soliton of the class is the slice itself: the plane $y = 0$ of the path along $z$, at one moment, flat, a disc about the soliton's centre with the path marked as a line through it.
-Without a potential the published metric has no length in it, so the disc's radius is in any length $\ell$, and nothing else is marked.
-The caption carries the physics: on the flat slice the energy density the riding observers measure is $(K^2 - K_{ij}K^{ij})c^4/16\pi G = \sigma_2(\partial_i\partial_j\phi)\,c^4/8\pi G$, the sum of the principal minors of the Hessian of $\phi$, which Lentz arranged to be positive wherever his soliton has any, and which Jessica Santiago, Sebastian Schuster and Matt Visser showed an observer moving fast enough through the slices measures as negative.
-The check is the published spatial metric, $\delta_{ij}$ with no dependence on $\phi$.
+His soliton exists only as a numerical integral of the wave equation $\partial_x^2\phi + \partial_y^2\phi - (2/v_h^2)\partial_z^2\phi = \rho_h$ over his rhomboid cells of source, and his paper gives their pentagonal arrangement, their sizes, their charges and $v_h$ only as a figure, so no member of the class can be computed from it, and a potential written in its place would draw another soliton.
+Every slice of every member is the flat plane, so the plane of the path could carry nothing of the soliton: its energy density, its expansion and the flow of its shift all need $\phi$.
+A first drawing of the plane $y = 0$ with the path alone, published on 28 September 2026, showed a bare disc, and Lentz's soliton has no embedding diagram; `embedding.py` names it in `NOT_DRAWN`.
 
 ---
 

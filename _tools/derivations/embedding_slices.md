@@ -133,8 +133,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 
 ### Lentz
 
-- The embedding is the plane $y = 0$ of the path at one moment.
-- Nothing else is drawn of Lentz's soliton, so the moment appears nowhere else.
+- No embedding diagram, and nothing else is drawn of Lentz's soliton.
 
 ### Malament-Hogarth
 
@@ -166,8 +165,8 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 
 ### Natário
 
-- The embedding is the plane $z = 0$ at $t = 0$, a disc of radius $3R$.
-- `cartesian_flow/tx`: the line $ct = 0$ across the whole box.
+- The embedding is the energy density of the riding observers as a height over the plane $z = 0$ at $t = 0$, on a disc of radius $3R$.
+- `cartesian_flow/tx`: the line $ct = 0$ across the whole box, as far as the grid's rim reaches, $3R$ either side of the ship.
 - No conformal diagram.
 
 ### Oppenheimer-Snyder

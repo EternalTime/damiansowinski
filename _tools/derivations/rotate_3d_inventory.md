@@ -7,8 +7,8 @@ The captain asked on 29 September 2026 for every figure in three dimensions to t
 
 ### The embedding diagrams
 
-Thirty-one views in twenty-nine files, `MFS/assets/data/embedding/<metric_id>.json`, every one of them carrying `figure.turn`.
-`_tools/derivations/embedding.py` writes each surface in three dimensions under `surfaces` (a profile of $\rho$ against $z$ for a surface of revolution, a grid of heights over a plane for Alcubierre's and Krasnikov's, marked circles, curves and points) and projects it once from a fixed camera into `figure.layers`.
+Thirty views in twenty-eight files, `MFS/assets/data/embedding/<metric_id>.json`, every one of them carrying `figure.turn`.
+`_tools/derivations/embedding.py` writes each surface in three dimensions under `surfaces` (a profile of $\rho$ against $z$ for a surface of revolution, a grid of heights over a plane for Alcubierre's, Natário's and Krasnikov's, marked circles, curves and points) and projects it once from a fixed camera into `figure.layers`.
 `emFigure()` draws the published layers, and `wireTurning()` draws the view again from its surfaces with `MfsTurn.draw()` from `MFS/assets/turn.js` once the reader drags it.
 The data holds the three dimensional geometry.
 
