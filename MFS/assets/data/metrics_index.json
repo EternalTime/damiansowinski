@@ -223,6 +223,25 @@
     "embedding": "c85dd0fc5ef5f49f"
   },
   {
+    "id": "einstein_rosen_waves",
+    "name": "Einstein-Rosen",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "gravitational wave",
+      "cylindrical symmetry",
+      "exact solution",
+      "time-dependent",
+      "dynamical",
+      "radiating",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "c0763f05ec53a4b5"
+  },
+  {
     "id": "ellis_bronnikov",
     "name": "Ellis-Bronnikov",
     "tags": [

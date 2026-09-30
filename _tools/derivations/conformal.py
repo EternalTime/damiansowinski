@@ -3060,7 +3060,7 @@ def einstein_rosen_waves(ck, src):
     wave the causal structure of the half plane is Minkowski's half diamond,
     p, q = arctan((ct -+ rho)/a) = arctan(u/a), arctan(v/a), with the axis rho = 0 on X = 0. The
     maps are checked with random values of psi and gamma at every sample, and with the pulse of
-    Weber, Wheeler and Bonnor at C = a = 1, whose published Kretschmann scalar is checked finite
+    Weber, Wheeler, and Bonnor at C = a = 1, whose published Kretschmann scalar is checked finite
     on the axis; its rays through the event on the axis where it is greatest, rho = |ct|, are
     the lines q = 0 below and p = 0 above."""
     numeric = ["psi", "gamma"]
@@ -4228,7 +4228,7 @@ CAPTIONS = {
         "$e^{2(\\gamma - \\psi)}(-c^2dt^2 + d\\rho^2)$, and a conformal factor changes no null direction, so for "
         "every wave $p, q = \\arctan((ct \\mp \\rho)/a)$ bring it into Minkowski's half diamond, with the axis "
         "$\\rho = 0$ in place of a regular centre wherever $\\gamma = 0$ there.",
-        "The pulse of Weber, Wheeler and Bonnor comes in from $\\mathscr{I}^-$, is greatest on the axis at "
+        "The pulse of Weber, Wheeler, and Bonnor comes in from $\\mathscr{I}^-$, is greatest on the axis at "
         "$t = 0$, and goes out to $\\mathscr{I}^+$, its crest just outside the rays $\\rho = |ct|$.",
     ],
     ("einstein_rosen_waves", "null"): [

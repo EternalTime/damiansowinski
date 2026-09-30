@@ -76,7 +76,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 
 ### Einstein-Rosen waves
 
-- The embedding is four moments of the cylindrical chart, $ct = a$, $2a$, $4a$ and $8a$, of the pulse of Weber, Wheeler and Bonnor at $C = a$ going out from the axis, each the plane $z = 0$ from the axis to $\rho = 10\,a$.
+- The embedding is four moments of the cylindrical chart, $ct = a$, $2a$, $4a$ and $8a$, of the pulse of Weber, Wheeler, and Bonnor at $C = a$ going out from the axis, each the plane $z = 0$ from the axis to $\rho = 10\,a$.
 - `cylindrical/radial`, the plane of $t$ and $\rho$: horizontal lines $ct = a$, $2a$, $4a$ and $8a$ from $\rho = 0$ to $10\,a$, inside the box, which runs from $ct = -a$ to $9a$.
 - `null/radial`, drawn against $(v - u)/2$ and $(u + v)/2$: the same lines, $u = ct - \rho$ and $v = ct + \rho$ along each.
 - `cylindrical` and `null`, the conformal diagrams: four curves $p, q = \arctan((ct \mp \rho)/a)$ from the axis to $\rho = 10\,a$.
