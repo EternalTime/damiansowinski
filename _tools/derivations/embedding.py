@@ -2192,12 +2192,18 @@ def oppenheimer_snyder(ck, src):
                        "1 - r_s/r$, each shell of clocks released from rest at $R = r$ when the dust is.")]
 
 
+VERTICAL = 2   # the Tolman-Bondi cloud is drawn this many times taller than its embedding
+
+
 def tolman_bondi(ck, src):
     """The cloud the spacetime diagram draws, density falling as 1 - r^2/r_b^2 to zero at r_b and
     2GM(r_b)/c^2 = r_b/2, so k = 2M/r^3 = (5 - 3r^2)/4 inside and 1/(2r^3) outside, r_b = 1,
     but released from rest, E = -M/r, rather than marginally bound: with E = 0 the slice has
     g_rr = (dR/dr)^2 and is a plane, which is checked for the spacetime diagram's own cloud and
-    stated. Four moments of t until just before the centre is crushed, at t = pi/sqrt(5)."""
+    stated. Four moments of t until just before the centre is crushed, at t = pi/sqrt(5).
+    Every surface is checked as the metric gives it and then drawn with its heights doubled,
+    VERTICAL, which the caption states: the cloud rises by a third of its width and would read
+    on the page as a flat disc."""
     cloud = RestCloud(lambda r: np.where(r < 1, (5 - 3 * r * r) / 4, 1 / (2 * np.maximum(r, 1.0) ** 3)),
                       lambda r: np.where(r < 1, -1.5 * r, -1.5 / np.maximum(r, 1.0) ** 4))
     cloud.check(ck, src, "Tolman-Bondi", np.linspace(0.02, 4, 80), [0.0, 0.5, 1.0, 1.3])
@@ -2226,6 +2232,8 @@ def tolman_bondi(ck, src):
         if t == 0:
             ck.form(f"{where}, outside it is Flamm's paraboloid", ext,
                     lambda r, z1=ext.z[0]: z1 + 2 * np.sqrt(0.5 * (r - 0.5)) - 2 * np.sqrt(0.25), size)
+        for p in (dust, ext):
+            p.z = VERTICAL * p.z
         surfaces.append(Surface([dust, ext], label=f"$ct = {t:g}\\,r_b$", time=t))
     fig = sequence_figure(surfaces, {"star": "star", "sheet": "cover"}, size, columns=2)
     fig.legend("fill", "star", "the cloud, $r < r_b$")
@@ -2236,7 +2244,7 @@ def tolman_bondi(ck, src):
     if any(ring["class"] == "horizon" for s in surfaces for ring in s.rings()):
         fig.legend("line", "horizon", "the apparent horizon, $R = 2GM(r)/c^2$ for the mass inside it")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
-    return [view("cloud", "The collapsing cloud", "$r_b$", surfaces, fig.done(),
+    return [view("cloud", "The collapsing cloud", "$r_b$", surfaces, fig.done(), vertical=VERTICAL,
                  settings="$r_b = 1$, the unit of every length, and $2GM/c^2 = r_b/2$.",
                  input="The cloud of the spacetime diagram, its density falling as $1 - r^2/r_b^2$ to zero at $r_b$ "
                        "with $R(r, 0) = r$, but released from rest, $E = -GM(r)/c^2r$, each shell falling on its own "
@@ -3534,8 +3542,8 @@ CAPTIONS = {
     ],
     ("tolman_bondi", "cloud"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a cloud of dust collapsing from rest, densest at its "
-        "centre, at four moments of $t$, each drawn as a surface in flat space with every distance along it "
-        "the metric distance. On it $g_{rr} = (\\partial_rR)^2/(1 + 2E)$, with $R(r, t)$ "
+        "centre, at four moments of $t$, each drawn as its embedding in flat space (vertical scale $\\times 2$). "
+        "On it $g_{rr} = (\\partial_rR)^2/(1 + 2E)$, with $R(r, t)$ "
         "the areal radius of the shell $r$, so in the areal radius the surface climbs at "
         "$dz/dR = \\sqrt{-2E/(1 + 2E)}$, set by the energy $E = -GM(r)/c^2r$ of the shell there alone. Every "
         "shell falls on its own clock, the centre first, and the surface follows the shells as they go.",

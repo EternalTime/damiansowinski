@@ -1949,12 +1949,13 @@ class EmbeddingDiagrams(unittest.TestCase):
         for r, rho, z in piece("oppenheimer_snyder", "exterior"):
             near(z, 2 * math.sqrt(r - 1) - 2, f"Oppenheimer-Snyder release z at {r}")
         # Tolman-Bondi's cloud at its release: every shell at its label, R = r, and outside it
-        # Flamm's paraboloid of 2GM/c^2 = r_b/2 from the surface.
+        # Flamm's paraboloid of 2GM/c^2 = r_b/2 from the surface, drawn twice as tall.
+        vertical = self.embedding["tolman_bondi"]["views"][0]["vertical"]
         cloud, outside = piece("tolman_bondi", "cloud"), piece("tolman_bondi", "exterior")
         for r, rho, z in cloud + outside:
             near(rho, r, f"Tolman-Bondi release rho at {r}")
         for r, rho, z in outside:
-            near(z - outside[0][2], 2 * math.sqrt(0.5 * (r - 0.5)) - 1, f"Tolman-Bondi release z at {r}")
+            near((z - outside[0][2]) / vertical, 2 * math.sqrt(0.5 * (r - 0.5)) - 1, f"Tolman-Bondi release z at {r}")
         # Bertotti-Robinson's equator is a cylinder of radius b, z = b ln r, and its sphere of radius b.
         for r, rho, z in piece("bertotti_robinson", "cylinder"):
             near(rho, 1.0, f"Bertotti-Robinson rho at {r}")
@@ -2266,6 +2267,33 @@ class EmbeddingDiagrams(unittest.TestCase):
                     self.assertGreater(max(widths), 0, f"{where}: no width")
                     self.assertGreaterEqual((max(heights) - min(heights)) / max(widths), RELIEF,
                                             f"{where}: flatter than {RELIEF} of its width")
+
+    def test_a_surface_drawn_taller_than_its_embedding_says_so_in_its_caption(self):
+        """A view whose heights are drawn `vertical` times as tall as the embedding's says so in
+        the first sentence of its caption, "(vertical scale $\\times N$)", and only Tolman-Bondi's
+        cloud is: at the scale the metric gives it the cloud rises by a third of its width, and
+        drawn twice as tall each moment stands in relief of at least 0.6 of its width."""
+        scaled = {name: view for name, data in self.embedding.items() for view in data["views"] if "vertical" in view}
+        self.assertEqual(set(scaled), {"tolman_bondi"})
+        for name, view in scaled.items():
+            self.assertIsInstance(view["vertical"], int, name)
+            self.assertGreater(view["vertical"], 1, name)
+            first = view["caption"][0].split(". ")[0]
+            self.assertIn(f"(vertical scale $\\times {view['vertical']}$)", first, name)
+        for data in self.embedding.values():
+            for view in data["views"]:
+                if "vertical" not in view:
+                    self.assertNotIn("vertical scale", " ".join(view["caption"]), view["id"])
+        view = scaled["tolman_bondi"]
+        self.assertEqual(view["vertical"], 2)
+        for surface in view["surfaces"]:
+            points = [P for piece in surface["pieces"] for P in piece["points"]]
+            width = 2 * max(P[1] for P in points)
+            relief = (max(P[2] for P in points) - min(P[2] for P in points)) / width
+            self.assertGreaterEqual(relief, 0.6, f"Tolman-Bondi at ct = {surface['time']}")
+            cloud = next(piece for piece in surface["pieces"] if piece["id"] == "cloud")["points"]
+            self.assertGreaterEqual((cloud[-1][2] - cloud[0][2]) / (2 * cloud[-1][1]), 0.55,
+                                    f"Tolman-Bondi's cloud at ct = {surface['time']}")
 
     def test_krasnikov_draws_how_far_the_tube_tips_the_light_cone_as_a_height(self):
         """1 - k, twice the published g_tx, of the tube the spacetime diagram declares, at
