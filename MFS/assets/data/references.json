@@ -1,5 +1,5 @@
 {
-  "version": "af6b1bf9537a1fe6",
+  "version": "1934e2f26d045de1",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -7379,6 +7379,184 @@
         "eprint": "1301.1072",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1301.1072"
+      }
+    },
+    "letelier1979": {
+      "type": "article",
+      "fields": {
+        "title": "Clouds of strings in general relativity",
+        "author": "Letelier, Patricio S.",
+        "journal": "Physical Review D",
+        "volume": "20",
+        "number": "6",
+        "pages": "1294--1302",
+        "year": "1979",
+        "doi": "10.1103/PhysRevD.20.1294",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.20.1294"
+      }
+    },
+    "stachel1980": {
+      "type": "article",
+      "fields": {
+        "title": "Thickening the string. I. The string perfect dust",
+        "author": "Stachel, John",
+        "journal": "Physical Review D",
+        "volume": "21",
+        "number": "8",
+        "pages": "2171--2181",
+        "year": "1980",
+        "doi": "10.1103/PhysRevD.21.2171",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.21.2171"
+      }
+    },
+    "barriola1989": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational field of a global monopole",
+        "author": "Barriola, Manuel and Vilenkin, Alexander",
+        "journal": "Physical Review Letters",
+        "volume": "63",
+        "number": "4",
+        "pages": "341--343",
+        "year": "1989",
+        "doi": "10.1103/PhysRevLett.63.341",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.63.341"
+      }
+    },
+    "harari1990": {
+      "type": "article",
+      "fields": {
+        "title": "Repulsive gravitational effects of global monopoles",
+        "author": "Harari, Diego and Lousto, Carlos",
+        "journal": "Physical Review D",
+        "volume": "42",
+        "number": "8",
+        "pages": "2626--2631",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.42.2626",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.42.2626"
+      }
+    },
+    "guendelman1991": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational field of a hedgehog and the evolution of vacuum bubbles",
+        "author": "Guendelman, Eduardo I. and Rabinowitz, A.",
+        "journal": "Physical Review D",
+        "volume": "44",
+        "number": "10",
+        "pages": "3152--3158",
+        "year": "1991",
+        "doi": "10.1103/PhysRevD.44.3152",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.44.3152"
+      }
+    },
+    "vilenkin1994": {
+      "type": "article",
+      "fields": {
+        "title": "Topological inflation",
+        "author": "Vilenkin, Alexander",
+        "journal": "Physical Review Letters",
+        "volume": "72",
+        "number": "20",
+        "pages": "3137--3140",
+        "year": "1994",
+        "doi": "10.1103/PhysRevLett.72.3137",
+        "eprint": "hep-th/9402085",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9402085"
+      }
+    },
+    "linde1994": {
+      "type": "article",
+      "fields": {
+        "title": "Monopoles as big as a universe",
+        "author": "Linde, Andrei",
+        "journal": "Physics Letters B",
+        "volume": "327",
+        "number": "3-4",
+        "pages": "208--213",
+        "year": "1994",
+        "doi": "10.1016/0370-2693(94)90719-6",
+        "eprint": "astro-ph/9402031",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9402031"
+      }
+    },
+    "liebling2000": {
+      "type": "article",
+      "fields": {
+        "title": "Static gravitational global monopoles",
+        "author": "Liebling, Steven L.",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "2",
+        "pages": "024030",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.024030",
+        "eprint": "gr-qc/9906014",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9906014"
+      }
+    },
+    "maison1999": {
+      "type": "article",
+      "fields": {
+        "title": "Some remarks on gravitational global monopoles",
+        "author": "Maison, Dieter and Liebling, Steven L.",
+        "journal": "Physical Review Letters",
+        "volume": "83",
+        "number": "25",
+        "pages": "5218--5221",
+        "year": "1999",
+        "doi": "10.1103/PhysRevLett.83.5218",
+        "eprint": "gr-qc/9908038",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9908038"
+      }
+    },
+    "bennett1990": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmological evolution of global monopoles and the origin of large-scale structure",
+        "author": "Bennett, David P. and Rhie, Sun Hong",
+        "journal": "Physical Review Letters",
+        "volume": "65",
+        "number": "14",
+        "pages": "1709--1712",
+        "year": "1990",
+        "doi": "10.1103/PhysRevLett.65.1709",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.65.1709"
+      }
+    },
+    "pen1994": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic structure formation and microwave anisotropies from global field ordering",
+        "author": "Pen, Ue-Li and Spergel, David N. and Turok, Neil",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "2",
+        "pages": "692--729",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.692",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.49.692"
+      }
+    },
+    "pen1997": {
+      "type": "article",
+      "fields": {
+        "title": "Power spectra in global defect theories of cosmic structure formation",
+        "author": "Pen, Ue-Li and Seljak, Uroš and Turok, Neil",
+        "journal": "Physical Review Letters",
+        "volume": "79",
+        "number": "9",
+        "pages": "1611--1614",
+        "year": "1997",
+        "doi": "10.1103/PhysRevLett.79.1611",
+        "eprint": "astro-ph/9704165",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9704165"
       }
     }
   }
