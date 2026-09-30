@@ -1717,6 +1717,35 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.embedding = embedding_files()
         self.assertTrue(self.embedding, "no embedding diagram file was found, so nothing was checked")
 
+    def test_btz_is_one_surface_through_both_exteriors(self):
+        """The BTZ moment t = 0 as the file holds it: each exterior a piece in flat space from the
+        throat r_+ = l to sqrt(2) l and a piece in Minkowski space beyond, rho = r throughout, the
+        two parts of each exterior meeting level in one circle marked `space`, and the two
+        exteriors meeting at the throat."""
+        views = self.embedding["btz"]["views"]
+        self.assertEqual(len(views), 1)
+        surface = views[0]["surfaces"][0]
+        pieces = {p["id"]: p for p in surface["pieces"]}
+        level = math.sqrt(2)
+        for inner, outer in (("exterior", "exterior_minkowski"), ("other_exterior", "other_exterior_minkowski")):
+            a, b = pieces[inner], pieces[outer]
+            self.assertNotIn("space", a, inner)
+            self.assertEqual(b.get("space"), "minkowski", outer)
+            self.assertEqual((a["points"][0][0], a["points"][-1][0], b["points"][0][0]), (1.0, level, level))
+            for x, rho, z in a["points"] + b["points"]:
+                self.assertLess(abs(rho - x), 1e-6, f"{inner} rho at {x}")
+            for i in (1, 2):
+                self.assertLess(abs(a["points"][-1][i] - b["points"][0][i]), 1e-7, f"{inner} meets {outer}")
+            # Level on both sides of the circle: the chords next to it climb far less than they run.
+            for P, Q in ((a["points"][-2], a["points"][-1]), (b["points"][0], b["points"][1])):
+                self.assertLess(abs(Q[2] - P[2]), 0.1 * abs(Q[1] - P[1]), f"{inner} and {outer} level at the join")
+            self.assertEqual(a["end"]["kind"], "join")
+            self.assertEqual(b["start"]["kind"], "join")
+            joins = [r for r in surface["rings"] if r["class"] == "space" and r["piece"] == inner]
+            self.assertEqual([r["x"] for r in joins], [level], inner)
+        self.assertEqual(pieces["exterior"]["points"][0][1:], pieces["other_exterior"]["points"][0][1:])
+        self.assertEqual(pieces["exterior"]["start"]["kind"], "throat")
+
     def test_every_file_was_drawn_from_what_its_metrics_publish(self):
         by_id = {m["id"]: m for m in self.metrics}
         for metric_id, data in self.embedding.items():
@@ -2051,7 +2080,8 @@ class EmbeddingDiagrams(unittest.TestCase):
         # Anti-de Sitter's static equator on the hyperboloid Z = sqrt(L^2 + r^2) - L in Minkowski
         # space, and the light cone it nears, Z = rho - L.
         ads = view("anti_de_sitter")
-        self.assertEqual(ads["space"], "minkowski")
+        for p in ads["surfaces"][0]["pieces"]:
+            self.assertEqual(p.get("space"), "minkowski", f"anti-de Sitter {p['id']}")
         for r, rho, z in piece(ads["surfaces"][0], "sheet"):
             near(rho, r, f"anti-de Sitter rho at {r}")
             near(z, math.sqrt(1 + r * r) - 1, f"anti-de Sitter z at {r}")
