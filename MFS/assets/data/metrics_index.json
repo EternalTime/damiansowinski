@@ -481,6 +481,31 @@
     "embedding": "4c55f429abb61a19"
   },
   {
+    "id": "milne",
+    "name": "Milne",
+    "tags": [
+      "cosmology",
+      "cosmological",
+      "expanding universe",
+      "open universe",
+      "hyperbolic space",
+      "empty universe",
+      "flat",
+      "vacuum",
+      "vacuum solution",
+      "special relativity",
+      "homogeneous",
+      "isotropic",
+      "FLRW",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "76014ecaff44cab1"
+  },
+  {
     "id": "minkowski",
     "name": "Minkowski",
     "tags": [
