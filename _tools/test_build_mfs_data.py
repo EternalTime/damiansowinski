@@ -2090,8 +2090,9 @@ class EmbeddingDiagrams(unittest.TestCase):
         # The Milne universe's moments on the hyperboloids Z = ct cosh chi, rho = ct sinh chi, the
         # moment itself in its inertial chart, nested inside the light cone Z = rho of their apex.
         milne = view("milne")
-        self.assertEqual(milne["space"], "minkowski")
         for surface in milne["surfaces"] + milne["movie"]["frames"]:
+            for p in surface["pieces"]:
+                self.assertEqual(p.get("space"), "minkowski", f"Milne {p['id']} at ct = {surface.get('time', surface.get('value'))}")
             t = surface.get("time", surface.get("value"))
             for chi, rho, z in piece(surface, "sheet"):
                 near(rho, t * math.sinh(chi), f"Milne rho at ct = {t}, chi = {chi}")
