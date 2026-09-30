@@ -1,5 +1,5 @@
 {
-  "version": "f511fae3262c5820",
+  "version": "383aef04aa7b5ca7",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -6347,6 +6347,214 @@
         "eprint": "0709.2948",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/0709.2948"
+      }
+    },
+    "milne1932": {
+      "type": "article",
+      "fields": {
+        "title": "World Structure and the Expansion of the Universe",
+        "author": "Milne, Edward Arthur",
+        "journal": "Nature",
+        "volume": "130",
+        "number": "3270",
+        "pages": "9--10",
+        "year": "1932",
+        "doi": "10.1038/130009a0",
+        "url": "https://doi.org/10.1038/130009a0"
+      }
+    },
+    "milne1933": {
+      "type": "article",
+      "fields": {
+        "title": "World-Structure and the Expansion of the Universe",
+        "author": "Milne, Edward Arthur",
+        "journal": "Zeitschrift f\\\"ur Astrophysik",
+        "volume": "6",
+        "pages": "1--95",
+        "year": "1933",
+        "url": "https://ui.adsabs.harvard.edu/abs/1933ZA......6....1M"
+      }
+    },
+    "milne1933note": {
+      "type": "article",
+      "fields": {
+        "title": "Note on H. P. Robertson's paper on World-Structure",
+        "author": "Milne, Edward Arthur",
+        "journal": "Zeitschrift f\\\"ur Astrophysik",
+        "volume": "7",
+        "pages": "180--187",
+        "year": "1933",
+        "url": "https://ui.adsabs.harvard.edu/abs/1933ZA......7..180M"
+      }
+    },
+    "robertson1933": {
+      "type": "article",
+      "fields": {
+        "title": "On E. A. Milne's Theory of World Structure",
+        "author": "Robertson, Howard Percy",
+        "journal": "Zeitschrift f\\\"ur Astrophysik",
+        "volume": "7",
+        "pages": "153--166",
+        "year": "1933",
+        "url": "https://ui.adsabs.harvard.edu/abs/1933ZA......7..153R"
+      }
+    },
+    "kermack1933": {
+      "type": "article",
+      "fields": {
+        "title": "On Milne's Theory of World Structure",
+        "author": "Kermack, William Ogilvy and McCrea, William Hunter",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "93",
+        "number": "7",
+        "pages": "519--529",
+        "year": "1933",
+        "doi": "10.1093/mnras/93.7.519",
+        "url": "https://doi.org/10.1093/mnras/93.7.519"
+      }
+    },
+    "milne1933remarks": {
+      "type": "article",
+      "fields": {
+        "title": "Remarks on World-Structure",
+        "author": "Milne, Edward Arthur",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "93",
+        "number": "9",
+        "pages": "668--680",
+        "year": "1933",
+        "doi": "10.1093/mnras/93.9.668",
+        "url": "https://doi.org/10.1093/mnras/93.9.668"
+      }
+    },
+    "milne1935": {
+      "type": "book",
+      "fields": {
+        "title": "Relativity, Gravitation and World-Structure",
+        "author": "Milne, Edward Arthur",
+        "publisher": "Clarendon Press, Oxford",
+        "series": "International Series of Monographs on Physics",
+        "year": "1935"
+      }
+    },
+    "ellis2012": {
+      "type": "article",
+      "fields": {
+        "title": "Editorial note to: H. P. Robertson, Relativistic cosmology",
+        "author": "Ellis, George F. R.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "44",
+        "number": "8",
+        "pages": "2099--2114",
+        "year": "2012",
+        "doi": "10.1007/s10714-012-1400-1",
+        "url": "https://doi.org/10.1007/s10714-012-1400-1"
+      }
+    },
+    "milne1934": {
+      "type": "article",
+      "fields": {
+        "title": "A Newtonian Expanding Universe",
+        "author": "Milne, Edward Arthur",
+        "journal": "The Quarterly Journal of Mathematics",
+        "volume": "os-5",
+        "number": "1",
+        "pages": "64--72",
+        "year": "1934",
+        "doi": "10.1093/qmath/os-5.1.64",
+        "url": "https://doi.org/10.1093/qmath/os-5.1.64"
+      }
+    },
+    "mccrea1934": {
+      "type": "article",
+      "fields": {
+        "title": "Newtonian Universes and the Curvature of Space",
+        "author": "McCrea, William Hunter and Milne, Edward Arthur",
+        "journal": "The Quarterly Journal of Mathematics",
+        "volume": "os-5",
+        "number": "1",
+        "pages": "73--80",
+        "year": "1934",
+        "doi": "10.1093/qmath/os-5.1.73",
+        "url": "https://doi.org/10.1093/qmath/os-5.1.73"
+      }
+    },
+    "mukhanov2005": {
+      "type": "book",
+      "fields": {
+        "title": "Physical Foundations of Cosmology",
+        "author": "Mukhanov, Viatcheslav",
+        "publisher": "Cambridge University Press",
+        "year": "2005",
+        "doi": "10.1017/CBO9780511790553",
+        "url": "https://doi.org/10.1017/CBO9780511790553"
+      }
+    },
+    "barrow2002": {
+      "type": "article",
+      "fields": {
+        "title": "Behavior of varying-alpha cosmologies",
+        "author": "Barrow, John D. and Sandvik, Håvard Bunes and Magueijo, Jo\\~ao",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "pages": "063504",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.65.063504",
+        "eprint": "astro-ph/0109414",
+        "url": "https://doi.org/10.1103/PhysRevD.65.063504"
+      }
+    },
+    "khoury2002": {
+      "type": "article",
+      "fields": {
+        "title": "From big crunch to big bang",
+        "author": "Khoury, Justin and Ovrut, Burt A. and Seiberg, Nathan and Steinhardt, Paul J. and Turok, Neil",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "pages": "086007",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.65.086007",
+        "eprint": "hep-th/0108187",
+        "url": "https://doi.org/10.1103/PhysRevD.65.086007"
+      }
+    },
+    "turok2004": {
+      "type": "article",
+      "fields": {
+        "title": "M theory model of a big crunch/big bang transition",
+        "author": "Turok, Neil and Perry, Malcolm and Steinhardt, Paul J.",
+        "journal": "Physical Review D",
+        "volume": "70",
+        "pages": "106004",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.70.106004",
+        "eprint": "hep-th/0408083",
+        "url": "https://doi.org/10.1103/PhysRevD.70.106004"
+      }
+    },
+    "benoitlevy2012": {
+      "type": "article",
+      "fields": {
+        "title": "Introducing the Dirac-Milne universe",
+        "author": "Benoit-L\\'evy, Aur\\'elien and Chardin, Gabriel",
+        "journal": "Astronomy \\& Astrophysics",
+        "volume": "537",
+        "pages": "A78",
+        "year": "2012",
+        "doi": "10.1051/0004-6361/201016103",
+        "eprint": "1110.3054",
+        "url": "https://doi.org/10.1051/0004-6361/201016103"
+      }
+    },
+    "vaudrevange2007": {
+      "type": "article",
+      "fields": {
+        "title": "Trans-Planckian Issue in the Milne Universe",
+        "author": "Vaudrevange, Pascal M. and Kofman, Lev",
+        "journal": "arXiv preprint arXiv:0706.0980",
+        "year": "2007",
+        "eprint": "0706.0980",
+        "url": "https://arxiv.org/abs/0706.0980"
       }
     }
   }
