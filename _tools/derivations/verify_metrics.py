@@ -453,6 +453,15 @@ DIMENSIONS = {
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\Lambda": "1/L**2",
     },
+    # Visser's thin shell wormhole joins two Schwarzschild exteriors at the throat radius a, a
+    # length beside r_s. Through the throat, ell = +-(r - a) is a length, |ell| carries what ell
+    # carries and sgn(ell) none, and the delta at the throat an inverse length.
+    ("thin_shell_wormhole", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L",
+    },
+    ("thin_shell_wormhole", "throat"): {
+        "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L",
+    },
     ("stockum_dust", "cylindrical"): {
         "t": "L", "r": "L", "\\phi": "1", "z": "L", "R": "L",
     },

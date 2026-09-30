@@ -57,7 +57,7 @@ class Sum:
 
 class Printer:
     def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None, factors=None, named=None,
-                 rising=(), flip=True):
+                 rising=(), flip=True, last=()):
         """coords: coordinate symbols in chart order.
         primed: names of functions of one variable printed with primes.
         lead: generators, most significant first, that order the terms of a sum.
@@ -71,6 +71,8 @@ class Printer:
             1 - r_s/r - Lambda r^2/3.
         flip: whether -(A - B)/D is printed as (B - A)/D; a chart whose sums keep one order
             throughout passes False.
+        last: expressions whose terms close a sum, as a chart with a kink puts the delta at
+            the kink after the smooth part of every value.
         """
         self.coords = list(coords)
         self.primed = set(primed)
@@ -78,6 +80,7 @@ class Printer:
         self.factors = list(lead if factors is None else factors)
         self.rising = list(rising)
         self.flip = flip
+        self.last = list(last)
         self.overrides = dict(overrides or {})
         self.named = dict(named or {})
         self.collect = collect
@@ -96,7 +99,8 @@ class Printer:
         return out
 
     def ordered(self, terms):
-        return sorted(terms, key=lambda t: (self.degrees(t[1]), -sp.count_ops(t[1]), self.plain(t[1])))
+        return sorted(terms, key=lambda t: (any(t[1].has(g) for g in self.last), self.degrees(t[1]),
+                                            -sp.count_ops(t[1]), self.plain(t[1])))
 
     def plain(self, rest):
         try:
@@ -663,7 +667,8 @@ def is_single_term(text):
 
 
 class Chart:
-    def __init__(self, coords_tex, parameters, chart_line_element, printer_options=None, pretty=None, time=None):
+    def __init__(self, coords_tex, parameters, chart_line_element, printer_options=None, pretty=None, time=None,
+                 bracketed=None):
         # Time is already the chart coordinate here, so no coordinate is scaled by c. A chart
         # whose components depend on the time names it as `time`: its symbol then stands for
         # x^0 = ct in the geometry, and every value is printed and read back with it written
@@ -676,6 +681,10 @@ class Chart:
         self.geo = vm.Geometry(g, self.symbols, 10 ** 6)
         self.printer = Printer(self.symbols, **(printer_options or {}))
         self.pretty = pretty or sp.factor
+        # The sum a value is printed as when it has to stand in a bracket with a minus in front:
+        # expanded, unless the chart writes its sums its own way, as a chart with a kink does.
+        self.bracketed = bracketed or sp.expand
+        self.own_brackets = bracketed is not None
 
     def check(self, text, value):
         if vm.norm(self.reader(text) - sp.sympify(value).subs(self.bare, simultaneous=True)) != 0:
@@ -696,7 +705,15 @@ class Chart:
         candidate = negate(self.text(-value))
         if is_single_term(candidate) and not candidate.startswith("\\left("):
             return candidate
-        return self.check("-\\left(" + self.printer.positive_first(sp.expand(-value)) + "\\right)", value)
+        if self.own_brackets:
+            # A chart that writes its own sums keeps their order, and brackets whichever of the
+            # value and its negation leads with a positive term, minus first.
+            for sign, inner in ((-1, -value), (1, value)):
+                s = self.printer.sum_of(self.bracketed(inner))
+                if not self.printer.leads_negative(s.terms[0]):
+                    text = "\\left(" + self.printer.sum_text(s) + "\\right)"
+                    return self.check(text if sign == 1 else "-" + text, value)
+        return self.check("-\\left(" + self.printer.positive_first(self.bracketed(-value)) + "\\right)", value)
 
     def block(self, tensor, rank):
         """Nonzero components, each class of values listed together, and a value and its

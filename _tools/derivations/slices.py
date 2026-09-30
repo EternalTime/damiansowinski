@@ -436,6 +436,12 @@ FLAT = {
     ("schwarzschild", "eddington_finkelstein_outgoing", "chart"): lambda: schwarzschild_t(-1),
     ("ellis_bronnikov", "spherical", "radial"): lambda: one("ellis_bronnikov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("morris_thorne", "spherical", "radial"): lambda: one("morris_thorne", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    ("thin_shell_wormhole", "spherical", "radial"): lambda: one(
+        "thin_shell_wormhole", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    # Both sides are read in the areal chart from the throat r = a out, and l = +-(r - a).
+    ("thin_shell_wormhole", "throat", "radial"): lambda: one(
+        "thin_shell_wormhole", lambda m: along(0.0, m.reach("spherical", "r")[0] - m.reach("spherical", "r")[1],
+                                               m.reach("spherical", "r")[1] - m.reach("spherical", "r")[0])),
     ("minkowski", "spherical", "radial"): lambda: one("minkowski", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # t = (u + v)/2 and r = (v - u)/2, so the moment is u = -r, v = r.
     ("minkowski", "spherical_null", "radial"): lambda: one(

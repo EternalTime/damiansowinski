@@ -2,7 +2,8 @@
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
-khan_penrose, global_monopole, domain_wall, majumdar_papapetrou and melvin, and Godel's cylindrical chart.
+khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin and thin_shell_wormhole, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -1380,6 +1381,97 @@ def majumdar_papapetrou_pullback(chart):
 MP_CHARTS = ["cartesian", "cylindrical", "isotropic"]
 
 
+# -- The thin shell wormhole -------------------------------------------------------------
+
+TSW_SPHERE = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+TSW_KINK = "\\left(a + |\\ell|\\right)"
+TSW_KINK_BARE = "a + |\\ell|"
+TSW_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def thin_shell_wormhole(system):
+    """Visser's thin shell wormhole, two copies of Schwarzschild's exterior r >= a > r_s
+    joined at r = a, in two charts. The first is Schwarzschild's own on either side, where
+    the spacetime is vacuum and every value is Schwarzschild's. The second runs through the
+    throat with r = a + |ell|, ell = r - a on one side and a - r on the other, so the metric is
+    continuous at ell = 0 with a jump in its first derivative: the Christoffel symbols carry
+    sgn ell, and the curvature a delta at the throat, whose Einstein tensor is the surface
+    energy and pressure of the Israel junction conditions. The Kretschmann scalar squares
+    that delta, so it is stated off the throat, where it is Schwarzschild's.
+    thin_shell_wormhole.md derives each."""
+    parameters = ["r_s", "a"]
+    if system == "spherical":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        f = "\\left(1 - \\dfrac{r_s}{r}\\right)"
+        bare = "1 - \\dfrac{r_s}{r}"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + TSW_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        r, rs = probe.symbol["r"], probe.parameters["r_s"]
+        return {
+            "metric_id": "thin_shell_wormhole",
+            "system": {"id": "spherical", "name": "Schwarzschild", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in [a, \\infty)"] + TSW_ANGLES
+                       + ["r = a \;\\text{(throat)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + TSW_SPHERE,
+            "printer": {"rising": [rs], "lead": [r, rs], "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+        }
+    coords = ["t", "\\ell", "\\theta", "\\phi"]
+    f = "\\left(1 - \\dfrac{r_s}{" + TSW_KINK_BARE + "}\\right)"
+    bare = "1 - \\dfrac{r_s}{" + TSW_KINK_BARE + "}"
+    sphere = " + " + TSW_KINK + "^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{d\\ell^2}{" + bare + "}" + sphere
+    probe = vm.Reader(coords, parameters, ())
+    ell, rs, a = probe.symbol["\\ell"], probe.parameters["r_s"], probe.parameters["a"]
+    # chart_printer.kink prints each value as A(|ell|) + sgn(ell) B(|ell|); the smooth part and the
+    # coefficient of the delta at the throat are each factored on their own, the delta's term last.
+    delta = sp.Symbol("_delta" + ell.name)
+
+    def then(e):
+        return sp.factor(e.subs(delta, 0)) + sp.factor(sp.diff(e, delta)) * delta
+
+    pretty, overrides = cp.kink(ell, then)
+    absolute = next(p for p in overrides if p.name.startswith("_abs"))
+    return {
+        "metric_id": "thin_shell_wormhole",
+        "system": {"id": "throat", "name": "Through the Throat", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "\\ell \\in (-\\infty, \\infty)"] + TSW_ANGLES
+                   + ["\\ell = 0 \;\\text{(throat)}"],
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": "ds^2 = -" + f + "dt^2 + \\dfrac{d\\ell^2}{" + bare + "}" + sphere,
+        "printer": {"rising": [rs], "lead": [a, absolute, rs], "flip": False, "last": [delta], "overrides": overrides},
+        "pretty": pretty,
+        "bracketed": pretty,
+        "components": {"metric_components": {("t", "t"): "-" + f, ("\\ell", "\\ell"): f + "^{-1}"},
+                       "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("\\ell", "\\ell"): bare}},
+        "kretschmann_where": "\\ell",
+        "check": thin_shell_pullback,
+    }
+
+
+def thin_shell_pullback(chart):
+    """The chart through the throat with ell > 0 is Schwarzschild's with r = a + ell."""
+    ell = chart.reader.symbol["\\ell"]
+    spherical = vm.Reader(["t", "r", "\\theta", "\\phi"], ["r_s", "a"], ())
+    r = spherical.symbol["r"]
+    g = vm.metric_from_line_element(
+        spherical, "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}}" + TSW_SPHERE,
+        ["t", "r", "\\theta", "\\phi"])
+    a = chart.reader.parameters["a"]
+    names = {spherical.parameters[n]: chart.reader.parameters[n] for n in ("r_s", "a")}
+    names[spherical.symbol["t"]] = chart.reader.symbol["t"]
+    names[spherical.symbol["\\theta"]] = chart.reader.symbol["\\theta"]
+    for side in (1, -1):
+        pulled = g.subs(names).subs(r, a + side * ell)
+        mine = chart.geo.g.subs(sp.sign(ell), side)
+        if vm.norm(pulled - mine) != sp.zeros(4, 4):
+            raise AssertionError(f"thin_shell_wormhole: the chart through the throat misses Schwarzschild's "
+                                 f"on the side sgn ell = {side}")
+
+
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
@@ -1392,7 +1484,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "khan_penrose": khan_penrose,
           "global_monopole": [lambda s=s: global_monopole(s) for s in GM_CHARTS],
           "domain_wall": [lambda s=s: domain_wall(s) for s in DW_CHARTS],
-          "majumdar_papapetrou": [lambda s=s: majumdar_papapetrou(s) for s in MP_CHARTS]}
+          "majumdar_papapetrou": [lambda s=s: majumdar_papapetrou(s) for s in MP_CHARTS],
+          "thin_shell_wormhole": [lambda s=s: thin_shell_wormhole(s) for s in ("spherical", "throat")]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------
@@ -1672,7 +1765,7 @@ CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
-                     spec["printer"], spec.get("pretty"), spec.get("time"))
+                     spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"))
     if "check" in spec:
         spec["check"](chart)
     math = chart.mathematics()
