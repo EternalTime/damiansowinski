@@ -4436,6 +4436,72 @@ def einstein_rosen_waves(ck, src):
                         "moment."])]
 
 
+MELVIN_ERNST = {"r_s": 1, "B": sp.Rational(1, 2)}   # Ernst's hole at B r_s = 1/2, its widest circle at r = 4 r_s
+
+
+def melvin(ck, src):
+    """Melvin's plane z = 0 at t = 0 in the cylindrical chart at B = 1, and the equator of Ernst's hole
+    at t = 0 with r_s = 1 and B = 1/2.
+
+    Melvin's slice has g_rhorho = Lambda^2 and g_phiphi = rho^2/Lambda^2, Lambda = 1 + B^2 rho^2/4, so
+    its circles sit at rho/Lambda, which grows to 1/B at the Melvin radius rho = 2/B and falls as 4/(B^2 rho)
+    beyond, while the distance out to them grows as rho + B^2 rho^3/12: drho/dx = (1 - B^2 rho^2/4)/Lambda^2
+    stays below Lambda, so the slice embeds everywhere, a vase that widens to radius 1/B and narrows into a
+    spike without end, drawn out to rho = 4/B. Ernst's equator has g_rr = Lambda^2/(1 - r_s/r) and circles
+    of radius r/Lambda, Lambda = 1 + B^2 r^2/4: Flamm's throat at r_s, where 1/g_rr has its root, opening to
+    the widest circle at r = 2/B = 4 r_s and closing into the same kind of spike, drawn out to r = 5 r_s on
+    both sheets of the slice through the bifurcation sphere."""
+    sl = Slice(src, "melvin", "cylindrical", "\\rho", "\\phi", {"t": 0, "z": 0}, {"B": 1})
+    top, size = 4.0, 9.0
+    vase = Piece("universe", "sheet", sl, 0.0, top, 0.0, 1,
+                 (("axis", "the axis $\\rho = 0$"), ("edge", "the surface runs on, narrowing, to $\\rho \\to \\infty$")),
+                 [(1.0, "r", None), (2.0, "surface", "$\\rho = 2/B$"), (3.0, "r", None), (top, "r", "$4/B$")], size)
+    ck.isometry("Melvin, the plane z = 0", vase)
+    ck.radius("Melvin, the plane z = 0, rho = rho/(1 + B^2 rho^2/4)", vase, lambda r: r / (1 + r * r / 4), size)
+    surface = Surface([vase])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *vase.at(2.0), "$\\rho = 2/B$", dx=10)
+    ring_label(fig, [0, 0, 0], *vase.at(top), "$4/B$")
+    fig.legend("fill", "cover", "the plane $z = 0$ at $t = 0$, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $1$, $3$ and $4/B$")
+    fig.legend("line", "surface", "the widest circle, of radius $1/B$, at the Melvin radius $\\rho = 2/B$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("universe", "Melvin's universe", "$1/B$", [surface], fig.done(),
+                  settings="$B = 1$, so that $1/B$ is the unit of every length.")]
+
+    sl = Slice(src, "melvin", "ernst", "r", "\\phi", {"t": 0, **EQUATOR}, MELVIN_ERNST)
+    throat, = [r for r in sl.horizons() if r > 0]
+    ck.add("Ernst: the throat is the root r = r_s of 1/g_rr", abs(throat - 1.0), 1e-12)
+    top, size = 5.0, 18.0
+    radii = (2.0, 3.0)
+    near = Piece("exterior", "sheet", sl, throat, top, 0.0, 1,
+                 (("throat", "the throat $r = r_s$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", "the surface runs on, narrowing, to $r \\to \\infty$")),
+                 [(throat, "horizon", "$r = r_s$")] + [(r, "r", None) for r in radii]
+                 + [(4.0, "surface", "$r = 2/B$"), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, throat, top, 0.0, -1,
+                (("throat", "the throat $r = r_s$"), ("edge", "the surface runs on, narrowing, to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(4.0, "surface", None), (top, "r2", None)], size)
+    ck.join("Ernst, the two sheets at the throat", near, throat, far, throat)
+    for p in (near, far):
+        ck.isometry(f"Ernst, {p.id}", p)
+        ck.radius(f"Ernst, {p.id}, rho = r/(1 + B^2 r^2/4)", p, lambda r: r / (1 + r * r / 16), size)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(throat), "$r = r_s$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(4.0), "$r = 2/B$", dx=10)
+    fig.legend("fill", "cover", "the exterior $r > r_s$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$ and $5\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_s$, where the slice crosses the horizon")
+    fig.legend("line", "surface", "the widest circle, of radius $1/B$, at $r = 2/B = 4\\,r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("ernst", "Ernst's black hole", "$r_s$", [surface], fig.done(),
+                      settings="$r_s = 1$, the unit of every length, and $B = 1/(2r_s)$, so that the widest circle "
+                               "of the equator sits at $r = 4\\,r_s$."))
+    return views
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -4825,6 +4891,7 @@ DRAWN = {
     "nariai": nariai,
     "global_monopole": global_monopole,
     "majumdar_papapetrou": majumdar_papapetrou,
+    "melvin": melvin,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -5015,6 +5082,22 @@ CAPTIONS = {
         "turned over, and through its throat at $r_h$ into another, a chain of throats and widest circles "
         "without end, one period of which is drawn. Identifying the two throats closes the slice into a space "
         "of topology $S^1 \\times S^2$.",
+    ],
+    ("melvin", "universe"): [
+        "The plane $z = 0$ of Melvin's universe at one moment ($B = 1$), drawn as a surface in flat space with "
+        "every distance along it the metric distance. On it $g_{\\rho\\rho} = (1 + B^2\\rho^2/4)^2$ and the circle "
+        "about the axis has radius $\\rho/(1 + B^2\\rho^2/4)$, which grows to $1/B$ at the Melvin radius $\\rho = 2/B$ "
+        "and shrinks as $4/(B^2\\rho)$ beyond it, while the distance out to it grows as $\\rho + B^2\\rho^3/12$.",
+        "The surface widens from the axis like a vase to its widest circle and then narrows into a spike of "
+        "unbounded length, drawn out to $\\rho = 4/B$; every plane of constant $z$ at every moment is the same.",
+    ],
+    ("melvin", "ernst"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Ernst's black hole at the moment $t = 0$ ($B = 1/(2r_s)$), drawn "
+        "as a surface in flat space. On it $g_{rr} = (1 + B^2r^2/4)^2/(1 - r_s/r)$ and the circle of constant $r$ "
+        "has radius $r/(1 + B^2r^2/4)$, so the surface stands vertical at Flamm's throat $r = r_s$, opens to its "
+        "widest circle, of radius $1/B$, at $r = 2/B$, and closes beyond it into a spike, as Melvin's plane does.",
+        "The slice runs through the bifurcation sphere at $r_s$ into the other exterior, the same surface turned "
+        "over. Where $B r_s \\ge 2$ the widest circle is the throat itself.",
     ],
     ("einstein_rosen_waves", "pulse"): [
         "The plane $z = 0$ of space around a pulse of Weber, Wheeler, and Bonnor ($C = a$) going out from the axis, "

@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the thirty spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the thirty-one spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -3567,6 +3567,116 @@ def einstein_rosen_waves(ck, src):
     return views
 
 
+def melvin(ck, src):
+    """Melvin's half plane of fixed phi and z, and Ernst's equator.
+
+    The metric on Melvin's half plane is Lambda^2(-c^2dt^2 + drho^2), Lambda = 1 + B^2 rho^2/4, and the
+    factor changes no null direction, so p, q = arctan((ct -+ rho)B) bring it into Minkowski's half
+    diamond with the axis on X = 0; the affine parameter along a ray grows as the integral of Lambda^2,
+    without bound, so the far edges are the half plane's null infinity. Ernst's equator has
+    Lambda^2(-(1 - r_s/r)c^2dt^2 + dr^2/(1 - r_s/r)), Lambda = 1 + B^2 r^2/4, conformal to Schwarzschild's
+    plane of t and r, so Kruskal and Szekeres's cells, the tower of the one root r_s, draw it, checked
+    against the published metric at B = 1/(2 r_s); the same null curves serve every plane of constant theta,
+    and on the equator and the axis they are geodesics."""
+    cyl = Plane(src, "melvin", "cylindrical", ("t", "\\rho"), {"phi": "0", "z": "0"}, {"B": 1})
+    ck.chart("Melvin cylindrical", cyl, mink_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20), lambda t, r: (1, 0))
+    K = cyl.kretschmann
+    ck.finite("Melvin: the Kretschmann scalar is finite on the axis rho = 0",
+              K(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    ck.limit("Melvin: the Kretschmann scalar on the axis is 20 B^4", K(np.zeros(1), np.full(1, 1e-9)), [20.0], 1e-6)
+
+    ern = Plane(src, "melvin", "ernst", ("t", "r"), EQUATOR, {"r_s": 1, "B": "1/2"})
+    T = Tower(1 - 1 / ern.x1, ern.x1, [1])
+    ck.chart("Ernst equator, exterior", ern, lambda t, r: T.pq("I", t, r),
+             ck.uniform(-15, 15), ck.uniform(1.001, 30), lambda t, r: (1, 0))
+    ck.chart("Ernst equator, black hole", ern, lambda t, r: T.pq("II", t, r),
+             ck.uniform(-15, 15), ck.uniform(0.01, 0.999), lambda t, r: (0, -1))
+    ck.chart("Ernst equator, white hole", ern, lambda t, r: T.pq("IV", t, r),
+             ck.uniform(-15, 15), ck.uniform(0.01, 0.999), lambda t, r: (0, 1))
+    ck.chart("Ernst equator, other exterior", ern, lambda t, r: T.pq("I'", t, r),
+             ck.uniform(-15, 15), ck.uniform(1.001, 30), lambda t, r: (-1, 0))
+    p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit("Ernst: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    KE = ern.kretschmann
+    ck.diverges("Ernst: the Kretschmann scalar diverges at r = 0", KE(0, 1e-2), KE(0, 1e-3))
+    ck.finite("Ernst: the Kretschmann scalar is finite at r = r_s", KE(np.zeros(3), np.array([0.999, 1, 1.001])))
+
+    views = []
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS, RS = (-4, -2, -1, 0, 1, 2, 4), (0.5, 1, 4)
+    universe = slices.moments("melvin", "universe")[0]
+    v = View("cylindrical", "Cylindrical", box, "cylindrical")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda r, t: mink_pq(t, r), RS, S_ALL)
+    grid(v, "surface", lambda r, t: mink_pq(t, r), (2,), S_ALL)
+    grid(v, "t", mink_pq, TS, S_POS)
+    triangle_edges(v, centre="$\\rho = 0$")
+    v.legend("cover", "the whole spacetime, which $t$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, in units of $1/B$")
+    v.legend("surface", "the Melvin radius $\\rho = 2/B$, where the circles about the axis are widest")
+    v.legend("t", "$ct$ constant")
+    v.legend("centre", "the axis $\\rho = 0$")
+    r = np.linspace(*universe.reach("cylindrical", "\\rho"), 2)
+    v.slice(universe, [mink_pq(0 * r, r)])
+    v.set(restriction="The half plane of fixed $\\phi$ and $z$ only, totally geodesic, each point in the diagram a "
+                      "circle around the axis times a line along it.",
+          settings="$B = 1$, the scale of $p = \\arctan((ct - \\rho)B)$ and $q = \\arctan((ct + \\rho)B)$.")
+    views.append(v)
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    t = spread(-np.inf, np.inf, 500, 9)
+    v = View("ernst", "Ernst", box, "ernst")
+    v.fill("region", hexagon)
+    v.fill("cover", exterior)
+    for rr in (1.25, 2, 3, 6):
+        v.curve("r", *T.pq("I", t, np.full_like(t, rr)))
+    v.curve("surface", *T.pq("I", t, np.full_like(t, 4.0)))
+    rr = spread(1, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+    v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                    [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+    v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+    v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+    for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+    v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+    v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+    for sx in (1, -1):
+        v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+        v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+        v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+        v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+    v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+    v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+    v.label_xt([-Q4, Q4], "$r = r_s$", "tr", "small", dx=-6, dy=2)
+    v.label_xt([HALF, -0.95], "exterior", cls="region")
+    v.label_xt([-HALF, 0], "exterior", cls="region")
+    v.label_xt([0, 1.15], "black hole", cls="region")
+    v.label_xt([0, -1.15], "white hole", cls="region")
+    label_on(v, T.pq("I", 0.0, 4.0), "$r = 2/B$")
+    v.legend("cover", "the region that $t$ and $r > r_s$ cover")
+    v.legend("r", "$r$ constant, at $1.25$, $2$, $3$ and $6\\,r_s$")
+    v.legend("surface", "$r = 2/B$, the widest circle of the equator")
+    v.legend("t", "$ct$ constant, in units of $r_s$")
+    v.legend("horizon", "the horizon $r = r_s$")
+    v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity of the plane, $\\mathscr{I}^\\pm$")
+    moment = slices.moments("melvin", "ernst")[0]
+    lo, hi = moment.reach("ernst", "r")
+    rm = np.linspace(lo, hi, 2)
+    a, b = T.pq("I'", 0 * rm, rm[::-1]), T.pq("I", 0 * rm, rm)
+    v.slice(moment, [(np.concatenate([a[0], b[0]]), np.concatenate([a[1], b[1]]))])
+    v.set(restriction="The plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ only, totally geodesic, and "
+                      "the same drawing for every plane of constant $\\theta$.",
+          settings="$r_s = 1$ and $B = 1/(2r_s)$; the drawing is the same for every $B$.")
+    views.append(v)
+    return views
+
+
 def published_gthth(src, metric_id, system_id, params):
     """The published g_thetatheta of a spherical chart, c = 1, as a numpy function of (t, r) on
     the equator."""
@@ -4639,6 +4749,7 @@ DRAWN = {
     "einstein_rosen_waves": einstein_rosen_waves,
     "nariai": nariai, "khan_penrose": khan_penrose,
     "majumdar_papapetrou": majumdar_papapetrou,
+    "melvin": melvin,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -5312,6 +5423,23 @@ CAPTIONS = {
         "The same half plane in the null chart ($u = ct - \\rho$, $v = ct + \\rho$), where the metric on it is "
         "$-e^{2(\\gamma - \\psi)}du\\,dv$. The lines of constant $u$ and of constant $v$ are light rays, the 45° "
         "lines of the triangle, with $p = \\arctan(u/a)$ and $q = \\arctan(v/a)$, and the axis is the line $u = v$.",
+    ],
+    ("melvin", "cylindrical"): [
+        "The half plane of $t$ and $\\rho$ of Melvin's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "
+        "on it is $(1 + B^2\\rho^2/4)^2(-c^2dt^2 + d\\rho^2)$, and a conformal factor changes no null direction, so "
+        "$p, q = \\arctan((ct \\mp \\rho)B)$ bring it into Minkowski's half diamond, with the regular axis $\\rho = 0$ "
+        "on its left edge.",
+        "A light ray reaches $\\rho \\to \\infty$ only at an infinite value of its affine parameter, which grows as "
+        "$\\int(1 + B^2\\rho^2/4)^2\\,d\\rho$, so the far edges are the null infinity of the half plane, although the "
+        "circles about the axis shrink to zero there.",
+    ],
+    ("melvin", "ernst"): [
+        "The plane of $t$ and $r$ of Ernst's black hole at $\\theta = \\pi/2$, totally geodesic. The metric on it is "
+        "$(1 + B^2r^2/4)^2$ times Schwarzschild's, so Kruskal and Szekeres's extension draws it for every $B$: two "
+        "exteriors, the black hole above, the white hole below, and the curvature singularity $r = 0$ at the top "
+        "and the bottom.",
+        "The plane of $t$ and $r$ at every other constant $\\theta$ has the same null curves and the same drawing, "
+        "on the axis with the factor equal to $1$.",
     ],
     ("malament_hogarth", "cartesian"): [
         "The Malament-Hogarth toy spacetime, Minkowski space with one event "

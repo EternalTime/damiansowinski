@@ -708,6 +708,14 @@ DIAGRAMS = [
                      "inside the crest of the pulse"),),
             points=(("mark", ("0", "0"), "the event on the axis where the pulse is greatest, $\\psi = 2C/a$"),),
             input=ER_INPUT),
+    # Melvin's plane of t and rho, conformally flat, and Ernst's equator, conformal to Schwarzschild's
+    # plane of t and r, at B r_s = 1/2, as the embedding diagram draws it.
+    Diagram("melvin", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
+            "$B\\rho$", "$Bct$", {"B": 1}, {"phi": "0", "z": "0"},
+            lines=(("surface", "r", "2", "the Melvin radius $\\rho = 2/B$, where the circles about the axis are widest"),)),
+    Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
+            lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
     Diagram("malament_hogarth", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$ct$", {},
             {"y": "0", "z": "0"}, families=SIDEWAYS, functions={"Omega": _MH_FACTOR}, any_factor="Omega",
             lines=(("world", "r", "0", "the computer's world line, up the axis into the removed event",
@@ -1573,6 +1581,21 @@ CAPTIONS = {
         "light rays are the coordinate lines $u = $ const and $v = $ const themselves, for every wave.",
         "The pulse comes in with its crest just outside the ray $v = 0$, is greatest on the axis at $u = v = 0$, "
         "and goes out with its crest just outside $u = 0$.",
+    ],
+    ("melvin", "cylindrical", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Melvin's universe ($B = 1$). The metric on it is "
+        "$(1 + B^2\\rho^2/4)^2(-c^2dt^2 + d\\rho^2)$, and the factor drops out of the null condition, so the rays are "
+        "at 45°, each ingoing ray meeting an outgoing one on the axis $\\rho = 0$. No Christoffel symbol turns them "
+        "out of the plane, so they are null geodesics, and the Kretschmann scalar is finite everywhere on it.",
+    ],
+    ("melvin", "ernst", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Ernst's black hole ($B = 1/(2r_s)$). The metric on "
+        "it is $(1 + B^2r^2/4)^2$ times Schwarzschild's, $-(1 - r_s/r)c^2dt^2 + dr^2/(1 - r_s/r)$, and the factor drops "
+        "out of the null condition, so the rays are Schwarzschild's curves $ct = \\pm(r + r_s\\ln|r/r_s - 1|) + $ const, "
+        "and they are the same curves in every plane of constant $\\theta$.",
+        "On the equator and on the axis no Christoffel symbol turns them out of the plane, so there they are null "
+        "geodesics. The cones close at the horizon $r = r_s$, and inside it every cone points to $r = 0$, where the "
+        "Kretschmann scalar diverges.",
     ],
     ("malament_hogarth", "cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$) through the removed event at the origin. "
@@ -3550,6 +3573,9 @@ CLOSED_FORMS = {
         (lambda t, r: t + np.sqrt(r ** 2 - 1), lambda t, r: t - np.sqrt(r ** 2 - 1), lambda t, r: r > 1.0005),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
+    ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("melvin", "ernst", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("minkowski", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("minkowski", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("minkowski", "rindler", "tx"):
