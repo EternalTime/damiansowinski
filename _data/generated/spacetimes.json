@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 36,
+  "count": 37,
   "spacetimes": [
     {
       "id": "alcubierre",
@@ -3993,6 +3993,229 @@
           ],
           "ricci_scalar": "R = \\dfrac{2\\left(1 - \\left(\\partial_l r\\right)^2 - r^2\\left(\\left(\\partial_l\\Phi\\right)^2 + \\partial_l^2\\Phi\\right) - 2r\\left(\\partial_l\\Phi\\,\\partial_l r + \\partial_l^2 r\\right)\\right)}{r^2}",
           "kretschmann": "K = 4\\left(\\left(\\partial_l\\Phi\\right)^2 + \\partial_l^2\\Phi\\right)^2 + \\dfrac{8\\left(\\partial_l\\Phi\\right)^2\\left(\\partial_l r\\right)^2}{r^2} + \\dfrac{8\\left(\\partial_l^2 r\\right)^2}{r^2} + \\dfrac{4\\left(1 - \\left(\\partial_l r\\right)^2\\right)^2}{r^4}"
+        }
+      ]
+    },
+    {
+      "id": "nariai",
+      "name": "Nariai Universe",
+      "short_name": "Nariai",
+      "description": "A vacuum solution with a positive cosmological constant, geometrically the product of a two dimensional de Sitter space and a sphere of the same radius (dS₂ × S²). It is the limit of the Schwarzschild-de Sitter black hole as its horizon meets the cosmological horizon, the largest black hole a de Sitter universe can hold.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "positive cosmological constant",
+        "cosmological constant",
+        "de Sitter",
+        "product spacetime",
+        "homogeneous",
+        "spherically symmetric",
+        "static",
+        "cosmology",
+        "cosmological",
+        "horizon",
+        "cosmological horizon",
+        "Killing horizon",
+        "extremal",
+        "Schwarzschild-de Sitter",
+        "black hole pair creation",
+        "instanton",
+        "Birkhoff theorem",
+        "Petrov type D",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The single parameter is the cosmological constant $\\Lambda$, positive and an inverse length squared, and $1/\\sqrt{\\Lambda}$ is the radius of both factors of the product. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "kasner1925",
+        "nariai1950",
+        "nariai1951",
+        "krasinski1999",
+        "ortaggio2002",
+        "bousso1996",
+        "bertotti1959",
+        "krasinski1980",
+        "ginsparg1983",
+        "dias2003",
+        "bousso1998",
+        "bousso1998proliferation",
+        "cardoso2004"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nariai.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in \\left(-1/\\sqrt{\\Lambda},\\, 1/\\sqrt{\\Lambda}\\right)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = \\pm 1/\\sqrt{\\Lambda} \\;\\text{(the two horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, positive and an inverse length squared; the two horizons sit at $r = \\pm 1/\\sqrt{\\Lambda}$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length along the two dimensional de Sitter factor. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\Lambda r^2\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\Lambda r^2} + \\dfrac{1}{\\Lambda}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\Lambda\\,r^2\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{1 - \\Lambda\\,r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{1}{\\Lambda}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\sin^2\\theta}{\\Lambda}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = 8\\Lambda^2"
+        },
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, 2\\pi)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, positive and an inverse length squared; the circle of $\\chi$ has its least radius, $1/\\sqrt{\\Lambda}$, at $t = 0$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\chi$ an angle around the circle of the de Sitter factor. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{1}{\\Lambda}\\left(\\cosh^2\\left(\\sqrt{\\Lambda}\\,ct\\right)d\\chi^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{\\cosh^2\\left(\\sqrt{\\Lambda}\\,c\\,t\\right)}{\\Lambda}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{1}{\\Lambda}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\sin^2\\theta}{\\Lambda}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = 8\\Lambda^2"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\pi/2, \\pi/2)",
+            "\\chi \\in [0, 2\\pi)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, positive and an inverse length squared; the future and past infinities lie at $\\eta = \\pm\\pi/2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, \\chi, \\theta, \\phi)$, all dimensionless, with the conformal time $\\eta$ related to the global chart by $\\tan\\eta = \\sinh(\\sqrt{\\Lambda}\\,ct)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{1}{\\Lambda}\\left(\\dfrac{-d\\eta^2 + d\\chi^2}{\\cos^2\\eta} + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{1}{\\Lambda\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{1}{\\Lambda\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{1}{\\Lambda}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\sin^2\\theta}{\\Lambda}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = 8\\Lambda^2"
         }
       ]
     },

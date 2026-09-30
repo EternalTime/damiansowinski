@@ -2657,7 +2657,7 @@ class StacksAndMovies(unittest.TestCase):
     STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5}   # the height of a unit of time
     MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
               "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$",
-              "einstein_rosen_waves": "$ct$"}
+              "einstein_rosen_waves": "$ct$", "nariai": "$ct$"}
 
     def setUp(self):
         self.embedding = embedding_files()
