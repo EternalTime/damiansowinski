@@ -39,9 +39,12 @@ serve a diagonal h, the Eddington-Finkelstein charts' g_rr = 0 and a double null
 chart's g_uu = g_vv = 0. h is divided by its largest entry first, which changes
 no direction and keeps the numbers finite next to a horizon. P and M are continuous line
 fields: P is the family that conserves an advanced coordinate, drawn as the ingoing or
-left moving family, and M the retarded one. --verify confirms that labelling chart by
-chart. Their integral curves are traced both ways by fourth order Runge-Kutta in the
-drawing's own unit square, from seeds spaced evenly along its four edges.
+left moving family, and M the retarded one. Where the drawn coordinate falls outward, as
+the C-metric's Hong-Teo y = 1/(alpha r) does, the left moving family is the outgoing one and
+P conserves the retarded coordinate, so the page's colour of P means moving left in every
+view. --verify confirms that labelling chart by chart. Their integral curves are traced
+both ways by fourth order Runge-Kutta in the drawing's own unit square, from seeds spaced
+evenly along its four edges.
 
 Every curve drawn is a null curve, its tangent null. It is also a null geodesic, the path
 a light ray takes, only if nothing accelerates it out of the plane, Gamma^A_ab k^a k^b = 0
@@ -603,7 +606,9 @@ DIAGRAMS = [
             tau="Piecewise((-r, r < 2), (t, True))"),
     Diagram("c_metric", "hong_teo", "inner", "the inner axis, $x = 1$", ("\\tau", "y"), (-1, 5, -3, 3),
             "$y$", "$\\tau$", {"m": 1, "alpha": "1/6", "C": "3/4"}, {"x": "1", "phi": "0"},
-            tau="Piecewise((-y, y < 1), (tau, y < 3), (y, True))"),
+            tau="Piecewise((-y, y < 1), (tau, y < 3), (y, True))",
+            # y = 1/(alpha r) falls outward, so P, the family moving to smaller y, is the outgoing one.
+            families=("outgoing", "ingoing")),
 ]
 
 
@@ -3014,8 +3019,9 @@ CLOSED_FORMS.update({
     ("c_metric", "spherical", "outer"):
         (lambda t, r: t + 6 * _c_metric_rstar(6 / r), lambda t, r: t - 6 * _c_metric_rstar(6 / r),
          lambda t, r: (np.abs(r - 2) > 0.05) & (np.abs(r - 6) > 0.05)),
+    # P is outgoing here, and conserves the retarded tau - alpha r*.
     ("c_metric", "hong_teo", "inner"):
-        (lambda tau, y: tau + _c_metric_rstar(y), lambda tau, y: tau - _c_metric_rstar(y),
+        (lambda tau, y: tau - _c_metric_rstar(y), lambda tau, y: tau + _c_metric_rstar(y),
          lambda tau, y: (np.abs(y - 1) > 0.02) & (np.abs(y - 3) > 0.02) & (y > -0.98)),
 })
 # The cylinders of t and phi, where each family runs straight, dt = k dphi, and conserves
