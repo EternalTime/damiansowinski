@@ -456,7 +456,7 @@ async function convention(id, chart, before) {
       if (node.nodeType === 3) return node.data;
       return [].map.call(node.childNodes, read).join('');
     }
-    var shown = paragraphs.map(read).join(' ').replace(/\u00AD/g, '').replace(/\s+/g, ' ').trim();
+    var shown = paragraphs.map(read).join(' ').replace(/\u00AD/g, '').replace(/\\s+/g, ' ').trim();
     return { expected: expected, shown: shown, paragraphs: paragraphs.length };
   })()`);
   const at = `${opened} / chart ${chart}: conventions`;
