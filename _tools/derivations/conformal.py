@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the twenty-five spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the twenty-six spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -312,12 +312,15 @@ class Plane:
                degenerate, as the axis of Kerr does at theta = 0;
     quotient   a coordinate the metric does not depend on, divided out: the surface's metric is
                g_ab - g_ak g_bk/g_kk, orthogonal to its orbits, as null_rays.py's rays of no
-               angular momentum take it, and the published inverse's block is its inverse.
+               angular momentum take it, and the published inverse's block is its inverse;
+    off_shock  every Dirac delta, and every derivative of one, read as zero, for a surface
+               evaluated only away from the hypersurface the delta sits on.
     """
 
     def __init__(self, sources, metric_id, system_id, plane, fixed=None, params=None,
-                 functions=None, numeric=(), axis=None, quotient=None):
+                 functions=None, numeric=(), axis=None, quotient=None, off_shock=False):
         metric, entry, reader = nr.load(metric_id, system_id)
+        self.off_shock = off_shock
         sources.note(metric_id, system_id, BASE_FIELDS)
         self.sources, self.metric_id, self.system_id = sources, metric_id, system_id
         self.entry, self.reader = entry, reader
@@ -356,6 +359,8 @@ class Plane:
             e = e.subs(self.reader.parameters[name], rep).doit()
         for fn, var, (F0, F1, F2) in self.numeric.values():
             e = e.subs(sp.Derivative(fn, (var, 2)), F2).subs(sp.Derivative(fn, var), F1).subs(fn, F0)
+        if self.off_shock:
+            e = e.replace(lambda x: isinstance(x, sp.DiracDelta), lambda x: sp.Integer(0))
         e = e.subs(self.subs)
         if self.axis:
             e = sp.limit(e, *self.axis) if limit else e.subs(*self.axis)
@@ -3891,7 +3896,77 @@ def nariai(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Aichelburg-Sexl
+
+AS_JUMP = float(np.log(8.0))    # the jump of a ray moving left at rho = rho_0/8, in units of 8GE/c^4
+
+
+def aichelburg_sexl(ck, src):
+    """The plane of u and v at x = rho_0/8, y = 0 of the null Cartesian chart, in units of
+    8GE/c^4 = rho_0 = 1. Off the shock u = 0 the metric on it is -du dv, flat, and a ray
+    moving left crosses the shock with v raised by Delta v = -ln(rho/rho_0) = ln 8, which is
+    the published geodesic equation's v'' = -(4GE/c^4) ln((x^2 + y^2)/rho_0^2) delta'(u) u'^2
+    integrated across it at fixed x and y. So p = arctan u and q = arctan(v - Delta v theta(u))
+    give each half the half of Minkowski's diamond on its side of p = 0, and carry every ray
+    moving left across the shock as one line of constant q. The plane is totally geodesic off
+    the shock, where every Christoffel symbol vanishes."""
+    fixed = {"x": "1/8", "y": "0"}
+    params = {"G": 1, "E": "1/8", "rho_0": 1}
+    plane = Plane(src, "aichelburg_sexl", "null_cartesian", ("u", "v"), fixed, params, off_shock=True)
+
+    def before(u, w):
+        return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(w, dtype=float))
+
+    def after(u, w):
+        return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(w, dtype=float) - AS_JUMP)
+    ck.chart("Aichelburg-Sexl, before the shock", plane, before, ck.uniform(-20, -0.01), ck.uniform(-20, 20),
+             lambda u, w: (1, 1))
+    ck.chart("Aichelburg-Sexl, behind the shock", plane, after, ck.uniform(0.01, 20), ck.uniform(-20, 20),
+             lambda u, w: (1, 1))
+    # The jump from the published geodesic equation: v'' = -A delta'(u) with A the coefficient of
+    # delta'(u) in Gamma^v_uu, integrated twice across u = 0 at u' = 1, gives Delta v = -A.
+    metric, entry, R = nr.load("aichelburg_sexl", "null_cartesian")
+    src.note("aichelburg_sexl", "null_cartesian", ["christoffel"])
+    gamma = next(c for c in entry["christoffel"]["variants"]["ull"]["nonzero"] if c["indices"] == ["v", "u", "u"])
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    value = R(gamma["value"]).subs({R.c: 1, R.parameters["G"]: 1, R.parameters["E"]: sp.Rational(1, 8),
+                                    R.parameters["rho_0"]: 1, names["x"]: sp.Rational(1, 8), names["y"]: 0})
+    A = value.coeff(sp.DiracDelta(names["u"], 1))
+    ck.limit("Aichelburg-Sexl: -Gamma^v_uu integrated twice across the shock is the jump ln 8", [-float(A)], [AS_JUMP], 1e-12)
+    w = ck.uniform(-20, 20, 200)
+    ck.limit("Aichelburg-Sexl: a ray moving left keeps its q across the shock",
+             before(np.full_like(w, -1e-12), w)[1], after(np.full_like(w, 1e-12), w + AS_JUMP)[1], 1e-9)
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    v = View("shock", "The shock at $\\rho = \\rho_0/8$", box, "null_cartesian")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    s = spread(-np.inf, np.inf, 600, 10)
+    for c in (-4, -2, -1, 1, 2, 4):
+        v.curve("null", *before(np.full_like(s, c), s))
+    for c in (-4, -2, -1, 0, 1, 2, 4):
+        u = -spread(0, np.inf, 400, 10)[::-1]
+        v.curve("null", *before(u, np.full_like(u, c)))
+        u = spread(0, np.inf, 400, 10)
+        v.curve("null", *after(u, np.full_like(u, c)))
+    v.segment("surface", (0, -HALF), (0, HALF))
+    diamond_edges(v)
+    v.label((0, 0.35), "the shock, $u = 0$", "tl", "small", dx=4, dy=3)
+    v.legend("null", "$u$ constant and $v$ constant at $0$, $\\pm 1$, $\\pm 2$ and $\\pm 4$, light rays off the shock")
+    v.legend("surface", "the shock $u = 0$, a light ray")
+    v.set(restriction="The plane $x = \\rho_0/8$, $y = 0$ only, totally geodesic off the shock, each point in the "
+                      "diagram a single event.",
+          settings="$8GE/c^4 = \\rho_0$, the unit of $u$ and $v$.")
+    # Each wave front of the embedding is the null line u = u_k, every v, the same flat front.
+    w = spread(-np.inf, np.inf, 400, 10)
+    for m in slices.moments("aichelburg_sexl"):
+        fmap = before if m.time < 0 else after
+        v.slice(m, [fmap(np.full_like(w, m.time), w)])
+    return [v]
+
+
 DRAWN = {
+    "aichelburg_sexl": aichelburg_sexl,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "anti_de_sitter": anti_de_sitter,
@@ -3910,6 +3985,15 @@ DRAWN = {
 # and every sentence about the spacetime, never about the page or the collection. A caption
 # opens by naming what is drawn, the whole spacetime or the surface in it.
 CAPTIONS = {
+    ("aichelburg_sexl", "shock"): [
+        "The plane of $u$ and $v$ at distance $\\rho = \\rho_0/8$ from the axis the source moves along, brought by "
+        "$p = \\arctan u$ and $q = \\arctan(v - \\Delta v\\,\\theta(u))$ into the whole diamond, with "
+        "$\\Delta v = (8GE/c^4)\\ln 8$ the jump of a ray moving left across the shock and $\\theta$ the unit step. "
+        "The shock $u = 0$ is a light ray from $\\mathscr{I}^-$ to $\\mathscr{I}^+$, with flat Minkowski space on "
+        "either side of it.",
+        "Every ray moving left keeps its $q$ across the shock, and every line of constant $v$ breaks there, its part "
+        "behind the shock moved along it by $\\Delta v$. The rays moving right never meet the shock.",
+    ],
     ("c_metric", "inner_spherical"): [
         "The half axis $\\theta = 0$ between the black holes of the maximally extended C-metric ($\\alpha m = 1/6$), "
         "totally geodesic, each point in the diagram a single event. On it the metric is "
