@@ -239,7 +239,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9a042b8e5091a124"
+    "version": "9a042b8e5091a124",
+    "diagrams": "885cf2913e61ef20",
+    "conformal": "20e6465d5697a404",
+    "embedding": "4dd134d3c9350df4"
   },
   {
     "id": "ellis_bronnikov",
