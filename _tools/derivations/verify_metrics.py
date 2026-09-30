@@ -342,6 +342,16 @@ DIMENSIONS = {
     ("natario", "plane_flow"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "u": "L/T",
     },
+    # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
+    ("nariai", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
+    },
+    ("nariai", "global"): {
+        "t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
+    },
+    ("nariai", "conformal"): {
+        "\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
+    },
     # The collapse is two charts. Inside, the comoving polar angle chi is dimensionless
     # and the scale factor carries the length, so an areal radius is a sin(chi) and a dot
     # on a is dimensionless; chi_0 marks the surface and a_m is the scale factor at
@@ -927,6 +937,26 @@ def expand_braced_call(text, command, replacement):
         text = f"{text[:found.start()]}{replacement}({body}){text[closing + 1:]}"
 
 
+def powered_trig_calls(text, names):
+    """Turn trig ** n (argument) into (trig(argument))**n, the argument a balanced bracket,
+    which is how \\cosh^2\\left(\\sqrt{\\Lambda}\\,t\\right) reads once the brackets are bare."""
+    pattern = re.compile(r"\b(" + names + r")\s*\*\*\s*\(?\s*(\d+)\s*\)?\s*\(")
+    while True:
+        found = pattern.search(text)
+        if not found:
+            return text
+        opening = found.end() - 1
+        depth = 0
+        for closing in range(opening, len(text)):
+            depth += {"(": 1, ")": -1}.get(text[closing], 0)
+            if depth == 0:
+                break
+        else:
+            raise LatexError(f"unbalanced bracket after {found.group(1)} in {text!r}")
+        body = text[opening + 1:closing]
+        text = f"{text[:found.start()]}({found.group(1)}({body}))**{found.group(2)}{text[closing + 1:]}"
+
+
 PARTIAL = re.compile(
     r"\\partial_\s*\{?\s*(?:\\([A-Za-z]+)|([A-Za-z]))\s*\}?\s*(?:\^\s*\{?\s*(\d+)\s*\}?)?\s*")
 PARTIAL_TARGET = re.compile(r"\\?([A-Za-z]+)")
@@ -1150,6 +1180,8 @@ class Reader:
         names = "|".join(sorted(TRIG, key=len, reverse=True))
         text = re.sub(r"\b(" + names + r")\s*\*\*\s*\(?\s*(-?\d+)\s*\)?\s*([A-Za-z]\w*)",
                       r"(\1(\3))**\2", text)
+        # The same with a bracketed argument, as \cosh^2\left(\sqrt{\Lambda}\,t\right).
+        text = powered_trig_calls(text, names)
         text = re.sub(r"\b(" + names + r")\s+([A-Za-z]\w*)", r"\1(\2)", text)
         text = re.sub(r"(?<![A-Za-z_])e\s*\*\*", " E**", text)
         # 3R\sqrt{..} leaves 3Rsqrt(..), whose one name token would be split letter by letter.

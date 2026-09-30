@@ -1,0 +1,86 @@
+{
+  "id": "nariai",
+  "name": "Nariai Universe",
+  "short_name": "Nariai",
+  "description": "A vacuum solution with a positive cosmological constant, geometrically the product of a two dimensional de Sitter space and a sphere of the same radius (dS₂ × S²). It is the limit of the Schwarzschild-de Sitter black hole as its horizon meets the cosmological horizon, the largest black hole a de Sitter universe can hold.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "positive cosmological constant",
+    "cosmological constant",
+    "de Sitter",
+    "product spacetime",
+    "homogeneous",
+    "spherically symmetric",
+    "static",
+    "cosmology",
+    "cosmological",
+    "horizon",
+    "cosmological horizon",
+    "Killing horizon",
+    "extremal",
+    "Schwarzschild-de Sitter",
+    "black hole pair creation",
+    "instanton",
+    "Birkhoff theorem",
+    "Petrov type D",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit. The single parameter is the cosmological constant $\\Lambda$, positive and an inverse length squared, and $1/\\sqrt{\\Lambda}$ is the radius of both factors of the product. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Edward Kasner asked which manifolds of four dimensions satisfy the field equations with a cosmological constant when their metric splits into two independent forms of two variables each, and found that both forms must have the same constant curvature, so that the manifold is the product of two equal spheres [kasner1925]. He embedded it in flat space of six dimensions as the intersection of two cylinders built on unit spheres, a manifold of the fourth degree, and called it \"the simplest solution beyond the hypersphere\" of Willem de Sitter [kasner1925]. Kasner presented the result in 1921 and published it in 1925, with every sign of its metric positive [kasner1925].¶Hidekazu Nariai found the Lorentzian solution in 1950, as one member of a collection of static, spherically symmetric solutions of Einstein's equations, and worked out its properties in 1951 [nariai1950, nariai1951, krasinski1999]. Every sphere of symmetry in it has the radius $1/\\sqrt{\\Lambda}$, and the other two dimensions form a de Sitter space of two dimensions with that same radius [ortaggio2002]. The manifold is the product of two surfaces of the same positive constant curvature, one Lorentzian and the other a sphere, and its Euclidean section is Kasner's product of two round spheres [krasinski1999, bousso1996, kasner1925]. In flat space of six dimensions with one timelike direction it is the intersection of $-Z_0^2 + Z_1^2 + Z_2^2 = 1/\\Lambda$ with $Z_3^2 + Z_4^2 + Z_5^2 = 1/\\Lambda$, homogeneous under the group $SO(2,1) \\times SO(3)$, and of Petrov type D, with $\\Psi_2 = -\\Lambda/3$ its one nonzero Weyl scalar [ortaggio2002]. Bruno Bertotti's uniform electromagnetic field of 1959 has the same product structure, with two curvatures that differ by an amount proportional to the field [bertotti1959, krasinski1999].¶The area of the spheres is the same everywhere, so it cannot serve as a radial coordinate, and the usual derivation of Birkhoff's theorem, which takes it as one, misses the solution [krasinski1999]. Andrzej Krasiński located the error in the step that sets the area of each sphere to $4\\pi r^2$, which is possible only where the gradient of the area is spacelike [krasinski1999]. That step leaves out a timelike gradient, a null one, and a vanishing one, and with a cosmological constant and no matter a vanishing gradient admits Nariai's solution alone [krasinski1999]. Krasiński and Jerzy Plebański had proved in 1980 that every spherically symmetric vacuum solution with a cosmological constant, static or not, reduces by a change of coordinates to the Schwarzschild-de Sitter metric or to Nariai's [krasinski1980, krasinski1999]. The form of Birkhoff's theorem that makes every such solution equivalent to the Schwarzschild-de Sitter metric therefore fails, and Nariai's solution is the counterexample [krasinski1999].¶Paul Ginsparg and Malcolm Perry studied the stability of de Sitter space in 1983 and showed, with the Euclidean formulation of quantum gravity, that it is unstable to the nucleation of black holes [ginsparg1983]. They generated Nariai's solution from the Schwarzschild-de Sitter black hole by a limit in which its horizon approaches the cosmological horizon, writing the mass parameter $\\mu$ as $9\\mu^2\\Lambda = 1 - 3\\epsilon^2$ and letting $\\epsilon \\to 0$ [dias2003, bousso1998]. The black hole of the limit, $9\\mu^2\\Lambda = 1$, is the largest a de Sitter universe can hold [bousso1996, bousso1998]. Raphael Bousso and Stephen Hawking took its Euclidean section in 1996 as the instanton for the pair creation of black holes during inflation, the only regular one among the Euclidean Schwarzschild-de Sitter solutions, and found the rate of pair creation to be $\\exp(-\\pi/\\Lambda)$ in Planck units [bousso1996]. Its black hole and cosmological horizons have the same radius and the same surface gravity, so they radiate at the same rate and stay in thermal equilibrium, at the temperature $\\sqrt{\\Lambda}/2\\pi$ in natural units [bousso1996, ortaggio2002]. Quantum effects make most of the black holes created in pairs during inflation evaporate before it ends [bousso1996].¶Bousso and Hawking perturbed this equilibrium in 1998, with the quantum radiation included at one loop, and found that nearly maximal Schwarzschild-de Sitter black holes \"anti-evaporate\" [bousso1998]. A different mode of perturbation makes them evaporate, and they showed that this mode is always excited when a pair of such black holes nucleates [bousso1998]. Bousso studied the higher modes of perturbation the same year, in which the size of the spheres rises and falls $n$ times around the circle of the de Sitter factor [bousso1998proliferation]. Several black hole horizons then form on the handle the Nariai solution attaches to de Sitter space, and as the black holes evaporate they split space into several parts, so that de Sitter space \"disintegrates into an infinite number of copies of itself\" [bousso1998proliferation].¶Marcello Ortaggio found in 2002 exact impulsive gravitational waves travelling through the Nariai universe, whose wave front is a pair of spheres that never expand [ortaggio2002]. Óscar Dias and José Lemos took the limit of Ginsparg and Perry for a pair of accelerating black holes in 2003, and built from the C-metric with a cosmological constant its counterpart of the Nariai solution [dias2003]. With Vitor Cardoso they found in 2004 every solution of the Einstein-Maxwell equations in more than three dimensions that is the product of two manifolds of constant curvature, the Nariai solution of each dimension among them [cardoso2004].",
+  "references": [
+    "kasner1925",
+    "nariai1950",
+    "nariai1951",
+    "krasinski1999",
+    "ortaggio2002",
+    "bousso1996",
+    "bertotti1959",
+    "krasinski1980",
+    "ginsparg1983",
+    "dias2003",
+    "bousso1998",
+    "bousso1998proliferation",
+    "cardoso2004"
+  ],
+  "coordinates": [
+    {
+      "id": "static",
+      "name": "Static",
+      "parameters": [
+        {
+          "symbol": "\\Lambda",
+          "description": "Cosmological constant, positive and an inverse length squared; the two horizons sit at $r = \\pm 1/\\sqrt{\\Lambda}$"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length along the two dimensional de Sitter factor. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    },
+    {
+      "id": "global",
+      "name": "Global",
+      "parameters": [
+        {
+          "symbol": "\\Lambda",
+          "description": "Cosmological constant, positive and an inverse length squared; the circle of $\\chi$ has its least radius, $1/\\sqrt{\\Lambda}$, at $t = 0$"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\chi$ an angle around the circle of the de Sitter factor. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    },
+    {
+      "id": "conformal",
+      "name": "Conformal",
+      "parameters": [
+        {
+          "symbol": "\\Lambda",
+          "description": "Cosmological constant, positive and an inverse length squared; the future and past infinities lie at $\\eta = \\pm\\pi/2$"
+        }
+      ],
+      "convention": "We use coordinates $(\\eta, \\chi, \\theta, \\phi)$, all dimensionless, with the conformal time $\\eta$ related to the global chart by $\\tan\\eta = \\sinh(\\sqrt{\\Lambda}\\,ct)$. A dot in the geodesic equations is a derivative with respect to an affine parameter."
+    }
+  ]
+}
