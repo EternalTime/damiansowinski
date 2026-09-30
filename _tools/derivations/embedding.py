@@ -519,8 +519,8 @@ class Piece:
     """
 
     def __init__(self, pid, cls, sl, lo, hi, z0=0.0, sense=1, ends=(("edge", None), ("edge", None)),
-                 marks=(), size=1.0, reference=False, legend=None):
-        self.id, self.cls, self.sl, self.size = pid, cls, sl, size
+                 marks=(), size=1.0, reference=False, legend=None, digits=None):
+        self.id, self.cls, self.sl, self.size, self.digits = pid, cls, sl, size, digits
         self.lo, self.hi, self.sense = lo, hi, sense
         self.ends, self.marks, self.reference, self.legend = ends, list(marks), reference, legend
         knots = sorted({lo, hi} | {m[0] for m in self.marks if lo <= m[0] <= hi})
@@ -553,7 +553,7 @@ class Piece:
     @property
     def decimals(self):
         return decimals(max(float(np.ptp(self.rho)), float(np.ptp(self.z)), 1e-9),
-                        LORENTZ_DIGITS if self.sl.lorentz else DIGITS)
+                        self.digits or (LORENTZ_DIGITS if self.sl.lorentz else DIGITS))
 
     def at(self, x):
         """(rho, z) of the circle at x, which must be a point of the profile."""
@@ -3977,6 +3977,11 @@ def milne(ck, src):
                         "in flat space carries the slice; Minkowski space carries it."])]
 
 
+# At ct = a the pulse bends the surface by the axis on a scale of a/4, against a drawing 20a
+# across, so the chords there are a few thousandths of a long and are rounded a decade finer.
+ER_DIGITS = 1e-8
+
+
 def einstein_rosen_waves(ck, src):
     """The pulse of Weber, Wheeler, and Bonnor at C = a = 1, going out from the axis, at the moments
     ct = a to 8a of the cylindrical chart, on the plane z = 0: g_rhorho = e^{2(gamma - psi)} and
@@ -4028,7 +4033,8 @@ def einstein_rosen_waves(ck, src):
                       (("axis", "the axis $\\rho = 0$, where the surface starts level"),
                        ("edge", "the surface runs on toward the cone of deficit angle $2\\pi(1 - e^{-C^2/a^2})$, "
                                 "to $\\rho \\to \\infty$")),
-                      [(r, "r", None) for r in (2.0, 4.0, 6.0, 8.0)] + [(top, "chartedge", None)], size)
+                      [(r, "r", None) for r in (2.0, 4.0, 6.0, 8.0)] + [(top, "chartedge", None)], size,
+                      digits=ER_DIGITS)
         ck.isometry(where, whole)
         ck.radius(f"{where}, rho e^(-psi)", whole, lambda x, T=T: x * np.exp(-as_num["psi"][0](T, x)), size)
         return Surface([whole], label=f"$ct = {T:g}\\,a$", time=T)
