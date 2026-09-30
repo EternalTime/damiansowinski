@@ -320,6 +320,11 @@ DIMENSIONS = {
         "u": "L", "v": "L", "\\rho": "L", "\\phi": "1", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2",
         "\\rho_0": "L",
     },
+    # k = 2 pi G sigma / c^4 is an inverse length, 1/k the radius of the wall when it stops.
+    ("domain_wall", "planar"): {"t": "T", "x": "L", "y": "L", "z": "L", "k": "1/L"},
+    ("domain_wall", "global"): {"t": "T", "z": "L", "\\theta": "1", "\\phi": "1", "k": "1/L"},
+    ("domain_wall", "conformal"): {"t": "T", "w": "L", "\\theta": "1", "\\phi": "1", "k": "1/L"},
+    ("domain_wall", "inertial"): {"T": "T", "R": "L", "\\theta": "1", "\\phi": "1", "k": "1/L"},
     ("malament_hogarth", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1",
     },
@@ -509,7 +514,7 @@ FUNCTIONS = {
     "sin": sp.sin, "cos": sp.cos, "tan": sp.tan, "cot": sp.cot,
     "sec": sp.sec, "csc": sp.csc, "sinh": sp.sinh, "cosh": sp.cosh,
     "tanh": sp.tanh, "coth": sp.coth, "exp": sp.exp, "log": sp.log,
-    "ln": sp.log, "sqrt": sp.sqrt,
+    "ln": sp.log, "sqrt": sp.sqrt, "Abs": sp.Abs, "sign": sp.sign,
 }
 
 
@@ -597,6 +602,8 @@ def _canonical(expression):
     for function, rewrite in _IN_SIN_COS_EXP.items():
         if expression.has(function):
             expression = expression.replace(function, rewrite)
+    if expression.has(sp.Abs, sp.sign, sp.DiracDelta):
+        expression = _on_a_kink(expression)
     if any(not atom.args[0].is_Symbol for atom in expression.atoms(sp.sin, sp.cos)):
         expression = sp.expand_trig(expression)
     # A logarithm's argument is put in one form, since expand spreads (x^2 + y^2)/rho_0^2 into two
@@ -619,6 +626,9 @@ def _canonical(expression):
     for cosine in [g for g in generators if g.func is sp.cos]:
         if sp.sin(cosine.args[0]) in generators:
             algebraic.append((cosine, 1 - sp.sin(cosine.args[0]) ** 2))
+    # sgn(x)^2 = 1 wherever x is not zero, which is where a function of x is read.
+    for sign in [g for g in generators if g.func is sp.sign]:
+        algebraic.append((sign, sp.Integer(1)))
     for base, q in radicals.items():
         if q != 2:
             raise NotImplementedError(f"a root of {base} above the square")
@@ -649,6 +659,54 @@ def _canonical(expression):
     if not value.numerator:
         return sp.Integer(0)
     return value.as_expr()
+
+
+def _on_a_kink(expression):
+    """A metric with a kink, as the domain wall's (1 - k|z|)^2, read as a distribution.
+
+    |x| of a coordinate is written x sgn(x), so that diff gives its derivative sgn(x) and
+    the derivative of that, 2 delta(x), and sgn(x)^2 = 1 is one of _canonical's relations.
+    Such a metric is continuous with a jump in its first derivative, so its curvature is a
+    bounded function plus a delta of x times a function continuous at x = 0, which is the
+    value of that function at x = 0 times the delta; that is the reduction made here, term
+    by term in the power of delta(x), with sgn(x)^2 taken as 1 and x sgn(x) as |x|. A delta
+    times a function that jumps at x = 0, which no reading as a distribution fixes, stops
+    the reader. A square of a delta, which only the Kretschmann scalar holds, is left as it
+    is; `off_support` compares such a scalar where x is not zero, as the entry states it.
+    A delta whose argument is not a bare coordinate, or which carries a prime, is passed
+    over, as the Aichelburg-Sexl shock's are, since nothing multiplying it varies across it.
+    """
+    expression = expression.replace(lambda e: isinstance(e, sp.Abs) and e.args[0].is_Symbol,
+                                    lambda e: e.args[0] * sp.sign(e.args[0]))
+    for delta in sorted(expression.atoms(sp.DiracDelta), key=sp.default_sort_key):
+        if len(delta.args) != 1 or not delta.args[0].is_Symbol:
+            continue
+        x = delta.args[0]
+        D, s = sp.Dummy("D"), sp.Dummy("s")
+        e = expression.xreplace({delta: D, sp.sign(x): s})
+        if not e.has(x) and not e.has(s):
+            continue
+        numerator, denominator = sp.fraction(sp.together(e))
+        if denominator.has(D):
+            raise NotImplementedError(f"{delta} stands below a fraction line")
+        terms = []
+        for (power,), coefficient in sp.Poly(sp.expand(numerator), D).as_dict().items():
+            coefficient = coefficient if hasattr(coefficient, "free_symbols") else sp.sympify(coefficient)
+            if power != 1:
+                terms.append(D ** power * coefficient / denominator)
+                continue
+            on = [_even_in(sp.expand(side.subs(x, 0)), s) for side in (coefficient, denominator)]
+            if any(side.has(s) for side in on) or on[1] == 0:
+                raise NotImplementedError(f"{delta} multiplies a function that jumps at {x} = 0")
+            terms.append(D * on[0] / on[1])
+        expression = sp.Add(*terms).xreplace({D: delta, s: sp.sign(x)})
+    return expression
+
+
+def _even_in(expression, s):
+    """The expression with every power of s, a sign, reduced by s^2 = 1."""
+    return sp.expand(expression.replace(lambda e: e.is_Pow and e.base == s and e.exp.is_Integer,
+                                        lambda e: s ** (int(e.exp) % 2)))
 
 
 def _factored_root(power):
@@ -1201,6 +1259,10 @@ class Reader:
         text = re.sub(r"\\[,;:!>]", " ", text)
         text = re.sub(r"\\ ", " ", text)
         text = text.replace("\\cdot", "*")
+        # |z| is the absolute value of a coordinate and \mathrm{sgn}(z) its sign, as a metric
+        # with a kink writes them; _on_a_kink says how they are read.
+        text = re.sub(r"\|\s*(\\?[A-Za-z]+)\s*\|", r" Abs(\1) ", text)
+        text = text.replace("\\mathrm{sgn}", " sign ")
         if self.dirac:
             text = re.sub(r"\\delta\s*('*)\s*\(", lambda m: f" DIRAC{len(m.group(1))}(", text)
         for name in sorted(self.primed, key=len, reverse=True):
@@ -1333,6 +1395,11 @@ class Dimensions:
             for variable, order in expression.variable_count:
                 out /= self(variable) ** order
             return out
+        if isinstance(expression, sp.Abs):
+            return self(expression.args[0])
+        if isinstance(expression, sp.sign):
+            self(expression.args[0])
+            return sp.Integer(1)
         if isinstance(expression, sp.DiracDelta):
             # The delta carries the inverse of its argument, and each derivative one more.
             order = expression.args[1] if len(expression.args) > 1 else 0
@@ -1399,7 +1466,7 @@ def check_dimensions(report, reader, dimensions, where, entry, coords):
         if field not in entry:
             continue
         label = f"{where}.{field}"
-        text = entry[field].split("=", 1)[1] if "=" in entry[field] else entry[field]
+        text, _ = scalar_parts(entry[field])
         value = read(label, text)
         if value is not None:
             term_by_term(label, sp.expand(value), FIELD_DIMENSIONS[field])
@@ -1721,14 +1788,41 @@ def compare_block(report, reader, where, published, computed, variance, coords, 
             report.disagree(where, f"{names} is missing, sympy says {norm(weighted)}")
 
 
+WHERE = re.compile(r"\s*\\;\\text\{for\}\\;\s*(\\?[A-Za-z]+)\s*\\neq\s*0\s*$")
+
+
+def scalar_parts(published):
+    """A published scalar as (its value, the coordinate it holds away from the zero of, or None).
+
+    The domain wall's Kretschmann scalar is written "K = 0 \\;\\text{for}\\; z \\neq 0": its
+    Riemann tensor carries delta(z), and the square of a delta is no distribution, so the
+    scalar is stated where z is not zero, and compared there by off_support.
+    """
+    text = published.split("=", 1)[1] if "=" in published.split("\\;")[0] else published
+    found = WHERE.search(text)
+    if found is None:
+        return text, None
+    return text[:found.start()], found.group(1)
+
+
+def off_support(expression, x):
+    """The expression where the coordinate x is not zero: every delta of x set to zero."""
+    return expression.replace(lambda e: isinstance(e, sp.DiracDelta) and e.args[0].has(x), lambda e: sp.Integer(0))
+
+
 def compare_scalar(report, reader, where, published, computed):
-    text = published.split("=", 1)[1] if "=" in published else published
+    text, away = scalar_parts(published)
     try:
         value = reader.surface(reader(text))
     except LatexError as error:
         report.skip(where, str(error))
         return
     computed = reader.surface(computed)
+    if away is not None:
+        if away not in reader.symbol:
+            report.disagree(where, f"{published!r} holds away from {away}, which is not a coordinate")
+            return
+        computed = off_support(computed, reader.symbol[away])
     if norm(value - computed) != 0:
         report.disagree(where, f"published as {published.strip()}, sympy says {norm(computed)}")
 

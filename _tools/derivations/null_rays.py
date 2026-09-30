@@ -1607,9 +1607,12 @@ CAPTIONS = {
 # ---------------------------------------------------------------- reading a chart
 
 def strip_lhs(latex):
-    """'K = ...' -> '...'; a bare value is returned unchanged."""
+    """'K = ...' -> '...'; a bare value is returned unchanged, and a condition such as the
+    domain wall's "\\;\\text{for}\\; z \\neq 0" is left off, since every ray is traced off the
+    zero it names."""
     head, eq, tail = latex.partition("=")
-    return tail if eq and len(head.strip()) <= 3 else latex
+    value = tail if eq and len(head.strip()) <= 3 else latex
+    return vm.scalar_parts(value)[0]
 
 
 def published_matrix(reader, entry, field_name):
