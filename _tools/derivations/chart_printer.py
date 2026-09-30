@@ -21,7 +21,8 @@ import sympy as sp
 
 import verify_metrics as vm
 
-GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell", "alpha"}
+GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell", "alpha",
+         "Lambda"}
 # A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
 ACCENTED = {"tildephi": "\\tilde\\phi"}
 TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
@@ -53,7 +54,8 @@ class Sum:
 
 
 class Printer:
-    def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None, factors=None, named=None):
+    def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None, factors=None, named=None,
+                 rising=(), flip=True):
         """coords: coordinate symbols in chart order.
         primed: names of functions of one variable printed with primes.
         lead: generators, most significant first, that order the terms of a sum.
@@ -62,11 +64,18 @@ class Printer:
             would be, so a factor such as 1 + alpha r cos(theta) keeps the order it is written in.
         collect: a function turning the polynomial numerator of a value into a Sum.
         factors: generators in the order they are written within a product, lead by default.
+        rising: generators, most significant first, that order the terms of a sum before
+            lead does, lowest power first, so that 3r - 3r_s - Lambda r^3 keeps the order of
+            1 - r_s/r - Lambda r^2/3.
+        flip: whether -(A - B)/D is printed as (B - A)/D; a chart whose sums keep one order
+            throughout passes False.
         """
         self.coords = list(coords)
         self.primed = set(primed)
         self.lead = list(lead)
         self.factors = list(lead if factors is None else factors)
+        self.rising = list(rising)
+        self.flip = flip
         self.overrides = dict(overrides or {})
         self.named = dict(named or {})
         self.collect = collect
@@ -76,6 +85,9 @@ class Printer:
         _, rest = term.as_coeff_Mul()
         powers = rest.as_powers_dict()
         out = []
+        for g in self.rising:
+            d = sp.sympify(powers.get(g, 0))
+            out.append(d if d.is_Number else 0)
         for g in self.lead:
             d = sp.sympify(powers.get(g, 0))
             out.append(-d if d.is_Number else 0)
@@ -213,7 +225,7 @@ class Printer:
                 done.append((base, exponent))
             out.append(done)
         # -(A - B)/D reads better as (B - A)/D.
-        if top and sign < 0 and out[1]:
+        if self.flip and top and sign < 0 and out[1]:
             sums = [i for i, (b, k) in enumerate(out[0]) if isinstance(b, Sum) and k == 1]
             if len(sums) == 1:
                 i = sums[0]

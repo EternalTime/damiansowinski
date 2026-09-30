@@ -741,6 +741,38 @@
     "embedding": "4181f245af34d03e"
   },
   {
+    "id": "schwarzschild_de_sitter",
+    "name": "Schwarzschild-de Sitter",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "black hole",
+      "mass",
+      "cosmological constant",
+      "positive cosmological constant",
+      "de Sitter",
+      "singularity",
+      "curvature singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "cosmological horizon",
+      "white hole",
+      "maximal extension",
+      "causal structure",
+      "extremal",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "facb4e3fb6c18223"
+  },
+  {
     "id": "taub_nut",
     "name": "Taub-Newman-Unti-Tamburino",
     "tags": [
