@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
-schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai and aichelburg_sexl, and Godel's cylindrical chart.
+schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl
+and khan_penrose, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -819,6 +820,129 @@ def aichelburg_sexl(system):
 AS_CHARTS = ["cartesian", "null_cartesian", "null_cylindrical"]
 
 
+# -- Khan-Penrose ------------------------------------------------------------------------
+
+KP_NULL_LINE = (
+    "ds^2 = -\\dfrac{2L^2\\left(1 - u^2 - v^2\\right)^{3/2}}{\\sqrt{1 - u^2}\\sqrt{1 - v^2}"
+    "\\left(uv + \\sqrt{1 - u^2}\\sqrt{1 - v^2}\\right)^2}du\\,dv"
+    " + \\left(1 - u^2 - v^2\\right)\\dfrac{1 + u\\sqrt{1 - v^2} + v\\sqrt{1 - u^2}}"
+    "{1 - u\\sqrt{1 - v^2} - v\\sqrt{1 - u^2}}dx^2"
+    " + \\left(1 - u^2 - v^2\\right)\\dfrac{1 - u\\sqrt{1 - v^2} - v\\sqrt{1 - u^2}}"
+    "{1 + u\\sqrt{1 - v^2} + v\\sqrt{1 - u^2}}dy^2")
+KP_COSMOLOGICAL_LINE = (
+    "ds^2 = \\dfrac{L^2\\left(\\cos\\tau\\right)^{3/2}}{2\\sqrt{\\cos\\sigma}}\\left(-d\\tau^2 + d\\sigma^2\\right)"
+    " + \\dfrac{\\cos\\sigma}{\\cos\\tau}\\left(\\left(1 + \\sin\\tau\\right)^2dx^2"
+    " + \\left(1 - \\sin\\tau\\right)^2dy^2\\right)")
+
+
+def khan_penrose():
+    """The Khan-Penrose spacetime where both waves have passed, in two charts. The first is
+    Khan and Penrose's null chart, in the form J. Frauendiener, C. Stevens and B. Whale give as
+    their eq. (11), Phys. Rev. D 89, 104026 (2014), with the signature flipped and the focal
+    length L restored on the plane of u and v; its g_xx factor (R + Q)(W + P)/((R - Q)(W - P))
+    is written as (1 + S)/(1 - S) with S = u sqrt(1 - v^2) + v sqrt(1 - u^2), which it equals.
+    The second is the chart of tau = arcsin u + arcsin v and sigma = arcsin u - arcsin v, whose
+    sines are the t and z of J. B. Griffiths and M. Santano-Roco, eq. (42), Class. Quantum
+    Grav. 19, 4273 (2002); before it is written, its metric pulled back through that map is
+    checked equal to the null chart's at random points.
+
+    Every radicand of the null chart is positive where the chart is claimed, but each of its
+    irreducible factors, u - 1 among them, is normalised by the checker to the sign that is
+    negative there, so the checker reads sqrt(1 - u^2) as i sqrt(u - 1) sqrt(u + 1). That is
+    a consistent choice of root, and the values it computes are printed back in real radicals:
+    i sqrt(u - 1) sqrt(u + 1) as sqrt(1 - u^2), and the same for v and for 1 - u^2 - v^2."""
+    null_coords = ["u", "v", "x", "y"]
+    parameters = ["L"]
+    probe = vm.Reader(null_coords, parameters, ())
+    u, v, L = probe.symbol["u"], probe.symbol["v"], probe.parameters["L"]
+    a, b, c = sp.symbols("KPa KPb KPc", positive=True)
+    PA, PB, PC = sp.Symbol("KPA"), sp.Symbol("KPB"), sp.Symbol("KPC")
+    named = [(PA, 1 - u ** 2, "1 - u^2"), (PB, 1 - v ** 2, "1 - v^2"), (PC, 1 - u ** 2 - v ** 2, "1 - u^2 - v^2")]
+    factors = named_factors(named, [(1 + u, 1 - u, PA), (1 + v, 1 - v, PB)])
+    reduce_to = {a: 1 - u ** 2, b: 1 - v ** 2, c: 1 - u ** 2 - v ** 2}
+
+    def real_radicals(value):
+        value = value.subs({sp.sqrt(u - 1): -sp.I * a / sp.sqrt(u + 1), sp.sqrt(v - 1): -sp.I * b / sp.sqrt(v + 1),
+                            sp.sqrt(u ** 2 + v ** 2 - 1): -sp.I * c})
+        numerator, denominator = sp.fraction(sp.together(sp.expand(value)))
+        gens = (a, b, c)
+
+        def reduced(poly):
+            poly = sp.Poly(sp.expand(poly), *gens)
+            out = 0
+            for (i, j, k), coefficient in poly.terms():
+                out += coefficient * (reduce_to[a] ** (i // 2) * a ** (i % 2) * reduce_to[b] ** (j // 2) * b ** (j % 2)
+                                      * reduce_to[c] ** (k // 2) * c ** (k % 2))
+            return sp.expand(out)
+
+        value = reduced(numerator) / reduced(denominator)
+        if value.has(sp.I):
+            raise AssertionError(f"khan_penrose: a value stays complex in real radicals: {value}")
+        return value
+
+    def pretty(value):
+        out = factors(real_radicals(value))
+        return out.subs({a: sp.sqrt(PA), b: sp.sqrt(PB), c: sp.sqrt(PC)})
+
+    domains = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)"]
+    null = {
+        "metric_id": "khan_penrose",
+        "system": {"id": "double_null", "name": "Double Null", "coords": null_coords,
+                   "domains": ["u \\in [0, 1)", "v \\in [0, 1)"] + domains + ["u^2 + v^2 < 1"],
+                   "parameters": parameters, "line_element": KP_NULL_LINE},
+        "chart_line_element": KP_NULL_LINE,
+        "printer": {"lead": [L, u, v], "named": {p: text for p, _, text in named}},
+        "pretty": pretty,
+    }
+    cosmological_coords = ["\\tau", "\\sigma", "x", "y"]
+    cosmological = {
+        "metric_id": "khan_penrose",
+        "system": {"id": "cosmological", "name": "Cosmological", "coords": cosmological_coords,
+                   "domains": ["\\tau \\in [0, \\pi/2)", "\\sigma \\in (-\\pi/2, \\pi/2)"] + domains
+                   + ["|\\sigma| \\le \\tau"],
+                   "parameters": parameters, "line_element": KP_COSMOLOGICAL_LINE},
+        "chart_line_element": KP_COSMOLOGICAL_LINE,
+        "printer": {"lead": [vm.Reader(cosmological_coords, parameters, ()).parameters["L"]]},
+        "check": khan_penrose_pullback,
+    }
+    return [null, cosmological]
+
+
+def khan_penrose_pullback(chart, points=24):
+    """J^T g J, with g the cosmological metric and J the Jacobian of tau = arcsin u + arcsin v,
+    sigma = arcsin u - arcsin v, against the null chart's metric, at random points where both
+    waves have passed, to forty digits. Both line elements are read as printed, with sympy's
+    principal roots, which are the real roots there."""
+    null_coords, cosmological_coords = ["u", "v", "x", "y"], ["\\tau", "\\sigma", "x", "y"]
+    rn, rc = vm.Reader(null_coords, ["L"], ()), vm.Reader(cosmological_coords, ["L"], ())
+
+    def matrix(reader, line, coords):
+        form = sp.expand(reader(line.partition("=")[2]))
+        d = [reader.differential[name] for name in coords]
+        return sp.Matrix(4, 4, lambda i, j: form.coeff(d[i], 2) if i == j
+                         else form.coeff(d[i], 1).coeff(d[j], 1) / 2)
+
+    gn, gc = matrix(rn, KP_NULL_LINE, null_coords), matrix(rc, KP_COSMOLOGICAL_LINE, cosmological_coords)
+    u, v, x, y = (rn.symbol[n] for n in null_coords)
+    image = [sp.asin(u) + sp.asin(v), sp.asin(u) - sp.asin(v), x, y]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], [u, v, x, y][j]))
+    at = dict(zip((rc.symbol[n] for n in cosmological_coords), image))
+    at[rc.parameters["L"]] = rn.parameters["L"]
+    difference = J.T * gc.subs(at) * J - gn
+    rng = __import__("random").Random(9)
+    checked = 0
+    while checked < points:
+        p = {u: sp.Rational(rng.randint(1, 999), 1000), v: sp.Rational(rng.randint(1, 999), 1000),
+             rn.parameters["L"]: sp.Rational(rng.randint(1, 50), 10)}
+        if p[u] ** 2 + p[v] ** 2 >= 1:
+            continue
+        worst = max(abs(sp.N(difference[i, j].subs(p), 40)) for i in range(4) for j in range(4))
+        if worst > sp.Float("1e-30"):
+            raise AssertionError(f"khan_penrose: the cosmological metric pulled back misses the null chart's "
+                                 f"by {worst} at {p}")
+        checked += 1
+
+
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
@@ -827,7 +951,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "milne": [lambda s=s: milne(s) for s in ("comoving_hyperbolic", "comoving_spherical", "logarithmic_time", "inertial")],
           "einstein_rosen_waves": [lambda s=s: einstein_rosen(s) for s in ("cylindrical", "null")],
           "nariai": [lambda s=s: nariai(s) for s in ("static", "global", "conformal")],
-          "aichelburg_sexl": [lambda s=s: aichelburg_sexl(s) for s in AS_CHARTS]}
+          "aichelburg_sexl": [lambda s=s: aichelburg_sexl(s) for s in AS_CHARTS],
+          "khan_penrose": khan_penrose}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------

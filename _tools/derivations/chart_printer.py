@@ -23,7 +23,7 @@ import sympy as sp
 import verify_metrics as vm
 
 GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell", "alpha",
-         "Lambda", "gamma"}
+         "Lambda", "gamma", "sigma"}
 # A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
 ACCENTED = {"tildephi": "\\tilde\\phi"}
 TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
@@ -344,6 +344,9 @@ class Printer:
         if isinstance(base, sp.log) and exponent == 1:
             # The argument is one fraction, as ln((x^2 + y^2)/rho_0^2), however sympy expanded it.
             return "\\ln\\left(" + self.expr(sp.factor(base.args[0])) + "\\right)"
+        if isinstance(base, TRIG) and not exponent.is_Integer:
+            # The reader takes \cos^2\tau but not \cos^{3/2}\tau, so a fractional power is bracketed.
+            return "\\left(\\" + base.func.__name__ + self.trig_argument(base.args[0]) + "\\right)^" + _sup(exponent)
         if isinstance(base, TRIG):
             head = "\\" + base.func.__name__
             if exponent != 1:
