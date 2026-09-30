@@ -379,6 +379,17 @@ The most general stationary black hole solution, carrying mass, angular momentum
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json
 - chart Kerr-Newman (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\dfrac{2GMr}{c^2} - r_Q^2}{r^2 + a^2\cos^2\theta}\right)c^2 dt^2 - \dfrac{2a\sin^2\theta\left(\dfrac{2GMr}{c^2} - r_Q^2\right)}{r^2 + a^2\cos^2\theta}c\,dt\,d\phi + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{2GMr}{c^2} + r_Q^2}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2 + \dfrac{a^2\sin^2\theta\left(\dfrac{2GMr}{c^2} - r_Q^2\right)}{r^2 + a^2\cos^2\theta}\right)\sin^2\theta\,d\phi^2$$
 
+### Khan-Penrose Colliding Plane Waves
+
+Two impulsive plane gravitational waves colliding head on in flat space. Each focuses the other, and the vacuum where both have passed ends in a spacelike curvature singularity.
+
+- id: `khan_penrose`
+- tags: vacuum, vacuum solution, plane wave, gravitational wave, colliding plane waves, impulsive wave, curvature singularity, fold singularity, nonlinear, exact solution, time-dependent, dynamical, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/khan_penrose.json
+- chart Double Null: coordinates $(u, v, x, y)$, $$ds^2 = -\dfrac{2L^2\left(1 - u^2 - v^2\right)^{3/2}}{\sqrt{1 - u^2}\sqrt{1 - v^2}\left(uv + \sqrt{1 - u^2}\sqrt{1 - v^2}\right)^2}du\,dv + \left(1 - u^2 - v^2\right)\dfrac{1 + u\sqrt{1 - v^2} + v\sqrt{1 - u^2}}{1 - u\sqrt{1 - v^2} - v\sqrt{1 - u^2}}dx^2 + \left(1 - u^2 - v^2\right)\dfrac{1 - u\sqrt{1 - v^2} - v\sqrt{1 - u^2}}{1 + u\sqrt{1 - v^2} + v\sqrt{1 - u^2}}dy^2$$
+- chart Cosmological: coordinates $(\tau, \sigma, x, y)$, $$ds^2 = \dfrac{L^2\left(\cos\tau\right)^{3/2}}{2\sqrt{\cos\sigma}}\left(-d\tau^2 + d\sigma^2\right) + \dfrac{\cos\sigma}{\cos\tau}\left(\left(1 + \sin\tau\right)^2dx^2 + \left(1 - \sin\tau\right)^2dy^2\right)$$
+
 ### Krasnikov Tube
 
 A tube of modified spacetime laid down along the path of an outbound ship, flat inside but with its light cones tipped so far open that the trip home can be superluminal. The outbound leg is no faster than light, yet the round trip can be made arbitrarily short by clocks left at home, and holding the tube open takes negative energy density.
