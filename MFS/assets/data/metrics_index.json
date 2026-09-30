@@ -503,7 +503,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ac2f2b26f2173f28"
+    "version": "ac2f2b26f2173f28",
+    "diagrams": "fd25dd652b32e2d9",
+    "conformal": "65162ce0392363df",
+    "embedding": "2152487c58d8b99c"
   },
   {
     "id": "minkowski",
