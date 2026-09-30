@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 42,
+  "count": 43,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3862,6 +3862,179 @@
           ],
           "ricci_scalar": "R = -\\dfrac{6\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)}{\\Omega^3}",
           "kretschmann": "K = \\dfrac{2\\left(\\left(3\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_t^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_x^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_y^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_z^2\\Omega\\right)^2\\right) + 16\\left(\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)^2 + \\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)^2 + \\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_x\\Omega - \\Omega\\,\\partial_t\\partial_x\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)^2\\right) + 4\\Omega^2\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)^2}{\\Omega^8}"
+        }
+      ]
+    },
+    {
+      "id": "melvin",
+      "name": "Melvin Magnetic Universe",
+      "short_name": "Melvin",
+      "description": "A static bundle of parallel magnetic field lines held together by the gravity of the field's own energy, with no matter anywhere, the solution William Bonnor found in 1954 and Mael Melvin found again in 1964. Frederick Ernst placed a Schwarzschild black hole inside it in 1976.",
+      "tags": [
+        "electrovacuum",
+        "electromagnetic field",
+        "magnetic field",
+        "static",
+        "stationary",
+        "cylindrical symmetry",
+        "axisymmetric",
+        "black hole",
+        "event horizon",
+        "horizon",
+        "singularity",
+        "curvature singularity",
+        "not asymptotically flat",
+        "geon",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The field strength $B$ is an inverse length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "bonnor1954",
+        "bini2022",
+        "wheeler1955",
+        "melvin1964",
+        "melvin1965",
+        "thorne1965b",
+        "garfinkle1994b",
+        "kastor2021",
+        "wald1974",
+        "harrison1968",
+        "ernst1976b",
+        "gibbons2013",
+        "bicak2000b",
+        "ernst1976c",
+        "hiscock1981b",
+        "radu2002",
+        "ernst1976",
+        "gibbons1986",
+        "garfinkle1994",
+        "dowker1994",
+        "tseytlin1995"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "B",
+              "description": "Magnetic field strength on the axis, an inverse length, $B = \\sqrt{G}\\,B_0/c^2$ with $B_0$ the field in Gaussian units; the vector potential is $A_\\phi = \\dfrac{c^2}{\\sqrt{G}}\\,\\dfrac{2B\\rho^2}{4 + B^2\\rho^2}$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2\\left(-c^2dt^2 + d\\rho^2 + dz^2\\right) + \\dfrac{\\rho^2}{\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16384B^4\\left(3B^4\\,\\rho^4 - 24B^2\\,\\rho^2 + 80\\right)}{\\left(4 + B^2\\rho^2\\right)^8}"
+        },
+        {
+          "id": "ernst",
+          "name": "Ernst",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, where the horizon sits"
+            },
+            {
+              "symbol": "B",
+              "description": "Magnetic field strength of Melvin's universe around the hole, an inverse length, $B = \\sqrt{G}\\,B_0/c^2$ with $B_0$ in Gaussian units; the vector potential is $A_\\phi = \\dfrac{c^2}{\\sqrt{G}}\\,\\dfrac{2Br^2\\sin^2\\theta}{4 + B^2r^2\\sin^2\\theta}$"
+            }
+          ],
+          "convention": "We use the coordinates of Frederick Ernst, $(t, r, \\theta, \\phi)$, Schwarzschild's with $t$ carrying dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2\\left(-\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2d\\theta^2\\right) + \\dfrac{r^2\\sin^2\\theta}{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2}{1 - \\dfrac{r_s}{r}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{49152B^8\\,r^{10}\\sin^4\\theta - 36864B^8\\,r^9\\,r_s\\sin^8\\theta - 73728B^8\\,r^9\\,r_s\\sin^6\\theta + 64512B^8\\,r^8\\,r_s^2\\sin^8\\theta - 393216B^6\\,r^8\\sin^2\\theta + 147456B^6\\,r^7\\,r_s\\sin^6\\theta + 688128B^6\\,r^7\\,r_s\\sin^4\\theta - 442368B^6\\,r^6\\,r_s^2\\sin^6\\theta + 1310720B^4\\,r^6 + 589824B^4\\,r^5\\,r_s\\sin^4\\theta - 3014656B^4\\,r^5\\,r_s\\sin^2\\theta + 1015808B^4\\,r^4\\,r_s^2\\sin^4\\theta - 2359296B^2\\,r^3\\,r_s\\sin^2\\theta + 1572864B^2\\,r^3\\,r_s + 786432B^2\\,r^2\\,r_s^2\\sin^2\\theta + 786432r_s^2}{r^6\\left(4 + B^2r^2\\sin^2\\theta\\right)^8}"
         }
       ]
     },

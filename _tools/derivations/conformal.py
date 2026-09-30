@@ -3657,7 +3657,6 @@ def melvin(ck, src):
     v.label_xt([-HALF, 0], "exterior", cls="region")
     v.label_xt([0, 1.15], "black hole", cls="region")
     v.label_xt([0, -1.15], "white hole", cls="region")
-    label_on(v, T.pq("I", 0.0, 4.0), "$r = 2/B$")
     v.legend("cover", "the region that $t$ and $r > r_s$ cover")
     v.legend("r", "$r$ constant, at $1.25$, $2$, $3$ and $6\\,r_s$")
     v.legend("surface", "$r = 2/B$, the widest circle of the equator")

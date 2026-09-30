@@ -455,6 +455,17 @@ A spacetime construction containing a worldline of infinite proper length that l
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = \Omega^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
 
+### Melvin Magnetic Universe
+
+A static bundle of parallel magnetic field lines held together by the gravity of the field's own energy, with no matter anywhere, the solution William Bonnor found in 1954 and Mael Melvin found again in 1964. Frederick Ernst placed a Schwarzschild black hole inside it in 1976.
+
+- id: `melvin`
+- tags: electrovacuum, electromagnetic field, magnetic field, static, stationary, cylindrical symmetry, axisymmetric, black hole, event horizon, horizon, singularity, curvature singularity, not asymptotically flat, geon, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/melvin.json
+- chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = \left(1 + \dfrac{B^2\rho^2}{4}\right)^2\left(-c^2dt^2 + d\rho^2 + dz^2\right) + \dfrac{\rho^2}{\left(1 + \dfrac{B^2\rho^2}{4}\right)^2}d\phi^2$$
+- chart Ernst: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \left(1 + \dfrac{B^2r^2\sin^2\theta}{4}\right)^2\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2d\theta^2\right) + \dfrac{r^2\sin^2\theta}{\left(1 + \dfrac{B^2r^2\sin^2\theta}{4}\right)^2}d\phi^2$$
+
 ### Milne Universe
 
 Edward Arthur Milne's expanding universe of 1932: test particles flying apart from one event of flat spacetime with every speed below that of light. In comoving coordinates it is the empty open Friedmann universe, with scale factor $ct$ and hyperbolic space at each moment.

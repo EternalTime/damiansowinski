@@ -3199,7 +3199,11 @@ class Slices(unittest.TestCase):
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
                     "majumdar_papapetrou/isotropic/radial": {"two_holes"},
-                    "conformal majumdar_papapetrou/one_hole": {"two_holes"}}
+                    "conformal majumdar_papapetrou/one_hole": {"two_holes"},
+                    # Melvin's universe with no hole and Ernst's hole inside it are two spacetimes of one entry,
+                    # each chart's drawings marking its own moment.
+                    "melvin/cylindrical/radial": {"ernst"}, "conformal melvin/cylindrical": {"ernst"},
+                    "melvin/ernst/radial": {"universe"}, "conformal melvin/ernst": {"universe"}}
 
     def reach(self, surface, system=None, reference=False):
         xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))
