@@ -714,7 +714,11 @@ A view's `movie` plays a run of frames in turn, as the captain asked on 30 Septe
 
 - `frames`: at least two surfaces, each as `surfaces` defines one, with its `label` and in place of `time` its `value`, strictly increasing from frame to frame; a movie in time holds each surface of `surfaces` as one of its frames, with the same pieces and rings, and runs from the first to the last.
 - `variable`: TeX naming what `value` is, as `$ct$` or `$\Delta\phi$`.
-- `seconds`: how long one pass takes: `value` runs at a steady rate from the first frame to the last in that time, the last frame is held for one step of the mean, and the movie starts again.
+- `seconds`: how long one pass takes: `value` runs at a steady rate from the first frame to the last in that time.
+- `loop`, optional: how the movie goes on after a pass, `"once"` when absent.
+  Played `"once"`, frame $k$ is shown while `value` runs from its value to the next frame's, the last frame is held for one step of the mean, and the movie starts again from the first.
+  Played `"pingpong"`, `value` runs forward to the last frame, back to the first and forward again at the same steady rate, and the frame shown is the one whose value is nearest, so with evenly spaced values every frame is shown for one step, the frames run $\dots, n-2, n-1, n-2, \dots, 1, 0, 1, \dots$ with each end shown once at its turnaround, and the clock starts half a step before the first frame so that it too is shown for one step.
+  Only the cosmic string's cone unrolling carries `"pingpong"`, as the captain asked on 30 September 2026, and a client that plays movies honours it.
 - `turns`: `false` where turning the figure adds nothing, as for FRW's sphere, which looks the same from every side; absent otherwise.
 
 Every frame stands on its own axis at the one origin, and `figure` draws the first frame alone in a box that holds every frame, with a label that carries `frame` and names the frame shown.
@@ -812,6 +816,7 @@ The arrow keys turn it by 15 degrees once the drawing has the focus, which a cli
 `dragged()`, `keyed()` and `turned()` in `MFS/assets/turn.js` are those rules, and the tests drag a surface of revolution, a height over a plane and a figure of light cones with them.
 
 The page plays a movie as `wireMovie()` in `_layouts/mfs.html` says: it plays once drawn and only while it is on the screen, keeping each frame once drawn at the figure's own camera, and a reader who asks for reduced motion finds it paused on its first frame.
+`movieFrame()` in `MFS/assets/turn.js` is the frame shown at each moment of playing, by the movie's `seconds` and `loop`, and the tests run it in Node.
 The button in the top left corner of its frame, in the reset's size and colours and pink while pressed, plays and pauses it, and the label below the drawing names the frame shown.
 The movies of FRW and the Milne universe do not turn under the hand, and every other movie turns while it plays.
 The print copy prints the first frame.

@@ -8,6 +8,7 @@ import contextlib
 import copy
 import decimal
 import io
+import itertools
 import json
 import math
 import re
@@ -2804,6 +2805,64 @@ class StacksAndMovies(unittest.TestCase):
         self.assertAlmostEqual(2 * math.pi - (last["v"][-1] - last["v"][0]), delta, delta=1e-12)
         self.assertAlmostEqual(math.degrees(delta), 36, delta=1e-12)
         self.assertEqual(frames[-1]["label"], "$\\Delta\\phi = 36° = \\delta$")
+
+    def test_only_the_cosmic_string_plays_forward_and_back(self):
+        loops = {name: v["movie"].get("loop", "once") for name, data in self.embedding.items()
+                 for v in data["views"] if "movie" in v}
+        self.assertEqual({name for name, loop in loops.items() if loop != "once"}, {"cosmic_string"})
+        self.assertEqual(loops["cosmic_string"], "pingpong")
+        self.assertNotIn("loop", next(v for v in self.embedding["frw"]["views"] if "movie" in v)["movie"])
+        view = copy.deepcopy(next(v for v in self.embedding["cosmic_string"]["views"] if "movie" in v))
+        build.check_movie("cosmic_string", view)
+        view["movie"]["loop"] = "bounce"
+        with self.assertRaises(build.DataError) as raised:
+            build.check_movie("cosmic_string", view)
+        self.assertIn("neither 'once' nor 'pingpong'", str(raised.exception))
+
+    def frames_shown(self, movies, times):
+        """The frame MfsTurn.movieFrame() shows of each movie at each of `times` in milliseconds,
+        run in Node as the page runs it."""
+        if shutil.which("node") is None:
+            self.skipTest("Node is not installed, so the page's movie player cannot be run")
+        script = ("const t = require(process.argv[1]); const [movies, times] = JSON.parse(require('fs').readFileSync(0));"
+                  "process.stdout.write(JSON.stringify(movies.map(m => times.map(ms => t.movieFrame(m, ms)))));")
+        movies = [{k: m[k] for k in ("seconds", "loop") if k in m} | {"frames": [{"value": f["value"]} for f in m["frames"]]}
+                  for m in movies]
+        run = subprocess.run(["node", "-e", script, str(build.ROOT / "MFS" / "assets" / "turn.js")],
+                             input=json.dumps([movies, times]), capture_output=True, text=True, timeout=120)
+        self.assertEqual(run.returncode, 0, run.stderr[-2000:])
+        return json.loads(run.stdout)
+
+    def test_the_cosmic_string_turns_round_at_each_end_without_a_stutter(self):
+        movie = next(v for v in self.embedding["cosmic_string"]["views"] if "movie" in v)["movie"]
+        n, step = len(movie["frames"]), 1000 * movie["seconds"] / (len(movie["frames"]) - 1)
+        # At the middle of each step: 0, 1, ..., n - 2, n - 1, n - 2, ..., 1, 0, 1, ..., each end once.
+        [shown] = self.frames_shown([movie], [(j + 0.5) * step for j in range(4 * (n - 1) + 1)])
+        up, down = list(range(n)), list(range(n - 2, 0, -1))
+        self.assertEqual(shown, up + down + up + down + [0])
+        # Millisecond by millisecond over two cycles, every frame, the ends and the first included,
+        # stays on the screen for one step, so the turnarounds keep the pace.
+        total = int(4 * (n - 1) * step)
+        [shown] = self.frames_shown([movie], list(range(total)))
+        runs = [len(list(g)) for _, g in itertools.groupby(shown)]
+        self.assertEqual(len(runs), 4 * (n - 1))
+        for run in runs[:-1]:
+            self.assertLessEqual(abs(run - step), 1, runs)
+        self.assertTrue(all(abs(a - b) == 1 for a, b in zip(shown, shown[1:]) if a != b))
+
+    def test_every_other_movie_plays_once_through_and_starts_again(self):
+        movies = {name: v["movie"] for name, data in self.embedding.items() for v in data["views"]
+                  if "movie" in v and v["movie"].get("loop", "once") == "once"}
+        self.assertEqual(set(movies), set(self.MOVIES) - {"cosmic_string"})
+        times = list(range(0, 2 * 1000 * max(m["seconds"] for m in movies.values()) + 2000, 7))
+        for (name, movie), shown in zip(movies.items(), self.frames_shown(list(movies.values()), times)):
+            values, period = [f["value"] for f in movie["frames"]], 1000 * movie["seconds"]
+            n = len(values)
+            want = []
+            for ms in times:
+                v = values[0] + (values[-1] - values[0]) * (ms % (period * n / (n - 1))) / period
+                want.append(max(k for k in range(n) if k == 0 or values[k] <= v))
+            self.assertEqual(shown, want, name)
 
     def test_the_page_plays_a_movie_and_holds_it_still_for_a_reader_who_asks(self):
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")

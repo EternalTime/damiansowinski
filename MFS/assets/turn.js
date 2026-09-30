@@ -163,6 +163,30 @@
   // Which frame of a movie draw() draws, the first until another is chosen.
   function frame(M, k) { M.frame = k; }
 
+  /* The frame of a movie shown `ms` milliseconds into playing it, as _tools/README.md, the
+     movie's `loop`, says. Its `value` runs at a steady rate, one pass from the first frame to the
+     last taking the movie's `seconds`. Played once, the default, frame k is shown from its value
+     to the next frame's, the last is held for one step of the mean, and the movie starts again.
+     Played "pingpong", the value runs forward and then back and on again, and the frame shown is
+     the one whose value is nearest, so every frame of evenly spaced values, the two ends
+     included, is shown for one step at each pass, and the ends once at each turnaround. The
+     clock starts half a step early, on the far side of the first frame, so the first frame too
+     is shown for one whole step at the start; a value halfway between two frames, to within
+     rounding, shows the earlier. */
+  function movieFrame(movie, ms) {
+    var values = movie.frames.map(function(fr) { return fr.value; }), n = values.length;
+    var span = values[n - 1] - values[0], period = 1000 * movie.seconds, k = 0, v;
+    if (movie.loop === 'pingpong') {
+      var half = period / (n - 1) / 2, p = ((ms - half) % (2 * period) + 2 * period) % (2 * period);
+      v = values[0] + span * (p < period ? p : 2 * period - p) / period;
+      while (k + 1 < n && (values[k] + values[k + 1]) / 2 < v - 1e-9 * span) k++;
+      return k;
+    }
+    v = values[0] + span * (ms % (period * n / (n - 1))) / period;
+    while (k + 1 < n && values[k + 1] <= v) k++;
+    return k;
+  }
+
   /* What each cone of the scene is tinted: 1 for one left clear and 2 on for the fill classes in
      order. Every cone takes its piece's tint from `turn.tint`, until `s`, one of the view's
      `shades` or null for none, is shown: then the cones of its piece between the circles at its
@@ -1225,7 +1249,7 @@
     return (M.kind === 'cones' ? drawCones : drawSurfaces)(M, azimuth, elevation, quick, sizes);
   }
 
-  var api = { camera: camera, prepare: prepare, draw: draw, frame: frame, shade: shade, dragged: dragged, keyed: keyed, turned: turned,
+  var api = { camera: camera, prepare: prepare, draw: draw, frame: frame, movieFrame: movieFrame, shade: shade, dragged: dragged, keyed: keyed, turned: turned,
               fitting: fitting, hidden: hidden, isolines: isolines, labelBox: labelBox, hull: hull };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.MfsTurn = api;
