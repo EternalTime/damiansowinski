@@ -669,7 +669,7 @@ def global_monopole(system_id):
     bare = "1 - \\Delta - \\dfrac{r_s}{r}"
     sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
     angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
-    horizon = ["r = r_s/(1 - \\Delta) \;\\text{(the horizon, for}\; r_s > 0\\text{)}"]
+    horizon = ["r = r_s/(1 - \\Delta) \\;\\text{(the horizon, for}\\; r_s > 0\\text{)}"]
     parameters = ["\\Delta", "r_s"]
     kretschmann = "\\dfrac{12r_s^2 + 8\\Delta\\,r_s\\,r + 4\\Delta^2r^2}{r^6}"
     if system_id == "conical":
