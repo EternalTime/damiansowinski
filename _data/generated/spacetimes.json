@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 34,
+  "count": 35,
   "spacetimes": [
     {
       "id": "alcubierre",
@@ -2718,6 +2718,272 @@
           ],
           "ricci_scalar": "R = -\\dfrac{6\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)}{\\Omega^3}",
           "kretschmann": "K = \\dfrac{2\\left(\\left(3\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_t^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_x^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_y^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_z^2\\Omega\\right)^2\\right) + 16\\left(\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)^2 + \\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)^2 + \\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_x\\Omega - \\Omega\\,\\partial_t\\partial_x\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)^2\\right) + 4\\Omega^2\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)^2}{\\Omega^8}"
+        }
+      ]
+    },
+    {
+      "id": "milne",
+      "name": "Milne Universe",
+      "short_name": "Milne",
+      "description": "Edward Arthur Milne's expanding universe of 1932: test particles flying apart from one event of flat spacetime with every speed below that of light. In comoving coordinates it is the empty open Friedmann universe, with scale factor $ct$ and hyperbolic space at each moment.",
+      "tags": [
+        "cosmology",
+        "cosmological",
+        "expanding universe",
+        "open universe",
+        "hyperbolic space",
+        "empty universe",
+        "flat",
+        "vacuum",
+        "vacuum solution",
+        "special relativity",
+        "homogeneous",
+        "isotropic",
+        "FLRW",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit.",
+      "references": [
+        "hubble1929",
+        "milne1932",
+        "friedmann1922",
+        "lemaitre1927",
+        "milne1933",
+        "milne1933note",
+        "robertson1933",
+        "kermack1933",
+        "milne1933remarks",
+        "friedmann1924",
+        "milne1934",
+        "mccrea1934",
+        "milne1935",
+        "robertson1935",
+        "walker1937",
+        "ellis2012",
+        "mukhanov2005",
+        "rindler1956",
+        "barrow2002",
+        "vaudrevange2007",
+        "khoury2002",
+        "turok2004",
+        "benoitlevy2012"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/milne.json",
+      "charts": [
+        {
+          "id": "comoving_hyperbolic",
+          "name": "Comoving Hyperbolic",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [],
+          "convention": "We use the cosmic time $t$, the proper time of each comoving particle since the event $t = 0$, and the hyperbolic angle $\\chi$, the rapidity of a comoving particle relative to the one at $\\chi = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + c^2t^2\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "c^2\\,t^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "c^2\\,t^2\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "c^2\\,t^2\\sinh^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "comoving_spherical",
+          "name": "Comoving Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [],
+          "convention": "We use the cosmic time $t$ and the comoving radius $r = \\sinh\\chi$, a pure number, the areal radius of the sphere through a point divided by $ct$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + c^2t^2\\left(\\dfrac{dr^2}{1 + r^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{c^2\\,t^2}{r^2 + 1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "c^2\\,t^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "c^2\\,t^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "logarithmic_time",
+          "name": "Logarithmic Time",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "t_0",
+              "description": "Cosmic time at which $\\tau = 0$, any positive time; it fixes only the origin of $\\tau$"
+            }
+          ],
+          "convention": "We use the logarithmic time $\\tau = t_0\\ln(t/t_0)$, with $t$ the cosmic time, and the hyperbolic angle $\\chi$. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = e^{2\\tau/t_0}\\left(-c^2d\\tau^2 + c^2t_0^2\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-e^{2\\tau/t_0}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "c^2\\,t_0^2e^{2\\tau/t_0}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "c^2\\,t_0^2e^{2\\tau/t_0}\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "c^2\\,t_0^2e^{2\\tau/t_0}\\sinh^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "inertial",
+          "name": "Inertial",
+          "coordinates": [
+            "T",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (0, \\infty)",
+            "R \\in [0, cT)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [],
+          "convention": "We use the inertial coordinates of the comoving particle at $\\chi = 0$, the time $T = t\\cosh\\chi$ and the distance $R = ct\\sinh\\chi$. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dR^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "0",
+          "kretschmann": "K = 0"
         }
       ]
     },
