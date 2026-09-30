@@ -589,6 +589,21 @@ DIAGRAMS = [
             marked=(("event", "-1/1000", 0, "the white hole's horizon"),), singular_runs=True,
             input="$m(u) = M$ for $u < 0$ and $0$ for $u > 0$, with $r_s = 2GM/c^2$: a shell of null "
                   "dust carrying off the whole mass $M$ along $u = 0$."),
+    # The C-metric on the two halves of its axis, where sin(theta) = 0 kills Gamma^theta_tt and
+    # Gamma^theta_rr and the null curves of the plane are null geodesics. Inside 2m and beyond
+    # 1/alpha the time function is r, taken the way Griffiths, Krtous and Podolsky's extensions
+    # take it: the black hole inside 2m and, beyond 1/alpha, the region to the future of the
+    # acceleration horizon, which ends on null infinity. The Hong-Teo plane of the inner axis
+    # runs on through y = 0, r = infinity, to null infinity at y = -1.
+    Diagram("c_metric", "spherical", "inner", "the inner axis, $\\theta = 0$", ("t", "r"), (0, 9, -4.5, 4.5),
+            "$r/m$", "$ct/m$", {"m": 1, "alpha": "1/6", "C": "3/4"}, {"theta": "0", "phi": "0"},
+            tau="Piecewise((-r, r < 2), (t, r < 6), (r, True))"),
+    Diagram("c_metric", "spherical", "outer", "the outer axis, $\\theta = \\pi$", ("t", "r"), (0, 6, -3, 3),
+            "$r/m$", "$ct/m$", {"m": 1, "alpha": "1/6", "C": "3/4"}, {"theta": "pi", "phi": "0"},
+            tau="Piecewise((-r, r < 2), (t, True))"),
+    Diagram("c_metric", "hong_teo", "inner", "the inner axis, $x = 1$", ("\\tau", "y"), (-1, 5, -3, 3),
+            "$y$", "$\\tau$", {"m": 1, "alpha": "1/6", "C": "3/4"}, {"x": "1", "phi": "0"},
+            tau="Piecewise((-y, y < 1), (tau, y < 3), (y, True))"),
 ]
 
 
@@ -1196,6 +1211,40 @@ CAPTIONS = {
         "horizon is the ingoing ray that stays at $r_s$ until the shell leaves and then crosses flat "
         "space to the centre, arriving at $cu = 2r_s$. Every ingoing ray that reaches the centre "
         "before that moment came out of the white hole, and every one after came in from far away.",
+    ],
+    ("c_metric", "spherical", "inner"): [
+        "The plane of $t$ and $r$ on the half axis between the black holes ($\\theta = 0$, $\\phi = 0$), "
+        "drawn for $\\alpha m = 1/6$. The curves drawn are null, and on the axis they are also null "
+        "geodesics, the paths light takes, since $\\Gamma^\\theta{}_{tt}$ and $\\Gamma^\\theta{}_{rr}$ carry a "
+        "factor $\\sin\\theta$. There $g^{rr} = (1 - 2m/r)(1 - \\alpha^2r^2)(1 + \\alpha r)^2$ vanishes at the "
+        "black hole horizon $r = 2m$ and at the acceleration horizon $r = 1/\\alpha = 6m$, and the cones close "
+        "at both.",
+        "Inside $2m$ and beyond $6m$ the coordinate $r$ is the time. We take the future from the extensions of "
+        "Jerry Griffiths, Pavel Krtouš, and Jiří Podolský across both horizons, which make the region inside "
+        "$2m$ the black hole, where the cones point to $r = 0$, and the region beyond $6m$ the one to the "
+        "future of the acceleration horizon, where the cones point to larger $r$ and null infinity lies ahead, "
+        "at $r = -1/\\alpha$ past $r = \\infty$. The Kretschmann scalar $48m^2(1 + \\alpha r)^6/r^6$ diverges "
+        "at $r = 0$.",
+    ],
+    ("c_metric", "spherical", "outer"): [
+        "The plane of $t$ and $r$ on the half axis beyond the black hole ($\\theta = \\pi$, $\\phi = 0$), drawn "
+        "for $\\alpha m = 1/6$, with the null curves null geodesics as on the inner axis. There the factor "
+        "$1 + \\alpha r\\cos\\theta = 1 - \\alpha r$ vanishes at $r = 1/\\alpha = 6m$, so on this half of the "
+        "axis the acceleration horizon lies at null infinity, where the plane ends. The cones close at "
+        "$r = 2m$, and inside it they point to $r = 0$, in the black hole.",
+        "With $C = 1/(1 + 2\\alpha m)$ this half of the axis carries the cosmic string, whose deficit angle "
+        "$8\\pi\\alpha m/(1 + 2\\alpha m)$ lies in the angle about the axis and leaves this plane unchanged. The "
+        "Kretschmann scalar $48m^2(1 - \\alpha r)^6/r^6$ diverges at $r = 0$ and vanishes at null infinity.",
+    ],
+    ("c_metric", "hong_teo", "inner"): [
+        "The plane of $\\tau$ and $y$ on the half axis between the black holes ($x = 1$, $\\phi = 0$), drawn "
+        "for $\\alpha m = 1/6$, with $y = 1/(\\alpha r)$ and $\\tau = \\alpha ct$. The coordinate $y$ runs on "
+        "through $y = 0$, where $r$ is infinite, to null infinity at $y = -1$, where $x + y$ vanishes. The cones "
+        "close at the acceleration horizon $y = 1$ and at the black hole horizon $y = 1/(2\\alpha m) = 3$.",
+        "Between $y = -1$ and $y = 1$ the coordinate $y$ is the time, and we take the future as Griffiths, "
+        "Krtouš, and Podolský do beyond the acceleration horizon, so that the cones point to smaller $y$ and "
+        "every future directed ray reaches null infinity. Beyond $y = 3$ they point to larger $y$, into the "
+        "black hole, whose singularity lies at $y = \\infty$.",
     ],
 }
 
@@ -2949,6 +2998,26 @@ CLOSED_FORMS = {
     ("pp_wave", "exact_plane_wave", "tz"): (lambda u, v: v, lambda u, v: u, None),
     ("krasnikov", "cylindrical", "tx"): (None, lambda t, x: t - x, None),
 }
+
+
+def _c_metric_rstar(y):
+    """alpha r* of the C-metric at alpha m = 1/6, in y = 1/(alpha r), up to a constant: Griffiths,
+    Krtous and Podolsky's eq. (10) with k_c = 3/8, k_a = -3/4 and k_o = 3/8."""
+    y = np.asarray(y, float)
+    return 3 / 8 * np.log(np.abs(1 + y)) - 3 / 4 * np.log(np.abs(1 - y)) + 3 / 8 * np.log(np.abs(1 - y / 3))
+
+
+CLOSED_FORMS.update({
+    ("c_metric", "spherical", "inner"):
+        (lambda t, r: t + 6 * _c_metric_rstar(6 / r), lambda t, r: t - 6 * _c_metric_rstar(6 / r),
+         lambda t, r: (np.abs(r - 2) > 0.05) & (np.abs(r - 6) > 0.05)),
+    ("c_metric", "spherical", "outer"):
+        (lambda t, r: t + 6 * _c_metric_rstar(6 / r), lambda t, r: t - 6 * _c_metric_rstar(6 / r),
+         lambda t, r: (np.abs(r - 2) > 0.05) & (np.abs(r - 6) > 0.05)),
+    ("c_metric", "hong_teo", "inner"):
+        (lambda tau, y: tau + _c_metric_rstar(y), lambda tau, y: tau - _c_metric_rstar(y),
+         lambda tau, y: (np.abs(y - 1) > 0.02) & (np.abs(y - 3) > 0.02) & (y > -0.98)),
+})
 # The cylinders of t and phi, where each family runs straight, dt = k dphi, and conserves
 # t - k phi: van Stockum's k = r(1 - r/R) moving right and -r(1 + r/R) moving left, and
 # Godel's sinh r (cosh r - sqrt 2 sinh r) and -sinh r (cosh r + sqrt 2 sinh r), which are the
