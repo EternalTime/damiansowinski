@@ -4,8 +4,284 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 37,
+  "count": 38,
   "spacetimes": [
+    {
+      "id": "aichelburg_sexl",
+      "name": "Aichelburg-Sexl Ultraboost",
+      "short_name": "Aichelburg-Sexl",
+      "description": "The gravitational field of a massless particle, the Schwarzschild field boosted to the speed of light with its energy held fixed. Spacetime is flat on either side of a single null plane, which carries an impulsive gravitational shock wave with the particle at its centre.",
+      "tags": [
+        "gravitational wave",
+        "shock wave",
+        "impulsive wave",
+        "pp-wave",
+        "massless particle",
+        "ultrarelativistic",
+        "boosted black hole",
+        "null source",
+        "vacuum",
+        "time-dependent",
+        "dynamical",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $G$ and $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "tolman1931",
+        "bonnor1969light",
+        "brinkmann1925",
+        "aichelburg1971",
+        "eardley2002",
+        "penrose1972impulsive",
+        "podolsky1999expanding",
+        "dray1985",
+        "lousto1989",
+        "ferrari1990",
+        "hotta1993",
+        "thooft1987",
+        "amati1987",
+        "devega1989",
+        "verlinde1992",
+        "death1992a",
+        "death1992c",
+        "giddings2002",
+        "dimopoulos2001",
+        "yoshino2003",
+        "sperhake2008",
+        "east2013"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/aichelburg_sexl.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(x, y) \\neq (0, 0)"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "E",
+              "description": "Energy of the massless source, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as its rest mass $M$ goes to zero and its speed $V$ to $c$"
+            },
+            {
+              "symbol": "\\rho_0",
+              "description": "An arbitrary length; changing it moves $v$ behind the shock by a constant, which is a change of coordinates"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths, and $\\delta$ is the Dirac delta, a prime on it a derivative with respect to its argument. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 - \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)\\left(c\\,dt - dz\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1 - \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+            },
+            {
+              "indices": [
+                "t",
+                "z"
+              ],
+              "value": "\\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+            },
+            {
+              "indices": [
+                "z",
+                "t"
+              ],
+              "value": "\\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1 - \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "null_cartesian",
+          "name": "Null Cartesian",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "(x, y) \\neq (0, 0)"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "E",
+              "description": "Energy of the massless source, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as its rest mass $M$ goes to zero and its speed $V$ to $c$"
+            },
+            {
+              "symbol": "\\rho_0",
+              "description": "An arbitrary length; changing it moves $v$ behind the shock by a constant, which is a change of coordinates"
+            }
+          ],
+          "convention": "We use the null coordinates $u = ct - z$ and $v = ct + z$, both lengths, with $x$ and $y$ the transverse lengths, and $\\delta$ is the Dirac delta, a prime on it a derivative with respect to its argument. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dv + dx^2 + dy^2 - \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(u)\\,du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{4GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(u)}{c^4}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "null_cylindrical",
+          "name": "Null Cylindrical",
+          "coordinates": [
+            "u",
+            "v",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "E",
+              "description": "Energy of the massless source, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as its rest mass $M$ goes to zero and its speed $V$ to $c$"
+            },
+            {
+              "symbol": "\\rho_0",
+              "description": "An arbitrary length; changing it moves $v$ behind the shock by a constant, which is a change of coordinates"
+            }
+          ],
+          "convention": "We use the null coordinates $u = ct - z$ and $v = ct + z$, both lengths, with $\\rho$ the distance from the axis of the source and $\\phi$ the angle about it, and $\\delta$ is the Dirac delta, a prime on it a derivative with respect to its argument. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dv + d\\rho^2 + \\rho^2d\\phi^2 - \\dfrac{8GE}{c^4}\\ln\\left(\\dfrac{\\rho}{\\rho_0}\\right)\\delta(u)\\,du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{8GE\\,\\ln\\left(\\dfrac{\\rho}{\\rho_0}\\right)\\delta(u)}{c^4}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
     {
       "id": "alcubierre",
       "name": "Alcubierre Warp Drive",

@@ -206,6 +206,18 @@ URL: https://damiansowinski.com/MFS/
 
 Machine-readable catalogue: https://damiansowinski.com/data/spacetimes.json
 
+### Aichelburg-Sexl Ultraboost
+
+The gravitational field of a massless particle, the Schwarzschild field boosted to the speed of light with its energy held fixed. Spacetime is flat on either side of a single null plane, which carries an impulsive gravitational shock wave with the particle at its centre.
+
+- id: `aichelburg_sexl`
+- tags: gravitational wave, shock wave, impulsive wave, pp-wave, massless particle, ultrarelativistic, boosted black hole, null source, vacuum, time-dependent, dynamical, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/aichelburg_sexl.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 - \dfrac{4GE}{c^4}\ln\left(\dfrac{x^2 + y^2}{\rho_0^2}\right)\delta(ct - z)\left(c\,dt - dz\right)^2$$
+- chart Null Cartesian: coordinates $(u, v, x, y)$, $$ds^2 = -du\,dv + dx^2 + dy^2 - \dfrac{4GE}{c^4}\ln\left(\dfrac{x^2 + y^2}{\rho_0^2}\right)\delta(u)\,du^2$$
+- chart Null Cylindrical: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8GE}{c^4}\ln\left(\dfrac{\rho}{\rho_0}\right)\delta(u)\,du^2$$
+
 ### Alcubierre Warp Drive
 
 A warp bubble metric that contracts space ahead of a ship and expands it behind, allowing travel that is effectively faster than light without locally exceeding light speed. It requires negative energy density (exotic matter) to sustain the bubble.
