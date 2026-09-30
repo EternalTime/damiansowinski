@@ -101,6 +101,16 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `closed`, the rectangle $0 \le \chi \le \pi$: five lines $T = \eta$ across its whole width, the near hemisphere $\chi \le \pi/2$ and the far one.
 - `flat` and `open`: not visible, other universes.
 
+### The global monopole
+
+- The embedding has two views of two spacetimes of one line element: the monopole with no mass at its centre, the equator of a moment of the Barriola-Vilenkin chart, drawn at $t = 0$, $r$ from the centre to $3\ell$; and Letelier's black hole at $r_s = 1$, the equator of the static moment $t = 0$, $r$ from the throat $r_h = r_s/(1 - \Delta) = 1.235\,r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere, both at $\Delta = 0.19$.
+- `conical/radial`: the monopole's line $ct = 0$ from the centre to $3\ell$; the black hole is another spacetime and is not marked.
+- `static/radial`: the black hole's line $ct = 0$ from $r_h$ to the box's edge at $6\,r_s$; the monopole is not marked.
+- `eddington_finkelstein_ingoing/finkelstein` and `/chart`: with $v = ct + r_*$, $r_* = r/(1 - \Delta) + r_s\ln|(1 - \Delta)r/r_s - 1|/(1 - \Delta)^2$, the moment is the curve $v = r_*$ outside $r_h$, which runs off to $v \to -\infty$ at the horizon, as Schwarzschild's does.
+- `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u = -r_*$.
+- `static`, `ingoing` and `outgoing`, Kruskal's diagram of the black hole: the line $T = 0$ through the bifurcation point across both exteriors, $r$ from $r_h$ to $6\,r_s$ on each side, the same on all three.
+- `conical`, Minkowski's triangle with its centre singular: the monopole's line $T = 0$ from the centre to $r = 3\ell$.
+
 ### Gödel
 
 - The embedding is the plane $z = 0$ of the cylindrical chart at $t = 0$ about the world line $r = 0$, $r$ from $0$ to $\operatorname{arcsinh} 2^{-1/4} = 0.764$, where it stops.
@@ -286,6 +296,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 | de Sitter | line, line, curve | none | line, line |
 | Ellis-Bronnikov | line | none | line |
 | FRW | not visible, three times | none | five lines on the closed universe |
+| global monopole | line, line, four curves | none | line, four times |
 | Gödel | line, line, not visible | floor | none drawn |
 | interior Schwarzschild | line, line | none | line |
 | Kasner | four lines, twice | none | none drawn |
