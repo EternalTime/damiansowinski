@@ -178,6 +178,14 @@ DIMENSIONS = {
     ("btz", "eddington_finkelstein_outgoing"): {
         "u": "L", "r": "L", "\\tilde\\phi": "1", "\\ell": "L", "M": "1", "J": "L",
     },
+    # The wave amplitude psi and gamma sit in exponentials and are dimensionless; the null chart's
+    # u = ct - rho and v = ct + rho are lengths, as the Eddington-Finkelstein times of BTZ are.
+    ("einstein_rosen_waves", "cylindrical"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\gamma": "1",
+    },
+    ("einstein_rosen_waves", "null"): {
+        "u": "L", "v": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\gamma": "1",
+    },
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
