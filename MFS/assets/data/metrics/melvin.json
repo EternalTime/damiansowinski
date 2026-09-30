@@ -1,0 +1,3618 @@
+{
+  "id": "melvin",
+  "name": "Melvin Magnetic Universe",
+  "short_name": "Melvin",
+  "description": "A static bundle of parallel magnetic field lines held together by the gravity of the field's own energy, with no matter anywhere, the solution William Bonnor found in 1954 and Mael Melvin found again in 1964. Frederick Ernst placed a Schwarzschild black hole inside it in 1976.",
+  "tags": [
+    "electrovacuum",
+    "electromagnetic field",
+    "magnetic field",
+    "static",
+    "stationary",
+    "cylindrical symmetry",
+    "axisymmetric",
+    "black hole",
+    "event horizon",
+    "horizon",
+    "singularity",
+    "curvature singularity",
+    "not asymptotically flat",
+    "geon",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The field strength $B$ is an inverse length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "An exact solution of the Einstein-Maxwell equations for a uniform magnetic field was among those William Bonnor gave in 1954, from a theorem that adapts a class of electrostatic solutions to magnetostatics [bonnor1954, bini2022]. Geons, electromagnetic disturbances whose own mass holds them together by its gravitational attraction, came from John Wheeler the next year [wheeler1955]. Mael Avrami Melvin found Bonnor's field again in 1964 as a pure magnetic geon, \"a configuration of parallel magnetic lines of force in equilibrium under their mutual gravitational attraction\" [melvin1964, melvin1965]. The pressure of the magnetic field pushes the lines apart and the gravity of the field's own energy pulls them together, with no matter anywhere [bini2022].¶Melvin renamed his geon a magnetic universe in 1965, \"because the magnetic-field energy falls off so slowly with distance\" [melvin1965]. By Melvin's own account the bundle \"is unstable according to an elementary Newtonian analysis\" [melvin1965]. Under radial perturbations he found it stable, oscillating with every admissible frequency real, and he suggested that extended magnetic fields may retard and finally halt the gravitational collapse of matter [melvin1965]. No radial perturbation, however large, can make Melvin's field collapse to a singularity or explode electromagnetically to infinite dispersion, as Kip Thorne proved the same year [thorne1965b]. Perturbed inside a finite region, the magnetic and gravitational fields undergo damped oscillations until they have radiated away the energy of the perturbation, and then settle back into Melvin's static configuration [thorne1965b]. David Garfinkle and Melvin applied the Ehlers transformation to the magnetic universe in 1994 and found two rotating magnetic universes and an evolving one, each free of singularities [garfinkle1994b].¶Within the Melvin radius $\\rho = 2/B$ of its axis, Melvin's universe is nearly flat [kastor2021]. The field is strongest on the axis and weakens steadily away from it [bini2022]. The circumference of a circle about the axis grows as in flat space, is greatest at the Melvin radius, $2\\pi/B$, and shrinks to zero as $\\rho \\to \\infty$ [kastor2021]. Melvin's universe is not asymptotically flat, and far from the axis its metric approaches a static vacuum solution of Levi-Civita's class [kastor2021]. A weak field makes a broad tube, since a field $B$ covers an area that scales as $1/B^2$, and the total flux diverges as $B \\to 0$ [kastor2021]. A field of half a gauss, about the strength of the Earth's at its surface, has a Melvin radius of about 5 megaparsecs [bini2022].¶Robert Wald placed a rotating black hole in a uniform magnetic test field in 1974, using a Killing vector of the vacuum spacetime as the vector potential of the field [wald1974]. The hole accretes charge until $Q = 2BJ$ in units with $G = c = 1$, where $J$ is its angular momentum [wald1974]. Transformations that generate new solutions of the Einstein-Maxwell equations from old ones with a Killing vector had come from B. Kent Harrison in 1968 [harrison1968]. Frederick Ernst used one of Harrison's type in 1976 to carry asymptotically flat, axially symmetric solutions into solutions resembling Melvin's universe, and from Schwarzschild's black hole it gives Ernst's metric, which is Melvin's universe at $r_s = 0$ and Schwarzschild's hole at $B = 0$ [ernst1976b, gibbons2013, bicak2000b]. With Walter Wild he gave the fields of charged, rotating Kerr-Newman holes in the same universe that year, and the whole metric when $Q = 2BJ$ [ernst1976c]. Ernst's Schwarzschild-Melvin hole is the unique static, axisymmetric black hole of the sourceless Einstein-Maxwell equations that asymptotically resembles Melvin's universe, a theorem William Hiscock proved in 1981 [hiscock1981b].¶Around Ernst's hole, where $r_s \\ll r \\ll 1/B$, spacetime is nearly flat and the field nearly uniform, and far beyond $1/B$ the metric approaches Melvin's universe [bicak2000b]. The flux through the upper half of the horizon first grows with $BM$, as classical physics expects, then falls, and is greatest, $2\\pi M$ with $G = c = 1$, at $BM = 1$, since the gravity of a strong field concentrates it near the axis [bicak2000b]. The temperature and entropy of the hole do not depend on the field passing through it, as Eugen Radu proved in 2002 [radu2002]. Gary Gibbons, A. H. Mujtaba and Christopher Pope found in 2013 that Ernst's magnetized Kerr-Newman holes approach Melvin's universe only when their charge takes one value fixed by their spin and the field, and otherwise carry an ergoregion from the horizon out to infinity [gibbons2013]. Across the horizons of extreme holes, charged or rotating, \"the magnetic fluxes vanish\", which Jiří Bičák called the \"Meissner effect within the exact framework\" [bicak2000b].¶Added to the charged C-metric, the field supplies the force that accelerates its black holes, and where their equations of motion hold the nodal singularity of the C-metric disappears, as Ernst found in 1976 [ernst1976, kastor2021]. Gibbons proposed in 1986 that a background field creates pairs of black holes as it creates pairs of charged particles in Julian Schwinger's process [gibbons1986, garfinkle1994]. Garfinkle, Steven Giddings and Andrew Strominger described in 1994 the creation of Reissner-Nordström pairs in a magnetic field by the Euclidean continuation of Ernst's accelerating metric, and found an explicit factor $e^{A/4}$ in its amplitude, with $A$ the area of the horizon in Planck units [garfinkle1994]. They called that factor \"consistent with the hypothesis that $e^{A/4}$ measures the number of black hole states\" [garfinkle1994]. Pair creation extends to black holes with a dilaton, as Fay Dowker, Jerome Gauntlett, David Kastor and Jennie Traschen showed the same year [dowker1994]. The dilatonic Melvin background is an exact solution of string theory to all orders in $\\alpha'$, which Arkady Tseytlin showed in 1995 [tseytlin1995].",
+  "references": [
+    "bonnor1954",
+    "bini2022",
+    "wheeler1955",
+    "melvin1964",
+    "melvin1965",
+    "thorne1965b",
+    "garfinkle1994b",
+    "kastor2021",
+    "wald1974",
+    "harrison1968",
+    "ernst1976b",
+    "gibbons2013",
+    "bicak2000b",
+    "ernst1976c",
+    "hiscock1981b",
+    "radu2002",
+    "ernst1976",
+    "gibbons1986",
+    "garfinkle1994",
+    "dowker1994",
+    "tseytlin1995"
+  ],
+  "coordinates": [
+    {
+      "id": "cylindrical",
+      "name": "Cylindrical",
+      "coords": [
+        "t",
+        "\\rho",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\rho \\in [0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "B",
+          "description": "Magnetic field strength on the axis, an inverse length, $B = \\sqrt{G}\\,B_0/c^2$ with $B_0$ the field in Gaussian units; the vector potential is $A_\\phi = \\dfrac{c^2}{\\sqrt{G}}\\,\\dfrac{2B\\rho^2}{4 + B^2\\rho^2}$"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2\\left(-c^2dt^2 + d\\rho^2 + dz^2\\right) + \\dfrac{\\rho^2}{\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2}d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\rho^2}{\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^{-2}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^{-2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^{-2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)^2}{\\rho^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2B^2\\,\\rho}{4 + B^2\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\,\\rho}{4 + B^2\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\,\\rho}{4 + B^2\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2B^2\\,\\rho}{4 + B^2\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{2B^2\\,\\rho}{4 + B^2\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{2B^2\\,\\rho}{4 + B^2\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2B^2\\,\\rho}{4 + B^2\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{256\\rho\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4 - B^2\\rho^2}{\\rho\\left(4 + B^2\\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4 - B^2\\rho^2}{\\rho\\left(4 + B^2\\rho^2\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{B^2\\,\\rho\\left(4 + B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{B^2\\,\\rho\\left(4 + B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{B^2\\,\\rho\\left(4 + B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{B^2\\,\\rho\\left(4 + B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{B^2\\,\\rho\\left(4 + B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{B^2\\,\\rho\\left(4 + B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{B^2\\,\\rho\\left(4 + B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{16\\rho\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{16\\rho\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{16\\rho\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{512B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{512B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{512B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{512B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4B^4\\,\\rho^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4B^4\\,\\rho^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4B^4\\,\\rho^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4B^4\\,\\rho^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1024B^2\\,\\rho^2\\left(8 - B^2\\,\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{1024B^2\\,\\rho^2\\left(8 - B^2\\,\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4B^2\\left(B^2\\,\\rho^2 - 8\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4B^2\\left(B^2\\,\\rho^2 - 8\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{B^4\\,\\rho^2}{4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{B^4\\,\\rho^2}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{B^4\\,\\rho^2}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{B^4\\,\\rho^2}{4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{64B^2\\,\\rho^2\\left(8 - B^2\\,\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{64B^2\\,\\rho^2\\left(8 - B^2\\,\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{64B^2\\,\\rho^2\\left(8 - B^2\\,\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{64B^2\\,\\rho^2\\left(8 - B^2\\,\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{16B^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{16B^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{16B^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4096B^2\\,\\rho^2}{\\left(4 + B^2\\rho^2\\right)^6}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{256B^2}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{256B^2}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{256B^2}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{256B^2}{\\left(4 + B^2\\rho^2\\right)^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4096B^2}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4096B^2}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4096B^2}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{16B^2}{\\rho^2\\left(4 + B^2\\rho^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{16384B^4\\left(3B^4\\,\\rho^4 - 24B^2\\,\\rho^2 + 80\\right)}{\\left(4 + B^2\\rho^2\\right)^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{16B^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{16B^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{16B^2}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4096B^2\\,\\rho^2}{\\left(4 + B^2\\rho^2\\right)^6}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{256B^2}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{256B^2}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{256B^2}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{256B^2}{\\left(4 + B^2\\rho^2\\right)^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4096B^2}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4096B^2}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4096B^2}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{16B^2}{\\rho^2\\left(4 + B^2\\rho^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{512B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{512B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{512B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{512B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4B^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1024B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{1024B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^6}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{32B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{B^2\\left(4 - B^2\\rho^2\\right)}{4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{64B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{64B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{64B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{64B^2\\,\\rho^2\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^4}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{4B^2\\,\\rho}{4 + B^2\\rho^2}\\dot{t}\\dot{\\rho} = 0",
+        "\\ddot{\\rho} + \\dfrac{2B^2\\,\\rho}{4 + B^2\\rho^2}\\left(\\dot{t}^2 + \\dot{\\rho}^2 - \\dot{z}^2\\right) - \\dfrac{256\\rho\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^5}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\left(4 - B^2\\rho^2\\right)}{\\rho\\left(4 + B^2\\rho^2\\right)}\\dot{\\rho}\\dot{\\phi} = 0",
+        "\\ddot{z} + \\dfrac{4B^2\\,\\rho}{4 + B^2\\rho^2}\\dot{\\rho}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "ernst",
+      "name": "Ernst",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r = r_s \\;\\text{(horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Schwarzschild radius, $r_s = 2GM/c^2$, where the horizon sits"
+        },
+        {
+          "symbol": "B",
+          "description": "Magnetic field strength of Melvin's universe around the hole, an inverse length, $B = \\sqrt{G}\\,B_0/c^2$ with $B_0$ in Gaussian units; the vector potential is $A_\\phi = \\dfrac{c^2}{\\sqrt{G}}\\,\\dfrac{2Br^2\\sin^2\\theta}{4 + B^2r^2\\sin^2\\theta}$"
+        }
+      ],
+      "convention": "We use the coordinates of Frederick Ernst, $(t, r, \\theta, \\phi)$, Schwarzschild's with $t$ carrying dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2\\left(-\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2d\\theta^2\\right) + \\dfrac{r^2\\sin^2\\theta}{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2}d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2\\left(1 - \\dfrac{r_s}{r}\\right)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2}{1 - \\dfrac{r_s}{r}}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{r^2\\sin^2\\theta}{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2\\left(1 - \\dfrac{r_s}{r}\\right)}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1 - \\dfrac{r_s}{r}}{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)^2}{r^2\\sin^2\\theta}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{4B^2\\,r^3\\sin^2\\theta - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s}{2r\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{4B^2\\,r^3\\sin^2\\theta - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s}{2r\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B^2\\,r^2\\sin\\theta\\cos\\theta}{4 + B^2r^2\\sin^2\\theta}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\,r^2\\sin\\theta\\cos\\theta}{4 + B^2r^2\\sin^2\\theta}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B^2\\,r^2\\sin\\theta\\cos\\theta}{4 + B^2r^2\\sin^2\\theta}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2B^2\\,r^2\\sin\\theta\\cos\\theta}{4 + B^2r^2\\sin^2\\theta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B^2\\,r^2\\sin\\theta\\cos\\theta}{4 + B^2r^2\\sin^2\\theta}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(4B^2\\,r^3\\sin^2\\theta - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)}{2r^3\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4B^2\\,r^3\\sin^2\\theta - 5B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s}{2r\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(3B^2\\,r^2\\sin^2\\theta + 4\\right)\\left(r - r_s\\right)}{4 + B^2r^2\\sin^2\\theta}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{256\\left(r_s - r\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2B^2\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2B^2\\,r\\sin\\theta\\cos\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3B^2\\,r^2\\sin^2\\theta + 4}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{3B^2\\,r^2\\sin^2\\theta + 4}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{256\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4 - B^2r^2\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4 - B^2r^2\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4 - B^2r^2\\sin^2\\theta\\right)\\cot\\theta}{4 + B^2r^2\\sin^2\\theta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(4 - B^2r^2\\sin^2\\theta\\right)\\cot\\theta}{4 + B^2r^2\\sin^2\\theta}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3\\sin^2\\theta - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3\\sin^2\\theta - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3\\sin^2\\theta - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B^2\\,r\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{B^2\\,r\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{B^2\\,r\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3\\sin^2\\theta - 5B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}{32\\left(r - r_s\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{B^2\\,r^3\\left(4 + B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{B^2\\,r^3\\left(4 + B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{B^2\\,r^3\\left(4 + B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r\\left(3B^2\\,r^2\\sin^2\\theta + 4\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}{16}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\left(3B^2\\,r^2\\sin^2\\theta + 4\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}{16}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(3B^2\\,r^2\\sin^2\\theta + 4\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}{16}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{16r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{16r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{16r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{B^2\\,r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{16r^2\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{16r^2\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{16r^2\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 8B^2\\,r^3\\sin^2\\theta + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 8B^2\\,r^3\\sin^2\\theta + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B^2\\,r\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2B^2\\,r\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2B^2\\,r\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2B^2\\,r\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 16B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 16r_s}{2r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 16B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 16r_s}{2r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{128\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{128\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 8B^2\\,r^3\\sin^2\\theta + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)}{r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 8B^2\\,r^3\\sin^2\\theta + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)}{r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B^2\\left(r - r_s\\right)^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\sin\\theta\\cos\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2B^2\\left(r - r_s\\right)^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\sin\\theta\\cos\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{128\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 80B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 64B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{128\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 80B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 64B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{512B^2\\,r^2\\left(3B^2\\,r^2\\sin^2\\theta - 20\\right)\\left(r - r_s\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{512B^2\\,r^2\\left(3B^2\\,r^2\\sin^2\\theta - 20\\right)\\left(r - r_s\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 16B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 16r_s\\right)}{2r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 16B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 16r_s\\right)}{2r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{512B^2\\,r\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{512B^2\\,r\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{256\\left(6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 40B^2\\,r^3\\sin^2\\theta + 32B^2\\,r^3 + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{256\\left(6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 40B^2\\,r^3\\sin^2\\theta + 32B^2\\,r^3 + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 80B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 64B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{2r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 80B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 64B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{2r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2B^2\\,r\\left(3B^2\\,r^2\\sin^2\\theta - 20\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2B^2\\,r\\left(3B^2\\,r^2\\sin^2\\theta - 20\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2B^2\\,r\\left(3B^2\\,r^2\\sin^2\\theta - 20\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2B^2\\,r\\left(3B^2\\,r^2\\sin^2\\theta - 20\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 40B^2\\,r^3\\sin^2\\theta + 32B^2\\,r^3 + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 40B^2\\,r^3\\sin^2\\theta + 32B^2\\,r^3 + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 8B^2\\,r^3\\sin^2\\theta + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{16r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 8B^2\\,r^3\\sin^2\\theta + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{16r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 8B^2\\,r^3\\sin^2\\theta + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{16r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 8B^2\\,r^3\\sin^2\\theta + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s}{16r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{B^2\\left(3B^2\\,r^2\\sin^2\\theta - 4\\right)\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 16B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 16r_s\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 16B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 16r_s\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 16B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 16r_s\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 16B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 16r_s\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{8\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{8\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 80B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 64B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{8\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 80B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 64B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 80B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 64B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{8\\left(12B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 9B^4\\,r^4\\,r_s\\sin^4\\theta - 80B^2\\,r^3\\sin^2\\theta + 16B^2\\,r^3 + 64B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{32B^2\\,r^3\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{32B^2\\,r^3\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{32B^2\\,r^3\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{32B^2\\,r^3\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{32B^2\\,r^3\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{32B^2\\,r^3\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{32B^2\\,r^3\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{32B^2\\,r^3\\left(20 - 3B^2\\,r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{16r\\left(6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 40B^2\\,r^3\\sin^2\\theta + 32B^2\\,r^3 + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{16r\\left(6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 40B^2\\,r^3\\sin^2\\theta + 32B^2\\,r^3 + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{16r\\left(6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 40B^2\\,r^3\\sin^2\\theta + 32B^2\\,r^3 + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{16r\\left(6B^4\\,r^5\\sin^4\\theta - 4B^4\\,r^5\\sin^2\\theta - 3B^4\\,r^4\\,r_s\\sin^4\\theta - 40B^2\\,r^3\\sin^2\\theta + 32B^2\\,r^3 + 8B^2\\,r^2\\,r_s\\sin^2\\theta + 16r_s\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{16B^2\\left(r - r_s\\right)\\left(r - r_s\\sin^2\\theta\\right)}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{16B^2\\left(2r\\sin^2\\theta - r - r_s\\sin^2\\theta\\right)}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{32B^2\\,r\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{32B^2\\,r\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{16B^2\\,r\\left(r_s\\sin^2\\theta + r - 2r\\sin^2\\theta\\right)}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4096B^2\\,r\\left(r - r_s\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{256B^2\\left(r_s\\sin^2\\theta - r\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{256B^2\\left(r_s\\sin^2\\theta - r\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{256B^2\\left(2r\\sin^2\\theta - r - r_s\\sin^2\\theta\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{256B^2\\left(2r\\sin^2\\theta - r - r_s\\sin^2\\theta\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{512B^2\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{512B^2\\sin\\theta\\cos\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4096B^2\\left(r - r_s\\sin^2\\theta\\right)}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4096B^2\\left(r - r_s\\right)\\left(2r\\sin^2\\theta - r - r_s\\sin^2\\theta\\right)}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{8192B^2\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{8192B^2\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4096B^2\\left(r_s\\sin^2\\theta + r - 2r\\sin^2\\theta\\right)}{r^3\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{16B^2\\left(r - r_s\\sin^2\\theta\\right)\\csc^2\\theta}{r^3\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{49152B^8\\,r^{10}\\sin^4\\theta - 36864B^8\\,r^9\\,r_s\\sin^8\\theta - 73728B^8\\,r^9\\,r_s\\sin^6\\theta + 64512B^8\\,r^8\\,r_s^2\\sin^8\\theta - 393216B^6\\,r^8\\sin^2\\theta + 147456B^6\\,r^7\\,r_s\\sin^6\\theta + 688128B^6\\,r^7\\,r_s\\sin^4\\theta - 442368B^6\\,r^6\\,r_s^2\\sin^6\\theta + 1310720B^4\\,r^6 + 589824B^4\\,r^5\\,r_s\\sin^4\\theta - 3014656B^4\\,r^5\\,r_s\\sin^2\\theta + 1015808B^4\\,r^4\\,r_s^2\\sin^4\\theta - 2359296B^2\\,r^3\\,r_s\\sin^2\\theta + 1572864B^2\\,r^3\\,r_s + 786432B^2\\,r^2\\,r_s^2\\sin^2\\theta + 786432r_s^2}{r^6\\left(4 + B^2r^2\\sin^2\\theta\\right)^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{16B^2\\left(r - r_s\\right)\\left(r - r_s\\sin^2\\theta\\right)}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{16B^2\\left(2r\\sin^2\\theta - r - r_s\\sin^2\\theta\\right)}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{32B^2\\,r\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{32B^2\\,r\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{16B^2\\,r\\left(r_s\\sin^2\\theta + r - 2r\\sin^2\\theta\\right)}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4096B^2\\,r\\left(r - r_s\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{256B^2\\left(r_s\\sin^2\\theta - r\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{256B^2\\left(r_s\\sin^2\\theta - r\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{256B^2\\left(2r\\sin^2\\theta - r - r_s\\sin^2\\theta\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{256B^2\\left(2r\\sin^2\\theta - r - r_s\\sin^2\\theta\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{512B^2\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{512B^2\\sin\\theta\\cos\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4096B^2\\left(r - r_s\\sin^2\\theta\\right)}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4096B^2\\left(r - r_s\\right)\\left(2r\\sin^2\\theta - r - r_s\\sin^2\\theta\\right)}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{8192B^2\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{8192B^2\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4096B^2\\left(r_s\\sin^2\\theta + r - 2r\\sin^2\\theta\\right)}{r^3\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{16B^2\\left(r - r_s\\sin^2\\theta\\right)\\csc^2\\theta}{r^3\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4r_s + 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 6B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(4r_s + 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 6B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{6B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{6B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{6B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{6B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{6B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{6B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{6B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{128\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{128\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(6B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(6B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{6B^2\\left(r - r_s\\right)^2\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{6B^2\\left(r - r_s\\right)^2\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{128\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{128\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1536B^2\\,r^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{1536B^2\\,r^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{6B^2\\left(r_s - r\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{6B^2\\left(r_s - r\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1536B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{1536B^2\\,r\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{256\\left(4r_s + 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 6B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{256\\left(4r_s + 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 6B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^4\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4r_s + 9B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 12B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4r_s + 9B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 12B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{2r^2\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(6B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(6B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(6B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{16r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(6B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{16r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(6B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{16r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(6B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{16r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3B^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{3B^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3B^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3B^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3B^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{3B^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{3B^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{3B^2\\left(r - r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{8}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(r - r_s\\right)\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(r - r_s\\right)\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{8\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{8\\left(r - r_s\\right)\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{r^2\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4B^2\\,r^3 - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)}{32\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{8\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{8\\left(12B^2\\,r^3\\sin^2\\theta - 4B^2\\,r^3 - 9B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{96B^2\\,r^3\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{96B^2\\,r^3\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{96B^2\\,r^3\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{96B^2\\,r^3\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{96B^2\\,r^3\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{96B^2\\,r^3\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{96B^2\\,r^3\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{96B^2\\,r^3\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^3\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{16r\\left(4r_s + 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 6B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{16r\\left(4r_s + 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 6B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{16r\\left(4r_s + 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 6B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{16r\\left(4r_s + 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4B^2\\,r^3 - 6B^2\\,r^3\\sin^2\\theta\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^4}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{4B^2\\,r^3\\sin^2\\theta - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s}{r\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}\\dot{t}\\dot{r} + \\dfrac{4B^2\\,r^2\\sin\\theta\\cos\\theta}{4 + B^2r^2\\sin^2\\theta}\\dot{t}\\dot{\\theta} = 0",
+        "\\ddot{r} + \\dfrac{\\left(r - r_s\\right)\\left(4B^2\\,r^3\\sin^2\\theta - 3B^2\\,r^2\\,r_s\\sin^2\\theta + 4r_s\\right)}{2r^3\\left(4 + B^2r^2\\sin^2\\theta\\right)}\\dot{t}^2 + \\dfrac{4B^2\\,r^3\\sin^2\\theta - 5B^2\\,r^2\\,r_s\\sin^2\\theta - 4r_s}{2r\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}\\dot{r}^2 + \\dfrac{4B^2\\,r^2\\sin\\theta\\cos\\theta}{4 + B^2r^2\\sin^2\\theta}\\dot{r}\\dot{\\theta} - \\dfrac{\\left(3B^2\\,r^2\\sin^2\\theta + 4\\right)\\left(r - r_s\\right)}{4 + B^2r^2\\sin^2\\theta}\\dot{\\theta}^2 + \\dfrac{256\\left(r_s - r\\right)\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^5}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2B^2\\left(r - r_s\\right)\\sin\\theta\\cos\\theta}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)}\\dot{t}^2 - \\dfrac{2B^2\\,r\\sin\\theta\\cos\\theta}{\\left(r - r_s\\right)\\left(4 + B^2r^2\\sin^2\\theta\\right)}\\dot{r}^2 + \\dfrac{6B^2\\,r^2\\sin^2\\theta + 8}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)}\\dot{r}\\dot{\\theta} + \\dfrac{2B^2\\,r^2\\sin\\theta\\cos\\theta}{4 + B^2r^2\\sin^2\\theta}\\dot{\\theta}^2 - \\dfrac{256\\left(4 - B^2r^2\\sin^2\\theta\\right)\\sin\\theta\\cos\\theta}{\\left(4 + B^2r^2\\sin^2\\theta\\right)^5}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\left(4 - B^2r^2\\sin^2\\theta\\right)}{r\\left(4 + B^2r^2\\sin^2\\theta\\right)}\\dot{r}\\dot{\\phi} + \\dfrac{2\\left(4 - B^2r^2\\sin^2\\theta\\right)\\cot\\theta}{4 + B^2r^2\\sin^2\\theta}\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

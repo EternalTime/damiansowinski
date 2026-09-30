@@ -1564,6 +1564,83 @@ def einstein_rosen_pullback(chart):
 
 
 
+# -- Melvin ------------------------------------------------------------------------------
+
+def melvin(system):
+    """Melvin's magnetic universe in its cylindrical chart, with Lambda = 1 + B^2 rho^2/4, and
+    Ernst's Schwarzschild black hole inside it in Schwarzschild's coordinates, with
+    Lambda = 1 + B^2 r^2 sin^2(theta)/4. Every value is printed around 4 + B^2 rho^2, or
+    4 + B^2 r^2 sin^2(theta), which is 4 Lambda, and 4 - B^2 rho^2, which vanishes on the widest circle,
+    and the metric and its inverse as the line element writes them. melvin.md beside this file
+    checks both against the Einstein-Maxwell equations with A_phi = B rho^2/(2 Lambda)."""
+    if system == "cylindrical":
+        coords, parameters = ["t", "\\rho", "\\phi", "z"], ["B"]
+        L = "\\left(1 + \\dfrac{B^2\\rho^2}{4}\\right)"
+
+        def line(c2):
+            return f"ds^2 = {L}^2\\left(-{c2}dt^2 + d\\rho^2 + dz^2\\right) + \\dfrac{{\\rho^2}}{{{L}^2}}d\\phi^2"
+        probe = vm.Reader(coords, parameters, ())
+        rho, B = probe.symbol["\\rho"], probe.parameters["B"]
+        named = [(sp.Symbol("MP"), 4 + B ** 2 * rho ** 2, "4 + B^2\\rho^2"),
+                 (sp.Symbol("MM"), 4 - B ** 2 * rho ** 2, "4 - B^2\\rho^2")]
+        merges = [(2 + B * rho, 2 - B * rho, named[1][0])]
+        metric = {("t", "t"): "-" + L + "^2", ("\\rho", "\\rho"): L + "^2", ("z", "z"): L + "^2",
+                  ("\\phi", "\\phi"): "\\dfrac{\\rho^2}{" + L + "^2}"}
+        inverse = {("t", "t"): "-" + L + "^{-2}", ("\\rho", "\\rho"): L + "^{-2}", ("z", "z"): L + "^{-2}",
+                   ("\\phi", "\\phi"): "\\dfrac{" + L + "^2}{\\rho^2}"}
+        domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)"]
+        lead = [B, rho]
+        name = "Cylindrical"
+    else:
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["r_s", "B"]
+        L = "\\left(1 + \\dfrac{B^2r^2\\sin^2\\theta}{4}\\right)"
+        f = "\\left(1 - \\dfrac{r_s}{r}\\right)"
+
+        def line(c2):
+            return (f"ds^2 = {L}^2\\left(-{f}{c2}dt^2 + \\dfrac{{dr^2}}{{1 - \\dfrac{{r_s}}{{r}}}} + r^2d\\theta^2\\right)"
+                    f" + \\dfrac{{r^2\\sin^2\\theta}}{{{L}^2}}d\\phi^2")
+        probe = vm.Reader(coords, parameters, ())
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        B, rs = probe.parameters["B"], probe.parameters["r_s"]
+        s = sp.sin(th)
+        named = [(sp.Symbol("MP"), 4 + B ** 2 * r ** 2 * s ** 2, "4 + B^2r^2\\sin^2\\theta"),
+                 (sp.Symbol("MM"), 4 - B ** 2 * r ** 2 * s ** 2, "4 - B^2r^2\\sin^2\\theta")]
+        merges = [(2 + B * r * s, 2 - B * r * s, named[1][0])]
+        metric = {("t", "t"): "-" + L + "^2" + f, ("r", "r"): "\\dfrac{" + L + "^2}{1 - \\dfrac{r_s}{r}}",
+                  ("\\theta", "\\theta"): L + "^2r^2", ("\\phi", "\\phi"): "\\dfrac{r^2\\sin^2\\theta}{" + L + "^2}"}
+        inverse = {("t", "t"): "-\\dfrac{1}{" + L + "^2" + f + "}", ("r", "r"): "\\dfrac{1 - \\dfrac{r_s}{r}}{" + L + "^2}",
+                   ("\\theta", "\\theta"): "\\dfrac{1}{" + L + "^2r^2}",
+                   ("\\phi", "\\phi"): "\\dfrac{" + L + "^2}{r^2\\sin^2\\theta}"}
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]",
+                   "\\phi \\in [0, 2\\pi)", "r = r_s \\;\\text{(horizon)}"]
+        lead = [B, r, rs, sp.cos(th), s]
+        name = "Ernst"
+    return {
+        "metric_id": "melvin",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": lead, "named": {p: text for p, _, text in named}},
+        "pretty": named_factors(named, merges),
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        **({"geodesics": MELVIN_GEODESICS} if system == "cylindrical" else {}),
+    }
+
+
+# The cylindrical geodesics with the three terms that share 2B^2 rho/(4 + B^2 rho^2) gathered.
+MELVIN_GEODESICS = [
+    "\\ddot{t} + \\dfrac{4B^2\\,\\rho}{4 + B^2\\rho^2}\\dot{t}\\dot{\\rho} = 0",
+    "\\ddot{\\rho} + \\dfrac{2B^2\\,\\rho}{4 + B^2\\rho^2}\\left(\\dot{t}^2 + \\dot{\\rho}^2 - \\dot{z}^2\\right)"
+    " - \\dfrac{256\\rho\\left(4 - B^2\\rho^2\\right)}{\\left(4 + B^2\\rho^2\\right)^5}\\dot{\\phi}^2 = 0",
+    "\\ddot{\\phi} + \\dfrac{2\\left(4 - B^2\\rho^2\\right)}{\\rho\\left(4 + B^2\\rho^2\\right)}\\dot{\\rho}\\dot{\\phi} = 0",
+    "\\ddot{z} + \\dfrac{4B^2\\,\\rho}{4 + B^2\\rho^2}\\dot{\\rho}\\dot{z} = 0",
+]
+
+
+CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],

@@ -626,6 +626,32 @@
     "embedding": "a96058187788999b"
   },
   {
+    "id": "melvin",
+    "name": "Melvin",
+    "tags": [
+      "electrovacuum",
+      "electromagnetic field",
+      "magnetic field",
+      "static",
+      "stationary",
+      "cylindrical symmetry",
+      "axisymmetric",
+      "black hole",
+      "event horizon",
+      "horizon",
+      "singularity",
+      "curvature singularity",
+      "not asymptotically flat",
+      "geon",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "43772945dd7c22fc"
+  },
+  {
     "id": "milne",
     "name": "Milne",
     "tags": [
