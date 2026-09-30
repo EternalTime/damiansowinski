@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the nineteen spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the twenty spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -2835,13 +2835,275 @@ def einstein_static(ck, src):
 
 # ---------------------------------------------------------------- the table
 
+# ---------------------------------------------------------------- the C-metric
+
+C_M = {"m": 1, "alpha": "1/6", "C": "3/4"}
+C_KAPPA = 1 / 9                 # alpha (1 - 2 alpha m), the surface gravity of the acceleration horizon
+
+
+def c_rstar(r):
+    """Griffiths, Krtous and Podolsky's tortoise coordinate, eq. (10), at m = 1 and alpha = 1/6:
+    alpha r* = k_c ln|1 + alpha r| + k_a ln|1 - alpha r| + k_o ln|1 - r/2m| with k_c = 3/8,
+    k_a = -3/4 and k_o = 3/8, so that r*(0) = 0."""
+    r = np.asarray(r, dtype=float)
+    with np.errstate(divide="ignore"):
+        return 6 * (3 / 8 * np.log(np.abs(1 + r / 6)) - 3 / 4 * np.log(np.abs(1 - r / 6))
+                    + 3 / 8 * np.log(np.abs(1 - r / 2)))
+
+
+def c_rstar_y(y):
+    """The same r* in y = 1/(alpha r), which runs on through y = 0, r = infinity, to null
+    infinity at y = -1 on the inner axis: alpha r* = k_c ln|1 + y| + k_a ln|1 - y|
+    + k_o ln|1 - 2 alpha m y| - k_o ln(2 alpha m)."""
+    y = np.asarray(y, dtype=float)
+    with np.errstate(divide="ignore"):
+        return 6 * (3 / 8 * np.log(np.abs(1 + y)) - 3 / 4 * np.log(np.abs(1 - y))
+                    + 3 / 8 * np.log(np.abs(1 - y / 3)) + 3 / 8 * np.log(3))
+
+
+def c_cell(cell, t, rs):
+    """(p, q) of the points of a cell at the static time t and tortoise coordinate rs.
+
+    With u = t - r* and v = t + r* and A(w) = arctan exp(k w), k the surface gravity of the
+    acceleration horizon, the drawing is Kruskal's across the acceleration horizon, U = tan q
+    and V = tan p near it, and continuous across the black hole horizon:
+
+        II   the static region of the first black hole    p = -A(-v),  q = A(u)
+        I    beyond the acceleration horizon, its future  p = A(-v),   q = A(u)
+        BH   inside the first black hole                  p = -A(-v),  q = pi - A(u)
+
+    II has the acceleration horizon on its left, v -> +infinity and u -> -infinity, and the
+    black hole horizon on its right. The singularity r* = 0 of BH is v = u, where
+    p + q = pi - A(-u) - A(u) = pi/2: the straight line T = pi/2. Null infinity on the inner
+    axis, r* -> -infinity with u -> +infinity or v -> -infinity in I, is its two upper edges.
+    The other cells are these reflected: X -> -X, the second black hole's side; T -> -T, the
+    past; and X -> 2 pi - X, the exterior beyond the first black hole's Einstein-Rosen bridge.
+    """
+    t, rs = np.asarray(t, dtype=float), np.asarray(rs, dtype=float)
+    u, v = t - rs, t + rs
+
+    def A(w):
+        return atan_exp(C_KAPPA * np.asarray(w, dtype=float))
+    if cell == "II":
+        return -A(-v), A(u)
+    if cell == "I":
+        return A(-v), A(u)
+    if cell == "BH":
+        return -A(-v), PI - A(u)
+    raise KeyError(cell)
+
+
+def c_images(p, q, where):
+    """The reflections of c_cell's cells: 'L' X -> -X, 'P' T -> -T, 'F' X -> 2 pi - X, in turn."""
+    p, q = np.asarray(p, dtype=float), np.asarray(q, dtype=float)
+    for w in where:
+        if w == "L":
+            p, q = q, p
+        elif w == "P":
+            p, q = -q, -p
+        elif w == "F":
+            p, q = q - PI, p + PI
+    return p, q
+
+
+C_POLYGONS = {
+    "II": [(0, 0), (-HALF, 0), (-HALF, HALF), (0, HALF)],
+    "I": [(0, 0), (HALF, 0), (HALF, HALF), (0, HALF)],
+    "BH": [(-HALF, HALF), (-HALF, PI), (0, HALF)],
+}
+
+
+def c_metric(ck, src):
+    """The C-metric on the two halves of its axis, at alpha m = 1/6 and m = 1, as Jerry
+    Griffiths, Pavel Krtous and Jiri Podolsky draw it in their figure 2 (b) and (c). On the axis
+    sin(theta) = 0, so the plane of t and r is totally geodesic, and its metric is
+    (-Q dt^2 + dr^2/Q)/(1 + alpha r cos(theta))^2 with Q = (1 - alpha^2 r^2)(1 - 2m/r): the null
+    directions are Q's alone, dt = +-dr/Q = +-dr*, and the conformal factor places null
+    infinity where 1 + alpha r cos(theta) vanishes. On the inner axis theta = 0 that is
+    y = 1/(alpha r) = -1, past r = infinity, reached in the Hong-Teo plane of tau and y; on the
+    outer axis theta = pi it is r = 1/alpha, the acceleration horizon itself, so there the left
+    edges of the static region are null infinity. c_cell's docstring gives the maps.
+    """
+    views = []
+    rinf = float(c_rstar_y(0.0))
+
+    def planes(theta):
+        sph = Plane(src, "c_metric", "spherical", ("t", "r"), {"theta": theta, "phi": "0"}, C_M)
+        assert sph.g[0, 1] == 0
+        return sph
+    inner, outer = planes("0"), planes("pi")
+    ht = Plane(src, "c_metric", "hong_teo", ("\\tau", "y"), {"x": "1", "phi": "0"}, C_M)
+    assert ht.g[0, 1] == 0
+    span = 40
+    for name, pl in (("inner axis", inner), ("outer axis", outer)):
+        ck.chart(f"C-metric {name}, static region", pl, lambda t, r: c_cell("II", t, c_rstar(r)),
+                 ck.uniform(-span, span), ck.uniform(2.001, 5.999), lambda t, r: (1, 0))
+        ck.chart(f"C-metric {name}, black hole", pl, lambda t, r: c_cell("BH", t, c_rstar(r)),
+                 ck.uniform(-span, span), ck.uniform(0.01, 1.999), lambda t, r: (0, -1))
+    ck.chart("C-metric inner axis, beyond the acceleration horizon", inner, lambda t, r: c_cell("I", t, c_rstar(r)),
+             ck.uniform(-span, span), ck.uniform(6.001, 300), lambda t, r: (0, 1))
+
+    def ht_map(cell):
+        return lambda tau, y: c_cell(cell, 6 * np.asarray(tau, dtype=float), c_rstar_y(y))
+    ck.chart("C-metric Hong-Teo inner axis, beyond the acceleration horizon", ht, ht_map("I"),
+             ck.uniform(-span / 6, span / 6), ck.uniform(-0.999, 0.999), lambda tau, y: (0, -1))
+    ck.chart("C-metric Hong-Teo inner axis, static region", ht, ht_map("II"),
+             ck.uniform(-span / 6, span / 6), ck.uniform(1.001, 2.999), lambda tau, y: (1, 0))
+    ck.chart("C-metric Hong-Teo inner axis, black hole", ht, ht_map("BH"),
+             ck.uniform(-span / 6, span / 6), ck.uniform(3.001, 200), lambda tau, y: (0, 1))
+    ck.limit("C-metric: r* in y is r* in r, y = 1/(alpha r)", c_rstar_y(6 / np.array([0.5, 1.5, 3, 5, 9, 40])),
+             c_rstar(np.array([0.5, 1.5, 3, 5, 9, 40])), 1e-9)
+    p, q = c_cell("BH", np.array([-9.0, 0.0, 9.0]), c_rstar(np.full(3, 1e-12)))
+    ck.limit("C-metric: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3, 1e-9)
+    p, q = c_cell("II", np.array([3.0]), c_rstar(np.array([6 - 1e-12])))
+    ck.limit("C-metric: r -> 1/alpha at fixed t lands on the acceleration horizon's bifurcation, (0, 0)",
+             point(p[0], q[0]), [0, 0], 1e-4)
+    # r* -> -infinity as r -> 2m only as 2.25 ln(r - 2m), too slowly to follow in r itself.
+    ck.limit("C-metric: r* -> -infinity as r -> 2m", float(c_rstar(np.array([2 + 1e-12]))[0] < -60), 1, 0.5)
+    p, q = c_cell("II", np.array([3.0]), np.array([-1e4]))
+    ck.limit("C-metric: r* -> -infinity at fixed t lands on the black hole's bifurcation, (pi, 0)",
+             point(p[0], q[0]), [PI, 0], 1e-4)
+    p, q = c_cell("I", np.array([1.0]), c_rstar_y(np.array([-1 + 1e-15])))
+    ck.limit("C-metric inner axis: y -> -1 at fixed t lands on the top of the region beyond the "
+             "acceleration horizon, (0, pi), where its two edges of null infinity meet", point(p[0], q[0]), [0, PI], 2e-3)
+    uu = np.array([-20.0, 0.0, 20.0])
+    ys = np.full(3, -1 + 1e-15)
+    p, q = c_cell("I", uu + c_rstar_y(ys), c_rstar_y(ys))
+    ck.limit("C-metric inner axis: y -> -1 along a line of constant u lands on the edge p = pi/2", p, [HALF] * 3, 1e-6)
+    ck.diverges("C-metric: the Kretschmann scalar diverges at r = 0 on the inner axis",
+                inner.kretschmann(0, 1e-2), inner.kretschmann(0, 1e-3))
+    ck.diverges("C-metric: the Kretschmann scalar diverges at r = 0 on the outer axis",
+                outer.kretschmann(0, 1e-2), outer.kretschmann(0, 1e-3))
+    ck.finite("C-metric: the Kretschmann scalar is finite at both horizons on both halves of the axis",
+              np.concatenate([pl.kretschmann(np.zeros(2), np.array([2.0, 6.0])) for pl in (inner, outer)]))
+    ck.finite("C-metric: the Kretschmann scalar is finite at null infinity on the inner axis",
+              ht.kretschmann(np.zeros(3), np.array([-0.999, -0.9999, -1.0])))
+    ck.finite("C-metric: the Kretschmann scalar is finite at null infinity on the outer axis",
+              outer.kretschmann(np.zeros(2), np.array([5.999, 6.0])))
+
+    times = [c / C_KAPPA for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    r_II, r_BH, r_I = (2.3, 3, 4, 5.3), (0.8, 1.5), (7, 10, 20)
+    y_I = (0.6, 0.2, -0.2, -0.6)
+    rr_II, rr_BH = spread(2, 6, 600, 16), spread(0, 2, 600, 16)
+    tt = spread(-np.inf, np.inf, 500, 10)
+
+    def draw_cell(v, cell, where, radii, rmap, rr_range):
+        for r in radii:
+            v.curve("r", *c_images(*c_cell(cell, tt, np.full_like(tt, rmap(r))), where))
+        for t0 in times:
+            v.curve("t", *c_images(*c_cell(cell, np.full_like(rr_range, t0), rmap(rr_range)), where))
+
+    def region(v, cell, where):
+        pts = [c_images(np.array([a]), np.array([b]), where) for a, b in C_POLYGONS[cell]]
+        v.fill("region", [point(p[0], q[0]) for p, q in pts])
+
+    def seg(v, cls, a, b, where, zig=False):
+        pa = c_images(np.array([a[0]]), np.array([a[1]]), where)
+        pb = c_images(np.array([b[0]]), np.array([b[1]]), where)
+        v.segment(cls, (pa[0][0], pa[1][0]), (pb[0][0], pb[1][0]), zig)
+
+    def statics(v, sides, scri_left):
+        """The static regions and the black holes beside them; `sides` lists the reflections,
+        and on the outer axis the left edges of the static region are null infinity."""
+        for where in sides:
+            # The black hole of an exterior reflected by F is the black hole it shares with the
+            # exterior it is reflected from, so it is drawn once.
+            hole = "F" not in where
+            for past in ("", "P"):
+                region(v, "II", where + past)
+                draw_cell(v, "II", where + past, r_II, c_rstar, rr_II)
+                if hole:
+                    region(v, "BH", where + past)
+                    draw_cell(v, "BH", where + past, r_BH, c_rstar, rr_BH)
+                    seg(v, "singular", (-HALF, PI), (0, HALF), where + past, zig=True)
+                seg(v, "horizon", (-HALF, 0), (-HALF, HALF), where + past)
+                seg(v, "horizon", (-HALF, HALF), (0, HALF), where + past)
+                seg(v, "scri" if scri_left else "horizon", (0, 0), (0, HALF), where + past)
+
+    box_in = [-2 * PI - 0.3, 2 * PI + 0.3, -PI - 0.25, PI + 0.25]
+    box_out = [-0.3, 2 * PI + 0.3, -HALF - 0.45, HALF + 0.45]
+    equator = slices.moments("c_metric", "equator")[0]
+    horizon = slices.moments("c_metric", "horizon", label="$t = 0$, $r = 2m$")[0]
+    lo, hi = equator.reach("spherical", "r")
+    rr = np.linspace(lo, hi, 2)
+
+    for system in ("spherical", "hong_teo"):
+        v = View(f"inner_{system}", "the inner axis", box_in, system)
+        statics(v, ["", "F", "L", "FL"], False)
+        for where in ("", "P"):
+            region(v, "I", where)
+            if system == "spherical":
+                draw_cell(v, "I", where, r_I, c_rstar, spread(6, np.inf, 600, 16))
+            else:
+                draw_cell(v, "I", where, y_I, c_rstar_y, spread(-1, 1, 600, 16)[::-1])
+            seg(v, "scri", (0, HALF), (HALF, HALF), where)
+            seg(v, "scri", (HALF, 0), (HALF, HALF), where)
+        v.fill("cover", [point(a, b) for a, b in C_POLYGONS["II"]])
+        v.fill("cover", [point(a, b) for a, b in C_POLYGONS["BH"]])
+        if system == "spherical":
+            ts = spread(-np.inf, np.inf, 500, 10)
+            p, q = c_cell("I", ts, np.full_like(ts, rinf))
+            v.fill("cover", [[0.0, 0.0]] + [point(a, b) for a, b in zip(p, q)])
+            v.curve("chartedge", p, q)
+            v.legend("chartedge", "$r = \\infty$, where the coordinate $r$ ends and $y = 1/(\\alpha r)$ passes through 0")
+        else:
+            v.fill("cover", [point(a, b) for a, b in C_POLYGONS["I"]])
+        for sx in (1, -1):
+            v.label_xt([sx * Q4 * 0.9, 3 * Q4 + 0.05], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-3)
+            v.label_xt([sx * Q4 * 0.9, -3 * Q4 - 0.05], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=3)
+            v.label_xt([sx * PI, 1.15], "black hole", cls="region")
+            v.label_xt([sx * PI, -1.15], "white hole", cls="region")
+        v.label_xt([Q4, Q4], "$r = 1/\\alpha$", "tl", "small", dx=5, dy=1)
+        v.label_xt([PI - Q4, Q4], "$r = 2m$", "tr", "small", dx=-5, dy=1)
+        v.slice(equator, [c_images(*c_cell("II", 0 * rr, c_rstar(rr)), w) for w in ("", "L")])
+        v.slice(horizon, points=[(-HALF, HALF)])
+        v.legend("cover", "the regions that " + ("$t$ and $r > 0$" if system == "spherical" else "$\\tau$ and $y > -1$")
+                 + " cover")
+        v.legend("r", "$r$ constant, in units of $m$" if system == "spherical" else "$y = 1/(\\alpha r)$ constant")
+        v.legend("t", "$ct$ constant" if system == "spherical" else "$\\tau$ constant")
+        v.legend("horizon", "the black hole horizons $r = 2m$ and the acceleration horizons $r = 1/\\alpha$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity, where $1 + \\alpha r\\cos\\theta$ vanishes")
+        v.set(restriction="The half axis $\\theta = 0$ between the black holes only, a totally geodesic surface, "
+                          "each point in the diagram a single event.")
+        views.append(v)
+
+        v = View(f"outer_{system}", "the outer axis", box_out, system)
+        statics(v, ["", "F"], True)
+        v.fill("cover", [point(a, b) for a, b in C_POLYGONS["II"]])
+        v.fill("cover", [point(a, b) for a, b in C_POLYGONS["BH"]])
+        v.label_xt([PI, 1.15], "black hole", cls="region")
+        v.label_xt([PI, -1.15], "white hole", cls="region")
+        v.label_xt([PI - Q4, Q4], "$r = 2m$", "tr", "small", dx=-5, dy=1)
+        for at in ((0, 0), (2 * PI, 0)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        for x0, sx in ((Q4, -1), (2 * PI - Q4, 1)):
+            v.label_xt([x0, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-3)
+            v.label_xt([x0, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=3)
+        v.slice(equator, [c_cell("II", 0 * rr, c_rstar(rr))])
+        v.slice(horizon, points=[(-HALF, HALF)])
+        v.legend("cover", "the static region and the black hole that " + ("$t$ and $r$" if system == "spherical" else "$\\tau$ and $y$") + " cover")
+        v.legend("r", "$r$ constant, in units of $m$" if system == "spherical" else "$y = 1/(\\alpha r)$ constant")
+        v.legend("t", "$ct$ constant" if system == "spherical" else "$\\tau$ constant")
+        v.legend("horizon", "the black hole horizon $r = 2m$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity, $r = 1/\\alpha$, where the acceleration horizon lies on this half of the axis")
+        v.set(restriction="The half axis $\\theta = \\pi$ beyond the black hole only, a totally geodesic surface, "
+                          "each point in the diagram a single event.")
+        views.append(v)
+    settings = "$m = 1$, $\\alpha = 1/(6m)$, so that the horizons are at $r = 2m$ and $r = 1/\\alpha = 6m$."
+    for view in views:
+        view.set(settings=settings)
+    return views
+
+
 DRAWN = {
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
-    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz,
+    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "c_metric": c_metric,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -2850,6 +3112,64 @@ DRAWN = {
 # and every sentence about the spacetime, never about the page or the collection. A caption
 # opens by naming what is drawn, the whole spacetime or the surface in it.
 CAPTIONS = {
+    ("c_metric", "inner_spherical"): [
+        "The half axis $\\theta = 0$ between the black holes of the maximally extended C-metric ($\\alpha m = 1/6$), "
+        "totally geodesic, each point in the diagram a single event. On it the metric is "
+        "$(-Q\\,c^2dt^2 + dr^2/Q)/(1 + \\alpha r)^2$ with $Q = (1 - \\alpha^2r^2)(1 - 2m/r)$, whose roots are the "
+        "black hole horizon $r = 2m$ and the acceleration horizon $r = 1/\\alpha$, and maps $p$ and $q$ of "
+        "$ct \\mp r_*$, with $dr_* = dr/Q$, bring each region into a finite diamond, drawn with $T = p + q$ up and "
+        "$X = q - p$ across. The maps are Kruskal's across the acceleration horizon and continuous across the black "
+        "hole horizon.",
+        "The two static regions in the middle are the exteriors of the two black holes, causally separated by the "
+        "acceleration horizon. Above and below them lie the regions beyond the acceleration horizon, whose outer "
+        "edges are null infinity, where $1 + \\alpha r$ vanishes at $r = -1/\\alpha$, past $r = \\infty$. Beyond "
+        "each black hole horizon lie the black hole and the white hole, which end on the singularity $r = 0$, and "
+        "the exterior across the Einstein-Rosen bridge, from which the chain of regions repeats in both directions. "
+        "Jerry Griffiths, Pavel Krtouš, and Jiří Podolský drew this diagram in 2006.",
+        "The coordinates $t$ and $r > 0$ cover one static region, its black hole, and the part of the region "
+        "beyond the acceleration horizon out to $r = \\infty$.",
+    ],
+    ("c_metric", "inner_hong_teo"): [
+        "The half axis $\\theta = 0$ between the black holes of the maximally extended C-metric ($\\alpha m = 1/6$), "
+        "totally geodesic, each point in the diagram a single event. On it the metric is "
+        "$(-Q\\,c^2dt^2 + dr^2/Q)/(1 + \\alpha r)^2$ with $Q = (1 - \\alpha^2r^2)(1 - 2m/r)$, whose roots are the "
+        "black hole horizon $r = 2m$ and the acceleration horizon $r = 1/\\alpha$, and maps $p$ and $q$ of "
+        "$ct \\mp r_*$, with $dr_* = dr/Q$, bring each region into a finite diamond, drawn with $T = p + q$ up and "
+        "$X = q - p$ across. The maps are Kruskal's across the acceleration horizon and continuous across the black "
+        "hole horizon.",
+        "The two static regions in the middle are the exteriors of the two black holes, causally separated by the "
+        "acceleration horizon. Above and below them lie the regions beyond the acceleration horizon, whose outer "
+        "edges are null infinity, where $1 + \\alpha r$ vanishes at $r = -1/\\alpha$, past $r = \\infty$. Beyond "
+        "each black hole horizon lie the black hole and the white hole, which end on the singularity $r = 0$, and "
+        "the exterior across the Einstein-Rosen bridge, from which the chain of regions repeats in both directions. "
+        "Jerry Griffiths, Pavel Krtouš, and Jiří Podolský drew this diagram in 2006.",
+        "The coordinates $\\tau$ and $y > -1$ cover one static region, its black hole, and the whole region "
+        "beyond the acceleration horizon, out to null infinity at $y = -1$.",
+    ],
+    ("c_metric", "outer_spherical"): [
+        "The half axis $\\theta = \\pi$ beyond the black hole of the maximally extended C-metric ($\\alpha m = 1/6$), "
+        "totally geodesic, each point in the diagram a single event. There the metric is "
+        "$(-Q\\,c^2dt^2 + dr^2/Q)/(1 - \\alpha r)^2$, whose conformal factor diverges at $r = 1/\\alpha$, so on "
+        "this half of the axis the acceleration horizon lies at null infinity and bounds the static region on the "
+        "left, as null infinity bounds the exterior of Schwarzschild's black hole.",
+        "Beyond the black hole horizon $r = 2m$ lie the black hole and the white hole, which end on the singularity "
+        "$r = 0$, and the exterior across the Einstein-Rosen bridge, whose own outer axis runs to null infinity on "
+        "the right. With $C = 1/(1 + 2\\alpha m)$ this half of the axis carries the cosmic string, whose deficit "
+        "angle lies in the angle about the axis and leaves this surface unchanged.",
+        "The coordinates $t$ and $r$ cover the static region and its black hole.",
+    ],
+    ("c_metric", "outer_hong_teo"): [
+        "The half axis $\\theta = \\pi$ beyond the black hole of the maximally extended C-metric ($\\alpha m = 1/6$), "
+        "totally geodesic, each point in the diagram a single event. There the metric is "
+        "$(-Q\\,c^2dt^2 + dr^2/Q)/(1 - \\alpha r)^2$, whose conformal factor diverges at $r = 1/\\alpha$, so on "
+        "this half of the axis the acceleration horizon lies at null infinity and bounds the static region on the "
+        "left, as null infinity bounds the exterior of Schwarzschild's black hole.",
+        "Beyond the black hole horizon $r = 2m$ lie the black hole and the white hole, which end on the singularity "
+        "$r = 0$, and the exterior across the Einstein-Rosen bridge, whose own outer axis runs to null infinity on "
+        "the right. With $C = 1/(1 + 2\\alpha m)$ this half of the axis carries the cosmic string, whose deficit "
+        "angle lies in the angle about the axis and leaves this surface unchanged.",
+        "The coordinates $\\tau$ and $y > 1$ cover the static region and its black hole.",
+    ],
     ("minkowski", "spherical"): [
         "Minkowski spacetime, each point in the diagram a 2-sphere of radius $r$. With $u = ct - r$ and $v = ct + r$ the metric on the plane of $t$ "
         "and $r$ is $-du\\,dv$, and for any length $\\ell$ the maps $p = \\arctan(u/\\ell)$ and "

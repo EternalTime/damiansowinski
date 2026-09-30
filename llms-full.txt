@@ -260,6 +260,17 @@ A family of spatially homogeneous but generally anisotropic cosmologies classifi
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json
 - chart Type I, Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + a_1^2 dx^2 + a_2^2 dy^2 + a_3^2 dz^2$$
 
+### C-Metric Accelerating Black Holes
+
+An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.
+
+- id: `c_metric`
+- tags: vacuum, vacuum solution, static, axisymmetric, black hole, accelerating black hole, acceleration horizon, event horizon, horizon, Killing horizon, boost symmetry, cosmic string, conical singularity, Petrov type D, gravitational radiation, singularity, curvature singularity, maximal extension, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1}{\left(1 + \alpha r\cos\theta\right)^2}\left(-\left(1 - \alpha^2r^2\right)\left(1 - \dfrac{2m}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \alpha^2r^2\right)\left(1 - \dfrac{2m}{r}\right)} + \dfrac{r^2d\theta^2}{1 + 2\alpha m\cos\theta} + C^2\left(1 + 2\alpha m\cos\theta\right)r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Hong-Teo: coordinates $(\tau, y, x, \phi)$, $$ds^2 = \dfrac{1}{\alpha^2\left(x + y\right)^2}\left(\left(1 - y^2\right)\left(1 - 2\alpha m y\right)d\tau^2 - \dfrac{dy^2}{\left(1 - y^2\right)\left(1 - 2\alpha m y\right)} + \dfrac{dx^2}{\left(1 - x^2\right)\left(1 + 2\alpha m x\right)} + C^2\left(1 - x^2\right)\left(1 + 2\alpha m x\right)d\phi^2\right)$$
+
 ### de Sitter
 
 The maximally symmetric vacuum solution with constant positive curvature, driven by a positive cosmological constant. It models an exponentially expanding empty universe and describes both inflation and the far future of our cosmos.
