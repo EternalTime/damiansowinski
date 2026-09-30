@@ -590,7 +590,7 @@ class FormPiece(Piece):
     are rho_of(x) and z_of(x) at the values xs of the coordinate of `sl` it is set beside."""
 
     def __init__(self, pid, sl, xs, rho_of, z_of, ends, size=1.0):
-        self.id, self.cls, self.sl, self.size = pid, "reference", sl, size
+        self.id, self.cls, self.sl, self.size, self.digits = pid, "reference", sl, size, None
         self.lo, self.hi, self.sense = float(xs[0]), float(xs[-1]), 1
         self.ends, self.marks, self.reference, self.legend = ends, [], True, None
         self.x = np.asarray(xs, dtype=float)
