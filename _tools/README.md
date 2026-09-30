@@ -481,6 +481,9 @@ The domains are not among the fields, since no conformal diagram reads one.
 A free function does not by itself rule a diagram out: where every choice of it gives the same shape, as for the Tolman-Oppenheimer-Volkoff star and the Morris-Thorne wormhole, the diagram is drawn with a declared choice that moves only the lines inside, and the Malament-Hogarth toy is drawn for every conformal factor at once, since a conformal factor changes no null direction.
 Those twelve have no file, which a full redraw removes if one is left behind, so the page has no conformal diagram section for them; `build_mfs_data.py` refuses a file that draws nothing, and the script stops if a metric file is in neither table, so a new spacetime needs a decision.
 
+The BTZ black hole's $1/N^2$ is a sum of simple poles with no constant term, so `BTZTower` sums its tortoise coordinate over every root of $N^2$, the negative ones included, which makes $r_*$ vanish both at $r = 0$ and as $r \to \infty$ and puts the conformal boundary and $r = 0$ on the vertical lines $X = \pm\pi/2$.
+Without rotation that is the square Bañados, Henneaux, Teitelboim and Zanelli drew, and the rotating hole is drawn on its plane of $t$ and $r$ with $\phi$ divided out, `Plane(..., quotient="phi")`, as its spacetime diagram is, a tower between those lines cut to one period by `clip_in_t`.
+
 A view of a surface that is not the whole spacetime carries `restriction`, which the page prints in a band across the top of the figure, never in a footnote.
 Kerr and Kerr-Newman are drawn on the symmetry axis and the cosmic string on the half plane of fixed $\phi$ and $z$, and the tests hold those three to carrying a restriction on every view.
 
