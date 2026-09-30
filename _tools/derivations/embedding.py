@@ -117,6 +117,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import build_mfs_data as build  # noqa: E402
 import null_rays as nr  # noqa: E402
+import conformal  # noqa: E402
 from conformal import Sources  # noqa: E402
 from projections import Camera  # noqa: E402
 
@@ -1401,6 +1402,7 @@ class Figure:
         self.extent = []
         self.surfaces, self.meridians, self.tint, self.marks = [], None, {}, []
         self.grids = []             # the lines of each grid piece a client draws again, by index
+        self.shades = []            # the parts of a piece shaded while a conformal view is shown
 
     def screen(self, P):
         return self.camera.screen(np.asarray(P, dtype=float))
@@ -1451,20 +1453,23 @@ class Figure:
         self.extent.append(S)
         self.lines.append((cls, S, True))
 
-    def fills_seen(self, n=420):
+    def fills_seen(self, n=420, scene=None):
         """Where each fill class is the surface nearest the camera, as polygons of a grid n
-        points across the drawing, painted under every line."""
-        fills = self.scene.fills()
+        points across the drawing, painted under every line: of the figure's own scene, or of
+        `scene`, the same surfaces tinted otherwise, as a shade tints them, on the same grid."""
+        scene = scene or self.scene
+        fills = scene.fills()
         classes = sorted({fill for fill in fills if fill})
+        out = []
         if not classes:
-            return
+            return out
         E = np.vstack(self.extent)
         lo, hi = E.min(0), E.max(0)
         step = float(np.max(hi - lo)) / n
         X = np.arange(lo[0] - 2 * step, hi[0] + 3 * step, step)
         Y = np.arange(lo[1] - 2 * step, hi[1] + 3 * step, step)
         GX, GY = np.meshgrid(X, Y)
-        near = self.scene.front(np.column_stack([GX.ravel(), GY.ravel()])).reshape(GX.shape)
+        near = scene.front(np.column_stack([GX.ravel(), GY.ravel()])).reshape(GX.shape)
         for cls in classes:
             which = [k for k, fill in enumerate(fills) if fill == cls]
             mask = np.isin(near, which).astype(float)
@@ -1475,7 +1480,41 @@ class Figure:
                 layer = {"kind": "fill", "class": cls, "points": rings[0]}
                 if len(rings) > 1:
                     layer["holes"] = rings[1:]
-                self.fills.append(layer)
+                out.append(layer)
+        return out
+
+    def shade(self, view, k, piece, lo, hi, T, reach, legend, caption):
+        """Tint the circles of `piece` on the figure's surface k from x = lo to x = hi, both
+        points of its profile, in the class shade in place of the piece's own tint, the rest of
+        the piece clear, while the view `view` of the spacetime's conformal diagram is shown: the
+        part of the moment that the region the view draws covers at its conformal time T.
+        `reach` is that part at other conformal times, each [T, lo, hi], or [T, None, None]
+        where the region covers none of the moment; `legend` names the tint and `caption` is a
+        paragraph read after the view's caption while the shade is shown."""
+        if isinstance(piece, GridPiece) or piece.reference:
+            raise AssertionError(f"piece {piece.id}: only a profile of the slice is shaded")
+        for x in (lo, hi):
+            piece.at(x)
+        self.shades.append({"view": view, "surface": k, "piece": piece, "from": lo, "to": hi, "T": T,
+                            "reach": reach, "legend": legend, "caption": caption})
+
+    def shaded(self, shade):
+        """The figure's scene with `shade` in place of its piece's tint: the piece cut at the
+        circles lo and hi into cones tinted shade between them and left clear outside."""
+        scene = Scene(self.camera, self.scene.size)
+        for k, (surface, off) in enumerate(self.surfaces):
+            for p in surface.pieces:
+                if p.reference:
+                    continue
+                if k != shade["surface"] or p is not shade["piece"]:
+                    scene.add(p, off, self.tint.get(p.cls))
+                    continue
+                i, j = sorted(int(np.argmin(np.abs(p.x - x))) for x in (shade["from"], shade["to"]))
+                for a, b, fill in ((0, i, None), (i, j, "shade"), (j, len(p.x) - 1, None)):
+                    if b > a:
+                        scene.solids.append((np.asarray(off, dtype=float), p.rho[a:b + 1].astype(float),
+                                             p.z[a:b + 1].astype(float), fill))
+        return scene
 
     def plain_fill(self, cls, S):
         """A polygon already in the plane of the page, painted under every line."""
@@ -1513,7 +1552,8 @@ class Figure:
     def done(self, pad=0.04):
         """The figure as it is written, boxed so that every label fits inside at its size, and
         refused if two labels overlap, since each is set on its own ground over the lines."""
-        self.fills_seen()
+        flat_fills = list(self.fills)
+        self.fills += self.fills_seen()
         P = np.vstack(self.extent)
         lo, hi = P.min(0), P.max(0)
         for _ in range(3):
@@ -1531,9 +1571,11 @@ class Figure:
             for j, b in enumerate(boxes[:i]):
                 if a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]:
                     raise AssertionError(f"the labels {self.labels[j]['text']} and {self.labels[i]['text']} overlap")
-        layers = [dict(layer, points=rounded(layer["points"]), **({"holes": [rounded(h) for h in layer["holes"]]}
+        def filled(fills):
+            return [dict(layer, points=rounded(layer["points"]), **({"holes": [rounded(h) for h in layer["holes"]]}
                                                                     if "holes" in layer else {}))
-                  for layer in self.fills]
+                    for layer in fills]
+        layers = filled(self.fills)
         order = {cls: i for i, (_, cls, _) in enumerate(self.legend_items)}
         # Hidden lines first, then the lines seen, each in the order of the legend.
         for far in (True, False):
@@ -1551,9 +1593,20 @@ class Figure:
                 "tint": self.tint, "marks": self.marks}
         if self.grids:
             turn["grid"] = self.grids
-        return {"box": [fixed(b, 4) for b in box],
-                "camera": {"azimuth": self.camera.azimuth, "elevation": self.camera.elevation},
-                "layers": layers, "labels": labels, "legend": self.legend_items, "turn": turn}
+        out = {"box": [fixed(b, 4) for b in box],
+               "camera": {"azimuth": self.camera.azimuth, "elevation": self.camera.elevation},
+               "layers": layers, "labels": labels, "legend": self.legend_items, "turn": turn}
+        if self.shades:
+            # The fills painted in place of the figure's own while each shade is shown; view()
+            # sets the shades beside the figure.
+            out["shades"] = [{"view": sh["view"], "surface": sh["surface"], "piece": sh["piece"].id,
+                              "from": significant(sh["from"]), "to": significant(sh["to"]), "T": sh["T"],
+                              "reach": [[T] + ([None, None] if lh is None else [fixed(lh[0], 7), fixed(lh[1], 7)])
+                                        for T, lh in sh["reach"]],
+                              "layers": filled(flat_fills + self.fills_seen(scene=self.shaded(sh))),
+                              "legend": sh["legend"], "caption": sh["caption"]}
+                             for sh in self.shades]
+        return out
 
 
 def rounded(points):
@@ -1818,9 +1871,12 @@ def movie(frames, variable, values, seconds=5, turns=True):
 # ---------------------------------------------------------------- the spacetimes
 
 def view(vid, label, unit, surfaces, figure, **fields):
+    shades = figure.pop("shades", None)
     out = {"id": vid, "label": label, "unit": unit, "surfaces": [s.data() for s in surfaces],
            "figure": figure}
     out.update({k: v for k, v in fields.items() if v is not None})
+    if shades:
+        out["shades"] = shades
     return out
 
 
@@ -2257,6 +2313,42 @@ def einstein_static(ck, src):
     fig.legend("line", "r", "$\\chi$ constant, at $\\pi/4$ and $3\\pi/4$")
     fig.legend("line", "chartedge", "the equator $\\chi = \\pi/2$, $r = R$, where the areal chart and Einstein's end")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    # The moment is t = 0, eta = ct/R = 0, the slice the conformal diagram draws. While the
+    # conformal diagram shows Minkowski space, de Sitter space or anti-de Sitter space in its
+    # strip, the sphere is shaded where that spacetime's own map covers it at eta = 0, and the
+    # map's reach at other times is checked against Hawking and Ellis's regions: chi < pi - |eta|,
+    # the whole sphere for |eta| < pi/2, and chi < pi/2 at every eta.
+    hawking_ellis = {
+        "minkowski": lambda eta: (0.0, math.pi - abs(eta)) if abs(eta) < math.pi else None,
+        "de_sitter": lambda eta: (0.0, math.pi) if abs(eta) < math.pi / 2 else None,
+        "anti_de_sitter": lambda eta: (0.0, math.pi / 2),
+    }
+    words = {
+        "minkowski": ("Minkowski space at $t = 0$, the sphere but its antipode $i^0$",
+                      "The part of the sphere Minkowski space covers (pink, $\\eta = 0$): all of it but the antipode, "
+                      "spatial infinity $i^0$, and the cap $\\chi < \\pi - |\\eta|$ at any other $\\eta$."),
+        "de_sitter": ("de Sitter space at its waist, the whole sphere",
+                      "The part of the sphere de Sitter space covers (pink, $\\eta = 0$): the whole sphere, at every "
+                      "$\\eta$ from $-\\pi/2$ to $\\pi/2$."),
+        "anti_de_sitter": ("anti-de Sitter space at $t = 0$, the hemisphere $\\chi < \\pi/2$",
+                           "The part of the sphere anti-de Sitter space covers (pink, $\\eta = 0$): the hemisphere "
+                           "$\\chi < \\pi/2$, the same at every $\\eta$."),
+    }
+    for vid, (name, fmap, reach) in conformal.ESU_EMBEDDED.items():
+        reaches = [(eta, conformal.covered(fmap, reach, eta)) for eta in conformal.ESU_ETAS]
+        err = 0.0
+        for eta, got in reaches:
+            want = hawking_ellis[vid](eta)
+            err = max(err, 0.0 if got is None and want is None else math.inf if got is None or want is None
+                      else max(abs(got[0] - want[0]), abs(got[1] - want[1])))
+        ck.add(f"Einstein static: the part of the sphere {name} covers is Hawking and Ellis's, at every eta checked",
+               err, 1e-6)
+        lo, hi = conformal.covered(fmap, reach, 0.0)
+        # Each end is a circle of the profile: the pole, the equator or the antipode.
+        lo, hi = (float(sphere.x[int(np.argmin(np.abs(sphere.x - x)))]) for x in (lo, hi))
+        ck.add(f"Einstein static: the part of the sphere {name} covers at eta = 0 ends on circles of the profile",
+               max(abs(a - b) for a, b in zip((lo, hi), conformal.covered(fmap, reach, 0.0))), 1e-6)
+        fig.shade(vid, 0, sphere, lo, hi, 0.0, reaches, ["fill", "shade", words[vid][0]], words[vid][1])
     return [view("sphere", "The three sphere", "$R$", [surface], fig.done(),
                  settings="$R = 1$, the unit of every length.")]
 

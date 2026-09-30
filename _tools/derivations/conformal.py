@@ -393,6 +393,38 @@ def mink_pq(t, x, ell=1.0):
     return np.arctan((t - x) / ell), np.arctan((t + x) / ell)
 
 
+def ds_static_pq(t, r):
+    """de Sitter's static patch in its global square at L = 1: tan p = tanh(u/2) and
+    tan q = tanh(v/2), with u, v = t -+ artanh(r)."""
+    t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+    rs = np.arctanh(r)
+    return np.arctan(np.tanh((t - rs) / 2)), np.arctan(np.tanh((t + rs) / 2))
+
+
+def ds_hyperboloid(p, q):
+    """The point (X0, X4, |X_1..3|) of de Sitter's hyperboloid at L = 1 at p, q of its global
+    square: X0 = tan T, X4 = cos(chi)/cos T and |X_1..3| = sin(chi)/cos T, with T = p + q and
+    chi = q - p."""
+    T, chi = p + q, q - p
+    return np.tan(T), np.cos(chi) / np.cos(T), np.sin(chi) / np.cos(T)
+
+
+def ds_closed_pq(t, chi):
+    """de Sitter's closed slicing at L = 1, X0 = sinh t, X4 = cosh t cos chi and
+    |X_1..3| = cosh t sin chi, in its global square by ds_hyperboloid read backwards: tan T = X0,
+    and chi the same angle. Its time runs over the whole line and chi from 0 to pi."""
+    T = np.arctan(np.sinh(np.asarray(t, dtype=float)))
+    chi = np.asarray(chi, dtype=float)
+    return (T - chi) / 2, (T + chi) / 2
+
+
+def ads_global_pq(t, r):
+    """Anti-de Sitter's static global chart in its strip at L = 1: sigma = arctan r and
+    p, q = (t -+ sigma)/2."""
+    t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+    return (t - np.arctan(r)) / 2, (t + np.arctan(r)) / 2
+
+
 def atan_exp(x):
     """arctan(exp(x)), without overflow."""
     x = np.asarray(x, dtype=float)
@@ -1673,34 +1705,26 @@ def de_sitter(ck, src):
     st = Plane(src, "de_sitter", "static_spherical", ("t", "r"), EQUATOR, {"Lambda": 3})
     fl = Plane(src, "de_sitter", "flat_slicing", ("t", "x"), {"y": "0", "z": "0"}, {"H": 1})
 
-    def static(t, r):
-        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
-        rs = np.arctanh(r)
-        return np.arctan(np.tanh((t - rs) / 2)), np.arctan(np.tanh((t + rs) / 2))
-
     def flat(t, rho):
         eta = -np.exp(-np.asarray(t, dtype=float))
         return Q4 + np.arctan(eta - rho), Q4 + np.arctan(eta + rho)
-    ck.chart("de Sitter static", st, static, ck.uniform(-10, 10), ck.uniform(0.001, 0.999), lambda t, r: (1, 0))
+    ck.chart("de Sitter static", st, ds_static_pq, ck.uniform(-10, 10), ck.uniform(0.001, 0.999), lambda t, r: (1, 0))
     ck.chart("de Sitter flat slicing", fl, flat, ck.uniform(-6, 6), ck.uniform(0.001, 20), lambda t, x: (1, 0))
 
-    def embedding(p, q):
-        T, chi = p + q, q - p
-        return np.tan(T), np.cos(chi) / np.cos(T), np.sin(chi) / np.cos(T)
     t, r = ck.uniform(-6, 6, 2000), ck.uniform(0, 0.999, 2000)
-    X0, X4, R = embedding(*static(t, r))
+    X0, X4, R = ds_hyperboloid(*ds_static_pq(t, r))
     scale = 1 + np.abs(X0) + np.abs(X4)
     ck.limit("de Sitter: the static coordinates land where the hyperboloid puts them",
              np.concatenate([(X0 - np.sqrt(1 - r ** 2) * np.sinh(t)) / scale,
                              (X4 - np.sqrt(1 - r ** 2) * np.cosh(t)) / scale, (R - r) / scale]), 0, 1e-10)
     t, rho = ck.uniform(-4, 4, 2000), ck.uniform(0, 8, 2000)
-    X0, X4, R = embedding(*flat(t, rho))
+    X0, X4, R = ds_hyperboloid(*flat(t, rho))
     scale = 1 + np.abs(X0) + np.abs(X4) + np.abs(R)
     a = np.exp(t)
     ck.limit("de Sitter: the flat slicing lands where the hyperboloid puts it",
              np.concatenate([(X0 - np.sinh(t) - rho ** 2 * a / 2) / scale,
                              (X4 - np.cosh(t) + rho ** 2 * a / 2) / scale, (R - a * rho) / scale]), 0, 1e-10)
-    p, q = static(np.array([0.0, 3, -3]), np.full(3, 1 - 1e-14))
+    p, q = ds_static_pq(np.array([0.0, 3, -3]), np.full(3, 1 - 1e-14))
     ck.limit("de Sitter: r -> sqrt(3/Lambda) lands on the horizons q = pi/4 (t > 0) and p = -pi/4 (t < 0)",
              [q[0], q[1], p[2]], [Q4, Q4, -Q4], 1e-6)
     p, q = flat(np.array([50.0]), np.array([1.0]))
@@ -1728,7 +1752,7 @@ def de_sitter(ck, src):
     static_moment = slices.moments("de_sitter")[0]
     lo, hi = static_moment.reach("static_spherical", "r")
     r = np.linspace(lo, hi, 2)
-    p, q = static(0 * r, r)
+    p, q = ds_static_pq(0 * r, r)
     X, T = xt(p, q)
     # The observer's hemisphere out to its horizon, then the antipode's, the static patch's
     # mirror X -> pi - X, back in to its centre.
@@ -1737,10 +1761,10 @@ def de_sitter(ck, src):
     v = View("static", "Static spherical", box, "static_spherical")
     frame(v)
     v.fill("cover", [[0, -HALF], [HALF, 0], [0, HALF]])
-    grid(v, "r", lambda r, t: static(t, r), (0.3, 0.6, 0.85, 0.97), S_ALL)
-    grid(v, "t", static, (-3, -1.5, -0.5, 0, 0.5, 1.5, 3), spread(0, 1, 500, 14))
-    label_on(v, static(0, 0.6), "$0.6$")
-    label_on(v, static(0, 0.3), "$r = 0.3$")
+    grid(v, "r", lambda r, t: ds_static_pq(t, r), (0.3, 0.6, 0.85, 0.97), S_ALL)
+    grid(v, "t", ds_static_pq, (-3, -1.5, -0.5, 0, 0.5, 1.5, 3), spread(0, 1, 500, 14))
+    label_on(v, ds_static_pq(0, 0.6), "$0.6$")
+    label_on(v, ds_static_pq(0, 0.3), "$r = 0.3$")
     v.label_xt([PI * 0.8, -0.28], "the antipode's static patch", cls="region")
     v.label_xt([HALF, 1.05], "expanding", cls="region")
     v.label_xt([HALF, -1.05], "contracting", cls="region")
@@ -1797,10 +1821,7 @@ def anti_de_sitter(ck, src):
     gl = Plane(src, "anti_de_sitter", "static_global", ("t", "r"), EQUATOR, {"L": 1})
     po = Plane(src, "anti_de_sitter", "poincare", ("t", "z"), {"x": "0", "y": "0"}, {"L": 1})
 
-    def global_pq(t, r):
-        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
-        return (t - np.arctan(r)) / 2, (t + np.arctan(r)) / 2
-    ck.chart("anti-de Sitter global", gl, global_pq, ck.uniform(-10, 10), ck.uniform(0.001, 50), lambda t, r: (1, 0))
+    ck.chart("anti-de Sitter global", gl, ads_global_pq, ck.uniform(-10, 10), ck.uniform(0.001, 50), lambda t, r: (1, 0))
     ck.chart("anti-de Sitter Poincare", po, poincare_pq, ck.uniform(-10, 10), ck.uniform(0.001, 20), lambda t, z: (1, 0))
     t, z = ck.uniform(-6, 6, 2000), ck.uniform(1e-3, 8, 2000)
     p, q = poincare_pq(t, z)
@@ -1857,7 +1878,7 @@ def anti_de_sitter(ck, src):
     hyperboloid = slices.moments("anti_de_sitter")[0]
     lo, hi = hyperboloid.reach("static_global", "r")
     r = np.linspace(lo, hi, 2)
-    v.slice(hyperboloid, [global_pq(0 * r, r)])
+    v.slice(hyperboloid, [ads_global_pq(0 * r, r)])
     views.append(v)
 
     T0, T1 = -1.1 * PI, 1.1 * PI
@@ -3164,6 +3185,58 @@ def published_gthth(src, metric_id, system_id, params):
     return sp.lambdify((x0, x1), e, "numpy")
 
 
+def covered(fmap, reach, eta):
+    """The values of chi that a spacetime drawn in the strip of the Einstein static universe covers
+    at the conformal time eta, as (lowest, highest), or None where it covers none. fmap draws it
+    from its own chart, whose time runs over the whole line and whose radial coordinate over
+    `reach`. At each of 4001 values of the radial coordinate the time at which the map reaches eta
+    is found by bisection, since eta = p + q grows with the time, and the values of chi = q - p
+    that reach it are kept. An unbounded reach is sampled out to 10^8, where Minkowski space and
+    anti-de Sitter space fall short of their edges in chi by less than 10^-7."""
+    lo, hi = reach
+    r = np.concatenate([[lo], lo + np.geomspace(1e-9, 1e8, 4000)]) if np.isinf(hi) else np.linspace(lo, hi, 4001)
+    a, b = np.full_like(r, -1e10), np.full_like(r, 1e10)
+    with np.errstate(over="ignore"):
+        for _ in range(200):
+            m = (a + b) / 2
+            p, q = fmap(m, r)
+            below = p + q < eta
+            a, b = np.where(below, m, a), np.where(below, b, m)
+        p, q = fmap((a + b) / 2, r)
+    hit = np.abs(p + q - eta) < 1e-7
+    if not hit.any():
+        return None
+    chi = (q - p)[hit]
+    return float(chi.min()), float(chi.max())
+
+
+def across(polygon, T):
+    """The least and greatest X at which the line of constant T crosses a convex polygon of (X, T),
+    or None where it misses it."""
+    P = np.asarray(polygon, dtype=float)
+    xs = []
+    for (x0, t0), (x1, t1) in zip(P, np.roll(P, -1, axis=0)):
+        if min(t0, t1) <= T <= max(t0, t1):
+            xs += [x0, x1] if t0 == t1 else [x0 + (T - t0) * (x1 - x0) / (t1 - t0)]
+    return (min(xs), max(xs)) if xs else None
+
+
+# The spacetimes the Einstein static universe's conformal diagram draws inside its strip, by the
+# id of the view that draws each: its name, the map from its own chart into the strip at R = 1,
+# and that chart's reach in its radial coordinate, its time running over the whole line.
+# Minkowski space and anti-de Sitter space enter by the charts the conformal check pulls back;
+# de Sitter space by its closed slicing, since its static patch covers only the diamond
+# |eta| + chi < pi/2 about the pole.
+ESU_EMBEDDED = {
+    "minkowski": ("Minkowski space", mink_pq, (0.0, np.inf)),
+    "de_sitter": ("de Sitter space", ds_closed_pq, (0.0, PI)),
+    "anti_de_sitter": ("anti-de Sitter space", ads_global_pq, (0.0, np.inf)),
+}
+# The conformal times at which each region is checked against Hawking and Ellis's, none on an
+# edge of a region.
+ESU_ETAS = tuple(float(e) for e in np.arange(-3, 3.01, 0.5))
+
+
 def einstein_static(ck, src):
     """The strip. In the hyperspherical chart the metric on the plane of t and chi is
     -c^2dt^2 + R^2dchi^2, flat as it stands, so with eta = ct/R the map p, q = (eta -+ chi)/2 draws
@@ -3225,17 +3298,9 @@ def einstein_static(ck, src):
         ck.limit(f"Einstein static: {name} is conformal to the region drawn, plane and sphere with one factor",
                  float(np.max(err)), 0, 1e-6)
 
-    def ds_static(t, r):
-        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
-        rs = np.arctanh(r)
-        return np.arctan(np.tanh((t - rs) / 2)), np.arctan(np.tanh((t + rs) / 2))
-
-    def ads_global(t, r):
-        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
-        return (t - np.arctan(r)) / 2, (t + np.arctan(r)) / 2
     conformal("Minkowski space", "minkowski", "spherical", {}, mink_pq, 0.001, 20)
-    conformal("de Sitter space", "de_sitter", "static_spherical", {"Lambda": 3}, ds_static, 0.001, 0.999)
-    conformal("anti-de Sitter space", "anti_de_sitter", "static_global", {"L": 1}, ads_global, 0.001, 50)
+    conformal("de Sitter space", "de_sitter", "static_spherical", {"Lambda": 3}, ds_static_pq, 0.001, 0.999)
+    conformal("anti-de Sitter space", "anti_de_sitter", "static_global", {"L": 1}, ads_global_pq, 0.001, 50)
 
     T0, T1 = -PI - 0.3, PI + 0.3
     box = [-0.35, PI + 0.35, T0, T1]
@@ -3244,6 +3309,19 @@ def einstein_static(ck, src):
     moment = slices.moments("einstein_static")[0]
     if moment.reach("hyperspherical", "\\chi") != (0, PI):
         raise SystemExit("Einstein static: the embedding is not the whole moment, pole to antipode")
+
+    # Each region drawn in the strip is the one its map covers, at every conformal time checked,
+    # which is the part of the sphere the embedding diagram shades while the region's view is shown.
+    covers = {"minkowski": TRIANGLE, "de_sitter": [[0, -HALF], [PI, -HALF], [PI, HALF], [0, HALF]],
+              "anti_de_sitter": half}
+    for vid, (name, fmap, reach) in ESU_EMBEDDED.items():
+        err = []
+        for eta in ESU_ETAS:
+            got, want = covered(fmap, reach, eta), across(covers[vid], eta)
+            err.append(0.0 if got is None and want is None else np.inf if got is None or want is None
+                       else max(abs(got[0] - want[0]), abs(got[1] - want[1])))
+        ck.limit(f"Einstein static: the region drawn for {name} is the region its map covers, at every eta checked",
+                 err, 0, 1e-6)
 
     def frame(v, times=True):
         v.fill("region", strip_)
@@ -3294,7 +3372,7 @@ def einstein_static(ck, src):
 
     v = View("minkowski", "Minkowski space", box)
     frame(v, times=False)
-    v.fill("cover", TRIANGLE)
+    v.fill("cover", covers["minkowski"])
     rr = spread(0, np.inf, 500, 12)
     s = S_ALL
     for r in (0.5, 1, 2):
@@ -3310,7 +3388,7 @@ def einstein_static(ck, src):
 
     v = View("de_sitter", "de Sitter space", box)
     frame(v, times=False)
-    v.fill("cover", [[0, -HALF], [PI, -HALF], [PI, HALF], [0, HALF]])
+    v.fill("cover", covers["de_sitter"])
     v.line("scri", [[[0, HALF], [PI, HALF]], [[0, -HALF], [PI, -HALF]]])
     v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
     v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "t", dy=5)
@@ -3321,7 +3399,7 @@ def einstein_static(ck, src):
 
     v = View("anti_de_sitter", "anti-de Sitter space", box)
     frame(v, times=False)
-    v.fill("cover", half)
+    v.fill("cover", covers["anti_de_sitter"])
     for r in (0.5, 1, 2):
         X = float(np.arctan(r))
         v.line("r", [[[X, T0], [X, T1]]])
