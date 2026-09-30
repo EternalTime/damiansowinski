@@ -410,6 +410,18 @@ The flat spacetime of special relativity. No curvature, no gravity.
 - chart Spherical Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -c^2\,du\,dv + \dfrac{c^2(v-u)^2}{4}\left(d\theta^2 + \sin^2\theta\, d\phi^2\right)$$
 - chart Rindler: coordinates $(T, X, Y, Z)$, $$ds^2 = -\dfrac{a^2}{c^4}X^2 c^2 dT^2 + dX^2 + dY^2 + dZ^2$$
 
+### Misner Space
+
+Minkowski space identified under a boost, flat everywhere. A contracting universe whose closed direction turns from space into time across a horizon of closed null geodesics, with closed timelike curves through every event beyond it.
+
+- id: `misner`
+- tags: flat, vacuum, vacuum solution, closed timelike curves, causality violation, chronology horizon, time machine, topology, boost, Taub-NUT, exact solution, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/misner.json
+- chart Misner: coordinates $(T, \psi, y, z)$, $$ds^2 = -2\,dT\,d\psi - T\,d\psi^2 + dy^2 + dz^2$$
+- chart Milne: coordinates $(t, \chi, y, z)$, $$ds^2 = -c^2 dt^2 + c^2t^2\,d\chi^2 + dy^2 + dz^2$$
+- chart Rindler: coordinates $(\eta, \xi, y, z)$, $$ds^2 = -\xi^2 d\eta^2 + d\xi^2 + dy^2 + dz^2$$
+
 ### Mixmaster Chaotic Cosmology
 
 A spatially homogeneous Bianchi type IX cosmology whose approach to the singularity consists of an infinite, chaotic sequence of Kasner oscillations. It is the prototype of chaotic cosmological dynamics near a singularity.

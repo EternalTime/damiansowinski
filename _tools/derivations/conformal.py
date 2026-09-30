@@ -661,6 +661,148 @@ def minkowski(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Misner space
+
+MISNER_PSI0 = 2.0       # a boost of rapidity 1, so that several copies fit the drawing
+
+
+def misner(ck, src):
+    """Misner space in the plane y = z = 0 of the Minkowski space that covers it, one view per
+    chart, each tinting one copy of the spacetime between two lines the boost carries onto one
+    another.
+
+    In the covering plane, with l = 1, Levanony and Ori's ct - x = -2 e^(-psi/2) and
+    ct + x = 2T e^(psi/2) give -d(ct - x) d(ct + x) = -2 dT dpsi - T dpsi^2, so Misner's
+    coordinates cover the half x > ct and p = arctan(ct - x), q = arctan(ct + x) bring it to the
+    half square p < 0. The Milne chart's ct cosh chi, ct sinh chi, t < 0, is the past light cone
+    of the origin, p, q < 0, and the Rindler chart's xi sinh eta, xi cosh eta the wedge
+    p < 0 < q. The boost of rapidity psi_0/2 is psi -> psi + psi_0, chi -> chi + psi_0/2 and
+    eta -> eta + psi_0/2. At psi_0 = 4 pi, the value the other diagrams are drawn at, one copy
+    stretches by e^(2 pi) along each light ray and fills the drawing to within a pixel, so these
+    views are drawn at psi_0 = 2. The horizon T = 0 is q = 0, and psi -> infinity is p = 0."""
+    views = []
+    half_box = [-HALF - 0.35, PI + 0.35, -PI - 0.25, HALF + 0.25]
+    past_box = [-HALF - 0.35, HALF + 0.35, -PI - 0.25, 0.25]
+    wedge_box = [-0.35, PI + 0.35, -HALF - 0.25, HALF + 0.25]
+    psi0 = MISNER_PSI0
+    params = {"psi_0": repr(psi0)}
+    settings = f"$\\psi_0 = {psi0:g}$, a boost of rapidity $1$, and $\\ell = 1$."
+    restriction = ("The plane $y = z = 0$ of the covering Minkowski space only, each point in the diagram a "
+                   "single event, each event of Misner space drawn once in every copy.")
+    ks = range(-4, 5)
+
+    def pq(u, v):
+        return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(v, dtype=float))
+
+    def misner_pq(T, psi):
+        T, psi = np.asarray(T, dtype=float), np.asarray(psi, dtype=float)
+        return pq(-2 * np.exp(-psi / 2), 2 * T * np.exp(psi / 2))
+
+    def milne_pq(t, chi):
+        t, chi = np.asarray(t, dtype=float), np.asarray(chi, dtype=float)
+        return pq(t * np.exp(-chi), t * np.exp(chi))
+
+    def rindler_pq(eta, xi):
+        eta, xi = np.asarray(eta, dtype=float), np.asarray(xi, dtype=float)
+        return pq(-xi * np.exp(-eta), xi * np.exp(eta))
+
+    def corners(*pqs):
+        return [point(p, q) for p, q in pqs]
+
+    moments = slices.moments("misner")
+
+    def hyperbola(t):
+        """The moment ct = t in the covering plane: (ct - x)(ct + x) = t^2 with both negative,
+        every copy of its circle, out to where either null coordinate is 50."""
+        s = np.geomspace(t * t / 50, 50, 801)
+        return pq(-s, -t * t / s)
+
+    past_null = [[point(-HALF, -HALF), point(0, -HALF)], [point(-HALF, -HALF), point(-HALF, 0)]]
+
+    # Misner's own coordinates.
+    mis = Plane(src, "misner", "misner", ("T", "\\psi"), {"y": "0", "z": "0"}, params)
+    ck.chart("Misner", mis, misner_pq, ck.uniform(-5, 5), ck.uniform(-6, 6), lambda T, psi: (np.abs(T) / 2 + 1, 1))
+    p, q = misner_pq(np.zeros(5), np.linspace(-4, 4, 5))
+    ck.limit("Misner: T = 0 is the null line q = 0", q, np.zeros(5), 1e-12)
+    p, q = misner_pq(np.linspace(-3, 3, 5), np.full(5, 200.0))
+    ck.limit("Misner: psi -> infinity is the null line p = 0", p, np.zeros(5), 1e-12)
+    ck.finite("Misner: the chronology horizon T = 0 is regular", mis.kretschmann(np.zeros(50), ck.uniform(-5, 5, 50)))
+    v = View("misner", "Misner", half_box, "misner")
+    v.fill("region", corners((-HALF, -HALF), (-HALF, HALF), (0, HALF), (0, -HALF)))
+    lo, hi = math.atan(-2.0), math.atan(-2 * math.exp(-psi0 / 2))
+    v.fill("cover", corners((lo, -HALF), (lo, HALF), (hi, HALF), (hi, -HALF)))
+    grid(v, "t", misner_pq, (-2, -1, -0.5, 0.5, 1, 2), S_ALL)
+    grid(v, "r", misner_pq, [k * psi0 for k in ks], S_ALL, first=False)
+    v.line("horizon", [corners((-HALF, 0), (0, 0))])
+    v.line("chartedge", [corners((0, -HALF), (0, HALF))])
+    v.line("scri", [corners((-HALF, -HALF), (-HALF, HALF), (0, HALF))] + past_null[:1])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([0, -PI / 2 - 0.35], "$T < 0$", "c", "small")
+    v.label_xt([PI / 2 + 0.45, 0], "$T > 0$", "c", "small")
+    v.legend("cover", "one copy of Misner space, $0 \\le \\psi < \\psi_0$")
+    v.legend("r", "$\\psi = k\\psi_0$ for integer $k$, each the same light ray of Misner space")
+    v.legend("t", "$T$ constant, at $\\pm1/2$, $\\pm1$ and $\\pm2$ times $\\ell^2$")
+    v.legend("horizon", "$T = 0$, the chronology horizon")
+    v.legend("chartedge", "$\\psi \\to \\infty$, where the coordinates end")
+    v.set(restriction=restriction, settings=settings)
+    for m in moments:
+        v.slice(m, [hyperbola(m.time)])
+    views.append(v)
+
+    # The Milne chart of the region T < 0.
+    mil = Plane(src, "misner", "milne", ("t", "\\chi"), {"y": "0", "z": "0"}, params)
+    ck.chart("Misner, Milne", mil, milne_pq, ck.uniform(-10, -0.01), ck.uniform(-3, 3), lambda t, chi: (1, 0))
+    p, q = milne_pq(np.full(5, -1e-12), np.linspace(-2, 2, 5))
+    ck.limit("Misner, Milne: t -> 0 is the null lines p = 0 and q = 0", np.concatenate([p, q]), np.zeros(10), 1e-11)
+    v = View("milne", "Milne", past_box, "milne")
+    v.fill("region", corners((-HALF, -HALF), (-HALF, 0), (0, 0), (0, -HALF)))
+    s = -np.geomspace(1e-6, 1e6, 400)
+    a, b = milne_pq(s, np.zeros_like(s))
+    c, d = milne_pq(s[::-1], np.full_like(s, psi0 / 2))
+    v.fill("cover", [point(x, y) for x, y in zip(np.concatenate([a, c]), np.concatenate([b, d]))])
+    grid(v, "t", milne_pq, (-0.5, -1, -2, -4), S_ALL)
+    grid(v, "r", milne_pq, [k * psi0 / 2 for k in ks], -np.geomspace(1e-6, 1e6, 400), first=False)
+    v.line("horizon", [corners((-HALF, 0), (0, 0)), corners((0, -HALF), (0, 0))])
+    v.line("scri", past_null)
+    v.layers.append({"kind": "point", "class": "infinity", "at": [0.0, round(-PI, 4)]})
+    v.label_xt([0, -PI], "$i^-$", "t", dy=6)
+    v.legend("cover", "one copy of the region $T < 0$, $0 \\le \\chi < \\psi_0/2$")
+    v.legend("r", "$\\chi = k\\psi_0/2$ for integer $k$, each the same line of Misner space")
+    v.legend("t", "$ct$ constant, at $-1/2$, $-1$, $-2$ and $-4$ times $\\ell$")
+    v.legend("horizon", "$t \\to 0$, the chronology horizon of each extension")
+    v.set(restriction=restriction, settings=settings)
+    for m in moments:
+        v.slice(m, [hyperbola(m.time)])
+    views.append(v)
+
+    # The Rindler chart of the region T > 0.
+    rin = Plane(src, "misner", "rindler", ("\\eta", "\\xi"), {"y": "0", "z": "0"}, params)
+    ck.chart("Misner, Rindler", rin, rindler_pq, ck.uniform(-3, 3), ck.uniform(0.01, 10), lambda eta, xi: (1, 0))
+    p, q = rindler_pq(np.linspace(-2, 2, 5), np.full(5, 1e-12))
+    ck.limit("Misner, Rindler: xi -> 0 is the null lines p = 0 and q = 0", np.concatenate([p, q]), np.zeros(10), 1e-11)
+    v = View("rindler", "Rindler", wedge_box, "rindler")
+    v.fill("region", corners((-HALF, 0), (-HALF, HALF), (0, HALF), (0, 0)))
+    s = np.geomspace(1e-6, 1e6, 400)
+    a, b = rindler_pq(np.zeros_like(s), s)
+    c, d = rindler_pq(np.full_like(s, psi0 / 2), s[::-1])
+    v.fill("cover", [point(x, y) for x, y in zip(np.concatenate([a, c]), np.concatenate([b, d]))])
+    grid(v, "r", lambda xi, eta: rindler_pq(eta, xi), (0.25, 0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", rindler_pq, [k * psi0 / 2 for k in ks], s)
+    v.line("horizon", [corners((-HALF, 0), (0, 0)), corners((0, HALF), (0, 0))])
+    v.line("scri", [corners((-HALF, 0), (-HALF, HALF), (0, HALF))])
+    v.layers.append({"kind": "point", "class": "infinity", "at": [round(PI, 4), 0.0]})
+    v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+    v.legend("cover", "one copy of the region $T > 0$, $0 \\le \\eta < \\psi_0/2$")
+    v.legend("r", "$\\xi$ constant, each a closed timelike curve of Misner space, at $1/4$, $1/2$, $1$, $2$ and $4$ times $\\ell$")
+    v.legend("t", "$\\eta = k\\psi_0/2$ for integer $k$, each the same line of Misner space")
+    v.legend("horizon", "$\\xi \\to 0$, the chronology horizon of each extension")
+    v.set(restriction=restriction, settings=settings)
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- the tower
 
 class Tower:
@@ -3104,6 +3246,7 @@ DRAWN = {
     "cosmic_string": cosmic_string, "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "c_metric": c_metric,
+    "misner": misner,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -3207,6 +3350,32 @@ CAPTIONS = {
         "An observer at constant $X$ accelerates uniformly, at $c^2/X$, and the null line "
         "$ct = x$ is that observer's horizon: no event beyond it can send a signal into the "
         "wedge, as nothing inside $r_s$ can reach a static observer outside a black hole.",
+    ],
+    ("misner", "misner"): [
+        "The plane $y = z = 0$ of the Minkowski space that covers Misner space, in Misner's coordinates, with "
+        "$ct - x = -2\\ell e^{-\\psi/2}$ and $ct + x = 2Te^{\\psi/2}/\\ell$ for any length $\\ell$, brought into a "
+        "finite drawing by $p = \\arctan((ct - x)/\\ell)$ and $q = \\arctan((ct + x)/\\ell)$. The coordinates cover "
+        "the half $x > ct$: the past light cone of the origin, where $T < 0$, and the wedge $x > c|t|$, where "
+        "$T > 0$.",
+        "The boost of rapidity $\\psi_0/2$ carries each light ray $\\psi = k\\psi_0$ onto the next, and one copy of "
+        "Misner space lies between two neighbouring rays, which are one ray of it. The null line $T = 0$ is the "
+        "chronology horizon, and in the quotient each hyperbola of constant $T > 0$ is a closed timelike curve.",
+    ],
+    ("misner", "milne"): [
+        "The past light cone of the origin in the plane $y = z = 0$ of the covering Minkowski space, in the "
+        "Milne chart, $ct\\cosh\\chi$ and $ct\\sinh\\chi$ with $t < 0$. Lines of constant $\\chi$ run straight "
+        "into the origin, and the boost carries each line $\\chi = k\\psi_0/2$ onto the next.",
+        "Each hyperbola of constant $t$ is, in the quotient, a circle of circumference $\\psi_0c|t|/2$, and the "
+        "circles shrink toward the null lines $t \\to 0$. Misner's coordinates continue the region across the "
+        "line $ct + x = 0$ into the wedge $x > c|t|$, and the other extension across $ct - x = 0$.",
+    ],
+    ("misner", "rindler"): [
+        "The wedge $x > c|t|$ in the plane $y = z = 0$ of the covering Minkowski space, in the Rindler chart, "
+        "$\\xi\\sinh\\eta$ and $\\xi\\cosh\\eta$. The boost carries each line $\\eta = k\\psi_0/2$ onto the next, "
+        "so each hyperbola of constant $\\xi$ is, in the quotient, a closed timelike curve of proper length "
+        "$\\xi\\psi_0/2$.",
+        "The closed curves shrink toward the null lines $\\xi \\to 0$, the chronology horizon, where they become "
+        "closed null geodesics.",
     ],
     ("schwarzschild", "spherical"): [
         "The Schwarzschild spacetime, maximally extended, each point in the diagram a 2-sphere "

@@ -3149,6 +3149,11 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp + tq) / 2 - t), 2e-4 * scale, where)
                             self.assertLessEqual(lo - 2e-4 * scale, (tq - tp) / 2, where)
                             self.assertLessEqual((tq - tp) / 2, hi + 2e-4 * scale, where)
+                    elif metric_id == "misner":
+                        # The hyperbola (ct - x)(ct + x) = c^2t^2 of the covering plane, every copy.
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs(tp * tq - t * t), 2e-4 * (1 + tp * tp + tq * tq), where)
                     elif metric_id == "vaidya":
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2
