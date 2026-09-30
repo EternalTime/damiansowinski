@@ -81,6 +81,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
   All of the observer's hemisphere lies on it, $r = \rho e^{Ht}$ reaching $\ell$ only as $\rho \to \infty$; the antipodal hemisphere lies outside the flat chart.
 - `static` and `flat`, the square, each point a sphere: the line $T = 0$ across the whole square, the observer's hemisphere $\chi \le \pi/2$ and the antipodal one beyond it, the same on both, since both are the whole spacetime.
 
+### The domain wall
+
+- The embedding is the equator $\theta = \pi/2$ of the global chart at five moments, $kct = -1$, $-0.5$, $0$, $0.5$ and $1$, $z$ from $-1/k$ to $1/k$, the centre of one side through the wall to the centre of the other, drawn in Minkowski space.
+- `planar/tz`, the plane $x = y = 0$: the moment $kct = t_k$ of the global chart meets it along the line $t = t_k$, every $z$, since both charts put the point of each side at $R = (1 - k|z|)\cosh(kct)$, $cT = (1 - k|z|)\sinh(kct)$ of its inertial chart; five lines across the whole box.
+- `inertial/through`, the line through the centre of the side $z < 0$: the moment is the cone $cT = R\tanh(kct)$, so five lines $cT = |x|\tanh(kct_k)$ through the centre, out to the wall at $|x| = \cosh(kct_k)/k$.
+- `planar`, `global`, `conformal` and `inertial`, the whole spacetime, each point a 2-sphere: five curves from the centre of one side at $T = 0$ through the wall to the centre of the other, each the image of $cT = R\tanh(kct_k)$ on both sides, the one at $kct = 0$ the line $T = 0$.
+
 ### Einstein-Rosen waves
 
 - The embedding is four moments of the cylindrical chart, $ct = a$, $2a$, $4a$ and $8a$, of the pulse of Weber, Wheeler, and Bonnor at $C = a$ going out from the axis, each the plane $z = 0$ from the axis to $\rho = 10\,a$.
@@ -294,6 +301,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 | Bianchi I | four lines | none | none drawn |
 | cosmic string | none | whole drawing | line, line |
 | de Sitter | line, line, curve | none | line, line |
+| domain wall | five lines, twice | none | five curves, four times |
 | Ellis-Bronnikov | line | none | line |
 | FRW | not visible, three times | none | five lines on the closed universe |
 | global monopole | line, line, four curves | none | line, four times |

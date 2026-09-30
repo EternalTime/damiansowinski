@@ -2,7 +2,7 @@
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
-khan_penrose and global_monopole, and Godel's cylindrical chart.
+khan_penrose, global_monopole and domain_wall, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
