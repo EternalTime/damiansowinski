@@ -2403,6 +2403,77 @@ def schwarzschild_de_sitter(ck, src):
                           "$r_h = 1.085\\,r_s$ and $r_c = 3.215\\,r_s$.")]
 
 
+def global_monopole(ck, src):
+    """Two moments at Delta = 0.19, so that sqrt(1 - Delta) = 0.9. The monopole with no mass at
+    its centre, the Barriola-Vilenkin chart's equator at t = 0: g_rr = 1 and g_phiphi =
+    (1 - Delta) r^2, so rho = 0.9 r and dz/dr = sqrt(Delta), a cone of half angle arcsin 0.9
+    whose apex is the centre, where the Kretschmann scalar diverges, the same cone as the cosmic
+    string's at 4G mu/c^2 = 0.1. Letelier's black hole, the static chart's equator at t = 0 with
+    r_s = 1: g_rr = 1/(1 - Delta - 1/r) and rho = r, so dz/dr = sqrt((Delta r + 1)/((1 - Delta) r - 1)),
+    vertical at the throat r_h = 1/(1 - Delta) = 100/81 and tending to the cone's sqrt(Delta/(1 - Delta))
+    far out; with w = sqrt((1 - Delta) r - 1) its closed form is
+    z = (w sqrt(Delta w^2 + 1) + arsinh(sqrt(Delta) w)/sqrt(Delta))/(1 - Delta)^(3/2). The slice runs
+    through the bifurcation sphere into the other exterior, the same surface turned over."""
+    D, fold = 0.19, 0.9
+    size, top = 6.0, 3.0
+    cone = Slice(src, "global_monopole", "conical", "r", "\\phi", {"t": 0, **EQUATOR}, {"Delta": "19/100"})
+    apex = Piece("cone", "sheet", cone, 0.0, top, 0.0, 1,
+                 (("apex", "the centre $r = 0$, where the Kretschmann scalar diverges"),
+                  ("edge", "the cone runs on to $r \\to \\infty$")),
+                 [(r, "r", None) for r in (1.0, 2.0)] + [(top, "r", None)], size)
+    ck.isometry("global monopole, the cone", apex)
+    ck.form("global monopole, the cone z = sqrt(Delta) r", apex, lambda r: math.sqrt(D) * r, size)
+    ck.radius("global monopole, the cone rho = sqrt(1 - Delta) r", apex, lambda r: fold * r, size)
+    monopole = Surface([apex])
+    fig = figure_of([monopole], {"sheet": "cover"}, size, Camera(-90, 20))
+    ring_label(fig, [0, 0, 0], *apex.at(1.0), "$r = \\ell$", side=-1, clear=True)
+    ring_label(fig, [0, 0, 0], *apex.at(top), "$3\\ell$", side=-1)
+    fig.legend("fill", "cover", "the equatorial plane, a cone of half angle $\\arcsin\\sqrt{1 - \\Delta}$")
+    fig.legend("line", "r", "$r$ constant, at $\\ell$, $2\\ell$ and $3\\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    first = view("monopole", "The monopole", "$\\ell$", [monopole], fig.done(),
+                 settings="$\\Delta = 0.19$, so that $\\sqrt{1 - \\Delta} = 0.9$, and any length $\\ell$ as the "
+                          "unit.")
+
+    size, top = 12.0, 6.0
+    sl = Slice(src, "global_monopole", "static", "r", "\\phi", {"t": 0, **EQUATOR}, {"Delta": "19/100", "r_s": 1})
+    rh = sl.horizons()[0]
+    ck.add("global monopole: the horizon is r_s/(1 - Delta) = 100/81", abs(rh - 100 / 81), 1e-12)
+    radii = (2.0, 3.0, 4.0, 5.0)
+    near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1,
+                 (("throat", "the throat $r = r_h$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", "the surface runs on, opening into the cone of the monopole, to $r \\to \\infty$")),
+                 [(rh, "horizon", "$r = r_h$")] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                (("throat", "the throat $r = r_h$"),
+                 ("edge", "the surface runs on, opening into the cone of the monopole, to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+
+    def closed(r):
+        w = np.sqrt(np.maximum((1 - D) * r - 1, 0))
+        return (w * np.sqrt(D * w * w + 1) + np.arcsinh(math.sqrt(D) * w) / math.sqrt(D)) / (1 - D) ** 1.5
+    for p in (near, far):
+        ck.isometry(f"global monopole, Letelier's black hole, {p.id}", p)
+        ck.form(f"global monopole, Letelier's black hole, {p.id}, the closed form of z", p,
+                lambda r, s=p.sense: s * closed(r), size)
+        ck.radius(f"global monopole, Letelier's black hole, {p.id}, rho = r", p, lambda r: r, size)
+    ck.join("global monopole, Letelier's black hole, the two sheets at the throat", near, rh, far, rh)
+    hole = Surface([near, far])
+    fig = figure_of([hole], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rh), "$r = r_h$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "the exterior $r > r_h$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_h$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    second = view("black_hole", "Letelier's black hole", "$r_s$", [hole], fig.done(),
+                  settings="$r_s = 1$, the unit of every length, and $\\Delta = 0.19$, so that "
+                           "$r_h = r_s/(1 - \\Delta) = 1.235\\,r_s$.")
+    return [first, second]
+
+
 def vaidya(ck, src):
     """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
     for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
@@ -4610,6 +4681,7 @@ DRAWN = {
     "c_metric": c_metric,
     "einstein_rosen_waves": einstein_rosen_waves,
     "nariai": nariai,
+    "global_monopole": global_monopole,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -4921,6 +4993,28 @@ CAPTIONS = {
         "The cone of an ideal cosmic string ($4G\\mu/c^2 = 0.1$) cut along $\\phi = 0$ and unrolled onto the plane "
         "without stretching, every distance from the apex and every circle keeping its length. Laid flat it is a "
         "plane missing the wedge between the cut's two edges, the deficit angle $\\delta = 8\\pi G\\mu/c^2 = 36°$.",
+    ],
+    ("global_monopole", "monopole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) around a global monopole with no mass at its centre, at one "
+        "moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "the metric is $dr^2 + (1 - \\Delta)r^2d\\phi^2$, so the circle at the proper distance $r$ from the centre "
+        "has circumference $2\\pi\\sqrt{1 - \\Delta}\\,r$ and the surface is a cone of half angle "
+        "$\\arcsin\\sqrt{1 - \\Delta}$. Cut along a line from its apex and laid flat, it is a plane missing a wedge "
+        "of angle $2\\pi(1 - \\sqrt{1 - \\Delta})$, $36°$ at $\\Delta = 0.19$.",
+        "Every plane through the centre is the same cone. A light ray in one runs straight across it laid flat, so "
+        "it turns through $\\pi(1/\\sqrt{1 - \\Delta} - 1)$, $20°$ at $\\Delta = 0.19$, whatever its impact "
+        "parameter. The apex is the centre, where the Kretschmann scalar $4\\Delta^2/\\left((1 - \\Delta)^2r^4\\right)$ "
+        "diverges.",
+    ],
+    ("global_monopole", "black_hole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Letelier's black hole in a cloud of strings, at one moment "
+        "of $t$, drawn as a surface in flat space with every distance along it the metric distance. On it the "
+        "metric is $dr^2/(1 - \\Delta - r_s/r) + r^2d\\phi^2$, so $dz/dr = \\sqrt{(\\Delta r + r_s)/((1 - \\Delta)r - "
+        "r_s)}$, vertical at the horizon $r_h = r_s/(1 - \\Delta)$ and tending to the slope "
+        "$\\sqrt{\\Delta/(1 - \\Delta)}$ of the monopole's cone far out.",
+        "The slice passes through the bifurcation sphere $r = r_h$, its smallest circle, and runs on into a second "
+        "exterior, the same surface turned over. At $\\Delta = 0$ it is Flamm's paraboloid of the Schwarzschild "
+        "spacetime.",
     ],
     ("cosmic_string", "cone"): [
         "The plane $z = 0$ across a straight cosmic string at one moment of $t$, drawn as a surface in flat "

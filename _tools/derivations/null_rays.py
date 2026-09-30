@@ -385,6 +385,13 @@ AS_INPUT = ("$\\delta(u)$ drawn as the pulse $e^{-u^2/w^2}/(w\\sqrt{\\pi})$ with
             "of light of that length in $u$ along the axis, carrying the same energy $E$.")
 AS_RHO = {"half": "1/2", "eighth": "1/8", "thirtysecond": "1/32"}
 
+# The global monopole at Delta = 0.19, so that sqrt(1 - Delta) = 0.9 and the equatorial cone of its
+# embedding diagram lacks the 36 degrees the cosmic string's does, and Letelier's black hole at
+# r_s = 1 inside it, with its horizon at r_s/(1 - Delta) = 100/81 r_s.
+GM = {"Delta": "19/100", "r_s": 1}
+GM_CONE = {"Delta": "19/100"}
+GM_RH = 100 / 81
+
 # Every view the page draws, in the order it shows them. Plot ranges are chosen with
 # equal scales on both axes, so light in flat space runs at 45 degrees, and cone
 # lattices so that no cone sits exactly on a line where the chart is singular.
@@ -420,6 +427,20 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
     Diagram("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 4, -4, 0), "$r/r_s$", "$u/r_s$", SDS, EQUATOR, tau="u + r", areal=True),
+    Diagram("global_monopole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$ct/r_s$", GM, EQUATOR, orient="ingoing", areal=True),
+    Diagram("global_monopole", "conical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r$", "$ct$", GM_CONE, EQUATOR),
+    Diagram("global_monopole", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 6, -3, 3), "$r/r_s$", "$(v - r)/r_s$", GM, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("global_monopole", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 6, 0, 6), "$r/r_s$", "$v/r_s$", GM, EQUATOR, tau="v - r", areal=True),
+    Diagram("global_monopole", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 6, -3, 3), "$r/r_s$", "$(u + r)/r_s$", GM, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("global_monopole", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 6, -6, 0), "$r/r_s$", "$u/r_s$", GM, EQUATOR, tau="u + r", areal=True),
     Diagram("frw", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 3, 0, 2),
             "$r\\;[c/H_0]$", "$ct\\;[c/H_0]$", {"k": 0}, EQUATOR, areal=True, dust=FRW_DUST,
             reference="$a = 1$",
@@ -828,6 +849,49 @@ CAPTIONS = {
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at both horizons and leans toward larger $r$ "
         "inside $r_h$ and beyond $r_c$.",
+    ],
+    ("global_monopole", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Letelier's black hole in a cloud of strings, "
+        "drawn for $\\Delta = 0.19$, each point in the plane a 2-sphere of area $4\\pi r^2$. The cones close at the "
+        "horizon $r_h = r_s/(1 - \\Delta) = 1.235\\,r_s$, where $c\\,dt/dr = \\pm(1 - \\Delta - r_s/r)^{-1}$ diverges, "
+        "and far from it their edges tend to $c\\,dt/dr = \\pm 1/(1 - \\Delta) = \\pm 1.235$, steeper than 45° at "
+        "every radius.",
+        "Inside $r_h$, $t$ is a spacelike coordinate, and we take the future from the ingoing Eddington-Finkelstein "
+        "chart, which makes that region the black hole, where every cone points to $r = 0$. The Kretschmann scalar "
+        "$(12r_s^2 + 8\\Delta\\,r_s\\,r + 4\\Delta^2r^2)/r^6$ is finite at $r_h$ and diverges only at $r = 0$.",
+    ],
+    ("global_monopole", "conical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) around a global monopole with no mass at its "
+        "centre, drawn for $\\Delta = 0.19$, each point in the plane a 2-sphere of area $4\\pi(1 - \\Delta)r^2$. The "
+        "metric on the plane is $-c^2dt^2 + dr^2$, so every ray runs at 45°, and $\\Delta$ enters only "
+        "$g_{\\theta\\theta}$ and $g_{\\phi\\phi}$. The Kretschmann scalar "
+        "$4\\Delta^2/\\left((1 - \\Delta)^2r^4\\right)$ diverges at the centre, $r = 0$.",
+    ],
+    ("global_monopole", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\Delta = 0.19$ with $v - r$ as "
+        "the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has "
+        "$dv/dr = 2(1 - \\Delta - r_s/r)^{-1}$, so it stands vertical at the horizon $r_h = 1.235\\,r_s$, "
+        "an outgoing ray that stays where it is.",
+        "The cones cross $r_h$ smoothly and keep tipping. Inside, both edges of every future cone point to "
+        "smaller $r$, so every future directed ray ends at $r = 0$.",
+    ],
+    ("global_monopole", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a null "
+        "coordinate. The outgoing family turns vertical at $r_h$ and leans back toward smaller $r$ inside it.",
+    ],
+    ("global_monopole", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\Delta = 0.19$ with $u + r$ as "
+        "the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The retarded chart crosses the "
+        "other horizon. Inside $r_h$ both edges of every future cone point to larger $r$: this is the white hole, "
+        "which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("global_monopole", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a null "
+        "coordinate. The ingoing family turns vertical at $r_h$ and leans toward larger $r$ inside it.",
     ],
     ("frw", "comoving_spherical", "radial"): [
         "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at "
@@ -3333,6 +3397,14 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), lambda v, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
+    ("global_monopole", "static", "radial"):
+        (lambda t, r: t + _rstar(r, [GM_RH]) / 0.81, lambda t, r: t - _rstar(r, [GM_RH]) / 0.81,
+         lambda t, r: np.abs(r - GM_RH) > 0.05),
+    ("global_monopole", "conical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("global_monopole", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [GM_RH]) / 0.81, lambda v, r: np.abs(r - GM_RH) > 0.05),
+    ("global_monopole", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _rstar(r, [GM_RH]) / 0.81, lambda u, r: u, lambda u, r: np.abs(r - GM_RH) > 0.05),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):
