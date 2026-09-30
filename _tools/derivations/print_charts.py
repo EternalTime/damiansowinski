@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
-schwarzschild_de_sitter, milne, einstein_rosen_waves and nariai, and Godel's cylindrical chart.
+schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai and aichelburg_sexl, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -740,6 +740,85 @@ def nariai_embedding(chart, system):
                                      f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
 
 
+# -- Aichelburg-Sexl ------------------------------------------------------------------
+
+def aichelburg_sexl(system):
+    """The three charts of the Aichelburg-Sexl ultraboost, a pp-wave whose profile is
+    F(rho) delta(u) with F = -(8GE/c^4) ln(rho/rho_0), harmonic off the axis rho = 0. The
+    Cartesian chart is Aichelburg and Sexl's own, with u = ct - z, and the null charts write
+    u and v = ct + z as coordinates, with the transverse plane in Cartesian or polar form;
+    aichelburg_sexl.md derives each. The profile is written with ln((x^2 + y^2)/rho_0^2) in
+    the Cartesian planes, so no radical appears in any component."""
+    log_xy = "\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)"
+    charts = {
+        "cartesian": {
+            "name": "Cartesian", "coords": ["t", "x", "y", "z"],
+            "domains": ["t \\in (-\\infty, \\infty)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                        "z \\in (-\\infty, \\infty)", "(x, y) \\neq (0, 0)"],
+            "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 - \\dfrac{4GE}{c^4}" + log_xy
+                            + "\\delta(ct - z)\\left(c\\,dt - dz\\right)^2",
+            "chart": "ds^2 = -dt^2 + dx^2 + dy^2 + dz^2 - \\dfrac{4GE}{c^4}" + log_xy
+                     + "\\delta(t - z)\\left(dt - dz\\right)^2",
+            "time": "t"},
+        "null_cartesian": {
+            "name": "Null Cartesian", "coords": ["u", "v", "x", "y"],
+            "domains": ["u \\in (-\\infty, \\infty)", "v \\in (-\\infty, \\infty)", "x \\in (-\\infty, \\infty)",
+                        "y \\in (-\\infty, \\infty)", "(x, y) \\neq (0, 0)"],
+            "line_element": "ds^2 = -du\\,dv + dx^2 + dy^2 - \\dfrac{4GE}{c^4}" + log_xy + "\\delta(u)\\,du^2"},
+        "null_cylindrical": {
+            "name": "Null Cylindrical", "coords": ["u", "v", "\\rho", "\\phi"],
+            "domains": ["u \\in (-\\infty, \\infty)", "v \\in (-\\infty, \\infty)", "\\rho \\in (0, \\infty)",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line_element": "ds^2 = -du\\,dv + d\\rho^2 + \\rho^2d\\phi^2 - \\dfrac{8GE}{c^4}"
+                            "\\ln\\left(\\dfrac{\\rho}{\\rho_0}\\right)\\delta(u)\\,du^2"},
+    }
+    # The Cartesian chart's metric and inverse are written as Minkowski's plus the shock, each
+    # term of the shock carrying (c dt - dz)^2 or its dual, which is how they read.
+    shock = "\\dfrac{4GE}{c^4}" + log_xy + "\\delta(ct - z)"
+    components = {
+        "cartesian": {
+            "metric_components": {("t", "t"): "-1 - " + shock, ("t", "z"): shock, ("z", "t"): shock,
+                                  ("z", "z"): "1 - " + shock},
+            "inverse_metric_components": {("t", "t"): "-1 + " + shock, ("t", "z"): shock, ("z", "t"): shock,
+                                          ("z", "z"): "1 + " + shock}},
+    }
+    # The Cartesian chart's geodesics grouped around ct - z, whose rate is the one the shock sees.
+    kick = "\\dfrac{8GE\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+    along = ("\\dfrac{2GE}{c^4}" + log_xy + "\\delta'(ct - z)\\left(\\dot{t} - \\dot{z}\\right)^2 + " + kick
+             + "\\left(x\\dot{x} + y\\dot{y}\\right)\\left(\\dot{t} - \\dot{z}\\right) = 0")
+    across = "\\dfrac{4GE\\,{0}\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}\\left(\\dot{t} - \\dot{z}\\right)^2 = 0"
+    null_kick = "\\dfrac{16GE\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+    geodesics = {
+        "cartesian": ["\\ddot{t} + " + along, "\\ddot{x} + " + across.replace("{0}", "x"),
+                      "\\ddot{y} + " + across.replace("{0}", "y"), "\\ddot{z} + " + along],
+        "null_cartesian": ["\\ddot{u} = 0",
+                           "\\ddot{v} + \\dfrac{4GE}{c^4}" + log_xy + "\\delta'(u)\\,\\dot{u}^2 + " + null_kick
+                           + "\\left(x\\dot{x} + y\\dot{y}\\right)\\dot{u} = 0",
+                           "\\ddot{x} + \\dfrac{4GE\\,x\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}\\dot{u}^2 = 0",
+                           "\\ddot{y} + \\dfrac{4GE\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}\\dot{u}^2 = 0"],
+    }
+    chart = charts[system]
+    parameters = ["G", "E", "\\rho_0"]
+    probe = vm.Reader(chart["coords"], parameters, ())
+    G, E = probe.parameters["G"], probe.parameters["E"]
+    # G and E enter every component as the product GE, printed together as the line element has it.
+    GE = sp.Symbol("GE")
+    return {
+        **({"components": components[system]} if system in components else {}),
+        **({"geodesics": geodesics[system]} if system in geodesics else {}),
+        "metric_id": "aichelburg_sexl",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": parameters, "line_element": chart["line_element"]},
+        "chart_line_element": chart.get("chart", chart["line_element"]),
+        "printer": {"lead": [probe.c, GE, *probe.symbol.values()], "flip": False},
+        "pretty": lambda value: sp.factor(value).subs(E, GE / G),
+        **({"time": chart["time"]} if "time" in chart else {}),
+    }
+
+
+AS_CHARTS = ["cartesian", "null_cartesian", "null_cylindrical"]
+
+
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
@@ -747,7 +826,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "schwarzschild_de_sitter": [lambda s=s: schwarzschild_de_sitter(s) for s in SDS_CHARTS],
           "milne": [lambda s=s: milne(s) for s in ("comoving_hyperbolic", "comoving_spherical", "logarithmic_time", "inertial")],
           "einstein_rosen_waves": [lambda s=s: einstein_rosen(s) for s in ("cylindrical", "null")],
-          "nariai": [lambda s=s: nariai(s) for s in ("static", "global", "conformal")]}
+          "nariai": [lambda s=s: nariai(s) for s in ("static", "global", "conformal")],
+          "aichelburg_sexl": [lambda s=s: aichelburg_sexl(s) for s in AS_CHARTS]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------
@@ -948,8 +1028,10 @@ def write(spec):
         math = rewritten(math, spec["rewrite"], chart)
     if "geodesics" in spec:
         # Each equation written by hand is read back against the one printed from the Christoffel symbols.
+        # Both are printed texts, so both already carry a named time as c times it.
         for text, printed in zip(spec["geodesics"], math["geodesics"], strict=True):
-            chart.check(text.partition("=")[0], chart.reader(printed.partition("=")[0]))
+            if vm.norm(chart.reader(text.partition("=")[0]) - chart.reader(printed.partition("=")[0])) != 0:
+                raise AssertionError(f"the geodesic {text!r} does not read back as {printed!r}")
         math["geodesics"] = list(spec["geodesics"])
 
     path = METRICS / f"{spec['metric_id']}.json"

@@ -1,0 +1,4512 @@
+{
+  "id": "aichelburg_sexl",
+  "name": "Aichelburg-Sexl Ultraboost",
+  "short_name": "Aichelburg-Sexl",
+  "description": "TODO",
+  "tags": [],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $G$ and $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "",
+  "references": [],
+  "coordinates": [
+    {
+      "id": "cartesian",
+      "name": "Cartesian",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "(x, y) \\neq (0, 0)"
+      ],
+      "parameters": [
+        {
+          "symbol": "G",
+          "description": "Newton's gravitational constant"
+        },
+        {
+          "symbol": "E",
+          "description": "Energy of the massless source, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as its rest mass $M$ goes to zero and its speed $V$ to $c$"
+        },
+        {
+          "symbol": "\\rho_0",
+          "description": "An arbitrary length; changing it moves $v$ behind the shock by a constant, which is a change of coordinates"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths, and $\\delta$ is the Dirac delta, a prime on it a derivative with respect to its argument. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 - \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)\\left(c\\,dt - dz\\right)^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1 - \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+        },
+        {
+          "indices": [
+            "t",
+            "z"
+          ],
+          "value": "\\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+        },
+        {
+          "indices": [
+            "z",
+            "t"
+          ],
+          "value": "\\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1 - \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1 + \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+        },
+        {
+          "indices": [
+            "t",
+            "z"
+          ],
+          "value": "\\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+        },
+        {
+          "indices": [
+            "z",
+            "t"
+          ],
+          "value": "\\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1 + \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(ct - z)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)\\left(\\dot{t} - \\dot{z}\\right)^2 + \\dfrac{8GE\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}\\left(x\\dot{x} + y\\dot{y}\\right)\\left(\\dot{t} - \\dot{z}\\right) = 0",
+        "\\ddot{x} + \\dfrac{4GE\\,x\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}\\left(\\dot{t} - \\dot{z}\\right)^2 = 0",
+        "\\ddot{y} + \\dfrac{4GE\\,y\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}\\left(\\dot{t} - \\dot{z}\\right)^2 = 0",
+        "\\ddot{z} + \\dfrac{2GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(ct - z)\\left(\\dot{t} - \\dot{z}\\right)^2 + \\dfrac{8GE\\,\\delta(ct - z)}{c^4\\left(x^2 + y^2\\right)}\\left(x\\dot{x} + y\\dot{y}\\right)\\left(\\dot{t} - \\dot{z}\\right) = 0"
+      ]
+    },
+    {
+      "id": "null_cartesian",
+      "name": "Null Cartesian",
+      "coords": [
+        "u",
+        "v",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "(x, y) \\neq (0, 0)"
+      ],
+      "parameters": [
+        {
+          "symbol": "G",
+          "description": "Newton's gravitational constant"
+        },
+        {
+          "symbol": "E",
+          "description": "Energy of the massless source, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as its rest mass $M$ goes to zero and its speed $V$ to $c$"
+        },
+        {
+          "symbol": "\\rho_0",
+          "description": "An arbitrary length; changing it moves $v$ behind the shock by a constant, which is a change of coordinates"
+        }
+      ],
+      "convention": "We use the null coordinates $u = ct - z$ and $v = ct + z$, both lengths, with $x$ and $y$ the transverse lengths, and $\\delta$ is the Dirac delta, a prime on it a derivative with respect to its argument. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -du\\,dv + dx^2 + dy^2 - \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(u)\\,du^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\dfrac{4GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(u)}{c^4}"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\dfrac{16GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta(u)}{c^4}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{2GE\\,\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,x\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,x\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{16GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{16GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{16GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{16GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{16GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{16GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{16GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{16GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\left(x + y\\right)\\left(x - y\\right)\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,x\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} + \\dfrac{4GE}{c^4}\\ln\\left(\\dfrac{x^2 + y^2}{\\rho_0^2}\\right)\\delta'(u)\\,\\dot{u}^2 + \\dfrac{16GE\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}\\left(x\\dot{x} + y\\dot{y}\\right)\\dot{u} = 0",
+        "\\ddot{x} + \\dfrac{4GE\\,x\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}\\dot{u}^2 = 0",
+        "\\ddot{y} + \\dfrac{4GE\\,y\\,\\delta(u)}{c^4\\left(x^2 + y^2\\right)}\\dot{u}^2 = 0"
+      ]
+    },
+    {
+      "id": "null_cylindrical",
+      "name": "Null Cylindrical",
+      "coords": [
+        "u",
+        "v",
+        "\\rho",
+        "\\phi"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "\\rho \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "G",
+          "description": "Newton's gravitational constant"
+        },
+        {
+          "symbol": "E",
+          "description": "Energy of the massless source, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as its rest mass $M$ goes to zero and its speed $V$ to $c$"
+        },
+        {
+          "symbol": "\\rho_0",
+          "description": "An arbitrary length; changing it moves $v$ behind the shock by a constant, which is a change of coordinates"
+        }
+      ],
+      "convention": "We use the null coordinates $u = ct - z$ and $v = ct + z$, both lengths, with $\\rho$ the distance from the axis of the source and $\\phi$ the angle about it, and $\\delta$ is the Dirac delta, a prime on it a derivative with respect to its argument. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -du\\,dv + d\\rho^2 + \\rho^2d\\phi^2 - \\dfrac{8GE}{c^4}\\ln\\left(\\dfrac{\\rho}{\\rho_0}\\right)\\delta(u)\\,du^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\dfrac{8GE\\,\\ln\\left(\\dfrac{\\rho}{\\rho_0}\\right)\\delta(u)}{c^4}"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\rho^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\dfrac{32GE\\,\\ln\\left(\\dfrac{\\rho}{\\rho_0}\\right)\\delta(u)}{c^4}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{\\rho^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,\\ln\\left(\\dfrac{\\rho}{\\rho_0}\\right)\\delta'(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{8GE\\,\\delta(u)}{c^4\\,\\rho}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,\\delta(u)}{c^4\\,\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\rho"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{1}{\\rho}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,\\ln\\left(\\dfrac{\\rho}{\\rho_0}\\right)\\delta'(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\rho"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\rho"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\rho"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "\\rho",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{8GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\rho",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "\\rho",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\rho",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "\\rho",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{8GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\rho",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "-\\dfrac{8GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{8GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "\\rho",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\rho",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "u",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "u",
+                  "\\rho",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4GE\\,\\delta(u)}{c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{4GE\\,\\delta(u)}{c^4}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} + \\dfrac{8GE\\,\\ln\\left(\\dfrac{\\rho}{\\rho_0}\\right)\\delta'(u)}{c^4}\\dot{u}^2 + \\dfrac{16GE\\,\\delta(u)}{c^4\\,\\rho}\\dot{u}\\dot{\\rho} = 0",
+        "\\ddot{\\rho} + \\dfrac{4GE\\,\\delta(u)}{c^4\\,\\rho}\\dot{u}^2 - \\rho\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{\\rho}\\dot{\\rho}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

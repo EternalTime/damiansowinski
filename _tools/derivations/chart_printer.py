@@ -9,8 +9,9 @@ with the value it was printed from before it is written, so a printing slip cann
 file; `verify_metrics.py` then checks the file as it checks every other entry.
 
 The printer knows a small class of expressions: sums, products, rational powers, symbols,
-undefined functions and their derivatives, exp and the trigonometric functions. A value is
-printed as a sign, a rational coefficient, and numerator and denominator factors. A sum prints
+undefined functions and their derivatives, exp, the logarithm, the trigonometric functions,
+and the Dirac delta with its derivatives, as \\delta'(u). A value is printed as a sign, a
+rational coefficient, and numerator and denominator factors. A sum prints
 its terms in an order the chart chooses, (r - 2m) rather than (-2m + r), and a chart may pass a
 `collect` function that regroups the numerator of a value, which is how TOV's curvature is
 written around (d_r Phi)^2 + d_r^2 Phi and Bianchi IX's around a_1^2 cos^2 psi + a_2^2 sin^2 psi.
@@ -31,7 +32,8 @@ TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
 def tex_name(name):
     if name in ACCENTED:
         return ACCENTED[name]
-    return "\\" + name if name in GREEK else name
+    # A Greek letter with a subscript, as rho_0, keeps its command.
+    return "\\" + name if name in GREEK or name.partition("_")[0] in GREEK else name
 
 
 class Sum:
@@ -135,6 +137,11 @@ class Printer:
             return tex_name(e.name)
         if isinstance(e, sp.core.function.AppliedUndef):
             return tex_name(e.func.__name__)
+        if isinstance(e, sp.DiracDelta):
+            # A prime for each derivative, taken with respect to the delta's own argument.
+            order = e.args[1] if len(e.args) > 1 else 0
+            # Its argument is set tight, as ct - z is in the line element.
+            return "\\delta" + "'" * order + "(" + self.positive_first(e.args[0]).replace("\\,", "") + ")"
         if isinstance(e, sp.Derivative):
             name = tex_name(e.expr.func.__name__)
             counts = {}
@@ -297,6 +304,10 @@ class Printer:
             return (1, self.rank_of(base), base.func.__name__)
         if isinstance(base, sp.exp):
             return (4,)
+        if isinstance(base, sp.log):
+            return (6.5,)
+        if isinstance(base, sp.DiracDelta):
+            return (8,)
         if isinstance(base, sp.Derivative):
             return (5, self.rank_of(base), self.atom(base))
         if isinstance(base, TRIG):
@@ -330,6 +341,9 @@ class Printer:
             return "\\sqrt{" + (_num(base) if base.is_Number else self.expr(base)) + "}"
         if isinstance(base, sp.exp):
             return "e^{" + self.exponent(base.args[0]) + "}"
+        if isinstance(base, sp.log) and exponent == 1:
+            # The argument is one fraction, as ln((x^2 + y^2)/rho_0^2), however sympy expanded it.
+            return "\\ln\\left(" + self.expr(sp.factor(base.args[0])) + "\\right)"
         if isinstance(base, TRIG):
             head = "\\" + base.func.__name__
             if exponent != 1:
