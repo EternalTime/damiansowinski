@@ -459,7 +459,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a93a6e0c780022f9"
+    "version": "59a7f3e6cd185e0f",
+    "diagrams": "c4473409197814bd",
+    "conformal": "0e17e6acafcdcd23",
+    "embedding": "d48d5c7c317761da"
   },
   {
     "id": "krasnikov",

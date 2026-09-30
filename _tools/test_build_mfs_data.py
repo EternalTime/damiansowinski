@@ -2411,7 +2411,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl"}
+        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose"}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -2511,7 +2511,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl"})
+                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -2727,7 +2727,7 @@ class StacksAndMovies(unittest.TestCase):
     diagrams that change through a run of moments played as movies, as the captain asked on 30
     September 2026, from the numbers written and nothing else."""
 
-    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5}   # the height of a unit of time
+    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0}   # the height of a unit of time
     MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
               "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$",
               "einstein_rosen_waves": "$ct$", "nariai": "$ct$"}

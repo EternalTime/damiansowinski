@@ -104,6 +104,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import build_mfs_data as build  # noqa: E402
 import null_rays as nr  # noqa: E402
+import verify_metrics as vm  # noqa: E402
 
 CONFORMAL_DIR = build.CONFORMAL_DIR
 BASE_FIELDS = ("coords", "parameters", "metric_components", "inverse_metric_components")
@@ -4732,8 +4733,8 @@ CAPTIONS = {
         "region behind the other wave ends at $v = 1$. Where both waves have passed each focuses the other, and the "
         "region ends on the spacelike curvature singularity $u^2 + v^2 = 1$, where the Kretschmann scalar diverges.",
         "The coordinates $u$ and $v$ cover the region where both waves have passed, $0 \\le v < \\sqrt{1 - u^2}$ "
-        "with $0 \\le u < 1$, where the published metric holds; ahead of either wave the metric is the same with "
-        "that wave's coordinate set to zero.",
+        "with $0 \\le u < 1$, and ahead of either wave the metric is the same with that wave's coordinate set to "
+        "zero.",
     ],
     ("khan_penrose", "cosmological"): [
         "The plane $x = y = 0$ of the Khan-Penrose spacetime, totally geodesic, each point in the diagram a single "
