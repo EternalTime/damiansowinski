@@ -374,6 +374,14 @@ Kerr and Kerr-Newman are the only charts the extension draws something new for.
 Every spherically symmetric chart that is not conformally flat has the plane of $t$ and $r$ as its principal plane, and so does Taub-NUT, whose twist sits in $g_{t\phi}$; Gödel's is the plane of $t$ and $z$ along its axis of rotation, which is flat.
 van Stockum's Weyl tensor has four distinct principal directions and no repeated one, so its light rays, which frame dragging turns out of the plane of $t$ and $r$, form no principal congruence, and the pp-wave's one repeated direction, $\partial_v$, lies in the plane of its axis, already drawn.
 
+### Rays of no angular momentum
+
+The rotating BTZ hole turns its light rays in $\phi$ as Kerr does, and between its ergosurface and its outer horizon the plane of $t$ and $r$ at fixed $\phi$ has no null direction; its Weyl tensor vanishes, as every Weyl tensor in three dimensions does, so it has no principal directions either.
+A row with `quotient="phi"` divides the circles of $\phi$ out: the plane's metric is $h_{ab} = g_{ab} - g_{a\phi}g_{b\phi}/g_{\phi\phi}$, the part of the published metric orthogonal to the circles, and it takes the place of the coordinate plane's metric in the null condition, as the principal plane's does for Kerr.
+Its rays are the shadows on $t$ and $r$ of the null geodesics with no angular momentum, each lifted into the spacetime by $d\phi = -(g_{\phi t}dt + g_{\phi r}dr)/g_{\phi\phi}$, and the upper left block of the published inverse metric is the inverse of $h$, so the horizons marked from $g^{rr}$ are the zeros of $h$'s own.
+The script refuses such a row unless every coordinate is drawn, held fixed or divided out and nothing published depends on the one divided out, and before it writes the view it checks every lifted direction null against the published metric and geodesic by the published Christoffel symbols, which it stamps with the view; the header's "Rays of no angular momentum" gives the details.
+The BTZ hole's three charts each draw the hole without rotation on the plane $\phi = 0$ and the rotating one with $\phi$ divided out, at $M = 1$ and $J = 4\ell/5$, where $r_\pm^2 = 4\ell^2/5$ and $\ell^2/5$.
+
 ### Figures in three dimensions
 
 Where the causal structure a reader comes for turns in a direction no plane of two coordinates holds, a coordinate system also gets a figure in three dimensions: a slice of one time and two spatial coordinates, every other coordinate held fixed, drawn from the published metric by `_tools/derivations/projections.py` and projected once from a fixed camera.
