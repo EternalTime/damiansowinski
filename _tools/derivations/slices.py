@@ -393,6 +393,12 @@ FLAT = {
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "chart"): lambda: kottler_t(1),
     ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"): lambda: kottler_t(-1),
     ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart"): lambda: kottler_t(-1),
+    # The moments ct = T of the Einstein-Rosen pulse, out to where the embedding reaches, and in the
+    # null chart u = T - rho, v = T + rho along the same stretch.
+    ("einstein_rosen_waves", "cylindrical", "radial"): lambda: one(
+        "einstein_rosen_waves", lambda m: along(m.time, *m.reach("cylindrical", "\\rho"))),
+    ("einstein_rosen_waves", "null", "radial"): lambda: one(
+        "einstein_rosen_waves", lambda m: [[(m.time - r, m.time + r) for r in m.reach("cylindrical", "\\rho")]]),
     ("de_sitter", "static_spherical", "radial"): lambda: one("de_sitter", lambda m: along(0.0, *m.reach("static_spherical", "r"))),
     ("de_sitter", "static_spherical", "through"): lambda: one("de_sitter", lambda m: along(0.0, *m.reach("static_spherical", "r"))),
     ("de_sitter", "flat_slicing", "tx"): _ds_flat,
