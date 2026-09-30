@@ -1947,6 +1947,10 @@ class EmbeddingDiagrams(unittest.TestCase):
             for r, rho, z in piece("de_sitter", pid):
                 near(rho, r, f"de Sitter rho at {r}")
                 near(z, sign * math.sqrt(max(1 - r * r, 0)), f"de Sitter z at {r}")
+        # The Einstein static universe's moment is the round sphere of radius R, pole to antipode.
+        for chi, rho, z in piece("einstein_static", "sphere"):
+            near(rho, math.sin(chi), f"Einstein static rho at {chi}")
+            near(z, -math.cos(chi), f"Einstein static z at {chi}")
         # Vaidya's slices of constant v - r: a flat disc inside the shell, and outside it Flamm's
         # paraboloid moved in by r_s, z = 2 sqrt(r), from the shell at z = 0 or from the axis.
         for number, surface in enumerate(self.embedding["vaidya"]["views"][0]["surfaces"]):
@@ -3012,6 +3016,9 @@ class Slices(unittest.TestCase):
         if key.startswith("bertotti_robinson"):
             lo, hi = self.reach(surface) if mark["lines"] else (1, 1)
             return (lambda X: 0.0), [lo, hi]
+        if key == "einstein_static/static_areal/radial":
+            # r = R sin chi carries the near hemisphere of the moment, out to the equator r = R.
+            return (lambda X: 0.0), [0.0, 1.0]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

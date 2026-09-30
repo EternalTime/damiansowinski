@@ -2212,6 +2212,37 @@ def de_sitter(ck, src):
                         "being Euclidean space scaled by $e^{Ht}$, so its equator is a plane."])]
 
 
+def einstein_static(ck, src):
+    """The equator of one moment of the hyperspherical chart at R = 1: g_chichi = 1 and
+    g_phiphi = sin^2 chi, the round sphere of radius R, rho = sin chi and z = -cos chi from the
+    pole chi = 0 to the antipode chi = pi, the same at every moment. The areal chart, r = R sin chi,
+    and Einstein's projection cover the hemisphere chi < pi/2 and end at its equator, which is
+    marked. The areal chart's own slice, g_rr = 1/(1 - r^2), is checked to be the same hemisphere."""
+    sl = Slice(src, "einstein_static", "hyperspherical", "\\chi", "\\phi", {"t": 0, **EQUATOR}, {"R": 1})
+    size = 2.0
+    sphere = Piece("sphere", "sheet", sl, 0.0, math.pi, -1.0, 1,
+                   (("axis", "the pole $\\chi = 0$"), ("axis", "the antipode $\\chi = \\pi$")),
+                   [(math.pi / 4, "r", None), (math.pi / 2, "chartedge", "$\\chi = \\pi/2$"),
+                    (3 * math.pi / 4, "r", None)], size)
+    ck.isometry("Einstein static, the sphere", sphere)
+    ck.radius("Einstein static, the sphere rho = R sin chi", sphere, np.sin, size)
+    ck.form("Einstein static, the sphere z = -R cos chi", sphere, lambda chi: -np.cos(chi), size)
+    areal = Slice(src, "einstein_static", "static_areal", "r", "\\phi", {"t": 0, **EQUATOR}, {"R": 1})
+    near = Piece("near", "sheet", areal, 0.0, areal.horizons()[0], -1.0, 1, size=size)
+    ck.isometry("Einstein static, the areal hemisphere", near)
+    ck.form("Einstein static, the areal hemisphere z = -sqrt(R^2 - r^2)", near,
+            lambda r: -np.sqrt(np.maximum(1 - r * r, 0)), size)
+    surface = Surface([sphere])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sphere.at(math.pi / 2), "$\\chi = \\pi/2$", dx=10)
+    fig.legend("fill", "cover", "the whole moment, a sphere of radius $R$")
+    fig.legend("line", "r", "$\\chi$ constant, at $\\pi/4$ and $3\\pi/4$")
+    fig.legend("line", "chartedge", "the equator $\\chi = \\pi/2$, $r = R$, where the areal chart and Einstein's end")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("sphere", "The three sphere", "$R$", [surface], fig.done(),
+                 settings="$R = 1$, the unit of every length.")]
+
+
 def vaidya(ck, src):
     """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
     for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
@@ -3852,6 +3883,7 @@ DRAWN = {
     "ellis_bronnikov": ellis_bronnikov,
     "rn_metric": rn_metric,
     "de_sitter": de_sitter,
+    "einstein_static": einstein_static,
     "vaidya": vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "tolman_bondi": tolman_bondi,
@@ -3989,6 +4021,14 @@ CAPTIONS = {
         "smallest moment of the closed slicing, in which space is a three sphere of radius "
         "$\\ell\\cosh(ct/\\ell)$ that contracts to this waist and expands after it. The two observers can "
         "never exchange light: each hemisphere lies outside the other observer's past and future alike.",
+    ],
+    ("einstein_static", "sphere"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Einstein static universe at one moment of $t$, "
+        "drawn as a surface in flat space with every distance along it the metric distance. On it the "
+        "metric is $R^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\phi^2\\right)$, the round sphere of radius $R$, "
+        "the same at every moment.",
+        "The areal radius $r = R\\sin\\chi$ and Einstein's projected coordinates cover the hemisphere "
+        "$\\chi < \\pi/2$ and end at the equator $r = R$, where the surface stands vertical.",
     ],
     ("vaidya", "shell"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, from "
