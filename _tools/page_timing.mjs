@@ -28,11 +28,15 @@
    Bianchi's fraktur or Malament-Hogarth's small capitals, fitted its numbers in the face
    drawn in its place and moved them by up to 4 pixels when the font arrived.
 
-   In each of those states it holds every number, name of an axis and label of a spacetime
-   diagram shown to the margin of 1.5 em of the diagram's words that the page gives them, and
-   counts any that stands nearer the edge of the diagram's ground as an error. --print does the
-   same for the print copy of each chart, as the page lays it out for paper once its print
-   button is pressed, the browser's print dialog left closed.
+   In each of those states it holds every number, name of an axis and label of every drawing
+   shown, a spacetime diagram, a conformal diagram, a figure in three dimensions and an
+   embedding diagram, to the margin of 1.5 em of the drawing's words that the page gives them,
+   and counts any that stands nearer the edge of the drawing's ground as an error. It holds
+   them to the captain's order of 30 September 2026 as well: every word at least the size of
+   the caption beside its drawing and in the page's white, no two labels over each other, and
+   a spacetime diagram's tick marks at least half an em of its numbers long and a tenth of one
+   thick. --print does the same for the print copy of each chart, as the page lays it out for
+   paper once its print button is pressed, the browser's print dialog left closed.
 
    Nothing on the page glows, as the captain asked on 29 September 2026: "No glow anywhere".
    In each of those states it counts as an error every element whose computed style carries
@@ -160,21 +164,101 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
       return Object.keys(moved).map(function (k) { return moved[k]; });
     };
   };
-  /* Every number, name of an axis and label of each spacetime diagram shown in root that
-     stands nearer the edge of the diagram's ground than 1.5 em of its words, the margin
-     .mfs-nr-figure gives them, with how near it stands, in those ems. */
+  /* The words of a drawing's ground, a spacetime diagram's .mfs-nr-figure or the
+     .mfs-cd-drawing of a conformal diagram, a figure in three dimensions or an embedding
+     diagram, that a reader sees: its numbers, the names of its axes and its labels. */
+  window.__mfsWords = function (ground) {
+    var words = ground.matches('.mfs-nr-figure') ? '.nr-tick, .nr-name, .nr-ref, .mfs-slice-label' : '.cd-at';
+    return [].filter.call(ground.querySelectorAll(words), function (el) {
+      return el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
+    });
+  };
+  /* What a drawing is, for a message: its kind and the name its SVG gives it. */
+  window.__mfsDrawingName = function (ground) {
+    var figure = ground.closest('.mfs-cd-figure'), svg = ground.querySelector('svg');
+    var kind = !figure ? 'spacetime diagram' : figure.classList.contains('mfs-em-figure') ? 'embedding diagram'
+      : figure.classList.contains('mfs-pj-figure') ? 'figure' : 'conformal diagram';
+    var name = svg && svg.getAttribute('aria-label') || '';
+    return kind + ' "' + name.replace(/^[^,]*, /, '').slice(0, 48) + '"';
+  };
+  /* Every drawing shown in root whose words are not all readable, as the captain asked on
+     30 September 2026: every word at least the size of the caption beside it and in the
+     page's white, --text-bright, no two over each other, and a spacetime diagram's tick marks
+     at least half an em of its numbers long and a tenth of one thick. One line for each
+     drawing, with the numbers. On paper, where every word prints black, the colour is not held. */
+  window.__mfsReadable = function (root, paper) {
+    var probe = document.body.appendChild(document.createElement('i'));
+    probe.style.color = 'var(--text-bright)';
+    var white = getComputedStyle(probe).color, out = [];
+    probe.remove();
+    [].forEach.call(root.querySelectorAll('.mfs-nr-figure, .mfs-cd-drawing'), function (ground) {
+      if (!ground.getClientRects().length) return;
+      var view = ground.closest('.mfs-nr-view'), caption = view && view.querySelector('.mfs-nr-caption p');
+      var least = caption ? parseFloat(getComputedStyle(caption).fontSize) : 0;
+      var words = window.__mfsWords(ground), small = null, colours = {}, faults = [];
+      words.forEach(function (el) {
+        var size = parseFloat(getComputedStyle(el).fontSize);
+        if (!small || size < small.size) small = { size: size, text: el.textContent.trim().slice(0, 16) };
+        if (!paper) [el].concat([].slice.call(el.querySelectorAll('*'))).some(function (e) {
+          var c = getComputedStyle(e).color;
+          if (c !== white) { colours[c] = (colours[c] || 0) + 1; return true; }
+        });
+      });
+      if (small && small.size < least - 0.01) {
+        faults.push('words from ' + small.size.toFixed(1) + 'px ("' + small.text + '"), below the caption, ' + least.toFixed(1) + 'px');
+      }
+      var grey = Object.keys(colours);
+      if (grey.length) {
+        faults.push(grey.reduce(function (n, c) { return n + colours[c]; }, 0) + ' of ' + words.length +
+          ' words not white ' + white + ' but ' + grey.join(', '));
+      }
+      if (ground.matches('.mfs-nr-figure')) {
+        var tick = ground.querySelector('.nr-tick'), em = tick ? parseFloat(getComputedStyle(tick).fontSize) : 0;
+        var marks = [].map.call(ground.querySelectorAll('.nr-tickmark'), function (m) {
+          var r = m.getBoundingClientRect(), x = m.closest('.nr-xticks');
+          return { long: x ? r.height : r.width, thick: x ? r.width : r.height };
+        });
+        if (!marks.length) {
+          var svg = ground.querySelector('.mfs-nr-svg'), scale = svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
+          marks = [].map.call(svg.querySelectorAll('line.nr-axis'), function (m) {
+            var r = m.getBoundingClientRect();
+            return { long: Math.max(r.width, r.height), thick: parseFloat(getComputedStyle(m).strokeWidth) * scale };
+          });
+        }
+        var longest = marks.reduce(function (a, m) { return Math.min(a, m.long); }, Infinity);
+        var thickest = marks.reduce(function (a, m) { return Math.min(a, m.thick); }, Infinity);
+        if (marks.length && (longest < 0.5 * em - 0.01 || thickest < 0.1 * em - 0.01)) {
+          faults.push('tick marks ' + longest.toFixed(1) + 'px long and ' + thickest.toFixed(2) + 'px thick, below ' +
+            (0.5 * em).toFixed(1) + 'px and ' + (0.1 * em).toFixed(2) + 'px');
+        }
+      }
+      // Two labels over each other by more than half a pixel each way; they may touch.
+      var boxes = words.map(function (el) { return el.getBoundingClientRect(); });
+      boxes.forEach(function (a, i) {
+        boxes.slice(0, i).forEach(function (b, j) {
+          if (a.left < b.right - 0.5 && b.left < a.right - 0.5 && a.top < b.bottom - 0.5 && b.top < a.bottom - 0.5) {
+            faults.push('"' + words[j].textContent.trim().slice(0, 16) + '" and "' + words[i].textContent.trim().slice(0, 16) + '" overlap');
+          }
+        });
+      });
+      if (faults.length) out.push(window.__mfsDrawingName(ground) + ': ' + faults.join('; '));
+    });
+    return out;
+  };
+  /* Every number, name of an axis and label of each drawing shown in root that stands nearer
+     the edge of the drawing's ground than 1.5 em of its words, the margin .mfs-nr-figure and
+     .mfs-cd-drawing give them, with how near it stands, in those ems. */
   window.__mfsMargins = function (root) {
     var out = [];
-    [].forEach.call(root.querySelectorAll('.mfs-nr-figure'), function (fig) {
+    [].forEach.call(root.querySelectorAll('.mfs-nr-figure, .mfs-cd-drawing'), function (fig) {
       if (!fig.getClientRects().length) return;
       var b = fig.getBoundingClientRect(), em = parseFloat(getComputedStyle(fig).fontSize);
-      [].forEach.call(fig.querySelectorAll('.nr-tick, .nr-name, .nr-ref, .mfs-slice-label'), function (el) {
-        if (!el.getClientRects().length || getComputedStyle(el).visibility === 'hidden') return;
+      window.__mfsWords(fig).forEach(function (el) {
         var r = el.getBoundingClientRect();
         var near = Math.min(r.left - b.left, r.top - b.top, b.right - r.right, b.bottom - r.bottom);
         // Less half a pixel, to which a browser may round where a turned or shifted box stands.
         if (near < 1.5 * em - 0.5) {
-          out.push(el.className.split(' ')[0] + ' "' + el.textContent.trim().slice(0, 24) + '" stands ' +
+          out.push(window.__mfsDrawingName(fig) + ': ' + el.className.split(' ')[0] + ' "' + el.textContent.trim().slice(0, 24) + '" stands ' +
             (near / em).toFixed(2) + ' em from the edge of its diagram, inside the margin of 1.5 em');
         }
       });
@@ -344,7 +428,7 @@ function timed(action, chart) {
                        elements: panel.getElementsByTagName('*').length };
         window.__mfsSettled().then(function () {
           result.moved = stop();
-          result.margins = window.__mfsMargins(panel).concat(window.__mfsGlow(document.documentElement), window.__mfsPink(),
+          result.margins = window.__mfsMargins(panel).concat(window.__mfsReadable(panel), window.__mfsGlow(document.documentElement), window.__mfsPink(),
             window.__mfsSizes(), window.__mfsPanelEdges());
           resolve(result);
         });
@@ -368,7 +452,7 @@ async function views() {
       await window.__mfsSettled();
       await new Promise(function (r) { requestAnimationFrame(r); });
       stop().forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
-      window.__mfsMargins(panel).concat(window.__mfsGlow(panel), window.__mfsPink(), window.__mfsSizes())
+      window.__mfsMargins(panel).concat(window.__mfsReadable(panel), window.__mfsGlow(panel), window.__mfsPink(), window.__mfsSizes())
         .forEach(function (m) { moved.push(button.textContent.trim() + ': ' + m); });
     }
     return moved;
@@ -392,7 +476,8 @@ async function printCopy() {
   if (!ready) { errors.push(`${opened}: the print copy was never set`); return; }
   await send('Emulation.setEmulatedMedia', { media: 'print' });
   for (const m of await evaluate(`window.__mfsMargins(document.getElementById('mfs-print-root'))
-      .concat(window.__mfsGlow(document.getElementById('mfs-print-root')))`)) {
+      .concat(window.__mfsReadable(document.getElementById('mfs-print-root'), true),
+              window.__mfsGlow(document.getElementById('mfs-print-root')))`)) {
     errors.push(`${opened}: print: ${m}`);
   }
   await send('Emulation.setEmulatedMedia', { media: '' });

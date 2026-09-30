@@ -978,7 +978,7 @@
   /* A generous width of a TeX label in ems, and the box it takes, as the generator's
      label_width() and label_box() give them, in the units of the figure's box, or with `size`
      the box of that width and height, as a page measures a label it has set. */
-  var LAB = { lab: 15, small: 13 };
+  var LAB = { lab: 21, small: 21 };
   var ANCHOR = { l: [0, -0.5], r: [-1, -0.5], t: [-0.5, 0], b: [-0.5, -1], c: [-0.5, -0.5],
                  tl: [0, 0], tr: [-1, 0], bl: [0, -1], br: [-1, -1] };
   var COMMANDS = ['\\chi', '\\ell', '\\pi', '\\phi', '\\eta', '\\theta', '\\sqrt', '\\frac', '\\infty', '\\mu', '\\delta'];
@@ -989,7 +989,7 @@
     return 0.55 * Array.from(plain).length + 0.3;
   }
   function labelBox(L, at, unit, measured) {
-    var size = (LAB[L['class']] || 13) * unit, w = labelWidth(L.text) * size, h = 1.25 * size;
+    var size = (LAB[L['class']] || 21) * unit, w = labelWidth(L.text) * size, h = 1.25 * size;
     if (measured) { w = measured[0]; h = measured[1]; }
     var a = ANCHOR[L.anchor || 'c'];
     var x0 = at[0] + (L.dx || 0) * unit + a[0] * w, y0 = at[1] - (L.dy || 0) * unit - (a[1] + 1) * h;

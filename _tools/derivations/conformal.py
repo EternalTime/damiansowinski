@@ -166,9 +166,11 @@ def rounded(points):
 
 
 # The page's drawing, as _layouts/mfs.html draws it: CD_W wide in a margin CD_M, a label's
-# size in units of that 628, and where its anchor pins it, as a fraction of its box.
+# size in units of that 628, the most the page sets it at, since the page sets every label at
+# the caption's size and never draws the drawing so narrow that that is more, and where its
+# anchor pins it, as a fraction of its box.
 CD_W, CD_M = 560, 34
-CD_LABEL_SIZE = {"lab": 15, "small": 13, "region": 13, "coord": 12}
+CD_LABEL_SIZE = {"lab": 21, "small": 21, "region": 21, "coord": 21}
 CD_ANCHOR_SHIFT = {"c": (-0.5, -0.5), "l": (0, -0.5), "r": (-1, -0.5), "t": (-0.5, 0), "b": (-0.5, -1),
                    "tl": (0, 0), "tr": (-1, 0), "bl": (0, -1), "br": (-1, -1)}
 
@@ -244,6 +246,7 @@ class View:
         self.d["layers"] = sorted(self.layers, key=lambda layer: order[layer["kind"]])
         self.d["labels"] = self.labels
         self.d["legend"] = self.legend_items
+        self.clear_labels()
         if self.slices:
             X0, X1, T0, T1 = self.d["box"]
             for mark in self.slices:
@@ -252,7 +255,58 @@ class View:
                         raise AssertionError(f"view {self.d['id']}: the slice {mark['label']} leaves the box at {at}")
             self.place_slice_labels()
             self.d["slices"] = self.slices
+            # A slice's label that finds no side clear of every other label is named in the
+            # legend instead, as a slice that is a region alone is.
+            placed = [self.label_box(L["at"], L["text"], L["anchor"], L["dx"], L["dy"]) for L in self.labels]
+            for mark in self.slices:
+                if not mark.get("place"):
+                    continue
+                P = mark["place"]
+                box = self.label_box(P["at"], mark["label"], P["anchor"], P["dx"], P["dy"])
+                if any(overlap(box, other) for other in placed):
+                    del mark["place"]
+                else:
+                    placed.append(box)
         return self.d
+
+    def label_box(self, at, text, anchor, dx, dy):
+        """The box a label takes on the page's drawing, x0, y0, x1, y1 from the box's top left
+        corner in units of the 628, y down, at the most the page sets it at, as slices.py's
+        label_size() gives it, which is never smaller than MathJax sets it."""
+        X0, X1, T0, T1 = self.d["box"]
+        s = CD_W / (X1 - X0)
+        w, h = (v * CD_LABEL_SIZE["lab"] for v in slices.label_size(text))
+        ax, ay = CD_ANCHOR_SHIFT[anchor]
+        x, y = (at[0] - X0) * s + dx, (T1 - at[1]) * s + dy
+        return x + ax * w, y + ay * h, x + (ax + 1) * w, y + (ay + 1) * h
+
+    def clear_labels(self):
+        """No label overlaps another at the size the page sets them at. A label that would
+        overlap one before it stands on the other side of its point, above for below or left
+        for right, its offset turned with it; one that overlaps from every side, or a label
+        centred on its point, which has no other side, stops the script, naming both."""
+        placed = []
+        for L in self.labels:
+            anchor = L["anchor"]
+            flips = [(anchor, 1, 1)]
+            if anchor != "c":
+                vertical = {"t": "b", "b": "t"}
+                horizontal = {"l": "r", "r": "l"}
+                v_flip = "".join(vertical.get(c, c) for c in anchor)
+                h_flip = "".join(horizontal.get(c, c) for c in anchor)
+                both = "".join(horizontal.get(c, vertical.get(c, c)) for c in anchor)
+                flips += [(a, sx, sy) for a, sx, sy in ((v_flip, 1, -1), (h_flip, -1, 1), (both, -1, -1)) if a != anchor]
+            for a, sx, sy in flips:
+                box = self.label_box(L["at"], L["text"], a, sx * L["dx"], sy * L["dy"])
+                clash = [text for other, text in placed if overlap(box, other)]
+                if not clash:
+                    break
+            else:
+                box = self.label_box(L["at"], L["text"], anchor, L["dx"], L["dy"])
+                clash = [text for other, text in placed if overlap(box, other)]
+                raise AssertionError(f"view {self.d['id']}: the label {L['text']} overlaps {clash[0]}")
+            L["anchor"], L["dx"], L["dy"] = a, sx * L["dx"], sy * L["dy"]
+            placed.append((box, L["text"]))
 
     def place_slice_labels(self):
         """Each slice's label, placed by slices.place on the drawing as the page draws it,
@@ -573,6 +627,11 @@ def grid(v, cls, fmap, constants, s, first=True):
     for c in constants:
         cs = np.full_like(s, c)
         v.curve(cls, *(fmap(cs, s) if first else fmap(s, cs)))
+
+
+def overlap(a, b):
+    """Whether two boxes x0, y0, x1, y1 overlap; boxes that touch do not."""
+    return a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]
 
 
 def label_on(v, pq, text, anchor="b", cls="coord", dx=0, dy=-3):
@@ -1041,7 +1100,8 @@ class TowerDrawing:
                     v.label_xt([sx * HALF, base + dT], text, anchor + ("l" if sx > 0 else "r"), dx=5 * sx, dy=dy)
                 v.label_xt([sx * 3 * Q4, base + Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-3)
                 v.label_xt([sx * 3 * Q4, base - Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=3)
-                v.label_xt([sx * HALF, base], "exterior", cls="region")
+                # Above the moment t = 0, which runs through the middle of the exterior.
+                v.label_xt([sx * HALF, base + 0.3], "exterior", cls="region")
         v.label_xt([0, HALF + 0.1], "black hole", cls="region")
         v.label_xt([0, 1.5 * PI - 0.1], "white hole", cls="region")
         v.label_xt([0, -HALF], "white hole", cls="region")
@@ -1051,7 +1111,7 @@ class TowerDrawing:
         for sx in (1, -1):
             if self.singular:
                 v.label_xt([sx * HALF, PI + 0.35], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
-                v.label_xt([sx * 1.05, PI - 0.2], inner, cls="region")
+                v.label_xt([sx * 1.05, PI + 0.3], inner, cls="region")
             else:
                 v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * PI, 4), round(PI, 4)]})
                 v.label_xt([sx * PI, PI], "$i^0$", "l" if sx > 0 else "r", dx=6 * sx)
@@ -1563,8 +1623,10 @@ def schwarzschild_de_sitter(ck, src):
         v.label_xt([PI, -1.62], "$\\mathscr{I}^-$", "t", dy=3)
         v.label_xt([0, H + 0.15], "$r = 0$", "b", dy=-4)
         v.label_xt([0, -H - 0.15], "$r = 0$", "t", dy=4)
-        v.label_xt([Q4, Q4], "$r_h$", "tl", "small", dx=5, dy=1)
-        v.label_xt([PI - Q4, Q4], "$r_c$", "tr", "small", dx=-5, dy=1)
+        # Each horizon's name stands on the outer side of its point, which leaves the middle
+        # of the static region to the circle r = 2 r_s.
+        v.label_xt([Q4, Q4], "$r_h$", "tr", "small", dx=-5, dy=1)
+        v.label_xt([PI - Q4, Q4], "$r_c$", "tl", "small", dx=5, dy=1)
         v.legend("horizon", f"the black hole horizons $r_h = {rh:.4g}\\,r_s$ and the cosmological horizons "
                             f"$r_c = {rc:.4g}\\,r_s$")
         v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
@@ -1597,7 +1659,7 @@ def schwarzschild_de_sitter(ck, src):
     for tt in TS:
         v.curve("t", *K.pq("S", np.full_like(rr, tt), rr))
     edges(v)
-    label_on(v, K.pq("S", 0.0, 2.0), "$2\\,r_s$")
+    label_on(v, K.pq("S", 0.0, 2.0), "$2\\,r_s$", "br", dx=-3)
     v.legend("cover", "the static region $r_h < r < r_c$, which $t$ and $r$ cover")
     v.legend("r", "$r$ constant, at " + listed(R_S) + " in units of $r_s$")
     v.legend("t", "$ct$ constant, in units of $r_s$")
@@ -2201,13 +2263,14 @@ def btz(ck, src):
         for a, b in (((0, 0), (HALF, 0)), ((HALF, 0), (HALF, HALF)), ((HALF, HALF), (0, HALF)), ((0, HALF), (0, 0)),
                      ((0, 0), (-HALF, 0)), ((0, 0), (0, -HALF))):
             v.segment("horizon", reflect(*a, up), reflect(*b, up))
+    # Each region's name stands where its wedge is wide enough for it, well out from the vertex.
     for base in (0, 2 * PI):
         for sx in (1, -1):
-            v.label_xt([sx * 0.33, base], "exterior", cls="region")
+            v.label_xt([sx * 0.95, base], "exterior", cls="region")
     v.label_xt([0, HALF + 0.1], "black hole", cls="region")
     v.label_xt([0, 1.5 * PI - 0.1], "white hole", cls="region")
     for sx in (1, -1):
-        v.label_xt([sx * 0.22, PI], "$r < r_-$", cls="region")
+        v.label_xt([sx * 0.95, PI], "$r < r_-$", cls="region")
         v.label_xt([sx * HALF, PI], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
         for base in (0, 2 * PI):
             v.label_xt([sx * HALF, base + (0.25 if base == 0 else -0.25)], "$r \\to \\infty$",
@@ -2810,7 +2873,7 @@ def oppenheimer_snyder(ck, src):
     v.label_xt([Xmax, 0], "$i^0$", "l", dx=6)
     v.label_xt([(3 * c + Xmax) / 2, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
     v.label_xt([1.5 * c, PI], "$r = 0$", "b", dy=-8)
-    v.label_xt([Xmax / 2, 0], "released from rest: $\\tau = 0$ inside, $t = 0$ outside", "t", "coord", dy=7)
+    v.label_xt([Xmax / 2, 0], "$\\tau = 0$ inside, $t = 0$ outside", "t", "coord", dy=7)
     v.label_xt([c / 2, 0.25], "dust", cls="region")
     v.label_xt([c, 0.9], "$\\chi = \\chi_0$", "l", "small", dx=5)
     v.legend("star", "the dust, in its conformal time $\\eta$ and $\\chi$, which $\\tau$ and $\\chi$ cover")
@@ -3633,10 +3696,11 @@ def c_metric(ck, src):
         for sx in (1, -1):
             v.label_xt([sx * Q4 * 0.9, 3 * Q4 + 0.05], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-3)
             v.label_xt([sx * Q4 * 0.9, -3 * Q4 - 0.05], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=3)
-            v.label_xt([sx * PI, 1.15], "black hole", cls="region")
-            v.label_xt([sx * PI, -1.15], "white hole", cls="region")
-        v.label_xt([Q4, Q4], "$r = 1/\\alpha$", "tl", "small", dx=5, dy=1)
-        v.label_xt([PI - Q4, Q4], "$r = 2m$", "tr", "small", dx=-5, dy=1)
+            v.label_xt([sx * (PI + 0.15), 1.15], "black hole", cls="region")
+            v.label_xt([sx * (PI + 0.15), -1.15], "white hole", cls="region")
+        # Each horizon's name stands on the outer side of its point, clear of the other's.
+        v.label_xt([Q4, Q4], "$r = 1/\\alpha$", "tr", "small", dx=-5, dy=1)
+        v.label_xt([PI - Q4, Q4], "$r = 2m$", "tl", "small", dx=5, dy=1)
         v.slice(equator, [c_images(*c_cell("II", 0 * rr, c_rstar(rr)), w) for w in ("", "L")])
         v.slice(horizon, points=[(-HALF, HALF)])
         v.legend("cover", "the regions that " + ("$t$ and $r > 0$" if system == "spherical" else "$\\tau$ and $y > -1$")
@@ -3871,7 +3935,8 @@ def nariai(ck, src):
     v.fill("cover", diamond)
     grid(v, "r", lambda r, t: static_pq(t, r), (-0.9, -0.6, -0.3, 0, 0.3, 0.6, 0.9), S_ALL)
     grid(v, "t", static_pq, (-2, -1, 0, 1, 2), np.tanh(np.linspace(-14, 14, 1001)))
-    label_on(v, static_pq(0, 0), "$r = 0$")
+    # Below its point, which leaves the room above it to the moment of the embedding.
+    label_on(v, static_pq(0, 0), "$r = 0$", "t", dy=3)
     v.legend("cover", "the static patch, which $t$ and $r$ cover")
     v.legend("r", "$r$ constant, from $-0.9$ to $0.9$ in units of $1/\\sqrt{\\Lambda}$")
     v.legend("t", "$ct$ constant, every $1/\\sqrt{\\Lambda}$")
