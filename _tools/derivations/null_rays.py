@@ -97,6 +97,32 @@ plane of t and r their radial views already draw, and that van Stockum's Weyl te
 type I, with no principal congruence to draw.
 
 
+Rays of no angular momentum
+---------------------------
+
+The rotating BTZ hole turns every light ray that runs straight in or out in phi, as Kerr's
+does, and between its ergosurface and its outer horizon the plane of t and r at fixed phi
+has no null direction at all. Its Weyl tensor vanishes, as every Weyl tensor in three
+dimensions does, so it has no principal directions to draw them by. A row with
+quotient='phi' divides the circles of phi out instead: where the published metric does not
+depend on the coordinate k named, the plane's metric is
+
+    h_ab = g_ab - g_ak g_bk / g_kk,
+
+the part of g orthogonal to the circles, and it takes the place of the coordinate plane's
+metric in the null condition, as the principal plane's does. A null direction of h, lifted
+by dx^k = -(g_ka dx^a + g_kb dx^b)/g_kk, is null in the spacetime and carries no momentum
+along k, and the rays of h are the shadows on the drawn pair of the null geodesics with no
+angular momentum: those project to the geodesics of h, and in two dimensions every null
+curve of h is one. The upper left block of the published inverse metric is the inverse of
+h, so the markers read from it mark the zeros of h's own g^rr. Every coordinate is drawn,
+held fixed or divided out, and nothing published may depend on the one divided out.
+
+Before such a view is written, each family's lifted direction is checked null against the
+published metric and to be a geodesic by the published Christoffel symbols, the orbits of
+k are checked spacelike, and the Christoffel symbols are stamped with the view.
+
+
 Which way is the future
 -----------------------
 
@@ -194,6 +220,7 @@ SIDEWAYS = ("moving left", "moving right")
 EQUATOR = {"theta": "pi/2", "phi": "0"}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
+BTZ_CONE = "future cone of no angular momentum"
 
 
 @dataclass
@@ -244,6 +271,9 @@ class Diagram:
     crunch: bool = False            # mark where the metric stops being finite as a singular curve,
                                     # checked on the Kretschmann scalar, and hatch what lies beyond it
     solves: tuple = ()              # published Einstein components the declared functions must zero
+    quotient: str = None            # a coordinate the metric does not depend on, divided out: the
+                                    # plane's metric is g_ab - g_ak g_bk/g_kk; see "Rays of no angular
+                                    # momentum"
 
 
 def _alcubierre_profile():
@@ -384,6 +414,23 @@ DIAGRAMS = [
     Diagram("rn_metric", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r/r_s$", "$t/r_s$", {"r_s": 1, "r_q": "12/25"}, EQUATOR, orient="ingoing",
             areal=True),
+    Diagram("btz", "stationary", "static", "$J = 0$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1, "M": 1, "J": 0}, {"phi": "0"}, orient="ingoing"),
+    Diagram("btz", "stationary", "rotating", "$J = 4\\ell/5$", ("t", "r"), (0, 2, -1, 1),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1, "M": 1, "J": "4/5"}, orient="ingoing", quotient="phi",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
+    Diagram("btz", "eddington_finkelstein_ingoing", "static", "$J = 0$", ("v", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\ell$", "$(v - r)/\\ell$", {"ell": 1, "M": 1, "J": 0}, {"tildephi": "0"},
+            to_display=FINKELSTEIN_IN, orient="ingoing"),
+    Diagram("btz", "eddington_finkelstein_ingoing", "rotating", "$J = 4\\ell/5$", ("v", "r"), (0, 2, -1, 1),
+            "$r/\\ell$", "$(v - r)/\\ell$", {"ell": 1, "M": 1, "J": "4/5"}, to_display=FINKELSTEIN_IN,
+            orient="ingoing", quotient="tildephi", mark_gtt="the ergosurface", cone=BTZ_CONE),
+    Diagram("btz", "eddington_finkelstein_outgoing", "static", "$J = 0$", ("u", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\ell$", "$(u + r)/\\ell$", {"ell": 1, "M": 1, "J": 0}, {"tildephi": "0"},
+            to_display=FINKELSTEIN_OUT, orient="outgoing"),
+    Diagram("btz", "eddington_finkelstein_outgoing", "rotating", "$J = 4\\ell/5$", ("u", "r"), (0, 2, -1, 1),
+            "$r/\\ell$", "$(u + r)/\\ell$", {"ell": 1, "M": 1, "J": "4/5"}, to_display=FINKELSTEIN_OUT,
+            orient="outgoing", quotient="tildephi", mark_gtt="the ergosurface", cone=BTZ_CONE),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
     Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
@@ -743,6 +790,64 @@ CAPTIONS = {
         "chart runs smoothly through both horizons, and we take the future from it, which makes "
         "the region between the horizons the black hole. The Kretschmann scalar diverges at $r = "
         "0$.",
+    ],
+    ("btz", "stationary", "static"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$) of the hole without rotation ($M = 1$, $J = 0$), the "
+        "same at every $\\phi$ by circular symmetry. The cones close at the horizon $r_+ = \\sqrt{M}\\,\\ell$, "
+        "where $g^{rr} = r^2/\\ell^2 - M$ vanishes and $c\\,dt/dr = \\pm\\ell^2/(r^2 - M\\ell^2)$ diverges. Far "
+        "out the rays flatten, and a ray reaches $r \\to \\infty$, the conformal boundary, in a finite time, "
+        "as in anti-de Sitter space.",
+        "Inside $r_+$, $r$ is the time. We take the future from the ingoing Eddington-Finkelstein chart, "
+        "which makes that region the black hole, every cone pointing to $r = 0$. The Kretschmann scalar is "
+        "$12/\\ell^4$ at every point, and at $r = 0$ the circles of $\\phi$ shrink to zero length: $r = 0$ is "
+        "a singularity in the causal structure, past which the circles would be closed timelike curves.",
+    ],
+    ("btz", "stationary", "rotating"): [
+        "The plane of $t$ and $r$ of the rotating hole ($M = 1$, $J = 4\\ell/5$) with $\\phi$ divided out, "
+        "$-N^2c^2dt^2 + dr^2/N^2$, the metric orthogonal to the circles of $\\phi$. Its null curves are the "
+        "shadows on $t$ and $r$ of the null geodesics of zero angular momentum, each turning in $\\phi$ at "
+        "$d\\phi/d(ct) = J/(2r^2)$, and each cone is the future cone of the directions of zero angular "
+        "momentum.",
+        "The cones close at both zeros of $N^2$, the horizons $r_+ = 2\\ell/\\sqrt{5}$ and $r_- = "
+        "\\ell/\\sqrt{5}$. Between them $r$ is the time, and the future taken from the ingoing chart makes "
+        "that region the black hole; inside $r_-$ the lines of constant $r$ are timelike again. The dotted "
+        "line is the ergosurface, $g_{tt} = 0$ at $r = \\sqrt{M}\\,\\ell$, and between it and $r_+$ no "
+        "observer keeps $\\phi$ fixed.",
+    ],
+    ("btz", "eddington_finkelstein_ingoing", "static"): [
+        "The plane of $v$ and $r$ ($\\tilde\\phi = 0$) of the hole without rotation ($M = 1$, $J = 0$), "
+        "drawn with $v - r$ as the vertical axis so that the ingoing rays, $v = $ const, run at 45°. The "
+        "outgoing family has $dv/dr = 2\\ell^2/(r^2 - M\\ell^2)$, so it stands vertical at $r_+ = "
+        "\\sqrt{M}\\,\\ell$: the horizon is an outgoing ray that stays where it is.",
+        "The cones cross $r_+$ smoothly and keep tipping. Inside it both edges of every future cone point "
+        "to smaller $r$, so every future directed ray ends at $r = 0$.",
+    ],
+    ("btz", "eddington_finkelstein_ingoing", "rotating"): [
+        "The plane of $v$ and $r$ of the rotating hole ($M = 1$, $J = 4\\ell/5$) with $\\tilde\\phi$ divided "
+        "out, $-N^2dv^2 + 2\\,dv\\,dr$, drawn with $v - r$ as the vertical axis. Its null curves are the "
+        "shadows on $v$ and $r$ of the null geodesics of zero angular momentum. The ingoing family, $v = $ "
+        "const, runs through both horizons to $r = 0$, and the outgoing family stands vertical at $r_+ = "
+        "2\\ell/\\sqrt{5}$ and at $r_- = \\ell/\\sqrt{5}$.",
+        "Between the horizons both edges of every future cone point to smaller $r$. Inside $r_-$ the "
+        "outgoing edge turns back toward larger $r$, and the outgoing rays pile up against $r_-$, the inner "
+        "horizon. The dotted line is the ergosurface, $g_{vv} = 0$ at $r = \\sqrt{M}\\,\\ell$.",
+    ],
+    ("btz", "eddington_finkelstein_outgoing", "static"): [
+        "The plane of $u$ and $r$ ($\\tilde\\phi = 0$) of the hole without rotation ($M = 1$, $J = 0$), "
+        "drawn with $u + r$ as the vertical axis so that the outgoing rays, $u = $ const, run at 45°. The "
+        "retarded chart crosses the other horizon. Inside $r_+$ both edges of every future cone point to "
+        "larger $r$, so that region is the white hole, which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("btz", "eddington_finkelstein_outgoing", "rotating"): [
+        "The plane of $u$ and $r$ of the rotating hole ($M = 1$, $J = 4\\ell/5$) with $\\tilde\\phi$ divided "
+        "out, $-N^2du^2 - 2\\,du\\,dr$, drawn with $u + r$ as the vertical axis. Its null curves are the "
+        "shadows on $u$ and $r$ of the null geodesics of zero angular momentum. The outgoing family, $u = $ "
+        "const, runs out from $r = 0$ through both horizons, and the ingoing family stands vertical at $r_+ "
+        "= 2\\ell/\\sqrt{5}$ and at $r_- = \\ell/\\sqrt{5}$.",
+        "Between the horizons both edges of every future cone point to larger $r$, the white hole. The "
+        "dotted line is the ergosurface, $g_{uu} = 0$ at $r = \\sqrt{M}\\,\\ell$.",
     ],
     ("taub_nut", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $l = "
@@ -1370,6 +1475,9 @@ class Chart:
         # A principal view's null directions come from the principal plane instead of the
         # coordinate plane; its markers still come from the published inverse metric.
         drawn = (() if spec.principal else (("g00", g[a, a]), ("g0r", g[a, b]), ("grr", g[b, b])))
+        self.quotient = Quotient(self, g, prep, a, b) if spec.quotient else None
+        if self.quotient:
+            drawn = self.quotient.drawn
         for name, expr in drawn + (("gi00", gi[a, a]), ("gi0r", gi[a, b]), ("girr", gi[b, b])):
             self.fn[name] = self.lambdify(prep(expr))
         if spec.mark_gtt:
@@ -1716,6 +1824,119 @@ class PrincipalPlane:
 
 
 # ---------------------------------------------------------------- one view of a chart
+
+class Quotient:
+    """A plane of x^0 and r with the coordinate k, which the metric does not depend on, divided
+    out: its metric h_ab = g_ab - g_ak g_bk/g_kk is the one the header's "Rays of no angular
+    momentum" gives, and a null direction of h, lifted by dx^k = -(g_ka dx^a + g_kb dx^b)/g_kk,
+    is null in the whole spacetime with no momentum along k."""
+
+    def __init__(self, chart, g, prep, a, b):
+        spec, entry, reader = chart.spec, chart.entry, chart.reader
+        coords = entry["coords"]
+        plain = [reader._plain(c) for c in coords]
+        self.name, self.a, self.b = key(spec), a, b
+        drawn = [reader._plain(spec.plane[0]), reader._plain(spec.plane[1])]
+        if sorted(drawn + list(spec.fixed) + [spec.quotient]) != sorted(plain) or spec.dust or spec.principal:
+            raise SystemExit(f"{self.name}: a view that divides out a coordinate needs every coordinate "
+                             "drawn, held fixed or divided out exactly once, and no dust")
+        self.k = k = plain.index(spec.quotient)
+        n = len(coords)
+        gamma = entry["christoffel"]["variants"]["ull"]["nonzero"]
+        self.gamma_index = [tuple(coords.index(x) for x in comp["indices"]) for comp in gamma]
+        exprs = [prep(g[i, j]) for i in range(n) for j in range(n)]
+        gammas = [prep(reader(comp["value"])) for comp in gamma]
+        along = reader.symbol[coords[k]]
+        for expr in exprs + gammas:
+            if along in expr.free_symbols:
+                raise SystemExit(f"{self.name}: the published metric depends on {spec.quotient}, "
+                                 "which the view divides out")
+        self.drawn = tuple((name, g[i, j] - g[i, k] * g[j, k] / g[k, k])
+                           for name, (i, j) in (("g00", (a, a)), ("g0r", (a, b)), ("grr", (b, b))))
+        args = (chart.x0, chart.xr, *chart.fixed_syms)
+        self.f = sp.lambdify(args, exprs, "numpy")
+        self.f_gamma = sp.lambdify(args, gammas, "numpy")
+        self.fixed_vals, self.n = chart.fixed_vals, n
+
+    def _values(self, f, x0, r):
+        x0, r = np.broadcast_arrays(np.asarray(x0, dtype=float), np.asarray(r, dtype=float))
+        args = [np.full(x0.size, v) for v in self.fixed_vals]
+        with np.errstate(all="ignore"):
+            out = f(x0.ravel(), r.ravel(), *args)
+        return np.array([np.broadcast_to(np.asarray(v, dtype=float), (x0.size,)) for v in out])
+
+    def metric(self, x0, r):
+        """The published g_ab at the points, stacked along the first axis."""
+        v = self._values(self.f, x0, r)
+        return v.T.reshape(v.shape[1], self.n, self.n)
+
+    def christoffel(self, x0, r):
+        """The published Gamma^a_bc at the points, stacked along the first axis."""
+        v = self._values(self.f_gamma, x0, r)
+        G = np.zeros((v.shape[1], self.n, self.n, self.n))
+        for (i, j, k), value in zip(self.gamma_index, v):
+            G[:, i, j, k] = value
+        return G
+
+    def lift(self, direction, g):
+        """A direction (dx^0, dr) of the plane as a vector of the spacetime with no momentum
+        along k, the coordinates held fixed not moving."""
+        K = np.zeros(direction.shape[:1] + (self.n,))
+        K[:, self.a], K[:, self.b] = direction[:, 0], direction[:, 1]
+        K[:, self.k] = -(g[:, self.k, self.a] * K[:, self.a] + g[:, self.k, self.b] * K[:, self.b]) / g[:, self.k, self.k]
+        return K
+
+
+def quotient_checks(chart, n=241):
+    """A view that divides out a coordinate, against what the drawing does not use.
+
+    At n points along the drawn r, away from where g^rr vanishes, each family's direction is
+    lifted into the spacetime, scaled to k^r = 1, and checked null against the published metric
+    and to satisfy k^b nabla_b k^a = lambda k^a with the published Christoffel symbols,
+    derivatives along the two drawn coordinates taken by central differences and none along
+    the coordinate divided out, which nothing depends on; the orbits of that coordinate are
+    checked spacelike, g_kk > 0. Returns the worst of each and refuses the view past GEODESIC.
+    """
+    spec, q = chart.spec, chart.quotient
+    r = np.linspace(spec.box[0], spec.box[1], n)[1:-1]
+    x0 = np.full_like(r, 0.5)
+    with np.errstate(all="ignore"):
+        keep = np.abs(chart.fn["girr"](x0, r)) > 1e-2
+    x0, r = x0[keep], r[keep]
+    step = 1e-5 * np.maximum(1.0, np.abs(r))
+
+    def tangents(t, rr):
+        g = q.metric(t, rr)
+        P, M, _ = chart.null_dirs(t, rr)
+        return [K / K[:, q.b:q.b + 1] for K in (q.lift(d, g) for d in (P, M))]
+
+    here = tangents(x0, r)
+    along = [[(p - m) / (2 * step[:, None]) for p, m in zip(tangents(*plus), tangents(*minus))]
+             for plus, minus in (((x0 + step, r), (x0 - step, r)), ((x0, r + step), (x0, r - step)))]
+    g, G = q.metric(x0, r), q.christoffel(x0, r)
+    if not np.all(g[:, q.k, q.k] > 0):
+        raise SystemExit(f"{key(spec)}: the orbits of {spec.quotient} are not spacelike everywhere on the view")
+    geodesic, null, finite = [], [], np.ones(r.size, dtype=bool)
+    for f, K in enumerate(here):
+        dK = K[:, q.a:q.a + 1] * along[0][f] + K[:, q.b:q.b + 1] * along[1][f]
+        GKK = np.einsum("nabc,nb,nc->na", G, K, K)
+        acc = dK + GKK
+        across = acc - (np.sum(acc * K, 1) / np.sum(K * K, 1))[:, None] * K
+        # A family whose tangent is exactly parallel, as v = const of an Eddington-Finkelstein chart
+        # is, has both terms zero, and misses by nothing; the smallest float keeps that 0/0 a zero.
+        size = np.linalg.norm(dK, axis=1) + np.linalg.norm(GKK, axis=1) + np.finfo(float).tiny
+        geodesic.append(np.linalg.norm(across, axis=1) / size)
+        null.append(np.abs(np.einsum("nab,na,nb->n", g, K, K)) / (np.abs(g).max((1, 2)) * np.sum(K * K, 1)))
+        finite &= np.isfinite(geodesic[-1]) & np.isfinite(null[-1])
+    if finite.sum() < 0.8 * r.size:
+        raise SystemExit(f"{key(spec)}: the checks of the divided out view are finite at {finite.sum()} of {r.size} points")
+    geodesic = float(max(np.max(v[finite]) for v in geodesic))
+    null = float(max(np.max(v[finite]) for v in null))
+    if not (geodesic <= GEODESIC and null <= 1e-12):
+        raise SystemExit(f"{key(spec)}: the lifted rays miss the geodesic equation by {geodesic:.1e} "
+                         f"or the null condition by {null:.1e}")
+    return {"points": int(finite.sum()), "geodesic": geodesic, "null": null}
+
 
 class Plot:
     """A Diagram drawn: rays, cones and markers in the unit square of its axes."""
@@ -2375,6 +2596,7 @@ def settings(spec, entry):
 
 
 PRINCIPAL_FIELDS = ["weyl_tensor", "christoffel"]
+QUOTIENT_FIELDS = ["christoffel"]
 # How far k^b nabla_b k^a may miss k^a, against the size of its two terms. Beside the horizons
 # both terms grow as 1/Delta^2 and cancel, and rounding in their central differences leaves
 # about 2e-6 at any step; a direction that is not a geodesic misses by order one.
@@ -2490,9 +2712,11 @@ def draw(spec):
     plot = Plot(chart)
     families = plot.rays()
     fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust or spec.star or spec.solves else [])
-              + (PRINCIPAL_FIELDS if spec.principal else []))
+              + (PRINCIPAL_FIELDS if spec.principal else []) + (QUOTIENT_FIELDS if spec.quotient else []))
     if spec.principal:
         principal_checks(chart)
+    if spec.quotient:
+        quotient_checks(chart)
     if spec.star:
         star_checks(spec, chart.solver)
     if spec.any_factor:
@@ -2658,9 +2882,36 @@ def _rstar(r, horizons):
     return out
 
 
+def _btz_rstar(r, roots):
+    """The integral of 1/N^2 for the BTZ hole at l = 1, N^2 = (r^2 - a)(r^2 - b)/r^2 with the
+    squared horizons a > b, or r^2 - a where b = 0, up to a constant."""
+    a, b = roots
+    one = lambda s: np.sqrt(s) / 2 * np.log(np.abs((r - np.sqrt(s)) / (r + np.sqrt(s))))
+    return (one(a) - (one(b) if b else 0)) / (a - b)
+
+
+def _away(*radii):
+    return lambda x0, r: np.all([np.abs(r - h) > 0.05 for h in radii], axis=0)
+
+
+BTZ_STATIC, BTZ_ROTATING = (1.0, 0.0), (0.8, 0.2)
+
 # (metric, system, view): (what P conserves, what M conserves, where to compare). None
 # where a family has no closed form. P moves toward smaller r or x, M toward larger.
 CLOSED_FORMS = {
+    ("btz", "stationary", "static"):
+        (lambda t, r: t + _btz_rstar(r, BTZ_STATIC), lambda t, r: t - _btz_rstar(r, BTZ_STATIC), _away(1.0)),
+    ("btz", "stationary", "rotating"):
+        (lambda t, r: t + _btz_rstar(r, BTZ_ROTATING), lambda t, r: t - _btz_rstar(r, BTZ_ROTATING),
+         _away(np.sqrt(0.8), np.sqrt(0.2))),
+    ("btz", "eddington_finkelstein_ingoing", "static"):
+        (lambda v, r: v, lambda v, r: v - 2 * _btz_rstar(r, BTZ_STATIC), _away(1.0)),
+    ("btz", "eddington_finkelstein_ingoing", "rotating"):
+        (lambda v, r: v, lambda v, r: v - 2 * _btz_rstar(r, BTZ_ROTATING), _away(np.sqrt(0.8), np.sqrt(0.2))),
+    ("btz", "eddington_finkelstein_outgoing", "static"):
+        (lambda u, r: u + 2 * _btz_rstar(r, BTZ_STATIC), lambda u, r: u, _away(1.0)),
+    ("btz", "eddington_finkelstein_outgoing", "rotating"):
+        (lambda u, r: u + 2 * _btz_rstar(r, BTZ_ROTATING), lambda u, r: u, _away(np.sqrt(0.8), np.sqrt(0.2))),
     ("schwarzschild", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"):
