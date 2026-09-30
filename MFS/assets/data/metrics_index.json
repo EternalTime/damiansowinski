@@ -649,7 +649,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9ac84b8c4a763451"
+    "version": "9ac84b8c4a763451",
+    "diagrams": "5ac02048c1fc2550",
+    "conformal": "edd5386c486f11df",
+    "embedding": "86969fc37532f407"
   },
   {
     "id": "milne",
