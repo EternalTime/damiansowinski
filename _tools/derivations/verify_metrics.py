@@ -185,6 +185,16 @@ DIMENSIONS = {
     # the dimensionless 4G mu/c^2 the entry prints; delta is the deficit angle itself,
     # which the entry declares and states rather than uses. The interior is written with
     # a dimensionless polar angle chi, so its one length is the radius of the cap.
+    # The mass is folded into the length m = GM/c^2, as Taub-NUT folds it, and the
+    # acceleration alpha is an inverse length, so alpha r and 2 alpha m are pure numbers; C
+    # scales the angle about the axis. The Hong-Teo chart is dimensionless throughout, with
+    # tau = alpha ct, y = 1/(alpha r) and x = cos(theta), so its one length is 1/alpha.
+    ("c_metric", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\alpha": "1/L", "C": "1",
+    },
+    ("c_metric", "hong_teo"): {
+        "\\tau": "1", "y": "1", "x": "1", "\\phi": "1", "m": "L", "\\alpha": "1/L", "C": "1",
+    },
     ("cosmic_string", "conical"): {
         "t": "T", "r": "L", "\\phi": "1", "z": "L",
         "\\mu": "M/L", "G": "L**3/(M*T**2)", "\\delta": "1",

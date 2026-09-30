@@ -1,0 +1,2766 @@
+{
+  "id": "c_metric",
+  "name": "C-Metric Accelerating Black Holes",
+  "short_name": "C-Metric",
+  "description": "An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "static",
+    "axisymmetric",
+    "black hole",
+    "accelerating black hole",
+    "acceleration horizon",
+    "event horizon",
+    "horizon",
+    "Killing horizon",
+    "boost symmetry",
+    "cosmic string",
+    "conical singularity",
+    "Petrov type D",
+    "gravitational radiation",
+    "singularity",
+    "curvature singularity",
+    "maximal extension",
+    "causal structure",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ and $G$ explicit, the mass parameter is the geometric mass $m = GM/c^2$, and the acceleration $\\alpha$ carries an inverse length, with $0 < 2\\alpha m < 1$. The constant $C$ is a pure number that scales the angle $\\phi$ about the axis. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+  "history": "",
+  "references": [],
+  "coordinates": [
+    {
+      "id": "spherical",
+      "name": "Spherical",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "1 + \\alpha r\\cos\\theta > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Geometric mass, $m = GM/c^2$, which is a length; the black hole horizon sits at $r = 2m$"
+        },
+        {
+          "symbol": "\\alpha",
+          "description": "Acceleration, an inverse length, with $2\\alpha m < 1$; the acceleration horizon sits at $r = 1/\\alpha$"
+        },
+        {
+          "symbol": "C",
+          "description": "A pure number scaling the angle about the axis; $C = 1/(1 + 2\\alpha m)$ makes the half axis $\\theta = 0$ regular and leaves a cosmic string along $\\theta = \\pi$"
+        }
+      ],
+      "convention": "We use the coordinates of Jerry Griffiths, Pavel Krtouš and Jiří Podolský, $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\dfrac{1}{\\left(1 + \\alpha r\\cos\\theta\\right)^2}\\left(-\\left(1 - \\alpha^2r^2\\right)\\left(1 - \\dfrac{2m}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{\\left(1 - \\alpha^2r^2\\right)\\left(1 - \\dfrac{2m}{r}\\right)} + \\dfrac{r^2d\\theta^2}{1 + 2\\alpha m\\cos\\theta} + C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{\\left(2m - r\\right)\\left(1 - \\alpha^2r^2\\right)}{r\\left(1 + \\alpha r\\cos\\theta\\right)^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{r}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)^2\\left(1 - \\alpha^2r^2\\right)}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{r^2}{\\left(1 + \\alpha r\\cos\\theta\\right)^2\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{r^2\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{r\\left(1 + \\alpha r\\cos\\theta\\right)^2}{\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)^2\\left(1 - \\alpha^2r^2\\right)}{r}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\left(1 + \\alpha r\\cos\\theta\\right)^2\\left(1 + 2\\alpha m\\cos\\theta\\right)}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\left(1 + \\alpha r\\cos\\theta\\right)^2\\csc^2\\theta}{r^2\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m + 3\\alpha\\,r\\,m\\cos\\theta - \\alpha\\,r^2\\cos\\theta + \\alpha^2\\,r^2\\,m - \\alpha^2\\,r^3 - \\alpha^3\\,r^3\\,m\\cos\\theta}{r\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m + 3\\alpha\\,r\\,m\\cos\\theta - \\alpha\\,r^2\\cos\\theta + \\alpha^2\\,r^2\\,m - \\alpha^2\\,r^3 - \\alpha^3\\,r^3\\,m\\cos\\theta}{r\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\alpha\\,r\\sin\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\alpha\\,r\\sin\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\alpha\\,r\\sin\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\alpha\\,r\\sin\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(r - 2m\\right)\\left(\\alpha^3\\,r^3\\,m\\cos\\theta + \\alpha^2\\,r^3 - \\alpha^2\\,r^2\\,m + \\alpha\\,r^2\\cos\\theta - 3\\alpha\\,r\\,m\\cos\\theta - m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\alpha^3\\,r^4\\cos\\theta - 3\\alpha^3\\,r^3\\,m\\cos\\theta + \\alpha^2\\,r^3 - \\alpha^2\\,r^2\\,m - \\alpha\\,r^2\\cos\\theta + \\alpha\\,r\\,m\\cos\\theta - m}{r\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2m - r\\right)\\left(1 - \\alpha^2r^2\\right)}{\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{C^2\\left(2m - r\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\alpha\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\alpha\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\alpha\\left(3\\alpha\\,r\\,m\\cos\\theta + r + m\\right)\\sin\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{C^2\\left(\\alpha^2\\,r\\,m\\cos^3\\theta + \\alpha^2\\,r\\,m\\cos\\theta + \\alpha\\,r + 3\\alpha\\,m\\cos^2\\theta - \\alpha\\,m + \\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\alpha^2\\,r\\,m\\cos^3\\theta + \\alpha^2\\,r\\,m\\cos\\theta + \\alpha\\,r + 3\\alpha\\,m\\cos^2\\theta - \\alpha\\,m + \\cos\\theta\\right)\\csc\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(\\alpha^2\\,r\\,m\\cos^3\\theta + \\alpha^2\\,r\\,m\\cos\\theta + \\alpha\\,r + 3\\alpha\\,m\\cos^2\\theta - \\alpha\\,m + \\cos\\theta\\right)\\csc\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\alpha^3\\,r^3\\,m\\cos\\theta + \\alpha^2\\,r^3 - \\alpha^2\\,r^2\\,m + \\alpha\\,r^2\\cos\\theta - 3\\alpha\\,r\\,m\\cos\\theta - m}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\alpha^3\\,r^3\\,m\\cos\\theta + \\alpha^2\\,r^3 - \\alpha^2\\,r^2\\,m + \\alpha\\,r^2\\cos\\theta - 3\\alpha\\,r\\,m\\cos\\theta - m}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\alpha^3\\,r^3\\,m\\cos\\theta + \\alpha^2\\,r^3 - \\alpha^2\\,r^2\\,m + \\alpha\\,r^2\\cos\\theta - 3\\alpha\\,r\\,m\\cos\\theta - m}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\alpha\\left(2m - r\\right)\\left(1 - \\alpha^2r^2\\right)\\sin\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\alpha\\left(2m - r\\right)\\left(1 - \\alpha^2r^2\\right)\\sin\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\alpha\\left(2m - r\\right)\\left(1 - \\alpha^2r^2\\right)\\sin\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\alpha^3\\,r^4\\cos\\theta - 3\\alpha^3\\,r^3\\,m\\cos\\theta + \\alpha^2\\,r^3 - \\alpha^2\\,r^2\\,m - \\alpha\\,r^2\\cos\\theta + \\alpha\\,r\\,m\\cos\\theta - m}{\\left(r - 2m\\right)^2\\left(1 + \\alpha r\\cos\\theta\\right)^3\\left(1 - \\alpha^2r^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\alpha\\,r^2\\sin\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)^3\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\alpha\\,r^2\\sin\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)^3\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\alpha\\,r^2\\sin\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)^3\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r}{\\left(1 + \\alpha r\\cos\\theta\\right)^3\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r}{\\left(1 + \\alpha r\\cos\\theta\\right)^3\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{\\left(1 + \\alpha r\\cos\\theta\\right)^3\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\alpha\\,r^2\\left(3\\alpha\\,r\\,m\\cos\\theta + r + m\\right)\\sin\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3\\left(1 + 2\\alpha m\\cos\\theta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\,C^2\\left(\\alpha^2\\,r\\,m\\cos^3\\theta + \\alpha^2\\,r\\,m\\cos\\theta + \\alpha\\,r + 3\\alpha\\,m\\cos^2\\theta - \\alpha\\,m + \\cos\\theta\\right)\\sin\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\,C^2\\left(\\alpha^2\\,r\\,m\\cos^3\\theta + \\alpha^2\\,r\\,m\\cos\\theta + \\alpha\\,r + 3\\alpha\\,m\\cos^2\\theta - \\alpha\\,m + \\cos\\theta\\right)\\sin\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^2\\,C^2\\left(\\alpha^2\\,r\\,m\\cos^3\\theta + \\alpha^2\\,r\\,m\\cos\\theta + \\alpha\\,r + 3\\alpha\\,m\\cos^2\\theta - \\alpha\\,m + \\cos\\theta\\right)\\sin\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(2m - r\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(2m - r\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(2m - r\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(2m - r\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2m}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r\\,m\\,C^2\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2r\\,m\\,C^2\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r\\,m\\,C^2\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r\\,m\\,C^2\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{48m^2\\left(1 + \\alpha r\\cos\\theta\\right)^6}{r^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(2m - r\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(2m - r\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(2m - r\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(2m - r\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(1 + \\alpha r\\cos\\theta\\right)}{r^2\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,C^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(1 + \\alpha r\\cos\\theta\\right)}{r\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2m}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(r - 2m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin^2\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r\\,m\\,C^2\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2r\\,m\\,C^2\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r\\,m\\,C^2\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r\\,m\\,C^2\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2m + 6\\alpha\\,r\\,m\\cos\\theta - 2\\alpha\\,r^2\\cos\\theta + 2\\alpha^2\\,r^2\\,m - 2\\alpha^2\\,r^3 - 2\\alpha^3\\,r^3\\,m\\cos\\theta}{r\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}\\dot{t}\\dot{r} + \\dfrac{2\\alpha\\,r\\sin\\theta}{1 + \\alpha r\\cos\\theta}\\dot{t}\\dot{\\theta} = 0",
+        "\\ddot{r} - \\dfrac{\\left(r - 2m\\right)\\left(\\alpha^3\\,r^3\\,m\\cos\\theta + \\alpha^2\\,r^3 - \\alpha^2\\,r^2\\,m + \\alpha\\,r^2\\cos\\theta - 3\\alpha\\,r\\,m\\cos\\theta - m\\right)\\left(1 - \\alpha^2r^2\\right)}{r^3\\left(1 + \\alpha r\\cos\\theta\\right)}\\dot{t}^2 + \\dfrac{2\\alpha^3\\,r^4\\cos\\theta - 3\\alpha^3\\,r^3\\,m\\cos\\theta + \\alpha^2\\,r^3 - \\alpha^2\\,r^2\\,m - \\alpha\\,r^2\\cos\\theta + \\alpha\\,r\\,m\\cos\\theta - m}{r\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}\\dot{r}^2 + \\dfrac{2\\alpha\\,r\\sin\\theta}{1 + \\alpha r\\cos\\theta}\\dot{r}\\dot{\\theta} + \\dfrac{\\left(2m - r\\right)\\left(1 - \\alpha^2r^2\\right)}{\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}\\dot{\\theta}^2 + \\dfrac{C^2\\left(2m - r\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin^2\\theta}{1 + \\alpha r\\cos\\theta}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{\\alpha\\left(r - 2m\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)\\sin\\theta}{r^2\\left(1 + \\alpha r\\cos\\theta\\right)}\\dot{t}^2 - \\dfrac{\\alpha\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin\\theta}{\\left(r - 2m\\right)\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 - \\alpha^2r^2\\right)}\\dot{r}^2 + \\dfrac{2}{r\\left(1 + \\alpha r\\cos\\theta\\right)}\\dot{r}\\dot{\\theta} + \\dfrac{\\alpha\\left(3\\alpha\\,r\\,m\\cos\\theta + r + m\\right)\\sin\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}\\dot{\\theta}^2 - \\dfrac{C^2\\left(\\alpha^2\\,r\\,m\\cos^3\\theta + \\alpha^2\\,r\\,m\\cos\\theta + \\alpha\\,r + 3\\alpha\\,m\\cos^2\\theta - \\alpha\\,m + \\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)\\sin\\theta}{1 + \\alpha r\\cos\\theta}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r\\left(1 + \\alpha r\\cos\\theta\\right)}\\dot{r}\\dot{\\phi} + \\dfrac{2\\left(\\alpha^2\\,r\\,m\\cos^3\\theta + \\alpha^2\\,r\\,m\\cos\\theta + \\alpha\\,r + 3\\alpha\\,m\\cos^2\\theta - \\alpha\\,m + \\cos\\theta\\right)\\csc\\theta}{\\left(1 + \\alpha r\\cos\\theta\\right)\\left(1 + 2\\alpha m\\cos\\theta\\right)}\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "hong_teo",
+      "name": "Hong-Teo",
+      "coords": [
+        "\\tau",
+        "y",
+        "x",
+        "\\phi"
+      ],
+      "domains": [
+        "\\tau \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "x \\in [-1, 1]",
+        "\\phi \\in [0, 2\\pi)",
+        "x + y > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Geometric mass, $m = GM/c^2$, which is a length; the black hole horizon sits at $y = 1/(2\\alpha m)$"
+        },
+        {
+          "symbol": "\\alpha",
+          "description": "Acceleration, an inverse length, with $2\\alpha m < 1$; the acceleration horizon sits at $y = 1$"
+        },
+        {
+          "symbol": "C",
+          "description": "A pure number scaling the angle about the axis; $C = 1/(1 + 2\\alpha m)$ makes the half axis $x = 1$ regular and leaves a cosmic string along $x = -1$"
+        }
+      ],
+      "convention": "We use the coordinates of Kenneth Hong and Edward Teo, $(\\tau, y, x, \\phi)$, all dimensionless and related to the spherical chart by $\\tau = \\alpha ct$, $y = 1/(\\alpha r)$ and $x = \\cos\\theta$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = \\dfrac{1}{\\alpha^2\\left(x + y\\right)^2}\\left(\\left(1 - y^2\\right)\\left(1 - 2\\alpha m y\\right)d\\tau^2 - \\dfrac{dy^2}{\\left(1 - y^2\\right)\\left(1 - 2\\alpha m y\\right)} + \\dfrac{dx^2}{\\left(1 - x^2\\right)\\left(1 + 2\\alpha m x\\right)} + C^2\\left(1 - x^2\\right)\\left(1 + 2\\alpha m x\\right)d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "\\dfrac{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha^2\\left(x + y\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "-\\dfrac{1}{\\alpha^2\\left(x + y\\right)^2\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{\\alpha^2\\left(x + y\\right)^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha^2\\left(x + y\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "\\dfrac{\\alpha^2\\left(x + y\\right)^2}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "-\\alpha^2\\left(x + y\\right)^2\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\alpha^2\\left(x + y\\right)^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\alpha^2\\left(x + y\\right)^2}{C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x + \\alpha\\,m\\,y - \\alpha\\,m\\,x - y\\,x - 1}{\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x + \\alpha\\,m\\,y - \\alpha\\,m\\,x - y\\,x - 1}{\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{x + y}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{1}{x + y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{x + y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{x + y}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{x + y}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{x + y}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{x + y}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{x + y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x + \\alpha\\,m\\,y - \\alpha\\,m\\,x - y\\,x - 1\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{x + y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{5\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x - 3\\alpha\\,m\\,y - \\alpha\\,m\\,x - 2y^2 - y\\,x + 1}{\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{x + y}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{x + y}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + 5\\alpha\\,m\\,x^3 - 3\\alpha\\,m\\,x + y\\,x + 2x^2 - 1}{\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{C^2\\left(3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + \\alpha\\,m\\,x^3 + \\alpha\\,m\\,x + y\\,x + 1\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{x + y}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + \\alpha\\,m\\,x^3 + \\alpha\\,m\\,x + y\\,x + 1}{\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "-\\dfrac{3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + \\alpha\\,m\\,x^3 + \\alpha\\,m\\,x + y\\,x + 1}{\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x + \\alpha\\,m\\,y - \\alpha\\,m\\,x - y\\,x - 1}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x + \\alpha\\,m\\,y - \\alpha\\,m\\,x - y\\,x - 1}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x + \\alpha\\,m\\,y - \\alpha\\,m\\,x - y\\,x - 1}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{5\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x - 3\\alpha\\,m\\,y - \\alpha\\,m\\,x - 2y^2 - y\\,x + 1}{\\alpha^2\\left(x + y\\right)^3\\left(1 - 2\\alpha m y\\right)^2\\left(1 - y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{\\alpha^2\\left(x + y\\right)^3\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{\\alpha^2\\left(x + y\\right)^3\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{\\alpha^2\\left(x + y\\right)^3\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{\\alpha^2\\left(x + y\\right)^3\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{\\alpha^2\\left(x + y\\right)^3\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{\\alpha^2\\left(x + y\\right)^3\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "-\\dfrac{C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + 5\\alpha\\,m\\,x^3 - 3\\alpha\\,m\\,x + y\\,x + 2x^2 - 1}{\\alpha^2\\left(x + y\\right)^3\\left(1 + 2\\alpha m x\\right)^2\\left(1 - x^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{C^2\\left(3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + \\alpha\\,m\\,x^3 + \\alpha\\,m\\,x + y\\,x + 1\\right)}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{C^2\\left(3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + \\alpha\\,m\\,x^3 + \\alpha\\,m\\,x + y\\,x + 1\\right)}{\\alpha^2\\left(x + y\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "-\\dfrac{C^2\\left(3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + \\alpha\\,m\\,x^3 + \\alpha\\,m\\,x + y\\,x + 1\\right)}{\\alpha^2\\left(x + y\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-2\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "2\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "2\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "-2\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{2m}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2m}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{2m}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{2m}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{m\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{m\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{m\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{m\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{m}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{m}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{m}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{m}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,C^2}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "-\\dfrac{2m\\,C^2}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,C^2}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "\\dfrac{2m\\,C^2}{\\alpha\\left(x + y\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 48\\alpha^6\\,m^2\\left(x + y\\right)^6",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-2\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "2\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\alpha\\,m\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\dfrac{\\alpha\\,m\\left(x + y\\right)}{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "2\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "-2\\alpha\\,m\\,C^2\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\alpha\\,m\\left(x + y\\right)}{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{2m}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2m}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{2m}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{2m}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{m\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{m\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{m\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{m\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{m}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{m}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{m}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{m}{\\alpha\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\dfrac{m\\,C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\alpha\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,C^2}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "-\\dfrac{2m\\,C^2}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,C^2}{\\alpha\\left(x + y\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "\\dfrac{2m\\,C^2}{\\alpha\\left(x + y\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} + \\dfrac{2\\alpha\\,m\\,y^3 + 6\\alpha\\,m\\,y^2\\,x + 2\\alpha\\,m\\,y - 2\\alpha\\,m\\,x - 2y\\,x - 2}{\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}\\dot{\\tau}\\dot{y} - \\dfrac{2}{x + y}\\dot{\\tau}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{\\left(\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x + \\alpha\\,m\\,y - \\alpha\\,m\\,x - y\\,x - 1\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{x + y}\\dot{\\tau}^2 - \\dfrac{5\\alpha\\,m\\,y^3 + 3\\alpha\\,m\\,y^2\\,x - 3\\alpha\\,m\\,y - \\alpha\\,m\\,x - 2y^2 - y\\,x + 1}{\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}\\dot{y}^2 - \\dfrac{2}{x + y}\\dot{y}\\dot{x} - \\dfrac{\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}{\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}\\dot{x}^2 - \\dfrac{C^2\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{x + y}\\dot{\\phi}^2 = 0",
+        "\\ddot{x} + \\dfrac{\\left(1 + 2\\alpha m x\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - x^2\\right)\\left(1 - y^2\\right)}{x + y}\\dot{\\tau}^2 - \\dfrac{\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{\\left(x + y\\right)\\left(1 - 2\\alpha m y\\right)\\left(1 - y^2\\right)}\\dot{y}^2 - \\dfrac{2}{x + y}\\dot{y}\\dot{x} + \\dfrac{3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + 5\\alpha\\,m\\,x^3 - 3\\alpha\\,m\\,x + y\\,x + 2x^2 - 1}{\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}\\dot{x}^2 + \\dfrac{C^2\\left(3\\alpha\\,m\\,y\\,x^2 - \\alpha\\,m\\,y + \\alpha\\,m\\,x^3 + \\alpha\\,m\\,x + y\\,x + 1\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}{x + y}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{2}{x + y}\\dot{y}\\dot{\\phi} - \\dfrac{6\\alpha\\,m\\,y\\,x^2 - 2\\alpha\\,m\\,y + 2\\alpha\\,m\\,x^3 + 2\\alpha\\,m\\,x + 2y\\,x + 2}{\\left(x + y\\right)\\left(1 + 2\\alpha m x\\right)\\left(1 - x^2\\right)}\\dot{x}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

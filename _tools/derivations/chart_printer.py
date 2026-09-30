@@ -21,7 +21,7 @@ import sympy as sp
 
 import verify_metrics as vm
 
-GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell"}
+GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell", "alpha"}
 # A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
 ACCENTED = {"tildephi": "\\tilde\\phi"}
 TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
@@ -53,11 +53,13 @@ class Sum:
 
 
 class Printer:
-    def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None, factors=None):
+    def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None, factors=None, named=None):
         """coords: coordinate symbols in chart order.
         primed: names of functions of one variable printed with primes.
         lead: generators, most significant first, that order the terms of a sum.
         overrides: {placeholder symbol: its printed text}.
+        named: {placeholder symbol: the text of a sum it stands for}, bracketed wherever a sum
+            would be, so a factor such as 1 + alpha r cos(theta) keeps the order it is written in.
         collect: a function turning the polynomial numerator of a value into a Sum.
         factors: generators in the order they are written within a product, lead by default.
         """
@@ -66,6 +68,7 @@ class Printer:
         self.lead = list(lead)
         self.factors = list(lead if factors is None else factors)
         self.overrides = dict(overrides or {})
+        self.named = dict(named or {})
         self.collect = collect
 
     # -- ordering ----------------------------------------------------------------------
@@ -260,6 +263,8 @@ class Printer:
             return (0,)
         if base in self.overrides:
             return (3, 100)
+        if base in self.named:
+            return (3, 50 + list(self.named).index(base))
         if isinstance(base, sp.Symbol):
             return (1, self.rank_of(base), base.name)
         if isinstance(base, sp.core.function.AppliedUndef):
@@ -288,8 +293,8 @@ class Printer:
         return out
 
     def factor(self, base, exponent, alone=False):
-        if isinstance(base, Sum):
-            text = self.sum_text(base)
+        if isinstance(base, Sum) or base in self.named:
+            text = self.named[base] if base in self.named else self.sum_text(base)
             if exponent == 1:
                 return text if alone else "\\left(" + text + "\\right)"
             if exponent == sp.Rational(1, 2):
