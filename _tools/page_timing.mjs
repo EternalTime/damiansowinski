@@ -52,6 +52,12 @@
    is half what it was before 29 September 2026, as the captain asked that day; any of them a
    pixel out counts as an error.
 
+   The Conventions section follows the chart, as the captain asked on 29 September 2026: in
+   each state the paragraph under the signature reads exactly the chosen chart's convention
+   followed by the one its spacetime shares across charts, as the metric file gives them,
+   each formula read back from MathJax as the TeX it was set from, and choosing another chart
+   changes it. Any other text there counts as an error.
+
    It prints one line per chart, slowest last, then every page error and console error the
    page raised and every label that moved, and exits non-zero if any chart missed the budget
    or never became ready, or if the page raised any error at all. */
@@ -427,6 +433,39 @@ async function pressed() {
   await send('DOM.disable');
 }
 
+/* Read the Conventions paragraph as it stands, each formula as the TeX MathJax set it from and
+   the soft hyphens that divide a long word taken out, and hold it to the chart's convention
+   followed by the spacetime's, as the metric file gives them. Returns what it read, so the
+   next chart can be held to reading differently. */
+async function convention(id, chart, before) {
+  const found = await evaluate(`(async function () {
+    var data = await (await fetch(${JSON.stringify(`${base}/MFS/assets/data/metrics/${id}.json`)})).json();
+    var coord = (data.coordinates || [])[${chart}] || {};
+    var expected = [coord.convention, data.convention].filter(function (t) { return t && t.trim(); })
+      .map(function (t) { return t.trim(); }).join(' ');
+    var box = document.querySelector('#mfs-content-panel .mfs-convention');
+    var paragraphs = box ? [].filter.call(box.querySelectorAll('p'), function (p) {
+      return !p.querySelector('.mfs-convention-k');
+    }) : [];
+    var roots = new Map();
+    paragraphs.forEach(function (p) {
+      MathJax.startup.document.getMathItemsWithin(p).forEach(function (m) { roots.set(m.typesetRoot, m.math); });
+    });
+    function read(node) {
+      if (roots.has(node)) return '$' + roots.get(node) + '$';
+      if (node.nodeType === 3) return node.data;
+      return [].map.call(node.childNodes, read).join('');
+    }
+    var shown = paragraphs.map(read).join(' ').replace(/\u00AD/g, '').replace(/\s+/g, ' ').trim();
+    return { expected: expected, shown: shown, paragraphs: paragraphs.length };
+  })()`);
+  const at = `${opened} / chart ${chart}: conventions`;
+  if (found.paragraphs !== (found.expected ? 1 : 0)) errors.push(`${at} stand in ${found.paragraphs} paragraphs`);
+  if (found.shown !== found.expected) errors.push(`${at} read ${JSON.stringify(found.shown)}, not ${JSON.stringify(found.expected)}`);
+  if (before !== undefined && found.shown === before) errors.push(`${at} did not change with the chart`);
+  return found.shown;
+}
+
 async function pageErrors() {
   for (const e of await evaluate(`window.__mfsTiming.errors.splice(0)`)) errors.push(`${opened}: page error: ${e}`);
 }
@@ -440,6 +479,7 @@ for (const id of ids) {
   results.push({ id, ...(first || { chart: '?' }), failed: !first });
   if (!first) continue;
   for (const m of first.moved.concat(first.margins)) errors.push(`${opened} / ${first.chart}: ${m}`);
+  let conventions = await convention(id, 0);
   await pressed();
   await views();
   if (print) await printCopy();
@@ -449,6 +489,7 @@ for (const id of ids) {
     results.push({ id, ...(r || { chart: String(c) }), failed: !r });
     if (!r) continue;
     for (const m of r.moved.concat(r.margins)) errors.push(`${opened} / ${r.chart}: ${m}`);
+    conventions = await convention(id, c, conventions);
     await views();
     if (print) await printCopy();
   }
