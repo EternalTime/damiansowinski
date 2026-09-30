@@ -463,6 +463,15 @@ class Checks:
         ok = bool(np.all(K2 > 1e8) and np.all(K2 > 50 * K1))
         self.limits.append({"name": name, "error": float(np.min(K2)), "ok": ok, "kind": "diverges"})
 
+    def settles(self, name, K_near, K_nearer):
+        """The Kretschmann scalar at two points approaching a line drawn as regular, the second ten
+        times closer: both finite and apart by less than a part in 10^4 of the largest, for a
+        spacetime whose curvature there is large in the units it is drawn in."""
+        K1, K2 = np.asarray(K_near, dtype=float), np.asarray(K_nearer, dtype=float)
+        change = float(np.max(np.abs(K2 - K1)) / np.max(np.abs(K2)))
+        ok = bool(np.all(np.isfinite(K1)) and np.all(np.isfinite(K2)) and change < 1e-4)
+        self.limits.append({"name": name, "error": change, "ok": ok, "kind": "settles"})
+
     def finite(self, name, K):
         """The Kretschmann scalar at points on or approaching a line drawn as regular."""
         K = np.abs(np.asarray(K, dtype=float))
@@ -480,7 +489,7 @@ class Checks:
                   f"  {'ok' if c['ok'] else 'FAILED'}")
         print()
         for x in self.limits:
-            shown = {"diverges": "K", "finite": "K"}.get(x.get("kind"), "err")
+            shown = {"diverges": "K", "finite": "K", "settles": "change"}.get(x.get("kind"), "err")
             print(f"{'ok    ' if x['ok'] else 'FAILED'} {x['name']}  ({shown} = {x['error']:.2e})")
 
 
@@ -3060,8 +3069,8 @@ def einstein_rosen_waves(ck, src):
     wave the causal structure of the half plane is Minkowski's half diamond,
     p, q = arctan((ct -+ rho)/a) = arctan(u/a), arctan(v/a), with the axis rho = 0 on X = 0. The
     maps are checked with random values of psi and gamma at every sample, and with the pulse of
-    Weber, Wheeler, and Bonnor at C = a = 1, whose published Kretschmann scalar is checked finite
-    on the axis; its rays through the event on the axis where it is greatest, rho = |ct|, are
+    Weber, Wheeler, and Bonnor at C = a = 1, whose published Kretschmann scalar is checked to settle to a
+    finite value on the axis; its rays through the event on the axis where it is greatest, rho = |ct|, are
     the lines q = 0 below and p = 0 above."""
     numeric = ["psi", "gamma"]
 
@@ -3086,8 +3095,11 @@ def einstein_rosen_waves(ck, src):
         K = K.replace(reader.parameters[name].func, nr._as_lambda(reader, name, text)).doit()
     K = sp.lambdify((reader.symbol["t"], reader.symbol["\\rho"]), K.subs({reader.c: 1, reader.symbol["\\phi"]: 0,
                                                                         reader.symbol["z"]: 0}), "numpy")
-    ck.finite("Einstein-Rosen: the axis rho = 0 is regular for the pulse",
-              K(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    # On the axis at t = 0 the pulse has psi = 2, and K carries e^{4(psi - gamma)}: it settles near
+    # 5.7e5 as rho -> 0, large in units of a but finite.
+    t_axis = ck.uniform(-5, 5, 50)
+    ck.settles("Einstein-Rosen: the axis rho = 0 is regular for the pulse",
+               K(t_axis, np.full(50, 1e-3)), K(t_axis, np.full(50, 1e-4)))
 
     def null_map(u, w):
         return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(w, dtype=float))
