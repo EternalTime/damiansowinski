@@ -3822,6 +3822,94 @@ def pp_wave(ck, src):
             view("ring", "A ring of particles", "$L$", surfaces, fig.done(), settings=settings, input=given)]
 
 
+def aichelburg_sexl(ck, src):
+    """The wave front at four values of u of the null Cartesian chart, u = -1, 0.5, 1 and 1.5 in
+    units of 8GE/c^4 = rho_0 = 1, with the delta of the shock drawn as the pulse its spacetime
+    diagram declares: a surface of constant u has the metric dx^2 + dy^2 whatever v is on it, flat.
+    The ring is 360 free particles at rest on x^2 + y^2 = 1 before the shock, the circle of radius
+    8GE/c^4 about the axis the source moves along, each run from u = -1 with the published
+    Christoffel symbols, u being affine on every geodesic since no Gamma^u is published:
+    x'' = -Gamma^x_uu and y'' = -Gamma^y_uu. Across the delta each particle gains the velocity
+    -(4GE/c^4) x/rho^2 toward the axis, so the ring stays a circle of radius 1 - u/2 behind the
+    shock and closes on the axis at u = 2. The particles move while they cross a pulse of width w,
+    which moves the focus by the order of w, so the delta is drawn here as a pulse a tenth as wide
+    as the spacetime diagram's, whose width no drawing shows, and every check holds to twice it."""
+    width = 0.005
+    gamma, R = published_christoffel(src, "aichelburg_sexl", "null_cartesian")
+    ck.exact("Aichelburg-Sexl: no published Gamma^u, so u is an affine parameter", not any(ix[0] == "u" for ix in gamma))
+    ck.exact("Aichelburg-Sexl: the only published Gamma^x and Gamma^y are Gamma^x_uu and Gamma^y_uu",
+             {ix for ix in gamma if ix[0] in ("x", "y")} == {("x", "u", "u"), ("y", "u", "u")})
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    decl = {R.parameters["G"]: 1, R.parameters["E"]: sp.Rational(1, 8), R.parameters["rho_0"]: 1}
+    args = (names["u"], names["x"], names["y"])
+    pulse = f"exp(-s**2/{width}**2)/({width}*sqrt(pi))"
+    gx = sp.lambdify(args, nr.smoothed(gamma[("x", "u", "u")], pulse).subs(decl), "numpy")
+    gy = sp.lambdify(args, nr.smoothed(gamma[("y", "u", "u")], pulse).subs(decl), "numpy")
+    from scipy.integrate import solve_ivp
+    from scipy.optimize import brentq
+    alpha = np.linspace(0, 2 * math.pi, 361)[:-1]
+    n = len(alpha)
+
+    def rhs(u, w):
+        x, y = w[:n], w[n:2 * n]
+        return np.concatenate([w[2 * n:3 * n], w[3 * n:], -gx(u, x, y) * np.ones(n), -gy(u, x, y) * np.ones(n)])
+    start = np.concatenate([np.cos(alpha), np.sin(alpha), np.zeros(2 * n)])
+    run = solve_ivp(rhs, (-1, 2.5), start, rtol=1e-12, atol=1e-14, dense_output=True, max_step=width / 5)
+
+    def radius(u):
+        w = run.sol(np.atleast_1d(u))
+        return np.hypot(w[0], w[n])
+    # The particle that starts at (1, 0) moves along the x axis, and reaches the axis x = 0 at the focus.
+    focus = brentq(lambda u: float(run.sol(u)[0]), 1.5, 2.2, xtol=1e-12)
+    ck.add("Aichelburg-Sexl: the ring closes on the axis at u = 2, to twice the width of the pulse", abs(focus - 2.0), 2 * width)
+    ck.add("Aichelburg-Sexl: behind the pulse the ring shrinks as 1 - u/2", float(np.max(np.abs(radius(np.linspace(0.3, 1.5, 50))
+                                                                                                - (1 - np.linspace(0.3, 1.5, 50) / 2)))), 2 * width)
+    top = 1.5
+    surfaces = []
+    for u in (-1.0, 0.5, 1.0, 1.5):
+        sl = FlatPlane(src, "aichelburg_sexl", "null_cartesian", "x", "y", {"u": repr(u), "v": 0}, params={"G": 1, "E": "1/8", "rho_0": 1})
+        where = f"Aichelburg-Sexl, u = {u:g}"
+        plane = disc(sl, "plane", top, "the axis the source moves along", "the wave front runs on, flat, to infinity", [], 2 * top)
+        ck.isometry(where, plane)
+        w = run.sol(u)
+        cx, cy = np.append(w[:n], w[0]), np.append(w[n:2 * n], w[n])
+        a = float(np.hypot(w[0], w[n]))
+        ck.add(f"{where}: the ring is the circle of radius {a:.6f} about the axis",
+               float(np.max(np.abs(np.column_stack([cx, cy]) - a * np.column_stack([np.cos(np.append(alpha, 0)),
+                                                                                    np.sin(np.append(alpha, 0))])))), 1e-9)
+        ring, dots = particles(ck, where, sl, plane, cx, cy)
+        surfaces.append(Surface([plane], label=f"$u = {u:g}$", time=u, curves=[ring], dots=dots))
+
+    def as_rows(u):
+        w = run.sol(np.atleast_1d(u))
+        return w[0], w[n + 90]
+
+    def as_ring(u, a, b):
+        # Every particle of the ring, run with the published Christoffel symbols, on the row.
+        w = run.sol(u)
+        return float(np.max(np.abs(np.column_stack([w[:n], w[n:2 * n]]) - np.column_stack([a * np.cos(alpha),
+                                                                                        b * np.sin(alpha)]))))
+    tube = stack(ck, "Aichelburg-Sexl", surfaces, as_rows, 0.5, as_ring, 2 * top,
+                 "the world tube of the ring runs on before $u = -1$, and closes on the axis at $u = 2$")
+    tube_fig = stack_figure(tube, 2 * top, "$u$", [
+        ("fill", "cover", "the ring at every wave front from $u = -1$ to $u = 1.5$, each at the height of its $u$"),
+        ("line", "particles", "the ring at the four wave fronts of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles"),
+        ("line", "axis", "the axis the source moves along, crossed by the shock at $u = 0$")])
+    fig = sequence_figure(surfaces, {"sheet": "cover"}, 2 * top, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig.legend("fill", "cover", "the wave front at each moment, flat")
+    fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = (8GE/c^4)^2$ before the shock, "
+                                    "with twelve of them marked")
+    fig.legend("line", "meridian", "straight lines from the axis, every $30°$")
+    settings = ("$8GE/c^4 = \\rho_0 = 1$, the unit of every length and of $u$; each moment is the wave front of one "
+                "$u$.")
+    given = ("$\\delta(u)$ drawn as the pulse $e^{-u^2/w^2}/(w\\sqrt{\\pi})$ with $w = 0.005$, the field of a pulse of "
+             "light of that length in $u$ along the axis, carrying the same energy $E$.")
+    return [view("tube", "The ring's world tube", "$8GE/c^4$", [tube], tube_fig, settings=settings, input=given,
+                 height="$u$, a height of $1/2$ for each unit of $u$"),
+            view("ring", "A ring of particles", "$8GE/c^4$", surfaces, fig.done(), settings=settings, input=given)]
+
+
 def malament_hogarth(ck, src):
     """The plane z = 0 about the removed event at ct = -0.7, -0.3, -0.1 and 0, with the conformal
     factor the spacetime diagram declares, which depends only on c^2t^2 + x^2 + y^2 + z^2: turned
@@ -4431,6 +4519,7 @@ STATED = {}
 # ---------------------------------------------------------------- the tables
 
 DRAWN = {
+    "aichelburg_sexl": aichelburg_sexl,
     "schwarzschild": schwarzschild,
     "misner": misner,
     "interior_schwarzschild": interior_schwarzschild,
@@ -4865,6 +4954,22 @@ CAPTIONS = {
         "$a_1 = a_2 = a_3 = 1$), each moment from $c\\bar Ht = 0.10$ to $2.00$ an ellipse at the height of its "
         "time. Its cross section reaches $a_1\\ell$ along $x$ and $a_3\\ell$ along $z$: squeezed along $z$ near the "
         "singularity, narrowest along $x$ at $c\\bar Ht = 1.18$, and widening along both afterwards.",
+    ],
+    ("aichelburg_sexl", "tube"): [
+        "The world tube of a ring of free particles at rest about the axis the source moves along before the shock, "
+        "each wave front from $u = -1$ to $u = 1.5$ a circle at the height of its $u$. Behind the shock the tube "
+        "narrows as a cone and closes on the axis at $u = 2$, in units of $8GE/c^4$.",
+    ],
+    ("aichelburg_sexl", "ring"): [
+        "The wave front of the Aichelburg-Sexl shock at four values of $u = ct - z$, each drawn as a surface in flat "
+        "space with every distance along it the metric distance. A surface of constant $u$ has the metric "
+        "$dx^2 + dy^2$ whatever $v$ is on it, so the drawing is a flat disc, and the shock shows in a ring of free "
+        "particles at rest on the circle of radius $8GE/c^4$ about the axis before it arrives.",
+        "Crossing the shock, each particle gains the velocity $d\\rho/du = -4GE/(c^4\\rho)$ toward the axis, so the "
+        "ring stays a circle of radius $\\rho - (4GE/c^4)\\,u/\\rho$ and closes on the axis at $u = "
+        "c^4\\rho^2/4GE$, twice $8GE/c^4$ for this ring. A ring of radius $\\rho$ focuses at a $u$ growing as "
+        "$\\rho^2$, so the shock focuses like a lens whose focal length grows with the square of the distance from "
+        "its axis.",
     ],
     ("pp_wave", "tube"): [
         "The world tube of a ring of free particles at rest before the pulse ($A = e^{-u^2}/L^2$), each wave front "

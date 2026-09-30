@@ -1,7 +1,7 @@
 # Where each embedding diagram is cut from
 
 Every embedding diagram draws part of one moment of its spacetime, or of several moments in turn: a surface of one spatial coordinate $x$ and the angle $\phi$ at one value of a time, every other coordinate held fixed.
-The moment is a hypersurface of three dimensions, spacelike everywhere it is drawn, save the pp-wave's wave fronts, which are null.
+The moment is a hypersurface of three dimensions, spacelike everywhere it is drawn, save the wave fronts of the pp-wave and of the Aichelburg-Sexl shock, which are null.
 The surface drawn is its equator, or for the flat slices a plane through it, and each point of a spherically symmetric moment's line on a conformal diagram stands for a sphere whose equator is one circle of the surface.
 
 On a drawing of a plane of two coordinates, the moment appears where the plane meets it.
@@ -12,7 +12,7 @@ On a figure in three dimensions of one time and two spatial coordinates, the mom
 The moment is drawn over the part of it the embedding's pieces reach, since every point of that part lies on a circle of the drawn surface.
 Each piece holds its coordinate $x$ from its first point to its last, so the reach is read from the file: Schwarzschild's $r$ from $r_s$ to $6\,r_s$ on both sheets, the Malament-Hogarth plane's $s$ from $0.03$ to $1.5$ at $ct = 0$.
 A reference piece, as the vacuum paraboloid under a star, is no part of the moment and adds nothing to the reach, save for the ideal cosmic string, whose own moment is the reference cone together with the sheet outside Gott's core.
-Where the slice is homogeneous and the unit of the embedding is any length, as for Minkowski space, Kasner's and Bianchi's planes and the pp-wave's fronts, the reach is the whole drawing.
+Where the slice is homogeneous and the unit of the embedding is any length, as for Minkowski space, Kasner's and Bianchi's planes and the fronts of the pp-wave and of the Aichelburg-Sexl shock, the reach is the whole drawing.
 The moment is then cut to the drawing's box, and where it lies on an edge of the box it is drawn on that edge.
 
 Each moment appears on a drawing in one of six ways: a line, a curve, a point, a surface, the whole drawing, or not at all, and the last always has a reason in the physics.
@@ -22,6 +22,13 @@ Each moment appears on a drawing in one of six ways: a line, a curve, a point, a
 ## Spacetime by spacetime
 
 A flat view is named by its keys in the diagram file, `system/view`, a figure in three dimensions by its id, and a conformal view by its id, and every number is in its drawing's own units.
+
+### Aichelburg-Sexl
+
+- The embedding is the wave front $x$, $y$ of four values of $u = ct - z$, $u = -1$, $0.5$, $1$ and $1.5$ in units of $8GE/c^4$.
+  The moment is the null hypersurface $u = u_k$, every $v$ on it carrying the same flat front.
+- `null_cartesian/half`, `/eighth` and `/thirtysecond`, the planes $x = \rho_0/2$, $\rho_0/8$ and $\rho_0/32$ at $y = 0$ drawn in $z$ and $ct$ with $u = ct - z$ and $v = ct + z$: four null lines $ct = z + u_k$ at 45°, parallel to the shock $u = 0$; the first, $u = -1$, runs before the shock and the other three behind it.
+- `shock`, the conformal diagram of the plane $x = \rho_0/8$, $y = 0$: the four lines of constant $p = \arctan u_k$, from $\mathscr{I}^-$ to $\mathscr{I}^+$, parallel to the shock.
 
 ### Alcubierre
 
@@ -270,6 +277,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 
 | spacetime | flat views | figure | conformal diagram |
 | --- | --- | --- | --- |
+| Aichelburg-Sexl | four null lines, three times | none | four null lines |
 | Alcubierre | line | floor | none drawn |
 | anti-de Sitter | line, line, line | none | line, line |
 | Bertotti-Robinson | line and point, twice | none | line and point, twice |

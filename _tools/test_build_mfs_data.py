@@ -2147,6 +2147,13 @@ class EmbeddingDiagrams(unittest.TestCase):
                 for X, Y, Z in P:
                     near((X / A) ** 2 + ((Y / B) ** 2 if B else 1 - (X / A) ** 2), 1, f"{metric_id}'s ring", 1e-5)
         self.assertEqual(max(abs(p[1]) for p in rings("pp_wave")["surfaces"][-1]["curves"][0]["points"]), 0)
+        # The shock's ring stays a circle about the axis, of radius 1 - u/2 behind the shock to the
+        # width of the declared pulse.
+        for surface in rings("aichelburg_sexl")["surfaces"]:
+            P = surface["curves"][0]["points"]
+            radii = [math.hypot(X, Y) for X, Y, _ in P]
+            near(max(radii) - min(radii), 0, "the Aichelburg-Sexl ring is a circle", 1e-5)
+            near(radii[0], 1 - max(surface["time"], 0) / 2, "the Aichelburg-Sexl ring's radius", 2e-3)
 
         # Natario's lines of flow, closed, each on one level of the stream function n(r_s) y^2,
         # y being the drawing's Y, and each on the triangles of the height.
@@ -2339,7 +2346,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "bianchi", "pp_wave"}
+        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl"}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -2439,7 +2446,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave"})
+                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -2655,7 +2662,7 @@ class StacksAndMovies(unittest.TestCase):
     diagrams that change through a run of moments played as movies, as the captain asked on 30
     September 2026, from the numbers written and nothing else."""
 
-    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5}   # the height of a unit of time
+    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5}   # the height of a unit of time
     MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
               "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$",
               "einstein_rosen_waves": "$ct$", "nariai": "$ct$"}
@@ -3122,7 +3129,7 @@ class Slices(unittest.TestCase):
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key == "de_sitter/flat_slicing/tx":
             return (lambda X: -0.5 * math.log(1 + X * X)), None
-        if key == "pp_wave/exact_plane_wave/tz":
+        if key == "pp_wave/exact_plane_wave/tz" or key.startswith("aichelburg_sexl/null_cartesian"):
             return (lambda X: X + t), None
         if key == "oppenheimer_snyder/exterior_schwarzschild/radial":
             lo, hi = self.reach(surface, "comoving_synchronous")
@@ -3339,6 +3346,9 @@ class Slices(unittest.TestCase):
                         # is the event at eta = 0.
                         eta = 0.0 if t is None else math.atan(math.sinh(t))
                         self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
+                    elif metric_id == "aichelburg_sexl":
+                        # The wave front u = u_k is the null line p = arctan u_k.
+                        self.assertTrue(all(abs((T - X) / 2 - math.atan(t)) < 2e-4 for X, T in points), where)
                     elif metric_id == "rn_metric" and mark["view"] == "inside":
                         self.assertTrue(all(abs(T - math.pi) < 2e-4 for _, T in points), where)
                     else:

@@ -209,6 +209,7 @@ import contourpy
 import numpy as np
 import sympy as sp
 from scipy.integrate import quad, solve_ivp
+from scipy.special import erf as scipy_erf
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
@@ -256,6 +257,7 @@ class Diagram:
     areal: bool = False             # spherical: R^2 = g_theta_theta
     areal_contours: tuple = ()
     functions: dict = field(default_factory=dict)   # a declared function -> its expression
+    delta: str = None               # the Dirac delta drawn as this pulse, an expression in s; see smoothed
     dust: dict = None               # scale factors solved as dust, see DustSolver
     reference: str = None           # label of the line where a dust solution starts, as TeX
     kretschmann: bool = True
@@ -368,10 +370,25 @@ GODEL_RC = math.asinh(1.0)
 SDS = {"r_s": 1, "Lambda": "1/5"}
 SDS_STATIC = 7.5 ** (1 / 3)
 
+# The Aichelburg-Sexl shock on the plane of u and v at three distances from the source, in units
+# of 8GE/c^4 with rho_0 = 8GE/c^4: each ray moving left jumps along the shock by -ln(rho/rho_0),
+# ln 2, ln 8 and ln 32, the same step of ln 4 between neighbours. The delta is drawn as a pulse of
+# width 1/20, which moves every such ray by the same amount. The box stands half a unit higher in ct
+# than it is wide in z, so that no cone of the lattice falls within seven widths of the shock.
+AS_PULSE = "20*exp(-400*s**2)/sqrt(pi)"
+AS_INPUT = ("$\\delta(u)$ drawn as the pulse $e^{-u^2/w^2}/(w\\sqrt{\\pi})$ with $w = 0.05$, the field of a pulse "
+            "of light of that length in $u$ along the axis, carrying the same energy $E$.")
+AS_RHO = {"half": "1/2", "eighth": "1/8", "thirtysecond": "1/32"}
+
 # Every view the page draws, in the order it shows them. Plot ranges are chosen with
 # equal scales on both axes, so light in flat space runs at 45 degrees, and cone
 # lattices so that no cone sits exactly on a line where the chart is singular.
 DIAGRAMS = [
+    *[Diagram("aichelburg_sexl", "null_cartesian", view, f"$\\rho = \\rho_0/{rho[2:]}$", ("u", "v"), (-3, 3, -2.5, 3.5),
+              "$z\\;[8GE/c^4]$", "$ct\\;[8GE/c^4]$", {"G": 1, "E": "1/8", "rho_0": 1}, {"x": rho, "y": "0"},
+              to_display=NULL_TO_TR, tau="u + v", families=SIDEWAYS, delta=AS_PULSE,
+              lines=(("shell", "x0", "0", "the shock, $u = 0$"),), input=AS_INPUT)
+      for view, rho in AS_RHO.items()],
     Diagram("schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, orient="ingoing", areal=True),
     Diagram("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -696,7 +713,24 @@ DIAGRAMS = [
 
 # ---------------------------------------------------------------- the captions
 
+def _as_caption(n):
+    """The caption of the Aichelburg-Sexl view at rho = rho_0/n."""
+    return [
+        f"The plane of $u$ and $v$ ($x = \\rho_0/{n}$, $y = 0$), at distance $\\rho = \\rho_0/{n}$ from the axis "
+        "the source moves along, drawn with $z = (v - u)/2$ and $ct = (u + v)/2$. Off the shock $u = 0$ the "
+        "metric on this plane is $-du\\,dv$, flat, and light runs at 45°. The rays moving right keep their "
+        "$u$ and run beside the shock without crossing it. Each ray moving left crosses it and comes out "
+        f"moved along it by $\\Delta v = -(8GE/c^4)\\ln(\\rho/\\rho_0) = (8GE/c^4)\\ln {n}$, a delay of "
+        f"$(4GE/c^4)\\ln {n}$ in $ct$.",
+        "The Christoffel symbol $\\Gamma^x{}_{uu}$ turns every light ray crossing the shock toward the axis, out "
+        "of this plane, so the curves drawn are null curves, and null geodesics everywhere off the shock. "
+        "The jump grows by $(8GE/c^4)\\ln 4$ each time $\\rho$ is divided by $4$, and a change of "
+        "$\\rho_0$ moves every ray behind the shock by the same amount.",
+    ]
+
+
 CAPTIONS = {
+    **{("aichelburg_sexl", "null_cartesian", view): _as_caption(rho[2:]) for view, rho in AS_RHO.items()},
     ("schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every fixed angle "
         "by spherical symmetry. Outside $r_s$ the cones narrow toward "
@@ -1713,6 +1747,17 @@ def dust_solver(metric_id, system_id, time_name, dust):
 
 # ---------------------------------------------------------------- one chart, numerically
 
+def smoothed(expr, pulse):
+    """expr with every Dirac delta, and every derivative of one, replaced by the declared pulse of
+    the same argument and its derivatives. A pp-wave's profile may be any function of u, so the
+    pulse is another exact solution, and the null curves of a plane that cross it are moved
+    along it by the integral of the pulse, which is 1, exactly as across the delta."""
+    s = sp.Symbol("s", real=True)
+    body = sp.sympify(pulse, locals={"s": s})
+    return expr.replace(lambda e: isinstance(e, sp.DiracDelta),
+                        lambda e: sp.diff(body, s, int(e.args[1]) if len(e.args) > 1 else 0).subs(s, e.args[0]))
+
+
 class Chart:
     """The plane of one Diagram, as numpy functions of (x^0, r)."""
 
@@ -1739,6 +1784,8 @@ class Chart:
             expr = sp.sympify(expr)
             for name, rep in (spec.functions or {}).items():
                 expr = expr.replace(reader.parameters[name].func, _as_lambda(reader, name, rep)).doit()
+            if spec.delta:
+                expr = smoothed(expr, spec.delta)
             return expr.subs(subs)
 
         g = published_matrix(reader, entry, "metric_components")
@@ -3274,6 +3321,10 @@ CLOSED_FORMS = {
     ("kasner", "cartesian", "tz"):
         (lambda t, z: z + 7 * t ** (1 / 7), lambda t, z: z - 7 * t ** (1 / 7), lambda t, z: t > 1e-3),
     ("pp_wave", "exact_plane_wave", "tz"): (lambda u, v: v, lambda u, v: u, None),
+    # Across the declared pulse a ray moving left gains ln(rho_0/rho) times the pulse's integral.
+    **{("aichelburg_sexl", "null_cartesian", view):
+       (lambda u, v, n=float(sp.Rational(rho)): v + math.log(n) * (1 + scipy_erf(20 * u)) / 2, lambda u, v: u, None)
+       for view, rho in AS_RHO.items()},
     ("krasnikov", "cylindrical", "tx"): (None, lambda t, x: t - x, None),
 }
 
