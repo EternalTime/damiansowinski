@@ -142,6 +142,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `cartesian`, the triangle, each point a sphere: four curves.
   With $p, q = \arctan(ct \mp r)$ a moment of $t \ne 0$ bows from the axis toward $i^0$, and the moment $ct = 0$ is the line $T = 0$ from $r = 0.03$ to $1.5$, ending short of the removed event on the axis.
 
+### Milne
+
+- The embedding is the equator of the comoving hyperbolic chart at $ct = 0.5$, $1$, $2$ and $3$, each out to $\chi = \operatorname{arcsinh}(4/ct)$, where it is $4$ from the axis, in any length $\ell$; the reference cone is no part of any moment.
+- `comoving_hyperbolic/through`: four lines of constant $ct$ from the centre to that $\chi$, the widest two cut by the box's edge $\chi = 3$.
+- `comoving_spherical/radial`: four lines of constant $ct$, $r = \sinh\chi$ from $0$ to $4/ct$, the first two cut by the box's edge $r = 4$.
+- `logarithmic_time/radial`, at $t_0 = 1$: four lines $c\tau = \ln(ct)$, from $\chi = 0$ to the same $\chi$.
+- `inertial/through`: four hyperbolae $c^2T^2 - R^2 = c^2t^2$ across the centre, $|R|$ out to $4$, since $R = ct\sinh\chi$.
+- `comoving_hyperbolic`, `comoving_spherical`, `logarithmic_time` and `inertial`, the wedge of Minkowski's triangle: four curves, $p, q = \arctan(ct\,e^{\mp\chi})$, from the centre toward the corner where the light cone of the event $T = R = 0$ meets $\mathscr{I}^+$.
+
 ### Minkowski
 
 - The embedding is the equator of the spherical chart at one moment of $t$, drawn at $t = 0$, out to $r = 4\ell$ in any length $\ell$.
@@ -270,6 +279,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 | Krasnikov | point, a line after the height plot | none | none drawn |
 | Lentz | none drawn | none | none drawn |
 | Malament-Hogarth | four lines | none | four curves |
+| Milne | four lines, three times, and four hyperbolae | none | four curves, four times |
 | Minkowski | line, four times | none | line, five times |
 | Mixmaster | none drawn | none | none drawn |
 | Morris-Thorne | line | none | line, line |
