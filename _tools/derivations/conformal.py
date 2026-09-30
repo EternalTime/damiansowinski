@@ -1338,6 +1338,188 @@ def schwarzschild(ck, src):
     return views
 
 
+def global_monopole(ck, src):
+    """Letelier's black hole in a cloud of strings at Delta = 0.19 and r_s = 1, and the monopole
+    with no mass at its centre in the Barriola-Vilenkin chart.
+
+    On the plane of t and r the static metric is -f dt^2 + dr^2/f with f = (1 - Delta)(1 - r_h/r),
+    r_h = r_s/(1 - Delta), which is 1/(1 - Delta) times -F dtau^2 + dr^2/F with F = 1 - r_h/r and
+    tau = (1 - Delta)t: Schwarzschild's plane with r_h for r_s, a constant factor away. So the Tower
+    of F draws it at tau, Kruskal's square, and the tortoise coordinate of the Eddington-Finkelstein
+    charts, r_* = r/(1 - Delta) + r_s ln|(1 - Delta)r/r_s - 1|/(1 - Delta)^2, is the Tower's own
+    r + r_h ln|r/r_h - 1| over 1 - Delta, so their v and u are the Tower's over 1 - Delta as well:
+    V = exp((1 - Delta)v/2r_h), U = (1 - r/r_h) e^(r/r_h)/V ingoing, and the time reverse outgoing.
+
+    The Barriola-Vilenkin plane is -c^2dt^2 + dr^2, Minkowski's, drawn as its triangle by
+    p, q = arctan(ct -+ r); its centre r = 0 is a curvature singularity, where the published
+    Kretschmann scalar 4 Delta^2/((1 - Delta)^2 r^4) diverges.
+    """
+    D, params = 0.19, {"Delta": "19/100", "r_s": 1}
+    rh = 100 / 81
+    sph = Plane(src, "global_monopole", "static", ("t", "r"), EQUATOR, params)
+    assert sph.g[0, 1] == 0 and sp.simplify(sph.g[0, 0] * sph.g[1, 1] + 1) == 0
+    T = Tower(sp.simplify(-sph.g[0, 0] * sp.Rational(100, 81)), sph.x1, [sp.Rational(100, 81)])
+
+    def cell(name):
+        return lambda t, r: T.pq(name, (1 - D) * np.asarray(t, dtype=float), r)
+    ck.chart("global monopole static, exterior", sph, cell("I"),
+             ck.uniform(-15, 15), ck.uniform(rh + 0.001, 30), lambda t, r: (1, 0))
+    ck.chart("global monopole static, black hole", sph, cell("II"),
+             ck.uniform(-15, 15), ck.uniform(0.01, rh - 0.001), lambda t, r: (0, -1))
+    ck.chart("global monopole static, white hole", sph, cell("IV"),
+             ck.uniform(-15, 15), ck.uniform(0.01, rh - 0.001), lambda t, r: (0, 1))
+    ck.chart("global monopole static, other exterior", sph, cell("I'"),
+             ck.uniform(-15, 15), ck.uniform(rh + 0.001, 30), lambda t, r: (-1, 0))
+
+    def ingoing(w, r):
+        w, r = (1 - D) * np.asarray(w, dtype=float), np.asarray(r, dtype=float) / rh
+        return np.arctan((1 - r) * np.exp(r - w / (2 * rh))), atan_exp(w / (2 * rh))
+
+    def outgoing(u, r):
+        u, r = (1 - D) * np.asarray(u, dtype=float), np.asarray(r, dtype=float) / rh
+        return -atan_exp(-u / (2 * rh)), np.arctan((r - 1) * np.exp(r + u / (2 * rh)))
+    ein = Plane(src, "global_monopole", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, params)
+    ck.chart("global monopole ingoing Eddington-Finkelstein", ein, ingoing,
+             ck.uniform(-15, 15), ck.uniform(0.01, 30), lambda w, r: (1, -60))
+    eout = Plane(src, "global_monopole", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, params)
+    ck.chart("global monopole outgoing Eddington-Finkelstein", eout, outgoing,
+             ck.uniform(-15, 15), ck.uniform(0.01, 30), lambda u, r: (1, 60))
+
+    p, q = cell("II")(np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit("global monopole: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = cell("I")(np.array([0.0]), np.array([1e8]))
+    ck.limit("global monopole: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = cell("I")(np.array([3.0]), np.array([rh * (1 + 1e-12)]))
+    ck.limit("global monopole: r -> r_h at fixed t lands on the bifurcation sphere", point(p[0], q[0]), [0, 0], 1e-4)
+    rstar = lambda r: T.rstar(r) / (1 - D)
+    ck.limit("global monopole: r_* is the published r/(1 - Delta) + r_s ln|(1 - Delta)r/r_s - 1|/(1 - Delta)^2",
+             rstar(np.array([0.5, 3.0])),
+             np.array([0.5, 3.0]) / (1 - D) + np.log(np.abs((1 - D) * np.array([0.5, 3.0]) - 1)) / (1 - D) ** 2, 1e-12)
+    ck.limit("global monopole: the ingoing and static coordinates put one event at one point",
+             ingoing(2.0 + rstar(3.0), 3.0), cell("I")(2.0, 3.0), 1e-12)
+    ck.limit("global monopole: the outgoing and static coordinates put one event at one point",
+             outgoing(2.0 - rstar(3.0), 3.0), cell("I")(2.0, 3.0), 1e-12)
+    K = sph.kretschmann
+    ck.diverges("global monopole: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite("global monopole: the Kretschmann scalar is finite at r = r_h",
+              K(np.zeros(3), np.array([rh - 0.001, rh, rh + 0.001])))
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    R_OUT, R_IN, TS = (1.3, 1.5, 2, 3, 4), (0.5, 0.9, 1.1), (-4, -2, -1, 0, 1, 2, 4)
+
+    def edges(v):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([-Q4, Q4], "$r = r_h$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.legend("horizon", "the horizon $r = r_h = r_s/(1 - \\Delta)$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    hole = slices.moments("global_monopole", "black_hole")[0]
+    lo, hi = hole.reach("static", "r")
+    rr_moment = np.linspace(lo, hi, 2)
+    moment = [cell("I'")(0 * rr_moment, rr_moment[::-1]), cell("I")(0 * rr_moment, rr_moment)]
+    moment = [(np.concatenate([moment[0][0], moment[1][0]]), np.concatenate([moment[0][1], moment[1][1]]))]
+    views = []
+    t = spread(-np.inf, np.inf, 500, 9)
+    v = View("static", "Static Spherical", box, "static")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]])
+    for r in R_OUT:
+        v.curve("r", *cell("I")(t, np.full_like(t, r)))
+    rr = spread(rh, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *cell("I")(np.full_like(rr, tt), rr))
+    edges(v)
+    for r, text in ((1.5, "$1.5\\,r_s$"), (3, "$3\\,r_s$")):
+        label_on(v, cell("I")(0.0, r), text)
+    v.legend("cover", "the region that $t$ and $r > r_h$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("t", "$ct$ constant, in units of $r_s$")
+    v.slice(hole, moment)
+    views.append(v)
+
+    v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    rr = spread(0, np.inf, 600, 14)
+    for w in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
+    edges(v)
+    v.legend("cover", "the region that $v$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$v$ constant, an ingoing light ray")
+    v.slice(hole, moment)
+    views.append(v)
+
+    v = View("outgoing", "Outgoing Eddington-Finkelstein", box, "eddington_finkelstein_outgoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [-HALF, -HALF], [HALF, -HALF], [PI, 0], [HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *outgoing(t, np.full_like(t, r)))
+    for u in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *outgoing(np.full_like(rr, u), rr))
+    edges(v)
+    v.legend("cover", "the region that $u$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$u$ constant, an outgoing light ray")
+    v.slice(hole, moment)
+    views.append(v)
+
+    cone = Plane(src, "global_monopole", "conical", ("t", "r"), EQUATOR, {"Delta": "19/100"})
+    ck.chart("global monopole Barriola-Vilenkin", cone, mink_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20),
+             lambda t, r: (1, 0))
+    K = cone.kretschmann
+    ck.diverges("global monopole: the Barriola-Vilenkin Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    tri_box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    v = View("conical", "Barriola-Vilenkin", tri_box, "conical")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda r, t: mink_pq(t, r), (0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", mink_pq, TS, S_POS)
+    v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                     ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([0, 0.25], "$r = 0$", "r", dx=-6)
+    label_on(v, mink_pq(0, 1), "$r = \\ell$")
+    label_on(v, mink_pq(0, 4), "$4\\ell$")
+    v.legend("cover", "the whole spacetime, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, in units of $\\ell$")
+    v.legend("t", "$ct$ constant")
+    v.legend("singular", "$r = 0$, the monopole, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    monopole = slices.moments("global_monopole", "monopole")[0]
+    along_r = np.linspace(*monopole.reach("conical", "r"), 2)
+    v.slice(monopole, [mink_pq(0 * along_r, along_r)])
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Reissner-Nordstrom, and the axis of Kerr
 
 def reissner_nordstrom(ck, src):
@@ -4163,7 +4345,7 @@ DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
-    "schwarzschild_de_sitter": schwarzschild_de_sitter, "anti_de_sitter": anti_de_sitter,
+    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
@@ -4363,6 +4545,39 @@ CAPTIONS = {
         "$U = -e^{-u/2r_s}$ and $V = (r/r_s - 1)e^{r/r_s}/(-U)$ they cover the exterior and the "
         "white hole, and their lines of constant $u$ are outgoing light rays, which leave $r = 0$ "
         "and cross the horizon outward.",
+    ],
+    ("global_monopole", "static"): [
+        "Letelier's black hole in a cloud of strings, maximally extended ($\\Delta = 0.19$), each point in the "
+        "diagram a 2-sphere of area $4\\pi r^2$. On the plane of $t$ and $r$ the metric is $1/(1 - \\Delta)$ "
+        "times Schwarzschild's with $r_h = r_s/(1 - \\Delta)$ in place of $r_s$ and $(1 - \\Delta)\\,ct$ in place "
+        "of $ct$, so Kruskal and Szekeres's $U = -e^{-(1 - \\Delta)u/2r_h}$ and $V = e^{(1 - \\Delta)v/2r_h}$, with "
+        "$u, v = ct \\mp r_*$, draw it as they draw Schwarzschild's, and $p = \\arctan U$ and $q = \\arctan V$ put "
+        "the singularity $UV = 1$ on the straight lines $T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $r > r_h$ cover the right exterior alone. The horizon is the pair of null lines "
+        "$U = 0$ and $V = 0$, crossing at the bifurcation sphere, and the black hole above it ends at $r = 0$ on "
+        "$T = \\pi/2$. Far out the proper distance between neighbouring spheres is $dr/\\sqrt{1 - \\Delta}$, so a "
+        "sphere of area $4\\pi r^2$ lacks the solid angle $4\\pi\\Delta$ of a Euclidean one.",
+    ],
+    ("global_monopole", "ingoing"): [
+        "The whole of Letelier's black hole with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on it. "
+        "From $V = e^{(1 - \\Delta)v/2r_h}$ and $U = (1 - r/r_h)e^{r/r_h}/V$, one formula for every $r > 0$, they "
+        "cover the exterior and the black hole together, and their lines of constant $v$ are ingoing light rays, "
+        "which cross the horizon at 45° and end at $r = 0$.",
+    ],
+    ("global_monopole", "outgoing"): [
+        "The whole of Letelier's black hole with the outgoing Eddington-Finkelstein coordinates $u$ and $r$ on "
+        "it, the time reverse of the ingoing ones. From $U = -e^{-(1 - \\Delta)u/2r_h}$ and "
+        "$V = (r/r_h - 1)e^{r/r_h}/(-U)$ they cover the exterior and the white hole, and their lines of constant "
+        "$u$ are outgoing light rays, which leave $r = 0$ and cross the horizon outward.",
+    ],
+    ("global_monopole", "conical"): [
+        "The global monopole with no mass at its centre ($\\Delta = 0.19$), each point in the diagram a 2-sphere "
+        "of area $4\\pi(1 - \\Delta)r^2$. On the plane of $t$ and $r$ the metric is $-c^2dt^2 + dr^2$, "
+        "Minkowski's, and $p = \\arctan((ct - r)/\\ell)$ and $q = \\arctan((ct + r)/\\ell)$ bring it into "
+        "Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The deficit enters only $g_{\\theta\\theta}$ and $g_{\\phi\\phi}$, so the plane and its triangle are "
+        "Minkowski's. The edge $X = 0$ is the monopole, $r = 0$, where the Kretschmann scalar "
+        "$4\\Delta^2/\\left((1 - \\Delta)^2r^4\\right)$ diverges, a timelike singularity.",
     ],
     ("btz", "static"): [
         "The black hole without rotation ($M = 1$, $J = 0$), maximally extended, each point in the "

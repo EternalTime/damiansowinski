@@ -179,6 +179,22 @@ def kottler_t(sign):
     return [Mark(m, [np.column_stack([sign * kottler_rstar(r), r])])]
 
 
+def monopole_rstar(r):
+    """The tortoise coordinate of Letelier's black hole at Delta = 0.19 and r_s = 1, as the
+    Eddington-Finkelstein charts fix it, r_* = r/(1 - Delta) + ln|(1 - Delta)r - 1|/(1 - Delta)^2,
+    which vanishes at r = 0."""
+    return r / 0.81 + np.log(np.abs(0.81 * r - 1)) / 0.81 ** 2
+
+
+def monopole_t(sign):
+    """Letelier's black hole's static t = 0 in an Eddington-Finkelstein chart: v = r_* in the
+    ingoing chart and u = -r_* in the outgoing one, outside r_h, as far as the embedding reaches.
+    The monopole's cone is another spacetime, with no mass at its centre, and is not drawn here."""
+    m = moments("global_monopole", "black_hole")[0]
+    lo, hi = m.reach("static", "r")
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([sign * monopole_rstar(r), r])])]
+
 def novikov(R, tau):
     """A shell of dust released from rest at areal radius R at t = 0, r_s = 1, at its proper
     time tau: its areal radius r and its Schwarzschild t, from the cycloid
@@ -416,6 +432,16 @@ FLAT = {
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "chart"): lambda: kottler_t(1),
     ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"): lambda: kottler_t(-1),
     ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart"): lambda: kottler_t(-1),
+    # Letelier's black hole, r_s = 1, on the static and Eddington-Finkelstein planes, and the monopole
+    # with no mass at its centre on the Barriola-Vilenkin plane; each is another spacetime than the other.
+    ("global_monopole", "static", "radial"): lambda: one(
+        "global_monopole", lambda m: along(0.0, *m.reach("static", "r")), view_id="black_hole"),
+    ("global_monopole", "conical", "radial"): lambda: one(
+        "global_monopole", lambda m: along(0.0, *m.reach("conical", "r")), view_id="monopole"),
+    ("global_monopole", "eddington_finkelstein_ingoing", "finkelstein"): lambda: monopole_t(1),
+    ("global_monopole", "eddington_finkelstein_ingoing", "chart"): lambda: monopole_t(1),
+    ("global_monopole", "eddington_finkelstein_outgoing", "finkelstein"): lambda: monopole_t(-1),
+    ("global_monopole", "eddington_finkelstein_outgoing", "chart"): lambda: monopole_t(-1),
     # The moments ct = T of the Einstein-Rosen pulse, out to where the embedding reaches, and in the
     # null chart u = T - rho, v = T + rho along the same stretch.
     ("einstein_rosen_waves", "cylindrical", "radial"): lambda: one(

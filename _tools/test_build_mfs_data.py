@@ -2130,6 +2130,18 @@ class EmbeddingDiagrams(unittest.TestCase):
         for theta, rho, z in piece("nariai", "sphere", view=1):
             near(rho, math.sin(theta), f"Nariai sphere rho at {theta}")
             near(z, 1 - math.cos(theta), f"Nariai sphere z at {theta}")
+        # The global monopole at Delta = 0.19: the Barriola-Vilenkin equator is the cone rho = 0.9 r,
+        # z = sqrt(0.19) r, and Letelier's black hole at r_s = 1 rises from its throat at 100/81 as
+        # z = (w sqrt(0.19 w^2 + 1) + arsinh(sqrt(0.19) w)/sqrt(0.19))/0.81^(3/2), w = sqrt(0.81 r - 1).
+        for r, rho, z in piece("global_monopole", "cone"):
+            near(rho, 0.9 * r, f"global monopole cone rho at {r}")
+            near(z, math.sqrt(0.19) * r, f"global monopole cone z at {r}")
+        for sign, pid in ((1, "exterior"), (-1, "other_exterior")):
+            for r, rho, z in piece("global_monopole", pid, view=1):
+                w = math.sqrt(max(0.81 * r - 1, 0))
+                near(rho, r, f"Letelier rho at {r}")
+                near(z, sign * (w * math.sqrt(0.19 * w * w + 1) + math.asinh(math.sqrt(0.19) * w) / math.sqrt(0.19))
+                     / 0.81 ** 1.5, f"Letelier z at {r}")
         # Van Stockum's circles grow to r = R/sqrt(2) and shrink after, and the drawing stops at 0.83 R.
         dust = piece("stockum_dust", "dust")
         for r, rho, z in dust:
@@ -3167,7 +3179,16 @@ class Slices(unittest.TestCase):
 
     # The embedding views a drawing does not mark though it marks others: Gott's core replaces
     # the apex of the ideal string's cone, which is another spacetime than Gott's.
-    HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"}}
+    # Letelier's black hole, r_s > 0, and the monopole with no mass at its centre are two spacetimes of
+    # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
+    # Barriola-Vilenkin drawings the monopole's.
+    HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    **{f"global_monopole/{s}": {"monopole"} for s in (
+                        "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
+                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
+                    **{f"conformal global_monopole/{v}": {"monopole"} for v in ("static", "ingoing", "outgoing")},
+                    "global_monopole/conical/radial": {"black_hole"},
+                    "conformal global_monopole/conical": {"black_hole"}}
 
     def reach(self, surface, system=None, reference=False):
         xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))
@@ -3219,6 +3240,13 @@ class Slices(unittest.TestCase):
             def rstar(r):
                 return sum(math.log(abs(1 - r / ri)) / (1 / ri ** 2 - 0.4 * ri / 3) for ri in roots)
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("global_monopole/eddington_finkelstein"):
+            # Letelier's black hole at Delta = 0.19 and r_s = 1: r_* = r/0.81 + ln|0.81 r - 1|/0.81^2,
+            # and the static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            return (lambda X: sign * (X / 0.81 + math.log(abs(0.81 * X - 1)) / 0.81 ** 2 - (X if finkelstein else 0))), \
+                list(self.reach(surface))
         if key == "de_sitter/flat_slicing/tx":
             return (lambda X: -0.5 * math.log(1 + X * X)), None
         if key == "pp_wave/exact_plane_wave/tz" or key.startswith("aichelburg_sexl/null_cartesian"):
