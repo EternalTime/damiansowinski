@@ -396,6 +396,19 @@ A spacetime construction containing a worldline of infinite proper length that l
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = \Omega^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
 
+### Milne Universe
+
+Edward Arthur Milne's expanding universe of 1932: test particles flying apart from one event of flat spacetime with every speed below that of light. In comoving coordinates it is the empty open Friedmann universe, with scale factor $ct$ and hyperbolic space at each moment.
+
+- id: `milne`
+- tags: cosmology, cosmological, expanding universe, open universe, hyperbolic space, empty universe, flat, vacuum, vacuum solution, special relativity, homogeneous, isotropic, FLRW, time-dependent, exact solution, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/milne.json
+- chart Comoving Hyperbolic: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + c^2t^2\left(d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Comoving Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + c^2t^2\left(\dfrac{dr^2}{1 + r^2} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Logarithmic Time: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = e^{2\tau/t_0}\left(-c^2d\tau^2 + c^2t_0^2\left(d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\phi^2\right)\right)$$
+- chart Inertial: coordinates $(T, R, \theta, \phi)$, $$ds^2 = -c^2dT^2 + dR^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Minkowski Flat Spacetime
 
 The flat spacetime of special relativity. No curvature, no gravity.
