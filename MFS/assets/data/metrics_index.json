@@ -133,6 +133,37 @@
     "embedding": "1e642ab59830c7db"
   },
   {
+    "id": "c_metric",
+    "name": "C-Metric",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "axisymmetric",
+      "black hole",
+      "accelerating black hole",
+      "acceleration horizon",
+      "event horizon",
+      "horizon",
+      "Killing horizon",
+      "boost symmetry",
+      "cosmic string",
+      "conical singularity",
+      "Petrov type D",
+      "gravitational radiation",
+      "singularity",
+      "curvature singularity",
+      "maximal extension",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "13d95577bda6b146"
+  },
+  {
     "id": "de_sitter",
     "name": "de Sitter",
     "tags": [
