@@ -1,5 +1,5 @@
 {
-  "version": "b323da1de5b237be",
+  "version": "af6b1bf9537a1fe6",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -7232,6 +7232,153 @@
         "eprint": "1210.0443",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevLett.110.101101"
+      }
+    },
+    "khan1971": {
+      "type": "article",
+      "fields": {
+        "title": "Scattering of two impulsive gravitational plane waves",
+        "author": "Khan, K. A. and Penrose, Roger",
+        "journal": "Nature",
+        "volume": "229",
+        "pages": "185--186",
+        "year": "1971",
+        "doi": "10.1038/229185a0",
+        "url": "https://doi.org/10.1038/229185a0"
+      }
+    },
+    "szekeres1970": {
+      "type": "article",
+      "fields": {
+        "title": "Colliding gravitational waves",
+        "author": "Szekeres, Peter",
+        "journal": "Nature",
+        "volume": "228",
+        "pages": "1183--1184",
+        "year": "1970",
+        "doi": "10.1038/2281183a0",
+        "url": "https://doi.org/10.1038/2281183a0"
+      }
+    },
+    "szekeres1972": {
+      "type": "article",
+      "fields": {
+        "title": "Colliding plane gravitational waves",
+        "author": "Szekeres, Peter",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "13",
+        "pages": "286--294",
+        "year": "1972",
+        "doi": "10.1063/1.1665972",
+        "url": "https://doi.org/10.1063/1.1665972"
+      }
+    },
+    "nutku1977": {
+      "type": "article",
+      "fields": {
+        "title": "Colliding impulsive gravitational waves",
+        "author": "Nutku, Yavuz and Halil, Mustafa",
+        "journal": "Physical Review Letters",
+        "volume": "39",
+        "pages": "1379--1382",
+        "year": "1977",
+        "doi": "10.1103/PhysRevLett.39.1379",
+        "url": "https://doi.org/10.1103/PhysRevLett.39.1379"
+      }
+    },
+    "chandrasekhar1984ferrari": {
+      "type": "article",
+      "fields": {
+        "title": "On the {Nutku}-{Halil} solution for colliding impulsive gravitational waves",
+        "author": "Chandrasekhar, Subrahmanyan and Ferrari, Valeria",
+        "journal": "Proceedings of the Royal Society of London A",
+        "volume": "396",
+        "pages": "55--74",
+        "year": "1984",
+        "doi": "10.1098/rspa.1984.0108",
+        "url": "https://doi.org/10.1098/rspa.1984.0108"
+      }
+    },
+    "chandrasekhar1986": {
+      "type": "article",
+      "fields": {
+        "title": "A new type of singularity created by colliding gravitational waves",
+        "author": "Chandrasekhar, Subrahmanyan and Xanthopoulos, Basilis C.",
+        "journal": "Proceedings of the Royal Society of London A",
+        "volume": "408",
+        "pages": "175--208",
+        "year": "1986",
+        "doi": "10.1098/rspa.1986.0116",
+        "url": "https://doi.org/10.1098/rspa.1986.0116"
+      }
+    },
+    "tipler1980": {
+      "type": "article",
+      "fields": {
+        "title": "Singularities from colliding plane gravitational waves",
+        "author": "Tipler, Frank J.",
+        "journal": "Physical Review D",
+        "volume": "22",
+        "pages": "2929--2932",
+        "year": "1980",
+        "doi": "10.1103/PhysRevD.22.2929",
+        "url": "https://doi.org/10.1103/PhysRevD.22.2929"
+      }
+    },
+    "matzner1984": {
+      "type": "article",
+      "fields": {
+        "title": "Metaphysics of colliding self-gravitating plane waves",
+        "author": "Matzner, Richard A. and Tipler, Frank J.",
+        "journal": "Physical Review D",
+        "volume": "29",
+        "pages": "1575--1583",
+        "year": "1984",
+        "doi": "10.1103/PhysRevD.29.1575",
+        "url": "https://doi.org/10.1103/PhysRevD.29.1575"
+      }
+    },
+    "yurtsever1988": {
+      "type": "article",
+      "fields": {
+        "title": "Structure of the singularities produced by colliding plane waves",
+        "author": "Yurtsever, Ulvi",
+        "journal": "Physical Review D",
+        "volume": "38",
+        "pages": "1706--1730",
+        "year": "1988",
+        "doi": "10.1103/PhysRevD.38.1706",
+        "url": "https://doi.org/10.1103/PhysRevD.38.1706"
+      }
+    },
+    "frauendiener2014": {
+      "type": "article",
+      "fields": {
+        "title": "Numerical evolution of plane gravitational waves in the {Friedrich}-{Nagy} gauge",
+        "author": "Frauendiener, J\\\"org and Stevens, Chris and Whale, Ben",
+        "journal": "Physical Review D",
+        "volume": "89",
+        "pages": "104026",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.89.104026",
+        "eprint": "1403.1338",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1403.1338"
+      }
+    },
+    "luk2017": {
+      "type": "article",
+      "fields": {
+        "title": "Nonlinear interaction of impulsive gravitational waves for the vacuum {Einstein} equations",
+        "author": "Luk, Jonathan and Rodnianski, Igor",
+        "journal": "Cambridge Journal of Mathematics",
+        "volume": "5",
+        "pages": "435--570",
+        "year": "2017",
+        "doi": "10.4310/CJM.2017.v5.n4.a1",
+        "eprint": "1301.1072",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1301.1072"
       }
     }
   }
