@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the twenty-three spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the twenty-four spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -3053,6 +3053,91 @@ def malament_hogarth(ck, src):
     return [v]
 
 
+def einstein_rosen_waves(ck, src):
+    """The half plane of fixed phi and z, totally geodesic, whose metric is
+    e^{2(gamma - psi)}(-c^2dt^2 + drho^2) in the cylindrical chart and -e^{2(gamma - psi)} du dv in
+    the null chart, u, v = ct -+ rho. A conformal factor changes no null direction, so for every
+    wave the causal structure of the half plane is Minkowski's half diamond,
+    p, q = arctan((ct -+ rho)/a) = arctan(u/a), arctan(v/a), with the axis rho = 0 on X = 0. The
+    maps are checked with random values of psi and gamma at every sample, and with the pulse of
+    Weber, Wheeler and Bonnor at C = a = 1, whose published Kretschmann scalar is checked finite
+    on the axis; its rays through the event on the axis where it is greatest, rho = |ct|, are
+    the lines q = 0 below and p = 0 above."""
+    numeric = ["psi", "gamma"]
+
+    def any_wave(x0, x1):
+        values = {}
+        for name in numeric:
+            w = ck.rng.uniform(-3, 3, np.shape(x0))
+            values[name] = (w, 0 * w, 0 * w)
+        return values
+    cyl = Plane(src, "einstein_rosen_waves", "cylindrical", ("t", "\\rho"), {"phi": "0", "z": "0"}, numeric=numeric)
+    ck.chart("Einstein-Rosen cylindrical, for any wave", cyl, mink_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20),
+             lambda t, r: (1, 0), any_wave)
+    pulse = nr._er_pulse("t", "rho")
+    wave = Plane(src, "einstein_rosen_waves", "cylindrical", ("t", "\\rho"), {"phi": "0", "z": "0"}, functions=pulse)
+    ck.chart("Einstein-Rosen cylindrical, the pulse", wave, mink_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20),
+             lambda t, r: (1, 0))
+    # The published Kretschmann scalar with the pulse, differentiated in sympy and not simplified.
+    _, entry, reader = nr.load("einstein_rosen_waves", "cylindrical")
+    src.note("einstein_rosen_waves", "cylindrical", ["kretschmann"])
+    K = reader(nr.strip_lhs(entry["kretschmann"]))
+    for name, text in pulse.items():
+        K = K.replace(reader.parameters[name].func, nr._as_lambda(reader, name, text)).doit()
+    K = sp.lambdify((reader.symbol["t"], reader.symbol["\\rho"]), K.subs({reader.c: 1, reader.symbol["\\phi"]: 0,
+                                                                        reader.symbol["z"]: 0}), "numpy")
+    ck.finite("Einstein-Rosen: the axis rho = 0 is regular for the pulse",
+              K(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+
+    def null_map(u, w):
+        return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(w, dtype=float))
+    null = Plane(src, "einstein_rosen_waves", "null", ("u", "v"), {"phi": "0", "z": "0"}, numeric=numeric)
+    u = ck.uniform(-20, 20)
+    ck.chart("Einstein-Rosen null, for any wave", null, null_map, u, u + ck.uniform(0.01, 30), lambda u, w: (1, 1),
+             any_wave)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS, RS = (-4, -2, -1, 0, 1, 2, 4), (0.5, 1, 2, 4)
+    restriction = ("The half plane of fixed $\\phi$ and $z$ only, totally geodesic, each point in the diagram a "
+                   "circle around the axis times a line along it.")
+    moments = slices.moments("einstein_rosen_waves")
+    views = []
+    for system in ("cylindrical", "null"):
+        v = View(system, {"cylindrical": "Cylindrical", "null": "Null"}[system], box, system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        if system == "cylindrical":
+            grid(v, "r", lambda r, t: mink_pq(t, r), RS, S_ALL)
+            grid(v, "t", mink_pq, TS, S_POS)
+            v.legend("cover", "the whole spacetime, which $t$ and $\\rho$ cover")
+            v.legend("r", "$\\rho$ constant, in units of $a$")
+            v.legend("t", "$ct$ constant")
+        else:
+            for c in TS:
+                s = np.linspace(c, 60, 400)
+                v.curve("null", *null_map(np.full_like(s, c), s))
+                s = np.linspace(-60, c, 400)
+                v.curve("null", *null_map(s, np.full_like(s, c)))
+            v.legend("cover", "the whole spacetime, which $u$ and $v$ cover")
+            v.legend("null", "$u$ constant and $v$ constant, every one a light ray")
+        triangle_edges(v, centre="$\\rho = 0$" if system == "cylindrical" else "$u = v$")
+        v.segment("cone", (-HALF, 0), (0, 0))
+        v.segment("cone", (0, 0), (0, HALF))
+        v.point("mark", (0, 0))
+        v.label((0, 0), "$\\psi = 2C/a$", "l", "small", dx=8)
+        rays = "$\\rho = |ct|$" if system == "cylindrical" else "$v = 0$ and $u = 0$"
+        v.legend("cone", f"the rays {rays} through that event, just inside the crest of the pulse")
+        v.legend("mark", "the event on the axis where the pulse is greatest")
+        v.legend("centre", "the axis $\\rho = 0$, regular where $\\gamma = 0$" if system == "cylindrical"
+                 else "the axis $u = v$, regular where $\\gamma = 0$")
+        v.set(restriction=restriction, input=nr.ER_INPUT)
+        for m in moments:
+            r = np.linspace(*m.reach("cylindrical", "\\rho"), 2)
+            v.slice(m, [mink_pq(np.full_like(r, m.time), r)])
+        views.append(v)
+    return views
+
+
 def published_gthth(src, metric_id, system_id, params):
     """The published g_thetatheta of a spherical chart, c = 1, as a numpy function of (t, r) on
     the equator."""
@@ -3620,6 +3705,7 @@ DRAWN = {
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "c_metric": c_metric,
     "misner": misner, "milne": milne,
+    "einstein_rosen_waves": einstein_rosen_waves,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -4136,6 +4222,19 @@ CAPTIONS = {
         "has this causal structure: by Buchdahl's theorem a static ball of fluid whose density "
         "does not grow outward has $2GM/c^2R \\le 8/9$, so it has no horizon, and another "
         "equation of state moves only the surfaces of constant $t$ and $r$ inside the triangle.",
+    ],
+    ("einstein_rosen_waves", "cylindrical"): [
+        "The half plane of $t$ and $\\rho$ at fixed $\\phi$ and $z$, totally geodesic. The metric on it is "
+        "$e^{2(\\gamma - \\psi)}(-c^2dt^2 + d\\rho^2)$, and a conformal factor changes no null direction, so for "
+        "every wave $p, q = \\arctan((ct \\mp \\rho)/a)$ bring it into Minkowski's half diamond, with the axis "
+        "$\\rho = 0$ in place of a regular centre wherever $\\gamma = 0$ there.",
+        "The pulse of Weber, Wheeler and Bonnor comes in from $\\mathscr{I}^-$, is greatest on the axis at "
+        "$t = 0$, and goes out to $\\mathscr{I}^+$, its crest just outside the rays $\\rho = |ct|$.",
+    ],
+    ("einstein_rosen_waves", "null"): [
+        "The same half plane in the null chart ($u = ct - \\rho$, $v = ct + \\rho$), where the metric on it is "
+        "$-e^{2(\\gamma - \\psi)}du\\,dv$. The lines of constant $u$ and of constant $v$ are light rays, the 45° "
+        "lines of the triangle, with $p = \\arctan(u/a)$ and $q = \\arctan(v/a)$, and the axis is the line $u = v$.",
     ],
     ("malament_hogarth", "cartesian"): [
         "The Malament-Hogarth toy spacetime, Minkowski space with one event "

@@ -3977,6 +3977,79 @@ def milne(ck, src):
                         "in flat space carries the slice; Minkowski space carries it."])]
 
 
+def einstein_rosen_waves(ck, src):
+    """The pulse of Weber, Wheeler and Bonnor at C = a = 1, going out from the axis, at the moments
+    ct = a to 8a of the cylindrical chart, on the plane z = 0: g_rhorho = e^{2(gamma - psi)} and
+    g_phiphi = rho^2 e^{-2psi}, so the circle at rho has radius rho e^{-psi} and the surface climbs
+    at dz/drho = e^{-psi} sqrt(e^{2gamma} - (1 - rho d_rho psi)^2). psi and gamma enter as numbers,
+    with d_rho psi taken in sympy, and the pulse is checked to make every published Einstein
+    component vanish. On the axis gamma = 0 and d_rho psi = 0, so the surface starts level; far
+    out psi -> 0 and gamma -> C^2/a^2, a cone of deficit 2 pi (1 - e^{-1}). The pulse is even in t,
+    so the moments before it reaches the axis are these in reverse; at t = 0 no surface of
+    revolution in flat space carries the moment near the axis, where e^{2gamma} < (1 - rho
+    d_rho psi)^2, which is checked, and every moment drawn is checked to embed whole."""
+    tt, rr = sp.symbols("t rho", real=True)
+    pulse = {k: sp.sympify(v, locals={"t": tt, "rho": rr}) for k, v in nr._er_pulse("t", "rho").items()}
+    as_num = {k: (sp.lambdify((tt, rr), e, "numpy"), sp.lambdify((tt, rr), sp.diff(e, rr), "numpy"))
+              for k, e in pulse.items()}
+
+    # The published Einstein tensor, mixed, with the pulse, at points all over the plane.
+    src.note("einstein_rosen_waves", "cylindrical", ["einstein_tensor"])
+    _, entry, R = nr.load("einstein_rosen_waves", "cylindrical")
+    points = np.random.default_rng(7).uniform([-8, 0.05], [8, 12], (400, 2))
+    worst = 0.0
+    for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]:
+        e = R(c["value"]).subs(R.c, 1)
+        for name, text in nr._er_pulse("t", "rho").items():
+            e = e.replace(R.parameters[name].func, nr._as_lambda(R, name, text)).doit()
+        f = sp.lambdify((R.symbol["t"], R.symbol["\\rho"]), e, "numpy")
+        worst = max(worst, float(np.max(np.abs(f(points[:, 0], points[:, 1])))))
+    ck.add("Einstein-Rosen: the pulse makes every published G^mu_nu vanish", worst, 1e-10)
+
+    def slice_at(T):
+        numeric = {k: (lambda x, f=f, T=T: f(T, x), lambda x, df=df, T=T: df(T, x)) for k, (f, df) in as_num.items()}
+        return Slice(src, "einstein_rosen_waves", "cylindrical", "\\rho", "\\phi", {"t": T, "z": 0}, numeric=numeric)
+
+    from scipy.optimize import brentq
+    at0 = slice_at(0.0)
+    edge0 = brentq(lambda x: float(at0.defect_at(np.array([x]))[0]), 1.0, 3.0, xtol=1e-12)
+    ck.stops("Einstein-Rosen, t = 0, out to the edge of the band", at0, np.linspace(1e-3, edge0, 402)[1:-1])
+    ck.add("Einstein-Rosen, t = 0: the band ends at rho = 1.72 a", abs(round(edge0, 2) - 1.72), 0.0)
+
+    top = 10.0
+    size = 2 * top
+    far = as_num["gamma"][0](8.0, 1e6), as_num["psi"][0](8.0, 1e6)
+    ck.add("Einstein-Rosen: far out gamma -> C^2/a^2 and psi -> 0", max(abs(far[0] - 1), abs(far[1])), 1e-5)
+
+    def moment(T):
+        where = f"Einstein-Rosen, ct = {T:g} a"
+        sl = slice_at(T)
+        whole = Piece("whole", "sheet", sl, 0.0, top, 0.0, 1,
+                      (("axis", "the axis $\\rho = 0$, where the surface starts level"),
+                       ("edge", "the surface runs on toward the cone of deficit angle $2\\pi(1 - e^{-C^2/a^2})$, "
+                                "to $\\rho \\to \\infty$")),
+                      [(r, "r", None) for r in (2.0, 4.0, 6.0, 8.0)] + [(top, "chartedge", None)], size)
+        ck.isometry(where, whole)
+        ck.radius(f"{where}, rho e^(-psi)", whole, lambda x, T=T: x * np.exp(-as_num["psi"][0](T, x)), size)
+        return Surface([whole], label=f"$ct = {T:g}\\,a$", time=T)
+
+    times, keys = movie_values([1.0, 2.0, 4.0, 8.0], 0.1)
+    frames = [moment(T) for T in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the plane $z = 0$ of the moment, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $2a$, $4a$, $6a$ and $8a$")
+    fig.legend("line", "chartedge", "$\\rho = 10\\,a$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("pulse", "The outgoing pulse", "$a$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", [f.time for f in frames]),
+                 settings="$C = a$, with $a$ the unit of every length; each moment is a slice of constant $t$ and $z$.",
+                 input=nr.ER_INPUT,
+                 stops=[f"At $t = 0$ the circles about the axis out to $\\rho = {edge0:.2f}\\,a$ grow faster than the "
+                        "distance out to them, and no surface of revolution in flat space carries that part of the "
+                        "moment."])]
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -4228,6 +4301,7 @@ DRAWN = {
     "natario": natario,
     "btz": btz,
     "c_metric": c_metric,
+    "einstein_rosen_waves": einstein_rosen_waves,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -4404,6 +4478,14 @@ CAPTIONS = {
         "turned over, and through its throat at $r_h$ into another, a chain of throats and widest circles "
         "without end, one period of which is drawn. Identifying the two throats closes the slice into a space "
         "of topology $S^1 \\times S^2$.",
+    ("einstein_rosen_waves", "pulse"): [
+        "The plane $z = 0$ of space around a pulse of Weber, Wheeler and Bonnor ($C = a$) going out from the axis, "
+        "from $ct = a$ to $8a$, each moment drawn as a surface in flat space with every distance along it the metric "
+        "distance. The metric on it is $e^{2(\\gamma - \\psi)}d\\rho^2 + \\rho^2e^{-2\\psi}d\\phi^2$, so the circle at "
+        "$\\rho$ has radius $\\rho e^{-\\psi}$, and on the axis $\\gamma = 0$ and the surface starts level.",
+        "As the pulse goes out it leaves the space behind it flat about the axis, where $\\psi$ and $\\gamma$ fall "
+        "toward zero. Far ahead of it $\\psi \\to 0$ and $\\gamma \\to C^2/a^2$, and the surface becomes a cone of "
+        "deficit angle $2\\pi(1 - e^{-C^2/a^2})$, $228°$ at $C = a$.",
     ],
     ("vaidya", "shell"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, from "

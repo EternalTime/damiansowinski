@@ -3030,6 +3030,9 @@ class Slices(unittest.TestCase):
             return ct, [novikov_t(lo, t)[0] if t else lo, novikov_t(hi, t)[0] if t else hi]
         if key == "oppenheimer_snyder/interior_comoving/through":
             return (lambda X: t / (2 * math.sqrt(2))), [0, math.pi / 4]
+        if key.startswith("einstein_rosen_waves/"):
+            # A moment ct = T, drawn against rho and ct in both charts, out to the embedding's reach.
+            return (lambda X: t), list(self.reach(surface))
         if key == "vaidya/eddington_finkelstein_ingoing/shell":
             return (lambda X: t), list(self.reach(surface))
         if key == "krasnikov/cylindrical/tx":

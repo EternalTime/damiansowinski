@@ -326,6 +326,23 @@ _MH_FACTOR = ("Piecewise((1 + exp(1 - 1/(1 - (t**2 + x**2 + y**2 + z**2)))/sqrt(
 _TB_R = ("Piecewise((r*(1 - 3*sqrt(5 - 3*r**2)*t/4)**Rational(2, 3), r < 1),"
          " ((r**Rational(3, 2) - 3*t/(2*sqrt(2)))**Rational(2, 3), True))")
 
+def _er_pulse(t, rho):
+    """The pulse of Weber, Wheeler and Bonnor at C = a = 1, psi and gamma as strings in the
+    plain names of a chart whose ct and rho are the expressions t and rho: D_+ and D_-^2 are
+    (1 + rho^2 - t^2)^2 +- 4t^2, and D_-^2 is written as the polynomial it is, never as a root."""
+    q = f"(1 + ({rho})**2 - ({t})**2)"
+    dp = f"sqrt({q}**2 + 4*({t})**2)"
+    dm2 = f"({q}**2 - 4*({t})**2)"
+    return {"psi": f"sqrt(2)*sqrt({dp} + {q})/{dp}",
+            "gamma": f"(1 - 2*({rho})**2*{dm2}/{dp}**4 + (({rho})**2 - 1 - ({t})**2)/{dp})/2"}
+
+
+ER_INPUT = ("The pulse of Weber, Wheeler and Bonnor, $\\psi = \\sqrt{2}\\,C\\sqrt{D_+ + a^2 + \\rho^2 - c^2t^2}/D_+$ "
+            "and $\\gamma = \\tfrac{C^2}{2a^2}\\left(1 - 2a^2\\rho^2D_-^2/D_+^4 + (\\rho^2 - a^2 - c^2t^2)/D_+\\right)$, "
+            "with $D_\\pm^2 = (a^2 + \\rho^2 - c^2t^2)^2 \\pm 4a^2c^2t^2$, at $C = a$, checked to solve this "
+            "spacetime's own field equations.")
+ER_SOLVES = (("t", "t"), ("t", "\\rho"), ("\\phi", "\\phi"), ("z", "z"))
+
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
 OS_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0], "origin": "reference"}
@@ -588,6 +605,22 @@ DIAGRAMS = [
     Diagram("tov", "spherical", "through", "through the centre", ("t", "r"), (0, 16, -16, 16),
             "$x\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, mirror=True, families=SIDEWAYS,
             cones=(4, 8), areal=True, star=POLYTROPE, input=POLYTROPE_INPUT),
+    # The pulse of Weber, Wheeler and Bonnor, whose metric on the plane of t and rho is conformally
+    # flat, so its rays are at 45 degrees for every pulse; it comes in along rho = -ct and goes out
+    # along rho = ct.
+    Diagram("einstein_rosen_waves", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 10, -1, 9),
+            "$\\rho/a$", "$ct/a$", {}, {"phi": "0", "z": "0"}, functions=_er_pulse("t", "rho"), solves=ER_SOLVES,
+            marked=(("shell", {"x0": "0", "r": "0"}, "both", "the rays $\\rho = |ct|$ through that event, just inside "
+                     "the crest of the pulse"),),
+            points=(("mark", ("0", "0"), "the event on the axis where the pulse is greatest, $\\psi = 2C/a$"),),
+            input=ER_INPUT),
+    Diagram("einstein_rosen_waves", "null", "radial", "$t$ and $\\rho$", ("u", "v"), (0, 10, -1, 9),
+            "$(v - u)/2a$", "$(u + v)/2a$", {}, {"phi": "0", "z": "0"}, to_display=NULL_TO_TR, tau="u + v",
+            functions=_er_pulse("(u + v)/2", "(v - u)/2"),
+            marked=(("shell", {"x0": "0", "r": "0"}, "both", "the rays $v = 0$ and $u = 0$ through that event, just "
+                     "inside the crest of the pulse"),),
+            points=(("mark", ("0", "0"), "the event on the axis where the pulse is greatest, $\\psi = 2C/a$"),),
+            input=ER_INPUT),
     Diagram("malament_hogarth", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$ct$", {},
             {"y": "0", "z": "0"}, families=SIDEWAYS, functions={"Omega": _MH_FACTOR}, any_factor="Omega",
             lines=(("world", "r", "0", "the computer's world line, up the axis into the removed event",
@@ -1286,6 +1319,21 @@ CAPTIONS = {
         "right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, and spherical symmetry makes the "
         "two halves mirror images. Rays cross the centre smoothly, where the cones are narrowest and "
         "the Kretschmann scalar is finite, and the surface crosses the line on both sides.",
+    ],
+    ("einstein_rosen_waves", "cylindrical", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) through a pulse of Weber, Wheeler and Bonnor. "
+        "The metric on it is $e^{2(\\gamma - \\psi)}(-c^2dt^2 + d\\rho^2)$, and $e^{2(\\gamma - \\psi)}$ drops out "
+        "of the null condition, so for every wave the rays are at 45°, each ingoing ray meeting an outgoing one "
+        "on the axis $\\rho = 0$. No Christoffel symbol turns them out of the plane, so they are null geodesics.",
+        "The pulse comes in from the past and goes out again with its crest just outside the rays "
+        "$\\rho = |ct|$, and is greatest on the axis at $t = 0$, where $\\psi = 2C/a$.",
+    ],
+    ("einstein_rosen_waves", "null", "radial"): [
+        "The same plane in the null chart, $u$ and $v$ ($\\phi = 0$, $z = 0$), drawn against $(v - u)/2 = \\rho$ "
+        "and $(u + v)/2 = ct$. Only $g_{uv}$ is nonzero on it, so a null direction has $du\\,dv = 0$, and the "
+        "light rays are the coordinate lines $u = $ const and $v = $ const themselves, for every wave.",
+        "The pulse comes in with its crest just outside the ray $v = 0$, is greatest on the axis at $u = v = 0$, "
+        "and goes out with its crest just outside $u = 0$.",
     ],
     ("malament_hogarth", "cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$) through the removed event at the origin. "
@@ -3179,6 +3227,8 @@ CLOSED_FORMS = {
     ("ellis_bronnikov", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("morris_thorne", "spherical", "radial"):
         (lambda t, r: t + np.sqrt(r ** 2 - 1), lambda t, r: t - np.sqrt(r ** 2 - 1), lambda t, r: r > 1.0005),
+    ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     ("minkowski", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("minkowski", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("minkowski", "rindler", "tx"):

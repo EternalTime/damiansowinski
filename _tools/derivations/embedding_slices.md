@@ -74,6 +74,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
   All of the observer's hemisphere lies on it, $r = \rho e^{Ht}$ reaching $\ell$ only as $\rho \to \infty$; the antipodal hemisphere lies outside the flat chart.
 - `static` and `flat`, the square, each point a sphere: the line $T = 0$ across the whole square, the observer's hemisphere $\chi \le \pi/2$ and the antipodal one beyond it, the same on both, since both are the whole spacetime.
 
+### Einstein-Rosen waves
+
+- The embedding is four moments of the cylindrical chart, $ct = a$, $2a$, $4a$ and $8a$, of the pulse of Weber, Wheeler and Bonnor at $C = a$ going out from the axis, each the plane $z = 0$ from the axis to $\rho = 10\,a$.
+- `cylindrical/radial`, the plane of $t$ and $\rho$: horizontal lines $ct = a$, $2a$, $4a$ and $8a$ from $\rho = 0$ to $10\,a$, inside the box, which runs from $ct = -a$ to $9a$.
+- `null/radial`, drawn against $(v - u)/2$ and $(u + v)/2$: the same lines, $u = ct - \rho$ and $v = ct + \rho$ along each.
+- `cylindrical` and `null`, the conformal diagrams: four curves $p, q = \arctan((ct \mp \rho)/a)$ from the axis to $\rho = 10\,a$.
+
 ### Ellis-Bronnikov
 
 - The embedding is the equator at one moment of $t$, drawn at $t = 0$, $r$ from $-5\ell$ to $5\ell$ through the throat.
