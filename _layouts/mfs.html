@@ -210,7 +210,7 @@
       }
 
       /* Opens a spacetime and marks its name in the list, whichever asked for it: its name
-         in the list, or a link under "related spacetimes" on another spacetime's page. The
+         in the list, or a link under "Related Spacetimes" on another spacetime's page. The
          list keeps the mark as it is searched, and brings the name into view where the
          list scrolls. */
       var _open = null;
@@ -3197,7 +3197,7 @@
         var refs = data.references || [];
         return [
           '<div class="mfs-section mfs-related">',
-            '<div class="mfs-section-label">related spacetimes</div>',
+            '<div class="mfs-section-label">Related Spacetimes</div>',
             '<div class="mfs-history">' + related.map(function(r) {
               return '<p><a class="mfs-related-link" href="#" data-id="' + r.id + '">' +
                 (names[r.id] || r.id) + '</a>' + citedProse(r.text, refs) + '</p>';
