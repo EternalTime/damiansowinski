@@ -2279,6 +2279,8 @@ def curzon_chazy_charts():
 
 
 CHARTS["curzon_chazy"] = curzon_chazy_charts
+
+
 # -- A black hole threaded by a cosmic string ------------------------------------------
 
 def string_black_hole(system_id):
@@ -2292,8 +2294,8 @@ def string_black_hole(system_id):
     bare = "1 - \\dfrac{r_s}{r}"
     parameters = ["r_s", "b"]
     kretschmann = "\\dfrac{12r_s^2}{r^6}"
-    string = ["\\theta = 0, \\pi \;\\text{(the string, a conical singularity)}"]
-    horizon = ["r = r_s \;\\text{(the horizon)}"]
+    string = ["\\theta = 0, \\pi \\;\\text{(the string, a conical singularity)}"]
+    horizon = ["r = r_s \\;\\text{(the horizon)}"]
     extra = {}
     if system_id == "wedge":
         angle = "\\tilde\\phi"

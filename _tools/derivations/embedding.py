@@ -2523,6 +2523,88 @@ def global_monopole(ck, src):
     return [first, second]
 
 
+def string_black_hole(ck, src):
+    """Aryal, Ford and Vilenkin's black hole on a cosmic string at b = 1 - 4G mu/c^2 = 0.9, the
+    deficit the cosmic string is drawn at, and r_s = 1, in its static chart. Two views.
+
+    The equator of the moment t = 0: g_rr = 1/(1 - 1/r) and g_phiphi = b^2 r^2, so rho = b r and
+    dz/dr = sqrt(r/(r - 1) - b^2), vertical at the throat r = r_s, whose circle has radius b r_s,
+    and tending to sqrt(1 - b^2) far out, the cone of the string, of half angle arcsin b. With
+    w = sqrt(r - 1) and k = sqrt(1 - b^2) its closed form is z = w sqrt(1 + k^2 w^2) + arsinh(k w)/k,
+    which is Flamm's 2w at b = 1. The slice runs through the bifurcation sphere into the other
+    exterior, the same surface turned over.
+
+    The horizon itself, r = r_s at one moment, its bifurcation sphere: the metric is
+    dtheta^2 + b^2 sin^2(theta) dphi^2, so rho = b sin(theta) and dz/dtheta = sqrt(1 - b^2 cos^2(theta)),
+    a spindle whose two poles are apexes of cones, drho/ds = b at each, where the string meets the
+    horizon. Its area is 4 pi b r_s^2, the A of Aryal, Ford and Vilenkin's S = A/4."""
+    b, params = 0.9, {"r_s": 1, "b": "9/10"}
+    k = math.sqrt(1 - b * b)
+    sl = Slice(src, "string_black_hole", "static", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    ck.add("threaded black hole: the horizon on the equator is at r = r_s", abs(sl.horizons()[0] - 1), 1e-12)
+    top, radii = 6.0, (1.5, 2, 3, 4, 5)
+    size = 2 * b * top
+    edge = "the surface runs on, opening into the cone of the string, to $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, 1.0, top, 0.0, 1,
+                 (("throat", "the throat $r = r_s$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", edge)),
+                 [(1.0, "horizon", "$r = r_s$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 6\\,r_s$")],
+                 size)
+    far = Piece("other_exterior", "sheet2", sl, 1.0, top, 0.0, -1,
+                (("throat", "the throat $r = r_s$"), ("edge", edge)),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+
+    def closed(r):
+        w = np.sqrt(np.maximum(r - 1, 0))
+        return w * np.sqrt(1 + k * k * w * w) + np.arcsinh(k * w) / k
+    for p in (near, far):
+        ck.isometry(f"threaded black hole equator, {p.id}", p)
+        ck.form(f"threaded black hole equator, {p.id}, the closed form of z", p,
+                lambda r, s=p.sense: s * closed(r), size)
+        ck.radius(f"threaded black hole equator, {p.id}, rho = b r", p, lambda r: b * r, size)
+    ck.join("threaded black hole equator, the two sheets at the throat", near, 1.0, far, 1.0)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(1.0), "$r = r_s$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "the exterior $r > r_s$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_s$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = ("$r_s = 1$, the unit of every length, and $b = 0.9$, a deficit angle of $36°$, as the cosmic "
+                "string is drawn.")
+    views = [view("equator", "The equator", "$r_s$", [surface], fig.done(), settings=settings)]
+
+    hz = Slice(src, "string_black_hole", "static", "\\theta", "\\phi", {"t": 0, "r": 1}, params)
+    hsize = 2 * b
+    horizon = Piece("horizon", "sheet", hz, 0.0, math.pi, 0.0, -1,
+                    (("apex", "the pole $\\theta = 0$, where the string meets the horizon"),
+                     ("apex", "the pole $\\theta = \\pi$, where the string meets the horizon")),
+                    [(math.pi / 4, "r", None), (math.pi / 2, "r", "$\\theta = \\pi/2$"), (3 * math.pi / 4, "r", None)],
+                    hsize)
+    ck.isometry("threaded black hole horizon", horizon)
+    ck.radius("threaded black hole horizon, rho = b r_s sin(theta)", horizon, lambda th: b * np.sin(th), hsize)
+    for pole in (0.0, math.pi):
+        h = 1e-6 if pole == 0 else -1e-6
+        rate = abs(float(hz.rho_at(pole + h)) - float(hz.rho_at(pole))) / hz.proper(min(pole, pole + h), max(pole, pole + h))
+        ck.add(f"threaded black hole horizon: drho/ds at theta = {pole:.4f} is b", abs(rate - b), 1e-5)
+    pts = np.array(horizon.data()["points"])
+    ds = np.hypot(np.diff(pts[:, 1]), np.diff(pts[:, 2]))
+    area = float(np.sum(2 * math.pi * 0.5 * (pts[1:, 1] + pts[:-1, 1]) * ds))
+    ck.add("threaded black hole horizon: the area is 4 pi b r_s^2", abs(area - 4 * math.pi * b) / (4 * math.pi * b), 1e-4)
+    ck.add("threaded black hole horizon: from pole to pole is pi r_s", abs(hz.proper(0.0, math.pi) - math.pi), 1e-9)
+    hsurface = Surface([horizon])
+    fig = figure_of([hsurface], {"sheet": "cover"}, hsize)
+    ring_label(fig, [0, 0, 0], *horizon.at(math.pi / 2), "$\\theta = \\pi/2$")
+    fig.legend("fill", "cover", "the horizon $r = r_s$ at one moment")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("horizon", "The horizon", "$r_s$", [hsurface], fig.done(), settings=settings))
+    return views
+
+
 def vaidya(ck, src):
     """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
     for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
@@ -5166,6 +5248,7 @@ DRAWN = {
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
     "robinson_trautman": robinson_trautman,
+    "string_black_hole": string_black_hole,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -5575,6 +5658,27 @@ CAPTIONS = {
         "The slice passes through the bifurcation sphere $r = r_h$, its smallest circle, and runs on into a second "
         "exterior, the same surface turned over. At $\\Delta = 0$ it is Flamm's paraboloid of the Schwarzschild "
         "spacetime.",
+    ],
+    ("string_black_hole", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a black hole threaded by a cosmic string at one moment of "
+        "$t$ ($b = 0.9$), drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "the metric is $dr^2/(1 - r_s/r) + b^2r^2d\\phi^2$, so the circle of radius $r$ has circumference "
+        "$2\\pi br$ and $dz/dr = \\sqrt{r/(r - r_s) - b^2}$, vertical at the horizon $r_s$ and tending far out to "
+        "$\\sqrt{1 - b^2}$, the string's cone of half angle $\\arcsin b$.",
+        "The slice passes through the bifurcation sphere $r = r_s$, its smallest circle, of circumference "
+        "$2\\pi br_s$, and runs on into a second exterior, the same surface turned over. Cut along a line of "
+        "constant $\\phi$, it lies on Flamm's paraboloid of the Schwarzschild spacetime and leaves a wedge of angle "
+        "$2\\pi(1 - b)$, $36°$ here, uncovered at every radius, the throat included.",
+    ],
+    ("string_black_hole", "horizon"): [
+        "The horizon $r = r_s$ of a black hole threaded by a cosmic string at one moment of $t$, its bifurcation "
+        "sphere ($b = 0.9$), drawn as a surface in flat space with every distance along it the metric distance. "
+        "On it the metric is $r_s^2(d\\theta^2 + b^2\\sin^2\\theta\\,d\\phi^2)$, so the circle of latitude "
+        "$\\theta$ has radius $br_s\\sin\\theta$ and the distance from pole to pole is $\\pi r_s$.",
+        "Each pole is the apex of a cone, where the string meets the horizon. There the radius grows with distance "
+        "from the pole at the rate $b$, and the rate falls short of 1 by the deficit angle $2\\pi(1 - b)$ divided "
+        "by $2\\pi$. The area is $4\\pi br_s^2$, and Aryal, Ford, and Vilenkin's entropy is a quarter of it in "
+        "units with $G = \\hbar = c = k_B = 1$.",
     ],
     ("cosmic_string", "cone"): [
         "The plane $z = 0$ across a straight cosmic string at one moment of $t$, drawn as a surface in flat "

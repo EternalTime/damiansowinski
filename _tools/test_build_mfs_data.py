@@ -2152,6 +2152,20 @@ class EmbeddingDiagrams(unittest.TestCase):
                 near(rho, r, f"Letelier rho at {r}")
                 near(z, sign * (w * math.sqrt(0.19 * w * w + 1) + math.asinh(math.sqrt(0.19) * w) / math.sqrt(0.19))
                      / 0.81 ** 1.5, f"Letelier z at {r}")
+        # The black hole on a cosmic string at b = 0.9 and r_s = 1: its equator rises from the throat as
+        # z = w sqrt(1 + 0.19 w^2) + arsinh(sqrt(0.19) w)/sqrt(0.19), w = sqrt(r - 1), at rho = 0.9 r, and
+        # its horizon is the spindle rho = 0.9 sin(theta), 0.9 r_s wide at its equator.
+        for sign, pid in ((1, "exterior"), (-1, "other_exterior")):
+            for r, rho, z in piece("string_black_hole", pid):
+                w = math.sqrt(max(r - 1, 0))
+                near(rho, 0.9 * r, f"threaded black hole rho at {r}")
+                near(z, sign * (w * math.sqrt(1 + 0.19 * w * w) + math.asinh(math.sqrt(0.19) * w) / math.sqrt(0.19)),
+                     f"threaded black hole z at {r}")
+        spindle = piece("string_black_hole", "horizon", view=1)
+        for theta, rho, z in spindle:
+            near(rho, 0.9 * math.sin(theta), f"threaded black hole horizon rho at {theta}")
+        self.assertLess(abs(sum(math.pi * (a[1] + b[1]) * math.hypot(b[1] - a[1], b[2] - a[2])
+                                for a, b in zip(spindle, spindle[1:])) - 3.6 * math.pi), 2e-3)
         # Van Stockum's circles grow to r = R/sqrt(2) and shrink after, and the drawing stops at 0.83 R.
         dust = piece("stockum_dust", "dust")
         for r, rho, z in dust:
@@ -3210,6 +3224,10 @@ class Slices(unittest.TestCase):
                     **{f"conformal global_monopole/{v}": {"monopole"} for v in ("static", "ingoing", "outgoing")},
                     "global_monopole/conical/radial": {"black_hole"},
                     "conformal global_monopole/conical": {"black_hole"},
+                    # The threaded black hole's bifurcation sphere, its horizon view, lies at v -> -infinity and
+                    # u -> +infinity, off both Eddington-Finkelstein charts.
+                    **{f"string_black_hole/eddington_finkelstein_{way}/{v}": {"horizon"}
+                       for way in ("ingoing", "outgoing") for v in ("finkelstein", "chart")},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
@@ -3260,7 +3278,12 @@ class Slices(unittest.TestCase):
             # The fronts of one retarded time differ only in size, so a moment is the whole
             # outgoing ray u = u_k, drawn against r and cu + r, from r = 0 to the box.
             return (lambda X: t + X), [0.0]
-        if key.startswith("schwarzschild/eddington_finkelstein"):
+        if key.startswith("string_black_hole/") and not mark["lines"]:
+            # The horizon's bifurcation sphere, the point t = 0, r = r_s of the static planes.
+            return (lambda X: 0.0), [1.0]
+        if key.startswith("string_black_hole/") and "eddington" not in key:
+            return (lambda X: 0.0), list(self.reach(surface, "static"))
+        if key.startswith(("schwarzschild/eddington_finkelstein", "string_black_hole/eddington_finkelstein")):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * math.log(X - 1) + (0 if finkelstein else sign * X)), None
@@ -3409,7 +3432,7 @@ class Slices(unittest.TestCase):
                                 X, Y = X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)
                                 h = 2e-4 * (X1 - X0)
                                 slope = (abs(Y_of(min(X + h, X1)) - Y_of(max(X - h, X0 + 1e-9 if key.startswith(
-                                    ("schwarzschild/edd", "oppenheimer_snyder/ext")) else X0))) / (2 * h)
+                                    ("schwarzschild/edd", "string_black_hole/edd", "oppenheimer_snyder/ext")) else X0))) / (2 * h)
                                          if X0 < X < X1 else 0)
                                 tol = 1e-4 * (Y1 - Y0) + slope * 1e-4 * (X1 - X0) + 1e-9
                                 self.assertLess(abs(Y - Y_of(X)), 3 * tol, f"{key} {mark['label']} at {u}")

@@ -195,6 +195,20 @@ def monopole_t(sign):
     r = near(lo, hi)
     return [Mark(m, [np.column_stack([sign * monopole_rstar(r), r])])]
 
+def string_hole(sign=0):
+    """The threaded black hole's two moments, r_s = 1. On the static planes, the equator's t = 0
+    over the r it reaches and the horizon's bifurcation sphere, the point t = 0, r = r_s. In an
+    Eddington-Finkelstein chart the equator's t = 0 is v = r + ln(r - 1) or u = -r - ln(r - 1),
+    Schwarzschild's, and the bifurcation sphere lies at v -> -infinity or u -> +infinity, off the chart."""
+    equator = moments("string_black_hole", "equator")[0]
+    lo, hi = equator.reach("static", "r")
+    if not sign:
+        horizon = moments("string_black_hole", "horizon", label="$t = 0$, $r = r_s$")[0]
+        return [Mark(equator, along(0.0, lo, hi)), Mark(horizon, points=[(0.0, 1.0)])]
+    r = near(lo, hi)
+    return [Mark(equator, [np.column_stack([sign * (r + np.log(r - 1)), r])])]
+
+
 def novikov(R, tau):
     """A shell of dust released from rest at areal radius R at t = 0, r_s = 1, at its proper
     time tau: its areal radius r and its Schwarzschild t, from the cycloid
@@ -487,6 +501,12 @@ FLAT = {
     ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart"): lambda: kottler_t(-1),
     # Letelier's black hole, r_s = 1, on the static and Eddington-Finkelstein planes, and the monopole
     # with no mass at its centre on the Barriola-Vilenkin plane; each is another spacetime than the other.
+    ("string_black_hole", "static", "radial"): lambda: string_hole(),
+    ("string_black_hole", "wedge", "radial"): lambda: string_hole(),
+    ("string_black_hole", "eddington_finkelstein_ingoing", "finkelstein"): lambda: string_hole(1),
+    ("string_black_hole", "eddington_finkelstein_ingoing", "chart"): lambda: string_hole(1),
+    ("string_black_hole", "eddington_finkelstein_outgoing", "finkelstein"): lambda: string_hole(-1),
+    ("string_black_hole", "eddington_finkelstein_outgoing", "chart"): lambda: string_hole(-1),
     ("global_monopole", "static", "radial"): lambda: one(
         "global_monopole", lambda m: along(0.0, *m.reach("static", "r")), view_id="black_hole"),
     ("global_monopole", "conical", "radial"): lambda: one(
