@@ -10616,7 +10616,7 @@
               "description": "Horizon radius, $r_h^{D-3} = 16\\pi GM/\\left((D-2)\\,\\Omega_{D-2}\\,c^2\\right)$ in $D$ spacetime dimensions"
             }
           ],
-          "convention": "We use coordinates $(u, r, \\psi, \\theta, \\phi)$ in $D = 5$, with the retarded time $u = ct - r - \\tfrac{1}{2}r_h\\ln\\left|\\dfrac{r - r_h}{r - r_h}\\right|$ a length.",
+          "convention": "We use coordinates $(u, r, \\psi, \\theta, \\phi)$ in $D = 5$, with the retarded time $u = ct - r - \\tfrac{1}{2}r_h\\ln\\left|\\dfrac{r - r_h}{r + r_h}\\right|$ a length.",
           "line_element": "ds^2 = -\\left(1 - \\dfrac{r_h^2}{r^2}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
           "metric_components": [
             {
