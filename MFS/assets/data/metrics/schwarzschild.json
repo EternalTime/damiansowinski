@@ -124,7 +124,7 @@
     {
       "id": "minkowski",
       "kind": "special_case",
-      "text": "Schwarzschild's metric with the mass removed, $r_s = 0$."
+      "text": "Schwarzschild's metric with the mass plucked out, $r_s = 0$."
     },
     {
       "id": "interior_schwarzschild",

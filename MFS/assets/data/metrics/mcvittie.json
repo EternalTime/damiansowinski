@@ -49,7 +49,7 @@
     {
       "id": "schwarzschild_de_sitter",
       "kind": "special_case",
-      "text": "McVittie's metric with a constant Hubble rate $H$ [kaloper2010, carrera2010]."
+      "text": "McVittie's universe expanding at a steady rate, with $H$ constant [kaloper2010, carrera2010]."
     }
   ],
   "references": [

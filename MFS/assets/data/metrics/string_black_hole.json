@@ -37,7 +37,7 @@
     {
       "id": "schwarzschild",
       "kind": "special_case",
-      "text": "The black hole with the string taken out, $b = 1$, where the missing wedge closes."
+      "text": "The black hole with the string pulled out, $b = 1$, where the missing wedge closes."
     },
     {
       "id": "cosmic_string",

@@ -20,7 +20,7 @@
     {
       "id": "anti_de_sitter",
       "kind": "special_case",
-      "text": "Mark Hogarth proved in 1992 that anti-de Sitter space has the property [hogarth1992]."
+      "text": "A place to run an endless computation and still read off the answer. Mark Hogarth proved in 1992 that anti-de Sitter space has the property [hogarth1992]."
     },
     {
       "id": "rn_metric",

@@ -44,7 +44,7 @@
     {
       "id": "minkowski",
       "kind": "special_case",
-      "text": "The limit $L \\to \\infty$, where the curvature vanishes."
+      "text": "Anti-de Sitter space ironed flat, the limit $L \\to \\infty$."
     },
     {
       "id": "einstein_static",

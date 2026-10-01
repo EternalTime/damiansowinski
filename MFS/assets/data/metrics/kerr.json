@@ -41,7 +41,7 @@
     {
       "id": "kerr_newman",
       "kind": "generalisation",
-      "text": "Kerr's black hole with electric charge added. At $r_Q = 0$ it is Kerr's metric."
+      "text": "Kerr's black hole given an electric charge to carry as it spins. At $r_Q = 0$ it is Kerr's metric."
     },
     {
       "id": "btz",

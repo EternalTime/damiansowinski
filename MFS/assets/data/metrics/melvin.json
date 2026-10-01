@@ -46,7 +46,7 @@
     {
       "id": "minkowski",
       "kind": "special_case",
-      "text": "With $B = 0$ Melvin's universe is flat."
+      "text": "Switch the field off, $B = 0$, and Melvin's universe is flat."
     }
   ],
   "references": [
