@@ -412,6 +412,8 @@ AS_RHO = {"half": "1/2", "eighth": "1/8", "thirtysecond": "1/32"}
 GM = {"Delta": "19/100", "r_s": 1}
 GM_CONE = {"Delta": "19/100"}
 GM_RH = 100 / 81
+# The black hole on a cosmic string at the deficit the cosmic string is drawn at, 4G mu/c^2 = 0.1.
+SBH = {"r_s": 1, "b": "9/10"}
 
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m.
 MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
@@ -468,6 +470,20 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
     Diagram("global_monopole", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 6, -6, 0), "$r/r_s$", "$u/r_s$", GM, EQUATOR, tau="u + r", areal=True),
+    Diagram("string_black_hole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$ct/r_s$", SBH, EQUATOR, orient="ingoing", areal=True),
+    Diagram("string_black_hole", "wedge", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$ct/r_s$", SBH, {"theta": "pi/2", "tildephi": "0"}, orient="ingoing", areal=True),
+    Diagram("string_black_hole", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 6, -3, 3), "$r/r_s$", "$(v - r)/r_s$", SBH, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("string_black_hole", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 6, 0, 6), "$r/r_s$", "$v/r_s$", SBH, EQUATOR, tau="v - r", areal=True),
+    Diagram("string_black_hole", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 6, -3, 3), "$r/r_s$", "$(u + r)/r_s$", SBH, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("string_black_hole", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 6, -6, 0), "$r/r_s$", "$u/r_s$", SBH, EQUATOR, tau="u + r", areal=True),
     Diagram("frw", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 3, 0, 2),
             "$r\\;[c/H_0]$", "$ct\\;[c/H_0]$", {"k": 0}, EQUATOR, areal=True, dust=FRW_DUST,
             reference="$a = 1$",
@@ -995,6 +1011,49 @@ CAPTIONS = {
         "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a null "
         "coordinate. The ingoing family turns vertical at $r_h$ and leans toward larger $r$ inside it.",
+    ],
+    ("string_black_hole", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of a black hole threaded by a cosmic string, "
+        "drawn for $b = 0.9$, each point in the plane a sphere of radius $r$ with a wedge of $36°$ missing around "
+        "the string. The string enters $g_{\\phi\\phi}$ alone, so the rays are Schwarzschild's: the cones narrow "
+        "toward the vertical as $r \\to r_s$, where $c\\,dt/dr = \\pm(1 - r_s/r)^{-1}$ diverges.",
+        "Inside $r_s$, $t$ is a spacelike coordinate, and we take the future from the ingoing Eddington-Finkelstein "
+        "chart, which makes that region the black hole, where every cone points to $r = 0$. The Kretschmann scalar "
+        "$12r_s^2/r^6$ is finite at $r_s$ and diverges only at $r = 0$.",
+    ],
+    ("string_black_hole", "wedge", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\tilde\\phi = 0$) of a black hole threaded by a cosmic "
+        "string, drawn for $b = 0.9$, each point in the plane a sphere of radius $r$ whose angle $\\tilde\\phi$ runs "
+        "over $2\\pi b$, $324°$. The line element is Schwarzschild's, and so are the rays: the cones narrow toward "
+        "the vertical as $r \\to r_s$, where $c\\,dt/dr = \\pm(1 - r_s/r)^{-1}$ diverges.",
+        "Inside $r_s$, $t$ is a spacelike coordinate, and we take the future from the ingoing Eddington-Finkelstein "
+        "chart, which makes that region the black hole, where every cone points to $r = 0$.",
+    ],
+    ("string_black_hole", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $b = 0.9$ with $v - r$ as the "
+        "vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has "
+        "$dv/dr = 2(1 - r_s/r)^{-1}$, so it stands vertical at the horizon $r_s$, an outgoing ray that stays where "
+        "it is.",
+        "The cones cross $r_s$ smoothly and keep tipping. Inside, both edges of every future cone point to "
+        "smaller $r$, so every future directed ray ends at $r = 0$, and the string ends there with them.",
+    ],
+    ("string_black_hole", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a null "
+        "coordinate. The outgoing family turns vertical at $r_s$ and leans back toward smaller $r$ inside it.",
+    ],
+    ("string_black_hole", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $b = 0.9$ with $u + r$ as the "
+        "vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The retarded chart crosses the "
+        "other horizon. Inside $r_s$ both edges of every future cone point to larger $r$: this is the white hole, "
+        "which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("string_black_hole", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a null "
+        "coordinate. The ingoing family turns vertical at $r_s$ and leans toward larger $r$ inside it.",
     ],
     ("frw", "comoving_spherical", "radial"): [
         "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at "
@@ -4061,6 +4120,14 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [GM_RH]) / 0.81, lambda v, r: np.abs(r - GM_RH) > 0.05),
     ("global_monopole", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _rstar(r, [GM_RH]) / 0.81, lambda u, r: u, lambda u, r: np.abs(r - GM_RH) > 0.05),
+    ("string_black_hole", "static", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
+    ("string_black_hole", "wedge", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
+    ("string_black_hole", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), lambda v, r: np.abs(r - 1) > 0.05),
+    ("string_black_hole", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):

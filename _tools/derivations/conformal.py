@@ -1339,6 +1339,154 @@ def schwarzschild(ck, src):
     return views
 
 
+def string_black_hole(ck, src):
+    """Aryal, Ford and Vilenkin's black hole on a cosmic string, at b = 0.9 and r_s = 1.
+
+    The string enters g_phiphi alone, so on a plane of fixed theta and phi the metric is
+    Schwarzschild's, and the whole spacetime is that plane times a sphere of radius r with the
+    wedge 2 pi (1 - b) missing: Kruskal and Szekeres's extension, compactified by p = arctan U,
+    q = arctan V, the tower of the one root r_s, as Schwarzschild's is drawn. The static chart and
+    the chart whose angle b phi runs over 2 pi b are checked separately against their own published
+    metrics, and so are the two Eddington-Finkelstein charts. The string runs along the axis
+    through every region of the diagram, both horizons included, and ends at r = 0 with them.
+    """
+    params = {"r_s": 1, "b": "9/10"}
+    planes = {"static": Plane(src, "string_black_hole", "static", ("t", "r"), EQUATOR, params),
+              "wedge": Plane(src, "string_black_hole", "wedge", ("t", "r"), {"theta": "pi/2", "tildephi": "0"}, params)}
+    sph = planes["static"]
+    T = Tower(-sph.g[0, 0], sph.x1, [1])
+    for name, plane in planes.items():
+        assert plane.g[0, 1] == 0 and sp.simplify(plane.g[0, 0] * plane.g[1, 1] + 1) == 0
+        assert sp.simplify(plane.g[0, 0].subs(plane.x1, sph.x1) - sph.g[0, 0]) == 0
+        ck.chart(f"threaded black hole {name}, exterior", plane, lambda t, r: T.pq("I", t, r),
+                 ck.uniform(-15, 15), ck.uniform(1.001, 30), lambda t, r: (1, 0))
+        ck.chart(f"threaded black hole {name}, black hole", plane, lambda t, r: T.pq("II", t, r),
+                 ck.uniform(-15, 15), ck.uniform(0.01, 0.999), lambda t, r: (0, -1))
+        ck.chart(f"threaded black hole {name}, white hole", plane, lambda t, r: T.pq("IV", t, r),
+                 ck.uniform(-15, 15), ck.uniform(0.01, 0.999), lambda t, r: (0, 1))
+        ck.chart(f"threaded black hole {name}, other exterior", plane, lambda t, r: T.pq("I'", t, r),
+                 ck.uniform(-15, 15), ck.uniform(1.001, 30), lambda t, r: (-1, 0))
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan((1 - r) * np.exp(r - w / 2)), atan_exp(w / 2)
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        return -atan_exp(-u / 2), np.arctan((r - 1) * np.exp(r + u / 2))
+    ein = Plane(src, "string_black_hole", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, params)
+    ck.chart("threaded black hole ingoing Eddington-Finkelstein", ein, ingoing,
+             ck.uniform(-15, 15), ck.uniform(0.01, 30), lambda w, r: (1, -60))
+    eout = Plane(src, "string_black_hole", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, params)
+    ck.chart("threaded black hole outgoing Eddington-Finkelstein", eout, outgoing,
+             ck.uniform(-15, 15), ck.uniform(0.01, 30), lambda u, r: (1, 60))
+
+    p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit("threaded black hole: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
+    ck.limit("threaded black hole: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = T.pq("I", np.array([3.0]), np.array([1 + 1e-12]))
+    ck.limit("threaded black hole: r -> r_s at fixed t lands on the bifurcation sphere", point(p[0], q[0]), [0, 0], 1e-4)
+    ck.limit("threaded black hole: the ingoing and static coordinates put one event at one point",
+             ingoing(2.0 + 3 + np.log(2), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit("threaded black hole: the outgoing and static coordinates put one event at one point",
+             outgoing(2.0 - 3 - np.log(2), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    K = sph.kretschmann
+    ck.diverges("threaded black hole: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite("threaded black hole: the Kretschmann scalar is finite at r = r_s",
+              K(np.zeros(3), np.array([0.999, 1, 1.001])))
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN, TS = (1.05, 1.25, 1.5, 2, 3), (0.5, 0.75, 0.9), (-4, -2, -1, 0, 1, 2, 4)
+
+    def edges(v):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([-Q4, Q4], "$r = r_s$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.legend("horizon", "the horizon $r = r_s$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    equator = slices.moments("string_black_hole", "equator")[0]
+    horizon = slices.moments("string_black_hole", "horizon", label="$r = r_s$, the bifurcation sphere")[0]
+    lo, hi = equator.reach("static", "r")
+    rr_moment = np.linspace(lo, hi, 2)
+    moment = [T.pq("I'", 0 * rr_moment, rr_moment[::-1]), T.pq("I", 0 * rr_moment, rr_moment)]
+    moment = [(np.concatenate([moment[0][0], moment[1][0]]), np.concatenate([moment[0][1], moment[1][1]]))]
+
+    def marks(v):
+        v.slice(equator, moment)
+        v.slice(horizon, points=[(0.0, 0.0)])
+    views = []
+    t = spread(-np.inf, np.inf, 500, 9)
+    for vid, name in (("static", "Static"), ("wedge", "Static with the Wedge Removed")):
+        v = View(vid, name, box, vid)
+        v.fill("region", hexagon)
+        v.fill("cover", exterior)
+        for r in R_OUT:
+            v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+        rr = spread(1, np.inf, 500, 14)
+        for tt in TS:
+            v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+        edges(v)
+        for r, text in ((1.25, "$1.25\\,r_s$"), (2, "$2\\,r_s$")):
+            label_on(v, T.pq("I", 0.0, r), text)
+        v.legend("cover", "the region that $t$ and $r > r_s$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("t", "$ct$ constant, in units of $r_s$")
+        marks(v)
+        views.append(v)
+
+    v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    rr = spread(0, np.inf, 600, 14)
+    for w in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
+    edges(v)
+    v.legend("cover", "the region that $v$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$v$ constant, an ingoing light ray")
+    marks(v)
+    views.append(v)
+
+    v = View("outgoing", "Outgoing Eddington-Finkelstein", box, "eddington_finkelstein_outgoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [-HALF, -HALF], [HALF, -HALF], [PI, 0], [HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *outgoing(t, np.full_like(t, r)))
+    for u in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *outgoing(np.full_like(rr, u), rr))
+    edges(v)
+    v.legend("cover", "the region that $u$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$u$ constant, an outgoing light ray")
+    marks(v)
+    views.append(v)
+    return views
+
+
 def global_monopole(ck, src):
     """Letelier's black hole in a cloud of strings at Delta = 0.19 and r_s = 1, and the monopole
     with no mass at its centre in the Barriola-Vilenkin chart.
@@ -5320,6 +5468,7 @@ DRAWN = {
     "thin_shell_wormhole": thin_shell_wormhole,
     "levi_civita": levi_civita,
     "curzon_chazy": curzon_chazy,
+    "string_black_hole": string_black_hole,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -5602,6 +5751,40 @@ CAPTIONS = {
         "$U = -e^{-u/2r_s}$ and $V = (r/r_s - 1)e^{r/r_s}/(-U)$ they cover the exterior and the "
         "white hole, and their lines of constant $u$ are outgoing light rays, which leave $r = 0$ "
         "and cross the horizon outward.",
+    ],
+    ("string_black_hole", "static"): [
+        "A Schwarzschild black hole threaded by a cosmic string, maximally extended ($b = 0.9$), each point in "
+        "the diagram a sphere of radius $r$ with a wedge of $36°$ missing around the string. The string enters "
+        "$g_{\\phi\\phi}$ alone, so the plane of $t$ and $r$ is Schwarzschild's, and the coordinates of Martin "
+        "Kruskal and George Szekeres, $U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$, with $u, v = ct \\mp r_*$ and "
+        "$r_* = r + r_s\\ln|r/r_s - 1|$, make the metric regular through $r = r_s$. With $p = \\arctan U$ and "
+        "$q = \\arctan V$ the singularity $UV = 1$ lies on the straight lines $T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $r > r_s$ cover the right exterior alone. The string lies on the axis of every "
+        "sphere, so it runs through both exteriors and both horizons, the bifurcation sphere included, and ends "
+        "on the singularities $r = 0$.",
+    ],
+    ("string_black_hole", "wedge"): [
+        "A Schwarzschild black hole threaded by a cosmic string, maximally extended ($b = 0.9$), each point in "
+        "the diagram a sphere of radius $r$ whose angle $\\tilde\\phi$ runs over $2\\pi b$, $324°$. In these "
+        "coordinates the line element is Schwarzschild's, so the diagram is Kruskal and Szekeres's: "
+        "$U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$, with $u, v = ct \\mp r_*$ and $r_* = r + r_s\\ln|r/r_s - 1|$, "
+        "$p = \\arctan U$ and $q = \\arctan V$.",
+        "The coordinates $t$ and $r > r_s$ cover the right exterior alone. The two edges $\\tilde\\phi = 0$ and "
+        "$\\tilde\\phi = 2\\pi b$ of every sphere are one meridian, in every region of the diagram.",
+    ],
+    ("string_black_hole", "ingoing"): [
+        "The threaded black hole with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on it "
+        "($b = 0.9$), each point in the diagram a sphere of radius $r$ with a wedge of $36°$ missing. From "
+        "$V = e^{v/2r_s}$ and $U = (1 - r/r_s)e^{r/r_s}/V$, one formula for every $r > 0$, they cover the "
+        "exterior and the black hole together, and their lines of constant $v$ are ingoing light rays, which "
+        "cross the horizon at 45° and end at $r = 0$.",
+    ],
+    ("string_black_hole", "outgoing"): [
+        "The threaded black hole with the outgoing Eddington-Finkelstein coordinates $u$ and $r$ on it "
+        "($b = 0.9$), each point in the diagram a sphere of radius $r$ with a wedge of $36°$ missing. From "
+        "$U = -e^{-u/2r_s}$ and $V = (r/r_s - 1)e^{r/r_s}/(-U)$ they cover the exterior and the white hole, "
+        "and their lines of constant $u$ are outgoing light rays, which leave $r = 0$ and cross the horizon "
+        "outward.",
     ],
     ("global_monopole", "static"): [
         "Letelier's black hole in a cloud of strings, maximally extended ($\\Delta = 0.19$), each point in the "
