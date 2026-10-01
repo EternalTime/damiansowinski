@@ -2452,6 +2452,81 @@ def schwarzschild_de_sitter(ck, src):
                           "$r_h = 1.085\\,r_s$ and $r_c = 3.215\\,r_s$.")]
 
 
+def schwarzschild_ads(ck, src):
+    """The static slice t = 0 of Schwarzschild-anti-de Sitter at r_s = 2 and L = 1, so that the
+    horizon, the positive root of the published g^rr, is r_h = 1. g_rr = 1/f with f = 1 - 2/r +
+    r^2 and g_phiphi = r^2, so in flat space dz/dr = sqrt(1/f - 1): the slice runs through the
+    bifurcation sphere r_h, its throat, into the second exterior, as Flamm's paraboloid does, and
+    lies level where f = 1, at r^3 = r_s L^2, r = 2^(1/3). Farther out 1/f < 1, the circles grow
+    faster than the distance out to them, which is checked, and the slice is drawn on in three
+    dimensional Minkowski space, climbing at dZ/dr = sqrt(1 - 1/f) from level toward a light cone
+    of that space, as anti-de Sitter space's own static slice does; between r_h and 2^(1/3) no
+    surface of Minkowski space carries it, which is checked as well. Each exterior is a piece in
+    flat space and a piece in Minkowski space started at the height where the first ends; both
+    lie level at the join, so they meet in one circle with one tangent, which is checked from the
+    numbers and from the file. z(r) is an elliptic integral and is drawn by quadrature. The
+    drawing stops at r = 3, as the BTZ hole's does."""
+    params = {"r_s": 2, "L": 1}
+    fixed_at = {"t": 0, **EQUATOR}
+    sl = Slice(src, "schwarzschild_ads", "static", "r", "\\phi", fixed_at, params)
+    msl = Slice(src, "schwarzschild_ads", "static", "r", "\\phi", fixed_at, params, space="minkowski")
+    rh = sl.horizons()[0]
+    level = 2.0 ** (1 / 3)
+    top = 3.0
+    size = 2 * top
+    name = "Schwarzschild-anti-de Sitter"
+    ck.add(f"{name}: the horizon is at r_h = L", abs(rh - 1.0), 1e-12)
+    ck.add(f"{name}: the surface lies level where f = 1, at r = (r_s L^2)^(1/3)",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-12)
+    ck.stops(f"{name}, beyond r = (r_s L^2)^(1/3) in flat space", sl, np.linspace(level, 40, 402)[1:])
+    inward = np.linspace(rh, level, 402)[1:-1]
+    ck.add(f"{name}: between r_h and (r_s L^2)^(1/3) no surface in Minkowski space carries the slice, "
+           "(drho/dr)^2 - g_rr < 0", float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+    if not np.all(msl.defect_at(inward) > 0):
+        ck.items[-1]["ok"] = False
+
+    join = ("at $r = (r_sL^2)^{1/3}$ the surface lies level, in flat space nearer the horizon and in Minkowski "
+            "space beyond")
+    edge = "the sheet runs on toward a light cone, to $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rh, level, 0.0, 1,
+                 (("throat", "the throat $r = r_h$, the bifurcation sphere, where the other exterior begins"), ("join", join)),
+                 [(rh, "horizon", "$r = r_h$"), (1.1, "r", None), (level, "space", None)], size)
+    out = Piece("exterior_minkowski", "sheet", msl, level, top, near.at(level)[1], 1, (("join", join), ("edge", edge)),
+                [(2.0, "r", None), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rh, level, 0.0, -1, (("throat", "the throat $r = r_h$"), ("join", join)),
+                [(1.1, "r2", None), (level, "space", None)], size)
+    far_out = Piece("other_exterior_minkowski", "sheet2", msl, level, top, far.at(level)[1], -1,
+                    (("join", join), ("edge", edge)), [(2.0, "r2", None), (top, "r2", None)], size)
+    for p in (near, out, far, far_out):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {p.id} {space}", p)
+        ck.radius(f"{name}, {p.id}, rho = r {space}", p, lambda r: r, size)
+    ck.join(f"{name}, the two sheets at the throat", near, rh, far, rh)
+    for a, b in ((near, out), (far, far_out)):
+        ck.join(f"{name}, {a.id} in flat space and {b.id} in Minkowski space at r = (r_s L^2)^(1/3)", a, level, b, level)
+        # And as the file holds them: the last point of the one is the first of the other, to
+        # the rounding of the coarser of the two.
+        pa, pb = a.data()["points"][-1], b.data()["points"][0]
+        ck.add(f"{name}, {a.id} and {b.id} as written: one point at r = (r_s L^2)^(1/3)",
+               max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(a.decimals, b.decimals))
+
+    surface = Surface([near, out, far, far_out])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rh, 0.0, "$r = r_h$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(level), "$2^{1/3}L$")
+    ring_label(fig, [0, 0, 0], *out.at(top), "$3L$")
+    fig.legend("fill", "cover", "the exterior $r > r_h$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.1\\,L$, $2L$ and $3L$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_h$, where the slice crosses the horizon")
+    fig.legend("line", "space", "$r = (r_sL^2)^{1/3} = 1.26\\,L$, where $g_{rr} = 1$: flat space inside, Minkowski "
+                                "space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("throat", "Through the throat", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length, and $r_s = 2L$, so that $r_h = L$. Every length along "
+                          "the surface beyond $r = 1.26\\,L$ is measured with $dX^2 + dY^2 - dZ^2$.")]
+
+
 def global_monopole(ck, src):
     """Two moments at Delta = 0.19, so that sqrt(1 - Delta) = 0.9. The monopole with no mass at
     its centre, the Barriola-Vilenkin chart's equator at t = 0: g_rr = 1 and g_phiphi =
@@ -5406,6 +5481,7 @@ DRAWN = {
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
+    "schwarzschild_ads": schwarzschild_ads,
     "vaidya": vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "tolman_bondi": tolman_bondi,
@@ -5647,6 +5723,18 @@ CAPTIONS = {
         "the same at every moment.",
         "The areal radius $r = R\\sin\\chi$ and Einstein's projected coordinates cover the hemisphere "
         "$\\chi < \\pi/2$ and end at the equator $r = R$, where the surface stands vertical.",
+    ],
+    ("schwarzschild_ads", "throat"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Schwarzschild-anti-de Sitter black hole at the moment "
+        "$t = 0$ ($r_s = 2L$, $r_h = L$) through both of its exteriors, joined at the bifurcation sphere $r = r_h$, "
+        "in flat space out to the circle $r = (r_sL^2)^{1/3}$ and in three dimensional Minkowski space "
+        "($dX^2 + dY^2 - dZ^2$) beyond it, every distance along the surface the metric distance.",
+        "On the slice the metric is $dr^2/f + r^2d\\phi^2$ with $f = 1 - r_s/r + r^2/L^2$. Inside the circle "
+        "$f < 1$ and the surface climbs at $dz/dr = \\sqrt{1/f - 1}$, from vertical at the throat, as Flamm's "
+        "paraboloid does at $r_s$, to level where $f = 1$. Beyond it the circles grow faster than the distance "
+        "out to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
+        "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space, as the hyperboloid of "
+        "anti-de Sitter space does. Both parts lie level at the circle, so they meet there with one tangent plane.",
     ],
     ("schwarzschild_de_sitter", "static"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Kottler's spacetime at the moment $t = 0$ of its static chart, "

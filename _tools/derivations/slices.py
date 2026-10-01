@@ -451,6 +451,30 @@ def _btz(sign=0):
     return [Mark(m, [np.column_stack([sign * btz_rstar(r), r])])]
 
 
+def sads_rstar(r):
+    """Schwarzschild-anti-de Sitter's tortoise coordinate at r_s = 2 and L = 1, where 1/f =
+    r/((r - 1)(r^2 + r + 2)), as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
+    r_* = (1/4) ln|1 - r| - (1/8) ln((r^2 + r + 2)/2) + (5/(4 sqrt 7))(arctan((2r + 1)/sqrt 7) -
+    arctan(1/sqrt 7))."""
+    r = np.asarray(r, dtype=float)
+    w = math.sqrt(7.0)
+    return (0.25 * np.log(np.abs(1 - r)) - 0.125 * np.log((r * r + r + 2) / 2)
+            + 5 / (4 * w) * (np.arctan((2 * r + 1) / w) - math.atan(1 / w)))
+
+
+def _sads(sign=0):
+    """The moment t = 0 of the Schwarzschild-anti-de Sitter hole, from the throat r_h = 1 out: along
+    r in its static chart (sign 0), and in its ingoing (1) or outgoing (-1) chart as v = r_* or
+    u = -r_*, crowding toward the horizon, where the curve runs off. Each chart covers one
+    exterior, and the moment's other exterior lies over the same r."""
+    m, = moments("schwarzschild_ads")
+    lo, hi = m.reach("static", "r")
+    if not sign:
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([sign * sads_rstar(r), r])])]
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -511,6 +535,11 @@ FLAT = {
     ("btz", "stationary", "static"): lambda: _btz(),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
     ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),
+    ("schwarzschild_ads", "static", "radial"): lambda: _sads(),
+    ("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _sads(1),
+    ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),
+    ("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _sads(-1),
+    ("schwarzschild_ads", "eddington_finkelstein_outgoing", "chart"): lambda: _sads(-1),
     ("schwarzschild", "spherical", "radial"): lambda: one("schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"): lambda: schwarzschild_t(1),
     ("schwarzschild", "eddington_finkelstein_ingoing", "chart"): lambda: schwarzschild_t(1),
