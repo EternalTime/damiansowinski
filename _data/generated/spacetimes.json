@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 48,
+  "count": 49,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -556,6 +556,323 @@
           ],
           "ricci_scalar": "R = -\\dfrac{12}{L^2}",
           "kretschmann": "K = \\dfrac{24}{L^4}"
+        }
+      ]
+    },
+    {
+      "id": "string_black_hole",
+      "name": "Black Hole Threaded by a Cosmic String",
+      "short_name": "Aryal-Ford-Vilenkin",
+      "description": "A Schwarzschild black hole with a straight cosmic string through it. Off the axis it is Schwarzschild's vacuum, and around the whole axis, horizon included, a wedge is missing whose angle the string's tension sets, which lowers the horizon's area and the black hole's energy at a fixed mass.",
+      "tags": [
+        "topological defect",
+        "cosmic string",
+        "conical",
+        "angular deficit",
+        "conical singularity",
+        "black hole",
+        "black hole hair",
+        "black hole thermodynamics",
+        "vacuum",
+        "vacuum solution",
+        "static",
+        "stationary",
+        "axial symmetry",
+        "mass",
+        "singularity",
+        "curvature singularity",
+        "coordinate singularity",
+        "horizon",
+        "event horizon",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and $b = 1 - 4G\\mu/c^2$ for a string of mass per unit length $\\mu$, so the deficit angle is $2\\pi(1 - b) = 8\\pi G\\mu/c^2$. We keep factors of $c$ explicit.",
+      "references": [
+        "aryal1986",
+        "vilenkin1981",
+        "gott1985",
+        "achucarro1995",
+        "appels2017",
+        "martinez1990",
+        "bach1922",
+        "kinnersley1970",
+        "gregory1995",
+        "dowker1992",
+        "bonjour1999",
+        "gregory2013",
+        "lonsdale1988",
+        "galtsov1989",
+        "devilliers1998",
+        "vilenkin2018"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_black_hole.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\theta = 0, \\pi \\;\\text{(the string, a conical singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, with $M$ the gravitational mass"
+            },
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, equal to its tension, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\phi$ periodic in $2\\pi$, the deficit carried by $g_{\\phi\\phi} = b^2r^2\\sin^2\\theta$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + b^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "wedge",
+          "name": "Static with the Wedge Removed",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\tilde\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\tilde\\phi \\in [0, 2\\pi b)",
+            "\\theta = 0, \\pi \\;\\text{(the string, a conical singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, with $M$ the gravitational mass"
+            },
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, equal to its tension, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\tilde\\phi)$, with $t$ carrying dimensions of time and $\\tilde\\phi = b\\phi$ periodic in $2\\pi b$, so that the line element is Schwarzschild's.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\tilde\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "\\tilde\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\theta = 0, \\pi \\;\\text{(the string, a conical singularity)}",
+            "r = r_s \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, with $M$ the gravitational mass"
+            },
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, equal to its tension, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r - r_s\\ln\\left|r/r_s - 1\\right|$ a length and $\\phi$ periodic in $2\\pi$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + b^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\theta = 0, \\pi \\;\\text{(the string, a conical singularity)}",
+            "r = r_s \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, with $M$ the gravitational mass"
+            },
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, equal to its tension, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r + r_s\\ln\\left|r/r_s - 1\\right|$ a length and $\\phi$ periodic in $2\\pi$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + b^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
         }
       ]
     },
