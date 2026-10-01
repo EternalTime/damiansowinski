@@ -2148,7 +2148,9 @@ class Chart:
             self.fn["gtt"] = self.lambdify(prep(g[0, 0]))
         self.principal = PrincipalPlane(self, g, prep, a, b) if spec.principal else None
         K = prep(reader(strip_lhs(entry["kretschmann"]))) if spec.kretschmann else sp.Integer(0)
-        self.fn["K"] = self.lambdify(K)
+        # Exponentials are gathered into one, so that e^(-4m/R) e^(2m^2 rho^2/R^4) overflows to
+        # infinity near R = 0 and never to zero times infinity.
+        self.fn["K"] = self.lambdify(sp.powsimp(K, combine="exp"))
         tau = sp.sympify(spec.tau, locals={str(self.x0): self.x0, str(self.xr): self.xr})
         self.fn["dtau0"] = self.lambdify(sp.diff(tau, self.x0))
         self.fn["dtaur"] = self.lambdify(sp.diff(tau, self.xr))
@@ -2853,14 +2855,28 @@ class Plot:
             near, far = (np.abs(self.c.fn["K"](*self.to_chart(self.from_unit(at(e))))) for e in (1e-5, 1e-4))
             # A principal plane is timelike wherever it is taken, and is not taken this
             # close to a singularity.
-            lorentzian = (True if self.c.principal
-                          else self.c.null_dirs(*self.to_chart(self.from_unit(at(1e-4))))[2] > 0)
+            lorentzian = True if self.c.principal else self.lorentzian_near(at)
             claimed = (self.claimed(*self.to_chart(self.from_unit(at(1e-4)))) if self.c.spec.singular_where_claimed
                        else np.ones(t.shape, dtype=bool))
             with np.errstate(all="ignore"):
-                if claimed.any() and ((near > 1e8) & (near / far > 50) & lorentzian)[claimed].mean() > 0.5:
+                # A scalar that grows as e^(2m^2/rho^2), as the Curzon-Chazy particle's does in its plane
+                # z = 0, is past the largest double this close to the edge, and reads as infinite.
+                growing = (near / far > 50) | np.isposinf(near)
+                if claimed.any() and ((near > 1e8) & growing & lorentzian)[claimed].mean() > 0.5:
                     out.append(name)
         return out
+
+    def lorentzian_near(self, at):
+        """Whether the plane's metric is Lorentzian beside an edge, at 1e-4 of the drawing from it,
+        or, where a component is past the range of a double there, as the Curzon-Chazy particle's
+        e^(2m/rho - m^2/rho^2) is beside its ring, where it reads as zero, at the nearest of 1e-3 and
+        1e-2 where it is not."""
+        with np.errstate(all="ignore"):
+            signs = [self.c.null_dirs(*self.to_chart(self.from_unit(at(e))))[2] for e in (1e-4, 1e-3, 1e-2)]
+        out = signs[0]
+        for further in signs[1:]:
+            out = np.where(np.isfinite(out) & (out != 0), out, further)
+        return out > 0
 
     def finite(self, x0, r):
         """Where the metric on the plane is finite."""

@@ -193,6 +193,37 @@
     "embedding": "8cf5301ea3792cef"
   },
   {
+    "id": "curzon_chazy",
+    "name": "Curzon-Chazy",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "axisymmetric",
+      "axial symmetry",
+      "Weyl class",
+      "harmonic function",
+      "mass",
+      "singularity",
+      "curvature singularity",
+      "naked singularity",
+      "directional singularity",
+      "ring singularity",
+      "asymptotically flat",
+      "Petrov type I",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "15c8679903a95763",
+    "diagrams": "8b39c6bef80d5718",
+    "conformal": "573aa16b0b411fe4",
+    "embedding": "a9676c6465fbce1c"
+  },
+  {
     "id": "de_sitter",
     "name": "de Sitter",
     "tags": [
