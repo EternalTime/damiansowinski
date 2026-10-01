@@ -2,8 +2,8 @@
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
-khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy
-and robinson_trautman, and Godel's cylindrical chart.
+khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
+robinson_trautman and string_black_hole, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -2279,6 +2279,84 @@ def curzon_chazy_charts():
 
 
 CHARTS["curzon_chazy"] = curzon_chazy_charts
+# -- A black hole threaded by a cosmic string ------------------------------------------
+
+def string_black_hole(system_id):
+    """Aryal, Ford and Vilenkin's black hole on a cosmic string: Schwarzschild's metric with
+    g_phiphi multiplied by b^2, b = 1 - 4G mu/c^2, in the static chart, in the chart whose angle
+    b phi runs over 2 pi b, where the line element is Schwarzschild's own, and in the two
+    Eddington-Finkelstein charts built on Schwarzschild's tortoise coordinate. Every value is
+    printed around r - r_s, as Schwarzschild's are. The wedge chart is checked, slot by slot,
+    to be the static chart pulled back through phi = phi~/b."""
+    f = "\\left(1 - \\dfrac{r_s}{r}\\right)"
+    bare = "1 - \\dfrac{r_s}{r}"
+    parameters = ["r_s", "b"]
+    kretschmann = "\\dfrac{12r_s^2}{r^6}"
+    string = ["\\theta = 0, \\pi \;\\text{(the string, a conical singularity)}"]
+    horizon = ["r = r_s \;\\text{(the horizon)}"]
+    extra = {}
+    if system_id == "wedge":
+        angle = "\\tilde\\phi"
+        sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\tilde\\phi^2\\right)"
+        angles = ["\\theta \\in [0, \\pi]", "\\tilde\\phi \\in [0, 2\\pi b)"]
+        extra["check"] = string_black_hole_wedge
+    else:
+        angle = "\\phi"
+        sphere = " + r^2\\left(d\\theta^2 + b^2\\sin^2\\theta\\,d\\phi^2\\right)"
+        angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    if system_id in ("static", "wedge"):
+        coords = ["t", "r", "\\theta", angle]
+        name = "Static" if system_id == "static" else "Static with the Wedge Removed"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (r_s, \\infty)"] + angles + string
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                      "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", angle]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = chart_line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        one = "-1" if null == "u" else "1"
+        domains = [null + " \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles + string + horizon
+        components = {"metric_components": {(null, null): "-" + f, (null, "r"): one, ("r", null): one},
+                      "inverse_metric_components": {(null, "r"): one, ("r", null): one, ("r", "r"): bare}}
+    probe = vm.Reader(coords, parameters, ())
+    r, rs, b = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["b"]
+    return {
+        "metric_id": "string_black_hole",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"rising": [rs], "lead": [b, r, rs], "flip": False},
+        "components": components,
+        "kretschmann": kretschmann,
+        **extra,
+    }
+
+
+def string_black_hole_wedge(chart):
+    """J^T g J, with g the static chart and J the Jacobian of phi = phi~/b, against the wedge
+    chart's metric, which is Schwarzschild's, in every slot."""
+    spec = string_black_hole("static")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    b = chart.reader.parameters["b"]
+    at = {source.reader.parameters[n]: chart.reader.parameters[n] for n in ("r_s", "b")}
+    at.update(dict(zip(source.symbols[:3], chart.symbols[:3])))
+    at[source.symbols[3]] = chart.symbols[3] / b
+    J = sp.diag(1, 1, 1, 1 / b)
+    pulled = J.T * source.geo.g.subs(at) * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"string_black_hole: the static chart pulled back misses the wedge "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if chart.geo.g.has(b):
+        raise AssertionError("string_black_hole: the wedge chart's metric is not Schwarzschild's")
+
+
+SBH_CHARTS = ["static", "wedge", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+CHARTS["string_black_hole"] = [lambda s=s: string_black_hole(s) for s in SBH_CHARTS]
 
 
 def write(spec):

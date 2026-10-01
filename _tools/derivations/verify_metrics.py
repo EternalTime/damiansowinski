@@ -285,6 +285,20 @@ DIMENSIONS = {
     ("global_monopole", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "\\Delta": "1", "r_s": "L",
     },
+    # The black hole on a cosmic string keeps Schwarzschild's length r_s beside b = 1 - 4G mu/c^2,
+    # a pure number, and the wedge chart's angle b phi is as dimensionless as phi.
+    ("string_black_hole", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "b": "1",
+    },
+    ("string_black_hole", "wedge"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "r_s": "L", "b": "1",
+    },
+    ("string_black_hole", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "b": "1",
+    },
+    ("string_black_hole", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "b": "1",
+    },
     # e^x forces x dimensionless, and with it the other three coordinates, so the whole
     # length of the Godel solution sits in 1/omega.
     ("godel", "cartesian"): {
