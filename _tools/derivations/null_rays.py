@@ -350,6 +350,15 @@ _MH_FACTOR = ("Piecewise((1 + exp(1 - 1/(1 - (t**2 + x**2 + y**2 + z**2)))/sqrt(
 _TB_R = ("Piecewise((r*(1 - 3*sqrt(5 - 3*r**2)*t/4)**Rational(2, 3), r < 1),"
          " ((r**Rational(3, 2) - 3*t/(2*sqrt(2)))**Rational(2, 3), True))")
 
+# The dipole of the Szekeres cloud: S'/S = 2r(1 - r^2) inside r_b = 1, and S constant beyond.
+_SZ_S = "Piecewise((exp(r**2 - r**4/2), r < 1), (exp(Rational(1, 2)), True))"
+SZ_INPUT = ("Marginally bound dust, $f = 0$, with the areal radius and the mass of the Tolman-Bondi cloud, "
+            "$R(0, r) = r$ and $2GM(r)/c^2 = r^3\\left(5 - 3r^2/r_b^2\\right)/4r_b^2$ inside $r_b$, each shell "
+            "falling as $R^{3/2} = r^{3/2} - \\tfrac{3}{2}\\sqrt{2GM(r)/c^2}\\,ct$, and with "
+            "$S = \\exp\\left(r^2/r_b^2 - r^4/2r_b^4\\right)$ inside $r_b$ and constant beyond, checked to solve "
+            "this spacetime's own $G^r{}_r = 0$.")
+
+
 def _er_pulse(t, rho):
     """The pulse of Weber, Wheeler, and Bonnor at C = a = 1, psi and gamma as strings in the
     plain names of a chart whose ct and rho are the expressions t and rho: D_+ and D_-^2 are
@@ -916,6 +925,19 @@ DIAGRAMS = [
                   "zero at $r_b$, with $R(r, 0) = r$ and $2GM/c^2 = r_b/2$: each shell falls as "
                   "$R^{3/2} = r^{3/2} - \\tfrac{3}{2}\\sqrt{2GM(r)/c^2}\\,ct$, checked to solve this "
                   "spacetime's own $G^r{}_r = 0$."),
+    # Szekeres's quasispherical dust with an axis of symmetry, drawn on the two halves of that axis,
+    # which its light rays never leave: the Tolman-Bondi cloud above with the centres of its shells
+    # moved along the axis, S'/S = 2r(1 - r^2) inside the cloud and S constant outside it, where
+    # the spacetime is Schwarzschild's. The density stays positive and no shells cross, since
+    # S'/S < M'/(3M) = 5(1 - r^2)/(r(5 - 3r^2)) for r < 1.
+    *[Diagram("szekeres", "axisymmetric", view, label, ("t", "r"), (0, 1.5, -0.5, 1.0), "$r/r_b$", "$ct/r_b$", {},
+              {"theta": theta, "phi": "0"}, functions={"f": "0", "R": _TB_R, "S": _SZ_S},
+              solves=(("r", "r"),), crunch=True,
+              lines=(("surface", "r", "1", "the surface of the cloud, $r = r_b$"),),
+              marked=(("event", {"x0": "2*sqrt(2)/3*((11/10)**Rational(3, 2) - (1/2)**Rational(3, 2))", "r": "11/10"},
+                       1, "the last ray along this half of the axis to reach infinity"),),
+              input=SZ_INPUT)
+      for view, label, theta in (("north", "the axis, $\\theta = 0$", "0"), ("south", "the axis, $\\theta = \\pi$", "pi"))],
     # The collapse the conformal diagram draws, released from rest at R_0 = 2 r_s, chi_0 = pi/4:
     # the dust in its own chart, and the vacuum outside it in Schwarzschild's.
     Diagram("oppenheimer_snyder", "interior_comoving", "through", "through the centre", ("\\tau", "\\chi"),
@@ -2210,6 +2232,26 @@ CAPTIONS = {
         "there, and each outgoing ray it sends takes longer than the last to climb away. Outside the "
         "star the horizon and the black hole behind it lie beyond these coordinates; inside it the "
         "comoving coordinates carry on across both to the crunch.",
+    ],
+    ("szekeres", "axisymmetric", "north"): [
+        "The plane of $t$ and the comoving $r$ along the axis of symmetry ($\\theta = 0$) through a cloud of dust whose shells "
+        "fall as those of the Tolman-Bondi cloud do, with vacuum outside its surface $r_b$. Every shell reaches $R = 0$ at "
+        "its own time, the centre first, at $ct = 0.60\\,r_b$, and the surface at $0.94\\,r_b$, and the singularity, "
+        "where the Kretschmann scalar diverges, is that curve. The rays obey "
+        "$c\\,dt = \\pm\\left(\\partial_r R + R\\,S'/S\\right)dr$, where $R\\,S'/S$ is the rate at which the centres of "
+        "the spheres move along the axis toward $\\theta = 0$, so on this half of the axis neighbouring shells stand "
+        "farther apart than on the other and the cones are narrower in $r$.",
+        "The marked ray is the last along this half of the axis to reach infinity. It leaves the centre at "
+        "$ct = -0.81\\,r_b$ and crosses the surface at $0.61\\,r_b$, and outside the cloud, where $S$ is constant, it runs "
+        "along the horizon of Schwarzschild's exterior in Georges Lemaître's coordinates.",
+    ],
+    ("szekeres", "axisymmetric", "south"): [
+        "The plane of $t$ and the comoving $r$ along the axis of symmetry ($\\theta = \\pi$) through the same cloud, "
+        "the other half of the axis. The rays obey $c\\,dt = \\pm\\left(\\partial_r R - R\\,S'/S\\right)dr$, so "
+        "on this half neighbouring shells stand closer together and the cones are wider in $r$, while every shell "
+        "reaches $R = 0$ at the same time as on the other half, since $R$ depends on $t$ and $r$ alone.",
+        "The last ray along this half of the axis to reach infinity leaves the centre at $ct = -0.12\\,r_b$, later than "
+        "its counterpart toward $\\theta = 0$ by $0.69\\,r_b$, and crosses the surface at the same $0.61\\,r_b$.",
     ],
     ("tolman_bondi", "comoving_synchronous", "collapse"): [
         "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through a cloud of dust whose density falls from its centre to "
