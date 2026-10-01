@@ -1,5 +1,5 @@
 {
-  "version": "cc83645b9e000b1f",
+  "version": "9b2e056c593cefa3",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -5477,7 +5477,7 @@
       "type": "article",
       "fields": {
         "title": "Editor's Note: The Expanding Universe, by the Abb\\'e Georges Lema\\^itre",
-        "author": "Krasi\\'nski, Andrzej",
+        "author": "Krasiński, Andrzej",
         "journal": "General Relativity and Gravitation",
         "volume": "29",
         "number": "5",
@@ -10682,6 +10682,274 @@
         "eprint": "1510.04155",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1134/S0202289314040136"
+      }
+    },
+    "szekeres1975": {
+      "type": "article",
+      "fields": {
+        "title": "A class of inhomogeneous cosmological models",
+        "author": "Szekeres, Peter",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "41",
+        "number": "1",
+        "pages": "55--64",
+        "year": "1975",
+        "doi": "10.1007/BF01608547",
+        "url": "https://doi.org/10.1007/BF01608547"
+      }
+    },
+    "szekeres1975collapse": {
+      "type": "article",
+      "fields": {
+        "title": "Quasispherical gravitational collapse",
+        "author": "Szekeres, Peter",
+        "journal": "Physical Review D",
+        "volume": "12",
+        "number": "10",
+        "pages": "2941--2948",
+        "year": "1975",
+        "doi": "10.1103/PhysRevD.12.2941",
+        "url": "https://doi.org/10.1103/PhysRevD.12.2941"
+      }
+    },
+    "eardley1972": {
+      "type": "article",
+      "fields": {
+        "title": "Velocity-Dominated Singularities in Irrotational Dust Cosmologies",
+        "author": "Eardley, Douglas and Liang, Edison and Sachs, Rainer",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "13",
+        "number": "1",
+        "pages": "99--107",
+        "year": "1972",
+        "doi": "10.1063/1.1665859",
+        "url": "https://doi.org/10.1063/1.1665859"
+      }
+    },
+    "bonnor1976": {
+      "type": "article",
+      "fields": {
+        "title": "Non-radiative solutions of {Einstein}'s equations for dust",
+        "author": "Bonnor, William B.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "51",
+        "number": "3",
+        "pages": "191--199",
+        "year": "1976",
+        "doi": "10.1007/BF01617918",
+        "url": "https://doi.org/10.1007/BF01617918"
+      }
+    },
+    "bonnor1977": {
+      "type": "article",
+      "fields": {
+        "title": "Szekeres's space-times have no {Killing} vectors",
+        "author": "Bonnor, William B. and Sulaiman, A. H. and Tomimura, N.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "8",
+        "number": "8",
+        "pages": "549--559",
+        "year": "1977",
+        "doi": "10.1007/BF00756306",
+        "url": "https://doi.org/10.1007/BF00756306"
+      }
+    },
+    "berger1977": {
+      "type": "article",
+      "fields": {
+        "title": "Note on the spacetimes of {Szekeres}",
+        "author": "Berger, Beverly K. and Eardley, Douglas M. and Olson, Donald W.",
+        "journal": "Physical Review D",
+        "volume": "16",
+        "number": "10",
+        "pages": "3086--3089",
+        "year": "1977",
+        "doi": "10.1103/PhysRevD.16.3086",
+        "url": "https://doi.org/10.1103/PhysRevD.16.3086"
+      }
+    },
+    "wainwright1977": {
+      "type": "article",
+      "fields": {
+        "title": "Characterization of the {Szekeres} inhomogeneous cosmologies as algebraically special spacetimes",
+        "author": "Wainwright, John",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "18",
+        "number": "4",
+        "pages": "672--675",
+        "year": "1977",
+        "doi": "10.1063/1.523325",
+        "url": "https://doi.org/10.1063/1.523325"
+      }
+    },
+    "szafron1977": {
+      "type": "article",
+      "fields": {
+        "title": "Inhomogeneous cosmologies: New exact solutions and their evolution",
+        "author": "Szafron, D. A.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "18",
+        "number": "8",
+        "pages": "1673--1677",
+        "year": "1977",
+        "doi": "10.1063/1.523468",
+        "url": "https://doi.org/10.1063/1.523468"
+      }
+    },
+    "goode1982": {
+      "type": "article",
+      "fields": {
+        "title": "Singularities and evolution of the {Szekeres} cosmological models",
+        "author": "Goode, S. W. and Wainwright, John",
+        "journal": "Physical Review D",
+        "volume": "26",
+        "number": "12",
+        "pages": "3315--3326",
+        "year": "1982",
+        "doi": "10.1103/PhysRevD.26.3315",
+        "url": "https://doi.org/10.1103/PhysRevD.26.3315"
+      }
+    },
+    "barrow1984": {
+      "type": "article",
+      "fields": {
+        "title": "Inhomogeneous cosmologies with cosmological constant",
+        "author": "Barrow, John D. and Stein-Schabes, Jaime",
+        "journal": "Physics Letters A",
+        "volume": "103",
+        "number": "6--7",
+        "pages": "315--317",
+        "year": "1984",
+        "doi": "10.1016/0375-9601(84)90467-5",
+        "url": "https://doi.org/10.1016/0375-9601(84)90467-5"
+      }
+    },
+    "hellaby2002": {
+      "type": "article",
+      "fields": {
+        "title": "You cannot get through {Szekeres} wormholes: Regularity, topology, and causality in quasispherical {Szekeres} models",
+        "author": "Hellaby, Charles and Krasiński, Andrzej",
+        "journal": "Physical Review D",
+        "volume": "66",
+        "number": "8",
+        "pages": "084011",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.66.084011",
+        "eprint": "gr-qc/0206052",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.66.084011"
+      }
+    },
+    "hellaby2008": {
+      "type": "article",
+      "fields": {
+        "title": "Physical and geometrical interpretation of the $\\epsilon \\leq 0$ {Szekeres} models",
+        "author": "Hellaby, Charles and Krasiński, Andrzej",
+        "journal": "Physical Review D",
+        "volume": "77",
+        "number": "2",
+        "pages": "023529",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.77.023529",
+        "eprint": "0710.2171",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.77.023529"
+      }
+    },
+    "bolejko2006": {
+      "type": "article",
+      "fields": {
+        "title": "Structure formation in the quasispherical {Szekeres} model",
+        "author": "Bolejko, Krzysztof",
+        "journal": "Physical Review D",
+        "volume": "73",
+        "number": "12",
+        "pages": "123508",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.73.123508",
+        "eprint": "astro-ph/0604490",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.73.123508"
+      }
+    },
+    "bolejko2009": {
+      "type": "article",
+      "fields": {
+        "title": "The {Szekeres} {Swiss} Cheese model and the {CMB} observations",
+        "author": "Bolejko, Krzysztof",
+        "journal": "General Relativity and Gravitation",
+        "volume": "41",
+        "number": "8",
+        "pages": "1737--1755",
+        "year": "2009",
+        "doi": "10.1007/s10714-008-0746-x",
+        "eprint": "0804.1846",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-008-0746-x"
+      }
+    },
+    "bolejko2010": {
+      "type": "article",
+      "fields": {
+        "title": "Szekeres {Swiss}-cheese model and supernova observations",
+        "author": "Bolejko, Krzysztof and Célérier, Marie-Noëlle",
+        "journal": "Physical Review D",
+        "volume": "82",
+        "number": "10",
+        "pages": "103510",
+        "year": "2010",
+        "doi": "10.1103/PhysRevD.82.103510",
+        "eprint": "1005.2584",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.82.103510"
+      }
+    },
+    "sussman2012": {
+      "type": "article",
+      "fields": {
+        "title": "A novel approach to the dynamics of {Szekeres} dust models",
+        "author": "Sussman, Roberto A. and Bolejko, Krzysztof",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "29",
+        "number": "6",
+        "pages": "065018",
+        "year": "2012",
+        "doi": "10.1088/0264-9381/29/6/065018",
+        "eprint": "1109.1178",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/29/6/065018"
+      }
+    },
+    "buckley2013": {
+      "type": "article",
+      "fields": {
+        "title": "{CMB} dipoles and other low-order multipoles in the quasispherical {Szekeres} model",
+        "author": "Buckley, Robert G. and Schlegel, Eric M.",
+        "journal": "Physical Review D",
+        "volume": "87",
+        "number": "2",
+        "pages": "023524",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.87.023524",
+        "eprint": "1907.08684",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.87.023524"
+      }
+    },
+    "buckley2020": {
+      "type": "article",
+      "fields": {
+        "title": "Physical geometry of the quasispherical {Szekeres} models",
+        "author": "Buckley, Robert G. and Schlegel, Eric M.",
+        "journal": "Physical Review D",
+        "volume": "101",
+        "number": "2",
+        "pages": "023511",
+        "year": "2020",
+        "doi": "10.1103/PhysRevD.101.023511",
+        "eprint": "1908.02697",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.101.023511"
       }
     }
   }

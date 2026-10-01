@@ -5638,8 +5638,13 @@ def szekeres_cloud(r, t):
     q = np.where(inside, r, 1.0)
     M = np.where(inside, q ** 3 * (5 - 3 * q * q) / 8, 0.25)
     dM = np.where(inside, 15 * q * q * (1 - q * q) / 8, 0.0)
-    R = (r ** 1.5 - 1.5 * np.sqrt(2 * M) * t) ** (2 / 3)
-    dR = (np.sqrt(r) - dM * t / np.sqrt(2 * M)) / np.sqrt(R)
+    # Inside, R = r u^(2/3) with u = 1 - 3 sqrt(5 - 3r^2) t/4, written so that the centre r = 0 is a point like any other.
+    root = np.sqrt(5 - 3 * q * q)
+    u = 1 - 3 * root * t / 4
+    outer = np.maximum(r, 1.0)
+    R_out = (outer ** 1.5 - 1.5 * np.sqrt(0.5) * t) ** (2 / 3)
+    R = np.where(inside, r * u ** (2 / 3), R_out)
+    dR = np.where(inside, u ** (2 / 3) + 3 * q * q * t / (2 * u ** (1 / 3) * root), np.sqrt(outer / R_out))
     return R, dR, M, dM, np.where(inside, 2 * q * (1 - q * q), 0.0)
 
 
@@ -5694,7 +5699,8 @@ def szekeres(ck, src):
     size = 2 * float(szekeres_cloud(SZ_TOP, SZ_MOMENTS[0])[0])
 
     def moment(t):
-        fixed_at = {"t": repr(float(t)), **EQUATOR}
+        # The moment as an exact fraction, so that outside the cloud g_rr - (dR/dr)^2 is exactly zero.
+        fixed_at = {"t": str(sp.Rational(round(1000 * float(t)), 1000)), **EQUATOR}
         inside = Slice(src, "szekeres", "axisymmetric", "r", "\\phi", fixed_at, functions=SZ_INSIDE)
         outside = Slice(src, "szekeres", "axisymmetric", "r", "\\phi", fixed_at, functions=SZ_OUTSIDE)
         dust = Piece("cloud", "star", inside, 0.0, 1.0, 0.0, 1,
@@ -5723,7 +5729,7 @@ def szekeres(ck, src):
             p.z = SZ_VERTICAL * p.z
         return Surface([dust, ext], label=f"$ct = {t:g}\\,r_b$", time=t)
 
-    times, keys = movie_values(list(SZ_MOMENTS), 0.05)
+    times, keys = movie_values(list(SZ_MOMENTS), 0.025)
     frames = [moment(t) for t in times]
     surfaces = [frames[i] for i in keys]
     fig = movie_figure(frames, {"star": "star", "sheet": "cover"}, size, meridians=12)

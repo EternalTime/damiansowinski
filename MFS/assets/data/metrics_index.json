@@ -1358,6 +1358,40 @@
     "embedding": "ad4896f7b32bbeec"
   },
   {
+    "id": "szekeres",
+    "name": "Szekeres",
+    "tags": [
+      "dust",
+      "inhomogeneous",
+      "no Killing vectors",
+      "quasispherical",
+      "dipole",
+      "cosmology",
+      "cosmological",
+      "void",
+      "structure formation",
+      "Swiss cheese",
+      "comoving",
+      "time-dependent",
+      "dynamical",
+      "non-vacuum",
+      "Petrov type D",
+      "algebraically special",
+      "shell crossing",
+      "singularity",
+      "curvature singularity",
+      "big bang",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "790d52bad49d8142",
+    "diagrams": "99c54951a880e0fc",
+    "embedding": "afe08c1a64cd8527"
+  },
+  {
     "id": "taub_nut",
     "name": "Taub-Newman-Unti-Tamburino",
     "tags": [
