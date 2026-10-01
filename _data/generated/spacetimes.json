@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 55,
+  "count": 56,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -10443,6 +10443,223 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{240r_h^6}{r^{10}}"
+        }
+      ]
+    },
+    {
+      "id": "szekeres",
+      "name": "Szekeres Inhomogeneous Dust Cosmologies",
+      "short_name": "Szekeres",
+      "description": "The dust cosmologies Peter Szekeres found in 1975, which in general have no Killing vector. Their shells of matter are spheres, planes, or pseudospheres that are not concentric, each evolving as a shell of the Tolman-Bondi model does, so the density carries a dipole that changes from shell to shell.",
+      "tags": [
+        "dust",
+        "inhomogeneous",
+        "no Killing vectors",
+        "quasispherical",
+        "dipole",
+        "cosmology",
+        "cosmological",
+        "void",
+        "structure formation",
+        "Swiss cheese",
+        "comoving",
+        "time-dependent",
+        "dynamical",
+        "non-vacuum",
+        "Petrov type D",
+        "algebraically special",
+        "shell crossing",
+        "singularity",
+        "curvature singularity",
+        "big bang",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "szekeres1975",
+        "eardley1972",
+        "hellaby2002",
+        "szekeres1975collapse",
+        "bonnor1976",
+        "berger1977",
+        "bonnor1977",
+        "wainwright1977",
+        "szafron1977",
+        "bolejko2009",
+        "barrow1984",
+        "goode1982",
+        "hellaby2008",
+        "buckley2020",
+        "bolejko2006",
+        "bolejko2010",
+        "sussman2012",
+        "buckley2013"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/szekeres.json",
+      "charts": [
+        {
+          "id": "stereographic",
+          "name": "Stereographic",
+          "coordinates": [
+            "t",
+            "r",
+            "p",
+            "q"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "p \\in (-\\infty, \\infty)",
+            "q \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "R = R(t,r)",
+              "description": "Areal radius, a length ($R > 0$): where $\\epsilon = 1$ the shell labelled $r$ is a sphere of area $4\\pi R^2$ at time $t$. For dust $(\\partial_t R)^2 = 2GM/(c^2R) + f$, with $M$ a function of $r$ alone, the mass within the shell where $\\epsilon = 1$, which no component assumes. Every $\\partial_t$ is the derivative along the chart coordinate, $\\partial_t = c^{-1}\\partial/\\partial t$."
+            },
+            {
+              "symbol": "f = f(r)",
+              "description": "Energy function, dimensionless, with $\\epsilon + f > 0$: for dust, twice the energy per unit mass of the shell labelled $r$ in units of $c^2$. The prime is $f' = df/dr$."
+            },
+            {
+              "symbol": "S = S(r)",
+              "description": "Dimensionless positive function, the scale of the stereographic coordinates on the shell labelled $r$"
+            },
+            {
+              "symbol": "P = P(r)",
+              "description": "Dimensionless function: $(P, Q)$ is the center of the stereographic coordinates on the shell labelled $r$"
+            },
+            {
+              "symbol": "Q = Q(r)",
+              "description": "Dimensionless function, the second coordinate of that center"
+            },
+            {
+              "symbol": "\\epsilon",
+              "description": "Sign of the curvature of the shells: $+1$ for spheres (quasispherical), $0$ for planes (quasiplanar), and $-1$ for pseudospheres (quasihyperbolic)"
+            },
+            {
+              "symbol": "E = \\dfrac{S}{2}\\left(\\dfrac{\\left(p - P\\right)^2 + \\left(q - Q\\right)^2}{S^2} + \\epsilon\\right)",
+              "description": "Szekeres's function, dimensionless: $R^2(dp^2 + dq^2)/E^2$ is the metric of a sphere, a plane, or a pseudosphere of radius $R$ in stereographic projection. Where $\\epsilon = 1$, $\\partial_r E/E$ is a dipole over each sphere, and where $S$, $P$, and $Q$ are constant the spheres are concentric, as in Tolman-Bondi."
+            }
+          ],
+          "convention": "We use Charles Hellaby and Andrzej Krasiński's coordinates $(t, r, p, q)$, with $t$ the proper time of the dust, $r$ a comoving label for a shell of matter, a length, and $p$ and $q$ dimensionless stereographic coordinates on the shell. The areal radius $R(t,r)$ is a length, and $f$, $S$, $P$, and $Q$ are dimensionless functions of $r$ alone. We take components in the chart $x^0 = ct$, where $\\partial_t = c^{-1}\\partial/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{\\left(\\partial_r R - \\dfrac{R\\,\\partial_r E}{E}\\right)^2}{\\epsilon + f}dr^2 + \\dfrac{R^2}{E^2}\\left(dp^2 + dq^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\left(E\\,\\partial_r R - R\\,\\partial_r E\\right)^2}{E^2\\left(\\epsilon + f\\right)}"
+            },
+            {
+              "indices": [
+                "p",
+                "p"
+              ],
+              "value": "\\dfrac{R^2}{E^2}"
+            },
+            {
+              "indices": [
+                "q",
+                "q"
+              ],
+              "value": "\\dfrac{R^2}{E^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2E\\,R\\,f' + 2\\left(f\\,E\\,\\partial_r R - 3f\\,R\\,\\partial_r E - E\\,R^2\\,\\partial_t^2\\partial_r R - 2E\\,R\\,\\partial_r R\\,\\partial_t^2 R - 2E\\,R\\,\\partial_t R\\,\\partial_t\\partial_r R - E\\,\\partial_r R\\left(\\partial_t R\\right)^2 + 3R^2\\,\\partial_r E\\,\\partial_t^2 R + 3R\\,\\partial_r E\\left(\\partial_t R\\right)^2\\right)}{R^2\\left(E\\,\\partial_r R - R\\,\\partial_r E\\right)}",
+          "kretschmann": "K = \\dfrac{2E^2\\,R^2\\left(f'\\right)^2 - 8E\\,R^2\\left(f\\,\\partial_r E + E\\,\\partial_t R\\,\\partial_t\\partial_r R - \\partial_r E\\left(\\partial_t R\\right)^2\\right)f' + 4\\left(f^2\\,E^2\\left(\\partial_r R\\right)^2 - 2f^2\\,E\\,R\\,\\partial_r E\\,\\partial_r R + 3f^2\\,R^2\\left(\\partial_r E\\right)^2 - 2f\\,E^2\\left(\\partial_r R\\right)^2\\left(\\partial_t R\\right)^2 + 4f\\,E\\,R^2\\,\\partial_r E\\,\\partial_t R\\,\\partial_t\\partial_r R + 4f\\,E\\,R\\,\\partial_r E\\,\\partial_r R\\left(\\partial_t R\\right)^2 - 6f\\,R^2\\left(\\partial_r E\\right)^2\\left(\\partial_t R\\right)^2 + E^2\\,R^4\\left(\\partial_t^2\\partial_r R\\right)^2 + 2E^2\\,R^2\\left(\\partial_r R\\right)^2\\left(\\partial_t^2 R\\right)^2 + 2E^2\\,R^2\\left(\\partial_t R\\right)^2\\left(\\partial_t\\partial_r R\\right)^2 + E^2\\left(\\partial_r R\\right)^2\\left(\\partial_t R\\right)^4 - 2E\\,R^4\\,\\partial_r E\\,\\partial_t^2 R\\,\\partial_t^2\\partial_r R - 4E\\,R^3\\,\\partial_r E\\,\\partial_r R\\left(\\partial_t^2 R\\right)^2 - 4E\\,R^2\\,\\partial_r E\\left(\\partial_t R\\right)^3\\,\\partial_t\\partial_r R - 2E\\,R\\,\\partial_r E\\,\\partial_r R\\left(\\partial_t R\\right)^4 + 3R^4\\left(\\partial_r E\\right)^2\\left(\\partial_t^2 R\\right)^2 + 3R^2\\left(\\partial_r E\\right)^2\\left(\\partial_t R\\right)^4\\right)}{R^4\\left(E\\,\\partial_r R - R\\,\\partial_r E\\right)^2}"
+        },
+        {
+          "id": "axisymmetric",
+          "name": "Axisymmetric",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "R = R(t,r)",
+              "description": "Areal radius, a length ($R > 0$): the shell labelled $r$ is a sphere of area $4\\pi R^2$ at time $t$. For dust $(\\partial_t R)^2 = 2GM/(c^2R) + f$, with $M$ a function of $r$ alone, the mass within the shell, which no component assumes. Every $\\partial_t$ is the derivative along the chart coordinate, $\\partial_t = c^{-1}\\partial/\\partial t$."
+            },
+            {
+              "symbol": "f = f(r)",
+              "description": "Energy function, dimensionless, with $1 + f > 0$: for dust, twice the energy per unit mass of the shell labelled $r$ in units of $c^2$. The prime is $f' = df/dr$."
+            },
+            {
+              "symbol": "S = S(r)",
+              "description": "Dimensionless positive function: $R\\,S'/S$ is the rate, per unit $r$, at which the centers of the spheres move along the axis toward $\\theta = 0$. The prime is $S' = dS/dr$."
+            }
+          ],
+          "convention": "We use Robert Buckley and Eric Schlegel's coordinates $(t, r, \\theta, \\phi)$ on the quasispherical models, $\\epsilon = 1$, whose functions $P$ and $Q$ are constant, with $\\theta$ and $\\phi$ the polar angles of each sphere about the axis of symmetry, where $p - P = S\\cot(\\theta/2)\\cos\\phi$ and $q - Q = S\\cot(\\theta/2)\\sin\\phi$. The areal radius $R(t,r)$ is a length, and $f$ and $S$ are dimensionless functions of $r$ alone. We take components in the chart $x^0 = ct$, where $\\partial_t = c^{-1}\\partial/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{\\left(\\partial_r R + \\dfrac{R\\,S'\\cos\\theta}{S}\\right)^2}{1 + f}dr^2 + R^2\\left(d\\theta - \\dfrac{S'\\sin\\theta}{S}dr\\right)^2 + R^2\\sin^2\\theta\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{f\\,R^2\\left(S'\\right)^2\\,\\sin^2\\theta + S^2\\left(\\partial_r R\\right)^2 + 2S\\,R\\,S'\\,\\partial_r R\\,\\cos\\theta + R^2\\left(S'\\right)^2}{S^2\\left(f + 1\\right)}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\theta"
+              ],
+              "value": "-\\dfrac{R^2\\,S'\\,\\sin\\theta}{S}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "r"
+              ],
+              "value": "-\\dfrac{R^2\\,S'\\,\\sin\\theta}{S}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6R\\,S'\\left(\\partial_t R\\right)^2\\,\\cos\\theta + 6R^2\\,S'\\,\\partial_t^2 R\\,\\cos\\theta + 2S\\,\\partial_r R\\left(\\partial_t R\\right)^2 - 2S\\,R\\,f' + 4S\\,R\\,\\partial_t R\\,\\partial_t\\partial_r R + 4S\\,R\\,\\partial_r R\\,\\partial_t^2 R + 2S\\,R^2\\,\\partial_t^2\\partial_r R - 6f\\,R\\,S'\\,\\cos\\theta - 2f\\,S\\,\\partial_r R}{R^2\\left(S\\,\\partial_r R + R\\,S'\\,\\cos\\theta\\right)}",
+          "kretschmann": "K = \\dfrac{4f^2\\,S^2\\left(\\partial_r R\\right)^2 + 8f^2\\,S\\,R\\,S'\\,\\partial_r R\\,\\cos\\theta + 12f^2\\,R^2\\left(S'\\right)^2\\,\\cos^2\\theta - 8f\\,S^2\\left(\\partial_r R\\right)^2\\left(\\partial_t R\\right)^2 - 16f\\,S\\,R^2\\,S'\\,\\partial_t R\\,\\partial_t\\partial_r R\\,\\cos\\theta + 8f\\,S\\,R^2\\,S'\\,f'\\,\\cos\\theta - 16f\\,S\\,R\\,S'\\,\\partial_r R\\left(\\partial_t R\\right)^2\\,\\cos\\theta - 24f\\,R^2\\left(S'\\right)^2\\left(\\partial_t R\\right)^2\\,\\cos^2\\theta + 4S^2\\,R^4\\left(\\partial_t^2\\partial_r R\\right)^2 - 8S^2\\,R^2\\,\\partial_t R\\,\\partial_t\\partial_r R\\,f' + 8S^2\\,R^2\\left(\\partial_r R\\right)^2\\left(\\partial_t^2 R\\right)^2 + 8S^2\\,R^2\\left(\\partial_t R\\right)^2\\left(\\partial_t\\partial_r R\\right)^2 + 2S^2\\,R^2\\left(f'\\right)^2 + 4S^2\\left(\\partial_r R\\right)^2\\left(\\partial_t R\\right)^4 + 8S\\,R^4\\,S'\\,\\partial_t^2 R\\,\\partial_t^2\\partial_r R\\,\\cos\\theta + 16S\\,R^3\\,S'\\,\\partial_r R\\left(\\partial_t^2 R\\right)^2\\,\\cos\\theta - 8S\\,R^2\\,S'\\left(\\partial_t R\\right)^2\\,f'\\,\\cos\\theta + 16S\\,R^2\\,S'\\left(\\partial_t R\\right)^3\\,\\partial_t\\partial_r R\\,\\cos\\theta + 8S\\,R\\,S'\\,\\partial_r R\\left(\\partial_t R\\right)^4\\,\\cos\\theta + 12R^4\\left(S'\\right)^2\\left(\\partial_t^2 R\\right)^2\\,\\cos^2\\theta + 12R^2\\left(S'\\right)^2\\left(\\partial_t R\\right)^4\\,\\cos^2\\theta}{R^4\\left(S\\,\\partial_r R + R\\,S'\\,\\cos\\theta\\right)^2}"
         }
       ]
     },

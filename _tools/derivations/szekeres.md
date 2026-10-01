@@ -57,6 +57,8 @@ With $P$ and $Q$ constant the spacetime has the axis of symmetry $\theta = 0$, $
 $$ds^2 = -c^2dt^2 + \frac{\left(\partial_rR + R\,S'\cos\theta/S\right)^2}{1 + f}\,dr^2 + R^2\left(d\theta - \frac{S'\sin\theta}{S}\,dr\right)^2 + R^2\sin^2\theta\,d\phi^2.$$
 
 `szekeres_pullback` checks slot by slot that this is the stereographic chart pulled back, in the variable $u = \cot(\theta/2)$, in which both metrics are rational.
+The term in $dr\,d\theta$ mixes $\cos^2\theta$ and $\sin^2\theta$ in every tensor, so that a value factored as it comes carries $S^2(\partial_rR)^2 + R^2S'^2\sin^2\theta - R^2S'^2$ below the line where $S\,\partial_rR + R\,S'\cos\theta$ belongs.
+`szekeres_polar` writes every even power of the sine in the cosine, cancels the fraction, and factors each side as it stands, all in the cosine and all in the sine, keeping the shortest; the Ricci scalar is a third of the length it was and the Kretschmann scalar a quarter.
 
 With $f = 0$ the moment of $t$ is Euclidean space: the map $x = R\sin\theta\cos\phi$, $y = R\sin\theta\sin\phi$, $z = R\cos\theta + Z(r)$ pulls $dx^2 + dy^2 + dz^2$ back onto the spatial metric when $Z' = R\,S'/S$.
 So the shell $r$ is the sphere of radius $R$ about the point of the axis at height $Z$, and $R\,S'/S$ is the rate at which the centres move along the axis toward $\theta = 0$.

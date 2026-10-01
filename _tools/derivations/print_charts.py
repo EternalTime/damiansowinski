@@ -3092,6 +3092,33 @@ class SzekeresForms:
         return out
 
 
+def szekeres_polar(theta):
+    """A `pretty` for the axisymmetric chart. Its metric has a term in dr dtheta, so a value comes
+    back with cos^2(theta) and sin^2(theta) mixed and neither side of its fraction factors. Here
+    every even power of the sine is written in the cosine, the fraction cancelled, and each side
+    factored as it stands, all in the cosine and all in the sine, the shortest of the three kept."""
+    c, s = sp.Symbol("_c"), sp.Symbol("_s")
+    held = {sp.cos(theta): c, sp.sin(theta): s}
+    back = {c: sp.cos(theta), s: sp.sin(theta)}
+    circle = s ** 2 + c ** 2 - 1
+
+    def in_cosine(value):
+        return sp.expand(value).xreplace(held).replace(
+            lambda e: e.is_Pow and e.base == s and e.exp.is_Integer and e.exp > 1,
+            lambda e: (1 - c ** 2) ** (e.exp // 2) * s ** (e.exp % 2))
+
+    def side(polynomial):
+        polynomial = sp.expand(polynomial)
+        forms = [polynomial, sp.reduced(polynomial, [circle], s, c)[1], sp.reduced(polynomial, [circle], c, s)[1]]
+        return min((sp.factor(form) for form in forms), key=sp.count_ops).xreplace(back)
+
+    def pretty(value):
+        numerator, denominator = sp.fraction(sp.together(sp.sympify(value)))
+        numerator, denominator = sp.fraction(sp.cancel(in_cosine(numerator) / in_cosine(denominator)))
+        return side(numerator) / side(denominator)
+    return pretty
+
+
 def szekeres(system_id):
     """Szekeres's dust cosmologies of the class that holds the Lemaitre-Tolman models, in the
     two charts its literature uses: Hellaby and Krasinski's, whose surfaces of constant t and r
@@ -3121,7 +3148,7 @@ def szekeres(system_id):
         domains = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
         probe = vm.Reader(coords, parameters, ())
         lead = [probe.parameters["f"], probe.parameters["S"], probe.parameters["R"]]
-        extra = collect = {}
+        extra, collect = {"pretty": szekeres_polar(probe.symbol["\\theta"])}, {}
     return {
         "metric_id": "szekeres",
         "system": {"id": system_id, "name": name, "coords": coords,
