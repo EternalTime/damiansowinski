@@ -1,0 +1,3872 @@
+{
+  "id": "curzon_chazy",
+  "name": "Curzon-Chazy Particle",
+  "short_name": "Curzon-Chazy",
+  "description": "A static, axially symmetric vacuum field whose Weyl potential is Newton's potential of a point mass, found by Jean Chazy in 1924 and H. E. J. Curzon in 1925. Its singularity is a naked ring of infinite circumference, and the curvature there depends on the direction of approach.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "static",
+    "stationary",
+    "axisymmetric",
+    "axial symmetry",
+    "Weyl class",
+    "harmonic function",
+    "mass",
+    "singularity",
+    "curvature singularity",
+    "naked singularity",
+    "directional singularity",
+    "ring singularity",
+    "asymptotically flat",
+    "Petrov type I",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The mass parameter $m = GM/c^2$ is a length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Hermann Weyl reduced the vacuum field equations of a static, axially symmetric spacetime in 1917 to two equations for two functions, $\\psi$ and $\\gamma$, of his canonical coordinates $\\rho$ and $z$ [weyl1917, lehmkuhl2019]. The first is Laplace's equation for $\\psi$ in a flat space of three dimensions, and the second fixes $\\gamma$ by a quadrature that is quadratic in the derivatives of $\\psi$ [lehmkuhl2019, abdelqader2012]. Jean Chazy in 1924 and H. E. J. Curzon in 1925 took for $\\psi$ the Newtonian potential of point masses, and each presented the field of two such particles on the axis [chazy1924, curzon1925, lehmkuhl2019]. One particle alone has $\\psi = -m/R$ and $\\gamma = -m^2\\rho^2/2R^4$, with $R = \\sqrt{\\rho^2 + z^2}$ [abdelqader2012]. The constant $m$ is the mass at spatial infinity [abdelqader2012].¶Albert Einstein and Jakob Grommer started from the same potential in 1927, when they set out to derive the motion of a particle from the vacuum field equations [lehmkuhl2019]. They took the singularity at $\\rho = z = 0$ as the place of the particle, and worked to avoid a second singularity along the axis, which appears wherever $\\gamma$ fails to vanish there [lehmkuhl2019]. Ludwik Silberstein found the field of two particles again in 1936 and concluded that general relativity lets two masses stay at rest, which contradicts experience [silberstein1936, weinstein2015twobody]. Einstein and Nathan Rosen replied the same year that his solution has a further singularity on the line joining the two particles [einstein1936twobody, lehmkuhl2019].¶Ronald Gautreau and James Anderson noticed in 1967 that the curvature at $R = 0$ depends on the direction of approach [gautreau1967, abdelqader2012]. Along the axis the Kretschmann scalar is $48m^2(|z| - m)^2e^{-4m/|z|}/z^8$, which goes to zero as $z \\to 0$, and in the plane $z = 0$ it diverges [abdelqader2012]. In the coordinates $\\rho = r\\sin\\theta$ and $z = r\\cos\\theta$, John Stachel showed in 1968 that the area of a surface of constant $t$ and $r$ shrinks with $r$ to a minimum and then diverges as $r \\to 0$ [stachel1968, abdelqader2012]. The minimum lies at $r \\simeq 0.5389\\,m$ [abdelqader2012]. A circle about the axis in the plane $z = 0$ has circumference $2\\pi\\rho\\,e^{m/\\rho}$, which also diverges as $\\rho \\to 0$ [abdelqader2012].¶Peter Szekeres and F. H. Morgan examined the geodesics that approach the singularity and showed in 1973 that the metric can be extended so that almost all of them are complete [szekeres1973]. The extensions are infinite in number, none of them is analytic, and all are $C^\\infty$ [szekeres1973]. With Susan Scott, Szekeres built coordinates in 1986 in which the singularity is a ring, of finite radius and infinite circumference [scott1986a, abdelqader2012]. Spatial geodesics that thread the ring reach a second spacelike infinity on its other side [scott1986a]. One class of incomplete geodesics extends to the past and to the future into regions of flat space, and every other incomplete geodesic ends at the ring, which is naked [scott1986b]. Scott and Szekeres called the solution in these coordinates \"a peculiar kind of sandwich wave\" [scott1986b].¶The Weyl tensor is of Petrov type D on the axis and of type I off it, as Robyn Arianrhod, S. Fletcher, and Colin McIntosh found in 1991 [arianrhod1991]. The Riemann tensor vanishes at the two points $z = \\pm m$ of the axis, which lie on the surface $R = m$ where the cubic invariant of the Weyl tensor vanishes [arianrhod1991]. Jerry Griffiths and Jiří Podolský questioned in 2009, because of the ring, whether the solution is the relativistic field of a point particle [griffiths2009, lehmkuhl2019]. Majd Abdelqader and Kayll Lake compared the gradient flows of its curvature invariants with those of Newtonian fields in 2012 and found that, outside a region close to the singularity, the field is that of a Newtonian ring [abdelqader2012]. Mert Mangut, Özay Gürtuğ, and Mustafa Halilsoy probed the singularity with a scalar quantum field in 2025, by the method of Gary Horowitz and Donald Marolf, and found it quantum mechanically regular for that field [mangut2025].",
+  "references": [
+    "weyl1917",
+    "lehmkuhl2019",
+    "abdelqader2012",
+    "chazy1924",
+    "curzon1925",
+    "silberstein1936",
+    "weinstein2015twobody",
+    "einstein1936twobody",
+    "gautreau1967",
+    "stachel1968",
+    "szekeres1973",
+    "scott1986a",
+    "scott1986b",
+    "arianrhod1991",
+    "griffiths2009",
+    "mangut2025"
+  ],
+  "coordinates": [
+    {
+      "id": "weyl",
+      "name": "Weyl",
+      "coords": [
+        "t",
+        "\\rho",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\rho \\in [0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "(\\rho, z) \\neq (0, 0) \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass at spatial infinity"
+        },
+        {
+          "symbol": "R = \\sqrt{\\rho^2 + z^2}",
+          "description": "Distance from the origin in the flat space of Weyl's coordinates; Weyl's two functions are $\\psi = -m/R$ and $\\gamma = -m^2\\rho^2/(2R^4)$"
+        }
+      ],
+      "convention": "We use Weyl's canonical coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths, and write $R = \\sqrt{\\rho^2 + z^2}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -e^{-2m/R}c^2dt^2 + e^{2m/R}\\left(e^{-m^2\\rho^2/R^4}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{-2m/R}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "e^{2m/R}e^{-m^2\\rho^2/R^4}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{2m/R}e^{-m^2\\rho^2/R^4}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\rho^2e^{2m/R}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{2m/R}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "e^{-2m/R}e^{m^2\\rho^2/R^4}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{-2m/R}e^{m^2\\rho^2/R^4}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{e^{-2m/R}}{\\rho^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho}{R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,\\rho}{R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,z}{R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,z}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,z}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,z}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)}{R^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)}{R^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,z\\left(2m\\,\\rho^2 - R^3\\right)}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,z\\left(2m\\,\\rho^2 - R^3\\right)}{R^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,z\\left(2m\\,\\rho^2 - R^3\\right)}{R^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,z\\left(2m\\,\\rho^2 - R^3\\right)}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\rho\\left(m\\,\\rho^2 - R^3\\right)e^{m^2\\,\\rho^2/R^4}}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R^3 - m\\,\\rho^2}{\\rho\\,R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{R^3 - m\\,\\rho^2}{\\rho\\,R^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,z\\,e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\,z\\,e^{m^2\\,\\rho^2/R^4}}{R^3}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,e^{-2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,e^{-2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,e^{-2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,z\\,e^{-2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,z\\,e^{-2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,z\\,e^{-2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,z\\left(2m\\,\\rho^2 - R^3\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,z\\left(2m\\,\\rho^2 - R^3\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,z\\left(2m\\,\\rho^2 - R^3\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,z\\left(2m\\,\\rho^2 - R^3\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\rho\\left(m\\,\\rho^2 - R^3\\right)e^{2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\rho\\left(m\\,\\rho^2 - R^3\\right)e^{2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\rho\\left(m\\,\\rho^2 - R^3\\right)e^{2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\,z\\,e^{2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\,z\\,e^{2m/R}}{R^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\,z\\,e^{2m/R}}{R^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(m - R\\right)e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(m - R\\right)e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(R - m\\right)e^{-2m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(R - m\\right)e^{-2m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(R - m\\right)e^{-2m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(R - m\\right)e^{-2m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + 2m\\,R^5 + 3\\rho^2\\,R^4 - 2R^6\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + 2m\\,R^5 + 3\\rho^2\\,R^4 - 2R^6\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + 2m\\,R^5 + 3\\rho^2\\,R^4 - 2R^6\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + 2m\\,R^5 + 3\\rho^2\\,R^4 - 2R^6\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{2m/R}}{R^9}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{16m^2\\left(m^4\\,\\rho^2 - 3m^3\\,\\rho^2\\,R + 3m^2\\,\\rho^2\\,R^2 + 3m^2\\,R^4 - 6m\\,R^5 + 3R^6\\right)e^{-4m/R}e^{2m^2\\,\\rho^2/R^4}}{R^{12}}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(m - R\\right)e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(m - R\\right)e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{m^2\\,\\rho^2/R^4}}{R^9}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(R^6 - 3\\rho^2\\,R^4 - m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(R - m\\right)e^{-2m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(R - m\\right)e^{-2m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(R - m\\right)e^{-2m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(R - m\\right)e^{-2m/R}e^{m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + 2m\\,R^5 + 3\\rho^2\\,R^4 - 2R^6\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + 2m\\,R^5 + 3\\rho^2\\,R^4 - 2R^6\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + 2m\\,R^5 + 3\\rho^2\\,R^4 - 2R^6\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + 2m\\,R^5 + 3\\rho^2\\,R^4 - 2R^6\\right)e^{-2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(2R^6 - 3\\rho^2\\,R^4 - 2m\\,R^5 + 3m\\,\\rho^2\\,R^3 + 3m^2\\,\\rho^2\\,R^2 - 4m^2\\,\\rho^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\,\\rho^3\\,z\\left(4m^2\\,\\rho^2 - m^2\\,R^2 - 3m\\,R^3 + 3R^4\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\left(m - R\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{m\\left(m - R\\right)e^{2m/R}e^{-m^2\\,\\rho^2/R^4}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\,\\rho^2\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{2m/R}}{R^9}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,\\rho^2\\left(4m^2\\,\\rho^4 - 3m^2\\,\\rho^2\\,R^2 - 3m\\,\\rho^2\\,R^3 + m\\,R^5 + 3\\rho^2\\,R^4 - R^6\\right)e^{2m/R}}{R^9}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2m\\,\\rho}{R^3}\\dot{t}\\dot{\\rho} + \\dfrac{2m\\,z}{R^3}\\dot{t}\\dot{z} = 0",
+        "\\ddot{\\rho} + \\dfrac{m\\,\\rho\\,e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^3}\\dot{t}^2 + \\dfrac{m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)}{R^6}\\dot{\\rho}^2 + \\dfrac{2m\\,z\\left(2m\\,\\rho^2 - R^3\\right)}{R^6}\\dot{\\rho}\\dot{z} + \\dfrac{\\rho\\left(m\\,\\rho^2 - R^3\\right)e^{m^2\\,\\rho^2/R^4}}{R^3}\\dot{\\phi}^2 + \\dfrac{m\\,\\rho\\left(R^3 + m\\,R^2 - 2m\\,\\rho^2\\right)}{R^6}\\dot{z}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\left(R^3 - m\\,\\rho^2\\right)}{\\rho\\,R^3}\\dot{\\rho}\\dot{\\phi} - \\dfrac{2m\\,z}{R^3}\\dot{\\phi}\\dot{z} = 0",
+        "\\ddot{z} + \\dfrac{m\\,z\\,e^{-4m/R}e^{m^2\\,\\rho^2/R^4}}{R^3}\\dot{t}^2 + \\dfrac{m\\,z\\left(R^3 - 2m\\,\\rho^2\\right)}{R^6}\\dot{\\rho}^2 + \\dfrac{2m\\,\\rho\\left(2m\\,\\rho^2 - m\\,R^2 - R^3\\right)}{R^6}\\dot{\\rho}\\dot{z} + \\dfrac{m\\,\\rho^2\\,z\\,e^{m^2\\,\\rho^2/R^4}}{R^3}\\dot{\\phi}^2 + \\dfrac{m\\,z\\left(2m\\,\\rho^2 - R^3\\right)}{R^6}\\dot{z}^2 = 0"
+      ]
+    },
+    {
+      "id": "spherical",
+      "name": "Spherical",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r = 0 \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass at spatial infinity"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$ with $\\rho = r\\sin\\theta$ and $z = r\\cos\\theta$, so that $r$ is Weyl's $R$, and with $t$ carrying dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -e^{-2m/r}c^2dt^2 + e^{2m/r}\\left(e^{-m^2\\sin^2\\theta/r^2}\\left(dr^2 + r^2d\\theta^2\\right) + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{-2m/r}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2e^{2m/r}\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{2m/r}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{e^{-2m/r}}{r^2\\sin^2\\theta}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m\\sin^2\\theta - r\\right)}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^2\\sin\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^2\\sin\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^2\\sin\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^2\\sin^2\\theta - m\\,r + r^2}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\left(m - r\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m^2\\sin^2\\theta - m\\,r + r^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2\\sin^2\\theta - m\\,r + r^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r - m}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r - m}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,e^{-2m/r}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,e^{-2m/r}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\,e^{-2m/r}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m\\sin^2\\theta - r\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^2e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^2e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(r - m\\right)e^{2m/r}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\left(r - m\\right)e^{2m/r}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\left(r - m\\right)e^{2m/r}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-m^2e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2e^{2m/r}\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r^2e^{2m/r}\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r^2e^{2m/r}\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^3e^{m^2\\sin^2\\theta/r^2}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3e^{m^2\\sin^2\\theta/r^2}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(r - m\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(r - m\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^3e^{m^2\\sin^2\\theta/r^2}\\sin^3\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3e^{m^2\\sin^2\\theta/r^2}\\sin^3\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)}{r^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-2m/r}}{r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-2m/r}}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-2m/r}}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-2m/r}}{r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-2m/r}}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-2m/r}}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-2m/r}}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-2m/r}}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(r - m\\right)e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(r - m\\right)e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(r - m\\right)e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(r - m\\right)e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{2m/r}\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{2m/r}\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{2m/r}\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{2m/r}\\sin^2\\theta}{r}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{16m^2\\left(m^4\\sin^2\\theta - 3m^3\\,r\\sin^2\\theta + 3m^2\\,r^2\\sin^2\\theta + 3m^2\\,r^2 - 6m\\,r^3 + 3r^4\\right)e^{-4m/r}e^{2m^2\\sin^2\\theta/r^2}}{r^{10}}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m^3\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^3e^{m^2\\sin^2\\theta/r^2}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3e^{m^2\\sin^2\\theta/r^2}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(r - m\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(r - m\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^3e^{m^2\\sin^2\\theta/r^2}\\sin^3\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3e^{m^2\\sin^2\\theta/r^2}\\sin^3\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)}{r^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-2m/r}}{r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-2m/r}}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-2m/r}}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{-2m/r}}{r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m^3e^{-2m/r}\\sin\\theta\\cos\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-2m/r}}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-2m/r}}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-2m/r}}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{-2m/r}}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(r - m\\right)e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\left(r - m\\right)e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(r - m\\right)e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(r - m\\right)e^{-2m/r}e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m - r\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m - r\\right)e^{2m/r}e^{-m^2\\sin^2\\theta/r^2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)e^{2m/r}\\sin^2\\theta}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m^3e^{2m/r}\\sin^3\\theta\\cos\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{2m/r}\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{2m/r}\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{2m/r}\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\left(m^2\\sin^2\\theta - 2m\\,r + 2r^2\\right)e^{2m/r}\\sin^2\\theta}{r}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2m}{r^2}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{m\\,e^{-4m/r}e^{m^2\\sin^2\\theta/r^2}}{r^2}\\dot{t}^2 + \\dfrac{m\\left(m\\sin^2\\theta - r\\right)}{r^3}\\dot{r}^2 - \\dfrac{2m^2\\sin\\theta\\cos\\theta}{r^2}\\dot{r}\\dot{\\theta} - \\dfrac{m^2\\sin^2\\theta - m\\,r + r^2}{r}\\dot{\\theta}^2 + \\left(m - r\\right)e^{m^2\\sin^2\\theta/r^2}\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{m^2\\sin\\theta\\cos\\theta}{r^4}\\dot{r}^2 + \\dfrac{2\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^3}\\dot{r}\\dot{\\theta} - \\dfrac{m^2\\sin\\theta\\cos\\theta}{r^2}\\dot{\\theta}^2 - e^{m^2\\sin^2\\theta/r^2}\\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\left(r - m\\right)}{r^2}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

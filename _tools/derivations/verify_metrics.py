@@ -204,6 +204,13 @@ DIMENSIONS = {
     ("levi_civita", "kasner"): {
         "t": "T", "r": "L", "\\phi": "1", "z": "L", "p_0": "1", "p_2": "1", "p_3": "1", "\\ell": "L",
     },
+    # m = GM/c^2 is a length, and so is R = sqrt(rho^2 + z^2), the name Weyl's chart defines.
+    ("curzon_chazy", "weyl"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "m": "L", "R": "L",
+    },
+    ("curzon_chazy", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
+    },
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
@@ -1188,6 +1195,8 @@ class Reader:
         self.parameters = {}
         self.parameter_names = []
         self.functions = {}
+        # A name the entry defines, as Weyl's R = \sqrt{\rho^2 + z^2}: read as the expression it names.
+        self.defined = {}
         self.primed = set()
         # A parameter spelled with a command and a subscript, as \chi_0 is, is read whole: the
         # Greek letters are turned into words below, and \chi_0 would otherwise be read as chi
@@ -1222,6 +1231,10 @@ class Reader:
             split_symbols_custom(lambda name, _=None: name not in self.known),
             implicit_multiplication,
         )
+        for plain, definition in self.defined.items():
+            value = self(definition)
+            self.parameters[plain] = self.local[plain] = self.defined[plain] = value
+            self.known.add(plain)
         self.relations = {}
         for name, value in (relations or {}).items():
             if name not in self.parameters:
@@ -1237,7 +1250,10 @@ class Reader:
         return name.replace("\\", "").strip()
 
     def _declare_parameter(self, declaration):
-        """`a` is a constant; `a = a(t)` is a function of the coordinates it names.
+        """`a` is a constant; `a = a(t)` is a function of the coordinates it names; and
+        `R = \\sqrt{\\rho^2 + z^2}` is a name for the expression on its right, in the
+        coordinates and the parameters declared before it, which every published value
+        that writes the name is read as.
 
         For the second kind the printed rate is a derivative with respect to the chart
         coordinate, which is c times the named one when that one is a time, so the rate
@@ -1246,8 +1262,12 @@ class Reader:
         coordinates answers to \\partial at any order, which _declare_partials resolves
         when a published value names one.
         """
-        plain = self._plain(declaration.split("=")[0])
+        name, _, right = declaration.partition("=")
+        plain = self._plain(name)
         self.parameter_names.append(plain)
+        if right.strip() and not re.fullmatch(re.escape(name.strip()) + r"\s*\([^()]*\)", right.strip()):
+            self.defined[plain] = right
+            return
         argument = re.search(r"\(([^()]*)\)", declaration)
         if argument is None:
             self.parameters[plain] = sp.Symbol(plain, real=True)
@@ -1409,10 +1429,17 @@ class Dimensions:
         for name in reader.parameter_names:
             value = reader.parameters[name]
             dimension = sp.sympify(declared[name], locals=BASE_DIMENSIONS)
+            if name in reader.defined:
+                continue
             if value.is_Symbol:
                 self.of_symbol[value] = dimension
             else:
                 self.of_function[name] = dimension
+        # A defined name carries the dimension of its definition, which has to be the declared one.
+        for name, value in reader.defined.items():
+            dimension = sp.sympify(declared[name], locals=BASE_DIMENSIONS)
+            if sp.simplify(self(value) / dimension) != 1:
+                raise DimensionError(f"{name} is declared {dimension} and its definition carries {self(value)}")
 
     def __call__(self, expression):
         if expression.is_Number or isinstance(expression, sp.NumberSymbol):

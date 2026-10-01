@@ -95,6 +95,7 @@ from pathlib import Path
 
 import numpy as np
 import sympy as sp
+from scipy import integrate, special
 from scipy.integrate import cumulative_trapezoid, solve_ivp
 
 import slices
@@ -3807,6 +3808,153 @@ def levi_civita(ck, src):
     return views
 
 
+def curzon_axis_star(z):
+    """z_* on the axis of the Curzon-Chazy particle at m = 1, dz_*/dz = e^(2/z): z e^(2/z) - 2 Ei(2/z),
+    which falls to minus infinity as z -> 0 and grows as z + 2 ln z far out."""
+    z = np.asarray(z, dtype=float)
+    out = np.full(z.shape, -np.inf)
+    ok = z > 2 / 700
+    out[ok] = z[ok] * np.exp(2 / z[ok]) - 2 * special.expi(2 / z[ok])
+    return out
+
+
+def curzon_plane_star(rho):
+    """rho_* on the plane z = 0 of the Curzon-Chazy particle at m = 1, the integral from 0 of
+    e^(2/s - 1/(2 s^2)), which is finite at rho = 0 and grows as rho + 2 ln rho far out."""
+    def f(s):
+        return math.exp(2 / s - 0.5 / s ** 2) if s > 0 else 0.0
+
+    def one(r):
+        if r <= 0:
+            return 0.0
+        inner = integrate.quad(f, 0, min(r, 1.0), epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+        if r <= 1:
+            return inner
+        return inner + integrate.quad(lambda u: f(math.exp(u)) * math.exp(u), 0, math.log(r),
+                                      epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+    return np.vectorize(one, otypes=[float])(np.asarray(rho, dtype=float))
+
+
+CURZON_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of m
+
+
+def curzon_chazy(ck, src):
+    """The Curzon-Chazy particle on its two totally geodesic planes of t and one radius, m = 1.
+
+    On the axis rho = 0 the metric is -e^(-2m/z)c^2dt^2 + e^(2m/z)dz^2, so g_tt g_zz = -1, z is an affine
+    parameter along every ray, and z_* = z e^(2m/z) - 2m Ei(2m/z) runs from minus infinity at z = 0 to
+    infinity: p, q = arctan((ct -+ z_*)/l) bring the half axis z > 0 into the whole diamond, null infinity
+    on the right and on the left the edge z = 0, which a ray reaches at t = +-infinity after a finite
+    affine distance and where the Kretschmann scalar 48 m^2 (z - m)^2 e^(-4m/z)/z^8 goes to zero. On the
+    plane z = 0 the metric is -e^(-2m/rho)c^2dt^2 + e^(2m/rho - m^2/rho^2)drho^2, whose rho_*, the integral
+    of e^(2m/rho - m^2/(2 rho^2)), is finite at rho = 0, so the same p and q bring the half plane into
+    Minkowski's triangle with rho = 0 a timelike line on X = 0, where the Kretschmann scalar diverges.
+    The two edges are the one coordinate point R = 0 approached along the axis and in the plane. The
+    spherical chart draws the same two planes, theta = 0 and theta = pi/2, where r is z and rho."""
+    ell = CURZON_SCALE
+
+    def axis_pq(t, z):
+        zs = curzon_axis_star(z)
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - zs) / ell), np.arctan((t + zs) / ell)
+
+    def plane_pq(t, rho):
+        return mink_pq(t, curzon_plane_star(rho), ell)
+
+    views = []
+    charts = (("weyl", "Weyl", ("t", "z"), {"rho": "0", "phi": "0"}, ("t", "\\rho"), {"phi": "0", "z": "0"}, "z", "\\rho"),
+              ("spherical", "Spherical", ("t", "r"), {"theta": "0", "phi": "0"}, ("t", "r"), {**EQUATOR, "phi": "0"},
+               "r", "r"))
+    moment = slices.moments("curzon_chazy", "equator")[0]
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    for system, name, axis_plane, axis_fixed, eq_plane, eq_fixed, za, ra in charts:
+        axis = Plane(src, "curzon_chazy", system, axis_plane, axis_fixed, {"m": 1})
+        ck.chart(f"Curzon-Chazy {system}, the axis", axis, axis_pq, ck.uniform(-20, 20), ck.uniform(0.3, 20),
+                 lambda t, z: (1, 0))
+        g00, _, g11, *_ = axis.metric(np.zeros(5), np.array([0.2, 0.5, 1.0, 3.0, 10.0]))
+        ck.limit(f"Curzon-Chazy {system}: g_tt g_zz = -1 on the axis, so z is affine along its rays", g00 * g11,
+                 [-1.0] * 5, 1e-12)
+        K = axis.kretschmann
+        zz = np.array([0.7, 1.0, 2.5])
+        ck.limit(f"Curzon-Chazy {system}: the Kretschmann scalar on the axis is 48 m^2 (z - m)^2 e^(-4m/z)/z^8",
+                 K(np.zeros(3), zz), 48 * (zz - 1) ** 2 * np.exp(-4 / zz) / zz ** 8, 1e-9)
+        ck.finite(f"Curzon-Chazy {system}: the Kretschmann scalar is finite as z -> 0 on the axis",
+                  K(np.zeros(4), np.array([0.2, 0.1, 0.05, 0.02])))
+        ck.limit(f"Curzon-Chazy {system}: the Kretschmann scalar goes to zero as z -> 0 on the axis",
+                 K(np.zeros(2), np.array([0.05, 0.02])), [0.0, 0.0], 1e-6)
+        p, q = axis_pq(np.array([-3.0, 0.0, 3.0]), np.full(3, 1e-4))
+        ck.limit(f"Curzon-Chazy {system}: z -> 0 on the axis lands on X = -pi", q - p, [-PI] * 3)
+
+        box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+        v = View(f"{system}_axis", "The axis", box, system)
+        v.fill("region", DIAMOND)
+        v.fill("cover", DIAMOND)
+        ZS = (0.5, 0.7, 1, 2, 4, 8)
+        grid(v, "r", lambda z, t: axis_pq(t, z), ZS, S_ALL)
+        grid(v, "t", axis_pq, TS, spread(0, np.inf, 500, 9))
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        v.line("chartedge", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([-HALF, HALF], f"${za} = 0$", "br", dx=-5, dy=-3)
+        v.label_xt([-HALF, -HALF], f"${za} = 0$", "tr", dx=-5, dy=3)
+        label_on(v, axis_pq(0, 1), f"${za} = m$")
+        label_on(v, axis_pq(0, 4), "$4\\,m$")
+        v.legend("cover", f"the half axis ${za} > 0$, which $t$ and ${za}$ cover")
+        v.legend("r", f"${za}$ constant, at $0.5$, $0.7$, $1$, $2$, $4$ and $8\\,m$")
+        v.legend("t", "$ct$ constant, in units of $m$")
+        v.legend("chartedge", f"${za} = 0$, which light reaches as $t \\to \\pm\\infty$, at a finite affine distance, "
+                              "and where the Kretschmann scalar goes to zero")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(restriction=("The half of the axis $\\rho = 0$ with $z > 0$ only" if system == "weyl" else
+                           "The half axis $\\theta = 0$ only") + ", totally geodesic, each point in the diagram a single event.",
+              settings=f"$m = GM/c^2 = 1$, the unit of every length, and $\\ell = {ell:g}\\,m$.")
+        views.append(v)
+
+        eq = Plane(src, "curzon_chazy", system, eq_plane, eq_fixed, {"m": 1})
+        ck.chart(f"Curzon-Chazy {system}, the plane z = 0", eq, plane_pq, ck.uniform(-20, 20, 400),
+                 ck.uniform(0.05, 20, 400), lambda t, r: (1, 0))
+        KE = eq.kretschmann
+        ck.diverges(f"Curzon-Chazy {system}: the Kretschmann scalar diverges at R = 0 in the plane z = 0",
+                    KE(0, 0.3), KE(0, 0.2))
+        v = View(f"{system}_equator", "The plane $z = 0$" if system == "weyl" else "The plane $\\theta = \\pi/2$",
+                 [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        RS = (0.5, 2, 4, 8)
+        grid(v, "r", lambda r, t: plane_pq(t, r), RS, S_ALL)
+        grid(v, "surface", lambda r, t: plane_pq(t, r), (1,), S_ALL)
+        grid(v, "t", plane_pq, TS, spread(0, np.inf, 300, 9))
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], f"${ra} = 0$", "r", dx=-6)
+        label_on(v, plane_pq(0, 4), "$4\\,m$")
+        v.legend("cover", f"the half plane, which $t$ and ${ra}$ cover")
+        v.legend("r", f"${ra}$ constant, at $0.5$, $2$, $4$ and $8\\,m$")
+        v.legend("surface", f"${ra} = m$, the narrowest circle about the axis")
+        v.legend("t", "$ct$ constant, in units of $m$")
+        v.legend("singular", f"${ra} = 0$, the ring, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        r = np.linspace(*moment.reach("weyl", "\\rho"), 2)
+        v.slice(moment, [plane_pq(0 * r, r)])
+        v.set(restriction=("The half plane of $t$ and $\\rho$ at $z = 0$ and fixed $\\phi$ only" if system == "weyl" else
+                           "The half plane of $t$ and $r$ at $\\theta = \\pi/2$ and fixed $\\phi$ only")
+              + ", totally geodesic, each point in the diagram a single event.",
+              settings=f"$m = GM/c^2 = 1$, the unit of every length, and $\\ell = {ell:g}\\,m$.")
+        views.append(v)
+    return views
+
+
 def published_gthth(src, metric_id, system_id, params):
     """The published g_thetatheta of a spherical chart, c = 1, as a numpy function of (t, r) on
     the equator."""
@@ -5014,6 +5162,7 @@ DRAWN = {
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
     "levi_civita": levi_civita,
+    "curzon_chazy": curzon_chazy,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -5030,6 +5179,42 @@ CAPTIONS = {
         "either side of it.",
         "Every ray moving left keeps its $q$ across the shock, and every line of constant $v$ breaks there, its part "
         "behind the shock moved along it by $\\Delta v$. The rays moving right never meet the shock.",
+    ],
+    ("curzon_chazy", "weyl_axis"): [
+        "The half axis $\\rho = 0$, $z > 0$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
+        "The metric on it is $-e^{-2m/z}c^2dt^2 + e^{2m/z}dz^2$, and with $z_* = z\\,e^{2m/z} - 2m\\,\\mathrm{Ei}(2m/z)$, "
+        "which runs from $-\\infty$ at $z = 0$ to $\\infty$, $p = \\arctan((ct - z_*)/\\ell)$ and "
+        "$q = \\arctan((ct + z_*)/\\ell)$ bring it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "Since $g_{tt}g_{zz} = -1$, $z$ is an affine parameter along every light ray, so a ray reaches $z = 0$, "
+        "the two edges on the left, after a finite affine distance, at $t \\to \\pm\\infty$. The Kretschmann scalar on "
+        "the axis, $48m^2(z - m)^2e^{-4m/z}/z^8$, goes to zero there.",
+    ],
+    ("curzon_chazy", "weyl_equator"): [
+        "The half plane $z = 0$ of $t$ and $\\rho$ at fixed $\\phi$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
+        "The metric on it is $-e^{-2m/\\rho}c^2dt^2 + e^{2m/\\rho - m^2/\\rho^2}d\\rho^2$, and with "
+        "$\\rho_* = \\int_0^{\\rho} e^{2m/s - m^2/2s^2}ds$, which is finite at $\\rho = 0$, $p = \\arctan((ct - \\rho_*)/\\ell)$ and "
+        "$q = \\arctan((ct + \\rho_*)/\\ell)$ bring it into Minkowski's triangle.",
+        "The edge $X = 0$ is $\\rho = 0$, the ring, a timelike singularity where the Kretschmann scalar diverges as "
+        "$e^{2m^2/\\rho^2}$ and which light from any event of the plane reaches in a finite time $t$. The axis meets the "
+        "same coordinate point at the edge of its diamond, where the curvature goes to zero.",
+    ],
+    ("curzon_chazy", "spherical_axis"): [
+        "The half axis $\\theta = 0$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
+        "The metric on it is $-e^{-2m/r}c^2dt^2 + e^{2m/r}dr^2$, and with $r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$, "
+        "which runs from $-\\infty$ at $r = 0$ to $\\infty$, $p = \\arctan((ct - r_*)/\\ell)$ and "
+        "$q = \\arctan((ct + r_*)/\\ell)$ bring it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "Since $g_{tt}g_{rr} = -1$, $r$ is an affine parameter along every light ray, so a ray reaches $r = 0$, "
+        "the two edges on the left, after a finite affine distance, at $t \\to \\pm\\infty$. The Kretschmann scalar on "
+        "the axis, $48m^2(r - m)^2e^{-4m/r}/r^8$, goes to zero there.",
+    ],
+    ("curzon_chazy", "spherical_equator"): [
+        "The half plane $\\theta = \\pi/2$ of $t$ and $r$ at fixed $\\phi$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
+        "The metric on it is $-e^{-2m/r}c^2dt^2 + e^{2m/r - m^2/r^2}dr^2$, and with "
+        "$r_* = \\int_0^{r} e^{2m/s - m^2/2s^2}ds$, which is finite at $r = 0$, $p = \\arctan((ct - r_*)/\\ell)$ and "
+        "$q = \\arctan((ct + r_*)/\\ell)$ bring it into Minkowski's triangle.",
+        "The edge $X = 0$ is $r = 0$, the ring, a timelike singularity where the Kretschmann scalar diverges as "
+        "$e^{2m^2/r^2}$ and which light from any event of the plane reaches in a finite time $t$. The axis meets the "
+        "same coordinate point at the edge of its diamond, where the curvature goes to zero.",
     ],
     ("domain_wall", "planar"): [
         "The whole spacetime of the wall, each point in the diagram a 2-sphere, two copies of the inside of the "

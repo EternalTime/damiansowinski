@@ -197,6 +197,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `kasner/radial`, the plane of $t$ and $r$: the line $ct = 0$ from $r = \rho^\Sigma/\Sigma$ at $\rho = 1/16$ to its value at $\rho = 4$, with $\Sigma = 3/4$, that is from $r = 1/6$ to $3.77$; the Kasner form's $t$ is Weyl's times a constant, so the moment is the same.
 - `weyl` and `kasner`, the triangle: the curve $p, q = \arctan(\mp 4\rho^{1/4})$ between the same two circles.
 
+### Curzon-Chazy
+
+- The embedding is one moment: the plane $z = 0$ at $t = 0$ in Weyl's chart, from $\rho = 0.7226\,m$, where the surface starts, to $5\,m$.
+- `weyl/equator` and `spherical/equator`, the plane of $t$ and $\rho$ or $r$: the line $ct = 0$ from $0.7226\,m$ to the edge of the box at $4\,m$.
+- `weyl_equator` and `spherical_equator`, the triangle: the curve $p, q = \arctan(\mp\rho_*/\ell)$ over the same stretch.
+- `weyl/axis`, `spherical/axis`, `weyl_axis` and `spherical_axis`: nothing, since the plane meets the axis only at $\rho = 0$, inside where the embedding stops, which `HIDDEN` records.
+
 ### Milne
 
 - The embedding is the equator of the comoving hyperbolic chart at $ct = 0.5$, $1$, $2$ and $3$, each out to $\chi = \operatorname{arcsinh}(4/ct)$, where it is $4$ from the axis, in any length $\ell$; the reference cone is no part of any moment.

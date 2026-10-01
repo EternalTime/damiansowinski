@@ -210,6 +210,7 @@ import numpy as np
 import sympy as sp
 from scipy.integrate import quad, solve_ivp
 from scipy.special import erf as scipy_erf
+from scipy.special import expi as scipy_expi
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
@@ -748,6 +749,18 @@ DIAGRAMS = [
             "$\\rho$", "$ct$", LC_WEYL, {"phi": "0", "z": "0"}),
     Diagram("levi_civita", "kasner", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r$", "$ct$", LC_KASNER, {"phi": "0", "z": "0"}),
+    # The Curzon-Chazy particle on its two totally geodesic planes, the axis and the plane z = 0, in
+    # each chart: on the axis the cones close toward R = 0, and in the plane they open.
+    Diagram("curzon_chazy", "weyl", "axis", "$t$ and $z$ on the axis", ("t", "z"), (0, 4, -2, 2),
+            "$z/m$", "$ct/m$", {"m": 1}, {"rho": "0", "phi": "0"}),
+    Diagram("curzon_chazy", "weyl", "equator", "$t$ and $\\rho$ in the plane $z = 0$", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\rho/m$", "$ct/m$", {"m": 1}, {"phi": "0", "z": "0"},
+            lines=(("surface", "r", "1", "$\\rho = m$, the narrowest circle about the axis"),)),
+    Diagram("curzon_chazy", "spherical", "axis", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", {"m": 1}, {"theta": "0", "phi": "0"}),
+    Diagram("curzon_chazy", "spherical", "equator", "$t$ and $r$ in the plane $\\theta = \\pi/2$", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", {"m": 1}, {**EQUATOR, "phi": "0"},
+            lines=(("surface", "r", "1", "$r = m$, the narrowest circle about the axis"),)),
     Diagram("malament_hogarth", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$ct$", {},
             {"y": "0", "z": "0"}, families=SIDEWAYS, functions={"Omega": _MH_FACTOR}, any_factor="Omega",
             lines=(("world", "r", "0", "the computer's world line, up the axis into the removed event",
@@ -1663,6 +1676,38 @@ CAPTIONS = {
         "light rays are the coordinate lines $u = $ const and $v = $ const themselves, for every wave.",
         "The pulse comes in with its crest just outside the ray $v = 0$, is greatest on the axis at $u = v = 0$, "
         "and goes out with its crest just outside $u = 0$.",
+    ],
+    ("curzon_chazy", "weyl", "axis"): [
+        "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of the Curzon-Chazy particle ($m = 1$). The metric on it is "
+        "$-e^{-2m/z}c^2dt^2 + e^{2m/z}dz^2$, so the rays are $ct = \\pm z_* + $ const with "
+        "$z_* = z\\,e^{2m/z} - 2m\\,\\mathrm{Ei}(2m/z)$, and no Christoffel symbol turns them out of the plane, so they "
+        "are null geodesics.",
+        "The cones close as $e^{-2m/z}$ toward $z = 0$, which a ray reaches only as $t \\to \\pm\\infty$, though after "
+        "a finite affine distance, since $z$ is an affine parameter along it. The Kretschmann scalar on the axis, "
+        "$48m^2(z - m)^2e^{-4m/z}/z^8$, vanishes at $z = m$ and goes to zero at $z = 0$.",
+    ],
+    ("curzon_chazy", "weyl", "equator"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of the Curzon-Chazy particle ($m = 1$). The metric on it is "
+        "$-e^{-2m/\\rho}c^2dt^2 + e^{2m/\\rho - m^2/\\rho^2}d\\rho^2$, so a ray has $c\\,dt/d\\rho = \\pm e^{2m/\\rho - m^2/2\\rho^2}$, and no "
+        "Christoffel symbol turns it out of the plane, so the rays are null geodesics.",
+        "The cones are narrowest at $\\rho = m/2$ and open without bound toward $\\rho = 0$, the ring, which every ingoing ray "
+        "reaches in a finite time $t$ and where the Kretschmann scalar diverges as $e^{2m^2/\\rho^2}$.",
+    ],
+    ("curzon_chazy", "spherical", "axis"): [
+        "The plane of $t$ and $r$ ($\\theta = 0$, $\\phi = 0$) of the Curzon-Chazy particle ($m = 1$). The metric on it is "
+        "$-e^{-2m/r}c^2dt^2 + e^{2m/r}dr^2$, so the rays are $ct = \\pm r_* + $ const with "
+        "$r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$, and no Christoffel symbol turns them out of the plane, so they "
+        "are null geodesics.",
+        "The cones close as $e^{-2m/r}$ toward $r = 0$, which a ray reaches only as $t \\to \\pm\\infty$, though after "
+        "a finite affine distance, since $r$ is an affine parameter along it. The Kretschmann scalar on the axis, "
+        "$48m^2(r - m)^2e^{-4m/r}/r^8$, vanishes at $r = m$ and goes to zero at $r = 0$.",
+    ],
+    ("curzon_chazy", "spherical", "equator"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the Curzon-Chazy particle ($m = 1$). The metric on it is "
+        "$-e^{-2m/r}c^2dt^2 + e^{2m/r - m^2/r^2}dr^2$, so a ray has $c\\,dt/dr = \\pm e^{2m/r - m^2/2r^2}$, and no "
+        "Christoffel symbol turns it out of the plane, so the rays are null geodesics.",
+        "The cones are narrowest at $r = m/2$ and open without bound toward $r = 0$, the ring, which every ingoing ray "
+        "reaches in a finite time $t$ and where the Kretschmann scalar diverges as $e^{2m^2/r^2}$.",
     ],
     ("melvin", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Melvin's universe ($B = 1$). The metric on it is "
@@ -3559,6 +3604,21 @@ def _rstar(r, horizons):
     return out
 
 
+def _curzon_axis(z):
+    """z_* on the axis of the Curzon-Chazy particle at m = 1, dz_*/dz = e^(2/z)."""
+    z = np.asarray(z, float)
+    return z * np.exp(2 / z) - 2 * scipy_expi(2 / z)
+
+
+def _curzon_plane(rho):
+    """rho_* in the plane z = 0 of the Curzon-Chazy particle at m = 1, the integral from 0 of
+    e^(2/s - 1/(2 s^2))."""
+    def one(r):
+        return quad(lambda s: math.exp(2 / s - 0.5 / s ** 2) if s > 0 else 0.0, 0, r, epsabs=1e-13, epsrel=1e-13,
+                    limit=200)[0]
+    return np.vectorize(one, otypes=[float])(np.asarray(rho, float))
+
+
 def _btz_rstar(r, roots):
     """The integral of 1/N^2 for the BTZ hole at l = 1, N^2 = (r^2 - a)(r^2 - b)/r^2 with the
     squared horizons a > b, or r^2 - a where b = 0, up to a constant."""
@@ -3687,6 +3747,11 @@ CLOSED_FORMS = {
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
+    # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.
+    **{("curzon_chazy", system, "axis"): (lambda t, z: t + _curzon_axis(z), lambda t, z: t - _curzon_axis(z),
+                                          lambda t, z: z > 0.35) for system in ("weyl", "spherical")},
+    **{("curzon_chazy", system, "equator"): (lambda t, r: t + _curzon_plane(r), lambda t, r: t - _curzon_plane(r),
+                                             lambda t, r: r > 0.02) for system in ("weyl", "spherical")},
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("melvin", "ernst", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
