@@ -753,6 +753,43 @@
     "embedding": "a96058187788999b"
   },
   {
+    "id": "mcvittie",
+    "name": "McVittie",
+    "tags": [
+      "black hole",
+      "cosmology",
+      "cosmological",
+      "expanding universe",
+      "FLRW",
+      "mass",
+      "point mass",
+      "spherically symmetric",
+      "time-dependent",
+      "dynamical",
+      "non-vacuum",
+      "perfect fluid",
+      "singularity",
+      "curvature singularity",
+      "big bang",
+      "horizon",
+      "apparent horizon",
+      "event horizon",
+      "de Sitter",
+      "Schwarzschild-de Sitter",
+      "cosmological constant",
+      "positive cosmological constant",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "6ff15b1a9bca7c29",
+    "diagrams": "0940a6a1cfa8b5b6",
+    "conformal": "e70af2de3d00d908",
+    "embedding": "3782e936aebbd15d"
+  },
+  {
     "id": "melvin",
     "name": "Melvin",
     "tags": [

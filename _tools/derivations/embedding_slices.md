@@ -209,6 +209,12 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - The embedding is a movie of one wave front, the surface of $\theta$ and $\phi$ at one $u$ and one $r$ of the axisymmetric chart, at $cu = 0$, $0.25$, $0.5$, $1$ and $2\,m$; the fronts of one $u$ differ only in size and each is drawn with its own $r$ as the unit, so a moment is every front of its $u$.
 - `axisymmetric/axis` and `axisymmetric/equator`, the planes of $u$ and $r$ drawn against $r$ and $cu + r$: five outgoing rays $u = u_k$, each from $r = 0$ to the edge of the box.
 - `axis`, the conformal diagram: the five null lines $p = -\arctan e^{-cu_k/4m}$ from the singularity to future null infinity, the first of them the first front.
+### McVittie
+
+- The embedding is a movie of the moments $ct = 1$ to $7\,r_s$ of the isotropic chart, with the moments $ct = 1$, $3$, $5$ and $7\,r_s$ as its surfaces, each from the throat $r = r_s/4a$ out to the comoving $r$ whose areal radius is $6\,r_s$.
+- `isotropic/radial`, the plane of $t$ and $r$: the level line $ct$ from the throat to that $r$, or to the edge of the box at $2\,r_s$.
+- `areal/radial`, the plane of $t$ and $R$: the same cosmic time, so the level line $ct$ from $R = r_s$ to the edge of the box at $5\,r_s$; `slices.py` checks that the areal chart pulls back onto the isotropic plane and that `mcvittie_areal` is the areal radius.
+- `dust_lambda`, the conformal diagram: each moment through the diagram's own labels, from the singular sphere on $T = 0$, where both rays left at that moment's time, out to $R = 6\,r_s$.
 
 ### Milne
 

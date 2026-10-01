@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 49,
+  "count": 50,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -4760,6 +4760,198 @@
           ],
           "ricci_scalar": "R = -\\dfrac{6\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)}{\\Omega^3}",
           "kretschmann": "K = \\dfrac{2\\left(\\left(3\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_t^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_x^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_y^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_z^2\\Omega\\right)^2\\right) + 16\\left(\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)^2 + \\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)^2 + \\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_x\\Omega - \\Omega\\,\\partial_t\\partial_x\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)^2\\right) + 4\\Omega^2\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)^2}{\\Omega^8}"
+        }
+      ]
+    },
+    {
+      "id": "mcvittie",
+      "name": "McVittie Mass in an Expanding Universe",
+      "short_name": "McVittie",
+      "description": "A point mass in a spatially flat expanding universe, the solution George McVittie found in 1933 for a perfect fluid at rest about the mass. Where a positive cosmological constant drives the late expansion, it holds a black hole whose horizon approaches that of Schwarzschild-de Sitter.",
+      "tags": [
+        "black hole",
+        "cosmology",
+        "cosmological",
+        "expanding universe",
+        "FLRW",
+        "mass",
+        "point mass",
+        "spherically symmetric",
+        "time-dependent",
+        "dynamical",
+        "non-vacuum",
+        "perfect fluid",
+        "singularity",
+        "curvature singularity",
+        "big bang",
+        "horizon",
+        "apparent horizon",
+        "event horizon",
+        "de Sitter",
+        "Schwarzschild-de Sitter",
+        "cosmological constant",
+        "positive cosmological constant",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the scale factor $a(t)$ of the spatially flat universe is dimensionless. We keep factors of $c$ explicit.",
+      "references": [
+        "mcvittie1933",
+        "lemaitre1931expanding",
+        "mccrea1930",
+        "mccrea1931",
+        "kaloper2010",
+        "nandra2012",
+        "einstein1945",
+        "carrera2010",
+        "nolan1998",
+        "lake2011",
+        "faraoni2012",
+        "dasilva2013"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mcvittie.json",
+      "charts": [
+        {
+          "id": "isotropic",
+          "name": "Isotropic Comoving",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "r \\in (r_s/(4a), \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s/(4a) \\;\\text{(curvature singularity unless}\\; \\dot{a}/a \\;\\text{is constant)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor ($a > 0$, $\\dot{a} > 0$) of the spatially flat universe"
+            }
+          ],
+          "convention": "We use McVittie's cosmic time $t$ and a comoving isotropic radius $r$, a length, and take components in the chart $x^0 = ct$. A dot on the scale factor is $\\dot{a} = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{1 - \\dfrac{r_s}{4ar}}{1 + \\dfrac{r_s}{4ar}}\\right)^2c^2dt^2 + a^2\\left(1 + \\dfrac{r_s}{4ar}\\right)^4\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{4ar - r_s}{4ar + r_s}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2\\left(1 + \\dfrac{r_s}{4ar}\\right)^4"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2r^2\\left(1 + \\dfrac{r_s}{4ar}\\right)^4"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2r^2\\sin^2\\theta\\left(1 + \\dfrac{r_s}{4ar}\\right)^4"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12\\dot{a}^2}{a^2} + 6\\left(\\dfrac{\\ddot{a}}{a} - \\dfrac{\\dot{a}^2}{a^2}\\right)\\dfrac{4ar + r_s}{4ar - r_s}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{a^6r^6}\\left(1 + \\dfrac{r_s}{4ar}\\right)^{-12} + \\dfrac{12\\dot{a}^4}{a^4} + 12\\left(\\dfrac{\\dot{a}^2}{a^2} + \\left(\\dfrac{\\ddot{a}}{a} - \\dfrac{\\dot{a}^2}{a^2}\\right)\\dfrac{4ar + r_s}{4ar - r_s}\\right)^2"
+        },
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "R \\in (r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "R = r_s \\;\\text{(curvature singularity where}\\; \\dot{H} \\neq 0\\text{)}",
+            "1 - r_s/R - H^2R^2/c^2 = 0 \\;\\text{(apparent horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "H = H(t)",
+              "description": "Hubble rate, $H = (da/dt)/a$"
+            }
+          ],
+          "convention": "We use the cosmic time $t$ and the areal radius $R = ar\\left(1 + r_s/4ar\\right)^2$, and take components in the chart $x^0 = ct$. A dot on the Hubble rate is $\\dot{H} = dH/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{R} - \\dfrac{H^2R^2}{c^2}\\right)c^2dt^2 - \\dfrac{2HR}{\\sqrt{1 - \\dfrac{r_s}{R}}}dt\\,dR + \\dfrac{dR^2}{1 - \\dfrac{r_s}{R}} + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{R} - \\dfrac{H^2R^2}{c^2}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "R"
+              ],
+              "value": "-\\dfrac{HR}{c\\sqrt{1 - \\dfrac{r_s}{R}}}"
+            },
+            {
+              "indices": [
+                "R",
+                "t"
+              ],
+              "value": "-\\dfrac{HR}{c\\sqrt{1 - \\dfrac{r_s}{R}}}"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{R}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12H^2}{c^2} + \\dfrac{6\\dot{H}}{c\\sqrt{1 - \\dfrac{r_s}{R}}}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{R^6} + \\dfrac{12H^4}{c^4} + 12\\left(\\dfrac{H^2}{c^2} + \\dfrac{\\dot{H}}{c\\sqrt{1 - \\dfrac{r_s}{R}}}\\right)^2"
         }
       ]
     },

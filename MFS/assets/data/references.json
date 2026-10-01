@@ -1,5 +1,5 @@
 {
-  "version": "8e4f93dbc07d5f7a",
+  "version": "30d6c87203fed2c9",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -9463,6 +9463,188 @@
         "doi": "10.1088/1475-7516/2018/11/008",
         "eprint": "arXiv:1808.00670",
         "url": "https://doi.org/10.1088/1475-7516/2018/11/008"
+      }
+    },
+    "mcvittie1933": {
+      "type": "article",
+      "fields": {
+        "title": "The Mass-Particle in an Expanding Universe",
+        "author": "McVittie, G. C.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "93",
+        "number": "5",
+        "pages": "325--339",
+        "year": "1933",
+        "doi": "10.1093/mnras/93.5.325",
+        "url": "https://doi.org/10.1093/mnras/93.5.325"
+      }
+    },
+    "lemaitre1931expanding": {
+      "type": "article",
+      "fields": {
+        "title": "The Expanding Universe",
+        "author": "Lema\\^itre, Georges",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "91",
+        "number": "5",
+        "pages": "490--501",
+        "year": "1931",
+        "doi": "10.1093/mnras/91.5.490",
+        "url": "https://doi.org/10.1093/mnras/91.5.490"
+      }
+    },
+    "mccrea1930": {
+      "type": "article",
+      "fields": {
+        "title": "On the Contraction of the Universe",
+        "author": "McCrea, W. H. and McVittie, G. C.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "91",
+        "number": "1",
+        "pages": "128--133",
+        "year": "1930",
+        "doi": "10.1093/mnras/91.1.128",
+        "url": "https://doi.org/10.1093/mnras/91.1.128"
+      }
+    },
+    "mccrea1931": {
+      "type": "article",
+      "fields": {
+        "title": "The Expanding Universe",
+        "author": "McCrea, W. H. and McVittie, G. C.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "92",
+        "number": "1",
+        "pages": "7--12",
+        "year": "1931",
+        "doi": "10.1093/mnras/92.1.7",
+        "url": "https://doi.org/10.1093/mnras/92.1.7"
+      }
+    },
+    "kaloper2010": {
+      "type": "article",
+      "fields": {
+        "title": "McVittie's legacy: Black holes in an expanding universe",
+        "author": "Kaloper, Nemanja and Kleban, Matthew and Martin, Damien",
+        "journal": "Physical Review D",
+        "volume": "81",
+        "number": "10",
+        "pages": "104044",
+        "year": "2010",
+        "doi": "10.1103/PhysRevD.81.104044",
+        "eprint": "1003.4777",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1003.4777"
+      }
+    },
+    "nandra2012": {
+      "type": "article",
+      "fields": {
+        "title": "The effect of a massive object on an expanding universe",
+        "author": "Nandra, Roshina and Lasenby, Anthony N. and Hobson, Michael P.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "422",
+        "number": "4",
+        "pages": "2931--2944",
+        "year": "2012",
+        "doi": "10.1111/j.1365-2966.2012.20618.x",
+        "eprint": "1104.4447",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1104.4447"
+      }
+    },
+    "einstein1945": {
+      "type": "article",
+      "fields": {
+        "title": "The Influence of the Expansion of Space on the Gravitation Fields Surrounding the Individual Stars",
+        "author": "Einstein, Albert and Straus, Ernst G.",
+        "journal": "Reviews of Modern Physics",
+        "volume": "17",
+        "number": "2-3",
+        "pages": "120--124",
+        "year": "1945",
+        "doi": "10.1103/RevModPhys.17.120",
+        "url": "https://doi.org/10.1103/RevModPhys.17.120"
+      }
+    },
+    "carrera2010": {
+      "type": "article",
+      "fields": {
+        "title": "Influence of global cosmological expansion on local dynamics and kinematics",
+        "author": "Carrera, Matteo and Giulini, Domenico",
+        "journal": "Reviews of Modern Physics",
+        "volume": "82",
+        "number": "1",
+        "pages": "169--208",
+        "year": "2010",
+        "doi": "10.1103/RevModPhys.82.169",
+        "eprint": "0810.2712",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0810.2712"
+      }
+    },
+    "nolan1998": {
+      "type": "article",
+      "fields": {
+        "title": "A point mass in an isotropic universe: Existence, uniqueness, and basic properties",
+        "author": "Nolan, Brien C.",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "6",
+        "pages": "064006",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.064006",
+        "eprint": "gr-qc/9805041",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9805041"
+      }
+    },
+    "lake2011": {
+      "type": "article",
+      "fields": {
+        "title": "More on McVittie's legacy: A Schwarzschild-de Sitter black and white hole embedded in an asymptotically $\\Lambda$CDM cosmology",
+        "author": "Lake, Kayll and Abdelqader, Majd",
+        "journal": "Physical Review D",
+        "volume": "84",
+        "number": "4",
+        "pages": "044045",
+        "year": "2011",
+        "doi": "10.1103/PhysRevD.84.044045",
+        "eprint": "1106.3666",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1106.3666"
+      }
+    },
+    "faraoni2012": {
+      "type": "article",
+      "fields": {
+        "title": "Making sense of the bizarre behavior of horizons in the McVittie spacetime",
+        "author": "Faraoni, Valerio and Zambrano Moreno, Andres F. and Nandra, Roshina",
+        "journal": "Physical Review D",
+        "volume": "85",
+        "number": "8",
+        "pages": "083526",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.85.083526",
+        "eprint": "1202.0719",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1202.0719"
+      }
+    },
+    "dasilva2013": {
+      "type": "article",
+      "fields": {
+        "title": "How the expansion of the Universe determines the causal structure of McVittie spacetimes",
+        "author": "da Silva, Alan M. and Fontanini, Michele and Guariento, Daniel C.",
+        "journal": "Physical Review D",
+        "volume": "87",
+        "number": "6",
+        "pages": "064030",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.87.064030",
+        "eprint": "1212.0155",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1212.0155"
       }
     }
   }

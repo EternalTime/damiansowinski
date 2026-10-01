@@ -2800,7 +2800,7 @@ class StacksAndMovies(unittest.TestCase):
               "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$",
               "einstein_rosen_waves": "$ct$", "nariai": "$ct$", "domain_wall": "$kct$",
               "kantowski_sachs": "$\\eta$",
-              "robinson_trautman": "$cu$"}
+              "robinson_trautman": "$cu$", "mcvittie": "$ct$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -3394,6 +3394,15 @@ class Slices(unittest.TestCase):
             if key == "milne/logarithmic_time/radial":
                 return (lambda X: math.log(t)), [0.0, hi]
             return (lambda X: t), [0.0, math.sinh(hi) if "spherical" in key else hi]
+        if key.startswith("mcvittie/"):
+            # A moment of cosmic time is level in both charts, from the throat out to the comoving r the
+            # embedding reaches, which the areal chart draws at R = ar(1 + 1/(4ar))^2, r_s = 1, with
+            # a = sinh^(2/3)(3 H_0 t/2) and H_0 = 1/sqrt(15).
+            ends = list(self.reach(surface))
+            if "/areal/" in key:
+                a = math.sinh(1.5 * t / math.sqrt(15)) ** (2 / 3)
+                ends = [a * r * (1 + 1 / (4 * a * r)) ** 2 for r in ends]
+            return (lambda X: t), ends
         if key == "levi_civita/kasner/radial":
             # The Kasner form's r is the proper distance from the axis, rho^Sigma/Sigma with
             # Sigma = 3/4 at sigma = 1/4, of the circles the embedding reaches in Weyl's rho.
@@ -3566,6 +3575,38 @@ class Slices(unittest.TestCase):
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - (1 - radius) * math.exp(radius)), 2e-3 * (1 + tp * tp) * (1 + tq * tq),
                                             f"{where} at {(X, T)}")
+                    elif metric_id == "mcvittie":
+                        # p = F(s_out) and q = -F(s_in), the times the event's two rays left R = r_s:
+                        # each ray is run forward again from the throat x = 0 to the moment's time, by
+                        # Runge and Kutta's rule in ln t, and both must arrive at one x, R = cosh^2 x.
+                        h = 1 / math.sqrt(15)
+                        kappa = (1 / 1.0851996154371 ** 2 - 2 * 1.0851996154371 / 15) / 2
+
+                        def left_at(value):
+                            return math.exp(bisect(lambda y: math.atan(y / 2 + math.log(2) / 2 + math.expm1(
+                                kappa * math.exp(y)) / 20) - value, -60, math.log(60)))
+
+                        def arrives(s, sign, n=1500):
+                            def rate(y, x):
+                                tt = math.exp(y)
+                                return (h * tt / math.tanh(1.5 * h * tt) + sign * tt * math.tanh(x) / math.cosh(x) ** 2) / 2
+                            y, x, d = math.log(s), 0.0, (math.log(t) - math.log(s)) / n
+                            for _ in range(n):
+                                k1 = rate(y, x)
+                                k2 = rate(y + d / 2, x + d * k1 / 2)
+                                k3 = rate(y + d / 2, x + d * k2 / 2)
+                                k4 = rate(y + d, x + d * k3)
+                                y, x = y + d, x + d * (k1 + 2 * k2 + 2 * k3 + k4) / 6
+                            return x
+                        met = 0
+                        for X, T in points:
+                            p_, q_ = (T - X) / 2, (T + X) / 2
+                            if max(abs(p_), abs(q_)) > 1.2:
+                                continue    # where F has flattened, four decimals no longer fix the time
+                            out, back = arrives(left_at(p_), 1), arrives(left_at(-q_), -1)
+                            self.assertLess(abs(out - back), 5e-3 * (1 + out), f"{where} at {(X, T)}")
+                            met += 1
+                        self.assertGreater(met, 5, where)
                     elif metric_id == "milne":
                         # p, q = arctan(ct e^-chi), arctan(ct e^chi), so tan p tan q = c^2t^2.
                         for X, T in points:
