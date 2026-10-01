@@ -299,6 +299,24 @@ DIMENSIONS = {
     ("string_black_hole", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "b": "1",
     },
+    # The dilaton black hole keeps Schwarzschild's length r_s beside r_d = Q^2/M in units
+    # G = c = 1, a length too, so r(r - r_d) is an area. The string charts are the same chart
+    # with the metric multiplied by a power of 1 - r_d/r, a pure number.
+    ("dilaton_black_hole", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_d": "L",
+    },
+    ("dilaton_black_hole", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_d": "L",
+    },
+    ("dilaton_black_hole", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_d": "L",
+    },
+    ("dilaton_black_hole", "string_magnetic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_d": "L",
+    },
+    ("dilaton_black_hole", "string_electric"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_d": "L",
+    },
     # e^x forces x dimensionless, and with it the other three coordinates, so the whole
     # length of the Godel solution sits in 1/omega.
     ("godel", "cartesian"): {

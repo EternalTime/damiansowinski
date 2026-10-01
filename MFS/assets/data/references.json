@@ -1,5 +1,5 @@
 {
-  "version": "30d6c87203fed2c9",
+  "version": "d58024eb9a8ff777",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -9645,6 +9645,229 @@
         "eprint": "1212.0155",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1212.0155"
+      }
+    },
+    "gibbons1982dilaton": {
+      "type": "article",
+      "fields": {
+        "title": "Antigravitating black hole solitons with scalar hair in {N} = 4 supergravity",
+        "author": "Gibbons, G. W.",
+        "journal": "Nuclear Physics B",
+        "volume": "207",
+        "number": "2",
+        "pages": "337--349",
+        "year": "1982",
+        "doi": "10.1016/0550-3213(82)90170-5",
+        "url": "https://doi.org/10.1016/0550-3213(82)90170-5"
+      }
+    },
+    "gibbons1988": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes and membranes in higher-dimensional theories with dilaton fields",
+        "author": "Gibbons, G. W. and Maeda, Kei-ichi",
+        "journal": "Nuclear Physics B",
+        "volume": "298",
+        "number": "4",
+        "pages": "741--775",
+        "year": "1988",
+        "doi": "10.1016/0550-3213(88)90006-5",
+        "url": "https://doi.org/10.1016/0550-3213(88)90006-5"
+      }
+    },
+    "garfinkle1991": {
+      "type": "article",
+      "fields": {
+        "title": "Charged black holes in string theory",
+        "author": "Garfinkle, David and Horowitz, Gary T. and Strominger, Andrew",
+        "journal": "Physical Review D",
+        "volume": "43",
+        "number": "10",
+        "pages": "3140--3143",
+        "year": "1991",
+        "doi": "10.1103/PhysRevD.43.3140",
+        "note": "Erratum: Physical Review D 45, 3888 (1992), doi:10.1103/PhysRevD.45.3888",
+        "url": "https://doi.org/10.1103/PhysRevD.43.3140"
+      }
+    },
+    "horowitz1992": {
+      "type": "inproceedings",
+      "fields": {
+        "title": "The dark side of string theory: black holes and black strings",
+        "author": "Horowitz, Gary T.",
+        "booktitle": "String Theory and Quantum Gravity '92: Proceedings of the Trieste Spring School and Workshop",
+        "pages": "55--99",
+        "year": "1992",
+        "eprint": "hep-th/9210119",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9210119"
+      }
+    },
+    "giddings1992": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamics of extremal black holes",
+        "author": "Giddings, Steven B. and Strominger, Andrew",
+        "journal": "Physical Review D",
+        "volume": "46",
+        "pages": "627--637",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.46.627",
+        "eprint": "hep-th/9202004",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.46.627"
+      }
+    },
+    "preskill1991": {
+      "type": "article",
+      "fields": {
+        "title": "Limitations on the statistical description of black holes",
+        "author": "Preskill, John and Schwarz, Patricia and Shapere, Alfred and Trivedi, Sandip and Wilczek, Frank",
+        "journal": "Modern Physics Letters A",
+        "volume": "6",
+        "number": "26",
+        "pages": "2353--2361",
+        "year": "1991",
+        "doi": "10.1142/S0217732391002773",
+        "url": "https://doi.org/10.1142/S0217732391002773"
+      }
+    },
+    "holzhey1992": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes as elementary particles",
+        "author": "Holzhey, Christoph F. E. and Wilczek, Frank",
+        "journal": "Nuclear Physics B",
+        "volume": "380",
+        "pages": "447--477",
+        "year": "1992",
+        "doi": "10.1016/0550-3213(92)90254-9",
+        "eprint": "hep-th/9202014",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(92)90254-9"
+      }
+    },
+    "kallosh1992": {
+      "type": "article",
+      "fields": {
+        "title": "Supersymmetry as a cosmic censor",
+        "author": "Kallosh, Renata and Linde, Andrei and Ort\\'in, Tom\\'as and Peet, Amanda and Van Proeyen, Antoine",
+        "journal": "Physical Review D",
+        "volume": "46",
+        "pages": "5278--5302",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.46.5278",
+        "eprint": "hep-th/9205027",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.46.5278"
+      }
+    },
+    "sen1992": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating charged black hole solution in heterotic string theory",
+        "author": "Sen, Ashoke",
+        "journal": "Physical Review Letters",
+        "volume": "69",
+        "pages": "1006--1009",
+        "year": "1992",
+        "doi": "10.1103/PhysRevLett.69.1006",
+        "eprint": "hep-th/9204046",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.69.1006"
+      }
+    },
+    "horne1992": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating dilaton black holes",
+        "author": "Horne, James H. and Horowitz, Gary T.",
+        "journal": "Physical Review D",
+        "volume": "46",
+        "pages": "1340--1346",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.46.1340",
+        "eprint": "hep-th/9203083",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.46.1340"
+      }
+    },
+    "horne1993": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes coupled to a massive dilaton",
+        "author": "Horne, James H. and Horowitz, Gary T.",
+        "journal": "Nuclear Physics B",
+        "volume": "399",
+        "pages": "169--196",
+        "year": "1993",
+        "doi": "10.1016/0550-3213(93)90621-U",
+        "eprint": "hep-th/9210012",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(93)90621-U"
+      }
+    },
+    "gregory1993": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes with a massive dilaton",
+        "author": "Gregory, Ruth and Harvey, Jeffrey A.",
+        "journal": "Physical Review D",
+        "volume": "47",
+        "pages": "2411--2422",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.47.2411",
+        "eprint": "hep-th/9209070",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.47.2411"
+      }
+    },
+    "hirschmann2018": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole dynamics in {Einstein}-{Maxwell}-dilaton theory",
+        "author": "Hirschmann, Eric W. and Lehner, Luis and Liebling, Steven L. and Palenzuela, Carlos",
+        "journal": "Physical Review D",
+        "volume": "97",
+        "number": "6",
+        "pages": "064032",
+        "year": "2018",
+        "doi": "10.1103/PhysRevD.97.064032",
+        "eprint": "1706.09875",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.97.064032"
+      }
+    },
+    "mizuno2018": {
+      "type": "article",
+      "fields": {
+        "title": "The current ability to test theories of gravity with black hole shadows",
+        "author": "Mizuno, Yosuke and Younsi, Ziri and Fromm, Christian M. and Porth, Oliver and De Laurentis, Mariafelicia and Olivares, Hector and Falcke, Heino and Kramer, Michael and Rezzolla, Luciano",
+        "journal": "Nature Astronomy",
+        "volume": "2",
+        "number": "7",
+        "pages": "585--590",
+        "year": "2018",
+        "doi": "10.1038/s41550-018-0449-5",
+        "eprint": "1804.05812",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1038/s41550-018-0449-5"
+      }
+    },
+    "kocherlakota2021": {
+      "type": "article",
+      "fields": {
+        "title": "Constraints on black-hole charges with the 2017 {EHT} observations of {M87*}",
+        "author": "Kocherlakota, Prashant and Rezzolla, Luciano and others and {Event Horizon Telescope Collaboration}",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "10",
+        "pages": "104047",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.104047",
+        "eprint": "2105.09343",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.103.104047"
       }
     }
   }

@@ -1825,6 +1825,135 @@ def robinson_trautman_check(chart):
 RT_CHARTS = ["stereographic", "axisymmetric"]
 
 
+# -- Dilaton black hole ----------------------------------------------------------------
+
+DILATON_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+DILATON_MARKS = ["r = r_s \\;\\text{(the horizon)}", "r = r_d \\;\\text{(the singularity)}"]
+DILATON_F = "\\left(1 - \\dfrac{r_s}{r}\\right)"
+DILATON_H = "\\left(1 - \\dfrac{r_d}{r}\\right)"
+DILATON_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def dilaton_black_hole(system_id):
+    """The charged black hole of Gibbons and Maeda and of Garfinkle, Horowitz and Strominger.
+    Its Einstein metric is Schwarzschild's on the plane of t and r, f = 1 - r_s/r, with spheres
+    of area 4 pi r(r - r_d), r_d = Q^2/M in units G = c = 1; the static chart and the two
+    Eddington-Finkelstein charts on Schwarzschild's tortoise coordinate print it. The two
+    string charts print the string metric e^{2 phi} g of the magnetically charged hole,
+    e^{-2 phi} = 1 - r_d/r, and of the electrically charged one, e^{2 phi} = 1 - r_d/r, each in
+    the same r. dilaton_field_equations checks the Einstein charts against Einstein's equations
+    with the Maxwell field and the dilaton, Maxwell's equations and the dilaton's equation, and
+    dilaton_string_frame checks each string chart to be that multiple of the static chart."""
+    f, h, sphere = DILATON_F, DILATON_H, DILATON_SPHERE
+    bare = "1 - \\dfrac{r_s}{r}"
+    parameters = ["r_s", "r_d"]
+    radial = ["r \\in (r_d, \\infty)"] + DILATON_ANGLES + DILATON_MARKS
+    coords = ["t", "r", "\\theta", "\\phi"]
+    time = ["t \\in (-\\infty, \\infty)"]
+    extra = {}
+    if system_id == "static":
+        name = "Static Spherical"
+
+        def line(c2):
+            return ("ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r\\left(r - r_d\\right)" + sphere)
+        spec_line, chart_line = line("c^2"), line("")
+        extra = {"components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                                "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+                 "check": dilaton_field_equations}
+    elif system_id.startswith("eddington_finkelstein"):
+        null, sign = ("u", "-") if system_id.endswith("outgoing") else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        time = [null + " \\in (-\\infty, \\infty)"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        spec_line = chart_line = ("ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr"
+                                  + " + r\\left(r - r_d\\right)" + sphere)
+        one = "-1" if null == "u" else "1"
+        extra = {"components": {"metric_components": {(null, null): "-" + f, (null, "r"): one, ("r", null): one},
+                                "inverse_metric_components": {(null, "r"): one, ("r", null): one, ("r", "r"): bare}},
+                 "check": dilaton_field_equations}
+    elif system_id == "string_magnetic":
+        name = "String Metric, Magnetic Charge"
+
+        def line(c2):
+            return ("ds^2 = -\\dfrac{1 - \\dfrac{r_s}{r}}{1 - \\dfrac{r_d}{r}}" + c2 + "dt^2 + \\dfrac{dr^2}{"
+                    + f + h + "} + r^2" + sphere)
+        spec_line, chart_line = line("c^2"), line("")
+        extra = {"check": lambda chart: dilaton_string_frame(chart, -1)}
+    else:
+        name = "String Metric, Electric Charge"
+
+        def line(c2):
+            return ("ds^2 = " + h + "\\left(-" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "}\\right)"
+                    " + \\left(r - r_d\\right)^2" + sphere)
+        spec_line, chart_line = line("c^2"), line("")
+        extra = {"check": lambda chart: dilaton_string_frame(chart, 1)}
+    probe = vm.Reader(coords, parameters, ())
+    r, rs, rd = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["r_d"]
+    return {
+        "metric_id": "dilaton_black_hole",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": time + radial,
+                   "parameters": parameters, "line_element": spec_line},
+        "chart_line_element": chart_line,
+        "printer": {"rising": [rs, rd], "lead": [r, rs, rd], "flip": False},
+        **extra,
+    }
+
+
+def dilaton_field_equations(chart):
+    """The equations of the action R - 2(d phi)^2 - e^{-2 phi} F^2 for the magnetically charged
+    hole, e^{-2 phi} = 1 - r_d/r and F = Q sin(theta) d theta ^ d phi with Q^2 = r_s r_d/2, slot
+    by slot: G_mu nu = 2 d_mu phi d_nu phi - g_mu nu (d phi)^2 + 2 e^{-2 phi}(F_mu a F_nu^a
+    - g_mu nu F^2/4), d_mu(sqrt(-g) e^{-2 phi} F^mu nu) = 0, and box phi = -e^{-2 phi} F^2/2."""
+    x = chart.symbols
+    r, th = chart.reader.symbol["r"], chart.reader.symbol["\\theta"]
+    rs, rd = chart.reader.parameters["r_s"], chart.reader.parameters["r_d"]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    e = 1 - rd / r                                   # e^{-2 phi}
+    dphi = [sp.diff(-sp.log(e) / 2, c) for c in x]
+    F = sp.zeros(4, 4)
+    F[2, 3], F[3, 2] = sp.sin(th), -sp.sin(th)       # F / Q
+    Q2 = rs * rd / 2
+    Fup = ginv * F * ginv
+    F2 = Q2 * sum(F[a, b] * Fup[a, b] for a in range(4) for b in range(4))
+    dphi2 = sum(ginv[a, b] * dphi[a] * dphi[b] for a in range(4) for b in range(4))
+    G = chart.geo.einstein_ll()
+    for a in range(4):
+        for b in range(a, 4):
+            FF = Q2 * sum(F[a, c] * F[b, d] * ginv[c, d] for c in range(4) for d in range(4))
+            T = 2 * dphi[a] * dphi[b] - g[a, b] * dphi2 + 2 * e * (FF - g[a, b] * F2 / 4)
+            if vm.norm(vm._at(G, (a, b)) - T) != 0:
+                raise AssertionError(f"dilaton_black_hole: the Einstein tensor misses the stress of the Maxwell "
+                                     f"field and the dilaton in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+    # sqrt(-g) is r(r - r_d) sin(theta) in all three charts.
+    root = r * (r - rd) * sp.sin(th)
+    if sp.simplify(root ** 2 + g.det()) != 0:
+        raise AssertionError("dilaton_black_hole: sqrt(-g) is not r(r - r_d) sin(theta)")
+    for b in range(4):
+        if sp.simplify(sum(sp.diff(root * e * Fup[a, b], x[a]) for a in range(4))) != 0:
+            raise AssertionError(f"dilaton_black_hole: Maxwell's equations fail along {chart.coords_tex[b]}")
+    box = sum(sp.diff(root * ginv[a, b] * dphi[b], x[a]) for a in range(4) for b in range(4)) / root
+    if sp.simplify(box + e * F2 / 2) != 0:
+        raise AssertionError("dilaton_black_hole: the dilaton's equation fails")
+
+
+def dilaton_string_frame(chart, sign):
+    """The string chart is e^{2 phi} times the static chart, with e^{2 phi} = (1 - r_d/r)^sign:
+    sign = 1 for the electrically charged hole and -1 for the magnetically charged one."""
+    spec = dilaton_black_hole("static")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    names = dict(zip(source.symbols, chart.symbols))
+    names.update({source.reader.parameters[n]: chart.reader.parameters[n] for n in ("r_s", "r_d")})
+    r, rd = chart.reader.symbol["r"], chart.reader.parameters["r_d"]
+    scaled = (1 - rd / r) ** sign * source.geo.g.subs(names)
+    if vm.norm(scaled - chart.geo.g) != sp.zeros(4, 4):
+        raise AssertionError(f"dilaton_black_hole: the string chart of sign {sign} is not e^(2 phi) times the "
+                             "Einstein metric")
+
+
+DILATON_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing",
+                  "string_magnetic", "string_electric"]
+
+
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
@@ -1841,7 +1970,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "thin_shell_wormhole": [lambda s=s: thin_shell_wormhole(s) for s in ("spherical", "throat")],
           "kantowski_sachs": [lambda s=s: kantowski_sachs(s) for s in KS_CHARTS],
           "robinson_trautman": [lambda s=s: robinson_trautman(s) for s in RT_CHARTS],
-          "mcvittie": [lambda s=s: mcvittie(s) for s in ("isotropic", "areal")]}
+          "mcvittie": [lambda s=s: mcvittie(s) for s in ("isotropic", "areal")],
+          "dilaton_black_hole": [lambda s=s: dilaton_black_hole(s) for s in DILATON_CHARTS]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------
