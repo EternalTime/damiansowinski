@@ -257,6 +257,12 @@ def kerr_above(metric_id):
                             np.column_stack([phi, np.full_like(phi, lo)])]])]
 
 
+def levi_civita_r(rho, sigma=0.25):
+    """The proper distance from Levi-Civita's axis, the radius of the Kasner form:
+    r = rho^Sigma/Sigma with Sigma = 4 sigma^2 - 2 sigma + 1."""
+    Sigma = 4 * sigma * sigma - 2 * sigma + 1
+    return rho ** Sigma / Sigma
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -546,6 +552,11 @@ FLAT = {
     ("melvin", "cylindrical", "radial"): lambda: one(
         "melvin", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="universe"),
     ("melvin", "ernst", "radial"): lambda: one("melvin", lambda m: along(0.0, *m.reach("ernst", "r")), view_id="ernst"),
+    # Levi-Civita's plane z = 0 at t = 0, read in Weyl's coordinates; in the Kasner form r is the
+    # proper distance, r = rho^Sigma/Sigma with Sigma = 3/4 at sigma = 1/4.
+    ("levi_civita", "weyl", "radial"): lambda: one("levi_civita", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
+    ("levi_civita", "kasner", "radial"): lambda: one(
+        "levi_civita", lambda m: along(0.0, *(levi_civita_r(x) for x in m.reach("weyl", "\\rho")))),
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("malament_hogarth", "cartesian", "tx"): lambda: one("malament_hogarth", lambda m: across(m.time, *m.reach("cartesian", "x"))),

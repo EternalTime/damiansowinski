@@ -233,6 +233,11 @@ PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
 
 
+# Levi-Civita's cylinder as every one of its diagrams draws it: sigma = 1/4 and C = 1 in Weyl's
+# coordinates, which is the point (2/3, 2/3, -1/3) of Kasner's circle, with ell = (3/4)^(2/3).
+LC_WEYL = {"sigma": "1/4", "C": 1}
+LC_KASNER = {"p_0": "2/3", "p_2": "2/3", "p_3": "-1/3", "ell": "(3/4)**(2/3)"}
+
 @dataclass
 class Diagram:
     """One view of one coordinate system, and every choice its drawing makes."""
@@ -723,6 +728,12 @@ DIAGRAMS = [
     Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
             lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
+    # Levi-Civita's plane of t and its radius at sigma = 1/4, where the Kasner exponents are
+    # (2/3, 2/3, -1/3), in Weyl's coordinates and in the Kasner form, whose r is the proper distance.
+    Diagram("levi_civita", "weyl", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\rho$", "$ct$", LC_WEYL, {"phi": "0", "z": "0"}),
+    Diagram("levi_civita", "kasner", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r$", "$ct$", LC_KASNER, {"phi": "0", "z": "0"}),
     Diagram("malament_hogarth", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$ct$", {},
             {"y": "0", "z": "0"}, families=SIDEWAYS, functions={"Omega": _MH_FACTOR}, any_factor="Omega",
             lines=(("world", "r", "0", "the computer's world line, up the axis into the removed event",
@@ -1624,6 +1635,20 @@ CAPTIONS = {
         "On the equator and on the axis no Christoffel symbol turns them out of the plane, so there they are null "
         "geodesics. The cones close at the horizon $r = r_s$, and inside it every cone points to $r = 0$, where the "
         "Kretschmann scalar diverges.",
+    ],
+    ("levi_civita", "weyl", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Levi-Civita's cylinder ($\\sigma = 1/4$). The metric "
+        "on it is $\\rho^{4\\sigma}(-c^2dt^2 + \\rho^{8\\sigma(\\sigma - 1)}d\\rho^2)$, so the rays are the curves "
+        "$ct = \\pm 4\\rho^{1/4} + $ const, with cones that close toward the axis and open wider than 45° beyond "
+        "$\\rho = 1$. No Christoffel symbol turns them out of the plane, so they are null geodesics.",
+        "The Kretschmann scalar $3/(4\\rho^3)$ diverges on the axis $\\rho = 0$, and a ray that leaves the axis "
+        "reaches every $\\rho$ in a finite time, so the singularity is naked.",
+    ],
+    ("levi_civita", "kasner", "radial"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$, $z = 0$) of Levi-Civita's cylinder in its Kasner form "
+        "($p_0 = p_2 = 2/3$, $p_3 = -1/3$), with $r$ the proper distance from the axis. The metric on it is "
+        "$-r^{2p_0}c^2dt^2 + dr^2$, so the rays are the curves $ct = \\pm 3r^{1/3} + $ const, null geodesics of the "
+        "spacetime, and the Kretschmann scalar $-16p_0p_2p_3/r^4$ diverges on the axis $r = 0$.",
     ],
     ("malament_hogarth", "cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$) through the removed event at the origin. "
@@ -3615,6 +3640,10 @@ CLOSED_FORMS = {
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("melvin", "ernst", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
+    ("levi_civita", "weyl", "radial"):
+        (lambda t, r: t + 4 * r ** 0.25, lambda t, r: t - 4 * r ** 0.25, lambda t, r: r > 0.01),
+    ("levi_civita", "kasner", "radial"):
+        (lambda t, r: t + 3 * np.cbrt(r), lambda t, r: t - 3 * np.cbrt(r), lambda t, r: r > 0.01),
     ("minkowski", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("minkowski", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("minkowski", "rindler", "tx"):

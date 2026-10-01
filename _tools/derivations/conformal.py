@@ -3732,6 +3732,81 @@ def melvin(ck, src):
     return views
 
 
+def levi_civita(ck, src):
+    """Levi-Civita's half plane of fixed phi and z at sigma = 1/4, in Weyl's coordinates and in
+    the Kasner form.
+
+    On it the metric is rho^{4 sigma}(-c^2dt^2 + drho_*^2) with rho_* = rho^{(2 sigma - 1)^2}/
+    (2 sigma - 1)^2, which runs from 0 on the axis to infinity for every sigma but 1/2, so
+    p, q = arctan(ct -+ rho_*) bring it into Minkowski's triangle with the axis on X = 0. At
+    sigma = 1/4, rho_* = 4 rho^{1/4}. The Kasner form's plane is -r^{2 p_0}c^2dt^2 + dr^2 with
+    r_* = r^{1 - p_0}/(1 - p_0) = 3 r^{1/3} at p_0 = 2/3, the same triangle. The affine parameter
+    along a ray grows as the integral of rho^{4 sigma} drho_*, without bound, so the far edges are
+    the half plane's null infinity; the axis is reached at a finite parameter and the Kretschmann
+    scalar diverges there, a timelike singularity with no horizon."""
+    def weyl_pq(t, rho):
+        return mink_pq(t, 4 * np.asarray(rho, dtype=float) ** 0.25)
+
+    def kasner_pq(t, r):
+        return mink_pq(t, 3 * np.cbrt(np.asarray(r, dtype=float)))
+
+    fixed = {"phi": "0", "z": "0"}
+    weyl = Plane(src, "levi_civita", "weyl", ("t", "\\rho"), fixed, nr.LC_WEYL)
+    ck.chart("Levi-Civita, Weyl", weyl, weyl_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20), lambda t, r: (1, 0))
+    K = weyl.kretschmann
+    ck.diverges("Levi-Civita: the Kretschmann scalar diverges on the axis rho = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.limit("Levi-Civita: the Kretschmann scalar at sigma = 1/4 is 3/(4 rho^3)", K(np.zeros(1), np.full(1, 2.0)),
+             [3 / 32], 1e-12)
+    kasner = Plane(src, "levi_civita", "kasner", ("t", "r"), fixed, nr.LC_KASNER)
+    ck.chart("Levi-Civita, Kasner", kasner, kasner_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20), lambda t, r: (1, 0))
+    ck.diverges("Levi-Civita: the Kasner form's Kretschmann scalar diverges on the axis r = 0",
+                kasner.kretschmann(0, 1e-2), kasner.kretschmann(0, 1e-3))
+    # The two charts draw one triangle: r = rho^Sigma/Sigma and a constant rescaling of t carry one map
+    # onto the other, so a line of constant rho is a line of constant r.
+    rho = ck.uniform(0.01, 20)
+    ck.limit("Levi-Civita: the two tortoise coordinates are proportional, 4 rho^(1/4) = (4/3)^(1/3) 3 r^(1/3)",
+             4 * rho ** 0.25, (4 / 3) ** (1 / 3) * 3 * np.cbrt(slices.levi_civita_r(rho)), 1e-9)
+
+    views = []
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS, RS = (-4, -2, -1, 0, 1, 2, 4), (0.25, 1, 4)
+    moment = slices.moments("levi_civita")[0]
+    reach = np.linspace(*moment.reach("weyl", "\\rho"), 2)
+    for cid, name, fmap, x, to_x, unit in (
+            ("weyl", "Weyl", weyl_pq, "\\rho", lambda rho: rho, "$\\sigma = 1/4$ and $C = 1$, with $\\rho$ and $ct$ in "
+             "the unit of length of the powers of $\\rho$; $p = \\arctan(ct - 4\\rho^{1/4})$ and "
+             "$q = \\arctan(ct + 4\\rho^{1/4})$."),
+            ("kasner", "Kasner", kasner_pq, "r", slices.levi_civita_r, "$p_0 = p_2 = 2/3$ and $p_3 = -1/3$, with $r$ "
+             "and $ct$ in the unit of length of the powers of $r$; $p = \\arctan(ct - 3r^{1/3})$ and "
+             "$q = \\arctan(ct + 3r^{1/3})$.")):
+        v = View(cid, name, box, cid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda r, t, fmap=fmap: fmap(t, r), RS, S_ALL)
+        grid(v, "t", fmap, TS, S_POS)
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], f"${x} = 0$", "r", dx=-6)
+        v.legend("cover", f"the whole spacetime, which $t$ and ${x}$ cover")
+        v.legend("r", f"${x}$ constant, at $1/4$, $1$ and $4$")
+        v.legend("t", "$ct$ constant")
+        v.legend("singular", f"the axis ${x} = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity of the half plane, $\\mathscr{I}^\\pm$")
+        along = to_x(reach)
+        v.slice(moment, [fmap(0 * along, along)])
+        v.set(restriction="The half plane of fixed $\\phi$ and $z$ only, totally geodesic, each point in the diagram a "
+                          "circle around the axis times a line along it.",
+              settings=unit)
+        views.append(v)
+    return views
+
+
 def published_gthth(src, metric_id, system_id, params):
     """The published g_thetatheta of a spherical chart, c = 1, as a numpy function of (t, r) on
     the equator."""
@@ -4806,6 +4881,7 @@ DRAWN = {
     "majumdar_papapetrou": majumdar_papapetrou,
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
+    "levi_civita": levi_civita,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -5510,6 +5586,25 @@ CAPTIONS = {
         "and the bottom.",
         "The plane of $t$ and $r$ at every other constant $\\theta$ has the same null curves and the same drawing, "
         "on the axis with the factor equal to $1$.",
+    ],
+    ("levi_civita", "weyl"): [
+        "The half plane of fixed $\\phi$ and $z$ of Levi-Civita's cylinder ($\\sigma = 1/4$), each point in the "
+        "diagram a circle around the axis times a line along it. The metric on it is "
+        "$\\rho^{4\\sigma}(-c^2dt^2 + d\\rho_*^2)$ with $\\rho_* = \\rho^{(2\\sigma - 1)^2}/(2\\sigma - 1)^2 = 4\\rho^{1/4}$, "
+        "and $p = \\arctan(ct - \\rho_*)$ and $q = \\arctan(ct + \\rho_*)$ bring it into Minkowski's triangle, drawn "
+        "with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is the axis $\\rho = 0$, where the Kretschmann scalar $3/(4\\rho^3)$ diverges, a timelike "
+        "singularity with no horizon. The triangle is the same for every $\\sigma$ but $1/2$, where $\\rho_*$ is "
+        "$\\ln\\rho$ and the edge $\\rho = 0$ is a Rindler horizon of flat spacetime.",
+    ],
+    ("levi_civita", "kasner"): [
+        "The half plane of fixed $\\phi$ and $z$ of Levi-Civita's cylinder in its Kasner form ($p_0 = p_2 = 2/3$, "
+        "$p_3 = -1/3$), each point in the diagram a circle around the axis times a line along it. The metric on it "
+        "is $r^{2p_0}(-c^2dt^2 + dr_*^2)$ with $r_* = r^{1 - p_0}/(1 - p_0) = 3r^{1/3}$, and "
+        "$p = \\arctan(ct - r_*)$ and $q = \\arctan(ct + r_*)$ bring it into Minkowski's triangle, drawn with "
+        "$T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is the axis $r = 0$, where the Kretschmann scalar $-16p_0p_2p_3/r^4$ diverges, a timelike "
+        "singularity with no horizon.",
     ],
     ("malament_hogarth", "cartesian"): [
         "The Malament-Hogarth toy spacetime, Minkowski space with one event "
