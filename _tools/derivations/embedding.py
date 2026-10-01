@@ -2605,6 +2605,64 @@ def string_black_hole(ck, src):
     return views
 
 
+def dilaton_black_hole(ck, src):
+    """Three moments t = 0 at r_d = r_s/2, the charge Q = M in units G = c = 1, one of each metric
+    of the charged dilaton black hole. The Einstein metric's equator: g_rr = r/(r - r_s) and
+    rho = sqrt(r(r - r_d)), so the throat, the bifurcation sphere r = r_s, has the radius
+    sqrt(r_s(r_s - r_d)), narrower than Flamm's, and the slice runs through it into a second
+    exterior; between r_d and r_s g_rr < 0 and a slice of constant t is no moment of space. The
+    string metric of the magnetically charged hole: rho = r and g_rr = r^2/((r - r_s)(r - r_d)),
+    so dz/dr = sqrt((r(r_s + r_d) - r_s r_d)/((r - r_s)(r - r_d))), a throat of radius r_s. The
+    string metric of the electrically charged hole: rho = r - r_d and g_rr = (r - r_d)/(r - r_s),
+    so dz/dr = sqrt((r_s - r_d)/(r - r_s)) and z = 2 sqrt((r_s - r_d)(r - r_s)), Flamm's
+    paraboloid of the Schwarzschild radius r_s - r_d in the areal radius r - r_d."""
+    rd = 0.5
+    params = {"r_s": 1, "r_d": "1/2"}
+    settings = ("$r_s = 1$, the unit of every length, and $r_d = r_s/2$, the charge $Q = M$ in units with "
+                "$G = c = 1$.")
+    between = ("Between the singularity and the horizon, $r_d < r < r_s$, $g_{rr} < 0$: $r$ is a time there, and a "
+               "slice of constant $t$ is not a moment of space.")
+    top, radii = 6.0, (1.5, 2.0, 3.0, 4.0, 5.0)
+    size = 2 * top
+    legend_radii = "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_s$"
+    views = []
+    for vid, label, system, rho_of, z_of in (
+            ("einstein", "Einstein metric", "static", lambda r: np.sqrt(r * (r - rd)), None),
+            ("string_magnetic", "String metric, magnetic charge", "string_magnetic", lambda r: r, None),
+            ("string_electric", "String metric, electric charge", "string_electric", lambda r: r - rd,
+             lambda r: 2 * np.sqrt((1 - rd) * np.maximum(r - 1, 0)))):
+        name = f"dilaton black hole, {label}"
+        sl = Slice(src, "dilaton_black_hole", system, "r", "\\phi", {"t": 0, **EQUATOR}, params)
+        ck.add(f"{name}: the horizon is at r_s", abs(sl.horizons()[0] - 1.0), 1e-12)
+        ck.stops(f"{name}, between r_d and r_s", sl, np.linspace(rd, 1.0, 402)[1:-1])
+        near = Piece("exterior", "sheet", sl, 1.0, top, 0.0, 1,
+                     (("throat", "the throat $r = r_s$, the bifurcation sphere, where the other exterior begins"),
+                      ("edge", "the surface runs on to $r \\to \\infty$")),
+                     [(1.0, "horizon", "$r = r_s$")] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+        far = Piece("other_exterior", "sheet2", sl, 1.0, top, 0.0, -1,
+                    (("throat", "the throat $r = r_s$"), ("edge", "the surface runs on to $r \\to \\infty$")),
+                    [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+        ck.join(f"{name}, the two sheets at the throat", near, 1.0, far, 1.0)
+        for p in (near, far):
+            ck.isometry(f"{name}, {p.id}", p)
+            ck.radius(f"{name}, {p.id}, the closed form of rho", p, rho_of, size)
+            if z_of:
+                ck.form(f"{name}, {p.id}, z = 2 sqrt((r_s - r_d)(r - r_s))", p,
+                        lambda r, s=p.sense: s * z_of(r), size)
+        surface = Surface([near, far])
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], *near.at(1.0), "$r = r_s$", dx=14)
+        ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+        ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+        fig.legend("fill", "cover", "the exterior $r > r_s$ that $t$ and $r$ cover")
+        fig.legend("line", "r", legend_radii)
+        fig.legend("line", "r2", "the same radii on the other exterior")
+        fig.legend("line", "horizon", "the throat $r = r_s$, where the slice crosses the horizon")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(vid, label, "$r_s$", [surface], fig.done(), settings=settings, stops=[between]))
+    return views
+
+
 def vaidya(ck, src):
     """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
     for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
@@ -5320,6 +5378,7 @@ DRAWN = {
     "einstein_rosen_waves": einstein_rosen_waves,
     "nariai": nariai,
     "global_monopole": global_monopole,
+    "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
@@ -5759,6 +5818,37 @@ CAPTIONS = {
         "from the pole at the rate $b$, and the rate falls short of 1 by the deficit angle $2\\pi(1 - b)$ divided "
         "by $2\\pi$. The area is $4\\pi br_s^2$, and Aryal, Ford, and Vilenkin's entropy is a quarter of it in "
         "units with $G = \\hbar = c = k_B = 1$.",
+    ],
+    ("dilaton_black_hole", "einstein"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the charged dilaton black hole ($r_d = r_s/2$) at one moment "
+        "of $t$, in the Einstein metric, drawn as a surface in flat space with every distance along it the metric "
+        "distance. On it the metric is $dr^2/(1 - r_s/r) + r(r - r_d)d\\phi^2$: the distance out to the next circle "
+        "is Schwarzschild's, $dr/\\sqrt{1 - r_s/r}$, and the circle at $r$ has the circumference "
+        "$2\\pi\\sqrt{r(r - r_d)}$, shorter than $2\\pi r$.",
+        "The slice passes through the bifurcation sphere $r = r_s$, its smallest circle, of radius "
+        "$\\sqrt{r_s(r_s - r_d)} = 0.707\\,r_s$, and runs on into a second exterior, the same surface turned over. "
+        "The throat narrows as the charge grows and closes at the extremal charge $r_d = r_s$, where the area of "
+        "the horizon is zero. At $r_d = 0$ the surface is Flamm's paraboloid.",
+    ],
+    ("dilaton_black_hole", "string_magnetic"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the magnetically charged dilaton black hole ($r_d = r_s/2$) at "
+        "one moment of $t$, in the string metric, drawn as a surface in flat space with every distance along it the "
+        "metric distance. On it the metric is $dr^2/((1 - r_s/r)(1 - r_d/r)) + r^2d\\phi^2$, so the circle at $r$ has "
+        "the circumference $2\\pi r$ and $dz/dr = \\sqrt{(r(r_s + r_d) - r_sr_d)/((r - r_s)(r - r_d))}$.",
+        "The slice passes through the bifurcation sphere $r = r_s$, a throat of radius $r_s$ for every charge, into "
+        "a second exterior. The proper distance from $r_s$ out to a radius $r$ grows as $r_d$ approaches $r_s$, and "
+        "at the extremal charge $r_d = r_s$ it is infinite: the throat is infinitely long, a cylinder of radius "
+        "$r_s$, and the string metric has no horizon and no singularity.",
+    ],
+    ("dilaton_black_hole", "string_electric"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the electrically charged dilaton black hole ($r_d = r_s/2$) at "
+        "one moment of $t$, in the string metric, drawn as a surface in flat space with every distance along it the "
+        "metric distance. On it the metric is $(r - r_d)\\,dr^2/(r - r_s) + (r - r_d)^2d\\phi^2$, so with the areal "
+        "radius $\\rho = r - r_d$ it is $d\\rho^2/(1 - (r_s - r_d)/\\rho) + \\rho^2d\\phi^2$, Schwarzschild's moment "
+        "with $r_s - r_d$ for $r_s$.",
+        "The surface is Flamm's paraboloid $z^2 = 4(r_s - r_d)(r - r_s)$, with its throat, the bifurcation sphere "
+        "$r = r_s$, of radius $r_s - r_d$. At the extremal charge $r_d = r_s$ the throat closes to a point and the "
+        "moment is a flat plane.",
     ],
     ("cosmic_string", "cone"): [
         "The plane $z = 0$ across a straight cosmic string at one moment of $t$, drawn as a surface in flat "

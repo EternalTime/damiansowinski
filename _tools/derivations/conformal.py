@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the thirty-six spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the thirty-eight spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -1670,6 +1670,178 @@ def global_monopole(ck, src):
 
 
 # ---------------------------------------------------------------- Reissner-Nordstrom, and the axis of Kerr
+
+class ShiftedTower(Tower):
+    """A Tower whose tortoise coordinate is moved by a constant, r* - shift, which multiplies
+    Kruskal's U and V by exp(-k shift) each and is one more choice of the same null coordinates."""
+
+    def __init__(self, f, r, roots, shift):
+        super().__init__(f, r, roots)
+        self.shift = shift
+
+    def rstar(self, r):
+        return super().rstar(r) - self.shift
+
+
+def dilaton_black_hole(ck, src):
+    """The charged dilaton black hole at r_d = r_s/2, in its Einstein metric and its two string
+    metrics.
+
+    On the plane of t and r the Einstein metric is Schwarzschild's, and each string metric is a
+    power of 1 - r_d/r times it, so all three share Kruskal and Szekeres's null coordinates
+    U = -exp(-u/2r_s), V = exp(v/2r_s), with UV = (1 - r/r_s) exp(r/r_s). The spacetime ends at
+    the singularity r = r_d, where UV = k = (1 - r_d/r_s) exp(r_d/r_s) < 1, so U and V are each
+    divided by sqrt(k), the tortoise coordinate moved by r_s ln k, which puts the singularity on
+    UV = 1 and so, with p = arctan U and q = arctan V, on the straight lines T = +-pi/2.
+    """
+    rd, params = 0.5, {"r_s": 1, "r_d": "1/2"}
+    k = (1 - rd) * math.exp(rd)
+    shift = math.log(k)
+    planes = {system: Plane(src, "dilaton_black_hole", system, ("t", "r"), EQUATOR, params)
+              for system in ("static", "string_magnetic", "string_electric")}
+    sph = planes["static"]
+    assert sph.g[0, 1] == 0 and sp.simplify(sph.g[0, 0] * sph.g[1, 1] + 1) == 0
+    T = ShiftedTower(-sph.g[0, 0], sph.x1, [1], shift)
+    for system, plane in planes.items():
+        name = f"dilaton black hole {system}"
+        ck.chart(f"{name}, exterior", plane, lambda t, r: T.pq("I", t, r),
+                 ck.uniform(-15, 15), ck.uniform(1.001, 30), lambda t, r: (1, 0))
+        ck.chart(f"{name}, black hole", plane, lambda t, r: T.pq("II", t, r),
+                 ck.uniform(-15, 15), ck.uniform(rd + 0.01, 0.999), lambda t, r: (0, -1))
+        ck.chart(f"{name}, white hole", plane, lambda t, r: T.pq("IV", t, r),
+                 ck.uniform(-15, 15), ck.uniform(rd + 0.01, 0.999), lambda t, r: (0, 1))
+        ck.chart(f"{name}, other exterior", plane, lambda t, r: T.pq("I'", t, r),
+                 ck.uniform(-15, 15), ck.uniform(1.001, 30), lambda t, r: (-1, 0))
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float) - shift, np.asarray(r, dtype=float)
+        return np.arctan((1 - r) * np.exp(r - w / 2) / k), atan_exp(w / 2)
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float) + shift, np.asarray(r, dtype=float)
+        return -atan_exp(-u / 2), np.arctan((r - 1) * np.exp(r + u / 2) / k)
+    ein = Plane(src, "dilaton_black_hole", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, params)
+    ck.chart("dilaton black hole ingoing Eddington-Finkelstein", ein, ingoing,
+             ck.uniform(-15, 15), ck.uniform(rd + 0.01, 30), lambda w, r: (1, -60))
+    eout = Plane(src, "dilaton_black_hole", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, params)
+    ck.chart("dilaton black hole outgoing Eddington-Finkelstein", eout, outgoing,
+             ck.uniform(-15, 15), ck.uniform(rd + 0.01, 30), lambda u, r: (1, 60))
+
+    p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, rd + 1e-12))
+    ck.limit("dilaton black hole: r -> r_d in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
+    ck.limit("dilaton black hole: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = T.pq("I", np.array([3.0]), np.array([1 + 1e-12]))
+    ck.limit("dilaton black hole: r -> r_s at fixed t lands on the bifurcation sphere", point(p[0], q[0]), [0, 0], 1e-4)
+    rr = np.linspace(rd + 0.02, 5, 50)
+    for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
+        pp, qq = T.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
+        ck.limit(f"dilaton black hole {cell}: tan p tan q is Kruskal's UV = (1 - r/r_s) e^(r/r_s) over k",
+                 np.tan(pp) * np.tan(qq), (1 - rr[sel]) * np.exp(rr[sel]) / k, 1e-8)
+    ck.limit("dilaton black hole: the ingoing and static coordinates put one event at one point",
+             ingoing(2.0 + 3 + np.log(2), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit("dilaton black hole: the outgoing and static coordinates put one event at one point",
+             outgoing(2.0 - 3 - np.log(2), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    for system, plane in planes.items():
+        K = plane.kretschmann
+        ck.diverges(f"dilaton black hole {system}: the Kretschmann scalar diverges at r = r_d",
+                    K(0, rd + 1e-2), K(0, rd + 1e-3))
+        ck.finite(f"dilaton black hole {system}: the Kretschmann scalar is finite at r = r_s",
+                  K(np.zeros(3), np.array([0.999, 1, 1.001])))
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN, TS = (1.05, 1.25, 1.5, 2, 3), (0.6, 0.75, 0.9), (-4, -2, -1, 0, 1, 2, 4)
+
+    def edges(v):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = r_d$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = r_d$", "t", dy=8)
+        v.label_xt([-Q4, Q4], "$r = r_s$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.legend("horizon", "the horizon $r = r_s$")
+        v.legend("singular", "$r = r_d$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    def moment_of(view_id, system):
+        m = slices.moments("dilaton_black_hole", view_id)[0]
+        lo, hi = m.reach(system, "r")
+        rr = np.linspace(lo, hi, 2)
+        left, right = T.pq("I'", 0 * rr, rr[::-1]), T.pq("I", 0 * rr, rr)
+        return m, [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))]
+
+    views = []
+    t = spread(-np.inf, np.inf, 500, 9)
+    for vid, label, system, embedded in (
+            ("static", "Static Spherical", "static", "einstein"),
+            ("string_magnetic", "String Metric, Magnetic Charge", "string_magnetic", "string_magnetic"),
+            ("string_electric", "String Metric, Electric Charge", "string_electric", "string_electric")):
+        v = View(vid, label, box, system)
+        v.fill("region", hexagon)
+        v.fill("cover", exterior)
+        for r in R_OUT:
+            v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+        rr = spread(1, np.inf, 500, 14)
+        for tt in TS:
+            v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+        edges(v)
+        for r, text in ((1.25, "$1.25\\,r_s$"), (2, "$2\\,r_s$")):
+            label_on(v, T.pq("I", 0.0, r), text)
+        v.legend("cover", "the region that $t$ and $r > r_s$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("t", "$ct$ constant, in units of $r_s$")
+        v.slice(*moment_of(embedded, system))
+        views.append(v)
+
+    einstein = moment_of("einstein", "static")
+    rr = spread(rd, np.inf, 600, 14)
+    v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    for w in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
+    edges(v)
+    v.legend("cover", "the region that $v$ and $r > r_d$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$v$ constant, an ingoing light ray")
+    v.slice(*einstein)
+    views.append(v)
+
+    v = View("outgoing", "Outgoing Eddington-Finkelstein", box, "eddington_finkelstein_outgoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [-HALF, -HALF], [HALF, -HALF], [PI, 0], [HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *outgoing(t, np.full_like(t, r)))
+    for u in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *outgoing(np.full_like(rr, u), rr))
+    edges(v)
+    v.legend("cover", "the region that $u$ and $r > r_d$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$u$ constant, an outgoing light ray")
+    v.slice(*einstein)
+    views.append(v)
+    # The page lists the views in the order of the charts: static, outgoing, ingoing, then the string metrics.
+    order = ["static", "outgoing", "ingoing", "string_magnetic", "string_electric"]
+    return sorted(views, key=lambda v: order.index(v.d["id"]))
+
 
 def reissner_nordstrom(ck, src):
     """The tower of Reissner-Nordstrom, horizons at the roots of the published g^rr.
@@ -5681,7 +5853,7 @@ DRAWN = {
     "domain_wall": domain_wall,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
-    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "anti_de_sitter": anti_de_sitter,
+    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
@@ -6013,6 +6185,48 @@ CAPTIONS = {
         "$U = -e^{-u/2r_s}$ and $V = (r/r_s - 1)e^{r/r_s}/(-U)$ they cover the exterior and the white hole, "
         "and their lines of constant $u$ are outgoing light rays, which leave $r = 0$ and cross the horizon "
         "outward.",
+    ],
+    ("dilaton_black_hole", "static"): [
+        "The charged dilaton black hole, maximally extended ($r_d = r_s/2$), each point in the diagram a 2-sphere "
+        "of area $4\\pi r(r - r_d)$ in the Einstein metric. On the plane of $t$ and $r$ the metric is "
+        "Schwarzschild's, so Kruskal and Szekeres's $U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$, with "
+        "$u, v = ct \\mp r_*$, cross the horizon as they do there, with $UV = (1 - r/r_s)e^{r/r_s}$. The spacetime "
+        "ends at $r = r_d$, where $UV = k = (1 - r_d/r_s)e^{r_d/r_s}$, and $p = \\arctan(U/\\sqrt{k})$ and "
+        "$q = \\arctan(V/\\sqrt{k})$ put that singularity on the straight lines $T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $r > r_s$ cover the right exterior alone. The horizon is the pair of null lines "
+        "$U = 0$ and $V = 0$, crossing at the bifurcation sphere, and the black hole above it ends at the spacelike "
+        "singularity $r = r_d$, where the area of the spheres vanishes. The diagram is Schwarzschild's for every "
+        "charge below the extremal one, with no inner horizon.",
+    ],
+    ("dilaton_black_hole", "ingoing"): [
+        "The whole of the charged dilaton black hole ($r_d = r_s/2$) with the ingoing Eddington-Finkelstein "
+        "coordinates $v$ and $r$ on it. From $V = e^{v/2r_s}$ and $U = (1 - r/r_s)e^{r/r_s}/V$, one formula for "
+        "every $r > r_d$, they cover the exterior and the black hole together, and their lines of constant $v$ are "
+        "ingoing light rays, which cross the horizon at 45° and end at $r = r_d$.",
+    ],
+    ("dilaton_black_hole", "outgoing"): [
+        "The whole of the charged dilaton black hole ($r_d = r_s/2$) with the outgoing Eddington-Finkelstein "
+        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-u/2r_s}$ and "
+        "$V = (r/r_s - 1)e^{r/r_s}/(-U)$ they cover the exterior and the white hole, and their lines of constant "
+        "$u$ are outgoing light rays, which leave $r = r_d$ and cross the horizon outward.",
+    ],
+    ("dilaton_black_hole", "string_magnetic"): [
+        "The magnetically charged dilaton black hole in its string metric ($r_d = r_s/2$), each point in the "
+        "diagram a 2-sphere of area $4\\pi r^2$. The string metric is $e^{2\\varphi} = (1 - r_d/r)^{-1}$ times the "
+        "Einstein metric, and a conformal factor leaves every light ray where it is, so the diagram is the "
+        "Einstein metric's, drawn by the same $U$ and $V$.",
+        "The singularity $r = r_d$ is a sphere of area $4\\pi r_d^2$ here. At the extremal charge $r_d = r_s$ the "
+        "string metric is $-c^2dt^2 + dr^2/(1 - r_s/r)^2 + r^2d\\Omega^2$ on $r > r_s$, geodesically complete, with "
+        "no horizon and no singularity.",
+    ],
+    ("dilaton_black_hole", "string_electric"): [
+        "The electrically charged dilaton black hole in its string metric ($r_d = r_s/2$), each point in the "
+        "diagram a 2-sphere of area $4\\pi(r - r_d)^2$. The string metric is $e^{2\\varphi} = 1 - r_d/r$ times the "
+        "Einstein metric, and a conformal factor leaves every light ray where it is, so the diagram is the "
+        "Einstein metric's, drawn by the same $U$ and $V$.",
+        "The spheres shrink to zero area at the singularity $r = r_d$, where $g_{tt}$ vanishes too. At the extremal "
+        "charge $r_d = r_s$ the string metric is $-(1 - r_s/r)^2c^2dt^2 + dr^2 + (r - r_s)^2d\\Omega^2$, whose "
+        "moments of constant $t$ are flat.",
     ],
     ("global_monopole", "static"): [
         "Letelier's black hole in a cloud of strings, maximally extended ($\\Delta = 0.19$), each point in the "

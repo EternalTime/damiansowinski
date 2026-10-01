@@ -3228,6 +3228,18 @@ class Slices(unittest.TestCase):
                     # u -> +infinity, off both Eddington-Finkelstein charts.
                     **{f"string_black_hole/eddington_finkelstein_{way}/{v}": {"horizon"}
                        for way in ("ingoing", "outgoing") for v in ("finkelstein", "chart")},
+                    # The dilaton black hole's Einstein metric and its two string metrics measure one
+                    # manifold three ways: the Einstein charts mark the Einstein metric's moment and each
+                    # string chart its own.
+                    **{f"dilaton_black_hole/{s}": {"string_magnetic", "string_electric"} for s in (
+                        "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
+                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
+                    **{f"conformal dilaton_black_hole/{v}": {"string_magnetic", "string_electric"}
+                       for v in ("static", "ingoing", "outgoing")},
+                    "dilaton_black_hole/string_magnetic/radial": {"einstein", "string_electric"},
+                    "conformal dilaton_black_hole/string_magnetic": {"einstein", "string_electric"},
+                    "dilaton_black_hole/string_electric/radial": {"einstein", "string_magnetic"},
+                    "conformal dilaton_black_hole/string_electric": {"einstein", "string_magnetic"},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
@@ -3287,6 +3299,12 @@ class Slices(unittest.TestCase):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * math.log(X - 1) + (0 if finkelstein else sign * X)), None
+        if key.startswith("dilaton_black_hole/eddington_finkelstein"):
+            # The plane of t and r is Schwarzschild's at r_s = 1: static t = 0 is v = r + ln(r - 1) and
+            # u = -r - ln(r - 1), drawn against v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            return (lambda X: sign * math.log(X - 1) + (0 if finkelstein else sign * X)), list(self.reach(surface))
         if key.startswith("btz/eddington_finkelstein"):
             # v = ct + r_* and u = ct - r_*, r_* = (1/2) ln|(r - 1)/(r + 1)|, drawn against v - r and u + r.
             sign = 1 if "ingoing" in key else -1
