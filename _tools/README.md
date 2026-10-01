@@ -15,6 +15,43 @@ The page turns those brackets into numbered links by looking the key up in `refe
 A reason a reference is there, such as a novel beside the papers, goes in that prose; the `.bib` entries carry no annotations.
 `godel` and `morris_thorne` are worked examples.
 
+### Related spacetimes
+
+Every spacetime lists the spacetimes it is related to, in a `related` field of its own metric file, and the page shows them under "related spacetimes" right after the history, as the captain asked on 1 October 2026.
+The application reads the same field.
+A new spacetime includes its own list, and adds the answering entry to the file of every spacetime it names.
+
+    "related": [
+      {"id": "kerr", "kind": "generalisation", "text": "Schwarzschild's black hole set spinning. With $a = 0$ Kerr's metric is Schwarzschild's."},
+      {"id": "tangherlini", "kind": "generalisation", "text": "... At $D = 4$ it is Schwarzschild's [tangherlini1963]."}
+    ]
+
+An entry is those three fields and no other.
+`id` is the other spacetime's `id`, and the page links it under the name the search list shows.
+The entries are shown in the order they are written, so put the closest relations first.
+
+`kind` says what the spacetime named is to the one listing it, and the other file answers with the kind that goes with it:
+
+| `kind` | the spacetime named is | answered by |
+| --- | --- | --- |
+| `special_case` | this one at a value of a parameter, or a limit of it | `generalisation` |
+| `generalisation` | this one with a parameter, a dimension, or a freedom added | `special_case` |
+| `piece` | a part this one is cut or glued from, as Schwarzschild is of Oppenheimer-Snyder | `composite` |
+| `composite` | a spacetime built with this one as a part | `piece` |
+| `family` | a member of the same family or construction, or the same idea in another setting | `family` |
+| `dual` | this one under an analytic continuation or an exchange of coordinates | `dual` |
+| `conformal` | conformal to this one, or to a region of it | `conformal` |
+| `locally_same` | the same geometry locally, differing by identifications or by the region covered | `locally_same` |
+| `programme` | another result of the same discoverer's programme, or its historical counterpart | `programme` |
+
+`text` is one to three sentences on why, written to stand under the other spacetime's name, in the captain's voice and under every rule the histories keep: no dashes, no machinery, no contrast standing in for a definition, no epigram.
+It is short, plain, and a little playful, and it never says how many spacetimes there are.
+Each side of a relation has its own wording: Schwarzschild's entry for Kerr and Kerr's entry for Schwarzschild say the same fact from the two ends.
+A claim that is not elementary carries a citation, `[key]` as in a history, and each key it cites that the history does not is added to `references` after the history's, in the order the entries first cite them, so the page numbers them in reading order.
+
+The build refuses a spacetime with no `related`, an entry with a missing or stray field, an `id` with no metric file, a spacetime listing itself or another twice, a kind outside the table, a text of more than three sentences, a citation its `references` does not hold, a relation the other file does not answer, and an answer of the wrong kind, naming each.
+`relation_problems` in `build_mfs_data.py` holds those rules and the class `Relations` in the tests holds them to the files on disk.
+
 `_layouts/mfs.html` and `publications.markdown` do not read `references.json`; each parses `references.bib` in the browser with its own small reader.
 That reader takes a value nested one brace deep, as in `{Einstein}'s` or `Rebou\c{c}as`, and turns the accent commands `\"`, `\'`, `` \` ``, `\^`, `\~`, `\c` and `\ss` and the escape `\&` into characters, and nothing else.
 A value outside that set prints wrongly on the page without any error, so check a new entry's rendered line and not only the build.

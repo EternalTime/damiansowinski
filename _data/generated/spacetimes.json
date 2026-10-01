@@ -1,6 +1,6 @@
 {
   "name": "My Favorite Spacetimes",
-  "description": "A catalogue of exact solutions of Einstein's field equations. For each spacetime: its name, a description, tags, signature and the conventions shared by its charts, and for each coordinate chart the coordinates, their domains, the parameters, the chart's own conventions, the line element, the nonzero metric components and the curvature invariants. Mathematics is LaTeX.",
+  "description": "A catalogue of exact solutions of Einstein's field equations. For each spacetime: its name, a description, tags, signature, the conventions shared by its charts and the spacetimes it is related to, each with its id, the kind of relation and why, and for each coordinate chart the coordinates, their domains, the parameters, the chart's own conventions, the line element, the nonzero metric components and the curvature invariants. Mathematics is LaTeX.",
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
@@ -31,6 +31,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $G$ and $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "generalisation",
+          "text": "The black hole the shock is made from. Boosted toward the speed of light with its energy held fixed, Schwarzschild's field flattens onto a null plane [aichelburg1971]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "generalisation",
+          "text": "The family of waves with plane fronts and parallel rays that Hans Brinkmann found in 1925, to which the Aichelburg-Sexl shock belongs [brinkmann1925, bonnor1969light]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Flat spacetime on either side of the shock. Roger Penrose built such waves in 1972 by cutting Minkowski space along a null plane and joining the halves again with a warp [penrose1972impulsive]."
+        }
+      ],
       "references": [
         "tolman1931",
         "bonnor1969light",
@@ -304,6 +321,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep every factor of $c$ explicit. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "natario",
+          "kind": "generalisation",
+          "text": "Warp drives with any shift vector $(u, v, w)$. José Natário found one in 2002 that neither expands nor contracts space anywhere [natario2002]."
+        },
+        {
+          "id": "lentz",
+          "kind": "family",
+          "text": "A warp drive whose shift is the gradient of a potential, which Erik Lentz built in 2021 to have positive energy density for the observers riding with it [lentz2021]. Other observers still measure negative energy [santiago2022]."
+        },
+        {
+          "id": "krasnikov",
+          "kind": "family",
+          "text": "A second way to beat light with negative energy. A pilot inside an Alcubierre bubble cannot reach its wall to steer it, and Krasnikov's tube is laid down by a ship moving slower than light [krasnikov1998, everett1997]."
+        }
+      ],
       "references": [
         "alcubierre1994",
         "baxter1995gossamer",
@@ -314,7 +348,10 @@
         "natario2002",
         "lobo2004",
         "bobrick2021",
-        "lentz2021"
+        "lentz2021",
+        "santiago2022",
+        "krasnikov1998",
+        "everett1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/alcubierre.json",
@@ -421,6 +458,43 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit, and the one parameter is the anti-de Sitter radius $L$, a length, which fixes the cosmological constant through $\\Lambda = -3/L^2$. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild_ads",
+          "kind": "generalisation",
+          "text": "A black hole placed in anti-de Sitter space. Stephen Hawking and Don Page showed in 1983 that a large one sits in stable equilibrium with its own radiation [hawking1983]."
+        },
+        {
+          "id": "btz",
+          "kind": "locally_same",
+          "text": "In three dimensions, anti-de Sitter space with its points identified by a discrete group of its symmetries is a black hole [banados1992, banados1993]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "The same geometry with positive curvature, the vacuum of a positive cosmological constant. Its infinity is spacelike [hawking1973]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The limit $L \\to \\infty$, where the curvature vanishes."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "conformal",
+          "text": "Anti-de Sitter space maps conformally onto half of Einstein's static universe, and its infinity is the equator [hawking1973]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "A product of anti-de Sitter space of two dimensions and a round sphere, held up by a uniform electromagnetic field [bertotti1959, robinson1959]."
+        },
+        {
+          "id": "malament_hogarth",
+          "kind": "generalisation",
+          "text": "Anti-de Sitter space is a Malament-Hogarth spacetime, where one observer can see the whole endless future of another in a finite time of their own [hogarth1992]."
+        }
+      ],
       "references": [
         "desitter1917",
         "einstein1917",
@@ -440,7 +514,11 @@
         "ryu2006",
         "bizon2011",
         "moschidis2020",
-        "moschidis2023"
+        "moschidis2023",
+        "banados1993",
+        "bertotti1959",
+        "robinson1959",
+        "hogarth1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -593,6 +671,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and $b = 1 - 4G\\mu/c^2$ for a string of mass per unit length $\\mu$, so the deficit angle is $2\\pi(1 - b) = 8\\pi G\\mu/c^2$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The black hole with the string taken out, $b = 1$, where the missing wedge closes."
+        },
+        {
+          "id": "cosmic_string",
+          "kind": "special_case",
+          "text": "The string with the black hole taken out, $r_s = 0$, which leaves a flat cone."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "A black hole with a string on one side alone. That string pulls it into uniform acceleration [kinnersley1970, achucarro1995]."
+        }
+      ],
       "references": [
         "aryal1986",
         "vilenkin1981",
@@ -913,6 +1008,33 @@
       ],
       "signature": "(-,+,+)",
       "convention": "We keep factors of $c$ explicit, with $M = 8Gm/c^2$ and $J = 8Gj/c^3$ for a hole of mass $m$ and angular momentum $j$, and $G$ Newton's constant in three dimensions. We write $N^2 = r^2/\\ell^2 - M + J^2/(4r^2)$, which vanishes on the horizons $r_\\pm^2 = \\tfrac{1}{2}M\\ell^2\\left(1 \\pm \\sqrt{1 - J^2/(M^2\\ell^2)}\\right)$.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole of four dimensions. The BTZ black hole has an outer and an inner horizon as Kerr's does, in a spacetime of constant curvature [banados1992]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "The black hole of anti-de Sitter space in four dimensions, which has a curvature singularity at its centre."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "locally_same",
+          "text": "The BTZ black hole is anti-de Sitter space of three dimensions with its points identified, so it is locally anti-de Sitter space everywhere. At $M = -1$ and $J = 0$ it is anti-de Sitter space [banados1992, banados1993]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "Minkowski space identified under a boost, as the BTZ black hole is anti-de Sitter space identified under one [misner1967, banados1993]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "family",
+          "text": "Sören Holst and Hans-Jürgen Matschull showed in 1999 that two massless particles colliding in anti-de Sitter space make a Gott universe, which, with its closed timelike curves treated as singular, is a rotating BTZ black hole [holst1999]."
+        }
+      ],
       "references": [
         "deser1984",
         "deser1984cosmological",
@@ -926,7 +1048,9 @@
         "maldacena1998stringy",
         "birmingham2002",
         "witten2007",
-        "maloney2010"
+        "maloney2010",
+        "misner1967",
+        "holst1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -1177,6 +1301,38 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit. The single parameter $b$ is the common radius of the two factors, and every sphere of the spacetime has the areal radius $b$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "generalisation",
+          "text": "The charged black hole. With its charge at the largest value that keeps a horizon, the geometry near that horizon is the Bertotti-Robinson solution [gibbons1993]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "generalisation",
+          "text": "Any number of extremal charged black holes at rest. Each has a Bertotti-Robinson throat, however many of them stand together."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "The time and radial directions of Bertotti-Robinson form an anti-de Sitter space of two dimensions with radius $b$."
+        },
+        {
+          "id": "nariai",
+          "kind": "family",
+          "text": "The product of de Sitter space of two dimensions and a sphere of the same radius, a vacuum with a positive cosmological constant and no field [nariai1950, krasinski1999]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "programme",
+          "text": "Tullio Levi-Civita found the Bertotti-Robinson geometry in 1917, two years before his static cylinder [levicivita1917, levicivita1919]."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "The other universe held together by its own electromagnetic field, a bundle of magnetic field lines along an axis [bonnor1954, melvin1964]."
+        }
+      ],
       "references": [
         "bertotti1959",
         "robinson1959",
@@ -1190,7 +1346,12 @@
         "ferrara1995",
         "bardeen1999",
         "maldacena1999",
-        "sen2009"
+        "sen2009",
+        "nariai1950",
+        "krasinski1999",
+        "levicivita1919",
+        "bonnor1954",
+        "melvin1964"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -1331,12 +1492,42 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "The isotropic case, with one scale factor in place of three. Types I and VII$_0$ hold the flat universe, V and VII$_h$ the open one, and IX the closed one [ellismaccallum1969]."
+        },
+        {
+          "id": "kasner",
+          "kind": "special_case",
+          "text": "The vacuum of type I, three axes with fixed exponents [kasner1921]."
+        },
+        {
+          "id": "mixmaster",
+          "kind": "special_case",
+          "text": "Type IX in vacuum, which Charles Misner named in 1969 after a kitchen mixer [misner1969]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "special_case",
+          "text": "Abraham Taub's vacuum of 1951 is type IX with two axes equal, and it extends through a horizon into the NUT region [taub1951, misner1963]."
+        },
+        {
+          "id": "kantowski_sachs",
+          "kind": "family",
+          "text": "The homogeneous cosmologies outside Bianchi's classification, with space $\\mathbb{R} \\times S^2$ [kantowski1966, ellismaccallum1969]."
+        }
+      ],
       "references": [
         "bianchi1898",
         "taub1951",
         "ellismaccallum1969",
         "misner1969",
-        "bkl1970"
+        "bkl1970",
+        "kasner1921",
+        "misner1963",
+        "kantowski1966"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json",
@@ -1440,6 +1631,38 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit, the mass parameter is the geometric mass $m = GM/c^2$, and the acceleration $\\alpha$ carries an inverse length, with $0 < 2\\alpha m < 1$. The constant $C$ is a pure number that scales the angle $\\phi$ about the axis. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The C-metric with the acceleration set to zero, $\\alpha = 0$ [griffiths2006]."
+        },
+        {
+          "id": "robinson_trautman",
+          "kind": "generalisation",
+          "text": "The C-metric is one of Robinson and Trautman's solutions, of type D like Schwarzschild's [robinson1962, griffiths2009]."
+        },
+        {
+          "id": "cosmic_string",
+          "kind": "piece",
+          "text": "The conical singularity along the axis of the C-metric is a cosmic string under tension, and it pulls the black holes apart [kinnersley1970, griffiths2006]."
+        },
+        {
+          "id": "string_black_hole",
+          "kind": "family",
+          "text": "A black hole with a string through it on both sides, which pull equally, so the hole stays at rest [aryal1986, achucarro1995]."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "A magnetic field along the axis can do the pulling in place of the string. Frederick Ernst showed in 1976 that it removes the nodal singularity of the charged C-metric [ernst1976]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "programme",
+          "text": "Tullio Levi-Civita found the static form of the C-metric in 1918, a year before his field of a line of mass [griffiths2009, levicivita1919]."
+        }
+      ],
       "references": [
         "griffiths2009",
         "bini2004",
@@ -1459,7 +1682,10 @@
         "eardley1995",
         "gregory1995",
         "hong2003",
-        "griffiths2005"
+        "griffiths2005",
+        "aryal1986",
+        "achucarro1995",
+        "levicivita1919"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -1626,6 +1852,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The mass parameter $m = GM/c^2$ is a length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Both are Weyl fields built on a Newtonian potential, that of a rod of length $r_s$ for Schwarzschild and that of a point for Curzon and Chazy [weyl1917, bicak2000]."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "generalisation",
+          "text": "The Weyl field of a rod. With the rod shrunk to a point at fixed mass it becomes the Curzon-Chazy particle [herrera1999]."
+        }
+      ],
       "references": [
         "weyl1917",
         "lehmkuhl2019",
@@ -1642,7 +1880,9 @@
         "scott1986b",
         "arianrhod1991",
         "griffiths2009",
-        "mangut2025"
+        "mangut2025",
+        "bicak2000",
+        "herrera1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/curzon_chazy.json",
@@ -1794,6 +2034,38 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit. The cosmological constant $\\Lambda$ is positive and carries an inverse length squared. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "generalisation",
+          "text": "A black hole placed in de Sitter space, so that a static observer sits between two horizons. At $r_s = 0$ it is de Sitter space."
+        },
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "The homogeneous, isotropic universe with any matter in it. Georges Lemaître and Howard Robertson showed that de Sitter space is one, with flat space and a scale factor growing exponentially [lemaitre1925, robertson1928]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "The same geometry with its curvature reversed in sign, the vacuum of a negative cosmological constant. Its infinity is timelike [hawking1973]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The limit $\\Lambda \\to 0$, where the cosmological horizon recedes to infinity."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "programme",
+          "text": "Einstein's universe of the same year, dust in balance against $\\Lambda$ [einstein1917]. De Sitter space maps conformally onto a strip of it, where its conformal diagram is drawn [hawking1973]."
+        },
+        {
+          "id": "nariai",
+          "kind": "family",
+          "text": "Another vacuum with a positive cosmological constant, the product of de Sitter space of two dimensions and a sphere of the same radius [ortaggio2002]."
+        }
+      ],
       "references": [
         "einstein1917",
         "desitter1917",
@@ -1810,7 +2082,9 @@
         "gibbons1977",
         "wald1983",
         "riess1998",
-        "perlmutter1999"
+        "perlmutter1999",
+        "hawking1973",
+        "ortaggio2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -1972,6 +2246,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit, and $r_s$ and $r_d$ are lengths. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The black hole with no charge, $r_d = 0$. With charge, the plane of $t$ and $r$ keeps Schwarzschild's metric and the spheres shrink [horowitz1992]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The charged black hole of Einstein-Maxwell theory, with no dilaton. It has an inner horizon, and the dilaton black hole has none [horowitz1992]."
+        }
+      ],
       "references": [
         "gibbons1982dilaton",
         "gibbons1988",
@@ -2346,6 +2632,28 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit, and the one parameter is the radius $R$ of the three sphere, a length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "The static universe with its radius free to change in time. Einstein gave up the static one in 1931, starting from Friedmann's equations [oraifeartaigh2014]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "programme",
+          "text": "The rival cosmology of 1917, Einstein's amended equations solved with no matter. Arthur Eddington summed up the pair as matter without motion and motion without matter [desitter1917, eddington1933]. It is conformal to the region $-\\pi/2 < \\eta < \\pi/2$ of the static universe [hawking1973]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "conformal",
+          "text": "Roger Penrose mapped Minkowski space conformally onto a bounded region of the static universe in 1963, which brings its infinity to a finite place [penrose1964conformal]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "conformal",
+          "text": "Anti-de Sitter space is conformal to half of the static universe, $0 \\le \\chi < \\pi/2$, and the equator where it ends is a timelike boundary [hawking1973]."
+        }
+      ],
       "references": [
         "einstein1917",
         "oraifeartaigh2017",
@@ -2360,7 +2668,8 @@
         "ellis2004",
         "ellis2004explicit",
         "penrose1964conformal",
-        "hawking1973"
+        "hawking1973",
+        "eddington1933"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -2600,6 +2909,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "pp_wave",
+          "kind": "family",
+          "text": "Exact gravitational waves with plane fronts. Einstein and Rosen concluded in 1936 that plane waves could not exist, since they could not avoid singularities in the metric [kennefick2005]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "special_case",
+          "text": "The static member of the family, $\\psi \\propto \\ln\\rho$, the field of a line of mass [levicivita1919]. Guido Beck found the cylindrical waves in 1925 by the change $z \\to it$, $t \\to iz$ in Weyl's static fields [beck1925, bicak2000]."
+        }
+      ],
       "references": [
         "beck1925",
         "bicak2000",
@@ -2620,7 +2941,8 @@
         "berger1995",
         "ashtekar1997",
         "kuchar1971",
-        "ashtekar1996"
+        "ashtekar1996",
+        "levicivita1919"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -2774,6 +3096,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The parameter $\\ell > 0$ is the radius of the throat. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "morris_thorne",
+          "kind": "generalisation",
+          "text": "The general traversable wormhole, with any redshift function $\\Phi$ and shape function $b$. Its simplest example is exactly Ellis's metric, which Michael Morris and Kip Thorne had not known of [morris1988, james2015]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Homer Ellis wanted a model of a particle free of the singularity at the centre of Schwarzschild's manifold, and opened that singularity into a throat with a scalar field [ellis1973]."
+        }
+      ],
       "references": [
         "ellis1973",
         "bronnikov1973",
@@ -2871,6 +3205,43 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The curvature parameter $k \\in \\{-1, 0, +1\\}$ sets the spatial geometry, in units of the inverse square of the curvature radius. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "composite",
+          "text": "A ball of closed Friedmann universe filled with dust, with Schwarzschild's vacuum around it. J. Robert Oppenheimer and Hartland Snyder used it in 1939 as the first model of collapse to a black hole [oppenheimersnyder1939]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "generalisation",
+          "text": "Dust whose density depends on radius, each shell expanding as a Friedmann universe of its own [lemaitre1933, tolman1934, bondi1947]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "The Friedmann universe with nothing in it but a positive cosmological constant. In flat slices its scale factor grows exponentially [lemaitre1925, robertson1928]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "special_case",
+          "text": "The closed Friedmann universe held still, with dust and a positive $\\Lambda$ balanced so that $a$ stays constant [einstein1917]. Arthur Eddington showed in 1930 that the balance is unstable [eddington1930]."
+        },
+        {
+          "id": "milne",
+          "kind": "special_case",
+          "text": "The empty open case, $a = ct$ and $k = -1$, which is flat spacetime [robertson1933]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "generalisation",
+          "text": "Homogeneous universes that expand at different rates in different directions. The Friedmann universes are the isotropic members [ellismaccallum1969]."
+        },
+        {
+          "id": "mcvittie",
+          "kind": "generalisation",
+          "text": "A point mass placed in the spatially flat Friedmann universe. At $r_s = 0$ it is that universe [mcvittie1933, kaloper2010]."
+        }
+      ],
       "references": [
         "friedmann1922",
         "einstein1922",
@@ -2894,7 +3265,18 @@
         "riess1998",
         "perlmutter1999",
         "misner1973",
-        "wald1984"
+        "wald1984",
+        "oppenheimersnyder1939",
+        "lemaitre1933",
+        "tolman1934",
+        "bondi1947",
+        "lemaitre1925",
+        "robertson1928",
+        "einstein1917",
+        "robertson1933",
+        "ellismaccallum1969",
+        "mcvittie1933",
+        "kaloper2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -3061,6 +3443,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit. The deficit $\\Delta$ is dimensionless and $r_s$ a length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The case $\\Delta = 0$, with no solid angle missing."
+        },
+        {
+          "id": "cosmic_string",
+          "kind": "family",
+          "text": "The defect along a line. It removes a wedge from every plane it crosses, where the monopole removes a solid angle from every sphere [vilenkin1981, barriola1989]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "The defect spread over a surface. A wall repels matter, as a global monopole does [kibble1976, harari1990]."
+        }
+      ],
       "references": [
         "kibble1976",
         "barriola1989",
@@ -3359,6 +3758,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We work in units with $G = c = 1$ throughout. The parameter $\\omega$ is the angular velocity of the dust, and $1/\\omega$ is the one length of the solution. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "stockum_dust",
+          "kind": "family",
+          "text": "Rotating dust with closed timelike curves, found before Gödel's. It is a cylinder turning about one axis, and Gödel's universe is homogeneous [lanczos1924, vanstockum1937]."
+        },
+        {
+          "id": "malament_hogarth",
+          "kind": "generalisation",
+          "text": "Every event of Gödel's universe is a Malament-Hogarth event, one with a worldline of infinite proper length in its past [earman1993]."
+        }
+      ],
       "references": [
         "godel1949",
         "lanczos1924",
@@ -3376,7 +3787,8 @@
         "malament1984",
         "malament1985",
         "manchak2011",
-        "stephenson2008"
+        "stephenson2008",
+        "earman1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/godel.json",
@@ -3551,6 +3963,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit. Each string has mass per unit length $\\mu$ and removes a wedge of angle $2\\alpha = 8\\pi G\\mu/c^2$, and $\\gamma = (1 - v^2/c^2)^{-1/2}$.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "piece",
+          "text": "Either string alone is the Vilenkin-Gott cosmic string, Minkowski space with a wedge of angle $8\\pi G\\mu/c^2$ removed [gott1985, grant1993]."
+        },
+        {
+          "id": "misner",
+          "kind": "special_case",
+          "text": "Away from the strings Gott's spacetime is Minkowski space identified under a boost and a shift $b$. Misner space is the case $b = 0$ [grant1993]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "In anti-de Sitter space of three dimensions two massless particles passing one another make a Gott universe, which, with its closed timelike curves treated as singular, is a rotating BTZ black hole [holst1999]."
+        }
+      ],
       "references": [
         "gott1991",
         "gott1985",
@@ -3883,6 +4312,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The vacuum member of the family is the inside of Schwarzschild's horizon, where $r$ is a time [ellismaccallum1969, doran2008]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "family",
+          "text": "Every other spatially homogeneous cosmology. The Kantowski-Sachs group has four parameters, and none of Bianchi's groups sits inside it acting simply transitively [kantowski1966, ellismaccallum1969]."
+        }
+      ],
       "references": [
         "bianchi1898",
         "ellismaccallum1969",
@@ -4101,6 +4542,33 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit. The expansion exponents obey $p_1 + p_2 + p_3 = 1$ and $p_1^2 + p_2^2 + p_3^2 = 1$, and every component assumes both conditions.",
+      "related": [
+        {
+          "id": "bianchi",
+          "kind": "generalisation",
+          "text": "Kasner's metric is the vacuum solution of Bianchi type I, the type whose space is flat [ellismaccallum1969]."
+        },
+        {
+          "id": "mixmaster",
+          "kind": "composite",
+          "text": "Bianchi type IX in vacuum, which runs through an endless sequence of Kasner epochs on its way to the singularity [misner1969, bkl1970]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The exponents $(1, 0, 0)$ make Kasner's spacetime flat, a wedge of Minkowski space in coordinates that expand along one axis."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "dual",
+          "text": "Kasner's metric with $t$ traded for a radius is the static field of a line of mass, which Tullio Levi-Civita had found in 1919 [levicivita1919, maccallum2011]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "family",
+          "text": "Two plane waves colliding end in a singularity near which the metric is Kasner's, with exponents set by the incoming waves [yurtsever1988]."
+        }
+      ],
       "references": [
         "kasner1921flat",
         "kasner1921",
@@ -4108,7 +4576,11 @@
         "penrose1965",
         "khalatnikov1970",
         "bkl1970",
-        "misner1969"
+        "misner1969",
+        "ellismaccallum1969",
+        "levicivita1919",
+        "maccallum2011",
+        "yurtsever1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -4212,6 +4684,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit, and the two parameters are the mass $M$ and the spin per unit mass $a = J/(Mc)$, which carries dimensions of length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Kerr's black hole with the spin switched off, $a = 0$. The horizon is a round sphere again and the ergosphere is gone."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "generalisation",
+          "text": "Kerr's black hole with electric charge added. At $r_Q = 0$ it is Kerr's metric."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "A rotating black hole in three dimensions, with an outer and an inner horizon like Kerr's and the same curvature at every point [banados1992, banados1993]."
+        }
+      ],
       "references": [
         "kerr1963",
         "kerr2009",
@@ -4231,7 +4720,9 @@
         "nolan2014interstellar",
         "james2015lensing",
         "abbott2016",
-        "eht2019"
+        "eht2019",
+        "banados1992",
+        "banados1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -4352,6 +4843,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit, and the parameters are the mass $M$, the spin per unit mass $a = J/(Mc)$, which carries dimensions of length, and the charge radius $r_Q$, fixed by $r_Q^2 = GQ^2/(4\\pi\\epsilon_0 c^4)$ from the total electric charge $Q$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Kerr-Newman with neither spin nor charge, $a = 0$ and $r_Q = 0$, where only the mass is left."
+        },
+        {
+          "id": "kerr",
+          "kind": "special_case",
+          "text": "Kerr-Newman with the charge set to zero, $r_Q = 0$. Ezra Newman's group reached the charged metric by the complex shift that carries Schwarzschild's metric to Kerr's [newman1965janis, newman1965kn]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "Kerr-Newman with the spin switched off, $a = 0$, a charged black hole that does not turn."
+        }
+      ],
       "references": [
         "kerr1963",
         "reissner1916",
@@ -4483,6 +4991,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "related": [
+        {
+          "id": "kasner",
+          "kind": "family",
+          "text": "Near the singularity made by the collision the metric approaches a Kasner solution whose exponents vary along the singularity [yurtsever1988]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "piece",
+          "text": "Each incoming wave alone is a plane wave of this family. Roger Penrose showed in 1965 how strongly such a wave focuses light [penrose1965plane]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "Flat spacetime ahead of both waves, and flat again behind either one alone [frauendiener2014]."
+        }
+      ],
       "references": [
         "szekeres1970",
         "khan1971",
@@ -4639,6 +5164,13 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit. The Riemann tensor is $R^\\mu{}_{\\nu\\sigma\\tau} = \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\tau} - \\partial_\\tau\\Gamma^\\mu{}_{\\nu\\sigma} + \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\tau} - \\Gamma^\\mu{}_{\\tau\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "alcubierre",
+          "kind": "family",
+          "text": "The warp bubble, whose pilot is cut off from the bubble wall and can neither raise it nor steer it [alcubierre1994, everett1997]."
+        }
+      ],
       "references": [
         "krasnikov1998",
         "everett1997",
@@ -4751,6 +5283,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The parameter $R$ sets the scale of the dust cylinder. We work in units with $G = c = 1$ throughout, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "levi_civita",
+          "kind": "family",
+          "text": "The static vacuum outside a line of mass. William Bonnor showed in 1980 that the vacuum outside van Stockum's cylinder is static only for the lightest cylinders [bonnor1980]."
+        },
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "Kurt Gödel's rotating dust of 1949, homogeneous and with closed timelike curves through every event [godel1949]."
+        }
+      ],
       "references": [
         "lanczos1924",
         "vanstockum1937",
@@ -4760,7 +5304,8 @@
         "niven1977cylinders",
         "misner1973",
         "vanloo2004",
-        "wack2014timebomber"
+        "wack2014timebomber",
+        "godel1949"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stockum_dust.json",
@@ -4861,6 +5406,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep every factor of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "alcubierre",
+          "kind": "family",
+          "text": "The original warp bubble, with its ring of negative energy density around the ship [alcubierre1994, pfenning1997]."
+        },
+        {
+          "id": "natario",
+          "kind": "generalisation",
+          "text": "The warp drive with flat space at each moment and any shift vector. Lentz's soliton is the case of a shift with a potential [natario2002]."
+        }
+      ],
       "references": [
         "alcubierre1994",
         "natario2002",
@@ -5002,6 +5559,48 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The mass parameter $\\sigma$ is dimensionless, $G/c^2$ times the mass per unit length of the source where it is small. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kasner",
+          "kind": "dual",
+          "text": "Levi-Civita's metric is Kasner's with a space coordinate in the place of time, the static class of the family Edward Kasner found in 1921 [kasner1921, maccallum2011]."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "generalisation",
+          "text": "Cylindrical symmetry with a dependence on time allowed. The wave with $\\psi \\propto \\ln\\rho$ does not change in time and is Levi-Civita's metric [beck1925, bicak2000]."
+        },
+        {
+          "id": "cosmic_string",
+          "kind": "special_case",
+          "text": "Levi-Civita's metric at $\\sigma = 0$ is flat, and its angular deficit is then that of a cosmic string [maccallum2011, vilenkin1981]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "programme",
+          "text": "Levi-Civita found the static form of the C-metric in 1918, a year before the cylinder [griffiths2009, bini2004]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "programme",
+          "text": "A uniform electromagnetic field on AdS$_2 \\times$ S$^2$, which Levi-Civita found in 1917, four decades before Bertotti and Robinson [levicivita1917, bertotti1959]."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "family",
+          "text": "The Weyl field of a rod of finite length. As $m \\to \\infty$ it becomes, locally, Levi-Civita's metric with $\\sigma = (1 + q)/2$ [herrera1999]."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "Far from its axis Melvin's magnetic universe approaches Levi-Civita's metric with $\\sigma = 1$ [kastor2021]."
+        },
+        {
+          "id": "stockum_dust",
+          "kind": "family",
+          "text": "Dust rotating rigidly inside a cylinder. William Bonnor showed in 1980 that the vacuum outside the lightest such cylinders is static [bonnor1980]."
+        }
+      ],
       "references": [
         "levicivita1919",
         "levicivita2011b",
@@ -5022,7 +5621,14 @@
         "bonnormartins1991",
         "bonnordavidson1992",
         "philbin1996",
-        "bicak2004"
+        "bicak2004",
+        "beck1925",
+        "bicak2000",
+        "griffiths2009",
+        "bini2004",
+        "levicivita1917",
+        "bertotti1959",
+        "bonnor1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",
@@ -5193,6 +5799,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. Each hole carries the mass parameter $m_i = GM_i/c^2$, a length, and a charge $Q_i$ of one common sign with $GQ_i^2/(4\\pi\\epsilon_0c^4) = m_i^2$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "A single hole of the family is the extremal Reissner-Nordström black hole in isotropic coordinates [hartle1972, griffiths2009]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "special_case",
+          "text": "The geometry down the throat of each hole. Near any one of them $U \\approx m_i/|\\mathbf{x} - \\mathbf{x}_i|$, and the metric is that of AdS$_2 \\times$ S$^2$."
+        }
+      ],
       "references": [
         "weyl1917",
         "griffiths2009",
@@ -5409,6 +6027,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep every factor of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The conformal factor $\\Omega$ is a dimensionless function, equal to $1$ outside a compact region $C$ around the removed event and growing without bound as that event is approached.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "Mark Hogarth proved in 1992 that anti-de Sitter space has the property [hogarth1992]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "The charged black hole has the property too, as John Earman and John Norton noted in 1993 [earman1993]."
+        },
+        {
+          "id": "godel",
+          "kind": "special_case",
+          "text": "In Gödel's universe every event is a Malament-Hogarth event [earman1993]."
+        }
+      ],
       "references": [
         "pitowsky1990",
         "hogarth1992",
@@ -5516,6 +6151,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the scale factor $a(t)$ of the spatially flat universe is dimensionless. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "McVittie's metric with the expansion stopped. At constant $a$ it is Schwarzschild's in isotropic coordinates [kaloper2010]."
+        },
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "McVittie's metric with the mass removed, $r_s = 0$, the spatially flat Friedmann universe with the same $a(t)$ [kaloper2010]."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "special_case",
+          "text": "McVittie's metric with a constant Hubble rate $H$ [kaloper2010, carrera2010]."
+        }
+      ],
       "references": [
         "mcvittie1933",
         "lemaitre1931expanding",
@@ -5700,6 +6352,28 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The field strength $B$ is an inverse length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "Melvin's field added to the charged C-metric accelerates its black holes and removes the string from the axis [ernst1976, kastor2021]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "family",
+          "text": "The static vacuum with cylindrical symmetry, which Melvin's universe approaches far from the axis [kastor2021]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "The other universe held together by its own electromagnetic field. Its field is uniform over a sphere, and Melvin's is a bundle along an axis [bertotti1959, robinson1959]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "With $B = 0$ Melvin's universe is flat."
+        }
+      ],
       "references": [
         "bonnor1954",
         "bini2022",
@@ -5721,7 +6395,9 @@
         "gibbons1986",
         "garfinkle1994",
         "dowker1994",
-        "tseytlin1995"
+        "tseytlin1995",
+        "bertotti1959",
+        "robinson1959"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -5872,6 +6548,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "Milne's universe is the Friedmann universe with $a = ct$, $k = -1$, and nothing in it [robertson1933]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Milne's universe is the inside of one event's future light cone in Minkowski space, in the coordinates of particles flying out from that event [robertson1933]."
+        }
+      ],
       "references": [
         "hubble1929",
         "milne1932",
@@ -6132,6 +6820,73 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "generalisation",
+          "text": "Flat spacetime with one mass in it, at rest and without charge. Far from the mass it is flat again."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "generalisation",
+          "text": "Flat spacetime given a positive cosmological constant. Both have ten symmetries, the most a spacetime of four dimensions can have."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "generalisation",
+          "text": "Flat spacetime given a negative cosmological constant, with the same ten symmetries."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "conformal",
+          "text": "Minkowski space is conformal to a bounded region of Einstein's static universe, where light rays reach its infinity at a finite place [penrose1964conformal]."
+        },
+        {
+          "id": "milne",
+          "kind": "locally_same",
+          "text": "The inside of a future light cone in expanding coordinates. It looks like a cosmology with a beginning and is flat everywhere [robertson1933, mukhanov2005]."
+        },
+        {
+          "id": "kasner",
+          "kind": "generalisation",
+          "text": "Kasner's solution with exponents $(1, 0, 0)$ is a piece of Minkowski space in expanding coordinates."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a gravitational wave running through it along one null direction [brinkmann1925]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "locally_same",
+          "text": "Minkowski space cut along a null plane and joined again with a warp is the field of a massless particle [aichelburg1971, penrose1972impulsive]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "composite",
+          "text": "Two impulsive waves crossing Minkowski space, which stays flat until they meet [khan1971]."
+        },
+        {
+          "id": "cosmic_string",
+          "kind": "locally_same",
+          "text": "Minkowski space with a wedge removed and the edges sewn together. It is flat everywhere off the string, and light passing on either side of it makes double images [vilenkin1981, gott1985]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "locally_same",
+          "text": "Two copies of the inside of a hyperboloid in Minkowski space, matched across the wall and flat on both sides [caldwell1996]."
+        },
+        {
+          "id": "melvin",
+          "kind": "generalisation",
+          "text": "Flat spacetime filled with a magnetic field along one axis, whose energy curves it [melvin1964]."
+        },
+        {
+          "id": "misner",
+          "kind": "locally_same",
+          "text": "Minkowski space rolled up under a boost. It stays flat, and the identification alone makes its closed timelike curves [misner1967, li1998]."
+        }
+      ],
       "references": [
         "minkowski1908",
         "minkowski1909",
@@ -6150,7 +6905,20 @@
         "unruh1976",
         "fulling1973",
         "bisognano1976",
-        "sewell1982"
+        "sewell1982",
+        "penrose1964conformal",
+        "robertson1933",
+        "mukhanov2005",
+        "brinkmann1925",
+        "aichelburg1971",
+        "penrose1972impulsive",
+        "khan1971",
+        "vilenkin1981",
+        "gott1985",
+        "caldwell1996",
+        "melvin1964",
+        "misner1967",
+        "li1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -6440,6 +7208,28 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Misner space is Minkowski space with each event identified with its images under a boost [misner1967]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "programme",
+          "text": "The curved spacetime Misner space imitates. Its horizon and its closed timelike curves appear in Misner space with the curvature gone [misner1967]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "generalisation",
+          "text": "James Grant showed in 1993 that Gott's two strings, away from the strings themselves, make a generalised Misner space, identified under a boost combined with a shift [grant1993]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The same construction in anti-de Sitter space of three dimensions, where the identification makes a black hole [banados1993]."
+        }
+      ],
       "references": [
         "misner1967",
         "li1998",
@@ -6454,7 +7244,8 @@
         "gott1991",
         "grant1993",
         "thorne1993misner",
-        "berkooz2004"
+        "berkooz2004",
+        "banados1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -6667,6 +7458,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "bianchi",
+          "kind": "generalisation",
+          "text": "The Mixmaster universe is the vacuum of Bianchi type IX, the type with closed space [misner1969]."
+        },
+        {
+          "id": "kasner",
+          "kind": "piece",
+          "text": "Each epoch of the Mixmaster universe is a stretch of Kasner's solution. The curvature of space then deals the exponents out again [misner1969, bkl1970]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "special_case",
+          "text": "The Mixmaster universe with two of its three axes equal is Taub's universe of 1951, the region of Taub-NUT between its horizons [taub1951, misner1963]."
+        }
+      ],
       "references": [
         "misner1968",
         "misner1969",
@@ -6683,7 +7491,9 @@
         "cornish1997",
         "motter2003",
         "demaret1985",
-        "damour2003"
+        "damour2003",
+        "taub1951",
+        "misner1963"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mixmaster.json",
@@ -6806,6 +7616,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The redshift function $\\Phi$ is dimensionless, and $b_0$ is the radius of the throat. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "ellis_bronnikov",
+          "kind": "special_case",
+          "text": "Morris and Thorne's simplest example, $\\Phi = 0$ and $b = b_0^2/r$, is the drainhole Homer Ellis and Kirill Bronnikov found in 1973 [ellis1973, bronnikov1973, morris1988]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "A wormhole with all of its exotic matter in a thin shell at the throat, which Matt Visser built in 1989 by cutting and gluing [visser1989prd, visser1989nuclphysb]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Schwarzschild's metric has a bridge of its own, which Einstein and Nathan Rosen described in 1935, and it pinches off faster than light can cross it [einstein1935, fuller1962]."
+        }
+      ],
       "references": [
         "sagan1985",
         "morris1988",
@@ -6815,7 +7642,11 @@
         "morris1988prl",
         "echeverria1991",
         "kim1991",
-        "hawking1992"
+        "hawking1992",
+        "ellis1973",
+        "bronnikov1973",
+        "visser1989prd",
+        "visser1989nuclphysb"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -6984,6 +7815,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ explicit. The single parameter is the cosmological constant $\\Lambda$, positive and an inverse length squared, and $1/\\sqrt{\\Lambda}$ is the radius of both factors of the product. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "generalisation",
+          "text": "The black hole Nariai's solution is a limit of. As $\\Lambda r_s^2 \\to 4/9$ the two horizons of Schwarzschild-de Sitter meet, the largest black hole de Sitter space can hold [ginsparg1983]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "Nariai's time and radial directions form a de Sitter space of two dimensions with radius $1/\\sqrt{\\Lambda}$ [ortaggio2002]. Edward Kasner called the solution \"the simplest solution beyond the hypersphere\" of de Sitter [kasner1925]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "The same kind of product, anti-de Sitter space of two dimensions and a sphere, filled with a uniform electromagnetic field. In Bruno Bertotti's solution of 1959 the two curvatures differ by an amount proportional to the field [bertotti1959, krasinski1999]."
+        }
+      ],
       "references": [
         "kasner1925",
         "nariai1950",
@@ -7197,6 +8045,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "alcubierre",
+          "kind": "special_case",
+          "text": "The first warp drive, the shift $(c\\,v_s f, 0, 0)$, which contracts space ahead of the ship and expands it behind [alcubierre1994]."
+        },
+        {
+          "id": "lentz",
+          "kind": "special_case",
+          "text": "Natário's shift vector taken to be a gradient, $(u, v, w) = c\\,\\nabla\\phi$ [lentz2021]."
+        }
+      ],
       "references": [
         "alcubierre1994",
         "natario2002",
@@ -7204,7 +8064,8 @@
         "santiago2022",
         "alcubierre2017",
         "dickinson2024exordia",
-        "mattingly2021"
+        "mattingly2021",
+        "lentz2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/natario.json",
@@ -7414,6 +8275,38 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit, and $r_s = 2GM/c^2$ is the Schwarzschild radius of the star. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The inside of the collapsing star, a ball cut from a closed Friedmann universe of dust and run toward its big crunch."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The outside of the collapsing star. The surface of the dust falls along radial geodesics of Schwarzschild's metric and crosses $r = r_s$ in a finite proper time."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "generalisation",
+          "text": "Collapsing dust whose density varies with radius. Demetrios Christodoulou proved in 1984 that such a cloud can form a singularity that sends light out to infinity, which the uniform ball never does [christodoulou1984]."
+        },
+        {
+          "id": "tov",
+          "kind": "programme",
+          "text": "Oppenheimer and George Volkoff showed earlier in 1939 that a cold star above a certain mass has no equilibrium [oppenheimer1939]. Oppenheimer and Snyder followed such a star down."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "family",
+          "text": "A ball of uniform density with Schwarzschild's vacuum outside, held static by pressure. No such star exists below $R = \\frac{9}{8}r_s$ [schwarzschild1916b]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "A star that radiates. Prahalad Vaidya carried the collapse over in 1966 to matter that shines as it falls [vaidya1966]."
+        }
+      ],
       "references": [
         "oppenheimer1939",
         "oppenheimersnyder1939",
@@ -7422,7 +8315,10 @@
         "nolan2023oppenheimer",
         "penrose1965",
         "de2026",
-        "beasor2026"
+        "beasor2026",
+        "christodoulou1984",
+        "schwarzschild1916b",
+        "vaidya1966"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -7570,6 +8466,33 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We contract the Ricci tensor on the middle index, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, the standard contraction.",
+      "related": [
+        {
+          "id": "aichelburg_sexl",
+          "kind": "special_case",
+          "text": "The pp-wave whose $H$ is concentrated on a single null plane, the field of a massless particle [aichelburg1971]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "composite",
+          "text": "Two impulsive plane waves, each a pp-wave alone, sent at each other head on. They focus each other into a singularity [khan1971]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "With $H = 0$ the metric is Minkowski's in null coordinates $u$ and $v$."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "family",
+          "text": "Exact gravitational waves with cylindrical fronts, which Einstein and Nathan Rosen found in 1937 after first concluding that gravitational waves do not exist [einstein1937, kennefick2005]."
+        },
+        {
+          "id": "robinson_trautman",
+          "kind": "family",
+          "text": "Waves on expanding spherical fronts from an isolated body, where the fronts of a pp-wave are planes with parallel rays [robinson1960, griffiths2009]."
+        }
+      ],
       "references": [
         "brinkmann1925",
         "kundt1961",
@@ -7585,7 +8508,11 @@
         "weber1960",
         "hulse1975",
         "taylor1979",
-        "abbott2016"
+        "abbott2016",
+        "aichelburg1971",
+        "khan1971",
+        "robinson1960",
+        "griffiths2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -7754,6 +8681,38 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The parameter $r_s = 2GM/c^2$ is the Schwarzschild radius, and $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$ is the square of the charge radius, where $Q$ is the total electric charge. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The black hole with no charge, $r_q = 0$, and with it no inner horizon."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "generalisation",
+          "text": "The charged black hole set spinning. With $a = 0$ Kerr-Newman is Reissner-Nordström."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "special_case",
+          "text": "The throat of the extremal black hole, $r_q = r_s/2$. Near its horizon the geometry is AdS$_2 \\times$ S$^2$ [gibbons1993]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "generalisation",
+          "text": "Any number of extremal Reissner-Nordström black holes at rest together, the electric repulsion of each pair balancing its gravity. James Hartle and Stephen Hawking showed in 1972 that these solutions are black holes [hartle1972]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The charged black hole of low energy string theory, where a scalar field couples to the Maxwell field. It has one horizon for every charge [garfinkle1991, horowitz1992]."
+        },
+        {
+          "id": "malament_hogarth",
+          "kind": "generalisation",
+          "text": "Reissner-Nordström is a Malament-Hogarth spacetime, as John Earman and John Norton noted in 1993 [earman1993]."
+        }
+      ],
       "references": [
         "reissner1916",
         "nordstrom1918",
@@ -7770,7 +8729,11 @@
         "simpson1973",
         "poisson1989",
         "poisson1990",
-        "dafermos2005"
+        "dafermos2005",
+        "gibbons1993",
+        "garfinkle1991",
+        "horowitz1992",
+        "earman1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -7873,6 +8836,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The mass parameter is $m = GM/c^2$, a length.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The member with round wave fronts and no radiation. Piotr Chruściel proved in 1991 that the others settle down to it as their waves leave [chrusciel1991, bicak1997]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "family",
+          "text": "Waves whose fronts are planes and whose rays stay parallel, where Robinson and Trautman's fronts expand [brinkmann1925, griffiths2009]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "special_case",
+          "text": "Two black holes accelerating apart, a member of the family of type D [robinson1962, griffiths2009]."
+        }
+      ],
       "references": [
         "robinson1960",
         "griffiths2009",
@@ -7894,7 +8874,8 @@
         "tod1989",
         "bicak1995",
         "macedo2008",
-        "rezzolla2010"
+        "rezzolla2010",
+        "brinkmann1925"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/robinson_trautman.json",
@@ -8066,6 +9047,138 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "generalisation",
+          "text": "Schwarzschild's black hole set spinning. With $a = 0$ Kerr's metric is Schwarzschild's."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "generalisation",
+          "text": "The same black hole carrying electric charge, which puts a second horizon inside the first. At $r_q = 0$ it is Schwarzschild's."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "generalisation",
+          "text": "The black hole with both spin and charge. With $a = 0$ and $r_Q = 0$ it is Schwarzschild's."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "generalisation",
+          "text": "The black hole in a universe with a positive cosmological constant, which adds a cosmological horizon far outside it. At $\\Lambda = 0$ it is Schwarzschild's."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "generalisation",
+          "text": "The black hole in anti-de Sitter space, with a negative cosmological constant. As $L \\to \\infty$ it is Schwarzschild's."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "generalisation",
+          "text": "Schwarzschild's black hole in $D$ spacetime dimensions, with $(r_h/r)^{D-3}$ in the metric function. At $D = 4$ it is Schwarzschild's [tangherlini1963]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "generalisation",
+          "text": "A charged black hole of string theory whose metric on the plane of $t$ and $r$ is Schwarzschild's, with the horizon at $r_s$ for every charge [horowitz1992]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "generalisation",
+          "text": "Schwarzschild's metric with one more parameter, $l$, a magnetic kind of mass. Ezra Newman, Louis Tamburino, and Theodore Unti found it in 1963 while generalising Schwarzschild's metric [nut1963]."
+        },
+        {
+          "id": "global_monopole",
+          "kind": "generalisation",
+          "text": "Schwarzschild's metric with $1 - \\Delta$ in the place of $1$, so that every sphere about the centre misses the same fraction of its solid angle [barriola1989]."
+        },
+        {
+          "id": "string_black_hole",
+          "kind": "generalisation",
+          "text": "Schwarzschild's black hole with a straight cosmic string through it. A wedge is missing around the whole axis, horizon included [aryal1986]."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "generalisation",
+          "text": "Schwarzschild's metric deformed by a quadrupole, the Weyl field of a rod of any density. At $q = 0$ it is Schwarzschild's [quevedo2011]."
+        },
+        {
+          "id": "curzon_chazy",
+          "kind": "family",
+          "text": "The Weyl field of Newton's point mass. Schwarzschild's own Weyl potential is that of a rod of length $r_s$ [weyl1917, bicak2000]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "generalisation",
+          "text": "A pair of black holes accelerating apart, pulled by a cosmic string or pushed by a strut. With the acceleration $\\alpha = 0$ it is Schwarzschild's [kinnersley1970, griffiths2006]."
+        },
+        {
+          "id": "mcvittie",
+          "kind": "generalisation",
+          "text": "Schwarzschild's mass set in an expanding universe, which George McVittie found in 1933 [mcvittie1933]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "generalisation",
+          "text": "Schwarzschild's metric with the mass made a function $m(u)$ of retarded time, for a star that shines. With $m$ constant it is Schwarzschild's in Eddington-Finkelstein coordinates [vaidya1951]."
+        },
+        {
+          "id": "robinson_trautman",
+          "kind": "generalisation",
+          "text": "Vacuum fields radiating gravitational waves on expanding fronts. With round fronts the metric is Schwarzschild's in retarded time, and from smooth data the others settle down to it [chrusciel1991, bicak1997]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "special_case",
+          "text": "Schwarzschild's field boosted to the speed of light, with the mass sent to zero as the energy stays fixed [aichelburg1971]."
+        },
+        {
+          "id": "kantowski_sachs",
+          "kind": "generalisation",
+          "text": "Inside the horizon $r$ is a time and $t$ a length, and the black hole's interior is a Kantowski-Sachs cosmology collapsing to the singularity [ellismaccallum1969, doran2008]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "Schwarzschild's metric with the mass removed, $r_s = 0$."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "programme",
+          "text": "Schwarzschild's second solution, for the inside of a star of uniform density. It joins the exterior at the star's surface, $r = R$ [schwarzschild1916b]."
+        },
+        {
+          "id": "tov",
+          "kind": "composite",
+          "text": "A star of perfect fluid in hydrostatic equilibrium, with Schwarzschild's vacuum outside it. By Birkhoff's theorem the outside is the same whatever the star is made of [birkhoff1923]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "composite",
+          "text": "Schwarzschild's vacuum around a ball of dust falling in on itself, the first model of a star collapsing to a black hole [oppenheimersnyder1939]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "generalisation",
+          "text": "Dust falling freely in spherical symmetry. With the dust removed, its comoving coordinates are Lemaître's coordinates for Schwarzschild's metric, regular across the horizon [lemaitre1933]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "A wormhole made to be crossed. Schwarzschild's own bridge pinches off faster than light can cross it [fuller1962, morris1988]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "composite",
+          "text": "Two copies of Schwarzschild's exterior cut at a radius outside the horizon and joined there, a wormhole with no horizon [visser1989nuclphysb]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "A wormhole made by opening Schwarzschild's central singularity into a throat with a scalar field [ellis1973]."
+        }
+      ],
       "references": [
         "schulmann1998",
         "schwarzschild1916",
@@ -8083,7 +9196,30 @@
         "birkhoff1923",
         "einstein1935",
         "israel1967",
-        "eht2022"
+        "eht2022",
+        "tangherlini1963",
+        "horowitz1992",
+        "nut1963",
+        "barriola1989",
+        "aryal1986",
+        "quevedo2011",
+        "weyl1917",
+        "bicak2000",
+        "kinnersley1970",
+        "griffiths2006",
+        "mcvittie1933",
+        "vaidya1951",
+        "chrusciel1991",
+        "bicak1997",
+        "aichelburg1971",
+        "ellismaccallum1969",
+        "doran2008",
+        "schwarzschild1916b",
+        "oppenheimersnyder1939",
+        "fuller1962",
+        "morris1988",
+        "visser1989nuclphysb",
+        "ellis1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -8295,13 +9431,34 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The parameter $r_s = 2GM/c^2$ is the Schwarzschild radius of the star, and $R$ is the stellar radius. We work in units with $c = 1$ throughout, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "programme",
+          "text": "Schwarzschild's first solution, the vacuum outside the star. The two metrics agree at the surface $r = R$, where the pressure falls to zero [schwarzschild1916]."
+        },
+        {
+          "id": "tov",
+          "kind": "generalisation",
+          "text": "The equations of hydrostatic equilibrium for a star with any equation of state. With constant density they integrate to Schwarzschild's interior [tolman1939, oppenheimer1939]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "Another ball of uniform density with Schwarzschild's vacuum outside, made of dust with no pressure, so it collapses [oppenheimersnyder1939]."
+        }
+      ],
       "references": [
         "schwarzschild1916b",
         "droste1917",
         "flamm1916",
         "buchdahl1959",
         "chandrasekhar1964",
-        "nordmann1922"
+        "nordmann1922",
+        "schwarzschild1916",
+        "tolman1939",
+        "oppenheimer1939",
+        "oppenheimersnyder1939"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json",
@@ -8404,6 +9561,28 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the anti-de Sitter radius $L$, a length, fixes the cosmological constant through $\\Lambda = -3/L^2$. The horizon $r_h$ is the one positive root of $1 - r_s/r + r^2/L^2$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The limit $L \\to \\infty$, where the cosmological constant vanishes and $r^2/L^2$ drops out of the metric function."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "family",
+          "text": "The same black hole with a positive cosmological constant. A cosmological horizon takes the place of the timelike boundary at infinity."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "Schwarzschild-anti-de Sitter with the black hole taken out, $r_s = 0$. The timelike boundary at infinity stays."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of anti-de Sitter space in three dimensions, where the curvature is the same constant everywhere [banados1992]."
+        }
+      ],
       "references": [
         "kottler1918",
         "hawking1983",
@@ -8426,7 +9605,8 @@
         "lemos1995",
         "mann1997",
         "vanzo1997",
-        "kastor2009"
+        "kastor2009",
+        "banados1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -8664,6 +9844,33 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the cosmological constant $\\Lambda$ carries an inverse length squared. The horizons $r_h < r_c$ are the two positive roots of $1 - r_s/r - \\Lambda r^2/3$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Kottler's black hole with $\\Lambda = 0$. The cosmological horizon moves off to infinity and the spacetime is asymptotically flat."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "The same black hole with the sign of the cosmological constant reversed. A timelike boundary at infinity takes the place of the cosmological horizon."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "Schwarzschild-de Sitter with the black hole taken out, $r_s = 0$. The cosmological horizon stays."
+        },
+        {
+          "id": "nariai",
+          "kind": "special_case",
+          "text": "The limit $\\Lambda r_s^2 \\to 4/9$, where the black hole horizon meets the cosmological horizon. Paul Ginsparg and Malcolm Perry showed in 1983 that the region between them stays regular and becomes Nariai's solution [ginsparg1983]."
+        },
+        {
+          "id": "mcvittie",
+          "kind": "generalisation",
+          "text": "A mass in a universe whose expansion rate changes in time. Where $H$ is constant it is Schwarzschild-de Sitter [kaloper2010, carrera2010]."
+        }
+      ],
       "references": [
         "einstein1917",
         "kottler1918",
@@ -8680,7 +9887,9 @@
         "bousso1998",
         "schleich2010",
         "islam1983",
-        "rindler2007"
+        "rindler2007",
+        "kaloper2010",
+        "carrera2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_de_sitter.json",
@@ -8922,6 +10131,13 @@
       ],
       "signature": "(-,+,\\ldots,+)",
       "convention": "The horizon radius $r_h$ is fixed by the mass $M$ through $r_h^{D-3} = 16\\pi GM/\\left((D-2)\\,\\Omega_{D-2}\\,c^2\\right)$, with $G$ Newton's constant in $D$ spacetime dimensions and $\\Omega_{D-2}$ the area of the unit sphere of $D - 2$ dimensions. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The case $D = 4$, where the metric function is $1 - r_s/r$ and a massive particle has stable circular orbits."
+        }
+      ],
       "references": [
         "ehrenfest1917",
         "whitrow1955",
@@ -9253,6 +10469,28 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit, the mass parameter is the geometric mass $m = GM/c^2$, and the NUT parameter $l$ is a length as well. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Taub-NUT with the NUT parameter set to zero, $l = 0$ [nut1963]."
+        },
+        {
+          "id": "mixmaster",
+          "kind": "generalisation",
+          "text": "Taub's universe with all three axes free. Charles Misner found in 1969 that it then oscillates without end on the way to its singularity [misner1969]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "generalisation",
+          "text": "Taub's universe, the region between the horizons, is a vacuum of Bianchi type IX with two of its three axes equal [taub1951, ellismaccallum1969]."
+        },
+        {
+          "id": "misner",
+          "kind": "programme",
+          "text": "Charles Misner's flat model of Taub-NUT, from his lecture of 1967 on Taub-NUT as \"a counterexample to almost anything\" [misner1967]."
+        }
+      ],
       "references": [
         "taub1951",
         "nut1963",
@@ -9263,7 +10501,10 @@
         "hawking1977",
         "sorkin1983",
         "lyndenbell1998",
-        "clement2015"
+        "clement2015",
+        "misner1969",
+        "ellismaccallum1969",
+        "misner1967"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
@@ -9369,6 +10610,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "special_case",
+          "text": "The Tolman-Bondi solution for a uniform ball of dust matched to vacuum [oppenheimersnyder1939, christodoulou1984]."
+        },
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "Tolman-Bondi with every shell alike. With $R = a(t)\\,r$ and $2E = -kr^2$ it is the Friedmann universe of dust."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Tolman-Bondi with no dust outside a central mass. Georges Lemaître used it in 1933 to show that freely falling observers cross $r = r_s$ without incident [lemaitre1933]."
+        }
+      ],
       "references": [
         "lemaitre1933",
         "tolman1934",
@@ -9480,6 +10738,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The vacuum outside the star. Where the pressure reaches zero, $m(r)$ stops growing and the metric continues as Schwarzschild's with $r_s = 2m$."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "special_case",
+          "text": "The star of constant density, whose structure equations integrate by hand. Its central pressure diverges as $R \\to \\frac{9}{8}r_s$ [schwarzschild1916b, buchdahl1959]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "programme",
+          "text": "With Hartland Snyder, a few months later, Oppenheimer followed a star too heavy for any equilibrium as it collapses [oppenheimersnyder1939]."
+        }
+      ],
       "references": [
         "phillips1999",
         "lane1870",
@@ -9498,7 +10773,10 @@
         "riley2019",
         "miller2019",
         "abbott2017",
-        "abbott2018"
+        "abbott2018",
+        "schwarzschild1916b",
+        "buchdahl1959",
+        "oppenheimersnyder1939"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",
@@ -9591,6 +10869,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $G$ and $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The case of constant mass, where no radiation flows and Birkhoff's theorem applies [birkhoff1923]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "Collapse with no radiation. Vaidya carried Oppenheimer and Snyder's collapsing star over in 1966 to matter that radiates as it falls [vaidya1966]."
+        }
+      ],
       "references": [
         "vaidya1951",
         "vaidya1997",
@@ -9769,6 +11059,43 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit. The string's mass per unit length is $\\mu$, equal to its tension, and the deficit angle is $\\delta = 8\\pi G\\mu/c^2$. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Flat spacetime with a wedge cut out along the string and the two faces glued together. Off the string the curvature vanishes."
+        },
+        {
+          "id": "string_black_hole",
+          "kind": "generalisation",
+          "text": "A cosmic string threaded through a Schwarzschild black hole, which Mukunda Aryal, Larry Ford, and Alexander Vilenkin wrote down in 1986 [aryal1986]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "generalisation",
+          "text": "The static vacuum outside any straight line of mass. At $\\sigma = 0$, with the angle periodic, it is the cosmic string [maccallum2011, vilenkin1981]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "composite",
+          "text": "Two of these strings passing one another fast enough make closed timelike curves, as J. Richard Gott found in 1991 [gott1991]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "composite",
+          "text": "A cosmic string ending on a black hole pulls it into uniform acceleration. Stephen Hawking and Simon Ross took from the C-metric in 1995 the instanton for a string that breaks by creating a pair of black holes [hawking1995]."
+        },
+        {
+          "id": "global_monopole",
+          "kind": "family",
+          "text": "The defect at a point. The string removes a wedge from every plane it crosses, and the monopole removes a solid angle from every sphere around it [vilenkin1981, barriola1989]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "The defect spread over a surface. Tom Kibble showed in 1976 that the topology of the vacuum decides whether walls, strings, or monopoles form [kibble1976]. A wall repels test bodies, and a straight string leaves them alone."
+        }
+      ],
       "references": [
         "kibble1976",
         "vilenkin1981",
@@ -9785,7 +11112,11 @@
         "ori1991",
         "hawking1992",
         "visser2003",
-        "stewart2001flatterland"
+        "stewart2001flatterland",
+        "aryal1986",
+        "maccallum2011",
+        "hawking1995",
+        "barriola1989"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",
@@ -9959,6 +11290,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\delta$ is the Dirac delta.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "family",
+          "text": "The defect along a line, flat off the string as the wall's spacetime is flat off the wall [kibble1976, vilenkin1981]."
+        },
+        {
+          "id": "global_monopole",
+          "kind": "family",
+          "text": "The defect at a point. Like a wall, a global monopole repels matter [kibble1976, harari1990]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Each side of the wall is the inside of the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$ in Minkowski space [ipser1984, caldwell1996]."
+        }
+      ],
       "references": [
         "zeldovich1974",
         "zeldovich1975",
@@ -9973,7 +11321,8 @@
         "ipser1984walls",
         "widrow1989",
         "cvetic1992",
-        "saikawa2017"
+        "saikawa2017",
+        "harari1990"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",
@@ -10236,6 +11585,18 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "The smooth traversable wormhole, whose throat needs a tension greater than its energy density [morris1988]. Visser counted his among its \"absurdly benign\" cases, with the layer of exotic matter shrunk to zero thickness [visser1989nuclphysb]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "Both sides of the throat are Schwarzschild's exterior, cut off at $r = a > r_s$ [visser1989nuclphysb]."
+        }
+      ],
       "references": [
         "morris1988",
         "visser1989prd",
@@ -10415,6 +11776,23 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "The parameter $m$ is a length, and the mass $M$ has $GM/c^2 = \\delta m$ with $\\delta = 1 + q$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The undeformed case, $q = 0$, whose rod has length $r_s$ [bicak2000]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "family",
+          "text": "The Weyl field of an infinite line of mass, which the rod approaches locally as $m \\to \\infty$ [herrera1999]."
+        },
+        {
+          "id": "curzon_chazy",
+          "kind": "special_case",
+          "text": "The rod shrunk to a point at fixed mass, $q \\to \\infty$ and $m \\to 0$ with $(1 + q)m$ fixed [herrera1999]."
+        }
+      ],
       "references": [
         "weyl1917",
         "bicak2000",

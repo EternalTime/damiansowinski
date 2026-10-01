@@ -113,7 +113,7 @@ CAPTION_VOICE = (
 )
 # A hyphen joins two names, a name and a word, or a designation; beyond those it is part of a
 # spelling only in these terms, and an ordinary compound is rewritten without it.
-HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "scalar-tensor"}
+HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "pp-wave", "scalar-tensor"}
 
 # The templates and pages whose words reach a reader, beside the generated files, and the
 # data the site hands to agents.
@@ -130,6 +130,9 @@ def prose(metric):
     for field in PROSE_FIELDS:
         if metric.get(field):
             yield field, metric[field]
+    for entry in metric.get("related") or []:
+        if isinstance(entry, dict) and entry.get("text"):
+            yield f"related[{entry.get('id')}].text", entry["text"]
     for position, system in enumerate(metric.get("coordinates") or []):
         where = f"coordinates[{system.get('id') or position}]"
         if system.get("name"):
@@ -587,12 +590,15 @@ class Prose(unittest.TestCase):
 def voiced_prose():
     """Yield every text held to the captain's voice, each with its place: the paragraphs of every
     history and convention, and every caption, note, restriction band and sentence stated in place
-    of a drawing. Labels and legends name things and are not sentences."""
+    of a drawing, and every sentence on why a spacetime is related to another. Labels and legends
+    name things and are not sentences."""
     for metric in build.load_metrics():
         for number, paragraph in build.prose_paragraphs(metric.get("history") or ""):
             yield f"{metric['id']}.json: history paragraph {number}", paragraph
         for chart_id, convention in build.chart_conventions(metric):
             yield f"{metric['id']}.json: convention of {chart_id}", convention
+        for entry in metric.get("related") or []:
+            yield f"{metric['id']}.json: related {entry['id']}", entry["text"]
     sentences = re.compile(r"\.(?:caption\[\d+\]|input|settings|height|restriction|stops\[\d+\]|start|end|edge)$")
     fields = [field for name, diagram in diagram_files().items() for field in diagram_prose(name, diagram)]
     fields += [field for name, data in conformal_files().items() for field in conformal_prose(name, data)]
@@ -3985,6 +3991,127 @@ class ShadedRegions(unittest.TestCase):
         self.assertIn("showShade(root, button.getAttribute('data-cd-view'))", page)
 
 
+class Relations(unittest.TestCase):
+    """Every spacetime lists the spacetimes it is related to, each with a sentence on why, as the
+    captain asked on 1 October 2026: every link resolves, and a relation written on one
+    spacetime is written on the other too, in that one's own words, with the kind that answers
+    it. _tools/README.md carries the format."""
+
+    @staticmethod
+    def metric(metric_id, related, references=()):
+        return {"id": metric_id, "name": metric_id, "short_name": metric_id, "tags": ["t"],
+                "related": related, "references": list(references)}
+
+    def pair(self, kind="generalisation", back="special_case", text="Kerr with $a = 0$.", **extra):
+        return [self.metric("a", [dict({"id": "b", "kind": kind, "text": text}, **extra)]),
+                self.metric("b", [{"id": "a", "kind": back, "text": "The same, set spinning."}])]
+
+    def problems(self, metrics):
+        return build.relation_problems(metrics)
+
+    def test_the_collection_as_it_stands_holds_together(self):
+        self.assertEqual(self.problems(build.load_metrics()), [])
+
+    def test_every_spacetime_on_disk_lists_at_least_one_related_spacetime(self):
+        for metric in build.load_metrics():
+            self.assertTrue(metric.get("related"), metric["id"])
+
+    def test_every_link_on_disk_resolves_and_is_answered(self):
+        """Stated here apart from the build's own check, so the two cannot go wrong together."""
+        metrics = {m["id"]: m for m in build.load_metrics()}
+        links = {(m["id"], entry["id"]) for m in metrics.values() for entry in m["related"]}
+        self.assertGreater(len(links), len(metrics))
+        for one, other in sorted(links):
+            self.assertIn(other, metrics, f"{one}.json lists {other}, which has no metric file")
+            self.assertNotEqual(one, other)
+            self.assertIn((other, one), links, f"{one}.json lists {other}, and {other}.json does not list {one}")
+
+    def test_each_side_of_a_relation_has_its_own_wording(self):
+        metrics = {m["id"]: m for m in build.load_metrics()}
+        for metric in metrics.values():
+            for entry in metric["related"]:
+                back = next(e for e in metrics[entry["id"]]["related"] if e["id"] == metric["id"])
+                self.assertNotEqual(entry["text"], back["text"], f"{metric['id']} and {entry['id']}")
+
+    def test_no_relation_states_how_many_spacetimes_there_are(self):
+        count = len(build.load_metrics())
+        for metric in build.load_metrics():
+            for entry in metric["related"]:
+                self.assertNotRegex(entry["text"], rf"(?i)\b{count}\b|\b(?:spacetimes|solutions) in (?:this|the) (?:collection|catalogue)\b",
+                                    f"{metric['id']}.json: related[{entry['id']}]")
+
+    def test_a_pair_that_answers_itself_passes(self):
+        self.assertEqual(self.problems(self.pair()), [])
+        self.assertEqual(self.problems(self.pair("family", "family")), [])
+
+    def test_every_kind_has_an_answer_that_answers_back(self):
+        for kind, back in build.RELATION_KINDS.items():
+            self.assertEqual(build.RELATION_KINDS[back], kind)
+
+    def test_a_relation_written_one_way_only_is_refused(self):
+        metrics = self.pair()
+        metrics[1]["related"] = [{"id": "c", "kind": "family", "text": "A cousin."}]
+        metrics.append(self.metric("c", [{"id": "b", "kind": "family", "text": "A cousin too."}]))
+        self.assertEqual(self.problems(metrics), ["a.json lists b, and b.json does not list a"])
+
+    def test_a_relation_answered_with_the_wrong_kind_is_refused(self):
+        found = self.problems(self.pair("generalisation", "generalisation"))
+        self.assertEqual(len(found), 2)
+        self.assertIn("b.json has to list a as special_case", found[0])
+
+    def test_a_link_to_no_spacetime_is_refused(self):
+        metrics = self.pair()
+        metrics[0]["related"].append({"id": "ghost", "kind": "family", "text": "Nobody."})
+        self.assertEqual(self.problems(metrics), ["a.json: related[ghost] names a spacetime that has no metric file"])
+
+    def test_a_spacetime_listing_itself_or_another_twice_is_refused(self):
+        metrics = self.pair()
+        metrics[0]["related"].append({"id": "a", "kind": "family", "text": "Itself."})
+        metrics[0]["related"].append({"id": "b", "kind": "generalisation", "text": "Again."})
+        self.assertEqual(self.problems(metrics), ["a.json lists itself as related", "a.json lists b twice"])
+
+    def test_a_spacetime_with_no_relations_is_refused(self):
+        metrics = self.pair()
+        del metrics[1]["related"]
+        found = self.problems(metrics)
+        self.assertIn("b.json lists no related spacetimes", found)
+
+    def test_an_unknown_kind_a_stray_field_and_an_empty_text_are_refused(self):
+        self.assertIn("which is not one of", self.problems(self.pair("cousin"))[0])
+        self.assertIn("and nothing else", self.problems(self.pair(note="x"))[0])
+        self.assertIn("does not say why", self.problems(self.pair(text=" "))[0])
+
+    def test_a_text_past_three_sentences_or_ending_mid_sentence_is_refused(self):
+        self.assertIn("runs past 3 sentences", self.problems(self.pair(text="One. Two. Three. Four."))[0])
+        self.assertIn("does not end at the end of a sentence", self.problems(self.pair(text="Kerr with no spin"))[0])
+        self.assertEqual(self.problems(self.pair(text="He called it \"a counterexample\" [misner1967].")),
+                         ["a.json: related[b] cites 'misner1967', which a.json does not list in its references"])
+
+    def test_a_citation_outside_the_references_is_refused(self):
+        metrics = self.pair(text="Kerr with $a = 0$ [kerr1963].")
+        self.assertIn("cites 'kerr1963'", self.problems(metrics)[0])
+        metrics[0]["references"] = ["kerr1963"]
+        self.assertEqual(self.problems(metrics), [])
+
+    def test_a_broken_relation_leaves_both_published_files_alone(self):
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        broken = build.load_metrics()
+        broken[0] = dict(broken[0], related=broken[0]["related"][1:])
+        with mock.patch.object(build, "load_metrics", return_value=broken):
+            self.assertEqual(build.main([]), 2)
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
+
+    def test_the_page_lists_them_right_after_the_history(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        body = page[page.index("var body = ["):]
+        history, related, coordinates = (body.index(mark) for mark in (
+            "mfs-section-label\">history<", "relatedSection(data),", "mfs-section-label\">coordinates<"))
+        self.assertLess(history, related)
+        self.assertLess(related, coordinates)
+        self.assertIn("mfs-section-label\">related spacetimes<", page)
+
+
 class Bibliography(unittest.TestCase):
     def setUp(self):
         self.references = read(build.REFERENCES_FILE)
@@ -4032,15 +4159,13 @@ class Citations(unittest.TestCase):
         entries = build.build_references()["entries"]
         self.assertIsNone(build.check_citations(build.load_metrics(), entries))
 
-    def test_every_metric_lists_its_references_in_the_order_its_history_first_cites_them(self):
-        """The page numbers a citation by its place in `references`, so [1] is the first one read."""
+    def test_every_metric_lists_its_references_in_the_order_its_prose_first_cites_them(self):
+        """The page numbers a citation by its place in `references`, so [1] is the first one read:
+        the history's citations in order, then those of the related spacetimes, which stand
+        right after it."""
         for metric in build.load_metrics():
-            cited = []
-            for bracket in re.findall(r"\[([A-Za-z0-9_, ]+)\]", metric.get("history") or ""):
-                for key in (k.strip() for k in bracket.split(",")):
-                    if key not in cited:
-                        cited.append(key)
-            self.assertEqual(metric.get("references", []), cited, metric["id"])
+            read = [metric.get("history") or ""] + [entry["text"] for entry in metric.get("related") or []]
+            self.assertEqual(metric.get("references", []), build.cited_keys(" ".join(read)), metric["id"])
 
     def test_a_citation_the_bibliography_has_no_entry_for_is_refused(self):
         metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "references": ["ghost"]}

@@ -23,6 +23,43 @@
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit. The string's mass per unit length is $\\mu$, equal to its tension, and the deficit angle is $\\delta = 8\\pi G\\mu/c^2$. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Tom Kibble spent the middle of the 1970s asking what a cooling universe does with a symmetry it breaks, and answered in 1976 that regions too far apart to communicate break it differently and cannot always be matched where they meet. Along certain lines the old symmetric phase stays trapped, held there by the topology of the vacuum manifold alone [kibble1976]. The defect left behind is a thread thinner than a proton, drawn across cosmological distances, its tension equal to its mass per unit length.¶Remarkably, the thread does almost nothing to the space around it. Alexander Vilenkin computed the field of a straight string in linearized gravity in 1981 and found that space flat, the whole gravitational effect packed into a deficit angle fixed by the tension [vilenkin1981]. The geometry is still not Minkowski: a wedge has been cut from every plane the string crosses and the edges sewn together, leaving a cone. In Stephen Baxter's novel Ring of 1994 a character reckons that a ship passing through a string's conical deficit could outrun a beam of light [baxter1994ring].¶J. Richard Gott gave the exact solution in 1985, that cone outside and a spherical cap within, and worked out its optics [gott1985]. The missing wedge lenses by itself, so one quasar behind the string shows up twice at equal brightness, and the microwave sky steps in temperature across its track. Robert Brandenberger and Neil Turok computed in 1986 what a network of strings would stamp on the microwave background [brandenberger1986], and in a 1994 review Brandenberger set out the whole defect theory of structure formation [brandenberger1994]. The acoustic peaks measured later decided against it: they are the sound of a plasma set oscillating in step, and strings do not set it oscillating that way.¶Then Gott came back to his own solution and used it to build a time machine. In 1991 he gave the exact geometry of two straight strings passing one another without touching, and showed that if each moves fast enough, a traveler who loops around both while they pass returns to their own past [gott1991]. The condition he gives is $\\gamma_s > (\\sin 4\\pi\\mu)^{-1}$ for each string in the laboratory frame, with $\\mu$ the mass per unit length in Planck units and $8\\pi\\mu$ the deficit angle. Each string on its own is an ordinary source of positive energy.¶Each alone is the harmless cone of 1985, and a circuit of either one brings you home late, never early. A deficit angle is a global fact: nothing near a string betrays it, and only a trip the whole way around turns the missing wedge up in the total. So a ship circling the pair can beat a light signal sent through the flat space between them, and while the strings are moving it beats it in time as well. Curt Cutler mapped the global structure the year after, penning the curves into a bounded region that grows out of complete spacelike surfaces carrying none [cutler1992]. The closed curves appear only to the future of those surfaces, as they would in a machine someone switched on.¶The objections came fast. Stanley Deser, Roman Jackiw, and Gerard 't Hooft, who had made gravity in three dimensions a flat space problem in 1984 [deser1984], added up the energy and momentum of Gott's pair and found it tachyonic: together the strings move faster than light though neither does alone, so the pair cannot be realized by physical, timelike sources [deser1992]. Then came the attempts to build one anyway. Four pages earlier in that same issue of Physical Review Letters, Sean Carroll, Edward Farhi, and Alan Guth had built the spacetime of one gravitating particle decaying into two and found that an open universe never holds enough energy to reach Gott's threshold [carroll1992]. A closed universe will let you assemble the pair, and 't Hooft showed that this fails too: such a universe has a finite lifetime and crunches before anybody finishes the circuit [thooft1992]. Amos Ori had come at it earlier still: if such a spacetime has any closed curves, every surface of constant time in it meets one, so the machine was never switched on [ori1991].¶Stephen Hawking generalized the quarrel in 1992. Causality violation growing in a finite region out of an infinite initial surface must break the averaged weak energy condition on its Cauchy horizon, which disposes of closed curves made from finite lengths of string; and as a curve nears closure the stress tensor's expectation value runs away, wrecking the horizon before any traveler arrives [hawking1992]. In his words, \"It seems that there is a Chronology Protection Agency which prevents the appearance of closed timelike curves and so makes the universe safe for historians.\"¶These arguments rule out manufacturing such a spacetime, but chronology protection is still a conjecture, since the divergence it leans on arrives where the semiclassical approximation gives out [visser2003]. Gott's spacetime is still there, an exact solution made of two threads of positive energy obeying every energy condition, with no wormhole, no exotic matter, and no singularity in it. Arguments about time travel often return to it, since it needs nothing exotic. Ian Stewart told the whole story as fiction in his novel Flatterland of 2001, whose characters learn to make the string's cone by cutting a wedge from the plane and gluing its edges, meet Gott's time machine of two strings passing each other at nearly light speed, and are told that their universe holds too little energy to build one [stewart2001flatterland].",
+  "related": [
+    {
+      "id": "minkowski",
+      "kind": "locally_same",
+      "text": "Flat spacetime with a wedge cut out along the string and the two faces glued together. Off the string the curvature vanishes."
+    },
+    {
+      "id": "string_black_hole",
+      "kind": "generalisation",
+      "text": "A cosmic string threaded through a Schwarzschild black hole, which Mukunda Aryal, Larry Ford, and Alexander Vilenkin wrote down in 1986 [aryal1986]."
+    },
+    {
+      "id": "levi_civita",
+      "kind": "generalisation",
+      "text": "The static vacuum outside any straight line of mass. At $\\sigma = 0$, with the angle periodic, it is the cosmic string [maccallum2011, vilenkin1981]."
+    },
+    {
+      "id": "gott_time_machine",
+      "kind": "composite",
+      "text": "Two of these strings passing one another fast enough make closed timelike curves, as J. Richard Gott found in 1991 [gott1991]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "composite",
+      "text": "A cosmic string ending on a black hole pulls it into uniform acceleration. Stephen Hawking and Simon Ross took from the C-metric in 1995 the instanton for a string that breaks by creating a pair of black holes [hawking1995]."
+    },
+    {
+      "id": "global_monopole",
+      "kind": "family",
+      "text": "The defect at a point. The string removes a wedge from every plane it crosses, and the monopole removes a solid angle from every sphere around it [vilenkin1981, barriola1989]."
+    },
+    {
+      "id": "domain_wall",
+      "kind": "family",
+      "text": "The defect spread over a surface. Tom Kibble showed in 1976 that the topology of the vacuum decides whether walls, strings, or monopoles form [kibble1976]. A wall repels test bodies, and a straight string leaves them alone."
+    }
+  ],
   "references": [
     "kibble1976",
     "vilenkin1981",
@@ -39,7 +76,11 @@
     "ori1991",
     "hawking1992",
     "visser2003",
-    "stewart2001flatterland"
+    "stewart2001flatterland",
+    "aryal1986",
+    "maccallum2011",
+    "hawking1995",
+    "barriola1989"
   ],
   "coordinates": [
     {

@@ -27,6 +27,48 @@
   "signature": "(-,+,+,+)",
   "convention": "The mass parameter $\\sigma$ is dimensionless, $G/c^2$ times the mass per unit length of the source where it is small. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Tullio Levi-Civita found the static vacuum field with cylindrical symmetry in 1919, in the ninth of his notes on Einsteinian $ds^2$ in Newtonian fields [levicivita1919, levicivita2011b, maccallum2011]. Levi-Civita introduced the analog of the logarithmic potential of Newtonian gravity and found the other metric coefficients from the vacuum Einstein equations [levicivita2011b, maccallum2011]. For small $\\sigma$ the field is that of an infinitely long homogeneous line of mass in Newton's theory, with $\\sigma$ its mass per unit length, as Levi-Civita noticed himself [herrera2001]. Werner Israel confirmed in 1977 that $\\sigma$ is the mass per unit length [israel1977, maccallum2011]. Levi-Civita's metric is a member of the class of static axisymmetric vacuum solutions Hermann Weyl gave in 1917, and it is the static class of the family Edward Kasner published in 1921 [weyl1917, kasner1921, maccallum2011].¶The solution holds two independent parameters, $\\sigma$ and $C$, as L. Marder established in 1958 [marder1958, herrera2001]. A change of coordinates takes $C$ to $1$ locally, and with $\\phi$ running once round the axis $C$ fixes the angular deficit there [maccallum2011]. William Bonnor pointed out in 1979 that the constant has a global topological meaning and cannot be removed by scale transformations [bonnor1979, herrera2001]. At $\\sigma = 0$ the spacetime is flat, and with $\\phi$ periodic it is the spacetime of a cosmic string [maccallum2011, vilenkin1981]. The metric is also the limit of the $\\gamma$ metric, whose potential is that of a finite rod, as the length of the rod tends to infinity [herrera1999, maccallum2011].¶The curvature is infinite on the axis $\\rho = 0$ for every $\\sigma$ except $0$ and $1/2$, where the spacetime is flat [dasilva1995]. At $\\sigma = 1/2$ it is flat spacetime in the coordinates of a uniformly accelerated frame [wang1997]. M. F. A. da Silva, Luis Herrera, Filipe Paiva, and Nilton Santos found in 1995 that the metric is of Petrov type I except at $\\sigma = -1/2$, $1/4$, and $1$, where it is of type D and has one more symmetry [dasilva1995]. At $\\sigma = -1/2$ that symmetry is a rotation in the plane of $z$ and $\\phi$, and the metric is locally the plane symmetric vacuum Abraham Taub found in 1951 [wang1997, taub1951]. At $\\sigma = 1/4$ it is a Lorentz boost that mixes $t$ and $\\phi$ [wang1997]. Far from its axis Melvin's magnetic universe approaches the Levi-Civita metric with $\\sigma = 1$ [kastor2021].¶A particle on a circular geodesic moves past the static observers at one speed $W$ whatever its radius, with $W^2 = 2\\sigma/(1 - 2\\sigma)$ in units of the speed of light, as round a line of mass in Newton's theory [dasilva1995, herrera2001]. That speed reaches the speed of light at $\\sigma = 1/4$, and Ronald Gautreau and R. B. Hoffman demonstrated in 1969 that no circular geodesic is timelike for $\\sigma \\geq 1/4$ [gautreau1969, dasilva1995]. Bonnor and M. A. P. Martins conjectured in 1991 that the metric does not represent an infinite line of mass if $\\sigma \\geq 1/4$ [bonnormartins1991, dasilva1995]. In 1992 Bonnor and W. Davidson matched it to a cylinder of perfect fluid with $\\sigma$ above $1/4$ and below $1/2$ [bonnordavidson1992, dasilva1995]. A cylinder of dust with equal numbers of particles circling the axis in each sense is a source for $0 \\leq \\sigma \\leq 1/2$, as da Silva, Herrera, Paiva, and Santos found in 1995 [dasilva1995]. For $-1/2 < \\sigma < 1/2$ the source can be a cylinder of perfect fluid and for $|\\sigma| > 1/2$ a wall, with the sign of the fluid's density that of $\\sigma$, as Thomas Philbin found in 1996 [philbin1996].¶A cylindrical shell of anisotropic fluid that satisfies the energy conditions is a source for $0 \\leq \\sigma \\leq 1$, as Anzhong Wang, da Silva, and Santos found in 1997 [wang1997]. Herrera, Santos, Antonio Teixeira, and Wang showed in 2001 that at $\\sigma = 1/2$ the axial and angular coordinates switch meaning, and gave a shell that satisfies the energy conditions for every $\\sigma \\geq 0$ [herrera2001]. By Israel's definition the energy per unit length of their shell is $\\sigma/(4\\sigma^2 - 2\\sigma + 1)$, which is greatest at $\\sigma = 1/2$, where it is $1/2$, and falls to zero as $\\sigma \\to \\infty$ [herrera2001, israel1977]. The Levi-Civita spacetime has no event horizon [herrera2001]. At $\\sigma = 1/2$ their shell has a positive energy density and a positive pressure, while the spacetime outside it is flat [herrera2001]. Jiří Bičák, Tomáš Ledvinka, Bernd Schmidt, and Martin Žofka demonstrated in 2004 that static cylinders of perfect fluid with their Levi-Civita exteriors exist as unique global solutions for a fairly general equation of state, and that only special cylinders have an exterior with $C = 1$ [bicak2004].",
+  "related": [
+    {
+      "id": "kasner",
+      "kind": "dual",
+      "text": "Levi-Civita's metric is Kasner's with a space coordinate in the place of time, the static class of the family Edward Kasner found in 1921 [kasner1921, maccallum2011]."
+    },
+    {
+      "id": "einstein_rosen_waves",
+      "kind": "generalisation",
+      "text": "Cylindrical symmetry with a dependence on time allowed. The wave with $\\psi \\propto \\ln\\rho$ does not change in time and is Levi-Civita's metric [beck1925, bicak2000]."
+    },
+    {
+      "id": "cosmic_string",
+      "kind": "special_case",
+      "text": "Levi-Civita's metric at $\\sigma = 0$ is flat, and its angular deficit is then that of a cosmic string [maccallum2011, vilenkin1981]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "programme",
+      "text": "Levi-Civita found the static form of the C-metric in 1918, a year before the cylinder [griffiths2009, bini2004]."
+    },
+    {
+      "id": "bertotti_robinson",
+      "kind": "programme",
+      "text": "A uniform electromagnetic field on AdS$_2 \\times$ S$^2$, which Levi-Civita found in 1917, four decades before Bertotti and Robinson [levicivita1917, bertotti1959]."
+    },
+    {
+      "id": "zipoy_voorhees",
+      "kind": "family",
+      "text": "The Weyl field of a rod of finite length. As $m \\to \\infty$ it becomes, locally, Levi-Civita's metric with $\\sigma = (1 + q)/2$ [herrera1999]."
+    },
+    {
+      "id": "melvin",
+      "kind": "family",
+      "text": "Far from its axis Melvin's magnetic universe approaches Levi-Civita's metric with $\\sigma = 1$ [kastor2021]."
+    },
+    {
+      "id": "stockum_dust",
+      "kind": "family",
+      "text": "Dust rotating rigidly inside a cylinder. William Bonnor showed in 1980 that the vacuum outside the lightest such cylinders is static [bonnor1980]."
+    }
+  ],
   "references": [
     "levicivita1919",
     "levicivita2011b",
@@ -47,7 +89,14 @@
     "bonnormartins1991",
     "bonnordavidson1992",
     "philbin1996",
-    "bicak2004"
+    "bicak2004",
+    "beck1925",
+    "bicak2000",
+    "griffiths2009",
+    "bini2004",
+    "levicivita1917",
+    "bertotti1959",
+    "bonnor1980"
   ],
   "coordinates": [
     {

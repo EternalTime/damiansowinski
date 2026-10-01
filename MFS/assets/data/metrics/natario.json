@@ -23,6 +23,18 @@
   "signature": "(-,+,+,+)",
   "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "The Alcubierre warp drive comes with a story attached, and the story is the part that gets remembered: space contracts in front of the ship, expands behind it, and the ship rides the wave from here to there [alcubierre1994]. José Natário asked whether the expansion does any of the work, and showed that it does none. In 2002 he published a warp drive whose volume elements are neither stretched nor squeezed anywhere in the spacetime, and which carries a ship exactly as Alcubierre's does [natario2002]. The contraction and expansion turned out to be a marginal consequence of one particular choice; make a different choice and they go away, while the drive keeps working.¶Natário put a prettier picture in their place. Hold a stone fixed in a river and watch the water: the flow parts ahead of it, slides around the sides, and closes up behind, and no parcel of water is compressed on the way past. That is the Natário drive. Space flows around a ship that sits still in it, and the flow is arranged so that volumes are carried along untouched. The stretching and squeezing of Alcubierre's space can be removed without disturbing anything the drive needs.¶His drive still needs what Alcubierre's needed: negative energy. Francisco Lobo and Matt Visser examined both drives in 2004 and found the classical energy conditions violated with no perturbative approximation doing the damage, and violated still when the bubble is made to crawl, and the negative energy stored in the warp field has to be a sizable fraction of the mass of the ship it carries [lobo2004]. Jessica Santiago, Sebastian Schuster, and Matt Visser sharpened this in 2022 into a claim about the whole family. Any warp drive a physicist would call physically reasonable violates the null energy condition, and so violates the weak, strong, and dominant conditions along with it; move to modified gravity and the violation returns as a violation of the purely geometric null convergence condition [santiago2022].¶A second obstruction has nothing to do with matter. Natário worked out the global and optical structure of his spacetime alongside the geometry [natario2002], and once a warp bubble is pushed past light speed it acquires horizons. The consequence is awkward for anyone hoping to fly one: an observer inside the ship can neither create the bubble on demand nor control it, so the apparatus would have to be laid down along the route in advance [alcubierre2017]. In Seth Dickinson's novel Exordia a character explaining how a ship bends space begins \"We can create an Alcubierre\" and corrects it to \"a Natário metric\", and another counts on a ship warped up through light speed being \"stuck in a bubble of causally disconnected space-time\" [dickinson2024exordia].¶Brandon Mattingly and colleagues drew both drives in 2021, plotting curvature invariants for the Alcubierre and Natário spacetimes, a way of looking at a geometry that does not depend on its coordinates. In their plots a safe harbor sits at the center where the crew rides flat, with the shape function drawing out the bubble wall around them. At constant velocity the Natário drive leaves no wake; the wake appears once the bubble accelerates [mattingly2021].¶Natário did not settle whether anyone can travel this way. He showed that the expansion of space does none of the work of a warp drive. Without it the drive still carries the ship, and it still needs negative energy.",
+  "related": [
+    {
+      "id": "alcubierre",
+      "kind": "special_case",
+      "text": "The first warp drive, the shift $(c\\,v_s f, 0, 0)$, which contracts space ahead of the ship and expands it behind [alcubierre1994]."
+    },
+    {
+      "id": "lentz",
+      "kind": "special_case",
+      "text": "Natário's shift vector taken to be a gradient, $(u, v, w) = c\\,\\nabla\\phi$ [lentz2021]."
+    }
+  ],
   "references": [
     "alcubierre1994",
     "natario2002",
@@ -30,7 +42,8 @@
     "santiago2022",
     "alcubierre2017",
     "dickinson2024exordia",
-    "mattingly2021"
+    "mattingly2021",
+    "lentz2021"
   ],
   "coordinates": [
     {

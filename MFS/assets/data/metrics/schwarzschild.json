@@ -30,6 +30,138 @@
   "signature": "(-,+,+,+)",
   "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$. We keep factors of $c$ explicit.",
   "history": "Weeks after Einstein presented his field equations to the Prussian Academy, in December 1915, Karl Schwarzschild wrote to Einstein from the Russian front with an exact solution. The war, he told Einstein, was kindly disposed toward him, allowing him, \"despite fierce gunfire at a decidedly terrestrial distance, to take this walk into this your land of ideas\" [schulmann1998]. He had found the gravitational field outside a spherical mass that does not rotate, working under artillery fire in what must rank among the more remarkable acts of mathematical focus in the history of physics. Einstein presented the result to the Academy on January 13, 1916 [schwarzschild1916].¶Einstein had replied on 29 December that he had not expected the rigorous treatment of the point problem to be so simple, and on 9 January that he would present the paper to the Academy the following Thursday [schulmann1998]. Schwarzschild prized the exact solution because it proved the solution unique, a point Einstein's approximations had left in doubt, and because it showed that Einstein's orbit for Mercury differs from the exact one only by terms of order $10^{-12}$ [schwarzschild1916]. Schwarzschild died that May from a disease contracted at the front, having never seen the full implications of his own solution. On 29 June Einstein gave his memorial address before the Academy, crediting him as the first to calculate gravitational fields exactly in the new theory [einstein1916memorial].¶Schwarzschild's original coordinates covered only $r > r_s$. Ludwig Flamm gave the exterior its first picture in 1916: a plane through the center, measured with the metric's own rulers, has the geometry of the surface made by rotating a parabola about its directrix, the funnel now called Flamm's paraboloid [flamm1916]. Johannes Droste in 1916 and David Hilbert in 1917 each rederived the solution with the coordinate domain extended to all $r > 0$, giving the metric the form in which it is used today [droste1917, hilbert1917]. The metric nonetheless carries Schwarzschild's name alone.¶The solution harbors a singularity at $r = r_s = 2GM/c^2$, which puzzled relativists for decades. Arthur Eddington introduced a coordinate change in 1924 that removed it from the metric components [eddington1924], and Georges Lemaître recognized in 1933 that the singularity was a coordinate artifact, and that freely falling observers cross it without incident [lemaitre1933]. The full picture came in a burst: David Finkelstein in 1958 [finkelstein1958], then Martin Kruskal and George Szekeres independently in 1960 [kruskal1960, szekeres1960], who each found maximally extended coordinate systems revealing that $r = r_s$ is a horizon, a membrane that lets matter and light fall in but never back out. In Poul Anderson's story \"Kyrie\" of 1968 a being of plasma falls with a collapsing star, and since by distant clocks the star takes infinite time to shrink to the Schwarzschild radius, its dying cry goes on forever in the mind of the telepath who hears it [anderson1968kyrie]. In Geoffrey Landis's \"Approaching Perimelasma\" of 1998 the narrator falls into a black hole that technicians have checked is not rotating, past three Schwarzschild radii, inside which no orbit is stable, and one and a half, where orbiting takes the speed of light, to the horizon where the directions of space and time change identity [landis1998perimelasma]. George Birkhoff had already shown in 1923 that the exterior Schwarzschild metric is the unique spherically symmetric vacuum solution, so any pulsating or collapsing sphere, as long as it remains spherical, wears this geometry outside [birkhoff1923].¶Albert Einstein and Nathan Rosen turned the geometry into a model of a particle in 1935: in their static, spherically symmetric solutions physical space consists of two identical sheets, and a particle is a bridge joining them [einstein1935]. Werner Israel proved in 1967 that among static, asymptotically flat vacuum spacetimes the Schwarzschild solution is the only one with a regular horizon, so no static lump or quadrupole moment can distort a black hole and leave its horizon intact [israel1967]. The Event Horizon Telescope collaboration imaged the black hole at the center of the Milky Way in 2022, a ring 51.8 microarcseconds across around a mass of about four million Suns, and its comparisons with simulations disfavor a black hole without spin [eht2022].",
+  "related": [
+    {
+      "id": "kerr",
+      "kind": "generalisation",
+      "text": "Schwarzschild's black hole set spinning. With $a = 0$ Kerr's metric is Schwarzschild's."
+    },
+    {
+      "id": "rn_metric",
+      "kind": "generalisation",
+      "text": "The same black hole carrying electric charge, which puts a second horizon inside the first. At $r_q = 0$ it is Schwarzschild's."
+    },
+    {
+      "id": "kerr_newman",
+      "kind": "generalisation",
+      "text": "The black hole with both spin and charge. With $a = 0$ and $r_Q = 0$ it is Schwarzschild's."
+    },
+    {
+      "id": "schwarzschild_de_sitter",
+      "kind": "generalisation",
+      "text": "The black hole in a universe with a positive cosmological constant, which adds a cosmological horizon far outside it. At $\\Lambda = 0$ it is Schwarzschild's."
+    },
+    {
+      "id": "schwarzschild_ads",
+      "kind": "generalisation",
+      "text": "The black hole in anti-de Sitter space, with a negative cosmological constant. As $L \\to \\infty$ it is Schwarzschild's."
+    },
+    {
+      "id": "tangherlini",
+      "kind": "generalisation",
+      "text": "Schwarzschild's black hole in $D$ spacetime dimensions, with $(r_h/r)^{D-3}$ in the metric function. At $D = 4$ it is Schwarzschild's [tangherlini1963]."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "generalisation",
+      "text": "A charged black hole of string theory whose metric on the plane of $t$ and $r$ is Schwarzschild's, with the horizon at $r_s$ for every charge [horowitz1992]."
+    },
+    {
+      "id": "taub_nut",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric with one more parameter, $l$, a magnetic kind of mass. Ezra Newman, Louis Tamburino, and Theodore Unti found it in 1963 while generalising Schwarzschild's metric [nut1963]."
+    },
+    {
+      "id": "global_monopole",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric with $1 - \\Delta$ in the place of $1$, so that every sphere about the centre misses the same fraction of its solid angle [barriola1989]."
+    },
+    {
+      "id": "string_black_hole",
+      "kind": "generalisation",
+      "text": "Schwarzschild's black hole with a straight cosmic string through it. A wedge is missing around the whole axis, horizon included [aryal1986]."
+    },
+    {
+      "id": "zipoy_voorhees",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric deformed by a quadrupole, the Weyl field of a rod of any density. At $q = 0$ it is Schwarzschild's [quevedo2011]."
+    },
+    {
+      "id": "curzon_chazy",
+      "kind": "family",
+      "text": "The Weyl field of Newton's point mass. Schwarzschild's own Weyl potential is that of a rod of length $r_s$ [weyl1917, bicak2000]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "generalisation",
+      "text": "A pair of black holes accelerating apart, pulled by a cosmic string or pushed by a strut. With the acceleration $\\alpha = 0$ it is Schwarzschild's [kinnersley1970, griffiths2006]."
+    },
+    {
+      "id": "mcvittie",
+      "kind": "generalisation",
+      "text": "Schwarzschild's mass set in an expanding universe, which George McVittie found in 1933 [mcvittie1933]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric with the mass made a function $m(u)$ of retarded time, for a star that shines. With $m$ constant it is Schwarzschild's in Eddington-Finkelstein coordinates [vaidya1951]."
+    },
+    {
+      "id": "robinson_trautman",
+      "kind": "generalisation",
+      "text": "Vacuum fields radiating gravitational waves on expanding fronts. With round fronts the metric is Schwarzschild's in retarded time, and from smooth data the others settle down to it [chrusciel1991, bicak1997]."
+    },
+    {
+      "id": "aichelburg_sexl",
+      "kind": "special_case",
+      "text": "Schwarzschild's field boosted to the speed of light, with the mass sent to zero as the energy stays fixed [aichelburg1971]."
+    },
+    {
+      "id": "kantowski_sachs",
+      "kind": "generalisation",
+      "text": "Inside the horizon $r$ is a time and $t$ a length, and the black hole's interior is a Kantowski-Sachs cosmology collapsing to the singularity [ellismaccallum1969, doran2008]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "Schwarzschild's metric with the mass removed, $r_s = 0$."
+    },
+    {
+      "id": "interior_schwarzschild",
+      "kind": "programme",
+      "text": "Schwarzschild's second solution, for the inside of a star of uniform density. It joins the exterior at the star's surface, $r = R$ [schwarzschild1916b]."
+    },
+    {
+      "id": "tov",
+      "kind": "composite",
+      "text": "A star of perfect fluid in hydrostatic equilibrium, with Schwarzschild's vacuum outside it. By Birkhoff's theorem the outside is the same whatever the star is made of [birkhoff1923]."
+    },
+    {
+      "id": "oppenheimer_snyder",
+      "kind": "composite",
+      "text": "Schwarzschild's vacuum around a ball of dust falling in on itself, the first model of a star collapsing to a black hole [oppenheimersnyder1939]."
+    },
+    {
+      "id": "tolman_bondi",
+      "kind": "generalisation",
+      "text": "Dust falling freely in spherical symmetry. With the dust removed, its comoving coordinates are Lemaître's coordinates for Schwarzschild's metric, regular across the horizon [lemaitre1933]."
+    },
+    {
+      "id": "morris_thorne",
+      "kind": "family",
+      "text": "A wormhole made to be crossed. Schwarzschild's own bridge pinches off faster than light can cross it [fuller1962, morris1988]."
+    },
+    {
+      "id": "thin_shell_wormhole",
+      "kind": "composite",
+      "text": "Two copies of Schwarzschild's exterior cut at a radius outside the horizon and joined there, a wormhole with no horizon [visser1989nuclphysb]."
+    },
+    {
+      "id": "ellis_bronnikov",
+      "kind": "family",
+      "text": "A wormhole made by opening Schwarzschild's central singularity into a throat with a scalar field [ellis1973]."
+    }
+  ],
   "references": [
     "schulmann1998",
     "schwarzschild1916",
@@ -47,7 +179,30 @@
     "birkhoff1923",
     "einstein1935",
     "israel1967",
-    "eht2022"
+    "eht2022",
+    "tangherlini1963",
+    "horowitz1992",
+    "nut1963",
+    "barriola1989",
+    "aryal1986",
+    "quevedo2011",
+    "weyl1917",
+    "bicak2000",
+    "kinnersley1970",
+    "griffiths2006",
+    "mcvittie1933",
+    "vaidya1951",
+    "chrusciel1991",
+    "bicak1997",
+    "aichelburg1971",
+    "ellismaccallum1969",
+    "doran2008",
+    "schwarzschild1916b",
+    "oppenheimersnyder1939",
+    "fuller1962",
+    "morris1988",
+    "visser1989nuclphysb",
+    "ellis1973"
   ],
   "coordinates": [
     {

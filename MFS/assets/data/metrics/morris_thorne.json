@@ -23,6 +23,23 @@
   "signature": "(-,+,+,+)",
   "convention": "The redshift function $\\Phi$ is dimensionless, and $b_0$ is the radius of the throat. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Carl Sagan wanted his heroine's route across the galaxy to survive a physicist's reading. In the summer of 1985 he sent Kip Thorne a prepublication draft of Contact and asked him to make the gravitational physics in it as accurate as possible [sagan1985, morris1988]. Science fiction moved people by dropping them into black holes, and a black hole is no route: tidal forces kill the traveler before the horizon unless the hole outweighs ten thousand suns, and the horizon is a membrane that admits and never returns. Wormholes were no better off. The bridge Einstein and Nathan Rosen ran between two sheets of spacetime in 1935 [einstein1935] pinches off faster than light can cross it, as Robert Fuller and John Wheeler showed in 1962 [fuller1962]. There was nothing on the shelf to hand a novelist.¶So Thorne and his graduate student Michael Morris ran the problem backwards. The usual direction is source first: write the stress energy, solve for the geometry. They began from what a traveler would insist on.¶A throat joining two distant regions. No horizon, since a horizon is a one way door. Accelerations and tidal forces no worse than standing on the ground at home. A crossing of under a year, timed by the traveler and by those waiting at both stations. They wrote a metric meeting every item, then ran it through the Einstein tensor to see what such a geometry demands of its matter. Sagan slipped the new geometry into Contact at the galley proof stage; Morris and Thorne published the paper in the American Journal of Physics in 1988, under a subtitle that admitted its origin: a tool for teaching general relativity [morris1988].¶At the throat the radial tension has to beat the energy density, and Morris and Thorne worked the number for a throat of three kilometers radius: about $10^{37}$ dynes per square centimeter, the same magnitude as the pressure at the center of the most massive of neutron stars [morris1988]. Tension beating energy density means that an observer crossing the throat fast enough, near the speed of light, measures a negative energy density, so the null energy condition fails and the singularity theorems no longer apply. They called the stuff exotic and declined to be embarrassed, since quantum field theory, they wrote, gives tantalizing hints that such material might, in fact, be possible. Nor was the requirement a quirk of their ansatz. Topological censorship, proved in 1993 by John Friedman, Kristin Schleich, and Donald Witt, holds that under the null energy condition any topological shortcut collapses too fast for light to cross, so a shortcut that stays open requires exotic matter [friedman1993].¶Nobody had yet asked what happens if you take one mouth of the shortcut and move it. Put one mouth on a ship, run it out at speed, bring it home. It has aged less than the mouth that stayed, the tunnel keeps its ends in step as seen from inside, and a walk through the throat is a walk into your own past. Morris, Thorne, and Ulvi Yurtsever published that the same year, and the arguing began [morris1988prl].¶Fernando Echeverria, Gunnar Klinkhammer, and Thorne threw billiard balls in so that each came back out to knock its younger self off course, and found in 1991 that the grandfather paradox fails in the direction nobody expected, with too many consistent histories where too few had been feared [echeverria1991]. Sung-Won Kim and Thorne found the quantum stress energy diverging as the machine switches on, but so feebly that quantum gravity takes over first, they argued, and the wormhole carries on regardless [kim1991]. Stephen Hawking held that the divergence wins, and answered in 1992 with chronology protection, his experimental evidence being that we have not been overrun by tourists from the future [hawking1992]. They never agreed on what counts as close to a horizon, which is a question about quantum gravity. Sagan's request for a way across the galaxy had become a research program.",
+  "related": [
+    {
+      "id": "ellis_bronnikov",
+      "kind": "special_case",
+      "text": "Morris and Thorne's simplest example, $\\Phi = 0$ and $b = b_0^2/r$, is the drainhole Homer Ellis and Kirill Bronnikov found in 1973 [ellis1973, bronnikov1973, morris1988]."
+    },
+    {
+      "id": "thin_shell_wormhole",
+      "kind": "family",
+      "text": "A wormhole with all of its exotic matter in a thin shell at the throat, which Matt Visser built in 1989 by cutting and gluing [visser1989prd, visser1989nuclphysb]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "Schwarzschild's metric has a bridge of its own, which Einstein and Nathan Rosen described in 1935, and it pinches off faster than light can cross it [einstein1935, fuller1962]."
+    }
+  ],
   "references": [
     "sagan1985",
     "morris1988",
@@ -32,7 +49,11 @@
     "morris1988prl",
     "echeverria1991",
     "kim1991",
-    "hawking1992"
+    "hawking1992",
+    "ellis1973",
+    "bronnikov1973",
+    "visser1989prd",
+    "visser1989nuclphysb"
   ],
   "coordinates": [
     {

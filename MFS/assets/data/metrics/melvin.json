@@ -27,6 +27,28 @@
   "signature": "(-,+,+,+)",
   "convention": "The field strength $B$ is an inverse length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "An exact solution of the Einstein-Maxwell equations for a uniform magnetic field was among those William Bonnor gave in 1954, from a theorem that adapts a class of electrostatic solutions to magnetostatics [bonnor1954, bini2022]. John Wheeler introduced geons in 1955, electromagnetic disturbances held together by the gravity of their own energy [wheeler1955]. Mael Avrami Melvin found Bonnor's field again in 1964 as a pure magnetic geon, \"a configuration of parallel magnetic lines of force in equilibrium under their mutual gravitational attraction\" [melvin1964, melvin1965]. The pressure of the magnetic field pushes the lines apart and the gravity of the field's own energy pulls them together, with no matter anywhere [bini2022].¶Melvin renamed his geon a magnetic universe in 1965, \"because the magnetic-field energy falls off so slowly with distance\" [melvin1965]. By Melvin's own account the bundle \"is unstable according to an elementary Newtonian analysis\" [melvin1965]. Under radial perturbations he found it stable, oscillating with every admissible frequency real, and he suggested that extended magnetic fields may retard and finally halt the gravitational collapse of matter [melvin1965]. No radial perturbation, however large, can make Melvin's field collapse to a singularity or explode electromagnetically to infinite dispersion, as Kip Thorne proved the same year [thorne1965b]. Perturbed inside a finite region, the magnetic and gravitational fields undergo damped oscillations until they have radiated away the energy of the perturbation, and then settle back into Melvin's static configuration [thorne1965b]. David Garfinkle and Melvin applied the Ehlers transformation to the magnetic universe in 1994 and found two rotating magnetic universes and an evolving one, each free of singularities [garfinkle1994b].¶Within the Melvin radius $\\rho = 2/B$ of its axis, Melvin's universe is nearly flat [kastor2021]. The field is strongest on the axis and weakens steadily away from it [bini2022]. The circumference of a circle about the axis grows as in flat space, is greatest at the Melvin radius, $\\rho = 2/B$, where it is $2\\pi/B$, and shrinks to zero as $\\rho \\to \\infty$ [kastor2021]. Melvin's universe is not asymptotically flat, and far from the axis its metric approaches a static vacuum solution of Levi-Civita's class [kastor2021]. A weak field makes a broad tube, since a field $B$ covers an area that scales as $1/B^2$, and the total flux diverges as $B \\to 0$ [kastor2021]. A field of half a gauss, about the strength of the Earth's at its surface, has a Melvin radius of about 5 megaparsecs [bini2022].¶Robert Wald placed a rotating black hole in a uniform magnetic test field in 1974, using a Killing vector of the vacuum spacetime as the vector potential of the field [wald1974]. The hole accretes charge until $Q = 2BJ$ in units with $G = c = 1$, where $J$ is its angular momentum [wald1974]. Transformations that generate new solutions of the Einstein-Maxwell equations from old ones with a Killing vector had come from B. Kent Harrison in 1968 [harrison1968]. Frederick Ernst used one of Harrison's type in 1976 to carry asymptotically flat, axially symmetric solutions into solutions resembling Melvin's universe, and from Schwarzschild's black hole it gives Ernst's metric, which is Melvin's universe at $r_s = 0$ and Schwarzschild's hole at $B = 0$ [ernst1976b, gibbons2013, bicak2000b]. With Walter Wild he gave the fields of charged, rotating Kerr-Newman holes in the same universe that year, and the whole metric when $Q = 2BJ$ [ernst1976c]. Ernst's Schwarzschild-Melvin hole is the unique static, axisymmetric black hole of the sourceless Einstein-Maxwell equations that asymptotically resembles Melvin's universe, a theorem William Hiscock proved in 1981 [hiscock1981b].¶Around Ernst's hole, where $r_s \\ll r \\ll 1/B$, spacetime is nearly flat and the field nearly uniform, and far beyond $1/B$ the metric approaches Melvin's universe [bicak2000b]. The flux through the upper half of the horizon first grows with $BM$, as classical physics expects, then falls, and is greatest, $2\\pi M$ with $G = c = 1$, at $BM = 1$, since the gravity of a strong field concentrates it near the axis [bicak2000b]. The temperature and entropy of the hole do not depend on the field passing through it, as Eugen Radu proved in 2002 [radu2002]. Gary Gibbons, A. H. Mujtaba and Christopher Pope found in 2013 that Ernst's magnetized Kerr-Newman holes approach Melvin's universe only when their charge takes one value fixed by their spin and the field, and otherwise carry an ergoregion from the horizon out to infinity [gibbons2013]. Across the horizons of extreme holes, charged or rotating, \"the magnetic fluxes vanish\", which Jiří Bičák called the \"Meissner effect within the exact framework\" [bicak2000b].¶Added to the charged C-metric, the field supplies the force that accelerates its black holes, and where their equations of motion hold the nodal singularity of the C-metric disappears, as Ernst found in 1976 [ernst1976, kastor2021]. Gibbons proposed in 1986 that a background field creates pairs of black holes as it creates pairs of charged particles in Julian Schwinger's process [gibbons1986, garfinkle1994]. Garfinkle, Steven Giddings and Andrew Strominger described in 1994 the creation of Reissner-Nordström pairs in a magnetic field by the Euclidean continuation of Ernst's accelerating metric, and found an explicit factor $e^{A/4}$ in its amplitude, with $A$ the area of the horizon in Planck units [garfinkle1994]. They called that factor \"consistent with the hypothesis that $e^{A/4}$ measures the number of black hole states\" [garfinkle1994]. Pair creation extends to black holes with a dilaton, as Fay Dowker, Jerome Gauntlett, David Kastor and Jennie Traschen showed the same year [dowker1994]. The dilatonic Melvin background is an exact solution of string theory to all orders in $\\alpha'$, which Arkady Tseytlin showed in 1995 [tseytlin1995].",
+  "related": [
+    {
+      "id": "c_metric",
+      "kind": "family",
+      "text": "Melvin's field added to the charged C-metric accelerates its black holes and removes the string from the axis [ernst1976, kastor2021]."
+    },
+    {
+      "id": "levi_civita",
+      "kind": "family",
+      "text": "The static vacuum with cylindrical symmetry, which Melvin's universe approaches far from the axis [kastor2021]."
+    },
+    {
+      "id": "bertotti_robinson",
+      "kind": "family",
+      "text": "The other universe held together by its own electromagnetic field. Its field is uniform over a sphere, and Melvin's is a bundle along an axis [bertotti1959, robinson1959]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "With $B = 0$ Melvin's universe is flat."
+    }
+  ],
   "references": [
     "bonnor1954",
     "bini2022",
@@ -48,7 +70,9 @@
     "gibbons1986",
     "garfinkle1994",
     "dowker1994",
-    "tseytlin1995"
+    "tseytlin1995",
+    "bertotti1959",
+    "robinson1959"
   ],
   "coordinates": [
     {

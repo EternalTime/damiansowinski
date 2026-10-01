@@ -99,6 +99,7 @@ def spacetime_entry(metric):
         "tags": metric["tags"],
         "signature": metric.get("signature"),
         "convention": metric.get("convention"),
+        "related": metric.get("related", []),
         "references": metric["references"],
         "page_url": absolute("/MFS/"),
         "data_url": absolute(f"/MFS/assets/data/metrics/{metric['id']}.json"),
@@ -111,7 +112,8 @@ def build_spacetimes(metrics):
         "name": "My Favorite Spacetimes",
         "description": (
             "A catalogue of exact solutions of Einstein's field equations. For each spacetime: "
-            "its name, a description, tags, signature and the conventions shared by its charts, "
+            "its name, a description, tags, signature, the conventions shared by its charts and "
+            "the spacetimes it is related to, each with its id, the kind of relation and why, "
             "and for each coordinate chart the coordinates, their domains, the parameters, the "
             "chart's own conventions, the line element, the nonzero metric components and the "
             "curvature invariants. Mathematics is LaTeX."

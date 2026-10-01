@@ -21,6 +21,23 @@
   "signature": "(-,+,+,+)",
   "convention": "We keep every factor of $c$ explicit. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "The warp drive is the rare exact solution that began as a piece of science fiction taken seriously. In 1994 Miguel Alcubierre, then in Wales, asked whether Star Trek's travel faster than light could be given an honest general relativistic description, and found that it could [alcubierre1994]. His construction places the ship in a flat bubble of spacetime and contracts space ahead of the bubble while expanding it behind. Stephen Baxter carried the metric back into science fiction the next year: in his story \"Gossamer\" the collapsing mouth of a wormhole throws off an Alcubierre wave, a moment of negative energy that distorts a chunk of spacetime and carries two travellers superluminally down to Pluto [baxter1995gossamer]. André Bormanis, producer and science consultant of Seth MacFarlane's series The Orville, which began on Fox in 2017, explains the quantum drive of its ship through Alcubierre's space expanding behind and contracting ahead [macfarlane2017orville, bormanis2017quantum].¶Locally nothing moves faster than light, since the ship sits at rest in its own little patch, yet the bubble itself glides through spacetime at any speed one likes. Special relativity forbids outrunning a light beam locally; it says nothing about how fast a region of space may be made to move. The difficulty is the source: to bend spacetime this way the Einstein equations demand a region of negative energy density, exotic matter that violates the energy conditions every known form of matter obeys.¶The negative energy needed is enormous. In 1997 Michael Pfenning and Larry Ford applied quantum inequalities to the bubble and found that its walls must be only a few hundred Planck lengths thick, and that the total negative energy required exceeds, by many orders of magnitude, anything physically conceivable, comparable in scale to all the mass and energy of the visible universe [pfenning1997]. The warp drive therefore remains a thought experiment, though a remarkably productive one.¶The drive sharpened the question of how far the energy conditions can be pushed, and it spawned a family of variants. In 1999 Chris Van Den Broeck showed that a clever change of the bubble's shape, a tiny throat opening into a large interior, could cut the required negative energy from the scale of a universe down to a few solar masses [vandenbroeck1999]. José Natário showed in 2002 that the ship needs no contraction ahead and expansion behind, constructing a warp drive with no volume expansion [natario2002]. The central obstruction held: in 2004 Francisco Lobo and Matt Visser showed that the energy conditions fail for bubbles of every speed, however slow [lobo2004].¶Alexey Bobrick, Gianni Martire, and Erik Lentz took up the question of the source again in 2021. Bobrick and Martire gave a general framework that encompasses every warp drive metric yet proposed and clarified which of their features are negotiable, describing physical, subluminal warp drives free of the worst pathologies [bobrick2021]; Lentz exhibited soliton solutions that can in principle be sourced by purely positive energy densities drawn from a conducting plasma and classical electromagnetic fields, the first warp geometries built from familiar matter [lentz2021]. Whether anyone could build such a drive remains open. General relativity permits the geometry, and the energy conditions mark where it resists.",
+  "related": [
+    {
+      "id": "natario",
+      "kind": "generalisation",
+      "text": "Warp drives with any shift vector $(u, v, w)$. José Natário found one in 2002 that neither expands nor contracts space anywhere [natario2002]."
+    },
+    {
+      "id": "lentz",
+      "kind": "family",
+      "text": "A warp drive whose shift is the gradient of a potential, which Erik Lentz built in 2021 to have positive energy density for the observers riding with it [lentz2021]. Other observers still measure negative energy [santiago2022]."
+    },
+    {
+      "id": "krasnikov",
+      "kind": "family",
+      "text": "A second way to beat light with negative energy. A pilot inside an Alcubierre bubble cannot reach its wall to steer it, and Krasnikov's tube is laid down by a ship moving slower than light [krasnikov1998, everett1997]."
+    }
+  ],
   "references": [
     "alcubierre1994",
     "baxter1995gossamer",
@@ -31,7 +48,10 @@
     "natario2002",
     "lobo2004",
     "bobrick2021",
-    "lentz2021"
+    "lentz2021",
+    "santiago2022",
+    "krasnikov1998",
+    "everett1997"
   ],
   "coordinates": [
     {
