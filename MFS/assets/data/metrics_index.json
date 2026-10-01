@@ -382,6 +382,35 @@
     "embedding": "05f185c5abaada89"
   },
   {
+    "id": "kantowski_sachs",
+    "name": "Kantowski-Sachs",
+    "tags": [
+      "cosmology",
+      "cosmological",
+      "spatially homogeneous",
+      "homogeneous",
+      "anisotropic",
+      "locally rotationally symmetric",
+      "spherically symmetric",
+      "Bianchi classification",
+      "dust",
+      "vacuum",
+      "vacuum solution",
+      "Schwarzschild interior",
+      "black hole interior",
+      "singularity",
+      "curvature singularity",
+      "time-dependent",
+      "dynamical",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "0b1c4fc7df4e7618"
+  },
+  {
     "id": "kasner",
     "name": "Kasner",
     "tags": [
