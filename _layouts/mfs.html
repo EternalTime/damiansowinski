@@ -4365,7 +4365,7 @@
   <script>
     /* ── MFS exit transition: ramp scale down then navigate ── */
     (function() {
-      // delegate so it works whether the link was in the original DOM or swapped in
+      // delegated, since the flicker-in rebuilds the link's letters
       document.addEventListener('click', function(e) {
         var exitLink = e.target.closest('#mfs-exit');
         if (!exitLink) return;
