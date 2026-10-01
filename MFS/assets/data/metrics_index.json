@@ -1222,6 +1222,43 @@
     "embedding": "33dc4c3913188978"
   },
   {
+    "id": "schwarzschild_ads",
+    "name": "Schwarzschild-anti-de Sitter",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "black hole",
+      "mass",
+      "cosmological constant",
+      "negative cosmological constant",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "holography",
+      "black hole thermodynamics",
+      "Hawking-Page transition",
+      "singularity",
+      "curvature singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "white hole",
+      "maximal extension",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "d30e332c27ff4f52",
+    "diagrams": "1fc6612302f13cf4",
+    "conformal": "3ddb7a78badb82f3",
+    "embedding": "d3f0fd120a6d665b"
+  },
+  {
     "id": "schwarzschild_de_sitter",
     "name": "Schwarzschild-de Sitter",
     "tags": [

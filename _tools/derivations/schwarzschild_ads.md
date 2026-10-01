@@ -37,7 +37,7 @@ $$r_* = \frac{1}{4}\ln|1 - r| - \frac{1}{8}\ln\frac{r^2 + r + 2}{2} + \frac{5}{4
 
 ## Step 4. Printing
 
-`chart_printer.Printer` orders the terms of each sum by rising powers of $r$ and then of $r_s$, with `flip = False`, so every value is printed around $L^2r - L^2r_s + r^3$, in the order of $f$ itself.
+`chart_printer.Printer` orders the terms of each sum by rising powers of $L$ and then of $r_s$, with `flip = False`, so every value is printed around $r^3 + L^2r - L^2r_s$, the cubic of Step 2.
 The metric and its inverse are written as the line element writes $f$, the Ricci scalar as $-12/L^2$, and the Kretschmann scalar as
 
 $$K = \frac{12r_s^2}{r^6} + \frac{24}{L^4},$$

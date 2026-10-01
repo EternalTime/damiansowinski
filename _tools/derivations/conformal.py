@@ -3293,8 +3293,8 @@ def schwarzschild_ads(ck, src):
         v.label_xt([HALF, 0.9], "$r \\to \\infty$", "l", "small", dx=6)
         v.label_xt([-HALF, 0.9], "$r \\to \\infty$", "r", "small", dx=-6)
         v.label_xt([-Q4, Q4], "$r_h$", "tr", "small", dx=-6, dy=2)
-        v.label_xt([0.95, -0.35], "exterior", cls="region")
-        v.label_xt([-0.95, 0.35], "exterior", cls="region")
+        v.label_xt([1.05, -0.75], "exterior", cls="region")
+        v.label_xt([-1.05, -0.75], "exterior", cls="region")
         # The lens between the horizons and r = 0 is 0.52 high on the axis; each name stands in its upper part.
         v.label_xt([0, 0.43], "black hole", cls="region")
         v.label_xt([0, -0.43], "white hole", cls="region")
