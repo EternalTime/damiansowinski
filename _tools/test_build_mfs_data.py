@@ -1917,6 +1917,37 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertEqual(pieces["exterior"]["points"][0][1:], pieces["other_exterior"]["points"][0][1:])
         self.assertEqual(pieces["exterior"]["start"]["kind"], "throat")
 
+    def test_the_spinning_string_leaves_the_axis_along_the_light_cone_and_ends_on_its_cone(self):
+        """The spinning string's moment t = 0 as the file holds it, at b = 0.9 and a = 0.9: a piece
+        in Minkowski space from the null circle, where it runs along the light cone, to the level
+        circle R = a b/sqrt(1 - b^2), and a piece in flat space beyond, whose last chord climbs at
+        sqrt(g_RR - 1), a little below the slope sqrt(1/b^2 - 1) of the cosmic string's cone; every chord of both is the
+        proper distance sqrt(g_RR) dR of the published metric, g_RR = R^2/(b^2 (R^2 + a^2))."""
+        a = b = 0.9
+        level = a * b / math.sqrt(1 - b * b)
+        surface, = self.embedding["spinning_string"]["views"][0]["surfaces"]
+        near, far = surface["pieces"]
+        self.assertEqual(near.get("space"), "minkowski")
+        self.assertNotIn("space", far)
+        self.assertLess(abs(near["points"][-1][0] - level), 1e-12)
+        self.assertEqual(near["points"][-1][0], far["points"][0][0])
+        self.assertLess(near["points"][0][1], 0.006)
+        P, Q = near["points"][:2]
+        self.assertLess(abs((Q[2] - P[2]) / (Q[1] - P[1]) - 1), 1e-3, "along the light cone at the null circle")
+        P, Q = far["points"][-2:]
+        cone = math.sqrt(1 / b ** 2 - 1)
+        slope, mid = (Q[2] - P[2]) / (Q[1] - P[1]), (P[0] + Q[0]) / 2
+        self.assertLess(abs(slope - math.sqrt(mid ** 2 / (b * b * (mid ** 2 + a * a)) - 1)), 1e-3)
+        self.assertTrue(0.85 * cone < slope < cone, "nearing the cone's slope from below at 5 r_c")
+        proper = lambda R: math.sqrt(R * R + a * a) / b      # the proper radius, whose differences are distances
+        for piece, sign in ((near, -1), (far, 1)):
+            for P, Q in zip(piece["points"], piece["points"][1:]):
+                chord = math.sqrt((Q[1] - P[1]) ** 2 + sign * (Q[2] - P[2]) ** 2)
+                want = proper(Q[0]) - proper(P[0])
+                self.assertLess(abs(chord - want), 3e-4 * want, f"{piece['id']} at R = {P[0]}")
+            for R, rho, _ in piece["points"]:
+                self.assertLess(abs(rho - R), 1e-6, f"{piece['id']} rho at {R}")
+
     def test_every_file_was_drawn_from_what_its_metrics_publish(self):
         by_id = {m["id"]: m for m in self.metrics}
         for metric_id, data in self.embedding.items():
@@ -3278,7 +3309,7 @@ class TurningLightConeFigures(unittest.TestCase):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
         self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging",
-                                   "kerr_newman/dragging", "stockum_dust/tipping"})
+                                   "kerr_newman/dragging", "spinning_string/tipping", "stockum_dust/tipping"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -3427,6 +3458,8 @@ class Slices(unittest.TestCase):
               "gott_time_machine/centre_of_momentum/loop",
               # Bell and Szekeres's regular chart, whose planes of T and Z lie off eta = 0, where the ring is.
               "bell_szekeres/regular/plane", "conformal bell_szekeres/regular",
+              # The spinning string's cylinders inside r_c, whose circles are closed timelike curves.
+              *[f"spinning_string/{s}/inside" for s in ("proper_radius", "rescaled_radius", "helical")],
               # The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.
               "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
               "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis",
@@ -3687,6 +3720,11 @@ class Slices(unittest.TestCase):
         if key in ("misner/milne/plane", "gott_time_machine/grant_milne/plane"):
             return (lambda X: t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "minkowski/rindler")):
+            return (lambda X: 0.0), None
+        if key == "spinning_string/helical/outside":
+            # One turn of the helix c tau = a phi~/b = r_c phi~, drawn against r phi~ at r = 3 r_c/2.
+            return (lambda X: X / 1.5), None
+        if key.startswith("spinning_string/"):
             return (lambda X: 0.0), None
         if key.startswith("c_metric"):
             # The equator's t = 0 along the axis, and the horizon's bifurcation sphere as a point,

@@ -4,7 +4,7 @@ charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metri
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
-kaluza_klein_monopole and bell_szekeres, and Godel's cylindrical chart.
+kaluza_klein_monopole, bell_szekeres and spinning_string, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -3681,6 +3681,141 @@ def bell_szekeres_check(chart, system, points=12):
 
 
 CHARTS["bell_szekeres"] = [lambda s=s: bell_szekeres(s) for s in BS_CHARTS]
+
+
+# -- The spinning cosmic string --------------------------------------------------------
+
+SPINNING_CHARTS = ("proper_radius", "rescaled_radius", "circumference_radius", "helical", "extended_source")
+
+
+def spinning_string(system):
+    """The spinning cosmic string of Deser, Jackiw and 't Hooft, with a = 4GJ/c^3 and
+    b = 1 - 4G mu/c^2, in four charts of its flat exterior and one of an extended source:
+
+    proper_radius         Deser and Jackiw's form of 1992, (c dt + a dphi)^2 with r the proper radius;
+    rescaled_radius       rho = b r, the form of Cornish and Frankel's (1.2) and of Mena, Natario and Tod;
+    circumference_radius  R^2 = b^2 r^2 - a^2, Cornish and Frankel's (1.6), whose g_phiphi is R^2;
+    helical               tau = t + a phi/c and phi~ = b phi, Deser and Jackiw's (9), Minkowski's line
+                          element with a circuit of the string identifying (tau, phi~) with
+                          (tau + 2 pi a/c, phi~ + 2 pi b);
+    extended_source       Soleng's frame of 1994, (c dt + M dphi)^2 and rho^2 dphi^2 with M(r) and
+                          rho(r) free, which is the proper radius chart at M = a and rho = b r.
+
+    Each exterior chart is checked, slot by slot, to be the proper radius chart pulled back, and
+    the extended source's Einstein tensor is checked in Soleng's frame against his equation (4)
+    without torsion. spinning_string.md is the derivation."""
+    reals = "(-\\infty, \\infty)"
+    flat = "\\text{flat: every curvature tensor vanishes}"
+    string = "= 0 \;\\text{(the string)}"
+    twist = "-\\left(c\\,dt + a\\,d\\phi\\right)^2"
+    charts = {
+        "proper_radius": {
+            "name": "Proper Radius", "coords": ["t", "r", "\\phi", "z"], "parameters": ["a", "b"],
+            "domains": ["t \\in " + reals, "r \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
+                        "r " + string,
+                        "r < a/b \;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}",
+                        flat],
+            "line_element": "ds^2 = " + twist + " + dr^2 + b^2r^2d\\phi^2 + dz^2"},
+        "rescaled_radius": {
+            "name": "Rescaled Radius", "coords": ["t", "\\rho", "\\phi", "z"], "parameters": ["a", "b"],
+            "domains": ["t \\in " + reals, "\\rho \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
+                        "\\rho " + string,
+                        "\\rho < a \;\\text{(the circles of constant } t, \\rho, z \\text{ are closed timelike curves)}",
+                        flat],
+            "line_element": "ds^2 = " + twist + " + \\dfrac{d\\rho^2}{b^2} + \\rho^2d\\phi^2 + dz^2"},
+        "circumference_radius": {
+            "name": "Circumference Radius", "coords": ["t", "R", "\\phi", "z"], "parameters": ["a", "b"],
+            "domains": ["t \\in " + reals, "R \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
+                        "R = 0 \;\\text{(the circle of constant } t, R, z \\text{ is null)}", flat],
+            "line_element": ("ds^2 = -c^2dt^2 - 2ac\\,dt\\,d\\phi + \\dfrac{R^2dR^2}{b^2\\left(R^2 + a^2\\right)}"
+                             " + R^2d\\phi^2 + dz^2")},
+        "helical": {
+            "name": "Helical Time", "coords": ["\\tau", "r", "\\tilde\\phi", "z"], "parameters": ["a", "b"],
+            "domains": ["\\tau \\in " + reals, "r \\in (0, \\infty)", "\\tilde\\phi \\in [0, 2\\pi b)", "z \\in " + reals,
+                        "(\\tau, \\tilde\\phi) \\sim (\\tau + 2\\pi a/c, \\tilde\\phi + 2\\pi b)", "r " + string, flat],
+            "line_element": "ds^2 = -c^2d\\tau^2 + dr^2 + r^2d\\tilde\\phi^2 + dz^2"},
+        "extended_source": {
+            "name": "Extended Source", "coords": ["t", "r", "\\phi", "z"],
+            "parameters": ["M = M(r)", "\\rho = \\rho(r)", "r_0"],
+            "domains": ["t \\in " + reals, "r \\in [0, r_0]", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
+                        "M(0) = 0,\; M(r_0) = a",
+                        "M^2 > \\rho^2 \;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"],
+            "line_element": "ds^2 = -\\left(c\\,dt + M\\,d\\phi\\right)^2 + dr^2 + \\rho^2d\\phi^2 + dz^2"},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    lead = [probe.symbol[chart["coords"][1]], *probe.parameters.values()]
+    return {
+        "metric_id": "spinning_string",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line_element"]},
+        # The chart coordinate is x^0 = ct, so c dt is the chart's dt and 2ac dt is its 2a dt.
+        "chart_line_element": chart["line_element"].replace("2ac\\,dt", "2a\\,dt").replace("c\\,dt", "dt").replace("c^2d", "d"),
+        "printer": {"lead": lead},
+        "check": spinning_string_source if system == "extended_source" else
+                 (lambda c, system=system: spinning_string_pullback(c, system)) if system != "proper_radius" else
+                 (lambda c: None),
+    }
+
+
+def spinning_string_pullback(chart, system):
+    """J^T g J, with g the proper radius chart's metric and J the Jacobian of the map onto it,
+    against this chart's metric in every slot: r = rho/b, r = sqrt(R^2 + a^2)/b, and
+    t = tau - a phi~/b with phi = phi~/b, the time already the chart's x^0."""
+    spec = spinning_string("proper_radius")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    a, b = (chart.reader.parameters[n] for n in ("a", "b"))
+    x0, x1, x2, x3 = chart.symbols
+    image = {"rescaled_radius": [x0, x1 / b, x2, x3],
+             "circumference_radius": [x0, sp.sqrt(x1 ** 2 + a ** 2) / b, x2, x3],
+             "helical": [x0 - a * x2 / b, x1, x2 / b, x3]}[system]
+    at = {source.reader.parameters[n]: chart.reader.parameters[n] for n in ("a", "b")}
+    at.update(dict(zip(source.symbols, image)))
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = J.T * source.geo.g.subs(at, simultaneous=True) * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"spinning_string: the proper radius chart pulled back misses the {system} "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if system == "helical" and chart.geo.g != sp.diag(-1, 1, x1 ** 2, 1):
+        raise AssertionError("spinning_string: the helical chart's metric is not Minkowski's")
+
+
+def spinning_string_source(chart):
+    """The extended source against Soleng's equation (4) of 1994 without torsion, in his frame
+    e^0 = dt + M dphi, e^1 = dr, e^2 = rho dphi, e^3 = dz, with Omega = M'/(2 rho):
+    G^0_0 = -3 Omega^2 + rho''/rho, G^1_1 = G^2_2 = Omega^2, G^3_3 = -Omega^2 + rho''/rho and a
+    heat flow G^0_2 of magnitude Omega'. At M = a and rho = b r the metric is the proper radius
+    chart's."""
+    t, r, phi, z = chart.symbols
+    M, rho = chart.reader.parameters["M"], chart.reader.parameters["rho"]
+    e = sp.Matrix([[1, 0, M, 0], [0, 1, 0, 0], [0, 0, rho, 0], [0, 0, 0, 1]])
+    eta = sp.diag(-1, 1, 1, 1)
+    if (e.T * eta * e - chart.geo.g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+        raise AssertionError("spinning_string: Soleng's frame is not orthonormal in the extended source chart")
+    lowered = chart.geo.einstein_ll()
+    G = chart.geo.ginv * sp.Matrix(4, 4, lambda i, j: lowered[i][j])
+    frame = (e * G * e.inv()).applyfunc(sp.simplify)
+    Om = sp.diff(M, r) / (2 * rho)
+    ddrho = sp.diff(rho, r, 2) / rho
+    want = {(0, 0): -3 * Om ** 2 + ddrho, (1, 1): Om ** 2, (2, 2): Om ** 2, (3, 3): -Om ** 2 + ddrho}
+    for i in range(4):
+        for j in range(4):
+            if (i, j) in ((0, 2), (2, 0)):
+                if sp.simplify(frame[i, j] ** 2 - sp.diff(Om, r) ** 2) != 0:
+                    raise AssertionError(f"spinning_string: the heat flow G^{i}_{j} is not Omega'")
+            elif sp.simplify(frame[i, j] - want.get((i, j), 0)) != 0:
+                raise AssertionError(f"spinning_string: G^{i}_{j} in Soleng's frame is {frame[i, j]}")
+    spec = spinning_string("proper_radius")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    a, b = source.reader.parameters["a"], source.reader.parameters["b"]
+    exterior = chart.geo.g.subs({M: a, rho: b * r}).doit()
+    if (exterior - source.geo.g.subs(dict(zip(source.symbols, chart.symbols)))).applyfunc(sp.simplify) != sp.zeros(4, 4):
+        raise AssertionError("spinning_string: the extended source at M = a, rho = b r is not the exterior")
+
+
+CHARTS["spinning_string"] = [lambda s=s: spinning_string(s) for s in SPINNING_CHARTS]
 
 
 def write(spec):

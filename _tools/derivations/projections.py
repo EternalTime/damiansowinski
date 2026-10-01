@@ -70,6 +70,7 @@ A figure is written as
 """
 
 from dataclasses import dataclass, field
+import math
 
 import numpy as np
 import sympy as sp
@@ -506,6 +507,65 @@ def about_axis(spec, sl, bracket, names, camera=Camera(-90, 30)):
     return fig.done(), sl
 
 
+def about_string(spec, sl, bracket, names, camera=Camera(-90, 30)):
+    """Future light cones about a spinning string on a polar slice (t, r, phi), whose circles
+    of constant t and r are timelike inside a critical radius r_c and spacelike outside it.
+
+    r_c is where the published g_phiphi vanishes, found by bisection on `bracket`, and the
+    circle drawn at r_c/2 is checked timelike there by the published g_phiphi < 0. Cones stand
+    at four places around each of the circles r_c/2, r_c and 3 r_c/2, those on r_c turned by 45
+    degrees from the others so that no two meet, and none on the string, where the metric is
+    singular. `names` are the TeX names of r_c and r_c/2. The floor reaches out to 2 r_c, and
+    the moment t = 0 the embedding diagram draws is the floor from r_c out."""
+    g_phiphi = lambda r: sl.metric((0.0, r, 0.0))[2, 2]
+    critical = root(g_phiphi, *bracket)
+    within = 0.5 * critical
+    if not g_phiphi(within) < 0:
+        raise SystemExit(f"{key(spec)}: the circle inside the critical radius is not timelike")
+    if not g_phiphi(1.5 * critical) > 0:
+        raise SystemExit(f"{key(spec)}: the circle outside the critical radius is not spacelike")
+    unit = float(sl.radius(critical))
+    fig = Figure(spec.view, spec.label, camera)
+    for k in range(12):
+        ph = k * np.pi / 6
+        fig.line("floor", sl.to_drawing((np.zeros(2), np.array([0.0, 2 * critical]), np.full(2, ph))))
+    for r, cls in ((1.5, "floor"), (2.0, "floor"), (1.0, "critical"), (0.5, "ctc")):
+        fig.line(cls, circle(sl, 0.0, r * critical), closed=True)
+    for k in range(4):
+        fig.line("ctc", arrow(sl, 0.0, within, (k + 0.75) * np.pi / 2, 0.058 * unit))
+    fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 0.875]]) * unit)
+    cones = []
+    for r, shift in ((within, 0.5), (critical, 0.0), (1.5 * critical, 0.5)):
+        cones += [(0.0, r, (k + shift) * np.pi / 2) for k in range(4)]
+    drawn = [future_cone(sl, x, 0.187 * unit) for x in cones]
+    for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    # The moment t = 0 is the floor from the null circle out, as far as the embedding reaches
+    # or the floor does; inside r_c no surface of constant t is a moment of space.
+    m = slices.moments(spec.metric)[0]
+    a, b = (float(nr.number(spec.params[k])) for k in ("a", "b"))
+    lo, hi = (math.sqrt(R * R + a * a) / b for R in m.reach("circumference_radius", "R"))
+    if not critical <= lo < critical * (1 + 1e-4) or not hi >= 2 * critical:
+        raise SystemExit(f"{key(spec)}: the embedding does not run from r_c to the floor's edge")
+    fig.slice(m, fills=[[circle(sl, 0.0, 2 * critical), circle(sl, 0.0, lo)]], lines=[circle(sl, 0.0, lo)])
+    fig.label(np.array([0, 0, 0.875 * unit]), "$t$", "b", dy=-4)
+    for r, name, phi in ((critical, names[0], -7 * np.pi / 18), (within, names[1], -4 * np.pi / 18)):
+        fig.circle_label(float(sl.radius(r)), 0.0, phi, f"${name}$", "tl", dx=6, dy=4)
+    fig.legend("cone", "cone", "future light cone")
+    fig.legend("line", "axis", "the string")
+    fig.legend("line", "critical", f"${names[0]}$, where the circle of fixed $t$ and $r$ is null")
+    fig.legend("line", "ctc", f"${names[1]}$, where it is timelike")
+    return fig.done(), sl
+
+
+def spinning_string(spec):
+    """The spinning string's light cones about the string, on the slice z = 0 of the proper
+    radius chart at b = 0.9 and a = 0.9, drawn polar with r itself as its radius, since
+    g_rr = 1 and g_tt = -1 put the null directions straight out from the string at 45 degrees."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
+    return about_string(spec, sl, (0.5, 1.5), ("r = r_c", "r = r_c/2"))
+
+
 def stockum(spec):
     """Van Stockum's light cones about the axis of the dust, on the slice z = 0 at R = 1,
     drawn polar with the proper distance from the axis as its radius."""
@@ -665,6 +725,17 @@ CAPTIONS = {
         "together, light from both sides arrives, and an observer there sees a source far to the left "
         "twice, at equal brightness and $\\delta$ apart.",
     ],
+    ("spinning_string", "proper_radius", "tipping"): [
+        "The slice $z = 0$ of $t$, $r$, and $\\phi$, with $t$ up and $r$ as the radius, which puts the null "
+        "directions straight out from the string at 45°. The cones stand at $t = 0$ around the circles "
+        "$r = r_c/2$, $r_c$, and $3r_c/2$, with $r_c = a/b$. The cross term $g_{t\\phi} = -a$ is the same at "
+        "every radius, and it tips the cones over toward $+\\phi$, counterclockwise seen from above, the more "
+        "the smaller the circle they stand on.",
+        "At $r = r_c$, where $g_{\\phi\\phi} = b^2r^2 - a^2$ vanishes, one edge of every cone lies along the "
+        "circle of constant $t$ and $r$, which is a closed null curve. Inside it the cones have tipped past the "
+        "horizontal, and the circle $r = r_c/2$, run counterclockwise as its arrows point, lies inside every "
+        "one of them: a closed timelike curve through each of its events.",
+    ],
     ("stockum_dust", "cylindrical", "tipping"): [
         "The slice $z = 0$ of $t$, $r$, and $\\phi$, with $t$ up and the proper distance from "
         "the axis, $\\int e^{-r^2/2R^2}dr$, as the radius, which puts the null directions straight out "
@@ -742,6 +813,9 @@ FIGURES = [
                {"R": 1}, {"z": "0"}),
     Projection("godel", "cylindrical", "tipping", "light cones about the axis", godel,
                {"omega": 1}, {"z": "0"}),
+    # The spinning string at the values its cylinders are drawn at, r_c = a/b = 1.
+    Projection("spinning_string", "proper_radius", "tipping", "light cones about the string", spinning_string,
+               nr.SPINNING, {"z": "0"}),
     # The deficit the conformal diagram draws with, 4 G mu/c^2 = 0.1, so delta = 36 degrees.
     Projection("cosmic_string", "conical", "beam", "light passing the string", lambda spec: string_rays(spec),
                {"mu": "1/40", "G": 1, "delta": "pi/5"}, {"z": "0"}, fields=("christoffel",)),

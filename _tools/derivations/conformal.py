@@ -370,11 +370,16 @@ class Plane:
                g_ab - g_ak g_bk/g_kk, orthogonal to its orbits, as null_rays.py's rays of no
                angular momentum take it, and the published inverse's block is its inverse;
     off_shock  every Dirac delta, and every derivative of one, read as zero, for a surface
-               evaluated only away from the hypersurface the delta sits on.
+               evaluated only away from the hypersurface the delta sits on;
+    induced    a surface that a cross term of the published metric keeps from being orthogonal to
+               the coordinates held fixed, as the spinning string's half plane of fixed phi is
+               to its circles: the inverse is the inverse of the surface's own metric, and the
+               surface is checked totally geodesic, every published Gamma^k_ab with k held fixed
+               and a, b on the surface vanishing, so that its light rays are the spacetime's.
     """
 
     def __init__(self, sources, metric_id, system_id, plane, fixed=None, params=None,
-                 functions=None, numeric=(), axis=None, quotient=None, off_shock=False):
+                 functions=None, numeric=(), axis=None, quotient=None, off_shock=False, induced=False):
         metric, entry, reader = nr.load(metric_id, system_id)
         self.off_shock = off_shock
         sources.note(metric_id, system_id, BASE_FIELDS)
@@ -405,6 +410,14 @@ class Plane:
             g = sp.Matrix(len(coords), len(coords), lambda a, b: g[a, b] - g[a, k] * g[b, k] / g[k, k])
         self.g = sp.Matrix([[self.prep(g[i, i]), self.prep(g[i, j])], [self.prep(g[j, i]), self.prep(g[j, j])]])
         self.gi = sp.Matrix([[self.prep(gi[i, i]), self.prep(gi[i, j])], [self.prep(gi[j, i]), self.prep(gi[j, j])]])
+        if induced:
+            sources.note(metric_id, system_id, ["christoffel"])
+            for c in entry["christoffel"]["variants"]["ull"]["nonzero"]:
+                k, m, n = c["indices"]
+                if k not in plane and m in plane and n in plane and self.prep(R(c["value"])) != 0:
+                    raise SystemExit(f"{metric_id}/{system_id}: the surface of {plane[0]} and {plane[1]} is not "
+                                     f"totally geodesic, the published Gamma^{k}_{m}{n} does not vanish on it")
+            self.gi = self.g.inv().applyfunc(sp.simplify)
         self._metric = self.lambdify([self.g[0, 0], self.g[0, 1], self.g[1, 1],
                                       self.gi[0, 0], self.gi[0, 1], self.gi[1, 1]])
         self._K = None
@@ -3954,6 +3967,67 @@ def cosmic_string(ck, src):
     return views
 
 
+def spinning_string(ck, src):
+    """The half plane of fixed phi and z of the spinning string, flat and totally geodesic, at
+    b = 0.9 and a = 0.9, so that the null circle r_c = a/b is the unit of length. With r the
+    proper distance from the string the metric on it is -c^2dt^2 + dr^2 in every chart, the
+    twist a sitting in dphi alone: r is the proper radius chart's own coordinate and the helical
+    chart's, rho/b in the rescaled radius chart and sqrt(R^2 + a^2)/b in the circumference radius
+    chart, which covers only r > r_c. So p, q = arctan((ct -+ r)/r_c) bring it into Minkowski's
+    half diamond, one view for each chart, with the string on its left edge and the line
+    r = r_c, inside which each point's circle around the string is a closed timelike curve.
+    In the three charts with the cross term g_tphi = -a the half plane is not orthogonal to those
+    circles, so each is read as an induced surface, checked totally geodesic from the published
+    Christoffel symbols; in the helical chart it is the same half plane, tau = t there."""
+    a = b = 0.9
+    rc = a / b
+    at = {"a": "9/10", "b": "9/10"}
+    charts = (("proper_radius", "Proper radius", ("t", "r"), {"phi": "0", "z": "0"}, lambda x: x, 0.02,
+               "$r$", "$r$ constant, the proper distance from the string", "$ct$"),
+              ("rescaled_radius", "Rescaled radius", ("t", "\\rho"), {"phi": "0", "z": "0"}, lambda x: x / b, 0.02,
+               "$\\rho$", "$\\rho$ constant, at $\\rho = br$", "$ct$"),
+              ("circumference_radius", "Circumference radius", ("t", "R"), {"phi": "0", "z": "0"},
+               lambda x: np.sqrt(np.asarray(x, dtype=float) ** 2 + a * a) / b, 0.02,
+               "$R$", "$R$ constant, at $R = \\sqrt{b^2r^2 - a^2}$", "$ct$"),
+              ("helical", "Helical time", ("\\tau", "r"), {"tildephi": "0", "z": "0"}, lambda x: x, 0.02,
+               "$r$", "$r$ constant, the proper distance from the string", "$c\\tau$"))
+    m, = slices.moments("spinning_string")
+    reach = [math.sqrt(R * R + a * a) / b for R in m.reach("circumference_radius", "R")]
+    box = [-0.5, PI + 0.35, -PI - 0.25, PI + 0.25]
+    pc, qc = mink_pq(S_ALL, rc)
+    edge = [point(p, q) for p, q in zip(pc, qc)]
+    views = []
+    for system, label, plane, fixed, radius, least, name, r_legend, t_name in charts:
+        pl = Plane(src, "spinning_string", system, plane, fixed, at, induced=system != "helical")
+        ck.chart(f"spinning string, {system}", pl, lambda t, x, radius=radius: mink_pq(t, radius(x)),
+                 ck.uniform(-20, 20), ck.uniform(least, 20), lambda t, x: (1, 0))
+        v = View(system, label, box, system)
+        v.fill("region", TRIANGLE)
+        whole = system != "circumference_radius"
+        v.fill("cover", TRIANGLE if whole else [[0, -PI]] + edge + [[0, PI], [PI, 0]])
+        v.fill("star", [[0, -PI]] + edge + [[0, PI]])
+        for r in ((0.5, 2, 4) if whole else (2, 4)):
+            v.curve("r", *mink_pq(S_ALL, r))
+        grid(v, "t", mink_pq, (-4, -2, -1, 0, 1, 2, 4), S_POS)
+        v.curve("boundary", pc, qc)
+        triangle_edges(v, centre=None, centre_class="surface")
+        v.label_xt([0, -0.4], "the string", "r", "small", dx=-6)
+        v.legend("cover", f"the region that {t_name.replace('c', '', 1)} and {name} cover")
+        v.legend("star", "$r < r_c$, where the circle of fixed $t$, $r$, and $z$ is a closed timelike curve")
+        v.legend("boundary", "$r = r_c$, where that circle is null" if whole else
+                 "$R = 0$, the edge of the chart, where that circle is null")
+        v.legend("r", r_legend)
+        v.legend("t", f"{t_name} constant")
+        v.legend("surface", "the string, at $r = 0$")
+        v.set(settings="$b = 0.9$ and $a = 0.9\\,r_c$, with $r_c = a/b$ the unit of every length.",
+              restriction="The half plane of fixed $" + ("\\tilde\\phi" if system == "helical" else "\\phi")
+                          + "$ and $z$ only, totally geodesic, each point in the diagram a single event.")
+        r = np.array(reach)
+        v.slice(m, [mink_pq(0 * r, r)])
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- the interior Schwarzschild star
 
 def interior_schwarzschild(ck, src):
@@ -7132,7 +7206,8 @@ DRAWN = {
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
-    "cosmic_string": cosmic_string, "interior_schwarzschild": interior_schwarzschild, "frw": frw,
+    "cosmic_string": cosmic_string, "spinning_string": spinning_string,
+    "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
@@ -7985,6 +8060,22 @@ CAPTIONS = {
         "The string's gravity is its deficit angle $\\delta = 8\\pi G\\mu/c^2$, which shows in "
         "the circles of constant $r$ around it: each has circumference $2\\pi(1 - 4G\\mu/c^2)\\,r$, "
         "short of $2\\pi r$ by $\\delta r$.",
+    ],
+    ("spinning_string", "proper_radius"): [
+        "The half plane of $t$ and $r$ at fixed $\\phi$ and $z$ ($b = 0.9$, $a = 0.9\\,r_c$), totally geodesic. The metric on it is $-c^2dt^2 + dr^2$, so $p, q = \\arctan((ct \\mp r)/r_c)$ bring it into Minkowski's half diamond, with the string on its left edge.",
+        "The spin shows in the circle around the string through each event. The circle of constant $t$, $r$, and $z$ has $g_{\\phi\\phi} = b^2r^2 - a^2$, so it is spacelike outside $r_c = a/b$, null on it, and a closed timelike curve inside it.",
+    ],
+    ("spinning_string", "rescaled_radius"): [
+        "The half plane of $t$ and $\\rho$ at fixed $\\phi$ and $z$ ($b = 0.9$, $a = 0.9\\,r_c$), totally geodesic. The metric on it is $-c^2dt^2 + d\\rho^2/b^2$, which is $-c^2dt^2 + dr^2$ in the proper distance $r = \\rho/b$ from the string, so $p, q = \\arctan((ct \\mp r)/r_c)$ bring it into Minkowski's half diamond, with the string on its left edge.",
+        "The spin shows in the circle around the string through each event. The circle of constant $t$, $r$, and $z$ has $g_{\\phi\\phi} = b^2r^2 - a^2$, so it is spacelike outside $r_c = a/b$, null on it, and a closed timelike curve inside it.",
+    ],
+    ("spinning_string", "circumference_radius"): [
+        "The half plane of $t$ and $R$ at fixed $\\phi$ and $z$ ($b = 0.9$, $a = 0.9\\,r_c$), totally geodesic. The metric on it is $-c^2dt^2 + R^2dR^2/b^2(R^2 + a^2)$, which is $-c^2dt^2 + dr^2$ in the proper distance $r = \\sqrt{R^2 + a^2}/b$ from the string, so $p, q = \\arctan((ct \\mp r)/r_c)$ bring it into Minkowski's half diamond, with the string on its left edge.",
+        "The spin shows in the circle around the string through each event. The circle of constant $t$, $r$, and $z$ has $g_{\\phi\\phi} = b^2r^2 - a^2$, so it is spacelike outside $r_c = a/b$, null on it, and a closed timelike curve inside it.",
+    ],
+    ("spinning_string", "helical"): [
+        "The half plane of $\\tau$ and $r$ at fixed $\\tilde\\phi$ and $z$ ($b = 0.9$, $a = 0.9\\,r_c$), totally geodesic. The metric on it is $-c^2d\\tau^2 + dr^2$, so $p, q = \\arctan((c\\tau \\mp r)/r_c)$ bring it into Minkowski's half diamond, with the string on its left edge.",
+        "The spin shows in the circle around the string through each event. The circle of constant $t$, $r$, and $z$ has $g_{\\phi\\phi} = b^2r^2 - a^2$, so it is spacelike outside $r_c = a/b$, null on it, and a closed timelike curve inside it.",
     ],
     ("cosmic_string", "gott"): [
         "The same half plane with Gott's core, which makes the axis regular. Inside the "

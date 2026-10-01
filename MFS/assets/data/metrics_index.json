@@ -142,7 +142,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "db02af54231976ba",
+    "version": "0d71cf08a455620d",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "aa1949dc769108ad",
     "embedding": "bf931d9df3013c58"
@@ -543,7 +543,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4ecfc5bad2d9ee48",
+    "version": "0c267ae75b9d2c76",
     "diagrams": "fc0a639f4f3a4d4d",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
@@ -782,7 +782,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cf9782a23d692ecc",
+    "version": "cd103681f1be9f71",
     "diagrams": "03d90ee0c12cbe63",
     "embedding": "824169d893851bd7"
   },
@@ -1001,7 +1001,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9b8188c0827e9851",
+    "version": "3838ea57ff57c87e",
     "diagrams": "8682a860d329f091",
     "conformal": "a9e34cf1c120e37d",
     "embedding": "32a5018b0ec61d91"
@@ -1425,6 +1425,39 @@
     "embedding": "ad4896f7b32bbeec"
   },
   {
+    "id": "spinning_string",
+    "name": "Spinning Cosmic String",
+    "tags": [
+      "topological defect",
+      "cosmic string",
+      "conical",
+      "angular deficit",
+      "rotating",
+      "angular momentum",
+      "frame dragging",
+      "closed timelike curves",
+      "causality violation",
+      "time machine",
+      "flat",
+      "locally flat",
+      "three-dimensional gravity",
+      "torsion",
+      "Aharonov-Bohm effect",
+      "cylindrical symmetry",
+      "axial symmetry",
+      "stationary",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "5a398567975225a6",
+    "diagrams": "9b126a24baab54f6",
+    "conformal": "af0aad8daedb8e34",
+    "embedding": "d2f10fa2373b33b4"
+  },
+  {
     "id": "szekeres",
     "name": "Szekeres",
     "tags": [
@@ -1477,7 +1510,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eed6d239bb13bbed",
+    "version": "cfb402729667dfd8",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "be8e68489d42c0b8"
   },
@@ -1605,7 +1638,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b2d7b5be04b7a441",
+    "version": "bb2c6b6d86c3158f",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "aec3d8d98916b294",
     "embedding": "61bc15046da68ece"

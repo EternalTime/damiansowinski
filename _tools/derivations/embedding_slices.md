@@ -71,6 +71,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `conical`, the half plane of the ideal string: the line $T = 0$ from the string to $r = 3\ell$, which is the reference cone together with the sheet.
 - `gott`, the half plane with the core, in the proper distance $\rho$: the line $T = 0$ from the axis to $\rho = \ell\chi_0 + 3\ell - \ell\tan\chi_0$, through the edge of the core.
 
+### The spinning string
+
+- The embedding is the plane $z = 0$ at the moment $t = 0$ outside the null circle, from $r = r_c$ to $5\,r_c$, read in the circumference radius chart, whose $R = \sqrt{b^2r^2 - a^2}$.
+- `outside` in the proper radius, rescaled radius and circumference radius charts, cylinders of $t$ and $\phi$ at a radius the embedding reaches: the whole line $t = 0$.
+- `helical/outside`: the circle of constant $t$ is $c\tau = a\tilde\phi/b$, one turn of the helix, from the left edge to the same event on the right edge.
+- `inside` in each chart: inside $r_c$ the circles are closed timelike curves and no surface of constant $t$ is a moment of space, so nothing is drawn.
+- The figure `tipping`: the floor from $r_c$ out to its edge at $2r_c$.
+- The four conformal views: the line $T = 0$ from $r = r_c$ to $5\,r_c$.
+
 ### de Sitter
 
 - The embedding is the equator of the static chart at $t = 0$: the hemisphere the static chart covers, $r$ from $0$ to $\ell$, and the antipodal observer's hemisphere beyond the horizon.

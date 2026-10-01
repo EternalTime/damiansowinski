@@ -447,6 +447,8 @@ MCV_INPUT = ("A universe of dust and a cosmological constant, $a = \\sinh^{2/3}(
 # cosh(a/4) = gamma sin(alpha), and the shift is b = 4 gamma v d sin(alpha)/(c sinh(a/4)).
 GOTT = {"a": "4*acosh(5/(2*sqrt(3)))", "b": "8/sqrt(13)"}
 GOTT_A = 4 * math.acosh(5 / (2 * math.sqrt(3)))
+# The spinning string: b = 0.9, the cosmic string's deficit, and a = 0.9 in units of r_c = a/b.
+SPINNING = {"a": "9/10", "b": "9/10"}
 GOTT_STRINGS = {"mu": "1/12", "G": 1, "v": "4/5", "d": "1/2", "alpha": "pi/3", "gamma": "5/3"}
 GM_CONE = {"Delta": "19/100"}
 GM_RH = 100 / 81
@@ -712,6 +714,26 @@ DIAGRAMS = [
     Diagram("gott_time_machine", "grant_milne", "plane", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"),
             (0, GOTT_A, -2.5, 0), "$\\chi$", "$c\\tau/\\ell$", GOTT, {"Y": "0", "z": "0"}, tau="tau",
             families=SIDEWAYS, periodic=("\\chi",)),
+    # The spinning string's cylinders of one time and one angle at one radius, unrolled, at b = 0.9,
+    # the deficit the cosmic string is drawn at, and a = 0.9, so that the null circle r_c = a/b is
+    # the unit of length: inside it and outside it in the proper radius, rescaled radius and helical
+    # charts, and at R = a in the circumference radius chart, which ends on the null circle. The
+    # angle is scaled by the circle's own radius, b r, rho, R or r, so that the cones of a string
+    # without spin would stand at 45 degrees.
+    *[Diagram("spinning_string", system, view, f"$t$ and $\\phi$ at ${name}$", ("t", "\\phi"),
+              tuple(s * math.pi * width for s in (-1, 1, -1, 1)), across, "$ct/r_c$", SPINNING, {held: at, "z": "0"},
+              to_display=((0, width), (1, 0)), orient="vector", families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",))
+      for system, view, name, across, held, at, width in (
+          ("proper_radius", "inside", "r = r_c/2", "$br\\phi/r_c$", "r", "1/2", 0.45),
+          ("proper_radius", "outside", "r = 3r_c/2", "$br\\phi/r_c$", "r", "3/2", 1.35),
+          ("rescaled_radius", "inside", "\\rho = a/2", "$\\rho\\phi/r_c$", "rho", "9/20", 0.45),
+          ("rescaled_radius", "outside", "\\rho = 3a/2", "$\\rho\\phi/r_c$", "rho", "27/20", 1.35),
+          ("circumference_radius", "outside", "R = a", "$R\\phi/r_c$", "R", "9/10", 0.9))],
+    *[Diagram("spinning_string", "helical", view, f"$\\tau$ and $\\tilde\\phi$ at ${name}$", ("\\tau", "\\tilde\\phi"),
+              (0, 2 * math.pi * 0.9 * r, 0, 2 * math.pi * 0.9 * r), "$r\\tilde\\phi/r_c$", "$c\\tau/r_c$", SPINNING,
+              {"r": at, "z": "0"}, to_display=((0, r), (1, 0)), tau="tau", families=SIDEWAYS, cones=(5, 5),
+              periodic=("\\tilde\\phi",))
+      for view, name, at, r in (("inside", "r = r_c/2", "1/2", 0.5), ("outside", "r = 3r_c/2", "3/2", 1.5))],
     Diagram("de_sitter", "static_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r\\sqrt{\\Lambda/3}$", "$ct\\sqrt{\\Lambda/3}$", {"Lambda": 3}, EQUATOR,
             orient="outgoing", cones=(8, 7), areal=True),
@@ -1627,6 +1649,51 @@ CAPTIONS = {
         "timelike curve, of proper length $\\xi\\psi_0/2$.",
         "The light rays run as $\\xi = \\xi_0e^{\\pm\\eta}$, and the cones close toward $\\xi = 0$, the "
         "chronology horizon, where the closed curves turn into closed null geodesics.",
+    ],
+    ("spinning_string", "proper_radius", "inside"): [
+        "The cylinder of $t$ and $\\phi$ ($r = r_c/2$, $z = 0$), opened along the line $\\phi = \\pm\\pi$ and drawn with $br\\phi$ across, so that its left and right edges are that one line. The metric on it is $-(c\\,dt + a\\,d\\phi)^2 + b^2r^2d\\phi^2$, the same at every point, so its null curves are straight: $c\\,dt = (br - a)\\,d\\phi$ and $c\\,dt = -(br + a)\\,d\\phi$. Inside $r_c = a/b$ both go down in $t$ toward $+\\phi$, so every horizontal line, run toward $+\\phi$, points into the future cones, and the circle of constant $t$, $r$, and $z$ is a closed timelike curve.",
+        "Neither curve is a null geodesic: the spacetime is flat, and light launched along either one leaves the cylinder for larger $r$, turned by $\\Gamma^r{}_{\\phi\\phi} = -b^2r$.",
+    ],
+    ("spinning_string", "proper_radius", "outside"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 3r_c/2$, $z = 0$), opened along the line $\\phi = \\pm\\pi$ and drawn with $br\\phi$ across, so that its left and right edges are that one line. The metric on it is $-(c\\,dt + a\\,d\\phi)^2 + b^2r^2d\\phi^2$, the same at every point, so its null curves are straight: $c\\,dt = (br - a)\\,d\\phi$ and $c\\,dt = -(br + a)\\,d\\phi$. Outside $r_c = a/b$ the first climbs in $t$ toward $+\\phi$ and the second toward $-\\phi$, five times as steeply, so the cones lean toward $+\\phi$, and the horizontal lines, circles of constant $t$, lie outside every cone and are spacelike.",
+        "Neither curve is a null geodesic: the spacetime is flat, and light launched along either one leaves the cylinder for larger $r$, turned by $\\Gamma^r{}_{\\phi\\phi} = -b^2r$.",
+    ],
+    ("spinning_string", "rescaled_radius", "inside"): [
+        "The cylinder of $t$ and $\\phi$ ($\\rho = a/2$, $z = 0$), opened along the line $\\phi = \\pm\\pi$ and drawn with $\\rho\\phi$ across, so that its left and right edges are that one line. The metric on it is $-(c\\,dt + a\\,d\\phi)^2 + \\rho^2d\\phi^2$, the same at every point, so its null curves are straight: $c\\,dt = (\\rho - a)\\,d\\phi$ and $c\\,dt = -(\\rho + a)\\,d\\phi$. Inside $\\rho = a$ both go down in $t$ toward $+\\phi$, so every horizontal line, run toward $+\\phi$, points into the future cones, and the circle of constant $t$, $\\rho$, and $z$ is a closed timelike curve.",
+        "Neither curve is a null geodesic: the spacetime is flat, and light launched along either one leaves the cylinder for larger $\\rho$, turned by $\\Gamma^\\rho{}_{\\phi\\phi} = -b^2\\rho$.",
+    ],
+    ("spinning_string", "rescaled_radius", "outside"): [
+        "The cylinder of $t$ and $\\phi$ ($\\rho = 3a/2$, $z = 0$), opened along the line $\\phi = \\pm\\pi$ and drawn with $\\rho\\phi$ across, so that its left and right edges are that one line. The metric on it is $-(c\\,dt + a\\,d\\phi)^2 + \\rho^2d\\phi^2$, the same at every point, so its null curves are straight: $c\\,dt = (\\rho - a)\\,d\\phi$ and $c\\,dt = -(\\rho + a)\\,d\\phi$. Outside $\\rho = a$ the first climbs in $t$ toward $+\\phi$ and the second toward $-\\phi$, five times as steeply, so the cones lean toward $+\\phi$, and the horizontal lines, circles of constant $t$, lie outside every cone and are spacelike.",
+        "Neither curve is a null geodesic: the spacetime is flat, and light launched along either one leaves the cylinder for larger $\\rho$, turned by $\\Gamma^\\rho{}_{\\phi\\phi} = -b^2\\rho$.",
+    ],
+    ("spinning_string", "circumference_radius", "outside"): [
+        "The cylinder of $t$ and $\\phi$ ($R = a$, $z = 0$), opened along the line $\\phi = \\pm\\pi$ and drawn "
+        "with $R\\phi$ across, so that its left and right edges are that one line. The metric on it is "
+        "$-c^2dt^2 - 2ac\\,dt\\,d\\phi + R^2d\\phi^2$, the same at every point, so its null curves are straight: "
+        "$c\\,dt = (\\sqrt{R^2 + a^2} - a)\\,d\\phi$ and $c\\,dt = -(\\sqrt{R^2 + a^2} + a)\\,d\\phi$. "
+        "At every $R > 0$ the first climbs in $t$ toward $+\\phi$ and the second toward $-\\phi$, so the "
+        "horizontal lines, circles of circumference $2\\pi R$, are spacelike. The cones lean farther toward "
+        "$+\\phi$ as $R$ shrinks, and at $R = 0$, where the chart ends, the circle is null.",
+        "Neither curve is a null geodesic: the spacetime is flat, and light launched along either one leaves the "
+        "cylinder for larger $R$.",
+    ],
+    ("spinning_string", "helical", "inside"): [
+        "The cylinder of $\\tau$ and $\\tilde\\phi$ ($r = r_c/2$, $z = 0$), opened along $\\tilde\\phi = 0$ and "
+        "drawn with $r\\tilde\\phi$ across. The line element is Minkowski's, so the null curves run at 45°. "
+        "The right edge, $\\tilde\\phi = 2\\pi b$, is the left edge moved up by $2\\pi a/c$ in $\\tau$, so a "
+        "circuit of the string at constant $t$ is the straight line $c\\tau = a\\tilde\\phi/b$ from an event on "
+        "the left edge to the same event on the right.",
+        "Inside $r_c = a/b$ that line climbs by $2\\pi a$ while it crosses $2\\pi br < 2\\pi a$, steeper than "
+        "the null curves, so it lies inside the cones: a closed timelike curve through each of its events.",
+    ],
+    ("spinning_string", "helical", "outside"): [
+        "The cylinder of $\\tau$ and $\\tilde\\phi$ ($r = 3r_c/2$, $z = 0$), opened along $\\tilde\\phi = 0$ "
+        "and drawn with $r\\tilde\\phi$ across. The line element is Minkowski's, so the null curves run at 45°. "
+        "The right edge, $\\tilde\\phi = 2\\pi b$, is the left edge moved up by $2\\pi a/c$ in $\\tau$.",
+        "Outside $r_c = a/b$ the circuit of the string at constant $t$, the straight line "
+        "$c\\tau = a\\tilde\\phi/b$, climbs by $2\\pi a$ while it crosses $2\\pi br > 2\\pi a$, so it lies "
+        "outside the cones and is spacelike. It ends on the right edge at the event it left on the left edge, "
+        "one turn of a helix in $\\tau$.",
     ],
     ("gott_time_machine", "grant_rindler", "plane"): [
         "The plane of $\\eta$ and $\\xi$ ($Y = z = 0$) in the region of closed timelike curves, with "
@@ -5043,6 +5110,17 @@ CYLINDERS = {
     ("godel", "cylindrical", "inside"): (-(3 - math.sqrt(2)) / 2, (math.sqrt(2) - 1) / 2),
     ("godel", "cylindrical", "beyond"): (-(17 - math.sqrt(2)) / 2, -(3 - math.sqrt(2)) / 2),
 }
+# The spinning string's cylinders: k = -(b r + a) moving left and b r - a moving right, with
+# b r = 0.45 inside and 1.35 outside, in the proper radius and rescaled radius charts, and
+# sqrt(R^2 + a^2) = 0.9 sqrt 2 at R = a in the circumference radius chart; in the helical chart
+# the plane is Minkowski's and k = -r and r.
+CYLINDERS.update({
+    **{("spinning_string", system, view): (-(br + 0.9), br - 0.9)
+       for system in ("proper_radius", "rescaled_radius") for view, br in (("inside", 0.45), ("outside", 1.35))},
+    ("spinning_string", "circumference_radius", "outside"): (-0.9 * (math.sqrt(2) + 1), 0.9 * (math.sqrt(2) - 1)),
+    ("spinning_string", "helical", "inside"): (-0.5, 0.5),
+    ("spinning_string", "helical", "outside"): (-1.5, 1.5),
+})
 CLOSED_FORMS.update({where: (lambda t, phi, k=left: t - k * phi, lambda t, phi, k=right: t - k * phi, None)
                      for where, (left, right) in CYLINDERS.items()})
 # Misner space: in Misner's plane one family keeps psi and the other T e^(psi/2), read through
@@ -5069,6 +5147,9 @@ TURNING = {
     ("stockum_dust", "cylindrical", "beyond"): ("away", "toward"),
     ("godel", "cylindrical", "inside"): ("away", "geodesic"),
     ("godel", "cylindrical", "beyond"): ("away", "toward"),
+    # The spinning string is flat, so light launched along a circle about it leaves for larger r.
+    **{("spinning_string", system, view): ("away", "away")
+       for system in ("proper_radius", "helical") for view in ("inside", "outside")},
 }
 
 
