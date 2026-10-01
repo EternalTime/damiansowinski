@@ -500,6 +500,11 @@ class Checks:
 
     def __init__(self):
         self.charts, self.limits = [], []
+        self.reseed()
+
+    def reseed(self):
+        """The same random points for a spacetime whether it is drawn alone or after others, so a
+        check added to one spacetime moves no other's points."""
         self.rng = np.random.default_rng(20260924)
 
     def uniform(self, lo, hi, n=4000):
@@ -1973,7 +1978,7 @@ def global_monopole(ck, src):
     return views
 
 
-# ---------------------------------------------------------------- Reissner-Nordstrom, and the axis of Kerr
+# ---------------------------------------------------------------- Reissner-Nordstrom, and the axis and equator of Kerr
 
 class ShiftedTower(Tower):
     """A Tower whose tortoise coordinate is moved by a constant, r* - shift, which multiplies
@@ -2698,9 +2703,116 @@ def kerr_axis(ck, src, metric_id, params, name):
     return [v]
 
 
+class EquatorTower(Tower):
+    """The equatorial plane of a rotating hole with the rotation divided out, whose metric is
+    g_tt dt^2 + g_rr dr^2 with g_tt g_rr not -1, so that dr*/dr = S/Delta for Delta the numerator
+    of the published g^rr, with two simple roots, and S = Delta sqrt(-g_rr/g_tt), positive on r > 0.
+
+    With A_i = S(r_i)/Delta'(r_i) the residues, f = 1/(1 + sum_i A_i/(r - r_i)) is a Tower's f,
+    and dr*/dr = sqrt(W)/f with W = (S/Delta)^2 f^2, which is 1 at each root. So
+
+        r* = r + sum_i A_i ln|r/r_i - 1| + D(r),   D(r) = int_0^r h/(sqrt(W) + 1) ds,   h = (W - 1)/f,
+
+    with h a rational function with no pole on r >= 0, each step checked in sympy on construction: D is
+    smooth through both horizons, the residues are those of the tower of f, and r*(0) = 0, so
+    every cell is drawn as Tower draws it. D is integrated in w = sqrt(r/(1 + r)), in which the
+    integrand is analytic on [0, 1], sqrt(W) being w times an analytic function at r = 0 and h
+    falling as 1/r^2 at infinity, by a Chebyshev series whose last terms must have died away.
+    """
+
+    def __init__(self, plane):
+        r = plane.x1
+        assert plane.g[0, 1] == 0
+        delta = sp.Poly(sp.numer(sp.together(plane.gi[1, 1])), r)
+        roots = sorted(delta.real_roots(), reverse=True)
+        assert len(roots) == 2 and delta.degree() == 2, "the published g^rr has not two simple roots"
+        delta = delta.as_expr() / delta.LC()
+        S2 = sp.cancel(sp.together(-plane.g[1, 1] / plane.g[0, 0] * delta ** 2))
+        A = [sp.radsimp(sp.sqrtdenest(sp.sqrt(sp.simplify(S2.subs(r, ri)))) / sp.diff(delta, r).subs(r, ri)) for ri in roots]
+        f = sp.cancel(sp.together(1 / (1 + sum(Ai / (r - ri) for Ai, ri in zip(A, roots)))))
+        super().__init__(f, r, roots)
+        W = sp.cancel(sp.together(S2 / delta ** 2 * self.f_sym ** 2))
+        h = sp.cancel(sp.together((W - 1) / self.f_sym))
+        for ri in roots:
+            assert sp.simplify(W.subs(r, ri) - 1) == 0, "sqrt(W) is not 1 at a horizon"
+        assert not [z for z in sp.Poly(sp.denom(h), r).real_roots() if z >= 0], "h has a pole on r >= 0"
+        assert sp.limit(h * r, r, sp.oo) == 0, "h does not fall faster than 1/r"
+        integrand = sp.lambdify(r, h / (sp.sqrt(W) + 1), "numpy")
+
+        def in_w(w):
+            x = w * w / (1 - w * w)
+            return integrand(x) * 2 * w / (1 - w * w) ** 2
+        series = np.polynomial.chebyshev.Chebyshev.interpolate(in_w, 160, domain=[0, 1])
+        assert np.max(np.abs(series.coef[-8:])) < 1e-13 * np.max(np.abs(series.coef)), "D has not converged"
+        self.D = series.integ(lbnd=0)
+
+    def rstar(self, r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(invalid="ignore"):
+            w = np.where(np.isinf(r), 1.0, np.sqrt(r / (1 + r)))
+        return super().rstar(r) + self.D(w)
+
+
+def kerr_equator(ck, src, metric_id, params, name):
+    """The equatorial plane theta = pi/2, a totally geodesic surface of t, r and phi, with phi
+    divided out: the published metric there less g_t phi^2/g_phi phi, the metric on the circles
+    about the axis, whose null lines are the light rays of no angular momentum. Its t is timelike
+    wherever Delta > 0, through the ergoregion too. It is the tower of the axis ended at r = 0,
+    where the published Kretschmann scalar diverges: on this surface r = 0 is the ring, a
+    timelike singularity in each region inside r_-, and nothing lies beyond it. That is Carter's
+    extension of 1968, in which only the equatorial plane meets the singularity.
+    """
+    pl = Plane(src, metric_id, "boyer_lindquist", ("t", "r"), {"theta": "pi/2"}, params, quotient="phi")
+    T = EquatorTower(pl)
+    rp, rm = T.rf
+    tower_checks(ck, f"{name} equatorial plane", pl, T, 0.01, 15)
+    rr = np.array([0.05, 0.3, 1.0, 2.0, 7.0])
+    g00, _, g11 = pl.metric(0 * rr, rr)[:3]
+    ck.limit(f"{name} equatorial plane: |dr*/dr| is sqrt(-g_rr/g_tt) of the published metric less its rotation",
+             np.abs(T.rstar(rr + 1e-6) - T.rstar(rr - 1e-6)) / 2e-6 / np.sqrt(-g11 / g00), np.ones(5), 1e-7)
+    p, q = T.pq("III", np.array([-6.0, 0, 6]), np.full(3, 1e-12))
+    ck.limit(f"{name} equatorial plane: r -> 0 lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-5)
+    p, q = T.pq("I", np.array([0.0]), np.array([1e9]))
+    ck.limit(f"{name} equatorial plane: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
+             point(p[0], q[0]), [PI, 0], 1e-3)
+    ck.diverges(f"{name} equatorial plane: the Kretschmann scalar diverges at r = 0, the ring",
+                pl.kretschmann(0, 1e-2), pl.kretschmann(0, 1e-3))
+    ck.finite(f"{name} equatorial plane: the Kretschmann scalar is finite at both horizons",
+              pl.kretschmann(np.zeros(2), np.array([rp, rm])))
+
+    D = TowerDrawing(T, True, 0.0)
+    box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(T, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(T, "II", 4, rm, rp), [rm, rp])
+    # The even radii inside r_- all lie within 0.02 of it, so one line is drawn well inside, as
+    # Reissner-Nordstrom's is.
+    rIII = [0.3] + nice_all(even_radii(T, "III", 2, 0, rm, xmax=HALF), [0, rm, 0.3])
+    v = View("equator", "Equatorial plane", box, "boyer_lindquist")
+    D.draw(v, {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)},
+           cover=[("I", False)])
+    D.labels(v)
+    v.set(fade={"top": 0.9, "bottom": 0.9},
+          restriction="The equatorial plane $\\theta = \\pi/2$ only, a totally geodesic surface, each point in "
+                      "the diagram a circle about the axis. Light rays of zero angular momentum run at 45 degrees.")
+    v.legend("cover", "the exterior $r > r_+$, which $t$ and $r$ cover")
+    v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                  "in units of $GM/c^2$")
+    v.legend("t", "$ct$ constant")
+    v.legend("horizon", f"the horizons $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,GM/c^2$")
+    v.legend("singular", "$r = 0$, the ring, a timelike singularity, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    # The moment of the embedding's equator lies in this surface, through the outer bifurcation circle.
+    m = slices.moments(metric_id)[0]
+    v.slice(m, [through_bifurcation(T, ("I'", "I"), *m.reach("boyer_lindquist", "r")[::-1])])
+    return [v]
+
+
 def kerr(ck, src):
-    views = kerr_axis(ck, src, "kerr", {"G": 1, "M": 1, "a": "9/10"}, "Kerr")
-    views[0].set(settings="$a = 0.9\\,GM/c^2$.")
+    params = {"G": 1, "M": 1, "a": "9/10"}
+    views = kerr_axis(ck, src, "kerr", params, "Kerr") + kerr_equator(ck, src, "kerr", params, "Kerr")
+    for view in views:
+        view.set(settings="$a = 0.9\\,GM/c^2$.")
     return views
 
 
@@ -7275,6 +7387,11 @@ CAPTIONS = {
         "equatorial plane $\\theta = \\pi/2$. The coordinates $t$ and $r > r_+$ cover the "
         "exterior.",
     ],
+    ("kerr", "equator"): [
+        "The equatorial plane $\\theta = \\pi/2$ of the maximally extended Kerr spacetime ($a = 0.9\\,GM/c^2$), "
+        "each point in the diagram a circle about the axis, after Brandon Carter (1968). The ring singularity is "
+        "the timelike edge $r = 0$ of each region inside $r_-$, and on the symmetry axis $r = 0$ is a regular point.",
+    ],
     ("kerr_newman", "axis"): [
         "The symmetry axis $\\theta = 0$ of the maximally extended Kerr-Newman spacetime, "
         "totally geodesic as Kerr's is. On it the metric is again "
@@ -7662,6 +7779,7 @@ CAPTIONS = {
 
 def draw(metric_id, ck):
     src = Sources()
+    ck.reseed()
     views = DRAWN[metric_id](ck, src)
     out = []
     for v in views:
