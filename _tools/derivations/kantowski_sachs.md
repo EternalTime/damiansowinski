@@ -57,5 +57,5 @@ The dust universe's plane is conformal to the strip $|\tau| < 1.2189\,b_0$ of Mi
 ## Step 6. The embedding diagram
 
 The equator of a moment has the metric $a^2dr^2 + b^2d\phi^2$ with $a$ and $b$ constant on it, a flat cylinder of radius $b$ on which the stretch $|r| \le 1$ is $2a$ long.
-The dust universe is played as a movie in $\eta$ from $-1.1$ to $1.1$, and the vacuum is set as five cylinders from $T = 0.9\,r_s$ to $0.1\,r_s$, in the order of the proper time $c\tau = r_s(\eta + \sin\eta\cos\eta)$ of an observer at fixed $r$ since the horizon.
+The dust universe is played as a movie of its collapse, $\eta$ from $0$ to $1.2$, the expansion being the same run backward, and the vacuum is set as five cylinders from $T = 0.9\,r_s$ to $0.1\,r_s$, in the order of the proper time $c\tau = r_s(\eta + \sin\eta\cos\eta)$ of an observer at fixed $r$ since the horizon.
 The dust's moments are marked on the comoving and dust planes and on the lens, and the vacuum's on the plane of $T$ and $r$ and in Kruskal's square; `slices.py` checks that Step 2's $a$, $b$ and $t$ pull the comoving chart back onto the dust chart.

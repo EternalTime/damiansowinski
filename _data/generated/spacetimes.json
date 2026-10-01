@@ -2648,6 +2648,231 @@
       ]
     },
     {
+      "id": "kantowski_sachs",
+      "name": "Kantowski-Sachs Cosmologies",
+      "short_name": "Kantowski-Sachs",
+      "description": "The spatially homogeneous, anisotropic cosmologies outside Bianchi's classification. Every moment of time is a cylinder $\\mathbb{R} \\times S^2$, or $S^1 \\times S^2$, whose length and whose spheres evolve separately, and the vacuum member is the region inside the horizon of a Schwarzschild black hole.",
+      "tags": [
+        "cosmology",
+        "cosmological",
+        "spatially homogeneous",
+        "homogeneous",
+        "anisotropic",
+        "locally rotationally symmetric",
+        "spherically symmetric",
+        "Bianchi classification",
+        "dust",
+        "vacuum",
+        "vacuum solution",
+        "Schwarzschild interior",
+        "black hole interior",
+        "singularity",
+        "curvature singularity",
+        "time-dependent",
+        "dynamical",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "bianchi1898",
+        "ellismaccallum1969",
+        "kantowski1966",
+        "ashtekar2006",
+        "kompaneets1964",
+        "conradi1995",
+        "mengual2026",
+        "doran2008",
+        "collins1977",
+        "weber1984",
+        "laflamme1987"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kantowski_sachs.json",
+      "charts": [
+        {
+          "id": "comoving",
+          "name": "Comoving",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor along $r$, the axis of the cylinder ($a > 0$), dimensionless"
+            },
+            {
+              "symbol": "b = b(t)",
+              "description": "Radius of the spheres, a length ($b > 0$); $a$ and $b$ are independent"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ a cosmic time, $r$ a comoving length along the axis of the cylinder, and $\\theta$ and $\\phi$ angles on the spheres. The scale factor $a(t)$ is dimensionless and the radius $b(t)$ of the spheres is a length, both free functions of $t$. We take components in the chart $x^0 = ct$, a prime is the derivative along that chart time, $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2dr^2 + b^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "b^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 2\\left(\\dfrac{a''}{a} + \\dfrac{2b''}{b} + \\dfrac{2a'\\,b'}{a\\,b} + \\dfrac{\\left(b'\\right)^2 + 1}{b^2}\\right)",
+          "kretschmann": "K = 4\\left(\\dfrac{a''}{a}\\right)^2 + 8\\left(\\dfrac{b''}{b}\\right)^2 + 8\\left(\\dfrac{a'\\,b'}{a\\,b}\\right)^2 + 4\\left(\\dfrac{\\left(b'\\right)^2 + 1}{b^2}\\right)^2"
+        },
+        {
+          "id": "schwarzschild_interior",
+          "name": "Vacuum (Schwarzschild Interior)",
+          "coordinates": [
+            "T",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (0, r_s)",
+            "r \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            }
+          ],
+          "convention": "We use coordinates $(T, r, \\theta, \\phi)$, where the time $T$ is the areal radius of the spheres, a length, and $r$ is $c$ times Schwarzschild's $t$, a length along the axis of the cylinder. In the comoving chart $a = \\sqrt{r_s/T - 1}$, $b = T$, and $c\\,dt = dT/a$.",
+          "line_element": "ds^2 = -\\dfrac{dT^2}{\\dfrac{r_s}{T} - 1} + \\left(\\dfrac{r_s}{T} - 1\\right)dr^2 + T^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\left(\\dfrac{r_s}{T} - 1\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r_s}{T} - 1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "T^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "T^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{T^6}"
+        },
+        {
+          "id": "dust",
+          "name": "Dust, Parametric Time",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\pi/2, \\pi/2)",
+            "r \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b_0",
+              "description": "Largest radius the spheres reach, at $\\eta = 0$, a length"
+            },
+            {
+              "symbol": "\\kappa",
+              "description": "Dimensionless constant with $|\\kappa| < \\pi/2$; the model is symmetric in time about $\\eta = 0$ where $\\kappa = 0$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, r, \\theta, \\phi)$, with $\\eta$ a dimensionless time and $r$ a comoving length along the axis of the cylinder. In the comoving chart $a = 1 + (\\eta + \\kappa)\\tan\\eta$, $b = b_0\\cos^2\\eta$, and $c\\,dt = 2b_0\\cos^2\\eta\\,d\\eta$, so $ct = b_0\\left(\\eta + \\sin\\eta\\cos\\eta\\right)$. The dust is at rest in the chart, with density $\\rho = \\dfrac{c^2}{8\\pi G\\,a\\,b^2}$.",
+          "line_element": "ds^2 = b_0^2\\cos^4\\eta\\left(-4\\,d\\eta^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\left(1 + \\left(\\eta + \\kappa\\right)\\tan\\eta\\right)^2dr^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-4b_0^2\\cos^4\\eta"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 + \\left(\\eta + \\kappa\\right)\\tan\\eta\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "b_0^2\\cos^4\\eta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b_0^2\\cos^4\\eta\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{1}{b_0^2\\left(1 + \\left(\\eta + \\kappa\\right)\\tan\\eta\\right)\\cos^4\\eta}",
+          "kretschmann": "K = \\dfrac{12\\left(\\eta + \\kappa\\right)^2\\,\\tan^6\\eta + 24\\left(\\eta + \\kappa\\right)^2\\,\\tan^4\\eta + 12\\left(\\eta + \\kappa\\right)^2\\,\\tan^2\\eta + 24\\left(\\eta + \\kappa\\right)\\tan^5\\eta + 40\\left(\\eta + \\kappa\\right)\\tan^3\\eta + 16\\left(\\eta + \\kappa\\right)\\tan\\eta + 12\\tan^4\\eta + 16\\tan^2\\eta + 7}{b_0^4\\left(1 + \\left(\\eta + \\kappa\\right)\\tan\\eta\\right)^2\\cos^8\\eta}"
+        }
+      ]
+    },
+    {
       "id": "kasner",
       "name": "Kasner Anisotropic Vacuum Cosmology",
       "short_name": "Kasner",

@@ -2129,7 +2129,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                     near(z, z_of(theta), f"Nariai z at ct = {t}, theta = {theta}")
         # The Kantowski-Sachs moments are cylinders of radius b on which |r| <= 1 is 2a long: the dust
         # at a = 1 + eta tan(eta), b = cos^2(eta), and the vacuum at a = sqrt(1/T - 1), b = T.
-        for number, eta in enumerate((-1.1, -0.55, 0.0, 0.55, 1.1)):
+        for number, eta in enumerate((0.0, 0.3, 0.6, 0.9, 1.2)):
             for r, rho, z in piece("kantowski_sachs", "tube", number):
                 near(rho, math.cos(eta) ** 2, f"Kantowski-Sachs dust rho at eta = {eta}")
                 near(z, (1 + eta * math.tan(eta)) * r, f"Kantowski-Sachs dust z at eta = {eta}, r = {r}")
