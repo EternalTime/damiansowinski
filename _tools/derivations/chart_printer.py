@@ -57,9 +57,11 @@ class Sum:
 
 class Printer:
     def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None, factors=None, named=None,
-                 rising=(), flip=True, last=()):
+                 rising=(), flip=True, last=(), dotted=()):
         """coords: coordinate symbols in chart order.
         primed: names of functions of one variable printed with primes.
+        dotted: names of functions of the time printed with dots, as \\dot{a} and \\ddot{a},
+            the way FRW writes its scale factor; each dot is a derivative along the chart's x^0.
         lead: generators, most significant first, that order the terms of a sum.
         overrides: {placeholder symbol: its printed text}.
         named: {placeholder symbol: the text of a sum it stands for}, bracketed wherever a sum
@@ -76,6 +78,7 @@ class Printer:
         """
         self.coords = list(coords)
         self.primed = set(primed)
+        self.dotted = set(dotted)
         self.lead = list(lead)
         self.factors = list(lead if factors is None else factors)
         self.rising = list(rising)
@@ -151,6 +154,9 @@ class Printer:
             counts = {}
             for v, k in e.variable_count:
                 counts[v] = counts.get(v, 0) + k
+            if e.expr.func.__name__ in self.dotted:
+                (n,) = counts.values()
+                return ("\\dot{", "\\ddot{")[n - 1] + name + "}"
             if e.expr.func.__name__ in self.primed:
                 (n,) = counts.values()
                 return name + "'" * n
@@ -363,7 +369,7 @@ class Printer:
         text = _num(base) if base.is_Number else self.atom(base)
         if exponent == 1:
             return text
-        if isinstance(base, sp.Derivative) or "'" in text:
+        if (isinstance(base, sp.Derivative) and base.expr.func.__name__ not in self.dotted) or "'" in text:
             return "\\left(" + text + "\\right)^" + _sup(exponent)
         return text + "^" + _sup(exponent)
 

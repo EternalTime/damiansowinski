@@ -502,6 +502,17 @@ A spacetime construction containing a worldline of infinite proper length that l
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = \Omega^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
 
+### McVittie Mass in an Expanding Universe
+
+A point mass in a spatially flat expanding universe, the solution George McVittie found in 1933 for a perfect fluid at rest about the mass. Where a positive cosmological constant drives the late expansion, it holds a black hole whose horizon approaches that of Schwarzschild-de Sitter.
+
+- id: `mcvittie`
+- tags: black hole, cosmology, cosmological, expanding universe, FLRW, mass, point mass, spherically symmetric, time-dependent, dynamical, non-vacuum, perfect fluid, singularity, curvature singularity, big bang, horizon, apparent horizon, event horizon, de Sitter, Schwarzschild-de Sitter, cosmological constant, positive cosmological constant, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/mcvittie.json
+- chart Isotropic Comoving: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(\dfrac{1 - \dfrac{r_s}{4ar}}{1 + \dfrac{r_s}{4ar}}\right)^2c^2dt^2 + a^2\left(1 + \dfrac{r_s}{4ar}\right)^4\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Areal Radius: coordinates $(t, R, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{R} - \dfrac{H^2R^2}{c^2}\right)c^2dt^2 - \dfrac{2HR}{\sqrt{1 - \dfrac{r_s}{R}}}dt\,dR + \dfrac{dR^2}{1 - \dfrac{r_s}{R}} + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Melvin Magnetic Universe
 
 A static bundle of parallel magnetic field lines held together by the gravity of the field's own energy, with no matter anywhere, the solution William Bonnor found in 1954 and Mael Melvin found again in 1964. Frederick Ernst placed a Schwarzschild black hole inside it in 1976.

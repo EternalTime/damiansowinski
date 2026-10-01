@@ -161,6 +161,9 @@ Markers
   singular    an edge along which the published Kretschmann scalar exceeds 1e8 and grows
               at least fiftyfold between 1e-4 and 1e-5 of the drawing, where h is
               Lorentzian.
+              A row may declare a curve singular in `singular_zero` where the scalar
+              diverges too slowly for that; the same test is then taken at 1e-20 and 1e-30
+              of the chart's unit from the curve, in 60 digits.
   hatch       outside the entry's published domains, parsed by the same Reader; a domain
               ending at the undeclared r_+ is read at the outermost zero of g^rr.
 
@@ -294,6 +297,10 @@ class Diagram:
     crunch: bool = False            # mark where the metric stops being finite as a singular curve,
                                     # checked on the Kretschmann scalar, and hatch what lies beyond it
     solves: tuple = ()              # published Einstein components the declared functions must zero
+    singular_zero: str = None       # an expression in the chart's plain names whose zero set the row
+                                    # declares a curvature singularity, where the Kretschmann scalar
+                                    # diverges too slowly for the test at 1e-5 of the drawing; drawn as a
+                                    # singular curve and checked in 60 digits, see Plot.weak_singularity
     quotient: str = None            # a coordinate the metric does not depend on, divided out: the
                                     # plane's metric is g_ab - g_ak g_bk/g_kk; see "Rays of no angular
                                     # momentum"
@@ -410,6 +417,14 @@ AS_RHO = {"half": "1/2", "eighth": "1/8", "thirtysecond": "1/32"}
 # embedding diagram lacks the 36 degrees the cosmic string's does, and Letelier's black hole at
 # r_s = 1 inside it, with its horizon at r_s/(1 - Delta) = 100/81 r_s.
 GM = {"Delta": "19/100", "r_s": 1}
+# McVittie's mass in a universe of dust and a cosmological constant, the expansion Lake and
+# Abdelqader chose: H = H_0 coth(3 H_0 t/2), a = sinh^(2/3)(3 H_0 t/2), with H_0 = c/(sqrt(15) r_s),
+# which is Lambda r_s^2 = 3 H_0^2 r_s^2/c^2 = 1/5, the value Schwarzschild-de Sitter is drawn at.
+MCV_H = "coth(3*t/(2*sqrt(15)))/sqrt(15)"
+MCV_A = "sinh(3*t/(2*sqrt(15)))**Rational(2, 3)"
+MCV_INPUT = ("A universe of dust and a cosmological constant, $a = \\sinh^{2/3}(3H_0t/2)$ and "
+             "$H = H_0\\coth(3H_0t/2)$, the expansion Kayll Lake and Majd Abdelqader chose, with "
+             "$H_0 = c/(\\sqrt{15}\\,r_s)$, which is $\\Lambda r_s^2 = 1/5$.")
 GM_CONE = {"Delta": "19/100"}
 GM_RH = 100 / 81
 # The black hole on a cosmic string at the deficit the cosmic string is drawn at, 4G mu/c^2 = 0.1.
@@ -484,6 +499,12 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
     Diagram("string_black_hole", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 6, -6, 0), "$r/r_s$", "$u/r_s$", SBH, EQUATOR, tau="u + r", areal=True),
+    Diagram("mcvittie", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 2, 0, 8),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, functions={"a": MCV_A},
+            singular_zero="4*a*r - r_s", input=MCV_INPUT),
+    Diagram("mcvittie", "areal", "radial", "$t$ and $R$", ("t", "R"), (0, 5, 0, 12),
+            "$R/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, functions={"H": MCV_H},
+            singular_zero="R - r_s", input=MCV_INPUT),
     Diagram("frw", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 3, 0, 2),
             "$r\\;[c/H_0]$", "$ct\\;[c/H_0]$", {"k": 0}, EQUATOR, areal=True, dust=FRW_DUST,
             reference="$a = 1$",
@@ -1054,6 +1075,34 @@ CAPTIONS = {
         "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a null "
         "coordinate. The ingoing family turns vertical at $r_s$ and leans toward larger $r$ inside it.",
+    ],
+    ("mcvittie", "isotropic", "radial"): [
+        "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every other "
+        "angle by spherical symmetry, for a universe of dust and a cosmological constant with "
+        "$\\Lambda r_s^2 = 1/5$. The rays obey $dr/d(ct) = \\pm(1 - \\mu)/(a(1 + \\mu)^3)$ with "
+        "$\\mu = r_s/4ar$, so far from the mass the cones are those of the spatially flat "
+        "Friedmann-Lemaître-Robertson-Walker universe, and they close on the curve $r = r_s/4a$, where "
+        "$\\mu = 1$.",
+        "That curve is the sphere of areal radius $R = r_s$, a curvature singularity, and it falls toward "
+        "$r = 0$ as $a$ grows. The dotted curve, where $|\\nabla R|^2 = 1 - r_s/R - H^2R^2/c^2$ vanishes "
+        "for the areal radius $R = ar(1 + \\mu)^2$, appears at $ct = 2.10\\,r_s$, and its two branches "
+        "approach the spheres $R = 1.085\\,r_s$ and $R = 3.215\\,r_s$.",
+    ],
+    ("mcvittie", "areal", "radial"): [
+        "The plane of $t$ and the areal radius $R$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every "
+        "other angle by spherical symmetry, for a universe of dust and a cosmological constant with "
+        "$\\Lambda r_s^2 = 1/5$. The rays obey "
+        "$dR/d(ct) = \\sqrt{1 - r_s/R}\\,(HR/c \\pm \\sqrt{1 - r_s/R})$, so every outgoing ray gains $R$, "
+        "and an ingoing ray loses $R$ only where $g^{RR} = 1 - r_s/R - H^2R^2/c^2$ is positive. The curve "
+        "where $g^{RR}$ vanishes appears at $ct = 2.10\\,r_s$ on $R = 3r_s/2$, and its two branches run "
+        "toward $1.085\\,r_s$ and $3.215\\,r_s$, the horizons of the Schwarzschild-de Sitter black hole "
+        "with the same $r_s$ and $\\Lambda$.",
+        "On $R = r_s$ the Ricci scalar $12H^2/c^2 + 6\\dot{H}/(c\\sqrt{1 - r_s/R})$ diverges, and both "
+        "families of rays leave that sphere, which lies in the past of every event of the plane. The "
+        "curvature also diverges toward $t = 0$, where $H$ is infinite. An ingoing ray that starts between "
+        "the two branches runs down to the inner one as $t \\to \\infty$ and reaches it at a finite affine "
+        "parameter, as Nemanja Kaloper, Matthew Kleban, and Damien Martin showed, so the black hole "
+        "horizon is the surface $R = 1.085\\,r_s$, $t = \\infty$.",
     ],
     ("frw", "comoving_spherical", "radial"): [
         "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at "
@@ -2477,6 +2526,10 @@ class Chart:
         # Exponentials are gathered into one, so that e^(-4m/R) e^(2m^2 rho^2/R^4) overflows to
         # infinity near R = 0 and never to zero times infinity.
         self.fn["K"] = self.lambdify(sp.powsimp(K, combine="exp"))
+        if spec.singular_zero:
+            self.K_expr = K
+            self.zero_expr = prep(sp.sympify(spec.singular_zero, locals={**reader.local, **by_plain}))
+            self.fn["szero"] = self.lambdify(self.zero_expr)
         tau = sp.sympify(spec.tau, locals={str(self.x0): self.x0, str(self.xr): self.xr})
         self.fn["dtau0"] = self.lambdify(sp.diff(tau, self.x0))
         self.fn["dtaur"] = self.lambdify(sp.diff(tau, self.xr))
@@ -3251,6 +3304,36 @@ class Plot:
             runs.append(points)
         return [rounded(thin(np.array(p), 0.0006)) for p in runs if len(p) > 2]
 
+    def weak_singularity(self):
+        """The zero set a row declares singular in `singular_zero`, as lines of the unit square,
+        checked to be a curvature singularity at a dozen points of each line. McVittie's
+        Kretschmann scalar diverges on R = r_s only as (dH/dt)^2/(1 - r_s/R), and dH/dt falls
+        off exponentially, so at 1e-5 of the drawing it is nowhere near 1e8. The test is the
+        header's own, the scalar past 1e8 and growing fiftyfold, taken at 1e-20 and 1e-30 of the
+        chart's unit from the curve, on the side the published domains claim, in 60 digits."""
+        import mpmath
+        lines = self.zero_set("szero")
+        if not lines:
+            raise SystemExit(f"{key(self.c.spec)}: {self.c.spec.singular_zero} = 0 nowhere in the drawing")
+        fixed = dict(zip(self.c.fixed_syms, self.c.fixed_vals))
+        K = sp.lambdify((self.c.x0, self.c.xr), self.c.K_expr.subs(fixed), "mpmath")
+        Z = sp.lambdify((self.c.x0, self.c.xr), self.c.zero_expr.subs(fixed), "mpmath")
+        with mpmath.workdps(60):
+            for line in lines:
+                for u in np.asarray(line)[1:-1:max(1, len(line) // 12)]:
+                    x0, r = (float(v) for v in self.to_chart(self.from_unit(u)))
+                    root = mpmath.findroot(lambda q: Z(mpmath.mpf(x0), q), mpmath.mpf(r))
+                    step = 1e-3 * float(np.max(self.span))
+                    side = next((k for k in (1, -1) if self.claimed(x0, float(root) + k * step)), None)
+                    if side is None:
+                        raise SystemExit(f"{key(self.c.spec)}: neither side of the declared singularity at "
+                                         f"{x0, r} lies in the published domains")
+                    near, far = (abs(K(mpmath.mpf(x0), root + side * mpmath.mpf(d))) for d in ("1e-30", "1e-20"))
+                    if not (near > 1e8 and near / far > 50):
+                        raise SystemExit(f"{key(self.c.spec)}: the Kretschmann scalar does not diverge on the "
+                                         f"declared singularity at {x0, r}: {float(far):.1e}, {float(near):.1e}")
+        return lines
+
     def singular_runs(self):
         """The singular_edges test point by point along each edge: an edge singular all the way
         is named, and a stretch of one is returned as a line in the unit square."""
@@ -3361,7 +3444,9 @@ class Plot:
                 out.append({"kind": "g00", "lines": lines})
         # Under a conformal factor g^rr vanishes only where the factor is infinite, at an event
         # the view marks itself.
-        lines = [] if spec.any_factor else self.zero_set("girr")
+        # Beyond a declared singular curve there is no spacetime, so nothing is marked there.
+        here = (lambda x0, r: self.claimed(x0, r)) if spec.singular_zero else (lambda x0, r: True)
+        lines = [] if spec.any_factor else self.zero_set("girr", keep=here if spec.singular_zero else None)
         if lines:
             out.append({"kind": "grr", "lines": lines})
         if spec.mark_gtt:
@@ -3372,11 +3457,11 @@ class Plot:
                 t = self.c.entry["coords"][0]
                 out.append({"kind": "gtt", "lines": lines, "legend": f"$g_{{{t}{t}}} = 0$, {spec.mark_gtt}"})
         if spec.areal:
-            throat = self.zero_set("dRr", keep=lambda x0, r: fn["R"](x0, r) > 1e-6, drop_edge=True)
+            throat = self.zero_set("dRr", keep=lambda x0, r: (fn["R"](x0, r) > 1e-6) & here(x0, r), drop_edge=True)
             if throat:
                 out.append({"kind": "throat", "lines": throat})
             if not self.c.same_as_grr:
-                apparent = self.zero_set("grad2", keep=lambda x0, r: np.abs(fn["dRr"](x0, r)) > 1e-6)
+                apparent = self.zero_set("grad2", keep=lambda x0, r: (np.abs(fn["dRr"](x0, r)) > 1e-6) & here(x0, r))
                 apparent = [l for l in apparent if not same_line(l, throat)]
                 if apparent:
                     out.append({"kind": "apparent", "lines": apparent})
@@ -3410,6 +3495,8 @@ class Plot:
             edges, runs = self.singular_runs()
             if edges or runs:
                 out.append({"kind": "singular", "edges": edges, **({"lines": runs} if runs else {})})
+        elif spec.singular_zero:
+            out.append({"kind": "singular", "edges": self.singular_edges(), "lines": self.weak_singularity()})
         else:
             edges = self.singular_edges()
             if edges:
@@ -3602,7 +3689,8 @@ def bound_along(chart, name, text, subs):
     where the end names anything else, and it is then not hatched."""
     other = chart.x0 if name == chart.spec.plane[1] else chart.xr
     try:
-        expr = chart.reader(text).subs(subs)
+        # A declared function in the end, as McVittie's r_s/(4a), takes the row's expression.
+        expr = chart.prep(chart.reader(text)).subs(subs)
     except (vm.LatexError, TypeError, ValueError):
         return None
     if expr.free_symbols != {other}:

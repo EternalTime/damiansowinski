@@ -5178,6 +5178,85 @@ def kantowski_sachs(ck, src):
                                "$c\\tau = r_s\\left(\\eta + \\sin\\eta\\cos\\eta\\right)$ of an observer at fixed $r$ since "
                                "the horizon, where $T = r_s\\cos^2\\eta$."))
     return views
+MCV_MOMENTS = (1.0, 3.0, 5.0, 7.0)      # ct in r_s
+MCV_H0 = 1 / math.sqrt(15)              # H_0 r_s/c, which is Lambda r_s^2 = 1/5
+MCV_RINGS = (0.25, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0)   # the comoving r of the circles marked, in r_s
+MCV_TOP = 6.0                           # the areal radius every frame runs out to, in r_s
+
+
+def mcvittie_scale(t):
+    """a = sinh^(2/3)(3 H_0 t/2) and H = H_0 coth(3 H_0 t/2), the expansion of a universe of dust
+    and a cosmological constant that Lake and Abdelqader chose, at ct in r_s."""
+    x = 1.5 * MCV_H0 * t
+    return math.sinh(x) ** (2 / 3), MCV_H0 / math.tanh(x)
+
+
+def mcvittie_horizons(t):
+    """The areal radii where 1 - r_s/R - H^2R^2/c^2 vanishes at ct, the two positive roots of
+    H^2R^3 - R + r_s, or none before H r_s/c falls to 2/(3 sqrt(3))."""
+    H = mcvittie_scale(t)[1]
+    roots = np.roots([H * H, 0.0, -1.0, 1.0])
+    return sorted(float(R.real) for R in roots if abs(R.imag) < 1e-9 and R.real > 1.0)
+
+
+def mcvittie(ck, src):
+    """The equator of a moment of McVittie's cosmic time in his isotropic chart, at r_s = 1:
+    g_rr = a^2(1 + mu)^4 and g_phiphi = a^2r^2(1 + mu)^4 with mu = 1/(4ar). In x = ar that is
+    (1 + 1/(4x))^4(dx^2 + x^2dphi^2), the equator of Schwarzschild's space in isotropic
+    coordinates, so every moment is Flamm's paraboloid z^2 = 4(R - 1) over the areal radius
+    R = ar(1 + mu)^2, from its throat R = 1 at r = 1/(4a), where the spacetime is singular, and
+    the scale factor only says which comoving circle lies where on it. The movie runs ct from 1
+    to 7 with a = sinh^(2/3)(3 H_0 t/2) and H_0 = 1/sqrt(15), each frame out to R = 6: the
+    circles of constant r slide outward along the one surface, and from ct = 2.10 the two
+    circles where 1 - 1/R - H^2R^2 vanishes are marked, which run toward 1.085 and 3.215."""
+    size = 2 * MCV_TOP
+
+    def comoving(R, a):
+        # x = ar on the outer branch of R = x(1 + 1/(4x))^2: x + 1/2 + 1/(16x) = R.
+        return (R - 0.5 + math.sqrt((R - 0.5) ** 2 - 0.25)) / (2 * a)
+
+    def moment(t, check):
+        a = mcvittie_scale(t)[0]
+        sl = Slice(src, "mcvittie", "isotropic", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1}, {"a": repr(a)})
+        lo, hi = 1 / (4 * a), comoving(MCV_TOP, a)
+        marks = [(lo, "throat", None)] + [(r, "r", None) for r in MCV_RINGS if lo < r < hi]
+        marks += [(comoving(R, a), "horizon", None) for R in mcvittie_horizons(t) if R < MCV_TOP]
+        sheet = Piece("exterior", "sheet", sl, lo, hi, 0.0, 1,
+                      (("stops", "the throat $R = r_s$, a curvature singularity, where the moment ends"),
+                       ("edge", "the paraboloid runs on to $R \\to \\infty$")),
+                      sorted(marks), size)
+
+        def areal(r):
+            return a * r * (1 + 1 / (4 * a * r)) ** 2
+        where = f"McVittie, ct = {t:g}"
+        if check:
+            ck.isometry(f"{where}, the moment", sheet)
+            ck.radius(f"{where}, rho = R = ar(1 + r_s/4ar)^2", sheet, areal, size)
+            ck.form(f"{where}, Flamm's z = 2 sqrt(r_s (R - r_s))", sheet,
+                    lambda r: 2 * np.sqrt(np.maximum(areal(r) - 1, 0)), size)
+        return Surface([sheet], label=f"$ct = {t:g}\\,r_s$", time=t)
+
+    star = 2 * math.atanh(MCV_H0 * 1.5 * math.sqrt(3)) / (3 * MCV_H0)
+    ck.add("McVittie: the horizons appear at ct = 2.0972, where H r_s/c = 2/(3 sqrt(3))", abs(star - 2.0971772585064), 1e-10)
+    late = mcvittie_horizons(60.0)
+    ck.add("McVittie: the horizons run toward Kottler's 1.0852 and 3.2146",
+           abs(late[0] - 1.0851996154371) + abs(late[1] - 3.2146274073951), 1e-9)
+    times, keys = movie_values(list(MCV_MOMENTS), 0.2)
+    frames = [moment(t, True) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the moment outside the throat, which $r$ and $\\phi$ cover")
+    fig.legend("line", "throat", "the throat $R = r_s$, the smallest circle, where the curvature is singular")
+    fig.legend("line", "r", "$r$ constant, the circles of the fluid at $r = 0.25$, $0.5$, $1$, $1.5$, $2$, $3$, $4$ "
+                            "and $6\\,r_s$ that lie inside $R = 6\\,r_s$")
+    fig.legend("line", "horizon", "the two circles where $1 - r_s/R - H^2R^2/c^2 = 0$, from $ct = 2.10\\,r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("flamm", "A moment of $t$", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", times),
+                 settings="$r_s = 1$, the unit of every length and of $ct$.",
+                 input="A universe of dust and a cosmological constant, $a = \\sinh^{2/3}(3H_0t/2)$, the expansion "
+                       "Kayll Lake and Majd Abdelqader chose, with $H_0 = c/(\\sqrt{15}\\,r_s)$, which is "
+                       "$\\Lambda r_s^2 = 1/5$.")]
 
 
 def flat_slices(ck, src, metric_id, system_id, time="t"):
@@ -5249,6 +5328,7 @@ DRAWN = {
     "curzon_chazy": curzon_chazy,
     "robinson_trautman": robinson_trautman,
     "string_black_hole": string_black_hole,
+    "mcvittie": mcvittie,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -5917,6 +5997,19 @@ CAPTIONS = {
         "closes at its apex, the centre of its side at $T = 0$, where the horizon meets it. At $ct = 0$ both are the "
         "flat disc of radius $1/k$, the moment the wall stops, and the whole equator is that disc taken twice, "
         "joined at its rim.",
+    ],
+    ("mcvittie", "flamm"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of McVittie's spacetime as cosmic time runs from $ct = 1$ to "
+        "$7\\,r_s$, each moment drawn as a surface in flat space with every distance along it the metric distance. "
+        "On it the metric is $a^2(1 + \\mu)^4(dr^2 + r^2d\\phi^2)$ with $\\mu = r_s/4ar$, which in the areal radius "
+        "$R = ar(1 + \\mu)^2$ is $dR^2/(1 - r_s/R) + R^2d\\phi^2$, so every moment is Ludwig Flamm's paraboloid "
+        "$z^2 = 4r_s(R - r_s)$, the same for every $a$.",
+        "The circles of constant $r$, which the fluid rides, slide outward along that one surface as $a$ grows, and "
+        "the distance between two of them grows with it, while the throat $R = r_s$ keeps its circumference "
+        "$2\\pi r_s$. On the throat $r = r_s/4a$ the pressure of the fluid and the Ricci scalar diverge, and the "
+        "moment ends there. From $ct = 2.10\\,r_s$ the two circles where $1 - r_s/R - H^2R^2/c^2$ vanishes stand "
+        "on the surface, and they run toward $R = 1.085\\,r_s$ and $3.215\\,r_s$, the horizons of the "
+        "Schwarzschild-de Sitter black hole with the same $r_s$ and $\\Lambda$.",
     ],
     ("milne", "hyperboloids"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Milne universe as cosmic time runs from $ct = 0.5$ to $3$, "

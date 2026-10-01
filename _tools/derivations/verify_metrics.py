@@ -384,6 +384,16 @@ DIMENSIONS = {
     ("lentz", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "\\phi": "L",
     },
+    # McVittie's mass is folded into r_s = 2GM/c^2, and his comoving r is a length with the
+    # scale factor a pure number, as FRW's are, so r_s/4ar is one too. The areal chart carries
+    # the Hubble rate H = (da/dt)/a, a frequency as de Sitter's flat slicing carries it, so HR/c
+    # is a pure number.
+    ("mcvittie", "isotropic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "1",
+    },
+    ("mcvittie", "areal"): {
+        "t": "T", "R": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "H": "1/T",
+    },
     # The Milne universe has no length of its own: the comoving chi and r are pure numbers and
     # ct carries the length, and the logarithmic time tau needs the time t_0 at which it is zero.
     ("milne", "comoving_hyperbolic"): {

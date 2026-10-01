@@ -3534,6 +3534,233 @@ def vaidya(ck, src):
     return [v]
 
 
+# ---------------------------------------------------------------- McVittie
+
+MCV_H0 = 1 / math.sqrt(15)      # H_0 r_s/c, which is Lambda r_s^2 = 1/5, the value Kottler's diagrams take
+MCV_H = "coth(3*t/(2*sqrt(15)))/sqrt(15)"
+
+
+class McVittieRays:
+    """The radial light rays of McVittie's areal chart at r_s = 1 and c = 1, for
+    H = H_0 coth(3 H_0 t/2). With R = cosh^2 x, so that sqrt(1 - 1/R) = tanh x, the null
+    condition dR/dt = sqrt(1 - 1/R)(HR +- sqrt(1 - 1/R)) is
+
+        dx/dt = (H(t) +- tanh x sech^2 x)/2,
+
+    regular from the singular sphere x = 0 out to x -> infinity. Both families leave x = 0, at
+    dx/dt = H/2, so every event lies on one outgoing ray and one ingoing ray, and its two null
+    coordinates are the times s_out and s_in at which those rays left the sphere R = r_s. An
+    outgoing ray gains x all the way, so s_out is integrated in x, every point at once; an
+    ingoing ray is traced back in t to the event x = 0."""
+
+    def __init__(self):
+        self.h = MCV_H0
+        self.roots = sorted(float(R.real) for R in np.roots([self.h ** 2, 0.0, -1.0, 1.0]) if R.real > 1)
+        self.xm, self.xp = (float(np.arccosh(np.sqrt(R))) for R in self.roots)
+
+    def H(self, t):
+        return self.h / np.tanh(1.5 * self.h * np.asarray(t, dtype=float))
+
+    @staticmethod
+    def k(x):
+        return np.tanh(x) / np.cosh(x) ** 2
+
+    @staticmethod
+    def x_of(R):
+        # On the throat itself rounding can leave R a part in 1e16 below r_s, which is x = 0.
+        return np.arccosh(np.sqrt(np.maximum(np.asarray(R, dtype=float), 1.0)))
+
+    def tH(self, t):
+        """t H(t), which tends to 2/3 as t -> 0."""
+        return self.h * t / np.tanh(1.5 * self.h * t)
+
+    def s_out(self, t, x):
+        """Integrated in x from the event down to the sphere, for ln t, so that an early time,
+        exponentially small in x, keeps its digits: dln t/dx = 2/(tH + t tanh x sech^2 x)."""
+        t, x = np.broadcast_arrays(np.asarray(t, dtype=float), np.asarray(x, dtype=float))
+        x0 = x.ravel()
+
+        def rate(lam, y):
+            tt = np.exp(y)
+            return -2 * x0 / (self.tH(tt) + tt * self.k(x0 * (1 - lam)))
+        sol = solve_ivp(rate, (0, 1), np.log(t.ravel()), rtol=1e-12, atol=1e-14, method="DOP853")
+        return np.exp(sol.y[:, -1]).reshape(t.shape)
+
+    def s_in(self, t, x):
+        """Traced back in ln t, where the equation is dx/dln t = (tH - t tanh x sech^2 x)/2 with
+        tH -> 2/3 as t -> 0, so a ray from far out, which left the sphere at an early time
+        exponentially small in x, takes no more steps than any other."""
+        t, x = np.broadcast_arrays(np.asarray(t, dtype=float), np.asarray(x, dtype=float))
+        out = np.empty(t.size)
+
+        def left(tau, y):
+            return y[0]
+        left.terminal, left.direction = True, -1
+
+        def rate(tau, y):
+            tt = np.exp(tau)
+            return (self.tH(tt) - tt * self.k(y)) / 2
+        for i, (tk, xk) in enumerate(zip(t.ravel(), x.ravel())):
+            sol = solve_ivp(rate, (math.log(tk), -700.0), [xk], rtol=1e-12, atol=1e-14, method="DOP853", events=left)
+            out[i] = math.exp(sol.t_events[0][0]) if sol.t_events[0].size else np.nan
+        return out.reshape(t.shape)
+
+    def ingoing(self, s, until):
+        """The ingoing ray that left the singular sphere at s, as x(t) up to `until`."""
+        return solve_ivp(lambda tt, y: (self.H(tt) - self.k(y)) / 2, (s, until), [0.0], rtol=1e-12, atol=1e-14,
+                         method="DOP853", dense_output=True).sol
+
+    def last_seen(self, s, at=200.0):
+        """The s_out of the event where the ingoing ray s, one that escapes, has reached t = at:
+        its limit as at -> infinity is the last outgoing ray that ever crosses it."""
+        return float(self.s_out(at, self.ingoing(s, at)(at)[0]))
+
+    def horizons(self, t):
+        """The areal radii where g^RR = 1 - 1/R - H^2R^2 vanishes at t, inner and outer."""
+        H = float(self.H(t))
+        return sorted(float(R.real) for R in np.roots([H * H, 0.0, -1.0, 1.0]) if abs(R.imag) < 1e-12 and R.real > 1)
+
+
+def mcvittie(ck, src):
+    """McVittie's mass in a universe of dust and a cosmological constant, H = H_0 coth(3 H_0 t/2)
+    with H_0 = 1/sqrt(15) at r_s = 1, the expansion Lake and Abdelqader drew, read in the areal
+    chart. McVittieRays gives each event the times s_out and s_in at which its outgoing and its
+    ingoing ray left the singular sphere R = r_s, and the drawing's null coordinates are
+
+        p = F(s_out),   q = -F(s_in),   F(s) = arctan(ln(2s)/2 + (e^(kappa s) - 1)/20),
+
+    with kappa = (1/r_-^2 - 2 r_-/15)/2 the surface gravity of Kottler's horizon r_-, so that F
+    spreads the early times by their logarithm and closes on pi/2 as a Kruskal coordinate does,
+    and T = F(s_out) - F(s_in) >= 0 and the singular sphere, where s_out = s_in, is the straight
+    line T = 0, with late times on the left. Nothing else is placed by hand:
+
+      scri+          an ingoing ray that left before T_c = 0.0298 escapes to R -> infinity, and
+                     the outgoing rays that cross it stop at a last one, s_out -> U(s_in); the
+                     curve p = F(U(s)), q = -F(s) is future infinity, spacelike;
+      r_+            the ingoing ray s_in = T_c stays at the outer root R = r_+ of
+                     1 - 1/R - H_0^2 R^2 for ever: the cosmological event horizon;
+      r_-            every ingoing ray that left after T_c ends at the inner root R = r_- as
+                     t -> infinity, where s_out -> infinity: the edge p = pi/2. The rays that
+                     rise above r_- and fall back to it, those that cross the inner branch of
+                     g^RR = 0, reach it from the region where R can be held, the black hole
+                     horizon of Kaloper, Kleban and Martin; those that left later reach it from
+                     below, on the part Lake and Abdelqader read as the white hole horizon.
+
+    Checked: the map at 600 events against the published metric and inverse; the labels beside
+    R = r_s; T_c against the ray that holds R = r_+; the rays that end on r_-; the convergence
+    of U; and the published Kretschmann scalar, which diverges on R = r_s, where it grows as
+    (dH/dt)^2/(1 - r_s/R) and is therefore taken at 1 - r_s/R = 1e-10 and 1e-12, and which takes
+    Kottler's value 12/r_-^6 + 24 H_0^4 on R = r_- as t -> infinity."""
+    from scipy.optimize import brentq
+    plane = Plane(src, "mcvittie", "areal", ("t", "R"), EQUATOR, {"r_s": 1}, functions={"H": MCV_H})
+    rays = McVittieRays()
+    rm, rp = rays.roots
+
+    kappa = (1 / rm ** 2 - 2 * rm / 15) / 2
+
+    def F(s):
+        s = np.asarray(s, dtype=float)
+        with np.errstate(over="ignore"):
+            return np.arctan(np.log(2 * s) / 2 + np.expm1(kappa * s) / 20)
+
+    def labels(t, x):
+        return F(rays.s_out(t, x)), -F(rays.s_in(t, x))
+
+    def fmap(t, R):
+        return labels(t, rays.x_of(R))
+
+    t = ck.uniform(0.3, 30, 600)
+    R = np.cosh(ck.uniform(0.05, 3.5, 600)) ** 2
+    ck.chart("McVittie, the areal chart by the times its rays left R = r_s", plane, fmap, t, R,
+             lambda t, R: (1, rays.H(t) * R * np.sqrt(1 - 1 / R)))
+    ts = np.array([0.5, 1.0, 2.0, 3.0])
+    near = np.full_like(ts, 1e-4)
+    ck.limit("McVittie: both rays through an event beside R = r_s left it at that event's time",
+             np.concatenate([rays.s_out(ts, near), rays.s_in(ts, near)]), np.concatenate([ts, ts]), 2e-3)
+    ck.diverges("McVittie: the Kretschmann scalar diverges on R = r_s, between 1 - r_s/R = 1e-10 and 1e-12",
+                plane.kretschmann(ts, 1 / (1 - 1e-10)), plane.kretschmann(ts, 1 / (1 - 1e-12)))
+    ck.limit("McVittie: r_- and r_+ are the roots of 1 - 1/R - R^2/15",
+             [1 - 1 / rm - rm ** 2 / 15, 1 - 1 / rp - rp ** 2 / 15], [0, 0], 1e-12)
+    Tc = brentq(lambda s: rays.ingoing(s, 300.0)(300.0)[0] - rays.xp, 1e-4, 0.05, xtol=1e-15)
+    ck.limit("McVittie: the ingoing ray that left at T_c holds R = r_+", [rays.ingoing(Tc, 60.0)(60.0)[0]], [rays.xp], 1e-6)
+    ck.limit("McVittie: T_c = 0.0298 r_s/c", [Tc], [0.029800706416], 1e-9)
+    ck.limit("McVittie: the ingoing rays that left at 0.1, 1 and 5 end on R = r_-",
+             [rays.ingoing(s, 150.0)(150.0)[0] for s in (0.1, 1.0, 5.0)], [rays.xm] * 3, 1e-6)
+    ck.limit("McVittie: the last outgoing ray to cross an escaping ingoing ray has settled by t = 120",
+             [rays.last_seen(v, 120.0) for v in (1e-3, 0.01, 0.025)], [rays.last_seen(v) for v in (1e-3, 0.01, 0.025)], 1e-8)
+    ck.limit("McVittie: on R = r_- the Kretschmann scalar tends to Kottler's 12/r_-^6 + 24 H_0^4",
+             plane.kretschmann(np.array([100.0]), np.array([rm])), [12 / rm ** 6 + 24 * MCV_H0 ** 4], 1e-9)
+
+    # Future infinity, from the corner t = 0 to i+, where s_in -> T_c and the last ray is s_out -> infinity.
+    v_scri = Tc * (1 - np.geomspace(1e-9, 1.0, 140)[::-1])[1:]
+    v_scri = np.concatenate([np.geomspace(1e-9, v_scri[0], 60)[:-1], v_scri])
+    scri = (np.concatenate([[-HALF], F([rays.last_seen(v) for v in v_scri]), [HALF]]),
+            np.concatenate([[HALF], -F(v_scri), [-F(Tc)]]))
+    qc = float(-F(Tc))
+    top = float(np.max(scri[0] + scri[1]))
+    v = View("dust_lambda", "Dust and $\\Lambda$", [-PI - 0.3, PI + 0.3, -0.35, top + 0.35])
+    sx, st = xt(*scri)
+    region = [[-PI, 0.0], [PI, 0.0]] + np.column_stack([sx, st])[1:].tolist()
+    v.fill("region", region)
+    v.fill("cover", region)
+
+    def line(cls, t, x):
+        t, x = np.broadcast_arrays(np.asarray(t, dtype=float), np.asarray(x, dtype=float))
+        v.curve(cls, *labels(t, x))
+
+    t_all = np.concatenate([np.geomspace(1e-30, 1.0, 120)[:-1], np.linspace(1.0, 12.0, 80)[:-1], np.geomspace(12.0, 150.0, 40)])
+    R_CONST, T_CONST = (1.02, 1.3, 2.0, 5.0, 20.0), (0.25, 1.0, 4.0, 16.0)
+    for Rc in R_CONST:
+        line("r", t_all, rays.x_of(Rc))
+    x_all = np.concatenate([np.geomspace(1e-5, 1.0, 60)[:-1], np.linspace(1.0, 40.0, 120)])
+    for tc in T_CONST:
+        line("t", tc, x_all)
+    # The fluid, r constant in the isotropic chart: R = ar(1 + 1/(4ar))^2 from the throat 4ar = 1.
+    for rc in (0.5, 2.0):
+        start = brentq(lambda tt: 4 * np.sinh(1.5 * MCV_H0 * tt) ** (2 / 3) * rc - 1, 1e-9, 50.0, xtol=1e-15)
+        tt = start + np.concatenate([np.geomspace(1e-8, 1.0, 60)[:-1], np.geomspace(1.0, 150.0, 80)])
+        ar = np.sinh(1.5 * MCV_H0 * tt) ** (2 / 3) * rc
+        line("world", tt, rays.x_of(ar * (1 + 1 / (4 * ar)) ** 2))
+    # g^RR = 0: both branches from the instant they appear, H = 2/(3 sqrt(3)) on R = 3/2.
+    star = 2 * math.atanh(MCV_H0 * 1.5 * math.sqrt(3)) / (3 * MCV_H0)
+    tt = star + np.concatenate([np.geomspace(1e-9, 1.0, 60)[:-1], np.geomspace(1.0, 60.0, 60)])
+    branches = np.array([rays.horizons(a) for a in tt])
+    ck.limit("McVittie: g^RR = 0 first at ct = 2.0972 on R = 3/2", [star, *rays.horizons(star + 1e-12)], [2.0971772585064, 1.5, 1.5], 1e-5)
+    inner, outer = labels(tt, rays.x_of(branches[:, 0])), labels(tt, rays.x_of(branches[:, 1]))
+    v.curve("apparent", np.concatenate([inner[0][::-1], outer[0], [HALF]]), np.concatenate([inner[1][::-1], outer[1], [qc]]))
+    v.segment("singular", (HALF, -HALF), (-HALF, HALF), zig=True)
+    v.segment("horizon", (HALF, -HALF), (HALF, qc))
+    v.segment("event", (float(F(Tc)), qc), (HALF, qc))
+    v.curve("scri", *scri, tol=0.001)
+    for pq, text, anchor, dx, dy in (((HALF, qc), "$i^+$", "b", 0, -6), ((-HALF, HALF), "$i^0$", "l", 6, 0)):
+        v.point("infinity", pq)
+        v.label(pq, text, anchor, dx=dx, dy=dy)
+    mid = int(np.argmin(np.abs(scri[1] - scri[0] - 1.2)))     # where future infinity passes X = 1.2
+    v.label((float(scri[0][mid]), float(scri[1][mid])), "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([0.6, 0.0], "$R = r_s$", "t", dy=8)
+    v.label((HALF, (qc - HALF) / 2 + 0.55), "$r_-$", "br", "small", dx=-5, dy=-1)
+    v.label(((float(F(Tc)) + HALF) / 2, qc), "$r_+$", "bl", "small", dx=5, dy=-1)
+    v.legend("cover", "the spacetime outside $R = r_s$, which $t$ and $R$ cover, and $t$ and $r$ as well")
+    v.legend("r", "$R$ constant, at " + listed(R_CONST) + " in units of $r_s$")
+    v.legend("t", "$ct$ constant, at " + listed(T_CONST) + " in units of $r_s$")
+    v.legend("world", "the fluid at $r = 0.5$ and $2\\,r_s$")
+    v.legend("apparent", "$g^{RR} = 1 - r_s/R - H^2R^2/c^2 = 0$, from $ct = 2.10\\,r_s$ on $R = 3r_s/2$")
+    v.legend("horizon", f"$R = r_- = {rm:.4g}\\,r_s$ at $t = \\infty$: the black hole horizon above the end of "
+                        "the inner branch of $g^{RR} = 0$, and the white hole horizon below it")
+    v.legend("event", f"the cosmological event horizon, the ingoing ray that holds $R = r_+ = {rp:.4g}\\,r_s$")
+    v.legend("singular", "$R = r_s$, where the Ricci scalar and the Kretschmann scalar diverge")
+    v.legend("scri", "future infinity $\\mathscr{I}^+$, spacelike")
+    v.set(settings="$r_s = 1$, the unit of every length and of $ct$.",
+          input="A universe of dust and a cosmological constant, $H = H_0\\coth(3H_0t/2)$, the expansion Kayll Lake "
+                "and Majd Abdelqader chose, with $H_0 = c/(\\sqrt{15}\\,r_s)$, which is $\\Lambda r_s^2 = 1/5$.")
+    for m in slices.moments("mcvittie"):
+        lo, hi = m.reach("isotropic", "r")
+        Rs = np.array([slices.mcvittie_areal(m.time, r) for r in (lo, hi)])
+        xs = np.geomspace(1e-4, 1.0, 160) * rays.x_of(Rs[1])
+        v.slice(m, [labels(np.full_like(xs, m.time), xs)])
+    return [v]
+
+
 # ---------------------------------------------------------------- Tolman-Oppenheimer-Volkoff
 
 def tov(ck, src):
@@ -5469,6 +5696,7 @@ DRAWN = {
     "levi_civita": levi_civita,
     "curzon_chazy": curzon_chazy,
     "string_black_hole": string_black_hole,
+    "mcvittie": mcvittie,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -5864,6 +6092,25 @@ CAPTIONS = {
         "The coordinates $t$ and $r > 0$ cover one region of each kind: an exterior, the black hole between "
         "the horizons, and a region inside $r_-$. At $r = 0$ the circles shrink to zero length while the "
         "curvature stays $R = -6/\\ell^2$, and continued past it they would be closed timelike curves.",
+    ],
+    ("mcvittie", "dust_lambda"): [
+        "McVittie's mass in a universe of dust and a cosmological constant ($\\Lambda r_s^2 = 1/5$), outside the "
+        "sphere $R = r_s$, each point in the diagram a 2-sphere of areal radius $R$. Every radial light ray leaves "
+        "the singular sphere $R = r_s$, and we place each event by the times $s_{\\rm out}$ and $s_{\\rm in}$ at which "
+        "its outgoing ray and its ingoing ray left it, $p = F(s_{\\rm out})$ and $q = -F(s_{\\rm in})$ with "
+        "$F(s) = \\arctan(\\tfrac{1}{2}\\ln(2cs/r_s) + (e^{\\kappa cs} - 1)/20)$ and $\\kappa$ the surface gravity of "
+        "the Schwarzschild-de Sitter horizon $r_-$, each time found by integrating "
+        "$dR/d(ct) = \\sqrt{1 - r_s/R}\\,(HR/c \\pm \\sqrt{1 - r_s/R})$, as Kayll Lake and Majd Abdelqader built "
+        "theirs. The singular sphere is then the straight line along the bottom, spacelike and in the past of every "
+        "event, with later times to the left.",
+        "An ingoing ray that left before $ct = 0.0298\\,r_s$ escapes to future infinity, a spacelike curve, and the "
+        "ray that left at that instant holds $R = r_+$, the cosmological event horizon. Every later one ends at "
+        "$R = r_-$ as $t \\to \\infty$, at a finite affine parameter, on the null line at the left, where Nemanja "
+        "Kaloper, Matthew Kleban, and Damien Martin showed the curvature to be that of the Schwarzschild-de Sitter "
+        "horizon. The curve $g^{RR} = 0$ runs from its first point down to that line and up to $i^+$. Above where it "
+        "meets the line the rays arrive from the region between the two branches, and the line is the black hole "
+        "horizon; below it they arrive from smaller $R$, on the part Lake and Abdelqader found to be the white "
+        "hole horizon of the Schwarzschild-de Sitter spacetime.",
     ],
     ("schwarzschild_de_sitter", "static"): [
         "Kottler's spacetime, maximally extended, each point in the diagram a 2-sphere of radius $r$. "

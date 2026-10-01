@@ -276,6 +276,22 @@ def levi_civita_r(rho, sigma=0.25):
     r = rho^Sigma/Sigma with Sigma = 4 sigma^2 - 2 sigma + 1."""
     Sigma = 4 * sigma * sigma - 2 * sigma + 1
     return rho ** Sigma / Sigma
+MCV_H0 = 1 / math.sqrt(15)      # McVittie's H_0 r_s/c, as its diagrams and its embedding declare it
+
+
+def mcvittie_areal(t, r):
+    """The areal radius R = ar(1 + r_s/(4ar))^2 of McVittie's comoving r at ct, in r_s, with
+    a = sinh^(2/3)(3 H_0 t/2)."""
+    x = math.sinh(1.5 * MCV_H0 * t) ** (2 / 3) * r
+    return x * (1 + 1 / (4 * x)) ** 2
+
+
+def _mcvittie_areal(m):
+    """A moment of McVittie's cosmic time in the areal chart, which keeps that time: R from the
+    throat r_s out to the areal radius of the comoving r the embedding reaches."""
+    lo, hi = m.reach("isotropic", "r")
+    return along(m.time, mcvittie_areal(m.time, lo), mcvittie_areal(m.time, hi))
+
 
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
@@ -608,6 +624,8 @@ FLAT = {
     # The plane z = 0 at t = 0, where the spherical chart's r is Weyl's rho.
     ("curzon_chazy", "weyl", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("curzon_chazy", "spherical", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
+    ("mcvittie", "isotropic", "radial"): lambda: one("mcvittie", lambda m: along(m.time, *m.reach("isotropic", "r"))),
+    ("mcvittie", "areal", "radial"): lambda: one("mcvittie", _mcvittie_areal),
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("malament_hogarth", "cartesian", "tx"): lambda: one("malament_hogarth", lambda m: across(m.time, *m.reach("cartesian", "x"))),
@@ -972,6 +990,27 @@ def checks():
     miss = max(abs(float(T_s.subs({tg: a, cg: b})) - float(nariai_static_t(a, float(R_s.subs({tg: a, cg: b})))))
                for a, b in pts)
     report("Nariai: nariai_static_t is the global moment in the static chart", miss, 1e-12)
+
+    # McVittie: R = ar(1 + 1/(4ar))^2 and the same t carry the isotropic plane onto the areal one,
+    # with H = (da/dt)/a and sqrt(1 - 1/R) = (4ar - 1)/(4ar + 1) outside the throat, at the scale
+    # factor the diagrams declare; mcvittie_areal is that R.
+    g_i, (ti, ri, *_) = metric("mcvittie", "isotropic", {"r_s": 1})
+    g_a, (ta, Ra, *_) = metric("mcvittie", "areal", {"r_s": 1})
+    _, _, reader_i = nr.load("mcvittie", "isotropic")
+    _, _, reader_a = nr.load("mcvittie", "areal")
+    scale = sp.sinh(sp.Rational(3, 2) * ti / sp.sqrt(15)) ** sp.Rational(2, 3)
+    g_i = g_i.replace(reader_i.parameters["a"].func, sp.Lambda(ti, scale)).doit()
+    hubble = sp.diff(scale, ti) / scale
+    g_a = g_a.replace(reader_a.parameters["H"].func, sp.Lambda(ta, hubble.subs(ti, ta))).doit()
+    R_of = scale * ri * (1 + 1 / (4 * scale * ri)) ** 2
+    J = sp.Matrix([[1, 0], [sp.diff(R_of, ti), sp.diff(R_of, ri)]])
+    pulled = J.T * g_a[:2, :2].subs({ta: ti, Ra: R_of}, simultaneous=True) * J
+    pts = [(a, b) for a, b in zip(rng.uniform(0.5, 8, 40), rng.uniform(0.05, 4, 40))
+           if 4 * math.sinh(1.5 * MCV_H0 * a) ** (2 / 3) * b > 1.05]
+    miss = max(abs(complex((pulled - g_i[:2, :2]).subs({ti: a, ri: b})[i, j])) for a, b in pts for i in range(2) for j in range(2))
+    report("McVittie: the areal chart pulls back onto the isotropic plane outside the throat", miss, 1e-10)
+    miss = max(abs(float(R_of.subs({ti: a, ri: b})) - mcvittie_areal(a, b)) for a, b in pts)
+    report("McVittie: mcvittie_areal is the areal radius of the comoving r", miss, 1e-12)
     return failures
 
 

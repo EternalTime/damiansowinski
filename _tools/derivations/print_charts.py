@@ -3,7 +3,7 @@
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
-robinson_trautman and string_black_hole, and Godel's cylindrical chart.
+robinson_trautman, string_black_hole and mcvittie, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -735,6 +735,135 @@ def global_monopole_cone(chart):
 
 
 GM_CHARTS = ["static", "conical", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+
+
+# -- McVittie ----------------------------------------------------------------------------
+
+MCV_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+MCV_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def mcvittie(system_id):
+    """McVittie's point mass in a spatially flat expanding universe, in his own isotropic
+    comoving chart and in the areal chart R = ar(1 + r_s/4ar)^2 of Nolan and of Kaloper,
+    Kleban and Martin, whose metric depends on the scale factor only through the Hubble
+    rate H = (da/dt)/a, a frequency as de Sitter's flat slicing has it. Every curvature value is collected by the derivatives of a, or by
+    H and its derivative, so that each reads as its Schwarzschild value plus the terms the
+    expansion adds, and the Ricci scalar is written as 12H^2/c^2 plus the term in Hdot that
+    diverges on the singular sphere R = r_s. The areal chart is checked, slot by slot, to be
+    the isotropic chart pulled back; mcvittie.md derives both."""
+    if system_id == "isotropic":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        parameters = ["r_s", "a = a(t)"]
+        mu = "\\dfrac{r_s}{4ar}"
+        lapse = "\\left(\\dfrac{1 - " + mu + "}{1 + " + mu + "}\\right)^2"
+        space = "a^2\\left(1 + " + mu + "\\right)^4\\left(dr^2 + r^2" + MCV_SPHERE + "\\right)"
+        line = "ds^2 = -" + lapse + "c^2dt^2 + " + space
+        chart_line = "ds^2 = -" + lapse + "dt^2 + " + space
+        probe = vm.Reader(coords, parameters, ())
+        r, rs, a = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["a"]
+        t = probe.symbol["t"]
+        rates = [sp.Derivative(a, (t, 2)), sp.Derivative(a, t)]
+        conformal = "a^2\\left(1 + " + mu + "\\right)^4"
+        inverse = "\\dfrac{1}{a^2}\\left(1 + " + mu + "\\right)^{-4}"
+        extra = {
+            "components": {
+                "metric_components": {("t", "t"): "-\\left(\\dfrac{4ar - r_s}{4ar + r_s}\\right)^2",
+                                      ("r", "r"): conformal, ("\\theta", "\\theta"): conformal[:3] + "r^2" + conformal[3:],
+                                      ("\\phi", "\\phi"): conformal[:3] + "r^2\\sin^2\\theta" + conformal[3:]},
+                "inverse_metric_components": {("t", "t"): "-\\left(\\dfrac{4ar + r_s}{4ar - r_s}\\right)^2",
+                                              ("r", "r"): inverse,
+                                              ("\\theta", "\\theta"): "\\dfrac{1}{a^2r^2}\\left(1 + " + mu + "\\right)^{-4}",
+                                              ("\\phi", "\\phi"): "\\dfrac{1}{a^2r^2\\sin^2\\theta}\\left(1 + " + mu + "\\right)^{-4}"}},
+            "ricci_scalar": ("\\dfrac{12\\dot{a}^2}{a^2} + 6\\left(\\dfrac{\\ddot{a}}{a} - \\dfrac{\\dot{a}^2}{a^2}\\right)"
+                             "\\dfrac{4ar + r_s}{4ar - r_s}"),
+            # The Weyl tensor's 12r_s^2/R^6 at the areal radius R = ar(1 + r_s/4ar)^2, and the
+            # Ricci tensor's share, 12H^4 + 12(H^2 + Hdot(1 + mu)/(1 - mu))^2.
+            "kretschmann": ("\\dfrac{12r_s^2}{a^6r^6}\\left(1 + " + mu + "\\right)^{-12} + \\dfrac{12\\dot{a}^4}{a^4}"
+                            " + 12\\left(\\dfrac{\\dot{a}^2}{a^2} + \\left(\\dfrac{\\ddot{a}}{a} - \\dfrac{\\dot{a}^2}{a^2}\\right)"
+                            "\\dfrac{4ar + r_s}{4ar - r_s}\\right)^2"),
+        }
+        domains = (["t \\in (0, \\infty)", "r \\in (r_s/(4a), \\infty)"] + MCV_ANGLES
+                   + ["r = r_s/(4a) \\;\\text{(curvature singularity unless}\\; \\dot{a}/a \\;\\text{is constant)}"])
+        name = "Isotropic Comoving"
+        printer = {"lead": [a, r, rs], "dotted": ["a"],
+                   "collect": lambda poly, printer: cp.collect_by(poly, rates, printer)}
+    else:
+        coords = ["t", "R", "\\theta", "\\phi"]
+        parameters = ["r_s", "H = H(t)"]
+        f = "\\left(1 - \\dfrac{r_s}{R} - \\dfrac{H^2R^2}{c^2}\\right)"
+        root = "\\sqrt{1 - \\dfrac{r_s}{R}}"
+        rest = " + \\dfrac{dR^2}{1 - \\dfrac{r_s}{R}} + R^2" + MCV_SPHERE
+        line = "ds^2 = -" + f + "c^2dt^2 - \\dfrac{2HR}{" + root + "}dt\\,dR" + rest
+        chart_line = "ds^2 = -" + f + "dt^2 - \\dfrac{2HR}{c" + root + "}dt\\,dR" + rest
+        probe = vm.Reader(coords, parameters, ())
+        R, rs, H = probe.symbol["R"], probe.parameters["r_s"], probe.parameters["H"]
+        rates = [sp.Derivative(H, probe.symbol["t"]), H]
+        extra = {
+            "check": mcvittie_areal,
+            "components": {
+                "metric_components": {("t", "t"): "-" + f, ("R", "R"): "\\left(1 - \\dfrac{r_s}{R}\\right)^{-1}",
+                                      ("t", "R"): "-\\dfrac{HR}{c" + root + "}", ("R", "t"): "-\\dfrac{HR}{c" + root + "}"},
+                "inverse_metric_components": {("t", "t"): "-\\left(1 - \\dfrac{r_s}{R}\\right)^{-1}",
+                                              ("t", "R"): "-\\dfrac{HR}{c" + root + "}",
+                                              ("R", "t"): "-\\dfrac{HR}{c" + root + "}",
+                                              ("R", "R"): f[6:-7]}},
+            "ricci_scalar": "\\dfrac{12H^2}{c^2} + \\dfrac{6\\dot{H}}{c" + root + "}",
+            # Schwarzschild's 12r_s^2/R^6 from the Weyl tensor, and the Ricci tensor's share,
+            # which is de Sitter's 24H^4/c^4 where Hdot = 0.
+            "kretschmann": ("\\dfrac{12r_s^2}{R^6} + \\dfrac{12H^4}{c^4}"
+                            " + 12\\left(\\dfrac{H^2}{c^2} + \\dfrac{\\dot{H}}{c" + root + "}\\right)^2"),
+        }
+        domains = (["t \\in (0, \\infty)", "R \\in (r_s, \\infty)"] + MCV_ANGLES
+                   + ["R = r_s \\;\\text{(curvature singularity where}\\; \\dot{H} \\neq 0\\text{)}",
+                      "1 - r_s/R - H^2R^2/c^2 = 0 \\;\\text{(apparent horizons)}"])
+        name = "Areal Radius"
+        printer = {"lead": [H, R, rs, probe.c], "factors": [probe.c, H, R, rs], "dotted": ["H"],
+                   "collect": lambda poly, printer: cp.collect_by(poly, rates, printer)}
+    return {
+        "metric_id": "mcvittie",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": printer,
+        **extra,
+    }
+
+
+def mcvittie_areal(chart):
+    """J^T g J, with g the areal chart's metric at R = ar(1 + r_s/4ar)^2 and H = c adot/a, and J
+    the Jacobian of (t, R) with respect to (t, r), against the isotropic chart's metric, in
+    every slot. The areal metric is first written with a symbol S for sqrt(1 - r_s/R) and
+    checked against the chart's own; S is then (4ar - r_s)/(4ar + r_s), which is positive on
+    the isotropic chart's domain r > r_s/4a."""
+    spec = mcvittie("isotropic")
+    target = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    t, r = target.symbols[:2]
+    a, rs = target.reader.parameters["a"], target.reader.parameters["r_s"]
+    T, R = chart.symbols[:2]
+    H, Rs = chart.reader.parameters["H"], chart.reader.parameters["r_s"]
+    S = sp.Symbol("S", positive=True)
+    c = chart.reader.c
+    f = 1 - Rs / R - H ** 2 * R ** 2 / c ** 2
+    areal = sp.Matrix([[-f, -H * R / (c * S)], [-H * R / (c * S), 1 / (1 - Rs / R)]])
+    for i in range(2):
+        for j in range(2):
+            if vm.norm(areal[i, j].subs(S, sp.sqrt(1 - Rs / R)) - chart.geo.g[i, j]) != 0:
+                raise AssertionError("mcvittie: the areal metric written with S misses the chart's own")
+    radius = a * r * (1 + rs / (4 * a * r)) ** 2
+    at = {S: (4 * a * r - rs) / (4 * a * r + rs), Rs: rs}
+    plane = areal.subs(at).subs(H, c * sp.Derivative(a, t) / a).subs(R, radius).subs(T, t)
+    J = sp.Matrix([[1, 0], [sp.diff(radius, t), sp.diff(radius, r)]])
+    pulled = J.T * plane * J
+    for i in range(2):
+        for j in range(i, 2):
+            if vm.norm(pulled[i, j] - target.geo.g[i, j]) != 0:
+                raise AssertionError(f"mcvittie: the areal chart pulled back misses the isotropic chart "
+                                     f"in slot {target.coords_tex[i]}{target.coords_tex[j]}")
+    for k in (2, 3):
+        if vm.norm(chart.geo.g[k, k].subs(R, radius).subs(chart.symbols[2], target.symbols[2])
+                   - target.geo.g[k, k]) != 0:
+            raise AssertionError(f"mcvittie: the areal sphere misses the isotropic one in slot {k}")
 
 
 # -- Nariai ----------------------------------------------------------------------------
@@ -1711,7 +1840,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "majumdar_papapetrou": [lambda s=s: majumdar_papapetrou(s) for s in MP_CHARTS],
           "thin_shell_wormhole": [lambda s=s: thin_shell_wormhole(s) for s in ("spherical", "throat")],
           "kantowski_sachs": [lambda s=s: kantowski_sachs(s) for s in KS_CHARTS],
-          "robinson_trautman": [lambda s=s: robinson_trautman(s) for s in RT_CHARTS]}
+          "robinson_trautman": [lambda s=s: robinson_trautman(s) for s in RT_CHARTS],
+          "mcvittie": [lambda s=s: mcvittie(s) for s in ("isotropic", "areal")]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------
