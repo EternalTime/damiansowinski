@@ -209,6 +209,26 @@ def string_hole(sign=0):
     return [Mark(equator, [np.column_stack([sign * (r + np.log(r - 1)), r])])]
 
 
+def teo_proper(r):
+    """Teo's proper radial distance from the throat at b_0 = 1, his eq. (28)."""
+    return math.sqrt(r * (r - 1)) + math.log(math.sqrt(r) + math.sqrt(r - 1))
+
+
+def teo(system, view):
+    """Teo's wormhole's two moments. The equatorial plane's t = 0, embedded at a = 1, lies on the
+    equator's planes, over the r it reaches on either side of the throat. The throat r = b_0 at
+    t = 0, embedded at a = 1/4, meets the axis at its poles, one point of the axis's planes, drawn
+    at that spin. Neither lies on the other's drawings: the equatorial plane does not meet the axis."""
+    if view == "axis":
+        at, label = ((0.0, 1.0), "$t = 0$, $r = b_0$") if system == "spherical" else ((0.0, 0.0), "$t = 0$, $l = 0$")
+        return [Mark(moments("teo_wormhole", "throat", label=label)[0], points=[at])]
+    equator = moments("teo_wormhole", "equator")[0]
+    lo, hi = equator.reach("spherical", "r")
+    if system == "spherical":
+        return [Mark(equator, along(0.0, lo, hi))]
+    return [Mark(equator, along(0.0, -teo_proper(hi), teo_proper(hi)))]
+
+
 def dilaton_t(sign):
     """The dilaton black hole's static t = 0 in an Eddington-Finkelstein chart, r_s = 1: its plane
     of t and r is Schwarzschild's, so v = r + ln(r - 1) in the ingoing chart and u = -r - ln(r - 1)
@@ -553,6 +573,8 @@ FLAT = {
     ("thin_shell_wormhole", "throat", "radial"): lambda: one(
         "thin_shell_wormhole", lambda m: along(0.0, m.reach("spherical", "r")[0] - m.reach("spherical", "r")[1],
                                                m.reach("spherical", "r")[1] - m.reach("spherical", "r")[0])),
+    **{("teo_wormhole", system, view): (lambda system=system, view=view: teo(system, view))
+       for system in ("spherical", "proper_radial") for view in ("axis", "equator")},
     ("minkowski", "spherical", "radial"): lambda: one("minkowski", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # t = (u + v)/2 and r = (v - u)/2, so the moment is u = -r, v = r.
     ("minkowski", "spherical_null", "radial"): lambda: one(

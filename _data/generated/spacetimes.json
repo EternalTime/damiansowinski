@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 58,
+  "count": 59,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3588,6 +3588,11 @@
           "id": "schwarzschild",
           "kind": "family",
           "text": "Homer Ellis wanted a model of a particle free of the singularity at the centre of Schwarzschild's manifold, and opened that singularity into a throat with a scalar field [ellis1973]."
+        },
+        {
+          "id": "teo_wormhole",
+          "kind": "family",
+          "text": "A wormhole that rotates. Edward Teo wrote its geometry down in 1998 and left its matter open, and Burkhard Kleihaus and Jutta Kunz set the throat of the Ellis wormhole itself rotating in 2014, phantom field and all [teo1998, kleihaus2014]."
         }
       ],
       "references": [
@@ -3601,7 +3606,9 @@
         "gonzalez2009a",
         "gonzalez2009b",
         "abe2010",
-        "takahashi2013"
+        "takahashi2013",
+        "teo1998",
+        "kleihaus2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -5516,6 +5523,11 @@
           "id": "btz",
           "kind": "family",
           "text": "A rotating black hole in three dimensions, with an outer and an inner horizon like Kerr's and the same curvature at every point [banados1992, banados1993]."
+        },
+        {
+          "id": "teo_wormhole",
+          "kind": "family",
+          "text": "A rotating wormhole with an ergoregion and no horizon. Its ergoregion is a tube round the equator of the throat, and the Penrose process draws energy from it as it does from Kerr's [teo1998]."
         }
       ],
       "references": [
@@ -5539,7 +5551,8 @@
         "abbott2016",
         "eht2019",
         "banados1992",
-        "banados1993"
+        "banados1993",
+        "teo1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -8468,6 +8481,11 @@
           "id": "schwarzschild",
           "kind": "family",
           "text": "Schwarzschild's metric has a bridge of its own, which Einstein and Nathan Rosen described in 1935, and it pinches off faster than light can cross it [einstein1935, fuller1962]."
+        },
+        {
+          "id": "teo_wormhole",
+          "kind": "generalisation",
+          "text": "The Morris-Thorne wormhole set spinning. Edward Teo added an angular velocity $\\omega$ and a function $K$ for the circles about the axis in 1998, and with $\\omega = 0$ and $K = 1$ his metric is this one [teo1998]."
         }
       ],
       "references": [
@@ -8483,7 +8501,8 @@
         "ellis1973",
         "bronnikov1973",
         "visser1989prd",
-        "visser1989nuclphysb"
+        "visser1989nuclphysb",
+        "teo1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -11698,6 +11717,226 @@
       ]
     },
     {
+      "id": "teo_wormhole",
+      "name": "Teo Rotating Traversable Wormhole",
+      "short_name": "Teo",
+      "description": "Edward Teo's rotating traversable wormhole of 1998, the stationary, axially symmetric generalisation of the Morris-Thorne wormhole, in the example he worked out. Exotic matter still holds its throat open, some travellers fall through without meeting any, and a fast enough spin wraps the equator of the throat in an ergoregion.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "rotating",
+        "stationary",
+        "axisymmetric",
+        "angular momentum",
+        "frame dragging",
+        "ergoregion",
+        "exotic matter",
+        "energy condition violation",
+        "non-vacuum",
+        "asymptotically flat",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The throat radius $b_0$ is a length, and the spin $a = GJ/(c^3b_0^2)$ is the angular momentum $J$ in units of the throat, a pure number. We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "morris_thorne",
+          "kind": "special_case",
+          "text": "Teo's wormhole with the spin taken out. With $\\omega = 0$, $K = 1$, and nothing depending on $\\theta$ his canonical metric is the Morris-Thorne one, and his example at $a = 0$ is its member $\\Phi = 0$, $b = b_0$ [teo1998]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "The static wormhole held open by a phantom scalar field. Burkhard Kleihaus and Jutta Kunz set its throat rotating in 2014 and solved the field equations numerically, which gave rotating wormholes whose matter is known [kleihaus2014]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "A rotating geometry with an ergoregion, as Teo's is for $|a| > 1/2$. Kerr's ergoregion encloses a horizon, Teo's is a tube round the equator of a throat, and the Penrose process draws energy from either [teo1998, penrose1969]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Matt Visser's cut and paste wormhole. In the same year he showed, with flat space cut along a polyhedron, that a traveller can cross a wormhole and miss its exotic matter, which is what Teo wanted from rotation [visser1989prd, teo1998]."
+        }
+      ],
+      "references": [
+        "teo1998",
+        "morris1988",
+        "visser1989prd",
+        "hartle1967",
+        "penrose1969",
+        "tsukamoto2015",
+        "perezbergliaffa2000",
+        "kuhfittig2003",
+        "kleihaus2014",
+        "harko2009",
+        "nedkova2013",
+        "shaikh2018"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/teo_wormhole.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [b_0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = b_0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b_0",
+              "description": "Throat radius, a length; Teo's shape function is the constant $b = b_0$"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin, $a = GJ/(c^3b_0^2)$ with $J$ the angular momentum, a pure number; the ergoregion exists for $|a| > 1/2$"
+            }
+          ],
+          "convention": "We use Teo's coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and his redshift function $N$ and his $K$ are both $1 + 16a^2b_0\\cos^2\\theta/r$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 + \\dfrac{16a^2b_0\\cos^2\\theta}{r}\\right)^2c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{b_0}{r}} + \\left(r + 16a^2b_0\\cos^2\\theta\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\left(d\\phi - \\dfrac{2ab_0^2}{r^3}c\\,dt\\right)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 + \\dfrac{16a^2b_0\\cos^2\\theta}{r}\\right)^2\\left(1 - \\dfrac{4a^2b_0^4\\sin^2\\theta}{r^4}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2a\\,b_0^2\\left(r + 16a^2b_0\\cos^2\\theta\\right)^2\\sin^2\\theta}{r^3}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{2a\\,b_0^2\\left(r + 16a^2b_0\\cos^2\\theta\\right)^2\\sin^2\\theta}{r^3}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{b_0}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r + 16a^2b_0\\cos^2\\theta\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r + 16a^2b_0\\cos^2\\theta\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2a^2\\,b_0\\left(589824a^8\\,r\\,b_0^7\\cos^{10}\\theta - 589824a^8\\,r\\,b_0^7\\cos^8\\theta - 589824a^8\\,b_0^8\\cos^{10}\\theta + 589824a^8\\,b_0^8\\cos^8\\theta + 131072a^6\\,r^5\\,b_0^3\\cos^8\\theta - 163840a^6\\,r^4\\,b_0^4\\cos^8\\theta + 147456a^6\\,r^2\\,b_0^6\\cos^8\\theta - 147456a^6\\,r^2\\,b_0^6\\cos^6\\theta - 147456a^6\\,r\\,b_0^7\\cos^8\\theta + 147456a^6\\,r\\,b_0^7\\cos^6\\theta + 16384a^4\\,r^6\\,b_0^2\\cos^6\\theta - 18432a^4\\,r^5\\,b_0^3\\cos^6\\theta + 13824a^4\\,r^3\\,b_0^5\\cos^6\\theta - 13824a^4\\,r^3\\,b_0^5\\cos^4\\theta - 13824a^4\\,r^2\\,b_0^6\\cos^6\\theta + 13824a^4\\,r^2\\,b_0^6\\cos^4\\theta - 1536a^2\\,r^7\\,b_0\\cos^4\\theta - 384a^2\\,r^6\\,b_0^2\\cos^4\\theta + 576a^2\\,r^4\\,b_0^4\\cos^4\\theta - 576a^2\\,r^4\\,b_0^4\\cos^2\\theta - 576a^2\\,r^3\\,b_0^5\\cos^4\\theta + 576a^2\\,r^3\\,b_0^5\\cos^2\\theta - 192r^8\\cos^2\\theta + 64r^8 + 8r^7\\,b_0\\cos^2\\theta + 9r^5\\,b_0^3\\cos^2\\theta - 9r^5\\,b_0^3 - 9r^4\\,b_0^4\\cos^2\\theta + 9r^4\\,b_0^4\\right)}{r^7\\left(r + 16a^2b_0\\cos^2\\theta\\right)^4}",
+          "kretschmann": "K = \\dfrac{2b_0^2\\left(7653631721472a^{20}\\,r^2\\,b_0^{14}\\cos^{20}\\theta - 15307263442944a^{20}\\,r^2\\,b_0^{14}\\cos^{18}\\theta + 7653631721472a^{20}\\,r^2\\,b_0^{14}\\cos^{16}\\theta - 15307263442944a^{20}\\,r\\,b_0^{15}\\cos^{20}\\theta + 30614526885888a^{20}\\,r\\,b_0^{15}\\cos^{18}\\theta - 15307263442944a^{20}\\,r\\,b_0^{15}\\cos^{16}\\theta + 7653631721472a^{20}\\,b_0^{16}\\cos^{20}\\theta - 15307263442944a^{20}\\,b_0^{16}\\cos^{18}\\theta + 7653631721472a^{20}\\,b_0^{16}\\cos^{16}\\theta + 2319282339840a^{18}\\,r^6\\,b_0^{10}\\cos^{18}\\theta - 2319282339840a^{18}\\,r^6\\,b_0^{10}\\cos^{16}\\theta - 5334349381632a^{18}\\,r^5\\,b_0^{11}\\cos^{18}\\theta + 5334349381632a^{18}\\,r^5\\,b_0^{11}\\cos^{16}\\theta + 3053721747456a^{18}\\,r^4\\,b_0^{12}\\cos^{18}\\theta - 3053721747456a^{18}\\,r^4\\,b_0^{12}\\cos^{16}\\theta + 3826815860736a^{18}\\,r^3\\,b_0^{13}\\cos^{18}\\theta - 7653631721472a^{18}\\,r^3\\,b_0^{13}\\cos^{16}\\theta + 3826815860736a^{18}\\,r^3\\,b_0^{13}\\cos^{14}\\theta - 7653631721472a^{18}\\,r^2\\,b_0^{14}\\cos^{18}\\theta + 15307263442944a^{18}\\,r^2\\,b_0^{14}\\cos^{16}\\theta - 7653631721472a^{18}\\,r^2\\,b_0^{14}\\cos^{14}\\theta + 3826815860736a^{18}\\,r\\,b_0^{15}\\cos^{18}\\theta - 7653631721472a^{18}\\,r\\,b_0^{15}\\cos^{16}\\theta + 3826815860736a^{18}\\,r\\,b_0^{15}\\cos^{14}\\theta + 34359738368a^{16}\\,r^{10}\\,b_0^6\\cos^{16}\\theta - 85899345920a^{16}\\,r^9\\,b_0^7\\cos^{16}\\theta + 53687091200a^{16}\\,r^8\\,b_0^8\\cos^{16}\\theta + 995358670848a^{16}\\,r^7\\,b_0^9\\cos^{16}\\theta - 995358670848a^{16}\\,r^7\\,b_0^9\\cos^{14}\\theta - 2309618663424a^{16}\\,r^6\\,b_0^{10}\\cos^{16}\\theta + 2309618663424a^{16}\\,r^6\\,b_0^{10}\\cos^{14}\\theta + 1333587345408a^{16}\\,r^5\\,b_0^{11}\\cos^{16}\\theta - 1333587345408a^{16}\\,r^5\\,b_0^{11}\\cos^{14}\\theta + 837115969536a^{16}\\,r^4\\,b_0^{12}\\cos^{16}\\theta - 1674231939072a^{16}\\,r^4\\,b_0^{12}\\cos^{14}\\theta + 837115969536a^{16}\\,r^4\\,b_0^{12}\\cos^{12}\\theta - 1674231939072a^{16}\\,r^3\\,b_0^{13}\\cos^{16}\\theta + 3348463878144a^{16}\\,r^3\\,b_0^{13}\\cos^{14}\\theta - 1674231939072a^{16}\\,r^3\\,b_0^{13}\\cos^{12}\\theta + 837115969536a^{16}\\,r^2\\,b_0^{14}\\cos^{16}\\theta - 1674231939072a^{16}\\,r^2\\,b_0^{14}\\cos^{14}\\theta + 837115969536a^{16}\\,r^2\\,b_0^{14}\\cos^{12}\\theta + 12884901888a^{14}\\,r^{11}\\,b_0^5\\cos^{14}\\theta - 32212254720a^{14}\\,r^{10}\\,b_0^6\\cos^{14}\\theta + 20132659200a^{14}\\,r^9\\,b_0^7\\cos^{14}\\theta + 172134236160a^{14}\\,r^8\\,b_0^8\\cos^{14}\\theta - 173342195712a^{14}\\,r^8\\,b_0^8\\cos^{12}\\theta - 2415919104a^{14}\\,r^8\\,b_0^8\\cos^{10}\\theta - 419765944320a^{14}\\,r^7\\,b_0^9\\cos^{14}\\theta + 420973903872a^{14}\\,r^7\\,b_0^9\\cos^{12}\\theta + 2415919104a^{14}\\,r^7\\,b_0^9\\cos^{10}\\theta + 251859566592a^{14}\\,r^6\\,b_0^{10}\\cos^{14}\\theta - 251859566592a^{14}\\,r^6\\,b_0^{10}\\cos^{12}\\theta + 104639496192a^{14}\\,r^5\\,b_0^{11}\\cos^{14}\\theta - 209278992384a^{14}\\,r^5\\,b_0^{11}\\cos^{12}\\theta + 104639496192a^{14}\\,r^5\\,b_0^{11}\\cos^{10}\\theta - 209278992384a^{14}\\,r^4\\,b_0^{12}\\cos^{14}\\theta + 418557984768a^{14}\\,r^4\\,b_0^{12}\\cos^{12}\\theta - 209278992384a^{14}\\,r^4\\,b_0^{12}\\cos^{10}\\theta + 104639496192a^{14}\\,r^3\\,b_0^{13}\\cos^{14}\\theta - 209278992384a^{14}\\,r^3\\,b_0^{13}\\cos^{12}\\theta + 104639496192a^{14}\\,r^3\\,b_0^{13}\\cos^{10}\\theta + 1811939328a^{12}\\,r^{12}\\,b_0^4\\cos^{12}\\theta + 268435456a^{12}\\,r^{12}\\,b_0^4\\cos^{10}\\theta - 4898947072a^{12}\\,r^{11}\\,b_0^5\\cos^{12}\\theta - 268435456a^{12}\\,r^{11}\\,b_0^5\\cos^{10}\\theta + 3229614080a^{12}\\,r^{10}\\,b_0^6\\cos^{12}\\theta + 15288238080a^{12}\\,r^9\\,b_0^7\\cos^{12}\\theta - 16043212800a^{12}\\,r^9\\,b_0^7\\cos^{10}\\theta - 603979776a^{12}\\,r^9\\,b_0^7\\cos^8\\theta - 41561358336a^{12}\\,r^8\\,b_0^8\\cos^{12}\\theta + 42316333056a^{12}\\,r^8\\,b_0^8\\cos^{10}\\theta + 603979776a^{12}\\,r^8\\,b_0^8\\cos^8\\theta + 26801602560a^{12}\\,r^7\\,b_0^9\\cos^{12}\\theta - 26801602560a^{12}\\,r^7\\,b_0^9\\cos^{10}\\theta + 8174960640a^{12}\\,r^6\\,b_0^{10}\\cos^{12}\\theta - 16349921280a^{12}\\,r^6\\,b_0^{10}\\cos^{10}\\theta + 8174960640a^{12}\\,r^6\\,b_0^{10}\\cos^8\\theta - 16349921280a^{12}\\,r^5\\,b_0^{11}\\cos^{12}\\theta + 32699842560a^{12}\\,r^5\\,b_0^{11}\\cos^{10}\\theta - 16349921280a^{12}\\,r^5\\,b_0^{11}\\cos^8\\theta + 8174960640a^{12}\\,r^4\\,b_0^{12}\\cos^{12}\\theta - 16349921280a^{12}\\,r^4\\,b_0^{12}\\cos^{10}\\theta + 8174960640a^{12}\\,r^4\\,b_0^{12}\\cos^8\\theta + 109051904a^{10}\\,r^{13}\\,b_0^3\\cos^{10}\\theta + 92274688a^{10}\\,r^{13}\\,b_0^3\\cos^8\\theta - 377487360a^{10}\\,r^{12}\\,b_0^4\\cos^{10}\\theta - 92274688a^{10}\\,r^{12}\\,b_0^4\\cos^8\\theta + 285212672a^{10}\\,r^{11}\\,b_0^5\\cos^{10}\\theta + 710148096a^{10}\\,r^{10}\\,b_0^6\\cos^{10}\\theta - 865861632a^{10}\\,r^{10}\\,b_0^6\\cos^8\\theta - 56623104a^{10}\\,r^{10}\\,b_0^6\\cos^6\\theta - 2420637696a^{10}\\,r^9\\,b_0^7\\cos^{10}\\theta + 2576351232a^{10}\\,r^9\\,b_0^7\\cos^8\\theta + 56623104a^{10}\\,r^9\\,b_0^7\\cos^6\\theta + 1751777280a^{10}\\,r^8\\,b_0^8\\cos^{10}\\theta - 1751777280a^{10}\\,r^8\\,b_0^8\\cos^8\\theta + 408748032a^{10}\\,r^7\\,b_0^9\\cos^{10}\\theta - 817496064a^{10}\\,r^7\\,b_0^9\\cos^8\\theta + 408748032a^{10}\\,r^7\\,b_0^9\\cos^6\\theta - 817496064a^{10}\\,r^6\\,b_0^{10}\\cos^{10}\\theta + 1634992128a^{10}\\,r^6\\,b_0^{10}\\cos^8\\theta - 817496064a^{10}\\,r^6\\,b_0^{10}\\cos^6\\theta + 408748032a^{10}\\,r^5\\,b_0^{11}\\cos^{10}\\theta - 817496064a^{10}\\,r^5\\,b_0^{11}\\cos^8\\theta + 408748032a^{10}\\,r^5\\,b_0^{11}\\cos^6\\theta + 4718592a^8\\,r^{14}\\,b_0^2\\cos^8\\theta + 7864320a^8\\,r^{14}\\,b_0^2\\cos^6\\theta + 3145728a^8\\,r^{14}\\,b_0^2\\cos^4\\theta - 12320768a^8\\,r^{13}\\,b_0^3\\cos^8\\theta - 12582912a^8\\,r^{13}\\,b_0^3\\cos^6\\theta + 14974976a^8\\,r^{12}\\,b_0^4\\cos^8\\theta + 13123584a^8\\,r^{11}\\,b_0^5\\cos^8\\theta - 28459008a^8\\,r^{11}\\,b_0^5\\cos^6\\theta - 2359296a^8\\,r^{11}\\,b_0^5\\cos^4\\theta - 82722816a^8\\,r^{10}\\,b_0^6\\cos^8\\theta + 98058240a^8\\,r^{10}\\,b_0^6\\cos^6\\theta + 2359296a^8\\,r^{10}\\,b_0^6\\cos^4\\theta + 71663616a^8\\,r^9\\,b_0^7\\cos^8\\theta - 71663616a^8\\,r^9\\,b_0^7\\cos^6\\theta + 12773376a^8\\,r^8\\,b_0^8\\cos^8\\theta - 25546752a^8\\,r^8\\,b_0^8\\cos^6\\theta + 12773376a^8\\,r^8\\,b_0^8\\cos^4\\theta - 25546752a^8\\,r^7\\,b_0^9\\cos^8\\theta + 51093504a^8\\,r^7\\,b_0^9\\cos^6\\theta - 25546752a^8\\,r^7\\,b_0^9\\cos^4\\theta + 12773376a^8\\,r^6\\,b_0^{10}\\cos^8\\theta - 25546752a^8\\,r^6\\,b_0^{10}\\cos^6\\theta + 12773376a^8\\,r^6\\,b_0^{10}\\cos^4\\theta + 32768a^6\\,r^{15}\\,b_0\\cos^6\\theta + 950272a^6\\,r^{15}\\,b_0\\cos^4\\theta - 131072a^6\\,r^{15}\\,b_0\\cos^2\\theta + 163840a^6\\,r^{14}\\,b_0^2\\cos^6\\theta - 786432a^6\\,r^{14}\\,b_0^2\\cos^4\\theta + 487424a^6\\,r^{13}\\,b_0^3\\cos^6\\theta - 193536a^6\\,r^{12}\\,b_0^4\\cos^6\\theta - 599040a^6\\,r^{12}\\,b_0^4\\cos^4\\theta - 36864a^6\\,r^{12}\\,b_0^4\\cos^2\\theta - 1520640a^6\\,r^{11}\\,b_0^5\\cos^6\\theta + 2313216a^6\\,r^{11}\\,b_0^5\\cos^4\\theta + 36864a^6\\,r^{11}\\,b_0^5\\cos^2\\theta + 1778688a^6\\,r^{10}\\,b_0^6\\cos^6\\theta - 1778688a^6\\,r^{10}\\,b_0^6\\cos^4\\theta + 228096a^6\\,r^9\\,b_0^7\\cos^6\\theta - 456192a^6\\,r^9\\,b_0^7\\cos^4\\theta + 228096a^6\\,r^9\\,b_0^7\\cos^2\\theta - 456192a^6\\,r^8\\,b_0^8\\cos^6\\theta + 912384a^6\\,r^8\\,b_0^8\\cos^4\\theta - 456192a^6\\,r^8\\,b_0^8\\cos^2\\theta + 228096a^6\\,r^7\\,b_0^9\\cos^6\\theta - 456192a^6\\,r^7\\,b_0^9\\cos^4\\theta + 228096a^6\\,r^7\\,b_0^9\\cos^2\\theta + 17408a^4\\,r^{16}\\cos^4\\theta - 2048a^4\\,r^{16}\\cos^2\\theta + 4096a^4\\,r^{16} + 21504a^4\\,r^{15}\\,b_0\\cos^4\\theta - 20480a^4\\,r^{15}\\,b_0\\cos^2\\theta + 11136a^4\\,r^{14}\\,b_0^2\\cos^4\\theta - 12096a^4\\,r^{13}\\,b_0^3\\cos^4\\theta - 8640a^4\\,r^{13}\\,b_0^3\\cos^2\\theta - 10944a^4\\,r^{12}\\,b_0^4\\cos^4\\theta + 31680a^4\\,r^{12}\\,b_0^4\\cos^2\\theta + 24192a^4\\,r^{11}\\,b_0^5\\cos^4\\theta - 24192a^4\\,r^{11}\\,b_0^5\\cos^2\\theta + 1782a^4\\,r^{10}\\,b_0^6\\cos^4\\theta - 3564a^4\\,r^{10}\\,b_0^6\\cos^2\\theta + 1782a^4\\,r^{10}\\,b_0^6 - 3564a^4\\,r^9\\,b_0^7\\cos^4\\theta + 7128a^4\\,r^9\\,b_0^7\\cos^2\\theta - 3564a^4\\,r^9\\,b_0^7 + 1782a^4\\,r^8\\,b_0^8\\cos^4\\theta - 3564a^4\\,r^8\\,b_0^8\\cos^2\\theta + 1782a^4\\,r^8\\,b_0^8 + 384a^2\\,r^{16}\\cos^2\\theta - 128a^2\\,r^{16} + 224a^2\\,r^{15}\\,b_0\\cos^2\\theta - 144a^2\\,r^{14}\\,b_0^2\\cos^2\\theta - 72a^2\\,r^{14}\\,b_0^2 + 18a^2\\,r^{13}\\,b_0^3\\cos^2\\theta + 198a^2\\,r^{13}\\,b_0^3 + 135a^2\\,r^{12}\\,b_0^4\\cos^2\\theta - 135a^2\\,r^{12}\\,b_0^4 + 3r^{16}\\right)}{r^{14}\\left(r + 16a^2b_0\\cos^2\\theta\\right)^8}"
+        },
+        {
+          "id": "proper_radial",
+          "name": "Proper Radial Distance",
+          "coordinates": [
+            "t",
+            "l",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "l \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "l = 0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b_0",
+              "description": "Throat radius, a length; Teo's shape function is the constant $b = b_0$"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin, $a = GJ/(c^3b_0^2)$ with $J$ the angular momentum, a pure number; the ergoregion exists for $|a| > 1/2$"
+            },
+            {
+              "symbol": "r = r(l)",
+              "description": "Radial coordinate of Teo's chart, a length, fixed by $\\partial_l r = \\pm\\sqrt{1 - b_0/r}$ with $r(0) = b_0$ at the throat, so that $l = \\pm\\left(\\sqrt{r(r - b_0)} + b_0\\ln\\left(\\sqrt{r/b_0} + \\sqrt{r/b_0 - 1}\\right)\\right)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, l, \\theta, \\phi)$, with $t$ carrying dimensions of time and $l$ the proper radial distance, zero at the throat, and Teo's $r$ a function of $l$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 + \\dfrac{16a^2b_0\\cos^2\\theta}{r}\\right)^2c^2dt^2 + dl^2 + \\left(r + 16a^2b_0\\cos^2\\theta\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\left(d\\phi - \\dfrac{2ab_0^2}{r^3}c\\,dt\\right)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 + \\dfrac{16a^2b_0\\cos^2\\theta}{r}\\right)^2\\left(1 - \\dfrac{4a^2b_0^4\\sin^2\\theta}{r^4}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2a\\,b_0^2\\left(r + 16a^2b_0\\cos^2\\theta\\right)^2\\sin^2\\theta}{r^3}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{2a\\,b_0^2\\left(r + 16a^2b_0\\cos^2\\theta\\right)^2\\sin^2\\theta}{r^3}"
+            },
+            {
+              "indices": [
+                "l",
+                "l"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r + 16a^2b_0\\cos^2\\theta\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r + 16a^2b_0\\cos^2\\theta\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2r^8 - 2r^8\\left(\\partial_l r\\right)^2 - 4r^9\\,\\partial_l^2 r + 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2 - 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 128a^2\\,r^7\\,b_0 + 448a^2\\,r^7\\,b_0\\cos^2\\theta - 64a^2\\,r^7\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 160a^2\\,r^8\\,b_0\\,\\partial_l^2 r\\,\\cos^2\\theta + 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 4608a^4\\,r^6\\,b_0^2\\cos^4\\theta - 1536a^4\\,r^6\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 1536a^4\\,r^7\\,b_0^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 32768a^6\\,r^5\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 8192a^6\\,r^6\\,b_0^3\\,\\partial_l^2 r\\,\\cos^6\\theta + 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 262144a^8\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 131072a^8\\,r^5\\,b_0^4\\,\\partial_l^2 r\\,\\cos^8\\theta + 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta}{r^6\\left(r + 16a^2b_0\\cos^2\\theta\\right)^4}",
+          "kretschmann": "K = \\dfrac{15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{20}\\theta - 30614526885888a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta + 15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{18}\\theta - 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{18}\\theta + 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 15307263442944a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 17179869184a^{16}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 68719476736a^{16}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 68719476736a^{16}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 3348463878144a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6442450944a^{14}\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 25769803776a^{14}\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 25769803776a^{14}\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 24159191040a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{14}\\theta + 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 21743271936a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta - 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 4831838208a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta - 418557984768a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 1140850688a^{12}\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4026531840a^{12}\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 4160749568a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta + 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 7700742144a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6190792704a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta - 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1207959552a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 32699842560a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 134217728a^{10}\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 335544320a^{10}\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 150994944a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 369098752a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 184549376a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta + 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 1009778688a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 698351616a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 113246208a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1634992128a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 11796480a^8\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 15728640a^8\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 21495808a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 19136512a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 11796480a^8\\,r^{12}\\,b_0^4\\cos^8\\theta + 25165824a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 9437184a^8\\,r^{12}\\,b_0^4\\cos^6\\theta + 6291456a^8\\,r^{12}\\,b_0^4\\cos^4\\theta + 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta + 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 69599232a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 38928384a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 4718592a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 51093504a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 753664a^6\\,r^{15}\\,b_0^3\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 393216a^6\\,r^{14}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 1703936a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 589824a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1179648a^6\\,r^{13}\\,b_0^3\\cos^6\\theta + 1572864a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 327680a^6\\,r^{13}\\,b_0^3\\cos^4\\theta - 262144a^6\\,r^{13}\\,b_0^3\\cos^2\\theta + 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta + 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 2654208a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1069056a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 73728a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 912384a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 31744a^4\\,r^{16}\\,b_0^2\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 4096a^4\\,r^{15}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 69632a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 12288a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 92160a^4\\,r^{14}\\,b_0^2\\cos^4\\theta + 40960a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 45056a^4\\,r^{14}\\,b_0^2\\cos^2\\theta + 8192a^4\\,r^{14}\\,b_0^2 + 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta - 52992a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 11520a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 7128a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4 + 768a^2\\,r^{17}\\,b_0\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 1280a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 1024a^2\\,r^{15}\\,b_0\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2 - 256a^2\\,r^{15}\\,b_0 + 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2 - 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta + 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r - 432a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta - 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4 + 8r^{18}\\left(\\partial_l^2 r\\right)^2 - 8r^{16}\\left(\\partial_l r\\right)^2 + 4r^{16}\\left(\\partial_l r\\right)^4 + 4r^{16}}{r^{12}\\left(r + 16a^2b_0\\cos^2\\theta\\right)^8}"
+        }
+      ]
+    },
+    {
       "id": "tolman_bondi",
       "name": "Tolman-Bondi Inhomogeneous Dust Universe",
       "short_name": "Tolman-Bondi",
@@ -12714,6 +12953,11 @@
           "id": "schwarzschild",
           "kind": "piece",
           "text": "Both sides of the throat are Schwarzschild's exterior, cut off at $r = a > r_s$ [visser1989nuclphysb]."
+        },
+        {
+          "id": "teo_wormhole",
+          "kind": "family",
+          "text": "A rotating wormhole some travellers cross without meeting its exotic matter. Teo took the idea from Visser's flat space wormholes of 1989, cut along polyhedra [teo1998, visser1989prd]."
         }
       ],
       "references": [
@@ -12733,7 +12977,8 @@
         "abedi2017",
         "westerweck2018",
         "abbott2021tgr",
-        "abbott2025tgr"
+        "abbott2025tgr",
+        "teo1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",

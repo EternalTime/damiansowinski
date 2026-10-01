@@ -3235,6 +3235,119 @@ def szekeres_charts():
 CHARTS["szekeres"] = szekeres_charts
 
 
+# -- Teo's rotating wormhole ---------------------------------------------------------------
+
+def teo_wormhole(system):
+    """The example of E. Teo, Phys. Rev. D 58, 024014 (1998), his eq. (26) in the canonical
+    metric (19): N = K = 1 + (4a cos theta)^2/r, b = 1 and omega = 2a/r^3 in units of the throat,
+    here with the throat radius b_0 restored, N = K = 1 + 16a^2 b_0 cos^2(theta)/r, b = b_0 and
+    omega = 2a b_0^2 c/r^3, and a = GJ/(c^3 b_0^2) a pure number. The first chart is his
+    (t, r, theta, phi) on one side of the throat; the second is his eq. (16), in the proper
+    radial distance l of his (15) and (28), with r a function of l the chart leaves free, so its
+    values hold for every r(l). Every value is printed around rN = r + 16a^2 b_0 cos^2 theta,
+    with cos^2 theta kept against sin^2 theta so that it survives as a factor.
+    teo_wormhole_pullback checks the second chart against the first."""
+    proper = system == "proper_radial"
+    x = "l" if proper else "r"
+    coords = ["t", x, "\\theta", "\\phi"]
+    parameters = ["b_0", "a"] + (["r = r(l)"] if proper else [])
+    probe = vm.Reader(coords, parameters, ())
+    th, b0, a = probe.symbol["\\theta"], probe.parameters["b_0"], probe.parameters["a"]
+    r = probe.parameters["r"] if proper else probe.symbol["r"]
+    s, c = sp.sin(th), sp.cos(th)
+    W = r + 16 * a ** 2 * b0 * c ** 2
+    rN, rN_text = sp.Symbol("TEO_rN", positive=True), "r + 16a^2b_0\\cos^2\\theta"
+
+    def in_cosine(e):
+        return e.replace(lambda p: p.is_Pow and p.base == s and p.exp.is_Integer and p.exp > 1,
+                         lambda p: s ** (int(p.exp) % 2) * (1 - c ** 2) ** (int(p.exp) // 2))
+
+    def in_sine(e):
+        return e.replace(lambda p: p.is_Pow and p.base == c and p.exp.is_Integer and p.exp > 1,
+                         lambda p: c ** (int(p.exp) % 2) * (1 - s ** 2) ** (int(p.exp) // 2))
+
+    def pretty(value):
+        # Factored with sin^2 as 1 - cos^2, the angle N is written in, so that r + 16a^2 b_0 cos^2 theta
+        # comes out as a factor, and (cos + 1)(cos - 1) as -sin^2; every other sum is then written
+        # in whichever of sin^2 and cos^2 leaves it fewer terms, as r^4 - 4a^2 b_0^4 sin^2 theta,
+        # the cosine where they tie.
+        powers = {}
+        for f in sp.Mul.make_args(sp.factor(in_cosine(sp.sympify(value)))):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        k = min(powers.get(c + 1, 0), powers.get(c - 1, 0))
+        if k > 0:
+            powers[c + 1] -= k
+            powers[c - 1] -= k
+            powers[s] = powers.get(s, 0) + 2 * k
+        out = sp.Integer(-1) ** max(k, 0)
+        for base, k in powers.items():
+            if base.is_Add and sp.expand(base - W) == 0:
+                base = rN
+            elif base.is_Add and sp.expand(base + W) == 0:
+                base = -rN
+            elif base.is_Add:
+                sine = sp.expand(in_sine(base))
+                if len(sp.Add.make_args(sine)) < len(sp.Add.make_args(base)):
+                    base = sine
+            out *= base ** k
+        return out
+
+    lapse = "\\left(1 + \\dfrac{16a^2b_0\\cos^2\\theta}{r}\\right)^2"
+
+    def line(cdt):
+        radial = "dl^2" if proper else "\\dfrac{dr^2}{1 - \\dfrac{b_0}{r}}"
+        return ("ds^2 = -" + lapse + ("c^2" if cdt else "") + "dt^2 + " + radial + " + \\left(" + rN_text
+                + "\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\left(d\\phi - \\dfrac{2ab_0^2}{r^3}" + cdt
+                + "dt\\right)^2\\right)")
+
+    domains = ["t \\in (-\\infty, \\infty)", "l \\in (-\\infty, \\infty)" if proper else "r \\in [b_0, \\infty)",
+               "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               ("l = 0" if proper else "r = b_0") + " \\;\\text{(throat)}"]
+    return {
+        "metric_id": "teo_wormhole",
+        "system": {"id": system, "name": "Proper Radial Distance" if proper else "Spherical", "coords": coords,
+                   "domains": domains, "parameters": parameters, "line_element": line("c\\,")},
+        "chart_line_element": line(""),
+        "printer": {"lead": [a, r, b0, c, s], "named": {rN: rN_text}},
+        "pretty": pretty,
+        "bracketed": pretty,
+        # The metric as the line element writes it: omega^2 r^2 N^2 sin^2 theta taken from N^2 in g_tt.
+        "components": {
+            "metric_components": {
+                ("t", "t"): "-" + lapse + "\\left(1 - \\dfrac{4a^2b_0^4\\sin^2\\theta}{r^4}\\right)",
+                **({} if proper else {("r", "r"): "\\left(1 - \\dfrac{b_0}{r}\\right)^{-1}"})},
+            "inverse_metric_components": {} if proper else {("r", "r"): "1 - \\dfrac{b_0}{r}"}},
+    }
+
+
+def teo_wormhole_pullback(chart):
+    """The proper distance chart with dr/dl = sqrt(1 - b_0/r) is the spherical one: J^T g J with
+    J = diag(1, dr/dl, 1, 1) and g the spherical metric at r = r(l), in every slot."""
+    spec = teo_wormhole("spherical")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    r = chart.reader.parameters["r"]
+    at = dict(zip(source.symbols, [chart.symbols[0], r, chart.symbols[2], chart.symbols[3]]))
+    at.update({source.reader.parameters[k]: chart.reader.parameters[k] for k in ("b_0", "a")})
+    b0 = chart.reader.parameters["b_0"]
+    jacobian = sp.diag(1, sp.sqrt(1 - b0 / r), 1, 1)
+    pulled = jacobian.T * source.geo.g.subs(at, simultaneous=True) * jacobian
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"teo_wormhole: the spherical chart pulled back misses the proper distance "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+def teo_wormhole_charts():
+    spherical, proper = teo_wormhole("spherical"), teo_wormhole("proper_radial")
+    proper["check"] = teo_wormhole_pullback
+    return [spherical, proper]
+
+
+CHARTS["teo_wormhole"] = teo_wormhole_charts
+
+
 # -- Kaluza-Klein monopole -------------------------------------------------------------
 
 KK_CHARTS = ["gross_perry", "hopf", "taub_nut"]

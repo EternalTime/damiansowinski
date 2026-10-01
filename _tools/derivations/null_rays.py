@@ -466,6 +466,52 @@ MP_TWO_INPUT = ("Two holes, each of mass parameter $m$, on the axis at $z = \\pm
 # Every view the page draws, in the order it shows them. Plot ranges are chosen with
 # equal scales on both axes, so light in flat space runs at 45 degrees, and cone
 # lattices so that no cone sits exactly on a line where the chart is singular.
+
+def teo_inverse(x):
+    """(rho, sigma) at x = l/b_0 for the wormhole of Teo's example, whose proper radial distance
+    is l = +-b_0 (sqrt(rho(rho - 1)) + ln(sqrt(rho) + sqrt(rho - 1))) with rho = r/b_0, his eq.
+    (28). With rho = cosh^2 w that is Kepler's kind of equation, x = w + sinh(2w)/2, solved for w
+    by Newton's method from w = asinh(2x)/2, which it meets for large |x|; then rho = cosh^2 w
+    and sigma = d rho/dx = tanh w, odd and smooth through the throat."""
+    x = np.asarray(x, dtype=float)
+    w = np.arcsinh(2 * x) / 2
+    for _ in range(60):
+        step = (w + np.sinh(2 * w) / 2 - x) / (2 * np.cosh(w) ** 2)
+        w = w - step
+        if np.max(np.abs(step), initial=0.0) < 1e-15:
+            break
+    return np.cosh(w) ** 2, np.tanh(w)
+
+
+class teo_rho(sp.Function):
+    """r/b_0 as a function of l/b_0 on Teo's wormhole, a declared function a row may name: sympy
+    differentiates it by d rho/dx = sigma and d sigma/dx = 1/(2 rho^2), which are dr/dl =
+    +-sqrt(1 - b_0/r) and its derivative, and lambdify evaluates it with teo_inverse."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: teo_inverse(x)[0])
+
+    def fdiff(self, argindex=1):
+        return teo_sigma(self.args[0])
+
+
+class teo_sigma(sp.Function):
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: teo_inverse(x)[1])
+
+    def fdiff(self, argindex=1):
+        return 1 / (2 * teo_rho(self.args[0]) ** 2)
+
+
+# Functions a row's `functions` may name beside the elementary ones, each a sympy function
+# that carries its own derivative and its own numbers.
+DECLARED_FUNCTIONS = {"teo_rho": teo_rho, "teo_sigma": teo_sigma}
+TEO_RADIUS = "b_0*teo_rho(l/b_0)"
+TEO_RADIUS_INPUT = ("$r(l)$ from Teo's $l = \\pm\\left(\\sqrt{r(r - b_0)} + b_0\\ln\\left(\\sqrt{r/b_0} + "
+                    "\\sqrt{r/b_0 - 1}\\right)\\right)$, inverted by Newton's method.")
+TEO_CONE = "future cone of no angular momentum"
+
 DIAGRAMS = [
     *[Diagram("aichelburg_sexl", "null_cartesian", view, f"$\\rho = \\rho_0/{rho[2:]}$", ("u", "v"), (-3, 3, -2.5, 3.5),
               "$z\\;[8GE/c^4]$", "$ct\\;[8GE/c^4]$", {"G": 1, "E": "1/8", "rho_0": 1}, {"x": rho, "y": "0"},
@@ -615,6 +661,21 @@ DIAGRAMS = [
             functions={"Phi": "0", "b": "b_0**2/r"},
             input="$\\Phi = 0$ and $b = b_0^2/r$, the member of the family that is the "
                   "Ellis-Bronnikov wormhole."),
+    # Teo's example: on the axis the dragging term vanishes and the plane of t and r holds its
+    # rays, drawn at his a = 1/4; on the equator N = 1, the rays of no angular momentum are
+    # those of the plane with phi divided out, and a = 1 puts the ergosurface at sqrt(2) b_0.
+    Diagram("teo_wormhole", "spherical", "axis", "$t$ and $r$ on the axis", ("t", "r"), (1, 5, -2, 2),
+            "$r/b_0$", "$ct/b_0$", {"b_0": 1, "a": "1/4"}, {"theta": "0", "phi": "0"}),
+    Diagram("teo_wormhole", "spherical", "equator", "$t$ and $r$ on the equator", ("t", "r"), (1, 5, -2, 2),
+            "$r/b_0$", "$ct/b_0$", {"b_0": 1, "a": 1}, {"theta": "pi/2"}, quotient="phi",
+            mark_gtt="the ergosurface", cone=TEO_CONE),
+    Diagram("teo_wormhole", "proper_radial", "axis", "$t$ and $l$ on the axis", ("t", "l"), (-3, 3, -3, 3),
+            "$l/b_0$", "$ct/b_0$", {"b_0": 1, "a": "1/4"}, {"theta": "0", "phi": "0"}, families=SIDEWAYS,
+            functions={"r": TEO_RADIUS}, input=TEO_RADIUS_INPUT, lines=(("throat", "r", "0", None),)),
+    Diagram("teo_wormhole", "proper_radial", "equator", "$t$ and $l$ on the equator", ("t", "l"), (-3, 3, -3, 3),
+            "$l/b_0$", "$ct/b_0$", {"b_0": 1, "a": 1}, {"theta": "pi/2"}, families=SIDEWAYS, quotient="phi",
+            functions={"r": TEO_RADIUS}, input=TEO_RADIUS_INPUT, lines=(("throat", "r", "0", None),),
+            mark_gtt="the ergosurface", cone=TEO_CONE),
     Diagram("minkowski", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r$", "$ct$", {}, EQUATOR, areal=True),
     Diagram("minkowski", "spherical_null", "radial", "$t$ and $r$", ("u", "v"), (0, 4, -2, 2),
@@ -1488,6 +1549,48 @@ CAPTIONS = {
         "The chart stops at the throat $r = a$, before the cones close at $r_s$, so there is no horizon. A ray "
         "moving in reaches the throat at a finite $t$ and goes on into the other side, where $r$ grows again. "
         "The Kretschmann scalar $12r_s^2/r^6$ is at most $12r_s^2/a^6$.",
+    ],
+    ("teo_wormhole", "spherical", "axis"): [
+        "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$) on one side of the throat, drawn for "
+        "$a = 1/4$, where $N = 1 + b_0/r$. The dragging of frames carries a factor $\\sin^2\\theta$ and "
+        "vanishes on the axis, so these rays are null geodesics that stay on it, with edges "
+        "$dr/d(ct) = \\pm N^{-1}\\sqrt{1 - b_0/r}$.",
+        "$ct \\mp r_*$ is constant along a ray, with $r_* = \\sqrt{r(r - b_0)} - b_0\\ln\\left(\\sqrt{r/b_0} + "
+        "\\sqrt{r/b_0 - 1}\\right) + \\sqrt{2}\\,b_0\\,\\mathrm{artanh}\\sqrt{(r - b_0)/2r}$. The cones close "
+        "toward the throat $r = b_0$ because $g_{rr}$ diverges there, while $N = 2$ stays finite, so there is no "
+        "horizon: a ray moving in reaches the throat at a finite $t$ and goes on into the other side, where $r$ "
+        "grows again.",
+    ],
+    ("teo_wormhole", "spherical", "equator"): [
+        "The plane of $t$ and $r$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, "
+        "$-c^2dt^2 + dr^2/(1 - b_0/r)$, the metric orthogonal to the circles of $\\phi$, drawn for $a = 1$. Its "
+        "null curves are the shadows on $t$ and $r$ of the null geodesics of zero angular momentum, each "
+        "turning in $\\phi$ at $d\\phi/d(ct) = 2ab_0^2/r^3$, and each cone is the future cone of the "
+        "directions of zero angular momentum.",
+        "On the equator $N = 1$, so $ct \\mp l$ is constant along a ray, with $l = \\sqrt{r(r - b_0)} + "
+        "b_0\\ln\\left(\\sqrt{r/b_0} + \\sqrt{r/b_0 - 1}\\right)$ the proper distance from the throat, and "
+        "the rays are the same for every spin. The dotted line is the ergosurface, $g_{tt} = 0$ at "
+        "$r = \\sqrt{2a}\\,b_0 = 1.41\\,b_0$. Between the throat and the ergosurface no observer keeps "
+        "$\\phi$ fixed, and the region exists for $|a| > 1/2$.",
+    ],
+    ("teo_wormhole", "proper_radial", "axis"): [
+        "The plane of $t$ and $l$ on the axis of rotation ($\\theta = 0$), drawn for $a = 1/4$, with $l < 0$ "
+        "on one side of the throat and $l > 0$ on the other. The dragging of frames vanishes on the axis, so "
+        "these rays are null geodesics that stay on it, with edges $dl/d(ct) = \\pm 1/N$ and $N = 1 + b_0/r$.",
+        "The cones are narrowest at the throat, where $N = 2$ and $dl/d(ct) = \\pm 1/2$, and they open to "
+        "45° far from it on both sides. Every ray crosses the throat in a finite time, and $ct \\mp l_*$ is "
+        "constant along it, with $l_* = \\pm\\left(\\sqrt{r(r - b_0)} - b_0\\ln\\left(\\sqrt{r/b_0} + "
+        "\\sqrt{r/b_0 - 1}\\right) + \\sqrt{2}\\,b_0\\,\\mathrm{artanh}\\sqrt{(r - b_0)/2r}\\right)$.",
+    ],
+    ("teo_wormhole", "proper_radial", "equator"): [
+        "The plane of $t$ and $l$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, "
+        "$-c^2dt^2 + dl^2$, the metric orthogonal to the circles of $\\phi$, drawn for $a = 1$. It is exactly "
+        "flat, so the shadows on $t$ and $l$ of the null geodesics of zero angular momentum are straight 45° "
+        "lines through the throat, each turning in $\\phi$ at $d\\phi/d(ct) = 2ab_0^2/r^3$, and each cone "
+        "is the future cone of the directions of zero angular momentum.",
+        "The dotted lines are the ergosurface, $g_{tt} = 0$ at $r = \\sqrt{2a}\\,b_0$, which is "
+        "$l = \\pm 1.37\\,b_0$. Between them, through the throat, no observer keeps $\\phi$ fixed. The "
+        "ergoregion is a tube round the equator of the throat and reaches neither pole.",
     ],
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). "
@@ -3204,7 +3307,7 @@ class Surface:
 
 def _as_lambda(reader, name, rep):
     fn = reader.parameters[name]
-    body = sp.sympify(rep, locals={**reader.local, **{str(arg): arg for arg in fn.args}})
+    body = sp.sympify(rep, locals={**reader.local, **DECLARED_FUNCTIONS, **{str(arg): arg for arg in fn.args}})
     return sp.Lambda(fn.args, body)
 
 
@@ -3470,7 +3573,11 @@ def quotient_checks(chart, n=241):
         across = acc - (np.sum(acc * K, 1) / np.sum(K * K, 1))[:, None] * K
         # A family whose tangent is exactly parallel, as v = const of an Eddington-Finkelstein chart
         # is, has both terms zero, and misses by nothing; the smallest float keeps that 0/0 a zero.
-        size = np.linalg.norm(dK, axis=1) + np.linalg.norm(GKK, axis=1) + np.finfo(float).tiny
+        # Where both terms vanish at one point only, as at the throat of Teo's wormhole, where
+        # dr/dl = 0, they are rounding there, so the miss is measured against no less than 1e-9
+        # of k.k, a hundred times the error of the central differences.
+        size = (np.linalg.norm(dK, axis=1) + np.linalg.norm(GKK, axis=1) + 1e-9 * np.sum(K * K, 1)
+                + np.finfo(float).tiny)
         geodesic.append(np.linalg.norm(across, axis=1) / size)
         null.append(np.abs(np.einsum("nab,na,nb->n", g, K, K)) / (np.abs(g).max((1, 2)) * np.sum(K * K, 1)))
         finite &= np.isfinite(geodesic[-1]) & np.isfinite(null[-1])
@@ -4584,6 +4691,20 @@ def _ks_tau(eta):
                      for e in np.atleast_1d(eta)]).reshape(np.shape(eta))
 
 
+def _teo_proper(r):
+    """Teo's proper radial distance from the throat at b_0 = 1, his eq. (28)."""
+    r = np.maximum(np.asarray(r, float), 1.0)
+    return np.sqrt(r * (r - 1)) + np.log(np.sqrt(r) + np.sqrt(r - 1))
+
+
+def _teo_axis(r):
+    """r_* on the axis of Teo's example at b_0 = 1 and a = 1/4, zero at the throat:
+    dr_*/dr = r^(3/2)/((r + 1) sqrt(r - 1))."""
+    r = np.maximum(np.asarray(r, float), 1.0)
+    return (np.sqrt(r * (r - 1)) - np.log(np.sqrt(r) + np.sqrt(r - 1))
+            + np.sqrt(2) * np.arctanh(np.sqrt((r - 1) / (2 * r))))
+
+
 def _rstar(r, horizons):
     """The tortoise coordinate of f = prod(1 - r_i/r) with simple roots r_i, up to a constant."""
     out = np.asarray(r, float).copy()
@@ -4817,6 +4938,16 @@ CLOSED_FORMS = {
     ("ellis_bronnikov", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("morris_thorne", "spherical", "radial"):
         (lambda t, r: t + np.sqrt(r ** 2 - 1), lambda t, r: t - np.sqrt(r ** 2 - 1), lambda t, r: r > 1.0005),
+    # Teo's example at b_0 = 1: on the equator the rays keep ct -+ l, and on the axis at a = 1/4,
+    # where N = 1 + 1/r, they keep ct -+ r_* with dr_*/dr = 1/(N sqrt(1 - 1/r)).
+    ("teo_wormhole", "spherical", "axis"):
+        (lambda t, r: t + _teo_axis(r), lambda t, r: t - _teo_axis(r), lambda t, r: r > 1.0005),
+    ("teo_wormhole", "spherical", "equator"):
+        (lambda t, r: t + _teo_proper(r), lambda t, r: t - _teo_proper(r), lambda t, r: r > 1.0005),
+    ("teo_wormhole", "proper_radial", "axis"):
+        (lambda t, l: t + np.sign(l) * _teo_axis(teo_inverse(l)[0]),
+         lambda t, l: t - np.sign(l) * _teo_axis(teo_inverse(l)[0]), None),
+    ("teo_wormhole", "proper_radial", "equator"): (lambda t, l: t + l, lambda t, l: t - l, None),
     # With r_s = 1 and a = 5/4, l_* = l + ln(1 + 4|l|) sgn l on the throat's chart and r_* = r + ln(r - 1).
     ("thin_shell_wormhole", "throat", "radial"):
         (lambda t, l: t + _tsw_lstar(l), lambda t, l: t - _tsw_lstar(l), None),

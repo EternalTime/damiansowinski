@@ -47,6 +47,11 @@
       "id": "btz",
       "kind": "family",
       "text": "A rotating black hole in three dimensions, with an outer and an inner horizon like Kerr's and the same curvature at every point [banados1992, banados1993]."
+    },
+    {
+      "id": "teo_wormhole",
+      "kind": "family",
+      "text": "A rotating wormhole with an ergoregion and no horizon. Its ergoregion is a tube round the equator of the throat, and the Penrose process draws energy from it as it does from Kerr's [teo1998]."
     }
   ],
   "references": [
@@ -70,7 +75,8 @@
     "abbott2016",
     "eht2019",
     "banados1992",
-    "banados1993"
+    "banados1993",
+    "teo1998"
   ],
   "coordinates": [
     {

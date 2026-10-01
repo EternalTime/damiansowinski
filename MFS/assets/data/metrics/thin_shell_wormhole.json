@@ -2686,6 +2686,11 @@
       "id": "schwarzschild",
       "kind": "piece",
       "text": "Both sides of the throat are Schwarzschild's exterior, cut off at $r = a > r_s$ [visser1989nuclphysb]."
+    },
+    {
+      "id": "teo_wormhole",
+      "kind": "family",
+      "text": "A rotating wormhole some travellers cross without meeting its exotic matter. Teo took the idea from Visser's flat space wormholes of 1989, cut along polyhedra [teo1998, visser1989prd]."
     }
   ],
   "references": [
@@ -2705,6 +2710,7 @@
     "abedi2017",
     "westerweck2018",
     "abbott2021tgr",
-    "abbott2025tgr"
+    "abbott2025tgr",
+    "teo1998"
   ]
 }

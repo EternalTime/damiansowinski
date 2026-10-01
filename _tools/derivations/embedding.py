@@ -2151,6 +2151,85 @@ def thin_shell_wormhole(ck, src):
                  settings="$r_s = 1$, the unit of every length, and $a = 1.25$.")]
 
 
+def teo_wormhole(ck, src):
+    """Teo's example at b_0 = 1 in two views. The equatorial plane at one moment of t, where
+    N = 1: g_rr = r/(r - b_0) and g_phiphi = r^2, g_tphi dropping out at constant t, so dz/dr =
+    sqrt(b_0/(r - b_0)) and the surface is Flamm's paraboloid z = +-2 sqrt(b_0 (r - b_0)), Teo's
+    eq. (27), for every spin; at a = 1 the ergosurface, g_tt = 0, is the circle r = sqrt(2) b_0,
+    marked on both sides. The proper distance chart, with r(l) from nr.teo_inverse, is checked
+    to give the same surface. And the throat r = b_0 itself at a = 1/4, the surface of theta and
+    phi with the metric b_0^2 N^2 (dtheta^2 + sin^2 theta dphi^2) and N = 1 + cos^2 theta: its
+    circles have rho = b_0 (1 + cos^2 theta) sin theta, least at the equator and greatest at
+    cos^2 theta = 1/3, the dumbbell of Teo's Fig. 1, each pole 3 pi b_0/4 from the equator along a meridian."""
+    params = {"b_0": 1, "a": 1}
+    sl = Slice(src, "teo_wormhole", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    ergo, top, radii = math.sqrt(2), 5.0, (2, 3, 4)
+    size = 2 * top
+    near = Piece("near", "sheet", sl, 1.0, top, 0.0, 1,
+                 (("throat", "the throat $r = b_0$, where the two sides join"),
+                  ("edge", "the side runs on, flattening, to $r \\to \\infty$")),
+                 [(1.0, "throat", "$r = b_0$"), (ergo, "ergo", None)] + [(r, "r", None) for r in radii]
+                 + [(top, "r", None)], size)
+    far = Piece("far", "sheet2", sl, 1.0, top, 0.0, -1,
+                (("throat", "the throat $r = b_0$"), ("edge", "the other side runs on, flattening, to $r \\to \\infty$")),
+                [(ergo, "ergo", None)] + [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    for p in (near, far):
+        ck.isometry(f"Teo, the equator, {p.id} side", p)
+        ck.form(f"Teo, the equator, {p.id} side, Flamm's z = 2 sqrt(b_0 (r - b_0))", p,
+                lambda r, s=p.sense: s * 2 * np.sqrt(np.maximum(r - 1, 0)), size)
+    ck.join("Teo, the two sides at the throat", near, 1.0, far, 1.0)
+    proper = Slice(src, "teo_wormhole", "proper_radial", "l", "\\phi", {"t": 0, **EQUATOR}, params,
+                   numeric={"r": (lambda l: nr.teo_inverse(l)[0], lambda l: nr.teo_inverse(l)[1])})
+    whole = Piece("proper", "sheet", proper, 0.0, float(nr._teo_proper(top)), 0.0, 1, size=size)
+    ck.isometry("Teo, the proper distance chart", whole)
+    ck.add("Teo, the proper distance chart gives the same surface",
+           float(np.max(np.abs(2 * np.sqrt(np.maximum(whole.rho - 1, 0)) - whole.z))) / size, FORM)
+    _, entry, reader = nr.load("teo_wormhole", "spherical")
+    g = nr.published_matrix(reader, entry, "metric_components")
+    names = {reader.c: 1, reader.parameters["b_0"]: 1}
+    at = {**names, reader.parameters["a"]: 1, reader.symbol["\\theta"]: sp.pi / 2, reader.symbol["r"]: sp.sqrt(2)}
+    ck.add("Teo, the published g_tt vanishes on the equator at r = sqrt(2) b_0 for a = 1",
+           abs(float(g[0, 0].subs(at))), 1e-12)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], 1.0, 0.0, "$r = b_0$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,b_0$")
+    ring_label(fig, [0, 0, 0], *far.at(3.0), "$3\\,b_0$")
+    fig.legend("fill", "cover", "the side $l > 0$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$, $4$ and $5\\,b_0$")
+    fig.legend("line", "r2", "the same radii on the other side, $l < 0$")
+    fig.legend("line", "throat", "the throat $r = b_0$, the smallest circle")
+    fig.legend("line", "ergo", "the ergosurface, $r = \\sqrt{2a}\\,b_0$ on the equator, one circle on either side")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    equator = view("equator", "The equator", "$b_0$", [surface], fig.done(),
+                   settings="$b_0 = 1$, the unit of every length, and $a = 1$, which enters only where the "
+                            "ergosurface lies.")
+
+    throat = Slice(src, "teo_wormhole", "spherical", "\\theta", "\\phi", {"t": 0, "r": 1}, {"b_0": 1, "a": "1/4"})
+    half = throat.rise(0.0, math.pi / 2)
+    bell = Piece("throat", "sheet", throat, 0.0, math.pi, -half, 1,
+                 (("axis", "the pole $\\theta = 0$"), ("axis", "the pole $\\theta = \\pi$")),
+                 [(math.acos(math.sqrt(1 / 3)), "r", None), (math.pi / 2, "throat", "$\\theta = \\pi/2$"),
+                  (math.pi - math.acos(math.sqrt(1 / 3)), "r", None)], 2 * half)
+    ck.isometry("Teo, the throat", bell)
+    ck.radius("Teo, the throat, rho = b_0 (1 + cos^2 theta) sin theta", bell,
+              lambda th: (1 + np.cos(th) ** 2) * np.sin(th), 2 * half)
+    ck.add("Teo, the throat is the same on either side of its equator",
+           abs(bell.at(math.pi)[1] - half) / (2 * half), FORM)
+    at = {**names, reader.parameters["a"]: sp.Rational(1, 4), reader.symbol["\\theta"]: 0, reader.symbol["r"]: 1}
+    ck.add("Teo, the throat at a = 1/4: the published g_thetatheta is (2 b_0)^2 at the poles",
+           abs(float(g[2, 2].subs(at)) - 4.0), 1e-12)
+    body = Surface([bell])
+    fig = figure_of([body], {"sheet": "cover"}, 2 * half)
+    ring_label(fig, [0, 0, 0], *bell.at(math.pi / 2), "$\\theta = \\pi/2$", dx=10)
+    fig.legend("fill", "cover", "the throat $r = b_0$, a closed surface")
+    fig.legend("line", "throat", "the equator $\\theta = \\pi/2$, the smallest circle, of radius $b_0$")
+    fig.legend("line", "r", "the widest circles, $\\cos^2\\theta = 1/3$, of radius $1.09\\,b_0$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [equator, view("throat", "The throat", "$b_0$", [body], fig.done(),
+                          settings="$b_0 = 1$, the unit of every length, and $a = 1/4$.")]
+
+
 def two_sheets(ck, name, sl, throat, top, radii, size, near_marks=(), texts=("", "")):
     """A slice of constant t through a bifurcation sphere, as Schwarzschild's: the exterior from
     the throat out to `top`, tinted, and the same surface turned over on the other side."""
@@ -5916,6 +5995,7 @@ DRAWN = {
     "majumdar_papapetrou": majumdar_papapetrou,
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
+    "teo_wormhole": teo_wormhole,
     "levi_civita": levi_civita,
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
@@ -6051,6 +6131,25 @@ CAPTIONS = {
         "density, which observers passing through it fast measure as a negative energy density. With "
         "$b = b_0^2/r$ the surface is the catenoid $r = b_0\\cosh(z/b_0)$, the shape of a soap film "
         "stretched between two rings.",
+    ],
+    ("teo_wormhole", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Teo's rotating wormhole at one moment of $t$, drawn as a "
+        "surface in flat space with every distance along it the metric distance. On the equator $N = 1$ and "
+        "$g_{rr} = 1/(1 - b_0/r)$, so $dz/dr = \\pm\\sqrt{b_0/(r - b_0)}$ and the surface is "
+        "$z = \\pm 2\\sqrt{b_0(r - b_0)}$, Flamm's paraboloid, the same for every spin.",
+        "At the throat $r = b_0$ the surface stands vertical and joins a second side, flat far away as the "
+        "first is. The spin moves no point of the surface, since $g_{t\\phi}$ drops out at constant $t$. It "
+        "sets the ergosurface, the circle $r = \\sqrt{2a}\\,b_0$ on either side, drawn here for $a = 1$, and "
+        "between the two circles, through the throat, no observer keeps $\\phi$ fixed.",
+    ],
+    ("teo_wormhole", "throat"): [
+        "The throat $r = b_0$ of Teo's rotating wormhole at one moment of $t$ ($a = 1/4$), drawn as a surface "
+        "in flat space with every distance along it the metric distance. Its metric is "
+        "$b_0^2N^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)$ with $N = 1 + 16a^2\\cos^2\\theta$, "
+        "so the circle at $\\theta$ has radius $b_0N\\sin\\theta$.",
+        "The circles are smallest at the equator, where the radius is $b_0$, and widest at "
+        "$\\cos^2\\theta = 1/3$, which gives the throat its dumbbell shape, Edward Teo's word for it in 1998. "
+        "Along a meridian each pole lies $3\\pi b_0/4$ from the equator, half again as far as on a sphere of radius $b_0$.",
     ],
     ("thin_shell_wormhole", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Visser's thin shell wormhole at one moment of $t$ "

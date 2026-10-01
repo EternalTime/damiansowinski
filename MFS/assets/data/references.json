@@ -1,5 +1,5 @@
 {
-  "version": "67b093d686214dc3",
+  "version": "c4b74eb156a7ce65",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -11252,6 +11252,143 @@
         "eprint": "gr-qc/0305105",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/0305105"
+      }
+    },
+    "teo1998": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating traversable wormholes",
+        "author": "Teo, Edward",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "2",
+        "pages": "024014",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.024014",
+        "eprint": "gr-qc/9803098",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.58.024014"
+      }
+    },
+    "hartle1967": {
+      "type": "article",
+      "fields": {
+        "title": "Slowly Rotating Relativistic Stars. I. Equations of Structure",
+        "author": "Hartle, James B.",
+        "journal": "The Astrophysical Journal",
+        "volume": "150",
+        "pages": "1005",
+        "year": "1967",
+        "doi": "10.1086/149400",
+        "url": "https://doi.org/10.1086/149400"
+      }
+    },
+    "perezbergliaffa2000": {
+      "type": "misc",
+      "fields": {
+        "title": "On the stress-energy tensor of a rotating wormhole",
+        "author": "Perez Bergliaffa, S. E. and Hibberd, K. E.",
+        "year": "2000",
+        "journal": "arXiv preprint arXiv:gr-qc/0006041",
+        "eprint": "gr-qc/0006041",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0006041"
+      }
+    },
+    "kuhfittig2003": {
+      "type": "article",
+      "fields": {
+        "title": "Axially symmetric rotating traversable wormholes",
+        "author": "Kuhfittig, Peter K. F.",
+        "journal": "Physical Review D",
+        "volume": "67",
+        "number": "6",
+        "pages": "064015",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.67.064015",
+        "eprint": "gr-qc/0401028",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.67.064015"
+      }
+    },
+    "harko2009": {
+      "type": "article",
+      "fields": {
+        "title": "Thin accretion disks in stationary axisymmetric wormhole spacetimes",
+        "author": "Harko, Tiberiu and Kov{\\'a}cs, Zolt{\\'a}n and Lobo, Francisco S. N.",
+        "journal": "Physical Review D",
+        "volume": "79",
+        "number": "6",
+        "pages": "064001",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.79.064001",
+        "eprint": "0901.3926",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.79.064001"
+      }
+    },
+    "nedkova2013": {
+      "type": "article",
+      "fields": {
+        "title": "Shadow of a rotating traversable wormhole",
+        "author": "Nedkova, Petya G. and Tinchev, Vassil K. and Yazadjiev, Stoytcho S.",
+        "journal": "Physical Review D",
+        "volume": "88",
+        "number": "12",
+        "pages": "124019",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.88.124019",
+        "eprint": "1307.7647",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.88.124019"
+      }
+    },
+    "kleihaus2014": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating Ellis wormholes in four dimensions",
+        "author": "Kleihaus, Burkhard and Kunz, Jutta",
+        "journal": "Physical Review D",
+        "volume": "90",
+        "number": "12",
+        "pages": "121503",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.90.121503",
+        "eprint": "1409.1503",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.90.121503"
+      }
+    },
+    "tsukamoto2015": {
+      "type": "article",
+      "fields": {
+        "title": "High energy collision of two particles in wormhole spacetimes",
+        "author": "Tsukamoto, Naoki and Bambi, Cosimo",
+        "journal": "Physical Review D",
+        "volume": "91",
+        "number": "8",
+        "pages": "084013",
+        "year": "2015",
+        "doi": "10.1103/PhysRevD.91.084013",
+        "eprint": "1411.5778",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.91.084013"
+      }
+    },
+    "shaikh2018": {
+      "type": "article",
+      "fields": {
+        "title": "Shadows of rotating wormholes",
+        "author": "Shaikh, Rajibul",
+        "journal": "Physical Review D",
+        "volume": "98",
+        "number": "2",
+        "pages": "024044",
+        "year": "2018",
+        "doi": "10.1103/PhysRevD.98.024044",
+        "eprint": "1803.11422",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.98.024044"
       }
     }
   }

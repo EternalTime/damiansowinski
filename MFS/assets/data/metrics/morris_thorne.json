@@ -38,6 +38,11 @@
       "id": "schwarzschild",
       "kind": "family",
       "text": "Schwarzschild's metric has a bridge of its own, which Einstein and Nathan Rosen described in 1935, and it pinches off faster than light can cross it [einstein1935, fuller1962]."
+    },
+    {
+      "id": "teo_wormhole",
+      "kind": "generalisation",
+      "text": "The Morris-Thorne wormhole set spinning. Edward Teo added an angular velocity $\\omega$ and a function $K$ for the circles about the axis in 1998, and with $\\omega = 0$ and $K = 1$ his metric is this one [teo1998]."
     }
   ],
   "references": [
@@ -53,7 +58,8 @@
     "ellis1973",
     "bronnikov1973",
     "visser1989prd",
-    "visser1989nuclphysb"
+    "visser1989nuclphysb",
+    "teo1998"
   ],
   "coordinates": [
     {

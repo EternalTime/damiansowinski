@@ -34,6 +34,11 @@
       "id": "schwarzschild",
       "kind": "family",
       "text": "Homer Ellis wanted a model of a particle free of the singularity at the centre of Schwarzschild's manifold, and opened that singularity into a throat with a scalar field [ellis1973]."
+    },
+    {
+      "id": "teo_wormhole",
+      "kind": "family",
+      "text": "A wormhole that rotates. Edward Teo wrote its geometry down in 1998 and left its matter open, and Burkhard Kleihaus and Jutta Kunz set the throat of the Ellis wormhole itself rotating in 2014, phantom field and all [teo1998, kleihaus2014]."
     }
   ],
   "references": [
@@ -47,7 +52,9 @@
     "gonzalez2009a",
     "gonzalez2009b",
     "abe2010",
-    "takahashi2013"
+    "takahashi2013",
+    "teo1998",
+    "kleihaus2014"
   ],
   "coordinates": [
     {

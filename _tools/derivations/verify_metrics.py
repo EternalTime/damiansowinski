@@ -478,6 +478,14 @@ DIMENSIONS = {
         "t": "T", "l": "L", "\\theta": "1", "\\phi": "1",
         "\\Phi": "1", "r": "L", "b_0": "L",
     },
+    # Teo's example with the throat radius restored: the spin a = GJ/(c^3 b_0^2) is a pure
+    # number, and in the proper distance chart r is a declared function of l.
+    ("teo_wormhole", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "b_0": "L", "a": "1",
+    },
+    ("teo_wormhole", "proper_radial"): {
+        "t": "T", "l": "L", "\\theta": "1", "\\phi": "1", "b_0": "L", "a": "1", "r": "L",
+    },
     # The slices are flat space and the whole of the geometry is the flow field carried on them,
     # so its components are velocities and the chart components of the metric are powers of V/c.
     ("natario", "cartesian_flow"): {
@@ -1530,7 +1538,23 @@ class Reader:
         text = re.sub(r"(?<![A-Za-z_])(\d+)([jJ])", r"\1 \2", text)
         if "\\" in text:
             raise LatexError(f"unhandled LaTeX in {latex!r}: {text!r}")
-        return text
+        return re.sub(r"[A-Za-z][A-Za-z0-9_]*", self._part_subscripted, text)
+
+    def _part_subscripted(self, match):
+        """A name written against the letters before it, as the b_0 of 2ab_0^2, parted from them.
+
+        The parser splits a token it does not know letter by letter, and a subscript split so
+        leaves a stray _0, which multiplies the whole term by zero without a word. So a token
+        that is not a name the system knows and ends in one that carries a subscript is read as
+        what stands before it times that name, and any other unknown token with an underscore
+        is an error rather than a zero."""
+        token = match.group(0)
+        if "_" not in token or token in self.local or PARTIAL_NAME.fullmatch(token):
+            return token
+        for start in range(1, len(token)):
+            if "_" in token[start:] and token[start:] in self.local and "_" not in token[:start]:
+                return f"{token[:start]} {token[start:]}"
+        raise LatexError(f"{match.string!r} holds {token!r}, a subscripted name the system does not declare")
 
     def __call__(self, latex):
         text = self._preprocess(latex)
