@@ -50,6 +50,11 @@ A formula inside prose, in a `history`, a `convention` or a caption, is set inli
 `fitProseMath` in `_layouts/mfs.html` measures that again at the next frame after the paragraph changes width, never from inside the observer that sees the change, and passes over a displayed formula, which has its line already.
 Each of these observers measures everything it was handed before it changes any class, because a class changed between two measurements makes the second lay the whole page out again, and once per line that held Kerr-Newman still for seconds and Natario for nearly a minute.
 
+A matrix's brackets end a quarter of an em past its highest and its lowest entry, whatever the entries are.
+MathJax stretches a bracket to the box of the rows, and a fraction or a bracketed sum in the first or last row fills that box, so `mfsMatrixBrackets` in `_layouts/mfs.html` makes every table standing between two fences that much taller and deeper before the brackets are sized.
+It works on the MathML that MathJax makes of the TeX, so it holds for `bmatrix`, `pmatrix` and any other fenced table, in a metric or in prose, and no entry in the data carries a strut.
+`node _tools/matrix_brackets.mjs http://127.0.0.1:4000` opens every chart of every spacetime and measures each right bracket against the ink of its entries; `--phone` and `--text 48` measure the other layouts.
+
 A chosen spacetime's panel waits off the screen until its mathematics is set and laid out, and only then slides in.
 While it waits, "Spacetime data loading..." shows where the panel rests, centred, under the panel so the panel slides in over it.
 Most of that wait holds the main thread, so the line cannot be shown once it starts; it is asked for as the wait begins and fades in by a CSS transition with a delay, which the browser runs off the main thread, so a spacetime set within that delay never shows it.

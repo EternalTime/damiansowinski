@@ -42,6 +42,34 @@
         });
       });
     }
+    /* A matrix's brackets are stretched to the box of its rows, and a row is as tall as its
+       tallest entry: a strut, or a fraction or a bracketed sum that stands past the strut. So
+       beside a first row holding a bracketed sum or a last row holding a fraction, the bracket
+       ended level with that entry's ink, as beside Schwarzschild's 1/(r^2 sin^2 theta). Every
+       table standing between two fences, whatever environment wrote it and whatever its
+       entries are, is given a quarter of an em of height and of depth before the fences are
+       sized, which is the depth of a row's strut under its baseline, so the brackets end that
+       far past the highest and the lowest entry. It is done on the MathML that MathJax makes
+       of the TeX, before MathJax's own filters set what each node inherits.
+       _tools/matrix_brackets.mjs measures every matrix of every chart against it. */
+    var MFS_MATRIX_REACH = '0.25em';
+    function mfsMatrixBrackets(arg) {
+      var tables = [];
+      arg.data.root.walkTree(function (node) {
+        var row = node.parent;
+        if (!node.isKind('mtable') || !row || !row.isKind('mrow') && !row.isKind('inferredMrow')) return;
+        var at = row.childNodes.indexOf(node);
+        var open = row.childNodes[at - 1], close = row.childNodes[at + 1];
+        if (open && close && open.isKind('mo') && close.isKind('mo')) tables.push(node);
+      });
+      tables.forEach(function (table) {
+        var row = table.parent, at = row.childNodes.indexOf(table);
+        var padded = arg.data.nodeFactory.create('node', 'mpadded', [table],
+          { height: '+' + MFS_MATRIX_REACH, depth: '+' + MFS_MATRIX_REACH });
+        row.childNodes[at] = padded;
+        padded.parent = row;
+      });
+    }
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -50,6 +78,7 @@
       startup: {
         ready: function () {
           MathJax.startup.defaultReady();
+          MathJax.startup.document.inputJax[0].postFilters.add(mfsMatrixBrackets, -10);
           mfsMenuWithoutShadow();
           MathJax.startup.promise.then(mfsMenuWithoutShadow);
         }
