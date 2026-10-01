@@ -2129,11 +2129,11 @@ def thin_shell_wormhole(ck, src):
     size = 2 * top
     sl = Slice(src, "thin_shell_wormhole", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, params)
     near = Piece("near", "sheet", sl, a, top, 0.0, 1,
-                 (("throat", "the throat $r = a$, where the two sides meet at the shell"),
+                 (("crease", "the throat $r = a$, where the two sides meet at the shell"),
                   ("edge", "the side runs on, flattening, to $r \\to \\infty$")),
                  [(a, "throat", "$r = a$")] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
     far = Piece("far", "sheet2", sl, a, top, 0.0, -1,
-                (("throat", "the throat $r = a$"), ("edge", "the other side runs on, flattening, to $r \\to \\infty$")),
+                (("crease", "the throat $r = a$"), ("edge", "the other side runs on, flattening, to $r \\to \\infty$")),
                 [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
     for p in (near, far):
         ck.isometry(f"thin shell wormhole, {p.id} side", p)

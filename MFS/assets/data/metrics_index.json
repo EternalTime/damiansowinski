@@ -1163,5 +1163,32 @@
     "diagrams": "d5e2884c8c7af71d",
     "conformal": "4d7dd21af4c45eda",
     "embedding": "93b27ed492458d6f"
+  },
+  {
+    "id": "thin_shell_wormhole",
+    "name": "Visser",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "thin shell",
+      "matched solution",
+      "exotic matter",
+      "energy condition violation",
+      "negative energy",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "non-vacuum",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "141c41fa9ed49a6b",
+    "diagrams": "d3c0cce1a6061334",
+    "conformal": "651a421afaa54900",
+    "embedding": "c9905ef896f1be24"
   }
 ]

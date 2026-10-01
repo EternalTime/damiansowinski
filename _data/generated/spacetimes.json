@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 43,
+  "count": 44,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -7597,6 +7597,178 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "thin_shell_wormhole",
+      "name": "Visser Thin Shell Wormhole",
+      "short_name": "Visser",
+      "description": "Matt Visser's traversable wormhole of 1989: two copies of the Schwarzschild exterior cut at a radius $a$ outside the horizon and joined there. All of its matter is a thin shell of negative surface energy density at the throat, and everywhere else spacetime is vacuum.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "thin shell",
+        "matched solution",
+        "exotic matter",
+        "energy condition violation",
+        "negative energy",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "non-vacuum",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "morris1988",
+        "visser1989prd",
+        "visser1989nuclphysb",
+        "poisson1995",
+        "sen1924",
+        "lanczos1924shell",
+        "israel1966",
+        "ishak2002",
+        "lobo2004crawford",
+        "eiroa2004",
+        "garcia2012",
+        "cardoso2016prl",
+        "cardoso2016prd",
+        "abedi2017",
+        "westerweck2018",
+        "abbott2021tgr",
+        "abbott2025tgr"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Schwarzschild",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [a, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = a \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, with $M$ the mass seen from either side"
+            },
+            {
+              "symbol": "a",
+              "description": "Throat radius, $a > r_s$, the areal radius at which the two exteriors are joined"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ on either side of the throat, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "throat",
+          "name": "Through the Throat",
+          "coordinates": [
+            "t",
+            "\\ell",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\ell \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\ell = 0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, with $M$ the mass seen from either side"
+            },
+            {
+              "symbol": "a",
+              "description": "Throat radius, $a > r_s$, the areal radius at which the two exteriors are joined"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\ell, \\theta, \\phi)$, with $t$ carrying dimensions of time and the length $\\ell = r - a$ on one side of the throat and $a - r$ on the other, and $\\delta$ is the Dirac delta. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{a + |\\ell|}\\right)c^2dt^2 + \\dfrac{d\\ell^2}{1 - \\dfrac{r_s}{a + |\\ell|}} + \\left(a + |\\ell|\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{a + |\\ell|}\\right)"
+            },
+            {
+              "indices": [
+                "\\ell",
+                "\\ell"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{a + |\\ell|}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(a + |\\ell|\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(a + |\\ell|\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(4a - 3r_s\\right)\\delta(\\ell)}{a^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{\\left(a + |\\ell|\\right)^6} \\;\\text{for}\\; \\ell \\neq 0"
         }
       ]
     }
