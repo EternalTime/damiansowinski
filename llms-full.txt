@@ -812,6 +812,17 @@ Matt Visser's traversable wormhole of 1989: two copies of the Schwarzschild exte
 - chart Schwarzschild: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Through the Throat: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{a + |\ell|}\right)c^2dt^2 + \dfrac{d\ell^2}{1 - \dfrac{r_s}{a + |\ell|}} + \left(a + |\ell|\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Zipoy-Voorhees Deformed Mass
+
+A static, axially symmetric vacuum field whose Weyl potential is Newton's potential of a uniform rod, found by Georges Darmois in 1927, David Zipoy in 1966, and B. H. Voorhees in 1970, and also called the $\gamma$ metric and the $q$ metric. It deforms Schwarzschild's metric by a quadrupole, and for every deformation a naked curvature singularity stands where the horizon was.
+
+- id: `zipoy_voorhees`
+- tags: vacuum, vacuum solution, static, stationary, axisymmetric, axial symmetry, Weyl class, harmonic function, mass, quadrupole, gamma metric, q-metric, singularity, curvature singularity, naked singularity, directional singularity, ring singularity, asymptotically flat, Petrov type I, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/zipoy_voorhees.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -f^{1+q}c^2dt^2 + f^{-q}\left(h^{-q(2+q)}\left(\dfrac{dr^2}{f} + r^2d\theta^2\right) + r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Prolate spheroidal: coordinates $(t, x, y, \phi)$, $$ds^2 = -f^{\delta}c^2dt^2 + \dfrac{m^2}{f^{\delta}}\left(\dfrac{x^2 - y^2}{h^{\delta^2}}\left(\dfrac{dx^2}{x^2 - 1} + \dfrac{dy^2}{1 - y^2}\right) + \left(x^2 - 1\right)\left(1 - y^2\right)d\phi^2\right)$$
+
 ## Code
 
 URL: https://damiansowinski.com/code.html

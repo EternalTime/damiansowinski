@@ -3,7 +3,8 @@
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
-robinson_trautman, string_black_hole, mcvittie, tangherlini and gott_time_machine, and Godel's cylindrical chart.
+robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine and zipoy_voorhees, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -2591,6 +2592,194 @@ def curzon_chazy_charts():
 
 
 CHARTS["curzon_chazy"] = curzon_chazy_charts
+
+
+# -- Zipoy-Voorhees ----------------------------------------------------------------------
+
+def named_powers(names, state, merges=()):
+    """A pretty printer for a chart whose values are each a rational function times powers, with
+    exponents that hold a parameter, of a few positive factors, where the chart names the ratios
+    those factors come in: Zipoy and Voorhees's metric carries (1 - 2m/r)^q and
+    (1 + m^2 sin^2(theta)/(r^2 - 2mr))^{q(2 + q)}, and names the two bases f and h. `names` maps
+    the text of each name to its powers of the irreducible factors, as f = (r - 2m)/r is
+    {r - 2m: 1, r: -1}. The part of every exponent that holds a parameter is written on the names,
+    as f^{2q}h^{q(2 + q)}, below the line where every term of the exponent is negative, and the
+    whole part stays in the rational function, factored, with each pair of `merges` written as
+    its product, as named_factors writes them. `state["printer"]` is the chart's printer, which
+    the chart's check puts there before anything is printed, and `pretty.tidy` is the factoring,
+    for a chart that collects its numerators."""
+    bases = []
+    for powers in names.values():
+        bases += [b for b in powers if b not in bases]
+    unknowns = {name: sp.Dummy() for name in names}
+    table = {}
+    tidy = named_factors([], merges)
+
+    def base_of(expression):
+        for b in bases:
+            if sp.expand(expression - b) == 0:
+                return b
+        return None
+
+    def exponent_text(printer, e):
+        factored = sp.factor(e)
+        sums = [f for f in sp.Mul.make_args(factored) if f.is_Add]
+        if len(sums) == 1 and len(sp.Mul.make_args(factored)) > 1 and not factored.could_extract_minus_sign():
+            return printer.term(factored).replace("\\left(", "(").replace("\\right)", ")")
+        return printer.positive_first(sp.expand(e))
+
+    def pretty(value):
+        value = sp.factor(sp.sympify(value))
+        symbolic, rest = {b: sp.Integer(0) for b in bases}, sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if k.is_Number:
+                rest *= f
+                continue
+            b = base_of(base)
+            if b is None:
+                raise AssertionError(f"{f} is a power of none of {bases}")
+            whole, part = sp.expand(k).as_coeff_Add()
+            symbolic[b] += part
+            rest *= b ** whole
+        if any(a.func is sp.Pow and not a.exp.is_Number for a in sp.preorder_traversal(rest)):
+            raise AssertionError(f"{value} is not one product of powers of {bases}")
+        equations = [sum(unknowns[name] * powers.get(b, 0) for name, powers in names.items()) - symbolic[b] for b in bases]
+        solution = sp.solve(equations, list(unknowns.values()), dict=True)
+        if len(solution) != 1 or set(solution[0]) != set(unknowns.values()):
+            raise AssertionError(f"the powers of {value} are not powers of {list(names)}")
+        printer = state["printer"]
+        out = tidy(rest)
+        # The names on one side of the line are written together, in the order the chart gives them.
+        sides = {1: "", -1: ""}
+        for name in names:
+            e = sp.expand(solution[0][unknowns[name]])
+            if e == 0:
+                continue
+            below = all(c.as_coeff_Mul()[0].is_negative for c in sp.Add.make_args(e))
+            sides[-1 if below else 1] += name + "^{" + exponent_text(printer, -e if below else e) + "}"
+        for side, text in sides.items():
+            if text:
+                placeholder = table.setdefault(text, sp.Symbol(f"NAMEDPOWER{len(table)}", positive=True))
+                printer.overrides[placeholder] = text
+                out *= placeholder ** side
+        return out
+
+    pretty.tidy = tidy
+    return pretty
+
+
+def zipoy_voorhees(system):
+    """Zipoy and Voorhees's deformed mass, the member of Weyl's class whose potential is that of
+    a uniform rod of length 2m and mass per unit length delta/2: in Quevedo's coordinates, which
+    are Schwarzschild's at q = delta - 1 = 0, and in the prolate spheroidal coordinates x = r/m - 1,
+    y = cos(theta) of Voorhees. Both charts name f = 1 - 2m/r and h = e^{-2 gamma/delta^2} and are
+    printed around their powers by named_powers; zipoy_voorhees_pullback checks the first against
+    the second, and zipoy_voorhees.md beside this file is the derivation."""
+    state = {}
+    if system == "spherical":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        parameters = ["m", "q", "f = 1 - \\dfrac{2m}{r}", "h = 1 + \\dfrac{m^2\\sin^2\\theta}{r^2 - 2mr}"]
+
+        def line(c2):
+            return (f"ds^2 = -f^{{1+q}}{c2}dt^2 + f^{{-q}}\\left(h^{{-q(2+q)}}\\left(\\dfrac{{dr^2}}{{f}} + r^2d\\theta^2\\right)"
+                    " + r^2\\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        r, th, m, q = probe.symbol["r"], probe.symbol["\\theta"], probe.parameters["m"], probe.parameters["q"]
+        sigma = r ** 2 - 2 * m * r + m ** 2 * sp.sin(th) ** 2
+        names = {"f": {r - 2 * m: 1, r: -1}, "h": {sigma: 1, r: -1, r - 2 * m: -1}}
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (2m, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "r = 2m \\;\\text{(the singularity, for } q \\neq 0\\text{)}"]
+        name, parameter = "Spherical", q
+        printer = {"lead": [r, m, sp.cos(th), sp.sin(th)], "factors": [m, q, r], "rising": [q],
+                   "collect": lambda poly, pr: cp.collect_by(poly, [sp.sin(th)], pr)}
+        metric = {("t", "t"): "-f^{1+q}", ("r", "r"): "\\dfrac{1}{f^{1+q}h^{q(2+q)}}",
+                  ("\\theta", "\\theta"): "\\dfrac{r^2}{f^{q}h^{q(2+q)}}", ("\\phi", "\\phi"): "\\dfrac{r^2\\sin^2\\theta}{f^{q}}"}
+        inverse = {("t", "t"): "-\\dfrac{1}{f^{1+q}}", ("r", "r"): "f^{1+q}h^{q(2+q)}",
+                   ("\\theta", "\\theta"): "\\dfrac{f^{q}h^{q(2+q)}}{r^2}", ("\\phi", "\\phi"): "\\dfrac{f^{q}}{r^2\\sin^2\\theta}"}
+        merges = []
+        # Quevedo's grouping of the Kretschmann scalar.
+        kretschmann = ("\\dfrac{16m^2\\left(1 + q\\right)^2\\left(3\\left(r - 2m - m\\,q\\right)^2"
+                       "\\left(r^2 - 2m\\,r + m^2\\sin^2\\theta\\right) + m^2\\,q\\left(2 + q\\right)"
+                       "\\left(m^2\\,q\\left(2 + q\\right) + 3\\left(r - m\\right)\\left(r - 2m - m\\,q\\right)\\right)"
+                       "\\sin^2\\theta\\right)f^{2q}h^{2q(2 + q)}}"
+                       "{r^6\\left(r - 2m\\right)^2\\left(r^2 - 2m\\,r + m^2\\sin^2\\theta\\right)}")
+    else:
+        coords = ["t", "x", "y", "\\phi"]
+        parameters = ["m", "\\delta", "f = \\dfrac{x - 1}{x + 1}", "h = \\dfrac{x^2 - y^2}{x^2 - 1}"]
+
+        def line(c2):
+            return (f"ds^2 = -f^{{\\delta}}{c2}dt^2 + \\dfrac{{m^2}}{{f^{{\\delta}}}}\\left(\\dfrac{{x^2 - y^2}}{{h^{{\\delta^2}}}}"
+                    "\\left(\\dfrac{dx^2}{x^2 - 1} + \\dfrac{dy^2}{1 - y^2}\\right) + \\left(x^2 - 1\\right)\\left(1 - y^2\\right)d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        x, y, m, delta = probe.symbol["x"], probe.symbol["y"], probe.parameters["m"], probe.parameters["delta"]
+        names = {"f": {x - 1: 1, x + 1: -1}, "h": {x - y: 1, x + y: 1, x - 1: -1, x + 1: -1}}
+        domains = ["t \\in (-\\infty, \\infty)", "x \\in (1, \\infty)", "y \\in [-1, 1]", "\\phi \\in [0, 2\\pi)",
+                   "x = 1 \\;\\text{(the singularity, for } \\delta \\neq 1\\text{)}"]
+        name, parameter = "Prolate spheroidal", delta
+        merges = [(x - 1, x + 1, x ** 2 - 1), (1 - y, 1 + y, 1 - y ** 2), (x - y, x + y, x ** 2 - y ** 2),
+                  (delta - 1, delta + 1, delta ** 2 - 1)]
+
+        def collect(poly, pr):
+            # Each power of delta with its coefficient factored as the denominators are.
+            return cp.Sum([(c, pretty.tidy(rest)) for c, rest in cp.collect_by(poly, [delta], pr).terms])
+        printer = {"lead": [delta, x, y], "factors": [m, delta, x, y], "rising": [y], "collect": collect}
+        metric, inverse, kretschmann = {}, {}, None
+
+    def check(chart):
+        state["printer"] = chart.printer
+        ricci = chart.geo.ricci_ll()
+        if any(vm.norm(ricci[a][b]) != 0 for a in range(4) for b in range(4)):
+            raise AssertionError("zipoy_voorhees: the Ricci tensor does not vanish")
+
+    pretty = named_powers(names, state, merges)
+    return {
+        **({"kretschmann": kretschmann} if kretschmann else {}),
+        "metric_id": "zipoy_voorhees",
+        "system": {"id": "spherical" if system == "spherical" else "prolate_spheroidal", "name": name, "coords": coords,
+                   "domains": domains, "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": check,
+    }
+
+
+def zipoy_voorhees_pullback():
+    """The spherical chart is the prolate spheroidal one with x = r/m - 1, y = cos(theta), and
+    delta = 1 + q: the pullback of the second metric is the first in every slot."""
+    sph, pro = (cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+                for spec in (zipoy_voorhees("spherical"), zipoy_voorhees("prolate_spheroidal")))
+    t, r, th, ph = sph.symbols
+    T, x, y, phi = pro.symbols
+    m, q = sph.reader.parameters["m"], sph.reader.parameters["q"]
+    at = {T: t, x: r / m - 1, y: sp.cos(th), phi: ph, pro.reader.parameters["delta"]: 1 + q}
+    images = [at[u] for u in pro.symbols]
+    jacobian = sp.Matrix(4, 4, lambda a, b: sp.diff(images[a], sph.symbols[b]))
+    # x - y and x + y each come to a factor linear in cos(theta), and the spherical chart writes
+    # their product, x^2 - y^2 = (r^2 - 2mr + m^2 sin^2(theta))/m^2, as one factor: every power of
+    # x - y is written through the product W before the coordinates are replaced.
+    W = sp.Dummy("W", positive=True)
+    source = pro.geo.g.applyfunc(lambda e: vm.norm(e.replace(
+        lambda u: u.func is sp.Pow and u.base == x - y and not u.exp.is_Number,
+        lambda u: (W / (x + y)) ** u.exp)))
+    at[W] = (r ** 2 - 2 * m * r + m ** 2 * sp.sin(th) ** 2) / m ** 2
+    source = source.subs(at, simultaneous=True)
+    pulled = jacobian.T * source * jacobian
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm(pulled[a, b] - sph.geo.g[a, b]) != 0:
+                raise AssertionError(f"zipoy_voorhees: the pullback of the prolate spheroidal chart misses the "
+                                     f"spherical chart in slot {sph.coords_tex[a]}{sph.coords_tex[b]}")
+
+
+def zipoy_voorhees_charts():
+    zipoy_voorhees_pullback()
+    return [zipoy_voorhees("spherical"), zipoy_voorhees("prolate_spheroidal")]
+
+
+CHARTS["zipoy_voorhees"] = zipoy_voorhees_charts
 
 
 # -- A black hole threaded by a cosmic string ------------------------------------------

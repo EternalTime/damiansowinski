@@ -700,6 +700,13 @@ FLAT = {
     ("curzon_chazy", "spherical", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("mcvittie", "isotropic", "radial"): lambda: one("mcvittie", lambda m: along(m.time, *m.reach("isotropic", "r"))),
     ("mcvittie", "areal", "radial"): lambda: one("mcvittie", _mcvittie_areal),
+    # The equatorial plane at t = 0 for each deformation, where the prolate spheroidal x is r/m - 1.
+    **{("zipoy_voorhees", "spherical", f"equator_{shape}"): lambda shape=shape: one(
+        "zipoy_voorhees", lambda m: along(0.0, *m.reach("spherical", "r")), view_id=shape)
+       for shape in ("oblate", "prolate")},
+    **{("zipoy_voorhees", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
+        "zipoy_voorhees", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
+       for shape in ("oblate", "prolate")},
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("malament_hogarth", "cartesian", "tx"): lambda: one("malament_hogarth", lambda m: across(m.time, *m.reach("cartesian", "x"))),
@@ -731,6 +738,10 @@ HIDDEN = {
        for system in ("weyl", "spherical")},
     **{("curzon_chazy", f"{system}_axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"
        for system in ("weyl", "spherical")},
+    **{("zipoy_voorhees", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
+       for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
+    **{("zipoy_voorhees", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
+       for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     ("frw", "flat"): "the flat universe's conformal diagram; the moments embedded are the closed universe's",
     ("misner", "rindler", "plane"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
     ("misner", "rindler"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",

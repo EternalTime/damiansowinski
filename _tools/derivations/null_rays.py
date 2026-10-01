@@ -878,6 +878,25 @@ DIAGRAMS = [
     Diagram("curzon_chazy", "spherical", "equator", "$t$ and $r$ in the plane $\\theta = \\pi/2$", ("t", "r"), (0, 4, -2, 2),
             "$r/m$", "$ct/m$", {"m": 1}, {**EQUATOR, "phi": "0"},
             lines=(("surface", "r", "1", "$r = m$, the narrowest circle about the axis"),)),
+    # Zipoy and Voorhees's metric on its two totally geodesic planes, the axis and the equatorial
+    # plane, in each chart, for the oblate q = 1 and the prolate q = -1/2. The prolate equator's
+    # curvature diverges only as the 3/2 power, so its rows declare the edge singular.
+    *[Diagram("zipoy_voorhees", "spherical", f"{plane}_{shape}", f"{name}, $q = {q}$", ("t", "r"), (2, 6, -2, 2),
+              "$r/m$", "$ct/m$", {"m": 1, "q": q}, fixed,
+              lines=((("surface", "r", "3", "$r = 3\\,m$, the narrowest circle about the axis"),)
+                     if (plane, shape) == ("equator", "oblate") else ()),
+              singular_zero="r - 2" if (plane, shape) == ("equator", "prolate") else None)
+      for shape, q in (("oblate", "1"), ("prolate", "-1/2"))
+      for plane, name, fixed in (("axis", "The axis", {"theta": "0", "phi": "0"}),
+                                 ("equator", "The equatorial plane", {**EQUATOR}))],
+    *[Diagram("zipoy_voorhees", "prolate_spheroidal", f"{plane}_{shape}", f"{name}, $\\delta = {d}$", ("t", "x"),
+              (1, 5, -2, 2), "$x$", "$ct/m$", {"m": 1, "delta": d}, fixed,
+              lines=((("surface", "r", "2", "$x = 2$, the narrowest circle about the axis"),)
+                     if (plane, shape) == ("equator", "oblate") else ()),
+              singular_zero="x - 1" if (plane, shape) == ("equator", "prolate") else None)
+      for shape, d in (("oblate", "2"), ("prolate", "1/2"))
+      for plane, name, fixed in (("axis", "The axis", {"y": "1", "phi": "0"}),
+                                 ("equator", "The equatorial plane", {"y": "0", "phi": "0"}))],
     Diagram("malament_hogarth", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$ct$", {},
             {"y": "0", "z": "0"}, families=SIDEWAYS, functions={"Omega": _MH_FACTOR}, any_factor="Omega",
             lines=(("world", "r", "0", "the computer's world line, up the axis into the removed event",
@@ -973,6 +992,64 @@ def _as_caption(n):
         "The jump grows by $(8GE/c^4)\\ln 4$ each time $\\rho$ is divided by $4$, and a change of "
         "$\\rho_0$ moves every ray behind the shock by the same amount.",
     ]
+
+
+def _zipoy_voorhees_captions(system):
+    """The four captions of one chart of Zipoy and Voorhees's metric: its axis and its equatorial plane,
+    oblate and prolate, in the chart's own radius and parameter."""
+    if system == "spherical":
+        r, f, edge, neck = "r", "$f = 1 - 2m/r$", "r = 2m", "r = 3m"
+        axis, equator = "$\\theta = 0$, $\\phi = 0$", "$\\theta = \\pi/2$, $\\phi = 0$"
+        values = ("$q = 1$, $m = 1$", "$q = -1/2$, $m = 1$")
+        h, m2, dr = "$h = (r - m)^2/(r(r - 2m))$", "", "dr"
+        star = ("r_* = r + 4m\\ln(r/2m - 1) - 4m^2/(r - 2m)",
+                "r_* = \\sqrt{r(r - 2m)} + 2m\\ln\\left(\\sqrt{r} + \\sqrt{r - 2m}\\right)")
+        slope = ("r^{7/2}/(\\sqrt{r - 2m}\\,(r - m)^3)", "f^{-7/8}(1 - m/r)^{3/4}")
+        K = ("192m^2(r - 3m)^2/r^8", "12m^2(r - 3m/2)^2/(r^5(r - 2m)^3)", "(r - 2m)^{-6}", "(r - 2m)^{-3/2}")
+        at_neck, at_edge = "r = 3m", "3/(4m^4)"
+    else:
+        r, f, edge, neck = "x", "$f = (x - 1)/(x + 1)$", "x = 1", "x = 2"
+        axis, equator = "$y = 1$, $\\phi = 0$", "$y = 0$, $\\phi = 0$"
+        values = ("$\\delta = 2$, $m = 1$", "$\\delta = 1/2$, $m = 1$")
+        h, m2, dr = "$h = x^2/(x^2 - 1)$", "m^2", "dx"
+        star = ("r_* = m\\left(x + 4\\ln(x - 1) - 4/(x - 1)\\right)",
+                "r_* = m\\left(\\sqrt{x^2 - 1} + 2\\ln\\left(\\sqrt{x + 1} + \\sqrt{x - 1}\\right)\\right)")
+        slope = ("m(x + 1)^{7/2}/(\\sqrt{x - 1}\\,x^3)", "m\\,f^{-7/8}(x/(x + 1))^{3/4}")
+        K = ("192(x - 2)^2/(m^4(x + 1)^8)", "12(x - 1/2)^2/(m^4(x + 1)^5(x - 1)^3)", "(x - 1)^{-6}", "(x - 1)^{-3/2}")
+        at_neck, at_edge = "x = 2", "3/(4m^4)"
+    geodesics = "and no Christoffel symbol turns them out of the plane, so they are null geodesics."
+    one = "and no Christoffel symbol turns it out of the plane, so the rays are null geodesics."
+    return {
+        "axis_oblate": [
+            f"The plane of $t$ and ${r}$ ({axis}) of the Zipoy-Voorhees metric ({values[0]}). The metric on it is "
+            f"$-f^{{2}}c^2dt^2 + {m2}f^{{-2}}{dr}^2$ with {f}, so the rays are $ct = \\pm r_* + $ const with "
+            f"${star[0]}$, {geodesics}",
+            f"The cones close as $f^{{2}}$ toward ${edge}$, which a ray reaches only as $t \\to \\pm\\infty$, though after "
+            f"a finite affine distance, since ${r}$ is an affine parameter along it. The Kretschmann scalar on the axis, "
+            f"${K[0]}$, vanishes at ${at_neck}$ and is ${at_edge}$ at ${edge}$.",
+        ],
+        "equator_oblate": [
+            f"The plane of $t$ and ${r}$ ({equator}) of the Zipoy-Voorhees metric ({values[0]}). The metric on it is "
+            f"$-f^{{2}}c^2dt^2 + {m2}f^{{-2}}h^{{-3}}{dr}^2$ with {f} and {h}, so a ray has "
+            f"$c\\,dt/{dr} = \\pm {slope[0]}$, {one}",
+            f"The cones close toward ${edge}$, the ring, which every ingoing ray reaches in a finite time $t$ and where "
+            f"the Kretschmann scalar diverges as ${K[2]}$. The circle about the axis is narrowest at ${neck}$.",
+        ],
+        "axis_prolate": [
+            f"The plane of $t$ and ${r}$ ({axis}) of the Zipoy-Voorhees metric ({values[1]}). The metric on it is "
+            f"$-f^{{1/2}}c^2dt^2 + {m2}f^{{-1/2}}{dr}^2$ with {f}, so the rays are $ct = \\pm r_* + $ const with "
+            f"${star[1]}$, {geodesics}",
+            f"The cones close as $f^{{1/2}}$ toward ${edge}$, which every ingoing ray reaches in a finite time $t$ and "
+            f"where the Kretschmann scalar on the axis, ${K[1]}$, diverges.",
+        ],
+        "equator_prolate": [
+            f"The plane of $t$ and ${r}$ ({equator}) of the Zipoy-Voorhees metric ({values[1]}). The metric on it is "
+            f"$-f^{{1/2}}c^2dt^2 + {m2}f^{{-1/2}}h^{{3/4}}{dr}^2$ with {f} and {h}, so a ray has "
+            f"$c\\,dt/{dr} = \\pm {slope[1]}$, {one}",
+            f"The cones close toward ${edge}$, which every ingoing ray reaches in a finite time $t$ and where the "
+            f"Kretschmann scalar diverges as ${K[3]}$. The circles about the axis shrink to zero there.",
+        ],
+    }
 
 
 CAPTIONS = {
@@ -2066,6 +2143,8 @@ CAPTIONS = {
         "The cones are narrowest at $r = m/2$ and open without bound toward $r = 0$, the ring, which every ingoing ray "
         "reaches in a finite time $t$ and where the Kretschmann scalar diverges as $e^{2m^2/r^2}$.",
     ],
+    **{("zipoy_voorhees", system, view): text for system in ("spherical", "prolate_spheroidal")
+       for view, text in _zipoy_voorhees_captions(system).items()},
     ("melvin", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Melvin's universe ($B = 1$). The metric on it is "
         "$(1 + B^2\\rho^2/4)^2(-c^2dt^2 + d\\rho^2)$, and the factor drops out of the null condition, so the rays are "
@@ -4356,6 +4435,32 @@ def _curzon_plane(rho):
     return np.vectorize(one, otypes=[float])(np.asarray(rho, float))
 
 
+def _zv_axis(r, oblate):
+    """r_* on the axis of Zipoy and Voorhees's metric at m = 1, dr_*/dr = f^(-1 - q): at q = 1,
+    r + 4 ln(r - 2) - 4/(r - 2), and at q = -1/2, sqrt(r (r - 2)) + 2 ln(sqrt r + sqrt(r - 2))."""
+    r = np.asarray(r, float)
+    if oblate:
+        return r + 4 * np.log(r - 2) - 4 / (r - 2)
+    return np.sqrt(r * (r - 2)) + 2 * np.log(np.sqrt(r) + np.sqrt(r - 2))
+
+
+def _zv_equator(r, oblate):
+    """r_* in the equatorial plane at m = 1, the integral from 2 of f^(-1 - q) h^(-q (2 + q)/2):
+    s^(7/2)/(sqrt(s - 2) (s - 1)^3) at q = 1 and (1 - 2/s)^(-7/8) (1 - 1/s)^(3/4) at q = -1/2."""
+    alpha, g = ((-0.5, lambda s: s ** 3.5 / (s - 1) ** 3) if oblate
+                else (-0.875, lambda s: s ** 0.875 * (1 - 1 / s) ** 0.75))
+
+    def one(x):
+        return quad(g, 2, x, weight="alg", wvar=(alpha, 0), epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+    return np.vectorize(one, otypes=[float])(np.asarray(r, float))
+
+
+def _zv_forms(star, oblate, shift, edge):
+    """t + r_* and t - r_* of one view, the prolate spheroidal chart's x = r/m - 1 moved by `shift`."""
+    return (lambda t, r: t + star(r + shift, oblate), lambda t, r: t - star(r + shift, oblate),
+            lambda t, r: r + shift > 2 + edge)
+
+
 def _btz_rstar(r, roots):
     """The integral of 1/N^2 for the BTZ hole at l = 1, N^2 = (r^2 - a)(r^2 - b)/r^2 with the
     squared horizons a > b, or r^2 - a where b = 0, up to a constant."""
@@ -4537,6 +4642,10 @@ CLOSED_FORMS = {
                                           lambda t, z: z > 0.35) for system in ("weyl", "spherical")},
     **{("curzon_chazy", system, "equator"): (lambda t, r: t + _curzon_plane(r), lambda t, r: t - _curzon_plane(r),
                                              lambda t, r: r > 0.02) for system in ("weyl", "spherical")},
+    **{("zipoy_voorhees", system, f"{plane}_{shape}"): _zv_forms(star, shape == "oblate", shift, edge)
+       for system, shift in (("spherical", 0), ("prolate_spheroidal", 1))
+       for shape in ("oblate", "prolate")
+       for plane, star, edge in (("axis", _zv_axis, 0.1), ("equator", _zv_equator, 0.02))},
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("melvin", "ernst", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
