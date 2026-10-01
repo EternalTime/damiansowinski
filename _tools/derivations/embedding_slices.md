@@ -181,6 +181,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `cylindrical`, the half diamond: the curve $p, q = \arctan(\mp B\rho)$ from the axis to $\rho = 4/B$.
 - `ernst`, the hexagon: the line $T = 0$ through the bifurcation point, from $r = 5\,r_s$ in one exterior to $5\,r_s$ in the other.
 
+### Levi-Civita
+
+- The embedding is one moment: the plane $z = 0$ at $t = 0$ in Weyl's coordinates, from $\rho = 1/16$ to $\rho = 4$, at $\sigma = 1/4$ and $C = 1$.
+- `weyl/radial`, the plane of $t$ and $\rho$: the line $ct = 0$ from $\rho = 1/16$ to $4$, the edge of the box.
+- `kasner/radial`, the plane of $t$ and $r$: the line $ct = 0$ from $r = \rho^\Sigma/\Sigma$ at $\rho = 1/16$ to its value at $\rho = 4$, with $\Sigma = 3/4$, that is from $r = 1/6$ to $3.77$; the Kasner form's $t$ is Weyl's times a constant, so the moment is the same.
+- `weyl` and `kasner`, the triangle: the curve $p, q = \arctan(\mp 4\rho^{1/4})$ between the same two circles.
+
 ### Milne
 
 - The embedding is the equator of the comoving hyperbolic chart at $ct = 0.5$, $1$, $2$ and $3$, each out to $\chi = \operatorname{arcsinh}(4/ct)$, where it is $4$ from the axis, in any length $\ell$; the reference cone is no part of any moment.

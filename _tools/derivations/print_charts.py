@@ -1811,7 +1811,7 @@ def radial_powers(radius, radius_tex, state):
 
 
 LC_DOMAINS = ["t \\in (-\\infty, \\infty)", "{r} \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in (-\\infty, \\infty)",
-              "{r} = 0 \;\\text{(the axis, a curvature singularity unless } {flat}\\text{)}"]
+              "{r} = 0 \\;\\text{(the axis, a curvature singularity unless } {flat}\\text{)}"]
 LC_FLAT = {"weyl": "\\sigma = 0 \\text{ or } \\sigma = 1/2", "kasner": "p_0\\,p_2\\,p_3 = 0"}
 
 
