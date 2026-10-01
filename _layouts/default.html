@@ -342,79 +342,40 @@
           doTransition(url.pathname, swapPageContent, a, goingRight);
         });
 
-        /* ── MFS icon: slide header up, swap body, plateau ramps in MFS script ── */
+        /* ── MFS icon: the header slides up and the content and footer down, then the browser
+           loads My Favorite Spacetimes as a page of its own. That page has its own head, with
+           its stylesheet, its colours, its MathJax settings and turn.js, none of which this
+           page's head carries, so its body is never put under this one's. ── */
         var mfsLink = document.querySelector('a.nav-icon-link');
         if (mfsLink) {
           mfsLink.addEventListener('click', function(e) {
+            // a new tab or window is the browser's to open
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
             e.preventDefault();
             mfsLink.blur();
             var href     = mfsLink.getAttribute('href');
-            var header   = document.querySelector('.site-header');
-            var content  = document.querySelector('.page-content');
-            var footer   = document.querySelector('footer');
             var SLIDE_UP_MS = 600;
-
-            // header and title slide up, content and footer slide down
-            if (header) {
-              header.style.transition = 'transform ' + (SLIDE_UP_MS/1000) + 's ease';
-              header.style.transform  = 'translateY(-120%)';
-            }
-            if (content) {
-              content.style.transition = 'transform ' + (SLIDE_UP_MS/1000) + 's ease';
-              content.style.transform  = 'translateY(120%)';
-            }
-            if (footer) {
-              footer.style.transition = 'transform ' + (SLIDE_UP_MS/1000) + 's ease';
-              footer.style.transform  = 'translateY(120%)';
-            }
-
-            // fetch in parallel
-            fetch(href)
-              .then(function(r) { return r.text(); })
-              .then(function(html) {
-                var fetchedDoc = new DOMParser().parseFromString(html, 'text/html');
-
-                // Extract raw body script texts BEFORE DOMParser mangles < > in JS
-                var rawBodyScripts = [];
-                var bodyMatch = html.match(/<body[\s\S]*?>([\s\S]*)<\/body>/i);
-                if (bodyMatch) {
-                  var bodyHtml = bodyMatch[1];
-                  var scriptRe = /<script(?:[^>]*)>([\s\S]*?)<\/script>/gi;
-                  var m;
-                  while ((m = scriptRe.exec(bodyHtml)) !== null) {
-                    rawBodyScripts.push(m[1]);
-                  }
-                }
-
-                setTimeout(function() {
-                  var newBody  = fetchedDoc.querySelector('body');
-                  var newTitle = fetchedDoc.querySelector('title');
-                  if (newBody) {
-                    var canvas = document.getElementById('wavy-grid');
-                    document.body.innerHTML = newBody.innerHTML;
-                    document.body.insertBefore(canvas, document.body.firstChild);
-                    var mfsCss = fetchedDoc.querySelector('link[href*="mfs.css"]');
-                    if (mfsCss && !document.querySelector('link[href*="mfs.css"]')) {
-                      document.head.appendChild(mfsCss.cloneNode());
-                    }
-                    var rawIdx = 0;
-                    document.body.querySelectorAll('script').forEach(function(s) {
-                      var ns = document.createElement('script');
-                      if (s.src) {
-                        ns.src = s.src;
-                      } else {
-                        ns.textContent = rawBodyScripts[rawIdx] !== undefined
-                          ? rawBodyScripts[rawIdx] : s.textContent;
-                        rawIdx++;
-                      }
-                      s.parentNode.replaceChild(ns, s);
-                    });
-                  }
-                  if (newTitle) document.title = newTitle.textContent;
-                  history.pushState({}, document.title, href);
-                }, SLIDE_UP_MS);
-              })
-              .catch(function() { window.location.href = href; });
+            var moves = [
+              [document.querySelector('.site-header'),  'translateY(-120%)'],
+              [document.querySelector('.page-content'), 'translateY(120%)'],
+              [document.querySelector('footer'),        'translateY(120%)']
+            ];
+            moves.forEach(function(move) {
+              if (!move[0]) return;
+              move[0].style.transition = 'transform ' + (SLIDE_UP_MS/1000) + 's ease';
+              move[0].style.transform  = move[1];
+            });
+            setTimeout(function() { window.location.href = href; }, SLIDE_UP_MS);
+            // Back from My Favorite Spacetimes, the browser may show this page as it was left:
+            // each of the three is set back in its place.
+            window.addEventListener('pageshow', function(ev) {
+              if (!ev.persisted) return;
+              moves.forEach(function(move) {
+                if (!move[0]) return;
+                move[0].style.transition = 'none';
+                move[0].style.transform  = '';
+              });
+            }, { once: true });
           });
         }
 
