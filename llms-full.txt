@@ -239,6 +239,19 @@ The maximally symmetric vacuum solution with constant negative curvature, arisin
 - chart Static global: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Poincare patch: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
 
+### Black Hole Threaded by a Cosmic String
+
+A Schwarzschild black hole with a straight cosmic string through it. Off the axis it is Schwarzschild's vacuum, and around the whole axis, horizon included, a wedge is missing whose angle the string's tension sets, which lowers the horizon's area and the black hole's energy at a fixed mass.
+
+- id: `string_black_hole`
+- tags: topological defect, cosmic string, conical, angular deficit, conical singularity, black hole, black hole hair, black hole thermodynamics, vacuum, vacuum solution, static, stationary, axial symmetry, mass, singularity, curvature singularity, coordinate singularity, horizon, event horizon, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/string_black_hole.json
+- chart Static: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + b^2\sin^2\theta\,d\phi^2\right)$$
+- chart Static with the Wedge Removed: coordinates $(t, r, \theta, \tilde\phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\tilde\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + b^2\sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + b^2\sin^2\theta\,d\phi^2\right)$$
+
 ### Bañados-Teitelboim-Zanelli Black Hole
 
 A rotating black hole in three spacetime dimensions with a negative cosmological constant. It has constant negative curvature everywhere, being anti-de Sitter space with points identified by a discrete boost, and it carries a temperature and an entropy that can be computed exactly.

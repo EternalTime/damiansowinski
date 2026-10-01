@@ -5767,8 +5767,8 @@ CAPTIONS = {
         "A Schwarzschild black hole threaded by a cosmic string, maximally extended ($b = 0.9$), each point in "
         "the diagram a sphere of radius $r$ whose angle $\\tilde\\phi$ runs over $2\\pi b$, $324°$. In these "
         "coordinates the line element is Schwarzschild's, so the diagram is Kruskal and Szekeres's: "
-        "$U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$, with $u, v = ct \\mp r_*$ and $r_* = r + r_s\\ln|r/r_s - 1|$, "
-        "$p = \\arctan U$ and $q = \\arctan V$.",
+        "$U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$, with $u, v = ct \\mp r_*$ and $r_* = r + r_s\\ln|r/r_s - 1|$. "
+        "We draw $p = \\arctan U$ against $q = \\arctan V$.",
         "The coordinates $t$ and $r > r_s$ cover the right exterior alone. The two edges $\\tilde\\phi = 0$ and "
         "$\\tilde\\phi = 2\\pi b$ of every sphere are one meridian, in every region of the diagram.",
     ],

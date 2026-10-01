@@ -104,7 +104,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cc35ac4a0e0d875c"
+    "version": "cc35ac4a0e0d875c",
+    "diagrams": "36a10a399fd9e586",
+    "conformal": "212fdcd488402227",
+    "embedding": "0e56a5456f5e3b52"
   },
   {
     "id": "btz",
