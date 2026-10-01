@@ -664,7 +664,7 @@ def schwarzschild_ads(system_id):
     Eddington-Finkelstein charts built on its tortoise coordinate, dr_*/dr = 1/f. The parameters
     are Schwarzschild's r_s and anti-de Sitter's L, so each chart reduces to Schwarzschild's as
     L grows without bound and to anti-de Sitter's static chart at r_s = 0. Every value is
-    printed around L^2 r f = L^2 r - L^2 r_s + r^3, in the order of f itself. The metric and
+    printed around L^2 r f = r^3 + L^2 r - L^2 r_s, the cubic whose positive root is the horizon. The metric and
     its inverse are written as the line element writes f, and the Kretschmann scalar as
     Schwarzschild's 12r_s^2/r^6 plus anti-de Sitter's 24/L^4, which it is."""
     f = "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r^2}{L^2}\\right)"
@@ -697,7 +697,7 @@ def schwarzschild_ads(system_id):
                    "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains,
                    "parameters": parameters, "line_element": line},
         "chart_line_element": chart_line,
-        "printer": {"rising": [r, rs], "lead": [L, r, rs], "flip": False},
+        "printer": {"rising": [L, rs], "lead": [L, r, rs], "flip": False},
         "components": {"metric_components": metric, "inverse_metric_components": inverse},
         "ricci_scalar": "-\\dfrac{12}{L^2}",
         "kretschmann": "\\dfrac{12r_s^2}{r^6} + \\dfrac{24}{L^4}",
