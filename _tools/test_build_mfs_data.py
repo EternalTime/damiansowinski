@@ -1714,6 +1714,28 @@ class ConformalDiagrams(unittest.TestCase):
             self.load_folder({"interior_schwarzschild.json": self.conformal["interior_schwarzschild"]}, changed)
         self.assertIn("schwarzschild.json", str(raised.exception))
 
+    def test_r_equals_zero_and_the_region_inside_it_stand_apart(self):
+        # A tower's r = 0 and the name of the region beside it, r < r_-, stand across one edge
+        # of the drawing. Their boxes, 1.5 high and for r < r_- 3.8 wide in units of the 21 a
+        # label is composed at, as cdLabelSize() in _layouts/mfs.html gives them, share no line
+        # of the page or stand a label's size apart along it, the most a reader's text makes
+        # them.
+        size, seen = 21, 0
+        for metric_id, data in self.conformal.items():
+            for view in data["views"]:
+                scale = 560 / (view["box"][1] - view["box"][0])
+                for zero in (L for L in view["labels"] if L["text"] == "$r = 0$" and L["anchor"] in ("l", "r")):
+                    for inner in (L for L in view["labels"] if L["text"] == "$r < r_-$" and L["anchor"] == "c"):
+                        if zero["at"][0] * inner["at"][0] <= 0 or abs(zero["at"][0]) < abs(inner["at"][0]):
+                            continue
+                        seen += 1
+                        lines = abs((zero["at"][1] - inner["at"][1]) * scale - (zero["dy"] - inner["dy"])) - 1.5 * size
+                        along = (abs(zero["at"][0] * scale + zero["dx"])
+                                 - abs(inner["at"][0] * scale + inner["dx"]) - 1.9 * size)
+                        self.assertTrue(lines >= 0 or along >= size,
+                                        f"{metric_id}/{view['id']}: $r = 0$ and $r < r_-$ are {along:.1f} apart on one line")
+        self.assertTrue(seen, "no tower with r = 0 outside a region r < r_- was found, so nothing was checked")
+
     def test_a_change_that_draws_nothing_leaves_the_diagrams_standing(self):
         changed = copy.deepcopy(self.metrics)
         for metric in changed:
