@@ -5340,7 +5340,7 @@ CAPTIONS = {
     ("thin_shell_wormhole", "throat"): [
         "Visser's thin shell wormhole ($a = 1.25\\,r_s$), each point in the diagram a 2-sphere of radius "
         "$a + |\\ell|$. The metric on the plane of $t$ and $\\ell$ is $(1 - r_s/r)\\left(-c^2dt^2 + d\\ell_*^2\\right)$, "
-        "with $\\ell_* = \\ell + r_s\\ln\\left(1 + |\\ell|/(a - r_s)\\right)\\operatorname{sgn}\\ell$ running over "
+        "with $\\ell_* = \\ell + r_s\\ln\\left(1 + |\\ell|/(a - r_s)\\right)\\mathrm{sgn}(\\ell)$ running over "
         "the whole line, and $p, q = \\arctan((ct \\mp \\ell_*)/r_s)$ bring it into the full diamond.",
         "The two ends are two asymptotically flat universes, each with its own $i^0$ and $\\mathscr{I}^\\pm$, "
         "joined at the throat $\\ell = 0$, where the shell sits. The factor $1 - r_s/r$ is at least "

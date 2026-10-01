@@ -470,8 +470,7 @@ DIAGRAMS = [
             "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, families=SIDEWAYS, areal=True,
             areal_contours=(1.5, 2.0, 3.0)),
     Diagram("thin_shell_wormhole", "throat", "radial", "$t$ and $\\ell$", ("t", "\\ell"), (-3, 3, -3, 3),
-            "$\\ell/r_s$", "$ct/r_s$", TSW, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(1.5, 2.0, 3.0),
-            lines=(("shell", "r", "0", "the shell at the throat, $\\ell = 0$"),)),
+            "$\\ell/r_s$", "$ct/r_s$", TSW, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(1.5, 2.0, 3.0)),
     Diagram("thin_shell_wormhole", "spherical", "radial", "$t$ and $r$", ("t", "r"), (1.25, 4.25, -1.5, 1.5),
             "$r/r_s$", "$ct/r_s$", TSW, EQUATOR, areal=True,
             lines=(("shell", "r", "5/4", "the shell at the throat, $r = a$"),)),
@@ -983,7 +982,7 @@ CAPTIONS = {
         "The plane of $t$ and $\\ell$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = 1.25\\,r_s$, with "
         "$\\ell < 0$ on one side of the throat and $\\ell > 0$ on the other. The edges of the cones are "
         "$d\\ell/d(ct) = \\pm\\left(1 - r_s/(a + |\\ell|)\\right)$, so $ct \\mp \\ell_*$ is constant along a ray, "
-        "with $\\ell_* = \\ell + r_s\\ln\\left(1 + |\\ell|/(a - r_s)\\right)\\operatorname{sgn}\\ell$. The cones "
+        "with $\\ell_* = \\ell + r_s\\ln\\left(1 + |\\ell|/(a - r_s)\\right)\\mathrm{sgn}(\\ell)$. The cones "
         "are narrowest at the throat, where $d\\ell/d(ct) = \\pm(1 - r_s/a) = \\pm 0.2$, and every ray crosses it "
         "in a finite time.",
         "The throat carries the shell. There the slope of a ray is continuous and its rate of change jumps "

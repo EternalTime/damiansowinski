@@ -680,6 +680,17 @@ The gravitational field of an infinitely thin domain wall, whose tension equals 
 - chart Conformal: coordinates $(t, w, \theta, \phi)$, $$ds^2 = e^{-2k|w|}\left(-c^2dt^2 + dw^2 + \dfrac{\cosh^2(kct)}{k^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Inertial: coordinates $(T, R, \theta, \phi)$, $$ds^2 = -c^2dT^2 + dR^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Visser Thin Shell Wormhole
+
+Matt Visser's traversable wormhole of 1989: two copies of the Schwarzschild exterior cut at a radius $a$ outside the horizon and joined there. All of its matter is a thin shell of negative surface energy density at the throat, and everywhere else spacetime is vacuum.
+
+- id: `thin_shell_wormhole`
+- tags: wormhole, traversable, thin shell, matched solution, exotic matter, energy condition violation, negative energy, static, stationary, spherically symmetric, non-vacuum, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json
+- chart Schwarzschild: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Through the Throat: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{a + |\ell|}\right)c^2dt^2 + \dfrac{d\ell^2}{1 - \dfrac{r_s}{a + |\ell|}} + \left(a + |\ell|\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ## Code
 
 URL: https://damiansowinski.com/code.html

@@ -19,32 +19,32 @@ With $\ell = r - a$ on one side and $a - r$ on the other, $r = a + |\ell|$ and $
 
 $$ds^2 = -\left(1 - \frac{r_s}{a + |\ell|}\right)c^2dt^2 + \frac{d\ell^2}{1 - r_s/(a + |\ell|)} + (a + |\ell|)^2\,d\Omega^2, \qquad \ell \in \mathbb{R}.$$
 
-The metric is continuous at $\ell = 0$ and its first derivative jumps there: $\partial_\ell r = \operatorname{sgn}\ell$ and $\partial_\ell^2 r = 2\delta(\ell)$.
-`thin_shell_pullback` in `print_charts.py` checks that the chart is Schwarzschild's with $r = a + \ell$ on the side $\operatorname{sgn}\ell = 1$ and with $r = a - \ell$ on the other.
+The metric is continuous at $\ell = 0$ and its first derivative jumps there: $\partial_\ell r = \mathrm{sgn}(\ell)$ and $\partial_\ell^2 r = 2\delta(\ell)$.
+`thin_shell_pullback` in `print_charts.py` checks that the chart is Schwarzschild's with $r = a + \ell$ on the side $\mathrm{sgn}(\ell) = 1$ and with $r = a - \ell$ on the other.
 $\ell$ is not the proper distance from the throat, which is $\int d\ell/\sqrt{1 - r_s/r}$ and has no inverse in closed form; $\ell$ is the one coordinate through the throat whose metric is algebraic, so the checker can compare every component exactly.
 
 ## Step 3. How the checker reads the kink
 
-The reader writes $|\ell|$ as sympy's `Abs` and $\operatorname{sgn}\ell$ as `sign`, and sympy differentiates them to $\operatorname{sgn}\ell$ and $2\delta(\ell)$.
-`_kinked` in `verify_metrics.py` writes $|\ell| = \ell\operatorname{sgn}\ell$, so every value is a rational function of $\ell$ and $\operatorname{sgn}\ell$, and `_canonical` folds $\operatorname{sgn}^2\ell = 1$ exactly as it folds a square root into its radicand.
-That form is canonical: a numerator $A + B\operatorname{sgn}\ell$ over a denominator free of $\operatorname{sgn}\ell$ vanishes for every $\ell$ exactly when it vanishes on both branches $\operatorname{sgn}\ell = \pm 1$ as rational functions, which forces $A = B = 0$.
-A delta multiplies a function continuous at $\ell = 0$ by that function's value there, so the coefficient of $\delta(\ell)$ is evaluated at $\ell = 0$, after checking that its odd part in $\operatorname{sgn}\ell$ vanishes there, since $\delta(\ell)\operatorname{sgn}\ell$ has no value.
-Every Christoffel symbol below carries $\operatorname{sgn}\ell$ to the first power and no delta, every curvature component is linear in its second derivatives, so no product of a delta with $\operatorname{sgn}\ell$ arises, and the check never stops on one.
-`KinkForms` in `print_charts.py` prints the canonical form back in $|\ell|$ and $\operatorname{sgn}\ell$: it puts $\ell = |\ell|\operatorname{sgn}\ell$, folds the square of $\operatorname{sgn}\ell$ again, multiplies out the conjugate $(a + |\ell|)(a - |\ell|)$ that canonical form leaves in a denominator, and factors the even and odd parts back into powers of $a + |\ell|$.
+The domain wall was the first metric with a kink, and its note, `domain_wall.md`, says how the checker reads one; the same reading serves here.
+The reader writes $|\ell|$ as sympy's `Abs` and $\mathrm{sgn}(\ell)$ as `sign`, and sympy differentiates them to $\mathrm{sgn}(\ell)$ and $2\delta(\ell)$.
+`_on_a_kink` in `verify_metrics.py` writes $|\ell| = \ell\,\mathrm{sgn}(\ell)$, so every value is a rational function of $\ell$ and $\mathrm{sgn}(\ell)$, and `_canonical` folds $\mathrm{sgn}(\ell)^2 = 1$ as it folds a square root into its radicand.
+A delta multiplies a function continuous at $\ell = 0$ by that function's value there, so the coefficient of $\delta(\ell)$ is evaluated at $\ell = 0$, and a delta times a function that jumps there stops the reader.
+Every Christoffel symbol below carries $\mathrm{sgn}(\ell)$ to the first power and no delta, and every curvature component is linear in its second derivatives, so no delta multiplies $\mathrm{sgn}(\ell)$ and the check never stops on one.
+Here, unlike on the wall, the curvature off the kink is not zero, so each value is a smooth part plus a delta: `chart_printer.kink` prints the value in $|\ell|$ and $\mathrm{sgn}(\ell)$, and the chart factors the smooth part and the delta's coefficient each on its own and writes the delta's term last.
 
 ## Step 4. The Christoffel symbols
 
-With $f = 1 - r_s/r$ and $\partial_\ell f = (r_s/r^2)\operatorname{sgn}\ell$ they are Schwarzschild's times $\operatorname{sgn}\ell$ wherever an index is $\ell$ an odd number of times:
+With $f = 1 - r_s/r$ and $\partial_\ell f = (r_s/r^2)\mathrm{sgn}(\ell)$ they are Schwarzschild's times $\mathrm{sgn}(\ell)$ wherever an index is $\ell$ an odd number of times:
 
-$$\Gamma^\ell{}_{tt} = \frac{r_s(r - r_s)}{2r^3}\operatorname{sgn}\ell, \quad \Gamma^t{}_{t\ell} = -\Gamma^\ell{}_{\ell\ell} = \frac{r_s\operatorname{sgn}\ell}{2r(r - r_s)}, \quad \Gamma^\ell{}_{\theta\theta} = -(r - r_s)\operatorname{sgn}\ell, \quad \Gamma^\theta{}_{\ell\theta} = \frac{\operatorname{sgn}\ell}{r},$$
+$$\Gamma^\ell{}_{tt} = \frac{r_s(r - r_s)}{2r^3}\mathrm{sgn}(\ell), \quad \Gamma^t{}_{t\ell} = -\Gamma^\ell{}_{\ell\ell} = \frac{r_s\mathrm{sgn}(\ell)}{2r(r - r_s)}, \quad \Gamma^\ell{}_{\theta\theta} = -(r - r_s)\mathrm{sgn}(\ell), \quad \Gamma^\theta{}_{\ell\theta} = \frac{\mathrm{sgn}(\ell)}{r},$$
 
 with $r = a + |\ell|$, and the angular symbols unchanged.
 They jump at the throat and carry no delta, so every geodesic crosses it with its velocity continuous and its acceleration jumping: a radial light ray keeps $d\ell/d(ct) = \pm f$, whose derivative along $\ell$ changes sign at $\ell = 0$.
 
 ## Step 5. The curvature
 
-Each Riemann component is Schwarzschild's off the throat plus a delta from $\partial_\ell\Gamma$, since $\partial_\ell\operatorname{sgn}\ell = 2\delta(\ell)$ and every coefficient of it is evaluated at $r = a$.
-For $\Gamma^\theta{}_{\ell\theta} = \operatorname{sgn}\ell/r$ the delta is $2\delta(\ell)/a$, which is why
+Each Riemann component is Schwarzschild's off the throat plus a delta from $\partial_\ell\Gamma$, since $\partial_\ell\mathrm{sgn}(\ell) = 2\delta(\ell)$ and every coefficient of it is evaluated at $r = a$.
+For $\Gamma^\theta{}_{\ell\theta} = \mathrm{sgn}(\ell)/r$ the delta is $2\delta(\ell)/a$, which is why
 
 $$R^\theta{}_{\ell\ell\theta} = \frac{r_s}{2r^2(r - r_s)} + \frac{2\delta(\ell)}{a},$$
 
@@ -72,15 +72,15 @@ At $a = 3r_s/2$ it vanishes: there $\sigma + p = 0$, so the surface stress is $-
 ## Step 8. The Kretschmann scalar
 
 Off the throat the Kretschmann scalar is Schwarzschild's, $12r_s^2/(a + |\ell|)^6$.
-On it the square of the curvature holds $\delta(\ell)^2$, which has no value as a distribution, so the scalar is defined only for $\ell \ne 0$, as the chart's convention says.
-`off_support` in `verify_metrics.py` compares it there, with every delta at the kink set to zero, and `print_charts.py` does the same before it writes.
+On it the square of the curvature holds $\delta(\ell)^2$, which has no value as a distribution, so the scalar is written $K = 12r_s^2/(a + |\ell|)^6 \;\text{for}\; \ell \neq 0$.
+`off_support` in `verify_metrics.py` compares it there, with every delta of $\ell$ set to zero, and `print_charts.py` does the same before it writes.
 
 ## Step 9. The spacetime diagrams
 
 Both are drawn at $r_s = 1$ and $a = 5/4$, inside the photon sphere, where $f(a) = 1/5$.
-Through the throat the rays are $ct \mp \ell_* = $ const with $\ell_* = \ell + r_s\ln(1 + |\ell|/(a - r_s))\operatorname{sgn}\ell = \ell + \ln(1 + 4|\ell|)\operatorname{sgn}\ell$, since $d\ell_*/d\ell = 1/f$ and $\ell_*(0) = 0$; `--verify` holds each ray to that closed form.
+Through the throat the rays are $ct \mp \ell_* = $ const with $\ell_* = \ell + r_s\ln(1 + |\ell|/(a - r_s))\mathrm{sgn}(\ell) = \ell + \ln(1 + 4|\ell|)\mathrm{sgn}(\ell)$, since $d\ell_*/d\ell = 1/f$ and $\ell_*(0) = 0$; `--verify` holds each ray to that closed form.
 On one side the rays are Schwarzschild's, $ct \mp r_*$ with $r_* = r + \ln(r - 1)$, from the throat out, and the box starts at $r = a$, where the chart ends.
-The throat is drawn as the shell, the line $\ell = 0$ and $r = a$.
+The throat is marked at $\ell = 0$ as the least areal radius, and on Schwarzschild's side the shell is marked on the chart's edge $r = a$.
 
 ## Step 10. The conformal diagram
 
@@ -92,3 +92,4 @@ On the plane of $t$ and $\ell$ the metric is $f\left(-c^2dt^2 + d\ell_*^2\right)
 The equator of $t = 0$ on either side is Flamm's paraboloid, $dz/dr = \sqrt{r_s/(r - r_s)}$, and from the throat $z = \pm 2(\sqrt{r_s(r - r_s)} - \sqrt{r_s(a - r_s)})$.
 At the throat both sides climb at $dz/dr = \sqrt{r_s/(a - r_s)} = 2$, one up and one down, so the surface has a crease there, the embedding of the jump in extrinsic curvature that the shell is.
 The script checks each side against that closed form, the two sides for one circle at the throat and for the slope $2$ on either side of it, and the chart through the throat for the same surface.
+Each side ends at the throat in a `crease`, the end the application and the page read as a fold of the surface at a thin shell.
