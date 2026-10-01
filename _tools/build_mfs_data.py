@@ -229,6 +229,12 @@ def load_conformal(metrics):
             if view.get("system") and view["system"] not in {s["id"] for s in by_id[path.stem]["coordinates"]}:
                 raise DataError(f"{where}: the view {view['id']!r} tints {view['system']!r}, which "
                                 f"{path.stem}.json has no coordinate system for")
+        if "together" in data:
+            # Drawn at once, the views are what one chart shows, so each names the same chart or none.
+            if data["together"] is not True:
+                raise DataError(f"{where}: `together` is true or absent")
+            if len(data["views"]) < 2 or len({view.get("system") for view in data["views"]}) != 1:
+                raise DataError(f"{where}: views drawn together are two or more of one chart")
         conformal[path.stem] = data
     return conformal
 

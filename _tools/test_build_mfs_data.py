@@ -1760,6 +1760,21 @@ class ConformalDiagrams(unittest.TestCase):
                 self.assertTrue(view.get("restriction"), f"{metric_id} {view['id']}")
                 self.assertRegex(view["restriction"], r"only", f"{metric_id} {view['id']}")
 
+    def test_views_drawn_together_are_two_or_more_of_one_chart(self):
+        """Kerr's axis and equatorial plane are drawn at once, the axis first, and the build
+        refuses the field on a file with one view or with views of different charts."""
+        kerr = self.conformal["kerr"]
+        self.assertIs(kerr.get("together"), True)
+        self.assertEqual([view["id"] for view in kerr["views"]], ["axis", "equator"])
+        self.assertEqual({name for name, data in self.conformal.items() if "together" in data}, {"kerr"})
+        for view in kerr["views"]:
+            self.assertEqual(len(view["caption"]), 1, view["id"])
+        other = dict(kerr["views"][1], system=None)
+        for data in (dict(kerr, views=kerr["views"][:1]), dict(kerr, views=[kerr["views"][0], other]),
+                     dict(kerr, together=False)):
+            with self.assertRaises(build.DataError):
+                self.load_folder({"kerr.json": data}, self.metrics)
+
     def test_every_text_is_tex_with_its_mathematics_closed(self):
         for name, data in self.conformal.items():
             for field, value in conformal_prose(name, data):

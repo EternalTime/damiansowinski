@@ -80,6 +80,10 @@ fields changes without the file being redrawn. A view is
                   surface is, printed on the diagram itself;
   settings, input the parameter values and any declared function, as TeX prose;
   fade            {top, bottom}: how far the drawing fades out where it continues;
+  together        on the file, beside `views`: true where the page draws every view of a chart at
+                  once, each with its own caption and legend, and offers no choice among them;
+                  TOGETHER names those spacetimes.
+
   slices          each moment of the spacetime's embedding diagram that the view shows, as a
                   spacetime diagram's view carries it, its lines and points in (X, T), drawn
                   by the view's own maps over the part of the moment the embedding reaches;
@@ -6772,6 +6776,11 @@ DRAWN = {
     "mcvittie": mcvittie,
 }
 
+# The spacetimes whose views are two surfaces of one spacetime that belong side by side, drawn
+# at once and never chosen between: Kerr's symmetry axis, where r = 0 is a regular point, and
+# its equatorial plane, where r = 0 is the ring.
+TOGETHER = {"kerr"}
+
 # ---------------------------------------------------------------- the captions
 
 # Each view's caption, prose under the rules of _tools/README.md: no dashes but in a name,
@@ -7376,16 +7385,9 @@ CAPTIONS = {
         "blueshifted.",
     ],
     ("kerr", "axis"): [
-        "The symmetry axis $\\theta = 0$ of the maximally extended Kerr spacetime, the "
-        "surface the rotations leave fixed and so totally geodesic. On it the metric is "
-        "$-\\frac{\\Delta}{r^2 + a^2}c^2dt^2 + \\frac{r^2 + a^2}{\\Delta}dr^2$ with $\\Delta = r^2 "
-        "- 2GMr/c^2 + a^2$, and its two simple roots give it the tower of Reissner-Nordström. "
-        "Brandon Carter extended the axis this way in 1966.",
-        "Where Reissner-Nordström ends at $r = 0$, the axis runs on through the centre of the "
-        "ring's disc, where the curvature is finite, into $r < 0$, a second asymptotically flat "
-        "end with its own null infinity. The ring singularity itself is at $r = 0$ in the "
-        "equatorial plane $\\theta = \\pi/2$. The coordinates $t$ and $r > r_+$ cover the "
-        "exterior.",
+        "The symmetry axis $\\theta = 0$ of the maximally extended Kerr spacetime ($a = 0.9\\,GM/c^2$), each point "
+        "in the diagram a single event, after Brandon Carter (1966). The axis passes through the centre of the "
+        "ring's disc at $r = 0$, where the curvature is finite, into $r < 0$, a second asymptotically flat end.",
     ],
     ("kerr", "equator"): [
         "The equatorial plane $\\theta = \\pi/2$ of the maximally extended Kerr spacetime ($a = 0.9\\,GM/c^2$), "
@@ -7785,7 +7787,10 @@ def draw(metric_id, ck):
     for v in views:
         v.set(caption=CAPTIONS[(metric_id, v.d["id"])])
         out.append(v.done())
-    return {"metric": metric_id, "source": src.stamps(), "views": out}
+    data = {"metric": metric_id, "source": src.stamps(), "views": out}
+    if metric_id in TOGETHER:
+        data["together"] = True
+    return data
 
 
 def check_table():
