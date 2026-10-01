@@ -17,7 +17,7 @@ A reason a reference is there, such as a novel beside the papers, goes in that p
 
 ### Related spacetimes
 
-Every spacetime lists the spacetimes it is related to, in a `related` field of its own metric file, and the page shows them under "related spacetimes" right after the history, as the captain asked on 1 October 2026.
+Every spacetime lists the spacetimes it is related to, in a `related` field of its own metric file, and the page shows them under "Related Spacetimes" right after the history, as the captain asked on 1 October 2026.
 The application reads the same field.
 A new spacetime includes its own list, and adds the answering entry to the file of every spacetime it names.
 

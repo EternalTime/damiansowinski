@@ -4109,7 +4109,7 @@ class Relations(unittest.TestCase):
             "mfs-section-label\">history<", "relatedSection(data),", "mfs-section-label\">coordinates<"))
         self.assertLess(history, related)
         self.assertLess(related, coordinates)
-        self.assertIn("mfs-section-label\">related spacetimes<", page)
+        self.assertIn("mfs-section-label\">Related Spacetimes<", page)
 
 
 class Bibliography(unittest.TestCase):

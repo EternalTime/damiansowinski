@@ -28,7 +28,7 @@
     {
       "id": "schwarzschild",
       "kind": "generalisation",
-      "text": "The black hole the shock is made from. Boosted toward the speed of light with its energy held fixed, Schwarzschild's field flattens onto a null plane [aichelburg1971]."
+      "text": "The Aichelburg-Sexl shock is Schwarzschild's field boosted to the speed of light with its energy held fixed, which flattens it onto a null plane [aichelburg1971]."
     },
     {
       "id": "pp_wave",
