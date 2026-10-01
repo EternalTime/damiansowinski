@@ -75,6 +75,38 @@
     "embedding": "33cf315a311a845d"
   },
   {
+    "id": "string_black_hole",
+    "name": "Aryal-Ford-Vilenkin",
+    "tags": [
+      "topological defect",
+      "cosmic string",
+      "conical",
+      "angular deficit",
+      "conical singularity",
+      "black hole",
+      "black hole hair",
+      "black hole thermodynamics",
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "axial symmetry",
+      "mass",
+      "singularity",
+      "curvature singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "cfa8b9173c20c568"
+  },
+  {
     "id": "btz",
     "name": "Bañados-Teitelboim-Zanelli",
     "tags": [
