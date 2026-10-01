@@ -48,6 +48,11 @@
       "id": "khan_penrose",
       "kind": "family",
       "text": "Two plane waves colliding end in a singularity near which the metric is Kasner's, with exponents set by the incoming waves [yurtsever1988]."
+    },
+    {
+      "id": "gowdy",
+      "kind": "generalisation",
+      "text": "Kasner's universe with gravitational waves running round a torus. The flat Kasner universe is the Gowdy torus with $P = \\tau$ and $Q = 0$ [ringstrom2010], and a polarised Gowdy universe approaches a Kasner universe of its own at each $\\theta$ as it nears the singularity [berger1974]."
     }
   ],
   "references": [
@@ -61,7 +66,9 @@
     "ellismaccallum1969",
     "levicivita1919",
     "maccallum2011",
-    "yurtsever1988"
+    "yurtsever1988",
+    "ringstrom2010",
+    "berger1974"
   ],
   "coordinates": [
     {

@@ -52,6 +52,11 @@
       "id": "teo_wormhole",
       "kind": "family",
       "text": "A rotating wormhole with an ergoregion and no horizon. Its ergoregion is a tube round the equator of the throat, and the Penrose process draws energy from it as it does from Kerr's [teo1998]."
+    },
+    {
+      "id": "gowdy",
+      "kind": "generalisation",
+      "text": "Between the outer and inner horizons $r$ is a time, and with $t$ wrapped into a circle the region is a Gowdy spacetime on $S^2 \\times S^1$ [obregon1998, garfinkle1999]."
     }
   ],
   "references": [
@@ -76,7 +81,9 @@
     "eht2019",
     "banados1992",
     "banados1993",
-    "teo1998"
+    "teo1998",
+    "obregon1998",
+    "garfinkle1999"
   ],
   "coordinates": [
     {

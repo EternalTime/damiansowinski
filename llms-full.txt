@@ -428,6 +428,18 @@ J. Richard Gott's exact solution of 1991: two straight, parallel cosmic strings 
 - chart Grant Rindler: coordinates $(\eta, \xi, Y, z)$, $$ds^2 = -\xi^2d\eta^2 + d\xi^2 + dY^2 + dz^2$$
 - chart Grant Milne: coordinates $(\tau, \chi, Y, z)$, $$ds^2 = -c^2d\tau^2 + c^2\tau^2d\chi^2 + dY^2 + dz^2$$
 
+### Gowdy Cosmologies
+
+Closed vacuum universes holding gravitational waves that travel along one direction, with two commuting spacelike Killing vectors and space $T^3$, $S^3$, or $S^2 \times S^1$. Einstein's equations for them reduce to two coupled wave equations in one space dimension and a quadrature, and near the singularity each point of space approaches a Kasner universe of its own.
+
+- id: `gowdy`
+- tags: vacuum, vacuum solution, cosmology, cosmological, inhomogeneous, gravitational wave, closed universe, Gowdy, exact solution, time-dependent, dynamical, singularity, strong cosmic censorship, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json
+- chart Torus, Areal Time: coordinates $(t, \theta, \sigma, \delta)$, $$ds^2 = L^2\left(\dfrac{e^{\lambda/2}}{\sqrt{t}}\left(-dt^2 + d\theta^2\right) + t\left(e^{P}\left(d\sigma + Q\,d\delta\right)^2 + e^{-P}d\delta^2\right)\right)$$
+- chart Torus, Logarithmic Time: coordinates $(\tau, \theta, \sigma, \delta)$, $$ds^2 = L^2\left(e^{(\lambda + \tau)/2}\left(-e^{-2\tau}d\tau^2 + d\theta^2\right) + e^{-\tau}\left(e^{P}\left(d\sigma + Q\,d\delta\right)^2 + e^{-P}d\delta^2\right)\right)$$
+- chart Sphere and Handle: coordinates $(t, \theta, \sigma, \delta)$, $$ds^2 = L^2\left(e^{2a}\left(-dt^2 + d\theta^2\right) + \sin t\,\sin\theta\left(e^{P}\left(d\sigma + Q\,d\delta\right)^2 + e^{-P}d\delta^2\right)\right)$$
+
 ### Kaluza-Klein Monopole
 
 A static vacuum solution of gravity in five dimensions, four of space and one of time, that Rafael Sorkin, and David Gross and Malcolm Perry, found in 1983: Euclidean Taub-NUT space with a time added. The fifth dimension is a circle that shrinks smoothly to a point at the centre, and seen from four dimensions the twist of that circle is the field of a magnetic monopole.

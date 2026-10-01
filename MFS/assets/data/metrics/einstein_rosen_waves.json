@@ -30,6 +30,11 @@
       "id": "levi_civita",
       "kind": "special_case",
       "text": "The wave that stands still, $\\psi \\propto \\ln\\rho$, the field of a line of mass [levicivita1919]. Guido Beck found the cylindrical waves in 1925 by the change $z \\to it$, $t \\to iz$ in Weyl's static fields [beck1925, bicak2000]."
+    },
+    {
+      "id": "gowdy",
+      "kind": "locally_same",
+      "text": "These waves closed up into a universe. Robert Gowdy changed their boundary conditions in 1971 [gowdy1971], and his $S^3$ and $S^2 \\times S^1$ universes transform locally into an Einstein-Rosen wave wherever the gradient of the orbit area is spacelike [gowdy2014]."
     }
   ],
   "references": [
@@ -53,7 +58,9 @@
     "ashtekar1997",
     "kuchar1971",
     "ashtekar1996",
-    "levicivita1919"
+    "levicivita1919",
+    "gowdy1971",
+    "gowdy2014"
   ],
   "coordinates": [
     {

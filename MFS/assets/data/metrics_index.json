@@ -404,7 +404,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c9d482c775f1a7f2",
+    "version": "5874abdb9f734637",
     "diagrams": "885cf2913e61ef20",
     "conformal": "673b1830ad956a8d",
     "embedding": "3de7a934fb717388"
@@ -549,6 +549,33 @@
     "embedding": "c0db8a34cdba1339"
   },
   {
+    "id": "gowdy",
+    "name": "Gowdy",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "cosmology",
+      "cosmological",
+      "inhomogeneous",
+      "gravitational wave",
+      "closed universe",
+      "Gowdy",
+      "exact solution",
+      "time-dependent",
+      "dynamical",
+      "singularity",
+      "strong cosmic censorship",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "28a959fe018c5e70",
+    "diagrams": "2af1bbf417683eb3",
+    "conformal": "431800db7085dc77",
+    "embedding": "f0d7a1bdcd0620df"
+  },
+  {
     "id": "kaluza_klein_monopole",
     "name": "Kaluza-Klein Monopole",
     "tags": [
@@ -612,7 +639,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "67b9696ea7669aff",
+    "version": "ed2125ad2b5dcec5",
     "diagrams": "a8296e17dab2de95",
     "conformal": "5aa345afee4654d8",
     "embedding": "46d9d6d9484b8e00"
@@ -637,7 +664,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f093628ef364346b",
+    "version": "478559d39f150cb3",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -670,7 +697,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ea9852721d671afd",
+    "version": "da7c124309969b8c",
     "diagrams": "2bebc0757ae1bb04",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1054,7 +1081,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a6b98935acda8dff",
+    "version": "2a3e44e2d8c2bf39",
     "embedding": "9634c59d5e2ae389"
   },
   {
@@ -1287,7 +1314,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c041cadc713b0cae",
+    "version": "e1ff2caf0aa47ae9",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -1510,7 +1537,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cfb402729667dfd8",
+    "version": "d0ba61c2f967248f",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "be8e68489d42c0b8"
   },

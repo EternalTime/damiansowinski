@@ -2962,7 +2962,8 @@ class StacksAndMovies(unittest.TestCase):
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
-              ("bell_szekeres", "ring"): "$\\xi$"}
+              ("bell_szekeres", "ring"): "$\\xi$",
+              ("gowdy", "torus"): "$t$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -3460,6 +3461,9 @@ class Slices(unittest.TestCase):
               "bell_szekeres/regular/plane", "conformal bell_szekeres/regular",
               # The spinning string's cylinders inside r_c, whose circles are closed timelike curves.
               *[f"spinning_string/{s}/inside" for s in ("proper_radius", "rescaled_radius", "helical")],
+              # Gowdy's sphere chart draws the inside of Schwarzschild's horizon; the moments
+              # embedded are the torus universe's.
+              "gowdy/sphere/plane", "conformal gowdy/sphere",
               # The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.
               "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
               "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis",
@@ -3690,6 +3694,12 @@ class Slices(unittest.TestCase):
         if key.startswith("einstein_rosen_waves/"):
             # A moment ct = T, drawn against rho and ct in both charts, out to the embedding's reach.
             return (lambda X: t), list(self.reach(surface))
+        if key == "gowdy/areal/plane":
+            # A moment of the areal time, drawn against theta and t, once round the torus.
+            return (lambda X: t), list(self.reach(surface))
+        if key == "gowdy/logarithmic/plane":
+            # The same moment against theta and -tau = ln t.
+            return (lambda X: math.log(t)), list(self.reach(surface))
         if key == "vaidya/eddington_finkelstein_ingoing/shell":
             return (lambda X: t), list(self.reach(surface))
         if key == "krasnikov/cylindrical/tx":
@@ -3880,7 +3890,7 @@ class Slices(unittest.TestCase):
                         eta = bisect(lambda e: e - math.sin(e) - t, 0, 2 * math.pi)
                         self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
                         self.assertEqual(sorted(X for X, _ in points), [0, round(math.pi, 4)], where)
-                    elif metric_id in ("malament_hogarth", "einstein_rosen_waves"):
+                    elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy"):
                         lo, hi = self.reach(surface)
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2

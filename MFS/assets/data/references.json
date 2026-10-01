@@ -1,5 +1,5 @@
 {
-  "version": "97e27fade59ab73f",
+  "version": "bebd8ead83d83bed",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -11610,6 +11610,263 @@
         "eprint": "0710.4696",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/0264-9381/25/4/045016"
+      }
+    },
+    "gowdy1971": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational Waves in Closed Universes",
+        "author": "Gowdy, Robert H.",
+        "journal": "Physical Review Letters",
+        "volume": "27",
+        "number": "12",
+        "pages": "826--829",
+        "year": "1971",
+        "doi": "10.1103/PhysRevLett.27.826",
+        "url": "https://doi.org/10.1103/PhysRevLett.27.826"
+      }
+    },
+    "gowdy1974": {
+      "type": "article",
+      "fields": {
+        "title": "Vacuum spacetimes with two-parameter spacelike isometry groups and compact invariant hypersurfaces: Topologies and boundary conditions",
+        "author": "Gowdy, Robert H.",
+        "journal": "Annals of Physics",
+        "volume": "83",
+        "number": "1",
+        "pages": "203--241",
+        "year": "1974",
+        "doi": "10.1016/0003-4916(74)90384-4",
+        "url": "https://doi.org/10.1016/0003-4916(74)90384-4"
+      }
+    },
+    "gowdy2014": {
+      "type": "article",
+      "fields": {
+        "title": "Gowdy Spacetimes",
+        "author": "Gowdy, Robert",
+        "journal": "Scholarpedia",
+        "volume": "9",
+        "number": "3",
+        "pages": "31673",
+        "year": "2014",
+        "doi": "10.4249/scholarpedia.31673",
+        "url": "https://doi.org/10.4249/scholarpedia.31673"
+      }
+    },
+    "misner1973gowdy": {
+      "type": "article",
+      "fields": {
+        "title": "A Minisuperspace Example: The Gowdy $T^3$ Cosmology",
+        "author": "Misner, Charles W.",
+        "journal": "Physical Review D",
+        "volume": "8",
+        "number": "10",
+        "pages": "3271--3285",
+        "year": "1973",
+        "doi": "10.1103/PhysRevD.8.3271",
+        "url": "https://doi.org/10.1103/PhysRevD.8.3271"
+      }
+    },
+    "berger1974": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum graviton creation in a model universe",
+        "author": "Berger, Beverly K.",
+        "journal": "Annals of Physics",
+        "volume": "83",
+        "number": "2",
+        "pages": "458--490",
+        "year": "1974",
+        "doi": "10.1016/0003-4916(74)90207-3",
+        "url": "https://doi.org/10.1016/0003-4916(74)90207-3"
+      }
+    },
+    "moncrief1981": {
+      "type": "article",
+      "fields": {
+        "title": "Global properties of Gowdy spacetimes with $T^3 \\times R$ topology",
+        "author": "Moncrief, Vincent",
+        "journal": "Annals of Physics",
+        "volume": "132",
+        "number": "1",
+        "pages": "87--107",
+        "year": "1981",
+        "doi": "10.1016/0003-4916(81)90270-0",
+        "url": "https://doi.org/10.1016/0003-4916(81)90270-0"
+      }
+    },
+    "isenberg1990": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotic behavior of the gravitational field and the nature of singularities in Gowdy spacetimes",
+        "author": "Isenberg, James and Moncrief, Vincent",
+        "journal": "Annals of Physics",
+        "volume": "199",
+        "number": "1",
+        "pages": "84--122",
+        "year": "1990",
+        "doi": "10.1016/0003-4916(90)90369-Y",
+        "url": "https://doi.org/10.1016/0003-4916(90)90369-Y"
+      }
+    },
+    "chrusciel1990cim": {
+      "type": "article",
+      "fields": {
+        "title": "Strong cosmic censorship in polarised Gowdy spacetimes",
+        "author": "Chruściel, Piotr T. and Isenberg, James and Moncrief, Vincent",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "7",
+        "number": "10",
+        "pages": "1671--1680",
+        "year": "1990",
+        "doi": "10.1088/0264-9381/7/10/003",
+        "url": "https://doi.org/10.1088/0264-9381/7/10/003"
+      }
+    },
+    "grubisic1993": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotic behavior of the $T^3 \\times R$ Gowdy space-times",
+        "author": "Grubišić, Boro and Moncrief, Vincent",
+        "journal": "Physical Review D",
+        "volume": "47",
+        "number": "6",
+        "pages": "2371--2382",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.47.2371",
+        "url": "https://doi.org/10.1103/PhysRevD.47.2371"
+      }
+    },
+    "berger1993": {
+      "type": "article",
+      "fields": {
+        "title": "Numerical investigation of cosmological singularities",
+        "author": "Berger, Beverly K. and Moncrief, Vincent",
+        "journal": "Physical Review D",
+        "volume": "48",
+        "number": "10",
+        "pages": "4676--4687",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.48.4676",
+        "eprint": "gr-qc/9307032",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.48.4676"
+      }
+    },
+    "berger1998": {
+      "type": "article",
+      "fields": {
+        "title": "Phenomenology of the Gowdy universe on $T^3 \\times R$",
+        "author": "Berger, Beverly K. and Garfinkle, David",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "8",
+        "pages": "4767--4777",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.4767",
+        "eprint": "gr-qc/9710102",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.57.4767"
+      }
+    },
+    "kichenassamy1998": {
+      "type": "article",
+      "fields": {
+        "title": "Analytic description of singularities in Gowdy spacetimes",
+        "author": "Kichenassamy, Satyanad and Rendall, Alan D.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "5",
+        "pages": "1339--1355",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/5/016",
+        "eprint": "1709.09710",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/15/5/016"
+      }
+    },
+    "obregon1998": {
+      "type": "article",
+      "fields": {
+        "title": "A family of exact solutions for unpolarized Gowdy models",
+        "author": "Obregón, Octavio and Ryan, Michael P.",
+        "journal": "arXiv preprint arXiv:gr-qc/9810068",
+        "year": "1998",
+        "url": "https://arxiv.org/abs/gr-qc/9810068"
+      }
+    },
+    "garfinkle1999": {
+      "type": "article",
+      "fields": {
+        "title": "Numerical simulations of Gowdy spacetimes on $S^2 \\times S^1 \\times R$",
+        "author": "Garfinkle, David",
+        "journal": "Physical Review D",
+        "volume": "60",
+        "number": "10",
+        "pages": "104010",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.60.104010",
+        "eprint": "gr-qc/9906019",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.60.104010"
+      }
+    },
+    "rendall2001": {
+      "type": "article",
+      "fields": {
+        "title": "Manufacture of Gowdy spacetimes with spikes",
+        "author": "Rendall, Alan D. and Weaver, Marsha",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "18",
+        "number": "15",
+        "pages": "2959--2975",
+        "year": "2001",
+        "doi": "10.1088/0264-9381/18/15/310",
+        "eprint": "gr-qc/0103102",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/18/15/310"
+      }
+    },
+    "ringstrom2006": {
+      "type": "article",
+      "fields": {
+        "title": "Existence of an asymptotic velocity and implications for the asymptotic behavior in the direction of the singularity in $T^3$-Gowdy",
+        "author": "Ringström, Hans",
+        "journal": "Communications on Pure and Applied Mathematics",
+        "volume": "59",
+        "number": "7",
+        "pages": "977--1041",
+        "year": "2006",
+        "doi": "10.1002/cpa.20105",
+        "url": "https://doi.org/10.1002/cpa.20105"
+      }
+    },
+    "ringstrom2009": {
+      "type": "article",
+      "fields": {
+        "title": "Strong cosmic censorship in $T^3$-Gowdy spacetimes",
+        "author": "Ringström, Hans",
+        "journal": "Annals of Mathematics",
+        "volume": "170",
+        "number": "3",
+        "pages": "1181--1240",
+        "year": "2009",
+        "doi": "10.4007/annals.2009.170.1181",
+        "url": "https://doi.org/10.4007/annals.2009.170.1181"
+      }
+    },
+    "ringstrom2010": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic Censorship for Gowdy Spacetimes",
+        "author": "Ringström, Hans",
+        "journal": "Living Reviews in Relativity",
+        "volume": "13",
+        "pages": "2",
+        "year": "2010",
+        "doi": "10.12942/lrr-2010-2",
+        "url": "https://doi.org/10.12942/lrr-2010-2"
       }
     }
   }

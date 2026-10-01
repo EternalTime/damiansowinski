@@ -43,7 +43,9 @@ fields: P is the family that conserves an advanced coordinate, drawn as the ingo
 left moving family, and M the retarded one. Where the drawn coordinate falls outward, as
 the C-metric's Hong-Teo y = 1/(alpha r) does, the left moving family is the outgoing one and
 P conserves the retarded coordinate, so the page's colour of P means moving left in every
-view. --verify confirms that labelling chart by chart. Their integral curves are traced
+view. A view drawn against a time that runs down the chart, as Gowdy's -tau is, mirrors the
+plane, and there the chart's M is the family drawn moving left and is the one named P.
+--verify confirms that labelling chart by chart. Their integral curves are traced
 both ways by fourth order Runge-Kutta in the drawing's own unit square, from seeds spaced
 evenly along its four edges.
 
@@ -379,6 +381,37 @@ ER_INPUT = ("The pulse of Weber, Wheeler, and Bonnor, $\\psi = \\sqrt{2}\\,C\\sq
             "with $D_\\pm^2 = (a^2 + \\rho^2 - c^2t^2)^2 \\pm 4a^2c^2t^2$, at $C = a$, checked to solve this "
             "spacetime's own field equations.")
 ER_SOLVES = (("t", "t"), ("t", "\\rho"), ("\\phi", "\\phi"), ("z", "z"))
+
+def _gowdy_wave(t):
+    """A polarised Gowdy wave on the torus, as strings in the plain names of a chart whose areal
+    time is the expression t: Q = 0, P = A Y_0(t) cos(theta) and
+    lambda = A^2 (t^2 (Y_0^2 + Y_1^2)/2 - t Y_0 Y_1 cos^2(theta)), with Y_0 and Y_1 the Bessel
+    functions of the second kind and A = -pi/4, so that P -> (cos(theta)/2) tau as t -> 0."""
+    y0, y1 = f"bessely(0, {t})", f"bessely(1, {t})"
+    return {"P": f"-pi/4*{y0}*cos(theta)", "Q": "0",
+            "lambda": f"(pi/4)**2*(({t})**2*({y0}**2 + {y1}**2)/2 - ({t})*{y0}*{y1}*cos(theta)**2)"}
+
+
+GOWDY_INPUT = ("A polarised wave once round the torus, $Q = 0$, $P = -\\tfrac{\\pi}{4}Y_0(t)\\cos\\theta$, and "
+               "$\\lambda = \\tfrac{\\pi^2}{16}\\left(\\tfrac{1}{2}t^2\\left(Y_0^2 + Y_1^2\\right) - tY_0Y_1\\cos^2\\theta\\right)$, "
+               "with $Y_0$ and $Y_1$ the Bessel functions of the second kind at $t$, checked to solve this "
+               "spacetime's own field equations; as $t \\to 0$, $P \\to \\tfrac{1}{2}\\cos\\theta\\,\\tau$ with "
+               "$\\tau = -\\ln t$.")
+
+
+# The inside of Schwarzschild's horizon in the sphere chart. print_charts.py checks in sympy that it
+# is Schwarzschild's metric and a vacuum, exactly, so its row names no `solves`: beside the
+# singularity the terms of G^mu_nu are 10^10 and their sum is lost in the rounding.
+GOWDY_HOLE = {"P": "log((1 - cos(t))**2*sin(theta)/sin(t))", "Q": "0", "a": "log(1 - cos(t))"}
+GOWDY_HOLE_INPUT = ("The inside of Schwarzschild's horizon, $Q = 0$, $e^{2a} = (1 - \\cos t)^2$, and "
+                    "$e^{P} = (1 - \\cos t)^2\\sin\\theta/\\sin t$, checked to solve this spacetime's own field "
+                    "equations; $r = L(1 - \\cos t)$ is Schwarzschild's radius with $r_s = 2L$, and $L\\delta$ "
+                    "his time.")
+
+
+def _gowdy_solves(time):
+    return ((time, time), (time, "\\theta"), ("\\theta", "\\theta"), ("\\sigma", "\\sigma"), ("\\delta", "\\delta"))
+
 
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
@@ -982,6 +1015,20 @@ DIAGRAMS = [
                      "inside the crest of the pulse"),),
             points=(("mark", ("0", "0"), "the event on the axis where the pulse is greatest, $\\psi = 2C/a$"),),
             input=ER_INPUT),
+    # Gowdy's torus: the plane of the time and theta is conformally flat in the areal time, so its
+    # rays are at 45 degrees for every wave, and in tau = -ln t they are theta -+ e^{-tau} = const.
+    Diagram("gowdy", "areal", "plane", "$t$ and $\\theta$", ("t", "\\theta"), (0, 2 * math.pi, 0, 2 * math.pi),
+            "$\\theta$", "$t$", {"L": 1}, {"sigma": "0", "delta": "0"}, families=SIDEWAYS, periodic=("\\theta",),
+            functions=_gowdy_wave("t"), solves=_gowdy_solves("t"), input=GOWDY_INPUT),
+    Diagram("gowdy", "logarithmic", "plane", "$\\tau$ and $\\theta$", ("\\tau", "\\theta"), (0, 2 * math.pi, -4, 2),
+            "$\\theta$", "$-\\tau$", {"L": 1}, {"sigma": "0", "delta": "0"}, to_display=((0, 1), (-1, 0)), tau="-tau",
+            families=SIDEWAYS, periodic=("\\theta",), functions=_gowdy_wave("exp(-tau)"),
+            solves=_gowdy_solves("\\tau"), input=GOWDY_INPUT),
+    # The sphere chart, for the inside of Schwarzschild's horizon, r = L(1 - cos t) with r_s = 2L:
+    # the plane is conformally flat for every wave, so the rays are t -+ theta = const.
+    Diagram("gowdy", "sphere", "plane", "$t$ and $\\theta$", ("t", "\\theta"), (0, math.pi, 0, math.pi),
+            "$\\theta$", "$t$", {"L": 1}, {"sigma": "0", "delta": "0"}, families=SIDEWAYS,
+            functions=GOWDY_HOLE, input=GOWDY_HOLE_INPUT),
     # Melvin's plane of t and rho, conformally flat, and Ernst's equator, conformal to Schwarzschild's
     # plane of t and r, at B r_s = 1/2, as the embedding diagram draws it.
     Diagram("melvin", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
@@ -2435,6 +2482,36 @@ CAPTIONS = {
         "The pulse comes in with its crest just outside the ray $v = 0$, is greatest on the axis at $u = v = 0$, "
         "and goes out with its crest just outside $u = 0$.",
     ],
+    ("gowdy", "areal", "plane"): [
+        "The plane of $t$ and $\\theta$ ($\\sigma = 0$, $\\delta = 0$) of a polarised wave on the torus, the "
+        "edges $\\theta = 0$ and $\\theta = 2\\pi$ one line. The metric on it is "
+        "$L^2t^{-1/2}e^{\\lambda/2}(-dt^2 + d\\theta^2)$, and the factor drops out of the null condition, so for "
+        "every wave the rays are at 45°. No Christoffel symbol turns them out of the plane, so they are null "
+        "geodesics.",
+        "A ray leaving the singularity $t = 0$ has covered the angle $t$ by the time $t$, so two events at "
+        "the time $t$ whose $\\theta$ differ by more than $2t$ have no event in both their pasts, and a ray "
+        "first comes back to its own $\\theta$ at $t = 2\\pi$.",
+    ],
+    ("gowdy", "logarithmic", "plane"): [
+        "The plane of $\\tau$ and $\\theta$ ($\\sigma = 0$, $\\delta = 0$) of the same wave, drawn against "
+        "$-\\tau$ so that the future is up and the singularity, $\\tau \\to \\infty$, lies below the drawing. "
+        "The rays are $\\theta \\pm e^{-\\tau} = $ const, so the cones close up toward the singularity as "
+        "$d\\theta/d\\tau = \\pm e^{-\\tau}$.",
+        "A ray covers the angle $e^{-\\tau}$ between the singularity and $\\tau$, so the pasts of two events "
+        "at $\\tau$ whose $\\theta$ differ by more than $2e^{-\\tau}$ do not meet, and each $\\theta$ reaches "
+        "the singularity with its own asymptotic velocity, $v(\\theta) = \\tfrac{1}{2}\\cos\\theta$.",
+    ],
+    ("gowdy", "sphere", "plane"): [
+        "The plane of $t$ and $\\theta$ ($\\sigma = 0$, $\\delta = 0$) of the inside of Schwarzschild's horizon "
+        "as a Gowdy universe on $S^2 \\times S^1$, the edges $\\theta = 0$ and $\\theta = \\pi$ the poles of the "
+        "sphere. The metric on it is $L^2e^{2a}(-dt^2 + d\\theta^2)$, so for every wave the rays are at 45°. "
+        "They are null geodesics, light running along a meridian of the sphere at one value of "
+        "Schwarzschild's time.",
+        "The universe begins at the singularity $t = 0$, where $r = 0$, and ends at $t = \\pi$, the horizon "
+        "$r = r_s$, which makes it the white hole's side of the horizon. A ray takes the whole life of the "
+        "universe to run from one pole to the other. On the diagonals $t = \\theta$ and $t + \\theta = \\pi$ "
+        "the gradient of the orbit area, $4\\pi^2L^2\\sin t\\sin\\theta$, is null.",
+    ],
     ("curzon_chazy", "weyl", "axis"): [
         "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of the Curzon-Chazy particle ($m = 1$). The metric on it is "
         "$-e^{-2m/z}c^2dt^2 + e^{2m/z}dz^2$, so the rays are $ct = \\pm z_* + $ const with "
@@ -3129,6 +3206,13 @@ def smoothed(expr, pulse):
                         lambda e: sp.diff(body, s, int(e.args[1]) if len(e.args) > 1 else 0).subs(s, e.args[0]))
 
 
+def numeric_modules(expr):
+    """What lambdify evaluates an expression with: numpy, and scipy as well where a declared
+    function holds a Bessel function, as Gowdy's wave does, which numpy does not have."""
+    held = any(sp.sympify(e).has(sp.besselj, sp.bessely) for e in (expr if isinstance(expr, (list, tuple)) else [expr]))
+    return ["scipy", "numpy"] if held else "numpy"
+
+
 class Chart:
     """The plane of one Diagram, as numpy functions of (x^0, r)."""
 
@@ -3227,7 +3311,7 @@ class Chart:
                 fixed_vals = [beside if sym == theta else v for sym, v in zip(self.fixed_syms, self.fixed_vals)]
             expr, held = FrontSolver.placeholders(self.reader, expr)
             extra = [symbol for _, symbol in held]
-        f = sp.lambdify((self.x0, self.xr, *self.fixed_syms, *extra), expr, "numpy")
+        f = sp.lambdify((self.x0, self.xr, *self.fixed_syms, *extra), expr, numeric_modules(expr))
 
         def call(x0, r):
             x0 = np.asarray(x0, dtype=float)
@@ -3284,6 +3368,11 @@ class Chart:
             M1, M2 = np.stack([-g0r - sD, g00], -1), np.stack([grr, -g0r + sD], -1)
         P = np.where((np.linalg.norm(P1, axis=-1) >= np.linalg.norm(P2, axis=-1))[..., None], P1, P2)
         M = np.where((np.linalg.norm(M1, axis=-1) >= np.linalg.norm(M2, axis=-1))[..., None], M1, M2)
+        # A view drawn against a time that runs down the chart, as Gowdy's tau does, mirrors the
+        # plane, and there the family drawn moving left is the chart's M.
+        show = self.spec.to_display
+        if show != POLAR and show[0][0] * show[1][1] - show[0][1] * show[1][0] > 0:
+            return M, P, D
         return P, M, D
 
     def orient(self, x0, r, P, M):
@@ -5020,6 +5109,9 @@ CLOSED_FORMS = {
         (lambda t, l: t + _tsw_lstar(l), lambda t, l: t - _tsw_lstar(l), None),
     ("thin_shell_wormhole", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
+    ("gowdy", "areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, lambda t, th: t > 0.02),
+    ("gowdy", "sphere", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
+    ("gowdy", "logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.

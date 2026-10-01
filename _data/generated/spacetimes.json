@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 60,
+  "count": 61,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3407,6 +3407,11 @@
           "id": "levi_civita",
           "kind": "special_case",
           "text": "The wave that stands still, $\\psi \\propto \\ln\\rho$, the field of a line of mass [levicivita1919]. Guido Beck found the cylindrical waves in 1925 by the change $z \\to it$, $t \\to iz$ in Weyl's static fields [beck1925, bicak2000]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "locally_same",
+          "text": "These waves closed up into a universe. Robert Gowdy changed their boundary conditions in 1971 [gowdy1971], and his $S^3$ and $S^2 \\times S^1$ universes transform locally into an Einstein-Rosen wave wherever the gradient of the orbit area is spacelike [gowdy2014]."
         }
       ],
       "references": [
@@ -3430,7 +3435,9 @@
         "ashtekar1997",
         "kuchar1971",
         "ashtekar1996",
-        "levicivita1919"
+        "levicivita1919",
+        "gowdy1971",
+        "gowdy2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -4789,6 +4796,344 @@
       ]
     },
     {
+      "id": "gowdy",
+      "name": "Gowdy Cosmologies",
+      "short_name": "Gowdy",
+      "description": "Closed vacuum universes holding gravitational waves that travel along one direction, with two commuting spacelike Killing vectors and space $T^3$, $S^3$, or $S^2 \\times S^1$. Einstein's equations for them reduce to two coupled wave equations in one space dimension and a quadrature, and near the singularity each point of space approaches a Kasner universe of its own.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "cosmology",
+        "cosmological",
+        "inhomogeneous",
+        "gravitational wave",
+        "closed universe",
+        "Gowdy",
+        "exact solution",
+        "time-dependent",
+        "dynamical",
+        "singularity",
+        "strong cosmic censorship",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "Every coordinate is a pure number and the length $L$ carries the dimensions, so no factor of $c$ appears. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "locally_same",
+          "text": "Gowdy built his universes from Einstein and Rosen's cylindrical waves by changing their boundary conditions [gowdy1971]. Where the gradient of $R$ is spacelike, the $S^3$ and $S^2 \\times S^1$ universes transform locally into an Einstein-Rosen wave [gowdy2014]."
+        },
+        {
+          "id": "kasner",
+          "kind": "special_case",
+          "text": "A Gowdy torus that is the same at every $\\theta$: $P = \\tau$, $Q = 0$ is the flat Kasner universe [ringstrom2010]. Near the singularity each $\\theta$ of a polarised solution approaches a Kasner universe of its own [berger1974]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "special_case",
+          "text": "The Taub universe is a Gowdy spacetime on $S^3$. It can be extended past its Big Bang, which is why strong cosmic censorship is stated for generic initial data [gowdy2014]."
+        },
+        {
+          "id": "kerr",
+          "kind": "special_case",
+          "text": "Between its outer and inner horizons Kerr's metric is a Gowdy spacetime on $S^2 \\times S^1$, with $t$ wrapped into a circle [obregon1998, garfinkle1999]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Obregón and Ryan's Kerr example with the spin switched off [obregon1998]. The inside of Schwarzschild's horizon is a polarised Gowdy spacetime on $S^2 \\times S^1$, with $r = L(1 - \\cos t)$, $r_s = 2L$, $e^{2a} = (1 - \\cos t)^2$, and $e^{P} = (1 - \\cos t)^2\\sin\\theta/\\sin t$."
+        },
+        {
+          "id": "kantowski_sachs",
+          "kind": "special_case",
+          "text": "The Kantowski-Sachs universe with no matter is the inside of Schwarzschild's horizon [ellismaccallum1969], and with its axis wrapped into a circle that is a polarised Gowdy spacetime on $S^2 \\times S^1$ [obregon1998]."
+        },
+        {
+          "id": "mixmaster",
+          "kind": "programme",
+          "text": "Both are testing grounds for the conjecture of Belinskii, Khalatnikov, and Lifshitz that each small region near a generic singularity evolves as a homogeneous universe of its own [bkl1970]. The Mixmaster universe oscillates all the way down, and in a generic Gowdy universe the spatial curvature terms drop out [gowdy2014]."
+        }
+      ],
+      "references": [
+        "gowdy1971",
+        "gowdy1974",
+        "garfinkle1999",
+        "misner1973gowdy",
+        "gowdy2014",
+        "ringstrom2010",
+        "obregon1998",
+        "bkl1970",
+        "eardley1972",
+        "berger1993",
+        "berger1974",
+        "moncrief1981",
+        "isenberg1990",
+        "chrusciel1990cim",
+        "penrose1969",
+        "grubisic1993",
+        "berger1998",
+        "kichenassamy1998",
+        "rendall2001",
+        "ringstrom2006",
+        "ringstrom2009",
+        "ellismaccallum1969"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Torus, Areal Time",
+          "coordinates": [
+            "t",
+            "\\theta",
+            "\\sigma",
+            "\\delta"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "\\theta \\in [0, 2\\pi)",
+            "\\sigma \\in [0, 2\\pi)",
+            "\\delta \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Length that sets the scale of the universe ($L > 0$)"
+            },
+            {
+              "symbol": "P = P(t,\\theta)",
+              "description": "Wave amplitude, a dimensionless function of $t$ and $\\theta$, periodic in $\\theta$; the spacetime is a vacuum exactly where $\\partial_t^2P + \\dfrac{1}{t}\\partial_tP - \\partial_\\theta^2P = e^{2P}\\left(\\left(\\partial_tQ\\right)^2 - \\left(\\partial_\\theta Q\\right)^2\\right)$ together with the equations for $Q$ and $\\lambda$"
+            },
+            {
+              "symbol": "Q = Q(t,\\theta)",
+              "description": "Twist of the two polarisations, a dimensionless function of $t$ and $\\theta$, periodic in $\\theta$, with $Q = 0$ the polarised case; in a vacuum $\\partial_t^2Q + \\dfrac{1}{t}\\partial_tQ - \\partial_\\theta^2Q = -2\\left(\\partial_tP\\,\\partial_tQ - \\partial_\\theta P\\,\\partial_\\theta Q\\right)$"
+            },
+            {
+              "symbol": "\\lambda = \\lambda(t,\\theta)",
+              "description": "Dimensionless function of $t$ and $\\theta$, periodic in $\\theta$; in a vacuum $\\partial_t\\lambda = t\\left(\\left(\\partial_tP\\right)^2 + \\left(\\partial_\\theta P\\right)^2 + e^{2P}\\left(\\left(\\partial_tQ\\right)^2 + \\left(\\partial_\\theta Q\\right)^2\\right)\\right)$ and $\\partial_\\theta\\lambda = 2t\\left(\\partial_tP\\,\\partial_\\theta P + e^{2P}\\partial_tQ\\,\\partial_\\theta Q\\right)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\theta, \\sigma, \\delta)$ on $T^3$, with $\\partial_\\sigma$ and $\\partial_\\delta$ the two Killing vectors and $t$ the area of their orbits in units of $4\\pi^2L^2$, which vanishes at the singularity. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = L^2\\left(\\dfrac{e^{\\lambda/2}}{\\sqrt{t}}\\left(-dt^2 + d\\theta^2\\right) + t\\left(e^{P}\\left(d\\sigma + Q\\,d\\delta\\right)^2 + e^{-P}d\\delta^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2e^{\\lambda/2}}{\\sqrt{t}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{L^2e^{\\lambda/2}}{\\sqrt{t}}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "L^2\\,t\\,e^{P}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\delta"
+              ],
+              "value": "L^2\\,Q\\,t\\,e^{P}"
+            },
+            {
+              "indices": [
+                "\\delta",
+                "\\sigma"
+              ],
+              "value": "L^2\\,Q\\,t\\,e^{P}"
+            },
+            {
+              "indices": [
+                "\\delta",
+                "\\delta"
+              ],
+              "value": "L^2\\,t\\left(Q^2e^{2P} + 1\\right)e^{-P}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\sqrt{t}\\left(\\left(\\partial_t P\\right)^2 - \\left(\\partial_\\theta P\\right)^2 + e^{2P}\\left(\\partial_t Q\\right)^2 - e^{2P}\\left(\\partial_\\theta Q\\right)^2 + \\partial_t^2\\lambda - \\partial_\\theta^2\\lambda\\right)e^{-\\lambda/2}}{2L^2}",
+          "kretschmann": "K = \\dfrac{\\left(t^4\\left(\\partial_t\\lambda\\right)^2\\left(\\partial_t P\\right)^2 - t^4\\left(\\partial_t\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 + t^4e^{2P}\\left(\\partial_t\\lambda\\right)^2\\left(\\partial_t Q\\right)^2 - t^4e^{2P}\\left(\\partial_t\\lambda\\right)^2\\left(\\partial_\\theta Q\\right)^2 + t^2\\left(\\partial_t\\lambda\\right)^2 - 8t^3\\,\\partial_t\\lambda\\left(\\partial_t P\\right)^2 - 4t^4e^{2P}\\partial_t\\lambda\\,\\partial_t P\\left(\\partial_t Q\\right)^2 + 12t^4e^{2P}\\partial_t\\lambda\\,\\partial_t P\\left(\\partial_\\theta Q\\right)^2 - 4t^4\\,\\partial_t\\lambda\\,\\partial_t P\\,\\partial_t^2 P - 4t^4\\,\\partial_t\\lambda\\,\\partial_t P\\,\\partial_\\theta^2 P + 4t^3\\,\\partial_t\\lambda\\left(\\partial_\\theta P\\right)^2 - 8t^4e^{2P}\\partial_t\\lambda\\,\\partial_\\theta P\\,\\partial_t Q\\,\\partial_\\theta Q + 8t^4\\,\\partial_t\\lambda\\,\\partial_\\theta P\\,\\partial_t\\partial_\\theta P - 8t^3e^{2P}\\partial_t\\lambda\\left(\\partial_t Q\\right)^2 - 4t^4e^{2P}\\partial_t\\lambda\\,\\partial_t Q\\,\\partial_t^2 Q - 4t^4e^{2P}\\partial_t\\lambda\\,\\partial_t Q\\,\\partial_\\theta^2 Q + 4t^3e^{2P}\\partial_t\\lambda\\left(\\partial_\\theta Q\\right)^2 + 8t^4e^{2P}\\partial_t\\lambda\\,\\partial_\\theta Q\\,\\partial_t\\partial_\\theta Q - t^4\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_t P\\right)^2 + t^4\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 - t^4e^{2P}\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_t Q\\right)^2 + t^4e^{2P}\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\theta Q\\right)^2 - t^2\\left(\\partial_\\theta\\lambda\\right)^2 + 4t^3\\,\\partial_\\theta\\lambda\\,\\partial_t P\\,\\partial_\\theta P - 8t^4e^{2P}\\partial_\\theta\\lambda\\,\\partial_t P\\,\\partial_t Q\\,\\partial_\\theta Q + 8t^4\\,\\partial_\\theta\\lambda\\,\\partial_t P\\,\\partial_t\\partial_\\theta P + 12t^4e^{2P}\\partial_\\theta\\lambda\\,\\partial_\\theta P\\left(\\partial_t Q\\right)^2 - 4t^4e^{2P}\\partial_\\theta\\lambda\\,\\partial_\\theta P\\left(\\partial_\\theta Q\\right)^2 - 4t^4\\,\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_t^2 P - 4t^4\\,\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_\\theta^2 P + 4t^3e^{2P}\\partial_\\theta\\lambda\\,\\partial_t Q\\,\\partial_\\theta Q + 8t^4e^{2P}\\partial_\\theta\\lambda\\,\\partial_t Q\\,\\partial_t\\partial_\\theta Q - 4t^4e^{2P}\\partial_\\theta\\lambda\\,\\partial_\\theta Q\\,\\partial_t^2 Q - 4t^4e^{2P}\\partial_\\theta\\lambda\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q + 3t^4\\left(\\partial_t P\\right)^4 - 6t^4\\left(\\partial_t P\\right)^2\\left(\\partial_\\theta P\\right)^2 + 38t^4e^{2P}\\left(\\partial_t P\\right)^2\\left(\\partial_t Q\\right)^2 - 30t^4e^{2P}\\left(\\partial_t P\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 9t^2\\left(\\partial_t P\\right)^2 - 16t^4e^{2P}\\partial_t P\\,\\partial_\\theta P\\,\\partial_t Q\\,\\partial_\\theta Q + 20t^3e^{2P}\\partial_t P\\left(\\partial_t Q\\right)^2 + 32t^4e^{2P}\\partial_t P\\,\\partial_t Q\\,\\partial_t^2 Q - 28t^3e^{2P}\\partial_t P\\left(\\partial_\\theta Q\\right)^2 - 32t^4e^{2P}\\partial_t P\\,\\partial_\\theta Q\\,\\partial_t\\partial_\\theta Q + 20t^3\\,\\partial_t P\\,\\partial_t^2 P + 4t^3\\,\\partial_t P\\,\\partial_\\theta^2 P + 3t^4\\left(\\partial_\\theta P\\right)^4 - 30t^4e^{2P}\\left(\\partial_\\theta P\\right)^2\\left(\\partial_t Q\\right)^2 + 38t^4e^{2P}\\left(\\partial_\\theta P\\right)^2\\left(\\partial_\\theta Q\\right)^2 - 5t^2\\left(\\partial_\\theta P\\right)^2 + 8t^3e^{2P}\\partial_\\theta P\\,\\partial_t Q\\,\\partial_\\theta Q - 32t^4e^{2P}\\partial_\\theta P\\,\\partial_t Q\\,\\partial_t\\partial_\\theta Q + 32t^4e^{2P}\\partial_\\theta P\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q - 24t^3\\,\\partial_\\theta P\\,\\partial_t\\partial_\\theta P + 11t^4e^{4P}\\left(\\partial_t Q\\right)^4 - 22t^4e^{4P}\\left(\\partial_t Q\\right)^2\\left(\\partial_\\theta Q\\right)^2 - 16t^4e^{2P}\\left(\\partial_t Q\\right)^2\\,\\partial_t^2 P + 9t^2e^{2P}\\left(\\partial_t Q\\right)^2 + 32t^4e^{2P}\\partial_t Q\\,\\partial_\\theta Q\\,\\partial_t\\partial_\\theta P + 20t^3e^{2P}\\partial_t Q\\,\\partial_t^2 Q + 4t^3e^{2P}\\partial_t Q\\,\\partial_\\theta^2 Q + 11t^4e^{4P}\\left(\\partial_\\theta Q\\right)^4 - 16t^4e^{2P}\\left(\\partial_\\theta Q\\right)^2\\,\\partial_\\theta^2 P - 5t^2e^{2P}\\left(\\partial_\\theta Q\\right)^2 - 24t^3e^{2P}\\partial_\\theta Q\\,\\partial_t\\partial_\\theta Q + 8t^4\\left(\\partial_t^2 P\\right)^2 - 16t^4\\left(\\partial_t\\partial_\\theta P\\right)^2 + 8t^4\\left(\\partial_\\theta^2 P\\right)^2 + 8t^4e^{2P}\\left(\\partial_t^2 Q\\right)^2 - 16t^4e^{2P}\\left(\\partial_t\\partial_\\theta Q\\right)^2 + 8t^4e^{2P}\\left(\\partial_\\theta^2 Q\\right)^2 + t^4\\left(\\partial_t^2\\lambda\\right)^2 - 2t^4\\,\\partial_t^2\\lambda\\,\\partial_\\theta^2\\lambda + 2t^2\\,\\partial_t^2\\lambda + t^4\\left(\\partial_\\theta^2\\lambda\\right)^2 - 2t^2\\,\\partial_\\theta^2\\lambda + 3\\right)e^{-\\lambda}}{4L^4\\,t^3}"
+        },
+        {
+          "id": "logarithmic",
+          "name": "Torus, Logarithmic Time",
+          "coordinates": [
+            "\\tau",
+            "\\theta",
+            "\\sigma",
+            "\\delta"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, 2\\pi)",
+            "\\sigma \\in [0, 2\\pi)",
+            "\\delta \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Length that sets the scale of the universe ($L > 0$)"
+            },
+            {
+              "symbol": "P = P(\\tau,\\theta)",
+              "description": "Wave amplitude, a dimensionless function of $\\tau$ and $\\theta$, periodic in $\\theta$; the spacetime is a vacuum exactly where $\\partial_\\tau^2P - e^{-2\\tau}\\partial_\\theta^2P = e^{2P}\\left(\\left(\\partial_\\tau Q\\right)^2 - e^{-2\\tau}\\left(\\partial_\\theta Q\\right)^2\\right)$ together with the equations for $Q$ and $\\lambda$"
+            },
+            {
+              "symbol": "Q = Q(\\tau,\\theta)",
+              "description": "Twist of the two polarisations, a dimensionless function of $\\tau$ and $\\theta$, periodic in $\\theta$, with $Q = 0$ the polarised case; in a vacuum $\\partial_\\tau^2Q - e^{-2\\tau}\\partial_\\theta^2Q = -2\\left(\\partial_\\tau P\\,\\partial_\\tau Q - e^{-2\\tau}\\partial_\\theta P\\,\\partial_\\theta Q\\right)$"
+            },
+            {
+              "symbol": "\\lambda = \\lambda(\\tau,\\theta)",
+              "description": "Dimensionless function of $\\tau$ and $\\theta$, periodic in $\\theta$; in a vacuum $\\partial_\\tau\\lambda = -\\left(\\partial_\\tau P\\right)^2 - e^{-2\\tau}\\left(\\partial_\\theta P\\right)^2 - e^{2P}\\left(\\left(\\partial_\\tau Q\\right)^2 + e^{-2\\tau}\\left(\\partial_\\theta Q\\right)^2\\right)$ and $\\partial_\\theta\\lambda = -2\\left(\\partial_\\tau P\\,\\partial_\\theta P + e^{2P}\\partial_\\tau Q\\,\\partial_\\theta Q\\right)$"
+            }
+          ],
+          "convention": "We use the time $\\tau = -\\ln t$ of the areal chart, which grows toward the past and reaches $+\\infty$ at the singularity, with $\\theta$, $\\sigma$, and $\\delta$ as in that chart. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = L^2\\left(e^{(\\lambda + \\tau)/2}\\left(-e^{-2\\tau}d\\tau^2 + d\\theta^2\\right) + e^{-\\tau}\\left(e^{P}\\left(d\\sigma + Q\\,d\\delta\\right)^2 + e^{-P}d\\delta^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-L^2e^{\\dfrac{\\lambda}{2} - \\dfrac{3\\tau}{2}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2e^{\\dfrac{\\lambda}{2} + \\dfrac{\\tau}{2}}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "L^2e^{P - \\tau}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\delta"
+              ],
+              "value": "L^2\\,Q\\,e^{P - \\tau}"
+            },
+            {
+              "indices": [
+                "\\delta",
+                "\\sigma"
+              ],
+              "value": "L^2\\,Q\\,e^{P - \\tau}"
+            },
+            {
+              "indices": [
+                "\\delta",
+                "\\delta"
+              ],
+              "value": "L^2\\left(Q^2e^{2P} + 1\\right)e^{-P - \\tau}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(e^{2\\tau}\\partial_\\tau\\lambda + e^{2\\tau}\\left(\\partial_\\tau P\\right)^2 - \\left(\\partial_\\theta P\\right)^2 + e^{2P + 2\\tau}\\left(\\partial_\\tau Q\\right)^2 - e^{2P}\\left(\\partial_\\theta Q\\right)^2 + e^{2\\tau}\\partial_\\tau^2\\lambda - \\partial_\\theta^2\\lambda\\right)e^{-\\dfrac{\\lambda}{2} - \\dfrac{\\tau}{2}}}{2L^2}",
+          "kretschmann": "K = \\dfrac{\\left(e^{4\\tau}\\left(\\partial_\\tau\\lambda\\right)^2\\left(\\partial_\\tau P\\right)^2 - e^{2\\tau}\\left(\\partial_\\tau\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 + e^{2P + 4\\tau}\\left(\\partial_\\tau\\lambda\\right)^2\\left(\\partial_\\tau Q\\right)^2 - e^{2P + 2\\tau}\\left(\\partial_\\tau\\lambda\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 2e^{4\\tau}\\left(\\partial_\\tau\\lambda\\right)^2 + 4e^{4\\tau}\\partial_\\tau\\lambda\\left(\\partial_\\tau P\\right)^2 - 4e^{2P + 4\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau P\\left(\\partial_\\tau Q\\right)^2 + 12e^{2P + 2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau P\\left(\\partial_\\theta Q\\right)^2 - 4e^{4\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau P\\,\\partial_\\tau^2 P - 4e^{2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau P\\,\\partial_\\theta^2 P - 4e^{2\\tau}\\partial_\\tau\\lambda\\left(\\partial_\\theta P\\right)^2 - 8e^{2P + 2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\theta P\\,\\partial_\\tau Q\\,\\partial_\\theta Q + 8e^{2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\theta P\\,\\partial_\\tau\\partial_\\theta P + 4e^{2P + 4\\tau}\\partial_\\tau\\lambda\\left(\\partial_\\tau Q\\right)^2 - 4e^{2P + 4\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau Q\\,\\partial_\\tau^2 Q - 4e^{2P + 2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau Q\\,\\partial_\\theta^2 Q - 4e^{2P + 2\\tau}\\partial_\\tau\\lambda\\left(\\partial_\\theta Q\\right)^2 + 8e^{2P + 2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\theta Q\\,\\partial_\\tau\\partial_\\theta Q + 2e^{4\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau^2\\lambda - 2e^{2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\theta^2\\lambda + 2e^{4\\tau}\\partial_\\tau\\lambda - e^{2\\tau}\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\tau P\\right)^2 + \\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 - e^{2P + 2\\tau}\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\tau Q\\right)^2 + e^{2P}\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\theta Q\\right)^2 - e^{2\\tau}\\left(\\partial_\\theta\\lambda\\right)^2 - 8e^{2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\tau P\\,\\partial_\\theta P - 8e^{2P + 2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\tau P\\,\\partial_\\tau Q\\,\\partial_\\theta Q + 8e^{2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\tau P\\,\\partial_\\tau\\partial_\\theta P + 12e^{2P + 2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\theta P\\left(\\partial_\\tau Q\\right)^2 - 4e^{2P}\\partial_\\theta\\lambda\\,\\partial_\\theta P\\left(\\partial_\\theta Q\\right)^2 - 4e^{2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_\\tau^2 P - 4\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_\\theta^2 P - 8e^{2P + 2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\tau Q\\,\\partial_\\theta Q + 8e^{2P + 2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\tau Q\\,\\partial_\\tau\\partial_\\theta Q - 4e^{2P + 2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\theta Q\\,\\partial_\\tau^2 Q - 4e^{2P}\\partial_\\theta\\lambda\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q + 3e^{4\\tau}\\left(\\partial_\\tau P\\right)^4 - 6e^{2\\tau}\\left(\\partial_\\tau P\\right)^2\\left(\\partial_\\theta P\\right)^2 + 38e^{2P + 4\\tau}\\left(\\partial_\\tau P\\right)^2\\left(\\partial_\\tau Q\\right)^2 - 30e^{2P + 2\\tau}\\left(\\partial_\\tau P\\right)^2\\left(\\partial_\\theta Q\\right)^2 - 3e^{4\\tau}\\left(\\partial_\\tau P\\right)^2 - 16e^{2P + 2\\tau}\\partial_\\tau P\\,\\partial_\\theta P\\,\\partial_\\tau Q\\,\\partial_\\theta Q - 4e^{2P + 4\\tau}\\partial_\\tau P\\left(\\partial_\\tau Q\\right)^2 + 32e^{2P + 4\\tau}\\partial_\\tau P\\,\\partial_\\tau Q\\,\\partial_\\tau^2 Q + 28e^{2P + 2\\tau}\\partial_\\tau P\\left(\\partial_\\theta Q\\right)^2 - 32e^{2P + 2\\tau}\\partial_\\tau P\\,\\partial_\\theta Q\\,\\partial_\\tau\\partial_\\theta Q - 4e^{4\\tau}\\partial_\\tau P\\,\\partial_\\tau^2 P - 4e^{2\\tau}\\partial_\\tau P\\,\\partial_\\theta^2 P + 3\\left(\\partial_\\theta P\\right)^4 - 30e^{2P + 2\\tau}\\left(\\partial_\\theta P\\right)^2\\left(\\partial_\\tau Q\\right)^2 + 38e^{2P}\\left(\\partial_\\theta P\\right)^2\\left(\\partial_\\theta Q\\right)^2 - 5e^{2\\tau}\\left(\\partial_\\theta P\\right)^2 - 8e^{2P + 2\\tau}\\partial_\\theta P\\,\\partial_\\tau Q\\,\\partial_\\theta Q - 32e^{2P + 2\\tau}\\partial_\\theta P\\,\\partial_\\tau Q\\,\\partial_\\tau\\partial_\\theta Q + 32e^{2P}\\partial_\\theta P\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q + 24e^{2\\tau}\\partial_\\theta P\\,\\partial_\\tau\\partial_\\theta P + 11e^{4P + 4\\tau}\\left(\\partial_\\tau Q\\right)^4 - 22e^{4P + 2\\tau}\\left(\\partial_\\tau Q\\right)^2\\left(\\partial_\\theta Q\\right)^2 - 16e^{2P + 4\\tau}\\left(\\partial_\\tau Q\\right)^2\\,\\partial_\\tau^2 P - 3e^{2P + 4\\tau}\\left(\\partial_\\tau Q\\right)^2 + 32e^{2P + 2\\tau}\\partial_\\tau Q\\,\\partial_\\theta Q\\,\\partial_\\tau\\partial_\\theta P - 4e^{2P + 4\\tau}\\partial_\\tau Q\\,\\partial_\\tau^2 Q - 4e^{2P + 2\\tau}\\partial_\\tau Q\\,\\partial_\\theta^2 Q + 11e^{4P}\\left(\\partial_\\theta Q\\right)^4 - 16e^{2P}\\left(\\partial_\\theta Q\\right)^2\\,\\partial_\\theta^2 P - 5e^{2P + 2\\tau}\\left(\\partial_\\theta Q\\right)^2 + 24e^{2P + 2\\tau}\\partial_\\theta Q\\,\\partial_\\tau\\partial_\\theta Q + 8e^{4\\tau}\\left(\\partial_\\tau^2 P\\right)^2 - 16e^{2\\tau}\\left(\\partial_\\tau\\partial_\\theta P\\right)^2 + 8\\left(\\partial_\\theta^2 P\\right)^2 + 8e^{2P + 4\\tau}\\left(\\partial_\\tau^2 Q\\right)^2 - 16e^{2P + 2\\tau}\\left(\\partial_\\tau\\partial_\\theta Q\\right)^2 + 8e^{2P}\\left(\\partial_\\theta^2 Q\\right)^2 + e^{4\\tau}\\left(\\partial_\\tau^2\\lambda\\right)^2 - 2e^{2\\tau}\\partial_\\tau^2\\lambda\\,\\partial_\\theta^2\\lambda + 2e^{4\\tau}\\partial_\\tau^2\\lambda + \\left(\\partial_\\theta^2\\lambda\\right)^2 - 2e^{2\\tau}\\partial_\\theta^2\\lambda + 3e^{4\\tau}\\right)e^{-\\lambda - \\tau}}{4L^4}"
+        },
+        {
+          "id": "sphere",
+          "name": "Sphere and Handle",
+          "coordinates": [
+            "t",
+            "\\theta",
+            "\\sigma",
+            "\\delta"
+          ],
+          "domains": [
+            "t \\in (0, \\pi)",
+            "\\theta \\in [0, \\pi]",
+            "\\sigma \\in [0, 2\\pi)",
+            "\\delta \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Length that sets the scale of the universe ($L > 0$)"
+            },
+            {
+              "symbol": "P = P(t,\\theta)",
+              "description": "Wave amplitude, a dimensionless function of $t$ and $\\theta$; the spacetime is a vacuum exactly where $\\partial_t^2P + \\cot t\\,\\partial_tP - \\partial_\\theta^2P - \\cot\\theta\\,\\partial_\\theta P = e^{2P}\\left(\\left(\\partial_tQ\\right)^2 - \\left(\\partial_\\theta Q\\right)^2\\right)$ together with the equations for $Q$ and $a$"
+            },
+            {
+              "symbol": "Q = Q(t,\\theta)",
+              "description": "Twist of the two polarisations, a dimensionless function of $t$ and $\\theta$, with $Q = 0$ the polarised case; in a vacuum $\\partial_t^2Q + \\cot t\\,\\partial_tQ - \\partial_\\theta^2Q - \\cot\\theta\\,\\partial_\\theta Q = -2\\left(\\partial_tP\\,\\partial_tQ - \\partial_\\theta P\\,\\partial_\\theta Q\\right)$"
+            },
+            {
+              "symbol": "a = a(t,\\theta)",
+              "description": "Dimensionless function of $t$ and $\\theta$; in a vacuum $\\cot\\theta\\,\\partial_ta + \\cot t\\,\\partial_\\theta a = \\dfrac{1}{2}\\left(\\cot t\\cot\\theta + \\partial_tP\\,\\partial_\\theta P + e^{2P}\\partial_tQ\\,\\partial_\\theta Q\\right)$ and $\\cot t\\,\\partial_ta + \\cot\\theta\\,\\partial_\\theta a = \\dfrac{1}{4}\\left(\\left(\\partial_tP\\right)^2 + \\left(\\partial_\\theta P\\right)^2 + e^{2P}\\left(\\left(\\partial_tQ\\right)^2 + \\left(\\partial_\\theta Q\\right)^2\\right) - \\cot^2t - \\cot^2\\theta\\right) - 1$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\theta, \\sigma, \\delta)$ on $S^3$ and on $S^2 \\times S^1$, with $\\partial_\\sigma$ and $\\partial_\\delta$ the two Killing vectors, whose orbits have area $4\\pi^2L^2\\sin t\\sin\\theta$ and shrink to the rotation axes at $\\theta = 0$ and $\\theta = \\pi$. The universe begins at $t = 0$ and ends at $t = \\pi$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = L^2\\left(e^{2a}\\left(-dt^2 + d\\theta^2\\right) + \\sin t\\,\\sin\\theta\\left(e^{P}\\left(d\\sigma + Q\\,d\\delta\\right)^2 + e^{-P}d\\delta^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-L^2e^{2a}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2e^{2a}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "L^2e^{P}\\sin t\\sin\\theta"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\delta"
+              ],
+              "value": "L^2\\,Q\\,e^{P}\\sin t\\sin\\theta"
+            },
+            {
+              "indices": [
+                "\\delta",
+                "\\sigma"
+              ],
+              "value": "L^2\\,Q\\,e^{P}\\sin t\\sin\\theta"
+            },
+            {
+              "indices": [
+                "\\delta",
+                "\\delta"
+              ],
+              "value": "L^2\\left(Q^2e^{2P} + 1\\right)e^{-P}\\sin t\\sin\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(\\left(\\partial_t P\\right)^2\\,\\sin^2 t\\sin^2\\theta - \\left(\\partial_\\theta P\\right)^2\\,\\sin^2 t\\sin^2\\theta + e^{2P}\\left(\\partial_t Q\\right)^2\\,\\sin^2 t\\sin^2\\theta - e^{2P}\\left(\\partial_\\theta Q\\right)^2\\,\\sin^2 t\\sin^2\\theta + 4\\partial_t^2 a\\,\\sin^2 t\\sin^2\\theta - 4\\partial_\\theta^2 a\\,\\sin^2 t\\sin^2\\theta + \\sin^2 t - \\sin^2\\theta\\right)e^{-2a}\\csc^2 t\\csc^2\\theta}{2L^2}",
+          "kretschmann": "K = \\dfrac{\\left(16\\left(\\partial_t a\\right)^2\\left(\\partial_t P\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16\\left(\\partial_t a\\right)^2\\left(\\partial_\\theta P\\right)^2\\,\\sin^4 t\\sin^4\\theta + 16e^{2P}\\left(\\partial_t a\\right)^2\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\left(\\partial_t a\\right)^2\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^4\\theta + 16\\left(\\partial_t a\\right)^2\\,\\sin^2 t\\sin^4\\theta - 16\\left(\\partial_t a\\right)^2\\,\\sin^4 t\\sin^2\\theta - 24\\partial_t a\\left(\\partial_t P\\right)^2\\,\\sin^3 t\\cos t\\sin^4\\theta + 16\\partial_t a\\,\\partial_t P\\,\\partial_\\theta P\\,\\sin^4 t\\sin^3\\theta\\cos\\theta - 16e^{2P}\\partial_t a\\,\\partial_t P\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^4\\theta + 48e^{2P}\\partial_t a\\,\\partial_t P\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16\\partial_t a\\,\\partial_t P\\,\\partial_t^2 P\\,\\sin^4 t\\sin^4\\theta - 16\\partial_t a\\,\\partial_t P\\,\\partial_\\theta^2 P\\,\\sin^4 t\\sin^4\\theta + 8\\partial_t a\\left(\\partial_\\theta P\\right)^2\\,\\sin^3 t\\cos t\\sin^4\\theta - 32e^{2P}\\partial_t a\\,\\partial_\\theta P\\,\\partial_t Q\\,\\partial_\\theta Q\\,\\sin^4 t\\sin^4\\theta + 32\\partial_t a\\,\\partial_\\theta P\\,\\partial_t\\partial_\\theta P\\,\\sin^4 t\\sin^4\\theta - 24e^{2P}\\partial_t a\\left(\\partial_t Q\\right)^2\\,\\sin^3 t\\cos t\\sin^4\\theta + 16e^{2P}\\partial_t a\\,\\partial_t Q\\,\\partial_\\theta Q\\,\\sin^4 t\\sin^3\\theta\\cos\\theta - 16e^{2P}\\partial_t a\\,\\partial_t Q\\,\\partial_t^2 Q\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\partial_t a\\,\\partial_t Q\\,\\partial_\\theta^2 Q\\,\\sin^4 t\\sin^4\\theta + 8e^{2P}\\partial_t a\\left(\\partial_\\theta Q\\right)^2\\,\\sin^3 t\\cos t\\sin^4\\theta + 32e^{2P}\\partial_t a\\,\\partial_\\theta Q\\,\\partial_t\\partial_\\theta Q\\,\\sin^4 t\\sin^4\\theta + 24\\partial_t a\\,\\sin^3 t\\cos t\\sin^2\\theta + 8\\partial_t a\\,\\sin t\\cos t\\sin^4\\theta - 16\\left(\\partial_\\theta a\\right)^2\\left(\\partial_t P\\right)^2\\,\\sin^4 t\\sin^4\\theta + 16\\left(\\partial_\\theta a\\right)^2\\left(\\partial_\\theta P\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\left(\\partial_\\theta a\\right)^2\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^4\\theta + 16e^{2P}\\left(\\partial_\\theta a\\right)^2\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16\\left(\\partial_\\theta a\\right)^2\\,\\sin^2 t\\sin^4\\theta + 16\\left(\\partial_\\theta a\\right)^2\\,\\sin^4 t\\sin^2\\theta + 8\\partial_\\theta a\\left(\\partial_t P\\right)^2\\,\\sin^4 t\\sin^3\\theta\\cos\\theta + 16\\partial_\\theta a\\,\\partial_t P\\,\\partial_\\theta P\\,\\sin^3 t\\cos t\\sin^4\\theta - 32e^{2P}\\partial_\\theta a\\,\\partial_t P\\,\\partial_t Q\\,\\partial_\\theta Q\\,\\sin^4 t\\sin^4\\theta + 32\\partial_\\theta a\\,\\partial_t P\\,\\partial_t\\partial_\\theta P\\,\\sin^4 t\\sin^4\\theta - 24\\partial_\\theta a\\left(\\partial_\\theta P\\right)^2\\,\\sin^4 t\\sin^3\\theta\\cos\\theta + 48e^{2P}\\partial_\\theta a\\,\\partial_\\theta P\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\partial_\\theta a\\,\\partial_\\theta P\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16\\partial_\\theta a\\,\\partial_\\theta P\\,\\partial_t^2 P\\,\\sin^4 t\\sin^4\\theta - 16\\partial_\\theta a\\,\\partial_\\theta P\\,\\partial_\\theta^2 P\\,\\sin^4 t\\sin^4\\theta + 8e^{2P}\\partial_\\theta a\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^3\\theta\\cos\\theta + 16e^{2P}\\partial_\\theta a\\,\\partial_t Q\\,\\partial_\\theta Q\\,\\sin^3 t\\cos t\\sin^4\\theta + 32e^{2P}\\partial_\\theta a\\,\\partial_t Q\\,\\partial_t\\partial_\\theta Q\\,\\sin^4 t\\sin^4\\theta - 24e^{2P}\\partial_\\theta a\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^3\\theta\\cos\\theta - 16e^{2P}\\partial_\\theta a\\,\\partial_\\theta Q\\,\\partial_t^2 Q\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\partial_\\theta a\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q\\,\\sin^4 t\\sin^4\\theta + 24\\partial_\\theta a\\,\\sin^2 t\\sin^3\\theta\\cos\\theta + 8\\partial_\\theta a\\,\\sin^4 t\\sin\\theta\\cos\\theta + 3\\left(\\partial_t P\\right)^4\\,\\sin^4 t\\sin^4\\theta - 6\\left(\\partial_t P\\right)^2\\left(\\partial_\\theta P\\right)^2\\,\\sin^4 t\\sin^4\\theta + 38e^{2P}\\left(\\partial_t P\\right)^2\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 30e^{2P}\\left(\\partial_t P\\right)^2\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^4\\theta + 2\\left(\\partial_t P\\right)^2\\,\\sin^2 t\\sin^4\\theta - 2\\left(\\partial_t P\\right)^2\\,\\sin^4 t\\sin^2\\theta - 8\\left(\\partial_t P\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\partial_t P\\,\\partial_\\theta P\\,\\partial_t Q\\,\\partial_\\theta Q\\,\\sin^4 t\\sin^4\\theta - 16\\partial_t P\\,\\partial_\\theta P\\,\\sin^3 t\\cos t\\sin^3\\theta\\cos\\theta + 16e^{2P}\\partial_t P\\left(\\partial_t Q\\right)^2\\,\\sin^3 t\\cos t\\sin^4\\theta + 32e^{2P}\\partial_t P\\,\\partial_t Q\\,\\partial_t^2 Q\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\partial_t P\\left(\\partial_\\theta Q\\right)^2\\,\\sin^3 t\\cos t\\sin^4\\theta - 32e^{2P}\\partial_t P\\,\\partial_\\theta Q\\,\\partial_t\\partial_\\theta Q\\,\\sin^4 t\\sin^4\\theta + 16\\partial_t P\\,\\partial_t^2 P\\,\\sin^3 t\\cos t\\sin^4\\theta - 16\\partial_t P\\,\\partial_t\\partial_\\theta P\\,\\sin^4 t\\sin^3\\theta\\cos\\theta + 3\\left(\\partial_\\theta P\\right)^4\\,\\sin^4 t\\sin^4\\theta - 30e^{2P}\\left(\\partial_\\theta P\\right)^2\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^4\\theta + 38e^{2P}\\left(\\partial_\\theta P\\right)^2\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 2\\left(\\partial_\\theta P\\right)^2\\,\\sin^2 t\\sin^4\\theta + 2\\left(\\partial_\\theta P\\right)^2\\,\\sin^4 t\\sin^2\\theta - 8\\left(\\partial_\\theta P\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\partial_\\theta P\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^3\\theta\\cos\\theta - 32e^{2P}\\partial_\\theta P\\,\\partial_t Q\\,\\partial_t\\partial_\\theta Q\\,\\sin^4 t\\sin^4\\theta + 16e^{2P}\\partial_\\theta P\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^3\\theta\\cos\\theta + 32e^{2P}\\partial_\\theta P\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q\\,\\sin^4 t\\sin^4\\theta - 16\\partial_\\theta P\\,\\partial_t\\partial_\\theta P\\,\\sin^3 t\\cos t\\sin^4\\theta + 16\\partial_\\theta P\\,\\partial_\\theta^2 P\\,\\sin^4 t\\sin^3\\theta\\cos\\theta + 11e^{4P}\\left(\\partial_t Q\\right)^4\\,\\sin^4 t\\sin^4\\theta - 22e^{4P}\\left(\\partial_t Q\\right)^2\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\left(\\partial_t Q\\right)^2\\,\\partial_t^2 P\\,\\sin^4 t\\sin^4\\theta + 2e^{2P}\\left(\\partial_t Q\\right)^2\\,\\sin^2 t\\sin^4\\theta - 2e^{2P}\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^2\\theta - 8e^{2P}\\left(\\partial_t Q\\right)^2\\,\\sin^4 t\\sin^4\\theta + 32e^{2P}\\partial_t Q\\,\\partial_\\theta Q\\,\\partial_t\\partial_\\theta P\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\partial_t Q\\,\\partial_\\theta Q\\,\\sin^3 t\\cos t\\sin^3\\theta\\cos\\theta + 16e^{2P}\\partial_t Q\\,\\partial_t^2 Q\\,\\sin^3 t\\cos t\\sin^4\\theta - 16e^{2P}\\partial_t Q\\,\\partial_t\\partial_\\theta Q\\,\\sin^4 t\\sin^3\\theta\\cos\\theta + 11e^{4P}\\left(\\partial_\\theta Q\\right)^4\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\left(\\partial_\\theta Q\\right)^2\\,\\partial_\\theta^2 P\\,\\sin^4 t\\sin^4\\theta - 2e^{2P}\\left(\\partial_\\theta Q\\right)^2\\,\\sin^2 t\\sin^4\\theta + 2e^{2P}\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^2\\theta - 8e^{2P}\\left(\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\partial_\\theta Q\\,\\partial_t\\partial_\\theta Q\\,\\sin^3 t\\cos t\\sin^4\\theta + 16e^{2P}\\partial_\\theta Q\\,\\partial_\\theta^2 Q\\,\\sin^4 t\\sin^3\\theta\\cos\\theta + 8\\left(\\partial_t^2 P\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16\\left(\\partial_t\\partial_\\theta P\\right)^2\\,\\sin^4 t\\sin^4\\theta + 8\\left(\\partial_\\theta^2 P\\right)^2\\,\\sin^4 t\\sin^4\\theta + 8e^{2P}\\left(\\partial_t^2 Q\\right)^2\\,\\sin^4 t\\sin^4\\theta - 16e^{2P}\\left(\\partial_t\\partial_\\theta Q\\right)^2\\,\\sin^4 t\\sin^4\\theta + 8e^{2P}\\left(\\partial_\\theta^2 Q\\right)^2\\,\\sin^4 t\\sin^4\\theta + 16\\left(\\partial_t^2 a\\right)^2\\,\\sin^4 t\\sin^4\\theta - 32\\partial_t^2 a\\,\\partial_\\theta^2 a\\,\\sin^4 t\\sin^4\\theta + 16\\left(\\partial_\\theta^2 a\\right)^2\\,\\sin^4 t\\sin^4\\theta - 6\\sin^2 t\\sin^2\\theta + 8\\sin^2 t\\sin^4\\theta + 8\\sin^4 t\\sin^2\\theta + 3\\sin^4 t + 3\\sin^4\\theta\\right)e^{-4a}\\csc^4 t\\csc^4\\theta}{4L^4}"
+        }
+      ]
+    },
+    {
       "id": "kaluza_klein_monopole",
       "name": "Kaluza-Klein Monopole",
       "short_name": "Kaluza-Klein Monopole",
@@ -5155,6 +5500,11 @@
           "id": "szekeres",
           "kind": "generalisation",
           "text": "Peter Szekeres's dust cosmologies of 1975 hold the Kantowski-Sachs dust models in their second class, and in general have no Killing vector [szekeres1975, bonnor1977]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "generalisation",
+          "text": "With its axis wrapped into a circle, the member with no matter is a polarised Gowdy spacetime on $S^2 \\times S^1$ [obregon1998]."
         }
       ],
       "references": [
@@ -5170,7 +5520,8 @@
         "weber1984",
         "laflamme1987",
         "szekeres1975",
-        "bonnor1977"
+        "bonnor1977",
+        "obregon1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kantowski_sachs.json",
@@ -5402,6 +5753,11 @@
           "id": "khan_penrose",
           "kind": "family",
           "text": "Two plane waves colliding end in a singularity near which the metric is Kasner's, with exponents set by the incoming waves [yurtsever1988]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "generalisation",
+          "text": "Kasner's universe with gravitational waves running round a torus. The flat Kasner universe is the Gowdy torus with $P = \\tau$ and $Q = 0$ [ringstrom2010], and a polarised Gowdy universe approaches a Kasner universe of its own at each $\\theta$ as it nears the singularity [berger1974]."
         }
       ],
       "references": [
@@ -5415,7 +5771,9 @@
         "ellismaccallum1969",
         "levicivita1919",
         "maccallum2011",
-        "yurtsever1988"
+        "yurtsever1988",
+        "ringstrom2010",
+        "berger1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -5539,6 +5897,11 @@
           "id": "teo_wormhole",
           "kind": "family",
           "text": "A rotating wormhole with an ergoregion and no horizon. Its ergoregion is a tube round the equator of the throat, and the Penrose process draws energy from it as it does from Kerr's [teo1998]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "generalisation",
+          "text": "Between the outer and inner horizons $r$ is a time, and with $t$ wrapped into a circle the region is a Gowdy spacetime on $S^2 \\times S^1$ [obregon1998, garfinkle1999]."
         }
       ],
       "references": [
@@ -5563,7 +5926,9 @@
         "eht2019",
         "banados1992",
         "banados1993",
-        "teo1998"
+        "teo1998",
+        "obregon1998",
+        "garfinkle1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -8346,6 +8711,11 @@
           "id": "taub_nut",
           "kind": "special_case",
           "text": "The Mixmaster universe with two of its three axes equal is Taub's universe of 1951, the region of Taub-NUT between its horizons [taub1951, misner1963]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "programme",
+          "text": "Both are testing grounds for the conjecture of Belinskii, Khalatnikov, and Lifshitz [bkl1970]. The Mixmaster universe oscillates all the way down to its singularity, and in a generic Gowdy universe the spatial curvature terms drop out [gowdy2014]."
         }
       ],
       "references": [
@@ -8366,7 +8736,8 @@
         "demaret1985",
         "damour2003",
         "taub1951",
-        "misner1963"
+        "misner1963",
+        "gowdy2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mixmaster.json",
@@ -10073,6 +10444,11 @@
           "id": "ellis_bronnikov",
           "kind": "family",
           "text": "A wormhole made by opening Schwarzschild's central singularity into a throat with a scalar field [ellis1973]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "generalisation",
+          "text": "Inside the horizon $r$ is a time, and with $t$ wrapped into a circle the region is a polarised Gowdy spacetime on $S^2 \\times S^1$, Obregón and Ryan's Kerr example with the spin switched off [obregon1998]."
         }
       ],
       "references": [
@@ -10117,7 +10493,8 @@
         "fuller1962",
         "morris1988",
         "visser1989nuclphysb",
-        "ellis1973"
+        "ellis1973",
+        "obregon1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -12113,6 +12490,11 @@
           "id": "spinning_string",
           "kind": "family",
           "text": "A straight string with spin, around which the flat time shifts on each circuit. Pawel Mazur found in 1986 that a wave around it is single valued only at quantised energies, and set that beside the quantisation a gravitational magnetic mass brings [mazur1986]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "generalisation",
+          "text": "The Taub universe is a Gowdy spacetime on $S^3$. Its extension past the Big Bang is the reason strong cosmic censorship is stated for generic initial data [gowdy2014]."
         }
       ],
       "references": [
@@ -12130,7 +12512,8 @@
         "ellismaccallum1969",
         "misner1967",
         "grossperry1983",
-        "mazur1986"
+        "mazur1986",
+        "gowdy2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",

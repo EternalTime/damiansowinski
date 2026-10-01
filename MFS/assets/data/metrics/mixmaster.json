@@ -42,6 +42,11 @@
       "id": "taub_nut",
       "kind": "special_case",
       "text": "The Mixmaster universe with two of its three axes equal is Taub's universe of 1951, the region of Taub-NUT between its horizons [taub1951, misner1963]."
+    },
+    {
+      "id": "gowdy",
+      "kind": "programme",
+      "text": "Both are testing grounds for the conjecture of Belinskii, Khalatnikov, and Lifshitz [bkl1970]. The Mixmaster universe oscillates all the way down to its singularity, and in a generic Gowdy universe the spatial curvature terms drop out [gowdy2014]."
     }
   ],
   "references": [
@@ -62,7 +67,8 @@
     "demaret1985",
     "damour2003",
     "taub1951",
-    "misner1963"
+    "misner1963",
+    "gowdy2014"
   ],
   "coordinates": [
     {

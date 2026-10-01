@@ -137,6 +137,8 @@ LENGTH = sp.Symbol("L", positive=True)
 TIME = sp.Symbol("T", positive=True)
 MASS = sp.Symbol("M", positive=True)
 AFFINE = sp.Symbol("lambda", positive=True)
+# The name the parser reads a parameter \lambda under, since `lambda` is a Python keyword.
+KEYWORD_LAMBDA = "lambda_"
 BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 
 # The dimension of every coordinate and every parameter, per system. A coordinate
@@ -185,6 +187,17 @@ DIMENSIONS = {
     },
     ("einstein_rosen_waves", "null"): {
         "u": "L", "v": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\gamma": "1",
+    },
+    # Gowdy's coordinates are all pure numbers, the areal time among them, and the one length L
+    # multiplies the whole line element, so no coordinate is a time the chart multiplies by c.
+    ("gowdy", "areal"): {
+        "t": "1", "\\theta": "1", "\\sigma": "1", "\\delta": "1", "L": "L", "P": "1", "Q": "1", "\\lambda": "1",
+    },
+    ("gowdy", "logarithmic"): {
+        "\\tau": "1", "\\theta": "1", "\\sigma": "1", "\\delta": "1", "L": "L", "P": "1", "Q": "1", "\\lambda": "1",
+    },
+    ("gowdy", "sphere"): {
+        "t": "1", "\\theta": "1", "\\sigma": "1", "\\delta": "1", "L": "L", "P": "1", "Q": "1", "a": "1",
     },
     # B = sqrt(G) B_0/c^2 folds the field in Gaussian units into an inverse length, so B rho and
     # B r sin(theta) are pure numbers; Ernst's hole keeps Schwarzschild's r_s = 2GM/c^2.
@@ -1381,7 +1394,7 @@ class Reader:
         if self.dirac:
             for order in range(DIRAC_ORDERS):
                 self.local[f"DIRAC{order}"] = lambda argument, k=order: sp.DiracDelta(argument, k)
-        self.known = set(self.local)
+        self.known = set(self.local) | ({KEYWORD_LAMBDA} if "lambda" in self.local else set())
         self.transforms = standard_transformations + (
             split_symbols_custom(lambda name, _=None: name not in self.known),
             implicit_multiplication,
@@ -1569,9 +1582,15 @@ class Reader:
     def __call__(self, latex):
         text = self._preprocess(latex)
         self._declare_partials(text)
+        local = dict(self.local)
+        if "lambda" in local:
+            # A system may name a function \lambda, as Gowdy's cosmologies do, and Python keeps
+            # that word for itself, so the parser is handed it under a spelling of its own.
+            text = re.sub(r"(?<![A-Za-z0-9_])lambda(?![A-Za-z0-9_])", KEYWORD_LAMBDA, text)
+            local[KEYWORD_LAMBDA] = local.pop("lambda")
         try:
             expression = parse_expr(
-                text, local_dict=dict(self.local), transformations=self.transforms, evaluate=True
+                text, local_dict=local, transformations=self.transforms, evaluate=True
             )
         except Exception as error:
             raise LatexError(f"cannot parse {latex!r} (as {text!r}): {error}") from error
