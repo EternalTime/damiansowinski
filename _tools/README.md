@@ -491,6 +491,9 @@ Gott's core, the cosmic string's interior, is flat on its plane of $t$ and $\chi
 `MFS/assets/data/conformal/<metric_id>.json` holds the conformal diagram of one spacetime: the whole spacetime brought to a finite drawing with light at 45°, or, where no picture of the whole is faithful, a totally geodesic surface in it that says so.
 The page draws it under the heading "conformal diagram", just below the spacetime diagram, and it follows the chart chosen at the top: it shows the views that name that chart, then the views that name no chart, with buttons only when that makes more than one.
 A chart none of whose views is its own shows no conformal diagram at all, as Vaidya's outgoing chart does, since the one drawn is the shell imploding in the ingoing chart.
+A file that carries `together: true` beside `views` has every view of the chart drawn at once with no buttons, each with its own caption and legend, as the captain asked of Kerr on 1 October 2026: its symmetry axis and its equatorial plane "shown alongside", "both slices visible".
+The views stand side by side where the panel holds them all at the width a drawing is never drawn narrower than, and one under the other in the file's order where it does not, as on a 1440px desktop and on a phone.
+`TOGETHER` in `conformal.py` names those spacetimes, the build refuses the field unless the file has two or more views of one chart, and `conformalSection` in `_layouts/mfs.html` carries the layout.
 The application reads the same files.
 
 `_tools/derivations/conformal.py` draws them, one function per spacetime, each carrying its derivation in its docstring, reading the published metric through the checker's `Reader` with the `load` and `published_matrix` the null rays use.
