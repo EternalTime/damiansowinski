@@ -1014,6 +1014,43 @@
     "embedding": "1f6d4a7541295881"
   },
   {
+    "id": "robinson_trautman",
+    "name": "Robinson-Trautman",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "gravitational waves",
+      "gravitational radiation",
+      "radiating",
+      "time-dependent",
+      "dynamical",
+      "algebraically special",
+      "Petrov type II",
+      "null congruence",
+      "shear-free",
+      "twist-free",
+      "expanding",
+      "retarded time",
+      "Bondi mass",
+      "Calabi flow",
+      "black hole",
+      "white hole",
+      "event horizon",
+      "apparent horizon",
+      "asymptotically flat",
+      "axisymmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "562d7bee931c7452",
+    "diagrams": "53ff4d90bff08988",
+    "conformal": "0326c9d2101aa7a6",
+    "embedding": "7b7a1d9f63195b3e"
+  },
+  {
     "id": "schwarzschild",
     "name": "Schwarzschild Exterior",
     "tags": [

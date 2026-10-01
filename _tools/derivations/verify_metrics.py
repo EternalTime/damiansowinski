@@ -458,6 +458,14 @@ DIMENSIONS = {
     ("majumdar_papapetrou", "isotropic"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # Robinson and Trautman's r is an affine length along the rays and the fronts' coordinates
+    # are angles, so P, f and H are pure numbers.
+    ("robinson_trautman", "stereographic"): {
+        "u": "T", "r": "L", "x": "1", "y": "1", "P": "1", "H": "1",
+    },
+    ("robinson_trautman", "axisymmetric"): {
+        "u": "T", "r": "L", "\\theta": "1", "\\phi": "1", "f": "1", "H": "1",
+    },
     ("rn_metric", "spherical"): {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L",
     },

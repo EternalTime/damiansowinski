@@ -2,8 +2,8 @@
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
-khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita and curzon_chazy,
-and Godel's cylindrical chart.
+khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy
+and robinson_trautman, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -20,8 +20,8 @@ yet give a convention, stops the script rather than being written without one. T
 reads better than an expanded one, and each of those is checked against sympy here too.
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
-malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md and
-majumdar_papapetrou.md beside this file.
+malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
+majumdar_papapetrou.md and robinson_trautman.md beside this file.
 """
 import argparse
 import itertools
@@ -1411,7 +1411,7 @@ def thin_shell_wormhole(system):
             "metric_id": "thin_shell_wormhole",
             "system": {"id": "spherical", "name": "Schwarzschild", "coords": coords,
                        "domains": ["t \\in (-\\infty, \\infty)", "r \\in [a, \\infty)"] + TSW_ANGLES
-                       + ["r = a \;\\text{(throat)}"],
+                       + ["r = a \\;\\text{(throat)}"],
                        "parameters": parameters, "line_element": line},
             "chart_line_element": "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + TSW_SPHERE,
             "printer": {"rising": [rs], "lead": [r, rs], "flip": False},
@@ -1439,7 +1439,7 @@ def thin_shell_wormhole(system):
         "metric_id": "thin_shell_wormhole",
         "system": {"id": "throat", "name": "Through the Throat", "coords": coords,
                    "domains": ["t \\in (-\\infty, \\infty)", "\\ell \\in (-\\infty, \\infty)"] + TSW_ANGLES
-                   + ["\\ell = 0 \;\\text{(throat)}"],
+                   + ["\\ell = 0 \\;\\text{(throat)}"],
                    "parameters": parameters, "line_element": line},
         "chart_line_element": "ds^2 = -" + f + "dt^2 + \\dfrac{d\\ell^2}{" + bare + "}" + sphere,
         "printer": {"rising": [rs], "lead": [a, absolute, rs], "flip": False, "last": [delta], "overrides": overrides},
@@ -1596,6 +1596,106 @@ def kantowski_sachs_member(chart, member):
 KS_CHARTS = ["comoving", "schwarzschild_interior", "dust"]
 
 
+# -- Robinson-Trautman -------------------------------------------------------------------
+
+def robinson_trautman(system_id):
+    """Robinson and Trautman's metric, -2H c^2du^2 - 2c du dr + r^2 times a metric on the wave
+    fronts, in the two charts its literature uses: the chart of their 1960 letter, with the
+    fronts' metric (dx^2 + dy^2)/P^2 and zeta = (x + iy)/sqrt 2 the complex coordinate of
+    later work, and the axisymmetric chart of the numerical work, with the fronts' metric
+    (dtheta^2 + sin^2 theta dphi^2)/f^2. H and P, or f, are left free in every tensor, so
+    no component assumes a field equation; robinson_trautman_check confirms before anything
+    is written that the vacuum H leaves the Robinson-Trautman equation as the one field
+    equation, and robinson_trautman.md records the choices."""
+    if system_id == "stereographic":
+        coords, name = ["u", "r", "x", "y"], "Robinson-Trautman"
+        parameters = ["P = P(u,x,y)", "H = H(u,r,x,y)"]
+        fronts = "\\dfrac{r^2}{P^2}\\left(dx^2 + dy^2\\right)"
+        domains = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)"]
+    else:
+        coords, name = ["u", "r", "\\theta", "\\phi"], "Axisymmetric"
+        parameters = ["f = f(u,\\theta)", "H = H(u,r,\\theta)"]
+        fronts = "\\dfrac{r^2}{f^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+        domains = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    line = "ds^2 = -2H{2}du^2 - 2{1}du\\,dr + " + fronts
+    probe = vm.Reader(coords, parameters, ())
+    shape = probe.parameters["P" if system_id == "stereographic" else "f"]
+    return {
+        "metric_id": "robinson_trautman",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": ["u \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + domains,
+                   "parameters": parameters,
+                   "line_element": line.replace("{2}", "\\,c^2").replace("{1}", "c\\,")},
+        "chart_line_element": line.replace("{2}", "\\,").replace("{1}", ""),
+        "printer": {"lead": [shape, probe.parameters["H"]], "flip": False,
+                    "collect": lambda poly, printer: cp.collect_by(poly, [shape], printer)},
+        "check": robinson_trautman_check,
+    }
+
+
+def robinson_trautman_vacuum(chart):
+    """The chart's front function, the Gaussian curvature K of the fronts at r = 1, the
+    Laplacian of the fronts, and the vacuum 2H = K - 2r d_u ln P - 2m/r, with m a length."""
+    u, r, a, b = chart.symbols
+    m = sp.Symbol("m", positive=True)
+    if chart.coords_tex[2] == "x":
+        P = chart.reader.parameters["P"]
+
+        def laplacian(F):
+            return P ** 2 * (sp.diff(F, a, 2) + sp.diff(F, b, 2))
+        K = laplacian(sp.log(P))
+    else:
+        P = chart.reader.parameters["f"]
+
+        def laplacian(F):
+            return P ** 2 * sp.diff(sp.sin(a) * sp.diff(F, a), a) / sp.sin(a)
+        K = P ** 2 + laplacian(sp.log(P))
+    H = (K - 2 * r * sp.diff(P, u) / P - 2 * m / r) / 2
+    return P, K, laplacian, H, m
+
+
+def robinson_trautman_check(chart):
+    """With the vacuum H every component of the Ricci tensor vanishes but R_uu, which is
+    (Laplacian K + 12m d_u ln P)/(2r^2), the Robinson-Trautman equation; with P = 1 + (x^2 + y^2)/4
+    or f = 1 the fronts have K = 1 and the Kretschmann scalar is Schwarzschild's 48m^2/r^6; and the
+    axisymmetric chart is the chart of x and y pulled back through x + iy = 2 tan(theta/2) e^{i phi},
+    P = f (1 + (x^2 + y^2)/4)."""
+    u, r, a, b = chart.symbols
+    P, K, laplacian, H, m = robinson_trautman_vacuum(chart)
+    free = chart.reader.parameters["H"]
+    ricci = chart.geo.ricci_ll()
+    equation = (laplacian(K) + 12 * m * sp.diff(P, u) / P) / (2 * r ** 2)
+    for i in range(4):
+        for j in range(i, 4):
+            value = sp.sympify(ricci[i][j]).subs(free, H).doit()
+            if vm.norm(value - (equation if i == j == 0 else 0)) != 0:
+                raise AssertionError(f"robinson_trautman: R_{chart.coords_tex[i]}{chart.coords_tex[j]} "
+                                     "with the vacuum H is not the Robinson-Trautman equation")
+    round_front = 1 + (a ** 2 + b ** 2) / 4 if chart.coords_tex[2] == "x" else sp.Integer(1)
+    schwarzschild = {free: (1 - 2 * m / r) / 2, P: round_front}
+    if vm.norm(K.subs(P, round_front).doit() - 1) != 0:
+        raise AssertionError("robinson_trautman: the round front has not K = 1")
+    if vm.norm(sp.sympify(chart.geo.kretschmann()).subs(schwarzschild).doit() - 48 * m ** 2 / r ** 6) != 0:
+        raise AssertionError("robinson_trautman: the round front is not Schwarzschild")
+    if chart.coords_tex[2] == "x":
+        return
+    # The pullback, with t = tan(theta/2) so that every entry is rational: x = 2t cos phi and
+    # y = 2t sin phi take (dx^2 + dy^2)/(1 + (x^2 + y^2)/4)^2 to 4dt^2/(1 + t^2)^2 + 4t^2dphi^2/(1 + t^2)^2,
+    # which is dtheta^2 + sin^2 theta dphi^2, since dtheta = 2dt/(1 + t^2) and sin theta = 2t/(1 + t^2).
+    t = sp.Symbol("t", positive=True)
+    image = [2 * t * sp.cos(b), 2 * t * sp.sin(b)]
+    J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], (t, b)[j]))
+    flat = (J.T * J) / (1 + (image[0] ** 2 + image[1] ** 2) / 4) ** 2
+    sphere = sp.Matrix([[4 / (1 + t ** 2) ** 2, 0], [0, 4 * t ** 2 / (1 + t ** 2) ** 2]])
+    for i in range(2):
+        for j in range(2):
+            if vm.norm(flat[i, j] - sphere[i, j]) != 0:
+                raise AssertionError("robinson_trautman: the stereographic fronts pulled back are not the sphere's")
+
+
+RT_CHARTS = ["stereographic", "axisymmetric"]
+
+
 CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmaster, "lentz": lentz, "godel": godel,
           "einstein_static": [lambda s=s: einstein_static(s) for s in ("hyperspherical", "static_areal", "einstein_cartesian")],
           "btz": [lambda: btz_stationary(), lambda: btz_null(1), lambda: btz_null(-1)],
@@ -1610,7 +1710,8 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "domain_wall": [lambda s=s: domain_wall(s) for s in DW_CHARTS],
           "majumdar_papapetrou": [lambda s=s: majumdar_papapetrou(s) for s in MP_CHARTS],
           "thin_shell_wormhole": [lambda s=s: thin_shell_wormhole(s) for s in ("spherical", "throat")],
-          "kantowski_sachs": [lambda s=s: kantowski_sachs(s) for s in KS_CHARTS]}
+          "kantowski_sachs": [lambda s=s: kantowski_sachs(s) for s in KS_CHARTS],
+          "robinson_trautman": [lambda s=s: robinson_trautman(s) for s in RT_CHARTS]}
 
 
 # -- Einstein-Rosen ------------------------------------------------------------------
@@ -2056,7 +2157,7 @@ def curzon_chazy(system):
         rho, z, m = probe.symbol["\\rho"], probe.symbol["z"], probe.parameters["m"]
         R = sp.Symbol("R", positive=True)
         domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
-                   "z \\in (-\\infty, \\infty)", "(\\rho, z) \\neq (0, 0) \;\\text{(the singularity)}"]
+                   "z \\in (-\\infty, \\infty)", "(\\rho, z) \\neq (0, 0) \\;\\text{(the singularity)}"]
         lead, pretty, name = [m, rho, R, z], weyl_distance(rho, z, R), "Weyl"
         metric = {("\\rho", "\\rho"): "e^{2m/R}e^{-m^2\\rho^2/R^4}", ("z", "z"): "e^{2m/R}e^{-m^2\\rho^2/R^4}"}
         inverse = {("\\rho", "\\rho"): "e^{-2m/R}e^{m^2\\rho^2/R^4}", ("z", "z"): "e^{-2m/R}e^{m^2\\rho^2/R^4}"}
@@ -2070,7 +2171,7 @@ def curzon_chazy(system):
         probe = vm.Reader(coords, parameters, ())
         r, th, m = probe.symbol["r"], probe.symbol["\\theta"], probe.parameters["m"]
         domains = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]",
-                   "\\phi \\in [0, 2\\pi)", "r = 0 \;\\text{(the singularity)}"]
+                   "\\phi \\in [0, 2\\pi)", "r = 0 \\;\\text{(the singularity)}"]
         lead, pretty, name = [m, r, sp.cos(th), sp.sin(th)], weyl_distance(None, None, None), "Spherical"
         metric = {}
         inverse = {("\\phi", "\\phi"): "\\dfrac{e^{-2m/r}}{r^2\\sin^2\\theta}"}

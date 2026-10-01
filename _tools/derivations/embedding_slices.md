@@ -204,6 +204,12 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `weyl_equator` and `spherical_equator`, the triangle: the curve $p, q = \arctan(\mp\rho_*/\ell)$ over the same stretch.
 - `weyl/axis`, `spherical/axis`, `weyl_axis` and `spherical_axis`: nothing, since the plane meets the axis only at $\rho = 0$, inside where the embedding stops, which `HIDDEN` records.
 
+### Robinson-Trautman
+
+- The embedding is a movie of one wave front, the surface of $\theta$ and $\phi$ at one $u$ and one $r$ of the axisymmetric chart, at $cu = 0$, $0.25$, $0.5$, $1$ and $2\,m$; the fronts of one $u$ differ only in size and each is drawn with its own $r$ as the unit, so a moment is every front of its $u$.
+- `axisymmetric/axis` and `axisymmetric/equator`, the planes of $u$ and $r$ drawn against $r$ and $cu + r$: five outgoing rays $u = u_k$, each from $r = 0$ to the edge of the box.
+- `axis`, the conformal diagram: the five null lines $p = -\arctan e^{-cu_k/4m}$ from the singularity to future null infinity, the first of them the first front.
+
 ### Milne
 
 - The embedding is the equator of the comoving hyperbolic chart at $ct = 0.5$, $1$, $2$ and $3$, each out to $\chi = \operatorname{arcsinh}(4/ct)$, where it is $4$ from the axis, in any length $\ell$; the reference cone is no part of any moment.

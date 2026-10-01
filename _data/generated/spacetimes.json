@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 47,
+  "count": 48,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -6608,6 +6608,204 @@
           ],
           "ricci_scalar": "0",
           "kretschmann": "\\dfrac{56r_q^4 - 48r r_q^2 r_s + 12r^2 r_s^2}{r^8}"
+        }
+      ]
+    },
+    {
+      "id": "robinson_trautman",
+      "name": "Robinson-Trautman Radiating Spacetimes",
+      "short_name": "Robinson-Trautman",
+      "description": "The vacuum field of an isolated body sending out gravitational waves on expanding wave fronts, found by Ivor Robinson and Andrzej Trautman in 1960. From smooth initial data the fronts grow round as the waves leave, and the spacetime settles down to the Schwarzschild black hole.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "gravitational waves",
+        "gravitational radiation",
+        "radiating",
+        "time-dependent",
+        "dynamical",
+        "algebraically special",
+        "Petrov type II",
+        "null congruence",
+        "shear-free",
+        "twist-free",
+        "expanding",
+        "retarded time",
+        "Bondi mass",
+        "Calabi flow",
+        "black hole",
+        "white hole",
+        "event horizon",
+        "apparent horizon",
+        "asymptotically flat",
+        "axisymmetric",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The mass parameter is $m = GM/c^2$, a length.",
+      "references": [
+        "robinson1960",
+        "griffiths2009",
+        "robinson1962",
+        "podolsky2009",
+        "stephani2003",
+        "bicak1997",
+        "chow1999",
+        "foster1967",
+        "lukacs1984",
+        "schmidt1988",
+        "rendall1988",
+        "singleton1990",
+        "chrusciel1991",
+        "calabi1982",
+        "chrusciel1992",
+        "chruscielsingleton1992",
+        "penrose1973",
+        "tod1989",
+        "bicak1995",
+        "macedo2008",
+        "rezzolla2010"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/robinson_trautman.json",
+      "charts": [
+        {
+          "id": "stereographic",
+          "name": "Robinson-Trautman",
+          "coordinates": [
+            "u",
+            "r",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "P = P(u,x,y)",
+              "description": "Dimensionless function fixing the metric $r^2P^{-2}(dx^2 + dy^2)$ of each wave front, whose Gaussian curvature at $r = 1$ is $K = P^2(\\partial_x^2 + \\partial_y^2)\\ln P$; $P = 1 + (x^2 + y^2)/4$ makes the fronts round spheres, and in vacuum $P$ obeys the Robinson-Trautman equation $P^2(\\partial_x^2 + \\partial_y^2)K + 12m\\,\\partial_u\\ln P = 0$, which no component assumes"
+            },
+            {
+              "symbol": "H = H(u,r,x,y)",
+              "description": "Dimensionless function, $2H = K - 2r\\,\\partial_u\\ln P - 2m/r$ in vacuum, which no component assumes"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, x, y)$, with the retarded time $u$ carrying dimensions of time, $r$ an affine length along the rays, and $x$ and $y$ pure numbers on each wave front, where $\\zeta = (x + iy)/\\sqrt{2}$ is the complex stereographic coordinate. We take components in the chart $x^0 = cu$, so $\\partial_u P = c^{-1}\\partial P/\\partial u$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -2H\\,c^2du^2 - 2c\\,du\\,dr + \\dfrac{r^2}{P^2}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-2H"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{P^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2}{P^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2P^2\\left(\\partial_x^2 P + \\partial_y^2 P\\right) - 2P\\left(2H + r^2\\,\\partial_r^2 H + \\left(\\partial_x P\\right)^2 + \\left(\\partial_y P\\right)^2 + 4r\\,\\partial_r H\\right) - 12r\\,\\partial_u P}{P\\,r^2}",
+          "kretschmann": "K = \\dfrac{4P^4\\left(\\partial_x^2 P + \\partial_y^2 P\\right)^2 - 8P^3\\left(\\partial_x^2 P + \\partial_y^2 P\\right)\\left(2H + \\left(\\partial_x P\\right)^2 + \\left(\\partial_y P\\right)^2\\right) + 4P^2\\left(4H^2 + 4H\\left(\\partial_x P\\right)^2 + 4H\\left(\\partial_y P\\right)^2 + 2\\left(\\partial_x P\\right)^2\\left(\\partial_y P\\right)^2 - 4r\\,\\partial_u P\\,\\partial_x^2 P - 4r\\,\\partial_u P\\,\\partial_y^2 P + 4r^2\\left(\\partial_r H\\right)^2 + r^4\\left(\\partial_r^2 H\\right)^2 + \\left(\\partial_x P\\right)^4 + \\left(\\partial_y P\\right)^4\\right) + 16P\\,r\\left(2H + \\left(\\partial_x P\\right)^2 + \\left(\\partial_y P\\right)^2 + 2r\\,\\partial_r H\\right)\\partial_u P + 32r^2\\left(\\partial_u P\\right)^2}{P^2\\,r^4}"
+        },
+        {
+          "id": "axisymmetric",
+          "name": "Axisymmetric",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "f = f(u,\\theta)",
+              "description": "Dimensionless function fixing the metric $r^2f^{-2}(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2)$ of each wave front, whose Gaussian curvature at $r = 1$ is $K = f^2\\left(1 + \\partial_\\theta(\\sin\\theta\\,\\partial_\\theta\\ln f)/\\sin\\theta\\right)$; $f = 1$ makes the fronts round spheres, and in vacuum $f$ obeys the Robinson-Trautman equation $f^2\\,\\partial_\\theta(\\sin\\theta\\,\\partial_\\theta K)/\\sin\\theta + 12m\\,\\partial_u\\ln f = 0$, which no component assumes"
+            },
+            {
+              "symbol": "H = H(u,r,\\theta)",
+              "description": "Dimensionless function, $2H = K - 2r\\,\\partial_u\\ln f - 2m/r$ in vacuum, which no component assumes"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u$ carrying dimensions of time, $r$ an affine length along the rays, and $\\theta$ and $\\phi$ the angles of each wave front about the axis of symmetry, where $x + iy = 2\\tan(\\theta/2)\\,e^{i\\phi}$ and $P = f\\left(1 + (x^2 + y^2)/4\\right)$. We take components in the chart $x^0 = cu$, so $\\partial_u f = c^{-1}\\partial f/\\partial u$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -2H\\,c^2du^2 - 2c\\,du\\,dr + \\dfrac{r^2}{f^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-2H"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{f^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{f^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(f^3\\sin\\theta + f^2\\left(\\partial_\\theta f\\,\\cos\\theta + \\partial_\\theta^2 f\\,\\sin\\theta\\right) - f\\left(2H + r^2\\,\\partial_r^2 H + \\left(\\partial_\\theta f\\right)^2 + 4r\\,\\partial_r H\\right)\\sin\\theta - 6r\\,\\partial_u f\\,\\sin\\theta\\right)\\csc\\theta}{f\\,r^2}",
+          "kretschmann": "K = \\dfrac{4\\left(f^6\\sin^2\\theta + 2f^5\\left(\\partial_\\theta f\\,\\cos\\theta + \\partial_\\theta^2 f\\,\\sin\\theta\\right)\\sin\\theta - f^4\\left(4H\\sin^2\\theta - 2\\partial_\\theta f\\,\\partial_\\theta^2 f\\,\\sin\\theta\\cos\\theta + 3\\left(\\partial_\\theta f\\right)^2\\,\\sin^2\\theta - \\left(\\partial_\\theta^2 f\\right)^2\\,\\sin^2\\theta - \\left(\\partial_\\theta f\\right)^2\\right) - 2f^3\\left(2H\\,\\partial_\\theta f\\,\\cos\\theta + 2H\\,\\partial_\\theta^2 f\\,\\sin\\theta + \\left(\\partial_\\theta f\\right)^2\\,\\partial_\\theta^2 f\\,\\sin\\theta + \\left(\\partial_\\theta f\\right)^3\\,\\cos\\theta + 2r\\,\\partial_u f\\,\\sin\\theta\\right)\\sin\\theta + f^2\\left(4H^2\\sin\\theta + 4H\\left(\\partial_\\theta f\\right)^2\\,\\sin\\theta - 4r\\,\\partial_\\theta f\\,\\partial_u f\\,\\cos\\theta - 4r\\,\\partial_\\theta^2 f\\,\\partial_u f\\,\\sin\\theta + 4r^2\\left(\\partial_r H\\right)^2\\,\\sin\\theta + r^4\\left(\\partial_r^2 H\\right)^2\\,\\sin\\theta + \\left(\\partial_\\theta f\\right)^4\\,\\sin\\theta\\right)\\sin\\theta + 4f\\,r\\left(2H + \\left(\\partial_\\theta f\\right)^2 + 2r\\,\\partial_r H\\right)\\partial_u f\\,\\sin^2\\theta + 8r^2\\left(\\partial_u f\\right)^2\\,\\sin^2\\theta\\right)\\csc^2\\theta}{f^2\\,r^4}"
         }
       ]
     },

@@ -2785,7 +2785,8 @@ class StacksAndMovies(unittest.TestCase):
     MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
               "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$",
               "einstein_rosen_waves": "$ct$", "nariai": "$ct$", "domain_wall": "$kct$",
-              "kantowski_sachs": "$\\eta$"}
+              "kantowski_sachs": "$\\eta$",
+              "robinson_trautman": "$cu$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -3255,6 +3256,10 @@ class Slices(unittest.TestCase):
         """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
         ends a line of it may have short of the box."""
         t = surface.get("time")
+        if key.startswith("robinson_trautman/"):
+            # The fronts of one retarded time differ only in size, so a moment is the whole
+            # outgoing ray u = u_k, drawn against r and cu + r, from r = 0 to the box.
+            return (lambda X: t + X), [0.0]
         if key.startswith("schwarzschild/eddington_finkelstein"):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
@@ -3548,6 +3553,9 @@ class Slices(unittest.TestCase):
                         # is the event at eta = 0.
                         eta = 0.0 if t is None else math.atan(math.sinh(t))
                         self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
+                    elif metric_id == "robinson_trautman":
+                        # The wave front u = u_k is the null line p = -arctan(e^{-cu_k/4m}).
+                        self.assertTrue(all(abs((T - X) / 2 + math.atan(math.exp(-t / 4))) < 2e-4 for X, T in points), where)
                     elif metric_id == "aichelburg_sexl":
                         # The wave front u = u_k is the null line p = arctan u_k.
                         self.assertTrue(all(abs((T - X) / 2 - math.atan(t)) < 2e-4 for X, T in points), where)

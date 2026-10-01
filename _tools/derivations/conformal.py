@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the thirty-four spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the thirty-six spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -5146,6 +5146,160 @@ def kantowski_sachs(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Robinson-Trautman
+
+class FrontPlane:
+    """The plane of u and r on the axis of Robinson and Trautman's fronts, G = c = m = 1, in null
+    coordinates. The outgoing rays are u constant, p = arctan U with Kruskal's U = -e^{-u/4}.
+    An ingoing ray obeys dr/du = -H, and it is named by Kruskal's V = (r/2 - 1) e^{(u + 2r)/4} at
+    the retarded time `late`, where the fronts are round to a part in 10^9 and the plane is
+    Schwarzschild's; before that the ray is carried there by integrating dr/du = -H, every ray at
+    once, each over its own stretch of u. q is a monotone function of arctan V, which changes
+    no null line: the identity for V >= 0, so that the exterior ends in Kruskal's own, and on
+    the rays that leave r = 0 the one that puts the singularity on the straight line
+    p + q = -pi/2, where Kruskal's UV = 1 puts Schwarzschild's; a monotone cubic joins the two."""
+
+    def __init__(self, fronts):
+        from scipy.interpolate import PchipInterpolator
+        self.fronts, self.late = fronts, fronts.LATE
+        u0 = np.concatenate([[0.0], np.geomspace(1e-5, self.late, 400)])
+        at = np.arctan(self.kruskal_v(u0, np.full_like(u0, 1e-7)))
+        want = np.arctan(-np.exp(u0 / 4))            # arctan(1/U) on the singularity
+        order = np.argsort(at)
+        if np.any(np.diff(at[order]) <= 0) or at.max() >= 0:
+            raise SystemExit("robinson_trautman: the rays that leave r = 0 are not in order")
+        # Below the last ray computed the plane is Schwarzschild's and q is arctan V itself.
+        tail = np.linspace(-HALF, at.min(), 40)[:-1]
+        straight = np.linspace(0.0, HALF, 200)
+        self.q_of = PchipInterpolator(np.concatenate([tail, at[order], straight]),
+                                      np.concatenate([tail, want[order], straight]))
+        self.first = float(at[0])                    # arctan V of the ray that leaves r = 0 on the first front
+
+    def kruskal_v(self, u, r):
+        return self.fronts.kruskal_v(u, r)
+
+    def pq(self, u, r):
+        u = np.asarray(u, dtype=float)
+        V = self.kruskal_v(u, r)
+        return -atan_exp(-u / 4) * np.ones_like(V), self.q_of(np.arctan(V))
+
+    def beyond(self, p, q):
+        """A point of Kruskal's diagram carried into the drawing: q through the same function."""
+        return p, self.q_of(q)
+
+    def fvals(self, u, r):
+        H = self.fronts.values(u, r)[("H", (0, 0, 0))]
+        return {"H": (H, 0 * H, 0 * H)}
+
+
+def robinson_trautman(ck, src):
+    """The plane of u and r on the axis of symmetry, theta = 0, of the fronts the spacetime
+    diagram declares, in m = 1: FrontPlane's null coordinates on the region the Robinson-Trautman
+    equation reaches, u >= 0, which is the part U >= -1 of Kruskal's exterior and white hole,
+    and beyond u = infinity Schwarzschild's black hole and second exterior, read from
+    schwarzschild.json at r_s = 2m, the join Bicak and Podolsky draw, which is of class C^5 in
+    general; Chrusciel's extensions of class C^117 stay within Robinson and Trautman's metrics.
+    The first front runs from the singularity to future null infinity, and nothing lies before it."""
+    fronts = nr.front_solver(nr.RT_FRONTS, 0.0)
+    nr.front_checks("Robinson-Trautman", nr.RT_FRONTS, report=lambda name, miss, tol: ck.limit(name, [miss], [0], tol))
+    src.note("robinson_trautman", "axisymmetric", ["ricci_tensor", "kretschmann"])
+    F = FrontPlane(fronts)
+    plane = Plane(src, "robinson_trautman", "axisymmetric", ("u", "r"), {"theta": "0", "phi": "0"}, numeric=("H",))
+    ck.chart("Robinson-Trautman, the axis outside g^rr = 0", plane, F.pq, ck.uniform(0.02, 6, 1500),
+             ck.uniform(2.6, 14, 1500), lambda u, r: (1, 60), F.fvals)
+    ck.chart("Robinson-Trautman, the axis inside it", plane, F.pq, ck.uniform(0.02, 6, 1500),
+             ck.uniform(0.05, 1.2, 1500), lambda u, r: (1, 60), F.fvals)
+
+    sph = Plane(src, "schwarzschild", "spherical", ("t", "r"), EQUATOR, {"r_s": 2})
+    T = Tower(-sph.g[0, 0], sph.x1, [2])
+    for cell, name, radii, future in (("II", "black hole", ck.uniform(0.02, 1.99), lambda t, r: (0, -1)),
+                                      ("I'", "second exterior", ck.uniform(2.01, 30), lambda t, r: (-1, 0))):
+        ck.chart(f"Robinson-Trautman: Schwarzschild's {name} beyond u = infinity", sph,
+                 lambda t, r, cell=cell: F.beyond(*T.pq(cell, t, r)), ck.uniform(-12, 12), radii, future)
+    out = Plane(src, "schwarzschild", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, {"r_s": 2})
+    ck.chart("Robinson-Trautman: the round fronts are Schwarzschild's outgoing chart", out, F.pq,
+             ck.uniform(F.late, F.late + 8, 1500), ck.uniform(0.05, 14, 1500), lambda u, r: (1, 60))
+    r = np.array([0.5, 1.0, 1.9, 2.1, 3.0, 8.0])
+    for cell, sel in (("I", r > 2), ("IV", r < 2)):
+        # The static t of an event of the outgoing chart is u + r*, in either region.
+        p, q = F.pq(np.full(sel.sum(), 12.0), r[sel])
+        ck.limit(f"Robinson-Trautman: late on, the plane is Kruskal's cell {cell}",
+                 [p, q], F.beyond(*T.pq(cell, 12.0 + T.rstar(r[sel]), r[sel])), 1e-7)
+    u = np.concatenate([[0.0], np.geomspace(1e-3, 9.0, 40)])
+    p, q = F.pq(u, np.full_like(u, 1e-7))
+    ck.limit("Robinson-Trautman: r -> 0 lands on the straight line T = -pi/2", p + q, np.full_like(u, -HALF), 1e-6)
+    p, q = F.pq(np.array([0.0, 1.0, 4.0]), np.full(3, 1e9))
+    ck.limit("Robinson-Trautman: r -> infinity along a front lands on future null infinity, q = pi/2", q, [HALF] * 3, 1e-6)
+    axis = nr.Chart(next(d for d in nr.DIAGRAMS if (d.metric, d.view) == ("robinson_trautman", "axis")))
+    K = axis.fn["K"]
+    ck.diverges("Robinson-Trautman: the Kretschmann scalar diverges at r = 0",
+                K(np.array([0.0, 0.5, 3.0]), np.full(3, 1e-2)), K(np.array([0.0, 0.5, 3.0]), np.full(3, 1e-3)))
+    ck.finite("Robinson-Trautman: the Kretschmann scalar is finite where g^rr = 0", K(np.array([0.0, 0.5, 3.0]), np.full(3, 2.0)))
+
+    first = -Q4                                   # p of the first front, U = -1
+    box = [-PI - 0.25, 3 * Q4 + 0.45, -HALF - 0.25, HALF + 0.25]
+    # The axis is x = y = 0 of the chart of x and y as well, so the view names no chart and both show it.
+    v = View("axis", "The axis", box)
+    region = [point(first, -Q4), point(0, -HALF), point(0, HALF), point(first, HALF)]
+    hole = [point(0, 0), point(HALF, 0), point(0, HALF)]
+    second = [point(0, 0), point(0, -HALF), point(HALF, -HALF), point(HALF, 0)]
+    v.fill("region", region)
+    v.fill("region", hole)
+    v.fill("region", second)
+    v.fill("cover", region)
+    uu = np.concatenate([[0.0], np.geomspace(1e-4, 60.0, 500)])
+    R_OUT, R_IN = (2.5, 3, 4, 6, 10), (0.5, 1, 1.5)
+    for r in R_OUT + R_IN:
+        v.curve("r", *F.pq(uu, np.full_like(uu, r)))
+    rr = np.concatenate([np.geomspace(1e-7, 2.0, 200), 2.0 + np.geomspace(1e-6, 1e9, 400)])
+    U_LINES = (0.5, 1, 2, 4)
+    for u0 in U_LINES:
+        v.curve("null", *F.pq(np.full_like(rr, u0), rr))
+    t = spread(-np.inf, np.inf, 500, 9)
+    for r in (0.5, 1, 1.5):
+        v.curve("r2", *F.beyond(*T.pq("II", t, np.full_like(t, r))))
+    for r in (2.5, 3, 4, 6, 10):
+        v.curve("r2", *F.beyond(*T.pq("I'", t, np.full_like(t, r))))
+    v.segment("surface", (first, -Q4), (first, HALF))
+    v.segment("event", (0, -HALF), (0, HALF))
+    v.segment("horizon", (0, 0), (HALF, 0))
+    v.segment("singular", (first, -Q4), (0, -HALF), zig=True)
+    v.segment("singular", (0, HALF), (HALF, 0), zig=True)
+    v.segment("scri", (first, HALF), (0, HALF))
+    v.segment("scri", (HALF, 0), (HALF, -HALF))
+    v.segment("scri", (HALF, -HALF), (0, -HALF))
+    for pq, text, anchor, dx, dy in (((0, HALF), "$i^+$", "b", 0, -6), ((HALF, 0), "$i^+$", "b", 0, -6),
+                                     ((HALF, -HALF), "$i^0$", "r", -6, 0), ((0, -HALF), "$i^-$", "t", 0, 6)):
+        v.point("infinity", pq)
+        v.label(pq, text, anchor, dx=dx, dy=dy)
+    v.label((first / 2, HALF), "$\\mathscr{I}^+$", "bl", dx=4, dy=-4)
+    v.label((first / 2, -3 * PI / 8), "$r = 0$", "t", dy=8)
+    v.label((Q4, Q4), "$r = 0$", "b", dy=-8)
+    v.label((first, 0.55), "the first front, $u = 0$", "tl", "small", dx=5, dy=3)
+    v.label((0, -0.9), "$u = \\infty$", "l", "small", dx=6)
+    v.label((0.5, 0.5), "black hole", cls="region")
+    v.label((Q4, -Q4), "exterior", cls="region")
+    v.legend("cover", "the region the Robinson-Trautman equation reaches, $u \\ge 0$")
+    v.legend("r", "$r$ constant on the axis: $0.5$, $1$, $1.5$, $2.5$, $3$, $4$, $6$ and $10\\,m$")
+    v.legend("null", "$u$ constant, a wave front: $cu = 0.5$, $1$, $2$ and $4\\,m$")
+    v.legend("r2", "$r$ constant in Schwarzschild's black hole and second exterior, at the same values")
+    v.legend("surface", "the first front, $u = 0$, a light ray")
+    v.legend("event", "$u = \\infty$, the horizon $r = 2m$ of the Schwarzschild black hole the fronts settle to")
+    v.legend("horizon", "Schwarzschild's other horizon")
+    v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity")
+    v.set(input=nr.RT_INPUT, settings="$m$ is the unit of every length and of $cu$.",
+          restriction="The axis of symmetry $\\theta = 0$ only, a totally geodesic surface, each point in the "
+                      "diagram a single event; off the axis the fronts have other curvatures and the lines of "
+                      "constant $r$ run otherwise.")
+    for m in slices.moments("robinson_trautman", "fronts"):
+        if m.time > 0:
+            v.slice(m, [F.pq(np.full_like(rr, m.time), rr)])
+        else:
+            v.slice(m, xt=[[point(first, -Q4), point(first, HALF)]])
+    return [v]
+
+
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
     "kantowski_sachs": kantowski_sachs,
@@ -5161,6 +5315,7 @@ DRAWN = {
     "einstein_rosen_waves": einstein_rosen_waves,
     "nariai": nariai, "khan_penrose": khan_penrose,
     "majumdar_papapetrou": majumdar_papapetrou,
+    "robinson_trautman": robinson_trautman,
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
     "levi_civita": levi_civita,
@@ -5960,6 +6115,20 @@ CAPTIONS = {
         "infinite while every light ray runs as it does in Minkowski space. The computer then "
         "runs for an infinite proper time before the removed event, and its signals reach $p$ "
         "blueshifted by $\\Omega$, without bound.",
+    ],
+    ("robinson_trautman", "axis"): [
+        "The axis of symmetry of a Robinson-Trautman spacetime whose first wave front is prolate "
+        "($\\epsilon = 4/5$), each point in the diagram a single event. The outgoing rays, one for the pole of "
+        "each wave front, are $p = \\arctan U$ with Kruskal's $U = -e^{-cu/4m}$, and an ingoing ray keeps "
+        "the $V = (r/2m - 1)e^{(cu + 2r)/4m}$ it has once the fronts are round. The region the "
+        "Robinson-Trautman equation reaches lies between the first front, $u = 0$, and $u = \\infty$, with "
+        "the singularity $r = 0$ in its past and future null infinity along its upper edge.",
+        "The equation has no solution toward the past, so nothing lies before the first front: the spacetime "
+        "has no past null infinity and no past event horizon. The fronts settle to round spheres, so "
+        "$u = \\infty$ is the horizon $r = 2m$ of a Schwarzschild black hole. Joined across it to "
+        "Schwarzschild's black hole and second exterior, as drawn here, the metric has five continuous "
+        "derivatives in general. Until $cu = 1.18\\,m$ every line of constant $r$ on the axis is spacelike, "
+        "since $g^{rr} < 0$ at every $r$ there, and from $cu = 4m$ on the lines are Schwarzschild's.",
     ],
     ("vaidya", "shell"): [
         "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, "
