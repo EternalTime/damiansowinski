@@ -127,6 +127,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `static`, `ingoing` and `outgoing`, Kruskal's diagram of the black hole: the line $T = 0$ through the bifurcation point across both exteriors, $r$ from $r_h$ to $6\,r_s$ on each side, the same on all three.
 - `conical`, Minkowski's triangle with its centre singular: the monopole's line $T = 0$ from the centre to $r = 3\ell$.
 
+### The dilaton black hole
+
+- The embedding has three views at $r_d = r_s/2$, the equator of the static moment $t = 0$ as each of three metrics on one manifold measures it: the Einstein metric, the string metric of the magnetically charged hole, and the string metric of the electrically charged one, each from the throat $r = r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere.
+- `static/radial`: the Einstein metric's line $ct = 0$ from $r_s$ to $6\,r_s$; the string metrics' moments are not marked.
+- `eddington_finkelstein_ingoing/finkelstein` and `/chart`: with $v = ct + r_*$, $r_* = r + r_s\ln|r/r_s - 1|$, the Einstein metric's moment is the curve $v = r_*$ outside $r_s$, as Schwarzschild's is.
+- `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u = -r_*$.
+- `string_magnetic/radial` and `string_electric/radial`: each string metric's own line $ct = 0$ from $r_s$ to $6\,r_s$.
+- `static`, `ingoing` and `outgoing`, Kruskal's diagram: the Einstein metric's line $T = 0$ through the bifurcation point across both exteriors; `string_magnetic` and `string_electric`: the same line, marked as that string metric's moment.
+
 ### Gödel
 
 - The embedding is the plane $z = 0$ of the cylindrical chart at $t = 0$ about the world line $r = 0$, $r$ from $0$ to $\operatorname{arcsinh} 2^{-1/4} = 0.764$, where it stops.
@@ -358,6 +367,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 | Bianchi I | four lines | none | none drawn |
 | cosmic string | none | whole drawing | line, line |
 | de Sitter | line, line, curve | none | line, line |
+| dilaton black hole | line, four curves, line, line | none | line, five times |
 | domain wall | five lines, twice | none | five curves, four times |
 | Ellis-Bronnikov | line | none | line |
 | FRW | not visible, three times | none | five lines on the closed universe |
