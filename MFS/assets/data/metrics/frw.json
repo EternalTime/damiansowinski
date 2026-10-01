@@ -34,6 +34,11 @@
       "text": "Dust whose density depends on radius, each shell expanding as a Friedmann universe of its own [lemaitre1933, tolman1934, bondi1947]."
     },
     {
+      "id": "szekeres",
+      "kind": "generalisation",
+      "text": "Friedmann's dust with both the homogeneity and the symmetry let go. Peter Szekeres's cosmologies in general have no Killing vector, and Friedmann's universe is the one whose shells are all alike [szekeres1975, bonnor1977]."
+    },
+    {
       "id": "de_sitter",
       "kind": "special_case",
       "text": "The Friedmann universe with nothing in it but a positive cosmological constant. In flat slices its scale factor grows exponentially [lemaitre1925, robertson1928]."
@@ -87,6 +92,8 @@
     "lemaitre1933",
     "tolman1934",
     "bondi1947",
+    "szekeres1975",
+    "bonnor1977",
     "lemaitre1925",
     "robertson1928",
     "einstein1917",
