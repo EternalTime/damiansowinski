@@ -354,6 +354,22 @@ def _wall_inertial(m):
     return [np.column_stack([np.abs(R) * math.tanh(m.time), R])]
 
 
+def ks_vacuum_T(m):
+    """The areal radius T, in units of r_s, of a vacuum moment of the Kantowski-Sachs embedding,
+    which is the radius of its cylinder; its time is the proper time since the horizon."""
+    return m.surface["pieces"][0]["points"][0][1]
+
+
+def _kantowski_sachs(chart):
+    """The dust universe's moments eta_k, each every r: level in the dust chart, and in the comoving
+    chart at ct = pi/2 + eta + sin(eta) cos(eta), counted from the first singularity at b_0 = 1. The
+    vacuum moments, each every r at its T, lie on the plane inside Schwarzschild's horizon alone."""
+    if chart == "schwarzschild_interior":
+        return one("kantowski_sachs", lambda m: across(ks_vacuum_T(m), 0.0, BIG), view_id="vacuum")
+    time = {"dust": lambda e: e, "comoving": lambda e: math.pi / 2 + e + math.sin(e) * math.cos(e)}[chart]
+    return one("kantowski_sachs", lambda m: across(time(m.time), 0.0, BIG), view_id="dust")
+
+
 def _ads_poincare():
     """Anti-de Sitter's static moment t = 0 is the Poincare moment t = 0; on the plane y = 0,
     z = L its static radius is r^2 = x^2 + x^4/4L^2, so the embedding's reach r <= 4L is
@@ -528,6 +544,9 @@ FLAT = {
     ("kasner", "cartesian", "tx"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     ("kasner", "cartesian", "tz"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     ("bianchi", "type_i_cartesian", "tx"): lambda: one("bianchi", lambda m: across(m.time, 0.0, BIG)),
+    ("kantowski_sachs", "comoving", "tr"): lambda: _kantowski_sachs("comoving"),
+    ("kantowski_sachs", "dust", "etar"): lambda: _kantowski_sachs("dust"),
+    ("kantowski_sachs", "schwarzschild_interior", "Tr"): lambda: _kantowski_sachs("schwarzschild_interior"),
     # Godel's t_x = 2t + sqrt(2)(2 arctan(e^(-2r) tan(phi/2)) - phi) and e^x = cosh 2r + cos(phi) sinh 2r
     # put the plane y = 0 at phi = 0 and pi, where t_x = 2t and x = +-2r.
     ("godel", "cartesian", "tx"): lambda: one("godel", lambda m: across(0.0, 0.0, 2 * m.reach("cylindrical", "r")[1])),
@@ -853,6 +872,18 @@ def checks():
     hi = moments("anti_de_sitter")[0].reach("static_global", "r")[1]
     xm = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
     report("anti-de Sitter: the reach r = 4L is |x| = sqrt(2(sqrt 17 - 1)) L", abs(xm ** 2 + xm ** 4 / 4 - hi * hi), 1e-12)
+
+    # Kantowski-Sachs: ct = eta + sin(eta) cos(eta), a = 1 + eta tan(eta) and b = cos^2(eta) carry the
+    # comoving chart onto the dust chart at b_0 = 1 and kappa = 0, so the moment eta_k is one t.
+    _, entry, reader = nr.load("kantowski_sachs", "comoving")
+    g_c = nr.published_matrix(reader, entry, "metric_components").subs(reader.c, 1)
+    g_d, (ed, *_) = metric("kantowski_sachs", "dust", {"b_0": 1, "kappa": 0})
+    lapse = sp.diff(ed + sp.sin(ed) * sp.cos(ed), ed)
+    g_c = g_c.subs({reader.parameters["a"]: 1 + ed * sp.tan(ed), reader.parameters["b"]: sp.cos(ed) ** 2})
+    pulled = sp.diag(lapse, 1, 1, 1) * g_c * sp.diag(lapse, 1, 1, 1)
+    theta = reader.symbol["\\theta"]
+    miss = max(abs(float((pulled - g_d).subs({ed: e, theta: 1.1})[i, i])) for e in rng.uniform(-1.4, 1.4, 20) for i in range(4))
+    report("Kantowski-Sachs: the comoving chart with the dust's a, b and t pulls back onto the dust chart", miss, 1e-10)
 
     # Misner: T = -t^2/4 and psi = 2 chi - ln(t^2/4) carry the Milne plane of t and chi onto
     # Misner's plane of T and psi, both being the covering Minkowski plane's t - x = t e^(-chi) =

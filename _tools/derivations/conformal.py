@@ -4865,8 +4865,140 @@ def domain_wall(ck, src):
     return views
 
 
+KS_TAU = 1.2189074815171743     # the dust universe's conformal time from its widest moment to a singularity, in b_0
+
+
+def kantowski_sachs(ck, src):
+    """Two members of the family, each on its plane of time and r, each point a 2-sphere.
+
+    The vacuum member is the inside of Schwarzschild's horizon. On its plane of T and r the
+    metric is -dT^2/f + f dr^2 with f = r_s/T - 1, which is Schwarzschild's -F dt^2 + dr^2/F with
+    F = 1 - r_s/T, ct for r and the areal radius for T, so the Tower of F, Kruskal's square,
+    draws it: its cell II at (t, r) = (r, T), the triangle between the horizon and the
+    singularity, with the future toward smaller T.
+
+    The dust universe symmetric in time, kappa = 0 and b_0 = 1, has on its plane of eta and r the
+    metric -4 cos^4(eta) d eta^2 + a^2 dr^2 with a = 1 + eta tan(eta), conformal to
+    -d tau^2 + dr^2 with d tau = 2 cos^2(eta) d eta/a, and tau runs only from -tau_m to tau_m,
+    tau_m = 1.2189, while r runs over the whole line. Minkowski's maps p = arctan(tau - r) and
+    q = arctan(tau + r) send that strip to the lens between the two curves tau = +-tau_m, which
+    meet at the two ends of the axis, (X, T) = (+-pi, 0). The comoving chart is the same map
+    through ct = eta + sin(eta) cos(eta)."""
+    vac = Plane(src, "kantowski_sachs", "schwarzschild_interior", ("T", "r"), EQUATOR, {"r_s": 1})
+    assert vac.g[0, 1] == 0 and sp.simplify(vac.g[0, 0] * vac.g[1, 1] + 1) == 0
+    tower = Tower(-vac.g[1, 1], vac.x0, [1])
+
+    def inside(T, r):
+        return tower.pq("II", r, T)
+    ck.chart("Kantowski-Sachs vacuum, inside the horizon", vac, inside, ck.uniform(0.01, 0.999), ck.uniform(-15, 15),
+             lambda T, r: (-1, 0))
+    p, q = inside(np.full(3, 1e-9), np.array([-5.0, 0, 5]))
+    ck.limit("Kantowski-Sachs vacuum: T -> 0 lands on the line T = pi/2 of the drawing", p + q, [HALF] * 3)
+    p, q = inside(np.array([1 - 1e-12]), np.array([3.0]))
+    ck.limit("Kantowski-Sachs vacuum: T -> r_s at fixed r lands on the bifurcation sphere", point(p[0], q[0]), [0, 0], 1e-4)
+    ck.diverges("Kantowski-Sachs vacuum: the Kretschmann scalar diverges at T = 0", vac.kretschmann(1e-2, 0), vac.kretschmann(1e-3, 0))
+    ck.finite("Kantowski-Sachs vacuum: the Kretschmann scalar is finite at T = r_s", vac.kretschmann(np.array([0.99, 0.999]), np.zeros(2)))
+
+    dust = Plane(src, "kantowski_sachs", "dust", ("\\eta", "r"), EQUATOR, {"b_0": 1, "kappa": 0})
+    etas = np.linspace(-HALF, HALF, 400001)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        rate = 2 * np.cos(etas) ** 3 / (np.cos(etas) + etas * np.sin(etas))
+    taus = cumulative_trapezoid(rate, etas, initial=0)
+    taus -= taus[len(taus) // 2]
+    times = etas + np.sin(etas) * np.cos(etas)
+
+    def tau_of(eta):
+        return np.interp(eta, etas, taus)
+
+    def lens(eta, r):
+        return mink_pq(tau_of(eta), r)
+
+    def comoving(t, r):
+        return lens(np.interp(t, times, etas), r)
+    ck.chart("Kantowski-Sachs dust, parametric time", dust, lens, ck.uniform(-1.5, 1.5), ck.uniform(-10, 10), lambda e, r: (1, 0))
+    com = Plane(src, "kantowski_sachs", "comoving", ("t", "r"), EQUATOR, numeric=["a"])
+
+    def fvals(t, r):
+        eta = np.interp(t, times, etas)
+        return {"a": (1 + eta * np.tan(eta), 0 * t, 0 * t)}
+    ck.chart("Kantowski-Sachs dust, comoving", com, comoving, ck.uniform(-1.5, 1.5), ck.uniform(-10, 10), lambda t, r: (1, 0), fvals)
+    ck.limit("Kantowski-Sachs dust: the conformal time to either singularity is 1.2189 b_0", [taus[-1], -taus[0]], [KS_TAU] * 2, 1e-8)
+    for sign, name in ((1, "last"), (-1, "first")):
+        ck.diverges(f"Kantowski-Sachs dust: the Kretschmann scalar diverges at the {name} singularity",
+                    dust.kretschmann(sign * (HALF - 1e-2), 0.5), dust.kretschmann(sign * (HALF - 1e-3), 0.5))
+
+    views = []
+    S = spread(-np.inf, np.inf, 600, 10)
+    top = 2 * math.atan(KS_TAU)
+    v = View("dust", "Dust", [-PI - 0.25, PI + 0.25, -top - 0.3, top + 0.3])
+    upper, lower = xt(*mink_pq(np.full_like(S, KS_TAU), S)), xt(*mink_pq(np.full_like(S, -KS_TAU), S))
+    region = ([[-PI, 0.0]] + [list(at) for at in zip(*upper)] + [[PI, 0.0]] + [list(at) for at in zip(*lower)][::-1])
+    v.fill("region", region)
+    v.fill("cover", region)
+    for eta in (-1.3, -0.8, -0.3, 0.3, 0.8, 1.3):
+        v.curve("t", *lens(np.full_like(S, eta), S))
+    ee = np.linspace(-HALF, HALF, 801)
+    for r in (-4, -2, -1, -0.5, 0.5, 1, 2, 4):
+        v.curve("r", *lens(ee, np.full_like(ee, r)))
+    v.curve("singular", *mink_pq(np.full_like(S, KS_TAU), S), zig=True, tol=0.01)
+    v.curve("singular", *mink_pq(np.full_like(S, -KS_TAU), S), zig=True, tol=0.01)
+    v.segment("null", mink_pq(-KS_TAU, 0), mink_pq(KS_TAU, 2 * KS_TAU))
+    for sx in (1, -1):
+        v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * PI, 4), 0]})
+        v.label_xt([sx * PI, 0], "$i^0$", "l" if sx > 0 else "r", dx=6 * sx)
+    v.label_xt([0, top], "$\\eta = \\pi/2$", "b", dy=-8)
+    v.label_xt([0, -top], "$\\eta = -\\pi/2$", "t", dy=8)
+    v.legend("cover", "the whole spacetime, which $r$ covers with $\\eta$ or with $t$")
+    v.legend("t", "$\\eta$ constant, at $\\pm 0.3$, $\\pm 0.8$, and $\\pm 1.3$")
+    v.legend("r", "$r$ constant, at $\\pm b_0/2$, $\\pm b_0$, $\\pm 2b_0$, and $\\pm 4b_0$")
+    v.legend("null", "light that leaves $r = 0$ at the first singularity and reaches $r = 2.44\\,b_0$ at the last")
+    v.legend("singular", "the two singularities, where the Kretschmann scalar diverges")
+    v.set(settings="$b_0 = 1$, the unit of every length, and $\\kappa = 0$.")
+    for m in slices.moments("kantowski_sachs", "dust"):
+        v.slice(m, [lens(np.full_like(S, m.time), S)])
+    views.append(v)
+
+    v = View("vacuum", "Vacuum", [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25], "schwarzschild_interior")
+    v.fill("region", [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]])
+    v.fill("cover", [[0, 0], [HALF, HALF], [-HALF, HALF]])
+    for T in (0.25, 0.5, 0.75, 0.95):
+        v.curve("t", *inside(np.full_like(S, T), S))
+    TT = spread(0, 1, 600, 16)
+    for r in (-2, -1, 0, 1, 2):
+        v.curve("r", *inside(TT, np.full_like(TT, r)))
+    v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]], [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+    v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+    v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+    for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+    v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+    v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+    for sx in (1, -1):
+        v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+        v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+        v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+        v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+    v.label_xt([0, HALF], "$T = 0$", "b", dy=-8)
+    v.label_xt([-Q4, Q4], "$T = r_s$", "tr", "small", dx=-6, dy=2)
+    v.label_xt([HALF, -0.95], "exterior", cls="region")
+    v.label_xt([-HALF, 0], "exterior", cls="region")
+    v.label_xt([0, -1.15], "white hole", cls="region")
+    v.legend("cover", "the black hole, which $T$ and $r$ cover")
+    v.legend("t", "$T$ constant, at $r_s/4$, $r_s/2$, $3r_s/4$, and $0.95\\,r_s$")
+    v.legend("r", "$r$ constant, at $0$, $\\pm r_s$, and $\\pm 2r_s$")
+    v.legend("horizon", "the horizon $T = r_s$")
+    v.legend("singular", "the singularities, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$r_s = 1$, the unit of every length.")
+    for m in slices.moments("kantowski_sachs", "vacuum"):
+        v.slice(m, [inside(np.full_like(S, slices.ks_vacuum_T(m)), S)])
+    views.append(v)
+    return views
+
+
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
+    "kantowski_sachs": kantowski_sachs,
     "domain_wall": domain_wall,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
@@ -5081,6 +5213,26 @@ CAPTIONS = {
         "$\\xi\\psi_0/2$.",
         "The closed curves shrink toward the null lines $\\xi \\to 0$, the chronology horizon, where they become "
         "closed null geodesics.",
+    ],
+    ("kantowski_sachs", "dust"): [
+        "The dust universe symmetric in time ($\\kappa = 0$), each point in the diagram a 2-sphere of radius "
+        "$b_0\\cos^2\\eta$. On the plane of $\\eta$ and $r$ the metric is conformal to $-d\\tau^2 + dr^2$ with "
+        "$d\\tau = 2b_0\\cos^2\\eta\\,d\\eta/a$, and $\\tau$ runs only from $-1.22\\,b_0$ to $1.22\\,b_0$ between "
+        "the two singularities while $r$ runs over the whole line, so the spacetime is the lens between two "
+        "spacelike curves that meet at the ends of the axis, $r \\to \\pm\\infty$.",
+        "Both singularities are spacelike, and light crosses only $2.44\\,b_0$ of $r$ between them. An observer "
+        "therefore sees a finite stretch of the axis in the whole life of the universe, and two observers more "
+        "than $4.88\\,b_0$ apart share no event in their pasts.",
+    ],
+    ("kantowski_sachs", "vacuum"): [
+        "The Schwarzschild spacetime, maximally extended, each point in the diagram a 2-sphere, with the region "
+        "inside the black hole's horizon tinted. There the metric is $-dT^2/(r_s/T - 1) + (r_s/T - 1)\\,dr^2$ on "
+        "the plane of $T$ and $r$, Schwarzschild's with $T$ for the areal radius and $r$ for $ct$, and Kruskal "
+        "and Szekeres's coordinates draw it as the triangle between the horizon and the singularity.",
+        "Each line of constant $T$ runs from one end of the horizon to the other and is a whole moment of the "
+        "vacuum Kantowski-Sachs universe, homogeneous along $r$. The future lies toward smaller $T$, and every "
+        "world line in the triangle ends on the singularity $T = 0$. The white hole below is the same universe "
+        "run backward in time.",
     ],
     ("schwarzschild", "spherical"): [
         "The Schwarzschild spacetime, maximally extended, each point in the diagram a 2-sphere "
