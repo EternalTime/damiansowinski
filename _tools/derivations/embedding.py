@@ -4602,8 +4602,10 @@ def curzon_chazy(ck, src):
     bound both as rho grows and as rho -> 0. The slice has a surface of revolution in flat space where
     e^(-m^2/rho^2) >= (1 - m/rho)^2, which is rho >= 0.7226 m, found here: a funnel that narrows to a
     neck at rho = m and widens again below it, until it lies level at rho = 0.7226 m, inside which the
-    circles grow faster than the distance in to them, which is checked. The spherical chart's equator,
-    where r is rho, is checked to give the same surface."""
+    circles grow faster than the distance in to them, which is checked. Where it lies level the profile
+    rises as the 3/2 power of the distance from that circle, so its chords there are short, and it is
+    written to nine decimals, as a surface in Minkowski space is. The spherical chart's equator, where r
+    is rho, is checked to give the same surface."""
     sl = Slice(src, "curzon_chazy", "weyl", "\\rho", "\\phi", {"t": 0, "z": 0}, {"m": 1})
     stop = float(sp.nsolve(sl.defect, sl.x, 0.72))
     ck.add("Curzon-Chazy: the surface starts where e^(-m^2/rho^2) = (1 - m/rho)^2",
@@ -4615,7 +4617,7 @@ def curzon_chazy(ck, src):
                   (("stops", "the circles grow faster than the distance in to them, and nothing in flat space carries the slice on"),
                    ("edge", "the surface runs on to $\\rho \\to \\infty$")),
                   [(stop, "chartedge", None), (1.0, "surface", "$\\rho = m$"), (2.0, "r", None), (3.0, "r", None),
-                   (4.0, "r", None), (top, "r", "$5\\,m$")], size)
+                   (4.0, "r", None), (top, "r", "$5\\,m$")], size, digits=LORENTZ_DIGITS)
     ck.isometry("Curzon-Chazy, the plane z = 0", plane)
     ck.radius("Curzon-Chazy, the plane z = 0, rho e^(m/rho)", plane, lambda r: r * np.exp(1 / r), size)
     ck.add("Curzon-Chazy: the narrowest circle is at rho = m, of radius m e",

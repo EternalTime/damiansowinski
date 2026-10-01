@@ -3916,8 +3916,10 @@ def curzon_chazy(ck, src):
         views.append(v)
 
         eq = Plane(src, "curzon_chazy", system, eq_plane, eq_fixed, {"m": 1})
+        # Sampled from rho = 0.2 m out: nearer the ring d rho_*/d rho = e^(2m/rho - m^2/(2 rho^2)) is so
+        # small, e^(-160) at 0.05 m, that the two null directions agree to every digit of a double.
         ck.chart(f"Curzon-Chazy {system}, the plane z = 0", eq, plane_pq, ck.uniform(-20, 20, 400),
-                 ck.uniform(0.05, 20, 400), lambda t, r: (1, 0))
+                 ck.uniform(0.2, 20, 400), lambda t, r: (1, 0))
         KE = eq.kretschmann
         ck.diverges(f"Curzon-Chazy {system}: the Kretschmann scalar diverges at R = 0 in the plane z = 0",
                     KE(0, 0.3), KE(0, 0.2))
@@ -5183,7 +5185,7 @@ CAPTIONS = {
     ("curzon_chazy", "weyl_axis"): [
         "The half axis $\\rho = 0$, $z > 0$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
         "The metric on it is $-e^{-2m/z}c^2dt^2 + e^{2m/z}dz^2$, and with $z_* = z\\,e^{2m/z} - 2m\\,\\mathrm{Ei}(2m/z)$, "
-        "which runs from $-\\infty$ at $z = 0$ to $\\infty$, $p = \\arctan((ct - z_*)/\\ell)$ and "
+        "which runs from $-\\infty$ at $z = 0$ to $\\infty$, the maps $p = \\arctan((ct - z_*)/\\ell)$ and "
         "$q = \\arctan((ct + z_*)/\\ell)$ bring it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
         "Since $g_{tt}g_{zz} = -1$, $z$ is an affine parameter along every light ray, so a ray reaches $z = 0$, "
         "the two edges on the left, after a finite affine distance, at $t \\to \\pm\\infty$. The Kretschmann scalar on "
@@ -5192,7 +5194,7 @@ CAPTIONS = {
     ("curzon_chazy", "weyl_equator"): [
         "The half plane $z = 0$ of $t$ and $\\rho$ at fixed $\\phi$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
         "The metric on it is $-e^{-2m/\\rho}c^2dt^2 + e^{2m/\\rho - m^2/\\rho^2}d\\rho^2$, and with "
-        "$\\rho_* = \\int_0^{\\rho} e^{2m/s - m^2/2s^2}ds$, which is finite at $\\rho = 0$, $p = \\arctan((ct - \\rho_*)/\\ell)$ and "
+        "$\\rho_* = \\int_0^{\\rho} e^{2m/s - m^2/2s^2}ds$, which is finite at $\\rho = 0$, the maps $p = \\arctan((ct - \\rho_*)/\\ell)$ and "
         "$q = \\arctan((ct + \\rho_*)/\\ell)$ bring it into Minkowski's triangle.",
         "The edge $X = 0$ is $\\rho = 0$, the ring, a timelike singularity where the Kretschmann scalar diverges as "
         "$e^{2m^2/\\rho^2}$ and which light from any event of the plane reaches in a finite time $t$. The axis meets the "
@@ -5201,7 +5203,7 @@ CAPTIONS = {
     ("curzon_chazy", "spherical_axis"): [
         "The half axis $\\theta = 0$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
         "The metric on it is $-e^{-2m/r}c^2dt^2 + e^{2m/r}dr^2$, and with $r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$, "
-        "which runs from $-\\infty$ at $r = 0$ to $\\infty$, $p = \\arctan((ct - r_*)/\\ell)$ and "
+        "which runs from $-\\infty$ at $r = 0$ to $\\infty$, the maps $p = \\arctan((ct - r_*)/\\ell)$ and "
         "$q = \\arctan((ct + r_*)/\\ell)$ bring it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
         "Since $g_{tt}g_{rr} = -1$, $r$ is an affine parameter along every light ray, so a ray reaches $r = 0$, "
         "the two edges on the left, after a finite affine distance, at $t \\to \\pm\\infty$. The Kretschmann scalar on "
@@ -5210,7 +5212,7 @@ CAPTIONS = {
     ("curzon_chazy", "spherical_equator"): [
         "The half plane $\\theta = \\pi/2$ of $t$ and $r$ at fixed $\\phi$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
         "The metric on it is $-e^{-2m/r}c^2dt^2 + e^{2m/r - m^2/r^2}dr^2$, and with "
-        "$r_* = \\int_0^{r} e^{2m/s - m^2/2s^2}ds$, which is finite at $r = 0$, $p = \\arctan((ct - r_*)/\\ell)$ and "
+        "$r_* = \\int_0^{r} e^{2m/s - m^2/2s^2}ds$, which is finite at $r = 0$, the maps $p = \\arctan((ct - r_*)/\\ell)$ and "
         "$q = \\arctan((ct + r_*)/\\ell)$ bring it into Minkowski's triangle.",
         "The edge $X = 0$ is $r = 0$, the ring, a timelike singularity where the Kretschmann scalar diverges as "
         "$e^{2m^2/r^2}$ and which light from any event of the plane reaches in a finite time $t$. The axis meets the "

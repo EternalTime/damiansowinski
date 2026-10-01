@@ -1,5 +1,5 @@
 {
-  "version": "e93100696cd49363",
+  "version": "e616ef6c2a360473",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -8479,6 +8479,204 @@
         "eprint": "2112.06861",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.112.084080"
+      }
+    },
+    "chazy1924": {
+      "type": "article",
+      "fields": {
+        "title": "Sur le champ de gravitation de deux masses fixes dans la th\\'eorie de la relativit\\'e",
+        "author": "Chazy, Jean",
+        "journal": "Bulletin de la Soci\\'et\\'e Math\\'ematique de France",
+        "volume": "52",
+        "pages": "17--38",
+        "year": "1924",
+        "doi": "10.24033/bsmf.1044",
+        "url": "https://doi.org/10.24033/bsmf.1044"
+      }
+    },
+    "curzon1925": {
+      "type": "article",
+      "fields": {
+        "title": "Cylindrical solutions of Einstein's gravitation equations",
+        "author": "Curzon, H. E. J.",
+        "journal": "Proceedings of the London Mathematical Society",
+        "volume": "s2-23",
+        "number": "1",
+        "pages": "477--480",
+        "year": "1925",
+        "doi": "10.1112/plms/s2-23.1.477",
+        "url": "https://doi.org/10.1112/plms/s2-23.1.477"
+      }
+    },
+    "silberstein1936": {
+      "type": "article",
+      "fields": {
+        "title": "Two-centers solution of the gravitational field equations, and the need for a reformed theory of matter",
+        "author": "Silberstein, Ludwik",
+        "journal": "Physical Review",
+        "volume": "49",
+        "number": "3",
+        "pages": "268--270",
+        "year": "1936",
+        "doi": "10.1103/PhysRev.49.268",
+        "url": "https://doi.org/10.1103/PhysRev.49.268"
+      }
+    },
+    "einstein1936twobody": {
+      "type": "article",
+      "fields": {
+        "title": "Two-body problem in general relativity theory",
+        "author": "Einstein, Albert and Rosen, Nathan",
+        "journal": "Physical Review",
+        "volume": "49",
+        "number": "5",
+        "pages": "404--405",
+        "year": "1936",
+        "doi": "10.1103/PhysRev.49.404.2",
+        "url": "https://doi.org/10.1103/PhysRev.49.404.2"
+      }
+    },
+    "weinstein2015twobody": {
+      "type": "article",
+      "fields": {
+        "title": "Two-body problem in general relativity: A heuristic guide in {Einstein}'s work on the {Einstein-Rosen} bridge and {EPR} paradox",
+        "author": "Weinstein, Galina",
+        "journal": "arXiv preprint arXiv:1511.05920",
+        "year": "2015",
+        "eprint": "1511.05920",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1511.05920"
+      }
+    },
+    "lehmkuhl2019": {
+      "type": "article",
+      "fields": {
+        "title": "General relativity as a hybrid theory: The genesis of {Einstein}'s work on the problem of motion",
+        "author": "Lehmkuhl, Dennis",
+        "journal": "Studies in History and Philosophy of Modern Physics",
+        "volume": "67",
+        "pages": "176--190",
+        "year": "2019",
+        "doi": "10.1016/j.shpsb.2017.09.006",
+        "eprint": "1803.09872",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.shpsb.2017.09.006"
+      }
+    },
+    "gautreau1967": {
+      "type": "article",
+      "fields": {
+        "title": "Directional singularities in {Weyl} gravitational fields",
+        "author": "Gautreau, Ronald and Anderson, James L.",
+        "journal": "Physics Letters A",
+        "volume": "25",
+        "number": "4",
+        "pages": "291--292",
+        "year": "1967",
+        "doi": "10.1016/0375-9601(67)90655-X",
+        "url": "https://doi.org/10.1016/0375-9601(67)90655-X"
+      }
+    },
+    "stachel1968": {
+      "type": "article",
+      "fields": {
+        "title": "Structure of the {Curzon} metric",
+        "author": "Stachel, John",
+        "journal": "Physics Letters A",
+        "volume": "27",
+        "number": "1",
+        "pages": "60--61",
+        "year": "1968",
+        "doi": "10.1016/0375-9601(68)91338-8",
+        "url": "https://doi.org/10.1016/0375-9601(68)91338-8"
+      }
+    },
+    "szekeres1973": {
+      "type": "article",
+      "fields": {
+        "title": "Extensions of the {Curzon} metric",
+        "author": "Szekeres, Peter and Morgan, F. H.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "32",
+        "number": "4",
+        "pages": "313--318",
+        "year": "1973",
+        "doi": "10.1007/BF01645612",
+        "url": "https://doi.org/10.1007/BF01645612"
+      }
+    },
+    "scott1986a": {
+      "type": "article",
+      "fields": {
+        "title": "The {Curzon} singularity. {I}: Spatial sections",
+        "author": "Scott, Susan M. and Szekeres, Peter",
+        "journal": "General Relativity and Gravitation",
+        "volume": "18",
+        "number": "6",
+        "pages": "557--570",
+        "year": "1986",
+        "doi": "10.1007/BF00769924",
+        "url": "https://doi.org/10.1007/BF00769924"
+      }
+    },
+    "scott1986b": {
+      "type": "article",
+      "fields": {
+        "title": "The {Curzon} singularity. {II}: Global picture",
+        "author": "Scott, Susan M. and Szekeres, Peter",
+        "journal": "General Relativity and Gravitation",
+        "volume": "18",
+        "number": "6",
+        "pages": "571--583",
+        "year": "1986",
+        "doi": "10.1007/BF00769925",
+        "url": "https://doi.org/10.1007/BF00769925"
+      }
+    },
+    "arianrhod1991": {
+      "type": "article",
+      "fields": {
+        "title": "Principal null directions of the {Curzon} metric",
+        "author": "Arianrhod, Robyn and Fletcher, S. and McIntosh, Colin B. G.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "8",
+        "number": "8",
+        "pages": "1519--1528",
+        "year": "1991",
+        "doi": "10.1088/0264-9381/8/8/016",
+        "url": "https://doi.org/10.1088/0264-9381/8/8/016"
+      }
+    },
+    "abdelqader2012": {
+      "type": "article",
+      "fields": {
+        "title": "Visualizing spacetime curvature via gradient flows. {II}. An example of the construction of a {Newtonian} analogue",
+        "author": "Abdelqader, Majd and Lake, Kayll",
+        "journal": "Physical Review D",
+        "volume": "86",
+        "number": "12",
+        "pages": "124037",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.86.124037",
+        "eprint": "1207.5496",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.86.124037"
+      }
+    },
+    "mangut2025": {
+      "type": "article",
+      "fields": {
+        "title": "Directional quantum singularities in {Curzon} spacetime",
+        "author": "Mangut, Mert and G\\\"urtuğ, \\\"Ozay and Halilsoy, Mustafa",
+        "journal": "Universe",
+        "volume": "11",
+        "number": "11",
+        "pages": "366",
+        "year": "2025",
+        "doi": "10.3390/universe11110366",
+        "eprint": "2511.08190",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3390/universe11110366"
       }
     },
     "levicivita1919": {
