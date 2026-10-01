@@ -4921,7 +4921,7 @@ def domain_wall(ck, src):
                         "space carries the slice; Minkowski space carries it."])]
 
 
-KS_DUST_MOMENTS = (-1.1, -0.55, 0.0, 0.55, 1.1)     # eta, the dust chart's parametric time
+KS_DUST_MOMENTS = (0.0, 0.3, 0.6, 0.9, 1.2)         # eta, the dust chart's parametric time, from the widest moment on
 KS_VACUUM_MOMENTS = (0.9, 0.7, 0.5, 0.3, 0.1)       # T in units of r_s, toward the singularity
 
 
@@ -4933,7 +4933,8 @@ def kantowski_sachs(ck, src):
     The first view is the dust universe symmetric in time, kappa = 0 of the dust chart at
     b_0 = 1, where a = 1 + eta tan(eta) and b = cos^2(eta): widest and shortest at eta = 0, and
     narrowing while it lengthens toward either singularity, eta -> +-pi/2. Drawn at five moments
-    from eta = -1.1 to 1.1 and played as a movie with a frame every 0.05 of eta.
+    of its collapse, from eta = 0 to 1.2, and played as a movie with a frame every 0.03 of eta;
+    the expansion before eta = 0 is the same movie run backward.
 
     The second is the vacuum member, the inside of Schwarzschild's horizon at r_s = 1, where
     a = sqrt(1/T - 1) and b = T, at five moments from T = 0.9 down to 0.1, set side by side in
@@ -4951,14 +4952,14 @@ def kantowski_sachs(ck, src):
         ck.form(f"{where}, z = a r", piece, lambda r: a * r, size)
         return piece
 
-    size = 2 * (1 + 1.1 * math.tan(1.1)) * reach
+    size = 2 * (1 + 1.2 * math.tan(1.2)) * reach
 
     def moment(eta):
         sl = Slice(src, "kantowski_sachs", "dust", "r", "\\phi", {"eta": repr(eta), **EQUATOR}, {"b_0": 1, "kappa": 0})
         piece = tube(sl, 1 + eta * math.tan(eta), math.cos(eta) ** 2, f"Kantowski-Sachs dust, eta = {eta:+.2f}", size)
         return Surface([piece], label=f"$\\eta = {eta:.2f}$", time=eta)
 
-    values, keys = movie_values(list(KS_DUST_MOMENTS), 0.05)
+    values, keys = movie_values(list(KS_DUST_MOMENTS), 0.03)
     frames = [moment(eta) for eta in values]
     surfaces = [frames[i] for i in keys]
     fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
@@ -4974,7 +4975,7 @@ def kantowski_sachs(ck, src):
         sl = Slice(src, "kantowski_sachs", "schwarzschild_interior", "r", "\\phi", {"T": repr(T), **EQUATOR}, {"r_s": 1})
         piece = tube(sl, math.sqrt(1 / T - 1), T, f"Kantowski-Sachs vacuum, T = {T:g} r_s", 6.0)
         eta = math.acos(math.sqrt(T))
-        vacuum.append(Surface([piece], label=f"$T = {T:g}\\,r_s$", time=eta + math.sin(eta) * math.cos(eta)))
+        vacuum.append(Surface([piece], label=f"$T = {T:g}$", time=eta + math.sin(eta) * math.cos(eta)))
     fig = sequence_figure(vacuum, {"sheet": "cover"}, 6.0, columns=5)
     fig.legend("fill", "cover", "the stretch $|r| \\le r_s$ of the equator of a moment, which $r$ and $\\phi$ cover")
     fig.legend("line", "r", "$r$ constant, at $-r_s/2$, $0$ and $r_s/2$, each a circle of circumference $2\\pi T$")
@@ -5453,13 +5454,14 @@ CAPTIONS = {
     ],
     ("kantowski_sachs", "dust"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the dust universe symmetric in time ($\\kappa = 0$) as $\\eta$ "
-        "runs from $-1.1$ to $1.1$, each moment drawn as a surface in flat space with every distance along it the "
+        "runs from $0$ to $1.2$, each moment drawn as a surface in flat space with every distance along it the "
         "metric distance. On it the metric is $a^2dr^2 + b^2d\\phi^2$ with $a = 1 + \\eta\\tan\\eta$ and "
         "$b = b_0\\cos^2\\eta$, so each moment is a flat cylinder of radius $b$ on which the stretch "
         "$|r| \\le b_0$ is $2ab_0$ long.",
-        "The cylinder is widest and shortest at $\\eta = 0$, where $b = b_0$ and $a = 1$. Toward either "
-        "singularity, $\\eta \\to \\pm\\pi/2$, its radius goes to zero while the length between any two circles of "
-        "constant $r$ grows without bound.",
+        "The cylinder is widest and shortest at $\\eta = 0$, where $b = b_0$ and $a = 1$. Toward the last "
+        "singularity, $\\eta \\to \\pi/2$, its radius goes to zero while the length between any two circles of "
+        "constant $r$ grows without bound, and the expansion from the first singularity is the same collapse "
+        "reversed in time.",
     ],
     ("kantowski_sachs", "vacuum"): [
         "The equatorial plane ($\\theta = \\pi/2$) inside the horizon of a Schwarzschild black hole at five moments "

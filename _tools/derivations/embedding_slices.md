@@ -90,7 +90,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 
 ### The Kantowski-Sachs cosmologies
 
-- The embedding has two views, two members of one family: the dust universe symmetric in time at five moments of the dust chart, $\eta = -1.1$, $-0.55$, $0$, $0.55$ and $1.1$, and the inside of Schwarzschild's horizon at $T = 0.9$, $0.7$, $0.5$, $0.3$ and $0.1\,r_s$, each the equator over $|r| \le 1$, a cylinder that runs on along $r$.
+- The embedding has two views, two members of one family: the dust universe symmetric in time at five moments of the dust chart, $\eta = 0$, $0.3$, $0.6$, $0.9$ and $1.2$, and the inside of Schwarzschild's horizon at $T = 0.9$, $0.7$, $0.5$, $0.3$ and $0.1\,r_s$, each the equator over $|r| \le 1$, a cylinder that runs on along $r$.
 - `dust/etar`: each dust moment is the line $\eta = \eta_k$, every $r$; five lines across the whole box, and no vacuum moment.
 - `comoving/tr`, drawn as the same dust from rest: the moment $\eta_k$ is the line $ct = \pi/2 + \eta_k + \sin\eta_k\cos\eta_k$, counted from the first singularity at $b_0 = 1$; five lines across the whole box.
 - `schwarzschild_interior/Tr`: each vacuum moment is the line $T = T_k$, every $r$; five lines across the whole box, and no dust moment.

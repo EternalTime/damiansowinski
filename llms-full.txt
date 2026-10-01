@@ -362,6 +362,18 @@ An exact solution of Einstein's field equations describing a rotating dust unive
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -\dfrac{1}{2\omega^2}dt^2 + \dfrac{1}{2\omega^2}dx^2 - \dfrac{e^x}{\omega^2}\,dt\,dy - \dfrac{e^{2x}}{4\omega^2}dy^2 + \dfrac{1}{2\omega^2}dz^2$$
 - chart Cylindrical: coordinates $(t, r, \phi, z)$, $$ds^2 = \dfrac{2}{\omega^2}\left(-dt^2 + dr^2 + \left(\sinh^2 r - \sinh^4 r\right)d\phi^2 - 2\sqrt{2}\sinh^2 r\,dt\,d\phi + dz^2\right)$$
 
+### Kantowski-Sachs Cosmologies
+
+The spatially homogeneous, anisotropic cosmologies outside Bianchi's classification. Every moment of time is a cylinder $\mathbb{R} \times S^2$, or $S^1 \times S^2$, whose length and whose spheres evolve separately, and the vacuum member is the region inside the horizon of a Schwarzschild black hole.
+
+- id: `kantowski_sachs`
+- tags: cosmology, cosmological, spatially homogeneous, homogeneous, anisotropic, locally rotationally symmetric, spherically symmetric, Bianchi classification, dust, vacuum, vacuum solution, Schwarzschild interior, black hole interior, singularity, curvature singularity, time-dependent, dynamical, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kantowski_sachs.json
+- chart Comoving: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2dr^2 + b^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Vacuum (Schwarzschild Interior): coordinates $(T, r, \theta, \phi)$, $$ds^2 = -\dfrac{dT^2}{\dfrac{r_s}{T} - 1} + \left(\dfrac{r_s}{T} - 1\right)dr^2 + T^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Dust, Parametric Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = b_0^2\cos^4\eta\left(-4\,d\eta^2 + d\theta^2 + \sin^2\theta\,d\phi^2\right) + \left(1 + \left(\eta + \kappa\right)\tan\eta\right)^2dr^2$$
+
 ### Kasner Anisotropic Vacuum Cosmology
 
 An anisotropic vacuum cosmology that expands along some axes while contracting along another, with expansion exponents constrained by two algebraic relations. It is a key building block of the chaotic approach to cosmological singularities.

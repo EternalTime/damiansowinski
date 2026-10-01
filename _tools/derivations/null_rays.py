@@ -3711,7 +3711,7 @@ CLOSED_FORMS = {
     ("kantowski_sachs", "schwarzschild_interior", "Tr"):
         (lambda T, r: r - T - np.log(1 - T), lambda T, r: r + T + np.log(1 - T), lambda T, r: T < 0.95),
     ("kantowski_sachs", "dust", "etar"):
-        (lambda e, r: r - _ks_tau(e), lambda e, r: r + _ks_tau(e), lambda e, r: np.abs(e) < 1.5),
+        (lambda e, r: r + _ks_tau(e), lambda e, r: r - _ks_tau(e), lambda e, r: np.abs(e) < 1.5),
     ("kasner", "cartesian", "tx"):
         (lambda t, x: x + t ** (9 / 7) * 7 / 9, lambda t, x: x - t ** (9 / 7) * 7 / 9, lambda t, x: t > 1e-3),
     ("kasner", "cartesian", "tz"):

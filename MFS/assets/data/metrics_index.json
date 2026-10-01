@@ -408,7 +408,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cdf326dc1d4fef12"
+    "version": "cdf326dc1d4fef12",
+    "diagrams": "a8296e17dab2de95",
+    "conformal": "5aa345afee4654d8",
+    "embedding": "b284a13acbc7b0ac"
   },
   {
     "id": "kasner",
