@@ -1557,10 +1557,10 @@ def tangherlini(ck, src):
         return -atan_exp(-u), np.arctan((r - 1) / (r + 1) * np.exp(2 * r + u))
     ein = Plane(src, "tangherlini", "eddington_finkelstein_ingoing", ("v", "r"), five_fixed, {"r_h": 1})
     ck.chart("Tangherlini ingoing Eddington-Finkelstein", ein, ingoing,
-             ck.uniform(-6, 6), ck.uniform(0.01, 8), lambda w, r: (1, -60))
+             ck.uniform(-6, 6), ck.uniform(0.05, 8), lambda w, r: (1, -300))
     eout = Plane(src, "tangherlini", "eddington_finkelstein_outgoing", ("u", "r"), five_fixed, {"r_h": 1})
     ck.chart("Tangherlini outgoing Eddington-Finkelstein", eout, outgoing,
-             ck.uniform(-6, 6), ck.uniform(0.01, 8), lambda u, r: (1, 60))
+             ck.uniform(-6, 6), ck.uniform(0.05, 8), lambda u, r: (1, 300))
 
     rr = np.linspace(0.05, 5, 50)
     for name, T, uv, plane in (("five", T5, uv_five, sph), ("six", T6, uv_six, six)):
@@ -1569,13 +1569,13 @@ def tangherlini(ck, src):
         p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
         ck.limit(f"Tangherlini, {name} dimensions: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
                  point(p[0], q[0]), [PI, 0], 1e-3)
-        p, q = T.pq("I", np.array([3.0]), np.array([1 + 1e-12]))
+        p, q = T.pq("I", np.array([1.5 / T.kp]), np.array([1 + 1e-12]))
         ck.limit(f"Tangherlini, {name} dimensions: r -> r_h at fixed t lands on the bifurcation sphere",
                  point(p[0], q[0]), [0, 0], 1e-4)
         for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
             pp, qq = T.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
-            ck.limit(f"Tangherlini, {name} dimensions, {cell}: tan p tan q is Kruskal's UV",
-                     np.tan(pp) * np.tan(qq), uv(rr[sel]), 1e-8)
+            ck.limit(f"Tangherlini, {name} dimensions, {cell}: tan p tan q is Kruskal's UV, as a part of it",
+                     np.tan(pp) * np.tan(qq) / uv(rr[sel]), np.ones(int(sel.sum())), 1e-8)
         K = plane.kretschmann
         ck.diverges(f"Tangherlini, {name} dimensions: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
         ck.finite(f"Tangherlini, {name} dimensions: the Kretschmann scalar is finite at r = r_h",
@@ -1622,7 +1622,7 @@ def tangherlini(ck, src):
         left, right = T.pq("I'", 0 * ends, ends[::-1]), T.pq("I", 0 * ends, ends)
         return m, [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))]
 
-    def static(vid, label, system, T, mark):
+    def static(vid, label, system, T, mark, named):
         v = View(vid, label, box, system)
         v.fill("region", hexagon)
         v.fill("cover", exterior)
@@ -1632,7 +1632,7 @@ def tangherlini(ck, src):
         for tt in TS:
             v.curve("t", *T.pq("I", np.full_like(out, tt), out))
         edges(v)
-        for r, text in ((1.25, "$1.25\\,r_h$"), (2, "$2\\,r_h$")):
+        for r, text in named:
             label_on(v, T.pq("I", 0.0, r), text)
         v.legend("cover", "the region that $t$ and $r > r_h$ cover")
         v.legend("r", "$r$ constant")
@@ -1642,7 +1642,7 @@ def tangherlini(ck, src):
 
     five = moment_of(T5, "five", "spherical")
     t = spread(-np.inf, np.inf, 500, 9)
-    views = [static("spherical", "Hyperspherical", "spherical", T5, five)]
+    views = [static("spherical", "Hyperspherical", "spherical", T5, five, ((1.25, "$1.25\\,r_h$"), (2, "$2\\,r_h$")))]
 
     v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
     v.fill("region", hexagon)
@@ -1673,7 +1673,9 @@ def tangherlini(ck, src):
     v.slice(*five)
     views.append(v)
 
-    views.append(static("six", "Hyperspherical", "spherical_six", T6, moment_of(T6, "six", "spherical_six")))
+    # In six dimensions the surface gravity is half again as large, and r = 2r_h lies beside i0.
+    views.append(static("six", "Hyperspherical", "spherical_six", T6, moment_of(T6, "six", "spherical_six"),
+                        ((1.25, "$1.25\\,r_h$"), (1.5, "$1.5\\,r_h$"))))
     return views
 
 

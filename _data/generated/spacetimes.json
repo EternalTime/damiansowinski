@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 51,
+  "count": 52,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -8294,6 +8294,349 @@
           ],
           "ricci_scalar": "R = 4\\Lambda",
           "kretschmann": "K = \\dfrac{12r_s^2}{r^6} + \\dfrac{8\\Lambda^2}{3}"
+        }
+      ]
+    },
+    {
+      "id": "tangherlini",
+      "name": "Schwarzschild-Tangherlini Black Hole",
+      "short_name": "Schwarzschild-Tangherlini",
+      "description": "The Schwarzschild black hole in $D \\ge 4$ spacetime dimensions, the static vacuum solution with hyperspherical symmetry that Frank Tangherlini found in 1963. Its metric function is $1 - (r_h/r)^{D-3}$, and for $D > 4$ every circular orbit of a massive particle around it is unstable.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "hyperspherical symmetry",
+        "black hole",
+        "mass",
+        "singularity",
+        "curvature singularity",
+        "coordinate singularity",
+        "horizon",
+        "event horizon",
+        "white hole",
+        "maximal extension",
+        "causal structure",
+        "asymptotically flat",
+        "higher dimensions",
+        "extra dimensions",
+        "five-dimensional",
+        "six-dimensional",
+        "dimensionality of space",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "The horizon radius $r_h$ is fixed by the mass $M$ through $r_h^{D-3} = 16\\pi GM/\\left((D-2)\\,\\Omega_{D-2}\\,c^2\\right)$, with $G$ Newton's constant in $D$ spacetime dimensions and $\\Omega_{D-2}$ the area of the unit sphere of $D - 2$ dimensions. We keep factors of $c$ explicit.",
+      "references": [
+        "ehrenfest1917",
+        "whitrow1955",
+        "tangherlini1963",
+        "schwarzschild1916",
+        "emparan2008",
+        "cardoso2009",
+        "myers1986",
+        "emparan2002",
+        "gregorylaflamme1993",
+        "gibbons2002",
+        "kodama2003",
+        "ishibashi2003",
+        "arkanihamed1998",
+        "argyres1998",
+        "giddings2002",
+        "dimopoulos2001",
+        "cms2011",
+        "emparan2013"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Hyperspherical, Five Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_h, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_h",
+              "description": "Horizon radius, $r_h^{D-3} = 16\\pi GM/\\left((D-2)\\,\\Omega_{D-2}\\,c^2\\right)$ in $D$ spacetime dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\psi, \\theta, \\phi)$ in $D = 5$, with $t$ carrying dimensions of time and $r_h^2 = 8GM/(3\\pi c^2)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_h^2}{r^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_h^2}{r^2}} + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_h^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_h^2}{r^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{72r_h^4}{r^8}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein, Five Dimensions",
+          "coordinates": [
+            "u",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_h",
+              "description": "Horizon radius, $r_h^{D-3} = 16\\pi GM/\\left((D-2)\\,\\Omega_{D-2}\\,c^2\\right)$ in $D$ spacetime dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\psi, \\theta, \\phi)$ in $D = 5$, with the retarded time $u = ct - r - \\tfrac{1}{2}r_h\\ln\\left|\\dfrac{r - r_h}{r - r_h}\\right|$ a length.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_h^2}{r^2}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_h^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{72r_h^4}{r^8}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein, Five Dimensions",
+          "coordinates": [
+            "v",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_h",
+              "description": "Horizon radius, $r_h^{D-3} = 16\\pi GM/\\left((D-2)\\,\\Omega_{D-2}\\,c^2\\right)$ in $D$ spacetime dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\psi, \\theta, \\phi)$ in $D = 5$, with the advanced time $v = ct + r + \\tfrac{1}{2}r_h\\ln\\left|\\dfrac{r - r_h}{r + r_h}\\right|$ a length.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_h^2}{r^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_h^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{72r_h^4}{r^8}"
+        },
+        {
+          "id": "spherical_six",
+          "name": "Hyperspherical, Six Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\chi",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_h, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_h",
+              "description": "Horizon radius, $r_h^{D-3} = 16\\pi GM/\\left((D-2)\\,\\Omega_{D-2}\\,c^2\\right)$ in $D$ spacetime dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\chi, \\psi, \\theta, \\phi)$ in $D = 6$, with $t$ carrying dimensions of time and $r_h^3 = 3GM/(2\\pi c^2)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_h^3}{r^3}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_h^3}{r^3}} + r^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\psi^2 + \\sin^2\\chi\\sin^2\\psi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_h^3}{r^3}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_h^3}{r^3}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\chi\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\chi\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{240r_h^6}{r^{10}}"
         }
       ]
     },

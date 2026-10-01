@@ -1,5 +1,5 @@
 {
-  "version": "d58024eb9a8ff777",
+  "version": "f9168618d33d96a0",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -9868,6 +9868,234 @@
         "eprint": "2105.09343",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.103.104047"
+      }
+    },
+    "ehrenfest1917": {
+      "type": "article",
+      "fields": {
+        "title": "In what way does it become manifest in the fundamental laws of physics that space has three dimensions?",
+        "author": "Ehrenfest, Paul",
+        "journal": "Proceedings of the Royal Netherlands Academy of Arts and Sciences",
+        "volume": "20",
+        "pages": "200--209",
+        "year": "1918",
+        "url": "https://dwc.knaw.nl/DL/publications/PU00012213.pdf"
+      }
+    },
+    "whitrow1955": {
+      "type": "article",
+      "fields": {
+        "title": "Why Physical Space Has Three Dimensions",
+        "author": "Whitrow, G. J.",
+        "journal": "The British Journal for the Philosophy of Science",
+        "volume": "6",
+        "number": "21",
+        "pages": "13--31",
+        "year": "1955",
+        "doi": "10.1093/bjps/VI.21.13",
+        "url": "https://doi.org/10.1093/bjps/VI.21.13"
+      }
+    },
+    "tangherlini1963": {
+      "type": "article",
+      "fields": {
+        "title": "Schwarzschild field in n dimensions and the dimensionality of space problem",
+        "author": "Tangherlini, F. R.",
+        "journal": "Il Nuovo Cimento",
+        "volume": "27",
+        "number": "3",
+        "pages": "636--651",
+        "year": "1963",
+        "doi": "10.1007/BF02784569",
+        "url": "https://doi.org/10.1007/BF02784569"
+      }
+    },
+    "emparan2008": {
+      "type": "article",
+      "fields": {
+        "title": "Black Holes in Higher Dimensions",
+        "author": "Emparan, Roberto and Reall, Harvey S.",
+        "journal": "Living Reviews in Relativity",
+        "volume": "11",
+        "pages": "6",
+        "year": "2008",
+        "doi": "10.12942/lrr-2008-6",
+        "eprint": "0801.3471",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.12942/lrr-2008-6"
+      }
+    },
+    "cardoso2009": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesic stability, Lyapunov exponents, and quasinormal modes",
+        "author": "Cardoso, Vitor and Miranda, Alex S. and Berti, Emanuele and Witek, Helvi and Zanchin, Vilson T.",
+        "journal": "Physical Review D",
+        "volume": "79",
+        "number": "6",
+        "pages": "064016",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.79.064016",
+        "eprint": "0812.1806",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.79.064016"
+      }
+    },
+    "myers1986": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes in higher dimensional space-times",
+        "author": "Myers, R. C. and Perry, M. J.",
+        "journal": "Annals of Physics",
+        "volume": "172",
+        "number": "2",
+        "pages": "304--347",
+        "year": "1986",
+        "doi": "10.1016/0003-4916(86)90186-7",
+        "url": "https://doi.org/10.1016/0003-4916(86)90186-7"
+      }
+    },
+    "emparan2002": {
+      "type": "article",
+      "fields": {
+        "title": "A Rotating Black Ring Solution in Five Dimensions",
+        "author": "Emparan, Roberto and Reall, Harvey S.",
+        "journal": "Physical Review Letters",
+        "volume": "88",
+        "number": "10",
+        "pages": "101101",
+        "year": "2002",
+        "doi": "10.1103/PhysRevLett.88.101101",
+        "eprint": "hep-th/0110260",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.88.101101"
+      }
+    },
+    "gibbons2002": {
+      "type": "article",
+      "fields": {
+        "title": "Uniqueness and Non-Uniqueness of Static Vacuum Black Holes in Higher Dimensions",
+        "author": "Gibbons, Gary W. and Ida, Daisuke and Shiromizu, Tetsuya",
+        "journal": "Progress of Theoretical Physics Supplement",
+        "volume": "148",
+        "pages": "284--290",
+        "year": "2002",
+        "doi": "10.1143/PTPS.148.284",
+        "eprint": "gr-qc/0203004",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1143/PTPS.148.284"
+      }
+    },
+    "kodama2003": {
+      "type": "article",
+      "fields": {
+        "title": "A Master Equation for Gravitational Perturbations of Maximally Symmetric Black Holes in Higher Dimensions",
+        "author": "Kodama, Hideo and Ishibashi, Akihiro",
+        "journal": "Progress of Theoretical Physics",
+        "volume": "110",
+        "number": "4",
+        "pages": "701--722",
+        "year": "2003",
+        "doi": "10.1143/PTP.110.701",
+        "eprint": "hep-th/0305147",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1143/PTP.110.701"
+      }
+    },
+    "ishibashi2003": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of Higher-Dimensional Schwarzschild Black Holes",
+        "author": "Ishibashi, Akihiro and Kodama, Hideo",
+        "journal": "Progress of Theoretical Physics",
+        "volume": "110",
+        "number": "5",
+        "pages": "901--919",
+        "year": "2003",
+        "doi": "10.1143/PTP.110.901",
+        "eprint": "hep-th/0305185",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1143/PTP.110.901"
+      }
+    },
+    "arkanihamed1998": {
+      "type": "article",
+      "fields": {
+        "title": "The hierarchy problem and new dimensions at a millimeter",
+        "author": "Arkani-Hamed, Nima and Dimopoulos, Savas and Dvali, Gia",
+        "journal": "Physics Letters B",
+        "volume": "429",
+        "number": "3-4",
+        "pages": "263--272",
+        "year": "1998",
+        "doi": "10.1016/S0370-2693(98)00466-3",
+        "eprint": "hep-ph/9803315",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(98)00466-3"
+      }
+    },
+    "argyres1998": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes and sub-millimeter dimensions",
+        "author": "Argyres, Philip C. and Dimopoulos, Savas and March-Russell, John",
+        "journal": "Physics Letters B",
+        "volume": "441",
+        "number": "1-4",
+        "pages": "96--104",
+        "year": "1998",
+        "doi": "10.1016/S0370-2693(98)01184-8",
+        "eprint": "hep-th/9808138",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(98)01184-8"
+      }
+    },
+    "cms2011": {
+      "type": "article",
+      "fields": {
+        "title": "Search for microscopic black hole signatures at the Large Hadron Collider",
+        "author": "{CMS Collaboration} and Khachatryan, V. and others",
+        "journal": "Physics Letters B",
+        "volume": "697",
+        "number": "5",
+        "pages": "434--453",
+        "year": "2011",
+        "doi": "10.1016/j.physletb.2011.02.032",
+        "eprint": "1012.3375",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2011.02.032"
+      }
+    },
+    "emparan2013": {
+      "type": "article",
+      "fields": {
+        "title": "The large D limit of General Relativity",
+        "author": "Emparan, Roberto and Suzuki, Ryotaku and Tanabe, Kentaro",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2013",
+        "number": "6",
+        "pages": "9",
+        "year": "2013",
+        "doi": "10.1007/JHEP06(2013)009",
+        "eprint": "1302.6382",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP06(2013)009"
+      }
+    },
+    "gregorylaflamme1993": {
+      "type": "article",
+      "fields": {
+        "title": "Black strings and p-branes are unstable",
+        "author": "Gregory, Ruth and Laflamme, Raymond",
+        "journal": "Physical Review Letters",
+        "volume": "70",
+        "number": "19",
+        "pages": "2837--2840",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.70.2837",
+        "eprint": "hep-th/9301052",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.70.2837"
       }
     }
   }
