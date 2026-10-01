@@ -3,7 +3,7 @@
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
-robinson_trautman, string_black_hole and mcvittie, and Godel's cylindrical chart.
+robinson_trautman, string_black_hole, mcvittie and tangherlini, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -21,7 +21,7 @@ reads better than an expanded one, and each of those is checked against sympy he
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
-majumdar_papapetrou.md and robinson_trautman.md beside this file.
+majumdar_papapetrou.md, robinson_trautman.md and tangherlini.md beside this file.
 """
 import argparse
 import itertools

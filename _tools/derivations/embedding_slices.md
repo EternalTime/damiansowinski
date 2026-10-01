@@ -206,6 +206,14 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `kasner/radial`, the plane of $t$ and $r$: the line $ct = 0$ from $r = \rho^\Sigma/\Sigma$ at $\rho = 1/16$ to its value at $\rho = 4$, with $\Sigma = 3/4$, that is from $r = 1/6$ to $3.77$; the Kasner form's $t$ is Weyl's times a constant, so the moment is the same.
 - `weyl` and `kasner`, the triangle: the curve $p, q = \arctan(\mp 4\rho^{1/4})$ between the same two circles.
 
+### Schwarzschild-Tangherlini
+
+- The embedding is two moments, one in each dimension: the plane of $r$ and $\phi$ at $t = 0$ in the static chart, every other angle at $\pi/2$, from the throat $r_h$ to $6\,r_h$ on both sheets.
+- `spherical/radial` and `spherical_six/radial`, the plane of $t$ and $r$: the line $ct = 0$ from $r_h$ to the edge of the box at $6\,r_h$, each chart marking its own dimension's moment.
+- The Eddington-Finkelstein planes of five dimensions: $v = r_*$ and $u = -r_*$ with $r_* = r + \tfrac{1}{2}r_h\ln((r - r_h)/(r + r_h))$, which runs off the drawing toward the horizon.
+- `spherical`, `ingoing`, `outgoing` and `six`, the square: the line $T = 0$ through the bifurcation sphere, from $6\,r_h$ in one exterior to $6\,r_h$ in the other.
+- Five dimensions and six are two spacetimes, so no drawing of one marks the other's moment, which `HIDDEN_VIEWS` records.
+
 ### Curzon-Chazy
 
 - The embedding is one moment: the plane $z = 0$ at $t = 0$ in Weyl's chart, from $\rho = 0.7226\,m$, where the surface starts, to $5\,m$.
