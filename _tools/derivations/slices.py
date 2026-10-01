@@ -702,6 +702,10 @@ FLAT = {
     ("kerr_newman", "boyer_lindquist", "principal"): lambda: one("kerr_newman", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_newman", "boyer_lindquist", "above"): lambda: kerr_above("kerr_newman"),
     # Homogeneous planes: every moment runs across the whole drawing.
+    # A moment of the areal time t is the line tau = -ln t of the logarithmic chart.
+    ("gowdy", "areal", "plane"): lambda: one("gowdy", lambda m: along(m.time, *m.reach("areal", "\\theta"))),
+    ("gowdy", "logarithmic", "plane"): lambda: one(
+        "gowdy", lambda m: along(-math.log(m.time), *m.reach("areal", "\\theta"))),
     ("kasner", "cartesian", "tx"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     ("kasner", "cartesian", "tz"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     ("bianchi", "type_i_cartesian", "tx"): lambda: one("bianchi", lambda m: across(m.time, 0.0, BIG)),
@@ -818,6 +822,8 @@ HIDDEN = {
     ("gott_time_machine", "centre_of_momentum", "loop"): "the centre of momentum chart about the strings; the moments embedded are Grant's, away from the strings",
     ("bell_szekeres", "regular", "plane"): "a plane of constant X and Y with X^2 + Y^2 < 1, off eta = 0, where the embedded ring's centre lies on the rim X^2 + Y^2 = 1 of the regular chart",
     ("bell_szekeres", "regular"): "a plane of constant X and Y with X^2 + Y^2 < 1, off eta = 0, where the embedded ring's centre lies on the rim X^2 + Y^2 = 1 of the regular chart",
+    ("gowdy", "sphere"): "the inside of Schwarzschild's horizon, a universe on S^2 x S^1; the moments embedded are the torus universe's",
+    ("gowdy", "sphere", "plane"): "the inside of Schwarzschild's horizon, a universe on S^2 x S^1; the moments embedded are the torus universe's",
     ("frw", "open"): "the open universe's conformal diagram; the moments embedded are the closed universe's",
 }
 

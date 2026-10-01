@@ -4986,6 +4986,143 @@ def einstein_rosen_waves(ck, src):
     return views
 
 
+def gowdy(ck, src):
+    """The torus universe on its plane of the time and theta, sigma and delta held fixed, each point
+    an orbit of the two Killing vectors, a 2-torus of area 4 pi^2 L^2 t.
+
+    The metric on the plane is L^2 t^{-1/2} e^{lambda/2}(-dt^2 + dtheta^2) in the areal chart, and
+    a conformal factor changes no null direction, so for every wave p, q = arctan(t -+ theta)
+    bring it into Minkowski's triangle, of which the universe is the part between the line
+    theta = 0, X = 0, and the curve theta = 2 pi, one line of the torus drawn twice: it starts on
+    the singularity t = 0, the segment T = 0 from X = 0 to 2 arctan(2 pi), and both meet at
+    t = infinity, the one point i+ at (0, pi), since theta is bounded. The logarithmic chart
+    enters through t = e^{-tau}. The maps are checked with random values of lambda at every
+    sample, and the published Kretschmann scalar with the wave the spacetime diagram declares,
+    differentiated in sympy and not simplified, is checked to diverge on t = 0."""
+    fixed = {"sigma": "0", "delta": "0"}
+
+    def any_wave(x0, x1):
+        w = ck.rng.uniform(-3, 3, np.shape(x0))
+        return {"lambda": (w, 0 * w, 0 * w)}
+
+    def log_pq(tau, theta):
+        return mink_pq(np.exp(-np.asarray(tau, dtype=float)), theta)
+    areal = Plane(src, "gowdy", "areal", ("t", "\\theta"), fixed, {"L": 1}, numeric=["lambda"])
+    ck.chart("Gowdy areal, for any wave", areal, mink_pq, ck.uniform(0.01, 30), ck.uniform(0, 2 * PI),
+             lambda t, th: (1, 0), any_wave)
+    log = Plane(src, "gowdy", "logarithmic", ("\\tau", "\\theta"), fixed, {"L": 1}, numeric=["lambda"])
+    ck.chart("Gowdy logarithmic, for any wave", log, log_pq, ck.uniform(-3, 4), ck.uniform(0, 2 * PI),
+             lambda tau, th: (-1, 0), any_wave)
+
+    _, entry, reader = nr.load("gowdy", "areal")
+    src.note("gowdy", "areal", ["kretschmann"])
+    K = reader(nr.strip_lhs(entry["kretschmann"]))
+    for name, text in nr._gowdy_wave("t").items():
+        K = K.replace(reader.parameters[name].func, nr._as_lambda(reader, name, text)).doit()
+    K = sp.lambdify((reader.symbol["t"], reader.symbol["\\theta"]), K.subs(reader.parameters["L"], 1),
+                    ["scipy", "numpy"])
+    th = ck.uniform(0, 2 * PI, 50)
+    ck.diverges("Gowdy: t = 0 is a curvature singularity for the wave",
+                K(np.full(50, 1e-3), th), K(np.full(50, 1e-4), th))
+    p, q = mink_pq(np.full(50, 1e9), th)
+    ck.limit("Gowdy: t -> infinity lands on the one point (0, pi)", np.concatenate([q - p, p + q]),
+             [0.0] * 50 + [PI] * 50, 1e-6)
+    p, q = mink_pq(np.zeros(50), th)
+    ck.limit("Gowdy: t = 0 lands on T = 0 at X = 2 arctan(theta)", np.concatenate([p + q, q - p]),
+             np.concatenate([np.zeros(50), 2 * np.arctan(th)]), 1e-12)
+
+    edge = 2 * float(np.arctan(2 * PI))
+    box = [-0.45, edge + 0.45, -0.3, PI + 0.3]
+    far = np.concatenate([[0.0], S_POS])
+    X, T = xt(*mink_pq(far, np.full_like(far, 2 * PI)))
+    region = [[0.0, 0.0]] + [[float(a), float(b)] for a, b in zip(X, T)] + [[0.0, PI]]
+    around = np.linspace(0, 2 * PI, 400)
+    moments = slices.moments("gowdy")
+    views = []
+    for vid, label, times, time_of, t_legend, singular, name in (
+            ("areal", "Areal time", (0.5, 1, 2, 4, 8), lambda c: c, "$t$ constant, at $1/2$, $1$, $2$, $4$ and $8$",
+             "$t = 0$", "$t$"),
+            ("logarithmic", "Logarithmic time", (2, 1, 0, -1, -2), lambda c: math.exp(-c),
+             "$\\tau$ constant, every $1$ from $-2$ to $2$", "$\\tau = \\infty$", "$\\tau$")):
+        v = View(vid, label, box, vid)
+        v.fill("region", region)
+        v.fill("cover", region)
+        grid(v, "r", lambda th, t: mink_pq(t, th), (HALF, PI, 3 * HALF), S_POS)
+        for c in times:
+            v.curve("t", *mink_pq(np.full_like(around, time_of(c)), around))
+        v.line("boundary", [[[0, 0], [0, PI]]])
+        v.curve("boundary", *mink_pq(far, np.full_like(far, 2 * PI)))
+        v.line("singular", [[[0, 0], [edge, 0]]], zig=True)
+        v.layers.append({"kind": "point", "class": "infinity", "at": [0.0, round(PI, 4)]})
+        v.label_xt([0, PI], "$i^+$", "b", dy=-6)
+        v.label_xt([edge / 2, 0], singular, "t", dy=8)
+        v.label_xt([0, 1.3], "$\\theta = 0$", "r", "coord", dx=-6)
+        v.label(mink_pq(1.3, 2 * PI), "$\\theta = 2\\pi$", "l", "coord", dx=6)
+        v.legend("cover", f"the whole torus universe, which {name} and $\\theta$ cover")
+        v.legend("r", "$\\theta$ constant, at $\\pi/2$, $\\pi$ and $3\\pi/2$")
+        v.legend("t", t_legend)
+        v.legend("boundary", "$\\theta = 0$ and $\\theta = 2\\pi$, one line of the torus drawn twice")
+        v.legend("singular", f"the singularity {singular}, where the Kretschmann scalar diverges")
+        v.set(input=nr.GOWDY_INPUT)
+        for m in moments:
+            reach = np.linspace(*m.reach("areal", "\\theta"), 200)
+            v.slice(m, [mink_pq(np.full_like(reach, m.time), reach)])
+        views.append(v)
+
+    # The sphere chart: its plane is L^2 e^{2a}(-dt^2 + dtheta^2) for every wave, and t and theta
+    # are bounded already, so p, q = (t -+ theta)/2 draw it as the square X = theta, T = t. It is
+    # drawn for the inside of Schwarzschild's horizon, which print_charts.py checks the declared
+    # functions to be: r = L(1 - cos t) and r_s = 2L, singular at t = 0 and regular at t = pi,
+    # where K = 12 r_s^2/r^6 = 3/(4 L^4).
+    def sphere_pq(t, theta):
+        t, theta = np.asarray(t, dtype=float), np.asarray(theta, dtype=float)
+        return (t - theta) / 2, (t + theta) / 2
+
+    def any_a(x0, x1):
+        w = ck.rng.uniform(-3, 3, np.shape(x0))
+        return {"a": (w, 0 * w, 0 * w)}
+    sphere = Plane(src, "gowdy", "sphere", ("t", "\\theta"), fixed, {"L": 1}, numeric=["a"])
+    ck.chart("Gowdy sphere, for any wave", sphere, sphere_pq, ck.uniform(0.01, PI - 0.01), ck.uniform(0.01, PI - 0.01),
+             lambda t, th: (1, 0), any_a)
+    _, entry, reader = nr.load("gowdy", "sphere")
+    src.note("gowdy", "sphere", ["kretschmann"])
+    K = reader(nr.strip_lhs(entry["kretschmann"]))
+    for name, text in nr.GOWDY_HOLE.items():
+        K = K.replace(reader.parameters[name].func, nr._as_lambda(reader, name, text)).doit()
+    K = sp.lambdify((reader.symbol["t"], reader.symbol["\\theta"]), K.subs(reader.parameters["L"], 1), "numpy")
+    th = ck.uniform(0.5, PI - 0.5, 50)
+    ck.diverges("Gowdy: t = 0 of Schwarzschild's inside is a curvature singularity",
+                K(np.full(50, 1e-2), th), K(np.full(50, 1e-3), th))
+    ck.limit("Gowdy: K = 3/(4 L^4) on the horizon t = pi of Schwarzschild's inside", K(np.full(50, PI - 1e-3), th),
+             np.full(50, 0.75), 1e-4)
+
+    v = View("sphere", "Sphere and handle", [-0.45, PI + 0.45, -0.3, PI + 0.3], "sphere")
+    square = [[0.0, 0.0], [PI, 0.0], [PI, PI], [0.0, PI]]
+    v.fill("region", square)
+    v.fill("cover", square)
+    inside = np.linspace(0, PI, 60)
+    grid(v, "r", lambda th, t: sphere_pq(t, th), (PI / 4, HALF, 3 * PI / 4), inside)
+    grid(v, "t", sphere_pq, (PI / 4, HALF, 3 * PI / 4), inside)
+    v.line("null", [[[0, 0], [PI, PI]], [[0, PI], [PI, 0]]])
+    v.line("boundary", [[[0, 0], [0, PI]], [[PI, 0], [PI, PI]]])
+    v.line("horizon", [[[0, PI], [PI, PI]]])
+    v.line("singular", [[[0, 0], [PI, 0]]], zig=True)
+    v.label_xt([HALF, 0], "$t = 0$", "t", dy=8)
+    v.label_xt([HALF, PI], "$t = \\pi$", "b", dy=-6)
+    v.label_xt([0, HALF], "$\\theta = 0$", "r", "coord", dx=-6)
+    v.label_xt([PI, HALF], "$\\theta = \\pi$", "l", "coord", dx=6)
+    v.legend("cover", "the inside of the horizon, a universe on $S^2 \\times S^1$, which $t$ and $\\theta$ cover whole")
+    v.legend("r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    v.legend("t", "$t$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    v.legend("null", "$t = \\theta$ and $t + \\theta = \\pi$, where the gradient of the orbit area is null")
+    v.legend("boundary", "the poles $\\theta = 0$ and $\\theta = \\pi$ of the sphere")
+    v.legend("horizon", "$t = \\pi$, the horizon $r = r_s$")
+    v.legend("singular", "the singularity $t = 0$, $r = 0$, where the Kretschmann scalar diverges")
+    v.set(input=nr.GOWDY_HOLE_INPUT)
+    views.append(v)
+    return views
+
+
 def melvin(ck, src):
     """Melvin's half plane of fixed phi and z, and Ernst's equator.
 
@@ -7212,7 +7349,7 @@ DRAWN = {
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
-    "einstein_rosen_waves": einstein_rosen_waves,
+    "einstein_rosen_waves": einstein_rosen_waves, "gowdy": gowdy,
     "nariai": nariai, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "majumdar_papapetrou": majumdar_papapetrou,
     "robinson_trautman": robinson_trautman,
@@ -8289,6 +8426,30 @@ CAPTIONS = {
         "The same half plane in the null chart ($u = ct - \\rho$, $v = ct + \\rho$), where the metric on it is "
         "$-e^{2(\\gamma - \\psi)}du\\,dv$. The lines of constant $u$ and of constant $v$ are light rays, the 45° "
         "lines of the triangle, with $p = \\arctan(u/a)$ and $q = \\arctan(v/a)$, and the axis is the line $u = v$.",
+    ],
+    ("gowdy", "areal"): [
+        "The plane of $t$ and $\\theta$ of the torus universe, each point in the diagram a 2-torus of area "
+        "$4\\pi^2L^2t$. The metric on it is $L^2t^{-1/2}e^{\\lambda/2}(-dt^2 + d\\theta^2)$, and a conformal factor "
+        "changes no null direction, so for every wave $p, q = \\arctan(t \\mp \\theta)$ bring it into Minkowski's "
+        "triangle, where the lines $\\theta = 0$ and $\\theta = 2\\pi$ are one line of the torus.",
+        "The singularity $t = 0$ is spacelike, the segment along the bottom, and since $\\theta$ is bounded "
+        "every line of constant $\\theta$ and every light ray ends at the one point $i^+$, $t \\to \\infty$. "
+        "A light ray from the singularity crosses the drawing from one edge to the other in the time $2\\pi$.",
+    ],
+    ("gowdy", "logarithmic"): [
+        "The same plane in the time $\\tau = -\\ln t$, each point in the diagram a 2-torus of area "
+        "$4\\pi^2L^2e^{-\\tau}$, with $p, q = \\arctan(e^{-\\tau} \\mp \\theta)$. The singularity is $\\tau \\to \\infty$, "
+        "and the lines of constant $\\tau$ crowd toward it, since equal steps of $\\tau$ are equal ratios of $t$.",
+    ],
+    ("gowdy", "sphere"): [
+        "The plane of $t$ and $\\theta$ of the inside of Schwarzschild's horizon as a Gowdy universe on "
+        "$S^2 \\times S^1$, each point in the diagram a 2-torus of area $4\\pi^2L^2\\sin t\\sin\\theta$. The "
+        "metric on it is $L^2e^{2a}(-dt^2 + d\\theta^2)$ with $t$ and $\\theta$ bounded, so for every wave the "
+        "plane is the square as it stands, with light rays at 45°.",
+        "The universe expands from the singularity $t = 0$, $r = 0$, to the horizon $t = \\pi$, $r = r_s$. The "
+        "orbits shrink to a circle at the poles $\\theta = 0$ and $\\theta = \\pi$, and the two diagonals, where "
+        "the gradient of their area is null, cut the square into the regions where it is timelike, below "
+        "and above, and spacelike, left and right.",
     ],
     ("melvin", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ of Melvin's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "

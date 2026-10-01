@@ -5108,6 +5108,72 @@ def einstein_rosen_waves(ck, src):
                         "moment."])]
 
 
+GOWDY_MOMENTS = (0.25, 0.5, 1.0, 2.0, 3.0)     # the areal time t
+
+
+def gowdy(ck, src):
+    """The torus of theta and sigma at delta = 0 of a moment of the areal time, for the polarised
+    wave the spacetime diagram declares, Q = 0, P = A Y_0(t) cos(theta) and
+    lambda = A^2 (t^2 (Y_0^2 + Y_1^2)/2 - t Y_0 Y_1 cos^2(theta)) with A = -pi/4, at L = 1:
+    g_thetatheta = e^{lambda/2}/sqrt(t) and g_sigmasigma = t e^P depend on theta alone, so the
+    moment is a surface of revolution about an axis along theta, the circle of sigma at theta of
+    radius sqrt(t) e^{P/2}, climbing at dz/dtheta = sqrt(e^{lambda/2}/sqrt(t) - t e^P (d_theta P)^2/4).
+    It is a tube whose two ends, theta = 0 and theta = 2 pi, are one circle of the torus, which no
+    surface of revolution in flat space closes on itself. At each moment the two Bessel functions
+    are numbers, so P and lambda enter as trigonometric polynomials in theta. The wave is
+    checked to make every published Einstein component vanish, and every moment to embed whole.
+    Toward t = 0 the tube lengthens and narrows, each theta at its own rate, and it widens
+    and shortens as the universe expands."""
+    from scipy.special import y0, y1
+    A = -math.pi / 4
+
+    # The published Einstein tensor, mixed, with the wave, at points all over the plane.
+    src.note("gowdy", "areal", ["einstein_tensor"])
+    _, entry, R = nr.load("gowdy", "areal")
+    points = np.random.default_rng(7).uniform([0.05, 0.0], [8, 2 * math.pi], (400, 2))
+    worst = 0.0
+    for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]:
+        e = R(c["value"]).subs(R.parameters["L"], 1)
+        for name, text in nr._gowdy_wave("t").items():
+            e = e.replace(R.parameters[name].func, nr._as_lambda(R, name, text)).doit()
+        f = sp.lambdify((R.symbol["t"], R.symbol["\\theta"]), e, ["scipy", "numpy"])
+        value = np.broadcast_to(np.asarray(f(points[:, 0], points[:, 1]), dtype=float), (len(points),))
+        worst = max(worst, float(np.max(np.abs(value))))
+    ck.add("Gowdy: the wave makes every published G^mu_nu vanish", worst, 1e-9)
+
+    top = 2 * math.pi
+    size = 9.0
+
+    def moment(T):
+        Z0, Z1 = float(y0(T)), float(y1(T))
+        wave = {"P": f"({A * Z0!r})*cos(theta)", "Q": "0",
+                "lambda": f"({A * A * T * T * (Z0 * Z0 + Z1 * Z1) / 2!r}) - ({A * A * T * Z0 * Z1!r})*cos(theta)**2"}
+        sl = Slice(src, "gowdy", "areal", "\\theta", "\\sigma", {"t": repr(T), "delta": 0}, {"L": 1}, wave)
+        where = f"Gowdy, t = {T:g}"
+        ck.add(f"{where}: the moment embeds whole", float(max(0.0, -np.min(sl.defect_at(np.linspace(0, top, 721))))), 0.0)
+        tube = Piece("tube", "sheet", sl, 0.0, top, 0.0, 1,
+                     (("edge", "the circle $\\theta = 0$, which is the circle $\\theta = 2\\pi$ at the other end"),
+                      ("edge", "the circle $\\theta = 2\\pi$, which is the circle $\\theta = 0$ at the other end")),
+                     [(math.pi / 2, "r", None), (math.pi, "r", None), (3 * math.pi / 2, "r", None)], size)
+        ck.isometry(where, tube)
+        ck.radius(f"{where}, rho = L sqrt(t) e^(P/2)", tube,
+                  lambda x, T=T, Z0=Z0: math.sqrt(T) * np.exp(A * Z0 * np.cos(x) / 2), size)
+        ck.add(f"{where}: the two ends are one circle", abs(float(tube.rho[0]) - float(tube.rho[-1])) / size, FORM)
+        return Surface([tube], label=f"$t = {T:g}$", time=T)
+
+    times, keys = movie_values(list(GOWDY_MOMENTS), 0.0625)
+    frames = [moment(T) for T in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the torus of $\\theta$ and $\\sigma$ at $\\delta = 0$, cut along the circle $\\theta = 0$")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/2$, $\\pi$ and $3\\pi/2$, each a circle of $\\sigma$")
+    fig.legend("line", "meridian", "$\\sigma$ constant, every $30°$")
+    return [view("torus", "A moment of $t$", "$L$", surfaces, fig.done(),
+                 movie=movie(frames, "$t$", times),
+                 settings="$L = 1$, the unit of every length; each moment is a slice of constant $t$ and $\\delta$.",
+                 input=nr.GOWDY_INPUT)]
+
+
 MELVIN_ERNST = {"r_s": 1, "B": sp.Rational(1, 2)}   # Ernst's hole at B r_s = 1/2, its widest circle at r = 4 r_s
 
 
@@ -6072,6 +6138,7 @@ DRAWN = {
     "btz": btz,
     "c_metric": c_metric,
     "einstein_rosen_waves": einstein_rosen_waves,
+    "gowdy": gowdy,
     "nariai": nariai,
     "global_monopole": global_monopole,
     "tangherlini": tangherlini,
@@ -6408,6 +6475,18 @@ CAPTIONS = {
         "As the pulse goes out it leaves the space behind it flat about the axis, where $\\psi$ and $\\gamma$ fall "
         "toward zero. Far ahead of it $\\psi \\to 0$ and $\\gamma \\to C^2/a^2$, and the surface becomes a cone of "
         "deficit angle $2\\pi(1 - e^{-C^2/a^2})$, $228°$ at $C = a$.",
+    ],
+    ("gowdy", "torus"): [
+        "The torus of $\\theta$ and $\\sigma$ ($\\delta = 0$) of a polarised wave once round the universe, from "
+        "$t = 1/4$ to $3$, each moment drawn as a surface in flat space with every distance along it the metric "
+        "distance. The metric on it is $L^2\\left(t^{-1/2}e^{\\lambda/2}d\\theta^2 + t\\,e^{P}d\\sigma^2\\right)$, so the "
+        "circle of $\\sigma$ at $\\theta$ has radius $L\\sqrt{t}\\,e^{P/2}$, and the surface is a tube along $\\theta$ "
+        "whose two ends are one circle.",
+        "The wave is the swelling on one side of the tube and the waist on the other, which change places as "
+        "$Y_0(t)$ changes sign. Toward the singularity the circle at $\\theta$ shrinks as $t^{(1 - v)/2}$ and the "
+        "tube lengthens as $t^{(v^2 - 1)/4}$, with $v = \\tfrac{1}{2}\\cos\\theta$: each $\\theta$ approaches a Kasner "
+        "universe of its own, with exponents $(v^2 - 1)/(v^2 + 3)$ along $\\theta$, $2(1 - v)/(v^2 + 3)$ along "
+        "$\\sigma$, and $2(1 + v)/(v^2 + 3)$ along $\\delta$.",
     ],
     ("vaidya", "shell"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, from "

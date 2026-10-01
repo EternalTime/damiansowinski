@@ -16,9 +16,11 @@ its terms in an order the chart chooses, (r - 2m) rather than (-2m + r), and a c
 `collect` function that regroups the numerator of a value, which is how TOV's curvature is
 written around (d_r Phi)^2 + d_r^2 Phi and Bianchi IX's around a_1^2 cos^2 psi + a_2^2 sin^2 psi.
 """
+import random
 import time
 
 import sympy as sp
+from sympy.core.function import AppliedUndef
 
 import verify_metrics as vm
 
@@ -726,6 +728,9 @@ class Chart:
         # expanded, unless the chart writes its sums its own way, as a chart with a kink does.
         self.bracketed = bracketed or sp.expand
         self.own_brackets = bracketed is not None
+        # The random point block() tells values apart at, seeded so that a chart prints the same twice.
+        self.random = random.Random(0)
+        self.point = {}
 
     def check(self, text, value):
         difference = self.reader(text) - sp.sympify(value).subs(self.bare, simultaneous=True)
@@ -757,6 +762,27 @@ class Chart:
                     return self.check(text if sign == 1 else "-" + text, value)
         return self.check("-\\left(" + self.printer.positive_first(self.bracketed(-value)) + "\\right)", value)
 
+    def fingerprint(self, value):
+        """The value at one random point, every symbol, function and derivative a number of its
+        own, or None where it has no such number, as a value holding a delta has none."""
+        value = sp.sympify(value)
+        atoms = value.atoms(sp.Derivative) | value.atoms(AppliedUndef) | value.free_symbols
+        for atom in sorted(atoms - set(self.point), key=sp.default_sort_key):
+            self.point[atom] = sp.Rational(self.random.randint(10 ** 5, 2 * 10 ** 5), 10 ** 5)
+        try:
+            mark = complex(value.xreplace(self.point).evalf(40))
+        except (TypeError, ValueError):
+            return None
+        return mark if mark == mark and abs(mark) != float("inf") else None
+
+    @staticmethod
+    def may_match(a, b):
+        """Whether two values may be equal, and whether they may be opposite, by their fingerprints."""
+        if a is None or b is None:
+            return True, True
+        slack = 1e-9 * max(abs(a), abs(b), 1e-300)
+        return abs(a - b) <= slack, abs(a + b) <= slack
+
     def block(self, tensor, rank):
         """Nonzero components, each class of values listed together, and a value and its
         negation printed so that the second is the first with a minus in front, which is
@@ -767,15 +793,20 @@ class Chart:
             value = vm._at(tensor, index)
             if value == 0:
                 continue
+            mark = self.fingerprint(value)
             for entry in classes:
-                if vm.norm(value - entry[0]) == 0:
+                # The exact comparison is slow on a chart of free functions, so it is asked only
+                # of two values that agree, or are opposite, at one random point.
+                same, opposite = self.may_match(mark, entry[2])
+                if same and vm.norm(value - entry[0]) == 0:
                     entry[1].append((index, 1))
                     break
-                if vm.norm(value + entry[0]) == 0:
+                if opposite and vm.norm(value + entry[0]) == 0:
                     entry[1].append((index, -1))
                     break
             else:
-                classes.append([value, [(index, 1)]])
+                classes.append([value, [(index, 1)], mark])
+        classes = [entry[:2] for entry in classes]
         out = []
         for value, members in classes:
             text = self.single_term(value) if len({s for _, s in members}) > 1 else self.text(value)

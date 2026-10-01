@@ -45,6 +45,11 @@
       "id": "szekeres",
       "kind": "generalisation",
       "text": "Peter Szekeres's dust cosmologies of 1975 hold the Kantowski-Sachs dust models in their second class, and in general have no Killing vector [szekeres1975, bonnor1977]."
+    },
+    {
+      "id": "gowdy",
+      "kind": "generalisation",
+      "text": "With its axis wrapped into a circle, the member with no matter is a polarised Gowdy spacetime on $S^2 \\times S^1$ [obregon1998]."
     }
   ],
   "references": [
@@ -60,7 +65,8 @@
     "weber1984",
     "laflamme1987",
     "szekeres1975",
-    "bonnor1977"
+    "bonnor1977",
+    "obregon1998"
   ],
   "coordinates": [
     {

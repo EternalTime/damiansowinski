@@ -2993,6 +2993,176 @@ def gott_time_machine(system):
 
 CHARTS["gott_time_machine"] = [lambda s=s: gott_time_machine(s) for s in GOTT_CHARTS]
 
+# -- Gowdy -----------------------------------------------------------------------------
+
+GOWDY_CHARTS = ["areal", "logarithmic", "sphere"]
+GOWDY_PARAMETERS = {
+    "areal": ["L", "P = P(t,\\theta)", "Q = Q(t,\\theta)", "\\lambda = \\lambda(t,\\theta)"],
+    "logarithmic": ["L", "P = P(\\tau,\\theta)", "Q = Q(\\tau,\\theta)", "\\lambda = \\lambda(\\tau,\\theta)"],
+    "sphere": ["L", "P = P(t,\\theta)", "Q = Q(t,\\theta)", "a = a(t,\\theta)"],
+}
+GOWDY_TORUS = "\\left(e^{P}\\left(d\\sigma + Q\\,d\\delta\\right)^2 + e^{-P}d\\delta^2\\right)"
+GOWDY_LINES = {
+    "areal": "ds^2 = L^2\\left(\\dfrac{e^{\\lambda/2}}{\\sqrt{t}}\\left(-dt^2 + d\\theta^2\\right) + t" + GOWDY_TORUS + "\\right)",
+    "logarithmic": ("ds^2 = L^2\\left(e^{(\\lambda + \\tau)/2}\\left(-e^{-2\\tau}d\\tau^2 + d\\theta^2\\right)"
+                    " + e^{-\\tau}" + GOWDY_TORUS + "\\right)"),
+    "sphere": ("ds^2 = L^2\\left(e^{2a}\\left(-dt^2 + d\\theta^2\\right) + \\sin t\\,\\sin\\theta"
+               + GOWDY_TORUS + "\\right)"),
+}
+
+
+def gowdy(system):
+    """Gowdy's cosmologies in his own notation, ds^2 = L^2(e^{2a}(-dt^2 + dtheta^2) +
+    R(e^P(dsigma + Q ddelta)^2 + e^{-P} ddelta^2)), the orbits of the two Killing vectors of
+    area 4 pi^2 L^2 R: the torus, R = t and e^{2a} = e^{lambda/2}/sqrt(t), in the areal time t
+    and in tau = -ln t, as Rendall and Weaver's equation (1) writes it, and the sphere and the
+    handle S^2 x S^1, R = sin t sin theta. The length L multiplies each line element whole and
+    every coordinate is a pure number. P, Q and lambda, or a, are free functions of the time and
+    theta, and no component assumes a field equation; gowdy_check holds the field equations each
+    chart's parameters state to making every Ricci component vanish, the logarithmic chart to
+    being the areal one pulled back through t = e^{-tau}, and the sphere chart to holding the
+    inside of Schwarzschild's horizon. gowdy.md beside this file is the derivation."""
+    parameters = GOWDY_PARAMETERS[system]
+    period = " \\in [0, 2\\pi)"
+    if system == "logarithmic":
+        coords = ["\\tau", "\\theta", "\\sigma", "\\delta"]
+        domains = ["\\tau \\in (-\\infty, \\infty)"] + [x + period for x in coords[1:]]
+        name = "Torus, Logarithmic Time"
+    else:
+        coords = ["t", "\\theta", "\\sigma", "\\delta"]
+        if system == "areal":
+            domains = ["t \\in (0, \\infty)"] + [x + period for x in coords[1:]]
+            name = "Torus, Areal Time"
+        else:
+            domains = ["t \\in (0, \\pi)", "\\theta \\in [0, \\pi]", "\\sigma" + period, "\\delta" + period]
+            name = "Sphere and Handle"
+    probe = vm.Reader(coords, parameters, ())
+    x, y = probe.symbol[coords[0]], probe.symbol[coords[1]]
+    P, Q, third = (probe.parameters[n] for n in ("P", "Q", "a" if system == "sphere" else "lambda"))
+    D = sp.Derivative
+    lead = [probe.parameters["L"], third, P, Q]
+    for f in (third, P, Q):
+        lead += [D(f, x), D(f, y)]
+    for f in (P, Q, third):
+        lead += [D(f, (x, 2)), D(f, x, y), D(f, (y, 2))]
+    lead.append(x)
+    return {
+        "metric_id": "gowdy",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": GOWDY_LINES[system]},
+        "chart_line_element": GOWDY_LINES[system],
+        "printer": {"lead": lead, "factors": lead},
+        "pretty": lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp"),
+        "check": gowdy_check,
+    }
+
+
+def gowdy_vacuum(chart):
+    """The field equations each chart's parameters state, as replacements for the second time
+    derivatives of the two wave amplitudes and for both first derivatives of the third function."""
+    x, y = chart.symbols[:2]
+    D = sp.Derivative
+    P, Q = chart.reader.parameters["P"], chart.reader.parameters["Q"]
+    e = sp.exp(2 * P)
+    if "a" in chart.reader.parameters:
+        cx, cy = sp.cos(x) / sp.sin(x), sp.cos(y) / sp.sin(y)
+        waves = {D(P, (x, 2)): D(P, (y, 2)) - cx * D(P, x) + cy * D(P, y) + e * (D(Q, x) ** 2 - D(Q, y) ** 2),
+                 D(Q, (x, 2)): D(Q, (y, 2)) - cx * D(Q, x) + cy * D(Q, y) - 2 * (D(P, x) * D(Q, x) - D(P, y) * D(Q, y))}
+        m = (cx * cy + D(P, x) * D(P, y) + e * D(Q, x) * D(Q, y)) / 2
+        n = (D(P, x) ** 2 + D(P, y) ** 2 + e * (D(Q, x) ** 2 + D(Q, y) ** 2) - cx ** 2 - cy ** 2) / 4 - 1
+        det = cy ** 2 - cx ** 2
+        return waves, chart.reader.parameters["a"], {x: (m * cy - n * cx) / det, y: (n * cy - m * cx) / det}
+    lam = chart.reader.parameters["lambda"]
+    if chart.coords_tex[0] == "t":
+        waves = {D(P, (x, 2)): D(P, (y, 2)) - D(P, x) / x + e * (D(Q, x) ** 2 - D(Q, y) ** 2),
+                 D(Q, (x, 2)): D(Q, (y, 2)) - D(Q, x) / x - 2 * (D(P, x) * D(Q, x) - D(P, y) * D(Q, y))}
+        first = {x: x * (D(P, x) ** 2 + D(P, y) ** 2 + e * (D(Q, x) ** 2 + D(Q, y) ** 2)),
+                 y: 2 * x * (D(P, x) * D(P, y) + e * D(Q, x) * D(Q, y))}
+    else:
+        w = sp.exp(-2 * x)
+        waves = {D(P, (x, 2)): w * D(P, (y, 2)) + e * (D(Q, x) ** 2 - w * D(Q, y) ** 2),
+                 D(Q, (x, 2)): w * D(Q, (y, 2)) - 2 * (D(P, x) * D(Q, x) - w * D(P, y) * D(Q, y))}
+        first = {x: -(D(P, x) ** 2 + w * D(P, y) ** 2 + e * (D(Q, x) ** 2 + w * D(Q, y) ** 2)),
+                 y: -2 * (D(P, x) * D(P, y) + e * D(Q, x) * D(Q, y))}
+    return waves, lam, first
+
+
+def gowdy_on_shell(chart, value):
+    """`value` where the chart's field equations hold: the third function's derivatives replaced
+    by the constraints and their derivatives, then every time derivative of the two amplitudes
+    beyond the first by the wave equations, until none is left."""
+    x, y = chart.symbols[:2]
+    waves, third, first = gowdy_vacuum(chart)
+    D = sp.Derivative
+    value = sp.sympify(value).subs({D(third, (x, 2)): sp.diff(first[x], x), D(third, (y, 2)): sp.diff(first[y], y),
+                                    D(third, x, y): sp.diff(first[x], y)}).doit()
+    value = value.subs({D(third, x): first[x], D(third, y): first[y]}).doit()
+    for _ in range(4):
+        higher = {}
+        for d in value.atoms(D):
+            counts = dict(d.variable_count)
+            for target, replacement in waves.items():
+                if d.expr == target.expr and counts.get(x, 0) >= 2:
+                    rest = [(v, n - (2 if v == x else 0)) for v, n in d.variable_count]
+                    rest = [(v, n) for v, n in rest if n]
+                    higher[d] = sp.diff(replacement, *rest) if rest else replacement
+        if not higher:
+            break
+        value = value.subs(higher).doit()
+    return value
+
+
+def gowdy_vanishes(value):
+    """Whether a value is zero: by the checker's canonical form, and by sympy's own
+    simplification where that form leaves something standing."""
+    try:
+        if vm.norm(sp.together(value)) == 0:
+            return True
+    except Exception:  # noqa: BLE001  the canonical form refuses some shapes, which simplify takes
+        pass
+    return sp.simplify(value) == 0
+
+
+def gowdy_check(chart):
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            if not gowdy_vanishes(gowdy_on_shell(chart, ricci[i][j])):
+                raise AssertionError(f"gowdy: the stated field equations leave R_{chart.coords_tex[i]}"
+                                     f"{chart.coords_tex[j]} standing")
+    x, y = chart.symbols[:2]
+    if chart.coords_tex[0] == "\\tau":
+        # The areal chart pulled back through t = e^{-tau}, the three functions one value at an event.
+        spec = gowdy("areal")
+        source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        values = sp.symbols("P0 Q0 l0")
+        at = {source.reader.parameters[n]: v for n, v in zip(("P", "Q", "lambda"), values)}
+        here = {chart.reader.parameters[n]: v for n, v in zip(("P", "Q", "lambda"), values)}
+        here[chart.reader.parameters["L"]] = source.reader.parameters["L"]
+        J = sp.diag(-sp.exp(-x), 1, 1, 1)
+        move = dict(zip(source.symbols[1:], chart.symbols[1:]))
+        move[source.symbols[0]] = sp.exp(-x)
+        pulled = J.T * source.geo.g.subs(at).subs(move) * J
+        if sp.simplify(pulled - chart.geo.g.subs(here)) != sp.zeros(4, 4):
+            raise AssertionError("gowdy: the areal chart pulled back through t = e^(-tau) misses the logarithmic chart")
+    if "a" in chart.reader.parameters:
+        # The inside of Schwarzschild's horizon, r = L(1 - cos t) and T = L delta with r_s = 2L:
+        # e^{2a} = (1 - cos t)^2 and e^P = (1 - cos t)^2 sin(theta)/sin(t), Q = 0.
+        P, Q, a = (chart.reader.parameters[n] for n in ("P", "Q", "a"))
+        hole = {P: sp.log((1 - sp.cos(x)) ** 2 * sp.sin(y) / sp.sin(x)), Q: sp.Integer(0), a: sp.log(1 - sp.cos(x))}
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(ricci[i][j].subs(hole).doit()) != 0:
+                    raise AssertionError("gowdy: the inside of Schwarzschild's horizon is not a vacuum in the sphere chart")
+        L, r = chart.reader.parameters["L"], 1 - sp.cos(x)
+        inside = sp.diag(-L ** 2 * r ** 2, L ** 2 * r ** 2, L ** 2 * r ** 2 * sp.sin(y) ** 2,
+                         L ** 2 * (2 / r - 1))
+        if sp.simplify(chart.geo.g.subs(hole).doit() - inside) != sp.zeros(4, 4):
+            raise AssertionError("gowdy: the sphere chart's member is not Schwarzschild's interior")
+
+
+CHARTS["gowdy"] = [lambda s=s: gowdy(s) for s in GOWDY_CHARTS]
+
 
 # -- Szekeres ----------------------------------------------------------------------------
 

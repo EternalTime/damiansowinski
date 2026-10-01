@@ -52,6 +52,11 @@
       "id": "spinning_string",
       "kind": "family",
       "text": "A straight string with spin, around which the flat time shifts on each circuit. Pawel Mazur found in 1986 that a wave around it is single valued only at quantised energies, and set that beside the quantisation a gravitational magnetic mass brings [mazur1986]."
+    },
+    {
+      "id": "gowdy",
+      "kind": "generalisation",
+      "text": "The Taub universe is a Gowdy spacetime on $S^3$. Its extension past the Big Bang is the reason strong cosmic censorship is stated for generic initial data [gowdy2014]."
     }
   ],
   "references": [
@@ -69,7 +74,8 @@
     "ellismaccallum1969",
     "misner1967",
     "grossperry1983",
-    "mazur1986"
+    "mazur1986",
+    "gowdy2014"
   ],
   "coordinates": [
     {

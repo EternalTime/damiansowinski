@@ -165,6 +165,11 @@
       "id": "ellis_bronnikov",
       "kind": "family",
       "text": "A wormhole made by opening Schwarzschild's central singularity into a throat with a scalar field [ellis1973]."
+    },
+    {
+      "id": "gowdy",
+      "kind": "generalisation",
+      "text": "Inside the horizon $r$ is a time, and with $t$ wrapped into a circle the region is a polarised Gowdy spacetime on $S^2 \\times S^1$, Obregón and Ryan's Kerr example with the spin switched off [obregon1998]."
     }
   ],
   "references": [
@@ -209,7 +214,8 @@
     "fuller1962",
     "morris1988",
     "visser1989nuclphysb",
-    "ellis1973"
+    "ellis1973",
+    "obregon1998"
   ],
   "coordinates": [
     {
