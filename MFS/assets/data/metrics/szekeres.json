@@ -33,6 +33,33 @@
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Peter Szekeres found in 1975 every solution of Einstein's equations for irrotational dust whose metric has the form $ds^2 = dt^2 - e^{2\\alpha}dr^2 - e^{2\\beta}(dy^2 + dz^2)$ [szekeres1975]. His solutions generalize the Tolman-Bondi models, the Kantowski-Sachs models, and the models of Douglas Eardley, Edison Liang, and Rainer Sachs [szekeres1975, eardley1972]. Charles Hellaby and Andrzej Krasiński wrote in 2002 those that hold the Tolman-Bondi models with a function $E(r,p,q)$ and a sign $\\epsilon$, in which the surfaces of constant $t$ and $r$ are spheres for $\\epsilon = +1$, planes for $\\epsilon = 0$, and pseudospheres for $\\epsilon = -1$ [hellaby2002]. The spheres are not concentric, since $g_{rr}$ depends on $p$ and $q$ as well as on $r$ and $t$ [hellaby2002]. Each shell evolves as a shell of the Tolman-Bondi model does: $R(t,r)$ obeys the Friedmann equation for dust, and $p$ and $q$ do not enter it [hellaby2002].¶In a second paper of 1975 Szekeres studied the solutions as collapsing clouds of dust, in a class that \"includes all spherically symmetric collapses but is more general and is termed quasispherical\" [szekeres1975collapse]. Under reasonable initial conditions he found the singularity hidden behind an event horizon, and with slightly irregular initial density distributions portions of it became naked [szekeres1975collapse]. William Bonnor showed in 1976 that the arbitrary functions can be chosen to give positive density and no Killing vectors while a ball of the spacetime joins to the Schwarzschild metric, so the collapse sends out no gravitational waves [bonnor1976]. Beverly Berger, Eardley, and Donald Olson found in 1977 that the quasispherical spacetimes have conformally flat space slices in comoving coordinates [berger1977].¶With A. H. Sulaiman and N. Tomimura, Bonnor proved in 1977 that Szekeres's spacetimes in their most general form have no Killing vectors [bonnor1977]. John Wainwright characterized them the same year as a subclass of the algebraically special solutions of type $\\{22\\}$ for irrotational dust [wainwright1977]. D. A. Szafron generalized them, also in 1977, to a perfect fluid at rest in the same coordinates, whose pressure depends on the time alone [szafron1977, bolejko2009]. Where that pressure is a cosmological constant the solutions generalize de Sitter space, the case John Barrow and Jaime Stein-Schabes treated in 1984 [barrow1984, bolejko2009]. S. W. Goode and Wainwright brought the two classes of Szekeres's solutions into one formulation in 1982, related them to the FLRW models, and analyzed their curvature singularities and their evolution in time [goode1982].¶In the quasispherical models the function $E$ describes the departure from spherical symmetry where $\\partial_r E \\neq 0$, which requires a density that is not zero [hellaby2002]. The density then varies over each sphere like a dipole [hellaby2002]. Hellaby and Krasiński gave the conditions for a regular origin, for regular maxima and minima of $R$ in a moment of time, and for the absence of shell crossings [hellaby2002]. They also showed that no light ray sent through the neck of a Szekeres wormhole emerges from under the apparent horizon on the other side [hellaby2002]. In 2008 they treated $\\epsilon \\leq 0$: the models with pseudospheres can have spatial maxima and minima but no origins, and the models with planes have neither [hellaby2008]. Robert Buckley and Eric Schlegel showed in 2020 that the three functions of $r$ in $E$, which they call the dipole functions, displace each shell with respect to its neighbors and also rotate it [buckley2020].¶Krzysztof Bolejko followed a void and a neighboring supercluster in a quasispherical model in 2006, and found that the flow of mass from the void to the cluster enhances the growth of the density contrast, which grew almost 8 times faster than in the linear approach [bolejko2006]. In 2009 he set Szekeres regions into a Friedmann background as a Swiss cheese and traced light through them: small nonlinear inhomogeneities changed the temperature of the microwave background by $10^{-6}$ to $10^{-7}$ [bolejko2009]. Bolejko and Marie-Noëlle Célérier found in 2010 that inhomogeneities of about 50 Mpc in axially symmetric models of this kind cannot fully explain the dimming of the supernovae, and that structures of 500 Mpc or larger are needed to fit the data [bolejko2010]. Roberto Sussman and Bolejko showed in 2012 that every Szekeres model maps to a unique Tolman-Bondi model, and that spherical symmetry is stable against small perturbations shaped like a dipole [sussman2012]. Buckley and Schlegel found in 2013 that an observer in a quasispherical void who sees the observed dipole of the microwave background is confined to a small region, one that is not as geometrically special as the center of a Tolman-Bondi void [buckley2013].",
+  "related": [
+    {
+      "id": "tolman_bondi",
+      "kind": "special_case",
+      "text": "Szekeres's dust with its spheres set concentric. Where $\\epsilon = 1$ and $S$, $P$, and $Q$ are constant, $\\partial_r E = 0$ and the metric is Tolman-Bondi's [hellaby2002]."
+    },
+    {
+      "id": "frw",
+      "kind": "special_case",
+      "text": "Szekeres's dust with every shell alike. With $\\epsilon = 1$, $R = a(t)\\,r$, $f = -kr^2$, and $S$, $P$, and $Q$ constant it is the Friedmann universe of dust [goode1982]."
+    },
+    {
+      "id": "kantowski_sachs",
+      "kind": "special_case",
+      "text": "The dust models of Ronald Kantowski and Rainer Sachs belong to Szekeres's second class of solutions, in which $\\beta$ does not depend on $r$ [szekeres1975]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "special_case",
+      "text": "Szekeres's quasispherical dust with the dust taken away, $M$ constant and $\\partial_r E = 0$, in the coordinates of freely falling observers. William Bonnor joined a ball of the dust to it in 1976 [bonnor1976]."
+    },
+    {
+      "id": "oppenheimer_snyder",
+      "kind": "special_case",
+      "text": "A uniform ball of Szekeres's dust with concentric shells, falling from rest inside Schwarzschild's vacuum. Szekeres's quasispherical collapses include the spherically symmetric ones [szekeres1975collapse]."
+    }
+  ],
   "references": [
     "szekeres1975",
     "eardley1972",
