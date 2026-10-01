@@ -2541,10 +2541,19 @@ class EmbeddingDiagrams(unittest.TestCase):
     def test_a_surface_drawn_taller_than_its_embedding_says_so_in_its_caption(self):
         """A view whose heights are drawn `vertical` times as tall as the embedding's says so in
         the first sentence of its caption, "(vertical scale $\\times N$)", and only Tolman-Bondi's
-        cloud is: at the scale the metric gives it the cloud rises by a third of its width, and
-        drawn twice as tall each moment stands in relief of at least 0.6 of its width."""
+        cloud and Szekeres's are: at the scale the metric gives it Tolman-Bondi's cloud rises by a
+        third of its width, and drawn twice as tall each moment stands in relief of at least 0.6 of
+        its width; the dish of Szekeres's cloud is 4/15 deep at ct = 0 and is drawn three times as deep."""
         scaled = {name: view for name, data in self.embedding.items() for view in data["views"] if "vertical" in view}
-        self.assertEqual(set(scaled), {"tolman_bondi"})
+        self.assertEqual(set(scaled), {"tolman_bondi", "szekeres"})
+        self.assertEqual(scaled["szekeres"]["vertical"], 3)
+        release = scaled["szekeres"]["surfaces"][1]
+        self.assertEqual(release["time"], 0)
+        for r, rho, z in release["pieces"][0]["points"]:
+            self.assertAlmostEqual(rho, r, 6, f"Szekeres at ct = 0, rho at {r}")
+            self.assertAlmostEqual(z / 3, 2 * r ** 3 / 3 - 2 * r ** 5 / 5 - 4 / 15, 6, f"Szekeres at ct = 0, z at {r}")
+        for surface in scaled["szekeres"]["surfaces"]:
+            self.assertTrue(all(P[2] == 0 for P in surface["pieces"][1]["points"]), "Szekeres's exterior is a plane")
         for name, view in scaled.items():
             self.assertIsInstance(view["vertical"], int, name)
             self.assertGreater(view["vertical"], 1, name)
@@ -2838,7 +2847,7 @@ class StacksAndMovies(unittest.TestCase):
               ("einstein_rosen_waves", "pulse"): "$ct$", ("nariai", "universe"): "$ct$",
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
-              ("tolman_bondi", "cloud"): "$ct$", ("misner", "cylinders"): "$ct$",
+              ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$"}
@@ -3341,7 +3350,10 @@ class Slices(unittest.TestCase):
               # The axis of Zipoy and Voorhees's metric, which the embedded equatorial plane does not meet.
               *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
               *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
-                for k in ("oblate", "prolate")]}
+                for k in ("oblate", "prolate")],
+              # The axis of Szekeres's cloud, which the embedded surface through the shells' equators meets
+              # only at the centre.
+              "szekeres/axisymmetric/north", "szekeres/axisymmetric/south"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
