@@ -45,5 +45,5 @@ On the slice $t = 0$, $z = 0$ the circle of radius $\rho^{1 - 2\sigma}/C$ grows 
 Every diagram is drawn at $\sigma = 1/4$ and $C = 1$, where the Kasner exponents are $(2/3, 2/3, -1/3)$ and $\ell = (3/4)^{2/3}$.
 There the circles grow as the power $2/3$ of the distance out to them, a horn the eye tells from a cone; at a small $\sigma$ the surface is within a few percent of the cosmic string's cone.
 The spacetime diagrams draw the plane of $t$ and $\rho$ and the plane of $t$ and $r$, and `null_rays.py --verify` compares their rays with $ct \pm 4\rho^{1/4}$ and $ct \pm 3r^{1/3}$.
-The conformal diagram is Minkowski's triangle, $p, q = \arctan(ct \mp 4\rho^{1/4})$, with the axis a timelike singularity on $X = 0$, one view for each chart, the same triangle since $4\rho^{1/4} = (4/3)^{1/3}\,3r^{1/3}$.
+The conformal diagram is Minkowski's triangle, $p, q = \arctan(ct \mp 4\rho^{1/4})$, with the axis a timelike singularity on $X = 0$, one view for each chart, the same triangle since $4\rho^{1/4} = (4/3)^{2/3}\,3r^{1/3}$.
 The embedding diagram is the plane $z = 0$ from $\rho_0 = 1/16$ to $\rho = 4$, the horn $z = (4\sqrt\rho - 1)^{3/2}/6$ with circles of radius $\sqrt\rho$, checked against both closed forms; inside $\rho_0$ no surface of revolution in flat space carries the slice, which the view states and the script checks.

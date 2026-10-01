@@ -596,7 +596,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "74f8307bea9988b1"
+    "version": "74f8307bea9988b1",
+    "diagrams": "32400e2bb95be485",
+    "conformal": "5451827f049d2595",
+    "embedding": "232b53e716678841"
   },
   {
     "id": "majumdar_papapetrou",

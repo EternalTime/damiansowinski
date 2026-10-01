@@ -4560,7 +4560,9 @@ def levi_civita(ck, src):
     space carries the slice, and ever more slowly beyond it. At sigma = 1/4 and C = 1, rho_0 = 1/16,
     the circles have radius sqrt(rho), and dz/drho = sqrt(4 sqrt(rho) - 1)/(2 sqrt(rho)), so the
     surface is z = (4 sqrt(rho) - 1)^{3/2}/6: level on the circle rho_0, of radius 1/4, and a horn
-    that steepens without end above it, drawn out to rho = 4."""
+    that steepens without end above it, drawn out to rho = 4. The curvature of the profile diverges
+    on the level circle, as (rho - rho_0)^{-1/2}, so its chords there are short and the piece is
+    written to the digits a surface in Minkowski space takes."""
     sl = Slice(src, "levi_civita", "weyl", "\\rho", "\\phi", {"t": 0, "z": 0}, nr.LC_WEYL)
     stop, top, size = 1 / 16, 4.0, 4.0
     ck.add("Levi-Civita: g_rhorho = (drho/dx)^2 at rho = 1/16", abs(float(sl.defect_at(np.array([stop]))[0])), 1e-12)
@@ -4569,7 +4571,8 @@ def levi_civita(ck, src):
                  (("stops", "the circles grow faster than the distance out to them, and nothing in flat space "
                             "carries the slice on toward the axis"),
                   ("edge", "the surface runs on, steepening, to $\\rho \\to \\infty$")),
-                 [(stop, "chartedge", None), (1.0, "r", None), (2.0, "r", None), (3.0, "r", None), (top, "r", None)], size)
+                 [(stop, "chartedge", None), (1.0, "r", None), (2.0, "r", None), (3.0, "r", None), (top, "r", None)], size,
+                 digits=LORENTZ_DIGITS)
     ck.isometry("Levi-Civita, the plane z = 0", horn)
     ck.radius("Levi-Civita, the plane z = 0, the circle's radius sqrt(rho)", horn, np.sqrt, size)
     ck.form("Levi-Civita, the plane z = 0, z = (4 sqrt(rho) - 1)^(3/2)/6", horn,
@@ -4583,8 +4586,9 @@ def levi_civita(ck, src):
     fig.legend("line", "r", "$\\rho$ constant, at $1$, $2$, $3$ and $4$")
     fig.legend("line", "chartedge", "$\\rho = 1/16$, where the drawing stops")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
-    return [view("field", "The plane $z = 0$", "the unit of $\\rho$", [surface], fig.done(),
-                 settings="$\\sigma = 1/4$ and $C = 1$, with $\\rho$ in the unit of length of its powers.",
+    return [view("field", "The plane $z = 0$", "$\\rho_0$", [surface], fig.done(),
+                 settings="$\\sigma = 1/4$ and $C = 1$, with $\\rho_0$ the unit of length in which the powers of "
+                          "$\\rho$ are evaluated.",
                  stops=["Inside $\\rho = 1/16$ the circles grow faster than the distance out to them, "
                         "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in "
                         "flat space carries the slice on to the axis."])]

@@ -3340,6 +3340,10 @@ class Slices(unittest.TestCase):
             if key == "milne/logarithmic_time/radial":
                 return (lambda X: math.log(t)), [0.0, hi]
             return (lambda X: t), [0.0, math.sinh(hi) if "spherical" in key else hi]
+        if key == "levi_civita/kasner/radial":
+            # The Kasner form's r is the proper distance from the axis, rho^Sigma/Sigma with
+            # Sigma = 3/4 at sigma = 1/4, of the circles the embedding reaches in Weyl's rho.
+            return (lambda X: 0.0), [rho ** 0.75 / 0.75 for rho in self.reach(surface)]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

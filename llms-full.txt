@@ -433,6 +433,17 @@ A superluminal soliton whose energy density is positive everywhere for the obser
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/lentz.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + \left(dx - \partial_x\phi\,c\,dt\right)^2 + \left(dy - \partial_y\phi\,c\,dt\right)^2 + \left(dz - \partial_z\phi\,c\,dt\right)^2$$
 
+### Levi-Civita Static Cylinder
+
+The static vacuum field with cylindrical symmetry, the field outside an infinitely long straight line of mass, which Tullio Levi-Civita found in 1919. It has two parameters, a mass per unit length and an angular deficit about the axis, and it is flat with no mass and again where the mass parameter is one half.
+
+- id: `levi_civita`
+- tags: vacuum, vacuum solution, static, stationary, cylindrical symmetry, line mass, Weyl class, Kasner, angular deficit, conical, singularity, curvature singularity, naked singularity, not asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json
+- chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -\rho^{4\sigma}c^2dt^2 + \rho^{4\sigma(2\sigma - 1)}\left(d\rho^2 + dz^2\right) + \dfrac{\rho^{2(1 - 2\sigma)}}{C^2}d\phi^2$$
+- chart Kasner: coordinates $(t, r, \phi, z)$, $$ds^2 = -r^{2p_0}c^2dt^2 + dr^2 + \ell^2r^{2p_2}d\phi^2 + r^{2p_3}dz^2$$
+
 ### Majumdar-Papapetrou Extremal Black Holes
 
 Any number of extremal charged black holes at rest, the static electrovacuum solution Sudhansu Datta Majumdar and Achilles Papapetrou found independently in 1947. Between every pair of holes the electric repulsion balances the gravitational attraction exactly, so the holes stay at rest in any arrangement.
