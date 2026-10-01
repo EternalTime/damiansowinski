@@ -1229,8 +1229,11 @@ class TowerDrawing:
         v.label_xt([Q4, 3 * Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
         for sx in (1, -1):
             if self.singular:
-                v.label_xt([sx * HALF, PI + 0.35], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
-                v.label_xt([sx * 1.05, PI + 0.3], inner, cls="region")
+                # r = 0 outside the jagged edge, above the middle of it and below i^-; the
+                # region's name inside, lower and nearer the centre, so the two share no line
+                # of the page and stand apart across the edge.
+                v.label_xt([sx * HALF, PI + 0.7], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
+                v.label_xt([sx * 0.9, PI + 0.2], inner, cls="region")
             else:
                 v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * PI, 4), round(PI, 4)]})
                 v.label_xt([sx * PI, PI], "$i^0$", "l" if sx > 0 else "r", dx=6 * sx)
@@ -2685,7 +2688,9 @@ def kerr_axis(ck, src, metric_id, params, name):
     for cell in ("III", "III'"):
         D.curve(v, "centre", cell, t, np.zeros_like(t))
     D.labels(v)
-    v.label_xt([HALF + 0.08, PI - 0.55], "$r = 0$", "l", "small", dx=4)
+    # On the inner side of its line and above the middle, clear of r_-, of the region's name
+    # and of null infinity's.
+    v.label_xt([HALF, PI + 0.7], "$r = 0$", "r", "small", dx=-6)
     v.set(fade={"top": 0.9, "bottom": 0.9},
           restriction="The symmetry axis $\\theta = 0$ only, a totally geodesic surface. The ring "
                       "singularity is at $r = 0$ in the equatorial plane $\\theta = \\pi/2$, off this "
