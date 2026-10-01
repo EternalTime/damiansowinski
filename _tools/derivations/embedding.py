@@ -4551,6 +4551,45 @@ def melvin(ck, src):
     return views
 
 
+def levi_civita(ck, src):
+    """Levi-Civita's plane z = 0 at t = 0 in Weyl's coordinates at sigma = 1/4 and C = 1.
+
+    The slice has g_rhorho = rho^{4 sigma (2 sigma - 1)} and circles of radius rho^{1 - 2 sigma}/C,
+    which grow at (1 - 2 sigma) rho^{-4 sigma^2}/C times the distance out to them: faster than the
+    distance inside rho_0 = ((1 - 2 sigma)/C)^{1/(4 sigma^2)}, where no surface of revolution in flat
+    space carries the slice, and ever more slowly beyond it. At sigma = 1/4 and C = 1, rho_0 = 1/16,
+    the circles have radius sqrt(rho), and dz/drho = sqrt(4 sqrt(rho) - 1)/(2 sqrt(rho)), so the
+    surface is z = (4 sqrt(rho) - 1)^{3/2}/6: level on the circle rho_0, of radius 1/4, and a horn
+    that steepens without end above it, drawn out to rho = 4."""
+    sl = Slice(src, "levi_civita", "weyl", "\\rho", "\\phi", {"t": 0, "z": 0}, nr.LC_WEYL)
+    stop, top, size = 1 / 16, 4.0, 4.0
+    ck.add("Levi-Civita: g_rhorho = (drho/dx)^2 at rho = 1/16", abs(float(sl.defect_at(np.array([stop]))[0])), 1e-12)
+    ck.stops("Levi-Civita, inside rho = 1/16", sl, np.geomspace(1e-6, stop, 202)[:-1])
+    horn = Piece("field", "sheet", sl, stop, top, 0.0, 1,
+                 (("stops", "the circles grow faster than the distance out to them, and nothing in flat space "
+                            "carries the slice on toward the axis"),
+                  ("edge", "the surface runs on, steepening, to $\\rho \\to \\infty$")),
+                 [(stop, "chartedge", None), (1.0, "r", None), (2.0, "r", None), (3.0, "r", None), (top, "r", None)], size)
+    ck.isometry("Levi-Civita, the plane z = 0", horn)
+    ck.radius("Levi-Civita, the plane z = 0, the circle's radius sqrt(rho)", horn, np.sqrt, size)
+    ck.form("Levi-Civita, the plane z = 0, z = (4 sqrt(rho) - 1)^(3/2)/6", horn,
+            lambda r: np.maximum(4 * np.sqrt(r) - 1, 0) ** 1.5 / 6, size)
+    surface = Surface([horn])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *horn.at(stop), "$\\rho = 1/16$", dx=10)
+    ring_label(fig, [0, 0, 0], *horn.at(1.0), "$\\rho = 1$", dx=10)
+    ring_label(fig, [0, 0, 0], *horn.at(top), "$4$")
+    fig.legend("fill", "cover", "the plane $z = 0$ at $t = 0$, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $1$, $2$, $3$ and $4$")
+    fig.legend("line", "chartedge", "$\\rho = 1/16$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("field", "The plane $z = 0$", "the unit of $\\rho$", [surface], fig.done(),
+                 settings="$\\sigma = 1/4$ and $C = 1$, with $\\rho$ in the unit of length of its powers.",
+                 stops=["Inside $\\rho = 1/16$ the circles grow faster than the distance out to them, "
+                        "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in "
+                        "flat space carries the slice on to the axis."])]
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -4942,6 +4981,7 @@ DRAWN = {
     "majumdar_papapetrou": majumdar_papapetrou,
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
+    "levi_civita": levi_civita,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -5158,6 +5198,16 @@ CAPTIONS = {
         "widest circle, of radius $1/B$, at $r = 2/B$, and closes beyond it into a spike, as Melvin's plane does.",
         "The slice runs through the bifurcation sphere at $r_s$ into the other exterior, the same surface turned "
         "over. Where $B r_s \\ge 2$ the widest circle is the throat itself.",
+    ],
+    ("levi_civita", "field"): [
+        "The plane $z = 0$ around Levi-Civita's line of mass at one moment ($\\sigma = 1/4$, $C = 1$), drawn as a "
+        "surface in flat space with every distance along it the metric distance. On it "
+        "$g_{\\rho\\rho} = \\rho^{4\\sigma(2\\sigma - 1)}$ and the circle about the axis has radius "
+        "$\\rho^{1 - 2\\sigma}/C = \\sqrt{\\rho}$, which grows as the power $2/3$ of the distance out to it, so the "
+        "surface is the horn $z = (4\\sqrt{\\rho} - 1)^{3/2}/6$, level on the circle $\\rho = 1/16$ and steeper at "
+        "every circle beyond it.",
+        "Every plane of constant $z$ at every moment is the same. With $\\sigma = 0$ the surface is the cone of a "
+        "cosmic string, or the plane where $C = 1$.",
     ],
     ("einstein_rosen_waves", "pulse"): [
         "The plane $z = 0$ of space around a pulse of Weber, Wheeler, and Bonnor ($C = a$) going out from the axis, "
