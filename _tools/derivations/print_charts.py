@@ -3,8 +3,8 @@
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
-robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees and szekeres,
-and Godel's cylindrical chart.
+robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres and
+kaluza_klein_monopole, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -3233,6 +3233,95 @@ def szekeres_charts():
 
 
 CHARTS["szekeres"] = szekeres_charts
+
+
+# -- Kaluza-Klein monopole -------------------------------------------------------------
+
+KK_CHARTS = ["gross_perry", "hopf", "taub_nut"]
+
+
+def kaluza_klein_monopole(system_id):
+    """Sorkin's and Gross and Perry's monopole, Euclidean Taub-NUT space with -c^2dt^2 added, in
+    three charts of its five dimensions. Gross and Perry's keeps the fifth coordinate x_5, of
+    period 16 pi m, with the potential 4m(1 - cos theta) d phi, regular on theta = 0. The Hopf
+    chart trades x_5 for the Euler angle psi = -phi - x_5/4m of period 4 pi, which leaves
+    16m^2 (d psi + cos theta d phi)^2/V on every 3-sphere of constant t and r. The Taub-NUT
+    chart moves the radius to rho = r + 2m, Hawking's form of the self-dual instanton with NUT
+    parameter 2m. Each chart after the first is checked, slot by slot, to be the first pulled
+    back through its map. The Kretschmann scalar is 384 m^2/(r + 4m)^6, finite
+    at the nut r = 0. kaluza_klein_monopole.md derives each chart."""
+    V = "\\left(1 + \\dfrac{4m}{r}\\right)"
+    bareV = "1 + \\dfrac{4m}{r}"
+    reals = "(-\\infty, \\infty)"
+    time = "t \\in " + reals
+    nut = "r = 0 \\;\\text{(the nut, a regular point)}"
+    kretschmann = "\\dfrac{384m^2}{\\left(r + 4m\\right)^6}"
+    parameters = ["m"]
+    components = {}
+    if system_id == "gross_perry":
+        coords, name = ["t", "r", "\\theta", "\\phi", "x_5"], "Gross-Perry"
+        domains = [time, "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "x_5 \\in [0, 16\\pi m)", nut,
+                   "\\theta = \\pi \\;\\text{(the Dirac string, a coordinate singularity)}"]
+        space = (V + "\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right) + " + V
+                 + "^{-1}\\left(dx_5 + 4m\\left(1 - \\cos\\theta\\right)d\\phi\\right)^2")
+        components = {"metric_components": {("r", "r"): bareV, ("x_5", "x_5"): V + "^{-1}"}}
+    elif system_id == "hopf":
+        coords, name = ["t", "r", "\\theta", "\\phi", "\\psi"], "Hopf Angle"
+        domains = [time, "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "\\psi \\in [0, 4\\pi)", nut]
+        space = (V + "\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right) + 16m^2" + V
+                 + "^{-1}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2")
+        components = {"metric_components": {("r", "r"): bareV, ("\\psi", "\\psi"): "16m^2" + V + "^{-1}"}}
+    else:
+        coords, name = ["t", "\\rho", "\\theta", "\\phi", "\\psi"], "Taub-NUT Radius"
+        domains = [time, "\\rho \\in [2m, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "\\psi \\in [0, 4\\pi)", "\\rho = 2m \\;\\text{(the nut, a regular point)}"]
+        space = ("\\dfrac{\\rho + 2m}{\\rho - 2m}d\\rho^2 + \\left(\\rho^2 - 4m^2\\right)\\left(d\\theta^2"
+                 " + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{16m^2\\left(\\rho - 2m\\right)}{\\rho + 2m}"
+                 "\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2")
+        kretschmann = "\\dfrac{384m^2}{\\left(\\rho + 2m\\right)^6}"
+    probe = vm.Reader(coords, parameters, ())
+    radius = probe.symbol[coords[1]]
+    spec = {
+        "metric_id": "kaluza_klein_monopole",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": "ds^2 = -c^2dt^2 + " + space},
+        "chart_line_element": "ds^2 = -dt^2 + " + space,
+        "printer": {"lead": [radius, probe.parameters["m"]], "flip": False},
+        "components": components,
+        "kretschmann": kretschmann,
+    }
+    if system_id != "gross_perry":
+        spec["check"] = lambda chart, s=system_id: kaluza_klein_pullback(chart, s)
+    return spec
+
+
+def kaluza_klein_pullback(chart, system_id):
+    """J^T g J, with g Gross and Perry's chart and J the Jacobian of the map from `chart` into
+    it, against the metric of `chart`, in every slot: x_5 = -4m(psi + phi) for the Hopf angle,
+    and r = rho - 2m besides for the Taub-NUT radius."""
+    spec = kaluza_klein_monopole("gross_perry")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    m = chart.reader.parameters["m"]
+    t, a, b, c, w = chart.symbols
+    if system_id == "hopf":
+        image = [t, a, b, c, -4 * m * (w + c)]
+    else:
+        image = [t, a - 2 * m, b, c, -4 * m * (w + c)]
+    J = sp.Matrix(5, 5, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    at = dict(zip(source.symbols, image))
+    at[source.reader.parameters["m"]] = m
+    pulled = J.T * source.geo.g.subs(at, simultaneous=True) * J
+    own = chart.geo.g
+    for i in range(5):
+        for j in range(i, 5):
+            if sp.simplify(pulled[i, j] - own[i, j]) != 0:
+                raise AssertionError(f"kaluza_klein_monopole: Gross and Perry's chart pulled back misses the "
+                                     f"{system_id} chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["kaluza_klein_monopole"] = [lambda s=s: kaluza_klein_monopole(s) for s in KK_CHARTS]
 
 
 def write(spec):

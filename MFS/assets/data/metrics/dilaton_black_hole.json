@@ -51,6 +51,11 @@
       "id": "rn_metric",
       "kind": "family",
       "text": "The charged black hole of Einstein-Maxwell theory, with no dilaton. It has an inner horizon, and the dilaton black hole has none [horowitz1992]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "The extreme magnetic black hole of the same family with the dilaton coupled at strength $\\sqrt{3}$, Kaluza and Klein's value. Lifted to five dimensions its singularity goes away and it is a smooth vacuum solution [duff1994]."
     }
   ],
   "references": [
@@ -69,7 +74,8 @@
     "dowker1994",
     "hirschmann2018",
     "mizuno2018",
-    "kocherlakota2021"
+    "kocherlakota2021",
+    "duff1994"
   ],
   "coordinates": [
     {

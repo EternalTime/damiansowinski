@@ -235,6 +235,10 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 # Tangherlini's planes of the time and r hold every angle fixed, three in five dimensions and four in six.
 TANGHERLINI_FIVE = {"psi": "pi/2", "theta": "pi/2", "phi": "0"}
 TANGHERLINI_SIX = {"chi": "pi/2", **TANGHERLINI_FIVE}
+# The Kaluza-Klein monopole's planes of t and its radius lie on the half axis theta = 0, where Gross and
+# Perry's potential vanishes and the embedding diagram's cigar stands.
+KK_AXIS = {"theta": "0", "phi": "0", "x_5": "0"}
+KK_HOPF = {"theta": "0", "phi": "0", "psi": "0"}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -522,6 +526,16 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, orient="outgoing", areal=True),
     Diagram("schwarzschild_ads", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 3, -2, 1), "$r/L$", "$u/L$", SADS, EQUATOR, orient="outgoing", areal=True),
+    # The Kaluza-Klein monopole at m = 1 on its plane of t and the radius, in each chart, and through the
+    # nut in Gross and Perry's: no horizon, and rays that slow toward the nut as sqrt(r/(r + 4m)).
+    Diagram("kaluza_klein_monopole", "gross_perry", "radial", "$t$ and $r$", ("t", "r"), (0, 16, -8, 8),
+            "$r/m$", "$ct/m$", {"m": 1}, KK_AXIS),
+    Diagram("kaluza_klein_monopole", "gross_perry", "through", "through the nut", ("t", "r"), (0, 16, -16, 16),
+            "$x/m$", "$ct/m$", {"m": 1}, KK_AXIS, mirror=True, families=SIDEWAYS, cones=(4, 8)),
+    Diagram("kaluza_klein_monopole", "hopf", "radial", "$t$ and $r$", ("t", "r"), (0, 16, -8, 8),
+            "$r/m$", "$ct/m$", {"m": 1}, KK_HOPF),
+    Diagram("kaluza_klein_monopole", "taub_nut", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 16, -8, 8),
+            "$\\rho/m$", "$ct/m$", {"m": 1}, KK_HOPF),
     Diagram("global_monopole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", GM, EQUATOR, orient="ingoing", areal=True),
     Diagram("global_monopole", "conical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
@@ -1242,6 +1256,39 @@ CAPTIONS = {
         "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at $r_h$ and leans toward larger $r$ inside it.",
+    ],
+    ("kaluza_klein_monopole", "gross_perry", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = 0$, $x_5 = 0$) of the Kaluza-Klein monopole, each point in the "
+        "plane a squashed 3-sphere of $\\theta$, $\\phi$, and $x_5$. The metric on it is "
+        "$-c^2dt^2 + (1 + 4m/r)\\,dr^2$, so the rays run at $dr/d(ct) = \\pm\\sqrt{r/(r + 4m)}$: at 45° far "
+        "away, and slower in $r$ toward the nut $r = 0$, where the cones close. No Christoffel symbol turns "
+        "them out of the plane, so they are null geodesics.",
+        "The cones close because $r$ is a poor ruler near the nut: the proper distance from it is "
+        "$\\int\\sqrt{1 + 4m/r}\\,dr \\approx 4\\sqrt{mr}$, and against that distance every ray runs at the "
+        "speed of light. A ray reaches $r = 0$ in a finite time, and the Kretschmann scalar "
+        "$384m^2/(r + 4m)^6$ is finite there. The monopole has no horizon.",
+    ],
+    ("kaluza_klein_monopole", "gross_perry", "through"): [
+        "The line through the nut along the axis: $x = r$ on the right is $\\theta = 0$ and $x = -r$ on the left "
+        "is $\\theta = \\pi$, and the monopole's spherical symmetry makes the two halves mirror images. Rays "
+        "cross the nut smoothly, since $r = 0$ is a regular point of the geometry in five dimensions, where the "
+        "Kretschmann scalar is $3/(32m^4)$.",
+    ],
+    ("kaluza_klein_monopole", "hopf", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = 0$, $\\psi = 0$) of the Kaluza-Klein monopole in the chart of the "
+        "Hopf angle, each point in the plane a squashed 3-sphere of the Euler angles $\\theta$, $\\phi$, and "
+        "$\\psi$. The metric on it is $-c^2dt^2 + (1 + 4m/r)\\,dr^2$, as in Gross and Perry's chart, so the rays "
+        "run at $dr/d(ct) = \\pm\\sqrt{r/(r + 4m)}$ and close toward the nut $r = 0$, which they reach in a finite "
+        "time. No Christoffel symbol turns them out of the plane, so they are null geodesics.",
+    ],
+    ("kaluza_klein_monopole", "taub_nut", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = 0$, $\\psi = 0$) of the Kaluza-Klein monopole with the radius "
+        "of the Taub-NUT line element, each point in the plane a squashed 3-sphere of the Euler angles. The "
+        "metric on it is $-c^2dt^2 + (\\rho + 2m)/(\\rho - 2m)\\,d\\rho^2$, so the rays run at "
+        "$d\\rho/d(ct) = \\pm\\sqrt{(\\rho - 2m)/(\\rho + 2m)}$ and the cones close at $\\rho = 2m$.",
+        "The edge $\\rho = 2m$ is the nut, a single point of space where the 3-spheres have shrunk away, and the "
+        "chart has no points with $\\rho < 2m$. A ray reaches it in a finite time, and the Kretschmann scalar "
+        "$384m^2/(\\rho + 2m)^6$ is finite there.",
     ],
     ("global_monopole", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Letelier's black hole in a cloud of strings, "
@@ -4522,6 +4569,13 @@ def _tangherlini_rstar(r, D=5):
             - np.arctan((2 * r + 1) / np.sqrt(3)) / np.sqrt(3))
 
 
+def _kk_rstar(r):
+    """The Kaluza-Klein monopole's tortoise coordinate at m = 1, the integral of sqrt(1 + 4/r) from the
+    nut: sqrt(r(r + 4)) + 4 arsinh(sqrt(r)/2)."""
+    r = np.maximum(np.asarray(r, float), 0.0)
+    return np.sqrt(r * (r + 4)) + 4 * np.arcsinh(np.sqrt(r) / 2)
+
+
 def _away(*radii):
     return lambda x0, r: np.all([np.abs(r - h) > 0.05 for h in radii], axis=0)
 
@@ -4595,6 +4649,12 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), lambda v, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
+    ("kaluza_klein_monopole", "gross_perry", "radial"):
+        (lambda t, r: t + _kk_rstar(r), lambda t, r: t - _kk_rstar(r), lambda t, r: r > 0.05),
+    ("kaluza_klein_monopole", "hopf", "radial"):
+        (lambda t, r: t + _kk_rstar(r), lambda t, r: t - _kk_rstar(r), lambda t, r: r > 0.05),
+    ("kaluza_klein_monopole", "taub_nut", "radial"):
+        (lambda t, rho: t + _kk_rstar(rho - 2), lambda t, rho: t - _kk_rstar(rho - 2), lambda t, rho: rho > 2.05),
     ("tangherlini", "spherical", "radial"):
         (lambda t, r: t + _tangherlini_rstar(r), lambda t, r: t - _tangherlini_rstar(r), _away(1.0)),
     ("tangherlini", "eddington_finkelstein_ingoing", "finkelstein"):

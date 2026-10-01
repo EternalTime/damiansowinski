@@ -43,6 +43,11 @@
       "id": "bertotti_robinson",
       "kind": "special_case",
       "text": "The geometry down the throat of each hole. Near any one of them $U \\approx m_i/|\\mathbf{x} - \\mathbf{x}_i|$, and the metric is that of AdS$_2 \\times$ S$^2$."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "Another solution built on $1 + \\sum_i m_i/|\\mathbf{x} - \\mathbf{x}_i|$: any number of Kaluza-Klein monopoles stay at rest wherever they are put, as these black holes do [hawking1977, ruback1986]."
     }
   ],
   "references": [
@@ -66,7 +71,9 @@
     "kastor1993",
     "brill1994",
     "contopoulos1990",
-    "shipley2016"
+    "shipley2016",
+    "hawking1977",
+    "ruback1986"
   ],
   "coordinates": [
     {

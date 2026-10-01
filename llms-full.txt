@@ -413,6 +413,18 @@ J. Richard Gott's exact solution of 1991: two straight, parallel cosmic strings 
 - chart Grant Rindler: coordinates $(\eta, \xi, Y, z)$, $$ds^2 = -\xi^2d\eta^2 + d\xi^2 + dY^2 + dz^2$$
 - chart Grant Milne: coordinates $(\tau, \chi, Y, z)$, $$ds^2 = -c^2d\tau^2 + c^2\tau^2d\chi^2 + dY^2 + dz^2$$
 
+### Kaluza-Klein Monopole
+
+A static vacuum solution of gravity in five dimensions, four of space and one of time, that Rafael Sorkin, and David Gross and Malcolm Perry, found in 1983: Euclidean Taub-NUT space with a time added. The fifth dimension is a circle that shrinks smoothly to a point at the centre, and seen from four dimensions the twist of that circle is the field of a magnetic monopole.
+
+- id: `kaluza_klein_monopole`
+- tags: vacuum, vacuum solution, static, stationary, five-dimensional, higher dimensions, extra dimensions, Kaluza-Klein, compact dimension, magnetic monopole, Dirac quantisation, Dirac string, soliton, topological defect, Taub-NUT, NUT parameter, gravitational instanton, self-dual, Hopf fibration, regular, no horizon, asymptotically flat, Gross-Perry-Sorkin, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json
+- chart Gross-Perry: coordinates $(t, r, \theta, \phi, x_5)$, $$ds^2 = -c^2dt^2 + \left(1 + \dfrac{4m}{r}\right)\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right) + \left(1 + \dfrac{4m}{r}\right)^{-1}\left(dx_5 + 4m\left(1 - \cos\theta\right)d\phi\right)^2$$
+- chart Hopf Angle: coordinates $(t, r, \theta, \phi, \psi)$, $$ds^2 = -c^2dt^2 + \left(1 + \dfrac{4m}{r}\right)\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right) + 16m^2\left(1 + \dfrac{4m}{r}\right)^{-1}\left(d\psi + \cos\theta\,d\phi\right)^2$$
+- chart Taub-NUT Radius: coordinates $(t, \rho, \theta, \phi, \psi)$, $$ds^2 = -c^2dt^2 + \dfrac{\rho + 2m}{\rho - 2m}d\rho^2 + \left(\rho^2 - 4m^2\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{16m^2\left(\rho - 2m\right)}{\rho + 2m}\left(d\psi + \cos\theta\,d\phi\right)^2$$
+
 ### Kantowski-Sachs Cosmologies
 
 The spatially homogeneous, anisotropic cosmologies outside Bianchi's classification. Every moment of time is a cylinder $\mathbb{R} \times S^2$, or $S^1 \times S^2$, whose length and whose spheres evolve separately, and the vacuum member is the region inside the horizon of a Schwarzschild black hole.

@@ -575,6 +575,16 @@ FLAT = {
     ("tangherlini", "eddington_finkelstein_outgoing", "chart"): lambda: tangherlini_t(-1),
     ("tangherlini", "spherical_six", "radial"): lambda: one(
         "tangherlini", lambda m: along(0.0, *m.reach("spherical_six", "r")), view_id="six"),
+    # The Kaluza-Klein monopole's cigar, the half axis theta = 0 at t = 0, on its plane of t and the radius
+    # in each chart; the Taub-NUT radius is rho = r + 2m.
+    ("kaluza_klein_monopole", "gross_perry", "radial"): lambda: one(
+        "kaluza_klein_monopole", lambda m: along(0.0, *m.reach("gross_perry", "r"))),
+    ("kaluza_klein_monopole", "gross_perry", "through"): lambda: one(
+        "kaluza_klein_monopole", lambda m: along(0.0, *m.reach("gross_perry", "r"))),
+    ("kaluza_klein_monopole", "hopf", "radial"): lambda: one(
+        "kaluza_klein_monopole", lambda m: along(0.0, *m.reach("gross_perry", "r"))),
+    ("kaluza_klein_monopole", "taub_nut", "radial"): lambda: one(
+        "kaluza_klein_monopole", lambda m: along(0.0, *(r + 2 for r in m.reach("gross_perry", "r")))),
     # Letelier's black hole, r_s = 1, on the static and Eddington-Finkelstein planes, and the monopole
     # with no mass at its centre on the Barriola-Vilenkin plane; each is another spacetime than the other.
     ("string_black_hole", "static", "radial"): lambda: string_hole(),

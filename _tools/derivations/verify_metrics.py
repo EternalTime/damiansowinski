@@ -552,6 +552,18 @@ DIMENSIONS = {
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\Lambda": "1/L**2",
     },
+    # The Kaluza-Klein monopole has one length, m, with G nowhere in the line element. Gross
+    # and Perry's fifth coordinate x_5 is a length of period 16 pi m, and the Hopf angle psi is a pure
+    # number.
+    ("kaluza_klein_monopole", "gross_perry"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "x_5": "L", "m": "L",
+    },
+    ("kaluza_klein_monopole", "hopf"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "m": "L",
+    },
+    ("kaluza_klein_monopole", "taub_nut"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "m": "L",
+    },
     # Tangherlini's black hole quotes its mass as the horizon radius r_h, a length in every
     # dimension, which leaves 1 - (r_h/r)^(D-3) a pure number; the charts are D = 5 and D = 6,
     # and the Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
@@ -1478,9 +1490,12 @@ class Reader:
         text = expand_braced_call(text, "sqrt", "sqrt")
         text = expand_braced_call(text, "ddot", "DDOT")
         text = expand_braced_call(text, "dot", "DOT")
-        # A dotted name may be accented, as \dot{\tilde\phi} is, and reads as the name tildephi.
-        text = re.sub(r"DDOT\s*\(\s*((?:\\?[A-Za-z]+)+)\s*\)", lambda m: f" {self._plain(m.group(1))}_ddot ", text)
-        text = re.sub(r"DOT\s*\(\s*((?:\\?[A-Za-z]+)+)\s*\)", lambda m: f" {self._plain(m.group(1))}_dot ", text)
+        # A dotted name may be accented, as \dot{\tilde\phi} is, and reads as the name tildephi, or
+        # carry a subscript, as the Kaluza-Klein monopole's \dot{x_5}.
+        text = re.sub(r"DDOT\s*\(\s*((?:\\?[A-Za-z]+)+(?:_[A-Za-z0-9]+)?)\s*\)",
+                      lambda m: f" {self._plain(m.group(1))}_ddot ", text)
+        text = re.sub(r"DOT\s*\(\s*((?:\\?[A-Za-z]+)+(?:_[A-Za-z0-9]+)?)\s*\)",
+                      lambda m: f" {self._plain(m.group(1))}_dot ", text)
         # d\Omega^2 is the unit two sphere, written out so the reader sees differentials.
         text = re.sub(r"d\\Omega\s*\^\s*2", "(dtheta**2 + sin(theta)**2*dphi**2)", text)
         # Differentials become single atoms before anything is allowed to pad with spaces.

@@ -2112,6 +2112,17 @@ class EmbeddingDiagrams(unittest.TestCase):
             for r, rho, z in piece("tangherlini", pid):
                 near(rho, r, f"Tangherlini's catenoid rho at {r}")
                 near(z, sign * math.acosh(r), f"Tangherlini's catenoid z at {r}")
+        # The Kaluza-Klein monopole's cigar: the circle of the fifth dimension at r has radius
+        # 8m sqrt(r/(r + 4m)), and the surface rises from the nut at dz/dr = 2 toward dz/dr = 1.
+        cigar = piece("kaluza_klein_monopole", "cigar")
+        self.assertEqual(list(cigar[0]), [0.0, 0.0, 0.0])
+        for r, rho, z in cigar:
+            near(rho, 8 * math.sqrt(r / (r + 4)), f"the cigar's rho at {r}")
+        for (r0, _, z0), (r1, _, z1) in zip(cigar, cigar[1:]):
+            slope = (z1 - z0) / (r1 - r0)
+            mid = 0.5 * (r0 + r1)
+            want = math.sqrt((mid ** 3 + 16 * mid ** 2 + 96 * mid + 256) / (mid + 4) ** 3)
+            self.assertLess(abs(slope - want), 2e-3, f"the cigar's dz/dr at {mid}")
         cap = piece("interior_schwarzschild", "star")
         for r, rho, z in cap:
             near(rho, r, f"cap rho at {r}")
@@ -3684,6 +3695,9 @@ class Slices(unittest.TestCase):
             # The Kasner form's r is the proper distance from the axis, rho^Sigma/Sigma with
             # Sigma = 3/4 at sigma = 1/4, of the circles the embedding reaches in Weyl's rho.
             return (lambda X: 0.0), [rho ** 0.75 / 0.75 for rho in self.reach(surface)]
+        if key == "kaluza_klein_monopole/taub_nut/radial":
+            # The Taub-NUT radius is rho = r + 2m, at m = 1, of the circles the cigar reaches in r.
+            return (lambda X: 0.0), [r + 2 for r in self.reach(surface)]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

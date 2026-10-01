@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 56,
+  "count": 57,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -2256,6 +2256,11 @@
           "id": "rn_metric",
           "kind": "family",
           "text": "The charged black hole of Einstein-Maxwell theory, with no dilaton. It has an inner horizon, and the dilaton black hole has none [horowitz1992]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "The extreme magnetic black hole of the same family with the dilaton coupled at strength $\\sqrt{3}$, Kaluza and Klein's value. Lifted to five dimensions its singularity goes away and it is a smooth vacuum solution [duff1994]."
         }
       ],
       "references": [
@@ -2274,7 +2279,8 @@
         "dowker1994",
         "hirschmann2018",
         "mizuno2018",
-        "kocherlakota2021"
+        "kocherlakota2021",
+        "duff1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -4289,6 +4295,327 @@
       ]
     },
     {
+      "id": "kaluza_klein_monopole",
+      "name": "Kaluza-Klein Monopole",
+      "short_name": "Kaluza-Klein Monopole",
+      "description": "A static vacuum solution of gravity in five dimensions, four of space and one of time, that Rafael Sorkin, and David Gross and Malcolm Perry, found in 1983: Euclidean Taub-NUT space with a time added. The fifth dimension is a circle that shrinks smoothly to a point at the centre, and seen from four dimensions the twist of that circle is the field of a magnetic monopole.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "static",
+        "stationary",
+        "five-dimensional",
+        "higher dimensions",
+        "extra dimensions",
+        "Kaluza-Klein",
+        "compact dimension",
+        "magnetic monopole",
+        "Dirac quantisation",
+        "Dirac string",
+        "soliton",
+        "topological defect",
+        "Taub-NUT",
+        "NUT parameter",
+        "gravitational instanton",
+        "self-dual",
+        "Hopf fibration",
+        "regular",
+        "no horizon",
+        "asymptotically flat",
+        "Gross-Perry-Sorkin",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "The length $m$ is the monopole's only parameter. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "taub_nut",
+          "kind": "dual",
+          "text": "The monopole's four dimensions of space are Taub-NUT continued to Euclidean signature, in its self dual case and with NUT parameter $2m$. Sorkin made the monopole by giving that space a time [sorkin1983, hawking1977]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "Rolled up to four dimensions, the monopole is the extreme magnetic black hole of Kaluza and Klein's theory, whose scalar field is a dilaton coupled with strength $\\sqrt{3}$ where string theory's has strength $1$ [duff1994]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Any number of monopoles stay at rest wherever they are put, as Majumdar and Papapetrou's extremal black holes do, with $1 + \\sum_i 4m/|\\mathbf{x} - \\mathbf{x}_i|$ in place of $1 + 4m/r$ [hawking1977, ruback1986]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "family",
+          "text": "A second static vacuum solution of gravity in five dimensions. Its 3-spheres are round and surround a horizon, and the monopole's are squashed and close smoothly at the nut."
+        }
+      ],
+      "references": [
+        "kaluza1921",
+        "duff1994",
+        "klein1926",
+        "dirac1931",
+        "nut1963",
+        "lyndenbell1998",
+        "hawking1977",
+        "sorkin1983",
+        "grossperry1983",
+        "sen1997",
+        "gregory1997",
+        "gibbonsperry1984",
+        "ruback1986",
+        "bombelli1987",
+        "townsend1995"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
+      "charts": [
+        {
+          "id": "gross_perry",
+          "name": "Gross-Perry",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi",
+            "x_5"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "x_5 \\in [0, 16\\pi m)",
+            "r = 0 \\;\\text{(the nut, a regular point)}",
+            "\\theta = \\pi \\;\\text{(the Dirac string, a coordinate singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "The monopole's one length: the fifth dimension has circumference $16\\pi m$ far away"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi, x_5)$, with $t$ carrying dimensions of time and the fifth coordinate $x_5$ a length, periodic with period $16\\pi m$. The potential $A_\\phi = 4m(1 - \\cos\\theta)$ vanishes on the half axis $\\theta = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\left(1 + \\dfrac{4m}{r}\\right)\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right) + \\left(1 + \\dfrac{4m}{r}\\right)^{-1}\\left(dx_5 + 4m\\left(1 - \\cos\\theta\\right)d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + \\dfrac{4m}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r\\left(r + 4m\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r\\left(r^2\\sin^2\\theta + 8r\\,m\\sin^2\\theta - 32m^2\\cos\\theta + 32m^2\\right)}{r + 4m}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "x_5"
+              ],
+              "value": "-\\dfrac{4r\\,m\\left(\\cos\\theta - 1\\right)}{r + 4m}"
+            },
+            {
+              "indices": [
+                "x_5",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{4r\\,m\\left(\\cos\\theta - 1\\right)}{r + 4m}"
+            },
+            {
+              "indices": [
+                "x_5",
+                "x_5"
+              ],
+              "value": "\\left(1 + \\dfrac{4m}{r}\\right)^{-1}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{384m^2}{\\left(r + 4m\\right)^6}"
+        },
+        {
+          "id": "hopf",
+          "name": "Hopf Angle",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 4\\pi)",
+            "r = 0 \\;\\text{(the nut, a regular point)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "The monopole's one length: the fifth dimension has circumference $16\\pi m$ far away"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi, \\psi)$, with $t$ carrying dimensions of time and the angle $\\psi = -\\phi - x_5/4m$ periodic with period $4\\pi$, so that $(\\theta, \\phi, \\psi)$ are Euler angles on each 3-sphere of constant $t$ and $r$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\left(1 + \\dfrac{4m}{r}\\right)\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right) + 16m^2\\left(1 + \\dfrac{4m}{r}\\right)^{-1}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + \\dfrac{4m}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r\\left(r + 4m\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r\\left(r^2\\sin^2\\theta + 8r\\,m\\sin^2\\theta + 16m^2\\right)}{r + 4m}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{16r\\,m^2\\cos\\theta}{r + 4m}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{16r\\,m^2\\cos\\theta}{r + 4m}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "16m^2\\left(1 + \\dfrac{4m}{r}\\right)^{-1}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{384m^2}{\\left(r + 4m\\right)^6}"
+        },
+        {
+          "id": "taub_nut",
+          "name": "Taub-NUT Radius",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [2m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 4\\pi)",
+            "\\rho = 2m \\;\\text{(the nut, a regular point)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "The monopole's one length: the fifth dimension has circumference $16\\pi m$ far away"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi, \\psi)$, with $t$ carrying dimensions of time, the radius $\\rho = r + 2m$ of the Taub-NUT line element with NUT parameter $2m$, and the Euler angle $\\psi$ periodic with period $4\\pi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{\\rho + 2m}{\\rho - 2m}d\\rho^2 + \\left(\\rho^2 - 4m^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{16m^2\\left(\\rho - 2m\\right)}{\\rho + 2m}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\rho + 2m}{\\rho - 2m}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(\\rho + 2m\\right)\\left(\\rho - 2m\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(\\rho - 2m\\right)\\left(\\rho^2\\sin^2\\theta + 4\\rho\\,m\\sin^2\\theta - 12m^2\\sin^2\\theta + 16m^2\\right)}{\\rho + 2m}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{16m^2\\left(\\rho - 2m\\right)\\cos\\theta}{\\rho + 2m}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{16m^2\\left(\\rho - 2m\\right)\\cos\\theta}{\\rho + 2m}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{16m^2\\left(\\rho - 2m\\right)}{\\rho + 2m}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{384m^2}{\\left(\\rho + 2m\\right)^6}"
+        }
+      ]
+    },
+    {
       "id": "kantowski_sachs",
       "name": "Kantowski-Sachs Cosmologies",
       "short_name": "Kantowski-Sachs",
@@ -5823,6 +6150,11 @@
           "id": "bertotti_robinson",
           "kind": "special_case",
           "text": "The geometry down the throat of each hole. Near any one of them $U \\approx m_i/|\\mathbf{x} - \\mathbf{x}_i|$, and the metric is that of AdS$_2 \\times$ S$^2$."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Another solution built on $1 + \\sum_i m_i/|\\mathbf{x} - \\mathbf{x}_i|$: any number of Kaluza-Klein monopoles stay at rest wherever they are put, as these black holes do [hawking1977, ruback1986]."
         }
       ],
       "references": [
@@ -5846,7 +6178,9 @@
         "kastor1993",
         "brill1994",
         "contopoulos1990",
-        "shipley2016"
+        "shipley2016",
+        "hawking1977",
+        "ruback1986"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -10163,6 +10497,11 @@
           "id": "schwarzschild",
           "kind": "special_case",
           "text": "The case $D = 4$, where the metric function is $1 - r_s/r$ and a massive particle has stable circular orbits."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "A second static vacuum solution of gravity in five dimensions. It has no horizon, and its 3-spheres are squashed and close smoothly at the centre [grossperry1983]."
         }
       ],
       "references": [
@@ -10183,7 +10522,8 @@
         "giddings2002",
         "dimopoulos2001",
         "cms2011",
-        "emparan2013"
+        "emparan2013",
+        "grossperry1983"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",
@@ -10760,6 +11100,11 @@
           "id": "misner",
           "kind": "programme",
           "text": "Charles Misner's flat model of Taub-NUT, from his lecture of 1967 on Taub-NUT as \"a counterexample to almost anything\" [misner1967]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "dual",
+          "text": "Taub-NUT continued to Euclidean signature, in its self dual case, with a time added: a static vacuum solution in five dimensions that four dimensions see as a magnetic monopole [sorkin1983, grossperry1983]."
         }
       ],
       "references": [
@@ -10775,7 +11120,8 @@
         "clement2015",
         "misner1969",
         "ellismaccallum1969",
-        "misner1967"
+        "misner1967",
+        "grossperry1983"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",

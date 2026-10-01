@@ -2778,6 +2778,51 @@ def tangherlini(ck, src):
     return views
 
 
+def kaluza_klein_monopole(ck, src):
+    """The Kaluza-Klein monopole's surface of r and x_5 on the half axis theta = 0 at t = 0, m = 1,
+    in Gross and Perry's chart, where the potential 4m(1 - cos theta) d phi vanishes. On it the
+    metric is V dr^2 + dx_5^2/V with V = 1 + 4m/r, and x_5 has the period 16 pi m, so the angle
+    of the surface of revolution is x_5/8m: the slice sweeps x_5 = 8m phi, and at theta = 0 the
+    azimuth phi itself moves nothing. The circle at r has radius rho = 8m sqrt(r/(r + 4m)), and
+    drho/ds = 16m^2/(r + 4m)^2 <= 1, so the surface embeds everywhere: a cigar that closes
+    smoothly at the nut r = 0, where drho/ds = 1, and widens to a cylinder of radius 8m. Its
+    height is the quadrature of sqrt((r^3 + 16m r^2 + 96m^2 r + 256m^3)/(r + 4m)^3), checked
+    against scipy's. Drawn to r = 16m."""
+    from scipy.integrate import quad
+    sl = Slice(src, "kaluza_klein_monopole", "gross_perry", "r", "\\phi", {"t": 0, "theta": 0}, {"m": 1},
+               swept={"x_5": "8*phi"})
+    top, size = 16.0, 18.0
+    radii = (1.0, 4.0, 8.0, 12.0)
+    cigar = Piece("cigar", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the nut $r = 0$, where the circle of the fifth dimension closes to a point"),
+                   ("edge", "the surface runs on to $r \\to \\infty$, a cylinder of radius $8m$")),
+                  [(r, "r", None) for r in radii] + [(top, "r", "$r = 16m$")], size)
+    ck.isometry("Kaluza-Klein monopole, the cigar", cigar)
+    ck.radius("Kaluza-Klein monopole, the cigar, rho = 8m sqrt(r/(r + 4m))", cigar,
+              lambda r: 8 * np.sqrt(r / (r + 4)), size)
+
+    def height(r):
+        return np.array([quad(lambda u: math.sqrt((u ** 3 + 16 * u ** 2 + 96 * u + 256) / (u + 4) ** 3), 0, x,
+                              epsabs=1e-12, epsrel=1e-12)[0] for x in np.atleast_1d(r)])
+    ck.form("Kaluza-Klein monopole, the cigar, the quadrature of its height", cigar, height, size)
+    tip = sl.slope(0.0, "+")
+    ck.add("Kaluza-Klein monopole: the cigar closes smoothly at the nut, drho/ds = 1",
+           float(np.hypot(tip[0] - 1, tip[1])), 1e-9)
+    r = np.linspace(0.01, 200, 400)
+    ck.add("Kaluza-Klein monopole: drho/ds = 16m^2/(r + 4m)^2 along the cigar",
+           float(np.max(np.abs(sl._drho(r) / np.sqrt(sl.gxx_at(r)) - 16 / (r + 4) ** 2))), 1e-12)
+    ck.add("Kaluza-Klein monopole: far away the circle's radius is 8m", abs(float(sl.rho_at(1e12)) - 8), 1e-9)
+    surface = Surface([cigar])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *cigar.at(4.0), "$r = 4m$", dx=10)
+    ring_label(fig, [0, 0, 0], *cigar.at(top), "$16m$")
+    fig.legend("fill", "cover", "the surface $\\theta = 0$ at $t = 0$, which $r$ and $x_5$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1$, $4$, $8$, $12$ and $16\\,m$: the circle of the fifth dimension")
+    fig.legend("line", "meridian", "$x_5$ constant, every $2\\pi m/3$")
+    return [view("cigar", "The fifth dimension", "$m$", [surface], fig.done(),
+                 settings="$m = 1$, the unit of every length, on the surface of $r$ and $x_5$ ($\\theta = 0$).")]
+
+
 def vaidya(ck, src):
     """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
     for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
@@ -5812,6 +5857,7 @@ DRAWN = {
     "nariai": nariai,
     "global_monopole": global_monopole,
     "tangherlini": tangherlini,
+    "kaluza_klein_monopole": kaluza_klein_monopole,
     "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
     "melvin": melvin,
@@ -6241,6 +6287,17 @@ CAPTIONS = {
         "The cone of an ideal cosmic string ($4G\\mu/c^2 = 0.1$) cut along $\\phi = 0$ and unrolled onto the plane "
         "without stretching, every distance from the apex and every circle keeping its length. Laid flat it is a "
         "plane missing the wedge between the cut's two edges, the deficit angle $\\delta = 8\\pi G\\mu/c^2 = 36°$.",
+    ],
+    ("kaluza_klein_monopole", "cigar"): [
+        "The surface of $r$ and $x_5$ on the half axis $\\theta = 0$ of the Kaluza-Klein monopole at one moment "
+        "of $t$, drawn as a surface in flat space with every distance along it the metric distance. On it the "
+        "metric is $(1 + 4m/r)\\,dr^2 + dx_5^2/(1 + 4m/r)$, so the circle of the fifth dimension at $r$ has "
+        "circumference $16\\pi m\\sqrt{r/(r + 4m)}$. Far from the monopole the surface is a cylinder of radius "
+        "$8m$, the small circle Klein gave every point of space.",
+        "Toward the centre the circle shrinks, and at the nut $r = 0$ it closes to a point. Its radius $\\rho$ "
+        "grows with the distance $s$ from the nut as $d\\rho/ds = 16m^2/(r + 4m)^2$, which is $1$ at $r = 0$, so "
+        "the tip is as smooth as the pole of a sphere. The period $16\\pi m$ of $x_5$ is the one that makes it "
+        "so; any other would leave the apex of a cone there.",
     ],
     ("tangherlini", "five"): [
         "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the Schwarzschild-Tangherlini spacetime in "

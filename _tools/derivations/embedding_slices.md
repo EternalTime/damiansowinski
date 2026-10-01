@@ -206,6 +206,12 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `kasner/radial`, the plane of $t$ and $r$: the line $ct = 0$ from $r = \rho^\Sigma/\Sigma$ at $\rho = 1/16$ to its value at $\rho = 4$, with $\Sigma = 3/4$, that is from $r = 1/6$ to $3.77$; the Kasner form's $t$ is Weyl's times a constant, so the moment is the same.
 - `weyl` and `kasner`, the triangle: the curve $p, q = \arctan(\mp 4\rho^{1/4})$ between the same two circles.
 
+### Kaluza-Klein monopole
+
+The cigar is the surface of $r$ and $x_5$ on the half axis $\theta = 0$ at $t = 0$ in Gross and Perry's chart, from the nut $r = 0$ out to $r = 16m$ at $m = 1$.
+Every plane of $t$ and the radius is drawn on that half axis, so the moment is the line $t = 0$ from the nut to $16m$ on each: $r$ itself in Gross and Perry's chart and the Hopf chart, and $\rho = r + 2m$, from $2m$ to $18m$, with the Taub-NUT radius.
+On the view through the nut it is the same line, which the page mirrors, and on each conformal view it is the curve $T = 0$ from the centre out to $r_*(16m)$.
+
 ### Schwarzschild-Tangherlini
 
 - The embedding is two moments, one in each dimension: the plane of $r$ and $\phi$ at $t = 0$ in the static chart, every other angle at $\pi/2$, from the throat $r_h$ to $6\,r_h$ on both sheets.
