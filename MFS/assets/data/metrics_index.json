@@ -430,7 +430,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dd320d17bc1b1c49",
+    "version": "2022ec62f120396e",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
@@ -670,7 +670,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ac003eaac1cdae2c",
+    "version": "ea9852721d671afd",
     "diagrams": "2bebc0757ae1bb04",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1077,7 +1077,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "09dd141d9e4123d6",
+    "version": "95accf7a9b6537e7",
     "diagrams": "6a553e7d399d3c52",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -1482,6 +1482,32 @@
     "embedding": "be8e68489d42c0b8"
   },
   {
+    "id": "teo_wormhole",
+    "name": "Teo",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "rotating",
+      "stationary",
+      "axisymmetric",
+      "angular momentum",
+      "frame dragging",
+      "ergoregion",
+      "exotic matter",
+      "energy condition violation",
+      "non-vacuum",
+      "asymptotically flat",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "7ec3da39a134a6b0",
+    "diagrams": "f99505d95b083db0",
+    "conformal": "577727a22f10c827",
+    "embedding": "b79fedbd55cef742"
+  },
+  {
     "id": "tolman_bondi",
     "name": "Tolman-Bondi",
     "tags": [
@@ -1632,7 +1658,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f9f566d952d2c2af",
+    "version": "79bb26b613fab434",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"

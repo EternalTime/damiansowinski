@@ -3721,6 +3721,102 @@ def morris_thorne(ck, src):
     return views
 
 
+def teo_wormhole(ck, src):
+    """Teo's example at b_0 = 1 on its two totally geodesic surfaces, each in both charts.
+
+    The axis theta = 0, where the dragging of frames vanishes, drawn at his a = 1/4: the metric
+    on it is -N^2 c^2dt^2 + dl^2 with N = 1 + b_0/r, so with dl_* = dl/N, which is
+    l_* = +-(sqrt(r(r - 1)) - ln(sqrt r + sqrt(r - 1)) + sqrt 2 artanh sqrt((r - 1)/2r)),
+    p, q = arctan((ct -+ l_*)/b_0) give the full diamond, the throat on its axis.
+
+    The equatorial plane theta = pi/2 with phi divided out, drawn at a = 1: N = 1 there and the
+    metric orthogonal to the circles of phi is -c^2dt^2 + dl^2 for every spin, so p, q =
+    arctan((ct -+ l)/b_0) give the same diamond, each point a circle about the axis. The
+    ergosurface, the zero of the published g_tt, is r = sqrt(2) b_0 on either side.
+
+    Teo's (t, r) cover the side l > 0 of each; r(l) of the proper distance chart is
+    nr.teo_inverse, handed to the published metric with its first two derivatives."""
+    def radius(t, l):
+        rho, sigma = nr.teo_inverse(l)
+        return {"r": (rho + 0 * t, sigma + 0 * t, 1 / (2 * rho ** 2) + 0 * t)}
+
+    def axis_star(l):
+        return np.sign(l) * nr._teo_axis(nr.teo_inverse(l)[0])
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    radii = (1.5, 2.5, 5.0)
+    ergo = math.sqrt(2)
+    views = []
+    for surface, fixed, params, quotient, star, restriction in (
+            ("axis", {"theta": "0", "phi": "0"}, {"b_0": 1, "a": "1/4"}, None, axis_star,
+             "The axis of rotation $\\theta = 0$ only, a totally geodesic surface, each point in the diagram a "
+             "single event."),
+            ("equator", {"theta": "pi/2"}, {"b_0": 1, "a": 1}, "phi", lambda l: np.asarray(l, dtype=float),
+             "The equatorial plane $\\theta = \\pi/2$ only, a totally geodesic surface, each point in the "
+             "diagram a circle about the axis. Light rays of zero angular momentum run at 45 degrees.")):
+        areal = Plane(src, "teo_wormhole", "spherical", ("t", "r"), fixed, params, quotient=quotient)
+        proper = Plane(src, "teo_wormhole", "proper_radial", ("t", "l"), fixed, params, numeric=["r"],
+                       quotient=quotient)
+        through = lambda t, l, star=star: mink_pq(t, star(l))
+        from_r = lambda t, r, through=through: through(t, nr._teo_proper(r))
+        ck.chart(f"Teo {surface}, his chart", areal, from_r, ck.uniform(-20, 20), ck.uniform(1.001, 20),
+                 lambda t, r: (1, 0))
+        ck.chart(f"Teo {surface}, proper distance", proper, through, ck.uniform(-20, 20), ck.uniform(-20, 20),
+                 lambda t, l: (1, 0), radius)
+        ck.finite(f"Teo {surface}: the curvature is finite at the throat r = b_0",
+                  areal.kretschmann(ck.uniform(-5, 5, 50), 1 + ck.uniform(1e-6, 1e-3, 50)))
+        p, q = through(np.zeros(2), np.array([1e9, -1e9]))
+        ck.limit(f"Teo {surface}: l -> +-infinity at t = 0 lands on the two i0, (X, T) = (+-pi, 0)",
+                 np.concatenate([point(p[0], q[0]), point(p[1], q[1])]), [PI, 0, -PI, 0], 1e-3)
+        if surface == "equator":
+            g00 = areal.metric(np.zeros(1), np.array([ergo]))[0]
+            _, entry, reader = nr.load("teo_wormhole", "spherical")
+            gtt = nr.published_matrix(reader, entry, "metric_components")[0, 0]
+            at = {reader.c: 1, reader.parameters["b_0"]: 1, reader.parameters["a"]: 1,
+                  reader.symbol["\\theta"]: sp.pi / 2, reader.symbol["r"]: sp.sqrt(2)}
+            ck.limit("Teo equator: the published g_tt vanishes at r = sqrt(2) b_0, and the plane's own g_tt is -1 there",
+                     [float(gtt.subs(at)), g00[0]], [0, -1], 1e-12)
+        lines = (ergo, 2.0, 3.0, 5.0) if surface == "equator" else radii
+        for system, label in (("spherical", "Spherical"), ("proper_radial", "Proper radial distance")):
+            v = View(f"{system}_{surface}", f"{label}, the {surface}", box, system)
+            v.fill("region", DIAMOND)
+            v.fill("cover", TRIANGLE if system == "spherical" else DIAMOND)
+            for r in lines:
+                ell = nr._teo_proper(r)
+                v.curve("r", *through(S_ALL, np.full_like(S_ALL, ell)))
+                v.curve("r2" if system == "spherical" else "r", *through(S_ALL, np.full_like(S_ALL, -ell)))
+            first = "$r = \\sqrt{2}\\,b_0$" if surface == "equator" else "$r = 1.5\\,b_0$"
+            label_on(v, through(0, nr._teo_proper(lines[0])), first)
+            grid(v, "t", through, (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+            v.line("throat", [[[0, -PI], [0, PI]]])
+            diamond_edges(v)
+            v.label_xt([0, 0.3], "throat", "l", "small", dx=6)
+            listed = "$\\sqrt{2}$, $2$, $3$, and $5\\,b_0$" if surface == "equator" else "$1.5$, $2.5$, and $5\\,b_0$"
+            if system == "spherical":
+                v.legend("cover", "the side $l > 0$, which $t$ and $r$ cover")
+                v.legend("r", f"$r$ constant, at {listed}")
+                v.legend("r2", "the same radii on the other side, $l < 0$")
+            else:
+                v.legend("cover", "the whole surface, which $t$ and $l$ cover")
+                v.legend("r", f"$r$ constant, at {listed} on either side")
+            v.legend("t", "$ct$ constant")
+            v.legend("throat", "the throat, $r = b_0$ and $l = 0$")
+            v.set(restriction=restriction,
+                  settings="$b_0 = 1$ and $a = 1/4$." if surface == "axis" else "$b_0 = 1$ and $a = 1$.")
+            if system == "proper_radial":
+                v.set(input=nr.TEO_RADIUS_INPUT)
+            if surface == "equator":
+                moment = slices.moments("teo_wormhole", "equator")[0]
+                ell = nr._teo_proper(moment.reach("spherical", "r")[1])
+                ls = np.array([-ell, 0.0, ell])
+                v.slice(moment, [through(0 * ls, ls)])
+            else:
+                moment = slices.moments("teo_wormhole", "throat", label="$t = 0$, $r = b_0$")[0]
+                v.slice(moment, points=[through(0.0, 0.0)])
+            views.append(v)
+    return views
+
+
 def _tsw_lstar(l):
     """The tortoise coordinate of the thin shell wormhole's chart through the throat at r_s = 1 and
     a = 5/4, zero at the throat: l_* = l + r_s ln(1 + |l|/(a - r_s)) sgn l."""
@@ -7047,6 +7143,7 @@ DRAWN = {
     "robinson_trautman": robinson_trautman,
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
+    "teo_wormhole": teo_wormhole,
     "levi_civita": levi_civita,
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "curzon_chazy": curzon_chazy,
@@ -7820,6 +7917,35 @@ CAPTIONS = {
         "universes, each with its own $i^0$ and $\\mathscr{I}^\\pm$, joined at the throat $r = 0$, "
         "where the spheres are smallest. Light crosses the throat at 45°, as it does everywhere "
         "else, so the wormhole has no horizon.",
+    ],
+    ("teo_wormhole", "spherical_axis"): [
+        "The axis of rotation of Teo's wormhole ($a = 1/4$), each point in the diagram a single event. On "
+        "the axis the dragging of frames vanishes and the metric is $-N^2c^2dt^2 + dl^2$ with $N = 1 + b_0/r$, "
+        "so $p, q = \\arctan((ct \\mp l_*)/b_0)$ with $dl_* = dl/N$ bring it into the full diamond, the "
+        "throat on its axis.",
+        "$N$ stays between $1$ and $2$, so there is no horizon and $l_*$ runs over the whole line. Teo's "
+        "$t$ and $r$ cover one side and end at the throat, where $g_{rr}$ diverges.",
+    ],
+    ("teo_wormhole", "proper_radial_axis"): [
+        "The axis of rotation of Teo's wormhole ($a = 1/4$) in the proper distance coordinates $t$ and $l$, "
+        "which cover both sides and run smoothly through the throat at $l = 0$, each point in the diagram a "
+        "single event. The metric on the axis is $-N^2c^2dt^2 + dl^2$, and "
+        "$p, q = \\arctan((ct \\mp l_*)/b_0)$ with $dl_* = dl/N$ bring it into the diamond.",
+    ],
+    ("teo_wormhole", "spherical_equator"): [
+        "The equatorial plane of Teo's wormhole ($a = 1$) with $\\phi$ divided out, each point in the diagram "
+        "a circle about the axis. On the equator $N = 1$, and the metric orthogonal to the circles is "
+        "$-c^2dt^2 + dl^2$ with $l$ the proper distance from the throat, so "
+        "$p, q = \\arctan((ct \\mp l)/b_0)$ bring it into the full diamond for every spin.",
+        "Inside the ergosurface $r = \\sqrt{2a}\\,b_0$ the circles turn with the wormhole and no observer "
+        "keeps $\\phi$ fixed, while $t$ stays a time and light of zero angular momentum crosses the throat "
+        "both ways. Teo's $t$ and $r$ cover one side and end at the throat.",
+    ],
+    ("teo_wormhole", "proper_radial_equator"): [
+        "The equatorial plane of Teo's wormhole ($a = 1$) with $\\phi$ divided out, in the proper distance "
+        "coordinates $t$ and $l$, each point in the diagram a circle about the axis. The metric orthogonal "
+        "to the circles is $-c^2dt^2 + dl^2$, exactly flat, and $p, q = \\arctan((ct \\mp l)/b_0)$ bring it "
+        "into the diamond, with the ergoregion the strip between the two lines $r = \\sqrt{2}\\,b_0$.",
     ],
     ("thin_shell_wormhole", "throat"): [
         "Visser's thin shell wormhole ($a = 1.25\\,r_s$), each point in the diagram a 2-sphere of radius "

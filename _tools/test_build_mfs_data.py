@@ -2097,6 +2097,24 @@ class EmbeddingDiagrams(unittest.TestCase):
                             self.assertIn(ring["class"], allowed[kinds[ring["piece"]]],
                                           f"{name} {view['id']} ring {ring['class']} on {ring['piece']}")
 
+    def test_teos_equator_is_flamms_paraboloid_and_his_throat_a_dumbbell(self):
+        """Teo's eq. (27), z = +-2 sqrt(b_0 (r - b_0)) on the equator for every spin, and the
+        throat's circles of radius b_0 (1 + cos^2 theta) sin theta at a = 1/4, the same on either
+        side of its equator, from the numbers written and nothing else."""
+        views = {view["id"]: view["surfaces"][0] for view in self.embedding["teo_wormhole"]["views"]}
+        sides = {p["id"]: p["points"] for p in views["equator"]["pieces"]}
+        for sign, pid in ((1, "near"), (-1, "far")):
+            for r, rho, z in sides[pid]:
+                self.assertLess(abs(rho - r), 2e-6, f"Teo's equator, rho at {r}")
+                self.assertLess(abs(z - sign * 2 * math.sqrt(max(r - 1, 0))), 2e-6, f"Teo's equator, z at {r}")
+        ergo = [ring for ring in views["equator"]["rings"] if ring["class"] == "ergo"]
+        self.assertEqual([round(ring["rho"] ** 2, 6) for ring in ergo], [2.0, 2.0])
+        throat = views["throat"]["pieces"][0]["points"]
+        for theta, rho, z in throat:
+            self.assertLess(abs(rho - (1 + math.cos(theta) ** 2) * math.sin(theta)), 2e-6, f"Teo's throat at {theta}")
+        self.assertLess(abs(throat[0][2] + throat[-1][2]), 2e-6)
+        self.assertGreater(max(rho for _, rho, _ in throat), 1.08)
+
     def test_the_surfaces_are_the_ones_known_in_closed_form(self):
         """Flamm's paraboloid, the interior Schwarzschild cap, the catenoid, the cone, Gott's cap
         and the sphere, from the numbers written and nothing else, to their rounding."""
@@ -3510,7 +3528,13 @@ class Slices(unittest.TestCase):
                     "kantowski_sachs/comoving/tr": {"vacuum"}, "kantowski_sachs/dust/etar": {"vacuum"},
                     "conformal kantowski_sachs/dust": {"vacuum"},
                     "kantowski_sachs/schwarzschild_interior/Tr": {"dust"},
-                    "conformal kantowski_sachs/vacuum": {"dust"}}
+                    "conformal kantowski_sachs/vacuum": {"dust"},
+                    # Teo's equatorial plane, embedded at a = 1, does not meet the axis, and his throat,
+                    # embedded at a = 1/4, is marked where its poles meet the axis, drawn at that spin.
+                    **{f"teo_wormhole/{s}/{surface}": {other} for s in ("spherical", "proper_radial")
+                       for surface, other in (("axis", "equator"), ("equator", "throat"))},
+                    **{f"conformal teo_wormhole/{s}_{surface}": {other} for s in ("spherical", "proper_radial")
+                       for surface, other in (("axis", "equator"), ("equator", "throat"))}}
 
     def reach(self, surface, system=None, reference=False):
         xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))
