@@ -676,6 +676,8 @@ FLAT = {
     # coordinates T = -c^2t_k^2/4, every psi; checks() carries the one chart onto the other.
     ("misner", "misner", "plane"): lambda: one("misner", lambda m: across(-m.time * m.time / 4, 0.0, BIG)),
     ("misner", "milne", "plane"): lambda: one("misner", lambda m: across(m.time, 0.0, BIG)),
+    # Gott's moments are Grant's Milne time tau = tau_k, every chi.
+    ("gott_time_machine", "grant_milne", "plane"): lambda: one("gott_time_machine", lambda m: across(m.time, 0.0, BIG)),
     # The wave front u = u_k, every v.
     ("pp_wave", "exact_plane_wave", "tz"): lambda: one("pp_wave", lambda m: [[(m.time, -BIG), (m.time, BIG)]]),
     **{("aichelburg_sexl", "null_cartesian", view): lambda: one("aichelburg_sexl", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
@@ -732,6 +734,9 @@ HIDDEN = {
     ("frw", "flat"): "the flat universe's conformal diagram; the moments embedded are the closed universe's",
     ("misner", "rindler", "plane"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
     ("misner", "rindler"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
+    ("gott_time_machine", "grant_rindler", "plane"): "the region of closed timelike curves beyond the chronology horizon, which no moment of Grant's Milne time meets",
+    ("gott_time_machine", "grant_rindler"): "the region of closed timelike curves beyond the chronology horizon, which no moment of Grant's Milne time meets",
+    ("gott_time_machine", "centre_of_momentum", "loop"): "the centre of momentum chart about the strings; the moments embedded are Grant's, away from the strings",
     ("frw", "open"): "the open universe's conformal diagram; the moments embedded are the closed universe's",
 }
 

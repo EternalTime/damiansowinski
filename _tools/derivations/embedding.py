@@ -161,6 +161,8 @@ class Slice:
                the slice, g_xx picking up the cross terms and the moving coordinate's own;
     swept      a coordinate that moves with phi -> an expression for it in phi, as psi = -phi on
                the Mixmaster great sphere: g_phiphi picks up the moving coordinate's terms;
+               one of the surface's own two coordinates may be given as an expression in both, as
+               Y and chi on Gott's cylinders, whose circle closes only after a shift along Y;
     turn       where the angle is no coordinate of the chart: the chart coordinate that turning
                carries x into, about the chart's origin, as y on the Malament-Hogarth plane of
                x and y; phi is then None, and the published metric is pulled back to the polar
@@ -185,7 +187,8 @@ class Slice:
         along, swept = along or {}, swept or {}
         plane = (x, turn) if turn else (x, phi)
         held = sorted(R._plain(c) for c in entry["coords"] if c not in plane)
-        if held != sorted([*fixed, *along, *swept]):
+        own = {R._plain(c) for c in plane}
+        if held != sorted(k for k in [*fixed, *along, *swept] if k not in own):
             raise SystemExit(f"{metric_id}/{system_id}: the slice of {x} and {turn or phi} holds {held} fixed, "
                              f"and the table fixes {sorted(fixed)} and moves {sorted([*along, *swept])}")
         self.x = R.symbol[x]
@@ -3637,6 +3640,60 @@ def misner(ck, src):
 
 
 
+def gott_time_machine(ck, src):
+    """Gott's two strings away from the strings and to the past of the chronology horizon, in
+    Grant's Milne chart, at the a and b of two strings with 4 G mu/c^2 = 1/3, v = 4c/5 and
+    d = l/2. The slice z = 0 of one moment tau has the flat metric c^2 tau^2 dchi^2 + dY^2, and a
+    circuit of both strings identifies (chi, Y) with (chi + a, Y + b): a flat cylinder of
+    circumference L = sqrt(a^2 c^2 tau^2 + b^2), which the map
+
+        chi = a phi/(2 pi) - b x/(c|tau| L),      Y = b phi/(2 pi) + a c|tau| x/L
+
+    carries the angle phi once round and the length x along. The pulled back metric is
+    dx^2 + (L/2 pi)^2 dphi^2 with no cross term, which Slice checks. Drawn at four moments as the
+    circle shrinks toward b at the horizon, each over -2 <= x <= 2 in the length l."""
+    a, b = (nr.GOTT[k] for k in ("a", "b"))
+    a_, b_ = (float(sp.sympify(v)) for v in (a, b))
+    moments = (-2.0, -1.0, -0.5, -0.25)
+    surfaces, size = [], 4.0
+    for ct in moments:
+        t = sp.nsimplify(abs(ct))
+        L = f"sqrt(({a})**2*({t})**2 + ({b})**2)"
+        sl = Slice(src, "gott_time_machine", "grant_milne", "Y", "\\chi", {"tau": repr(ct), "z": 0}, dict(nr.GOTT),
+                   swept={"chi": f"({a})*chi/(2*pi) - ({b})*Y/(({t})*{L})",
+                          "Y": f"({b})*chi/(2*pi) + ({a})*({t})*Y/{L}"})
+        tube = Piece("tube", "sheet", sl, -2.0, 2.0, -2.0, 1,
+                     (("edge", "the cylinder runs on for ever toward $x \\to -\\infty$"),
+                      ("edge", "the cylinder runs on for ever toward $x \\to \\infty$")),
+                     [(-1.0, "r", None), (0.0, "r", None), (1.0, "r", None)], size)
+        where = f"Gott, the cylinder at c tau = {ct}"
+        radius = math.hypot(a_ * ct, b_) / (2 * math.pi)
+        ck.isometry(where, tube)
+        ck.radius(f"{where}, rho = sqrt(a^2 c^2 tau^2 + b^2)/(2 pi)", tube,
+                  lambda x, radius=radius: np.full_like(x, radius), size)
+        ck.form(f"{where}, z = x", tube, lambda x: x, size)
+        surfaces.append(Surface([tube], label=f"$c\\tau = {ct:g}$", time=ct))
+    ck.add("Gott: the circle shrinks toward b at the horizon and stays above it",
+           0.0 if all(float(s.pieces[0].rho[0]) > b_ / (2 * math.pi) for s in surfaces) else 1.0, 0.5)
+    offsets, x, gap = [], 0.0, 1.5
+    for s in surfaces:
+        rho = float(s.pieces[0].rho[0])
+        offsets.append((x + rho, 0.0, 0.0))
+        x += 2 * rho + gap
+    fig = figure_of(surfaces, {"sheet": "cover"}, 8.0, offsets=offsets, meridians=12)
+    base = min(fig.screen(np.asarray(off) + [0, 0, -2.0])[1] for off in offsets)
+    # The narrow cylinders stand closer than their names are wide, so every second name stands a line lower.
+    for k, (s, off) in enumerate(zip(surfaces, offsets)):
+        fig.label(np.array([fig.screen(np.asarray(off))[0], base]), s.label, "t", "small", dy=8 + 36 * (k % 2))
+    fig.legend("fill", "cover", "the slice $z = 0$ of a moment of constant $\\tau$, away from the strings")
+    fig.legend("line", "r", "the circle a circuit of both strings closes, of circumference "
+                            "$\\sqrt{a^2c^2\\tau^2 + b^2}$, at three places a length $\\ell$ apart")
+    fig.legend("line", "meridian", "straight lines across the circles, every $30°$")
+    return [view("cylinders", "Away from the strings", "$\\ell$", surfaces, fig.done(),
+                 settings=f"$a = {a_:.2f}$ and $b = {b_:.2f}\\,\\ell$, the boost and the shift round two strings "
+                          "with $4G\\mu/c^2 = 1/3$, $v = 4c/5$, and $d = \\ell/2$.")]
+
+
 # ---------------------------------------------------------------- the eleven drawn last
 
 FLAT_CAMERA = Camera(-90, 55)   # a flat plane seen from well above it, so that what is marked on it shows
@@ -5473,6 +5530,7 @@ DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
     "schwarzschild": schwarzschild,
     "misner": misner,
+    "gott_time_machine": gott_time_machine,
     "interior_schwarzschild": interior_schwarzschild,
     "tov": tov,
     "morris_thorne": morris_thorne,
@@ -6052,6 +6110,16 @@ CAPTIONS = {
         "circumference $\\psi_0c|t|/2$, here $2\\pi c|t|$.",
         "The cylinders narrow as $t$ climbs toward $0$, where the circles become the closed null geodesics of "
         "the chronology horizon. Beyond it, where $T > 0$, the same circles are closed timelike curves.",
+    ],
+    ("gott_time_machine", "cylinders"): [
+        "The slice $z = 0$ of Gott's spacetime away from the strings at four moments of Grant's Milne time "
+        "$\\tau$, to the past of the chronology horizon, each drawn as a surface in flat space with every distance "
+        "along it the metric distance. On it the metric is $c^2\\tau^2d\\chi^2 + dY^2$, and a circuit of both "
+        "strings joins $(\\chi, Y)$ to $(\\chi + a, Y + b)$, so each moment is a flat cylinder of circumference "
+        "$\\sqrt{a^2c^2\\tau^2 + b^2}$.",
+        "The cylinders narrow as $\\tau$ climbs toward $0$ and stop at the circumference $b$; in Misner space, "
+        "where $b = 0$, they close up. The chronology horizon holds no closed null geodesic, and the closed "
+        "timelike curves lie beyond it, in the wedge $X > c|T|$.",
     ],
     ("minkowski", "plane"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Minkowski space at one moment of $t$, drawn as a "

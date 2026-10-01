@@ -3,7 +3,7 @@
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
-robinson_trautman, string_black_hole, mcvittie and tangherlini, and Godel's cylindrical chart.
+robinson_trautman, string_black_hole, mcvittie, tangherlini and gott_time_machine, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -2735,6 +2735,74 @@ def tangherlini(system_id):
 
 
 CHARTS["tangherlini"] = [lambda s=s: tangherlini(s) for s in TANGHERLINI_CHARTS]
+
+
+# -- Gott's time machine ---------------------------------------------------------------
+
+GOTT_CHARTS = ("centre_of_momentum", "string_rest", "grant_rindler", "grant_milne")
+
+
+def gott_time_machine(system):
+    """The four charts of Gott's two strings, every one flat: the inertial chart of the centre of
+    momentum frame, whose wedges and identifications are its domains; the conical chart of one
+    string's rest frame, the cosmic string's own; and the Rindler and Milne charts of the
+    Minkowski space James Grant showed the spacetime to be away from the strings, identified
+    under a boost of rapidity a and a shift b along its axis. gott_time_machine.md derives a
+    and b from the two strings' rotations."""
+    reals = "(-\\infty, \\infty)"
+    flat = "\\text{flat: every curvature tensor vanishes}"
+    deficit = "\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)"
+    charts = {
+        "centre_of_momentum": {
+            "name": "Centre of Momentum", "coords": ["t", "x", "y", "z"],
+            "parameters": ["\\mu", "G", "v", "d", "\\alpha", "\\gamma"],
+            "domains": ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals, "z \\in " + reals,
+                        "x = \\pm vt,\\; y = \\pm d \\;\\text{(the strings)}",
+                        "\\gamma|x \\mp vt| < \\pm(y \\mp d)\\tan\\alpha \\;\\text{(the wedges removed)}",
+                        "\\gamma\\sin\\alpha > 1 \\;\\text{(closed timelike curves)}", flat],
+            "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2",
+            "chart": "ds^2 = -dt^2 + dx^2 + dy^2 + dz^2"},
+        "string_rest": {
+            "name": "String Rest Frame", "coords": ["t", "r", "\\phi", "z"], "parameters": ["\\mu", "G", "d"],
+            "domains": ["t \\in " + reals, "r \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
+                        "r = 0 \\;\\text{(the string, a conical singularity)}",
+                        "r\\cos\\left[" + deficit + "(\\phi - \\pi)\\right] \\le d "
+                        "\\;\\text{(the half space } y \\ge 0\\text{)}", flat],
+            "line_element": "ds^2 = -c^2dt^2 + dr^2 + " + deficit + "^2 r^2 d\\phi^2 + dz^2",
+            "chart": "ds^2 = -dt^2 + dr^2 + " + deficit + "^2 r^2 d\\phi^2 + dz^2"},
+        "grant_rindler": {
+            "name": "Grant Rindler", "coords": ["\\eta", "\\xi", "Y", "z"], "parameters": ["a", "b"],
+            "domains": ["\\eta \\in [0, a)", "\\xi \\in (0, \\infty)", "Y \\in " + reals, "z \\in " + reals,
+                        "(\\eta, Y) \\sim (\\eta + a, Y + b)", "\\xi = 0 \\;\\text{(chronology horizon)}",
+                        "\\xi = \\dfrac{nb}{2\\sinh(na/2)} \\;\\text{(the } n\\text{th polarised hypersurface)}",
+                        flat],
+            "line_element": "ds^2 = -\\xi^2d\\eta^2 + d\\xi^2 + dY^2 + dz^2",
+            "chart": "ds^2 = -\\xi^2d\\eta^2 + d\\xi^2 + dY^2 + dz^2"},
+        "grant_milne": {
+            "name": "Grant Milne", "coords": ["\\tau", "\\chi", "Y", "z"], "parameters": ["a", "b"],
+            "domains": ["\\tau \\in " + reals, "\\chi \\in [0, a)", "Y \\in " + reals, "z \\in " + reals,
+                        "(\\chi, Y) \\sim (\\chi + a, Y + b)", "\\tau = 0 \\;\\text{(chronology horizon)}", flat],
+            "line_element": "ds^2 = -c^2d\\tau^2 + c^2\\tau^2d\\chi^2 + dY^2 + dz^2",
+            "chart": "ds^2 = -d\\tau^2 + \\tau^2d\\chi^2 + dY^2 + dz^2", "time": "\\tau"},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    return {
+        "metric_id": "gott_time_machine",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line_element"]},
+        "chart_line_element": chart["chart"],
+        "printer": {"lead": [probe.c, probe.symbol[chart["coords"][0]], *probe.parameters.values()]},
+        **({"time": chart["time"]} if "time" in chart else {}),
+        # The printer collects the deficit over c^4; the cone keeps it as the cosmic string writes it.
+        **({"rewrite": [("\\dfrac{c^4}{r^2\\left(c^2 - 4\\mu\\,G\\right)^2}", "\\dfrac{1}{" + deficit + "^2 r^2}"),
+                        ("\\dfrac{r^2\\left(c^2 - 4\\mu\\,G\\right)^2}{c^4}", deficit + "^2 r^2"),
+                        ("\\dfrac{r\\left(c^2 - 4\\mu\\,G\\right)^2}{c^4}", deficit + "^2 r")]}
+           if system == "string_rest" else {}),
+    }
+
+
+CHARTS["gott_time_machine"] = [lambda s=s: gott_time_machine(s) for s in GOTT_CHARTS]
 
 
 def write(spec):

@@ -1,0 +1,913 @@
+{
+  "id": "gott_time_machine",
+  "name": "Gott Time Machine",
+  "short_name": "Gott",
+  "description": "J. Richard Gott's exact solution of 1991: two straight, parallel cosmic strings passing one another at high speed, flat everywhere off the strings. When each string moves with $\\gamma\\sin\\alpha > 1$, where $2\\alpha = 8\\pi G\\mu/c^2$ is its deficit angle, closed timelike curves circle the pair.",
+  "tags": [
+    "time machine",
+    "closed timelike curves",
+    "causality violation",
+    "chronology horizon",
+    "cosmic string",
+    "topological defect",
+    "conical",
+    "angular deficit",
+    "flat",
+    "locally flat",
+    "tachyonic momentum",
+    "three-dimensional gravity",
+    "Misner space",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ and $G$ explicit. Each string has mass per unit length $\\mu$ and removes a wedge of angle $2\\alpha = 8\\pi G\\mu/c^2$, and $\\gamma = (1 - v^2/c^2)^{-1/2}$.",
+  "history": "Gott's time machine is two straight, parallel cosmic strings passing one another at high speed, an exact solution of Einstein's equations that J. Richard Gott found in 1991 [gott1991]. Each string alone is the Vilenkin-Gott cosmic string, Minkowski space with a wedge of angle $8\\pi G\\mu/c^2$ cut out along the string and the two faces of the wedge identified, where $\\mu$ is the string's mass per unit length [gott1985, grant1993]. A light ray sent round a string, across the identified faces of its wedge, can reach a point beyond the string before a ray sent there directly, and so can a fast enough rocket [gott1991, grant1993]. In a frame in which the string moves fast enough, the rocket arrives at the moment it left [gott1991, grant1993]. Gott joined two such spacetimes along a flat surface, with the strings moving in opposite directions at speed $v$ on either side of it, so that the rocket returns round the second string to the event it started from [gott1991, grant1993]. The closed timelike curves exist when each string has $\\gamma\\sin(4\\pi G\\mu/c^2) > 1$, with $\\gamma = (1 - v^2/c^2)^{-1/2}$ [gott1991].¶Nothing in the geometry depends on the coordinate along the strings, so the solution is also two point masses in general relativity with two dimensions of space and one of time [gott1991, carroll1994]. Gott and Mark Alpert, and Stanley Deser, Roman Jackiw, and Gerard 't Hooft, described that theory in 1984: spacetime is flat wherever it is empty, and around a point mass it is a cone whose deficit angle is proportional to the mass [gott1984, deser1984]. Deser, Jackiw, and 't Hooft wrote in that 1984 paper that moving particles without spin produce no closed timelike curves, a statement they reexamined in 1992 [deser1984, carroll1994, deser1992]. In this theory the total energy and momentum of a set of particles is characterized by the Lorentz transformation a vector undergoes when carried round a closed curve enclosing them, a rotation by the deficit angle round one string at rest [carroll1994, grant1993]. Deser, Jackiw, and 't Hooft found in 1992 that round Gott's pair it is a boost, the momentum of a tachyon, although each string moves slower than light [deser1992, carroll1994]. They concluded that physical, timelike sources cannot produce the closed timelike curves [deser1992].¶When the spacetime has closed timelike curves, every hypersurface of constant $t$ meets one, as Amos Ori showed in 1991, concluding that Gott's solutions do not contradict Stephen Hawking's chronology protection conjecture [ori1991]. Curt Cutler proved in 1992 that the closed timelike curves are confined to a region of the spacetime, and determined its boundary [cutler1992]. He also found complete, spacelike, edgeless, achronal hypersurfaces, from which the region of closed timelike curves evolves [cutler1992]. The boundary, the chronology horizon, extends indefinitely into the past and is not compactly generated [carroll1994, grant1993].¶The Lorentz transformation round both strings is a boost of rapidity $a$ with $\\cosh a = 1 + 8\\gamma^2\\sin^2\\alpha\\,(\\gamma^2\\sin^2\\alpha - 1)$, where $\\alpha = 4\\pi G\\mu/c^2$, as James Grant computed in 1993 [grant1993]. Away from the strings, he showed, Gott's spacetime is Minkowski space with each event identified with its image under that boost combined with a shift $b = 4\\gamma vd\\sin\\alpha/(c\\sqrt{\\gamma^2\\sin^2\\alpha - 1})$ along the axis of the boost, where $2d$ is the impact parameter of the strings [grant1993]. Misner space is the case $b = 0$ [grant1993]. With $x$ the direction of the boost in that Minkowski space, an event with $x^2 - c^2t^2 = n^2b^2/(2\\cosh na - 2)$ is joined to its $n$th image by a null geodesic, and these events make up the $n$th polarised hypersurface [grant1993]. As $n$ grows the polarised hypersurfaces close in on the null surfaces $x = \\pm ct$, the chronology horizon, in which no closed null geodesic lies [grant1993]. Dustin Laurence showed in 1994 that the region of closed timelike curves in Gott's spacetime is identical to one of the two such regions of Grant's space [laurence1994].¶Sean Carroll, Edward Farhi, and Alan Guth considered in 1992 an attempt to build Gott's pair [carroll1992]. They constructed the spacetime of one gravitating particle decaying into two, and found that an open universe never holds enough mass to build the pair from the decay products of stationary particles [carroll1992]. In a closed universe a decay can produce the pair, and there, 't Hooft showed in 1992, the universe has a finite lifetime and ends in a big crunch before a closed timelike curve appears [thooft1992, carroll1994]. With Ken Olum, the three proved in 1994 that in an open universe of timelike total momentum, no group of particles with the spacelike momentum of Gott's pair evolves from data on an edgeless spacelike surface [carroll1994]. The obstacle, they wrote, is \"the absence of sufficient energy in an open universe\" [carroll1994].¶Daniel Kabat conjectured in 1992 that no closed timelike curve surrounds a system of spinless particles with timelike total momentum in an open universe, and proved it for two particles [kabat1992]. Carroll, Farhi, Guth, and Olum found in 1994 that Gott's pairs and tachyons occupy disjoint regions of the universal covering group of the Lorentz group of 2+1 dimensions [carroll1994]. Matthew Headrick and Gott studied in 1994 the transformations a vector undergoes round closed curves in the known spacetimes of 2+1 dimensions with closed timelike curves, and stressed that Gott's spacetime \"does not have a tachyonic geometry\" [headrick1994]. They proved a modified form of Kabat's conjecture: for a closed timelike curve that can be deformed to spacelike or null infinity while remaining a closed timelike curve, that transformation cannot be a rotation [headrick1994].¶Hawking's chronology protection conjecture of 1992 is that the laws of physics do not allow closed timelike curves to appear [hawking1992]. He proved that causality violation developing in a finite region from a noncompact initial surface violates the averaged weak energy condition on its Cauchy horizon, and concluded that finite lengths of cosmic string cannot create closed timelike curves [hawking1992]. On Gott's spacetime with a total deficit angle of $2\\pi$, David Boulware built a scalar quantum field theory in 1992, and found the interacting theory not unitary and its stress tensor regular near the Cauchy horizon when the Compton wavelength of the field is small enough [boulware1992]. On his generalised Misner space Grant found the vacuum stress energy tensor of a conformally coupled scalar field diverging very weakly on the chronology horizon and more strongly on the polarised hypersurfaces, strongly enough, he argued, to alter the spacetime before quantum gravity becomes important [grant1993]. Laurence's identification of the two regions carries Grant's result on the chronology horizon over to Gott's spacetime [laurence1994].¶In anti-de Sitter space of 2+1 dimensions Sören Holst constructed closed timelike curves in 1996 in the way Gott had, and found that construction tachyonic too [holst1996]. With Hans-Jürgen Matschull he showed in 1999 that two massless particles colliding there with an impact parameter make a Gott universe with closed timelike curves, which, with those curves treated as singular, is a rotating Bañados-Teitelboim-Zanelli black hole [holst1999]. Danny Birmingham and Siddhartha Sen found in 2000 that the Gott time machine is the mechanism by which colliding point particles form that black hole, which gave them an exact analytic account of Choptuik scaling [birmingham2000]. Simon DeDeo and Gott found in 2002 that two point masses orbiting one another in anti-de Sitter space make an \"eternal\" time machine, whose closed timelike curves fill the whole space, with no event horizon and no chronology horizon [dedeo2002].",
+  "references": [
+    "gott1991",
+    "gott1985",
+    "grant1993",
+    "carroll1994",
+    "gott1984",
+    "deser1984",
+    "deser1992",
+    "ori1991",
+    "cutler1992",
+    "laurence1994",
+    "carroll1992",
+    "thooft1992",
+    "kabat1992",
+    "headrick1994",
+    "hawking1992",
+    "boulware1992",
+    "holst1996",
+    "holst1999",
+    "birmingham2000",
+    "dedeo2002"
+  ],
+  "coordinates": [
+    {
+      "id": "centre_of_momentum",
+      "name": "Centre of Momentum",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "x = \\pm vt,\\; y = \\pm d \\;\\text{(the strings)}",
+        "\\gamma|x \\mp vt| < \\pm(y \\mp d)\\tan\\alpha \\;\\text{(the wedges removed)}",
+        "\\gamma\\sin\\alpha > 1 \\;\\text{(closed timelike curves)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\mu",
+          "description": "Mass per unit length of each string, equal to its tension"
+        },
+        {
+          "symbol": "G",
+          "description": "Newton's gravitational constant"
+        },
+        {
+          "symbol": "v",
+          "description": "Speed of each string in the centre of momentum frame"
+        },
+        {
+          "symbol": "d",
+          "description": "Distance of each string from the plane $y = 0$ midway between them; the impact parameter is $2d$"
+        },
+        {
+          "symbol": "\\alpha",
+          "description": "Half the deficit angle of each string, $\\alpha = 4\\pi G\\mu/c^2$"
+        },
+        {
+          "symbol": "\\gamma",
+          "description": "Lorentz factor of each string, $\\gamma = (1 - v^2/c^2)^{-1/2}$"
+        }
+      ],
+      "convention": "We use the inertial coordinates $(t, x, y, z)$ of the centre of momentum frame, with $t$ carrying dimensions of time and the strings parallel to $z$, moving along $x$ at speeds $\\pm v$ on the lines $y = \\pm d$. The two faces of each wedge are identified at equal times in the rest frame of its string. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": []
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": []
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{x} = 0",
+        "\\ddot{y} = 0",
+        "\\ddot{z} = 0"
+      ]
+    },
+    {
+      "id": "string_rest",
+      "name": "String Rest Frame",
+      "coords": [
+        "t",
+        "r",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "r = 0 \\;\\text{(the string, a conical singularity)}",
+        "r\\cos\\left[\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)(\\phi - \\pi)\\right] \\le d \\;\\text{(the half space } y \\ge 0\\text{)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\mu",
+          "description": "Mass per unit length of each string, equal to its tension"
+        },
+        {
+          "symbol": "G",
+          "description": "Newton's gravitational constant"
+        },
+        {
+          "symbol": "d",
+          "description": "Distance of each string from the plane $y = 0$ midway between them; the impact parameter is $2d$"
+        }
+      ],
+      "convention": "We use the coordinates $(t, r, \\phi, z)$ of the rest frame of the string on $y = d$, with $t$ the time of that frame, $r$ the proper distance from the string, $z$ the proper length along it, and $\\phi$ periodic in $2\\pi$, with the deficit carried by $g_{\\phi\\phi} = (1 - 4G\\mu/c^2)^2r^2$ and the other string in the direction $\\phi = \\pi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dr^2 + \\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r^2 d\\phi^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{r} - \\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} = 0"
+      ]
+    },
+    {
+      "id": "grant_rindler",
+      "name": "Grant Rindler",
+      "coords": [
+        "\\eta",
+        "\\xi",
+        "Y",
+        "z"
+      ],
+      "domains": [
+        "\\eta \\in [0, a)",
+        "\\xi \\in (0, \\infty)",
+        "Y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "(\\eta, Y) \\sim (\\eta + a, Y + b)",
+        "\\xi = 0 \\;\\text{(chronology horizon)}",
+        "\\xi = \\dfrac{nb}{2\\sinh(na/2)} \\;\\text{(the } n\\text{th polarised hypersurface)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Rapidity of the boost round both strings, $\\cosh(a/4) = \\gamma\\sin\\alpha$"
+        },
+        {
+          "symbol": "b",
+          "description": "Shift along $Y$ round both strings, $b = 4\\gamma vd\\sin\\alpha/(c\\sinh(a/4))$"
+        }
+      ],
+      "convention": "We use the Rindler coordinates $(\\eta, \\xi, Y, z)$, with $X = \\xi\\cosh\\eta$ and $cT = \\xi\\sinh\\eta$, of the inertial frame $(T, X, Y, z)$, moving along $y$ at speed $c^2\\cot\\alpha/(\\gamma v)$, in which a circuit of both strings is a boost of rapidity $a$ along $X$ and a shift $b$ along $Y$. The rapidity $\\eta$ is dimensionless, and $\\xi$, $Y$, and $z$ are lengths. No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\xi^2d\\eta^2 + d\\xi^2 + dY^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\xi^2"
+        },
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\dfrac{1}{\\xi^2}"
+        },
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\xi"
+                ],
+                "value": "\\dfrac{1}{\\xi}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\xi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{1}{\\xi}"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\xi"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\xi"
+                ],
+                "value": "-\\xi"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\xi",
+                  "\\eta"
+                ],
+                "value": "-\\xi"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\xi"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\eta} + \\dfrac{2}{\\xi}\\dot{\\eta}\\dot{\\xi} = 0",
+        "\\ddot{\\xi} + \\xi\\,\\dot{\\eta}^2 = 0",
+        "\\ddot{Y} = 0",
+        "\\ddot{z} = 0"
+      ]
+    },
+    {
+      "id": "grant_milne",
+      "name": "Grant Milne",
+      "coords": [
+        "\\tau",
+        "\\chi",
+        "Y",
+        "z"
+      ],
+      "domains": [
+        "\\tau \\in (-\\infty, \\infty)",
+        "\\chi \\in [0, a)",
+        "Y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "(\\chi, Y) \\sim (\\chi + a, Y + b)",
+        "\\tau = 0 \\;\\text{(chronology horizon)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Rapidity of the boost round both strings, $\\cosh(a/4) = \\gamma\\sin\\alpha$"
+        },
+        {
+          "symbol": "b",
+          "description": "Shift along $Y$ round both strings, $b = 4\\gamma vd\\sin\\alpha/(c\\sinh(a/4))$"
+        }
+      ],
+      "convention": "We use the coordinates $(\\tau, \\chi, Y, z)$, with $cT = c\\tau\\cosh\\chi$ and $X = c\\tau\\sinh\\chi$, of the inertial frame $(T, X, Y, z)$, moving along $y$ at speed $c^2\\cot\\alpha/(\\gamma v)$, in which a circuit of both strings is a boost of rapidity $a$ along $X$ and a shift $b$ along $Y$. The rapidity $\\chi$ is dimensionless, $\\tau$ carries dimensions of time, and $Y$ and $z$ are lengths. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2d\\tau^2 + c^2\\tau^2d\\chi^2 + dY^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "c^2\\,\\tau^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{c^2\\,\\tau^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "c\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{c\\,\\tau}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{1}{c\\,\\tau}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-c\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "c\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "c\\,\\tau"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} + c\\,\\tau\\,\\dot{\\chi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2}{c\\,\\tau}\\dot{\\tau}\\dot{\\chi} = 0",
+        "\\ddot{Y} = 0",
+        "\\ddot{z} = 0"
+      ]
+    }
+  ]
+}

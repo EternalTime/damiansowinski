@@ -400,6 +400,19 @@ An exact solution of Einstein's field equations describing a rotating dust unive
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -\dfrac{1}{2\omega^2}dt^2 + \dfrac{1}{2\omega^2}dx^2 - \dfrac{e^x}{\omega^2}\,dt\,dy - \dfrac{e^{2x}}{4\omega^2}dy^2 + \dfrac{1}{2\omega^2}dz^2$$
 - chart Cylindrical: coordinates $(t, r, \phi, z)$, $$ds^2 = \dfrac{2}{\omega^2}\left(-dt^2 + dr^2 + \left(\sinh^2 r - \sinh^4 r\right)d\phi^2 - 2\sqrt{2}\sinh^2 r\,dt\,d\phi + dz^2\right)$$
 
+### Gott Time Machine
+
+J. Richard Gott's exact solution of 1991: two straight, parallel cosmic strings passing one another at high speed, flat everywhere off the strings. When each string moves with $\gamma\sin\alpha > 1$, where $2\alpha = 8\pi G\mu/c^2$ is its deficit angle, closed timelike curves circle the pair.
+
+- id: `gott_time_machine`
+- tags: time machine, closed timelike curves, causality violation, chronology horizon, cosmic string, topological defect, conical, angular deficit, flat, locally flat, tachyonic momentum, three-dimensional gravity, Misner space, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/gott_time_machine.json
+- chart Centre of Momentum: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2$$
+- chart String Rest Frame: coordinates $(t, r, \phi, z)$, $$ds^2 = -c^2dt^2 + dr^2 + \left(1 - \dfrac{4G\mu}{c^2}\right)^2 r^2 d\phi^2 + dz^2$$
+- chart Grant Rindler: coordinates $(\eta, \xi, Y, z)$, $$ds^2 = -\xi^2d\eta^2 + d\xi^2 + dY^2 + dz^2$$
+- chart Grant Milne: coordinates $(\tau, \chi, Y, z)$, $$ds^2 = -c^2d\tau^2 + c^2\tau^2d\chi^2 + dY^2 + dz^2$$
+
 ### Kantowski-Sachs Cosmologies
 
 The spatially homogeneous, anisotropic cosmologies outside Bianchi's classification. Every moment of time is a cylinder $\mathbb{R} \times S^2$, or $S^1 \times S^2$, whose length and whose spheres evolve separately, and the vacuum member is the region inside the horizon of a Schwarzschild black hole.

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 53,
+  "count": 54,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3521,6 +3521,334 @@
           ],
           "ricci_scalar": "R = -2\\omega^2",
           "kretschmann": "K = 12\\omega^4"
+        }
+      ]
+    },
+    {
+      "id": "gott_time_machine",
+      "name": "Gott Time Machine",
+      "short_name": "Gott",
+      "description": "J. Richard Gott's exact solution of 1991: two straight, parallel cosmic strings passing one another at high speed, flat everywhere off the strings. When each string moves with $\\gamma\\sin\\alpha > 1$, where $2\\alpha = 8\\pi G\\mu/c^2$ is its deficit angle, closed timelike curves circle the pair.",
+      "tags": [
+        "time machine",
+        "closed timelike curves",
+        "causality violation",
+        "chronology horizon",
+        "cosmic string",
+        "topological defect",
+        "conical",
+        "angular deficit",
+        "flat",
+        "locally flat",
+        "tachyonic momentum",
+        "three-dimensional gravity",
+        "Misner space",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit. Each string has mass per unit length $\\mu$ and removes a wedge of angle $2\\alpha = 8\\pi G\\mu/c^2$, and $\\gamma = (1 - v^2/c^2)^{-1/2}$.",
+      "references": [
+        "gott1991",
+        "gott1985",
+        "grant1993",
+        "carroll1994",
+        "gott1984",
+        "deser1984",
+        "deser1992",
+        "ori1991",
+        "cutler1992",
+        "laurence1994",
+        "carroll1992",
+        "thooft1992",
+        "kabat1992",
+        "headrick1994",
+        "hawking1992",
+        "boulware1992",
+        "holst1996",
+        "holst1999",
+        "birmingham2000",
+        "dedeo2002"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gott_time_machine.json",
+      "charts": [
+        {
+          "id": "centre_of_momentum",
+          "name": "Centre of Momentum",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "x = \\pm vt,\\; y = \\pm d \\;\\text{(the strings)}",
+            "\\gamma|x \\mp vt| < \\pm(y \\mp d)\\tan\\alpha \\;\\text{(the wedges removed)}",
+            "\\gamma\\sin\\alpha > 1 \\;\\text{(closed timelike curves)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Mass per unit length of each string, equal to its tension"
+            },
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "v",
+              "description": "Speed of each string in the centre of momentum frame"
+            },
+            {
+              "symbol": "d",
+              "description": "Distance of each string from the plane $y = 0$ midway between them; the impact parameter is $2d$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Half the deficit angle of each string, $\\alpha = 4\\pi G\\mu/c^2$"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Lorentz factor of each string, $\\gamma = (1 - v^2/c^2)^{-1/2}$"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(t, x, y, z)$ of the centre of momentum frame, with $t$ carrying dimensions of time and the strings parallel to $z$, moving along $x$ at speeds $\\pm v$ on the lines $y = \\pm d$. The two faces of each wedge are identified at equal times in the rest frame of its string. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "string_rest",
+          "name": "String Rest Frame",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = 0 \\;\\text{(the string, a conical singularity)}",
+            "r\\cos\\left[\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)(\\phi - \\pi)\\right] \\le d \\;\\text{(the half space } y \\ge 0\\text{)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Mass per unit length of each string, equal to its tension"
+            },
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "d",
+              "description": "Distance of each string from the plane $y = 0$ midway between them; the impact parameter is $2d$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\phi, z)$ of the rest frame of the string on $y = d$, with $t$ the time of that frame, $r$ the proper distance from the string, $z$ the proper length along it, and $\\phi$ periodic in $2\\pi$, with the deficit carried by $g_{\\phi\\phi} = (1 - 4G\\mu/c^2)^2r^2$ and the other string in the direction $\\phi = \\pi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dr^2 + \\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r^2 d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(1 - \\dfrac{4G\\mu}{c^2}\\right)^2 r^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "grant_rindler",
+          "name": "Grant Rindler",
+          "coordinates": [
+            "\\eta",
+            "\\xi",
+            "Y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in [0, a)",
+            "\\xi \\in (0, \\infty)",
+            "Y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(\\eta, Y) \\sim (\\eta + a, Y + b)",
+            "\\xi = 0 \\;\\text{(chronology horizon)}",
+            "\\xi = \\dfrac{nb}{2\\sinh(na/2)} \\;\\text{(the } n\\text{th polarised hypersurface)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Rapidity of the boost round both strings, $\\cosh(a/4) = \\gamma\\sin\\alpha$"
+            },
+            {
+              "symbol": "b",
+              "description": "Shift along $Y$ round both strings, $b = 4\\gamma vd\\sin\\alpha/(c\\sinh(a/4))$"
+            }
+          ],
+          "convention": "We use the Rindler coordinates $(\\eta, \\xi, Y, z)$, with $X = \\xi\\cosh\\eta$ and $cT = \\xi\\sinh\\eta$, of the inertial frame $(T, X, Y, z)$, moving along $y$ at speed $c^2\\cot\\alpha/(\\gamma v)$, in which a circuit of both strings is a boost of rapidity $a$ along $X$ and a shift $b$ along $Y$. The rapidity $\\eta$ is dimensionless, and $\\xi$, $Y$, and $z$ are lengths. No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\xi^2d\\eta^2 + d\\xi^2 + dY^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\xi^2"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "grant_milne",
+          "name": "Grant Milne",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "Y",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, a)",
+            "Y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(\\chi, Y) \\sim (\\chi + a, Y + b)",
+            "\\tau = 0 \\;\\text{(chronology horizon)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Rapidity of the boost round both strings, $\\cosh(a/4) = \\gamma\\sin\\alpha$"
+            },
+            {
+              "symbol": "b",
+              "description": "Shift along $Y$ round both strings, $b = 4\\gamma vd\\sin\\alpha/(c\\sinh(a/4))$"
+            }
+          ],
+          "convention": "We use the coordinates $(\\tau, \\chi, Y, z)$, with $cT = c\\tau\\cosh\\chi$ and $X = c\\tau\\sinh\\chi$, of the inertial frame $(T, X, Y, z)$, moving along $y$ at speed $c^2\\cot\\alpha/(\\gamma v)$, in which a circuit of both strings is a boost of rapidity $a$ along $X$ and a shift $b$ along $Y$. The rapidity $\\chi$ is dimensionless, $\\tau$ carries dimensions of time, and $Y$ and $z$ are lengths. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + c^2\\tau^2d\\chi^2 + dY^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "c^2\\,\\tau^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },

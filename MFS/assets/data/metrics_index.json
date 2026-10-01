@@ -491,6 +491,34 @@
     "embedding": "05f185c5abaada89"
   },
   {
+    "id": "gott_time_machine",
+    "name": "Gott",
+    "tags": [
+      "time machine",
+      "closed timelike curves",
+      "causality violation",
+      "chronology horizon",
+      "cosmic string",
+      "topological defect",
+      "conical",
+      "angular deficit",
+      "flat",
+      "locally flat",
+      "tachyonic momentum",
+      "three-dimensional gravity",
+      "Misner space",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "5c25e0d9ea12dbb9",
+    "diagrams": "fc0a639f4f3a4d4d",
+    "conformal": "14c873edf7fb75dc",
+    "embedding": "cffb4d75dcca77c8"
+  },
+  {
     "id": "kantowski_sachs",
     "name": "Kantowski-Sachs",
     "tags": [

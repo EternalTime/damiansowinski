@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the forty spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the forty-two spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -906,6 +906,118 @@ def misner(ck, src):
     v.legend("t", "$\\eta = k\\psi_0/2$ for integer $k$, each the same line of Misner space")
     v.legend("horizon", "$\\xi \\to 0$, the chronology horizon of each extension")
     v.set(restriction=restriction, settings=settings)
+    views.append(v)
+    return views
+
+
+def gott_time_machine(ck, src):
+    """Gott's two strings away from the strings, in the plane Y = z = 0 of the Minkowski space
+    James Grant showed that region to be, identified under a boost of rapidity a along X and a
+    shift b along Y, one view for each of Grant's two charts.
+
+    The Rindler chart's xi sinh(eta), xi cosh(eta) is the wedge X > c|T|, p < 0 < q with
+    p = arctan(cT - X) and q = arctan(cT + X), and the Milne chart's c tau cosh(chi),
+    c tau sinh(chi) the two light cones of the origin, p and q of one sign. The identification
+    carries an event of the plane to Y = b, off the plane, so each event of the plane is drawn
+    once. An event at xi and its nth image are null separated on the nth polarised hypersurface,
+    xi = n b/(2 sinh(n a/2)), which is checked against the interval between the two events in the
+    covering space; the hypersurfaces close in on xi = 0, the chronology horizon. Drawn at the a
+    and b of two strings with 4 G mu/c^2 = 1/3, v = 4c/5 and d = l/2, as the other diagrams are."""
+    views = []
+    params = dict(nr.GOTT)
+    a, b = (float(nr.number(params[k])) for k in ("a", "b"))
+    wedge_box = [-0.35, PI + 0.35, -HALF - 0.25, HALF + 0.25]
+    cones_box = [-HALF - 0.35, HALF + 0.35, -PI - 0.25, PI + 0.25]
+    settings = (f"$a = {a:.2f}$ and $b = {b:.2f}\\,\\ell$, the boost and the shift round two strings with "
+                "$4G\\mu/c^2 = 1/3$, $v = 4c/5$, and $d = \\ell/2$.")
+    restriction = ("The plane $Y = z = 0$ of the Minkowski space that Gott's spacetime is away from the strings "
+                   "only, each point in the diagram a single event.")
+
+    def pq(u, v):
+        return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(v, dtype=float))
+
+    def rindler_pq(eta, xi):
+        eta, xi = np.asarray(eta, dtype=float), np.asarray(xi, dtype=float)
+        return pq(-xi * np.exp(-eta), xi * np.exp(eta))
+
+    def milne_pq(tau, chi):
+        tau, chi = np.asarray(tau, dtype=float), np.asarray(chi, dtype=float)
+        return pq(tau * np.exp(-chi), tau * np.exp(chi))
+
+    def corners(*pqs):
+        return [point(p, q) for p, q in pqs]
+
+    # The nth polarised hypersurface: the interval from (eta, xi, Y) to (eta + n a, xi, Y + n b) in
+    # the covering space, -4 xi^2 sinh^2(n a/2) + n^2 b^2, vanishes there.
+    polarised = [n * b / (2 * math.sinh(n * a / 2)) for n in (1, 2, 3)]
+    for n, xi in zip((1, 2, 3), polarised):
+        eta = ck.uniform(-2, 2, 50)
+        one = np.stack([xi * np.sinh(eta), xi * np.cosh(eta), np.zeros_like(eta)])
+        other = np.stack([xi * np.sinh(eta + n * a), xi * np.cosh(eta + n * a), np.full_like(eta, n * b)])
+        d = other - one
+        interval = -d[0] ** 2 + d[1] ** 2 + d[2] ** 2
+        ck.limit(f"Gott: an event of the polarised hypersurface n = {n} and its image are null separated",
+                 interval / (n * b) ** 2, np.zeros_like(eta), 1e-9)
+
+    # The Rindler chart of the region of closed timelike curves.
+    rin = Plane(src, "gott_time_machine", "grant_rindler", ("\\eta", "\\xi"), {"Y": "0", "z": "0"}, params)
+    ck.chart("Gott, Grant Rindler", rin, rindler_pq, ck.uniform(-3, 3), ck.uniform(0.01, 10), lambda eta, xi: (1, 0))
+    p, q = rindler_pq(np.linspace(-2, 2, 5), np.full(5, 1e-12))
+    ck.limit("Gott, Grant Rindler: xi -> 0 is the null lines p = 0 and q = 0", np.concatenate([p, q]), np.zeros(10), 1e-11)
+    ck.finite("Gott, Grant Rindler: the region is flat", rin.kretschmann(ck.uniform(-3, 3, 50), ck.uniform(0.01, 10, 50)))
+    v = View("grant_rindler", "Grant Rindler", wedge_box, "grant_rindler")
+    v.fill("region", corners((-HALF, 0), (-HALF, HALF), (0, HALF), (0, 0)))
+    v.fill("cover", corners((-HALF, 0), (-HALF, HALF), (0, HALF), (0, 0)))
+    s = np.geomspace(1e-6, 1e6, 400)
+    grid(v, "r", lambda xi, eta: rindler_pq(eta, xi), polarised, S_ALL)
+    grid(v, "t", rindler_pq, [k / 2 for k in range(-4, 5)], s)
+    v.line("horizon", [corners((-HALF, 0), (0, 0)), corners((0, HALF), (0, 0))])
+    v.line("scri", [corners((-HALF, 0), (-HALF, HALF), (0, HALF))])
+    v.layers.append({"kind": "point", "class": "infinity", "at": [round(PI, 4), 0.0]})
+    v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+    v.legend("cover", "the region of closed timelike curves, $X > c|T|$")
+    v.legend("r", "the first three polarised hypersurfaces, $\\xi = nb/(2\\sinh(na/2))$, at $"
+             + "$, $".join(f"{x:.3f}" for x in polarised) + "$ times $\\ell$")
+    v.legend("t", "$\\eta$ constant, every $1/2$ from $-2$ to $2$")
+    v.legend("horizon", "$\\xi \\to 0$, the chronology horizon")
+    v.set(restriction=restriction, settings=settings)
+    views.append(v)
+
+    # The Milne chart of the two regions with no closed timelike curve.
+    mil = Plane(src, "gott_time_machine", "grant_milne", ("\\tau", "\\chi"), {"Y": "0", "z": "0"}, params)
+    for name, lo, hi in (("past", -10, -0.01), ("future", 0.01, 10)):
+        ck.chart(f"Gott, Grant Milne, {name}", mil, milne_pq, ck.uniform(lo, hi), ck.uniform(-3, 3), lambda tau, chi: (1, 0))
+    p, q = milne_pq(np.array([-1e-12, 1e-12] * 3), np.linspace(-2, 2, 6))
+    ck.limit("Gott, Grant Milne: tau -> 0 is the null lines p = 0 and q = 0", np.concatenate([p, q]), np.zeros(12), 1e-11)
+    ck.finite("Gott, Grant Milne: the region is flat", mil.kretschmann(ck.uniform(-10, -0.01, 50), ck.uniform(-3, 3, 50)))
+    v = View("grant_milne", "Grant Milne", cones_box, "grant_milne")
+    v.fill("region", corners((-HALF, -HALF), (-HALF, 0), (0, 0), (0, -HALF)))
+    v.fill("region", corners((0, 0), (0, HALF), (HALF, HALF), (HALF, 0)))
+    v.fill("cover", corners((-HALF, -HALF), (-HALF, 0), (0, 0), (0, -HALF)))
+    v.fill("cover", corners((0, 0), (0, HALF), (HALF, HALF), (HALF, 0)))
+    for sign in (-1, 1):
+        grid(v, "t", milne_pq, [sign * t for t in (0.5, 1, 2, 4)], S_ALL)
+        grid(v, "r", milne_pq, [k / 2 for k in range(-4, 5)], sign * np.geomspace(1e-6, 1e6, 400), first=False)
+    v.line("horizon", [corners((-HALF, 0), (0, 0)), corners((0, -HALF), (0, 0)),
+                       corners((0, 0), (HALF, 0)), corners((0, 0), (0, HALF))])
+    v.line("scri", [[point(-HALF, -HALF), point(0, -HALF)], [point(-HALF, -HALF), point(-HALF, 0)],
+                    [point(HALF, HALF), point(0, HALF)], [point(HALF, HALF), point(HALF, 0)]])
+    for at, text, anchor, dy in (((0, -PI), "$i^-$", "t", 6), ((0, PI), "$i^+$", "b", -6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": [0.0, round(at[1], 4)]})
+        v.label_xt(list(at), text, anchor, dy=dy)
+    v.legend("cover", "the two regions with no closed timelike curve, $c|T| > |X|$")
+    v.legend("t", "$c\\tau$ constant, at $\\pm1/2$, $\\pm1$, $\\pm2$ and $\\pm4$ times $\\ell$")
+    v.legend("r", "$\\chi$ constant, every $1/2$ from $-2$ to $2$")
+    v.legend("horizon", "$\\tau \\to 0$, the chronology horizon")
+    v.set(restriction=restriction, settings=settings)
+
+    def hyperbola(t):
+        """The moment c tau = t < 0 in the covering plane: (cT - X)(cT + X) = t^2 with both
+        negative, out to where either null coordinate is 50."""
+        u = np.geomspace(t * t / 50, 50, 801)
+        return pq(-u, -t * t / u)
+    for m in slices.moments("gott_time_machine"):
+        v.slice(m, [hyperbola(m.time)])
     views.append(v)
     return views
 
@@ -6275,6 +6387,7 @@ DRAWN = {
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
+    "gott_time_machine": gott_time_machine,
     "einstein_rosen_waves": einstein_rosen_waves,
     "nariai": nariai, "khan_penrose": khan_penrose,
     "majumdar_papapetrou": majumdar_papapetrou,
@@ -6512,6 +6625,24 @@ CAPTIONS = {
         "Each hyperbola of constant $t$ is, in the quotient, a circle of circumference $\\psi_0c|t|/2$, and the "
         "circles shrink toward the null lines $t \\to 0$. Misner's coordinates continue the region across the "
         "line $ct + x = 0$ into the wedge $x > c|t|$, and the other extension across $ct - x = 0$.",
+    ],
+    ("gott_time_machine", "grant_rindler"): [
+        "The wedge $X > c|T|$ of the plane $Y = z = 0$ of the Minkowski space that Gott's spacetime is away from "
+        "the strings, in Grant's Rindler chart, $\\xi\\sinh\\eta$ and $\\xi\\cosh\\eta$, brought into a finite "
+        "drawing by $p = \\arctan((cT - X)/\\ell)$ and $q = \\arctan((cT + X)/\\ell)$. A circuit of both strings "
+        "carries each event to its image under a boost of rapidity $a$ and a shift $b$ along $Y$, off this plane.",
+        "On the $n$th polarised hypersurface an event and its $n$th image are joined by a null geodesic, and "
+        "beyond it by a timelike one. The hypersurfaces close in on the null lines $\\xi \\to 0$, the chronology "
+        "horizon, so a closed timelike curve passes through every event of the wedge.",
+    ],
+    ("gott_time_machine", "grant_milne"): [
+        "The two light cones of the origin in the plane $Y = z = 0$ of the Minkowski space that Gott's spacetime "
+        "is away from the strings, in Grant's Milne chart, $c\\tau\\cosh\\chi$ and $c\\tau\\sinh\\chi$, with "
+        "$\\tau < 0$ in the past cone and $\\tau > 0$ in the future one. A circuit of both strings carries each "
+        "event to its image under a boost of rapidity $a$ and a shift $b$ along $Y$, off this plane.",
+        "An event and each of its images are spacelike separated here, by $n^2b^2 + 4c^2\\tau^2\\sinh^2(na/2)$ in "
+        "squared interval, so no closed timelike curve enters either cone. The null lines $\\tau \\to 0$ are the "
+        "chronology horizon.",
     ],
     ("misner", "rindler"): [
         "The wedge $x > c|t|$ in the plane $y = z = 0$ of the covering Minkowski space, in the Rindler chart, "
