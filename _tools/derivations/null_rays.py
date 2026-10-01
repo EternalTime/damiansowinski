@@ -433,6 +433,9 @@ GM_RH = 100 / 81
 # The black hole on a cosmic string at the deficit the cosmic string is drawn at, 4G mu/c^2 = 0.1.
 SBH = {"r_s": 1, "b": "9/10"}
 DILATON = {"r_s": 1, "r_d": "1/2"}
+# Schwarzschild-anti-de Sitter at r_s = 2L, where r^3 + L^2 r - L^2 r_s = (r - L)(r^2 + L r + 2L^2)
+# and the horizon is r_h = L, the black hole of Hawking and Page's temperature T_1.
+SADS = {"r_s": 2, "L": 1}
 
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m.
 MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
@@ -491,6 +494,18 @@ DIAGRAMS = [
             tau="u + r", areal=True),
     Diagram("tangherlini", "spherical_six", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_h$", "$ct/r_h$", {"r_h": 1}, TANGHERLINI_SIX, orient="ingoing", areal=True),
+    Diagram("schwarzschild_ads", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/L$", "$ct/L$", SADS, EQUATOR, orient="ingoing", areal=True),
+    Diagram("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 3, -1.5, 1.5), "$r/L$", "$(v - r)/L$", SADS, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 3, -1, 2), "$r/L$", "$v/L$", SADS, EQUATOR, tau="v - r", areal=True),
+    Diagram("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 3, -1.5, 1.5), "$r/L$", "$(u + r)/L$", SADS, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("schwarzschild_ads", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 3, -2, 1), "$r/L$", "$u/L$", SADS, EQUATOR, tau="u + r", areal=True),
     Diagram("global_monopole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", GM, EQUATOR, orient="ingoing", areal=True),
     Diagram("global_monopole", "conical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
@@ -1069,6 +1084,44 @@ CAPTIONS = {
         "Inside $r_h$ the same components make $r$ the time, and we take the future as the ingoing rays carry it "
         "across the horizon, which makes that region the black hole, where every cone points to $r = 0$. The "
         "Kretschmann scalar $240r_h^6/r^{10}$ is finite at $r_h$ and diverges only at $r = 0$.",
+    ],
+    ("schwarzschild_ads", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_s = 2L$, the same at every "
+        "other angle by spherical symmetry. There $g^{rr} = 1 - r_s/r + r^2/L^2$ vanishes at the horizon "
+        "$r_h = L$, and the cones close on it, since $dt/dr = \\pm(1 - r_s/r + r^2/L^2)^{-1}$ diverges there. "
+        "Far outside, $g^{rr}$ grows as $r^2/L^2$ and the cones open toward the horizontal: a light ray runs "
+        "from any radius to $r \\to \\infty$ in a finite time $t$, as in anti-de Sitter space.",
+        "Inside $r_h$, $t$ is a spacelike coordinate, and the components alone do not fix which way is future. "
+        "We take it from the ingoing Eddington-Finkelstein chart, which makes that region the black hole, where "
+        "every cone points to $r = 0$. The Kretschmann scalar $12r_s^2/r^6 + 24/L^4$ is finite at $r_h$ and "
+        "diverges only at $r = 0$.",
+    ],
+    ("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_s = 2L$ with $v - r$ as the "
+        "vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has "
+        "$dv/dr = 2(1 - r_s/r + r^2/L^2)^{-1}$, so it stands vertical at $r_h = L$: the horizon is an outgoing "
+        "ray that stays where it is.",
+        "The cones cross $r_h$ smoothly and keep tipping. Inside, both edges of every future cone point to "
+        "smaller $r$, so every future directed ray ends at $r = 0$. Far outside, the outgoing edge leans toward "
+        "the ingoing one, since $dv/dr$ falls as $2L^2/r^2$.",
+    ],
+    ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a "
+        "null coordinate. The outgoing family turns vertical at $r_h$ and leans back toward smaller $r$ inside it.",
+    ],
+    ("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_s = 2L$ with $u + r$ as the "
+        "vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family stands vertical "
+        "at $r_h = L$. Inside $r_h$ both edges of every future cone point to larger $r$: this is the white hole, "
+        "which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("schwarzschild_ads", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
+        "null coordinate. The ingoing family turns vertical at $r_h$ and leans toward larger $r$ inside it.",
     ],
     ("global_monopole", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Letelier's black hole in a cloud of strings, "
@@ -4295,6 +4348,14 @@ def _sds_rstar(r):
     return sum(np.log(np.abs(r - ri)) / (1 / ri ** 2 - 0.4 * ri / 3) for ri in roots)
 
 
+def _sads_rstar(r):
+    """Schwarzschild-anti-de Sitter's tortoise coordinate at r_s = 2 and L = 1, where 1/f =
+    r/((r - 1)(r^2 + r + 2)): (1/4) ln|r - 1| - (1/8) ln(r^2 + r + 2) + (5/(4 sqrt 7)) arctan((2r + 1)/sqrt 7),
+    up to a constant."""
+    w = np.sqrt(7.0)
+    return 0.25 * np.log(np.abs(r - 1)) - 0.125 * np.log(r * r + r + 2) + 5 / (4 * w) * np.arctan((2 * r + 1) / w)
+
+
 def _sds_away(x, r):
     return (np.abs(r - 1.0852) > 0.05) & (np.abs(r - 3.2146) > 0.05)
 
@@ -4377,6 +4438,12 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), lambda v, r: np.abs(r - 1) > 0.05),
     ("dilaton_black_hole", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
+    ("schwarzschild_ads", "static", "radial"):
+        (lambda t, r: t + _sads_rstar(r), lambda t, r: t - _sads_rstar(r), lambda t, r: np.abs(r - 1) > 0.05),
+    ("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _sads_rstar(r), lambda v, r: np.abs(r - 1) > 0.05),
+    ("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _sads_rstar(r), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):

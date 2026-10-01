@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
-schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
+schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie and tangherlini, and Godel's cylindrical chart.
 
@@ -654,6 +654,57 @@ def schwarzschild_de_sitter(system_id):
 
 
 SDS_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+
+
+# -- Schwarzschild-anti-de Sitter --------------------------------------------------------
+
+def schwarzschild_ads(system_id):
+    """Hawking and Page's black hole in anti-de Sitter space: Kottler's metric with
+    Lambda = -3/L^2, f = 1 - r_s/r + r^2/L^2, in the static chart and in the two
+    Eddington-Finkelstein charts built on its tortoise coordinate, dr_*/dr = 1/f. The parameters
+    are Schwarzschild's r_s and anti-de Sitter's L, so each chart reduces to Schwarzschild's as
+    L grows without bound and to anti-de Sitter's static chart at r_s = 0. Every value is
+    printed around L^2 r f = L^2 r - L^2 r_s + r^3, in the order of f itself. The metric and
+    its inverse are written as the line element writes f, and the Kretschmann scalar as
+    Schwarzschild's 12r_s^2/r^6 plus anti-de Sitter's 24/L^4, which it is."""
+    f = "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r^2}{L^2}\\right)"
+    bare = "1 - \\dfrac{r_s}{r} + \\dfrac{r^2}{L^2}"
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    domains = ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "r = r_h \\;\\text{(the horizon)}"]
+    if system_id == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    parameters = ["r_s", "L"]
+    probe = vm.Reader(coords, parameters, ())
+    r, rs, L = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["L"]
+    return {
+        "metric_id": "schwarzschild_ads",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"rising": [r, rs], "lead": [L, r, rs], "flip": False},
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "ricci_scalar": "-\\dfrac{12}{L^2}",
+        "kretschmann": "\\dfrac{12r_s^2}{r^6} + \\dfrac{24}{L^4}",
+    }
+
+
+SADS_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
 
 
 # -- Global monopole -------------------------------------------------------------------
@@ -2246,6 +2297,7 @@ MELVIN_GEODESICS = [
 
 
 CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
+CHARTS["schwarzschild_ads"] = [lambda s=s: schwarzschild_ads(s) for s in SADS_CHARTS]
 
 
 # -- Levi-Civita -------------------------------------------------------------------------

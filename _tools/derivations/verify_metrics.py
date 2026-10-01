@@ -547,6 +547,18 @@ DIMENSIONS = {
     ("tangherlini", "spherical_six"): {
         "t": "T", "r": "L", "\\chi": "1", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_h": "L",
     },
+    # Schwarzschild-anti-de Sitter keeps Schwarzschild's r_s and anti-de Sitter's radius, which the
+    # entry calls L and the dimensional pass calls L as well, as for anti-de Sitter space itself.
+    # The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
+    ("schwarzschild_ads", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "L": "L",
+    },
+    ("schwarzschild_ads", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "L": "L",
+    },
+    ("schwarzschild_ads", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "L": "L",
+    },
     # Visser's thin shell wormhole joins two Schwarzschild exteriors at the throat radius a, a
     # length beside r_s. Through the throat, ell = +-(r - a) is a length, |ell| carries what ell
     # carries and sgn(ell) none, and the delta at the throat an inverse length.

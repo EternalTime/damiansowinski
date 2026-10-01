@@ -1,0 +1,106 @@
+{
+  "id": "schwarzschild_ads",
+  "name": "Schwarzschild-anti-de Sitter Black Hole",
+  "short_name": "Schwarzschild-anti-de Sitter",
+  "description": "A black hole in anti-de Sitter space, the static, spherically symmetric vacuum solution with a negative cosmological constant. A small one is unstable and evaporates or grows, and a large one stays in stable equilibrium with thermal radiation, as Stephen Hawking and Don Page showed in 1983.",
+  "tags": [
+    "vacuum",
+    "vacuum solution",
+    "static",
+    "stationary",
+    "spherically symmetric",
+    "black hole",
+    "mass",
+    "cosmological constant",
+    "negative cosmological constant",
+    "anti-de Sitter",
+    "AdS/CFT",
+    "holography",
+    "black hole thermodynamics",
+    "Hawking-Page transition",
+    "singularity",
+    "curvature singularity",
+    "coordinate singularity",
+    "horizon",
+    "event horizon",
+    "white hole",
+    "maximal extension",
+    "causal structure",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the anti-de Sitter radius $L$, a length, fixes the cosmological constant through $\\Lambda = -3/L^2$. The horizon $r_h$ is the one positive root of $1 - r_s/r + r^2/L^2$. We keep factors of $c$ explicit.",
+  "history": "Friedrich Kottler solved Einstein's equations with a cosmological constant $\\Lambda$ outside a static, spherically symmetric mass in 1918 [kottler1918]. With $\\Lambda = -3/L^2$ his metric function is $$f(r) = 1 - \\frac{r_s}{r} + \\frac{r^2}{L^2},$$ Schwarzschild's $1 - r_s/r$ with the $r^2/L^2$ of anti-de Sitter space added [hawking1983]. It vanishes at a single radius, the horizon $r_h$, with $r_s = r_h\\left(1 + r_h^2/L^2\\right)$ [hawking1983]. At $r_s = 0$ the solution is anti-de Sitter space, whose infinity is timelike [hawking1973]. Larry Abbott and Stanley Deser wrote the energy of a metric that approaches anti-de Sitter space at infinity as a flux integral there in 1982, and proved it positive [abbott1982].¶The thermodynamics of this black hole is the work of Stephen Hawking and Don Page, in 1983 [hawking1983]. Its temperature is $$T = \\frac{\\hbar c}{4\\pi k_B}\\,\\frac{L^2 + 3r_h^2}{L^2 r_h},$$ which has a minimum $T_0 = \\sqrt{3}\\,\\hbar c/(2\\pi k_B L)$ at $r_h = L/\\sqrt{3}$ [hawking1983]. Below $T_0$ the only equilibrium is thermal radiation without a black hole [hawking1983]. Above $T_0$ two black holes have the same temperature [hawking1983]. The smaller has negative specific heat and is unstable, decaying into thermal radiation or growing into the larger, and the larger has positive specific heat and is at least locally stable [hawking1983]. The entropy of each is a quarter of the area of its horizon in Planck units, as in asymptotically flat space [hawking1983].¶Past $r_h = L$, where the temperature is $T_1 = \\hbar c/(\\pi k_B L)$, the larger black hole has a lower free energy than thermal radiation alone, and the radiation tends to tunnel to it [hawking1983]. This change in which state has the lower free energy is the Hawking-Page transition [aharony2004]. Between $T_0$ and $T_1$ the free energy of the larger black hole is positive, and it lowers its free energy by evaporating completely [hawking1983]. Hawking and Page computed these free energies from the Euclidean action, by the method of Gary Gibbons and Hawking, with anti-de Sitter space of the same period in imaginary time as the zero of action [gibbons1977action, hawking1983]. A black hole in asymptotically flat space reaches a stable equilibrium with radiation only inside a box with perfectly reflecting walls, and Hawking and Page observed that \"the gravitational potential of anti-de Sitter space acts as a box of finite volume\" [hawking1983]. The potential turns back every particle with rest mass, and reflecting boundary conditions at infinity keep the incoming and outgoing fluxes of massless particles equal [hawking1983, avis1978].¶Juan Maldacena conjectured in 1998 that gravity in anti-de Sitter space is equivalent to a conformal field theory on its boundary [maldacena1998]. Edward Witten repeated the calculation of Hawking and Page in every dimension that year and found the transition in each [witten1998thermal]. For the black hole in five dimensions, whose boundary theory is $\\mathcal{N} = 4$ super Yang-Mills theory on a three sphere at large $N$, the radiation phase has a free energy of order one, as a confining phase has, and the black hole phase one of order $N^2$, as a deconfining phase has [witten1998thermal]. At weak coupling the same theory has a deconfinement transition, found in 2004 by Ofer Aharony, Joseph Marsano, Shiraz Minwalla, Kyriakos Papadodimas, and Mark Van Raamsdonk, who suggested that it continues to the Hawking-Page transition at strong coupling [aharony2004]. Maldacena proposed in 2003 that the maximally extended black hole, with its two exterior regions, is described by two copies of the field theory in an entangled state [maldacena2003]. Gary Horowitz and Veronika Hubeny computed the decay of a scalar field outside the black hole in 2000, and identified the decay time for a large black hole with the time the field theory takes to approach thermal equilibrium [horowitz2000].¶Lukasz Fidkowski, Veronika Hubeny, Matthew Kleban, and Stephen Shenker showed in 2004 that \"the Penrose diagram for d > 3 is not square\", $d$ being the dimension of the spacetime [fidkowski2004]. A radial light ray that leaves one boundary at $t = 0$ reaches the singularity on its own side of the middle of the diagram, so with the two boundaries drawn as straight lines both singularities bow inward [fidkowski2004]. Zdeněk Stuchlík and Stanislav Hledík drew in 1999 the embedding diagrams of its equatorial plane at constant $t$, for the spatial geometry and for the optical geometry [stuchlik1999]. Norman Cruz, Marco Olivares, and J. R. Villanueva classified its geodesics in 2005 and found that a particle moving radially falls into the horizon from a greatest radius fixed by its energy, so that no radial particle escapes to infinity [cruz2005]. Eva Hackmann and Claus Lämmerzahl solved the geodesic equation completely in 2008, in terms of derivatives of Kleinian sigma functions [hackmann2008].¶Outside the black hole a scalar field decays exponentially at late times, with no power law tail, as Horowitz and Hubeny found [horowitz2000]. Vitor Cardoso and José Lemos computed the electromagnetic and gravitational quasinormal modes in 2001 and found that the odd and even gravitational perturbations have different frequencies, which in Schwarzschild's spacetime are equal [cardoso2001]. Hideo Kodama and Akihiro Ishibashi proved in 2003 that the black hole is stable against linear gravitational perturbations [kodama2003]. Gustav Holzegel and Jacques Smulevici proved in 2013 that, in spherical symmetry with a Klein-Gordon field, small perturbations of its initial data again lead to a black hole whose exterior approaches a Schwarzschild-anti-de Sitter metric [holzegel2013]. With $\\Lambda < 0$ a horizon need not be a sphere: Lemos found a black hole with a cylindrical horizon in 1995, and Robert Mann and Luciano Vanzo found in 1997 black holes whose horizons are surfaces of higher genus [lemos1995, mann1997, vanzo1997]. David Kastor, Sourya Ray, and Jennie Traschen wrote in 2009 a first law in which the cosmological constant varies as a pressure, and proposed that the mass of such a black hole is the enthalpy of the spacetime [kastor2009].",
+  "references": [
+    "kottler1918",
+    "hawking1983",
+    "hawking1973",
+    "abbott1982",
+    "aharony2004",
+    "gibbons1977action",
+    "avis1978",
+    "maldacena1998",
+    "witten1998thermal",
+    "maldacena2003",
+    "horowitz2000",
+    "fidkowski2004",
+    "stuchlik1999",
+    "cruz2005",
+    "hackmann2008",
+    "cardoso2001",
+    "kodama2003",
+    "holzegel2013",
+    "lemos1995",
+    "mann1997",
+    "vanzo1997",
+    "kastor2009"
+  ],
+  "coordinates": [
+    {
+      "id": "static",
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+        },
+        {
+          "symbol": "L",
+          "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    },
+    {
+      "id": "eddington_finkelstein_outgoing",
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+        },
+        {
+          "symbol": "L",
+          "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+        }
+      ],
+      "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r + r^2/L^2\\right)^{-1}$ and $r_* = 0$ at $r = 0$."
+    },
+    {
+      "id": "eddington_finkelstein_ingoing",
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+        },
+        {
+          "symbol": "L",
+          "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+        }
+      ],
+      "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r + r^2/L^2\\right)^{-1}$ and $r_* = 0$ at $r = 0$."
+    }
+  ]
+}

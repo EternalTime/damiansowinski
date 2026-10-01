@@ -334,6 +334,14 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `throat/radial`, both sides through the throat with $\ell = \pm(r - a)$: the line $ct = 0$ from $\ell = -3.75\,r_s$ to $3.75\,r_s$, cut to the box at $|\ell| = 3\,r_s$.
 - `throat` and `spherical`, the diamond in $\ell_*$: the line $T = 0$ from $\ell = -3.75\,r_s$ to $3.75\,r_s$, both sides through the throat, the same on both.
 
+### Schwarzschild-anti-de Sitter
+
+- The embedding is the equator of the static moment $t = 0$ at $r_s = 2L$, $r$ from the throat $r_h = L$ to $3L$ on both exteriors through the bifurcation sphere, in flat space out to $2^{1/3}L$ and in Minkowski space beyond.
+- `static/radial`: the line $ct = 0$ from $r_h$ to the box's edge at $3L$; inside $r_h$ the surfaces of constant $t$ are timelike.
+- `eddington_finkelstein_ingoing/finkelstein` and `/chart`: with $v = ct + r_*$ and $r_*(0) = 0$ the moment is the curve $v = r_*$ outside $r_h$, which runs off to $v \to -\infty$ at the horizon and rises to $r_* = 0.331\,L$ at $3L$, short of its limit $R = 0.658\,L$ at the conformal boundary.
+- `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u = -r_*$.
+- `static`, `ingoing` and `outgoing`, the conformal diagram: the moment $t = 0$ is $U = -V$, the line $T = 0$ through the bifurcation sphere across both exteriors, $r$ from $L$ to $3L$ on each side, the same on all three.
+
 ### The threaded black hole
 
 - The embedding has two views at $b = 0.9$ and $r_s = 1$: the equator of the static chart's $t = 0$, $r$ from $r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere, and the horizon itself, the bifurcation sphere, $\theta$ from $0$ to $\pi$.

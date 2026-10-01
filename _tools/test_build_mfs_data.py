@@ -3340,6 +3340,18 @@ class Slices(unittest.TestCase):
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * (0.5 * math.log(abs((X - 1) / (X + 1))) + (0 if finkelstein else X))), \
                 list(self.reach(surface))
+        if key.startswith("schwarzschild_ads/eddington_finkelstein"):
+            # At r_s = 2 and L = 1, 1/f = r/((r - 1)(r^2 + r + 2)), and r_* = (1/4) ln|1 - r| - (1/8) ln((r^2 + r +
+            # 2)/2) + (5/(4 sqrt 7))(arctan((2r + 1)/sqrt 7) - arctan(1/sqrt 7)), which vanishes at r = 0.
+            # Static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            w = math.sqrt(7)
+
+            def rstar(r):
+                return (0.25 * math.log(abs(1 - r)) - 0.125 * math.log((r * r + r + 2) / 2)
+                        + 5 / (4 * w) * (math.atan((2 * r + 1) / w) - math.atan(1 / w)))
+            return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key.startswith("global_monopole/eddington_finkelstein"):
             # Letelier's black hole at Delta = 0.19 and r_s = 1: r_* = r/0.81 + ln|0.81 r - 1|/0.81^2,
             # and the static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.
