@@ -103,6 +103,17 @@ Wherever the list and the spacetime stand side by side, the list's panel starts 
 The spacetime panel's top is halfway between the foot of the Exit sign and 150px, or 30px below the title's foot where a large text size wraps the title lower.
 `placeTop` and `syncPanel` in `_layouts/mfs.html` carry that geometry in `--mfs-top`, `--mfs-bottom` and `--mfs-coffee-h`, and `page_timing.mjs` holds every state of the page to it within a pixel.
 
+## The contents of a spacetime
+
+The list's panel holds two views and shows one: the list of spacetimes with its search field, and the contents of the spacetime that is open, as the captain asked on 1 October 2026.
+Pressing a spacetime slides the list out to the left and its contents in from the right, and "‹ All spacetimes" at the head of the contents slides the list back.
+The list is never drawn again for that, so it comes back with the search as it was typed and at the place it was scrolled to, and the open spacetime's name in it brings the contents back without drawing the spacetime again.
+The contents are the headings of the page as drawn, every `.mfs-section-label` in the spacetime's panel in its order, read each time `renderMetric` draws it, so a new section needs no entry anywhere.
+An entry brings its section to the top of what shows of the spacetime, under the name where the name stays in sight; the spacetime's panel scrolls on a desktop and the page on a phone.
+The slide is 220ms in the stylesheet, and a reader who asked for reduced motion gets the swap and the jump at once.
+A spacetime has an address of its own, `/MFS/?spacetime=<id>`, which the address bar shows once one is open and which opens the page on that spacetime with its contents showing.
+`showContents`, `_mfsContents` and `_mfsOpen` in `_layouts/mfs.html` carry it, and `page_timing.mjs` holds every spacetime to it: the contents against the headings, each entry's jump, the list as it comes back, and the page opened at an address.
+
 ## The page on a phone
 
 A screen narrower than 600px, or a touch screen under 500px tall, gets the same panels in one column that the page scrolls through: the title, the list with the coffee panel, then the spacetime.
