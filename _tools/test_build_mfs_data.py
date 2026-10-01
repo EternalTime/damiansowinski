@@ -2127,6 +2127,16 @@ class EmbeddingDiagrams(unittest.TestCase):
                 for theta, rho, z in piece("nariai", pid, number):
                     near(rho, math.cosh(t), f"Nariai rho at ct = {t}, theta = {theta}")
                     near(z, z_of(theta), f"Nariai z at ct = {t}, theta = {theta}")
+        # The Kantowski-Sachs moments are cylinders of radius b on which |r| <= 1 is 2a long: the dust
+        # at a = 1 + eta tan(eta), b = cos^2(eta), and the vacuum at a = sqrt(1/T - 1), b = T.
+        for number, eta in enumerate((-1.1, -0.55, 0.0, 0.55, 1.1)):
+            for r, rho, z in piece("kantowski_sachs", "tube", number):
+                near(rho, math.cos(eta) ** 2, f"Kantowski-Sachs dust rho at eta = {eta}")
+                near(z, (1 + eta * math.tan(eta)) * r, f"Kantowski-Sachs dust z at eta = {eta}, r = {r}")
+        for number, T in enumerate((0.9, 0.7, 0.5, 0.3, 0.1)):
+            for r, rho, z in piece("kantowski_sachs", "tube", number, view=1):
+                near(rho, T, f"Kantowski-Sachs vacuum rho at T = {T}")
+                near(z, math.sqrt(1 / T - 1) * r, f"Kantowski-Sachs vacuum z at T = {T}, r = {r}")
         for theta, rho, z in piece("nariai", "sphere", view=1):
             near(rho, math.sin(theta), f"Nariai sphere rho at {theta}")
             near(z, 1 - math.cos(theta), f"Nariai sphere z at {theta}")
@@ -2774,7 +2784,8 @@ class StacksAndMovies(unittest.TestCase):
     STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0}   # the height of a unit of time
     MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
               "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$",
-              "einstein_rosen_waves": "$ct$", "nariai": "$ct$", "domain_wall": "$kct$"}
+              "einstein_rosen_waves": "$ct$", "nariai": "$ct$", "domain_wall": "$kct$",
+              "kantowski_sachs": "$\\eta$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -3203,7 +3214,13 @@ class Slices(unittest.TestCase):
                     # Melvin's universe with no hole and Ernst's hole inside it are two spacetimes of one entry,
                     # each chart's drawings marking its own moment.
                     "melvin/cylindrical/radial": {"ernst"}, "conformal melvin/cylindrical": {"ernst"},
-                    "melvin/ernst/radial": {"universe"}, "conformal melvin/ernst": {"universe"}}
+                    "melvin/ernst/radial": {"universe"}, "conformal melvin/ernst": {"universe"},
+                    # The dust universe and the inside of Schwarzschild's horizon are two members of
+                    # the Kantowski-Sachs family, each marked on its own drawings.
+                    "kantowski_sachs/comoving/tr": {"vacuum"}, "kantowski_sachs/dust/etar": {"vacuum"},
+                    "conformal kantowski_sachs/dust": {"vacuum"},
+                    "kantowski_sachs/schwarzschild_interior/Tr": {"dust"},
+                    "conformal kantowski_sachs/vacuum": {"dust"}}
 
     def reach(self, surface, system=None, reference=False):
         xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))
@@ -3262,6 +3279,12 @@ class Slices(unittest.TestCase):
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * (X / 0.81 + math.log(abs(0.81 * X - 1)) / 0.81 ** 2 - (X if finkelstein else 0))), \
                 list(self.reach(surface))
+        if key.startswith("kantowski_sachs/"):
+            # A dust moment eta is level in the dust chart and at ct = pi/2 + eta + sin(eta) cos(eta)
+            # in the comoving one, b_0 = 1; a vacuum moment is level at its T, its cylinder's radius.
+            if "/schwarzschild_interior/" in key:
+                return (lambda X: surface["pieces"][0]["points"][0][1]), None
+            return (lambda X: t if "/dust/" in key else math.pi / 2 + t + math.sin(t) * math.cos(t)), None
         if key == "domain_wall/planar/tz":
             # A moment kct of the global chart meets the plane x = y = 0 along t = const, every z.
             return (lambda X: t), None
@@ -3495,6 +3518,23 @@ class Slices(unittest.TestCase):
                         inside, outside = mark["lines"]
                         self.assertEqual(inside, [[0, round(eta, 4)], [round(chi0, 4), round(eta, 4)]], where)
                         self.assertLess(math.dist(outside[0], [chi0, eta]), 2e-4, where)
+                    elif metric_id == "kantowski_sachs" and mark["view"] == "dust":
+                        # p, q = arctan(tau -+ r), tau the integral of 2 cos^3(s)/(cos(s) + s sin(s))
+                        # from 0 to eta, by Simpson's rule.
+                        n = 2000
+                        f = [2 * math.cos(t * k / n) ** 3 / (math.cos(t * k / n) + t * k / n * math.sin(t * k / n))
+                             for k in range(n + 1)]
+                        tau = t / n / 3 * (f[0] + f[-1] + 4 * sum(f[1:-1:2]) + 2 * sum(f[2:-1:2]))
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs((tp + tq) / 2 - tau), 2e-4 * (1 + tp * tp + tq * tq), f"{where} at {(X, T)}")
+                    elif metric_id == "kantowski_sachs":
+                        # Kruskal's square: tan p tan q = (1 - T/r_s) e^(T/r_s) inside the horizon.
+                        radius = surface["pieces"][0]["points"][0][1]
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs(tp * tq - (1 - radius) * math.exp(radius)), 2e-3 * (1 + tp * tp) * (1 + tq * tq),
+                                            f"{where} at {(X, T)}")
                     elif metric_id == "milne":
                         # p, q = arctan(ct e^-chi), arctan(ct e^chi), so tan p tan q = c^2t^2.
                         for X, T in points:

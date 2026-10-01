@@ -370,6 +370,10 @@ KM = 1.4766250614                       # GM_sun/c^2 in km
 
 BIANCHI_DUST = {"funcs": ["a_1", "a_2", "a_3"], "eqs": [["x", "x"], ["y", "y"], ["z", "z"]],
                 "rates": [-0.5, 1.5, 2.0]}
+# The Kantowski-Sachs dust at its moment of greatest b, where a = 1 and b = b_0, the unit, both at rest.
+KS_DUST = {"funcs": ["a", "b"], "eqs": [["r", "r"], ["\\theta", "\\theta"]], "rates": [0.0, 0.0], "start": [1.0, 1.0]}
+KS_INPUT = ("Dust: $a(t)$ and $b(t)$ solved from this spacetime's own $G^r{}_r = G^\\theta{}_\\theta = 0$, starting "
+            "from $a = 1$ and $b = b_0$ at rest at the dashed line.")
 
 # Godel's radius r_c = ln(1 + sqrt 2), where sinh r = 1 and the circles of constant t, r and z
 # turn from spacelike to timelike; the views read it off the published g_phiphi as well.
@@ -644,6 +648,16 @@ DIAGRAMS = [
             input="Dust: the three scale factors solved from this spacetime's own "
                   "$G^x{}_x = G^y{}_y = G^z{}_z = 0$, starting from $a_i = 1$ with rates "
                   "$(-0.5, 1.5, 2.0)\\,\\bar H$ at the dashed line, $\\bar H$ their mean."),
+    # The Kantowski-Sachs universes: the dust universe symmetric in time, in its comoving chart with
+    # a and b solved from rest and in the dust chart's own time eta, and the vacuum member, the
+    # inside of Schwarzschild's horizon, whose future lies toward smaller T.
+    Diagram("kantowski_sachs", "comoving", "tr", "$t$ and $r$", ("t", "r"), (-2, 2, 0, math.pi),
+            "$r\\;[b_0]$", "$ct\\;[b_0]$", {}, EQUATOR, families=SIDEWAYS, dust=KS_DUST,
+            reference="$b = b_0$", input=KS_INPUT),
+    Diagram("kantowski_sachs", "dust", "etar", "$\\eta$ and $r$", ("\\eta", "r"), (-2, 2, -math.pi / 2, math.pi / 2),
+            "$r/b_0$", "$\\eta$", {"b_0": 1, "kappa": 0}, EQUATOR, tau="eta", families=SIDEWAYS),
+    Diagram("kantowski_sachs", "schwarzschild_interior", "Tr", "$T$ and $r$", ("T", "r"), (-2, 2, 0, 1),
+            "$r/r_s$", "$T/r_s$", {"r_s": 1}, EQUATOR, tau="-T", families=SIDEWAYS),
     Diagram("godel", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$t$",
             {"omega": 1}, {"y": "0", "z": "0"}, orient="vector", families=SIDEWAYS),
     Diagram("alcubierre", "cartesian", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-3, 3, -2, 2),
@@ -1452,6 +1466,35 @@ CAPTIONS = {
         "goes to zero at the singularity, and the cones open out flat: $dz/dt = \\pm t^{-6/7}$. "
         "In the plane of $t$ and $x$ the same singularity closes the cones, since the "
         "scale factor there, $t^{-2/7}$, grows as $t \\to 0$.",
+    ],
+    ("kantowski_sachs", "comoving", "tr"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the diagram a 2-sphere of "
+        "radius $b(t)$. The line element leaves $a(t)$ and $b(t)$ free, and here they are those of dust at rest "
+        "in the chart, solved from $G^r{}_r = G^\\theta{}_\\theta = 0$ with both at rest at the dashed line, "
+        "where the spheres are largest. The universe lasts $\\pi b_0/c$ from one singularity to the other, "
+        "and $t$ is counted from the first.",
+        "The edges of the cones are $dr/d(ct) = \\pm 1/a$. At both singularities $b \\to 0$ while $a$ grows "
+        "without bound, so the cones close up along $r$, and a ray crosses only $2.44\\,b_0$ of $r$ in the "
+        "whole life of the universe.",
+    ],
+    ("kantowski_sachs", "dust", "etar"): [
+        "The plane of $\\eta$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the dust universe symmetric in time "
+        "($\\kappa = 0$), each point in the diagram a 2-sphere of radius $b_0\\cos^2\\eta$. The edges of the "
+        "cones are $dr/d\\eta = \\pm 2b_0\\cos^2\\eta/(1 + \\eta\\tan\\eta)$, widest at $\\eta = 0$, "
+        "where the spheres are largest.",
+        "The cones close toward $\\eta = \\pm\\pi/2$, where the spheres shrink to nothing, the lengths along "
+        "$r$ grow without bound, and the Kretschmann scalar diverges. No Christoffel symbol turns a ray out of "
+        "the plane, so every curve drawn is a null geodesic.",
+    ],
+    ("kantowski_sachs", "schwarzschild_interior", "Tr"): [
+        "The plane of $T$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the horizon of a Schwarzschild "
+        "black hole, each point in the diagram a 2-sphere of radius $T$. The future lies toward smaller $T$, so "
+        "every cone points down, and its edges are $dr/dT = \\pm T/(r_s - T)$, so that "
+        "$r \\pm \\left(T + r_s\\ln(1 - T/r_s)\\right)$ is constant along a ray.",
+        "The cones lie flat at the horizon, $T = r_s$, which a ray leaves at any $r$, and close toward the "
+        "singularity $T = 0$, where the Kretschmann scalar $12r_s^2/T^6$ diverges. From $T = r_s$ to $T = 0$ a "
+        "ray's $r$ changes without bound near the horizon and by less and less near the singularity, so two "
+        "observers at different $r$ lose sight of each other before the end.",
     ],
     ("bianchi", "type_i_cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$). The singularity comes about $0.378/\\bar "
@@ -3499,6 +3542,13 @@ def write(metric_ids=None):
 
 # ---------------------------------------------------------------- closed forms
 
+def _ks_tau(eta):
+    """The conformal time of the Kantowski-Sachs dust at kappa = 0 and b_0 = 1, the integral of
+    2 cos^2(s)/(1 + s tan(s)) from 0 to eta, along which r -+ tau is constant on a ray."""
+    return np.array([quad(lambda s: 2 * np.cos(s) ** 3 / (np.cos(s) + s * np.sin(s)), 0, e)[0]
+                     for e in np.atleast_1d(eta)]).reshape(np.shape(eta))
+
+
 def _rstar(r, horizons):
     """The tortoise coordinate of f = prod(1 - r_i/r) with simple roots r_i, up to a constant."""
     out = np.asarray(r, float).copy()
@@ -3657,6 +3707,11 @@ CLOSED_FORMS = {
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("godel", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    # Inside Schwarzschild's horizon dr/dT = +-T/(1 - T), so r +- (T + ln(1 - T)) is constant.
+    ("kantowski_sachs", "schwarzschild_interior", "Tr"):
+        (lambda T, r: r - T - np.log(1 - T), lambda T, r: r + T + np.log(1 - T), lambda T, r: T < 0.95),
+    ("kantowski_sachs", "dust", "etar"):
+        (lambda e, r: r - _ks_tau(e), lambda e, r: r + _ks_tau(e), lambda e, r: np.abs(e) < 1.5),
     ("kasner", "cartesian", "tx"):
         (lambda t, x: x + t ** (9 / 7) * 7 / 9, lambda t, x: x - t ** (9 / 7) * 7 / 9, lambda t, x: t > 1e-3),
     ("kasner", "cartesian", "tz"):
@@ -3814,6 +3869,16 @@ def verify(metrics=()):
         failures += not ok
         print(f"Bianchi I dust: exponents at the singularity {', '.join(f'{q:.4f}' for q in p)}, "
               f"on the Kasner circle  {'ok' if ok else 'FAILED'}")
+    if wanted("kantowski_sachs"):
+        ks = Chart(specs[("kantowski_sachs", "comoving", "tr")]).solver
+        eta = np.linspace(-1.5, 1.5, 301)
+        t = math.pi / 2 + eta + np.sin(eta) * np.cos(eta)
+        miss = max(float(np.max(np.abs(ks.values("a", t)[0] / (1 + eta * np.tan(eta)) - 1))),
+                   float(np.max(np.abs(ks.values("b", t)[0] / np.cos(eta) ** 2 - 1))))
+        ok = abs(ks.t_sing + math.pi / 2) < 1e-6 and miss < 1e-6
+        failures += not ok
+        print(f"Kantowski-Sachs dust: the first singularity {ks.t_sing:.9f} from the widest moment, -pi/2; a and b "
+              f"against 1 + eta tan(eta) and cos^2(eta) to {miss:.1e}  {'ok' if ok else 'FAILED'}")
     if wanted("alcubierre") or wanted("natario"):
         alcubierre = Chart(specs[("alcubierre", "cartesian", "tx")])
         natario = Chart(specs[("natario", "cartesian_flow", "tx")])

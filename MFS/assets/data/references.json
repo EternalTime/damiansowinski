@@ -1,5 +1,5 @@
 {
-  "version": "80fd927ff01b543f",
+  "version": "e93100696cd49363",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -8719,34 +8719,6 @@
         "year": "1966",
         "doi": "10.1063/1.1704952",
         "url": "https://doi.org/10.1063/1.1704952"
-      }
-    },
-    "kantowski1998": {
-      "type": "article",
-      "fields": {
-        "title": "Some Relativistic Cosmological Models",
-        "author": "Kantowski, Ronald",
-        "journal": "General Relativity and Gravitation",
-        "volume": "30",
-        "number": "11",
-        "pages": "1665--1700",
-        "year": "1998",
-        "doi": "10.1023/A:1026676524523",
-        "url": "https://doi.org/10.1023/A:1026676524523"
-      }
-    },
-    "krasinski1998": {
-      "type": "article",
-      "fields": {
-        "title": "Editor's Note: Some Relativistic Cosmological Models, by R. Kantowski",
-        "author": "Krasiński, Andrzej",
-        "journal": "General Relativity and Gravitation",
-        "volume": "30",
-        "number": "11",
-        "pages": "1663--1664",
-        "year": "1998",
-        "doi": "10.1023/A:1026624507685",
-        "url": "https://doi.org/10.1023/A:1026624507685"
       }
     },
     "collins1977": {
