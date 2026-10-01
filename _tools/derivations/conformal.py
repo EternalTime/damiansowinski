@@ -3145,13 +3145,14 @@ class AdSHoleTower(Tower):
         r* = Re sum_i A_i ln(1 - r/r_i),      A_i = 1/f'(r_i),
 
     with the principal logarithm, whose argument stays in the right half plane for the complex
-    pair since their real part is negative. That r* vanishes at r = 0, as the entry's
-    Eddington-Finkelstein charts fix it, and tends to the finite R = Re sum_i A_i ln(-1/r_i) as
-    r -> infinity, since sum_i A_i = 0. Both identities, and dr*/dr = 1/f, are checked in sympy on
-    construction. The cells are a Tower's, written in G(u) = arctan exp(-k u) with u, v = t -+ (r*
-    - R), so that the conformal boundary r -> infinity has u = v = t and lies on X = q - p =
-    pi/2 in cell I, as the BTZ hole's does. r = 0 then has Kruskal's UV = s = exp(-2kR) < 1, and
-    lies on the curve tan p tan q = s, below the straight line T = pi/2 that s = 1 would give.
+    pair since their real part is negative. That r* vanishes at r = 0, as a Tower's does and as
+    the entry's Eddington-Finkelstein charts fix it, and tends to the finite R = Re sum_i A_i
+    ln(-1/r_i) as r -> infinity, since sum_i A_i = 0. Both identities, and dr*/dr = 1/f, are
+    checked in sympy on construction. The cells are a Tower's, written in G(u) = arctan exp(-k u)
+    with u, v = t -+ r*, so r = 0 has Kruskal's UV = 1 and lies on the straight lines T = +-pi/2,
+    as Schwarzschild's does. The conformal boundary r -> infinity then has UV = -B, B = exp(2kR)
+    > 1, and lies on the curve tan p tan q = -B, outside the vertical line X = pi/2 that B = 1
+    would give, which is where the BTZ hole's boundary lies.
     """
 
     def __init__(self, f, r):
@@ -3173,28 +3174,23 @@ class AdSHoleTower(Tower):
         self.poles = [complex(x) for x in poles]
         self.Ap = [complex(a) for a in self.A]
         self.far = float(sum(A * np.log(-1 / ri) for A, ri in zip(self.Ap, self.poles)).real)
-        self.s = float(np.exp(-2 * self.kp * self.far))
+        self.B = float(np.exp(2 * self.kp * self.far))
 
-    def chart_rstar(self, r):
-        """r*, zero at r = 0, as the Eddington-Finkelstein charts take it."""
+    def rstar(self, r):
         r = np.asarray(r, dtype=float)
         with np.errstate(divide="ignore"):
             return sum(A * np.log(1 - r / ri) for A, ri in zip(self.Ap, self.poles)).real
 
-    def rstar(self, r):
-        """r* - R, zero on the conformal boundary, which the cells are written in."""
-        return self.chart_rstar(r) - self.far
-
     def UV(self, r):
-        """Kruskal's UV = (1 - r/r_h) exp(2k(r* - R - ln|1 - r/r_h|/2k)), one formula for every r > 0."""
+        """Kruskal's UV = (1 - r/r_h) exp(2k(r* - ln|1 - r/r_h|/2k)), one formula for every r > 0."""
         r = np.asarray(r, dtype=float)
         rest = sum(A * np.log(1 - r / ri) for A, ri in zip(self.Ap, self.poles) if abs(ri.imag) > 0).real
-        return (1 - r / self.rf[0]) * np.exp(2 * self.kp * (rest - self.far))
+        return (1 - r / self.rf[0]) * np.exp(2 * self.kp * rest)
 
-    def singularity(self, sign=1, n=400):
-        """r = 0 above (sign = 1) or below the horizons: tan p tan q = s, from one boundary to the other."""
-        p = sign * (HALF / (1 + np.exp(-np.linspace(-14, 14, n))))
-        return p, np.arctan(self.s / np.tan(p))
+    def boundary(self, n=400):
+        """r -> infinity in cell I: tan p tan q = -B, from the corner (X, T) = (pi/2, -pi/2) to (pi/2, pi/2)."""
+        p = -HALF / (1 + np.exp(np.linspace(-14, 14, n)))
+        return p, np.arctan(-self.B / np.tan(p))
 
 
 SADS = {"r_s": 2, "L": 1}
@@ -3205,21 +3201,25 @@ def schwarzschild_ads(ck, src):
     horizon is r_h = L, the black hole of Hawking and Page's temperature T_1.
 
     f = 1 - 2/r + r^2 = (r - 1)(r^2 + r + 2)/r and k = f'(1)/2 = 2. With r* as AdSHoleTower takes
-    it, Kruskal's U = -exp(-k u), V = exp(k v), u, v = ct -+ (r* - R), give UV = (1 - r)
-    (r^2 + r + 2)^(-1/2) exp((5/sqrt 7)(arctan((2r + 1)/sqrt 7) - pi/2)), analytic through r_h:
-    -1 on the conformal boundary, 0 on the horizon and s = 0.0719 at r = 0. With p = arctan U and
-    q = arctan V, tan(q - p) = (V - U)/(1 + UV) puts the boundary on X = +-pi/2, and r = 0 lies on
-    tan p tan q = s, which runs from one boundary to the other and reaches only T = 2 arctan
-    sqrt(s) = 0.524 on the axis: the singularities bow inward, as Fidkowski, Hubeny, Kleban and
-    Shenker found for every dimension above three. A light ray leaving the right boundary at
-    t = 0 has V = 1 and meets r = 0 at U = s, X = pi/4 - arctan s > 0, which is checked. The
-    ingoing chart's V = exp(k(v - R)), U = UV(r)/V is one formula for every r > 0, and the
-    outgoing chart is its time reverse.
+    it, Kruskal's U = -exp(-k u), V = exp(k v), u, v = ct -+ r*, give UV = (1 - r)
+    ((r^2 + r + 2)/2)^(-1/2) exp((5/sqrt 7)(arctan((2r + 1)/sqrt 7) - arctan(1/sqrt 7))), analytic
+    through r_h: 1 at r = 0, 0 on the horizon and -B = -13.90 on the conformal boundary. With
+    p = arctan U and q = arctan V, tan(p + q) = (U + V)/(1 - UV) puts r = 0 on T = +-pi/2, and the
+    boundary lies on tan p tan q = -B, which runs from one end of a singularity to the other and
+    reaches X = 2 arctan sqrt(B) = 2.617 on T = 0, beyond the X = pi/2 of a square: with the
+    singularities drawn straight the boundaries bow outward, which is the diagram of Fidkowski,
+    Hubeny, Kleban and Shenker with straight boundaries and singularities bowed inward, mapped
+    by U -> U/sqrt(B), V -> V/sqrt(B). The label of the black hole does not fit inside the lens
+    that the second form leaves between the horizons and r = 0, 0.52 high on the axis, so the
+    first is drawn. A light ray leaving the right boundary at t = 0 has V = sqrt(B) and meets
+    r = 0 at U = 1/sqrt(B), X = 2 arctan sqrt(B) - pi/2 = 1.047, two thirds of the way from the
+    axis to the corner, which is checked. The ingoing chart's V = exp(k v), U = UV(r)/V is one
+    formula for every r > 0, and the outgoing chart is its time reverse.
     """
     st = Plane(src, "schwarzschild_ads", "static", ("t", "r"), EQUATOR, SADS)
     assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
     T = AdSHoleTower(st.gi[1, 1], st.x1)
-    k, R = T.kp, T.far
+    k, R, B = T.kp, T.far, T.B
     name = "Schwarzschild-anti-de Sitter"
     ck.limit(f"{name}: the horizon is the positive root of the published g^rr, at r_h = L", T.rf, [1.0], 1e-12)
     ck.limit(f"{name}: the surface gravity is f'(r_h)/2 = 2/L", k, 2.0, 1e-12)
@@ -3234,11 +3234,11 @@ def schwarzschild_ads(ck, src):
 
     def ingoing(w, r):
         w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
-        return np.arctan(T.UV(r) * np.exp(-k * (w - R))), atan_exp(k * (w - R))
+        return np.arctan(T.UV(r) * np.exp(-k * w)), atan_exp(k * w)
 
     def outgoing(u, r):
         u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
-        return -atan_exp(-k * (u + R)), np.arctan(-T.UV(r) * np.exp(k * (u + R)))
+        return -atan_exp(-k * u), np.arctan(-T.UV(r) * np.exp(k * u))
     ein = Plane(src, "schwarzschild_ads", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, SADS)
     ck.chart(f"{name} ingoing Eddington-Finkelstein", ein, ingoing,
              ck.uniform(-4, 4), ck.uniform(0.01, 40), lambda w, r: (1, -60))
@@ -3247,57 +3247,62 @@ def schwarzschild_ads(ck, src):
              ck.uniform(-4, 4), ck.uniform(0.01, 40), lambda u, r: (1, 60))
 
     rr = np.linspace(0.05, 5, 50)
-    closed = (1 - rr) / np.sqrt(rr * rr + rr + 2) * np.exp(5 / np.sqrt(7) * (np.arctan((2 * rr + 1) / np.sqrt(7)) - HALF))
-    ck.limit(f"{name}: UV is (1 - r)(r^2 + r + 2)^(-1/2) exp((5/sqrt 7)(arctan((2r + 1)/sqrt 7) - pi/2))",
+    w7 = np.sqrt(7)
+    closed = ((1 - rr) / np.sqrt((rr * rr + rr + 2) / 2)
+              * np.exp(5 / w7 * (np.arctan((2 * rr + 1) / w7) - np.arctan(1 / w7))))
+    ck.limit(f"{name}: UV is (1 - r)((r^2 + r + 2)/2)^(-1/2) exp((5/sqrt 7)(arctan((2r + 1)/sqrt 7) - arctan(1/sqrt 7)))",
              T.UV(rr), closed, 1e-12)
     for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
         pp, qq = T.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
         ck.limit(f"{name}, {cell}: tan p tan q is Kruskal's UV", np.tan(pp) * np.tan(qq), T.UV(rr[sel]), 1e-8)
-    ck.limit(f"{name}: r* vanishes at r = 0", T.chart_rstar(np.array([0.0, 1e-9])), [0, 0], 1e-8)
-    ck.limit(f"{name}: r* tends to R as r -> infinity", T.chart_rstar(np.array([1e9])), [R], 1e-8)
+    ck.limit(f"{name}: r* vanishes at r = 0", T.rstar(np.array([0.0, 1e-9])), [0, 0], 1e-8)
+    ck.limit(f"{name}: r* tends to R as r -> infinity", T.rstar(np.array([1e9])), [R], 1e-8)
+    ck.limit(f"{name}: R = 0.658045 L and B = exp(2kR) = 13.904", [R, B], [0.658045, 13.9040], 1e-4)
     p, q = T.pq("II", np.array([-1.0, 0, 1]), np.full(3, 1e-9))
-    ck.limit(f"{name}: r -> 0 in the black hole lands on tan p tan q = s", np.tan(p) * np.tan(q), [T.s] * 3, 1e-8)
-    p, q = T.pq("I", np.array([-2.0, 0, 2]), np.full(3, 1e9))
-    ck.limit(f"{name}: r -> infinity lands on the boundary X = pi/2", q - p, [HALF] * 3, 1e-8)
+    ck.limit(f"{name}: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = T.pq("I", np.array([-0.5, 0, 0.5]), np.full(3, 1e9))
+    ck.limit(f"{name}: r -> infinity lands on the boundary tan p tan q = -B", np.tan(p) * np.tan(q), [-B] * 3, 1e-6)
+    ck.limit(f"{name}: the boundary crosses T = 0 at X = 2 arctan sqrt(B)", (q - p)[1], 2 * np.arctan(np.sqrt(B)), 1e-8)
     p, q = T.pq("I", np.array([0.5]), np.array([1 + 1e-12]))
     ck.limit(f"{name}: r -> r_h at fixed t lands on the bifurcation sphere", point(p[0], q[0]), [0, 0], 1e-4)
     ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
-             ingoing(0.4 + T.chart_rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
+             ingoing(0.4 + T.rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
     ck.limit(f"{name}: the outgoing and static coordinates put one event at one point",
-             outgoing(0.4 - T.chart_rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
-    # The ray that leaves the right boundary at t = 0 is v = R, V = 1; it meets r = 0 at U = s.
+             outgoing(0.4 - T.rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
+    # The ray that leaves the right boundary at t = 0 is v = R, V = sqrt(B); it meets r = 0 at U = 1/sqrt(B).
     p, q = ingoing(np.array([R]), np.array([1e-12]))
-    ck.limit(f"{name}: the ray leaving the boundary at t = 0 meets r = 0 at X = pi/4 - arctan s, on its own side",
-             q - p, [Q4 - np.arctan(T.s)], 1e-9)
-    ck.limit(f"{name}: s < 1, so the singularity lies below T = pi/2 on the axis, at 2 arctan sqrt(s)",
-             [float(T.s < 1), 2 * np.arctan(np.sqrt(T.s))], [1.0, 0.5239], 1e-3)
+    ray = 2 * np.arctan(np.sqrt(B)) - HALF
+    ck.limit(f"{name}: the ray leaving the boundary at t = 0 meets r = 0 at X = 2 arctan sqrt(B) - pi/2 = 1.047, "
+             "on its own side", [(q - p)[0], (p + q)[0]], [ray, HALF], 1e-9)
+    ck.limit(f"{name}: that X is 1.047, two thirds of the way from the axis to the corner at pi/2", ray, 1.047, 1e-3)
     K = st.kretschmann
     ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
     ck.finite(f"{name}: the Kretschmann scalar is finite at r = r_h", K(np.zeros(3), np.array([0.999, 1, 1.001])))
 
-    top = 2 * np.arctan(np.sqrt(T.s))
-    box = [-HALF - 0.55, HALF + 0.55, -HALF - 0.25, HALF + 0.25]
-    up, down = [T.singularity(1), T.singularity(-1)]
-    upper = [point(a, b) for a, b in zip(*up)]              # from the right boundary to the left
-    lower = [point(a, b) for a, b in zip(*down)]            # from the left boundary to the right
-    whole = [[HALF, -HALF], [HALF, HALF]] + upper + [[-HALF, HALF], [-HALF, -HALF]] + lower
+    reach = 2 * np.arctan(np.sqrt(B))
+    box = [-reach - 0.3, reach + 0.3, -HALF - 0.25, HALF + 0.25]
+    bp, bq = T.boundary()
+    right = [point(a, b) for a, b in zip(bp, bq)]           # from (pi/2, -pi/2) up to (pi/2, pi/2)
+    left = [[-x, t_] for x, t_ in right[::-1]]              # from (-pi/2, pi/2) down to (-pi/2, -pi/2)
+    whole = right + left
+    named = min(right, key=lambda at: abs(at[1] - 1.2))
     R_OUT, R_IN, TS = (1.1, 1.25, 1.5, 2, 4), (0.4, 0.7, 0.9), (-0.8, -0.4, -0.2, 0, 0.2, 0.4, 0.8)
 
     def edges(v):
-        v.line("boundary", [[[HALF, -HALF], [HALF, HALF]], [[-HALF, -HALF], [-HALF, HALF]]])
+        v.curve("boundary", bp, bq)
+        v.curve("boundary", -bq, -bp)
         v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
-        v.curve("singular", *up, zig=True, tol=0.01)
-        v.curve("singular", *down, zig=True, tol=0.01)
-        v.label_xt([0, top], "$r = 0$", "b", dy=-8)
-        v.label_xt([0, -top], "$r = 0$", "t", dy=8)
-        v.label_xt([HALF, 0.9], "$r \\to \\infty$", "l", "small", dx=6)
-        v.label_xt([-HALF, 0.9], "$r \\to \\infty$", "r", "small", dx=-6)
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        # Each boundary's name stands outside it where the curve has come in far enough to leave it room in the box.
+        v.label_xt(named, "$r \\to \\infty$", "l", "small", dx=6)
+        v.label_xt([-named[0], named[1]], "$r \\to \\infty$", "r", "small", dx=-6)
         v.label_xt([-Q4, Q4], "$r_h$", "tr", "small", dx=-6, dy=2)
-        v.label_xt([1.05, -0.75], "exterior", cls="region")
-        v.label_xt([-1.05, -0.75], "exterior", cls="region")
-        # The lens between the horizons and r = 0 is 0.52 high on the axis; each name stands in its upper part.
-        v.label_xt([0, 0.43], "black hole", cls="region")
-        v.label_xt([0, -0.43], "white hole", cls="region")
+        v.label_xt([1.6, -0.6], "exterior", cls="region")
+        v.label_xt([-1.6, -0.6], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
         v.legend("horizon", "the horizon $r_h = L$")
         v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
         v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
@@ -3306,7 +3311,7 @@ def schwarzschild_ads(ck, src):
     t = spread(-np.inf, np.inf, 500, 6)
     v = View("static", "Static", box, "static")
     v.fill("region", whole)
-    v.fill("cover", [[0, 0], [HALF, -HALF], [HALF, HALF]])
+    v.fill("cover", [[0, 0]] + right)
     for r in R_OUT:
         v.curve("r", *T.pq("I", t, np.full_like(t, r)))
     rr = spread(1, np.inf, 500, 14)
@@ -3321,13 +3326,12 @@ def schwarzschild_ads(ck, src):
 
     v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
     v.fill("region", whole)
-    v.fill("cover", [[0, 0], [HALF, -HALF], [HALF, HALF]] + upper)
-    w_all = R + t
+    v.fill("cover", [[0, 0]] + right + [[-HALF, HALF]])
     for r in R_OUT + R_IN:
-        v.curve("r", *ingoing(w_all, np.full_like(w_all, r)))
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
     rr = spread(0, np.inf, 600, 14)
-    for w in (-0.8, -0.4, 0, 0.4, 0.8):
-        v.curve("null", *ingoing(np.full_like(rr, R + w), rr))
+    for w in (-0.4, 0, 0.4, 0.8, 1.2):
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
     edges(v)
     v.legend("cover", "the region that $v$ and $r > 0$ cover")
     v.legend("r", "$r$ constant, at " + listed(R_IN + R_OUT) + " in units of $L$")
@@ -3336,12 +3340,11 @@ def schwarzschild_ads(ck, src):
 
     v = View("outgoing", "Outgoing Eddington-Finkelstein", box, "eddington_finkelstein_outgoing")
     v.fill("region", whole)
-    v.fill("cover", [[0, 0], [HALF, HALF], [HALF, -HALF]] + lower[::-1])
-    u_all = t - R
+    v.fill("cover", [[0, 0], [-HALF, -HALF]] + right)
     for r in R_OUT + R_IN:
-        v.curve("r", *outgoing(u_all, np.full_like(u_all, r)))
-    for w in (-0.8, -0.4, 0, 0.4, 0.8):
-        v.curve("null", *outgoing(np.full_like(rr, w - R), rr))
+        v.curve("r", *outgoing(t, np.full_like(t, r)))
+    for w in (-1.2, -0.8, -0.4, 0, 0.4):
+        v.curve("null", *outgoing(np.full_like(rr, w), rr))
     edges(v)
     v.legend("cover", "the region that $u$ and $r > 0$ cover")
     v.legend("r", "$r$ constant, at " + listed(R_IN + R_OUT) + " in units of $L$")
@@ -6777,26 +6780,27 @@ CAPTIONS = {
     ("schwarzschild_ads", "static"): [
         "The Schwarzschild-anti-de Sitter black hole ($r_s = 2L$, so that $r_h = L$), maximally extended, each "
         "point in the diagram a 2-sphere of radius $r$. Its tortoise coordinate $r_*$, with $dr_*/dr = "
-        "(1 - r_s/r + r^2/L^2)^{-1}$, tends to a finite value $R$ as $r \\to \\infty$, and the Kruskal coordinates "
-        "$U = -e^{-\\kappa u}$ and $V = e^{\\kappa v}$, with $u, v = ct \\mp (r_* - R)$ and $\\kappa = 2/L$, make "
-        "the metric regular through $r_h$. With $p = \\arctan U$ and $q = \\arctan V$ the conformal boundary, "
-        "$UV = -1$, lies on the vertical lines $X = \\pm\\pi/2$, and it is timelike, as that of anti-de Sitter "
-        "space is.",
+        "(1 - r_s/r + r^2/L^2)^{-1}$ and $r_*(0) = 0$, tends to a finite value $R = 0.658\\,L$ as $r \\to \\infty$, "
+        "and the Kruskal coordinates $U = -e^{-\\kappa u}$ and $V = e^{\\kappa v}$, with $u, v = ct \\mp r_*$ and "
+        "$\\kappa = 2/L$, make the metric regular through $r_h$. With $p = \\arctan U$ and $q = \\arctan V$ the "
+        "singularity $r = 0$, where $UV = 1$, lies on the horizontal lines $T = \\pm\\pi/2$, and the conformal "
+        "boundary, where $UV = -e^{2\\kappa R} = -13.9$, on the two timelike curves at the sides.",
         "The coordinates $t$ and $r > r_h$ cover the right exterior alone. The horizon is the pair of null lines "
-        "$U = 0$ and $V = 0$, crossing at the bifurcation sphere. At $r = 0$, $UV = 0.0719$, smaller than the 1 "
-        "that would put the singularity on the straight line $T = \\pi/2$, so both singularities bow inward and "
-        "reach $T = \\pm 0.524$ on the axis. A light ray that leaves a boundary at $t = 0$ meets $r = 0$ at "
-        "$X = \\pm 0.714$, on its own side of the axis.",
+        "$U = 0$ and $V = 0$, crossing at the bifurcation sphere. A light ray that leaves a boundary at $t = 0$ "
+        "meets $r = 0$ at $X = \\pm 1.047$, two thirds of the way from the axis to the corner, so the diagram is "
+        "wider than the square of the BTZ black hole: with the singularities drawn straight the boundaries bow "
+        "outward, and the map $U \\to U/\\sqrt{13.9}$, $V \\to V/\\sqrt{13.9}$ straightens the boundaries and bows "
+        "the singularities inward.",
     ],
     ("schwarzschild_ads", "ingoing"): [
         "The Schwarzschild-anti-de Sitter black hole ($r_s = 2L$) with the ingoing Eddington-Finkelstein "
-        "coordinates $v$ and $r$ on it. From $V = e^{\\kappa(v - R)}$ and $U = UV(r)/V$, one formula for every "
+        "coordinates $v$ and $r$ on it. From $V = e^{\\kappa v}$ and $U = UV(r)/V$, one formula for every "
         "$r > 0$, they cover the exterior and the black hole together, and their lines of constant $v$ are "
         "ingoing light rays, which leave the conformal boundary, cross the horizon at 45°, and end at $r = 0$.",
     ],
     ("schwarzschild_ads", "outgoing"): [
         "The Schwarzschild-anti-de Sitter black hole ($r_s = 2L$) with the outgoing Eddington-Finkelstein "
-        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa(u + R)}$ and "
+        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa u}$ and "
         "$V = UV(r)/U$ they cover the exterior and the white hole, and their lines of constant $u$ are outgoing "
         "light rays, which leave $r = 0$, cross the horizon outward, and end on the conformal boundary.",
     ],

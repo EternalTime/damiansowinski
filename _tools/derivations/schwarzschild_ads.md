@@ -46,15 +46,17 @@ Schwarzschild's plus anti-de Sitter's, since the square of the Weyl tensor is Sc
 
 ## Step 5. The conformal diagram
 
-`AdSHoleTower` in `conformal.py` writes a `Tower`'s cells in $G(u) = \arctan e^{-\kappa u}$ with $u, v = ct \mp (r_* - R)$, so that Kruskal's $UV$ is $-1$ on the conformal boundary, which $p = \arctan U$ and $q = \arctan V$ put on the vertical lines $X = \pm\pi/2$, as for the BTZ hole.
+`AdSHoleTower` in `conformal.py` writes a `Tower`'s cells in $G(u) = \arctan e^{-\kappa u}$ with $u, v = ct \mp r_*$, so that Kruskal's $UV$ is $1$ at $r = 0$, which $p = \arctan U$ and $q = \arctan V$ put on the straight lines $T = \pm\pi/2$, as for Schwarzschild.
 At $r_s = 2L$,
 
-$$UV = \frac{1 - r}{\sqrt{r^2 + r + 2}}\exp\left(\frac{5}{\sqrt{7}}\left(\arctan\frac{2r + 1}{\sqrt{7}} - \frac{\pi}{2}\right)\right),$$
+$$UV = \frac{1 - r}{\sqrt{(r^2 + r + 2)/2}}\exp\left(\frac{5}{\sqrt{7}}\left(\arctan\frac{2r + 1}{\sqrt{7}} - \arctan\frac{1}{\sqrt{7}}\right)\right),$$
 
-which is $0$ on the horizon and $s = e^{-2\kappa R} = 0.0719$ at $r = 0$.
-The BTZ hole has $s = 1$, which puts $r = 0$ on the straight lines $T = \pm\pi/2$ and makes its diagram a square.
-Here $s < 1$, so $r = 0$ lies on $\tan p\tan q = s$, which runs from one boundary to the other and reaches only $T = 2\arctan\sqrt{s} = 0.524$ on the axis: the singularities bow inward, which Fidkowski, Hubeny, Kleban, and Shenker showed for every dimension above three.
-The ray that leaves the right boundary at $t = 0$ has $V = 1$ and meets $r = 0$ at $U = s$, $X = \pi/4 - \arctan s = 0.714$, on its own side of the axis, which the script checks.
+which is $0$ on the horizon and $-B$, $B = e^{2\kappa R} = 13.90$, on the conformal boundary.
+The BTZ hole has $B = 1$, which puts its boundary on the vertical lines $X = \pm\pi/2$ and makes its diagram a square.
+Here $B > 1$, so the boundary lies on $\tan p\tan q = -B$, which runs from one end of a singularity to the other and reaches $X = 2\arctan\sqrt{B} = 2.617$ on $T = 0$: with the singularities straight the boundaries bow outward.
+The map $U \to U/\sqrt{B}$, $V \to V/\sqrt{B}$ straightens the boundaries and puts $r = 0$ on $\tan p\tan q = 1/B = 0.0719$, bowed inward to $T = 0.524$ on the axis; the two are one diagram, as Fidkowski, Hubeny, Kleban, and Shenker say of their Figs. 2b and 2c, which they showed for every dimension above three.
+The second leaves the black hole a lens $0.524$ high on the axis, in which its name, $0.52$ wide to either side and $0.24$ high at the size the page sets it, does not fit, so the first is drawn.
+The ray that leaves the right boundary at $t = 0$ has $V = \sqrt{B}$ and meets $r = 0$ at $U = 1/\sqrt{B}$, $X = 2\arctan\sqrt{B} - \pi/2 = 1.047$, two thirds of the way from the axis to the corner, which the script checks.
 
 ## Step 6. The embedding
 
