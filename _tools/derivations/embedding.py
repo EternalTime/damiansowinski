@@ -4972,6 +4972,85 @@ def curzon_chazy(ck, src):
                         "space carries the slice on."])]
 
 
+ZV_OBLATE, ZV_PROLATE = {"m": 1, "q": 1}, {"m": 1, "q": "-1/2"}
+
+
+def zipoy_voorhees(ck, src):
+    """The equatorial plane of Zipoy and Voorhees's metric at t = 0 in the spherical chart, m = 1, at
+    q = 1, the oblate delta = 2, and at q = -1/2, the prolate delta = 1/2.
+
+    On the equator h = (r - m)^2/(r (r - 2m)), g_rr = f^(-1 - q) h^(-q (2 + q)) and the circle of
+    radius r has radius r f^(-q/2) on the surface. At q = 1 that is r^(3/2)/sqrt(r - 2m), least,
+    3 sqrt(3) m, at r = 3m and growing without bound as r -> 2m, the ring; g_rr = r^5 (r - 2m)/(r - m)^6
+    and (drho/dr)^2 = r (r - 3m)^2/(r - 2m)^3, so the slice has a surface of revolution in flat space
+    where r^2 (r - 2m)^2 >= (3m - r)(r - m)^3, which is r >= 2.5161 m, found here: a funnel with its
+    neck at 3m that widens again below it until it lies level. At q = -1/2 the circles have radius
+    r^(3/4) (r - 2m)^(1/4), which falls to zero at r = 2m, g_rr = (r - m)^(3/2) r^(-1/4) (r - 2m)^(-5/4)
+    and (drho/dr)^2 = (r - 3m/2)^2/(sqrt(r) (r - 2m)^(3/2)), so the surface runs in to r = 2.0020 m, a
+    circle of radius 0.356 m, where it lies level. Inside each the circles change faster than the
+    distance in to them, which is checked. Where a surface lies level its chords are short, so it is
+    written to nine decimals, as the Curzon-Chazy particle's is. The prolate spheroidal chart's
+    equator, y = 0 with x = r/m - 1, is checked to give the same surfaces."""
+    top = 6.0
+    views = []
+    cases = (("oblate", "Oblate, $q = 1$", ZV_OBLATE, {"m": 1, "delta": 2}, (2.3, 2.9), 2.5161,
+              lambda r: r / np.sqrt(1 - 2 / r)),
+             ("prolate", "Prolate, $q = -1/2$", ZV_PROLATE, {"m": 1, "delta": "1/2"}, (2.0005, 2.01), 2.0020,
+              lambda r: r * (1 - 2 / r) ** 0.25))
+    for vid, label, params, other_params, bracket, expected, radius in cases:
+        sl = Slice(src, "zipoy_voorhees", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+        lo, hi = bracket
+        for _ in range(80):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if float(sl.defect_at(np.array([mid]))[0]) < 0 else (lo, mid)
+        stop = hi
+        ck.add(f"Zipoy-Voorhees {vid}: the surface starts at r = {expected} m", abs(stop - expected), 1e-4)
+        ck.stops(f"Zipoy-Voorhees {vid}, inside the first surface", sl, np.linspace(2 + 1e-6, stop, 202)[:-1])
+        size = 2 * float(sl.rho_at(top))
+        neck = [(3.0, "surface", "$r = 3\\,m$")] if vid == "oblate" else [(3.0, "r", None)]
+        plane = Piece("plane", "sheet", sl, stop, top, 0.0, 1,
+                      (("stops", "the circles change faster than the distance in to them, and nothing in flat space "
+                                 "carries the slice on"),
+                       ("edge", "the surface runs on to $r \\to \\infty$")),
+                      [(stop, "chartedge", None)] + neck + [(4.0, "r", None), (5.0, "r", None), (top, "r", "$6\\,m$")],
+                      size, digits=LORENTZ_DIGITS)
+        ck.isometry(f"Zipoy-Voorhees {vid}, the equatorial plane", plane)
+        ck.radius(f"Zipoy-Voorhees {vid}, the equatorial plane, r f^(-q/2)", plane, radius, size)
+        if vid == "oblate":
+            ck.add("Zipoy-Voorhees oblate: the narrowest circle is at r = 3m, of radius 3 sqrt(3) m",
+                   abs(float(np.min(plane.rho)) - 3 * math.sqrt(3)) + abs(plane.at(3.0)[0] - 3 * math.sqrt(3)), 1e-9)
+        else:
+            ck.add("Zipoy-Voorhees prolate: the first circle has radius 0.356 m", abs(plane.at(stop)[0] - 0.356), 1e-3)
+            ck.exact("Zipoy-Voorhees prolate: the circles grow with r throughout", bool(np.all(np.diff(plane.rho) > 0)))
+        other = Slice(src, "zipoy_voorhees", "prolate_spheroidal", "x", "\\phi", {"t": 0, "y": 0}, other_params)
+        xs = plane.x[1:]
+        ck.add(f"Zipoy-Voorhees {vid}, the prolate spheroidal chart's equator gives the same surface",
+               float(max(np.max(np.abs(other.rho_at(xs - 1) - sl.rho_at(xs))),
+                         np.max(np.abs(other.defect_at(xs - 1) - sl.defect_at(xs))))), 1e-9)
+        surface = Surface([plane])
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], *plane.at(stop), f"${stop:.2f}\\,m$" if vid == "oblate" else f"${stop:.3f}\\,m$", side=-1)
+        if vid == "oblate":
+            ring_label(fig, [0, 0, 0], *plane.at(3.0), "$r = 3\\,m$", dx=10)
+        ring_label(fig, [0, 0, 0], *plane.at(top), "$6\\,m$")
+        fig.legend("fill", "cover", "the equatorial plane at $t = 0$, which $r$ and $\\phi$ cover")
+        if vid == "oblate":
+            fig.legend("line", "r", "$r$ constant, at $4$, $5$ and $6\\,m$")
+            fig.legend("line", "surface", "the narrowest circle, of radius $3\\sqrt{3}\\,m$, at $r = 3\\,m$")
+            fig.legend("line", "chartedge", f"$r = {stop:.2f}\\,m$, where the drawing stops")
+        else:
+            fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$ and $6\\,m$")
+            fig.legend("line", "chartedge", f"$r = {stop:.3f}\\,m$, where the drawing stops")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        q = "1" if vid == "oblate" else "-1/2"
+        views.append(view(vid, label, "$m$", [surface], fig.done(),
+                          settings=f"$q = {q}$ and $m = 1$, the unit of every length.",
+                          stops=[f"Inside $r = {stop:.4f}\\,m$ the circles change faster than the distance in to them, "
+                                 "$g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat "
+                                 "space carries the slice on."]))
+    return views
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -5576,6 +5655,7 @@ DRAWN = {
     "levi_civita": levi_civita,
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
+    "zipoy_voorhees": zipoy_voorhees,
     "robinson_trautman": robinson_trautman,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
@@ -5813,6 +5893,23 @@ CAPTIONS = {
         "The surface narrows from far out to a neck at $\\rho = m$ and widens again toward the singularity, the ring "
         "of infinite circumference, until it lies level at $\\rho = 0.72\\,m$, where the drawing stops; the same "
         "plane at every moment is the same surface.",
+    ],
+    ("zipoy_voorhees", "oblate"): [
+        "The equatorial plane of the Zipoy-Voorhees metric at one moment ($q = 1$, $m = 1$), drawn as a surface in flat "
+        "space with every distance along it the metric distance. On it $g_{rr} = r^5(r - 2m)/(r - m)^6$ and the circle "
+        "of radius $r$ has circumference $2\\pi r/\\sqrt{1 - 2m/r}$, least, $6\\sqrt{3}\\,\\pi m$, at $r = 3\\,m$, and "
+        "growing without bound as $r \\to 2m$.",
+        "The surface narrows from far out to a neck at $r = 3\\,m$ and widens again toward the ring singularity at "
+        "$r = 2m$, until it lies level at $r = 2.52\\,m$, where the drawing stops; the same plane at every moment is "
+        "the same surface.",
+    ],
+    ("zipoy_voorhees", "prolate"): [
+        "The equatorial plane of the Zipoy-Voorhees metric at one moment ($q = -1/2$, $m = 1$), drawn as a surface in "
+        "flat space with every distance along it the metric distance. On it "
+        "$g_{rr} = (r - m)^{3/2}r^{-1/4}(r - 2m)^{-5/4}$ and the circle of radius $r$ has circumference "
+        "$2\\pi r(1 - 2m/r)^{1/4}$, which falls to zero as $r \\to 2m$.",
+        "The surface narrows all the way in toward the singularity at $r = 2m$ and lies level at $r = 2.002\\,m$, on a "
+        "circle of radius $0.36\\,m$, where the drawing stops; the same plane at every moment is the same surface.",
     ],
     ("melvin", "universe"): [
         "The plane $z = 0$ of Melvin's universe at one moment ($B = 1$), drawn as a surface in flat space with "

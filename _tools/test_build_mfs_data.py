@@ -3184,7 +3184,11 @@ class Slices(unittest.TestCase):
               "gott_time_machine/centre_of_momentum/loop",
               # The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.
               "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
-              "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis"}
+              "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis",
+              # The axis of Zipoy and Voorhees's metric, which the embedded equatorial plane does not meet.
+              *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
+              *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
+                for k in ("oblate", "prolate")]}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
@@ -3256,6 +3260,12 @@ class Slices(unittest.TestCase):
                     "conformal dilaton_black_hole/string_magnetic": {"einstein", "string_electric"},
                     "dilaton_black_hole/string_electric/radial": {"einstein", "string_magnetic"},
                     "conformal dilaton_black_hole/string_electric": {"einstein", "string_magnetic"},
+                    # Zipoy and Voorhees's oblate and prolate masses are two spacetimes of one line element,
+                    # each equatorial drawing marking its own moment.
+                    **{f"zipoy_voorhees/{s}/equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
+                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    **{f"conformal zipoy_voorhees/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
+                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
@@ -3456,6 +3466,9 @@ class Slices(unittest.TestCase):
                 a = math.sinh(1.5 * t / math.sqrt(15)) ** (2 / 3)
                 ends = [a * r * (1 + 1 / (4 * a * r)) ** 2 for r in ends]
             return (lambda X: t), ends
+        if key.startswith("zipoy_voorhees/prolate_spheroidal/"):
+            # The prolate spheroidal x is r/m - 1 of the circles the embedding reaches in r, at m = 1.
+            return (lambda X: 0.0), [r - 1 for r in self.reach(surface)]
         if key == "levi_civita/kasner/radial":
             # The Kasner form's r is the proper distance from the axis, rho^Sigma/Sigma with
             # Sigma = 3/4 at sigma = 1/4, of the circles the embedding reaches in Weyl's rho.

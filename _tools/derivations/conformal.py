@@ -5032,6 +5032,265 @@ def curzon_chazy(ck, src):
     return views
 
 
+def zv_axis_star(r, oblate):
+    """r_* on the axis of Zipoy and Voorhees's metric at m = 1, dr_*/dr = f^(-1 - q): at q = 1,
+    r + 4 ln(r - 2) - 4/(r - 2), which falls to minus infinity as r -> 2, and at q = -1/2,
+    sqrt(r (r - 2)) + 2 ln((sqrt r + sqrt(r - 2))/sqrt 2), which vanishes there."""
+    r = np.asarray(r, dtype=float)
+    if not oblate:
+        d = np.maximum(r - 2, 0)
+        return np.sqrt(r * d) + 2 * np.log((np.sqrt(r) + np.sqrt(d)) / math.sqrt(2))
+    out = np.full(r.shape, -np.inf)
+    ok = r > 2
+    out[ok] = r[ok] + 4 * np.log(r[ok] - 2) - 4 / (r[ok] - 2)
+    return out
+
+
+def zv_plane_star(r, oblate):
+    """r_* in the equatorial plane at m = 1, the integral from 2 of f^(-1 - q) h^(-q (2 + q)/2), finite
+    at r = 2: s^(7/2)/(sqrt(s - 2) (s - 1)^3) at q = 1 and (1 - 2/s)^(-7/8) (1 - 1/s)^(3/4) at q = -1/2."""
+    alpha, g = ((-0.5, lambda s: s ** 3.5 / (s - 1) ** 3) if oblate
+                else (-0.875, lambda s: s ** 0.875 * (1 - 1 / s) ** 0.75))
+
+    def one(x):
+        if x <= 2:
+            return 0.0
+        inner = integrate.quad(g, 2, min(x, 3.0), weight="alg", wvar=(alpha, 0), epsabs=1e-13, epsrel=1e-13,
+                               limit=200)[0]
+        if x <= 3:
+            return inner
+        return inner + integrate.quad(lambda u: g(math.exp(u)) * (math.exp(u) - 2) ** alpha * math.exp(u),
+                                      math.log(3.0), math.log(x), epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+    return np.vectorize(one, otypes=[float])(np.asarray(r, dtype=float))
+
+
+def zipoy_voorhees(ck, src):
+    """Zipoy and Voorhees's metric on its two totally geodesic planes of t and one radius, m = 1, for
+    the oblate q = 1 (delta = 2) and the prolate q = -1/2 (delta = 1/2), in each chart.
+
+    On the axis h = 1 and the metric is -f^(1 + q) c^2 dt^2 + f^(-1 - q) dr^2, f = 1 - 2m/r, so
+    g_tt g_rr = -1 and r is an affine parameter along every ray. At q = 1, r_* = r + 4m ln(r/2m - 1)
+    - 4m^2/(r - 2m) runs from minus infinity at r = 2m to infinity, so u, v = arctan((ct -+ r_*)/l)
+    bring the half axis into the whole diamond, null infinity on the right and on the left the edge
+    r = 2m, which a ray reaches at t = +-infinity after a finite affine distance and where the
+    Kretschmann scalar 192 m^2 (r - 3m)^2/r^8 is 3/(4 m^4): the end of Weyl's rod, across which Kodama
+    and Hikida extended the spacetime. At q = -1/2, r_* = sqrt(r (r - 2m)) + 2m ln((sqrt r +
+    sqrt(r - 2m))/sqrt(2m)) vanishes at r = 2m, so the same maps bring the half axis into Minkowski's
+    triangle with r = 2m a timelike line on X = 0, where 12 m^2 (r - 3m/2)^2/(r^5 (r - 2m)^3) diverges.
+    On the equatorial plane h = (r - m)^2/(r (r - 2m)) and c dt/dr = f^(-1 - q) h^(-q (2 + q)/2), whose
+    integral from 2m is finite for both, so each is Minkowski's triangle with r = 2m a timelike
+    singularity, where the Kretschmann scalar diverges as (r - 2m)^(-2 (q^2 + q + 1)): the sixth power
+    at q = 1, and the 3/2 power at q = -1/2, which is checked between 10^-8 m and 10^-10 m from it.
+    The prolate spheroidal chart draws the same planes, y = 1 and y = 0, with x = r/m - 1."""
+    ell = CURZON_SCALE
+    views = []
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    corners = (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6))
+    charts = (("spherical", "r", 0, {"theta": "0", "phi": "0"}, {**EQUATOR, "phi": "0"},
+               {"oblate": {"m": 1, "q": 1}, "prolate": {"m": 1, "q": "-1/2"}},
+               {"oblate": "$q = 1$", "prolate": "$q = -1/2$"}, "$\\theta = 0$", "$\\theta = \\pi/2$",
+               lambda r: f"{r:g}\\,m"),
+              ("prolate_spheroidal", "x", 1, {"y": "1", "phi": "0"}, {"y": "0", "phi": "0"},
+               {"oblate": {"m": 1, "delta": 2}, "prolate": {"m": 1, "delta": "1/2"}},
+               {"oblate": "$\\delta = 2$", "prolate": "$\\delta = 1/2$"}, "$y = 1$", "$y = 0$",
+               lambda r: f"{r - 1:g}"))
+    for system, ra, shift, axis_fixed, eq_fixed, values, shown, on_axis, on_plane, named in charts:
+        edge = f"{ra} = {named(2)}".replace("\\,m", "m")
+        for shape in ("oblate", "prolate"):
+            oblate = shape == "oblate"
+            moment = slices.moments("zipoy_voorhees", shape)[0]
+            settings = f"{shown[shape]} and $m = 1$, the unit of every length, and $\\ell = {ell:g}\\,m$."
+
+            def axis_pq(t, r, oblate=oblate):
+                rs = zv_axis_star(r, oblate)
+                t = np.asarray(t, dtype=float)
+                return np.arctan((t - rs) / ell), np.arctan((t + rs) / ell)
+
+            def plane_pq(t, r, oblate=oblate):
+                return mink_pq(t, zv_plane_star(r, oblate), ell)
+
+            axis = Plane(src, "zipoy_voorhees", system, ("t", ra), axis_fixed, values[shape])
+            ck.chart(f"Zipoy-Voorhees {system} {shape}, the axis", axis, lambda t, x: axis_pq(t, x + shift),
+                     ck.uniform(-20, 20), ck.uniform(2.3 - shift, 20), lambda t, x: (1, 0))
+            rr = np.array([2.5, 3.0, 5.0, 10.0])
+            g00, _, g11, *_ = axis.metric(np.zeros(4), rr - shift)
+            ck.limit(f"Zipoy-Voorhees {system} {shape}: g_tt g_rr = -1 on the axis, so the radius is affine along its rays",
+                     g00 * g11, [-1.0] * 4, 1e-12)
+            K = axis.kretschmann
+            if oblate:
+                ck.limit(f"Zipoy-Voorhees {system} oblate: the Kretschmann scalar on the axis is 192 m^2 (r - 3m)^2/r^8",
+                         K(np.zeros(4), rr - shift), 192 * (rr - 3) ** 2 / rr ** 8, 1e-9)
+                near = 2 + np.array([1e-2, 1e-4, 1e-6])
+                ck.finite(f"Zipoy-Voorhees {system} oblate: the Kretschmann scalar is finite as r -> 2m on the axis",
+                          K(np.zeros(3), near - shift))
+                ck.limit(f"Zipoy-Voorhees {system} oblate: the Kretschmann scalar is 3/(4 m^4) at r = 2m on the axis",
+                         K(np.zeros(1), near[-1:] - shift), [0.75], 1e-4)
+                p, q = axis_pq(np.array([-3.0, 0.0, 3.0]), np.full(3, 2 + 1e-9))
+                ck.limit(f"Zipoy-Voorhees {system} oblate: r -> 2m on the axis lands on X = -pi", q - p, [-PI] * 3)
+                v = View(f"{system}_axis_oblate", f"The axis, {shown[shape]}",
+                         [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+                v.fill("region", DIAMOND)
+                v.fill("cover", DIAMOND)
+                RS = (2.2, 2.5, 4, 6, 10)
+                grid(v, "r", lambda r, t: axis_pq(t, r), RS, S_ALL)
+                grid(v, "surface", lambda r, t: axis_pq(t, r), (3,), S_ALL)
+                grid(v, "t", lambda t, s: axis_pq(t, 2 + s), TS, spread(0, np.inf, 500, 9))
+                v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+                v.line("chartedge", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+                for at, text, anchor, dx, dy in corners:
+                    v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                    v.label_xt(at, text, anchor, dx=dx, dy=dy)
+                v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+                v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+                v.label_xt([-HALF, HALF], f"${edge}$", "br", dx=-5, dy=-3)
+                v.label_xt([-HALF, -HALF], f"${edge}$", "tr", dx=-5, dy=3)
+                label_on(v, axis_pq(0, 3), f"${ra} = {named(3)}$")
+                label_on(v, axis_pq(0, 6), f"${named(6)}$")
+                v.legend("cover", f"the half axis, which $t$ and ${ra}$ cover")
+                v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
+                v.legend("surface", f"${ra} = {named(3)}$, where the Kretschmann scalar on the axis vanishes")
+                v.legend("t", "$ct$ constant, in units of $m$")
+                v.legend("chartedge", f"${edge}$, which light reaches as $t \\to \\pm\\infty$, at a finite affine distance, "
+                                      "and where the Kretschmann scalar is $3/(4m^4)$")
+            else:
+                ck.limit(f"Zipoy-Voorhees {system} prolate: the Kretschmann scalar on the axis is "
+                         "12 m^2 (r - 3m/2)^2/(r^5 (r - 2m)^3)",
+                         K(np.zeros(4), rr - shift), 12 * (rr - 1.5) ** 2 / (rr ** 5 * (rr - 2) ** 3), 1e-9)
+                ck.diverges(f"Zipoy-Voorhees {system} prolate: the Kretschmann scalar diverges at r = 2m on the axis",
+                            K(0, 2 + 1e-3 - shift), K(0, 2 + 1e-4 - shift))
+                ck.limit(f"Zipoy-Voorhees {system} prolate: r_* vanishes at r = 2m on the axis",
+                         zv_axis_star(np.array([2.0]), False), [0.0], 1e-12)
+                v = View(f"{system}_axis_prolate", f"The axis, {shown[shape]}",
+                         [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+                v.fill("region", TRIANGLE)
+                v.fill("cover", TRIANGLE)
+                RS = (2.5, 3, 4, 6, 10)
+                grid(v, "r", lambda r, t: axis_pq(t, r), RS, S_ALL)
+                grid(v, "t", lambda t, s: axis_pq(t, 2 + s), TS, spread(0, np.inf, 300, 9))
+                v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+                v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+                for at, text, anchor, dx, dy in corners:
+                    v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                    v.label_xt(at, text, anchor, dx=dx, dy=dy)
+                v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+                v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+                v.label_xt([0, 0.25], f"${edge}$", "r", dx=-6)
+                label_on(v, axis_pq(0, 6), f"${named(6)}$")
+                v.legend("cover", f"the half axis, which $t$ and ${ra}$ cover")
+                v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
+                v.legend("t", "$ct$ constant, in units of $m$")
+                v.legend("singular", f"${edge}$, where the Kretschmann scalar on the axis diverges")
+            v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+            v.set(restriction=f"The half axis {on_axis} only, totally geodesic, each point in the diagram a single event.",
+                  settings=settings)
+            views.append(v)
+
+            eq = Plane(src, "zipoy_voorhees", system, ("t", ra), eq_fixed, values[shape])
+            ck.chart(f"Zipoy-Voorhees {system} {shape}, the equatorial plane", eq, lambda t, x: plane_pq(t, x + shift),
+                     ck.uniform(-20, 20, 400), ck.uniform(2.05 - shift, 20, 400), lambda t, x: (1, 0))
+            KE = eq.kretschmann
+            if oblate:
+                ck.diverges(f"Zipoy-Voorhees {system} oblate: the Kretschmann scalar diverges at r = 2m in the equatorial plane",
+                            KE(0, 2 + 1e-2 - shift), KE(0, 2 + 1e-3 - shift))
+            else:
+                # It grows as the 3/2 power, so the second point is a hundred times nearer.
+                ck.diverges(f"Zipoy-Voorhees {system} prolate: the Kretschmann scalar diverges at r = 2m in the equatorial plane",
+                            KE(0, 2 + 1e-8 - shift), KE(0, 2 + 1e-10 - shift))
+            v = View(f"{system}_equator_{shape}", f"The equatorial plane, {shown[shape]}",
+                     [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+            v.fill("region", TRIANGLE)
+            v.fill("cover", TRIANGLE)
+            RS = (2.5, 4, 6, 10) if oblate else (2.5, 3, 4, 6, 10)
+            grid(v, "r", lambda r, t: plane_pq(t, r), RS, S_ALL)
+            if oblate:
+                grid(v, "surface", lambda r, t: plane_pq(t, r), (3,), S_ALL)
+            grid(v, "t", lambda t, s: plane_pq(t, 2 + s), TS, spread(0, np.inf, 300, 9))
+            v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+            v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+            for at, text, anchor, dx, dy in corners:
+                v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                v.label_xt(at, text, anchor, dx=dx, dy=dy)
+            v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+            v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+            v.label_xt([0, 0.25], f"${edge}$", "r", dx=-6)
+            label_on(v, plane_pq(0, 6), f"${named(6)}$")
+            v.legend("cover", f"the half plane, which $t$ and ${ra}$ cover")
+            v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
+            if oblate:
+                v.legend("surface", f"${ra} = {named(3)}$, the narrowest circle about the axis")
+            v.legend("t", "$ct$ constant, in units of $m$")
+            v.legend("singular", f"${edge}$, the ring, where the Kretschmann scalar diverges" if oblate else
+                     f"${edge}$, where the Kretschmann scalar diverges and the circles about the axis shrink to zero")
+            v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+            r = np.linspace(*moment.reach("spherical", "r"), 2)
+            v.slice(moment, [plane_pq(0 * r, r)])
+            v.set(restriction=f"The half plane of $t$ and ${ra}$ at {on_plane} and fixed $\\phi$ only, totally geodesic, "
+                              "each point in the diagram a single event.",
+                  settings=settings)
+            views.append(v)
+    return views
+
+
+def _zipoy_voorhees_captions():
+    """The eight captions of Zipoy and Voorhees's metric: the axis and the equatorial plane, oblate and
+    prolate, in each chart's own radius and parameter."""
+    out = {}
+    maps = ("the maps $u = \\arctan((ct - r_*)/\\ell)$ and $v = \\arctan((ct + r_*)/\\ell)$ bring it into ")
+    for system in ("spherical", "prolate_spheroidal"):
+        if system == "spherical":
+            r, edge, axis, plane, dr, m2 = "r", "r = 2m", "$\\theta = 0$", "$\\theta = \\pi/2$", "dr", ""
+            values = ("$q = 1$, $m = 1$", "$q = -1/2$, $m = 1$")
+            star = ("r_* = r + 4m\\ln(r/2m - 1) - 4m^2/(r - 2m)",
+                    "r_* = \\sqrt{r(r - 2m)} + 2m\\ln\\left((\\sqrt{r} + \\sqrt{r - 2m})/\\sqrt{2m}\\right)",
+                    "r_* = \\int_{2m}^{r} s^{7/2}ds/(\\sqrt{s - 2m}\\,(s - m)^3)",
+                    "r_* = \\int_{2m}^{r} (1 - 2m/s)^{-7/8}(1 - m/s)^{3/4}ds")
+            K = ("192m^2(r - 3m)^2/r^8", "12m^2(r - 3m/2)^2/(r^5(r - 2m)^3)", "(r - 2m)^{-6}", "(r - 2m)^{-3/2}")
+            affine = "g_{tt}g_{rr} = -1"
+        else:
+            r, edge, axis, plane, dr, m2 = "x", "x = 1", "$y = 1$", "$y = 0$", "dx", "m^2"
+            values = ("$\\delta = 2$, $m = 1$", "$\\delta = 1/2$, $m = 1$")
+            star = ("r_* = m\\left(x + 4\\ln(x - 1) - 4/(x - 1)\\right)",
+                    "r_* = m\\left(\\sqrt{x^2 - 1} + 2\\ln\\left((\\sqrt{x + 1} + \\sqrt{x - 1})/\\sqrt{2}\\right)\\right)",
+                    "r_* = m\\int_{1}^{x} (s + 1)^{7/2}ds/(\\sqrt{s - 1}\\,s^3)",
+                    "r_* = m\\int_{1}^{x} ((s - 1)/(s + 1))^{-7/8}(s/(s + 1))^{3/4}ds")
+            K = ("192(x - 2)^2/(m^4(x + 1)^8)", "12(x - 1/2)^2/(m^4(x + 1)^5(x - 1)^3)", "(x - 1)^{-6}", "(x - 1)^{-3/2}")
+            affine = "g_{tt}g_{xx} = -m^2"
+        event = "each point in the diagram a single event. "
+        out[f"{system}_axis_oblate"] = [
+            f"The half axis {axis} of the Zipoy-Voorhees metric ({values[0]}), " + event +
+            f"The metric on it is $-f^{{2}}c^2dt^2 + {m2}f^{{-2}}{dr}^2$, and with ${star[0]}$, which runs from "
+            f"$-\\infty$ at ${edge}$ to $\\infty$, " + maps + "the whole diamond, drawn with $T = u + v$ up and "
+            "$X = v - u$ across.",
+            f"Since ${affine}$, ${r}$ is an affine parameter along every light ray, so a ray reaches ${edge}$, the two "
+            "edges on the left, after a finite affine distance, at $t \\to \\pm\\infty$. The Kretschmann scalar on the "
+            f"axis, ${K[0]}$, is $3/(4m^4)$ there.",
+        ]
+        out[f"{system}_axis_prolate"] = [
+            f"The half axis {axis} of the Zipoy-Voorhees metric ({values[1]}), " + event +
+            f"The metric on it is $-f^{{1/2}}c^2dt^2 + {m2}f^{{-1/2}}{dr}^2$, and with ${star[1]}$, which vanishes at "
+            f"${edge}$, " + maps + "Minkowski's triangle, drawn with $T = u + v$ up and $X = v - u$ across.",
+            f"The edge $X = 0$ is ${edge}$, a timelike singularity where the Kretschmann scalar on the axis, ${K[1]}$, "
+            "diverges and which light from any event of the axis reaches in a finite time $t$.",
+        ]
+        out[f"{system}_equator_oblate"] = [
+            f"The half plane {plane} of $t$ and ${r}$ at fixed $\\phi$ of the Zipoy-Voorhees metric ({values[0]}), " + event +
+            f"The metric on it is $-f^{{2}}c^2dt^2 + {m2}f^{{-2}}h^{{-3}}{dr}^2$, and with ${star[2]}$, which is finite at "
+            f"${edge}$, " + maps + "Minkowski's triangle, drawn with $T = u + v$ up and $X = v - u$ across.",
+            f"The edge $X = 0$ is ${edge}$, the ring, a timelike singularity where the Kretschmann scalar diverges as "
+            f"${K[2]}$ and which light from any event of the plane reaches in a finite time $t$. The axis meets the "
+            "same surface at the edge of its diamond, where the curvature is finite.",
+        ]
+        out[f"{system}_equator_prolate"] = [
+            f"The half plane {plane} of $t$ and ${r}$ at fixed $\\phi$ of the Zipoy-Voorhees metric ({values[1]}), " + event +
+            f"The metric on it is $-f^{{1/2}}c^2dt^2 + {m2}f^{{-1/2}}h^{{3/4}}{dr}^2$, and with ${star[3]}$, which is finite at "
+            f"${edge}$, " + maps + "Minkowski's triangle, drawn with $T = u + v$ up and $X = v - u$ across.",
+            f"The edge $X = 0$ is ${edge}$, a timelike singularity where the Kretschmann scalar diverges as ${K[3]}$ and "
+            "which light from any event of the plane reaches in a finite time $t$. The circles about the axis shrink "
+            "to zero there.",
+        ]
+    return out
+
+
 def published_gthth(src, metric_id, system_id, params):
     """The published g_thetatheta of a spherical chart, c = 1, as a numpy function of (t, r) on
     the equator."""
@@ -6396,6 +6655,7 @@ DRAWN = {
     "thin_shell_wormhole": thin_shell_wormhole,
     "levi_civita": levi_civita,
     "curzon_chazy": curzon_chazy,
+    "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
 }
@@ -6415,6 +6675,7 @@ CAPTIONS = {
         "Every ray moving left keeps its $q$ across the shock, and every line of constant $v$ breaks there, its part "
         "behind the shock moved along it by $\\Delta v$. The rays moving right never meet the shock.",
     ],
+    **{("zipoy_voorhees", view): text for view, text in _zipoy_voorhees_captions().items()},
     ("curzon_chazy", "weyl_axis"): [
         "The half axis $\\rho = 0$, $z > 0$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
         "The metric on it is $-e^{-2m/z}c^2dt^2 + e^{2m/z}dz^2$, and with $z_* = z\\,e^{2m/z} - 2m\\,\\mathrm{Ei}(2m/z)$, "

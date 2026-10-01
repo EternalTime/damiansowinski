@@ -1,5 +1,5 @@
 {
-  "version": "c0bfe25327c8e4d7",
+  "version": "cc83645b9e000b1f",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -10456,6 +10456,232 @@
         "doi": "10.1088/0264-9381/26/19/195011",
         "eprint": "arXiv:0904.2765",
         "url": "https://doi.org/10.1088/0264-9381/26/19/195011"
+      }
+    },
+    "zipoy1966": {
+      "type": "article",
+      "fields": {
+        "title": "Topology of Some Spheroidal Metrics",
+        "author": "Zipoy, David M.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "7",
+        "number": "6",
+        "pages": "1137--1143",
+        "year": "1966",
+        "doi": "10.1063/1.1705005",
+        "url": "https://doi.org/10.1063/1.1705005"
+      }
+    },
+    "voorhees1970": {
+      "type": "article",
+      "fields": {
+        "title": "Static Axially Symmetric Gravitational Fields",
+        "author": "Voorhees, B. H.",
+        "journal": "Physical Review D",
+        "volume": "2",
+        "number": "10",
+        "pages": "2119--2122",
+        "year": "1970",
+        "doi": "10.1103/PhysRevD.2.2119",
+        "url": "https://doi.org/10.1103/PhysRevD.2.2119"
+      }
+    },
+    "esposito1975": {
+      "type": "article",
+      "fields": {
+        "title": "On a static axisymmetric solution of the {Einstein} equations",
+        "author": "Esposito, F. P. and Witten, L.",
+        "journal": "Physics Letters B",
+        "volume": "58",
+        "number": "3",
+        "pages": "357--360",
+        "year": "1975",
+        "doi": "10.1016/0370-2693(75)90673-5",
+        "url": "https://doi.org/10.1016/0370-2693(75)90673-5"
+      }
+    },
+    "papadopoulos1981": {
+      "type": "article",
+      "fields": {
+        "title": "Some properties of a particular static, axially symmetric space-time",
+        "author": "Papadopoulos, Demetrios and Stewart, Bob and Witten, Louis",
+        "journal": "Physical Review D",
+        "volume": "24",
+        "number": "2",
+        "pages": "320--326",
+        "year": "1981",
+        "doi": "10.1103/PhysRevD.24.320",
+        "url": "https://doi.org/10.1103/PhysRevD.24.320"
+      }
+    },
+    "tomimatsu1972": {
+      "type": "article",
+      "fields": {
+        "title": "New Exact Solution for the Gravitational Field of a Spinning Mass",
+        "author": "Tomimatsu, Akira and Sato, Humitaka",
+        "journal": "Physical Review Letters",
+        "volume": "29",
+        "number": "19",
+        "pages": "1344--1345",
+        "year": "1972",
+        "doi": "10.1103/PhysRevLett.29.1344",
+        "url": "https://doi.org/10.1103/PhysRevLett.29.1344"
+      }
+    },
+    "virbhadra1996": {
+      "type": "article",
+      "fields": {
+        "title": "Directional naked singularity in general relativity",
+        "author": "Virbhadra, K. S.",
+        "journal": "arXiv preprint arXiv:gr-qc/9606004",
+        "year": "1996",
+        "eprint": "gr-qc/9606004",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9606004"
+      }
+    },
+    "kodamahikida2003": {
+      "type": "article",
+      "fields": {
+        "title": "Global structure of the {Zipoy-Voorhees-Weyl} spacetime and the $\\delta = 2$ {Tomimatsu-Sato} spacetime",
+        "author": "Kodama, Hideo and Hikida, Wataru",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "20",
+        "number": "23",
+        "pages": "5121--5140",
+        "year": "2003",
+        "doi": "10.1088/0264-9381/20/23/011",
+        "eprint": "gr-qc/0304064",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/20/23/011"
+      }
+    },
+    "quevedo2011": {
+      "type": "article",
+      "fields": {
+        "title": "Mass quadrupole as a source of naked singularities",
+        "author": "Quevedo, Hernando",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "20",
+        "number": "10",
+        "pages": "1779--1787",
+        "year": "2011",
+        "doi": "10.1142/S0218271811019852",
+        "eprint": "1012.4030",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271811019852"
+      }
+    },
+    "richterek2002": {
+      "type": "article",
+      "fields": {
+        "title": "{Einstein-Maxwell} fields generated from the $\\gamma$-metric and their limits",
+        "author": "Richterek, L. and Novotn\\'y, J. and Horsk\\'y, J.",
+        "journal": "Czechoslovak Journal of Physics",
+        "volume": "52",
+        "number": "9",
+        "pages": "1021--1040",
+        "year": "2002",
+        "doi": "10.1023/A:1020581415399",
+        "eprint": "gr-qc/0209094",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1020581415399"
+      }
+    },
+    "brink2008": {
+      "type": "article",
+      "fields": {
+        "title": "Spacetime encodings. {II}. Pictures of integrability",
+        "author": "Brink, Jeandrew",
+        "journal": "Physical Review D",
+        "volume": "78",
+        "number": "10",
+        "pages": "102002",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.78.102002",
+        "eprint": "0807.1179",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.78.102002"
+      }
+    },
+    "lukes2012": {
+      "type": "article",
+      "fields": {
+        "title": "Nonintegrability of the {Zipoy-Voorhees} metric",
+        "author": "Lukes-Gerakopoulos, Georgios",
+        "journal": "Physical Review D",
+        "volume": "86",
+        "number": "4",
+        "pages": "044013",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.86.044013",
+        "eprint": "1206.0660",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.86.044013"
+      }
+    },
+    "maciejewski2013": {
+      "type": "article",
+      "fields": {
+        "title": "Nonexistence of the final first integral in the {Zipoy-Voorhees} space-time",
+        "author": "Maciejewski, Andrzej J. and Przybylska, Maria and Stachowiak, Tomasz",
+        "journal": "Physical Review D",
+        "volume": "88",
+        "number": "6",
+        "pages": "064003",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.88.064003",
+        "eprint": "1302.4234",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.88.064003"
+      }
+    },
+    "chowdhury2012": {
+      "type": "article",
+      "fields": {
+        "title": "Circular geodesics and accretion disks in the {Janis-Newman-Winicour} and gamma metric spacetimes",
+        "author": "Chowdhury, Anirban N. and Patil, Mandar and Malafarina, Daniele and Joshi, Pankaj S.",
+        "journal": "Physical Review D",
+        "volume": "85",
+        "number": "10",
+        "pages": "104031",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.85.104031",
+        "eprint": "1112.2522",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.85.104031"
+      }
+    },
+    "abdikamalov2019": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole mimicker hiding in the shadow: Optical properties of the $\\gamma$ metric",
+        "author": "Abdikamalov, Askar B. and Abdujabbarov, Ahmadjon A. and Ayzenberg, Dimitry and Malafarina, Daniele and Bambi, Cosimo and Ahmedov, Bobomurat",
+        "journal": "Physical Review D",
+        "volume": "100",
+        "number": "2",
+        "pages": "024014",
+        "year": "2019",
+        "doi": "10.1103/PhysRevD.100.024014",
+        "eprint": "1904.06207",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.100.024014"
+      }
+    },
+    "toktarbay2014": {
+      "type": "article",
+      "fields": {
+        "title": "A stationary $q$-metric",
+        "author": "Toktarbay, S. and Quevedo, H.",
+        "journal": "Gravitation and Cosmology",
+        "volume": "20",
+        "number": "4",
+        "pages": "252--254",
+        "year": "2014",
+        "doi": "10.1134/S0202289314040136",
+        "eprint": "1510.04155",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1134/S0202289314040136"
       }
     }
   }

@@ -221,6 +221,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `weyl_equator` and `spherical_equator`, the triangle: the curve $p, q = \arctan(\mp\rho_*/\ell)$ over the same stretch.
 - `weyl/axis`, `spherical/axis`, `weyl_axis` and `spherical_axis`: nothing, since the plane meets the axis only at $\rho = 0$, inside where the embedding stops, which `HIDDEN` records.
 
+### Zipoy-Voorhees
+
+- The embedding is two moments of two spacetimes: the equatorial plane at $t = 0$ in the spherical chart for the oblate $q = 1$, from $r = 2.5161\,m$ to $6\,m$, and for the prolate $q = -1/2$, from $r = 2.0020\,m$ to $6\,m$.
+- `spherical/equator_oblate` and `spherical/equator_prolate`, the plane of $t$ and $r$: the line $ct = 0$ from where that deformation's surface starts to the edge of the box at $6\,m$.
+- `prolate_spheroidal/equator_oblate` and `prolate_spheroidal/equator_prolate`, the plane of $t$ and $x$: the same line at $x = r/m - 1$.
+- The four equatorial triangles of the conformal diagram: the curve $u, v = \arctan(\mp r_*/\ell)$ over the same stretch.
+- Each equatorial drawing marks its own deformation's moment and none of the other's, which the tests list in `HIDDEN_VIEWS`.
+- The eight drawings of the axis: nothing, since the equatorial plane does not meet the axis, which `HIDDEN` records.
+
 ### Robinson-Trautman
 
 - The embedding is a movie of one wave front, the surface of $\theta$ and $\phi$ at one $u$ and one $r$ of the axisymmetric chart, at $cu = 0$, $0.25$, $0.5$, $1$ and $2\,m$; the fronts of one $u$ differ only in size and each is drawn with its own $r$ as the unit, so a moment is every front of its $u$.

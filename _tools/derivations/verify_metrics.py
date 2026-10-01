@@ -211,6 +211,13 @@ DIMENSIONS = {
     ("curzon_chazy", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # m is half the length of Weyl's rod; f = 1 - 2m/r and h are the names both charts define.
+    ("zipoy_voorhees", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "q": "1", "f": "1", "h": "1",
+    },
+    ("zipoy_voorhees", "prolate_spheroidal"): {
+        "t": "T", "x": "1", "y": "1", "\\phi": "1", "m": "L", "\\delta": "1", "f": "1", "h": "1",
+    },
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
@@ -773,6 +780,10 @@ def _canonical(expression):
     expression = expression.replace(
         lambda x: x.is_Pow and x.exp.is_Rational and not x.exp.is_Integer and not x.base.is_Number,
         _factored_root)
+    # A power of a sum or a product with a symbolic exponent, as (1 - 2m/r)^q, is split the same way.
+    expression = expression.replace(
+        lambda x: x.func is sp.Pow and not x.exp.is_Number and (x.base.is_Add or x.base.is_Mul),
+        _factored_root)
 
     generators = set()
     radicals = {}
@@ -865,7 +876,8 @@ def _even_in(expression, s):
 
 
 def _factored_root(power):
-    """b^e as the product of f^(k e) over the irreducible factors f^k of b.
+    """b^e as the product of f^(k e) over the irreducible factors f^k of b, for e a fraction
+    or an exponent that holds a parameter, as the q of (1 - 2m/r)^q.
 
     That is an identity only where every factor is positive, and it is what lets
     sqrt((R - r_s)(R^3 - r^2 r_s)) and R^2 sqrt(1 - r_s/R) sqrt(1 - r^2 r_s/R^3) meet as
@@ -922,7 +934,11 @@ def _collect_generators(expression, generators, radicals):
         for generator, coefficient in _exponent_terms(expression):
             if not coefficient.is_Integer:
                 raise NotImplementedError(f"{expression} is not an integer power of a generator")
-            generators.add(generator)
+            if _is_transcendental_power(generator):
+                generators.add(generator)
+            else:
+                # The whole part of the exponent leaves the base itself, which is read as it stands.
+                _collect_generators(generator, generators, radicals)
     else:
         generators.add(expression)
 

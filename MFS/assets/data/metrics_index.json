@@ -1535,5 +1535,39 @@
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"
+  },
+  {
+    "id": "zipoy_voorhees",
+    "name": "Zipoy-Voorhees",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "axisymmetric",
+      "axial symmetry",
+      "Weyl class",
+      "harmonic function",
+      "mass",
+      "quadrupole",
+      "gamma metric",
+      "q-metric",
+      "singularity",
+      "curvature singularity",
+      "naked singularity",
+      "directional singularity",
+      "ring singularity",
+      "asymptotically flat",
+      "Petrov type I",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8bdeb84b968878c3",
+    "diagrams": "c383ba43920e5b0b",
+    "conformal": "f06e536b192c099c",
+    "embedding": "633fa78640daea0a"
   }
 ]
