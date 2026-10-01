@@ -3,8 +3,8 @@
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
-robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine and zipoy_voorhees, and Godel's
-cylindrical chart.
+robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees and szekeres,
+and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -22,7 +22,7 @@ reads better than an expanded one, and each of those is checked against sympy he
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
-majumdar_papapetrou.md, robinson_trautman.md and tangherlini.md beside this file.
+majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md and szekeres.md beside this file.
 """
 import argparse
 import itertools
@@ -3110,7 +3110,9 @@ def szekeres(system_id):
         probe = vm.Reader(coords, parameters, ())
         forms = SzekeresForms(probe)
         lead = [probe.parameters["epsilon"], probe.parameters["f"], probe.parameters["E"], probe.parameters["R"]]
+        slope = sp.Derivative(probe.parameters["f"], probe.symbol["r"])
         extra = {"reduce": forms.reduce, "pretty": forms.pretty}
+        collect = {"collect": lambda poly, printer: cp.collect_by(poly, [slope], printer)}
     else:
         coords, name = ["t", "r", "\\theta", "\\phi"], "Axisymmetric"
         parameters = ["R = R(t,r)", "f = f(r)", "S = S(r)"]
@@ -3119,14 +3121,14 @@ def szekeres(system_id):
         domains = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
         probe = vm.Reader(coords, parameters, ())
         lead = [probe.parameters["f"], probe.parameters["S"], probe.parameters["R"]]
-        extra = {}
+        extra = collect = {}
     return {
         "metric_id": "szekeres",
         "system": {"id": system_id, "name": name, "coords": coords,
                    "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, \\infty)"] + domains,
                    "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
         "chart_line_element": line.replace("{c2}", ""),
-        "printer": {"lead": lead, "primed": ["f", "S", "P", "Q"]},
+        "printer": {"lead": lead, "primed": ["f", "S", "P", "Q"], **collect},
         "check": szekeres_check,
         **extra,
     }
