@@ -1257,6 +1257,42 @@
     "embedding": "2693e5d4af5edd89"
   },
   {
+    "id": "tangherlini",
+    "name": "Schwarzschild-Tangherlini",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "hyperspherical symmetry",
+      "black hole",
+      "mass",
+      "singularity",
+      "curvature singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "white hole",
+      "maximal extension",
+      "causal structure",
+      "asymptotically flat",
+      "higher dimensions",
+      "extra dimensions",
+      "five-dimensional",
+      "six-dimensional",
+      "dimensionality of space",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "282e8d9c6a7994a2",
+    "diagrams": "9987ad5f20cc062e",
+    "conformal": "94cab2e957646c35",
+    "embedding": "ad4896f7b32bbeec"
+  },
+  {
     "id": "taub_nut",
     "name": "Taub-Newman-Unti-Tamburino",
     "tags": [
