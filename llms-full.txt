@@ -615,6 +615,17 @@ The unique static, spherically symmetric vacuum solution to the Einstein-Maxwell
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2 - r_s r + r_q^2}{r^2}\,dt^2 + \dfrac{r^2}{r^2 - r_s r + r_q^2}\,dr^2 + r^2 d\Omega^2$$
 
+### Robinson-Trautman Radiating Spacetimes
+
+The vacuum field of an isolated body sending out gravitational waves on expanding wave fronts, found by Ivor Robinson and Andrzej Trautman in 1960. From smooth initial data the fronts grow round as the waves leave, and the spacetime settles down to the Schwarzschild black hole.
+
+- id: `robinson_trautman`
+- tags: vacuum, vacuum solution, gravitational waves, gravitational radiation, radiating, time-dependent, dynamical, algebraically special, Petrov type II, null congruence, shear-free, twist-free, expanding, retarded time, Bondi mass, Calabi flow, black hole, white hole, event horizon, apparent horizon, asymptotically flat, axisymmetric, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/robinson_trautman.json
+- chart Robinson-Trautman: coordinates $(u, r, x, y)$, $$ds^2 = -2H\,c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{P^2}\left(dx^2 + dy^2\right)$$
+- chart Axisymmetric: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -2H\,c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{f^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Schwarzschild Black Hole
 
 The unique spherically symmetric vacuum solution of the Einstein field equations, describing the spacetime outside a static, uncharged mass that does not rotate.

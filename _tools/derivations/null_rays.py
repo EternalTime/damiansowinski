@@ -289,6 +289,7 @@ class Diagram:
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     singular_where_claimed: bool = False  # judge a singular edge only inside the published domains
     star: dict = None               # a declared polytrope, {"K": ..., "rho_c": ...}; see StarSolver
+    fronts: dict = None             # declared Robinson-Trautman initial data, {"epsilon": ...}; see FrontSolver
     any_factor: str = None          # a declared conformal factor the drawing holds for every value of
     crunch: bool = False            # mark where the metric stops being finite as a singular curve,
                                     # checked on the Kretschmann scalar, and hatch what lies beyond it
@@ -366,6 +367,13 @@ POLYTROPE_INPUT = ("A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_
                    "$\\rho c^2 = \\rho_0c^2 + p$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$ in "
                    "units where $G = c = M_\\odot = 1$, solved from this spacetime's own $G^t{}_t$ and "
                    "$G^r{}_r$: a star of $M = 1.40\\,M_\\odot$ and $R = 14.2$ km.")
+# Robinson and Trautman's fronts at u = 0: Macedo and Saa's prolate data, drawn at epsilon = 4/5.
+RT_FRONTS = {"epsilon": "4/5"}
+RT_INPUT = ("The first front $f(0, \\theta)^2 = f_0^2\\left(1 - \\epsilon^2\\cos^2\\theta\\right)$ at "
+            "$\\epsilon = 4/5$, with $f_0^2 = \\ln\\left((1 + \\epsilon)/(1 - \\epsilon)\\right)/(2\\epsilon)$ so that "
+            "every front has the area $4\\pi r^2$, and after it the solution of the Robinson-Trautman equation, "
+            "with the vacuum $2H = K - 2r\\,\\partial_u\\ln f - 2m/r$.")
+
 POLYTROPE_STATED = {"M": (1.40, 2), "R_km": (14.2, 1)}
 KM = 1.4766250614                       # GM_sun/c^2 in km
 
@@ -808,6 +816,18 @@ DIAGRAMS = [
             marked=(("event", "-1/1000", 0, "the white hole's horizon"),), singular_runs=True,
             input="$m(u) = M$ for $u < 0$ and $0$ for $u > 0$, with $r_s = 2GM/c^2$: a shell of null "
                   "dust carrying off the whole mass $M$ along $u = 0$."),
+    # Robinson and Trautman's fronts, prolate at u = 0 and round by u = 3m, on the axis and on
+    # the equator of the axisymmetric chart: the fronts are even about the equator, so d_theta H
+    # vanishes on both and Gamma^theta_uu with it, and the null curves of each plane are null
+    # geodesics. The equation runs toward the future only, so nothing is drawn before u = 0.
+    Diagram("robinson_trautman", "axisymmetric", "axis", "the axis", ("u", "r"), (0, 5, 0, 9),
+            "$r/m$", "$(cu + r)/m$", {}, {"theta": "0", "phi": "0"}, to_display=FINKELSTEIN_OUT, orient="outgoing",
+            fronts=RT_FRONTS, input=RT_INPUT, singular_runs=True,
+            lines=(("shell", "x0", "0", "the first front, $u = 0$"),)),
+    Diagram("robinson_trautman", "axisymmetric", "equator", "the equator", ("u", "r"), (0, 5, 0, 9),
+            "$r/m$", "$(cu + r)/m$", {}, EQUATOR, to_display=FINKELSTEIN_OUT, orient="outgoing",
+            fronts=RT_FRONTS, input=RT_INPUT, singular_runs=True,
+            lines=(("shell", "x0", "0", "the first front, $u = 0$"),)),
     # The C-metric on the two halves of its axis, where sin(theta) = 0 kills Gamma^theta_tt and
     # Gamma^theta_rr and the null curves of the plane are null geodesics. Inside 2m and beyond
     # 1/alpha the time function is r, taken the way Griffiths, Krtous and Podolsky's extensions
@@ -1811,6 +1831,34 @@ CAPTIONS = {
         "space to the centre, arriving at $cu = 2r_s$. Every ingoing ray that reaches the centre "
         "before that moment came out of the white hole, and every one after came in from far away.",
     ],
+    ("robinson_trautman", "axisymmetric", "axis"): [
+        "The plane of $u$ and $r$ on the axis of symmetry ($\\theta = 0$), drawn with $cu + r$ as "
+        "the vertical axis so that the outgoing rays, $u$ constant, run at 45°. Each outgoing ray is one "
+        "point of every wave front it crosses, and $r$ is the affine distance along it. The first front "
+        "is $u = 0$, and the Robinson-Trautman equation carries it toward the future only. The fronts are "
+        "even about the equator, so $\\partial_\\theta H$ vanishes on the axis and the null curves drawn "
+        "are null geodesics.",
+        "The ingoing rays obey $dr/d(cu) = -H$, with $2H = K - 2r\\,\\partial_u\\ln f - 2m/r$. On the "
+        "axis the first front has $K = 2.25$ and $\\partial_u\\ln f = 0.80/m$, so $H < 0$ at every $r$, "
+        "and until $cu = 1.18\\,m$ an ingoing ray far out on the axis gains $r$: the ray that leaves the first "
+        "front at $r = 3.5\\,m$ reaches $4.07\\,m$ before it turns. The curve $g^{rr} = 2H = 0$ comes in from "
+        "large $r$ at $cu = 1.18\\,m$ and closes on $r = 2m$, where it stays once the fronts are round, and "
+        "from then on the plane is Schwarzschild's in outgoing coordinates. Inside it every future cone "
+        "points to larger $r$, a white hole, and $r = 0$, where the Kretschmann scalar $48m^2/r^6$ "
+        "diverges, lies in its past.",
+    ],
+    ("robinson_trautman", "axisymmetric", "equator"): [
+        "The plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$), drawn with $cu + r$ as "
+        "the vertical axis so that the outgoing rays, $u$ constant, run at 45°. The fronts are even about "
+        "the equator, so $\\partial_\\theta H$ vanishes here and the null curves drawn are null geodesics. "
+        "On the equator the first front has $K = 0.49$ and $\\partial_u\\ln f = -0.14/m$: $f$ falls here while "
+        "it rises at the poles.",
+        "The curve $g^{rr} = 2H = 0$ meets the first front at $r = 1.85\\,m$, falls to $1.70\\,m$ at "
+        "$cu = 0.2\\,m$, and rises to $r = 2m$ as the fronts grow round. Outside it the ingoing rays lose $r$ "
+        "from the first front on, and inside it they gain $r$ and every future cone points to larger $r$, a "
+        "white hole with $r = 0$ in its past. By $cu = 3m$ the fronts are round to within $0.2\\%$, and "
+        "this plane and the axis's are both Schwarzschild's in outgoing coordinates.",
+    ],
     ("c_metric", "spherical", "inner"): [
         "The plane of $t$ and $r$ on the half axis between the black holes ($\\theta = 0$, $\\phi = 0$), "
         "drawn for $\\alpha m = 1/6$. The curves drawn are null, and on the axis they are also null "
@@ -2073,6 +2121,224 @@ class StarSolver:
 
 _SOLVERS = {}
 
+class FrontSolver:
+    """Robinson and Trautman's wave fronts for declared axisymmetric initial data, G = c = m = 1.
+
+    The fronts' metric is r^2 f^-2 (dtheta^2 + sin^2 theta dphi^2), and in vacuum
+    d_u f = -f^3 Lap K / 12, with Lap the Laplacian of the unit sphere and
+    K = f^2 (1 + Lap ln f) = f^2 + f Lap f - (1 - x^2)(d_x f)^2 the curvature of the front at
+    r = 1, x = cos theta. f is a series of Legendre polynomials in x, as Macedo and Saa take
+    it, and the equation is projected onto them by Gauss-Legendre quadrature, exact for the
+    polynomials it meets, and integrated by an implicit Runge-Kutta method from the data
+    f(0, theta)^2 = f_0^2 (1 - epsilon^2 cos^2 theta), f_0^2 = ln((1 + epsilon)/(1 - epsilon))/(2 epsilon),
+    which gives every front the area 4 pi r^2. The equation has no solution toward the past,
+    so there is no front before u = 0, and from `end` on the fronts are round to rounding.
+    The vacuum 2H = K - 2r d_u ln f - 2/r follows. null_rays draws light with it, embedding.py
+    the fronts and conformal.py the plane of its axis.
+    """
+
+    funcs = ()
+    end = 16.0
+    OFF_AXIS = 1e-3     # where a published value that divides by sin(theta) is read beside the axis
+
+    def __init__(self, epsilon, theta=0.0, modes=40):
+        from numpy.polynomial import legendre as L
+        self.epsilon, self.theta, self.n = float(epsilon), float(theta), modes
+        x, w = L.leggauss(4 * modes)
+        self.x = x
+        eye = np.eye(2 * modes + 1)
+        self.V = L.legvander(x, 2 * modes)
+        self.V1 = np.stack([L.legval(x, L.legder(row, 1)) for row in eye], axis=1)
+        self.V2 = np.stack([L.legval(x, L.legder(row, 2)) for row in eye], axis=1)
+        self.project = (self.V * w[:, None]).T * ((2 * np.arange(2 * modes + 1) + 1) / 2)[:, None]
+        self.ll = np.arange(2 * modes + 1) * (np.arange(2 * modes + 1) + 1.0)
+        self.f0sq = math.log((1 + self.epsilon) / (1 - self.epsilon)) / (2 * self.epsilon)
+        b0 = (self.project @ np.sqrt(self.f0sq * (1 - self.epsilon ** 2 * x ** 2)))[:modes + 1]
+        self.ivp = solve_ivp(lambda _, b: self.rate(b), (0.0, self.end), b0, method="Radau",
+                             jac=lambda _, b: self.jacobian(b), rtol=1e-10, atol=1e-12, dense_output=True)
+        if not self.ivp.success:
+            raise SystemExit("FrontSolver: the Robinson-Trautman equation was not integrated")
+        self._series = {}
+
+    def on_nodes(self, b):
+        """f, K and Lap K at the quadrature nodes, and the Legendre coefficients of K."""
+        n = self.n + 1
+        x = self.x
+        f, fx, fxx = self.V[:, :n] @ b, self.V1[:, :n] @ b, self.V2[:, :n] @ b
+        K = f ** 2 + f * ((1 - x ** 2) * fxx - 2 * x * fx) - (1 - x ** 2) * fx ** 2
+        k = self.project @ K
+        return f, K, -(self.V @ (self.ll * k)), k
+
+    def rate(self, b):
+        f, _, lap, _ = self.on_nodes(b)
+        return (self.project @ (-f ** 3 * lap / 12))[:self.n + 1]
+
+    def jacobian(self, b):
+        """The derivative of rate(b) in b, written out, since differences of a rate that carries
+        the fourth derivative of f lose to rounding the digits Newton's iteration needs."""
+        n = self.n + 1
+        x = self.x[:, None]
+        Vn, V1n, V2n = self.V[:, :n], self.V1[:, :n], self.V2[:, :n]
+        f, fx, fxx = (Vn @ b)[:, None], (V1n @ b)[:, None], (V2n @ b)[:, None]
+        dK = (2 * f + (1 - x ** 2) * fxx - 2 * x * fx) * Vn + f * ((1 - x ** 2) * V2n - 2 * x * V1n) \
+            - 2 * (1 - x ** 2) * fx * V1n
+        lap = self.on_nodes(b)[2][:, None]
+        dlap = -(self.V @ (self.ll[:, None] * (self.project @ dK)))
+        return (self.project @ (-(3 * f ** 2 * lap * Vn + f ** 3 * dlap) / 12))[:n]
+
+    def modes_at(self, u):
+        return self.ivp.sol(min(max(float(u), 0.0), self.end))
+
+    def series(self, u):
+        """The Legendre coefficients of f, d_u f, d_u^2 f, K and d_u K at retarded time u, d_u b
+        being the rate and d_u^2 b the Jacobian applied to it; kept, since a front is read at
+        many angles."""
+        u = min(max(float(u), 0.0), self.end)
+        if u not in self._series:
+            b = self.modes_at(u)
+            late = u >= self.end
+            db = 0 * b if late else self.rate(b)
+            ddb = 0 * b if late else self.jacobian(b) @ db
+            n = self.n + 1
+            fn, f1, f2 = (self.V[:, :n] @ b)[:, None], (self.V1[:, :n] @ b)[:, None], (self.V2[:, :n] @ b)[:, None]
+            xn = self.x[:, None]
+            dK = ((2 * fn + (1 - xn ** 2) * f2 - 2 * xn * f1) * self.V[:, :n]
+                  + fn * ((1 - xn ** 2) * self.V2[:, :n] - 2 * xn * self.V1[:, :n]) - 2 * (1 - xn ** 2) * f1 * self.V1[:, :n])
+            if len(self._series) > 20000:
+                self._series.clear()
+            self._series[u] = (b, db, ddb, self.on_nodes(b)[3], self.project @ (dK @ db))
+        return self._series[u]
+
+    def jet(self, u, theta):
+        """Everything the published tensors read at retarded time u and angles theta: f and K with
+        their derivatives in theta, d_u f with its derivatives in theta, d_u^2 f and d_u K, each
+        from the series itself."""
+        from numpy.polynomial import legendre as L
+        theta = np.asarray(theta, dtype=float)
+        x, s = np.cos(theta), np.sin(theta)
+        b, db, ddb, k, dk = self.series(u)
+
+        def along(c):
+            g, gx, gxx = L.legval(x, c), L.legval(x, L.legder(c)), L.legval(x, L.legder(c, 2))
+            return g, -s * gx, s ** 2 * gxx - x * gx
+        f, ft, ftt = along(b)
+        fu, fut, futt = along(db)
+        K, Kt, Ktt = along(k)
+        return {"f": f, "ft": ft, "ftt": ftt, "fu": fu, "fut": fut, "futt": futt, "fuu": L.legval(x, ddb),
+                "K": K, "Kt": Kt, "Ktt": Ktt, "Ku": L.legval(x, dk)}
+
+    def shape(self, u):
+        """f and d_theta f at retarded time u as functions of theta, for a front's surface."""
+        from numpy.polynomial import legendre as L
+        b = self.series(u)[0]
+        db = L.legder(b)
+        return (lambda th: L.legval(np.cos(th), b), lambda th: -np.sin(th) * L.legval(np.cos(th), db))
+
+    JET = ("f", "ft", "ftt", "fu", "fut", "futt", "fuu", "K", "Kt", "Ktt", "Ku")
+
+    def table(self):
+        """The jet on the solver's own theta as cubic splines in u, on a grid fine where the
+        short modes of the first front die out, so that a plane's worth of points is cheap."""
+        if not hasattr(self, "_table"):
+            from scipy.interpolate import CubicSpline
+            grid = np.concatenate([[0.0], np.geomspace(1e-7, self.end, 6000)])
+            rows = [self.jet(u, self.theta) for u in grid]
+            self._table = {name: CubicSpline(grid, np.array([float(row[name]) for row in rows])) for name in self.JET}
+        return self._table
+
+    def values(self, x0, r, exact=False):
+        """Every derivative of f and H a published component can name, at chart points (x^0, r)
+        on the solver's theta, keyed by the function and its orders in (u, theta) or
+        (u, r, theta); NaN before the first front. H = (K - 2r d_u ln f - 2/r)/2. With `exact`
+        each point's jet is taken from the series itself and the splines are left out, which
+        is what a check of a few points wants."""
+        shape = np.broadcast(np.asarray(x0), np.asarray(r)).shape
+        u = np.broadcast_to(np.asarray(x0, dtype=float), shape)
+        r = np.broadcast_to(np.asarray(r, dtype=float), shape)
+        if exact:
+            jets = [self.jet(v, self.theta) for v in u.ravel()]
+            j = {name: np.array([float(jet[name]) for jet in jets]).reshape(shape) for name in self.JET}
+        else:
+            table = self.table()
+            at = np.clip(u, 0.0, self.end)
+            j = {name: np.where(u >= 0, table[name](at), np.nan) for name in self.JET}
+        f = j["f"]
+        ln_u = j["fu"] / f
+        ln_ut = j["fut"] / f - j["fu"] * j["ft"] / f ** 2
+        ln_utt = (j["futt"] / f - 2 * j["fut"] * j["ft"] / f ** 2 - j["fu"] * j["ftt"] / f ** 2
+                  + 2 * j["fu"] * j["ft"] ** 2 / f ** 3)
+        ln_uu = j["fuu"] / f - j["fu"] ** 2 / f ** 2
+        with np.errstate(all="ignore"):
+            return {
+                ("f", (0, 0)): f, ("f", (0, 1)): j["ft"], ("f", (0, 2)): j["ftt"], ("f", (1, 0)): j["fu"],
+                ("f", (1, 1)): j["fut"], ("f", (1, 2)): j["futt"], ("f", (2, 0)): j["fuu"],
+                ("H", (0, 0, 0)): (j["K"] - 2 * r * ln_u - 2 / r) / 2,
+                ("H", (0, 1, 0)): -ln_u + 1 / r ** 2, ("H", (0, 2, 0)): -2 / r ** 3,
+                ("H", (0, 0, 1)): (j["Kt"] - 2 * r * ln_ut) / 2, ("H", (0, 0, 2)): (j["Ktt"] - 2 * r * ln_utt) / 2,
+                ("H", (0, 1, 1)): -ln_ut, ("H", (1, 0, 0)): (j["Ku"] - 2 * r * ln_uu) / 2,
+            }
+
+    @staticmethod
+    def placeholders(reader, expr):
+        """expr with H, f and every derivative of either replaced by a plain symbol, and the
+        symbols with the key of values() each stands for."""
+        found = {}
+
+        def symbol(fn, orders):
+            key = (fn.func.__name__, tuple(orders))
+            if key not in found:
+                found[key] = sp.Symbol("_" + key[0] + "_" + "".join(map(str, key[1])))
+            return found[key]
+        declared = [reader.parameters[name] for name in ("H", "f")]
+        for d in sorted(expr.atoms(sp.Derivative), key=lambda d: -len(d.variables)):
+            if d.expr in declared:
+                expr = expr.xreplace({d: symbol(d.expr, [d.variables.count(a) for a in d.expr.args])})
+        for fn in declared:
+            expr = expr.xreplace({fn: symbol(fn, [0] * len(fn.args))})
+        return expr, list(found.items())
+
+    LATE = 10.0     # the fronts are round to a part in 10^9 from here on
+
+    def kruskal_v(self, u, r):
+        """Kruskal's V of the ingoing ray through (u, r) on the solver's theta, for u >= 0: the
+        ray is carried by dr/du = -H, every ray at once and each over its own stretch of u, to the
+        retarded time LATE, where the plane is Schwarzschild's and V = (r/2 - 1) e^{(u + 2r)/4}."""
+        u, r = np.atleast_1d(np.asarray(u, dtype=float)), np.atleast_1d(np.asarray(r, dtype=float))
+        shape = np.broadcast(u, r).shape
+        u, r = np.broadcast_to(u, shape).ravel(), np.broadcast_to(r, shape).ravel()
+        span = np.maximum(self.LATE - u, 0.0)
+
+        def rate(s, y):
+            return -span * self.values(u + s * span, y)[("H", (0, 0, 0))]
+        end = solve_ivp(rate, (0.0, 1.0), r, method="DOP853", rtol=1e-12, atol=1e-13).y[:, -1]
+        at = np.maximum(u, self.LATE)
+        return ((end / 2 - 1) * np.exp((at + 2 * end) / 4)).reshape(shape)
+
+    def area(self, u):
+        """The area of the front r = 1 over 4 pi, which the equation conserves."""
+        f = self.on_nodes(self.modes_at(u))[0]
+        x, w = np.polynomial.legendre.leggauss(4 * self.n)
+        return float(np.sum(w / f ** 2) / 2)
+
+    def bondi_mass(self, u):
+        """Singleton's Bondi mass over m, the mean of f^-3 over the sphere."""
+        f = self.on_nodes(self.modes_at(u))[0]
+        x, w = np.polynomial.legendre.leggauss(4 * self.n)
+        return float(np.sum(w / f ** 3) / 2)
+
+    def radiated(self):
+        """Macedo and Saa's closed form for the fraction of the first Bondi mass radiated."""
+        e = self.epsilon
+        return 1 - math.sqrt((1 - e ** 2) * math.log((1 + e) / (1 - e)) ** 3 / (8 * e ** 3))
+
+
+def front_solver(fronts, theta=0.0):
+    key = ("fronts", json.dumps(fronts, sort_keys=True), float(theta))
+    if key not in _SOLVERS:
+        _SOLVERS[key] = FrontSolver(float(number(fronts["epsilon"])), float(theta))
+    return _SOLVERS[key]
+
+
 
 def star_solver(metric_id, system_id, star):
     key = (metric_id, system_id, json.dumps(star, sort_keys=True))
@@ -2123,7 +2389,8 @@ class Chart:
         self.fixed_syms = [by_plain[name] for name in spec.fixed]
         self.fixed_vals = [float(number(spec.fixed[name])) for name in spec.fixed]
         self.solver = (dust_solver(spec.metric, spec.system, spec.plane[0], spec.dust) if spec.dust
-                       else star_solver(spec.metric, spec.system, spec.star) if spec.star else None)
+                       else star_solver(spec.metric, spec.system, spec.star) if spec.star
+                       else front_solver(spec.fronts, float(number(spec.fixed["theta"]))) if spec.fronts else None)
 
         def prep(expr):
             expr = sp.sympify(expr)
@@ -2175,21 +2442,38 @@ class Chart:
         """A numpy function of (x^0, r), with the fixed coordinates and any dust fed in."""
         expr = sp.sympify(expr)
         extra = []
-        if self.solver:
+        if self.solver and not isinstance(self.solver, FrontSolver):
             for name in self.solver.funcs:
                 fn = self.reader.parameters[name]
                 var = fn.args[0]
                 A0, A1, A2 = sp.symbols(f"{name}_0 {name}_1 {name}_2")
                 expr = expr.subs(sp.Derivative(fn, (var, 2)), A2).subs(sp.Derivative(fn, var), A1).subs(fn, A0)
                 extra += [A0, A1, A2]
+        fronts = isinstance(self.solver, FrontSolver)
+        solver, fixed_vals = self.solver, self.fixed_vals
+        if fronts:
+            # A published scalar that divides by sin(theta), as the Kretschmann scalar does, is
+            # smooth across the axis and is read OFF_AXIS beside it, with the fronts' own values
+            # there; the metric on the plane has no such division and is read on the axis itself.
+            theta = self.reader.symbol["\\theta"]
+            here = self.fixed_vals[self.fixed_syms.index(theta)]
+            beside = min(max(here, FrontSolver.OFF_AXIS), math.pi - FrontSolver.OFF_AXIS)
+            if beside != here and expr.has(theta):
+                solver = front_solver(self.spec.fronts, beside)
+                fixed_vals = [beside if sym == theta else v for sym, v in zip(self.fixed_syms, self.fixed_vals)]
+            expr, held = FrontSolver.placeholders(self.reader, expr)
+            extra = [symbol for _, symbol in held]
         f = sp.lambdify((self.x0, self.xr, *self.fixed_syms, *extra), expr, "numpy")
 
         def call(x0, r):
             x0 = np.asarray(x0, dtype=float)
             r = np.asarray(r, dtype=float)
             shape = np.broadcast(x0, r).shape
-            args = [np.full(shape, v) for v in self.fixed_vals]
-            if self.solver:
+            args = [np.full(shape, v) for v in fixed_vals]
+            if fronts:
+                values = solver.values(x0, r)
+                args += [values[key] for key, _ in held]
+            elif self.solver:
                 for name in self.solver.funcs:
                     args += list(self.solver.at(name, x0, r))
             with np.errstate(all="ignore"):
@@ -3425,6 +3709,64 @@ def solves_check(spec, chart):
                              f"at {ok.sum()} finite points")
 
 
+def front_checks(where, fronts, report=None):
+    """Declared Robinson-Trautman fronts against what their construction does not use: every
+    published component of the axisymmetric chart's Ricci tensor vanishes on them and its
+    published Kretschmann scalar is Schwarzschild's 48/r^6, at points all over u, r and theta; the
+    area of a front is conserved; the Bondi mass falls from Macedo and Saa's closed form to m;
+    and the last mode to die falls as e^{-2u/m}, Foster and Newman's rate."""
+    kept = ("front_checks", json.dumps(fronts, sort_keys=True))
+    if kept not in _SOLVERS:
+        _SOLVERS[kept] = _front_misses(fronts)
+    out = _SOLVERS[kept]
+    limits = {"ricci": 1e-8, "kretschmann": 1e-9, "area": 1e-10, "bondi": 1e-10, "settles": 1e-10,
+              "falls": 1e-12, "rate": 1e-4}
+    if report:
+        for name, miss in out.items():
+            report(f"{where}: the fronts, {name}", miss, limits[name])
+    wrong = {k: v for k, v in out.items() if not v <= limits[k]}
+    if wrong:
+        raise SystemExit(f"{where}: the declared fronts miss {wrong}")
+    return out
+
+
+def _front_misses(fronts):
+    _, entry, reader = load("robinson_trautman", "axisymmetric")
+    rng = np.random.default_rng(11)
+    out = {"ricci": 0.0, "kretschmann": 0.0}
+    names = [reader.symbol[c] for c in entry["coords"]]
+    for theta in rng.uniform(0.15, math.pi - 0.15, 12):
+        solver = FrontSolver(float(number(fronts["epsilon"])), float(theta))
+        u, r = rng.uniform(0.0, 3.0, 40), rng.uniform(0.3, 6.0, 40)
+        values = solver.values(u, r, exact=True)
+
+        def at(text):
+            expr, held = FrontSolver.placeholders(reader, reader(text).subs(reader.c, 1))
+            f = sp.lambdify((*names, *[symbol for _, symbol in held]), expr, "numpy")
+            return np.asarray(f(u, r, theta, 0.0, *[values[k] for k, _ in held]), dtype=float) * np.ones_like(u)
+
+        def size(text):
+            # The same value with every term taken positive, which is what a miss is measured against.
+            expr, held = FrontSolver.placeholders(reader, reader(text).subs(reader.c, 1))
+            terms = sp.Add.make_args(sp.expand(sp.numer(sp.together(expr)))), sp.denom(sp.together(expr))
+            f = sp.lambdify((*names, *[symbol for _, symbol in held]), [list(terms[0]), terms[1]], "numpy")
+            top, bottom = f(u, r, theta, 0.0, *[values[k] for k, _ in held])
+            return sum(np.abs(np.asarray(t, dtype=float) * np.ones_like(u)) for t in top) / np.abs(bottom)
+        for c in entry["ricci_tensor"]["variants"]["ll"]["nonzero"]:
+            out["ricci"] = max(out["ricci"], float(np.max(np.abs(at(c["value"])) / size(c["value"]))))
+        K = at(strip_lhs(entry["kretschmann"]))
+        out["kretschmann"] = max(out["kretschmann"], float(np.max(np.abs(K * r ** 6 / 48 - 1))))
+    solver = front_solver(fronts)
+    times = np.concatenate([[0.0], np.geomspace(1e-4, FrontSolver.end, 60)])
+    mass = np.array([solver.bondi_mass(t) for t in times])
+    out["area"] = float(max(abs(solver.area(t) - 1) for t in times))
+    out["bondi"] = abs(mass[0] - 1 / (1 - solver.radiated()))
+    out["settles"] = abs(mass[-1] - 1)
+    out["falls"] = float(max(0.0, np.max(np.diff(mass))))
+    out["rate"] = abs(math.log(abs(solver.modes_at(5.0)[2] / solver.modes_at(6.0)[2])) - 2.0)
+    return {k: float(v) for k, v in out.items()}
+
+
 def star_checks(spec, star):
     """A declared star solves the one field equation its construction did not use, the
     published G^theta_theta = 8 pi p, and is the star its declared input says it is."""
@@ -3442,6 +3784,7 @@ def draw(spec):
     plot = Plot(chart)
     families = plot.rays()
     fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust or spec.star or spec.solves else [])
+              + (["ricci_tensor"] if spec.fronts else [])
               + (PRINCIPAL_FIELDS if spec.principal else []) + (QUOTIENT_FIELDS if spec.quotient else []))
     if spec.principal:
         principal_checks(chart)
@@ -3449,6 +3792,8 @@ def draw(spec):
         quotient_checks(chart)
     if spec.star:
         star_checks(spec, chart.solver)
+    if spec.fronts:
+        front_checks(key(spec), spec.fronts)
     if spec.any_factor:
         factor_check(spec, chart)
     if spec.solves:
@@ -3902,6 +4247,14 @@ def verify(metrics=()):
                              for x in np.atleast_1d(t)])
         forms[("frw", "comoving_spherical", "radial")] = (lambda t, r: eta(t) + r, lambda t, r: eta(t) - r,
                                                           lambda t, r: t > 0.02)
+    for view in ("axis", "equator"):
+        where = ("robinson_trautman", "axisymmetric", view)
+        if wanted(where[0]):
+            # An ingoing ray keeps the Kruskal V it has once the fronts are round, found by an
+            # integrator the tracing does not use, and an outgoing one its u.
+            fronts = Chart(specs[where]).solver
+            forms[where] = (lambda u, r, fronts=fronts: np.arctan(fronts.kruskal_v(u, r)), lambda u, r: u,
+                            lambda u, r: (u > 0.01) & (r > 0.05))
     print(f"{'view':56s} {'P drift':>9s} {'M drift':>9s}  other family spread")
     traced = {}
     for where, (own_P, own_M, keep) in forms.items():

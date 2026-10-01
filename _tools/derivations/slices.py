@@ -447,7 +447,16 @@ def _mp_axis():
     return [Mark(m, points=[(0.0, 0.0)])]
 
 
+def _rt_fronts():
+    """Robinson and Trautman's fronts: the fronts of one retarded time differ only in size, and
+    the embedding draws each with its own r as the unit, so a moment is the whole outgoing ray
+    u = u_k of the plane, from r = 0 out."""
+    return [Mark(m, [[(m.time, 0.0), (m.time, 100.0)]]) for m in moments("robinson_trautman", "fronts")]
+
+
 FLAT = {
+    ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
+    ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
     ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),

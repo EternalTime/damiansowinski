@@ -4904,6 +4904,67 @@ def nariai(ck, src):
     return views
 
 
+RT_MOMENTS = (0.0, 0.25, 0.5, 1.0, 2.0)     # cu in units of m
+
+
+def robinson_trautman(ck, src):
+    """A wave front of Robinson and Trautman's spacetime, the surface of theta and phi at one u
+    and one r of the axisymmetric chart, whose metric is r^2 f^-2 (dtheta^2 + sin^2 theta dphi^2):
+    a surface of revolution with circles of radius r sin(theta)/f and
+    dz/dtheta = (r/f) sqrt(1 - (cos theta - sin theta d_theta f/f)^2). The fronts of one u differ
+    only in size, so each is drawn with its own r as the unit. f enters as numbers, from
+    null_rays.FrontSolver with the fronts the spacetime diagram declares, which are checked to
+    make every published Ricci component vanish; the first front is prolate, 3.41 r from pole
+    to pole along a meridian against 0.853 r for the radius of its equator, and the fronts are round to a
+    part in a hundred by cu = 2m. Every front has the area 4 pi r^2, and stands with its equator
+    at z = 0."""
+    fronts = nr.front_solver(nr.RT_FRONTS)
+    nr.front_checks("Robinson-Trautman", nr.RT_FRONTS, report=ck.add)
+    src.note("robinson_trautman", "axisymmetric", ["ricci_tensor", "kretschmann"])
+    theta = np.linspace(0.0, math.pi, 721)
+    ck.add("Robinson-Trautman: the last front computed is the round sphere", float(np.max(np.abs(
+        fronts.jet(nr.FrontSolver.end, theta)["f"] - 1))), 1e-10)
+
+    def slice_at(u):
+        return Slice(src, "robinson_trautman", "axisymmetric", "\\theta", "\\phi", {"u": repr(u), "r": 1},
+                     numeric={"f": fronts.shape(u)})
+
+    first = slice_at(0.0)
+    size = first.rise(0.0, math.pi)
+    ck.add("Robinson-Trautman: the first front is 3.41 r from pole to pole along a meridian",
+           abs(round(first.proper(0.0, math.pi), 2) - 3.41), 0.0)
+    ck.add("Robinson-Trautman: the first front's equator has the radius 0.853 r",
+           abs(round(float(first.rho_at(math.pi / 2)), 3) - 0.853), 0.0)
+    marks = [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)]
+
+    def moment(u):
+        where = f"Robinson-Trautman, cu = {u:.2f} m"
+        sl = slice_at(u)
+        ball = Piece("front", "sheet", sl, 0.0, math.pi, -sl.rise(0.0, math.pi / 2), 1,
+                     (("axis", "the pole $\\theta = 0$, on the axis of symmetry"),
+                      ("axis", "the pole $\\theta = \\pi$")), marks, size)
+        ck.isometry(where, ball)
+        ck.radius(f"{where}, rho = r sin(theta)/f", ball, lambda th, u=u: np.sin(th) / fronts.jet(u, th)["f"], size)
+        ck.add(f"{where}: the equator stands at z = 0", abs(ball.at(math.pi / 2)[1]) / size, FORM)
+        pts = np.array(ball.data()["points"])
+        area = float(np.sum(math.pi * (pts[1:, 1] + pts[:-1, 1]) * np.hypot(np.diff(pts[:, 1]), np.diff(pts[:, 2]))))
+        ck.add(f"{where}: the area of the cones drawn is 4 pi r^2", abs(area / (4 * math.pi) - 1), 1e-4)
+        return Surface([ball], label=f"$cu = {u:g}\\,m$", time=u)
+
+    values, keys = movie_values(list(RT_MOMENTS), 0.05)
+    frames = [moment(u) for u in values]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the wave front, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("fronts", "The wave front", "$r$", surfaces, fig.done(),
+                 movie=movie(frames, "$cu$", [f.time for f in frames]),
+                 settings="$r$, the front's own, is the unit of every length, and $m$ the unit of $cu$; each "
+                          "moment is a surface of constant $u$ and $r$.",
+                 input=nr.RT_INPUT)]
+
+
 # ct in units of 1/k. Beyond |kct| = 1.1 the cones tip so near the light cone, |drho/dz| = cosh(kct),
 # that a chord turned 0.02 round the axis beside the apex misses the surface by more than ACROSS.
 WALL_MOMENTS = (-1.0, -0.5, 0.0, 0.5, 1.0)
@@ -5104,6 +5165,7 @@ DRAWN = {
     "levi_civita": levi_civita,
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
+    "robinson_trautman": robinson_trautman,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -5150,6 +5212,19 @@ CAPTIONS = {
         "horizon. There the radius grows with distance from the pole at the rate $(1 - 2\\alpha m)/(1 + 2\\alpha m)$, "
         "one half here, and the rate falls short of 1 by the deficit angle $8\\pi\\alpha m/(1 + 2\\alpha m)$ "
         "divided by $2\\pi$. The area is $16\\pi Cm^2/(1 - 4\\alpha^2m^2) = 13.5\\pi m^2$.",
+    ],
+    ("robinson_trautman", "fronts"): [
+        "A wave front of the Robinson-Trautman spacetime ($u$ and $r$ constant) at five retarded times, each "
+        "drawn as a surface in flat space with every distance along it the metric distance. On it the metric "
+        "is $r^2f^{-2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)$, a surface of revolution whose "
+        "circle at $\\theta$ has radius $r\\sin\\theta/f$. The fronts of one $u$ differ only in size, so each "
+        "is drawn with its own $r$ as the unit of length.",
+        "The first front is prolate, $3.41\\,r$ from pole to pole along a meridian with an equator of radius "
+        "$0.853\\,r$, where a round sphere has $\\pi r$ and $r$. Its Gaussian curvature is $2.25/r^2$ at the "
+        "poles and $0.49/r^2$ at the equator, and the Robinson-Trautman equation evens it out while the area "
+        "stays $4\\pi r^2$. The slowest part of the shape to go, a quadrupole, decays as $e^{-2cu/m}$, so by "
+        "$cu = 2m$ the front is round to a part in a hundred. The Bondi mass falls from $1.036\\,m$ to $m$ as "
+        "the gravitational waves carry the difference away.",
     ],
     ("nariai", "universe"): [
         "The circle of $\\chi$ times a great circle of the sphere ($\\phi = 0$ and $\\pi$) at moments of the "
