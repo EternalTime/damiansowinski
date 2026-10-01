@@ -200,17 +200,29 @@
             });
 
         results.innerHTML = matches.map(function(m) {
-          return '<div class="mfs-result" data-id="' + m.id + '">' + m.name + '</div>';
+          return '<div class="mfs-result' + (m.id === _open ? ' mfs-result-active' : '') +
+            '" data-id="' + m.id + '">' + m.name + '</div>';
         }).join('');
 
         results.querySelectorAll('.mfs-result').forEach(function(el) {
-          el.addEventListener('click', function() {
-            if (window._mfsShowMetric) window._mfsShowMetric(this.dataset.id);
-            results.querySelectorAll('.mfs-result').forEach(function(r) { r.classList.remove('mfs-result-active'); });
-            el.classList.add('mfs-result-active');
-          });
+          el.addEventListener('click', function() { window._mfsOpen(this.dataset.id); });
         });
       }
+
+      /* Opens a spacetime and marks its name in the list, whichever asked for it: its name
+         in the list, or a link under "related spacetimes" on another spacetime's page. The
+         list keeps the mark as it is searched, and brings the name into view where the
+         list scrolls. */
+      var _open = null;
+      window._mfsOpen = function(id) {
+        _open = id;
+        if (window._mfsShowMetric) window._mfsShowMetric(id);
+        results.querySelectorAll('.mfs-result').forEach(function(r) {
+          var on = r.dataset.id === id;
+          r.classList.toggle('mfs-result-active', on);
+          if (on && r.scrollIntoView) r.scrollIntoView({ block: 'nearest' });
+        });
+      };
 
       /* Every name in the list is set at one size, at most the size at which the widest word
          of any of them fits the list's line, less an entry's 8px of room at either side,
@@ -3159,6 +3171,41 @@
          another, and kept when the reader opens another spacetime and comes back to it. Its
          buttons, domains, conventions, tensors and diagrams all read that one choice, and
          choosing a chart draws them all again at once. */
+      // A sentence of prose with each [key] turned into the number of that reference in the
+      // spacetime's list, linked to it. A key the list does not hold is dropped.
+      function citedProse(text, refs) {
+        return nrProse(text).replace(/\s*\[([^\]]+)\]/g, function(_, inner) {
+          var keys = inner.split(',').map(function(k) { return k.trim(); });
+          return keys.map(function(key) {
+            var idx = refs.indexOf(key);
+            if (idx === -1) return '';
+            return '<sup><a class="mfs-cite" href="#ref-' + key + '">[' + (idx+1) + ']</a></sup>';
+          }).join('');
+        });
+      }
+
+      /* The spacetimes this one is related to stand right after its history, as the captain
+         asked on 1 October 2026: each by the name the list shows it under, which opens it,
+         and a sentence or two on why. They are the `related` entries of the spacetime's own
+         file, in the order written there, and are set as the history's prose is, so every
+         rule that holds the history's text holds theirs. */
+      function relatedSection(data) {
+        var related = (data.related || []).filter(function(r) { return r && r.id && r.text; });
+        if (!related.length) return '';
+        var names = {};
+        (window._mfsIndex || []).forEach(function(m) { names[m.id] = m.name; });
+        var refs = data.references || [];
+        return [
+          '<div class="mfs-section mfs-related">',
+            '<div class="mfs-section-label">related spacetimes</div>',
+            '<div class="mfs-history">' + related.map(function(r) {
+              return '<p><a class="mfs-related-link" href="#" data-id="' + r.id + '">' +
+                (names[r.id] || r.id) + '</a>' + citedProse(r.text, refs) + '</p>';
+            }).join('') + '</div>',
+          '</div>'
+        ].join('');
+      }
+
       function renderMetric(data) {
         var coordIdx = _chartOf[data.id] || 0;
         if (!data.coordinates || coordIdx >= data.coordinates.length) coordIdx = 0;
@@ -3222,19 +3269,13 @@
                     return '<div class="mfs-math">' + part + '</div>';
                   }
                   if (!part.trim()) return '';
-                  var text = nrProse(part).replace(/\s*\[([^\]]+)\]/g, function(_, inner) {
-                    var keys = inner.split(',').map(function(k) { return k.trim(); });
-                    return keys.map(function(key) {
-                      var idx = refs.indexOf(key);
-                      if (idx === -1) return '';
-                      return '<sup><a class="mfs-cite" href="#ref-' + key + '">[' + (idx+1) + ']</a></sup>';
-                    }).join('');
-                  });
-                  return '<p>' + text + '</p>';
+                  return '<p>' + citedProse(part, refs) + '</p>';
                 }).join('');
               }).join('') + '</div>',
             '</div>'
           ].join('') : '',
+
+          relatedSection(data),
 
           /* The chart is chosen before anything that depends on it, which the captain asked
              for on 27 September 2026, so the coordinates open the mathematics, their buttons
@@ -3446,6 +3487,14 @@
         wireLines(contentPanel);
         wireProse(contentPanel);
         wireWords(contentPanel);
+
+        // A related spacetime's name opens that spacetime, as its name in the list does.
+        contentPanel.querySelectorAll('.mfs-related-link').forEach(function(link) {
+          link.addEventListener('click', function(event) {
+            event.preventDefault();
+            if (window._mfsOpen) window._mfsOpen(link.dataset.id);
+          });
+        });
 
         // A chart's button draws the spacetime again in that chart. The buttons are drawn anew
         // with it, so one pressed from the keyboard hands its focus to the new one.
@@ -3908,6 +3957,17 @@
     #mfs-content-panel .mfs-history .mfs-math {
       color: var(--mfs-cyan-light) !important;
     }
+    /* A related spacetime's name stands on a line of its own above the sentence on why, and
+       opens that spacetime. It is coloured as a link in the references is at rest and under
+       the pointer. */
+    #mfs-content-panel a.mfs-related-link {
+      display: block; width: fit-content; max-width: 100%;
+      color: var(--cyan) !important; text-decoration: underline;
+      text-decoration-color: rgba(0,229,255,0.3); text-underline-offset: 0.2em;
+      transition: text-decoration-color 0.15s;
+    }
+    #mfs-content-panel a.mfs-related-link:hover,
+    #mfs-content-panel a.mfs-related-link:focus-visible { text-decoration-color: var(--cyan); }
     #mfs-content-panel .mfs-zero { color: rgba(0,229,255,0.35); }
     /* ── Spacetime diagrams ── */
     #mfs-content-panel .mfs-nr-view {

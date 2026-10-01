@@ -574,6 +574,94 @@ def check_citations(metrics, entries):
                 )
 
 
+# What one spacetime is to another, as the `kind` of an entry of `related` names it, and the
+# kind the other spacetime's entry has to carry back. A kind says what the spacetime named is
+# to the one listing it: Kerr is a `generalisation` on Schwarzschild's page, and Schwarzschild
+# a `special_case` on Kerr's. _tools/README.md says what each one covers.
+RELATION_KINDS = {
+    "special_case": "generalisation",
+    "generalisation": "special_case",
+    "piece": "composite",
+    "composite": "piece",
+    "family": "family",
+    "dual": "dual",
+    "conformal": "conformal",
+    "locally_same": "locally_same",
+    "programme": "programme",
+}
+RELATION_SENTENCES = 3
+CITATION = re.compile(r"\[([A-Za-z0-9_, ]+)\]")
+
+
+def cited_keys(text):
+    """The reference keys a prose field cites, in the order it first cites them."""
+    keys = []
+    for bracket in CITATION.findall(text or ""):
+        for key in (k.strip() for k in bracket.split(",")):
+            if key and key not in keys:
+                keys.append(key)
+    return keys
+
+
+def relation_problems(metrics):
+    """Each way the relations between the spacetimes fail to hold together."""
+    by_id = {metric["id"]: metric for metric in metrics}
+    kinds = {}
+    problems = []
+    for metric in metrics:
+        name = f"{metric['id']}.json"
+        related = metric.get("related")
+        if not isinstance(related, list) or not related:
+            problems.append(f"{name} lists no related spacetimes")
+            continue
+        for position, entry in enumerate(related):
+            where = f"{name}: related[{position}]"
+            if not isinstance(entry, dict) or set(entry) != {"id", "kind", "text"}:
+                problems.append(f"{where} is not an id, a kind and a text and nothing else")
+                continue
+            other, kind, text = entry["id"], entry["kind"], entry["text"]
+            where = f"{name}: related[{other}]"
+            if other == metric["id"]:
+                problems.append(f"{name} lists itself as related")
+                continue
+            if other not in by_id:
+                problems.append(f"{where} names a spacetime that has no metric file")
+                continue
+            if (metric["id"], other) in kinds:
+                problems.append(f"{name} lists {other} twice")
+                continue
+            if kind not in RELATION_KINDS:
+                problems.append(f"{where} has the kind {kind!r}, which is not one of "
+                                f"{', '.join(sorted(RELATION_KINDS))}")
+                continue
+            kinds[metric["id"], other] = kind
+            if not isinstance(text, str) or not text.strip():
+                problems.append(f"{where} does not say why")
+                continue
+            if not 1 <= len(sentences(CITATION.sub("", text))) <= RELATION_SENTENCES:
+                problems.append(f"{where} runs past {RELATION_SENTENCES} sentences")
+            if text != text.strip() or not re.search(r"[.?!][\"')]*(?: \[[A-Za-z0-9_, ]+\]\.?)?$", text):
+                problems.append(f"{where} does not end at the end of a sentence")
+            for key in cited_keys(text):
+                if key not in metric.get("references", []):
+                    problems.append(f"{where} cites {key!r}, which {name} does not list in its references")
+    for (one, other), kind in sorted(kinds.items()):
+        back = kinds.get((other, one))
+        if back is None:
+            problems.append(f"{one}.json lists {other}, and {other}.json does not list {one}")
+        elif back != RELATION_KINDS[kind]:
+            problems.append(f"{one}.json lists {other} as {kind}, so {other}.json has to list {one} as "
+                            f"{RELATION_KINDS[kind]} and lists it as {back}")
+    return problems
+
+
+def check_relations(metrics):
+    """Refuse a relation that leads nowhere, runs one way only, or disagrees with its reverse."""
+    problems = relation_problems(metrics)
+    if problems:
+        raise DataError("\n".join(problems))
+
+
 # Prose set in paragraphs reads evenly: every paragraph of a history has three to six
 # sentences, and the longest is no more than twice the length of the shortest. A history
 # tells a story, so it runs to at least five paragraphs. A table is not a paragraph of prose
@@ -726,6 +814,7 @@ def main(argv=None):
         check_citations(metrics, references["entries"])
         check_prose_shape(metrics)
         check_conventions(metrics)
+        check_relations(metrics)
         diagrams = load_diagrams(metrics)
         conformal = load_conformal(metrics)
         embedding = load_embedding(metrics)

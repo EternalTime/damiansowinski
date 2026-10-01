@@ -33,6 +33,33 @@
   "signature": "(-,+,+,+)",
   "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the cosmological constant $\\Lambda$ carries an inverse length squared. The horizons $r_h < r_c$ are the two positive roots of $1 - r_s/r - \\Lambda r^2/3$. We keep factors of $c$ explicit.",
   "history": "Albert Einstein added the cosmological constant $\\Lambda$ to his field equations in 1917, to keep a closed universe of dust static [einstein1917]. Friedrich Kottler, a physicist in Vienna, solved the amended equations outside a static, spherically symmetric mass in 1918 and found the metric function $$f(r) = 1 - \\frac{r_s}{r} - \\frac{\\Lambda r^2}{3},$$ Schwarzschild's $1 - r_s/r$ with one term added [kottler1918]. Hermann Weyl found the same solution independently in 1919, and the mathematician Erich Trefftz found it again in 1922 [goenner2016, trefftz1922]. At $r_s = 0$ it is the static solution Willem de Sitter found in 1917 [desitter1917].¶For $0 < \\Lambda r_s^2 < 4/9$ the function $f$ vanishes at two radii, the black hole horizon $r_h$ and the cosmological horizon $r_c$, with $r_s < r_h < 3r_s/2 < r_c$, and between them $t$ is a time and the region is static [podolsky1999]. Inside $r_h$ every future directed timelike curve ends at the curvature singularity $r = 0$, and beyond $r_c$ every one runs out to $r \\to \\infty$ as the universe expands [lake1977]. Kayll Lake and R. C. Roeder worked out the maximal extension in 1977 and showed that it joins infinitely many regions [lake1977]. Along it a static region, a black hole above a white hole across $r_h$, a second static region, and an expanding region above a contracting one across $r_c$ repeat without end [lake1977]. Zdeněk Stuchlík and Stanislav Hledík found in 1999 that at the static radius $r = (3r_s/2\\Lambda)^{1/3}$, where $f$ is greatest, the gravitational attraction of the black hole is exactly balanced by the cosmic repulsion, so a test particle at rest there feels no force [stuchlik1999]. They also drew the embedding diagrams of its equatorial planes at constant $t$ [stuchlik1999].¶A cosmological horizon radiates thermally, as a black hole horizon does, at a temperature proportional to its surface gravity $\\kappa$, as Gary Gibbons and Stephen Hawking showed in 1977 [gibbons1977]. Kottler's two horizons have different surface gravities, so they radiate at different temperatures, and the static region between them is not in thermal equilibrium [gibbons1977]. Paul Ginsparg and Malcolm Perry found de Sitter space unstable to the nucleation of black holes in 1983, and took the limit $\\Lambda r_s^2 \\to 4/9$, in which the region between the horizons stays regular and becomes Hidekazu Nariai's solution of 1950, the product of two dimensional de Sitter space and a sphere [ginsparg1983, nariai1950]. Raphael Bousso and Stephen Hawking used that geometry in 1996 to calculate the rate at which such black holes were created in pairs during inflation [bousso1996]. Two years later they found that nearly maximal Schwarzschild-de Sitter black holes can either shrink or grow, depending on the mode of the perturbation, and called the growth \"anti-evaporation\" [bousso1998].¶At $\\Lambda r_s^2 = 4/9$ the two horizons meet at $r = 3r_s/2 = 1/\\sqrt{\\Lambda}$ [podolsky1999]. Jiří Podolský analysed the global structure of this extreme case in 1999 and drew its conformal and embedding diagrams [podolsky1999]. From the geodesics and the equation of geodesic deviation he showed that radial observers whose conserved energy $E$ along $\\partial_t$ vanishes never cross the horizon and approach asymptotic points of the conformal diagram, and that every radial observer with $E \\neq 0$ reaches the singularity in a finite proper time [podolsky1999]. Kristin Schleich and Donald Witt gave a simple proof of Birkhoff's theorem with a cosmological constant in 2010, and noted that the extremal and overextremal members have no static region [schleich2010].¶Jamal Nazrul Islam bounded the cosmological constant below $10^{-42}\\,\\text{cm}^{-2}$ in 1983 from the perihelion shift of Mercury in Kottler's metric [islam1983]. He showed that the equation of a null geodesic \"takes the same form with or without the cosmological constant\", so the bending of starlight near the Sun gives no limit on it [islam1983]. Wolfgang Rindler and Mustapha Ishak showed in 2007 that $\\Lambda$ does contribute to the bending once the Schwarzschild-de Sitter geometry in which the angle is measured is taken into account [rindler2007].",
+  "related": [
+    {
+      "id": "schwarzschild",
+      "kind": "special_case",
+      "text": "Kottler's black hole with $\\Lambda = 0$. The cosmological horizon moves off to infinity and the spacetime is asymptotically flat."
+    },
+    {
+      "id": "schwarzschild_ads",
+      "kind": "family",
+      "text": "The same black hole with the sign of the cosmological constant reversed. A timelike boundary at infinity takes the place of the cosmological horizon."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "special_case",
+      "text": "Schwarzschild-de Sitter with the black hole taken out, $r_s = 0$. The cosmological horizon stays."
+    },
+    {
+      "id": "nariai",
+      "kind": "special_case",
+      "text": "The limit $\\Lambda r_s^2 \\to 4/9$, where the black hole horizon meets the cosmological horizon. Paul Ginsparg and Malcolm Perry showed in 1983 that the region between them stays regular and becomes Nariai's solution [ginsparg1983]."
+    },
+    {
+      "id": "mcvittie",
+      "kind": "generalisation",
+      "text": "A mass in a universe whose expansion rate changes in time. Where $H$ is constant it is Schwarzschild-de Sitter [kaloper2010, carrera2010]."
+    }
+  ],
   "references": [
     "einstein1917",
     "kottler1918",
@@ -49,7 +76,9 @@
     "bousso1998",
     "schleich2010",
     "islam1983",
-    "rindler2007"
+    "rindler2007",
+    "kaloper2010",
+    "carrera2010"
   ],
   "coordinates": [
     {

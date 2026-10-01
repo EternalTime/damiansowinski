@@ -25,6 +25,43 @@
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the one parameter is the anti-de Sitter radius $L$, a length, which fixes the cosmological constant through $\\Lambda = -3/L^2$. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Anti-de Sitter space was born as the other branch of the same idea. When Willem de Sitter solved Einstein's amended equations for an empty universe in 1917, the cosmological constant $\\Lambda$ was free to take either sign [desitter1917, einstein1917]. Positive $\\Lambda$ gave the exponentially expanding world that bears his name; negative $\\Lambda$ gave its mirror image, a maximally symmetric vacuum with constant negative curvature. For decades this second solution had no champion and no name beyond the obvious one: the anti-de Sitter universe, de Sitter's geometry with its curvature reversed in sign.¶As a cosmology it was a nonstarter. Anti-de Sitter space is static, so it cannot describe an expanding universe like ours. Its spatial sections are hyperbolic, and in its natural form it is riddled with closed timelike curves, and one must pass to the universal cover to be rid of them [hawking1973]. Strangest of all, it has a timelike boundary at spatial infinity: a light ray can reach the edge of the universe and return in finite time, so anti-de Sitter space is not globally hyperbolic. To evolve anything inside it, one must specify what happens at that boundary [hawking1973]. For sixty years it was studied mostly for these pathologies.¶S. J. Avis, Christopher Isham, and D. Storey showed in 1978 that because anti-de Sitter space is not globally hyperbolic the usual quantization of a field fails there, and that a consistent one exists once the information entering and leaving through its timelike infinity is controlled [avis1978]. Peter Breitenlohner and Daniel Freedman showed in 1982 that in anti-de Sitter space the energy of a field can stay positive even where its potential is unbounded below, so that gauged supergravities with such potentials still have stable anti-de Sitter ground states [breitenlohner1982, breitenlohner1982annals]. Stephen Hawking and Don Page found in 1983 that a black hole in anti-de Sitter space has a minimum temperature, and that a large one can sit in stable equilibrium with thermal radiation, because the gravitational potential of anti-de Sitter space acts as a box of finite volume [hawking1983]. J. David Brown and Marc Henneaux showed in 1986 that in three dimensions, with suitable boundary conditions, the symmetries of gravity with a negative cosmological constant at infinity form the conformal group in two dimensions, and that their generators carry a central charge, the Virasoro central charge [brown1986]. Máximo Bañados, Claudio Teitelboim, and Jorge Zanelli then found in 1992 that three dimensional gravity with a negative cosmological constant has a black hole, with anti-de Sitter space a state of negative energy separated from the black holes by a mass gap [banados1992].¶Then in 1997 Juan Maldacena found a use for the boundary [maldacena1998]. That troublesome timelike boundary, he argued, is where a quantum field theory lives, and the gravitational physics of the anti-de Sitter interior is exactly equivalent to a conformal field theory on its edge, which carries one dimension fewer; within months Steven Gubser, Igor Klebanov, and Alexander Polyakov, and independently Edward Witten, sharpened the proposal into a precise dictionary between the two sides [gubser1998, witten1998]. This is the AdS/CFT correspondence, the sharpest realization of the holographic principle anticipated by Gerard 't Hooft and Leonard Susskind [thooft1993, susskind1995], and it made anti-de Sitter space one of the most studied geometries in theoretical physics, though the universe is not anti-de Sitter, because there gravity is encoded in a theory on the boundary that has no gravity. Witten used it in 1998 to relate the thermodynamics of the gauge theory on the boundary to that of Schwarzschild black holes in anti-de Sitter space, so that confinement and the mass gap of the gauge theory are coded in classical geometry [witten1998thermal]. Shinsei Ryu and Tadashi Takayanagi proposed in 2006 that the entanglement entropy of a region of the boundary is the area of a minimal surface in the interior, by analogy with the Bekenstein-Hawking formula for the entropy of a black hole [ryu2006].¶Piotr Bizoń and Andrzej Rostworowski found numerically in 2011 that anti-de Sitter space is unstable against arbitrarily small generic perturbations, whose energy passes from low frequencies to high ones through a resonant mixing of modes [bizon2011]. Georgios Moschidis proved such an instability in 2020 for null dust with an inner mirror, a beam reflected again and again between the mirror and the boundary until a black hole forms [moschidis2020]. He later proved it for massless Vlasov matter as well [moschidis2023].",
+  "related": [
+    {
+      "id": "schwarzschild_ads",
+      "kind": "generalisation",
+      "text": "A black hole placed in anti-de Sitter space. Stephen Hawking and Don Page showed in 1983 that a large one sits in stable equilibrium with its own radiation [hawking1983]."
+    },
+    {
+      "id": "btz",
+      "kind": "locally_same",
+      "text": "In three dimensions, anti-de Sitter space with its points identified by a discrete group of its symmetries is a black hole [banados1992, banados1993]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "family",
+      "text": "The same geometry with positive curvature, the vacuum of a positive cosmological constant. Its infinity is spacelike [hawking1973]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "The limit $L \\to \\infty$, where the curvature vanishes."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "conformal",
+      "text": "Anti-de Sitter space maps conformally onto half of Einstein's static universe, and its infinity is the equator [hawking1973]."
+    },
+    {
+      "id": "bertotti_robinson",
+      "kind": "family",
+      "text": "A product of anti-de Sitter space of two dimensions and a round sphere, held up by a uniform electromagnetic field [bertotti1959, robinson1959]."
+    },
+    {
+      "id": "malament_hogarth",
+      "kind": "generalisation",
+      "text": "Anti-de Sitter space is a Malament-Hogarth spacetime, where one observer can see the whole endless future of another in a finite time of their own [hogarth1992]."
+    }
+  ],
   "references": [
     "desitter1917",
     "einstein1917",
@@ -44,7 +81,11 @@
     "ryu2006",
     "bizon2011",
     "moschidis2020",
-    "moschidis2023"
+    "moschidis2023",
+    "banados1993",
+    "bertotti1959",
+    "robinson1959",
+    "hogarth1992"
   ],
   "coordinates": [
     {

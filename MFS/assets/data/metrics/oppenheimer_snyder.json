@@ -26,6 +26,38 @@
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit, and $r_s = 2GM/c^2$ is the Schwarzschild radius of the star. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Earlier in 1939, J. Robert Oppenheimer and George Volkoff had shown that a cold star above a certain mass has nothing left to hold it up [oppenheimer1939]. What happens to it then? Oppenheimer answered the obvious next question that same year with his student Hartland Snyder, in a paper now recognized as the first description of a black hole forming in real time [oppenheimersnyder1939]. They took the simplest collapse imaginable: a uniform sphere of pressureless dust, with no internal pressure to slow its fall, and solved it exactly by matching a contracting interior, itself a piece of a closed dust cosmology, onto the static Schwarzschild geometry outside [schwarzschild1916].¶Their answer splits cleanly in two, depending on who is watching. An observer riding inward with the matter reaches the Schwarzschild radius, and then the central singularity, in a finite and unremarkable span of their own time, and nothing local marks the crossing of the horizon. A distant observer sees something entirely different: the collapse appears to slow as the surface nears the Schwarzschild radius, the light from it reddening and dimming, until the star seems to freeze at the horizon and fade from view, \"closing itself off,\" in their words, from any communication with the outside. The same event is a swift plunge for one observer and an eternal, fading hover for the other. Robert J. Sawyer set their words on the star closing itself off at the head of the third chapter of The Oppenheimer Alternative, his novel about Oppenheimer [sawyer2020oppenheimer].¶The paper was published on the day Germany invaded Poland, and it went largely unregarded for two decades, set aside by the war, and by a lingering disbelief that nature would permit such an object. Christopher Nolan put the coincidence on film in Oppenheimer, where Oppenheimer tells Snyder that their paper is in print and Snyder holds up a newspaper announcing that Hitler has invaded Poland [nolan2023oppenheimer]. The paper's vindication came in the 1960s. The worry had always been that the singularity was an artifact of the model's perfect symmetry, an idealization realistic, lumpy collapse would avoid; Roger Penrose's 1965 theorem dispelled that hope, proving that once a trapped surface forms a singularity is unavoidable, symmetry or no [penrose1965]. Oppenheimer and Snyder had described the generic fate of massive matter.¶Some 87 years later, astronomers may have watched it happen. In 2026 a team led by Kishalay De reported that M31-2014-DS1, a supergiant poor in hydrogen in the Andromeda galaxy, had brightened in the infrared for some three years and then quietly vanished, leaving only a shell of dust and no supernova, which they argued is the signature of a star whose core collapsed directly into a black hole [de2026]. Born around thirteen solar masses and down to roughly five at its disappearance, it offered the most complete record yet of the process Oppenheimer and Snyder had sketched on paper.¶The correspondence is approximate: the real star shed turbulent outer layers as it went, nothing like the pressureless, perfectly symmetric ball of the 1939 model, and the interpretation is contested. Emma Beasor and colleagues, pointing to a source in the middle infrared that lingers a decade on and the absence of X-rays from accretion, argue the event was a dusty stellar eruption, with no black hole born [beasor2026]. Whichever way it resolves, the question Oppenheimer and Snyder opened, whether massive matter collapses without limit, is at last one that astronomers can test with telescopes.",
+  "related": [
+    {
+      "id": "frw",
+      "kind": "piece",
+      "text": "The inside of the collapsing star, a ball cut from a closed Friedmann universe of dust and run toward its big crunch."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "piece",
+      "text": "The outside of the collapsing star. The surface of the dust falls along radial geodesics of Schwarzschild's metric and crosses $r = r_s$ in a finite proper time."
+    },
+    {
+      "id": "tolman_bondi",
+      "kind": "generalisation",
+      "text": "Collapsing dust whose density varies with radius. Demetrios Christodoulou proved in 1984 that such a cloud can form a singularity that sends light out to infinity, which the uniform ball never does [christodoulou1984]."
+    },
+    {
+      "id": "tov",
+      "kind": "programme",
+      "text": "Oppenheimer and George Volkoff showed earlier in 1939 that a cold star above a certain mass has no equilibrium [oppenheimer1939]. Oppenheimer and Snyder followed such a star down."
+    },
+    {
+      "id": "interior_schwarzschild",
+      "kind": "family",
+      "text": "A ball of uniform density with Schwarzschild's vacuum outside, held static by pressure. No such star exists below $R = \\frac{9}{8}r_s$ [schwarzschild1916b]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "family",
+      "text": "A star that radiates. Prahalad Vaidya carried the collapse over in 1966 to matter that shines as it falls [vaidya1966]."
+    }
+  ],
   "references": [
     "oppenheimer1939",
     "oppenheimersnyder1939",
@@ -34,7 +66,10 @@
     "nolan2023oppenheimer",
     "penrose1965",
     "de2026",
-    "beasor2026"
+    "beasor2026",
+    "christodoulou1984",
+    "schwarzschild1916b",
+    "vaidya1966"
   ],
   "coordinates": [
     {

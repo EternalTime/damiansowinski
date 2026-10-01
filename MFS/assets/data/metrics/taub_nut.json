@@ -22,6 +22,28 @@
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit, the mass parameter is the geometric mass $m = GM/c^2$, and the NUT parameter $l$ is a length as well. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Taub-NUT is two discoveries that turned out to be one spacetime. In 1951 Abraham Taub, looking for vacuum solutions with a high degree of symmetry, wrote down an empty cosmology whose spatial slices carry the symmetry group of the sphere $S^3$, a homogeneous but anisotropic universe that expands and recollapses [taub1951]. It was a clean result, not yet joined to any other solution, and for a decade it sat among the catalogue of exact solutions without causing trouble.¶The trouble arrived in 1963. Ezra Newman, Louis Tamburino, and Theodore Unti set out to generalize the Schwarzschild metric and found a new vacuum solution carrying one extra parameter beyond the mass, the NUT parameter, after their initials [nut1963]. That same year Charles Misner showed that their \"generalized Schwarzschild\" space and Taub's cosmology were one solution: Taub's universe is the interior, the NUT metric the exterior, joined across a horizon into a single analytic whole [misner1963]. Hence Taub-NUT.¶Misner also showed that the joined spacetime is spectacularly badly behaved. The NUT parameter acts like a magnetic charge for gravity, a \"gravitomagnetic monopole\", and like the Dirac string trailing a magnetic monopole, it drags along an unavoidable singular axis, the Misner string, that no choice of coordinates can remove without introducing closed timelike curves through every point. The spacetime is not asymptotically flat in any ordinary sense [misner1963] and is not globally hyperbolic [hawking1973]. Misner's own verdict was that it serves as \"a counterexample to almost any conjecture one might make,\" and relativists still turn to it to test whether a plausible theorem holds.¶William Bonnor interpreted the singular half axis physically in 1969, as the field of a mass together with a massless source of angular momentum running out to infinity along half the axis [bonnor1969]. Stephen Hawking and George Ellis gave Taub-NUT a section of its own in their 1973 monograph, as a spacetime of interest for its pathological global properties [hawking1973]. They used it as their example of a spacetime whose incomplete geodesics are imprisoned in a compact region where the curvature stays regular, so that an observer on one of them would wind round and round forever yet never get beyond a certain time in their life [hawking1973].¶J. S. Dowker argued in 1974 that the NUT solution is a gravitational dyon, a source with both mass and dual mass, and showed that Misner's periodic time plays the part of Dirac's quantization condition for a magnetic monopole [dowker1974]. Continued to Euclidean signature, Taub-NUT became one of the first gravitational instantons: Hawking named the Schwarzschild and Taub-NUT solutions as the simplest examples in 1977, the second of them self dual [hawking1977]. Rafael Sorkin found in 1983 that adding a flat time direction to Euclidean Taub-NUT gives a static solution of five dimensional gravity which, read in the manner of Kaluza and Klein, is a magnetic monopole [sorkin1983]. Donald Lynden-Bell and Mohammad Nouri-Zonoz showed in 1998 that every geodesic in NUT space lies on a cone, and used the result to study how bodies with a gravomagnetic monopole would lens light [lyndenbell1998]. Gérard Clément, Dmitri Gal'tsov, and Mourad Guenouche argued in 2015 that Misner's periodic time is not needed: without it the Misner string is transparent to geodesics, the spacetime is geodesically complete, and although a region of closed timelike curves remains, no freely falling observer travels on a closed one [clement2015].",
+  "related": [
+    {
+      "id": "schwarzschild",
+      "kind": "special_case",
+      "text": "Taub-NUT with the NUT parameter set to zero, $l = 0$ [nut1963]."
+    },
+    {
+      "id": "mixmaster",
+      "kind": "generalisation",
+      "text": "Taub's universe with all three axes free. Charles Misner found in 1969 that it then oscillates without end on the way to its singularity [misner1969]."
+    },
+    {
+      "id": "bianchi",
+      "kind": "generalisation",
+      "text": "Taub's universe, the region between the horizons, is a vacuum of Bianchi type IX with two of its three axes equal [taub1951, ellismaccallum1969]."
+    },
+    {
+      "id": "misner",
+      "kind": "programme",
+      "text": "Charles Misner's flat model of Taub-NUT, from his lecture of 1967 on Taub-NUT as \"a counterexample to almost anything\" [misner1967]."
+    }
+  ],
   "references": [
     "taub1951",
     "nut1963",
@@ -32,7 +54,10 @@
     "hawking1977",
     "sorkin1983",
     "lyndenbell1998",
-    "clement2015"
+    "clement2015",
+    "misner1969",
+    "ellismaccallum1969",
+    "misner1967"
   ],
   "coordinates": [
     {

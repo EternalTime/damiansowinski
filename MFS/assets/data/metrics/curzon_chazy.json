@@ -29,6 +29,18 @@
   "signature": "(-,+,+,+)",
   "convention": "The mass parameter $m = GM/c^2$ is a length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Hermann Weyl reduced the vacuum field equations of a static, axially symmetric spacetime in 1917 to two equations for two functions, $\\psi$ and $\\gamma$, of his canonical coordinates $\\rho$ and $z$ [weyl1917, lehmkuhl2019]. The first is Laplace's equation for $\\psi$ in a flat space of three dimensions, and the second fixes $\\gamma$ by a quadrature that is quadratic in the derivatives of $\\psi$ [lehmkuhl2019, abdelqader2012]. Jean Chazy in 1924 and H. E. J. Curzon in 1925 took for $\\psi$ the Newtonian potential of point masses, and each presented the field of two such particles on the axis [chazy1924, curzon1925, lehmkuhl2019]. One particle alone has $\\psi = -m/R$ and $\\gamma = -m^2\\rho^2/2R^4$, with $R = \\sqrt{\\rho^2 + z^2}$ [abdelqader2012]. The constant $m$ is the mass at spatial infinity [abdelqader2012].¶Albert Einstein and Jakob Grommer started from the same potential in 1927, when they set out to derive the motion of a particle from the vacuum field equations [lehmkuhl2019]. They took the singularity at $\\rho = z = 0$ as the place of the particle, and worked to avoid a second singularity along the axis, which appears wherever $\\gamma$ fails to vanish there [lehmkuhl2019]. Ludwik Silberstein found the field of two particles again in 1936 and concluded that general relativity lets two masses stay at rest, which contradicts experience [silberstein1936, weinstein2015twobody]. Einstein and Nathan Rosen replied the same year that his solution has a further singularity on the line joining the two particles [einstein1936twobody, lehmkuhl2019].¶Ronald Gautreau and James Anderson noticed in 1967 that the curvature at $R = 0$ depends on the direction of approach [gautreau1967, abdelqader2012]. Along the axis the Kretschmann scalar is $48m^2(|z| - m)^2e^{-4m/|z|}/z^8$, which goes to zero as $z \\to 0$, and in the plane $z = 0$ it diverges [abdelqader2012]. In the coordinates $\\rho = r\\sin\\theta$ and $z = r\\cos\\theta$, John Stachel showed in 1968 that the area of a surface of constant $t$ and $r$ shrinks with $r$ to a minimum and then diverges as $r \\to 0$ [stachel1968, abdelqader2012]. The minimum lies at $r \\simeq 0.5389\\,m$ [abdelqader2012]. A circle about the axis in the plane $z = 0$ has circumference $2\\pi\\rho\\,e^{m/\\rho}$, which also diverges as $\\rho \\to 0$ [abdelqader2012].¶Peter Szekeres and F. H. Morgan examined the geodesics that approach the singularity and showed in 1973 that the metric can be extended so that almost all of them are complete [szekeres1973]. The extensions are infinite in number, none of them is analytic, and all are $C^\\infty$ [szekeres1973]. With Susan Scott, Szekeres built coordinates in 1986 in which the singularity is a ring, of finite radius and infinite circumference [scott1986a, abdelqader2012]. Spatial geodesics that thread the ring reach a second spacelike infinity on its other side [scott1986a]. One class of incomplete geodesics extends to the past and to the future into regions of flat space, and every other incomplete geodesic ends at the ring, which is naked [scott1986b]. Scott and Szekeres called the solution in these coordinates \"a peculiar kind of sandwich wave\" [scott1986b].¶The Weyl tensor is of Petrov type D on the axis and of type I off it, as Robyn Arianrhod, S. Fletcher, and Colin McIntosh found in 1991 [arianrhod1991]. The Riemann tensor vanishes at the two points $z = \\pm m$ of the axis, which lie on the surface $R = m$ where the cubic invariant of the Weyl tensor vanishes [arianrhod1991]. Jerry Griffiths and Jiří Podolský questioned in 2009, because of the ring, whether the solution is the relativistic field of a point particle [griffiths2009, lehmkuhl2019]. Majd Abdelqader and Kayll Lake compared the gradient flows of its curvature invariants with those of Newtonian fields in 2012 and found that, outside a region close to the singularity, the field is that of a Newtonian ring [abdelqader2012]. Mert Mangut, Özay Gürtuğ, and Mustafa Halilsoy probed the singularity with a scalar quantum field in 2025, by the method of Gary Horowitz and Donald Marolf, and found it quantum mechanically regular for that field [mangut2025].",
+  "related": [
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "Both are Weyl fields built on a Newtonian potential, that of a rod of length $r_s$ for Schwarzschild and that of a point for Curzon and Chazy [weyl1917, bicak2000]."
+    },
+    {
+      "id": "zipoy_voorhees",
+      "kind": "generalisation",
+      "text": "The Weyl field of a rod. With the rod shrunk to a point at fixed mass it becomes the Curzon-Chazy particle [herrera1999]."
+    }
+  ],
   "references": [
     "weyl1917",
     "lehmkuhl2019",
@@ -45,7 +57,9 @@
     "scott1986b",
     "arianrhod1991",
     "griffiths2009",
-    "mangut2025"
+    "mangut2025",
+    "bicak2000",
+    "herrera1999"
   ],
   "coordinates": [
     {
