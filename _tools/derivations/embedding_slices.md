@@ -400,6 +400,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Aichelburg-Sexl | four null lines, three times | none | four null lines |
 | Alcubierre | line | floor | none drawn |
 | anti-de Sitter | line, line, line | none | line, line |
+| Bell-Szekeres | four events, five times; not visible on the regular view, which lies off $\eta = 0$ | none | four events, five times |
 | Bertotti-Robinson | line and point, twice | none | line and point, twice |
 | Bianchi I | four lines | none | none drawn |
 | cosmic string | none | whole drawing | line, line |

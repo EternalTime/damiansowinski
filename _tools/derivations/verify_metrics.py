@@ -361,6 +361,15 @@ DIMENSIONS = {
     # of the waves' focal length L, which multiplies the part of the metric along them.
     ("khan_penrose", "double_null"): {"u": "1", "v": "1", "x": "L", "y": "L", "L": "L"},
     ("khan_penrose", "cosmological"): {"\\tau": "1", "\\sigma": "1", "x": "L", "y": "L", "L": "L"},
+    # Bell and Szekeres's null coordinates are lengths and the two wave strengths inverse lengths;
+    # xi, eta and the coordinates of the regular, global and Bertotti-Robinson charts are pure
+    # numbers, with 1/(2ab) carrying the length squared.
+    ("bell_szekeres", "double_null"): {"u": "L", "v": "L", "x": "L", "y": "L", "a": "1/L", "b": "1/L"},
+    ("bell_szekeres", "time_space"): {"\\xi": "1", "\\eta": "1", "x": "L", "y": "L", "a": "1/L", "b": "1/L"},
+    ("bell_szekeres", "regular"): {"T": "1", "Z": "1", "X": "1", "Y": "1", "a": "1/L", "b": "1/L"},
+    ("bell_szekeres", "global"): {"\\chi": "1", "\\rho": "1", "\\theta": "1", "\\phi": "1", "a": "1/L", "b": "1/L"},
+    ("bell_szekeres", "kruskal_szekeres"): {"U": "L", "V": "L", "\\eta": "1", "x": "L", "a": "1/L", "b": "1/L"},
+    ("bell_szekeres", "bertotti_robinson"): {"t": "1", "r": "1", "\\theta": "1", "\\phi": "1", "a": "1/L", "b": "1/L"},
     ("krasnikov", "cylindrical"): {
         "t": "T", "x": "L", "r": "L", "\\phi": "1", "k": "1",
     },

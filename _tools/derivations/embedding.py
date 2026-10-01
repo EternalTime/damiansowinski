@@ -4563,6 +4563,60 @@ def khan_penrose(ck, src):
             view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
 
 
+def bell_szekeres(ck, src):
+    """The wave front, the plane of x and y, at the four events xi = 0, 0.5, 0.9 and 1.2 on eta = 0
+    of the chart of xi and eta, where au = bv, at a = b = 1: each flat, dx^2 + cos^2(xi) dy^2,
+    with the ring of free particles at rest on x^2 + y^2 = l^2, which the published Christoffel
+    symbols keep at rest: they have no Gamma^mu_xixi. At xi = 0, the collision, the ring is the
+    circle, and toward the Killing-Cauchy horizon at xi = pi/2 it keeps its width along x and
+    closes along y."""
+    gamma, _ = published_christoffel(src, "bell_szekeres", "time_space")
+    ck.exact("Bell-Szekeres: no published Gamma^mu_xixi", not any(ix[1:] == ("\\xi", "\\xi") for ix in gamma))
+    params = {"a": 1, "b": 1}
+
+    def front(t):
+        return f"$\\xi = {t:g}$", t, {"xi": repr(t), "eta": 0}, None
+    named = (0.0, 0.5, 0.9, 1.2)
+    # The movie runs through the moments at a steady xi, a frame every 0.025 of it.
+    moments, keys = ring_moments(named, 0.025, lambda k: front(named[k]), front)
+    times = [t for _, t, _, _ in moments]
+    frames = ring_sequence(ck, src, "Bell-Szekeres", "bell_szekeres", "time_space", moments, 2.0, params,
+                           axes=("x", "y"))
+    surfaces = [frames[i] for i in keys]
+
+    def rows(xi):
+        xi = np.asarray(xi, dtype=float)
+        return np.ones_like(xi), np.cos(xi)
+    a = np.linspace(0, 2 * math.pi, 361)
+    for s, t in zip(frames, times):
+        A, B = rows(t)
+        ck.add(f"Bell-Szekeres, xi = {t}: the ellipse of semi-axes 1 and cos xi",
+               float(np.max(np.abs(s.curves[0].points[:, :2] - np.column_stack([A * np.cos(a), B * np.sin(a)])))), 1e-12)
+
+    def plane(xi, A, B):
+        sl = FlatPlane(src, "bell_szekeres", "time_space", "x", "y", {"xi": repr(float(xi)), "eta": 0}, params)
+        return float(np.max(np.abs(sl.scale - [A, B])))
+    tube = stack(ck, "Bell-Szekeres", surfaces, rows, 3.0, plane, 4.0,
+                 "the world tube of the ring runs on before the collision, a cylinder, and after $\\xi = 1.2$ to the "
+                 "horizon")
+    tube_fig = stack_figure(tube, 4.0, "$\\xi$", [
+        ("fill", "cover", "the ring at every moment from the collision, $\\xi = 0$, to $\\xi = 1.2$, each at the height "
+                          "of its $\\xi$"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of $\\xi$, through the centre of the ring")])
+    fig, played = ring_movie(frames, 4.0, "$\\xi$")
+    fig.legend("fill", "cover", "the wave front at each moment, flat")
+    fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = \\ell^2$, with twelve of them marked: an "
+                                    "ellipse reaching $\\ell$ along $x$ and $\\ell\\cos\\xi$ along $y$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$a = b$, each moment the wave front at one $\\xi$ on $\\eta = 0$, where $au = bv$, with $\\ell$ the "
+                "ring's radius before the collision, the unit of every length.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings,
+                 height="$\\xi$, a height of $3\\,\\ell$ for each unit of $\\xi$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
+
+
 def malament_hogarth(ck, src):
     """The plane z = 0 about the removed event at ct = -0.7, -0.3, -0.1 and 0, with the conformal
     factor the spacetime diagram declares, which depends only on c^2t^2 + x^2 + y^2 + z^2: turned
@@ -5847,7 +5901,7 @@ DRAWN = {
     "mixmaster": mixmaster,
     "kasner": kasner,
     "bianchi": bianchi,
-    "pp_wave": pp_wave, "khan_penrose": khan_penrose,
+    "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "krasnikov": krasnikov,
     "alcubierre": alcubierre,
     "natario": natario,
@@ -6552,6 +6606,25 @@ CAPTIONS = {
         "singularity $\\tau = \\pi/2$, where the ring is drawn out without bound along $x$ and closes along $y$. "
         "K. A. Khan and Roger Penrose found this spacetime in 1971, the exact vacuum solution for two impulsive plane "
         "waves colliding head on.",
+    ],
+    ("bell_szekeres", "tube"): [
+        "The world tube of a ring of free particles at rest on the wave front where both electromagnetic waves have "
+        "passed ($a = b$), each moment on $\\eta = 0$ from the collision at $\\xi = 0$ to $\\xi = 1.2$ an ellipse at "
+        "the height of its $\\xi$. The two waves leave the tube its width along $x$ and squeeze it along $y$, and at "
+        "the Killing-Cauchy horizon $\\xi = \\pi/2$ it closes onto the plane of $x$ and $\\xi$ with the curvature "
+        "finite.",
+    ],
+    ("bell_szekeres", "ring"): [
+        "The wave front, the plane of $x$ and $y$, as $\\xi$ runs from $0$ to $1.2$ on $\\eta = 0$ where both "
+        "waves have passed, each moment drawn as a surface in flat space with every distance along it the metric distance. At each moment the "
+        "front has the metric $dx^2 + \\cos^2\\xi\\,dy^2$ with constant coefficients, so the drawing is a flat disc, "
+        "and the waves show in a ring of free particles at rest on the circle $x^2 + y^2 = \\ell^2$ before they "
+        "arrive.",
+        "At the collision, $\\xi = 0$, the ring is still that circle, and afterwards it is the ellipse reaching "
+        "$\\ell$ along $x$ and $\\ell\\cos\\xi$ along $y$. The area it encloses falls as $\\pi\\ell^2\\cos\\xi$ "
+        "and vanishes at the Killing-Cauchy horizon $\\xi = \\pi/2$, where the ring closes onto a segment of the "
+        "$x$ axis while the Kretschmann scalar stays at $32a^2b^2$. P. Bell and Peter Szekeres found this spacetime "
+        "in 1974, the exact solution for two plane electromagnetic shock waves colliding head on.",
     ],
     ("kasner", "ring"): [
         "The plane $y = 0$ of Kasner's universe as $t$ runs from $1/4$ to $2$, each moment drawn as a surface in flat space with "

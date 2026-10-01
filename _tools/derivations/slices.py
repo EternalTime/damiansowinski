@@ -696,6 +696,19 @@ FLAT = {
     ("khan_penrose", "double_null", "plane"): lambda: [
         Mark(m, points=[(math.sin(m.time / 2), math.sin(m.time / 2))]) for m in moments("khan_penrose")],
     ("khan_penrose", "cosmological", "plane"): lambda: [Mark(m, points=[(m.time, 0.0)]) for m in moments("khan_penrose")],
+    # Each moment of Bell and Szekeres's ring is the plane of x and y at one event, on eta = 0 at
+    # xi = t with a = b = 1: u = v = t/2; rho = 0 and chi = t - pi/2; U = V = -cos t/(sqrt 2 (1 + sin t));
+    # and t = tan xi, r = sec xi on y = 0.
+    ("bell_szekeres", "double_null", "plane"): lambda: [
+        Mark(m, points=[(m.time / 2, m.time / 2)]) for m in moments("bell_szekeres")],
+    ("bell_szekeres", "time_space", "plane"): lambda: [Mark(m, points=[(m.time, 0.0)]) for m in moments("bell_szekeres")],
+    ("bell_szekeres", "global", "plane"): lambda: [
+        Mark(m, points=[(m.time - math.pi / 2, 0.0)]) for m in moments("bell_szekeres")],
+    ("bell_szekeres", "kruskal_szekeres", "plane"): lambda: [
+        Mark(m, points=[(-math.cos(m.time) / (math.sqrt(2) * (1 + math.sin(m.time))),) * 2])
+        for m in moments("bell_szekeres")],
+    ("bell_szekeres", "bertotti_robinson", "plane"): lambda: [
+        Mark(m, points=[(math.tan(m.time), 1 / math.cos(m.time))]) for m in moments("bell_szekeres")],
     # Melvin's plane z = 0 at t = 0 and Ernst's equator at t = 0, each on its own chart's plane.
     ("melvin", "cylindrical", "radial"): lambda: one(
         "melvin", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="universe"),
@@ -760,6 +773,8 @@ HIDDEN = {
     ("gott_time_machine", "grant_rindler", "plane"): "the region of closed timelike curves beyond the chronology horizon, which no moment of Grant's Milne time meets",
     ("gott_time_machine", "grant_rindler"): "the region of closed timelike curves beyond the chronology horizon, which no moment of Grant's Milne time meets",
     ("gott_time_machine", "centre_of_momentum", "loop"): "the centre of momentum chart about the strings; the moments embedded are Grant's, away from the strings",
+    ("bell_szekeres", "regular", "plane"): "a plane of constant X and Y with X^2 + Y^2 < 1, off eta = 0, where the embedded ring's centre lies on the rim X^2 + Y^2 = 1 of the regular chart",
+    ("bell_szekeres", "regular"): "a plane of constant X and Y with X^2 + Y^2 < 1, off eta = 0, where the embedded ring's centre lies on the rim X^2 + Y^2 = 1 of the regular chart",
     ("frw", "open"): "the open universe's conformal diagram; the moments embedded are the closed universe's",
 }
 

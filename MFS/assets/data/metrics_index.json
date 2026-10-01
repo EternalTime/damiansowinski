@@ -148,6 +148,36 @@
     "embedding": "bf931d9df3013c58"
   },
   {
+    "id": "bell_szekeres",
+    "name": "Bell-Szekeres",
+    "tags": [
+      "electrovacuum",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "plane wave",
+      "electromagnetic wave",
+      "colliding plane waves",
+      "shock wave",
+      "conformally flat",
+      "Bertotti-Robinson",
+      "Killing-Cauchy horizon",
+      "Cauchy horizon",
+      "fold singularity",
+      "nonlinear",
+      "exact solution",
+      "time-dependent",
+      "dynamical",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "271689faee11bc7d",
+    "diagrams": "5f0ad659424e0599",
+    "conformal": "c7fc09c16f9ab26f",
+    "embedding": "e2cdc2bc29ec9b3c"
+  },
+  {
     "id": "bertotti_robinson",
     "name": "Bertotti-Robinson",
     "tags": [
@@ -166,7 +196,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7e2cf91bf828994a",
+    "version": "cc09592dd796cf76",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -702,7 +732,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2382cfa2e8720fca",
+    "version": "92d0e41fc1da0d79",
     "diagrams": "39424436cf59ea7f",
     "conformal": "6fa408bb4e46f514",
     "embedding": "0633d69609fb99f8"
@@ -971,7 +1001,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "757b52d132195546",
+    "version": "9b8188c0827e9851",
     "diagrams": "8682a860d329f091",
     "conformal": "a9e34cf1c120e37d",
     "embedding": "32a5018b0ec61d91"
@@ -1156,7 +1186,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "26ef20f59cb6a375",
+    "version": "10466e81a1dc83ab",
     "diagrams": "21757421f8076200",
     "embedding": "a484d91e42495a51"
   },

@@ -85,6 +85,11 @@
       "id": "misner",
       "kind": "locally_same",
       "text": "Minkowski space rolled up under a boost. It stays flat, and the identification alone makes its closed timelike curves [misner1967, li1998]."
+    },
+    {
+      "id": "bell_szekeres",
+      "kind": "composite",
+      "text": "Two plane electromagnetic shock waves colliding head on. Ahead of both of them spacetime is flat [griffiths1991]."
     }
   ],
   "references": [
@@ -118,7 +123,8 @@
     "caldwell1996",
     "melvin1964",
     "misner1967",
-    "li1998"
+    "li1998",
+    "griffiths1991"
   ],
   "coordinates": [
     {

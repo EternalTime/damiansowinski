@@ -1,0 +1,4530 @@
+{
+  "id": "bell_szekeres",
+  "name": "Bell-Szekeres Colliding Electromagnetic Waves",
+  "short_name": "Bell-Szekeres",
+  "description": "Two plane electromagnetic shock waves colliding head on in flat space. Where both have passed the spacetime is locally the Bertotti-Robinson universe, and the waves focus each other onto a Killing-Cauchy horizon with the curvature finite everywhere.",
+  "tags": [
+    "electrovacuum",
+    "electromagnetic field",
+    "Einstein-Maxwell",
+    "plane wave",
+    "electromagnetic wave",
+    "colliding plane waves",
+    "shock wave",
+    "conformally flat",
+    "Bertotti-Robinson",
+    "Killing-Cauchy horizon",
+    "Cauchy horizon",
+    "fold singularity",
+    "nonlinear",
+    "exact solution",
+    "time-dependent",
+    "dynamical",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Can two beams of light collide? Maxwell's equations are linear, so the two fields pass straight through one another, and the waves can only interact through the gravitational field of their own energy [griffiths1991]. P. Bell and Peter Szekeres worked the collision out exactly in 1974 for two plane electromagnetic waves with aligned polarizations, each one a step: nothing ahead of its front and a constant field behind [bell1974, griffiths1991]. Ahead of both waves spacetime is flat, and behind the wave of strength $a$ alone the metric is $-2\\,du\\,dv + \\cos^2(au)(dx^2 + dy^2)$, conformally flat, with a fold singularity at $u = \\pi/(2a)$ where the curvature is still finite [griffiths1991, feinstein1995, dorca1998].¶Where both waves have passed, $u > 0$ and $v > 0$, the metric is $-2\\,du\\,dv + \\cos^2(au - bv)dx^2 + \\cos^2(au + bv)dy^2$ [bell1974, griffiths1991]. Bruno Bertotti and Ivor Robinson had each found this geometry in 1959, in other coordinates, as the universe of a uniform electromagnetic field [bertotti1959, robinson1959, griffiths1991]. Between the two fronts sits a uniform electric field on the product of an anti-de Sitter space of two dimensions and a sphere, both of radius $1/\\sqrt{2ab}$ [feinstein1995]. The region is conformally flat, and the collision radiates gravitational waves along its two boundaries, as impulsive waves, $\\Psi_4 = -a\\tan(bv)\\,\\delta(u)\\Theta(v)$ on one and $\\Psi_0 = -b\\tan(au)\\,\\delta(v)\\Theta(u)$ on the other [griffiths1991].¶Bell and Szekeres showed that for electromagnetic shock waves \"the continuity conditions of Lichnerowicz must generally be relaxed in favour of the O'Brien-Synge conditions\", and that two colliding shocks then produce gravitational impulse waves [bell1974]. They then compared the effect of such an impulse on a measuring device with the experimental results of Joseph Weber [bell1974]. Tilting the polarization of one wave against the other leaves the gravitational field the same: by the theorem of N. Tariq and B. O. J. Tupper the interaction region must again be the Bertotti-Robinson universe, and a rotation of $x$ and $y$ through half the angle between the polarizations brings its metric back to Bell and Szekeres's [griffiths1991, tariq1974].¶The two impulsive gravitational waves of K. A. Khan and Roger Penrose, in 1971, had focused each other into a spacelike curvature singularity [khan1971]. Bell and Szekeres's waves focus each other too, on the surface $au + bv = \\pi/2$ where $g_{yy}$ vanishes, yet the curvature tensor stays bounded there, and the surface is a Killing-Cauchy horizon [griffiths1991, feinstein1995]. Bell and Szekeres removed the coordinate singularity with $T = -\\cos(au + bv)\\cosh ky$ and $Z = \\cos(au + bv)\\sinh ky$, where $k = \\sqrt{2ab}$ [griffiths1991]. Richard Matzner and Frank Tipler argued in 1984 that \"the apparently local curvature singularities both in the Khan-Penrose solution and in the Bell-Szekeres solution are actually global\" [matzner1984]. Chris Clarke and Sean Hayward worked out the global structure in 1989: apart from the impulsive waves themselves the solution has no curvature singularities, and the two singularities left, at $au - bv = \\pm\\pi/2$ where the horizon meets the fold singularity behind each wave, are quasiregular [clarke1989, griffiths1991].¶Clarke and Hayward also carried the spacetime through the horizon, and found that the continuation is not unique [griffiths1991]. In one extension the waves cross and focus, and the spacetime that follows is unchanging [griffiths1991]. In another, in Jerry Griffiths's words, \"the waves cross, mutually focus each other, re-expand and then separate leaving Minkowski space between them to the future\" [griffiths1991].¶Is the horizon stable? Ulvi Yurtsever showed in 1987 that Killing-Cauchy horizons in plane symmetric spacetimes are unstable against plane symmetric perturbations [yurtsever1987]. Subrahmanyan Chandrasekhar and Basilis Xanthopoulos perturbed the whole spacetime in 1988 and found, between the fronts, a complete set of bounded normal modes written in spin weighted spherical harmonics, with a frequency that grows without limit toward the horizon [chandrasekhar1988]. Behind each wave alone the perturbations diverge along the entire fold singularity, which in their words raises \"some serious conceptual questions\" [chandrasekhar1988]. Deborah Konkowski and Thomas Helliwell sent test scalar waves through the Bell-Szekeres spacetime in 1991, found their stress tensor diverging at the quasiregular singularities, and argued that the divergence converts them into scalar curvature singularities [konkowski1991].¶Alexander Feinstein and Miguel Angel Pérez Sebastián quantized a massless scalar field on the spacetime in 1995, with Kruskal-Szekeres coordinates of the kind Miquel Dorca and Enric Verdaguer introduced in 1993 for the Killing-Cauchy horizon of two colliding gravitational waves [feinstein1995, dorca1993]. An observer at the horizon counts particles in the vacuum of the flat region, with a spectrum consistent at long wavelengths with a temperature $\\hbar c\\sqrt{2ab}/(2\\pi k_B)$ [feinstein1995]. Dorca computed the stress tensor of such a field in 1998 and found it unbounded as the horizon is approached [dorca1998]. In more than four dimensions the same collision is no longer conformally flat and ends in curvature singularities, as Metin Gürses, Y. İpekoğlu, Atalay Karasu, and Çetin Şentürk found in 2003 [gurses2003].",
+  "related": [
+    {
+      "id": "bertotti_robinson",
+      "kind": "locally_same",
+      "text": "Where both waves have passed, the metric is that of the Bertotti-Robinson universe in other coordinates, with $1/\\sqrt{2ab}$ for the radius of both factors and $x$ running along its circle of longitude without closing [griffiths1991, feinstein1995]."
+    },
+    {
+      "id": "khan_penrose",
+      "kind": "family",
+      "text": "Khan and Penrose collide two impulsive gravitational waves in the same four regions, flat space, one wave, the other wave, and both, and their waves focus each other onto a curvature singularity [khan1971, griffiths1991]."
+    },
+    {
+      "id": "pp_wave",
+      "kind": "piece",
+      "text": "Behind either wave alone the spacetime is a plane electromagnetic wave, the pp-wave with $H = -a^2\\Theta(u)(x^2 + y^2)$ in Brinkmann's coordinates, which Bell and Szekeres's chart writes as $-2\\,du\\,dv + \\cos^2(au)(dx^2 + dy^2)$ [griffiths1991]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "piece",
+      "text": "Ahead of both waves, where $u < 0$ and $v < 0$, the spacetime is flat [griffiths1991]."
+    }
+  ],
+  "references": [
+    "griffiths1991",
+    "bell1974",
+    "feinstein1995",
+    "dorca1998",
+    "bertotti1959",
+    "robinson1959",
+    "tariq1974",
+    "khan1971",
+    "matzner1984",
+    "clarke1989",
+    "yurtsever1987",
+    "chandrasekhar1988",
+    "konkowski1991",
+    "dorca1993",
+    "gurses2003"
+  ],
+  "coordinates": [
+    {
+      "id": "double_null",
+      "name": "Double Null",
+      "coords": [
+        "u",
+        "v",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in [0, \\pi/(2a))",
+        "v \\in [0, (\\pi/2 - au)/b)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "au + bv = \\pi/2 \\;\\text{(Killing-Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Strength of the wave that crosses $u = 0$, an inverse length: behind that wave alone the null rays across its front meet at $u = \\pi/(2a)$"
+        },
+        {
+          "symbol": "b",
+          "description": "Strength of the wave that crosses $v = 0$, an inverse length: behind that wave alone the null rays across its front meet at $v = \\pi/(2b)$"
+        }
+      ],
+      "convention": "We use null coordinates $(u, v, x, y)$ where both waves have passed, all four of them lengths, with $x$ and $y$ across the wave fronts. Ahead of one wave or both, where $u < 0$ or $v < 0$, the metric is this one with $u$ or $v$ set to zero.",
+      "line_element": "ds^2 = -2\\,du\\,dv + \\cos^2\\left(au - bv\\right)dx^2 + \\cos^2\\left(au + bv\\right)dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\cos^2\\left(a\\,u - b\\,v\\right)"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\cos^2\\left(a\\,u + b\\,v\\right)"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{\\cos^2\\left(a\\,u - b\\,v\\right)}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{\\cos^2\\left(a\\,u + b\\,v\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x"
+                ],
+                "value": "b\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "-b\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x"
+                ],
+                "value": "-a\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y"
+                ],
+                "value": "-a\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{a\\sin\\left(a\\,u - b\\,v\\right)}{\\cos\\left(a\\,u - b\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{a\\sin\\left(a\\,u - b\\,v\\right)}{\\cos\\left(a\\,u - b\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{b\\sin\\left(a\\,u - b\\,v\\right)}{\\cos\\left(a\\,u - b\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "\\dfrac{b\\sin\\left(a\\,u - b\\,v\\right)}{\\cos\\left(a\\,u - b\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{a\\sin\\left(a\\,u + b\\,v\\right)}{\\cos\\left(a\\,u + b\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{a\\sin\\left(a\\,u + b\\,v\\right)}{\\cos\\left(a\\,u + b\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\sin\\left(a\\,u + b\\,v\\right)}{\\cos\\left(a\\,u + b\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "-\\dfrac{b\\sin\\left(a\\,u + b\\,v\\right)}{\\cos\\left(a\\,u + b\\,v\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x"
+                ],
+                "value": "a\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-a\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-a\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "a\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-a\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-a\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x"
+                ],
+                "value": "-b\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "b\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "b\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y"
+                ],
+                "value": "b\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "-b\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "-b\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-b^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "b^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "-b^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "b^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-a^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "a^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-a^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "a^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-a^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "a^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-a^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "a^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "v",
+                  "x"
+                ],
+                "value": "a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "v"
+                ],
+                "value": "-a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "-a\\,b"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "v",
+                  "y"
+                ],
+                "value": "-a\\,b"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "v"
+                ],
+                "value": "a\\,b"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "-a\\,b"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "-b^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "b^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "v",
+                  "y"
+                ],
+                "value": "-b^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "v"
+                ],
+                "value": "b^2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "a^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-a^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-a^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "a^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "v",
+                  "x"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "v"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "a^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-a^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-a^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "a^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "v",
+                  "y"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "v"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "-a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "b^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "-b^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "-b^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "b^2\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "b^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "-b^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "v",
+                  "y"
+                ],
+                "value": "-b^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "v"
+                ],
+                "value": "b^2\\cos^2\\left(a\\,u + b\\,v\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "2a^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "2b^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-2a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-2b^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-2a^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "2b^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "2a^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2a\\,b}{\\cos^2\\left(a\\,u - b\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a\\,b}{\\cos^2\\left(a\\,u + b\\,v\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 32a^2\\,b^2",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "2a^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "2b^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b\\cos^2\\left(a\\,u - b\\,v\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-2a\\,b\\cos^2\\left(a\\,u + b\\,v\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-2b^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-2a^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "2b^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "2a^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2a\\,b}{\\cos^2\\left(a\\,u - b\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a\\,b}{\\cos^2\\left(a\\,u + b\\,v\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} + b\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)\\dot{x}^2 - b\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)\\dot{y}^2 = 0",
+        "\\ddot{v} - a\\sin\\left(a\\,u - b\\,v\\right)\\cos\\left(a\\,u - b\\,v\\right)\\dot{x}^2 - a\\sin\\left(a\\,u + b\\,v\\right)\\cos\\left(a\\,u + b\\,v\\right)\\dot{y}^2 = 0",
+        "\\ddot{x} - \\dfrac{2a\\sin\\left(a\\,u - b\\,v\\right)}{\\cos\\left(a\\,u - b\\,v\\right)}\\dot{u}\\dot{x} + \\dfrac{2b\\sin\\left(a\\,u - b\\,v\\right)}{\\cos\\left(a\\,u - b\\,v\\right)}\\dot{v}\\dot{x} = 0",
+        "\\ddot{y} - \\dfrac{2a\\sin\\left(a\\,u + b\\,v\\right)}{\\cos\\left(a\\,u + b\\,v\\right)}\\dot{u}\\dot{y} - \\dfrac{2b\\sin\\left(a\\,u + b\\,v\\right)}{\\cos\\left(a\\,u + b\\,v\\right)}\\dot{v}\\dot{y} = 0"
+      ]
+    },
+    {
+      "id": "time_space",
+      "name": "Time and Space",
+      "coords": [
+        "\\xi",
+        "\\eta",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "\\xi \\in [0, \\pi/2)",
+        "\\eta \\in [-\\xi, \\xi]",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "\\xi = \\pi/2 \\;\\text{(Killing-Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+        },
+        {
+          "symbol": "b",
+          "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$"
+        }
+      ],
+      "convention": "We use coordinates $(\\xi, \\eta, x, y)$ where both waves have passed, with $\\xi = au + bv$ and $\\eta = bv - au$ dimensionless, and $x$ and $y$ lengths across the wave fronts.",
+      "line_element": "ds^2 = \\dfrac{-d\\xi^2 + d\\eta^2}{2ab} + \\cos^2\\eta\\,dx^2 + \\cos^2\\xi\\,dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "-\\dfrac{1}{2a\\,b}"
+        },
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "\\dfrac{1}{2a\\,b}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\cos^2\\eta"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\cos^2\\xi"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "-2a\\,b"
+        },
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "2a\\,b"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{\\cos^2\\eta}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{\\cos^2\\xi}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "y",
+                  "y"
+                ],
+                "value": "-2a\\,b\\sin\\xi\\cos\\xi"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b\\sin\\eta\\cos\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sin\\eta}{\\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\sin\\eta}{\\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\xi",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sin\\xi}{\\cos\\xi}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\xi"
+                ],
+                "value": "-\\dfrac{\\sin\\xi}{\\cos\\xi}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "y",
+                  "y"
+                ],
+                "value": "\\sin\\xi\\cos\\xi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\xi",
+                  "y"
+                ],
+                "value": "-\\sin\\xi\\cos\\xi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\xi"
+                ],
+                "value": "-\\sin\\xi\\cos\\xi"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x"
+                ],
+                "value": "\\sin\\eta\\cos\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-\\sin\\eta\\cos\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\sin\\eta\\cos\\eta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "y",
+                  "\\xi",
+                  "y"
+                ],
+                "value": "-2a\\,b\\cos^2\\xi"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "y",
+                  "y",
+                  "\\xi"
+                ],
+                "value": "2a\\,b\\cos^2\\xi"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "2a\\,b\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-2a\\,b\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\xi",
+                  "\\xi",
+                  "y"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\xi",
+                  "y",
+                  "\\xi"
+                ],
+                "value": "1"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "y",
+                  "\\xi",
+                  "y"
+                ],
+                "value": "\\cos^2\\xi"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "y",
+                  "y",
+                  "\\xi"
+                ],
+                "value": "-\\cos^2\\xi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\xi",
+                  "\\xi",
+                  "y"
+                ],
+                "value": "-\\cos^2\\xi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\xi",
+                  "y",
+                  "\\xi"
+                ],
+                "value": "\\cos^2\\xi"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "\\cos^2\\eta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "\\xi"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-2a\\,b\\cos^2\\xi"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "\\xi"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "\\xi"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2a\\,b}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a\\,b}{\\cos^2\\xi}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 32a^2\\,b^2",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "\\xi"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-2a\\,b\\cos^2\\xi"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "\\xi"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\xi",
+                  "\\xi"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2a\\,b}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a\\,b}{\\cos^2\\xi}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\xi} - 2a\\,b\\sin\\xi\\cos\\xi\\,\\dot{y}^2 = 0",
+        "\\ddot{\\eta} + 2a\\,b\\sin\\eta\\cos\\eta\\,\\dot{x}^2 = 0",
+        "\\ddot{x} - \\dfrac{2\\sin\\eta}{\\cos\\eta}\\dot{\\eta}\\dot{x} = 0",
+        "\\ddot{y} - \\dfrac{2\\sin\\xi}{\\cos\\xi}\\dot{\\xi}\\dot{y} = 0"
+      ]
+    },
+    {
+      "id": "regular",
+      "name": "Regular",
+      "coords": [
+        "T",
+        "Z",
+        "X",
+        "Y"
+      ],
+      "domains": [
+        "T \\in \\left[-\\sqrt{1 + Z^2},\\, -|Z|\\right)",
+        "Z \\in (-\\infty, \\infty)",
+        "X \\in (-1, 1)",
+        "Y \\in \\left(-\\sqrt{1 - X^2},\\, \\sqrt{1 - X^2}\\right)",
+        "T^2 - Z^2 \\le X^2 + Y^2 \\;\\text{(behind both wave fronts)}",
+        "T^2 = Z^2 \\;\\text{(Killing-Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+        },
+        {
+          "symbol": "b",
+          "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$"
+        }
+      ],
+      "convention": "We use coordinates $(T, Z, X, Y)$, all dimensionless. With $\\xi = au + bv$, $\\eta = bv - au$, and $k = \\sqrt{2ab}$ they are $T = -\\cos\\xi\\cosh ky$, $Z = \\cos\\xi\\sinh ky$, $X = \\cos\\eta\\cos kx$, and $Y = \\cos\\eta\\sin kx$, one to one for $-\\pi < kx \\le \\pi$ on either side of $\\eta = 0$.",
+      "line_element": "ds^2 = \\dfrac{-\\left(1 + Z^2\\right)dT^2 + 2TZ\\,dT\\,dZ + \\left(1 - T^2\\right)dZ^2}{2ab\\left(1 - T^2 + Z^2\\right)} + \\dfrac{\\left(1 - Y^2\\right)dX^2 + 2XY\\,dX\\,dY + \\left(1 - X^2\\right)dY^2}{2ab\\left(1 - X^2 - Y^2\\right)}",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-\\dfrac{1 + Z^2}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+        },
+        {
+          "indices": [
+            "T",
+            "Z"
+          ],
+          "value": "\\dfrac{T\\,Z}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+        },
+        {
+          "indices": [
+            "Z",
+            "T"
+          ],
+          "value": "\\dfrac{T\\,Z}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+        },
+        {
+          "indices": [
+            "Z",
+            "Z"
+          ],
+          "value": "\\dfrac{1 - T^2}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "\\dfrac{1 - Y^2}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+        },
+        {
+          "indices": [
+            "X",
+            "Y"
+          ],
+          "value": "\\dfrac{X\\,Y}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+        },
+        {
+          "indices": [
+            "Y",
+            "X"
+          ],
+          "value": "\\dfrac{X\\,Y}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "\\dfrac{1 - X^2}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-2a\\,b\\left(1 - T^2\\right)"
+        },
+        {
+          "indices": [
+            "T",
+            "Z"
+          ],
+          "value": "2a\\,b\\,T\\,Z"
+        },
+        {
+          "indices": [
+            "Z",
+            "T"
+          ],
+          "value": "2a\\,b\\,T\\,Z"
+        },
+        {
+          "indices": [
+            "Z",
+            "Z"
+          ],
+          "value": "2a\\,b\\left(1 + Z^2\\right)"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "2a\\,b\\left(1 - X^2\\right)"
+        },
+        {
+          "indices": [
+            "X",
+            "Y"
+          ],
+          "value": "-2a\\,b\\,X\\,Y"
+        },
+        {
+          "indices": [
+            "Y",
+            "X"
+          ],
+          "value": "-2a\\,b\\,X\\,Y"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "2a\\,b\\left(1 - Y^2\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{T\\left(1 + Z^2\\right)}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{T^2\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{T^2\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z"
+                ],
+                "value": "-\\dfrac{T\\left(1 - T^2\\right)}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{Z\\left(1 + Z^2\\right)}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{T\\,Z^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{T\\,Z^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "Z"
+                ],
+                "value": "-\\dfrac{Z\\left(1 - T^2\\right)}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{X\\left(1 - Y^2\\right)}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{X^2\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{X^2\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y"
+                ],
+                "value": "\\dfrac{X\\left(1 - X^2\\right)}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{Y\\left(1 - Y^2\\right)}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{X\\,Y^2}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{X\\,Y^2}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "Y"
+                ],
+                "value": "\\dfrac{Y\\left(1 - X^2\\right)}{1 - X^2 - Y^2}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{T\\left(1 + Z^2\\right)}{2a\\,b\\left(1 - T^2 + Z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{T^2\\,Z}{2a\\,b\\left(1 - T^2 + Z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{T^2\\,Z}{2a\\,b\\left(1 - T^2 + Z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{T\\left(1 - T^2\\right)}{2a\\,b\\left(1 - T^2 + Z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{Z\\left(1 + Z^2\\right)}{2a\\,b\\left(1 - T^2 + Z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{T\\,Z^2}{2a\\,b\\left(1 - T^2 + Z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{T\\,Z^2}{2a\\,b\\left(1 - T^2 + Z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "Z"
+                ],
+                "value": "-\\dfrac{Z\\left(1 - T^2\\right)}{2a\\,b\\left(1 - T^2 + Z^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{X\\left(1 - Y^2\\right)}{2a\\,b\\left(1 - X^2 - Y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{X^2\\,Y}{2a\\,b\\left(1 - X^2 - Y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{X^2\\,Y}{2a\\,b\\left(1 - X^2 - Y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y"
+                ],
+                "value": "\\dfrac{X\\left(1 - X^2\\right)}{2a\\,b\\left(1 - X^2 - Y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{Y\\left(1 - Y^2\\right)}{2a\\,b\\left(1 - X^2 - Y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{X\\,Y^2}{2a\\,b\\left(1 - X^2 - Y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{X\\,Y^2}{2a\\,b\\left(1 - X^2 - Y^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "Y"
+                ],
+                "value": "\\dfrac{Y\\left(1 - X^2\\right)}{2a\\,b\\left(1 - X^2 - Y^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{T\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{T\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{T\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{T\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{1 - T^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{1 - T^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{1 + Z^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{1 + Z^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{X\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{X\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{X\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{X\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{1 - X^2}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{1 - X^2}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{1 - Y^2}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{1 - Y^2}{1 - X^2 - Y^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{1}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{1}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{1}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{1}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{1}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{1}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{1 + Z^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{T\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{T\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "-\\dfrac{1 - T^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{1 - Y^2}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{X\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{X\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y"
+                ],
+                "value": "\\dfrac{1 - X^2}{1 - X^2 - Y^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y"
+                ],
+                "value": "2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "4a^2\\,b^2\\left(1 - T^2\\right)"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "-4a^2\\,b^2\\,T\\,Z"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "-4a^2\\,b^2\\,T\\,Z"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "-4a^2\\,b^2\\left(1 + Z^2\\right)"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "4a^2\\,b^2\\left(1 - X^2\\right)"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y"
+                ],
+                "value": "-4a^2\\,b^2\\,X\\,Y"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X"
+                ],
+                "value": "-4a^2\\,b^2\\,X\\,Y"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y"
+                ],
+                "value": "4a^2\\,b^2\\left(1 - Y^2\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 32a^2\\,b^2",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{1 + Z^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{T\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{T\\,Z}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "-\\dfrac{1 - T^2}{1 - T^2 + Z^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{1 - Y^2}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{X\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{X\\,Y}{1 - X^2 - Y^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y"
+                ],
+                "value": "\\dfrac{1 - X^2}{1 - X^2 - Y^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y"
+                ],
+                "value": "2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "4a^2\\,b^2\\left(1 - T^2\\right)"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "-4a^2\\,b^2\\,T\\,Z"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "-4a^2\\,b^2\\,T\\,Z"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "-4a^2\\,b^2\\left(1 + Z^2\\right)"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "4a^2\\,b^2\\left(1 - X^2\\right)"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y"
+                ],
+                "value": "-4a^2\\,b^2\\,X\\,Y"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X"
+                ],
+                "value": "-4a^2\\,b^2\\,X\\,Y"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y"
+                ],
+                "value": "4a^2\\,b^2\\left(1 - Y^2\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} + \\dfrac{T\\left(1 + Z^2\\right)}{1 - T^2 + Z^2}\\dot{T}^2 - \\dfrac{2T^2\\,Z}{1 - T^2 + Z^2}\\dot{T}\\dot{Z} - \\dfrac{T\\left(1 - T^2\\right)}{1 - T^2 + Z^2}\\dot{Z}^2 = 0",
+        "\\ddot{Z} + \\dfrac{Z\\left(1 + Z^2\\right)}{1 - T^2 + Z^2}\\dot{T}^2 - \\dfrac{2T\\,Z^2}{1 - T^2 + Z^2}\\dot{T}\\dot{Z} - \\dfrac{Z\\left(1 - T^2\\right)}{1 - T^2 + Z^2}\\dot{Z}^2 = 0",
+        "\\ddot{X} + \\dfrac{X\\left(1 - Y^2\\right)}{1 - X^2 - Y^2}\\dot{X}^2 + \\dfrac{2X^2\\,Y}{1 - X^2 - Y^2}\\dot{X}\\dot{Y} + \\dfrac{X\\left(1 - X^2\\right)}{1 - X^2 - Y^2}\\dot{Y}^2 = 0",
+        "\\ddot{Y} + \\dfrac{Y\\left(1 - Y^2\\right)}{1 - X^2 - Y^2}\\dot{X}^2 + \\dfrac{2X\\,Y^2}{1 - X^2 - Y^2}\\dot{X}\\dot{Y} + \\dfrac{Y\\left(1 - X^2\\right)}{1 - X^2 - Y^2}\\dot{Y}^2 = 0"
+      ]
+    },
+    {
+      "id": "global",
+      "name": "Global",
+      "coords": [
+        "\\chi",
+        "\\rho",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\chi \\in \\left[-\\pi/2,\\, -\\arcsin|\\tanh\\rho|\\right)",
+        "\\rho \\in (-\\infty, \\infty)",
+        "\\theta \\in \\left[\\arccos(\\cos\\chi\\cosh\\rho),\\, \\pi - \\arccos(\\cos\\chi\\cosh\\rho)\\right]",
+        "\\phi \\in (-\\infty, \\infty)",
+        "\\cos\\chi\\cosh\\rho = 1 \\;\\text{(Killing-Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+        },
+        {
+          "symbol": "b",
+          "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$"
+        }
+      ],
+      "convention": "We use coordinates $(\\chi, \\rho, \\theta, \\phi)$, all dimensionless. With $\\xi = au + bv$ and $k = \\sqrt{2ab}$ they are $\\sinh\\rho = \\cos\\xi\\sinh ky$, $\\sin\\chi = -\\cos\\xi\\cosh ky/\\cosh\\rho$, $\\theta = \\pi/2 + au - bv$, and $\\phi = kx$, and $\\phi$ runs over the whole line.",
+      "line_element": "ds^2 = \\dfrac{1}{2ab}\\left(-\\cosh^2\\rho\\,d\\chi^2 + d\\rho^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "-\\dfrac{\\cosh^2\\rho}{2a\\,b}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{1}{2a\\,b}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{2a\\,b}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\sin^2\\theta}{2a\\,b}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "-\\dfrac{2a\\,b}{\\cosh^2\\rho}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "2a\\,b"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "2a\\,b"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "2a\\,b\\csc^2\\theta"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\sinh\\rho}{\\cosh\\rho}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\rho",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\sinh\\rho}{\\cosh\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\sinh\\rho\\cosh\\rho"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\sinh\\rho\\cosh\\rho}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\rho",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\sinh\\rho\\cosh\\rho}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\sinh\\rho\\cosh\\rho}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\sin\\theta\\cos\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sin\\theta\\cos\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\sin\\theta\\cos\\theta}{2a\\,b}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\rho",
+                  "\\chi",
+                  "\\rho"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\rho",
+                  "\\rho",
+                  "\\chi"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\chi",
+                  "\\chi",
+                  "\\rho"
+                ],
+                "value": "-\\cosh^2\\rho"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\chi",
+                  "\\rho",
+                  "\\chi"
+                ],
+                "value": "\\cosh^2\\rho"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\sin^2\\theta"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\rho",
+                  "\\chi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\cosh^2\\rho}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\rho",
+                  "\\rho",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\cosh^2\\rho}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\chi",
+                  "\\chi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\cosh^2\\rho}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\chi",
+                  "\\rho",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\cosh^2\\rho}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sin^2\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\sin^2\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\sin^2\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\sin^2\\theta}{2a\\,b}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\cosh^2\\rho"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{4a^2\\,b^2}{\\cosh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "4a^2\\,b^2\\csc^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 32a^2\\,b^2",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\cosh^2\\rho"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{4a^2\\,b^2}{\\cosh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "4a^2\\,b^2\\csc^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\chi} + \\dfrac{2\\sinh\\rho}{\\cosh\\rho}\\dot{\\chi}\\dot{\\rho} = 0",
+        "\\ddot{\\rho} + \\sinh\\rho\\cosh\\rho\\,\\dot{\\chi}^2 = 0",
+        "\\ddot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "kruskal_szekeres",
+      "name": "Kruskal-Szekeres",
+      "coords": [
+        "U",
+        "V",
+        "\\eta",
+        "x"
+      ],
+      "domains": [
+        "U \\in (-\\infty, 0)",
+        "V \\in \\left[\\dfrac{1}{2abU},\\, 0\\right)",
+        "\\eta \\in (-\\pi/2, \\pi/2)",
+        "x \\in (-\\infty, \\infty)",
+        "2abUV \\le \\dfrac{1 - \\sin|\\eta|}{1 + \\sin|\\eta|} \\;\\text{(behind both wave fronts)}",
+        "UV = 0 \\;\\text{(Killing-Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+        },
+        {
+          "symbol": "b",
+          "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$"
+        }
+      ],
+      "convention": "We use coordinates $(U, V, \\eta, x)$, with $U$, $V$, and $x$ lengths and $\\eta = bv - au$ dimensionless. With $q = 1/\\sqrt{2ab}$ and $\\xi = au + bv$, the null coordinates are $U = -q\\,e^{y/q}\\cos\\xi/(1 + \\sin\\xi)$ and $V = -q\\,e^{-y/q}\\cos\\xi/(1 + \\sin\\xi)$, so $2abUV = (1 - \\sin\\xi)/(1 + \\sin\\xi)$.",
+      "line_element": "ds^2 = -\\dfrac{4\\,dU\\,dV}{\\left(1 + 2abUV\\right)^2} + \\dfrac{d\\eta^2}{2ab} + \\cos^2\\eta\\,dx^2",
+      "metric_components": [
+        {
+          "indices": [
+            "U",
+            "V"
+          ],
+          "value": "-\\dfrac{2}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+        },
+        {
+          "indices": [
+            "V",
+            "U"
+          ],
+          "value": "-\\dfrac{2}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "\\dfrac{1}{2a\\,b}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\cos^2\\eta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "U",
+            "V"
+          ],
+          "value": "-\\dfrac{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}{2}"
+        },
+        {
+          "indices": [
+            "V",
+            "U"
+          ],
+          "value": "-\\dfrac{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}{2}"
+        },
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "2a\\,b"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{\\cos^2\\eta}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "U"
+                ],
+                "value": "-\\dfrac{4a\\,b\\,V}{1 + 2a\\,b\\,U\\,V}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V"
+                ],
+                "value": "-\\dfrac{4a\\,b\\,U}{1 + 2a\\,b\\,U\\,V}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b\\sin\\eta\\cos\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sin\\eta}{\\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\sin\\eta}{\\cos\\eta}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{8a\\,b\\,U}{\\left(1 + 2a\\,b\\,U\\,V\\right)^3}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "U"
+                ],
+                "value": "\\dfrac{8a\\,b\\,V}{\\left(1 + 2a\\,b\\,U\\,V\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x"
+                ],
+                "value": "\\sin\\eta\\cos\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-\\sin\\eta\\cos\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\sin\\eta\\cos\\eta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{4a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{4a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "U",
+                  "V"
+                ],
+                "value": "-\\dfrac{4a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{4a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "2a\\,b\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-2a\\,b\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "1"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V",
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{8a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^4}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "V",
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{8a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "U",
+                  "V"
+                ],
+                "value": "-\\dfrac{8a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{8a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-\\cos^2\\eta"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "\\cos^2\\eta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{4a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{4a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b\\cos^2\\eta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "a\\,b\\left(1 + 2a\\,b\\,U\\,V\\right)^2"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "a\\,b\\left(1 + 2a\\,b\\,U\\,V\\right)^2"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2a\\,b}{\\cos^2\\eta}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 32a^2\\,b^2",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{4a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{4a\\,b}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b\\cos^2\\eta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "a\\,b\\left(1 + 2a\\,b\\,U\\,V\\right)^2"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "a\\,b\\left(1 + 2a\\,b\\,U\\,V\\right)^2"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2a\\,b}{\\cos^2\\eta}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{U} - \\dfrac{4a\\,b\\,V}{1 + 2a\\,b\\,U\\,V}\\dot{U}^2 = 0",
+        "\\ddot{V} - \\dfrac{4a\\,b\\,U}{1 + 2a\\,b\\,U\\,V}\\dot{V}^2 = 0",
+        "\\ddot{\\eta} + 2a\\,b\\sin\\eta\\cos\\eta\\,\\dot{x}^2 = 0",
+        "\\ddot{x} - \\dfrac{2\\sin\\eta}{\\cos\\eta}\\dot{\\eta}\\dot{x} = 0"
+      ]
+    },
+    {
+      "id": "bertotti_robinson",
+      "name": "Bertotti-Robinson",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in [0, r)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in \\left[\\pi/2 - \\arcsin(t/r),\\, \\pi/2 + \\arcsin(t/r)\\right]",
+        "\\phi \\in (-\\infty, \\infty)",
+        "t = r \\;\\text{(Killing-Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+        },
+        {
+          "symbol": "b",
+          "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$, the $b$ of the Bertotti-Robinson universe"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$, all dimensionless. With $q = 1/\\sqrt{2ab}$ they are $t = e^{y/q}\\tan(au + bv)$, $r = e^{y/q}\\sec(au + bv)$, $\\theta = \\pi/2 + au - bv$, and $\\phi = x/q$, and $\\phi$ runs over the whole line.",
+      "line_element": "ds^2 = \\dfrac{1}{2ab\\,r^2}\\left(-dt^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{2a\\,b\\,r^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{2a\\,b\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{2a\\,b}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\sin^2\\theta}{2a\\,b}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-2a\\,b\\,r^2"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "2a\\,b\\,r^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "2a\\,b"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "2a\\,b\\csc^2\\theta"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2a\\,b\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2a\\,b\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2a\\,b\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2a\\,b\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\sin\\theta\\cos\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sin\\theta\\cos\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\sin\\theta\\cos\\theta}{2a\\,b}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "1"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2a\\,b\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2a\\,b\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2a\\,b\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2a\\,b\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sin^2\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\sin^2\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\sin^2\\theta}{2a\\,b}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\sin^2\\theta}{2a\\,b}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "4a^2\\,b^2\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-4a^2\\,b^2\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "4a^2\\,b^2\\csc^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 32a^2\\,b^2",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "2a\\,b"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2a\\,b"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "4a^2\\,b^2\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-4a^2\\,b^2\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "4a^2\\,b^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "4a^2\\,b^2\\csc^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{2}{r}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} - \\dfrac{1}{r}\\dot{t}^2 - \\dfrac{1}{r}\\dot{r}^2 = 0",
+        "\\ddot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}
