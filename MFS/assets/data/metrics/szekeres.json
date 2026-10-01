@@ -101,7 +101,7 @@
         },
         {
           "symbol": "S = S(r)",
-          "description": "Dimensionless positive function: $R\\,S'/S$ is the rate, per unit $r$, at which the centers of the spheres move along the axis toward $\\theta = \\pi$. The prime is $S' = dS/dr$."
+          "description": "Dimensionless positive function: $R\\,S'/S$ is the rate, per unit $r$, at which the centers of the spheres move along the axis toward $\\theta = 0$. The prime is $S' = dS/dr$."
         }
       ],
       "convention": "We use coordinates $(t, r, \\theta, \\phi)$ on the quasispherical models, $\\epsilon = 1$, whose functions $P$ and $Q$ are constant, with $\\theta$ and $\\phi$ the polar angles of each sphere about the axis of symmetry, where $p - P = S\\cot(\\theta/2)\\cos\\phi$ and $q - Q = S\\cot(\\theta/2)\\sin\\phi$. The areal radius $R(t,r)$ is a length, and $f$ and $S$ are dimensionless functions of $r$ alone. We take components in the chart $x^0 = ct$, where $\\partial_t = c^{-1}\\partial/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
