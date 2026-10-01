@@ -43,6 +43,11 @@
       "text": "Collapsing dust whose density varies with radius. Demetrios Christodoulou proved in 1984 that such a cloud can form a singularity that sends light out to infinity, which the uniform ball never does [christodoulou1984]."
     },
     {
+      "id": "szekeres",
+      "kind": "generalisation",
+      "text": "The collapse with the uniformity and the spherical symmetry given up. Peter Szekeres found in 1975 that under reasonable initial conditions the singularity hides behind an event horizon, and that slightly irregular densities leave portions of it naked [szekeres1975collapse]."
+    },
+    {
       "id": "tov",
       "kind": "programme",
       "text": "Oppenheimer and George Volkoff showed earlier in 1939 that a cold star above a certain mass has no equilibrium [oppenheimer1939]. Oppenheimer and Snyder followed such a star down."
@@ -68,6 +73,7 @@
     "de2026",
     "beasor2026",
     "christodoulou1984",
+    "szekeres1975collapse",
     "schwarzschild1916b",
     "vaidya1966"
   ],

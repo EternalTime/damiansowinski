@@ -39,6 +39,11 @@
       "id": "schwarzschild",
       "kind": "special_case",
       "text": "Tolman-Bondi with no dust outside a central mass. Georges Lemaître used it in 1933 to show that freely falling observers cross $r = r_s$ without incident [lemaitre1933]."
+    },
+    {
+      "id": "szekeres",
+      "kind": "generalisation",
+      "text": "Tolman-Bondi with the spheres pushed off center. Peter Szekeres's dust keeps the evolution of each shell and sets the shells eccentrically, so the density carries a dipole and in general no Killing vector survives [szekeres1975, bonnor1977]."
     }
   ],
   "references": [
@@ -59,7 +64,9 @@
     "celerier2000",
     "alnes2006",
     "moss2011",
-    "zhang2011"
+    "zhang2011",
+    "szekeres1975",
+    "bonnor1977"
   ],
   "coordinates": [
     {

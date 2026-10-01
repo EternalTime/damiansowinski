@@ -40,6 +40,11 @@
       "id": "bianchi",
       "kind": "family",
       "text": "Every other spatially homogeneous cosmology. The Kantowski-Sachs group has four parameters, and none of Bianchi's groups sits inside it acting simply transitively [kantowski1966, ellismaccallum1969]."
+    },
+    {
+      "id": "szekeres",
+      "kind": "generalisation",
+      "text": "Peter Szekeres's dust cosmologies of 1975 hold the Kantowski-Sachs dust models in their second class, and in general have no Killing vector [szekeres1975, bonnor1977]."
     }
   ],
   "references": [
@@ -53,7 +58,9 @@
     "doran2008",
     "collins1977",
     "weber1984",
-    "laflamme1987"
+    "laflamme1987",
+    "szekeres1975",
+    "bonnor1977"
   ],
   "coordinates": [
     {

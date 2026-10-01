@@ -147,6 +147,11 @@
       "text": "Dust falling freely in spherical symmetry. With the dust removed, its comoving coordinates are Lemaître's coordinates for Schwarzschild's metric, regular across the horizon [lemaitre1933]."
     },
     {
+      "id": "szekeres",
+      "kind": "generalisation",
+      "text": "Schwarzschild's vacuum with dust let in, shell by shell, the shells no longer concentric. William Bonnor showed in 1976 that a ball of Peter Szekeres's dust with no Killing vector joins to Schwarzschild's exterior, so its collapse sends out no gravitational waves [szekeres1975, bonnor1976]."
+    },
+    {
       "id": "morris_thorne",
       "kind": "family",
       "text": "A wormhole made to be crossed. Schwarzschild's own bridge pinches off faster than light can cross it [fuller1962, morris1988]."
@@ -199,6 +204,8 @@
     "doran2008",
     "schwarzschild1916b",
     "oppenheimersnyder1939",
+    "szekeres1975",
+    "bonnor1976",
     "fuller1962",
     "morris1988",
     "visser1989nuclphysb",

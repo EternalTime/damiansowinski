@@ -3217,6 +3217,11 @@
           "text": "Dust whose density depends on radius, each shell expanding as a Friedmann universe of its own [lemaitre1933, tolman1934, bondi1947]."
         },
         {
+          "id": "szekeres",
+          "kind": "generalisation",
+          "text": "Friedmann's dust with both the homogeneity and the symmetry let go. Peter Szekeres's cosmologies in general have no Killing vector, and Friedmann's universe is the one whose shells are all alike [szekeres1975, bonnor1977]."
+        },
+        {
           "id": "de_sitter",
           "kind": "special_case",
           "text": "The Friedmann universe with nothing in it but a positive cosmological constant. In flat slices its scale factor grows exponentially [lemaitre1925, robertson1928]."
@@ -3270,6 +3275,8 @@
         "lemaitre1933",
         "tolman1934",
         "bondi1947",
+        "szekeres1975",
+        "bonnor1977",
         "lemaitre1925",
         "robertson1928",
         "einstein1917",
@@ -4322,6 +4329,11 @@
           "id": "bianchi",
           "kind": "family",
           "text": "Every other spatially homogeneous cosmology. The Kantowski-Sachs group has four parameters, and none of Bianchi's groups sits inside it acting simply transitively [kantowski1966, ellismaccallum1969]."
+        },
+        {
+          "id": "szekeres",
+          "kind": "generalisation",
+          "text": "Peter Szekeres's dust cosmologies of 1975 hold the Kantowski-Sachs dust models in their second class, and in general have no Killing vector [szekeres1975, bonnor1977]."
         }
       ],
       "references": [
@@ -4335,7 +4347,9 @@
         "doran2008",
         "collins1977",
         "weber1984",
-        "laflamme1987"
+        "laflamme1987",
+        "szekeres1975",
+        "bonnor1977"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kantowski_sachs.json",
@@ -8292,6 +8306,11 @@
           "text": "Collapsing dust whose density varies with radius. Demetrios Christodoulou proved in 1984 that such a cloud can form a singularity that sends light out to infinity, which the uniform ball never does [christodoulou1984]."
         },
         {
+          "id": "szekeres",
+          "kind": "generalisation",
+          "text": "The collapse with the uniformity and the spherical symmetry given up. Peter Szekeres found in 1975 that under reasonable initial conditions the singularity hides behind an event horizon, and that slightly irregular densities leave portions of it naked [szekeres1975collapse]."
+        },
+        {
           "id": "tov",
           "kind": "programme",
           "text": "Oppenheimer and George Volkoff showed earlier in 1939 that a cold star above a certain mass has no equilibrium [oppenheimer1939]. Oppenheimer and Snyder followed such a star down."
@@ -8317,6 +8336,7 @@
         "de2026",
         "beasor2026",
         "christodoulou1984",
+        "szekeres1975collapse",
         "schwarzschild1916b",
         "vaidya1966"
       ],
@@ -9164,6 +9184,11 @@
           "text": "Dust falling freely in spherical symmetry. With the dust removed, its comoving coordinates are Lemaître's coordinates for Schwarzschild's metric, regular across the horizon [lemaitre1933]."
         },
         {
+          "id": "szekeres",
+          "kind": "generalisation",
+          "text": "Schwarzschild's vacuum with dust let in, shell by shell, the shells no longer concentric. William Bonnor showed in 1976 that a ball of Peter Szekeres's dust with no Killing vector joins to Schwarzschild's exterior, so its collapse sends out no gravitational waves [szekeres1975, bonnor1976]."
+        },
+        {
           "id": "morris_thorne",
           "kind": "family",
           "text": "A wormhole made to be crossed. Schwarzschild's own bridge pinches off faster than light can cross it [fuller1962, morris1988]."
@@ -9216,6 +9241,8 @@
         "doran2008",
         "schwarzschild1916b",
         "oppenheimersnyder1939",
+        "szekeres1975",
+        "bonnor1976",
         "fuller1962",
         "morris1988",
         "visser1989nuclphysb",
@@ -10480,6 +10507,33 @@
       ],
       "signature": "(-,+,+,+)",
       "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "tolman_bondi",
+          "kind": "special_case",
+          "text": "Szekeres's dust with its spheres set concentric. Where $\\epsilon = 1$ and $S$, $P$, and $Q$ are constant, $\\partial_r E = 0$ and the metric is Tolman-Bondi's [hellaby2002]."
+        },
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "Szekeres's dust with every shell alike. With $\\epsilon = 1$, $R = a(t)\\,r$, $f = -kr^2$, and $S$, $P$, and $Q$ constant it is the Friedmann universe of dust [goode1982]."
+        },
+        {
+          "id": "kantowski_sachs",
+          "kind": "special_case",
+          "text": "The dust models of Ronald Kantowski and Rainer Sachs belong to Szekeres's second class of solutions, in which $\\beta$ does not depend on $r$ [szekeres1975]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Szekeres's quasispherical dust with the dust taken away, $M$ constant and $\\partial_r E = 0$, in the coordinates of freely falling observers. William Bonnor joined a ball of the dust to it in 1976 [bonnor1976]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "special_case",
+          "text": "A uniform ball of Szekeres's dust with concentric shells, falling from rest inside Schwarzschild's vacuum. Szekeres's quasispherical collapses include the spherically symmetric ones [szekeres1975collapse]."
+        }
+      ],
       "references": [
         "szekeres1975",
         "eardley1972",
@@ -10842,6 +10896,11 @@
           "id": "schwarzschild",
           "kind": "special_case",
           "text": "Tolman-Bondi with no dust outside a central mass. Georges Lemaître used it in 1933 to show that freely falling observers cross $r = r_s$ without incident [lemaitre1933]."
+        },
+        {
+          "id": "szekeres",
+          "kind": "generalisation",
+          "text": "Tolman-Bondi with the spheres pushed off center. Peter Szekeres's dust keeps the evolution of each shell and sets the shells eccentrically, so the density carries a dipole and in general no Killing vector survives [szekeres1975, bonnor1977]."
         }
       ],
       "references": [
@@ -10862,7 +10921,9 @@
         "celerier2000",
         "alnes2006",
         "moss2011",
-        "zhang2011"
+        "zhang2011",
+        "szekeres1975",
+        "bonnor1977"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json",
