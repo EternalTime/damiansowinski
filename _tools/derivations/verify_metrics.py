@@ -466,6 +466,16 @@ DIMENSIONS = {
     },
     ("gott_time_machine", "grant_rindler"): {"\\eta": "1", "\\xi": "L", "Y": "L", "z": "L", "a": "1", "b": "L"},
     ("gott_time_machine", "grant_milne"): {"\\tau": "T", "\\chi": "1", "Y": "L", "z": "L", "a": "1", "b": "L"},
+    # The spinning string's two parameters are the length a = 4GJ/c^3 and the pure number
+    # b = 1 - 4G mu/c^2; the helical chart's angle b phi is as dimensionless as phi, and the
+    # extended source's M(r) and rho(r) are lengths, as is the proper radius r_0 of its surface.
+    ("spinning_string", "proper_radius"): {"t": "T", "r": "L", "\\phi": "1", "z": "L", "a": "L", "b": "1"},
+    ("spinning_string", "rescaled_radius"): {"t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "a": "L", "b": "1"},
+    ("spinning_string", "circumference_radius"): {"t": "T", "R": "L", "\\phi": "1", "z": "L", "a": "L", "b": "1"},
+    ("spinning_string", "helical"): {"\\tau": "T", "r": "L", "\\tilde\\phi": "1", "z": "L", "a": "L", "b": "1"},
+    ("spinning_string", "extended_source"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "M": "L", "\\rho": "L", "r_0": "L",
+    },
     # The redshift function sits inside an exponential and so is dimensionless, and the
     # shape function is a length beside r, which is what leaves 1 - b/r dimensionless.
     # In the proper distance chart l is the radial coordinate and the areal radius r is

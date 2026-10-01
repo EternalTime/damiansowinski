@@ -33,6 +33,11 @@
       "id": "godel",
       "kind": "family",
       "text": "Kurt Gödel's rotating dust of 1949, homogeneous and with closed timelike curves through every event [godel1949]."
+    },
+    {
+      "id": "spinning_string",
+      "kind": "family",
+      "text": "A string with spin, flat everywhere off its axis. Its closed timelike curves lie close in, where van Stockum's cylinder has them far out [deser1992time]."
     }
   ],
   "references": [
@@ -45,7 +50,8 @@
     "misner1973",
     "vanloo2004",
     "wack2014timebomber",
-    "godel1949"
+    "godel1949",
+    "deser1992time"
   ],
   "coordinates": [
     {

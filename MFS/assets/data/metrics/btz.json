@@ -61,6 +61,11 @@
       "id": "gott_time_machine",
       "kind": "family",
       "text": "Sören Holst and Hans-Jürgen Matschull showed in 1999 that two massless particles colliding in anti-de Sitter space make a Gott universe, which, with its closed timelike curves treated as singular, is a rotating BTZ black hole [holst1999]."
+    },
+    {
+      "id": "spinning_string",
+      "kind": "family",
+      "text": "The spinning point particle of gravity in three dimensions with no cosmological constant, drawn out along a line into a string. It has no horizon, and its closed timelike curves lie close to the source [deser1984, deser1992time]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "witten2007",
     "maloney2010",
     "misner1967",
-    "holst1999"
+    "holst1999",
+    "deser1992time"
   ],
   "coordinates": [
     {

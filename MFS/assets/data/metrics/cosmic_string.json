@@ -58,6 +58,11 @@
       "id": "domain_wall",
       "kind": "family",
       "text": "The defect spread over a surface. Tom Kibble showed in 1976 that the topology of the vacuum decides whether walls, strings, or monopoles form [kibble1976]. A wall repels test bodies, and a straight string leaves them alone."
+    },
+    {
+      "id": "spinning_string",
+      "kind": "generalisation",
+      "text": "The string given angular momentum as well as mass. Time then jumps by $8\\pi GJ/c^4$ on each circuit of it, and close in the circles around it are closed timelike curves [deser1984, deser1992time]."
     }
   ],
   "references": [
@@ -80,7 +85,8 @@
     "aryal1986",
     "maccallum2011",
     "hawking1995",
-    "barriola1989"
+    "barriola1989",
+    "deser1992time"
   ],
   "coordinates": [
     {

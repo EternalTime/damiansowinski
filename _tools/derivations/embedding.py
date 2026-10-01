@@ -341,7 +341,9 @@ class Slice:
             g = float(self.gxx_at(x))
             return np.array([float(self._at(self._drho, x)) / math.sqrt(g),
                              math.sqrt(max(sign * float(self.defect_at(x)), 0.0) / g)])
-        x0 = self.exact.get(x, sp.nsimplify(x))
+        # A join at an irrational value, as the spinning string's level circle, is named exactly
+        # in `known` by the function that draws it, since nsimplify finds only the simplest surds.
+        x0 = self.exact.get(x, getattr(self, "known", {}).get(x, sp.nsimplify(x)))
         return np.array([float(sp.limit(e, self.x, x0, side)) for e in
                          (self.drho / sp.sqrt(self.gxx), sp.sqrt(sign * self.defect / self.gxx))])
 
@@ -523,11 +525,13 @@ class Piece:
     """
 
     def __init__(self, pid, cls, sl, lo, hi, z0=0.0, sense=1, ends=(("edge", None), ("edge", None)),
-                 marks=(), size=1.0, reference=False, legend=None, digits=None):
+                 marks=(), size=1.0, reference=False, legend=None, digits=None, knots=()):
         self.id, self.cls, self.sl, self.size, self.digits = pid, cls, sl, size, digits
         self.lo, self.hi, self.sense = lo, hi, sense
         self.ends, self.marks, self.reference, self.legend = ends, list(marks), reference, legend
-        knots = sorted({lo, hi} | {m[0] for m in self.marks if lo <= m[0] <= hi})
+        # `knots` are further values of x the profile passes through, where the halving below,
+        # which follows the profile's shape on the page, would leave chords too long in the metric.
+        knots = sorted({lo, hi} | {m[0] for m in self.marks if lo <= m[0] <= hi} | {k for k in knots if lo < k < hi})
         xs, zs = [knots[0]], [z0]
         for a, b in zip(knots, knots[1:]):
             self._refine(a, zs[-1], b, zs[-1] + sense * sl.rise(a, b), size, xs, zs)
@@ -4889,6 +4893,87 @@ def btz(ck, src):
                           "length along the surface beyond $r = \\sqrt{2}\\,\\ell$ is measured with $dX^2 + dY^2 - dZ^2$.")]
 
 
+def spinning_string(ck, src):
+    """The moment t = 0 of the spinning string outside its closed timelike curves, at b = 0.9, the
+    deficit the cosmic string is drawn at, and a = 0.9, so that the null circle r_c = a/b is the
+    unit of length. It is read in the circumference radius chart, whose R is the radius of the
+    circle itself: g_phiphi = R^2 and g_RR = R^2/(b^2 (R^2 + a^2)), with R = 0 the null circle.
+    Near the string g_RR < 1, the circles grow faster than the distance out to them, which is
+    checked, and the slice is drawn in three dimensional Minkowski space, leaving the axis along
+    the light cone, dZ/dR = sqrt(1 - g_RR) = 1 at R = 0, and bending over to lie level where
+    g_RR = 1, at R_1 = a b/sqrt(1 - b^2). Beyond that circle it is drawn in flat space, climbing
+    at dz/dR = sqrt(g_RR - 1) toward sqrt(1/b^2 - 1), the slope of the cosmic string's cone, which
+    is checked. Both pieces lie level at R_1, so they meet in one circle with one tangent, checked
+    from the numbers and from the file. In the proper radius the level circle is at
+    r = r_c/sqrt(1 - b^2), and the drawing stops at r = 5 r_c.
+
+    Toward R = 0 the sheet runs into the axis along the light cone, and there a straight chord
+    of Minkowski space from R_1 to R_2 is longer than the arc it spans by the factor
+    1 + ((R_2 - R_1)/(R_2 + R_1))^2/6, however short it is, so the chord from the axis itself is
+    2/sqrt 3 of its arc. The profile therefore steps toward the axis by a fortieth of R at a
+    time, is written to twelve decimals, and starts at r = (1 + 2e-5) r_c, R = 0.0057 r_c, a
+    circle a thousandth of the drawing's width across."""
+    a, b = sp.Rational(9, 10), sp.Rational(9, 10)
+    params = {"a": a, "b": b}
+    fixed = {"t": 0, "z": 0}
+    sl = Slice(src, "spinning_string", "circumference_radius", "R", "\\phi", fixed, params)
+    msl = Slice(src, "spinning_string", "circumference_radius", "R", "\\phi", fixed, params, space="minkowski")
+    exact_level = a * b / sp.sqrt(1 - b * b)
+    a, b = float(a), float(b)
+    rc = a / b
+    radius = lambda r: math.sqrt(b * b * r * r - a * a)       # R at the proper radius r
+    level = a * b / math.sqrt(1 - b * b)
+    top = radius(5 * rc)
+    sl.known = msl.known = {level: exact_level}
+    size = 2 * top
+    ck.add("spinning string: the surface lies level where g_RR = 1, at R = a b/sqrt(1 - b^2)",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-12)
+    ck.add("spinning string: the level circle is at the proper radius r_c/sqrt(1 - b^2)",
+           abs(radius(rc / math.sqrt(1 - b * b)) - level), 1e-12)
+    ck.stops("spinning string, inside R = a b/sqrt(1 - b^2) in flat space", sl, np.linspace(0.0, level, 402)[1:-1])
+    outward = np.linspace(level, 40, 402)[1:]
+    ck.add("spinning string: beyond the level circle no surface in Minkowski space carries the slice, "
+           "(drho/dR)^2 - g_RR < 0", float(max(0.0, np.max(-msl.defect_at(outward)))), 0.0)
+    if not np.all(msl.defect_at(outward) > 0):
+        ck.items[-1]["ok"] = False
+    ck.add("spinning string: far out the surface climbs as the cosmic string's cone, dz/dR -> sqrt(1/b^2 - 1)",
+           abs(math.sqrt(float(sl.defect_at(np.array([1e6]))[0])) - math.sqrt(1 / b ** 2 - 1)), 1e-10)
+
+    join = ("at $r = r_c/\\sqrt{1 - b^2}$ the surface lies level, in Minkowski space nearer the string and in "
+            "flat space beyond")
+    start = radius((1 + 2e-5) * rc)
+    steps = int(math.ceil(math.log(level / start) / math.log(1.025)))
+    near = Piece("near", "sheet", msl, start, level, 0.0, 1,
+                 (("edge", "the surface runs on into the axis along a light cone, to the closed null curve $r = r_c$"),
+                  ("join", join)),
+                 [(radius(1.5 * rc), "r", None), (level, "space", None)], size, digits=1e-12,
+                 knots=[start * (level / start) ** (k / steps) for k in range(1, steps)])
+    far = Piece("far", "sheet", sl, level, top, near.at(level)[1], 1,
+                (("join", join), ("edge", "the cone runs on, to $r \\to \\infty$")),
+                [(radius(3 * rc), "r", None), (top, "r", None)], size)
+    for p in (near, far):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"spinning string, {p.id} {space}", p)
+        ck.radius(f"spinning string, {p.id}, rho = R {space}", p, lambda R: R, size)
+    ck.join("spinning string, near in Minkowski space and far in flat space at the level circle", near, level, far, level)
+    pa, pb = near.data()["points"][-1], far.data()["points"][0]
+    ck.add("spinning string, near and far as written: one point at the level circle",
+           max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(near.decimals, far.decimals))
+
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(level), "$2.29\\,r_c$")
+    ring_label(fig, [0, 0, 0], *far.at(top), "$5\\,r_c$")
+    fig.legend("fill", "cover", "the region $r > r_c$, where the circles around the string are spacelike")
+    fig.legend("line", "r", "$r$ constant, at $1.5\\,r_c$, $3\\,r_c$, and $5\\,r_c$")
+    fig.legend("line", "space", "$r = r_c/\\sqrt{1 - b^2}$: Minkowski space inside, flat space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("moment", "A moment of $t$", "$r_c$", [surface], fig.done(),
+                 settings="$b = 0.9$ and $a = 0.9\\,r_c$, with $r_c = a/b$ the unit of every length. Every length "
+                          "along the surface inside $r = r_c/\\sqrt{1 - b^2} = 2.29\\,r_c$ is measured with "
+                          "$dX^2 + dY^2 - dZ^2$.")]
+
+
 MILNE = (0.5, 1.0, 2.0, 3.0)    # the moments of ct drawn, in any unit of length l
 
 
@@ -6004,6 +6089,7 @@ DRAWN = {
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
     "szekeres": szekeres,
+    "spinning_string": spinning_string,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -6013,6 +6099,19 @@ DRAWN = {
 NOT_DRAWN = {"lentz"}
 
 CAPTIONS = {
+    ("spinning_string", "moment"): [
+        "The moment $t = 0$ of the plane $z = 0$ outside the closed timelike curves ($b = 0.9$, $r > r_c = a/b$), "
+        "in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$) out to the circle $r = r_c/\\sqrt{1 - b^2}$ and "
+        "in flat space beyond it, every distance along the surface the metric distance.",
+        "On the slice the metric is $dr^2 + (b^2r^2 - a^2)\\,d\\phi^2$, so the circle at proper distance $r$ from "
+        "the string has radius $R = \\sqrt{b^2r^2 - a^2}$, and the circle $r = r_c$ has none: it is a closed null "
+        "curve, and the surface leaves the axis there along a light cone of Minkowski space. Near the string "
+        "the circles grow faster than the distance out to them and the surface climbs at "
+        "$dZ/dR = \\sqrt{1 - g_{RR}}$, with $g_{RR} = R^2/b^2(R^2 + a^2)$, bending over until it lies level where "
+        "$g_{RR} = 1$. Beyond that circle it climbs at $dz/dR = \\sqrt{g_{RR} - 1}$, which tends to "
+        "$\\sqrt{1/b^2 - 1}$, the slope of the Vilenkin-Gott cone. Both parts lie level at the circle, so they "
+        "meet there with one tangent plane.",
+    ],
     ("btz", "throat"): [
         "The moment $t = 0$ of the hole without rotation ($M = 1$, $J = 0$) through both of its exteriors, "
         "joined at the bifurcation circle $r = r_+$, in flat space out to the circle $r = \\sqrt{1 + M}\\,\\ell$ "

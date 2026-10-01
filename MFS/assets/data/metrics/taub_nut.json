@@ -47,6 +47,11 @@
       "id": "kaluza_klein_monopole",
       "kind": "dual",
       "text": "Taub-NUT continued to Euclidean signature, in its self dual case, with a time added: a static vacuum solution in five dimensions that four dimensions see as a magnetic monopole [sorkin1983, grossperry1983]."
+    },
+    {
+      "id": "spinning_string",
+      "kind": "family",
+      "text": "A straight string with spin, around which the flat time shifts on each circuit. Pawel Mazur found in 1986 that a wave around it is single valued only at quantised energies, and set that beside the quantisation a gravitational magnetic mass brings [mazur1986]."
     }
   ],
   "references": [
@@ -63,7 +68,8 @@
     "misner1969",
     "ellismaccallum1969",
     "misner1967",
-    "grossperry1983"
+    "grossperry1983",
+    "mazur1986"
   ],
   "coordinates": [
     {

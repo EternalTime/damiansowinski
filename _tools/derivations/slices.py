@@ -357,6 +357,18 @@ def _godel_cylinder(r):
     return lines
 
 
+def _spinning_cylinder(R, line=None):
+    """A cylinder about the spinning string at the circumference radius R = sqrt(b^2 r^2 - a^2),
+    which must lie within the embedding's reach: the whole line t = 0, every phi, or the line
+    given."""
+    def lines(m):
+        lo, hi = m.reach("circumference_radius", "R")
+        if not lo <= R <= hi:
+            raise ValueError("the cylinder lies outside the embedding")
+        return line or [[(0.0, -math.pi), (0.0, math.pi)]]
+    return lines
+
+
 def _os_interior():
     return one("oppenheimer_snyder", lambda m: [[(m.time / OS_AM, lo) for lo in m.reach("interior_comoving", "\\chi")]])
 
@@ -701,6 +713,13 @@ FLAT = {
     ("godel", "cartesian", "tx"): lambda: one("godel", lambda m: across(0.0, 0.0, 2 * m.reach("cylindrical", "r")[1])),
     ("godel", "cylindrical", "inside"): lambda: one("godel", _godel_cylinder(math.asinh(1.0) / 2)),
     ("stockum_dust", "cylindrical", "inside"): lambda: one("stockum_dust", _godel_cylinder(0.5)),
+    # The spinning string's moment t = 0 outside the null circle: the whole line t = 0 of each
+    # cylinder outside it, and in the helical chart c tau = a phi~/b, one turn of the helix.
+    **{("spinning_string", system, "outside"): lambda R=R: one("spinning_string", _spinning_cylinder(R))
+       for system, R in (("proper_radius", 0.9 * math.sqrt(1.25)), ("rescaled_radius", 0.9 * math.sqrt(1.25)),
+                         ("circumference_radius", 0.9))},
+    ("spinning_string", "helical", "outside"): lambda: one(
+        "spinning_string", _spinning_cylinder(0.9 * math.sqrt(1.25), [[(0.0, 0.0), (2 * math.pi * 0.9, 2 * math.pi * 0.9)]])),
     ("alcubierre", "cartesian", "tx"): lambda: one("alcubierre", lambda m: across(0.0, 0.0, m.grid()["u"][-1])),
     ("natario", "cartesian_flow", "tx"): lambda: one("natario", lambda m: across(0.0, 0.0, m.grid()["u"][-1])),
     ("krasnikov", "cylindrical", "tx"): _krasnikov,
@@ -777,6 +796,8 @@ HIDDEN = {
     ("frw", "conformal_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("godel", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves and no surface of constant t is a moment of space; the embedding stops at sinh^2 r = 1/sqrt 2",
     ("stockum_dust", "cylindrical", "beyond"): "beyond r = R the circles are closed timelike curves; the embedding stops at r = 0.83 R",
+    **{("spinning_string", system, "inside"): "inside r_c the circles are closed timelike curves; the embedding begins at r_c"
+       for system in ("proper_radius", "rescaled_radius", "helical")},
     ("tolman_bondi", "comoving_synchronous", "collapse"): "the marginally bound cloud, E = 0, whose moments are planes; the cloud embedded is released from rest",
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): "the exploding shell, the time reverse of the imploding shell embedded",
     **{("curzon_chazy", system, "axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"

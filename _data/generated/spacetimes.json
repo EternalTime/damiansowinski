@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 59,
+  "count": 60,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1033,6 +1033,11 @@
           "id": "gott_time_machine",
           "kind": "family",
           "text": "Sören Holst and Hans-Jürgen Matschull showed in 1999 that two massless particles colliding in anti-de Sitter space make a Gott universe, which, with its closed timelike curves treated as singular, is a rotating BTZ black hole [holst1999]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "The spinning point particle of gravity in three dimensions with no cosmological constant, drawn out along a line into a string. It has no horizon, and its closed timelike curves lie close to the source [deser1984, deser1992time]."
         }
       ],
       "references": [
@@ -1050,7 +1055,8 @@
         "witten2007",
         "maloney2010",
         "misner1967",
-        "holst1999"
+        "holst1999",
+        "deser1992time"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -4474,6 +4480,11 @@
           "id": "btz",
           "kind": "family",
           "text": "In anti-de Sitter space of three dimensions two massless particles passing one another make a Gott universe, which, with its closed timelike curves treated as singular, is a rotating BTZ black hole [holst1999]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "One string that spins on its own. Deser, Jackiw, and 't Hooft found closed timelike curves around it in 1984 and wrote that moving particles without spin would not make them, which Gott's pair does [deser1984, carroll1994]."
         }
       ],
       "references": [
@@ -6130,6 +6141,11 @@
           "id": "godel",
           "kind": "family",
           "text": "Kurt Gödel's rotating dust of 1949, homogeneous and with closed timelike curves through every event [godel1949]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "A string with spin, flat everywhere off its axis. Its closed timelike curves lie close in, where van Stockum's cylinder has them far out [deser1992time]."
         }
       ],
       "references": [
@@ -6142,7 +6158,8 @@
         "misner1973",
         "vanloo2004",
         "wack2014timebomber",
-        "godel1949"
+        "godel1949",
+        "deser1992time"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stockum_dust.json",
@@ -7734,6 +7751,11 @@
           "id": "bell_szekeres",
           "kind": "composite",
           "text": "Two plane electromagnetic shock waves colliding head on. Ahead of both of them spacetime is flat [griffiths1991]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "locally_same",
+          "text": "Minkowski space with a wedge removed and the faces sewn together a time $8\\pi GJ/c^4$ out of step. It is flat off the string and has closed timelike curves close to it [deser1992time]."
         }
       ],
       "references": [
@@ -7768,7 +7790,8 @@
         "melvin1964",
         "misner1967",
         "li1998",
-        "griffiths1991"
+        "griffiths1991",
+        "deser1992time"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -11328,6 +11351,472 @@
       ]
     },
     {
+      "id": "spinning_string",
+      "name": "Spinning Cosmic String",
+      "short_name": "Spinning Cosmic String",
+      "description": "The spacetime around an infinitely thin, straight string that carries angular momentum as well as mass, flat everywhere off the string. The mass removes a wedge from every plane the string crosses, the spin shifts time by $8\\pi GJ/c^4$ on each circuit of the string, and within $r = 4GJ/(c^3 - 4G\\mu c)$ the circles around it are closed timelike curves.",
+      "tags": [
+        "topological defect",
+        "cosmic string",
+        "conical",
+        "angular deficit",
+        "rotating",
+        "angular momentum",
+        "frame dragging",
+        "closed timelike curves",
+        "causality violation",
+        "time machine",
+        "flat",
+        "locally flat",
+        "three-dimensional gravity",
+        "torsion",
+        "Aharonov-Bohm effect",
+        "cylindrical symmetry",
+        "axial symmetry",
+        "stationary",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The string has mass $\\mu$ and angular momentum $J$ per unit length, which enter through $b = 1 - 4G\\mu/c^2$ and the length $a = 4GJ/c^3$.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "special_case",
+          "text": "The string with its spin switched off, $J = 0$. The helix in time closes up and only the cone is left [soleng1992]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Flat spacetime with a wedge cut out along the string and the two faces glued back together a time $8\\pi GJ/c^4$ out of step [deser1992time]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "family",
+          "text": "Two strings without spin whose closed timelike curves come from their motion. J. Richard Gott found them in 1991, seven years after Deser, Jackiw, and 't Hooft wrote that orbital angular momentum alone would not do it [gott1991, carroll1994]."
+        },
+        {
+          "id": "stockum_dust",
+          "kind": "family",
+          "text": "A spinning cylinder of dust with closed timelike curves far from its axis. The spinning string keeps its closed timelike curves close in, within $r = 4GJ/(c^3 - 4G\\mu c)$ [vanstockum1937, deser1992time]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "family",
+          "text": "The NUT parameter is a magnetic mass for gravity, and Charles Misner hid its string by making time periodic. Pawel Mazur drew the analogy in 1986: a wave around a spinning string is single valued only at quantised energies [misner1963, mazur1986]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of gravity in three dimensions, which needs a negative cosmological constant [banados1992]. Without one a spinning source is this string seen end on, and Neil Cornish and Norman Frankel found in 1994 that rotating matter there generally brings closed timelike curves or infinite shear [deser1984, cornish1994]."
+        }
+      ],
+      "references": [
+        "deser1984",
+        "deser1992time",
+        "galtsov1993",
+        "mazur1986",
+        "soleng1992",
+        "carroll1994",
+        "gott1991",
+        "deser1992",
+        "mazur1987",
+        "samuel1987",
+        "harari1988",
+        "gerbert1989",
+        "gerbert1990",
+        "soleng1994",
+        "jensen1992",
+        "menotti1993",
+        "letelier1995",
+        "mena2008",
+        "vanstockum1937",
+        "misner1963",
+        "banados1992",
+        "cornish1994"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/spinning_string.json",
+      "charts": [
+        {
+          "id": "proper_radius",
+          "name": "Proper Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = 0 \\;\\text{(the string)}",
+            "r < a/b \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Spin length, $a = 4GJ/c^3$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
+            },
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            }
+          ],
+          "convention": "We use Deser and Jackiw's coordinates $(t, r, \\phi, z)$, with $t$ carrying dimensions of time, $r$ the proper distance from the string, $z$ the proper length along it, and $\\phi$ periodic in $2\\pi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(c\\,dt + a\\,d\\phi\\right)^2 + dr^2 + b^2r^2d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-a"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-a"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r\\,b + a\\right)\\left(r\\,b - a\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rescaled_radius",
+          "name": "Rescaled Radius",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho = 0 \\;\\text{(the string)}",
+            "\\rho < a \\;\\text{(the circles of constant } t, \\rho, z \\text{ are closed timelike curves)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Spin length, $a = 4GJ/c^3$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
+            },
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, \\rho, \\phi, z)$ of Cornish and Frankel and of Mena, Natário, and Tod, with $t$ carrying dimensions of time, $\\phi$ periodic in $2\\pi$, and $\\rho = br$ for $r$ the proper distance from the string, so that the deficit sits in $g_{\\rho\\rho} = 1/b^2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(c\\,dt + a\\,d\\phi\\right)^2 + \\dfrac{d\\rho^2}{b^2} + \\rho^2d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-a"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-a"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{1}{b^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(\\rho + a\\right)\\left(\\rho - a\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "circumference_radius",
+          "name": "Circumference Radius",
+          "coordinates": [
+            "t",
+            "R",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "R \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "R = 0 \\;\\text{(the circle of constant } t, R, z \\text{ is null)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Spin length, $a = 4GJ/c^3$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
+            },
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            }
+          ],
+          "convention": "We use Cornish and Frankel's coordinates $(t, R, \\phi, z)$, with $t$ carrying dimensions of time, $\\phi$ periodic in $2\\pi$, and $R = \\sqrt{b^2r^2 - a^2}$ for $r$ the proper distance from the string, so that the circle of constant $t$, $R$, and $z$ has circumference $2\\pi R$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 - 2ac\\,dt\\,d\\phi + \\dfrac{R^2dR^2}{b^2\\left(R^2 + a^2\\right)} + R^2d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-a"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-a"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\dfrac{R^2}{b^2\\left(R^2 + a^2\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "helical",
+          "name": "Helical Time",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\tilde\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\tilde\\phi \\in [0, 2\\pi b)",
+            "z \\in (-\\infty, \\infty)",
+            "(\\tau, \\tilde\\phi) \\sim (\\tau + 2\\pi a/c, \\tilde\\phi + 2\\pi b)",
+            "r = 0 \\;\\text{(the string)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Spin length, $a = 4GJ/c^3$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
+            },
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            }
+          ],
+          "convention": "We use Deser and Jackiw's flat coordinates $(\\tau, r, \\tilde\\phi, z)$, with $\\tau = t + a\\phi/c$ carrying dimensions of time and $\\tilde\\phi = b\\phi$, so that the line element is Minkowski's and a circuit of the string carries $(\\tau, \\tilde\\phi)$ to $(\\tau + 2\\pi a/c, \\tilde\\phi + 2\\pi b)$. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + dr^2 + r^2d\\tilde\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "\\tilde\\phi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "extended_source",
+          "name": "Extended Source",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, r_0]",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "M(0) = 0,\\; M(r_0) = a",
+            "M^2 > \\rho^2 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M = M(r)",
+              "description": "Twist function, a length, which vanishes on the axis and equals $a = 4GJ/c^3$ at the surface of the string and beyond it"
+            },
+            {
+              "symbol": "\\rho = \\rho(r)",
+              "description": "Radius function, a length: $\\rho$ grows as $r$ near the axis, and at the surface of the string $\\partial_r\\rho = b = 1 - 4G\\mu/c^2$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Proper radius of the string's surface, where the source ends and the flat exterior begins"
+            }
+          ],
+          "convention": "We use Soleng's coordinates $(t, r, \\phi, z)$ inside a string of finite thickness, with $t$ carrying dimensions of time, $r$ the proper distance from the axis, and $\\phi$ periodic in $2\\pi$, and we leave the lengths $M(r)$ and $\\rho(r)$ free. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(c\\,dt + M\\,d\\phi\\right)^2 + dr^2 + \\rho^2d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\left(M - \\rho\\right)\\left(M + \\rho\\right)"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(\\partial_r M\\right)^2 - 4\\rho\\,\\partial_r^2\\rho}{2\\rho^2}",
+          "kretschmann": "K = \\dfrac{11\\left(\\partial_r M\\right)^4 - 24\\rho\\left(\\partial_r M\\right)^2\\,\\partial_r^2\\rho - 8\\left(\\partial_r M\\right)^2\\left(\\partial_r\\rho\\right)^2 + 16\\rho\\,\\partial_r M\\,\\partial_r^2 M\\,\\partial_r\\rho - 8\\rho^2\\left(\\partial_r^2 M\\right)^2 + 16\\rho^2\\left(\\partial_r^2\\rho\\right)^2}{4\\rho^4}"
+        }
+      ]
+    },
+    {
       "id": "szekeres",
       "name": "Szekeres Inhomogeneous Dust Cosmologies",
       "short_name": "Szekeres",
@@ -11619,6 +12108,11 @@
           "id": "kaluza_klein_monopole",
           "kind": "dual",
           "text": "Taub-NUT continued to Euclidean signature, in its self dual case, with a time added: a static vacuum solution in five dimensions that four dimensions see as a magnetic monopole [sorkin1983, grossperry1983]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "A straight string with spin, around which the flat time shifts on each circuit. Pawel Mazur found in 1986 that a wave around it is single valued only at quantised energies, and set that beside the quantisation a gravitational magnetic mass brings [mazur1986]."
         }
       ],
       "references": [
@@ -11635,7 +12129,8 @@
         "misner1969",
         "ellismaccallum1969",
         "misner1967",
-        "grossperry1983"
+        "grossperry1983",
+        "mazur1986"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
@@ -12452,6 +12947,11 @@
           "id": "domain_wall",
           "kind": "family",
           "text": "The defect spread over a surface. Tom Kibble showed in 1976 that the topology of the vacuum decides whether walls, strings, or monopoles form [kibble1976]. A wall repels test bodies, and a straight string leaves them alone."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "generalisation",
+          "text": "The string given angular momentum as well as mass. Time then jumps by $8\\pi GJ/c^4$ on each circuit of it, and close in the circles around it are closed timelike curves [deser1984, deser1992time]."
         }
       ],
       "references": [
@@ -12474,7 +12974,8 @@
         "aryal1986",
         "maccallum2011",
         "hawking1995",
-        "barriola1989"
+        "barriola1989",
+        "deser1992time"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",
