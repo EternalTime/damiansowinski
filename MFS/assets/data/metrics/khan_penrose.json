@@ -38,6 +38,11 @@
       "id": "minkowski",
       "kind": "piece",
       "text": "The calm before the collision. Spacetime is flat ahead of both waves, and flat again behind either one alone [frauendiener2014]."
+    },
+    {
+      "id": "bell_szekeres",
+      "kind": "family",
+      "text": "The same collision with light for the waves. Bell and Szekeres's two electromagnetic shock waves meet in the same four regions and focus each other onto a Killing-Cauchy horizon, with the curvature bounded [bell1974, griffiths1991]."
     }
   ],
   "references": [
@@ -52,7 +57,9 @@
     "chandrasekhar1986",
     "tipler1980",
     "matzner1984",
-    "yurtsever1988"
+    "yurtsever1988",
+    "bell1974",
+    "griffiths1991"
   ],
   "coordinates": [
     {

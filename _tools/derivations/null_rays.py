@@ -828,6 +828,30 @@ DIAGRAMS = [
     Diagram("khan_penrose", "cosmological", "plane", "$\\tau$ and $\\sigma$", ("\\tau", "\\sigma"),
             (-math.pi / 2, math.pi / 2, 0, math.pi / 2), "$\\sigma$", "$\\tau$", {"L": 1}, {"x": "0", "y": "0"},
             tau="tau", families=SIDEWAYS, singular_where_claimed=True),
+    # Bell and Szekeres's colliding electromagnetic waves at a = b = 1, where both have passed: each
+    # chart's domain ends on the two wave fronts and on the Killing-Cauchy horizon au + bv = pi/2, and
+    # the regular, global and Kruskal-Szekeres charts are drawn on through the horizon.
+    Diagram("bell_szekeres", "double_null", "plane", "$u$ and $v$", ("u", "v"), (-1.6, 1.6, 0, 1.6),
+            "$a(v - u)$", "$a(u + v)$", {"a": 1, "b": 1}, {"x": "0", "y": "0"}, to_display=NULL_TO_SUM,
+            tau="u + v", families=SIDEWAYS, kretschmann=False),
+    Diagram("bell_szekeres", "time_space", "plane", "$\\xi$ and $\\eta$", ("\\xi", "\\eta"),
+            (-math.pi / 2, math.pi / 2, 0, math.pi / 2), "$\\eta$", "$\\xi$", {"a": 1, "b": 1},
+            {"x": "0", "y": "0"}, tau="xi", families=SIDEWAYS, kretschmann=False),
+    Diagram("bell_szekeres", "regular", "plane", "$T$ and $Z$", ("T", "Z"), (-1.5, 1.5, -1.5, 0.5),
+            "$Z$", "$T$", {"a": 1, "b": 1}, {"X": "99/100", "Y": "0"}, tau="T/sqrt(1 + Z**2)", families=SIDEWAYS,
+            kretschmann=False, marked=(("shell", {"x0": "0", "r": "0"}, "both",
+                                        "the Killing-Cauchy horizon, $T = -|Z|$", "past"),)),
+    Diagram("bell_szekeres", "global", "plane", "$\\chi$ and $\\rho$", ("\\chi", "\\rho"),
+            (-2.5, 2.5, -math.pi / 2, 0.5), "$\\rho$", "$\\chi$", {"a": 1, "b": 1},
+            {"theta": "pi/2", "phi": "0"}, tau="chi", families=SIDEWAYS, kretschmann=False,
+            marked=(("shell", {"x0": "0", "r": "0"}, "both",
+                     "the Killing-Cauchy horizon, $\\cos\\chi\\cosh\\rho = 1$", "past"),)),
+    Diagram("bell_szekeres", "kruskal_szekeres", "plane", "$U$ and $V$", ("U", "V"), (-2, 2, -2.5, 0.5),
+            "$a(V - U)$", "$a(U + V)$", {"a": 1, "b": 1}, {"eta": "0", "x": "0"}, to_display=NULL_TO_SUM,
+            tau="U + V", families=SIDEWAYS, kretschmann=False,
+            marked=(("shell", {"x0": "0", "r": "0"}, "both", "the Killing-Cauchy horizon, $UV = 0$", "past"),)),
+    Diagram("bell_szekeres", "bertotti_robinson", "plane", "$t$ and $r$", ("t", "r"), (0, 3, 0, 3),
+            "$r$", "$t$", {"a": 1, "b": 1}, {"theta": "pi/2", "phi": "0"}, families=SIDEWAYS, kretschmann=False),
     Diagram("pp_wave", "exact_plane_wave", "tz", "$t$ and $z$ on the axis", ("u", "v"), (-2, 2, -2, 2),
             "$z$", "$ct$", {}, {"x": "0", "y": "0"}, to_display=UV_TO_TZ, tau="u + 2*v",
             families=SIDEWAYS, functions={"A": "exp(-u**2)", "B": "0"},
@@ -2080,6 +2104,67 @@ CAPTIONS = {
         "$\\tau = \\sigma = 0$, and the curvature singularity $u^2 + v^2 = 1$ is the line $\\tau = \\pi/2$, where "
         "$g_{xx}$ grows as $1/\\cos\\tau$ and $g_{yy}$ falls as $\\cos^3\\tau$. Each surface of constant "
         "$\\tau$ is spacelike, and every observer in the region reaches $\\tau = \\pi/2$.",
+    ],
+    ("bell_szekeres", "double_null", "plane"): [
+        "The plane of $u$ and $v$ ($x = y = 0$) where both waves have passed, drawn with $u + v$ up and $v - u$ "
+        "across at $a = b$, each point in the diagram a single event. Only $g_{uv}$ is nonzero on it, so the light "
+        "rays are the lines $u = $ const and $v = $ const at 45°, and no Christoffel symbol turns a ray along them "
+        "out of the plane, so each is a null geodesic.",
+        "The region is bounded below by the fronts of the two electromagnetic shock waves, $u = 0$ and $v = 0$, "
+        "which met at $u = v = 0$ and which carry the impulsive gravitational waves made by the collision, and "
+        "above by the Killing-Cauchy horizon $au + bv = \\pi/2$, where $g_{yy} = \\cos^2(au + bv)$ vanishes and "
+        "the Kretschmann scalar is $32a^2b^2$ as everywhere else. Every ray in the region reaches the horizon. "
+        "Its two ends, $au = \\pi/2$ on $v = 0$ and $bv = \\pi/2$ on $u = 0$, are where the fold singularities "
+        "behind each wave alone meet it.",
+    ],
+    ("bell_szekeres", "time_space", "plane"): [
+        "The plane of $\\xi$ and $\\eta$ ($x = y = 0$) where both waves have passed, each point in the diagram a "
+        "single event. The metric on it is $(-d\\xi^2 + d\\eta^2)/(2ab)$, flat, so the light rays are the lines "
+        "of constant $\\xi - \\eta = 2au$ and constant $\\xi + \\eta = 2bv$, at 45°, and each is a null "
+        "geodesic.",
+        "The fronts of the two waves are the lines $\\eta = \\pm\\xi$, which leave the collision at "
+        "$\\xi = \\eta = 0$, and the Killing-Cauchy horizon is the line $\\xi = \\pi/2$, where "
+        "$g_{yy} = \\cos^2\\xi$ vanishes. Each surface of constant $\\xi$ is spacelike, and an observer at rest "
+        "in $\\eta$, $x$, and $y$ reaches the horizon after the proper time $\\pi/(2\\sqrt{2ab})$.",
+    ],
+    ("bell_szekeres", "regular", "plane"): [
+        "The plane of $T$ and $Z$ ($X = 0.99$, $Y = 0$) at $a = b$, each point in the diagram a single event. "
+        "The surfaces of constant $\\xi = au + bv$ are the hyperbolas $T^2 - Z^2 = \\cos^2\\xi$, and the "
+        "lines through the origin are the surfaces of constant $y$. No Christoffel symbol turns a ray out of "
+        "the plane, so each ray is a null geodesic.",
+        "The collision $\\xi = 0$ is the hyperbola $T^2 - Z^2 = 1$, and on this plane the two wave fronts lie "
+        "within $0.01$ of it, on $T^2 - Z^2 = X^2$. The Killing-Cauchy horizon is the pair of lines $T = -|Z|$, "
+        "and the event $T = Z = 0$ where they cross is every point of the horizon at finite $y$. The metric is "
+        "regular there, and the rays run on through the horizon into $T > -|Z|$.",
+    ],
+    ("bell_szekeres", "global", "plane"): [
+        "The plane of $\\chi$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) at $a = b$, each point in the "
+        "diagram a single event. The metric on it is $(-\\cosh^2\\rho\\,d\\chi^2 + d\\rho^2)/(2ab)$, the anti-de "
+        "Sitter space of two dimensions in its global chart, and the light rays are the curves of constant "
+        "$\\chi \\pm \\arctan(\\sinh\\rho)$, each a null geodesic.",
+        "The collision is the line $\\chi = -\\pi/2$, and the Killing-Cauchy horizon is the pair of rays "
+        "$\\cos\\chi\\cosh\\rho = 1$ that climb from its two ends, $\\rho \\to \\pm\\infty$, to meet at "
+        "$\\chi = \\rho = 0$. Where both waves have passed is the region between them. The chart runs on above "
+        "the horizon, where Chris Clarke and Sean Hayward continued the spacetime.",
+    ],
+    ("bell_szekeres", "kruskal_szekeres", "plane"): [
+        "The plane of $U$ and $V$ ($\\eta = 0$, $x = 0$), drawn with $U + V$ up and $V - U$ across at $a = b$, "
+        "each point in the diagram a single event. Only $g_{UV}$ is nonzero on it, so the light rays are the "
+        "lines $U = $ const and $V = $ const at 45°, each a null geodesic.",
+        "The collision is the hyperbola $2abUV = 1$ in the quadrant $U < 0$, $V < 0$, and the Killing-Cauchy "
+        "horizon is the pair of lines $U = 0$ and $V = 0$, on which the metric is regular. The surfaces of "
+        "constant $\\xi = au + bv$ are the hyperbolas $2abUV = (1 - \\sin\\xi)/(1 + \\sin\\xi)$, and the "
+        "lines through the origin are the surfaces of constant $y$, so the translation along $y$ acts on the "
+        "plane as a boost and is null on the horizon.",
+    ],
+    ("bell_szekeres", "bertotti_robinson", "plane"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the diagram a single event. "
+        "The metric on it is $(-dt^2 + dr^2)/(2ab\\,r^2)$, a multiple of Minkowski's, so the light rays are the "
+        "lines of constant $t \\pm r$, at 45°, and each is a null geodesic.",
+        "The collision is the line $t = 0$, and where both waves have passed is the wedge $0 \\le t < r$ above "
+        "it. The surfaces of constant $\\xi = au + bv$ are the lines $t = r\\sin\\xi$ through the origin, and "
+        "the Killing-Cauchy horizon is the ray $t = r$, reached in this chart only as $y \\to -\\infty$; the rest "
+        "of the horizon lies at $t = \\infty$.",
     ],
     ("pp_wave", "exact_plane_wave", "tz"): [
         "The plane the wave travels in, on its axis ($x = y = 0$), drawn with $u = t - z$ and $v = "
@@ -4785,6 +4870,16 @@ CLOSED_FORMS = {
     ("khan_penrose", "double_null", "plane"): (lambda u, v: v, lambda u, v: u, None),
     ("khan_penrose", "cosmological", "plane"): (lambda tau, s: tau + s, lambda tau, s: tau - s, None),
     ("krasnikov", "cylindrical", "tx"): (None, lambda t, x: t - x, None),
+    ("bell_szekeres", "double_null", "plane"): (lambda u, v: v, lambda u, v: u, None),
+    ("bell_szekeres", "time_space", "plane"): (lambda xi, eta: xi + eta, lambda xi, eta: xi - eta, None),
+    # cos(xi) e^(-+ky) = -T -+ Z, so (-T -+ Z)/(1 + sin(xi)) with sin(xi) = sqrt(1 - T^2 + Z^2) are null.
+    ("bell_szekeres", "regular", "plane"):
+        (lambda T, Z: -(T + Z) / (1 + np.sqrt(1 - T ** 2 + Z ** 2)), lambda T, Z: (Z - T) / (1 + np.sqrt(1 - T ** 2 + Z ** 2)),
+         lambda T, Z: 1 - T ** 2 + Z ** 2 > 0.01),
+    ("bell_szekeres", "global", "plane"):
+        (lambda chi, rho: chi + np.arctan(np.sinh(rho)), lambda chi, rho: chi - np.arctan(np.sinh(rho)), None),
+    ("bell_szekeres", "kruskal_szekeres", "plane"): (lambda U, V: V, lambda U, V: U, None),
+    ("bell_szekeres", "bertotti_robinson", "plane"): (lambda t, r: t + r, lambda t, r: t - r, None),
 }
 
 

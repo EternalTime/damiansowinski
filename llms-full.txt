@@ -264,6 +264,21 @@ A rotating black hole in three spacetime dimensions with a negative cosmological
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \tilde\phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell^2} - M + \dfrac{J^2}{4r^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\tilde\phi - \dfrac{J}{2r^2}dv\right)^2$$
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \tilde\phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell^2} - M + \dfrac{J^2}{4r^2}\right)du^2 - 2\,du\,dr + r^2\left(d\tilde\phi - \dfrac{J}{2r^2}du\right)^2$$
 
+### Bell-Szekeres Colliding Electromagnetic Waves
+
+Two plane electromagnetic shock waves colliding head on in flat space. Where both have passed the spacetime is locally the Bertotti-Robinson universe, and the waves focus each other onto a Killing-Cauchy horizon with the curvature finite everywhere.
+
+- id: `bell_szekeres`
+- tags: electrovacuum, electromagnetic field, Einstein-Maxwell, plane wave, electromagnetic wave, colliding plane waves, shock wave, conformally flat, Bertotti-Robinson, Killing-Cauchy horizon, Cauchy horizon, fold singularity, nonlinear, exact solution, time-dependent, dynamical, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bell_szekeres.json
+- chart Double Null: coordinates $(u, v, x, y)$, $$ds^2 = -2\,du\,dv + \cos^2\left(au - bv\right)dx^2 + \cos^2\left(au + bv\right)dy^2$$
+- chart Time and Space: coordinates $(\xi, \eta, x, y)$, $$ds^2 = \dfrac{-d\xi^2 + d\eta^2}{2ab} + \cos^2\eta\,dx^2 + \cos^2\xi\,dy^2$$
+- chart Regular: coordinates $(T, Z, X, Y)$, $$ds^2 = \dfrac{-\left(1 + Z^2\right)dT^2 + 2TZ\,dT\,dZ + \left(1 - T^2\right)dZ^2}{2ab\left(1 - T^2 + Z^2\right)} + \dfrac{\left(1 - Y^2\right)dX^2 + 2XY\,dX\,dY + \left(1 - X^2\right)dY^2}{2ab\left(1 - X^2 - Y^2\right)}$$
+- chart Global: coordinates $(\chi, \rho, \theta, \phi)$, $$ds^2 = \dfrac{1}{2ab}\left(-\cosh^2\rho\,d\chi^2 + d\rho^2 + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Kruskal-Szekeres: coordinates $(U, V, \eta, x)$, $$ds^2 = -\dfrac{4\,dU\,dV}{\left(1 + 2abUV\right)^2} + \dfrac{d\eta^2}{2ab} + \cos^2\eta\,dx^2$$
+- chart Bertotti-Robinson: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1}{2ab\,r^2}\left(-dt^2 + dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right)$$
+
 ### Bertotti-Robinson Electrovacuum
 
 A conformally flat electrovacuum solution with uniform electromagnetic field, geometrically the product of two spaces of two dimensions each (AdS₂ × S²). It appears as the limit near the horizon of an extremal Reissner-Nordström black hole.

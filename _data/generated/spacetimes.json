@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 57,
+  "count": 58,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1279,6 +1279,475 @@
       ]
     },
     {
+      "id": "bell_szekeres",
+      "name": "Bell-Szekeres Colliding Electromagnetic Waves",
+      "short_name": "Bell-Szekeres",
+      "description": "Two plane electromagnetic shock waves colliding head on in flat space. Where both have passed the spacetime is locally the Bertotti-Robinson universe, and the waves focus each other onto a Killing-Cauchy horizon with the curvature finite everywhere.",
+      "tags": [
+        "electrovacuum",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "plane wave",
+        "electromagnetic wave",
+        "colliding plane waves",
+        "shock wave",
+        "conformally flat",
+        "Bertotti-Robinson",
+        "Killing-Cauchy horizon",
+        "Cauchy horizon",
+        "fold singularity",
+        "nonlinear",
+        "exact solution",
+        "time-dependent",
+        "dynamical",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "bertotti_robinson",
+          "kind": "locally_same",
+          "text": "Where both waves have passed, the metric is that of the Bertotti-Robinson universe in other coordinates, with $1/\\sqrt{2ab}$ for the radius of both factors and $x$ running along its circle of longitude without closing [griffiths1991, feinstein1995]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "family",
+          "text": "Khan and Penrose collide two impulsive gravitational waves in the same four regions, flat space, one wave, the other wave, and both, and their waves focus each other onto a curvature singularity [khan1971, griffiths1991]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "piece",
+          "text": "Behind either wave alone the spacetime is a plane electromagnetic wave, the pp-wave with $H = -a^2\\Theta(u)(x^2 + y^2)$ in Brinkmann's coordinates, which Bell and Szekeres's chart writes as $-2\\,du\\,dv + \\cos^2(au)(dx^2 + dy^2)$ [griffiths1991]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "Ahead of both waves, where $u < 0$ and $v < 0$, the spacetime is flat [griffiths1991]."
+        }
+      ],
+      "references": [
+        "griffiths1991",
+        "bell1974",
+        "feinstein1995",
+        "dorca1998",
+        "bertotti1959",
+        "robinson1959",
+        "tariq1974",
+        "khan1971",
+        "matzner1984",
+        "clarke1989",
+        "yurtsever1987",
+        "chandrasekhar1988",
+        "konkowski1991",
+        "dorca1993",
+        "gurses2003"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bell_szekeres.json",
+      "charts": [
+        {
+          "id": "double_null",
+          "name": "Double Null",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in [0, \\pi/(2a))",
+            "v \\in [0, (\\pi/2 - au)/b)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "au + bv = \\pi/2 \\;\\text{(Killing-Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Strength of the wave that crosses $u = 0$, an inverse length: behind that wave alone the null rays across its front meet at $u = \\pi/(2a)$"
+            },
+            {
+              "symbol": "b",
+              "description": "Strength of the wave that crosses $v = 0$, an inverse length: behind that wave alone the null rays across its front meet at $v = \\pi/(2b)$"
+            }
+          ],
+          "convention": "We use null coordinates $(u, v, x, y)$ where both waves have passed, all four of them lengths, with $x$ and $y$ across the wave fronts. Ahead of one wave or both, where $u < 0$ or $v < 0$, the metric is this one with $u$ or $v$ set to zero.",
+          "line_element": "ds^2 = -2\\,du\\,dv + \\cos^2\\left(au - bv\\right)dx^2 + \\cos^2\\left(au + bv\\right)dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\cos^2\\left(a\\,u - b\\,v\\right)"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\cos^2\\left(a\\,u + b\\,v\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 32a^2\\,b^2"
+        },
+        {
+          "id": "time_space",
+          "name": "Time and Space",
+          "coordinates": [
+            "\\xi",
+            "\\eta",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\xi \\in [0, \\pi/2)",
+            "\\eta \\in [-\\xi, \\xi]",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\xi = \\pi/2 \\;\\text{(Killing-Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+            },
+            {
+              "symbol": "b",
+              "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\xi, \\eta, x, y)$ where both waves have passed, with $\\xi = au + bv$ and $\\eta = bv - au$ dimensionless, and $x$ and $y$ lengths across the wave fronts.",
+          "line_element": "ds^2 = \\dfrac{-d\\xi^2 + d\\eta^2}{2ab} + \\cos^2\\eta\\,dx^2 + \\cos^2\\xi\\,dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "-\\dfrac{1}{2a\\,b}"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{1}{2a\\,b}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\cos^2\\eta"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\cos^2\\xi"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 32a^2\\,b^2"
+        },
+        {
+          "id": "regular",
+          "name": "Regular",
+          "coordinates": [
+            "T",
+            "Z",
+            "X",
+            "Y"
+          ],
+          "domains": [
+            "T \\in \\left[-\\sqrt{1 + Z^2},\\, -|Z|\\right)",
+            "Z \\in (-\\infty, \\infty)",
+            "X \\in (-1, 1)",
+            "Y \\in \\left(-\\sqrt{1 - X^2},\\, \\sqrt{1 - X^2}\\right)",
+            "T^2 - Z^2 \\le X^2 + Y^2 \\;\\text{(behind both wave fronts)}",
+            "T^2 = Z^2 \\;\\text{(Killing-Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+            },
+            {
+              "symbol": "b",
+              "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$"
+            }
+          ],
+          "convention": "We use coordinates $(T, Z, X, Y)$, all dimensionless. With $\\xi = au + bv$, $\\eta = bv - au$, and $k = \\sqrt{2ab}$ they are $T = -\\cos\\xi\\cosh ky$, $Z = \\cos\\xi\\sinh ky$, $X = \\cos\\eta\\cos kx$, and $Y = \\cos\\eta\\sin kx$, one to one for $-\\pi < kx \\le \\pi$ on either side of $\\eta = 0$.",
+          "line_element": "ds^2 = \\dfrac{-\\left(1 + Z^2\\right)dT^2 + 2TZ\\,dT\\,dZ + \\left(1 - T^2\\right)dZ^2}{2ab\\left(1 - T^2 + Z^2\\right)} + \\dfrac{\\left(1 - Y^2\\right)dX^2 + 2XY\\,dX\\,dY + \\left(1 - X^2\\right)dY^2}{2ab\\left(1 - X^2 - Y^2\\right)}",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{1 + Z^2}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+            },
+            {
+              "indices": [
+                "T",
+                "Z"
+              ],
+              "value": "\\dfrac{T\\,Z}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+            },
+            {
+              "indices": [
+                "Z",
+                "T"
+              ],
+              "value": "\\dfrac{T\\,Z}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+            },
+            {
+              "indices": [
+                "Z",
+                "Z"
+              ],
+              "value": "\\dfrac{1 - T^2}{2a\\,b\\left(1 - T^2 + Z^2\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\dfrac{1 - Y^2}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "Y"
+              ],
+              "value": "\\dfrac{X\\,Y}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+            },
+            {
+              "indices": [
+                "Y",
+                "X"
+              ],
+              "value": "\\dfrac{X\\,Y}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "\\dfrac{1 - X^2}{2a\\,b\\left(1 - X^2 - Y^2\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 32a^2\\,b^2"
+        },
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "\\chi",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\chi \\in \\left[-\\pi/2,\\, -\\arcsin|\\tanh\\rho|\\right)",
+            "\\rho \\in (-\\infty, \\infty)",
+            "\\theta \\in \\left[\\arccos(\\cos\\chi\\cosh\\rho),\\, \\pi - \\arccos(\\cos\\chi\\cosh\\rho)\\right]",
+            "\\phi \\in (-\\infty, \\infty)",
+            "\\cos\\chi\\cosh\\rho = 1 \\;\\text{(Killing-Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+            },
+            {
+              "symbol": "b",
+              "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\chi, \\rho, \\theta, \\phi)$, all dimensionless. With $\\xi = au + bv$ and $k = \\sqrt{2ab}$ they are $\\sinh\\rho = \\cos\\xi\\sinh ky$, $\\sin\\chi = -\\cos\\xi\\cosh ky/\\cosh\\rho$, $\\theta = \\pi/2 + au - bv$, and $\\phi = kx$, and $\\phi$ runs over the whole line.",
+          "line_element": "ds^2 = \\dfrac{1}{2ab}\\left(-\\cosh^2\\rho\\,d\\chi^2 + d\\rho^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "-\\dfrac{\\cosh^2\\rho}{2a\\,b}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{1}{2a\\,b}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{1}{2a\\,b}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\sin^2\\theta}{2a\\,b}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 32a^2\\,b^2"
+        },
+        {
+          "id": "kruskal_szekeres",
+          "name": "Kruskal-Szekeres",
+          "coordinates": [
+            "U",
+            "V",
+            "\\eta",
+            "x"
+          ],
+          "domains": [
+            "U \\in (-\\infty, 0)",
+            "V \\in \\left[\\dfrac{1}{2abU},\\, 0\\right)",
+            "\\eta \\in (-\\pi/2, \\pi/2)",
+            "x \\in (-\\infty, \\infty)",
+            "2abUV \\le \\dfrac{1 - \\sin|\\eta|}{1 + \\sin|\\eta|} \\;\\text{(behind both wave fronts)}",
+            "UV = 0 \\;\\text{(Killing-Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+            },
+            {
+              "symbol": "b",
+              "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$"
+            }
+          ],
+          "convention": "We use coordinates $(U, V, \\eta, x)$, with $U$, $V$, and $x$ lengths and $\\eta = bv - au$ dimensionless. With $q = 1/\\sqrt{2ab}$ and $\\xi = au + bv$, the null coordinates are $U = -q\\,e^{y/q}\\cos\\xi/(1 + \\sin\\xi)$ and $V = -q\\,e^{-y/q}\\cos\\xi/(1 + \\sin\\xi)$, so $2abUV = (1 - \\sin\\xi)/(1 + \\sin\\xi)$.",
+          "line_element": "ds^2 = -\\dfrac{4\\,dU\\,dV}{\\left(1 + 2abUV\\right)^2} + \\dfrac{d\\eta^2}{2ab} + \\cos^2\\eta\\,dx^2",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{2}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{2}{\\left(1 + 2a\\,b\\,U\\,V\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{1}{2a\\,b}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\cos^2\\eta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 32a^2\\,b^2"
+        },
+        {
+          "id": "bertotti_robinson",
+          "name": "Bertotti-Robinson",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in [0, r)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in \\left[\\pi/2 - \\arcsin(t/r),\\, \\pi/2 + \\arcsin(t/r)\\right]",
+            "\\phi \\in (-\\infty, \\infty)",
+            "t = r \\;\\text{(Killing-Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Strength of the wave that crosses $u = 0$, an inverse length"
+            },
+            {
+              "symbol": "b",
+              "description": "Strength of the wave that crosses $v = 0$, an inverse length; $1/\\sqrt{2ab}$ is the radius of both factors of the product AdS$_2 \\times$ S$^2$, the $b$ of the Bertotti-Robinson universe"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, all dimensionless. With $q = 1/\\sqrt{2ab}$ they are $t = e^{y/q}\\tan(au + bv)$, $r = e^{y/q}\\sec(au + bv)$, $\\theta = \\pi/2 + au - bv$, and $\\phi = x/q$, and $\\phi$ runs over the whole line.",
+          "line_element": "ds^2 = \\dfrac{1}{2ab\\,r^2}\\left(-dt^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{2a\\,b\\,r^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{2a\\,b\\,r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{1}{2a\\,b}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\sin^2\\theta}{2a\\,b}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 32a^2\\,b^2"
+        }
+      ]
+    },
+    {
       "id": "bertotti_robinson",
       "name": "Bertotti-Robinson Electrovacuum",
       "short_name": "Bertotti-Robinson",
@@ -1331,6 +1800,11 @@
           "id": "melvin",
           "kind": "family",
           "text": "The other universe held together by its own electromagnetic field, a bundle of magnetic field lines along an axis [bonnor1954, melvin1964]."
+        },
+        {
+          "id": "bell_szekeres",
+          "kind": "locally_same",
+          "text": "Two plane electromagnetic shock waves that collide head on leave this geometry between their fronts, with $b = 1/\\sqrt{2ab}$ set by the strengths $a$ and $b$ of the two waves. It lasts as far as the Killing-Cauchy horizon where the waves focus each other [bell1974, griffiths1991]."
         }
       ],
       "references": [
@@ -1351,7 +1825,9 @@
         "krasinski1999",
         "levicivita1919",
         "bonnor1954",
-        "melvin1964"
+        "melvin1964",
+        "bell1974",
+        "griffiths1991"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -5347,6 +5823,11 @@
           "id": "minkowski",
           "kind": "piece",
           "text": "The calm before the collision. Spacetime is flat ahead of both waves, and flat again behind either one alone [frauendiener2014]."
+        },
+        {
+          "id": "bell_szekeres",
+          "kind": "family",
+          "text": "The same collision with light for the waves. Bell and Szekeres's two electromagnetic shock waves meet in the same four regions and focus each other onto a Killing-Cauchy horizon, with the curvature bounded [bell1974, griffiths1991]."
         }
       ],
       "references": [
@@ -5361,7 +5842,9 @@
         "chandrasekhar1986",
         "tipler1980",
         "matzner1984",
-        "yurtsever1988"
+        "yurtsever1988",
+        "bell1974",
+        "griffiths1991"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/khan_penrose.json",
@@ -7233,6 +7716,11 @@
           "id": "misner",
           "kind": "locally_same",
           "text": "Minkowski space rolled up under a boost. It stays flat, and the identification alone makes its closed timelike curves [misner1967, li1998]."
+        },
+        {
+          "id": "bell_szekeres",
+          "kind": "composite",
+          "text": "Two plane electromagnetic shock waves colliding head on. Ahead of both of them spacetime is flat [griffiths1991]."
         }
       ],
       "references": [
@@ -7266,7 +7754,8 @@
         "caldwell1996",
         "melvin1964",
         "misner1967",
-        "li1998"
+        "li1998",
+        "griffiths1991"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -8845,6 +9334,11 @@
           "id": "robinson_trautman",
           "kind": "family",
           "text": "Waves on expanding spherical fronts from an isolated body, where the fronts of a pp-wave are planes with parallel rays [robinson1960, griffiths2009]."
+        },
+        {
+          "id": "bell_szekeres",
+          "kind": "composite",
+          "text": "Two plane electromagnetic waves sent at each other head on. Before they meet, each is the plane wave with $H = -a^2\\Theta(u)(x^2 + y^2)$, a step in $u$ [griffiths1991]."
         }
       ],
       "references": [
@@ -8866,7 +9360,8 @@
         "aichelburg1971",
         "khan1971",
         "robinson1960",
-        "griffiths2009"
+        "griffiths2009",
+        "griffiths1991"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",

@@ -2564,7 +2564,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose"}
+        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
         flat_moments = {("domain_wall", "moments", 2)}
@@ -2678,7 +2678,8 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose"})
+                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose",
+                          "bell_szekeres"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -2894,7 +2895,8 @@ class StacksAndMovies(unittest.TestCase):
     diagrams that change through a run of moments played as movies, as the captain asked on 30
     September 2026, from the numbers written and nothing else."""
 
-    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0}   # the height of a unit of time
+    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
+              "bell_szekeres": 3.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
@@ -2907,7 +2909,8 @@ class StacksAndMovies(unittest.TestCase):
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
-              ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$"}
+              ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
+              ("bell_szekeres", "ring"): "$\\xi$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -3401,6 +3404,8 @@ class Slices(unittest.TestCase):
               # and the centre of momentum chart about the strings.
               "gott_time_machine/grant_rindler/plane", "conformal gott_time_machine/grant_rindler",
               "gott_time_machine/centre_of_momentum/loop",
+              # Bell and Szekeres's regular chart, whose planes of T and Z lie off eta = 0, where the ring is.
+              "bell_szekeres/regular/plane", "conformal bell_szekeres/regular",
               # The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.
               "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
               "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis",
@@ -3642,6 +3647,16 @@ class Slices(unittest.TestCase):
             # The event on sigma = 0 at tau = t, u = v = sin(t/2): drawn against v - u and u + v, or
             # against sigma and tau.
             return (lambda X: 2 * math.sin(t / 2) if "/double_null/" in key else t), [0.0]
+        if key.startswith("bell_szekeres/"):
+            # The event on eta = 0 at xi = t, with a = b = 1: u = v = t/2 drawn against v - u and u + v;
+            # xi against eta; chi = t - pi/2 against rho; U = V = -cos t/(sqrt 2 (1 + sin t)) drawn
+            # against V - U and U + V; and t = tan xi at r = sec xi.
+            chart = key.split("/")[1]
+            if chart == "bertotti_robinson":
+                return (lambda X: math.tan(t)), [1 / math.cos(t)]
+            height = {"double_null": t, "time_space": t, "global": t - math.pi / 2,
+                      "kruskal_szekeres": -math.sqrt(2) * math.cos(t) / (1 + math.sin(t))}[chart]
+            return (lambda X: height), [0.0]
         if key in ("misner/milne/plane", "gott_time_machine/grant_milne/plane"):
             return (lambda X: t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "minkowski/rindler")):
@@ -3918,6 +3933,12 @@ class Slices(unittest.TestCase):
                         # The event u = v = sin(t/2) where both waves have passed, drawn with p, q = u, v.
                         for X, T in points:
                             self.assertLess(abs(X) + abs(T - 2 * math.sin(t / 2)), 2e-4, where)
+                    elif metric_id == "bell_szekeres":
+                        # The event on eta = 0 at xi = t: on the plane x = y = 0, p = q = t/2 at a = b = 1,
+                        # and on the strip of the anti-de Sitter factor, rho = 0 at chi = t - pi/2.
+                        height = t if view["id"] in ("double_null", "time_space") else t - math.pi / 2
+                        for X, T in points:
+                            self.assertLess(abs(X) + abs(T - height), 2e-4, where)
                     elif metric_id == "rn_metric" and mark["view"] == "inside":
                         self.assertTrue(all(abs(T - math.pi) < 2e-4 for _, T in points), where)
                     else:

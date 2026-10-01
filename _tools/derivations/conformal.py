@@ -6326,6 +6326,218 @@ def khan_penrose(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Bell-Szekeres
+
+def bs_strip_pq(chi, rho):
+    """The global chart of the anti-de Sitter factor into its strip: X = arctan(sinh(rho)) across
+    and T = chi up, so p, q = (chi -+ arctan(sinh(rho)))/2."""
+    chi, across = np.asarray(chi, dtype=float), np.arctan(np.sinh(np.asarray(rho, dtype=float)))
+    return (chi - across) / 2, (chi + across) / 2
+
+
+def bs_regular_pq(T, Z):
+    """Bell and Szekeres's regular chart into the strip: sinh(rho) = Z and sin(chi) = T/sqrt(1 + Z^2)."""
+    T, Z = np.asarray(T, dtype=float), np.asarray(Z, dtype=float)
+    return bs_strip_pq(np.arcsin(T / np.sqrt(1 + Z ** 2)), np.arcsinh(Z))
+
+
+def bell_szekeres(ck, src):
+    """Two planes, at a = b = 1. The plane x = y = 0 is totally geodesic, since x -> -x and
+    y -> -y are isometries that fix it, and is drawn as Khan and Penrose's is, in p, q = kp_pq(u),
+    kp_pq(v): where both waves have passed the published double null chart and the chart of xi
+    and eta are checked, the second through p, q = (xi -+ eta)/2, and ahead of one wave or both the
+    metric is the published one with u or v set to zero, checked through the same maps. Its Weyl
+    tensor, computed from those components, is checked to vanish and its Kretschmann scalar to be
+    finite on au + bv = pi/2, which this plane meets where the horizon's two branches cross.
+
+    The plane eta = 0, x = 0, also totally geodesic, is the anti-de Sitter factor, drawn in its
+    strip, X = arctan(sinh(rho)) across and T = chi up. The global chart is checked through
+    bs_strip_pq, the regular chart through bs_regular_pq, the Kruskal-Szekeres chart through
+    p, q = arctan(sqrt(2ab) U), arctan(sqrt(2ab) V) and the Bertotti-Robinson chart through
+    p, q = arctan(t - r), arctan(t + r) - pi/2, and one event of the region is checked to land
+    on one point of the strip through all four."""
+    params = {"a": 1, "b": 1}
+    fixed = {"x": "0", "y": "0"}
+    null = Plane(src, "bell_szekeres", "double_null", ("u", "v"), fixed, params)
+    total, share = ck.uniform(0.001, HALF - 0.001), ck.uniform(0.001, 0.999)
+    u, w = total * share, total * (1 - share)
+    ck.chart("Bell-Szekeres double null, both waves passed", null, lambda a, b: (kp_pq(a), kp_pq(b)), u, w,
+             lambda a, b: (1, 1))
+    ts = Plane(src, "bell_szekeres", "time_space", ("\\xi", "\\eta"), fixed, params)
+    xi = ck.uniform(0.001, HALF - 0.001)
+    eta = xi * ck.uniform(-0.999, 0.999)
+    ck.chart("Bell-Szekeres time and space", ts, lambda t, s: ((t - s) / 2, (t + s) / 2), xi, eta, lambda t, s: (1, 0))
+    for name, zu, zv, a, b in (("ahead of both waves", True, True, ck.uniform(-30, 0), ck.uniform(-30, 0)),
+                               ("behind the wave on u = 0 alone", False, True, ck.uniform(0, HALF - 0.001), ck.uniform(-30, 0)),
+                               ("behind the wave on v = 0 alone", True, False, ck.uniform(-30, 0), ck.uniform(0, HALF - 0.001))):
+        ck.chart(f"Bell-Szekeres {name}", KPFlatRegion(null, zu, zv), lambda a, b: (kp_pq(a), kp_pq(b)), a, b,
+                 lambda a, b: (1, 1))
+    # The Weyl tensor of the published metric as it stands, and with v, or u, set to zero.
+    _, entry, reader = nr.load("bell_szekeres", "double_null")
+    g = nr.published_matrix(reader, entry, "metric_components").subs({reader.parameters[k]: 1 for k in ("a", "b")})
+    symbols = [reader.symbol[c] for c in entry["coords"]]
+    for name, at in (("both waves passed", {}), ("u = 0", {symbols[0]: 0}), ("v = 0", {symbols[1]: 0})):
+        weyl = vm.Geometry(g.subs(at), symbols, 10 ** 6).weyl_llll()
+        nonzero = sum(1 for i in vm._indices(4, 4) if vm.norm(vm._at(weyl, i)) != 0)
+        ck.limit(f"Bell-Szekeres: conformally flat, the published metric at {name}", nonzero, 0, tol=0.5)
+    edge = ck.uniform(0.01, 0.99, 200)
+    ck.finite("Bell-Szekeres: the curvature is finite on au + bv = pi/2",
+              null.kretschmann((HALF - 1e-6) * edge, (HALF - 1e-6) * (1 - edge)))
+
+    strip_fixed = {"theta": "pi/2", "phi": "0"}
+    gl = Plane(src, "bell_szekeres", "global", ("\\chi", "\\rho"), strip_fixed, params)
+    rho = ck.uniform(-3, 3)
+    reach = np.arctan(np.abs(np.sinh(rho)))
+    chi = -HALF + (HALF - reach) * ck.uniform(0.001, 0.999)
+    ck.chart("Bell-Szekeres global", gl, bs_strip_pq, chi, rho, lambda c, r: (1, 0))
+    reg = Plane(src, "bell_szekeres", "regular", ("T", "Z"), {"X": "99/100", "Y": "0"}, params)
+    Z = ck.uniform(-2, 2)
+    T = -np.sqrt(Z ** 2 + ck.uniform(0.001, 0.999))
+    ck.chart("Bell-Szekeres regular", reg, bs_regular_pq, T, Z, lambda t, z: (1, 0))
+    root = math.sqrt(2)
+    ks = Plane(src, "bell_szekeres", "kruskal_szekeres", ("U", "V"), {"eta": "0", "x": "0"}, params)
+    U = -np.exp(ck.uniform(-4, 2))
+    V = -ck.uniform(0.001, 0.999) / (2 * np.abs(U))
+    ck.chart("Bell-Szekeres Kruskal-Szekeres", ks, lambda a, b: (np.arctan(root * a), np.arctan(root * b)), U, V,
+             lambda a, b: (1, 1))
+
+    def br_pq(t, r):
+        return np.arctan(np.asarray(t, dtype=float) - r), np.arctan(np.asarray(t, dtype=float) + r) - HALF
+    br = Plane(src, "bell_szekeres", "bertotti_robinson", ("t", "r"), strip_fixed, params)
+    r = ck.uniform(0.05, 20)
+    ck.chart("Bell-Szekeres Bertotti-Robinson", br, br_pq, r * ck.uniform(0.001, 0.999), r, lambda t, r: (1, 0))
+    # One event, xi and y on eta = 0, through every chart of the strip.
+    xi, y = ck.uniform(0.01, HALF - 0.01, 400), ck.uniform(-1.5, 1.5, 400)
+    T, Z = -np.cos(xi) * np.cosh(root * y), np.cos(xi) * np.sinh(root * y)
+    fall = np.cos(xi) / (root * (1 + np.sin(xi)))
+    here = np.array(bs_regular_pq(T, Z))
+    there = [np.array((np.arctan(-root * fall * np.exp(root * y)), np.arctan(-root * fall * np.exp(-root * y)))),
+             np.array(br_pq(np.exp(root * y) * np.tan(xi), np.exp(root * y) / np.cos(xi)))]
+    ck.limit("Bell-Szekeres: one event lands on one point of the strip through every chart",
+             np.concatenate([np.ravel(other - here) for other in there]), 0, 1e-9)
+    ck.limit("Bell-Szekeres: xi = 0 is chi = -pi/2 and xi = pi/2 is cos(chi) cosh(rho) = 1",
+             np.cos(here[0] + here[1]) * np.cosh(np.arcsinh(Z)) - np.sin(xi), 0, 1e-9)
+
+    moments = slices.moments("bell_szekeres")
+    views = []
+    # The plane x = y = 0, with all four regions.
+    box = [-PI, PI, -PI, HALF + 0.25]
+    s_neg = spread(-np.inf, 0, 400, 9)[:-1]
+    whole = [point(-HALF, -HALF), point(HALF, -HALF), point(HALF, 0), point(0, HALF), point(-HALF, HALF)]
+    region_iv = [point(0, 0), point(HALF, 0), point(0, HALF)]
+    restriction = "The plane $x = y = 0$ only, totally geodesic, each point in the diagram a single event."
+    for system in ("double_null", "time_space"):
+        v = View(system, {"double_null": "Double Null", "time_space": "Time and Space"}[system], box, system)
+        v.fill("region", whole)
+        v.fill("cover", region_iv)
+        if system == "double_null":
+            for c in (0.3, 0.6, 0.9, 1.2):
+                v.curve("null", np.full(2, c), np.array([0, HALF - c]))
+                v.curve("null", np.array([0, HALF - c]), np.full(2, c))
+            v.legend("cover", "the region where both waves have passed, which $u$ and $v$ cover")
+            v.legend("null", "$u$ constant and $v$ constant, every one a light ray")
+        else:
+            for c in (0.3, 0.6, 0.9, 1.2):
+                v.curve("t", np.array([c, 0]), np.array([0, c]))
+            for c in (-0.9, -0.45, 0.45, 0.9):
+                t = np.array([abs(c), HALF])
+                v.curve("r", (t - c) / 2, (t + c) / 2)
+            v.legend("cover", "the region where both waves have passed, which $\\xi$ and $\\eta$ cover")
+            v.legend("t", "$\\xi$ constant, spacelike")
+            v.legend("r", "$\\eta$ constant")
+        v.curve("surface", np.zeros_like(s_neg), kp_pq(s_neg))
+        v.curve("surface", kp_pq(s_neg), np.zeros_like(s_neg))
+        v.segment("surface", (0, 0), (0, HALF))
+        v.segment("surface", (0, 0), (HALF, 0))
+        v.segment("singular", (HALF, -HALF), (HALF, 0), zig=True)
+        v.segment("singular", (-HALF, HALF), (0, HALF), zig=True)
+        v.segment("horizon", (HALF, 0), (0, HALF))
+        v.segment("scri", (-HALF, -HALF), (HALF, -HALF))
+        v.segment("scri", (-HALF, -HALF), (-HALF, HALF))
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(point(-HALF, -HALF))})
+        v.point("mark", (0, 0))
+        v.label_xt(point(-HALF, -HALF), "$i^-$", "b", dy=-6)
+        v.label((HALF, -HALF / 2), "$au = \\pi/2$", "l", "small", dx=6)
+        v.label((-HALF / 2, HALF), "$bv = \\pi/2$", "r", "small", dx=-6)
+        v.label((HALF / 2, HALF / 2), "$au + bv = \\pi/2$", "t", "small", dy=6)
+        v.label((0.25 * -HALF, -HALF), "$\\mathscr{I}^-$", "bl", dx=5, dy=-3)
+        v.label((-HALF, 0.25 * -HALF), "$\\mathscr{I}^-$", "br", dx=-5, dy=-3)
+        v.legend("surface", "the fronts of the two electromagnetic shock waves, $u = 0$ and $v = 0$, with an impulsive "
+                            "gravitational wave on each where the other wave has passed")
+        v.legend("mark", "the collision, $u = v = 0$")
+        v.legend("horizon", "$au + bv = \\pi/2$, the Killing-Cauchy horizon, where the Kretschmann scalar is "
+                            "$32a^2b^2$ as everywhere between the fronts")
+        v.legend("singular", "$au = \\pi/2$ and $bv = \\pi/2$ behind one wave alone, fold singularities, where the "
+                             "curvature is finite")
+        v.legend("scri", "past null infinity $\\mathscr{I}^-$")
+        v.set(restriction=restriction)
+        for m in moments:
+            v.slice(m, points=[(m.time / 2, m.time / 2)])
+        views.append(v)
+
+    # The plane eta = 0, x = 0: the anti-de Sitter factor in its strip.
+    T0, T1 = -PI, HALF
+    box = [-HALF - 0.55, HALF + 0.55, T0, T1]
+    triangle = [[-HALF, -HALF], [HALF, -HALF], [0, 0]]
+    restriction = ("The plane $\\eta = 0$, $x = 0$ only, where $au = bv$, totally geodesic, each point in the diagram a "
+                   "single event.")
+    names = {"regular": "Regular", "global": "Global", "kruskal_szekeres": "Kruskal-Szekeres",
+             "bertotti_robinson": "Bertotti-Robinson"}
+    for system, label in names.items():
+        v = View(system, label, box, system)
+        strip(v, True, T0, T1)
+        v.fill("cover", triangle)
+        if system == "regular":
+            for c in (-1.0, -0.5, 0.0, 0.5, 1.0):
+                t = np.linspace(-math.sqrt(1 + c * c), -abs(c), 200)
+                v.curve("r", *bs_regular_pq(t, np.full_like(t, c)))
+            for c in (-0.9, -0.6, -0.3):
+                z = np.linspace(c, -c, 200)
+                v.curve("t", *bs_regular_pq(np.full_like(z, c), z))
+            v.legend("cover", "the region where both waves have passed, which $T$ and $Z$ cover")
+            v.legend("t", "$T$ constant, at $-0.9$, $-0.6$ and $-0.3$")
+            v.legend("r", "$Z$ constant, from $-1$ to $1$")
+        elif system == "global":
+            for c in (-1.5, -0.75, 0.0, 0.75, 1.5):
+                t = np.linspace(-HALF, -math.atan(abs(math.sinh(c))), 200)
+                v.curve("r", *bs_strip_pq(t, np.full_like(t, c)))
+            for c in (-1.2, -0.9, -0.6, -0.3):
+                z = np.linspace(-1, 1, 200) * math.asinh(math.tan(-c))
+                v.curve("t", *bs_strip_pq(np.full_like(z, c), z))
+            v.legend("cover", "the region where both waves have passed, which $\\chi$ and $\\rho$ cover")
+            v.legend("t", "$\\chi$ constant, spacelike")
+            v.legend("r", "$\\rho$ constant, from $-1.5$ to $1.5$")
+        elif system == "kruskal_szekeres":
+            for c in (-1.2, -0.8, -0.4):
+                v.curve("null", np.full(2, c), np.array([-HALF - c, 0]))
+                v.curve("null", np.array([-HALF - c, 0]), np.full(2, c))
+            v.legend("cover", "the region where both waves have passed, which $U$ and $V$ cover")
+            v.legend("null", "$U$ constant and $V$ constant, every one a light ray")
+        else:
+            for c in (0.5, 1.0, 2.0, 4.0):
+                t = np.linspace(0, c, 200)
+                v.curve("r", *br_pq(t, np.full_like(t, c)))
+            for c in (0.25, 0.5, 1.0, 2.0, 4.0):
+                rr = c + S_POS
+                v.curve("t", *br_pq(np.full_like(rr, c), rr))
+            v.legend("cover", "the region where both waves have passed, which $t$ and $r$ cover")
+            v.legend("t", "$t$ constant, from $1/4$ to $4$")
+            v.legend("r", "$r$ constant, from $1/2$ to $4$")
+        v.line("surface", [[[-HALF, -HALF], [HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [0, 0]], [[HALF, -HALF], [0, 0]]])
+        v.label_xt([0, -HALF], "$\\xi = 0$", "t", "small", dy=6)
+        v.legend("surface", "the collision, $au + bv = 0$, every $y$")
+        v.legend("horizon", "$au + bv = \\pi/2$, the Killing-Cauchy horizon, null, its two branches crossing at "
+                            "the event that is every finite $y$")
+        v.legend("boundary", "the conformal boundary of the Bertotti-Robinson universe, timelike")
+        v.set(restriction=restriction, fade={"top": 0.7, "bottom": 0.7})
+        if system != "regular":
+            for m in moments:
+                v.slice(m, points=[((m.time - HALF) / 2, (m.time - HALF) / 2)])
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Aichelburg-Sexl
 
 AS_JUMP = float(np.log(8.0))    # the jump of a ray moving left at rho = rho_0/8, in units of 8GE/c^4
@@ -6830,7 +7042,7 @@ DRAWN = {
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
     "einstein_rosen_waves": einstein_rosen_waves,
-    "nariai": nariai, "khan_penrose": khan_penrose,
+    "nariai": nariai, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "majumdar_papapetrou": majumdar_papapetrou,
     "robinson_trautman": robinson_trautman,
     "melvin": melvin,
@@ -7752,6 +7964,101 @@ CAPTIONS = {
         "The coordinates $\\tau = \\arcsin u + \\arcsin v$ and $\\sigma = \\arcsin u - \\arcsin v$ cover the "
         "region where both waves have passed, $|\\sigma| \\le \\tau < \\pi/2$, each surface of constant $\\tau$ "
         "spacelike, and the curvature singularity is $\\tau = \\pi/2$.",
+    ],
+    ("bell_szekeres", "double_null"): [
+        "The plane $x = y = 0$ of the Bell-Szekeres spacetime, totally geodesic, each point in the diagram a "
+        "single event. Two plane electromagnetic shock waves travel toward each other through flat space and "
+        "collide at $u = v = 0$. Maps $p$ and $q$ of $u$ and $v$, each the coordinate itself where it is "
+        "positive and its arctangent where it is negative, bring the whole plane into a finite drawing at $a "
+        "= b = 1$, with $T = p + q$ up and $X = q - p$ across, and light at 45°.",
+        "Ahead of both waves the spacetime is flat, and its past edges are null infinity, $u \\to -\\infty$ "
+        "and $v \\to -\\infty$. Behind one wave alone it is conformally flat, $-2\\,du\\,dv + "
+        "\\cos^2(au)(dx^2 + dy^2)$ behind the wave on $u = 0$, and ends at $au = \\pi/2$ in a fold "
+        "singularity, where the curvature is finite, as the region behind the other wave ends at $bv = "
+        "\\pi/2$. Where both waves have passed each focuses the other, and the region ends on the "
+        "Killing-Cauchy horizon $au + bv = \\pi/2$, which this plane meets along the line where the horizon's "
+        "two null branches cross.",
+        "The coordinates $u$ and $v$ cover the region where both waves have passed, $0 \\le bv < \\pi/2 - au$ "
+        "with $0 \\le au < \\pi/2$, and ahead of either wave the metric is the same with that wave's "
+        "coordinate set to zero.",
+    ],
+    ("bell_szekeres", "time_space"): [
+        "The plane $x = y = 0$ of the Bell-Szekeres spacetime, totally geodesic, each point in the diagram a "
+        "single event. Two plane electromagnetic shock waves travel toward each other through flat space and "
+        "collide at $u = v = 0$. Maps $p$ and $q$ of $u$ and $v$, each the coordinate itself where it is "
+        "positive and its arctangent where it is negative, bring the whole plane into a finite drawing at $a "
+        "= b = 1$, with $T = p + q$ up and $X = q - p$ across, and light at 45°.",
+        "Ahead of both waves the spacetime is flat, and its past edges are null infinity, $u \\to -\\infty$ "
+        "and $v \\to -\\infty$. Behind one wave alone it is conformally flat, $-2\\,du\\,dv + "
+        "\\cos^2(au)(dx^2 + dy^2)$ behind the wave on $u = 0$, and ends at $au = \\pi/2$ in a fold "
+        "singularity, where the curvature is finite, as the region behind the other wave ends at $bv = "
+        "\\pi/2$. Where both waves have passed each focuses the other, and the region ends on the "
+        "Killing-Cauchy horizon $au + bv = \\pi/2$, which this plane meets along the line where the horizon's "
+        "two null branches cross.",
+        "The coordinates $\\xi = au + bv$ and $\\eta = bv - au$ cover the region where both waves have "
+        "passed, $|\\eta| \\le \\xi < \\pi/2$, each surface of constant $\\xi$ spacelike, and the "
+        "Killing-Cauchy horizon is $\\xi = \\pi/2$.",
+    ],
+    ("bell_szekeres", "regular"): [
+        "The plane $\\eta = 0$, $x = 0$ of the Bell-Szekeres spacetime where both waves have passed, totally "
+        "geodesic, each point in the diagram a single event. Its metric is that of the anti-de Sitter space "
+        "of two dimensions with radius $1/\\sqrt{2ab}$, drawn in the strip of that space with $T = \\chi$ up "
+        "and $X = \\arctan(\\sinh\\rho)$ across, and light at 45°.",
+        "The collision is the line $\\chi = -\\pi/2$, which runs from one conformal boundary to the other as "
+        "$y$ runs over the whole line, and the region where both waves have passed is the triangle above it. "
+        "The Killing-Cauchy horizon is the pair of null lines that close the triangle, and they cross at "
+        "$\\chi = \\rho = 0$, the event that every finite $y$ reaches at $au + bv = \\pi/2$. The strip around "
+        "the triangle is the Bertotti-Robinson universe, in which Chris Clarke and Sean Hayward continued the "
+        "spacetime through the horizon.",
+        "The coordinates $T$ and $Z$ put the collision on the hyperbola $T^2 - Z^2 = 1$ and the horizon on "
+        "the lines $T = -|Z|$, where their metric is regular, and the surfaces of constant $y$ are the lines "
+        "$Z/T$ constant through the crossing.",
+    ],
+    ("bell_szekeres", "global"): [
+        "The plane $\\eta = 0$, $x = 0$ of the Bell-Szekeres spacetime where both waves have passed, totally "
+        "geodesic, each point in the diagram a single event. Its metric is that of the anti-de Sitter space "
+        "of two dimensions with radius $1/\\sqrt{2ab}$, drawn in the strip of that space with $T = \\chi$ up "
+        "and $X = \\arctan(\\sinh\\rho)$ across, and light at 45°.",
+        "The collision is the line $\\chi = -\\pi/2$, which runs from one conformal boundary to the other as "
+        "$y$ runs over the whole line, and the region where both waves have passed is the triangle above it. "
+        "The Killing-Cauchy horizon is the pair of null lines that close the triangle, and they cross at "
+        "$\\chi = \\rho = 0$, the event that every finite $y$ reaches at $au + bv = \\pi/2$. The strip around "
+        "the triangle is the Bertotti-Robinson universe, in which Chris Clarke and Sean Hayward continued the "
+        "spacetime through the horizon.",
+        "The coordinates $\\chi$ and $\\rho$ are the global chart of the anti-de Sitter factor, in which the "
+        "region where both waves have passed is $-\\pi/2 \\le \\chi < -\\arcsin|\\tanh\\rho|$ and the horizon "
+        "is $\\cos\\chi\\cosh\\rho = 1$.",
+    ],
+    ("bell_szekeres", "kruskal_szekeres"): [
+        "The plane $\\eta = 0$, $x = 0$ of the Bell-Szekeres spacetime where both waves have passed, totally "
+        "geodesic, each point in the diagram a single event. Its metric is that of the anti-de Sitter space "
+        "of two dimensions with radius $1/\\sqrt{2ab}$, drawn in the strip of that space with $T = \\chi$ up "
+        "and $X = \\arctan(\\sinh\\rho)$ across, and light at 45°.",
+        "The collision is the line $\\chi = -\\pi/2$, which runs from one conformal boundary to the other as "
+        "$y$ runs over the whole line, and the region where both waves have passed is the triangle above it. "
+        "The Killing-Cauchy horizon is the pair of null lines that close the triangle, and they cross at "
+        "$\\chi = \\rho = 0$, the event that every finite $y$ reaches at $au + bv = \\pi/2$. The strip around "
+        "the triangle is the Bertotti-Robinson universe, in which Chris Clarke and Sean Hayward continued the "
+        "spacetime through the horizon.",
+        "The coordinates $U$ and $V$ are null, with $p = \\arctan(\\sqrt{2ab}\\,U)$ and $q = "
+        "\\arctan(\\sqrt{2ab}\\,V)$, so the collision is $2abUV = 1$, the horizon is the pair of lines $U = "
+        "0$ and $V = 0$, and the metric is regular across both.",
+    ],
+    ("bell_szekeres", "bertotti_robinson"): [
+        "The plane $\\eta = 0$, $x = 0$ of the Bell-Szekeres spacetime where both waves have passed, totally "
+        "geodesic, each point in the diagram a single event. Its metric is that of the anti-de Sitter space "
+        "of two dimensions with radius $1/\\sqrt{2ab}$, drawn in the strip of that space with $T = \\chi$ up "
+        "and $X = \\arctan(\\sinh\\rho)$ across, and light at 45°.",
+        "The collision is the line $\\chi = -\\pi/2$, which runs from one conformal boundary to the other as "
+        "$y$ runs over the whole line, and the region where both waves have passed is the triangle above it. "
+        "The Killing-Cauchy horizon is the pair of null lines that close the triangle, and they cross at "
+        "$\\chi = \\rho = 0$, the event that every finite $y$ reaches at $au + bv = \\pi/2$. The strip around "
+        "the triangle is the Bertotti-Robinson universe, in which Chris Clarke and Sean Hayward continued the "
+        "spacetime through the horizon.",
+        "The coordinates $t$ and $r$ are the conformally flat chart of the Bertotti-Robinson universe, in "
+        "which the collision is $t = 0$ and the region where both waves have passed is $0 \\le t < r$. One "
+        "branch of the horizon is the ray $t = r$, and the other lies at $t = \\infty$, on the Poincaré "
+        "horizon where $t$ and $r$ end.",
     ],
     ("einstein_rosen_waves", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ at fixed $\\phi$ and $z$, totally geodesic. The metric on it is "

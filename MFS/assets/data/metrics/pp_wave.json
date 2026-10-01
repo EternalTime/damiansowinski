@@ -45,6 +45,11 @@
       "id": "robinson_trautman",
       "kind": "family",
       "text": "Waves on expanding spherical fronts from an isolated body, where the fronts of a pp-wave are planes with parallel rays [robinson1960, griffiths2009]."
+    },
+    {
+      "id": "bell_szekeres",
+      "kind": "composite",
+      "text": "Two plane electromagnetic waves sent at each other head on. Before they meet, each is the plane wave with $H = -a^2\\Theta(u)(x^2 + y^2)$, a step in $u$ [griffiths1991]."
     }
   ],
   "references": [
@@ -66,7 +71,8 @@
     "aichelburg1971",
     "khan1971",
     "robinson1960",
-    "griffiths2009"
+    "griffiths2009",
+    "griffiths1991"
   ],
   "coordinates": [
     {

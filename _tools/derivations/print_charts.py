@@ -3,8 +3,8 @@
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
-robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres and
-kaluza_klein_monopole, and Godel's cylindrical chart.
+robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
+kaluza_klein_monopole and bell_szekeres, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -3322,6 +3322,252 @@ def kaluza_klein_pullback(chart, system_id):
 
 
 CHARTS["kaluza_klein_monopole"] = [lambda s=s: kaluza_klein_monopole(s) for s in KK_CHARTS]
+# -- Bell-Szekeres -----------------------------------------------------------------------
+
+BS_CHARTS = ("double_null", "time_space", "regular", "global", "kruskal_szekeres", "bertotti_robinson")
+
+
+def bell_szekeres(system):
+    """The Bell-Szekeres spacetime where both electromagnetic waves have passed, in six charts,
+    every one with the signature flipped from its source's. The double null chart is Bell and
+    Szekeres's, Gen. Rel. Grav. 5, 275 (1974), eq. (15.7) of J. B. Griffiths, Colliding Plane
+    Waves in General Relativity (Oxford, 1991). The chart of xi = au + bv and eta = bv - au is
+    eq. (9) of A. Feinstein and M. A. Perez Sebastian, Class. Quantum Grav. 12, 2723 (1995). The
+    regular chart is the one Bell and Szekeres removed the coordinate singularity with, Griffiths's
+    eqs. (15.11) and (15.12). The global chart is C. J. S. Clarke and S. A. Hayward's, Class.
+    Quantum Grav. 6, 615 (1989), Griffiths's eqs. (15.13) to (15.15). The Kruskal-Szekeres chart
+    is Feinstein and Perez Sebastian's eqs. (10) to (13), after M. Dorca and E. Verdaguer, and the
+    conformally flat chart of the Bertotti-Robinson universe is Griffiths's eq. (15.9).
+    bell_szekeres_check pulls each of the last five back onto the first and checks the
+    Einstein-Maxwell equations in every chart, and bell_szekeres.md beside this file is the
+    derivation."""
+    reals = "(-\\infty, \\infty)"
+    charts = {
+        "double_null": {
+            "name": "Double Null", "coords": ["u", "v", "x", "y"],
+            "domains": ["u \\in [0, \\pi/(2a))", "v \\in [0, (\\pi/2 - au)/b)", "x \\in " + reals, "y \\in " + reals,
+                        "au + bv = \\pi/2 \\;\\text{(Killing-Cauchy horizon)}"],
+            "line": "ds^2 = -2\\,du\\,dv + \\cos^2\\left(au - bv\\right)dx^2 + \\cos^2\\left(au + bv\\right)dy^2"},
+        "time_space": {
+            "name": "Time and Space", "coords": ["\\xi", "\\eta", "x", "y"],
+            "domains": ["\\xi \\in [0, \\pi/2)", "\\eta \\in [-\\xi, \\xi]", "x \\in " + reals, "y \\in " + reals,
+                        "\\xi = \\pi/2 \\;\\text{(Killing-Cauchy horizon)}"],
+            "line": "ds^2 = \\dfrac{-d\\xi^2 + d\\eta^2}{2ab} + \\cos^2\\eta\\,dx^2 + \\cos^2\\xi\\,dy^2"},
+        "regular": {
+            "name": "Regular", "coords": ["T", "Z", "X", "Y"],
+            "domains": ["T \\in \\left[-\\sqrt{1 + Z^2},\\, -|Z|\\right)", "Z \\in " + reals, "X \\in (-1, 1)",
+                        "Y \\in \\left(-\\sqrt{1 - X^2},\\, \\sqrt{1 - X^2}\\right)",
+                        "T^2 - Z^2 \\le X^2 + Y^2 \\;\\text{(behind both wave fronts)}",
+                        "T^2 = Z^2 \\;\\text{(Killing-Cauchy horizon)}"],
+            "line": "ds^2 = \\dfrac{-\\left(1 + Z^2\\right)dT^2 + 2TZ\\,dT\\,dZ + \\left(1 - T^2\\right)dZ^2}"
+                    "{2ab\\left(1 - T^2 + Z^2\\right)}"
+                    " + \\dfrac{\\left(1 - Y^2\\right)dX^2 + 2XY\\,dX\\,dY + \\left(1 - X^2\\right)dY^2}"
+                    "{2ab\\left(1 - X^2 - Y^2\\right)}"},
+        "global": {
+            "name": "Global", "coords": ["\\chi", "\\rho", "\\theta", "\\phi"],
+            "domains": ["\\chi \\in \\left[-\\pi/2,\\, -\\arcsin|\\tanh\\rho|\\right)", "\\rho \\in " + reals,
+                        "\\theta \\in \\left[\\arccos(\\cos\\chi\\cosh\\rho),\\, \\pi - \\arccos(\\cos\\chi\\cosh\\rho)\\right]",
+                        "\\phi \\in " + reals,
+                        "\\cos\\chi\\cosh\\rho = 1 \\;\\text{(Killing-Cauchy horizon)}"],
+            "line": "ds^2 = \\dfrac{1}{2ab}\\left(-\\cosh^2\\rho\\,d\\chi^2 + d\\rho^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"},
+        "kruskal_szekeres": {
+            "name": "Kruskal-Szekeres", "coords": ["U", "V", "\\eta", "x"],
+            "domains": ["U \\in (-\\infty, 0)", "V \\in \\left[\\dfrac{1}{2abU},\\, 0\\right)",
+                        "\\eta \\in (-\\pi/2, \\pi/2)", "x \\in " + reals,
+                        "2abUV \\le \\dfrac{1 - \\sin|\\eta|}{1 + \\sin|\\eta|} \\;\\text{(behind both wave fronts)}",
+                        "UV = 0 \\;\\text{(Killing-Cauchy horizon)}"],
+            "line": "ds^2 = -\\dfrac{4\\,dU\\,dV}{\\left(1 + 2abUV\\right)^2} + \\dfrac{d\\eta^2}{2ab} + \\cos^2\\eta\\,dx^2"},
+        "bertotti_robinson": {
+            "name": "Bertotti-Robinson", "coords": ["t", "r", "\\theta", "\\phi"],
+            "domains": ["t \\in [0, r)", "r \\in (0, \\infty)",
+                        "\\theta \\in \\left[\\pi/2 - \\arcsin(t/r),\\, \\pi/2 + \\arcsin(t/r)\\right]",
+                        "\\phi \\in " + reals, "t = r \\;\\text{(Killing-Cauchy horizon)}"],
+            "line": "ds^2 = \\dfrac{1}{2ab\\,r^2}\\left(-dt^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)"},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], ["a", "b"], ())
+    a, b = probe.parameters["a"], probe.parameters["b"]
+    if system == "double_null":
+        printing = {"printer": {"lead": [a, b]},
+                    "pretty": bell_szekeres_sum_and_difference(a * probe.symbol["u"], b * probe.symbol["v"])}
+    elif system == "regular":
+        # Each sum is printed whole and in the order the line element writes it.
+        T, Z, X, Y = (probe.symbol[name] for name in chart["coords"])
+        named = [(sp.Symbol("BSh"), 1 - T ** 2 + Z ** 2, "1 - T^2 + Z^2"),
+                 (sp.Symbol("BSs"), 1 - X ** 2 - Y ** 2, "1 - X^2 - Y^2"),
+                 (sp.Symbol("BSz"), 1 + Z ** 2, "1 + Z^2"), (sp.Symbol("BSt"), 1 - T ** 2, "1 - T^2"),
+                 (sp.Symbol("BSx"), 1 - X ** 2, "1 - X^2"), (sp.Symbol("BSy"), 1 - Y ** 2, "1 - Y^2")]
+        merges = [(1 + w, 1 - w, placeholder) for w, (placeholder, _, _) in zip((T, X, Y), named[3:])]
+        printing = {"printer": {"lead": [a, b], "named": {placeholder: text for placeholder, _, text in named}},
+                    "pretty": named_factors(named, merges)}
+    else:
+        # (1 + sin)(1 - sin) of xi, eta or theta reads as the cosine squared the line element writes.
+        angles = [name for name in ("\\xi", "\\eta", "\\theta") if name in chart["coords"]]
+        pairs = [(sp.sin(probe.symbol[name]), sp.cos(probe.symbol[name]),
+                  sp.Symbol(f"BSp{i}", positive=True), sp.Symbol(f"BSm{i}", positive=True))
+                 for i, name in enumerate(angles)]
+        named = {}
+        for (_, _, plus, minus), name in zip(pairs, angles):
+            named[plus], named[minus] = f"1 + \\sin{name}", f"1 - \\sin{name}"
+        # The Kruskal-Szekeres chart's 1 + 2abUV keeps the order the line element writes it in.
+        rising = [probe.symbol["U"]] if system == "kruskal_szekeres" else []
+        hyperbolic = nariai_hyperbolic(probe.symbol["\\rho"]) if system == "global" else (lambda value: value)
+        printing = {"printer": {"lead": [a, b], "named": named, "rising": rising, "flip": False},
+                    "pretty": lambda value: trig_pairs(hyperbolic(value), pairs)}
+    return {
+        "metric_id": "bell_szekeres",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": ["a", "b"], "line_element": chart["line"]},
+        "chart_line_element": chart["line"],
+        "check": lambda c: bell_szekeres_check(c, system),
+        **printing,
+    }
+
+
+def bell_szekeres_sum_and_difference(p, q):
+    """A pretty printer for the double null chart, whose every value is a function of the sum
+    p + q = au + bv and the difference p - q = au - bv. The checker's canonical form spreads
+    each over the sines and cosines of p and of q; this writes it back with
+        cos^2 p = (1 + CP CM - SP SM)/2,    sin p cos p = (SP CM + CP SM)/2,
+        cos^2 q = (1 + CP CM + SP SM)/2,    sin q cos q = (SP CM - CP SM)/2,
+    where SP, CP are the sine and cosine of the sum and SM, CM those of the difference, which
+    reaches every monomial of even degree in p's pair and in q's. A numerator and a denominator
+    of odd degree are both multiplied by cos p or cos q first. Of the four ways of writing the
+    squares, sines or cosines for each angle, the one that factors shortest is printed."""
+    s1, c1, s2, c2 = sp.sin(p), sp.cos(p), sp.sin(q), sp.cos(q)
+    SP, CP, SM, CM = sp.symbols("BSsp BScp BSsm BScm")
+    square = {0: (1 + CP * CM - SP * SM) / 2, 1: (1 + CP * CM + SP * SM) / 2}
+    cross = {0: (SP * CM + CP * SM) / 2, 1: (SP * CM - CP * SM) / 2}
+    back = {SP: sp.sin(p + q), CP: sp.cos(p + q), SM: sp.sin(p - q), CM: sp.cos(p - q)}
+
+    def odd(poly, pair):
+        degrees = {sum(m[k] for k in pair) % 2 for m in poly.monoms()}
+        if len(degrees) > 1:
+            raise AssertionError(f"bell_szekeres: {poly.as_expr()} mixes parities in one angle")
+        return degrees == {1}
+
+    def carried(expr):
+        poly = sp.Poly(sp.expand(expr), s1, c1, s2, c2)
+        total = sp.Integer(0)
+        for (i, j, k, m), coefficient in poly.terms():
+            term = coefficient
+            for which, (sine, cosine) in enumerate(((i, j), (k, m))):
+                term *= (1 - square[which]) ** (sine // 2) * cross[which] ** (sine % 2) \
+                    * square[which] ** ((cosine - sine % 2) // 2)
+            total += term
+        return sp.expand(total)
+
+    def reduced(expr, use_sines):
+        for (sine, cosine), use_sine in zip(((SP, CP), (SM, CM)), use_sines):
+            keep, drop = (sine, cosine) if use_sine else (cosine, sine)
+            expr = sp.expand(sum(k * drop ** (d % 2) * (1 - keep ** 2) ** (d // 2) * rest
+                                 for (d,), k in sp.Poly(expr, drop).terms()
+                                 for rest in [1]))
+        return expr
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if not value.has(s1, c1, s2, c2):
+            return sp.factor(value)
+        numerator, denominator = sp.fraction(sp.together(value))
+        for pair, cosine in (((0, 1), c1), ((2, 3), c2)):
+            if odd(sp.Poly(sp.expand(numerator), s1, c1, s2, c2), pair):
+                numerator, denominator = numerator * cosine, denominator * cosine
+        numerator, denominator = carried(numerator), carried(denominator)
+        best = None
+        for use_sines in itertools.product((False, True), repeat=2):
+            candidate = sp.factor(reduced(numerator, use_sines)) / sp.factor(reduced(denominator, use_sines))
+            candidate = sp.factor(sp.cancel(candidate))
+            if best is None or sp.count_ops(candidate) < sp.count_ops(best):
+                best = candidate
+        return best.subs(back, simultaneous=True)
+
+    return pretty
+
+
+def bell_szekeres_field(chart, system):
+    """The field where both waves have passed, F = sqrt(2ab) times the area form of the anti-de
+    Sitter factor, uniform, in units where G_mu nu = 2(F_mu a F_nu^a - g_mu nu F^2/4). In the
+    double null chart and the chart of xi and eta it is dA with A = sin(au + bv) dy, and in the
+    others, whose first two coordinates span that factor, it is read off the metric."""
+    x, g = chart.symbols, chart.geo.g
+    a, b = chart.reader.parameters["a"], chart.reader.parameters["b"]
+    if system in ("double_null", "time_space"):
+        A = [0, 0, 0, sp.sin(a * x[0] + b * x[1]) if system == "double_null" else sp.sin(x[0])]
+        return sp.Matrix(4, 4, lambda i, j: sp.diff(A[j], x[i]) - sp.diff(A[i], x[j]))
+    area = sp.powdenest(sp.sqrt(sp.factor(-g[:2, :2].det())), force=True).replace(sp.Abs, lambda e: e)
+    F = sp.zeros(4, 4)
+    F[0, 1], F[1, 0] = sp.sqrt(2 * a * b) * area, -sp.sqrt(2 * a * b) * area
+    return F
+
+
+def bell_szekeres_maps(u, v, x, y, a, b):
+    """Each chart's coordinates as functions of the double null chart's."""
+    q = 1 / sp.sqrt(2 * a * b)
+    xi, eta = a * u + b * v, b * v - a * u
+    fall = q * sp.cos(xi) / (1 + sp.sin(xi))
+    c = sp.sqrt(2 * a * b)
+    T, Z = -sp.cos(xi) * sp.cosh(c * y), sp.cos(xi) * sp.sinh(c * y)
+    return {"time_space": [xi, eta, x, y],
+            "regular": [T, Z, sp.cos(eta) * sp.cos(c * x), sp.cos(eta) * sp.sin(c * x)],
+            "global": [sp.asin(T / sp.sqrt(1 + Z ** 2)), sp.asinh(Z), sp.pi / 2 - eta, c * x],
+            "kruskal_szekeres": [-fall * sp.exp(y / q), -fall * sp.exp(-y / q), eta, x],
+            "bertotti_robinson": [sp.exp(y / q) * sp.tan(xi), sp.exp(y / q) / sp.cos(xi), sp.pi / 2 - eta, x / q]}
+
+
+def bell_szekeres_check(chart, system, points=12):
+    """The Einstein tensor is the stress of bell_szekeres_field in every slot and that field
+    solves Maxwell's equations; the Weyl tensor vanishes; and J^T g J, with J the Jacobian of
+    the chart's coordinates as functions of u, v, x and y, is the double null metric at random
+    points where both waves have passed, to forty digits."""
+    x = chart.symbols
+    a, b = chart.reader.parameters["a"], chart.reader.parameters["b"]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    F = bell_szekeres_field(chart, system)
+    for i, j, k in itertools.combinations(range(4), 3):
+        if sp.simplify(sp.diff(F[i, j], x[k]) + sp.diff(F[j, k], x[i]) + sp.diff(F[k, i], x[j])) != 0:
+            raise AssertionError(f"bell_szekeres: the field is not closed in the {system} chart")
+    Fup = ginv * F * ginv
+    F2 = sum(F[i, j] * Fup[i, j] for i in range(4) for j in range(4))
+    G = chart.geo.einstein_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            T = 2 * (sum(F[i, c] * F[j, d] * ginv[c, d] for c in range(4) for d in range(4)) - g[i, j] * F2 / 4)
+            if sp.simplify(vm._at(G, (i, j)) - T) != 0:
+                raise AssertionError(f"bell_szekeres: the Einstein tensor misses Maxwell's stress in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]} of the {system} chart")
+    # sqrt(-g) is a product of factors that are each positive on the chart.
+    root = sp.powdenest(sp.sqrt(sp.factor(-g.det())), force=True).replace(sp.Abs, lambda e: e)
+    for j in range(4):
+        if sp.simplify(sum(sp.diff(root * Fup[i, j], x[i]) for i in range(4)) / root) != 0:
+            raise AssertionError(f"bell_szekeres: Maxwell's equations fail along {chart.coords_tex[j]} "
+                                 f"in the {system} chart")
+    weyl = chart.geo.weyl_llll()
+    if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"bell_szekeres: the {system} chart is not conformally flat")
+    if system == "double_null":
+        return
+    null = cp.Chart(["u", "v", "x", "y"], ["a", "b"], bell_szekeres("double_null")["chart_line_element"])
+    u, v, xx, y = null.symbols
+    na, nb = null.reader.parameters["a"], null.reader.parameters["b"]
+    image = bell_szekeres_maps(u, v, xx, y, na, nb)[system]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], null.symbols[j]))
+    at = dict(zip(x, image))
+    at.update({a: na, b: nb})
+    difference = J.T * g.subs(at, simultaneous=True) * J - null.geo.g
+    rng = __import__("random").Random(5)
+    for _ in range(points):
+        p = {na: sp.Rational(rng.randint(5, 30), 10), nb: sp.Rational(rng.randint(5, 30), 10),
+             xx: sp.Rational(rng.randint(-20, 20), 10), y: sp.Rational(rng.randint(-20, 20), 10)}
+        total, share = sp.Rational(rng.randint(1, 150), 100), sp.Rational(rng.randint(1, 99), 100)
+        p[u], p[v] = total * share / p[na], total * (1 - share) / p[nb]
+        worst = max(abs(sp.N(difference[i, j].subs(p), 40)) for i in range(4) for j in range(4))
+        if worst > sp.Float("1e-30"):
+            raise AssertionError(f"bell_szekeres: the {system} chart pulled back misses the double null chart's "
+                                 f"metric by {worst} at {p}")
+
+
+CHARTS["bell_szekeres"] = [lambda s=s: bell_szekeres(s) for s in BS_CHARTS]
 
 
 def write(spec):

@@ -52,6 +52,11 @@
       "id": "melvin",
       "kind": "family",
       "text": "The other universe held together by its own electromagnetic field, a bundle of magnetic field lines along an axis [bonnor1954, melvin1964]."
+    },
+    {
+      "id": "bell_szekeres",
+      "kind": "locally_same",
+      "text": "Two plane electromagnetic shock waves that collide head on leave this geometry between their fronts, with $b = 1/\\sqrt{2ab}$ set by the strengths $a$ and $b$ of the two waves. It lasts as far as the Killing-Cauchy horizon where the waves focus each other [bell1974, griffiths1991]."
     }
   ],
   "references": [
@@ -72,7 +77,9 @@
     "krasinski1999",
     "levicivita1919",
     "bonnor1954",
-    "melvin1964"
+    "melvin1964",
+    "bell1974",
+    "griffiths1991"
   ],
   "coordinates": [
     {

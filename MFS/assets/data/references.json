@@ -1,5 +1,5 @@
 {
-  "version": "d7080676bb64fb5b",
+  "version": "67b093d686214dc3",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -11109,6 +11109,149 @@
         "eprint": "hep-th/9708086",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.4310/ATMP.1997.v1.n2.a6"
+      }
+    },
+    "bell1974": {
+      "type": "article",
+      "fields": {
+        "title": "Interacting electromagnetic shock waves in general relativity",
+        "author": "Bell, P. and Szekeres, P.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "5",
+        "number": "3",
+        "pages": "275--286",
+        "year": "1974",
+        "doi": "10.1007/BF00770217",
+        "url": "https://doi.org/10.1007/BF00770217"
+      }
+    },
+    "griffiths1991": {
+      "type": "book",
+      "fields": {
+        "title": "Colliding Plane Waves in General Relativity",
+        "author": "Griffiths, J. B.",
+        "series": "Oxford Mathematical Monographs",
+        "publisher": "Clarendon Press",
+        "address": "Oxford",
+        "year": "1991"
+      }
+    },
+    "clarke1989": {
+      "type": "article",
+      "fields": {
+        "title": "The global structure of the {Bell}-{Szekeres} solution",
+        "author": "Clarke, C. J. S. and Hayward, S. A.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "6",
+        "number": "5",
+        "pages": "615--622",
+        "year": "1989",
+        "doi": "10.1088/0264-9381/6/5/007",
+        "url": "https://doi.org/10.1088/0264-9381/6/5/007"
+      }
+    },
+    "yurtsever1987": {
+      "type": "article",
+      "fields": {
+        "title": "Instability of {Killing}-{Cauchy} horizons in plane-symmetric spacetimes",
+        "author": "Yurtsever, Ulvi",
+        "journal": "Physical Review D",
+        "volume": "36",
+        "number": "6",
+        "pages": "1662--1672",
+        "year": "1987",
+        "doi": "10.1103/PhysRevD.36.1662",
+        "url": "https://doi.org/10.1103/PhysRevD.36.1662"
+      }
+    },
+    "chandrasekhar1988": {
+      "type": "article",
+      "fields": {
+        "title": "A perturbation analysis of the {Bell}-{Szekeres} space-time",
+        "author": "Chandrasekhar, Subrahmanyan and Xanthopoulos, Basilis C.",
+        "journal": "Proceedings of the Royal Society of London A",
+        "volume": "420",
+        "number": "1858",
+        "pages": "93--123",
+        "year": "1988",
+        "doi": "10.1098/rspa.1988.0119",
+        "url": "https://doi.org/10.1098/rspa.1988.0119"
+      }
+    },
+    "konkowski1991": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of the quasiregular singularities in {Bell}-{Szekeres} spacetime",
+        "author": "Konkowski, D. A. and Helliwell, T. M.",
+        "journal": "Physical Review D",
+        "volume": "43",
+        "number": "2",
+        "pages": "609--612",
+        "year": "1991",
+        "doi": "10.1103/PhysRevD.43.609",
+        "url": "https://doi.org/10.1103/PhysRevD.43.609"
+      }
+    },
+    "dorca1993": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum fields interacting with colliding plane waves: particle creation",
+        "author": "Dorca, Miquel and Verdaguer, Enric",
+        "journal": "Nuclear Physics B",
+        "volume": "403",
+        "number": "3",
+        "pages": "770--808",
+        "year": "1993",
+        "doi": "10.1016/0550-3213(93)90370-5",
+        "url": "https://doi.org/10.1016/0550-3213(93)90370-5"
+      }
+    },
+    "feinstein1995": {
+      "type": "article",
+      "fields": {
+        "title": "Particle creation in the {Bell}-{Szekeres} spacetime",
+        "author": "Feinstein, Alexander and Pérez Sebastián, Miguel Angel",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "12",
+        "number": "11",
+        "pages": "2723--2734",
+        "year": "1995",
+        "doi": "10.1088/0264-9381/12/11/005",
+        "eprint": "gr-qc/9511065",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9511065"
+      }
+    },
+    "dorca1998": {
+      "type": "article",
+      "fields": {
+        "title": "Stress-energy tensor in {Bell}-{Szekeres} space-time",
+        "author": "Dorca, Miquel",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "10",
+        "pages": "104010",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.104010",
+        "eprint": "gr-qc/9802050",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9802050"
+      }
+    },
+    "gurses2003": {
+      "type": "article",
+      "fields": {
+        "title": "Higher dimensional {Bell}-{Szekeres} metric",
+        "author": "Gürses, M. and İpekoğlu, Y. and Karasu, A. and Şentürk, Ç.",
+        "journal": "Physical Review D",
+        "volume": "68",
+        "number": "8",
+        "pages": "084007",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.68.084007",
+        "eprint": "gr-qc/0305105",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0305105"
       }
     }
   }
