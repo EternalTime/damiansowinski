@@ -42,6 +42,11 @@
       "id": "misner",
       "kind": "programme",
       "text": "Charles Misner's flat model of Taub-NUT, from his lecture of 1967 on Taub-NUT as \"a counterexample to almost anything\" [misner1967]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "dual",
+      "text": "Taub-NUT continued to Euclidean signature, in its self dual case, with a time added: a static vacuum solution in five dimensions that four dimensions see as a magnetic monopole [sorkin1983, grossperry1983]."
     }
   ],
   "references": [
@@ -57,7 +62,8 @@
     "clement2015",
     "misner1969",
     "ellismaccallum1969",
-    "misner1967"
+    "misner1967",
+    "grossperry1983"
   ],
   "coordinates": [
     {

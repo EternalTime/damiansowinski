@@ -324,7 +324,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1960947a5875f79c",
+    "version": "c3dd9386824e9754",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "60ff81e81f622c29",
     "embedding": "0ccedb0f3c6098dc"
@@ -517,6 +517,43 @@
     "diagrams": "fc0a639f4f3a4d4d",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
+  },
+  {
+    "id": "kaluza_klein_monopole",
+    "name": "Kaluza-Klein Monopole",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "five-dimensional",
+      "higher dimensions",
+      "extra dimensions",
+      "Kaluza-Klein",
+      "compact dimension",
+      "magnetic monopole",
+      "Dirac quantisation",
+      "Dirac string",
+      "soliton",
+      "topological defect",
+      "Taub-NUT",
+      "NUT parameter",
+      "gravitational instanton",
+      "self-dual",
+      "Hopf fibration",
+      "regular",
+      "no horizon",
+      "asymptotically flat",
+      "Gross-Perry-Sorkin",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "738811111ac2f276",
+    "diagrams": "e9244cb74392e23f",
+    "conformal": "f602e8960e9f39f9",
+    "embedding": "dfb086757c0677ec"
   },
   {
     "id": "kantowski_sachs",
@@ -800,7 +837,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "aa06c55c2e885aec",
+    "version": "ac370eafa4e41b3e",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -1352,7 +1389,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "6b96eedfe2ca54c4",
+    "version": "2e407d8760874d52",
     "diagrams": "9987ad5f20cc062e",
     "conformal": "94cab2e957646c35",
     "embedding": "ad4896f7b32bbeec"
@@ -1410,7 +1447,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "51e2c71455d1ec5d",
+    "version": "eed6d239bb13bbed",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "be8e68489d42c0b8"
   },

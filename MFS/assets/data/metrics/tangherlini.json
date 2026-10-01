@@ -39,6 +39,11 @@
       "id": "schwarzschild",
       "kind": "special_case",
       "text": "The case $D = 4$, where the metric function is $1 - r_s/r$ and a massive particle has stable circular orbits."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "A second static vacuum solution of gravity in five dimensions. It has no horizon, and its 3-spheres are squashed and close smoothly at the centre [grossperry1983]."
     }
   ],
   "references": [
@@ -59,7 +64,8 @@
     "giddings2002",
     "dimopoulos2001",
     "cms2011",
-    "emparan2013"
+    "emparan2013",
+    "grossperry1983"
   ],
   "coordinates": [
     {

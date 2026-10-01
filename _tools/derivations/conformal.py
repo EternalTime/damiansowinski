@@ -5000,6 +5000,71 @@ def levi_civita(ck, src):
     return views
 
 
+def kaluza_klein_monopole(ck, src):
+    """The Kaluza-Klein monopole's plane of t and its radius at m = 1, in each of its three polar
+    charts.
+
+    On it the metric is -c^2dt^2 + V dr^2 with V = 1 + 4m/r, which is -c^2dt^2 + dr_*^2 with
+    r_* = sqrt(r(r + 4m)) + 4m arsinh(sqrt(r/4m)), the proper distance from the nut, running from
+    0 at r = 0 without bound. So p, q = arctan((ct -+ r_*)/l) with l = 4m bring it into
+    Minkowski's triangle, with the nut on X = 0: a regular centre, where the Kretschmann scalar
+    is 3/(32 m^4), and no horizon. The Taub-NUT radius is rho = r + 2m. Each point of the
+    triangle is a 3-sphere of the angles, squashed, since the circle of the fifth dimension has
+    circumference 16 pi m/sqrt(V) while the 2-sphere it is fibred over has area 4 pi r(r + 4m)."""
+    ell = 4.0
+
+    def star(r):
+        r = np.maximum(np.asarray(r, dtype=float), 0.0)
+        return np.sqrt(r * (r + 4)) + 4 * np.arcsinh(np.sqrt(r) / 2)
+
+    def r_pq(t, r):
+        return mink_pq(t, star(r), ell)
+
+    def rho_pq(t, rho):
+        return mink_pq(t, star(np.asarray(rho, dtype=float) - 2), ell)
+
+    views = []
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS, RS = (-16, -8, -4, 0, 4, 8, 16), (1, 4, 8, 16)
+    moment = slices.moments("kaluza_klein_monopole")[0]
+    reach = np.linspace(*moment.reach("gross_perry", "r"), 200)
+    for cid, name, x, fixed, fmap, shift, sphere in (
+            ("gross_perry", "Gross-Perry", "r", nr.KK_AXIS, r_pq, 0.0, "$\\theta$, $\\phi$, and $x_5$"),
+            ("hopf", "Hopf angle", "r", nr.KK_HOPF, r_pq, 0.0, "the Euler angles"),
+            ("taub_nut", "Taub-NUT radius", "\\rho", nr.KK_HOPF, rho_pq, 2.0, "the Euler angles")):
+        plane = Plane(src, "kaluza_klein_monopole", cid, ("t", x), fixed, {"m": 1})
+        ck.chart(f"Kaluza-Klein monopole, {name}", plane, fmap, ck.uniform(-40, 40),
+                 shift + ck.uniform(0.01, 40), lambda t, r: (1, 0))
+        K = plane.kretschmann
+        ck.settles(f"Kaluza-Klein monopole, {name}: the nut is a regular centre",
+                   K(np.zeros(1), np.full(1, shift + 1e-6)), K(np.zeros(1), np.full(1, shift + 1e-7)))
+        ck.limit(f"Kaluza-Klein monopole, {name}: the Kretschmann scalar at the nut is 3/(32 m^4)",
+                 K(np.zeros(1), np.full(1, shift + 1e-9)), [3 / 32], 1e-7)
+        r = ck.uniform(0.01, 40)
+        g = plane.metric(0 * r, shift + r)
+        h = 1e-5 * r
+        ck.limit(f"Kaluza-Klein monopole, {name}: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+                 (star(r + h) - star(r - h)) / (2 * h), np.sqrt(-g[2] / g[0]), 1e-6)
+        centre = f"${x} = {'2m' if shift else '0'}$"
+        v = View(cid, name, box, cid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda r, t, fmap=fmap: fmap(t, r), [shift + r for r in RS], S_ALL)
+        grid(v, "t", fmap, TS, shift + S_POS)
+        triangle_edges(v, centre)
+        label_on(v, fmap(0, shift + 4), f"${x} = {6 if shift else 4}m$")
+        label_on(v, fmap(0, shift + 16), f"${18 if shift else 16}m$")
+        v.legend("cover", f"the whole spacetime, which $t$ and ${x}$ cover")
+        v.legend("r", f"${x}$ constant, at " + ("$3$, $6$, $10$ and $18\\,m$" if shift else "$1$, $4$, $8$ and $16\\,m$"))
+        v.legend("t", "$ct$ constant, every $4m$ to $\\pm 8m$, and at $\\pm 16m$")
+        v.legend("centre", f"the nut {centre}, a regular centre")
+        v.slice(moment, [fmap(0 * reach, shift + reach)])
+        v.set(settings=f"$m = 1$ and $\\ell = 4m$; $p = \\arctan((ct - r_*)/\\ell)$ and "
+                       f"$q = \\arctan((ct + r_*)/\\ell)$.")
+        views.append(v)
+    return views
+
+
 def curzon_axis_star(z):
     """z_* on the axis of the Curzon-Chazy particle at m = 1, dz_*/dz = e^(2/z): z e^(2/z) - 2 Ei(2/z),
     which falls to minus infinity as z -> 0 and grows as z + 2 ln z far out."""
@@ -6771,6 +6836,7 @@ DRAWN = {
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
     "levi_civita": levi_civita,
+    "kaluza_klein_monopole": kaluza_klein_monopole,
     "curzon_chazy": curzon_chazy,
     "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
@@ -7716,6 +7782,35 @@ CAPTIONS = {
         "and the bottom.",
         "The plane of $t$ and $r$ at every other constant $\\theta$ has the same null curves and the same drawing, "
         "on the axis with the factor equal to $1$.",
+    ],
+    ("kaluza_klein_monopole", "gross_perry"): [
+        "The Kaluza-Klein monopole ($m = 1$), each point in the diagram a squashed 3-sphere of $\\theta$, "
+        "$\\phi$, and $x_5$. The metric on the plane of $t$ and $r$ is $-c^2dt^2 + dr_*^2$ with "
+        "$r_* = \\sqrt{r(r + 4m)} + 4m\\,\\mathrm{arsinh}\\sqrt{r/4m}$, the proper distance from the nut, and "
+        "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring it into Minkowski's "
+        "triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is the nut $r = 0$, a regular centre where the Kretschmann scalar is $3/(32m^4)$, and "
+        "the monopole has no horizon. Each 3-sphere is a circle of the fifth dimension, of circumference "
+        "$16\\pi m\\sqrt{r/(r + 4m)}$, over every point of a 2-sphere of area $4\\pi r(r + 4m)$, so far from the "
+        "nut the circle stays at $16\\pi m$ while the 2-sphere grows.",
+    ],
+    ("kaluza_klein_monopole", "hopf"): [
+        "The Kaluza-Klein monopole ($m = 1$) in the chart of the Hopf angle, each point in the diagram a "
+        "squashed 3-sphere of the Euler angles $\\theta$, $\\phi$, and $\\psi$. The metric on the plane of $t$ "
+        "and $r$ is $-c^2dt^2 + dr_*^2$ with $r_* = \\sqrt{r(r + 4m)} + 4m\\,\\mathrm{arsinh}\\sqrt{r/4m}$, and "
+        "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring it into Minkowski's "
+        "triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is the nut $r = 0$, a regular centre with no horizon around it. On each 3-sphere "
+        "the circles of $\\psi$ are the fibres of the Hopf fibration, each of length $16\\pi m\\sqrt{r/(r + 4m)}$.",
+    ],
+    ("kaluza_klein_monopole", "taub_nut"): [
+        "The Kaluza-Klein monopole ($m = 1$) with the radius of the Taub-NUT line element, each point in the "
+        "diagram a squashed 3-sphere of the Euler angles. The metric on the plane of $t$ and $\\rho$ is "
+        "$-c^2dt^2 + dr_*^2$ with $r_* = \\sqrt{\\rho^2 - 4m^2} + 4m\\,\\mathrm{arsinh}\\sqrt{(\\rho - 2m)/4m}$, and "
+        "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring it into Minkowski's "
+        "triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is the nut $\\rho = 2m$, a regular centre where the Kretschmann scalar is "
+        "$3/(32m^4)$, and the monopole has no horizon.",
     ],
     ("levi_civita", "weyl"): [
         "The half plane of fixed $\\phi$ and $z$ of Levi-Civita's cylinder ($\\sigma = 1/4$), each point in the "
