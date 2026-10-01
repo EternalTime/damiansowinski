@@ -324,7 +324,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1c606d7d759d764b"
+    "version": "1c606d7d759d764b",
+    "diagrams": "4ab31bd70f52c64d",
+    "conformal": "60ff81e81f622c29",
+    "embedding": "0ccedb0f3c6098dc"
   },
   {
     "id": "einstein_static",

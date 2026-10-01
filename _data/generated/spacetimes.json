@@ -1931,6 +1931,395 @@
       ]
     },
     {
+      "id": "dilaton_black_hole",
+      "name": "Gibbons-Maeda-Garfinkle-Horowitz-Strominger Dilaton Black Hole",
+      "short_name": "Dilaton Black Hole",
+      "description": "The static, spherically symmetric charged black hole of low energy string theory, a solution of Einstein's equations with a Maxwell field and a scalar field, the dilaton, coupled to it. On the plane of time and radius its metric is Schwarzschild's, with one horizon at the Schwarzschild radius for every charge and no inner horizon, and the area of its spheres vanishes at the singularity.",
+      "tags": [
+        "non-vacuum",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "charged",
+        "charged black hole",
+        "black hole",
+        "dilaton",
+        "scalar field",
+        "scalar hair",
+        "string theory",
+        "string metric",
+        "Einstein-Maxwell-dilaton",
+        "electric charge",
+        "magnetic charge",
+        "mass",
+        "electromagnetic field",
+        "extremal",
+        "supersymmetric",
+        "singularity",
+        "curvature singularity",
+        "coordinate singularity",
+        "horizon",
+        "event horizon",
+        "Hawking temperature",
+        "black hole shadow",
+        "causal structure",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and $r_s$ and $r_d$ are lengths. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "gibbons1982dilaton",
+        "gibbons1988",
+        "garfinkle1991",
+        "horowitz1992",
+        "giddings1992",
+        "preskill1991",
+        "holzhey1992",
+        "kallosh1992",
+        "sen1992",
+        "horne1992",
+        "horne1993",
+        "gregory1993",
+        "dowker1994",
+        "hirschmann2018",
+        "mizuno2018",
+        "kocherlakota2021"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_d, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = r_d \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_d",
+              "description": "Radius at which the area of the spheres of the Einstein metric vanishes, $r_d = 2r_q^2/r_s$ with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ the square of the charge radius, which is $Q^2/M$ in units with $G = c = 1$; $0 \\le r_d \\le r_s$, and $r_d = r_s$ is the extremal charge $Q^2 = 2M^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components of the Einstein metric in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r\\left(r - r_d\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r\\left(r - r_d\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r\\left(r - r_d\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{r_d^2\\left(r - r_s\\right)}{2r^3\\left(r - r_d\\right)^2}",
+          "kretschmann": "K = \\dfrac{3r^2\\,r_d^4 - 16r^3\\,r_s\\,r_d^2 + 20r^2\\,r_s\\,r_d^3 - 10r\\,r_s\\,r_d^4 + 48r^4\\,r_s^2 - 144r^3\\,r_s^2\\,r_d + 180r^2\\,r_s^2\\,r_d^2 - 108r\\,r_s^2\\,r_d^3 + 27r_s^2\\,r_d^4}{4r^6\\left(r - r_d\\right)^4}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (r_d, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = r_d \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_d",
+              "description": "Radius at which the area of the spheres of the Einstein metric vanishes, $r_d = 2r_q^2/r_s$ with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ the square of the charge radius, which is $Q^2/M$ in units with $G = c = 1$; $0 \\le r_d \\le r_s$, and $r_d = r_s$ is the extremal charge $Q^2 = 2M^2$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$ on the Einstein metric, with the retarded time $u = ct - r_*$ a length, where $r_* = r + r_s\\ln\\left|r/r_s - 1\\right|$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)du^2 - 2\\,du\\,dr + r\\left(r - r_d\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r\\left(r - r_d\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r\\left(r - r_d\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{r_d^2\\left(r - r_s\\right)}{2r^3\\left(r - r_d\\right)^2}",
+          "kretschmann": "K = \\dfrac{3r^2\\,r_d^4 - 16r^3\\,r_s\\,r_d^2 + 20r^2\\,r_s\\,r_d^3 - 10r\\,r_s\\,r_d^4 + 48r^4\\,r_s^2 - 144r^3\\,r_s^2\\,r_d + 180r^2\\,r_s^2\\,r_d^2 - 108r\\,r_s^2\\,r_d^3 + 27r_s^2\\,r_d^4}{4r^6\\left(r - r_d\\right)^4}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (r_d, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = r_d \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_d",
+              "description": "Radius at which the area of the spheres of the Einstein metric vanishes, $r_d = 2r_q^2/r_s$ with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ the square of the charge radius, which is $Q^2/M$ in units with $G = c = 1$; $0 \\le r_d \\le r_s$, and $r_d = r_s$ is the extremal charge $Q^2 = 2M^2$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$ on the Einstein metric, with the advanced time $v = ct + r_*$ a length, where $r_* = r + r_s\\ln\\left|r/r_s - 1\\right|$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)dv^2 + 2\\,dv\\,dr + r\\left(r - r_d\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r\\left(r - r_d\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r\\left(r - r_d\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{r_d^2\\left(r - r_s\\right)}{2r^3\\left(r - r_d\\right)^2}",
+          "kretschmann": "K = \\dfrac{3r^2\\,r_d^4 - 16r^3\\,r_s\\,r_d^2 + 20r^2\\,r_s\\,r_d^3 - 10r\\,r_s\\,r_d^4 + 48r^4\\,r_s^2 - 144r^3\\,r_s^2\\,r_d + 180r^2\\,r_s^2\\,r_d^2 - 108r\\,r_s^2\\,r_d^3 + 27r_s^2\\,r_d^4}{4r^6\\left(r - r_d\\right)^4}"
+        },
+        {
+          "id": "string_magnetic",
+          "name": "String Metric, Magnetic Charge",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_d, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = r_d \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_d",
+              "description": "Radius at which the area of the spheres of the Einstein metric vanishes, $r_d = 2r_q^2/r_s$ with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ the square of the charge radius, which is $Q^2/M$ in units with $G = c = 1$; $0 \\le r_d \\le r_s$, and $r_d = r_s$ is the extremal charge $Q^2 = 2M^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius, and take components of the string metric $e^{2\\varphi}g_{\\mu\\nu}$ of the magnetically charged hole, with $g_{\\mu\\nu}$ the Einstein metric and $e^{-2\\varphi} = 1 - r_d/r$, in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{1 - \\dfrac{r_s}{r}}{1 - \\dfrac{r_d}{r}}c^2dt^2 + \\dfrac{dr^2}{\\left(1 - \\dfrac{r_s}{r}\\right)\\left(1 - \\dfrac{r_d}{r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r - r_s}{r - r_d}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^2}{\\left(r - r_d\\right)\\left(r - r_s\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{r_d\\left(r\\,r_d - 3r\\,r_s + 2r_s\\,r_d\\right)}{r^4\\left(r - r_d\\right)}",
+          "kretschmann": "K = \\dfrac{12r^4\\,r_d^2 - 20r^3\\,r_d^3 + 9r^2\\,r_d^4 - 24r^3\\,r_s\\,r_d^2 + 38r^2\\,r_s\\,r_d^3 - 16r\\,r_s\\,r_d^4 + 12r^4\\,r_s^2 - 36r^3\\,r_s^2\\,r_d + 53r^2\\,r_s^2\\,r_d^2 - 40r\\,r_s^2\\,r_d^3 + 12r_s^2\\,r_d^4}{r^8\\left(r - r_d\\right)^2}"
+        },
+        {
+          "id": "string_electric",
+          "name": "String Metric, Electric Charge",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_d, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = r_d \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_d",
+              "description": "Radius at which the area of the spheres of the Einstein metric vanishes, $r_d = 2r_q^2/r_s$ with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ the square of the charge radius, which is $Q^2/M$ in units with $G = c = 1$; $0 \\le r_d \\le r_s$, and $r_d = r_s$ is the extremal charge $Q^2 = 2M^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components of the string metric $e^{2\\varphi}g_{\\mu\\nu}$ of the electrically charged hole, with $g_{\\mu\\nu}$ the Einstein metric and $e^{2\\varphi} = 1 - r_d/r$, in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{r_d}{r}\\right)\\left(-\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}}\\right) + \\left(r - r_d\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(r - r_d\\right)\\left(r - r_s\\right)}{r^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r - r_d}{r - r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r - r_d\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r - r_d\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{r_d\\left(r\\,r_d + 3r\\,r_s - 4r_s\\,r_d\\right)}{r^2\\left(r - r_d\\right)^3}",
+          "kretschmann": "K = \\dfrac{12r^4\\,r_d^2 - 4r^3\\,r_d^3 + r^2\\,r_d^4 - 40r^3\\,r_s\\,r_d^2 + 30r^2\\,r_s\\,r_d^3 - 8r\\,r_s\\,r_d^4 + 12r^4\\,r_s^2 - 36r^3\\,r_s^2\\,r_d + 73r^2\\,r_s^2\\,r_d^2 - 56r\\,r_s^2\\,r_d^3 + 16r_s^2\\,r_d^4}{r^4\\left(r - r_d\\right)^6}"
+        }
+      ]
+    },
+    {
       "id": "einstein_static",
       "name": "Einstein Static Universe",
       "short_name": "Einstein Static",
