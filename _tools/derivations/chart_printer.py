@@ -23,7 +23,7 @@ import sympy as sp
 import verify_metrics as vm
 
 GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell", "alpha",
-         "Lambda", "gamma", "sigma", "Delta", "kappa", "xi", "delta"}
+         "Lambda", "gamma", "sigma", "Delta", "kappa", "xi", "delta", "epsilon"}
 # A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
 ACCENTED = {"tildephi": "\\tilde\\phi"}
 TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
@@ -676,9 +676,34 @@ def is_single_term(text):
     return True
 
 
+class Reduced:
+    """A Geometry whose every tensor is put through a chart's `reduce` as it is handed over."""
+
+    def __init__(self, geometry, reduce):
+        self._geometry, self._reduce, self._done = geometry, reduce, {}
+
+    def _through(self, value):
+        if isinstance(value, list):
+            return [self._through(item) for item in value]
+        return self._reduce(value)
+
+    def __getattr__(self, name):
+        found = getattr(self._geometry, name)
+        if not callable(found):
+            return found
+
+        def reduced(*arguments):
+            if arguments:
+                return self._through(found(*arguments))
+            if name not in self._done:
+                self._done[name] = self._through(found())
+            return self._done[name]
+        return reduced
+
+
 class Chart:
     def __init__(self, coords_tex, parameters, chart_line_element, printer_options=None, pretty=None, time=None,
-                 bracketed=None):
+                 bracketed=None, reduce=None):
         # Time is already the chart coordinate here, so no coordinate is scaled by c. A chart
         # whose components depend on the time names it as `time`: its symbol then stands for
         # x^0 = ct in the geometry, and every value is printed and read back with it written
@@ -689,6 +714,12 @@ class Chart:
         self.bare = {self.reader.symbol[time]: self.reader.c * self.reader.symbol[time]} if time else {}
         g = vm.metric_from_line_element(self.reader, chart_line_element, coords_tex)
         self.geo = vm.Geometry(g, self.symbols, 10 ** 6)
+        # A chart that holds a defined name as a function, as Szekeres's E is held, passes
+        # `reduce`, which writes a value in generators with no relation left among them, so
+        # that a value which vanishes for the name's definition is exactly zero.
+        self.reduce = reduce
+        if reduce:
+            self.geo = Reduced(self.geo, reduce)
         self.printer = Printer(self.symbols, **(printer_options or {}))
         self.pretty = pretty or sp.factor
         # The sum a value is printed as when it has to stand in a bracket with a minus in front:
@@ -697,7 +728,8 @@ class Chart:
         self.own_brackets = bracketed is not None
 
     def check(self, text, value):
-        if vm.norm(self.reader(text) - sp.sympify(value).subs(self.bare, simultaneous=True)) != 0:
+        difference = self.reader(text) - sp.sympify(value).subs(self.bare, simultaneous=True)
+        if vm.norm(self.reduce(difference) if self.reduce else difference) != 0:
             raise AssertionError(f"printed {text!r} does not read back as {value}")
         return text
 

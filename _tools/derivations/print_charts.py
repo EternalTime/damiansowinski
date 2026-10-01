@@ -2994,10 +2994,222 @@ def gott_time_machine(system):
 CHARTS["gott_time_machine"] = [lambda s=s: gott_time_machine(s) for s in GOTT_CHARTS]
 
 
+# -- Szekeres ----------------------------------------------------------------------------
+
+SZ_E = ("\\dfrac{S}{2}\\left(\\dfrac{\\left(p - P\\right)^2 + \\left(q - Q\\right)^2}{S^2}"
+        " + \\epsilon\\right)")
+SZ_ORDERS = 4
+
+
+class SzekeresForms:
+    """Szekeres's function E = (S/2)(((p - P)^2 + (q - Q)^2)/S^2 + epsilon), held as a function
+    of r, p and q while the tensors are built, and the two ways a value in it is written.
+
+    E is quadratic in p and q, so d_p^2 E = d_q^2 E = 1/S, d_p d_q E = 0 and every third
+    derivative along p and q vanishes, and 2E = S((d_p E)^2 + (d_q E)^2 + epsilon). `reduce`
+    writes those in and removes E and its derivatives along r alone by the last relation, which
+    leaves d_p E, d_q E and their derivatives along r, with no relation among them, so a value
+    that vanishes for Szekeres's E is exactly zero. `pretty` factors a reduced value and writes
+    each factor back in E and its derivatives along r, by the same relation, in whichever of
+    four orders of elimination is shortest."""
+
+    def __init__(self, reader):
+        self.r, self.p, self.q = (reader.symbol[name] for name in ("r", "p", "q"))
+        self.E, self.S, self.epsilon = (reader.parameters[name] for name in ("E", "S", "epsilon"))
+        a, b = sp.Function("_a")(self.r), sp.Function("_b")(self.r)
+        self.along_r = {}      # the k-th derivative of E along r, in d_p E, d_q E and their derivatives
+        self.symbol = {}       # a generator as the plain symbol Poly takes
+        relations = []
+        for k in range(SZ_ORDERS):
+            for letter, x in (("a", self.p), ("b", self.q)):
+                self.symbol[self.derivative(x, k)] = sp.Symbol(f"_{letter}{k}")
+            self.symbol[self.derivative(None, k)] = sp.Symbol(f"_e{k}")
+            value = sp.diff(self.S / 2 * (a ** 2 + b ** 2 + self.epsilon), self.r, k)
+            orders = {d: d.variable_count[0][1] for d in value.atoms(sp.Derivative) if d.expr in (a, b)}
+            value = value.xreplace({d: self.derivative(self.p if d.expr == a else self.q, n)
+                                    for d, n in orders.items()})
+            value = value.xreplace({a: self.derivative(self.p, 0), b: self.derivative(self.q, 0)})
+            self.along_r[k] = value
+            relations.append(sp.expand(value.xreplace(self.symbol) - sp.Symbol(f"_e{k}")))
+        self.back = {symbol: generator for generator, symbol in self.symbol.items()}
+        self.eliminations = []
+        for letter in "ba":
+            eliminated = [sp.Symbol(f"_{letter}{k}") for k in reversed(range(SZ_ORDERS))]
+            self.eliminations += [(eliminated, relations), (eliminated, relations[::-1])]
+
+    def derivative(self, x, k):
+        """d_r^k of E, or of d_x E where x is p or q."""
+        variables = ([x] if x is not None else []) + ([(self.r, k)] if k else [])
+        return sp.Derivative(self.E, *variables) if variables else self.E
+
+    def reduce(self, value):
+        value = sp.sympify(value)
+        if not value.has(self.E):
+            return vm.norm(value)
+        written = {}
+        for d in value.atoms(sp.Derivative):
+            if d.expr != self.E:
+                continue
+            count = {x: 0 for x in (self.r, self.p, self.q)}
+            for x, n in d.variable_count:
+                count[x] += n
+            i, j, k = count[self.p], count[self.q], count[self.r]
+            if k >= SZ_ORDERS:
+                raise AssertionError(f"szekeres: {d} is of a higher order along r than SZ_ORDERS allows")
+            if i + j >= 3 or (i, j) == (1, 1):
+                written[d] = sp.Integer(0)
+            elif i + j == 2:
+                written[d] = sp.diff(1 / self.S, self.r, k)
+            elif i + j == 0:
+                written[d] = self.along_r[k]
+        # E itself is replaced only where it stands outside a derivative.
+        held = {d: sp.Dummy() for d in value.atoms(sp.Derivative) if d not in written}
+        for image in written.values():
+            for d in image.atoms(sp.Derivative):
+                held.setdefault(d, sp.Dummy())
+        for d in self.along_r[0].atoms(sp.Derivative):
+            held.setdefault(d, sp.Dummy())
+        value = value.xreplace({d: image.xreplace(held) for d, image in written.items()}).xreplace(held)
+        value = value.xreplace({self.E: self.along_r[0].xreplace(held)})
+        return vm.norm(value.xreplace({dummy: d for d, dummy in held.items()}))
+
+    def factor(self, polynomial):
+        polynomial = sp.expand(polynomial.xreplace(self.symbol))
+        best = polynomial
+        for eliminated, relations in self.eliminations:
+            if not any(polynomial.has(x) for x in eliminated):
+                continue
+            remainder = sp.reduced(polynomial, relations, *eliminated, order="lex")[1]
+            if sp.count_ops(remainder) < sp.count_ops(best):
+                best = remainder
+        return sp.factor(best.xreplace(self.back))
+
+    def pretty(self, value):
+        out = sp.Integer(1)
+        for f in sp.Mul.make_args(sp.factor(sp.sympify(value))):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            out *= self.factor(base) ** k if base.is_Add else f
+        return out
+
+
+def szekeres(system_id):
+    """Szekeres's dust cosmologies of the class that holds the Lemaitre-Tolman models, in the
+    two charts its literature uses: Hellaby and Krasinski's, whose surfaces of constant t and r
+    carry the stereographic coordinates p and q and the sign epsilon of their curvature, and the
+    chart of the quasispherical case with an axis of symmetry, P and Q constant, in the polar
+    angles p - P = S cot(theta/2) cos(phi), q - Q = S cot(theta/2) sin(phi). R, f, S, P and Q
+    are left free in every tensor, so no component assumes a field equation; szekeres_check
+    confirms before anything is written that with (d_t R)^2 = 2M/R + f the matter is dust at
+    rest in the chart, and szekeres.md is the derivation."""
+    if system_id == "stereographic":
+        coords, name = ["t", "r", "p", "q"], "Stereographic"
+        parameters = ["R = R(t,r)", "f = f(r)", "S = S(r)", "P = P(r)", "Q = Q(r)", "\\epsilon", "E = " + SZ_E]
+        line = ("ds^2 = -{c2}dt^2 + \\dfrac{\\left(\\partial_r R - \\dfrac{R\\,\\partial_r E}{E}\\right)^2}"
+                "{\\epsilon + f}dr^2 + \\dfrac{R^2}{E^2}\\left(dp^2 + dq^2\\right)")
+        domains = ["p \\in (-\\infty, \\infty)", "q \\in (-\\infty, \\infty)"]
+        probe = vm.Reader(coords, parameters, ())
+        forms = SzekeresForms(probe)
+        lead = [probe.parameters["epsilon"], probe.parameters["f"], probe.parameters["E"], probe.parameters["R"]]
+        extra = {"reduce": forms.reduce, "pretty": forms.pretty}
+    else:
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Axisymmetric"
+        parameters = ["R = R(t,r)", "f = f(r)", "S = S(r)"]
+        line = ("ds^2 = -{c2}dt^2 + \\dfrac{\\left(\\partial_r R + \\dfrac{R\\,S'\\cos\\theta}{S}\\right)^2}"
+                "{1 + f}dr^2 + R^2\\left(d\\theta - \\dfrac{S'\\sin\\theta}{S}dr\\right)^2 + R^2\\sin^2\\theta\\,d\\phi^2")
+        domains = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+        probe = vm.Reader(coords, parameters, ())
+        lead = [probe.parameters["f"], probe.parameters["S"], probe.parameters["R"]]
+        extra = {}
+    return {
+        "metric_id": "szekeres",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+        "chart_line_element": line.replace("{c2}", ""),
+        "printer": {"lead": lead, "primed": ["f", "S", "P", "Q"]},
+        "check": szekeres_check,
+        **extra,
+    }
+
+
+def szekeres_check(chart):
+    """With (d_t R)^2 = 2M/R + f, M a function of r and a length, the Einstein tensor is that
+    of dust at rest in the chart: its one component is G^t_t = -8 pi G rho/c^2, with the density
+    Szekeres found, 2(M' - 3M E'/E)/(R^2(R' - R E'/E)) in the stereographic chart and the same
+    with E'/E = -S' cos(theta)/S in the axisymmetric one."""
+    t, r = chart.symbols[:2]
+    R, f = chart.reader.parameters["R"], chart.reader.parameters["f"]
+    M = sp.Function("M", real=True)(r)
+    w = sp.Symbol("_w", positive=True)
+    square = 2 * M / R + f
+    rates = {(1, 0): w, (1, 1): sp.diff(square, r) / (2 * w), (2, 0): -M / R ** 2, (2, 1): sp.diff(-M / R ** 2, r)}
+
+    def dust(value):
+        """The value with every derivative of R along the time written by the dust's equation."""
+        written = {}
+        for d in value.atoms(sp.Derivative):
+            count = dict(d.variable_count)
+            if d.expr == R and count.get(t):
+                written[d] = rates[count[t], count.get(r, 0)]
+        return value.xreplace(written)
+    if chart.coords_tex[2] == "p":
+        ratio = sp.Derivative(chart.reader.parameters["E"], r) / chart.reader.parameters["E"]
+    else:
+        S = chart.reader.parameters["S"]
+        ratio = -sp.Derivative(S, r) * sp.cos(chart.symbols[2]) / S
+    density = 2 * (sp.diff(M, r) - 3 * M * ratio) / (R ** 2 * (sp.Derivative(R, r) - R * ratio))
+    mixed = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    reduce = chart.reduce or vm.norm
+    for a in range(4):
+        for b in range(4):
+            value = dust(sp.sympify(mixed[a][b]))
+            value = sp.together(value).subs(w ** 2, square)
+            value = sp.expand(sp.numer(sp.together(value))).subs(w ** 2, square) / sp.denom(sp.together(value))
+            if value.has(w) or reduce(value + (density if a == b == 0 else 0)) != 0:
+                raise AssertionError(f"szekeres: with dust G^{chart.coords_tex[a]}_{chart.coords_tex[b]} "
+                                     "is not that of dust at rest")
+
+
+def szekeres_pullback():
+    """The axisymmetric chart is the stereographic one with epsilon = 1 and P and Q constant,
+    pulled back through p - P = S u cos(phi), q - Q = S u sin(phi), where u = cot(theta/2):
+    both metrics are compared in the coordinates t, r, u and phi, in which each is rational."""
+    stereo, polar = (cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+                     for spec in (szekeres("stereographic"), szekeres("axisymmetric")))
+    t, r, p, q = stereo.symbols
+    T, rr, theta, phi = polar.symbols
+    u = sp.Symbol("u", positive=True)
+    S, P0, Q0 = polar.reader.parameters["S"], sp.Symbol("P_0", real=True), sp.Symbol("Q_0", real=True)
+    held = {stereo.reader.parameters["P"]: P0, stereo.reader.parameters["Q"]: Q0,
+            stereo.reader.parameters["epsilon"]: 1}
+    at = {t: T, r: rr, p: P0 + S * u * sp.cos(phi), q: Q0 + S * u * sp.sin(phi)}
+    source = stereo.reader.surface(stereo.geo.g).subs(held).doit().subs(at, simultaneous=True)
+    images = [at[x] for x in stereo.symbols]
+    jacobian = sp.Matrix(4, 4, lambda a, b: sp.diff(images[a], (T, rr, u, phi)[b]))
+    pulled = jacobian.T * source * jacobian
+    # theta as a function of u: cos(theta) = (u^2 - 1)/(u^2 + 1), sin(theta) = 2u/(u^2 + 1), dtheta = -2du/(u^2 + 1).
+    angle = {sp.cos(theta): (u ** 2 - 1) / (u ** 2 + 1), sp.sin(theta): 2 * u / (u ** 2 + 1)}
+    change = sp.diag(1, 1, -2 / (u ** 2 + 1), 1)
+    target = change.T * polar.geo.g.subs(angle) * change
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm(pulled[a, b] - target[a, b]) != 0:
+                raise AssertionError("szekeres: the pullback of the stereographic chart misses the axisymmetric "
+                                     f"chart in slot {polar.coords_tex[a]}{polar.coords_tex[b]}")
+
+
+def szekeres_charts():
+    szekeres_pullback()
+    return [szekeres("stereographic"), szekeres("axisymmetric")]
+
+
+CHARTS["szekeres"] = szekeres_charts
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
-                     spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"))
+                     spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"), spec.get("reduce"))
     if "check" in spec:
         spec["check"](chart)
     math = chart.mathematics()
