@@ -311,6 +311,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `throat/radial`, both sides through the throat with $\ell = \pm(r - a)$: the line $ct = 0$ from $\ell = -3.75\,r_s$ to $3.75\,r_s$, cut to the box at $|\ell| = 3\,r_s$.
 - `throat` and `spherical`, the diamond in $\ell_*$: the line $T = 0$ from $\ell = -3.75\,r_s$ to $3.75\,r_s$, both sides through the throat, the same on both.
 
+### The threaded black hole
+
+- The embedding has two views at $b = 0.9$ and $r_s = 1$: the equator of the static chart's $t = 0$, $r$ from $r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere, and the horizon itself, the bifurcation sphere, $\theta$ from $0$ to $\pi$.
+- `static/radial` and `wedge/radial`: the line $ct = 0$ from $r = r_s$ to the box's edge at $6\,r_s$, and the bifurcation sphere as the point $ct = 0$, $r = r_s$.
+- The Eddington-Finkelstein views: the string enters $g_{\phi\phi}$ alone, so the equator's moment is Schwarzschild's curve on each, $v - r = r_s\ln(r/r_s - 1)$ and its time reverse; the bifurcation sphere lies at $v \to -\infty$ and $u \to +\infty$, off both charts, so those views mark the equator alone, which `HIDDEN_VIEWS` in the tests records.
+- `static`, `wedge`, `ingoing` and `outgoing`, Kruskal's diagram: the equator's moment is the line $T = 0$ across both exteriors, and the bifurcation sphere the point $(X, T) = (0, 0)$, on all four.
+
 ### Tolman-Bondi
 
 - The embedding is a cloud released from rest, $E = -GM(r)/c^2r$, at $ct = 0$, $0.6$, $1$ and $1.3\,r_b$.
