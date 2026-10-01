@@ -1087,6 +1087,8 @@ class FixedSizes(unittest.TestCase):
         "#mfs-content-panel #mfs-print-btn": ("15px", "12px"),
         "#mfs-content-panel .mfs-choice": ("min(15px, var(--mfs-fit, 15px))", "min(12px, var(--mfs-fit, 12px))"),
         ".mfs-result": ("min(18px, var(--mfs-fit, 18px))",),
+        ".mfs-toc-entry": ("18px",),
+        ".mfs-toc-back": ("18px",),
     }
     HEADINGS = "#mfs-content-panel .mfs-section-label"
 
@@ -1281,7 +1283,8 @@ class NoGlow(unittest.TestCase):
     def test_every_button_turns_pink_while_it_is_pressed(self):
         # Each :active rule comes after the button's :hover, which a mouse holds while it presses.
         for button, has_border in (("#mfs-content-panel .mfs-choice", True), ("#mfs-content-panel #mfs-print-btn", True),
-                                   ("#mfs-content-panel .mfs-turn-reset", True), (".mfs-result", False)):
+                                   ("#mfs-content-panel .mfs-turn-reset", True), (".mfs-result", False),
+                                   (".mfs-toc-entry", False), (".mfs-toc-back", False)):
             with self.subTest(button):
                 self.assertEqual(self.last(button + ":active", "color"), "var(--pink-light)")
                 if has_border:

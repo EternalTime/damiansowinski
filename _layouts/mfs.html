@@ -125,12 +125,24 @@
     width:var(--mfs-left-w);height:320px;
     background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
     overflow:hidden;pointer-events:none;
-    padding:min(1em, 16px); display:flex; flex-direction:column; gap:0.6em;">
+    padding:min(1em, 16px); display:flex; flex-direction:column;">
+  <!-- The panel holds two views side by side and shows one: the list of spacetimes with its
+       search field, and the contents of the spacetime that is open. Pressing a spacetime
+       slides the list out to the left and the contents in from the right, and the link at
+       the head of the contents slides the list back; the search script below says how. -->
+  <div id="mfs-panes">
+  <div id="mfs-list-pane" class="mfs-pane">
   <input id="mfs-search-input" type="text" placeholder="Search spacetimes…"
     style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--cyan);border-radius:4px;
     color:var(--text-bright);padding:0.4em 0.5em;font-family:'Source Code Pro',monospace;font-size:0.85em;
     outline:none;box-sizing:border-box; flex-shrink:0;">
   <div id="mfs-search-results" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;"></div>
+  </div>
+  <nav id="mfs-toc-pane" class="mfs-pane mfs-pane-off" aria-label="Contents of this spacetime" inert>
+    <button type="button" id="mfs-toc-back" class="mfs-toc-back">‹ All spacetimes</button>
+    <div id="mfs-toc"></div>
+  </nav>
+  </div>
   </div>
 
 <!-- Buy Me a Coffee panel. Its bottom edge lies on the bottom edge of the spacetime's panel,
@@ -189,6 +201,81 @@
       var input   = document.getElementById('mfs-search-input');
       var results = document.getElementById('mfs-search-results');
       if (!input || !results) return;
+      var listPane = document.getElementById('mfs-list-pane');
+      var tocPane  = document.getElementById('mfs-toc-pane');
+      var toc      = document.getElementById('mfs-toc');
+      var back     = document.getElementById('mfs-toc-back');
+
+      /* The panel shows the list of spacetimes or the contents of the one that is open, as
+         the captain asked on 1 October 2026: pressing a spacetime slides the list out and its
+         contents in, and "‹ All spacetimes" at their head slides the list back. The list is
+         never drawn again for it, so it comes back with the search as it was typed and at
+         the place it was scrolled to. The view out of sight is inert, so neither the
+         keyboard nor a search of the page reaches it; the stylesheet does the slide, and
+         swaps the two at once for a reader who asked for reduced motion. */
+      function showContents(on) {
+        listPane.classList.toggle('mfs-pane-off', on);
+        tocPane.classList.toggle('mfs-pane-off', !on);
+        listPane.inert = on;
+        tocPane.inert = !on;
+      }
+      back.addEventListener('click', function() {
+        // A reader who pressed the link from the keyboard goes on in the search field.
+        var keyed = back.matches(':focus-visible');
+        showContents(false);
+        if (keyed) input.focus({ preventScroll: true });
+      });
+
+      /* The contents are the headings of the spacetime's page as it is drawn, in its order,
+         read from the page itself each time it is drawn, a chart chosen in it included, so a
+         section added to the page is in the contents without a word here. An entry brings
+         its section to the top of what shows of the spacetime, below the name where the name
+         stays in sight: on a desktop the spacetime's panel scrolls, on a phone the page does,
+         and --mfs-head is how much of the top the name covers, which wireHeader() measures. */
+      var _built = null;
+      function reducedMotion() {
+        return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      }
+      function onPhone() {
+        return getComputedStyle(document.documentElement).getPropertyValue('--mfs-phone').trim() === '1';
+      }
+      function jumpTo(section) {
+        var panel = document.getElementById('mfs-content-panel');
+        var head = parseFloat(panel.style.getPropertyValue('--mfs-head')) || 0;
+        var top = section.getBoundingClientRect().top - head;
+        var behavior = reducedMotion() ? 'auto' : 'smooth';
+        if (onPhone()) {
+          window.scrollTo({ top: window.scrollY + top, behavior: behavior });
+        } else {
+          var edge = panel.getBoundingClientRect().top + panel.clientTop + parseFloat(getComputedStyle(panel).paddingTop);
+          panel.scrollTo({ top: panel.scrollTop + top - edge, behavior: behavior });
+        }
+      }
+      window._mfsContents = function(id, page) {
+        toc.textContent = '';
+        [].forEach.call(page.querySelectorAll('.mfs-section-label'), function(label) {
+          var entry = toc.appendChild(document.createElement('button'));
+          entry.type = 'button';
+          entry.className = 'mfs-toc-entry';
+          entry.textContent = label.textContent.trim();
+          entry.addEventListener('click', function() { jumpTo(label.closest('.mfs-section') || label); });
+        });
+        _built = id;
+      };
+
+      /* A spacetime has an address of its own, the page's with ?spacetime= and its id, which
+         the address bar shows once one is open, so a link to it opens the page on that
+         spacetime with its contents showing. The address replaces the page's rather than
+         adding to the browser's history, so Back leaves the page as it always has. */
+      var ASKED = 'spacetime';
+      function address(id) {
+        var url = new URL(window.location.href);
+        if (id) url.searchParams.set(ASKED, id); else url.searchParams.delete(ASKED);
+        try { window.history.replaceState(window.history.state, '', url); } catch (e) {}
+      }
+      var asked = new URLSearchParams(window.location.search).get(ASKED);
+      // Before the page is first drawn, so the contents are there and never slide in.
+      if (asked) showContents(true);
 
       function renderResults(METRIC_INDEX, query) {
         var q = query.trim().toLowerCase();
@@ -209,18 +296,29 @@
         });
       }
 
-      /* Opens a spacetime and marks its name in the list, whichever asked for it: its name
-         in the list, or a link under "Related Spacetimes" on another spacetime's page. The
-         list keeps the mark as it is searched, and brings the name into view where the
-         list scrolls. */
+      /* Opens a spacetime, marks its name in the list and shows its contents, whichever
+         asked for it: its name in the list, a link under "Related Spacetimes" on another
+         spacetime's page, or the page's address. The list keeps the mark as it is searched,
+         and brings the name into view where the list scrolls; it scrolls the list alone,
+         never the page or the panel the list has slid out of, which scrollIntoView() would.
+         The spacetime already open is not drawn again: its name in the list brings its
+         contents back. */
       var _open = null;
       window._mfsOpen = function(id) {
+        showContents(true);
+        if (id === _open && _built === id) return;
         _open = id;
+        _built = null;
+        toc.textContent = '';
+        address(id);
         if (window._mfsShowMetric) window._mfsShowMetric(id);
         results.querySelectorAll('.mfs-result').forEach(function(r) {
           var on = r.dataset.id === id;
           r.classList.toggle('mfs-result-active', on);
-          if (on && r.scrollIntoView) r.scrollIntoView({ block: 'nearest' });
+          if (!on) return;
+          var name = r.getBoundingClientRect(), list = results.getBoundingClientRect();
+          if (name.top < list.top) results.scrollTop -= list.top - name.top;
+          else if (name.bottom > list.bottom) results.scrollTop += name.bottom - list.bottom;
         });
       };
 
@@ -255,6 +353,9 @@
           window._mfsIndex = index;  // shared with the renderer, which reads the diagram stamps
           renderResults(index, '');
           fitList(index);
+          // The spacetime the address names, or the list again where it names none the page has.
+          if (asked && index.some(function(m) { return m.id === asked; })) window._mfsOpen(asked);
+          else if (asked) { showContents(false); address(null); }
           document.fonts.ready.then(function() { fitList(index); });
           document.fonts.addEventListener('loadingdone', function() { fitList(index); });
           input.addEventListener('input', function() { renderResults(index, this.value); });
@@ -301,6 +402,50 @@
     /* The spacetime shown, and a name being pressed, turn pink, and nothing on the page
        glows, which the captain asked for on 29 September 2026: "No glow anywhere". */
     .mfs-result.mfs-result-active, .mfs-result:active { color: var(--pink-light); }
+
+    /* The panel's two views, the list and the contents, each fill it, and the one out of
+       sight stands a whole width to its side: the list to the left, the contents to the
+       right. They slide as one over a fifth of a second, cut off at the edges of the
+       panel's padding, and the one that has left is hidden once it is out. A reader who
+       asked for reduced motion gets the swap at once. */
+    #mfs-panes { position: relative; flex: 1; min-height: 0; overflow: hidden; overflow: clip; }
+    .mfs-pane {
+      position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+      display: flex; flex-direction: column; gap: 0.6em;
+      transition: transform 220ms cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0s;
+    }
+    .mfs-pane.mfs-pane-off {
+      visibility: hidden;
+      transition: transform 220ms cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0s 220ms;
+    }
+    #mfs-list-pane.mfs-pane-off { transform: translateX(-100%); }
+    #mfs-toc-pane.mfs-pane-off { transform: translateX(100%); }
+    @media (prefers-reduced-motion: reduce) {
+      .mfs-pane, .mfs-pane.mfs-pane-off { transition: none; }
+    }
+    /* The contents are set as the list is, each entry a button of the list's font, size and
+       colours with its words capitalised, as "Related Spacetimes" is written, under the link
+       back to the list, which a hairline sets apart and which stays in place while they
+       scroll. */
+    #mfs-toc {
+      flex: 1; min-height: 0; overflow-y: auto;
+      display: flex; flex-direction: column; align-items: stretch; gap: 2px;
+      border-top: 1px solid rgba(0,229,255,0.2); padding-top: 0.6em;
+    }
+    .mfs-toc-entry, .mfs-toc-back {
+      appearance: none; -webkit-appearance: none; display: block; margin: 0;
+      background: transparent; border: 0; border-radius: 4px;
+      padding: 5px 8px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 18px;
+      color: var(--mfs-cyan-light);
+      letter-spacing: 0.04em; text-align: left; overflow-wrap: anywhere;
+      cursor: pointer; flex-shrink: 0;
+    }
+    .mfs-toc-entry { text-transform: capitalize; }
+    .mfs-toc-entry:hover, .mfs-toc-back:hover { background: rgba(0,229,255,0.1); color: var(--cyan); }
+    .mfs-toc-entry:focus-visible, .mfs-toc-back:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+    .mfs-toc-entry:active, .mfs-toc-back:active { color: var(--pink-light); }
   </style>
 
 
@@ -3479,6 +3624,8 @@
         // the formula was on, so the spacetime shown before is let go of before it is replaced.
         if (window.MathJax && MathJax.typesetClear) MathJax.typesetClear([contentPanel]);
         contentPanel.innerHTML = header + body;
+        // The contents in the list's panel are this page's headings, read from it as drawn.
+        if (window._mfsContents) window._mfsContents(data.id, contentPanel);
         wireHeader(contentPanel.querySelector('.mfs-header'));
         wireDiagrams(contentPanel);
         wireTurning(contentPanel);
