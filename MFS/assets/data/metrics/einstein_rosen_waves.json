@@ -29,7 +29,7 @@
     {
       "id": "levi_civita",
       "kind": "special_case",
-      "text": "The static member of the family, $\\psi \\propto \\ln\\rho$, the field of a line of mass [levicivita1919]. Guido Beck found the cylindrical waves in 1925 by the change $z \\to it$, $t \\to iz$ in Weyl's static fields [beck1925, bicak2000]."
+      "text": "The wave that stands still, $\\psi \\propto \\ln\\rho$, the field of a line of mass [levicivita1919]. Guido Beck found the cylindrical waves in 1925 by the change $z \\to it$, $t \\to iz$ in Weyl's static fields [beck1925, bicak2000]."
     }
   ],
   "references": [

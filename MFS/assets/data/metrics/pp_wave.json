@@ -34,7 +34,7 @@
     {
       "id": "minkowski",
       "kind": "special_case",
-      "text": "With $H = 0$ the metric is Minkowski's in null coordinates $u$ and $v$."
+      "text": "The wave gone quiet. With $H = 0$ the metric is Minkowski's in null coordinates $u$ and $v$."
     },
     {
       "id": "einstein_rosen_waves",

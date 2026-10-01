@@ -45,7 +45,7 @@
     {
       "id": "minkowski",
       "kind": "special_case",
-      "text": "The limit $\\Lambda \\to 0$, where the cosmological horizon recedes to infinity."
+      "text": "De Sitter space with its expansion switched off, $\\Lambda \\to 0$, where the cosmological horizon recedes to infinity."
     },
     {
       "id": "einstein_static",

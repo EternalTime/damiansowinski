@@ -477,7 +477,7 @@
         {
           "id": "minkowski",
           "kind": "special_case",
-          "text": "The limit $L \\to \\infty$, where the curvature vanishes."
+          "text": "Anti-de Sitter space ironed flat, the limit $L \\to \\infty$."
         },
         {
           "id": "einstein_static",
@@ -675,7 +675,7 @@
         {
           "id": "schwarzschild",
           "kind": "special_case",
-          "text": "The black hole with the string taken out, $b = 1$, where the missing wedge closes."
+          "text": "The black hole with the string pulled out, $b = 1$, where the missing wedge closes."
         },
         {
           "id": "cosmic_string",
@@ -1501,7 +1501,7 @@
         {
           "id": "kasner",
           "kind": "special_case",
-          "text": "The vacuum of type I, three axes with fixed exponents [kasner1921]."
+          "text": "The vacuum of type I, two axes stretching and one squeezing at fixed exponents [kasner1921]."
         },
         {
           "id": "mixmaster",
@@ -1635,7 +1635,7 @@
         {
           "id": "schwarzschild",
           "kind": "special_case",
-          "text": "The C-metric with the acceleration set to zero, $\\alpha = 0$ [griffiths2006]."
+          "text": "The C-metric with the acceleration eased off to zero, $\\alpha = 0$ [griffiths2006]."
         },
         {
           "id": "robinson_trautman",
@@ -2053,7 +2053,7 @@
         {
           "id": "minkowski",
           "kind": "special_case",
-          "text": "The limit $\\Lambda \\to 0$, where the cosmological horizon recedes to infinity."
+          "text": "De Sitter space with its expansion switched off, $\\Lambda \\to 0$, where the cosmological horizon recedes to infinity."
         },
         {
           "id": "einstein_static",
@@ -2918,7 +2918,7 @@
         {
           "id": "levi_civita",
           "kind": "special_case",
-          "text": "The static member of the family, $\\psi \\propto \\ln\\rho$, the field of a line of mass [levicivita1919]. Guido Beck found the cylindrical waves in 1925 by the change $z \\to it$, $t \\to iz$ in Weyl's static fields [beck1925, bicak2000]."
+          "text": "The wave that stands still, $\\psi \\propto \\ln\\rho$, the field of a line of mass [levicivita1919]. Guido Beck found the cylindrical waves in 1925 by the change $z \\to it$, $t \\to iz$ in Weyl's static fields [beck1925, bicak2000]."
         }
       ],
       "references": [
@@ -3447,7 +3447,7 @@
         {
           "id": "schwarzschild",
           "kind": "special_case",
-          "text": "The case $\\Delta = 0$, with no solid angle missing."
+          "text": "The monopole unwound, $\\Delta = 0$, with every sphere whole again."
         },
         {
           "id": "cosmic_string",
@@ -4693,7 +4693,7 @@
         {
           "id": "kerr_newman",
           "kind": "generalisation",
-          "text": "Kerr's black hole with electric charge added. At $r_Q = 0$ it is Kerr's metric."
+          "text": "Kerr's black hole given an electric charge to carry as it spins. At $r_Q = 0$ it is Kerr's metric."
         },
         {
           "id": "btz",
@@ -5005,7 +5005,7 @@
         {
           "id": "minkowski",
           "kind": "piece",
-          "text": "Flat spacetime ahead of both waves, and flat again behind either one alone [frauendiener2014]."
+          "text": "The calm before the collision. Spacetime is flat ahead of both waves, and flat again behind either one alone [frauendiener2014]."
         }
       ],
       "references": [
@@ -6031,7 +6031,7 @@
         {
           "id": "anti_de_sitter",
           "kind": "special_case",
-          "text": "Mark Hogarth proved in 1992 that anti-de Sitter space has the property [hogarth1992]."
+          "text": "A place to run an endless computation and still read off the answer. Mark Hogarth proved in 1992 that anti-de Sitter space has the property [hogarth1992]."
         },
         {
           "id": "rn_metric",
@@ -6165,7 +6165,7 @@
         {
           "id": "schwarzschild_de_sitter",
           "kind": "special_case",
-          "text": "McVittie's metric with a constant Hubble rate $H$ [kaloper2010, carrera2010]."
+          "text": "McVittie's universe expanding at a steady rate, with $H$ constant [kaloper2010, carrera2010]."
         }
       ],
       "references": [
@@ -6371,7 +6371,7 @@
         {
           "id": "minkowski",
           "kind": "special_case",
-          "text": "With $B = 0$ Melvin's universe is flat."
+          "text": "Switch the field off, $B = 0$, and Melvin's universe is flat."
         }
       ],
       "references": [
@@ -8480,7 +8480,7 @@
         {
           "id": "minkowski",
           "kind": "special_case",
-          "text": "With $H = 0$ the metric is Minkowski's in null coordinates $u$ and $v$."
+          "text": "The wave gone quiet. With $H = 0$ the metric is Minkowski's in null coordinates $u$ and $v$."
         },
         {
           "id": "einstein_rosen_waves",
@@ -8840,7 +8840,7 @@
         {
           "id": "schwarzschild",
           "kind": "special_case",
-          "text": "The member with round wave fronts and no radiation. Piotr Chruściel proved in 1991 that the others settle down to it as their waves leave [chrusciel1991, bicak1997]."
+          "text": "The quiet member, with round wave fronts and no radiation. Piotr Chruściel proved in 1991 that the others settle down to it as their waves leave [chrusciel1991, bicak1997]."
         },
         {
           "id": "pp_wave",
@@ -9141,7 +9141,7 @@
         {
           "id": "minkowski",
           "kind": "special_case",
-          "text": "Schwarzschild's metric with the mass removed, $r_s = 0$."
+          "text": "Schwarzschild's metric with the mass plucked out, $r_s = 0$."
         },
         {
           "id": "interior_schwarzschild",
@@ -10473,7 +10473,7 @@
         {
           "id": "schwarzschild",
           "kind": "special_case",
-          "text": "Taub-NUT with the NUT parameter set to zero, $l = 0$ [nut1963]."
+          "text": "Taub-NUT with the twist taken out, $l = 0$ [nut1963]."
         },
         {
           "id": "mixmaster",
@@ -10873,7 +10873,7 @@
         {
           "id": "schwarzschild",
           "kind": "special_case",
-          "text": "The case of constant mass, where no radiation flows and Birkhoff's theorem applies [birkhoff1923]."
+          "text": "The star gone dark. With $m$ constant no radiation flows and Birkhoff's theorem applies [birkhoff1923]."
         },
         {
           "id": "oppenheimer_snyder",

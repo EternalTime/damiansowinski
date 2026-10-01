@@ -39,7 +39,7 @@
     {
       "id": "schwarzschild",
       "kind": "special_case",
-      "text": "The case $\\Delta = 0$, with no solid angle missing."
+      "text": "The monopole unwound, $\\Delta = 0$, with every sphere whole again."
     },
     {
       "id": "cosmic_string",

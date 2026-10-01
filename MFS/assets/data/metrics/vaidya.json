@@ -28,7 +28,7 @@
     {
       "id": "schwarzschild",
       "kind": "special_case",
-      "text": "The case of constant mass, where no radiation flows and Birkhoff's theorem applies [birkhoff1923]."
+      "text": "The star gone dark. With $m$ constant no radiation flows and Birkhoff's theorem applies [birkhoff1923]."
     },
     {
       "id": "oppenheimer_snyder",
