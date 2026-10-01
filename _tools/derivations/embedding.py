@@ -4921,6 +4921,71 @@ def domain_wall(ck, src):
                         "space carries the slice; Minkowski space carries it."])]
 
 
+KS_DUST_MOMENTS = (-1.1, -0.55, 0.0, 0.55, 1.1)     # eta, the dust chart's parametric time
+KS_VACUUM_MOMENTS = (0.9, 0.7, 0.5, 0.3, 0.1)       # T in units of r_s, toward the singularity
+
+
+def kantowski_sachs(ck, src):
+    """The equator of a moment of a Kantowski-Sachs universe has the metric a^2 dr^2 + b^2 dphi^2
+    with a and b constant on it: a flat cylinder of radius b about the axis r, on which the
+    stretch |r| <= 1 is 2a long, rho = b and z = a r.
+
+    The first view is the dust universe symmetric in time, kappa = 0 of the dust chart at
+    b_0 = 1, where a = 1 + eta tan(eta) and b = cos^2(eta): widest and shortest at eta = 0, and
+    narrowing while it lengthens toward either singularity, eta -> +-pi/2. Drawn at five moments
+    from eta = -1.1 to 1.1 and played as a movie with a frame every 0.05 of eta.
+
+    The second is the vacuum member, the inside of Schwarzschild's horizon at r_s = 1, where
+    a = sqrt(1/T - 1) and b = T, at five moments from T = 0.9 down to 0.1, set side by side in
+    the order of the proper time of an observer at fixed r since the horizon,
+    c tau = eta + sin(eta) cos(eta) with T = cos^2(eta), since the future lies toward smaller T."""
+    reach = 1.0
+    marks = [(-0.5, "r", None), (0.0, "r", None), (0.5, "r", None)]
+    ends = (("edge", "the cylinder runs on for ever toward $r \\to -\\infty$"),
+            ("edge", "the cylinder runs on for ever toward $r \\to \\infty$"))
+
+    def tube(sl, a, b, where, size):
+        piece = Piece("tube", "sheet", sl, -reach, reach, -a * reach, 1, ends, marks, size)
+        ck.isometry(where, piece)
+        ck.radius(f"{where}, rho = b", piece, lambda r: np.full_like(r, b), size)
+        ck.form(f"{where}, z = a r", piece, lambda r: a * r, size)
+        return piece
+
+    size = 2 * (1 + 1.1 * math.tan(1.1)) * reach
+
+    def moment(eta):
+        sl = Slice(src, "kantowski_sachs", "dust", "r", "\\phi", {"eta": repr(eta), **EQUATOR}, {"b_0": 1, "kappa": 0})
+        piece = tube(sl, 1 + eta * math.tan(eta), math.cos(eta) ** 2, f"Kantowski-Sachs dust, eta = {eta:+.2f}", size)
+        return Surface([piece], label=f"$\\eta = {eta:.2f}$", time=eta)
+
+    values, keys = movie_values(list(KS_DUST_MOMENTS), 0.05)
+    frames = [moment(eta) for eta in values]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the stretch $|r| \\le b_0$ of the equator of a moment, which $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $-b_0/2$, $0$ and $b_0/2$, each a circle of circumference $2\\pi b$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views = [view("dust", "Dust", "$b_0$", surfaces, fig.done(), movie=movie(frames, "$\\eta$", values),
+                  settings="$b_0 = 1$, the unit of every length, and $\\kappa = 0$, with the moments named by the "
+                           "dust chart's time $\\eta$.")]
+
+    vacuum = []
+    for T in KS_VACUUM_MOMENTS:
+        sl = Slice(src, "kantowski_sachs", "schwarzschild_interior", "r", "\\phi", {"T": repr(T), **EQUATOR}, {"r_s": 1})
+        piece = tube(sl, math.sqrt(1 / T - 1), T, f"Kantowski-Sachs vacuum, T = {T:g} r_s", 6.0)
+        eta = math.acos(math.sqrt(T))
+        vacuum.append(Surface([piece], label=f"$T = {T:g}\\,r_s$", time=eta + math.sin(eta) * math.cos(eta)))
+    fig = sequence_figure(vacuum, {"sheet": "cover"}, 6.0, columns=5)
+    fig.legend("fill", "cover", "the stretch $|r| \\le r_s$ of the equator of a moment, which $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $-r_s/2$, $0$ and $r_s/2$, each a circle of circumference $2\\pi T$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views.append(view("vacuum", "Vacuum", "$r_s$", vacuum, fig.done(), system="schwarzschild_interior",
+                      settings="$r_s = 1$, the unit of every length, with the moments in the order of the proper time "
+                               "$c\\tau = r_s\\left(\\eta + \\sin\\eta\\cos\\eta\\right)$ of an observer at fixed $r$ since "
+                               "the horizon, where $T = r_s\\cos^2\\eta$."))
+    return views
+
+
 def flat_slices(ck, src, metric_id, system_id, time="t"):
     """Check that every slice of constant `time` of a coordinate system is flat: its spatial
     metric has no cross term and no component that depends on a spatial coordinate, so at
@@ -4986,6 +5051,7 @@ DRAWN = {
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
     "levi_civita": levi_civita,
+    "kantowski_sachs": kantowski_sachs,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -5384,6 +5450,25 @@ CAPTIONS = {
         "Richard Gott's core, a cylinder of uniform density, rounds the apex off. Its slice is a cap of "
         "a sphere of radius $\\ell$, and it meets the cone where their tangents agree, at $\\cos\\chi_0 = "
         "1 - 4G\\mu/c^2$. The cone of an ideal string runs on below the cap to its apex.",
+    ],
+    ("kantowski_sachs", "dust"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the dust universe symmetric in time ($\\kappa = 0$) as $\\eta$ "
+        "runs from $-1.1$ to $1.1$, each moment drawn as a surface in flat space with every distance along it the "
+        "metric distance. On it the metric is $a^2dr^2 + b^2d\\phi^2$ with $a = 1 + \\eta\\tan\\eta$ and "
+        "$b = b_0\\cos^2\\eta$, so each moment is a flat cylinder of radius $b$ on which the stretch "
+        "$|r| \\le b_0$ is $2ab_0$ long.",
+        "The cylinder is widest and shortest at $\\eta = 0$, where $b = b_0$ and $a = 1$. Toward either "
+        "singularity, $\\eta \\to \\pm\\pi/2$, its radius goes to zero while the length between any two circles of "
+        "constant $r$ grows without bound.",
+    ],
+    ("kantowski_sachs", "vacuum"): [
+        "The equatorial plane ($\\theta = \\pi/2$) inside the horizon of a Schwarzschild black hole at five moments "
+        "of $T$, from $0.9\\,r_s$ to $0.1\\,r_s$, each drawn as a surface in flat space with every distance along it "
+        "the metric distance. On it the metric is $(r_s/T - 1)\\,dr^2 + T^2d\\phi^2$, so each moment is a flat "
+        "cylinder of radius $T$ on which the stretch $|r| \\le r_s$ is $2r_s\\sqrt{r_s/T - 1}$ long.",
+        "At the horizon, $T = r_s$, the cylinder has its greatest radius and no length. As $T$ falls toward the "
+        "singularity its circles shrink and the same stretch of $r$ lengthens without bound, so a body falling in "
+        "is squeezed around the axis and stretched along it.",
     ],
     ("misner", "cylinders"): [
         "The slice $z = 0$ of Misner space at four moments of the Milne time $t$ in the region $T < 0$, each "
