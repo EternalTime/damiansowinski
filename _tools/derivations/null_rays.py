@@ -429,6 +429,7 @@ GM_CONE = {"Delta": "19/100"}
 GM_RH = 100 / 81
 # The black hole on a cosmic string at the deficit the cosmic string is drawn at, 4G mu/c^2 = 0.1.
 SBH = {"r_s": 1, "b": "9/10"}
+DILATON = {"r_s": 1, "r_d": "1/2"}
 
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m.
 MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
@@ -505,6 +506,22 @@ DIAGRAMS = [
     Diagram("mcvittie", "areal", "radial", "$t$ and $R$", ("t", "R"), (0, 5, 0, 12),
             "$R/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, functions={"H": MCV_H},
             singular_zero="R - r_s", input=MCV_INPUT),
+    Diagram("dilaton_black_hole", "static", "radial", "$t$ and $r$", ("t", "r"), (0.5, 6.5, -3, 3),
+            "$r/r_s$", "$ct/r_s$", DILATON, EQUATOR, orient="ingoing", areal=True),
+    Diagram("dilaton_black_hole", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0.5, 6.5, -3, 3), "$r/r_s$", "$(v - r)/r_s$", DILATON, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("dilaton_black_hole", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0.5, 6.5, 0, 6), "$r/r_s$", "$v/r_s$", DILATON, EQUATOR, tau="v - r", areal=True),
+    Diagram("dilaton_black_hole", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0.5, 6.5, -3, 3), "$r/r_s$", "$(u + r)/r_s$", DILATON, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("dilaton_black_hole", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0.5, 6.5, -6, 0), "$r/r_s$", "$u/r_s$", DILATON, EQUATOR, tau="u + r", areal=True),
+    Diagram("dilaton_black_hole", "string_magnetic", "radial", "$t$ and $r$", ("t", "r"), (0.5, 6.5, -3, 3),
+            "$r/r_s$", "$ct/r_s$", DILATON, EQUATOR, orient="ingoing", areal=True),
+    Diagram("dilaton_black_hole", "string_electric", "radial", "$t$ and $r$", ("t", "r"), (0.5, 6.5, -3, 3),
+            "$r/r_s$", "$ct/r_s$", DILATON, EQUATOR, orient="ingoing", areal=True),
     Diagram("frw", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 3, 0, 2),
             "$r\\;[c/H_0]$", "$ct\\;[c/H_0]$", {"k": 0}, EQUATOR, areal=True, dust=FRW_DUST,
             reference="$a = 1$",
@@ -1345,6 +1362,61 @@ CAPTIONS = {
         "on it is $(L^2/z^2)(-c^2dt^2 + dx^2)$, conformal to flat, so the rays are exact 45° "
         "lines, as they are at every $z$. The conformal boundary, which a ray reaches in finite "
         "time, lies off this plane, at $z \\to 0$.",
+    ],
+    ("dilaton_black_hole", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the Einstein metric, drawn for "
+        "$r_d = r_s/2$, each point in the plane a 2-sphere of area $4\\pi r(r - r_d)$. On the plane the metric is "
+        "Schwarzschild's for every charge, so the cones narrow toward the vertical as $r \\to r_s$, where "
+        "$c\\,dt/dr = \\pm(1 - r_s/r)^{-1}$ diverges.",
+        "Inside $r_s$, $t$ is a spacelike coordinate, and we take the future from the ingoing Eddington-Finkelstein "
+        "chart, which makes that region the black hole, where every cone points to the singularity $r = r_d$. "
+        "The spheres have zero area there and the Kretschmann scalar diverges, and at $r_s$ it is finite.",
+    ],
+    ("dilaton_black_hole", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the Einstein metric, drawn for "
+        "$r_d = r_s/2$ with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. "
+        "The outgoing family has $dv/dr = 2(1 - r_s/r)^{-1}$, so it stands vertical at the horizon $r_s$, an "
+        "outgoing ray that stays where it is.",
+        "The cones cross $r_s$ smoothly and keep tipping. Inside, both edges of every future cone point to "
+        "smaller $r$, so every future directed ray ends at the singularity $r = r_d$, where the area of the "
+        "spheres vanishes.",
+    ],
+    ("dilaton_black_hole", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a null "
+        "coordinate. The outgoing family turns vertical at $r_s$ and leans back toward smaller $r$ inside it.",
+    ],
+    ("dilaton_black_hole", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the Einstein metric, drawn for "
+        "$r_d = r_s/2$ with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. "
+        "The retarded chart crosses the other horizon. Inside $r_s$ both edges of every future cone point to "
+        "larger $r$: this is the white hole, which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("dilaton_black_hole", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a null "
+        "coordinate. The ingoing family turns vertical at $r_s$ and leans toward larger $r$ inside it.",
+    ],
+    ("dilaton_black_hole", "string_magnetic", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the string metric of the magnetically "
+        "charged hole, drawn for $r_d = r_s/2$, each point in the plane a 2-sphere of area $4\\pi r^2$. The string "
+        "metric is $e^{2\\varphi}$ times the Einstein metric, so its null rays on this plane are the Einstein "
+        "metric's, $c\\,dt/dr = \\pm(1 - r_s/r)^{-1}$, and the cones close at $r_s$.",
+        "The spheres keep the area $4\\pi r_d^2$ at the singularity $r = r_d$, where the Kretschmann scalar "
+        "diverges. At the extremal charge $r_d = r_s$ the metric on the plane is "
+        "$-c^2dt^2 + dr^2/(1 - r_s/r)^2$, and a ray takes an infinite time $t$ and an infinite affine parameter "
+        "to reach $r_s$.",
+    ],
+    ("dilaton_black_hole", "string_electric", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the string metric of the electrically "
+        "charged hole, drawn for $r_d = r_s/2$, each point in the plane a 2-sphere of area $4\\pi(r - r_d)^2$. The "
+        "string metric is $e^{2\\varphi}$ times the Einstein metric, so its null rays on this plane are the "
+        "Einstein metric's and the cones close at $r_s$.",
+        "With the areal radius $\\rho = r - r_d$ a moment of constant $t$ has the metric "
+        "$d\\rho^2/(1 - (r_s - r_d)/\\rho) + \\rho^2d\\Omega^2$, Schwarzschild's with $r_s - r_d$ for $r_s$. The "
+        "Kretschmann scalar diverges at $r = r_d$, where $g_{tt}$ vanishes with the area of the spheres.",
     ],
     ("rn_metric", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_q = 0.48\\,r_s$, "
@@ -4215,6 +4287,13 @@ CLOSED_FORMS = {
     ("string_black_hole", "eddington_finkelstein_ingoing", "finkelstein"):
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), lambda v, r: np.abs(r - 1) > 0.05),
     ("string_black_hole", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
+    **{("dilaton_black_hole", system, "radial"):
+       (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05)
+       for system in ("static", "string_magnetic", "string_electric")},
+    ("dilaton_black_hole", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), lambda v, r: np.abs(r - 1) > 0.05),
+    ("dilaton_black_hole", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),

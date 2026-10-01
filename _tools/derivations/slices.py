@@ -209,6 +209,17 @@ def string_hole(sign=0):
     return [Mark(equator, [np.column_stack([sign * (r + np.log(r - 1)), r])])]
 
 
+def dilaton_t(sign):
+    """The dilaton black hole's static t = 0 in an Eddington-Finkelstein chart, r_s = 1: its plane
+    of t and r is Schwarzschild's, so v = r + ln(r - 1) in the ingoing chart and u = -r - ln(r - 1)
+    in the outgoing one, outside r_s, as far as the Einstein metric's embedding reaches. The string
+    metrics' moments are the same events measured by other metrics, and are marked on their own charts."""
+    m = moments("dilaton_black_hole", "einstein")[0]
+    lo, hi = m.reach("static", "r")
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([sign * (r + np.log(r - 1)), r])])]
+
+
 def novikov(R, tau):
     """A shell of dust released from rest at areal radius R at t = 0, r_s = 1, at its proper
     time tau: its areal radius r and its Schwarzschild t, from the cycloid
@@ -531,6 +542,18 @@ FLAT = {
     ("global_monopole", "eddington_finkelstein_ingoing", "chart"): lambda: monopole_t(1),
     ("global_monopole", "eddington_finkelstein_outgoing", "finkelstein"): lambda: monopole_t(-1),
     ("global_monopole", "eddington_finkelstein_outgoing", "chart"): lambda: monopole_t(-1),
+    # The dilaton black hole at r_d = r_s/2: the Einstein metric's moment on the static and
+    # Eddington-Finkelstein planes, and each string metric's moment on its own plane.
+    ("dilaton_black_hole", "static", "radial"): lambda: one(
+        "dilaton_black_hole", lambda m: along(0.0, *m.reach("static", "r")), view_id="einstein"),
+    ("dilaton_black_hole", "eddington_finkelstein_ingoing", "finkelstein"): lambda: dilaton_t(1),
+    ("dilaton_black_hole", "eddington_finkelstein_ingoing", "chart"): lambda: dilaton_t(1),
+    ("dilaton_black_hole", "eddington_finkelstein_outgoing", "finkelstein"): lambda: dilaton_t(-1),
+    ("dilaton_black_hole", "eddington_finkelstein_outgoing", "chart"): lambda: dilaton_t(-1),
+    ("dilaton_black_hole", "string_magnetic", "radial"): lambda: one(
+        "dilaton_black_hole", lambda m: along(0.0, *m.reach("string_magnetic", "r")), view_id="string_magnetic"),
+    ("dilaton_black_hole", "string_electric", "radial"): lambda: one(
+        "dilaton_black_hole", lambda m: along(0.0, *m.reach("string_electric", "r")), view_id="string_electric"),
     # The moments ct = T of the Einstein-Rosen pulse, out to where the embedding reaches, and in the
     # null chart u = T - rho, v = T + rho along the same stretch.
     ("einstein_rosen_waves", "cylindrical", "radial"): lambda: one(
