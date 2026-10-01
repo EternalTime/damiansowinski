@@ -532,6 +532,21 @@ DIMENSIONS = {
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\Lambda": "1/L**2",
     },
+    # Tangherlini's black hole quotes its mass as the horizon radius r_h, a length in every
+    # dimension, which leaves 1 - (r_h/r)^(D-3) a pure number; the charts are D = 5 and D = 6,
+    # and the Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
+    ("tangherlini", "spherical"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_h": "L",
+    },
+    ("tangherlini", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_h": "L",
+    },
+    ("tangherlini", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_h": "L",
+    },
+    ("tangherlini", "spherical_six"): {
+        "t": "T", "r": "L", "\\chi": "1", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_h": "L",
+    },
     # Visser's thin shell wormhole joins two Schwarzschild exteriors at the throat radius a, a
     # length beside r_s. Through the throat, ell = +-(r - a) is a length, |ell| carries what ell
     # carries and sgn(ell) none, and the delta at the throat an inverse length.

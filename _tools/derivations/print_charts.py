@@ -2620,6 +2620,70 @@ def string_black_hole_wedge(chart):
 SBH_CHARTS = ["static", "wedge", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
 CHARTS["string_black_hole"] = [lambda s=s: string_black_hole(s) for s in SBH_CHARTS]
 
+# -- Schwarzschild-Tangherlini ---------------------------------------------------------
+
+TANGHERLINI_CHARTS = ["spherical", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing", "spherical_six"]
+
+
+def tangherlini(system_id):
+    """Tangherlini's black hole, f = 1 - (r_h/r)^(D-3), in D = 5 in the static chart and the two
+    Eddington-Finkelstein charts built on its tortoise coordinate
+    r_* = r + (r_h/2) ln|(r - r_h)/(r + r_h)|, and in D = 6 in the static chart. The angles are
+    the hyperspherical ones, each sphere's line element the next angle's plus its sine squared
+    times the sphere below. The metric and its inverse are written as the line element writes f,
+    and the Kretschmann scalar is (D-1)(D-2)^2(D-3) r_h^(2D-6)/r^(2D-2), Schwarzschild's
+    12r_s^2/r^6 at D = 4. tangherlini.md derives each chart."""
+    six = system_id == "spherical_six"
+    n = 3 if six else 2
+    f = "\\left(1 - \\dfrac{r_h^%d}{r^%d}\\right)" % (n, n)
+    bare = "1 - \\dfrac{r_h^%d}{r^%d}" % (n, n)
+    if six:
+        angles = ["\\chi", "\\psi", "\\theta", "\\phi"]
+        sphere = (" + r^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\psi^2 + \\sin^2\\chi\\sin^2\\psi\\,d\\theta^2"
+                  " + \\sin^2\\chi\\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)")
+    else:
+        angles = ["\\psi", "\\theta", "\\phi"]
+        sphere = (" + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2"
+                  " + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)")
+    domains = [a + " \\in [0, \\pi]" for a in angles[:-1]] + ["\\phi \\in [0, 2\\pi)"]
+    if system_id.startswith("spherical"):
+        coords = ["t", "r"] + angles
+        name = "Hyperspherical, " + ("Six" if six else "Five") + " Dimensions"
+        radial = "r \\in (r_h, \\infty)"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r"] + angles
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein, Five Dimensions"
+        radial = "r \\in (0, \\infty)"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    parameters = ["r_h"]
+    probe = vm.Reader(coords, parameters, ())
+    r, rh = probe.symbol["r"], probe.parameters["r_h"]
+    return {
+        "metric_id": "tangherlini",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)", radial] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"rising": [rh], "lead": [r, rh], "flip": False},
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "kretschmann": "\\dfrac{240r_h^6}{r^{10}}" if six else "\\dfrac{72r_h^4}{r^8}",
+        # The printer factors r^n - r_h^n; every value keeps it whole, as f itself is written.
+        "rewrite": [("\\left(r - r_h\\right)\\left(r^2 + r\\,r_h + r_h^2\\right)", "\\left(r^3 - r_h^3\\right)")] if six
+        else [("\\left(r + r_h\\right)\\left(r - r_h\\right)", "\\left(r^2 - r_h^2\\right)")],
+    }
+
+
+CHARTS["tangherlini"] = [lambda s=s: tangherlini(s) for s in TANGHERLINI_CHARTS]
+
 
 def write(spec):
     start = time.time()
