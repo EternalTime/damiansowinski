@@ -2,8 +2,8 @@
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
-khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin and thin_shell_wormhole, and Godel's
-cylindrical chart.
+khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole and levi_civita,
+and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -1762,6 +1762,156 @@ MELVIN_GEODESICS = [
 CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
 
 
+# -- Levi-Civita -------------------------------------------------------------------------
+
+def radial_powers(radius, radius_tex, state):
+    """A pretty printer for a chart whose every value is one monomial in a radius raised to an
+    exponent that holds a parameter, as Levi-Civita's rho^{4 sigma}. The printer writes rational
+    exponents only, so the power is handed to it as a placeholder whose text is the radius with
+    its exponent: in the numerator where the whole power of the radius is positive, as
+    rho^{2 - 4 sigma}, or with the whole power below the line and the rest above it, as
+    2 sigma rho^{8 sigma - 8 sigma^2}/rho, and all of it below the line where every term of the
+    exponent is negative, as 1/rho^{16 sigma^2 - 8 sigma + 4}. `state["printer"]` is the chart's
+    printer, which the chart's check puts there before anything is printed."""
+    table = {}
+
+    def pretty(value):
+        # The radius is positive on the chart, which is what lets its powers be gathered.
+        positive = sp.Dummy(positive=True)
+        value = sp.powsimp(sp.powdenest(sp.together(value.subs(radius, positive)), force=True), force=True)
+        value = value.subs(positive, radius)
+        exponent, rest = sp.Integer(0), sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if base == radius:
+                exponent += k
+            else:
+                rest *= f
+        if rest.has(radius):
+            raise AssertionError(f"{value} is not one monomial in {radius}")
+        whole, symbolic = sp.expand(exponent).as_coeff_Add()
+        out = sp.factor(rest)
+        if symbolic == 0:
+            return out * radius ** whole
+        printer = state["printer"]
+        negative = all(c.is_negative for c in sp.Add.make_args(symbolic) for c in [c.as_coeff_Mul()[0]])
+        if negative and whole <= 0:
+            shown, side = -(symbolic + whole), -1
+        elif whole > 0:
+            shown, side = symbolic + whole, 1
+        else:
+            shown, side = symbolic, 1
+            out *= radius ** whole
+        text = radius_tex + "^{" + printer.positive_first(shown) + "}"
+        placeholder = table.setdefault(text, sp.Symbol(f"RADIALPOWER{len(table)}", positive=True))
+        printer.overrides[placeholder] = text
+        return out * placeholder ** side
+
+    return pretty
+
+
+LC_DOMAINS = ["t \\in (-\\infty, \\infty)", "{r} \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in (-\\infty, \\infty)",
+              "{r} = 0 \;\\text{(the axis, a curvature singularity unless } {flat}\\text{)}"]
+LC_FLAT = {"weyl": "\\sigma = 0 \\text{ or } \\sigma = 1/2", "kasner": "p_0\\,p_2\\,p_3 = 0"}
+
+
+def levi_civita(system):
+    """Levi-Civita's static cylinder in Weyl's coordinates, with the mass parameter sigma and the
+    conicity C, and in its Kasner form, whose radial coordinate is the proper distance from the
+    axis and whose exponents lie on Kasner's circle, p_0 + p_2 + p_3 = p_0^2 + p_2^2 + p_3^2 = 1.
+    Every value is one monomial in the radius, printed by radial_powers, and the metric and its
+    inverse as the line element writes them. levi_civita.md beside this file derives the Kasner
+    form from Weyl's."""
+    state = {}
+
+    def check(chart):
+        state["printer"] = chart.printer
+
+    if system == "weyl":
+        coords, parameters = ["t", "\\rho", "\\phi", "z"], ["\\sigma", "C"]
+
+        def line(c2):
+            return (f"ds^2 = -\\rho^{{4\\sigma}}{c2}dt^2 + \\rho^{{4\\sigma(2\\sigma - 1)}}\\left(d\\rho^2 + dz^2\\right)"
+                    " + \\dfrac{\\rho^{2(1 - 2\\sigma)}}{C^2}d\\phi^2")
+        probe = vm.Reader(coords, parameters, ())
+        radius, sigma, C = probe.symbol["\\rho"], probe.parameters["sigma"], probe.parameters["C"]
+        metric = {("t", "t"): "-\\rho^{4\\sigma}", ("\\rho", "\\rho"): "\\rho^{4\\sigma(2\\sigma - 1)}",
+                  ("z", "z"): "\\rho^{4\\sigma(2\\sigma - 1)}", ("\\phi", "\\phi"): "\\dfrac{\\rho^{2(1 - 2\\sigma)}}{C^2}"}
+        inverse = {("t", "t"): "-\\rho^{-4\\sigma}", ("\\rho", "\\rho"): "\\rho^{-4\\sigma(2\\sigma - 1)}",
+                   ("z", "z"): "\\rho^{-4\\sigma(2\\sigma - 1)}", ("\\phi", "\\phi"): "C^2\\rho^{-2(1 - 2\\sigma)}"}
+        spec = {
+            "system": {"id": "weyl", "name": "Weyl", "coords": coords,
+                       "domains": [d.replace("{r}", "\\rho").replace("{flat}", LC_FLAT["weyl"]) for d in LC_DOMAINS], "parameters": parameters,
+                       "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [sigma, C, radius]},
+            "pretty": radial_powers(radius, "\\rho", state),
+            "components": {"metric_components": metric, "inverse_metric_components": inverse},
+            "kretschmann": "\\dfrac{64\\sigma^2\\left(2\\sigma - 1\\right)^2\\left(4\\sigma^2 - 2\\sigma + 1\\right)}"
+                           "{\\rho^{4(4\\sigma^2 - 2\\sigma + 1)}}",
+            "check": check,
+        }
+    else:
+        coords, parameters = ["t", "r", "\\phi", "z"], ["p_0", "p_2", "p_3", "\\ell"]
+
+        def line(c2):
+            return f"ds^2 = -r^{{2p_0}}{c2}dt^2 + dr^2 + \\ell^2r^{{2p_2}}d\\phi^2 + r^{{2p_3}}dz^2"
+        probe = vm.Reader(coords, parameters, ())
+        radius = probe.symbol["r"]
+        p0, p2, p3, ell = (probe.parameters[name] for name in ("p_0", "p_2", "p_3", "ell"))
+        metric = {("t", "t"): "-r^{2p_0}", ("\\phi", "\\phi"): "\\ell^2r^{2p_2}", ("z", "z"): "r^{2p_3}"}
+        inverse = {("t", "t"): "-r^{-2p_0}", ("\\phi", "\\phi"): "\\dfrac{r^{-2p_2}}{\\ell^2}", ("z", "z"): "r^{-2p_3}"}
+        spec = {
+            "system": {"id": "kasner", "name": "Kasner", "coords": coords,
+                       "domains": [d.replace("{r}", "r").replace("{flat}", LC_FLAT["kasner"]) for d in LC_DOMAINS], "parameters": parameters,
+                       "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [p0, p2, p3, ell, radius]},
+            "pretty": radial_powers(radius, "r", state),
+            "components": {"metric_components": metric, "inverse_metric_components": inverse},
+            "check": check,
+            "after": levi_civita_on_kasner_circle,
+        }
+    return {"metric_id": "levi_civita", **spec}
+
+
+LC_KASNER_KRETSCHMANN = "-\\dfrac{16p_0\\,p_2\\,p_3}{r^4}"
+
+
+def levi_civita_on_kasner_circle(math, chart):
+    """The Kasner form is a vacuum only on Kasner's circle, and the file claims its values only
+    there, as Kasner's cosmology does. The Christoffel symbols and the Riemann tensor are printed
+    for free exponents, which holds on the circle too; here the Ricci and Einstein tensors are
+    checked to vanish on the checker's own parametrisation of the circle and written as
+    vanishing, the Weyl tensor is the Riemann tensor, and the Kretschmann scalar is checked there."""
+    relations = vm.PARAMETER_RELATIONS[("levi_civita", "kasner")]
+    surface = {chart.reader.parameters[name]: sp.sympify(value) for name, value in relations.items()}
+
+    def on_circle(value):
+        return vm.norm(sp.sympify(value).subs(surface))
+
+    ricci = chart.geo.ricci_ll()
+    n = len(chart.symbols)
+    for index in vm._indices(n, 2):
+        if on_circle(vm._at(ricci, index)) != 0:
+            raise AssertionError(f"levi_civita: the Kasner form's Ricci tensor does not vanish in slot {index}")
+    if on_circle(chart.reader(LC_KASNER_KRETSCHMANN) - chart.geo.kretschmann()) != 0:
+        raise AssertionError("levi_civita: the Kasner form's Kretschmann scalar is misprinted")
+    for field in ("ricci_tensor", "einstein_tensor"):
+        for variant in math[field]["variants"].values():
+            variant["nonzero"] = []
+    math["ricci_scalar"] = "R = 0"
+    math["kretschmann"] = "K = " + LC_KASNER_KRETSCHMANN
+    notes = {"ulll": "C^\\mu{}_{\\nu\\rho\\sigma}", "llll": "C_{\\mu\\nu\\rho\\sigma}"}
+    math["weyl_tensor"] = {"default": math["riemann"]["default"], "variants": {
+        v: {"note": notes[v], "nonzero": [dict(entry) for entry in block["nonzero"]]}
+        for v, block in math["riemann"]["variants"].items()}}
+    return math
+
+
+CHARTS["levi_civita"] = [lambda s=s: levi_civita(s) for s in ("weyl", "kasner")]
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
@@ -1795,6 +1945,9 @@ def write(spec):
         math["ricci_scalar"] = math["ricci_scalar"].removeprefix("R = ")
     if "rewrite" in spec:
         math = rewritten(math, spec["rewrite"], chart)
+    if "after" in spec:
+        # A chart whose values hold only on a surface of its parameters states them there.
+        math = spec["after"](math, chart)
     if "geodesics" in spec:
         # Each equation written by hand is read back against the one printed from the Christoffel symbols.
         # Both are printed texts, so both already carry a named time as c times it.

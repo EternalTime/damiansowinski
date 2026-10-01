@@ -194,6 +194,16 @@ DIMENSIONS = {
     ("melvin", "ernst"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "B": "1/L",
     },
+    # sigma = G lambda/c^2, the mass per unit length lambda as a pure number, and the conicity C
+    # are dimensionless. A power of the radius whose exponent holds sigma, or one of Kasner's
+    # exponents, is read with the radius in a fixed unit, so rho^{2 - 4 sigma} is an area and
+    # ell, the radius of the circle at unit r, is a length.
+    ("levi_civita", "weyl"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "\\sigma": "1", "C": "1",
+    },
+    ("levi_civita", "kasner"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "p_0": "1", "p_2": "1", "p_3": "1", "\\ell": "L",
+    },
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },
@@ -524,6 +534,14 @@ PARAMETER_RELATIONS = {
         "p_1": "-u/(1 + u + u**2)",
         "p_2": "(1 + u)/(1 + u + u**2)",
         "p_3": "u*(1 + u)/(1 + u + u**2)",
+    },
+    # The same circle through Levi-Civita's mass parameter, written s here: the exponents of
+    # the Kasner form along t, phi and z. Every point of the circle but (0, 0, 1), the limit of
+    # large s, is reached.
+    ("levi_civita", "kasner"): {
+        "p_0": "2*s/(4*s**2 - 2*s + 1)",
+        "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
+        "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)",
     },
 }
 

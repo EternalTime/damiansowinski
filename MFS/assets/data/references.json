@@ -1,5 +1,5 @@
 {
-  "version": "9303249280595c33",
+  "version": "36a2c51abb114d13",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -8479,6 +8479,218 @@
         "eprint": "2112.06861",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.112.084080"
+      }
+    },
+    "levicivita1919": {
+      "type": "article",
+      "fields": {
+        "title": "$ds^2$ einsteiniani in campi newtoniani. IX: L'analogo del potenziale logaritmico",
+        "author": "Levi-Civita, Tullio",
+        "journal": "Rendiconti della Reale Accademia dei Lincei",
+        "volume": "28",
+        "pages": "101--109",
+        "year": "1919"
+      }
+    },
+    "levicivita2011b": {
+      "type": "article",
+      "fields": {
+        "title": "Republication of: Einsteinian $ds^2$ in Newtonian fields. IX: The analog of the logarithmic potential",
+        "author": "Levi-Civita, T.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "43",
+        "number": "8",
+        "pages": "2321--2330",
+        "year": "2011",
+        "doi": "10.1007/s10714-011-1189-3",
+        "url": "https://doi.org/10.1007/s10714-011-1189-3"
+      }
+    },
+    "maccallum2011": {
+      "type": "article",
+      "fields": {
+        "title": "Editorial note to: T. Levi-Civita, The physical reality of some normal spaces of Bianchi and to: Einsteinian $ds^2$ in Newtonian fields. IX: The analog of the logarithmic potential",
+        "author": "MacCallum, Malcolm A. H.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "43",
+        "number": "8",
+        "pages": "2297--2306",
+        "year": "2011",
+        "doi": "10.1007/s10714-011-1187-5",
+        "url": "https://doi.org/10.1007/s10714-011-1187-5"
+      }
+    },
+    "marder1958": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational waves in general relativity I. Cylindrical waves",
+        "author": "Marder, L.",
+        "journal": "Proceedings of the Royal Society of London. Series A",
+        "volume": "244",
+        "number": "1239",
+        "pages": "524--537",
+        "year": "1958",
+        "doi": "10.1098/rspa.1958.0058",
+        "url": "https://doi.org/10.1098/rspa.1958.0058"
+      }
+    },
+    "gautreau1969": {
+      "type": "article",
+      "fields": {
+        "title": "Exact solutions of the Einstein vacuum field equations in Weyl co-ordinates",
+        "author": "Gautreau, R. and Hoffman, R. B.",
+        "journal": "Il Nuovo Cimento B",
+        "volume": "61",
+        "number": "2",
+        "pages": "411--424",
+        "year": "1969",
+        "doi": "10.1007/BF02710947",
+        "url": "https://doi.org/10.1007/BF02710947"
+      }
+    },
+    "israel1977": {
+      "type": "article",
+      "fields": {
+        "title": "Line sources in general relativity",
+        "author": "Israel, Werner",
+        "journal": "Physical Review D",
+        "volume": "15",
+        "number": "4",
+        "pages": "935--941",
+        "year": "1977",
+        "doi": "10.1103/PhysRevD.15.935",
+        "url": "https://doi.org/10.1103/PhysRevD.15.935"
+      }
+    },
+    "bonnor1979": {
+      "type": "article",
+      "fields": {
+        "title": "Solution of Einstein's equations for a line-mass of perfect fluid",
+        "author": "Bonnor, W. B.",
+        "journal": "Journal of Physics A: Mathematical and General",
+        "volume": "12",
+        "number": "6",
+        "pages": "847--851",
+        "year": "1979",
+        "doi": "10.1088/0305-4470/12/6/014",
+        "url": "https://doi.org/10.1088/0305-4470/12/6/014"
+      }
+    },
+    "bonnormartins1991": {
+      "type": "article",
+      "fields": {
+        "title": "The interpretation of some static vacuum metrics",
+        "author": "Bonnor, W. B. and Martins, M. A. P.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "8",
+        "number": "4",
+        "pages": "727--738",
+        "year": "1991",
+        "doi": "10.1088/0264-9381/8/4/016",
+        "url": "https://doi.org/10.1088/0264-9381/8/4/016"
+      }
+    },
+    "bonnordavidson1992": {
+      "type": "article",
+      "fields": {
+        "title": "Interpreting the Levi-Civita vacuum metric",
+        "author": "Bonnor, W. B. and Davidson, W.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "9",
+        "number": "9",
+        "pages": "2065--2068",
+        "year": "1992",
+        "doi": "10.1088/0264-9381/9/9/012",
+        "url": "https://doi.org/10.1088/0264-9381/9/9/012"
+      }
+    },
+    "dasilva1995": {
+      "type": "article",
+      "fields": {
+        "title": "The Levi-Civita space-time",
+        "author": "da Silva, M. F. A. and Herrera, L. and Paiva, F. M. and Santos, N. O.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "36",
+        "number": "7",
+        "pages": "3625--3631",
+        "year": "1995",
+        "doi": "10.1063/1.530986",
+        "eprint": "gr-qc/9607058",
+        "url": "https://doi.org/10.1063/1.530986"
+      }
+    },
+    "philbin1996": {
+      "type": "article",
+      "fields": {
+        "title": "Perfect-fluid cylinders and walls - sources for the Levi-Civita spacetime",
+        "author": "Philbin, Thomas G.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "number": "5",
+        "pages": "1217--1232",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/5/032",
+        "eprint": "gr-qc/9512029",
+        "url": "https://doi.org/10.1088/0264-9381/13/5/032"
+      }
+    },
+    "wang1997": {
+      "type": "article",
+      "fields": {
+        "title": "On parameters of the Levi-Civita solution",
+        "author": "Wang, A. Z. and da Silva, M. F. A. and Santos, N. O.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "14",
+        "number": "8",
+        "pages": "2417--2423",
+        "year": "1997",
+        "doi": "10.1088/0264-9381/14/8/033",
+        "eprint": "gr-qc/9610052",
+        "url": "https://doi.org/10.1088/0264-9381/14/8/033"
+      }
+    },
+    "herrera1999": {
+      "type": "article",
+      "fields": {
+        "title": "The Levi-Civita space-time as a limiting case of the $\\gamma$ space-time",
+        "author": "Herrera, L. and Paiva, Filipe M. and Santos, N. O.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "40",
+        "number": "8",
+        "pages": "4064--4071",
+        "year": "1999",
+        "doi": "10.1063/1.532943",
+        "url": "https://doi.org/10.1063/1.532943"
+      }
+    },
+    "herrera2001": {
+      "type": "article",
+      "fields": {
+        "title": "On the interpretation of cylindrically symmetric Levi-Civita spacetime for $0 \\le \\sigma < \\infty$",
+        "author": "Herrera, L. and Santos, N. O. and Teixeira, A. F. F. and Wang, A. Z.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "18",
+        "number": "18",
+        "pages": "3847--3855",
+        "year": "2001",
+        "doi": "10.1088/0264-9381/18/18/305",
+        "eprint": "gr-qc/0107088",
+        "url": "https://doi.org/10.1088/0264-9381/18/18/305"
+      }
+    },
+    "bicak2004": {
+      "type": "article",
+      "fields": {
+        "title": "Static fluid cylinders and their fields: global solutions",
+        "author": "Bič\\'ak, Jiř\\'i and Ledvinka, Tom\\'aš and Schmidt, Bernd G. and Žofka, Martin",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "21",
+        "number": "6",
+        "pages": "1583--1608",
+        "year": "2004",
+        "doi": "10.1088/0264-9381/21/6/019",
+        "eprint": "gr-qc/0403012",
+        "url": "https://doi.org/10.1088/0264-9381/21/6/019"
       }
     }
   }
