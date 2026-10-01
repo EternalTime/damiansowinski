@@ -602,6 +602,16 @@ DIMENSIONS = {
     ("tov", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Phi": "1", "m": "L",
     },
+    # Szekeres's shells: the areal radius R and the shell label r are lengths, as Tolman-Bondi's
+    # are, the stereographic coordinates p and q of a shell are pure numbers, and so are S, P
+    # and Q, which place and scale them, the sign epsilon, the energy function f, and E.
+    ("szekeres", "stereographic"): {
+        "t": "T", "r": "L", "p": "1", "q": "1", "R": "L", "f": "1", "S": "1", "P": "1", "Q": "1",
+        "\\epsilon": "1", "E": "1",
+    },
+    ("szekeres", "axisymmetric"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "R": "L", "f": "1", "S": "1",
+    },
     # The areal radius is a length and the comoving shell label r is a length beside it,
     # so \partial_r R is dimensionless and the energy function has to be dimensionless
     # as well, which is what leaves 1 + 2E a pure number. Every published derivative of R
@@ -1337,9 +1347,19 @@ class Reader:
             split_symbols_custom(lambda name, _=None: name not in self.known),
             implicit_multiplication,
         )
+        # A defined name whose definition holds a function of the coordinates, as Szekeres's E
+        # holds S(r), P(r) and Q(r), is held as a function of the coordinates it varies with
+        # while the tensors are built, and written out by surface() where two values are compared.
+        self.held = {}
         for plain, definition in self.defined.items():
-            value = self(definition)
-            self.parameters[plain] = self.local[plain] = self.defined[plain] = value
+            value = self.defined[plain] = self(definition)
+            if value.atoms(sp.core.function.AppliedUndef):
+                names = [name for name in self.coords if value.has(self.symbol[name])]
+                function = sp.Function(plain, real=True)(*(self.symbol[name] for name in names))
+                self.functions[plain] = (function, names)
+                self.held[function] = value
+                value = function
+            self.parameters[plain] = self.local[plain] = value
             self.known.add(plain)
         self.relations = {}
         for name, value in (relations or {}).items():
@@ -1349,7 +1369,8 @@ class Reader:
 
     def surface(self, expression):
         """The expression on the surface the entry's constrained parameters live on."""
-        return expression.subs(self.relations)
+        expression = expression.subs(self.relations)
+        return expression.subs(self.held).doit() if self.held else expression
 
     @staticmethod
     def _plain(name):
@@ -1536,6 +1557,8 @@ class Dimensions:
             value = reader.parameters[name]
             dimension = sp.sympify(declared[name], locals=BASE_DIMENSIONS)
             if name in reader.defined:
+                if name in reader.functions:
+                    self.of_function[name] = dimension
                 continue
             if value.is_Symbol:
                 self.of_symbol[value] = dimension

@@ -1,0 +1,110 @@
+{
+  "id": "szekeres",
+  "name": "Szekeres Inhomogeneous Dust Cosmologies",
+  "short_name": "Szekeres",
+  "description": "The dust cosmologies Peter Szekeres found in 1975, which in general have no Killing vector. Their shells of matter are spheres, planes, or pseudospheres that are not concentric, each evolving as a shell of the Tolman-Bondi model does, so the density carries a dipole that changes from shell to shell.",
+  "tags": [
+    "dust",
+    "inhomogeneous",
+    "no Killing vectors",
+    "quasispherical",
+    "dipole",
+    "cosmology",
+    "cosmological",
+    "void",
+    "structure formation",
+    "Swiss cheese",
+    "comoving",
+    "time-dependent",
+    "dynamical",
+    "non-vacuum",
+    "Petrov type D",
+    "algebraically special",
+    "shell crossing",
+    "singularity",
+    "curvature singularity",
+    "big bang",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Peter Szekeres found in 1975 every solution of Einstein's equations for irrotational dust whose metric has the form $ds^2 = dt^2 - e^{2\\alpha}dr^2 - e^{2\\beta}(dy^2 + dz^2)$ [szekeres1975]. His solutions generalize the Tolman-Bondi models, the Kantowski-Sachs models, and the models of Douglas Eardley, Edison Liang, and Rainer Sachs [szekeres1975, eardley1972]. Charles Hellaby and Andrzej Krasiński write those that hold the Tolman-Bondi models with a function $E(r,p,q)$ and a sign $\\epsilon$, in which the surfaces of constant $t$ and $r$ are spheres for $\\epsilon = +1$, planes for $\\epsilon = 0$, and pseudospheres for $\\epsilon = -1$ [hellaby2002]. The spheres are not concentric, since $g_{rr}$ depends on $p$ and $q$ as well as on $r$ and $t$ [hellaby2002]. Each shell evolves as a shell of the Tolman-Bondi model does: $R(t,r)$ obeys the Friedmann equation for dust, and $p$ and $q$ do not enter it [hellaby2002].¶Later in 1975 Szekeres studied the solutions as collapsing clouds of dust, in a class that \"includes all spherically symmetric collapses but is more general and is termed quasispherical\" [szekeres1975collapse]. Under reasonable initial conditions he found the singularity hidden behind an event horizon, and with slightly irregular initial density distributions portions of it became naked [szekeres1975collapse]. William Bonnor showed in 1976 that the arbitrary functions can be chosen to give positive density and no Killing vectors while a ball of the spacetime joins to the Schwarzschild metric, so the collapse sends out no gravitational waves [bonnor1976]. Beverly Berger, Eardley, and Donald Olson found the following year that the quasispherical spacetimes have conformally flat space slices in comoving coordinates [berger1977].¶With A. H. Sulaiman and N. Tomimura, Bonnor proved in 1977 that Szekeres's spacetimes in their most general form have no Killing vectors [bonnor1977]. John Wainwright characterized them the same year as a subclass of the algebraically special solutions of type $\\{22\\}$ for irrotational dust [wainwright1977]. D. A. Szafron generalized them, also in 1977, to a perfect fluid at rest in the same coordinates, whose pressure depends on the time alone [szafron1977, bolejko2009]. Where that pressure is a cosmological constant the solutions generalize de Sitter space, the case John Barrow and Jaime Stein-Schabes treated in 1984 [barrow1984, bolejko2009]. The two classes of Szekeres's solutions were brought into one formulation in 1982 by S. W. Goode and Wainwright, who related them to the FLRW models and analyzed their curvature singularities and their evolution in time [goode1982].¶Hellaby and Krasiński examined the quasispherical models in 2002, where the function $E$ describes the departure from spherical symmetry if $\\partial_r E \\neq 0$, which requires a density that is not zero, and the density then varies over each sphere like a dipole [hellaby2002]. They gave the conditions for a regular origin, for regular maxima and minima of $R$ in a moment of time, and for the absence of shell crossings [hellaby2002]. They also showed that no light ray sent through the neck of a Szekeres wormhole emerges from under the apparent horizon on the other side [hellaby2002]. In 2008 they treated $\\epsilon \\leq 0$: the models with pseudospheres can have spatial maxima and minima but no origins, and the models with planes have neither [hellaby2008]. Robert Buckley and Eric Schlegel showed in 2020 that the functions $S$, $P$, and $Q$ displace each shell with respect to its neighbors and also rotate it [buckley2020].¶Krzysztof Bolejko followed a void and a neighboring supercluster in a quasispherical model in 2006, and found that the flow of mass from the void to the cluster enhances the growth of the density contrast, which grew almost 8 times faster than in the linear approach [bolejko2006]. In 2009 he set Szekeres regions into a Friedmann background as a Swiss cheese and traced light through them: small nonlinear inhomogeneities changed the temperature of the microwave background by $10^{-6}$ to $10^{-7}$ [bolejko2009]. Bolejko and Marie-Noëlle Célérier found in 2010 that inhomogeneities of about 50 Mpc in axially symmetric models of this kind cannot fully explain the dimming of the supernovae, and that structures of 500 Mpc or larger are needed to fit the data [bolejko2010]. Roberto Sussman and Bolejko showed in 2012 that every Szekeres model maps to a unique Tolman-Bondi model, and that spherical symmetry is stable against small perturbations shaped like a dipole [sussman2012]. An observer in a quasispherical void who sees the observed dipole of the microwave background is confined to a small region, Buckley and Schlegel found in 2013, one that is not as geometrically special as the center of a Tolman-Bondi void [buckley2013].",
+  "references": [
+    "szekeres1975",
+    "eardley1972",
+    "hellaby2002",
+    "szekeres1975collapse",
+    "bonnor1976",
+    "berger1977",
+    "bonnor1977",
+    "wainwright1977",
+    "szafron1977",
+    "bolejko2009",
+    "barrow1984",
+    "goode1982",
+    "hellaby2008",
+    "buckley2020",
+    "bolejko2006",
+    "bolejko2010",
+    "sussman2012",
+    "buckley2013"
+  ],
+  "coordinates": [
+    {
+      "id": "stereographic",
+      "parameters": [
+        {
+          "symbol": "R = R(t,r)",
+          "description": "Areal radius, a length ($R > 0$): where $\\epsilon = 1$ the shell labelled $r$ is a sphere of area $4\\pi R^2$ at time $t$. For dust $(\\partial_t R)^2 = 2GM/(c^2R) + f$, with $M$ a function of $r$ alone, the mass within the shell where $\\epsilon = 1$, which no component assumes. Every $\\partial_t$ is the derivative along the chart coordinate, $\\partial_t = c^{-1}\\partial/\\partial t$."
+        },
+        {
+          "symbol": "f = f(r)",
+          "description": "Energy function, dimensionless, with $\\epsilon + f > 0$: for dust, twice the energy per unit mass of the shell labelled $r$ in units of $c^2$. The prime is $f' = df/dr$."
+        },
+        {
+          "symbol": "S = S(r)",
+          "description": "Dimensionless positive function, the scale of the stereographic coordinates on the shell labelled $r$"
+        },
+        {
+          "symbol": "P = P(r)",
+          "description": "Dimensionless function: $(P, Q)$ is the center of the stereographic coordinates on the shell labelled $r$"
+        },
+        {
+          "symbol": "Q = Q(r)",
+          "description": "Dimensionless function, the second coordinate of that center"
+        },
+        {
+          "symbol": "\\epsilon",
+          "description": "Sign of the curvature of the shells: $+1$ for spheres (quasispherical), $0$ for planes (quasiplanar), and $-1$ for pseudospheres (quasihyperbolic)"
+        },
+        {
+          "symbol": "E = \\dfrac{S}{2}\\left(\\dfrac{\\left(p - P\\right)^2 + \\left(q - Q\\right)^2}{S^2} + \\epsilon\\right)",
+          "description": "Szekeres's function, dimensionless: $R^2(dp^2 + dq^2)/E^2$ is the metric of a sphere, a plane, or a pseudosphere of radius $R$ in stereographic projection. Where $\\epsilon = 1$, $\\partial_r E/E$ is a dipole over each sphere, and where $S$, $P$, and $Q$ are constant the spheres are concentric, as in Tolman-Bondi."
+        }
+      ],
+      "convention": "We use coordinates $(t, r, p, q)$, with $t$ the proper time of the dust, $r$ a comoving label for a shell of matter, a length, and $p$ and $q$ dimensionless stereographic coordinates on the shell. The areal radius $R(t,r)$ is a length, and $f$, $S$, $P$, and $Q$ are dimensionless functions of $r$ alone. We take components in the chart $x^0 = ct$, where $\\partial_t = c^{-1}\\partial/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    },
+    {
+      "id": "axisymmetric",
+      "parameters": [
+        {
+          "symbol": "R = R(t,r)",
+          "description": "Areal radius, a length ($R > 0$): the shell labelled $r$ is a sphere of area $4\\pi R^2$ at time $t$. For dust $(\\partial_t R)^2 = 2GM/(c^2R) + f$, with $M$ a function of $r$ alone, the mass within the shell, which no component assumes. Every $\\partial_t$ is the derivative along the chart coordinate, $\\partial_t = c^{-1}\\partial/\\partial t$."
+        },
+        {
+          "symbol": "f = f(r)",
+          "description": "Energy function, dimensionless, with $1 + f > 0$: for dust, twice the energy per unit mass of the shell labelled $r$ in units of $c^2$. The prime is $f' = df/dr$."
+        },
+        {
+          "symbol": "S = S(r)",
+          "description": "Dimensionless positive function: $R\\,S'/S$ is the rate, per unit $r$, at which the centers of the spheres move along the axis toward $\\theta = \\pi$. The prime is $S' = dS/dr$."
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$ on the quasispherical models, $\\epsilon = 1$, whose functions $P$ and $Q$ are constant, with $\\theta$ and $\\phi$ the polar angles of each sphere about the axis of symmetry, where $p - P = S\\cot(\\theta/2)\\cos\\phi$ and $q - Q = S\\cot(\\theta/2)\\sin\\phi$. The areal radius $R(t,r)$ is a length, and $f$ and $S$ are dimensionless functions of $r$ alone. We take components in the chart $x^0 = ct$, where $\\partial_t = c^{-1}\\partial/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    }
+  ]
+}
