@@ -88,6 +88,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `inertial/through`, the line through the centre of the side $z < 0$: the moment is the cone $cT = R\tanh(kct)$, so five lines $cT = |x|\tanh(kct_k)$ through the centre, out to the wall at $|x| = \cosh(kct_k)/k$.
 - `planar`, `global`, `conformal` and `inertial`, the whole spacetime, each point a 2-sphere: five curves from the centre of one side at $T = 0$ through the wall to the centre of the other, each the image of $cT = R\tanh(kct_k)$ on both sides, the one at $kct = 0$ the line $T = 0$.
 
+### The Kantowski-Sachs cosmologies
+
+- The embedding has two views, two members of one family: the dust universe symmetric in time at five moments of the dust chart, $\eta = -1.1$, $-0.55$, $0$, $0.55$ and $1.1$, and the inside of Schwarzschild's horizon at $T = 0.9$, $0.7$, $0.5$, $0.3$ and $0.1\,r_s$, each the equator over $|r| \le 1$, a cylinder that runs on along $r$.
+- `dust/etar`: each dust moment is the line $\eta = \eta_k$, every $r$; five lines across the whole box, and no vacuum moment.
+- `comoving/tr`, drawn as the same dust from rest: the moment $\eta_k$ is the line $ct = \pi/2 + \eta_k + \sin\eta_k\cos\eta_k$, counted from the first singularity at $b_0 = 1$; five lines across the whole box.
+- `schwarzschild_interior/Tr`: each vacuum moment is the line $T = T_k$, every $r$; five lines across the whole box, and no dust moment.
+- `dust`, the lens: five curves $\tau = \tau(\eta_k)$ from one end of the axis to the other.
+- `vacuum`, Kruskal's square: five curves of constant $T$ across the black hole's triangle, from one end of the horizon to the other, $\tan p\tan q = (1 - T_k/r_s)e^{T_k/r_s}$.
+
 ### Einstein-Rosen waves
 
 - The embedding is four moments of the cylindrical chart, $ct = a$, $2a$, $4a$ and $8a$, of the pulse of Weber, Wheeler, and Bonnor at $C = a$ going out from the axis, each the plane $z = 0$ from the axis to $\rho = 10\,a$.
@@ -327,6 +336,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 | Ellis-Bronnikov | line | none | line |
 | FRW | not visible, three times | none | five lines on the closed universe |
 | global monopole | line, line, four curves | none | line, four times |
+| Kantowski-Sachs | five lines, three times | none | five curves, twice |
 | Gödel | line, line, not visible | floor | none drawn |
 | interior Schwarzschild | line, line | none | line |
 | Kasner | four lines, twice | none | none drawn |
