@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 44,
+  "count": 45,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3541,6 +3541,191 @@
           ],
           "ricci_scalar": "R = 2\\left(\\partial_x\\partial_y^2\\phi + \\partial_x\\partial_z^2\\phi + \\partial_x^3\\phi\\right)\\partial_x\\phi + 2\\left(\\partial_x^2\\partial_y\\phi + \\partial_y\\partial_z^2\\phi + \\partial_y^3\\phi\\right)\\partial_y\\phi + 2\\left(\\partial_x^2\\partial_z\\phi + \\partial_y^2\\partial_z\\phi + \\partial_z^3\\phi\\right)\\partial_z\\phi + 2\\left(\\partial_x^2\\phi\\,\\partial_y^2\\phi + \\partial_x^2\\phi\\,\\partial_z^2\\phi + \\partial_y^2\\phi\\,\\partial_z^2\\phi + \\left(\\partial_x\\partial_y\\phi\\right)^2 + \\left(\\partial_x\\partial_z\\phi\\right)^2 + \\left(\\partial_x^2\\phi\\right)^2 + \\left(\\partial_y\\partial_z\\phi\\right)^2 + \\left(\\partial_y^2\\phi\\right)^2 + \\left(\\partial_z^2\\phi\\right)^2 + \\partial_t\\partial_x^2\\phi + \\partial_t\\partial_y^2\\phi + \\partial_t\\partial_z^2\\phi\\right)",
           "kretschmann": "K = 4\\left(\\left(\\partial_y^2\\phi\\,\\partial_z^2\\phi - \\partial_y\\partial_z\\phi\\,\\partial_y\\partial_z\\phi\\right)^2 + \\left(\\partial_x^2\\phi\\,\\partial_z^2\\phi - \\partial_x\\partial_z\\phi\\,\\partial_x\\partial_z\\phi\\right)^2 + \\left(\\partial_x^2\\phi\\,\\partial_y^2\\phi - \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_y\\phi\\right)^2 + 2\\left(\\partial_x\\partial_y\\phi\\,\\partial_z^2\\phi - \\partial_x\\partial_z\\phi\\,\\partial_y\\partial_z\\phi\\right)^2 + 2\\left(\\partial_x\\partial_y\\phi\\,\\partial_y\\partial_z\\phi - \\partial_x\\partial_z\\phi\\,\\partial_y^2\\phi\\right)^2 + 2\\left(\\partial_x^2\\phi\\,\\partial_y\\partial_z\\phi - \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_z\\phi\\right)^2\\right) + 4\\left(\\left(\\partial_t\\partial_x^2\\phi + \\partial_x\\phi\\,\\partial_x^3\\phi + \\partial_y\\phi\\,\\partial_x^2\\partial_y\\phi + \\partial_z\\phi\\,\\partial_x^2\\partial_z\\phi + \\left(\\partial_x^2\\phi\\right)^2 + \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_y\\phi + \\partial_x\\partial_z\\phi\\,\\partial_x\\partial_z\\phi\\right)^2 + \\left(\\partial_t\\partial_y^2\\phi + \\partial_x\\phi\\,\\partial_x\\partial_y^2\\phi + \\partial_y\\phi\\,\\partial_y^3\\phi + \\partial_z\\phi\\,\\partial_y^2\\partial_z\\phi + \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_y\\phi + \\left(\\partial_y^2\\phi\\right)^2 + \\partial_y\\partial_z\\phi\\,\\partial_y\\partial_z\\phi\\right)^2 + \\left(\\partial_t\\partial_z^2\\phi + \\partial_x\\phi\\,\\partial_x\\partial_z^2\\phi + \\partial_y\\phi\\,\\partial_y\\partial_z^2\\phi + \\partial_z\\phi\\,\\partial_z^3\\phi + \\partial_x\\partial_z\\phi\\,\\partial_x\\partial_z\\phi + \\partial_y\\partial_z\\phi\\,\\partial_y\\partial_z\\phi + \\left(\\partial_z^2\\phi\\right)^2\\right)^2 + 2\\left(\\partial_t\\partial_x\\partial_y\\phi + \\partial_x\\phi\\,\\partial_x^2\\partial_y\\phi + \\partial_y\\phi\\,\\partial_x\\partial_y^2\\phi + \\partial_z\\phi\\,\\partial_x\\partial_y\\partial_z\\phi + \\partial_x\\partial_y\\phi\\,\\partial_x^2\\phi + \\partial_x\\partial_y\\phi\\,\\partial_y^2\\phi + \\partial_x\\partial_z\\phi\\,\\partial_y\\partial_z\\phi\\right)^2 + 2\\left(\\partial_t\\partial_x\\partial_z\\phi + \\partial_x\\phi\\,\\partial_x^2\\partial_z\\phi + \\partial_y\\phi\\,\\partial_x\\partial_y\\partial_z\\phi + \\partial_z\\phi\\,\\partial_x\\partial_z^2\\phi + \\partial_x\\partial_z\\phi\\,\\partial_x^2\\phi + \\partial_x\\partial_y\\phi\\,\\partial_y\\partial_z\\phi + \\partial_x\\partial_z\\phi\\,\\partial_z^2\\phi\\right)^2 + 2\\left(\\partial_t\\partial_y\\partial_z\\phi + \\partial_x\\phi\\,\\partial_x\\partial_y\\partial_z\\phi + \\partial_y\\phi\\,\\partial_y^2\\partial_z\\phi + \\partial_z\\phi\\,\\partial_y\\partial_z^2\\phi + \\partial_x\\partial_y\\phi\\,\\partial_x\\partial_z\\phi + \\partial_y\\partial_z\\phi\\,\\partial_y^2\\phi + \\partial_y\\partial_z\\phi\\,\\partial_z^2\\phi\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "levi_civita",
+      "name": "Levi-Civita Static Cylinder",
+      "short_name": "Levi-Civita",
+      "description": "The static vacuum field with cylindrical symmetry, the field outside an infinitely long straight line of mass, which Tullio Levi-Civita found in 1919. It has two parameters, a mass per unit length and an angular deficit about the axis, and it is flat with no mass and again where the mass parameter is one half.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "static",
+        "stationary",
+        "cylindrical symmetry",
+        "line mass",
+        "Weyl class",
+        "Kasner",
+        "angular deficit",
+        "conical",
+        "singularity",
+        "curvature singularity",
+        "naked singularity",
+        "not asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass parameter $\\sigma$ is dimensionless, $G/c^2$ times the mass per unit length of the source where it is small. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "references": [
+        "levicivita1919",
+        "levicivita2011b",
+        "maccallum2011",
+        "herrera2001",
+        "israel1977",
+        "weyl1917",
+        "kasner1921",
+        "marder1958",
+        "bonnor1979",
+        "vilenkin1981",
+        "herrera1999",
+        "dasilva1995",
+        "wang1997",
+        "taub1951",
+        "kastor2021",
+        "gautreau1969",
+        "bonnormartins1991",
+        "bonnordavidson1992",
+        "philbin1996",
+        "bicak2004"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",
+      "charts": [
+        {
+          "id": "weyl",
+          "name": "Weyl",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho = 0 \\;\\text{(the axis, a curvature singularity unless } \\sigma = 0 \\text{ or } \\sigma = 1/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\sigma",
+              "description": "Mass parameter, dimensionless; for small $\\sigma$ the mass per unit length of the source is $\\sigma c^2/G$, and the spacetime is flat at $\\sigma = 0$ and at $\\sigma = 1/2$"
+            },
+            {
+              "symbol": "C",
+              "description": "Conicity parameter, dimensionless; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis, and no change of coordinates removes it"
+            }
+          ],
+          "convention": "We use Weyl's coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths, and we evaluate $\\rho^{4\\sigma}$ and $\\rho^{4\\sigma(2\\sigma - 1)}$ with $\\rho$ in a fixed unit of length, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\rho^{4\\sigma}c^2dt^2 + \\rho^{4\\sigma(2\\sigma - 1)}\\left(d\\rho^2 + dz^2\\right) + \\dfrac{\\rho^{2(1 - 2\\sigma)}}{C^2}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\rho^{4\\sigma}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\rho^{4\\sigma(2\\sigma - 1)}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\rho^{4\\sigma(2\\sigma - 1)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\rho^{2(1 - 2\\sigma)}}{C^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{64\\sigma^2\\left(2\\sigma - 1\\right)^2\\left(4\\sigma^2 - 2\\sigma + 1\\right)}{\\rho^{4(4\\sigma^2 - 2\\sigma + 1)}}"
+        },
+        {
+          "id": "kasner",
+          "name": "Kasner",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = 0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p_0",
+              "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$ with $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two constraints leave one free exponent"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the circle about the axis at unit $r$, a length, $\\ell = \\Sigma^{p_2}/C$ in the unit of length chosen"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\phi, z)$ with $r$ the proper distance from the axis, $r = \\rho^{\\Sigma}/\\Sigma$ with $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$, and $t$ and $z$ those of Weyl's coordinates multiplied by constants, and we evaluate the powers $r^{2p_i}$ with $r$ in a fixed unit of length, so they are dimensionless. The exponents obey $p_0 + p_2 + p_3 = 1$ and $p_0^2 + p_2^2 + p_3^2 = 1$, and every component assumes both conditions. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -r^{2p_0}c^2dt^2 + dr^2 + \\ell^2r^{2p_2}d\\phi^2 + r^{2p_3}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-r^{2p_0}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2r^{2p_2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "r^{2p_3}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{16p_0\\,p_2\\,p_3}{r^4}"
         }
       ]
     },

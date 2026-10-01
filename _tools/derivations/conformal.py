@@ -3764,8 +3764,8 @@ def levi_civita(ck, src):
     # The two charts draw one triangle: r = rho^Sigma/Sigma and a constant rescaling of t carry one map
     # onto the other, so a line of constant rho is a line of constant r.
     rho = ck.uniform(0.01, 20)
-    ck.limit("Levi-Civita: the two tortoise coordinates are proportional, 4 rho^(1/4) = (4/3)^(1/3) 3 r^(1/3)",
-             4 * rho ** 0.25, (4 / 3) ** (1 / 3) * 3 * np.cbrt(slices.levi_civita_r(rho)), 1e-9)
+    ck.limit("Levi-Civita: the two tortoise coordinates are proportional, 4 rho^(1/4) = (4/3)^(2/3) 3 r^(1/3)",
+             4 * rho ** 0.25, (4 / 3) ** (2 / 3) * 3 * np.cbrt(slices.levi_civita_r(rho)), 1e-9)
 
     views = []
     box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
