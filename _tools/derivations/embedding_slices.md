@@ -314,6 +314,12 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u + r = -r_s\ln(r/r_s - 1)$ from $3\,r_s$ at $1.050\,r_s$ down to $-1.609\,r_s$ at $6\,r_s$, and $u = -r - r_s\ln(r/r_s - 1)$ from $0$ at $1.278\,r_s$ to $-6\,r_s$ at $4.693\,r_s$.
 - `spherical`, `ingoing` and `outgoing`, Kruskal's diagram with $p = \arctan U$ and $q = \arctan V$: the moment $t = 0$ is $U = -V$, the line $T = 0$ through the bifurcation point across both exteriors, $r$ from $r_s$ to $6\,r_s$ on each side, the same on all three, since all three are the whole spacetime.
 
+### Szekeres
+
+- The embedding is the surface $\theta = \pi/2$ through the equators of the shells of the marginally bound cloud, $f = 0$ and $S'/S = 2r(1 - r^2)$ inside $r_b = 1$, at $ct = -0.4$, $0$, $0.3$ and $0.55\,r_b$, played as a movie.
+- `axisymmetric/north` and `axisymmetric/south` draw the two halves of the axis of symmetry, $\theta = 0$ and $\theta = \pi$, which that surface meets only at the centre $r = 0$: not visible.
+- No conformal diagram.
+
 ### Schwarzschild-de Sitter
 
 - The embedding is the equator of Kottler's static moment $t = 0$ at $\Lambda = 0.2/r_s^2$, $r$ from the throat $r_h = 1.085\,r_s$ to the widest circle $r_c = 3.215\,r_s$ and back to the next throat, through the cosmological bifurcation sphere into the next static region.
@@ -417,6 +423,7 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 | Schwarzschild | line, four curves | none | line, three times |
 | Schwarzschild-de Sitter | line, four curves | none | line, three times |
 | van Stockum | line, not visible | floor | none drawn |
+| Szekeres | not visible, twice | none | none drawn |
 | Taub-NUT | line | none | none drawn |
 | thin shell wormhole | line, line | none | line, line |
 | Tolman-Bondi | not visible | none | none drawn |

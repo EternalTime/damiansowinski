@@ -5622,6 +5622,126 @@ def mcvittie(ck, src):
                        "$\\Lambda r_s^2 = 1/5$.")]
 
 
+SZ_VERTICAL = 3     # the Szekeres cloud's dish is drawn this many times deeper than it is
+SZ_MOMENTS = (-0.4, 0.0, 0.3, 0.55)
+SZ_TOP = 1.25
+SZ_INSIDE = {"f": "0", "R": "r*(1 - 3*sqrt(5 - 3*r**2)*t/4)**Rational(2, 3)", "S": "exp(r**2 - r**4/2)"}
+SZ_OUTSIDE = {"f": "0", "R": "(r**Rational(3, 2) - 3*t/(2*sqrt(2)))**Rational(2, 3)", "S": "exp(Rational(1, 2))"}
+
+
+def szekeres_cloud(r, t):
+    """R, dR/dr, M, dM/dr and S'/S of the cloud null_rays.py declares, r_b = 1 and c = G = 1:
+    2M = r^3(5 - 3r^2)/4 inside and 1/2 beyond, R^(3/2) = r^(3/2) - (3/2) sqrt(2M) t, and
+    S'/S = 2r(1 - r^2) inside and 0 beyond."""
+    r = np.asarray(r, dtype=float)
+    inside = r < 1
+    q = np.where(inside, r, 1.0)
+    M = np.where(inside, q ** 3 * (5 - 3 * q * q) / 8, 0.25)
+    dM = np.where(inside, 15 * q * q * (1 - q * q) / 8, 0.0)
+    R = (r ** 1.5 - 1.5 * np.sqrt(2 * M) * t) ** (2 / 3)
+    dR = (np.sqrt(r) - dM * t / np.sqrt(2 * M)) / np.sqrt(R)
+    return R, dR, M, dM, np.where(inside, 2 * q * (1 - q * q), 0.0)
+
+
+def szekeres_fields(ck, src):
+    """What the drawing rests on, from the published metric and Einstein tensor of the
+    axisymmetric chart: with f = 0 the moment of t is Euclidean space, the shell r the sphere of
+    radius R about the point of the axis at height Z, Z' = R S'/S; and the declared cloud makes
+    the published G^r_r vanish and G^t_t the density -2(M' + 3M S' cos(theta)/S)/(R^2(R' + R S' cos(theta)/S))."""
+    _, entry, reader = nr.load("szekeres", "axisymmetric")
+    src.note("szekeres", "axisymmetric", ["einstein_tensor"])
+    t, r, theta, phi = (reader.symbol[name] for name in entry["coords"])
+    R, f, S = (reader.parameters[name] for name in ("R", "f", "S"))
+    g = nr.published_matrix(reader, entry, "metric_components").subs(reader.c, 1)
+    Z = sp.Function("Z")(r)
+    place = [R * sp.sin(theta) * sp.cos(phi), R * sp.sin(theta) * sp.sin(phi), R * sp.cos(theta) + Z]
+    J = sp.Matrix(3, 3, lambda i, j: sp.diff(place[i], (r, theta, phi)[j]))
+    flat = (J.T * J).subs(sp.Derivative(Z, r), R * sp.Derivative(S, r) / S)
+    space = g[1:, 1:].subs(f, 0)
+    ck.exact("Szekeres: with f = 0 a moment is Euclidean space, the shells spheres about (0, 0, Z), Z' = R S'/S",
+             all(sp.simplify(flat[i, j] - space[i, j]) == 0 for i in range(3) for j in range(3)))
+    ul = entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
+    rng = np.random.default_rng(11)
+    worst_r = worst_t = 0.0
+    for functions, lo, hi in ((SZ_INSIDE, 0.05, 0.95), (SZ_OUTSIDE, 1.05, 1.6)):
+        def value(index):
+            e = reader(next(c["value"] for c in ul if c["indices"] == [index, index])).subs(reader.c, 1)
+            for name, rep in functions.items():
+                e = e.replace(reader.parameters[name].func, nr._as_lambda(reader, name, rep)).doit()
+            return sp.lambdify((t, r, theta), e, "numpy")
+        Grr, Gtt = value("r"), value("t")
+        rs, ts, th = rng.uniform(lo, hi, 400), rng.uniform(-0.4, 0.55, 400), rng.uniform(0.05, math.pi - 0.05, 400)
+        Rn, dR, M, dM, sigma = szekeres_cloud(rs, ts)
+        scale = M / Rn ** 3
+        density = -2 * (dM + 3 * M * sigma * np.cos(th)) / (Rn ** 2 * (dR + Rn * sigma * np.cos(th)))
+        worst_r = max(worst_r, float(np.max(np.abs(Grr(ts, rs, th)) / scale)))
+        worst_t = max(worst_t, float(np.max(np.abs(Gtt(ts, rs, th) - density) / scale)))
+    ck.add("Szekeres: the declared cloud makes the published G^r_r vanish", worst_r, 1e-9)
+    ck.add("Szekeres: the published G^t_t is the declared density", worst_t, 1e-9)
+
+
+def szekeres(ck, src):
+    """The cloud the spacetime diagrams declare, marginally bound, f = 0, with an axis of
+    symmetry: the surface theta = pi/2 of a moment of t in the axisymmetric chart, through the
+    equator of every shell. On it g_rr = (dR/dr)^2 + R^2 S'^2/S^2 and g_phiphi = R^2, so in the
+    areal radius the surface climbs at dz/dr = R S'/S, which is the rate at which the centres of
+    the shells move along the axis in the flat space of the moment: each circle is a shell's
+    equator at the height of its centre. Outside the cloud S is constant and the surface is a
+    plane. The movie runs ct from -0.4 to 0.55, until just before the centre is crushed at
+    4/(3 sqrt(5)), the rim at z = 0 in every frame, and every height is drawn SZ_VERTICAL times
+    over, which the caption states."""
+    szekeres_fields(ck, src)
+    size = 2 * float(szekeres_cloud(SZ_TOP, SZ_MOMENTS[0])[0])
+
+    def moment(t):
+        fixed_at = {"t": repr(float(t)), **EQUATOR}
+        inside = Slice(src, "szekeres", "axisymmetric", "r", "\\phi", fixed_at, functions=SZ_INSIDE)
+        outside = Slice(src, "szekeres", "axisymmetric", "r", "\\phi", fixed_at, functions=SZ_OUTSIDE)
+        dust = Piece("cloud", "star", inside, 0.0, 1.0, 0.0, 1,
+                     (("axis", "the centre $r = 0$, where the surface is smooth"), ("join", "the surface $r = r_b$")),
+                     [(0.25, "r", None), (0.5, "r", None), (0.75, "r", None), (1.0, "surface", None)], size)
+        dust.z = dust.z - dust.z[-1]
+        ext = Piece("exterior", "sheet", outside, 1.0, SZ_TOP, 0.0, 1,
+                    (("join", "the surface $r = r_b$"), ("edge", "the plane runs on to $r \\to \\infty$")), [], size)
+        where = f"Szekeres, ct = {t:g}"
+        ck.isometry(f"{where}, the cloud", dust)
+        ck.isometry(f"{where}, outside", ext)
+        ck.join(f"{where}, the cloud meets the outside", dust, 1.0, ext, 1.0)
+        ck.plane(f"{where}, outside", outside, np.linspace(1.0, SZ_TOP, 60))
+        ck.radius(f"{where}, rho = R", dust, lambda r: szekeres_cloud(r, t)[0], size)
+        ck.radius(f"{where}, rho = R outside", ext, lambda r: szekeres_cloud(r, t)[0], size)
+
+        def centre(r):
+            def step(s):
+                R, _, _, _, sigma = szekeres_cloud(s, t)
+                return float(R * sigma)
+            return np.array([quad(step, 1.0, x, epsabs=1e-13, epsrel=1e-13)[0] for x in np.atleast_1d(r)])
+        ck.form(f"{where}, each circle at the height of its shell's centre, z' = R S'/S", dust, centre, size)
+        if t == 0:
+            ck.form(f"{where}, z = 2r^3/3 - 2r^5/5 - 4/15", dust, lambda r: 2 * r ** 3 / 3 - 2 * r ** 5 / 5 - 4 / 15, size)
+        for p in (dust, ext):
+            p.z = SZ_VERTICAL * p.z
+        return Surface([dust, ext], label=f"$ct = {t:g}\\,r_b$", time=t)
+
+    times, keys = movie_values(list(SZ_MOMENTS), 0.05)
+    frames = [moment(t) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"star": "star", "sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "star", "the cloud, $r < r_b$")
+    fig.legend("fill", "cover", "outside it, the plane of Lemaître's clocks falling from rest at infinity")
+    fig.legend("line", "r", "the equators of the shells $r_b/4$, $r_b/2$ and $3r_b/4$, each at the height of its "
+                            "shell's centre")
+    fig.legend("line", "surface", "the equator of the surface of the cloud, $r = r_b$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("equators", "The equators of the shells", "$r_b$", surfaces, fig.done(), vertical=SZ_VERTICAL,
+                 movie=movie(frames, "$ct$", times),
+                 settings="$r_b = 1$, the unit of every length and of $ct$, and $2GM/c^2 = r_b/2$.",
+                 input="The cloud of the spacetime diagrams: marginally bound dust, $f = 0$, with the areal radius and "
+                       "the mass of the Tolman-Bondi cloud and $S = \\exp\\left(r^2/r_b^2 - r^4/2r_b^4\\right)$ inside "
+                       "$r_b$, constant beyond, checked to solve this spacetime's own $G^r{}_r = 0$ and to give its "
+                       "density.")]
+
+
 def flat_slices(ck, src, metric_id, system_id, time="t"):
     """Check that every slice of constant `time` of a coordinate system is flat: its spatial
     metric has no cross term and no component that depends on a spatial coordinate, so at
@@ -5697,6 +5817,7 @@ DRAWN = {
     "robinson_trautman": robinson_trautman,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
+    "szekeres": szekeres,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -6461,6 +6582,19 @@ CAPTIONS = {
         "closes at its apex, the centre of its side at $T = 0$, where the horizon meets it. At $ct = 0$ both are the "
         "flat disc of radius $1/k$, the moment the wall stops, and the whole equator is that disc taken twice, "
         "joined at its rim.",
+    ],
+    ("szekeres", "equators"): [
+        "The surface through the equators ($\\theta = \\pi/2$) of the shells of a collapsing cloud of dust as $t$ runs "
+        "from $ct = -0.4$ to $0.55\\,r_b$, each moment drawn as it lies in flat space (vertical scale $\\times 3$). "
+        "The cloud is marginally bound, $f = 0$, so every moment of $t$ is Euclidean space, in which the shell $r$ is "
+        "a sphere of radius $R$ about a point of the axis of symmetry, and from one shell to the next that point moves "
+        "along the axis by $R\\,S'/S$ per unit $r$. Each circle is the equator of one shell, at the height of its "
+        "centre, so the dish is the path of the centres along the axis, and in the Tolman-Bondi cloud, where "
+        "$S' = 0$, it is a flat disc.",
+        "Outside the cloud $S$ is constant and the surface is a plane, the equator of Georges Lemaître's moment of "
+        "Schwarzschild's exterior. Every shell falls on its own clock, the centre first, and the dish grows shallower "
+        "as its circles shrink, since the step from one centre to the next is proportional to $R$. Peter Szekeres "
+        "found these solutions in 1975.",
     ],
     ("mcvittie", "flamm"): [
         "The equatorial plane ($\\theta = \\pi/2$) of McVittie's spacetime as cosmic time runs from $ct = 1$ to "
