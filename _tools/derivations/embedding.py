@@ -2663,6 +2663,62 @@ def dilaton_black_hole(ck, src):
     return views
 
 
+def tangherlini(ck, src):
+    """Tangherlini's black hole in five and in six dimensions, r_h = 1. The slice of constant t
+    on the plane of r and phi, every other angle at pi/2, has g_rr = 1/(1 - (r_h/r)^(D-3)) and
+    g_phiphi = r^2, so dz/dr = 1/sqrt((r/r_h)^(D-3) - 1). At D = 5 that is r_h/sqrt(r^2 - r_h^2),
+    z = r_h arcosh(r/r_h), the catenoid. At D = 6 the integrand falls as r^(-3/2), and
+    z = z_inf - 2 sqrt(r_h^3/r) F(1/2, 1/6; 7/6; r_h^3/r^3) with z_inf = B(1/6, 1/2) r_h/3, a
+    finite height, as for every D >= 6; Flamm's paraboloid, D = 4, and the catenoid rise without
+    bound. Each slice runs through the bifurcation sphere into the other exterior, the same
+    surface turned over. Drawn to r = 6 r_h on both sheets."""
+    from scipy.special import beta, hyp2f1
+    z_inf = beta(1 / 6, 0.5) / 3
+    ck.add("Tangherlini, six dimensions: the height at infinity is 2.4286 r_h", abs(z_inf - 2.4286), 1e-4)
+    forms = {
+        "five": lambda r: np.arccosh(np.maximum(r, 1.0)),
+        "six": lambda r: z_inf - 2 / np.sqrt(r) * hyp2f1(0.5, 1 / 6, 7 / 6, np.minimum(r ** -3.0, 1.0)),
+    }
+    top, radii = 6.0, (1.5, 2, 3, 4, 5)
+    size = 2 * top
+    views = []
+    for vid, system, word, held, held_tex in (
+            ("five", "spherical", "five", {"psi": "pi/2"}, "$\\psi = \\theta = \\pi/2$"),
+            ("six", "spherical_six", "six", {"chi": "pi/2", "psi": "pi/2"}, "$\\chi = \\psi = \\theta = \\pi/2$")):
+        sl = Slice(src, "tangherlini", system, "r", "\\phi", {"t": 0, **held, **EQUATOR}, {"r_h": 1})
+        rh = sl.horizons()[0]
+        ck.add(f"Tangherlini, {word} dimensions: the horizon is r_h", abs(rh - 1), 1e-12)
+        end = "the surface runs on to $r \\to \\infty$"
+        near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1,
+                     (("throat", "the throat $r = r_h$, the bifurcation sphere, where the other exterior begins"),
+                      ("edge", end)),
+                     [(rh, "horizon", "$r = r_h$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 6\\,r_h$")],
+                     size)
+        far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                    (("throat", "the throat $r = r_h$"), ("edge", end)),
+                    [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+        for p in (near, far):
+            ck.isometry(f"Tangherlini, {word} dimensions, {p.id}", p)
+            ck.form(f"Tangherlini, {word} dimensions, {p.id}, the closed form of z", p,
+                    lambda r, s=p.sense, f=forms[vid]: s * f(r), size)
+            ck.radius(f"Tangherlini, {word} dimensions, {p.id}, rho = r", p, lambda r: r, size)
+        ck.join(f"Tangherlini, {word} dimensions, the two sheets at the throat", near, rh, far, rh)
+        surface = Surface([near, far])
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], rh, 0.0, "$r = r_h$", dx=14)
+        ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_h$")
+        ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_h$")
+        fig.legend("fill", "cover", "the exterior $r > r_h$ that $t$ and $r$ cover")
+        fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_h$")
+        fig.legend("line", "r2", "the same radii on the other exterior")
+        fig.legend("line", "horizon", "the throat $r = r_h$, where the slice crosses the horizon")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(vid, word.capitalize() + " dimensions", "$r_h$", [surface], fig.done(),
+                          settings=f"$D = {5 if vid == 'five' else 6}$ and $r_h = 1$, the unit of every length, "
+                                   f"on the plane of $r$ and $\\phi$ ({held_tex})."))
+    return views
+
+
 def vaidya(ck, src):
     """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
     for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
@@ -5378,6 +5434,7 @@ DRAWN = {
     "einstein_rosen_waves": einstein_rosen_waves,
     "nariai": nariai,
     "global_monopole": global_monopole,
+    "tangherlini": tangherlini,
     "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
     "melvin": melvin,
@@ -5775,6 +5832,25 @@ CAPTIONS = {
         "The cone of an ideal cosmic string ($4G\\mu/c^2 = 0.1$) cut along $\\phi = 0$ and unrolled onto the plane "
         "without stretching, every distance from the apex and every circle keeping its length. Laid flat it is a "
         "plane missing the wedge between the cut's two edges, the deficit angle $\\delta = 8\\pi G\\mu/c^2 = 36°$.",
+    ],
+    ("tangherlini", "five"): [
+        "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the Schwarzschild-Tangherlini spacetime in "
+        "five dimensions at one moment of $t$, drawn as a surface in flat space with every distance along it the "
+        "metric distance. On it the metric is $dr^2/(1 - r_h^2/r^2) + r^2d\\phi^2$, so $dz/dr = "
+        "r_h/\\sqrt{r^2 - r_h^2}$ and the surface is the catenoid $r = r_h\\cosh(z/r_h)$. Far out its height "
+        "grows as $r_h\\ln(2r/r_h)$, where Flamm's paraboloid of four dimensions grows as $2\\sqrt{r_sr}$.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $r = r_h$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same catenoid turned over.",
+    ],
+    ("tangherlini", "six"): [
+        "The plane of $r$ and $\\phi$ ($\\chi = \\psi = \\theta = \\pi/2$) of the Schwarzschild-Tangherlini "
+        "spacetime in six dimensions at one moment of $t$, drawn as a surface in flat space with every distance "
+        "along it the metric distance. On it the metric is $dr^2/(1 - r_h^3/r^3) + r^2d\\phi^2$, so $dz/dr = "
+        "\\sqrt{r_h^3/(r^3 - r_h^3)}$, which falls as $r^{-3/2}$ far out. The surface climbs from vertical at "
+        "the throat toward the finite height $\\tfrac{1}{3}B(\\tfrac{1}{6}, \\tfrac{1}{2})\\,r_h = 2.429\\,r_h$, "
+        "which it approaches as $r \\to \\infty$, as the slice does for every $D \\ge 6$.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $r = r_h$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same surface turned over.",
     ],
     ("global_monopole", "monopole"): [
         "The equatorial plane ($\\theta = \\pi/2$) around a global monopole with no mass at its centre, at one "

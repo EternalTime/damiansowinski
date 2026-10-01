@@ -232,6 +232,9 @@ UV_TO_TZ = ((-0.5, 1), (0.5, 1))        # (u, v) of the plane wave to z = v - u/
 RADIAL = ("ingoing", "outgoing")
 SIDEWAYS = ("moving left", "moving right")
 EQUATOR = {"theta": "pi/2", "phi": "0"}
+# Tangherlini's planes of the time and r hold every angle fixed, three in five dimensions and four in six.
+TANGHERLINI_FIVE = {"psi": "pi/2", "theta": "pi/2", "phi": "0"}
+TANGHERLINI_SIX = {"chi": "pi/2", **TANGHERLINI_FIVE}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -472,6 +475,22 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
     Diagram("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 4, -4, 0), "$r/r_s$", "$u/r_s$", SDS, EQUATOR, tau="u + r", areal=True),
+    Diagram("tangherlini", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_h$", "$ct/r_h$", {"r_h": 1}, TANGHERLINI_FIVE, orient="ingoing", areal=True),
+    Diagram("tangherlini", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 6, -3, 3), "$r/r_h$", "$(v - r)/r_h$", {"r_h": 1}, TANGHERLINI_FIVE,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("tangherlini", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 6, 0, 6), "$r/r_h$", "$v/r_h$", {"r_h": 1}, TANGHERLINI_FIVE,
+            tau="v - r", areal=True),
+    Diagram("tangherlini", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 6, -3, 3), "$r/r_h$", "$(u + r)/r_h$", {"r_h": 1}, TANGHERLINI_FIVE,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("tangherlini", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 6, -6, 0), "$r/r_h$", "$u/r_h$", {"r_h": 1}, TANGHERLINI_FIVE,
+            tau="u + r", areal=True),
+    Diagram("tangherlini", "spherical_six", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_h$", "$ct/r_h$", {"r_h": 1}, TANGHERLINI_SIX, orient="ingoing", areal=True),
     Diagram("global_monopole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", GM, EQUATOR, orient="ingoing", areal=True),
     Diagram("global_monopole", "conical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
@@ -1006,6 +1025,50 @@ CAPTIONS = {
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at both horizons and leans toward larger $r$ "
         "inside $r_h$ and beyond $r_c$.",
+    ],
+    ("tangherlini", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) in five dimensions, the same at every fixed angle by hyperspherical "
+        "symmetry. Outside $r_h$ the cones narrow toward the vertical as $r \\to r_h$, because "
+        "$dt/dr = \\pm(1 - r_h^2/r^2)^{-1}$ diverges there. Away from the horizon they open faster than "
+        "Schwarzschild's, since $r_h^2/r^2$ falls faster than $r_s/r$.",
+        "Inside $r_h$ the same components make $r$ the time. We take the future from the ingoing "
+        "Eddington-Finkelstein chart, which runs smoothly across $r_h$, and this makes that region the black "
+        "hole, where every cone points to $r = 0$. The Kretschmann scalar $72r_h^4/r^8$ is finite at $r_h$ and "
+        "diverges only at $r = 0$.",
+    ],
+    ("tangherlini", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) in five dimensions, drawn with $v - r$ as the vertical axis so that the "
+        "ingoing rays, $v = $ const, run at 45°. The outgoing family has $dv/dr = 2(1 - r_h^2/r^2)^{-1}$, so it "
+        "stands exactly vertical at $r_h$: the horizon is itself an outgoing ray that stays where it is.",
+        "The cones cross $r_h$ smoothly and keep tipping. Inside, both edges of every future cone point to "
+        "smaller $r$, so every future directed ray ends at $r = 0$.",
+    ],
+    ("tangherlini", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own coordinates. The ingoing family is "
+        "$v = $ const and runs horizontally here, since $v$ is itself a null coordinate. The outgoing family "
+        "turns vertical at $r_h$ and leans back toward smaller $r$ inside it.",
+    ],
+    ("tangherlini", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) in five dimensions, drawn with $u + r$ as the vertical axis so that the "
+        "outgoing rays, $u = $ const, run at 45°. The ingoing family stands vertical at $r_h$. Inside $r_h$ both "
+        "edges of every future cone point to larger $r$: this is the white hole, which nothing from outside can "
+        "enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("tangherlini", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own coordinates. The outgoing family is "
+        "$u = $ const and runs horizontally here, since $u$ is itself a null coordinate. The ingoing family "
+        "turns vertical at $r_h$ and leans toward larger $r$ inside it.",
+    ],
+    ("tangherlini", "spherical_six", "radial"): [
+        "The plane of $t$ and $r$ ($\\chi = \\psi = \\theta = \\pi/2$, $\\phi = 0$) in six dimensions, the same "
+        "at every fixed angle by hyperspherical symmetry. Outside $r_h$ the cones narrow toward the vertical as "
+        "$r \\to r_h$, because $dt/dr = \\pm(1 - r_h^3/r^3)^{-1}$ diverges there. At $r = 2r_h$ it is $\\pm 8/7$, "
+        "where Schwarzschild's at $2r_s$ is $\\pm 2$.",
+        "Inside $r_h$ the same components make $r$ the time, and we take the future as the ingoing rays carry it "
+        "across the horizon, which makes that region the black hole, where every cone points to $r = 0$. The "
+        "Kretschmann scalar $240r_h^6/r^{10}$ is finite at $r_h$ and diverges only at $r = 0$.",
     ],
     ("global_monopole", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Letelier's black hole in a cloud of strings, "
@@ -4207,6 +4270,17 @@ def _btz_rstar(r, roots):
     return (one(a) - (one(b) if b else 0)) / (a - b)
 
 
+def _tangherlini_rstar(r, D=5):
+    """Tangherlini's tortoise coordinate at r_h = 1, the integral of 1/(1 - r^(3-D)), up to a constant:
+    r + ln|(r - 1)/(r + 1)|/2 in five dimensions, and in six
+    r + ln|r - 1|/3 - ln(r^2 + r + 1)/6 - arctan((2r + 1)/sqrt 3)/sqrt 3."""
+    r = np.asarray(r, float)
+    if D == 5:
+        return r + 0.5 * np.log(np.abs((r - 1) / (r + 1)))
+    return (r + np.log(np.abs(r - 1)) / 3 - np.log(r * r + r + 1) / 6
+            - np.arctan((2 * r + 1) / np.sqrt(3)) / np.sqrt(3))
+
+
 def _away(*radii):
     return lambda x0, r: np.all([np.abs(r - h) > 0.05 for h in radii], axis=0)
 
@@ -4272,6 +4346,14 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), lambda v, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
+    ("tangherlini", "spherical", "radial"):
+        (lambda t, r: t + _tangherlini_rstar(r), lambda t, r: t - _tangherlini_rstar(r), _away(1.0)),
+    ("tangherlini", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _tangherlini_rstar(r), _away(1.0)),
+    ("tangherlini", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _tangherlini_rstar(r), lambda u, r: u, _away(1.0)),
+    ("tangherlini", "spherical_six", "radial"):
+        (lambda t, r: t + _tangherlini_rstar(r, 6), lambda t, r: t - _tangherlini_rstar(r, 6), _away(1.0)),
     ("global_monopole", "static", "radial"):
         (lambda t, r: t + _rstar(r, [GM_RH]) / 0.81, lambda t, r: t - _rstar(r, [GM_RH]) / 0.81,
          lambda t, r: np.abs(r - GM_RH) > 0.05),

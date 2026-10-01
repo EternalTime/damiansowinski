@@ -220,6 +220,16 @@ def dilaton_t(sign):
     return [Mark(m, [np.column_stack([sign * (r + np.log(r - 1)), r])])]
 
 
+def tangherlini_t(sign):
+    """Tangherlini's static t = 0 in five dimensions in an Eddington-Finkelstein chart, r_h = 1:
+    v = r_* in the ingoing chart and u = -r_* in the outgoing one, r_* = r + ln((r - 1)/(r + 1))/2,
+    outside r_h, as far as the embedding reaches."""
+    m = moments("tangherlini", "five")[0]
+    lo, hi = m.reach("spherical", "r")
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([sign * (r + 0.5 * np.log((r - 1) / (r + 1))), r])])]
+
+
 def novikov(R, tau):
     """A shell of dust released from rest at areal radius R at t = 0, r_s = 1, at its proper
     time tau: its areal radius r and its Schwarzschild t, from the cycloid
@@ -526,6 +536,16 @@ FLAT = {
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "chart"): lambda: kottler_t(1),
     ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"): lambda: kottler_t(-1),
     ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart"): lambda: kottler_t(-1),
+    # Tangherlini's black hole in five dimensions on its three charts, and in six on its static chart;
+    # each dimension is another spacetime, marked on its own drawings alone.
+    ("tangherlini", "spherical", "radial"): lambda: one(
+        "tangherlini", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="five"),
+    ("tangherlini", "eddington_finkelstein_ingoing", "finkelstein"): lambda: tangherlini_t(1),
+    ("tangherlini", "eddington_finkelstein_ingoing", "chart"): lambda: tangherlini_t(1),
+    ("tangherlini", "eddington_finkelstein_outgoing", "finkelstein"): lambda: tangherlini_t(-1),
+    ("tangherlini", "eddington_finkelstein_outgoing", "chart"): lambda: tangherlini_t(-1),
+    ("tangherlini", "spherical_six", "radial"): lambda: one(
+        "tangherlini", lambda m: along(0.0, *m.reach("spherical_six", "r")), view_id="six"),
     # Letelier's black hole, r_s = 1, on the static and Eddington-Finkelstein planes, and the monopole
     # with no mass at its centre on the Barriola-Vilenkin plane; each is another spacetime than the other.
     ("string_black_hole", "static", "radial"): lambda: string_hole(),
