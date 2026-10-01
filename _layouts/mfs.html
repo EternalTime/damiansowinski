@@ -2254,23 +2254,16 @@
          says what that surface is in a band across the top of the figure, where it hides
          nothing that is drawn. */
       function cdFrameAround(f, above, drawing, extra, attrs) {
-        return '<div class="mfs-cd-figure' + (extra ? ' ' + extra : '') + '" style="' + cdWidths(f) + '">' + above +
+        var wide = Math.min(f.vw, CD_MAXH * f.vw / f.vh);
+        return '<div class="mfs-cd-figure' + (extra ? ' ' + extra : '') + '" style="--cd-wide:' + wide.toFixed(0) +
+          'px;--cd-min:' + (f.vw / CD_LAB).toFixed(4) + ';--cd-aspect:' + (f.vw / f.vh).toFixed(4) + '">' + above +
           '<div class="mfs-fig-scroll"><div class="mfs-cd-drawing"' + (attrs || '') + '>' + drawing + '</div></div></div>';
       }
 
-      function cdRestriction(view) {
-        return view.restriction ? '<div class="mfs-cd-restriction">' + nrProse(nrEsc(view.restriction)) + '</div>' : '';
-      }
-      // The widths cdFrameAround() gives a figure, as a style, for whatever is as wide as it.
-      function cdWidths(f) {
-        return '--cd-wide:' + Math.min(f.vw, CD_MAXH * f.vw / f.vh).toFixed(0) + 'px;--cd-min:' + (f.vw / CD_LAB).toFixed(4) +
-          ';--cd-aspect:' + (f.vw / f.vh).toFixed(4);
-      }
-      // A view's figure, its band inside it, or outside where views drawn together share a row
-      // for their bands, as conformalSection() says.
-      function cdFigure(view, bandOutside) {
+      function cdFigure(view) {
         var f = cdFrame(view);
-        return cdFrameAround(f, bandOutside ? '' : cdRestriction(view), cdSvg(view, f) + cdLabels(view, f));
+        var restriction = view.restriction ? '<div class="mfs-cd-restriction">' + nrProse(nrEsc(view.restriction)) + '</div>' : '';
+        return cdFrameAround(f, restriction, cdSvg(view, f) + cdLabels(view, f));
       }
 
       /* The views the chart being read has: those that name it, then those that name no chart,
@@ -2292,37 +2285,23 @@
           .concat(data.views.filter(function(v) { return !v.system; }));
       }
 
-      /* A file that carries `together` has every view of the chart drawn at once, each with its
-         own caption and legend and with no buttons, as the captain asked of Kerr on 1 October
-         2026: its symmetry axis and its equatorial plane "shown alongside", "both slices
-         visible". They stand side by side where the panel holds them all at the width
-         cdFrameAround() never draws a drawing narrower than, --cd-min ems of the caption, and
-         one under the other, in the file's order, where it does not: .mfs-cd-together is a
-         grid whose columns are at least --cd-together of those ems, the widest drawing's. A
-         view's caption and legend stand beside its drawing where its column has the room and
-         under it where it has not, as a view alone does. The bands that say what surface each
-         view is of differ in length, so each view is two rows of the grid, its band and the
-         rest, and views side by side share those rows: their drawings start on one line. */
       function conformalSection(metricId, coordId) {
         var views = cdViews(metricId, coordId);
         if (!views.length) return '';
-        var shown = 0, together = !!_conformalCache[metricId].together && views.length > 1;
-        var buttons = views.length > 1 && !together ? choices(views.map(function(v, i) {
+        var shown = 0;
+        var buttons = views.length > 1 ? choices(views.map(function(v, i) {
           return choiceButton(nrEsc(v.label), i === shown, { 'data-cd-view': v.id });
         }), 'view') : '';
-        var widest = together ? Math.max.apply(null, views.map(function(v) { return cdFrame(v).vw / CD_LAB; })) : 0;
         return [
           '<div class="mfs-section mfs-diagram mfs-conformal">',
             '<div class="mfs-section-head">',
               '<div class="mfs-section-label">conformal diagram</div>',
               buttons,
             '</div>',
-            together ? '<div class="mfs-cd-together" style="--cd-together:' + widest.toFixed(4) + '">' : '',
             views.map(function(view, i) {
               return [
-                together ? '<div class="mfs-nr-view mfs-cd-banded" style="' + cdWidths(cdFrame(view)) + '">' + cdRestriction(view) +
-                  '<div class="mfs-cd-body">' : '<div class="mfs-nr-view' + (i === shown ? '' : ' mfs-nr-hidden') + '">',
-                  cdFigure(view, together),
+                '<div class="mfs-nr-view' + (i === shown ? '' : ' mfs-nr-hidden') + '">',
+                  cdFigure(view),
                   '<div class="mfs-nr-text">',
                     '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
                     '<div class="mfs-nr-legend">' + view.legend.map(function(item) {
@@ -2331,10 +2310,9 @@
                     view.settings ? '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn at</span> ' + nrProse(nrEsc(view.settings)) + '</div>' : '',
                     view.input ? '<div class="mfs-nr-note"><span class="mfs-nr-k">drawn with</span> ' + nrProse(nrEsc(view.input)) + '</div>' : '',
                   '</div>',
-                together ? '</div></div>' : '</div>'
+                '</div>'
               ].join('');
             }).join(''),
-            together ? '</div>' : '',
           '</div>'
         ].join('');
       }
@@ -4168,27 +4146,9 @@
        the caption's size, --mfs-prose, and the drawing is at least --cd-min of those ems
        wide, as cdFrameAround() says. */
     .mfs-cd-figure { --cd-cap: var(--cd-wide); position: relative; width: 100%; }
-    .mfs-cd-banded { --cd-cap: var(--cd-wide); }
     #mfs-content-panel .mfs-cd-figure {
       flex: 0 1 max(calc(var(--cd-cap) * var(--mfs-text, 1)), calc(var(--cd-min) * var(--mfs-prose)));
       min-width: min(16.25rem, 100%); max-width: 100%;
-    }
-    /* Views drawn together, as conformalSection() says: as many columns as fit at the width
-       of the widest drawing, each view laid out in its column as a view alone is in the panel. */
-    #mfs-content-panel .mfs-cd-together {
-      display: grid; column-gap: 2rem; align-items: start;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--cd-together) * var(--mfs-prose))), 1fr));
-    }
-    #mfs-content-panel .mfs-cd-together > .mfs-nr-view {
-      display: grid; grid-row: span 2; grid-template-rows: subgrid; gap: 0; min-width: 0;
-    }
-    #mfs-content-panel .mfs-cd-body {
-      display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.75rem 2rem; min-width: 0;
-    }
-    /* A band outside its figure is as wide as the figure, whose width is the figure's rule below. */
-    #mfs-content-panel .mfs-cd-banded > .mfs-cd-restriction {
-      box-sizing: border-box; align-self: start;
-      width: min(100%, max(calc(var(--cd-cap) * var(--mfs-text, 1)), calc(var(--cd-min) * var(--mfs-prose))));
     }
     /* The frame a drawing scrolls sideways in when it is wider than the panel, a conformal
        diagram's or a figure's as cdFrameAround() says and a spacetime diagram's as nrFigure()
@@ -4396,7 +4356,7 @@
       #mfs-content-panel .mfs-nr-scroll {
         max-width: max(calc(100svh * var(--nr-aspect, 1)), calc(100vh - 64px));
       }
-      #mfs-content-panel .mfs-cd-figure, #mfs-content-panel .mfs-cd-banded {
+      #mfs-content-panel .mfs-cd-figure {
         --cd-cap: min(var(--cd-wide), max(calc(100svh * var(--cd-aspect, 1)), calc(100vh - 64px)));
       }
     }
@@ -4744,9 +4704,6 @@
       .mfs-print-body .mfs-cd-figure { width: max(min(12cm, var(--cd-wide)), calc(var(--cd-min) * 12pt)); max-width: none; }
       .mfs-print-body .mfs-fig-scroll { overflow: visible; }
       .mfs-print-body .mfs-cd-restriction { border: 1px solid #000 !important; margin: 0 0 4pt; padding: 3pt 6pt; }
-      .mfs-print-body .mfs-cd-banded > .mfs-cd-restriction {
-        box-sizing: border-box; width: max(min(12cm, var(--cd-wide)), calc(var(--cd-min) * 12pt));
-      }
       .mfs-print-body .cd-region { fill: #f3f3f3; }
       .mfs-print-body .cd-cover { fill: #d9eef4; }
       .mfs-print-body .cd-cover2 { fill: #f3e9c8; }
