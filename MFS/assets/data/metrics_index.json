@@ -23,7 +23,7 @@
     "version": "bb57401acacf9182",
     "diagrams": "a6fabc19c0e551be",
     "conformal": "2771060b42b8605b",
-    "embedding": "7a5bb61142ed4106"
+    "embedding": "9b0e2bc9b72fa37e"
   },
   {
     "id": "alcubierre",
@@ -191,7 +191,7 @@
     ],
     "version": "227938ced993dec8",
     "diagrams": "d6268bdae97d9fd7",
-    "embedding": "1464616c40f1267f"
+    "embedding": "7fea7a854b8ceca4"
   },
   {
     "id": "c_metric",
@@ -516,7 +516,7 @@
     "version": "5c25e0d9ea12dbb9",
     "diagrams": "fc0a639f4f3a4d4d",
     "conformal": "14c873edf7fb75dc",
-    "embedding": "cffb4d75dcca77c8"
+    "embedding": "c0db8a34cdba1339"
   },
   {
     "id": "kantowski_sachs",
@@ -548,7 +548,7 @@
     "version": "cdf326dc1d4fef12",
     "diagrams": "a8296e17dab2de95",
     "conformal": "5aa345afee4654d8",
-    "embedding": "b284a13acbc7b0ac"
+    "embedding": "46d9d6d9484b8e00"
   },
   {
     "id": "kasner",
@@ -572,7 +572,7 @@
     ],
     "version": "89819b3d261872f4",
     "diagrams": "a84952c23e2fa052",
-    "embedding": "cd34ed6b871671f6"
+    "embedding": "e2698f474fe29ce2"
   },
   {
     "id": "kerr",
@@ -668,7 +668,7 @@
     "version": "59a7f3e6cd185e0f",
     "diagrams": "39424436cf59ea7f",
     "conformal": "6fa408bb4e46f514",
-    "embedding": "4dfa90cbd6c3c88a"
+    "embedding": "0633d69609fb99f8"
   },
   {
     "id": "krasnikov",
@@ -961,7 +961,7 @@
     "version": "6922c354e7370010",
     "diagrams": "23589bf4a0fdba65",
     "conformal": "62cc3d3fab22417e",
-    "embedding": "42620bcd45e4fbb7"
+    "embedding": "74f663204d97446f"
   },
   {
     "id": "mixmaster",
@@ -1121,7 +1121,7 @@
     ],
     "version": "de0877bcf7d5128a",
     "diagrams": "21757421f8076200",
-    "embedding": "c8c8d60e367e8156"
+    "embedding": "a484d91e42495a51"
   },
   {
     "id": "rn_metric",
@@ -1403,7 +1403,7 @@
     ],
     "version": "c1ad76001c3acb8e",
     "diagrams": "a6afc8c8528a23f2",
-    "embedding": "8bdbbd1d68520d03"
+    "embedding": "a4e44fc72dc33b60"
   },
   {
     "id": "tov",

@@ -1871,6 +1871,8 @@ def movie(frames, variable, values, seconds=5, turns=True, loop=None):
         d = s.data()
         d.pop("time", None)
         out["frames"].append({"label": d.pop("label"), "value": fixed(v, 6), **d})
+    if len({f["label"] for f in out["frames"]}) != len(out["frames"]):
+        raise AssertionError(f"two frames of the movie in {variable} carry one name")
     if not turns:
         out["turns"] = False
     return out
@@ -1879,6 +1881,12 @@ def movie(frames, variable, values, seconds=5, turns=True, loop=None):
 # ---------------------------------------------------------------- the spacetimes
 
 def view(vid, label, unit, surfaces, figure, **fields):
+    """A view of its `surfaces`. More than one surface is a run of moments, and a view that
+    changes from moment to moment is played as a movie, never set out as separate pictures, as
+    the captain asked on 30 September and again on 1 October 2026, so such a view is refused
+    without its `movie`, whose frames hold every one of its moments."""
+    if len(surfaces) > 1 and fields.get("movie") is None:
+        raise AssertionError(f"the view {vid!r} holds {len(surfaces)} moments and no movie to play them")
     shades = figure.pop("shades", None)
     out = {"id": vid, "label": label, "unit": unit, "surfaces": [s.data() for s in surfaces],
            "figure": figure}
@@ -1901,33 +1909,6 @@ def figure_of(surfaces, fills, size, camera=CAMERA, offsets=None, meridians=24):
     fig.surfaces, fig.meridians, fig.tint = list(zip(surfaces, offsets)), meridians, dict(fills)
     for s, off in zip(surfaces, offsets):
         draw_surface(fig, s, off, meridians)
-    return fig
-
-
-def sequence_figure(surfaces, fills, size, columns, camera=CAMERA, meridians=12, gap=0.15):
-    """A sequence of surfaces in rows of `columns`, read left to right and down, each on its own
-    axis and centred in its column, the tops of a row level, and each moment's label set below
-    its row. `gap` is the space between columns as a part of the widest surface."""
-    phi = np.linspace(0, 2 * math.pi, 73)
-    boxes = []
-    for s in surfaces:
-        P = np.vstack([np.column_stack([np.outer(p.rho, np.cos(phi)).ravel(), np.outer(p.rho, np.sin(phi)).ravel(),
-                                        np.repeat(p.z, len(phi))]) for p in s.pieces if not p.reference])
-        S = camera.screen(P)
-        boxes.append((S.min(0), S.max(0)))
-    width = max(hi[0] - lo[0] for lo, hi in boxes)
-    height = max(hi[1] - lo[1] for lo, hi in boxes)
-    unit = columns * width * (1 + gap) / 560
-    row = height + (8 + 1.25 * LAB["small"] + 14) * unit
-    lift = float(camera.screen([0.0, 0.0, 1.0])[1] - camera.screen([0.0, 0.0, 0.0])[1])
-    offsets = []
-    for k, (lo, hi) in enumerate(boxes):
-        top = -(k // columns) * row
-        offsets.append(((k % columns) * width * (1 + gap) - 0.5 * (lo[0] + hi[0]), 0.0, (top - hi[1]) / lift))
-    fig = figure_of(surfaces, fills, size, camera, offsets, meridians)
-    for k, (s, off) in enumerate(zip(surfaces, offsets)):
-        at = np.array([float(fig.screen(np.asarray(off))[0]), -(k // columns) * row - height])
-        fig.label(at, s.label, "t", "small", dy=8)
     return fig
 
 
@@ -3056,7 +3037,9 @@ def tolman_bondi(ck, src):
     2GM(r_b)/c^2 = r_b/2, so k = 2M/r^3 = (5 - 3r^2)/4 inside and 1/(2r^3) outside, r_b = 1,
     but released from rest, E = -M/r, rather than marginally bound: with E = 0 the slice has
     g_rr = (dR/dr)^2 and is a plane, which is checked for the spacetime diagram's own cloud and
-    stated. Four moments of t until just before the centre is crushed, at t = pi/sqrt(5).
+    stated. Four moments of t until just before the centre is crushed, at t = pi/sqrt(5), played
+    as a movie with a frame every 0.025 r_b of ct and the rim, the clocks released at 2.5 r_b, at
+    z = 0 in every frame.
     Every surface is checked as the metric gives it and then drawn with its heights doubled,
     VERTICAL, which the caption states: the cloud rises by a third of its width and would read
     on the page as a flat disc."""
@@ -3070,8 +3053,8 @@ def tolman_bondi(ck, src):
         ck.plane(f"Tolman-Bondi, marginally bound, t = {t:g}", flat, np.linspace(0.02, 3, 300))
     top = 2.5
     size = 2 * top
-    surfaces = []
-    for t in (0.0, 0.6, 1.0, 1.3):
+
+    def moment(t):
         sl = cloud.slice(src, t, E)
         where = f"Tolman-Bondi, t = {t:g}"
         edge = cloud.horizon(t, 0.0, top)
@@ -3088,19 +3071,28 @@ def tolman_bondi(ck, src):
         if t == 0:
             ck.form(f"{where}, outside it is Flamm's paraboloid", ext,
                     lambda r, z1=ext.z[0]: z1 + 2 * np.sqrt(0.5 * (r - 0.5)) - 2 * np.sqrt(0.25), size)
+        # The rim of the drawing, the clocks released at 2.5 r_b, stands at z = 0 at every moment,
+        # and the cloud sinks below it.
+        shift = -ext.z[-1]
         for p in (dust, ext):
-            p.z = VERTICAL * p.z
-        surfaces.append(Surface([dust, ext], label=f"$ct = {t:g}\\,r_b$", time=t))
-    fig = sequence_figure(surfaces, {"star": "star", "sheet": "cover"}, size, columns=2)
+            p.z = VERTICAL * (p.z + shift)
+        return Surface([dust, ext], label=f"$ct = {t:g}\\,r_b$", time=t)
+
+    # The movie runs through the moments at a steady t, a frame every 0.025 r_b of ct.
+    times, keys = movie_values([0.0, 0.6, 1.0, 1.3], 0.025)
+    frames = [moment(round(t, 9)) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"star": "star", "sheet": "cover"}, size)
     fig.legend("fill", "star", "the cloud, $r < r_b$")
     fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the cloud")
     fig.legend("line", "r", "$r$ constant: the shells $r_b/3$ and $2r_b/3$ of the cloud, and outside it the clocks "
                             "released at $1.5$, $2$ and $2.5\\,r_b$")
     fig.legend("line", "surface", "the surface of the cloud, $r = r_b$")
-    if any(ring["class"] == "horizon" for s in surfaces for ring in s.rings()):
+    if any(ring["class"] == "horizon" for s in frames for ring in s.rings()):
         fig.legend("line", "horizon", "the apparent horizon, $R = 2GM(r)/c^2$ for the mass inside it")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     return [view("cloud", "The collapsing cloud", "$r_b$", surfaces, fig.done(), vertical=VERTICAL,
+                 movie=movie(frames, "$ct$", [f.time for f in frames]),
                  settings="$r_b = 1$, the unit of every length, and $2GM/c^2 = r_b/2$.",
                  input="The cloud of the spacetime diagram, its density falling as $1 - r^2/r_b^2$ to zero at $r_b$ "
                        "with $R(r, 0) = r$, but released from rest, $E = -GM(r)/c^2r$, each shell falling on its own "
@@ -3600,44 +3592,47 @@ def frw(ck, src):
 
 
 
+MISNER_MOMENTS = (-2.0, -1.5, -1.0, -0.5)      # ct in any length l
+
+
 def misner(ck, src):
     """The contracting region T < 0 of Misner space in the Milne chart, at Li and Gott's
     psi_0 = 4 pi, where chi runs once round 2 pi. The slice z = 0 of one moment t has the metric
     dy^2 + c^2t^2 dchi^2: a flat cylinder of radius c|t| about the axis y, z = y. Drawn at four
     moments as the closed direction shrinks toward the chronology horizon t = 0, each over
-    -2 <= y <= 2 in any length l, since flat space names none."""
-    moments = (-2.0, -1.5, -1.0, -0.5)
-    surfaces, size = [], 4.0
-    for ct in moments:
+    -2 <= y <= 2 in any length l, since flat space names none, and played as a movie with a frame
+    every 0.05 l of ct."""
+    size = 4.0
+
+    def moment(ct):
         sl = Slice(src, "misner", "milne", "y", "\\chi", {"t": repr(ct), "z": 0}, {"psi_0": "4*pi"})
         tube = Piece("tube", "sheet", sl, -2.0, 2.0, -2.0, 1,
                      (("edge", "the cylinder runs on for ever toward $y \\to -\\infty$"),
                       ("edge", "the cylinder runs on for ever toward $y \\to \\infty$")),
                      [(-1.0, "r", None), (0.0, "r", None), (1.0, "r", None)], size)
-        where = f"Misner, the cylinder at ct = {ct}"
+        where = f"Misner, the cylinder at ct = {ct:g}"
         ck.isometry(where, tube)
         ck.radius(f"{where}, rho = c|t|", tube, lambda y, ct=ct: np.full_like(y, abs(ct)), size)
         ck.form(f"{where}, z = y", tube, lambda y: y, size)
-        surfaces.append(Surface([tube], label=f"$ct = {ct:g}$", time=ct))
-    # The cylinders stand far enough apart that their names under them, at the size the page
-    # sets them at, stand clear of each other.
-    offsets, x, gap = [], 0.0, 2.0
-    for s in surfaces:
-        rho = float(s.pieces[0].rho[0])
-        offsets.append((x + rho, 0.0, 0.0))
-        x += 2 * rho + gap
-    fig = figure_of(surfaces, {"sheet": "cover"}, 8.0, offsets=offsets, meridians=12)
-    base = min(fig.screen(np.asarray(off) + [0, 0, -2.0])[1] for off in offsets)
-    for s, off in zip(surfaces, offsets):
-        fig.label(np.array([fig.screen(np.asarray(off))[0], base]), s.label, "t", "small", dy=8)
+        return Surface([tube], label=f"$ct = {ct:g}$", time=ct)
+
+    # The movie runs through the moments at a steady t, a frame every 0.05 l of ct.
+    times, keys = movie_values(list(MISNER_MOMENTS), 0.05)
+    frames = [moment(round(ct, 9)) for ct in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
     fig.legend("fill", "cover", "the slice $z = 0$ of a moment of constant $t$, which $\\chi$ and $y$ cover")
     fig.legend("line", "r", "$y$ constant, at $-\\ell$, $0$ and $\\ell$, each a circle of circumference $2\\pi c|t|$")
     fig.legend("line", "meridian", "$\\chi$ constant, every $30°$")
     return [view("cylinders", "The contracting region", "$\\ell$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", [f.time for f in frames]),
                  settings="$\\psi_0 = 4\\pi$, and $\\ell$, any length, the unit of every length, since flat space "
                           "has none of its own.")]
 
 
+
+
+GOTT_MOMENTS = (-2.0, -1.0, -0.5, -0.25)       # c tau in the length l
 
 
 def gott_time_machine(ck, src):
@@ -3651,45 +3646,44 @@ def gott_time_machine(ck, src):
 
     carries the angle phi once round and the length x along. The pulled back metric is
     dx^2 + (L/2 pi)^2 dphi^2 with no cross term, which Slice checks. Drawn at four moments as the
-    circle shrinks toward b at the horizon, each over -2 <= x <= 2 in the length l."""
+    circle shrinks toward b at the horizon, each over -2 <= x <= 2 in the length l, and played as
+    a movie with a frame every 0.05 l of c tau."""
     a, b = (nr.GOTT[k] for k in ("a", "b"))
     a_, b_ = (float(sp.sympify(v)) for v in (a, b))
-    moments = (-2.0, -1.0, -0.5, -0.25)
-    surfaces, size = [], 4.0
-    for ct in moments:
-        t = sp.nsimplify(abs(ct))
+    size = 4.0
+
+    def moment(ct):
+        # The moment as a fraction, so that the cross term of the pulled back metric cancels exactly.
+        t = sp.nsimplify(abs(ct), rational=True)
         L = f"sqrt(({a})**2*({t})**2 + ({b})**2)"
-        sl = Slice(src, "gott_time_machine", "grant_milne", "Y", "\\chi", {"tau": repr(ct), "z": 0}, dict(nr.GOTT),
+        sl = Slice(src, "gott_time_machine", "grant_milne", "Y", "\\chi", {"tau": str(-t), "z": 0}, dict(nr.GOTT),
                    swept={"chi": f"({a})*chi/(2*pi) - ({b})*Y/(({t})*{L})",
                           "Y": f"({b})*chi/(2*pi) + ({a})*({t})*Y/{L}"})
         tube = Piece("tube", "sheet", sl, -2.0, 2.0, -2.0, 1,
                      (("edge", "the cylinder runs on for ever toward $x \\to -\\infty$"),
                       ("edge", "the cylinder runs on for ever toward $x \\to \\infty$")),
                      [(-1.0, "r", None), (0.0, "r", None), (1.0, "r", None)], size)
-        where = f"Gott, the cylinder at c tau = {ct}"
+        where = f"Gott, the cylinder at c tau = {ct:g}"
         radius = math.hypot(a_ * ct, b_) / (2 * math.pi)
         ck.isometry(where, tube)
         ck.radius(f"{where}, rho = sqrt(a^2 c^2 tau^2 + b^2)/(2 pi)", tube,
                   lambda x, radius=radius: np.full_like(x, radius), size)
         ck.form(f"{where}, z = x", tube, lambda x: x, size)
-        surfaces.append(Surface([tube], label=f"$c\\tau = {ct:g}$", time=ct))
+        return Surface([tube], label=f"$c\\tau = {ct:g}$", time=ct)
+
+    # The movie runs through the moments at a steady tau, a frame every 0.05 l of c tau.
+    times, keys = movie_values(list(GOTT_MOMENTS), 0.05)
+    frames = [moment(round(ct, 9)) for ct in times]
+    surfaces = [frames[i] for i in keys]
     ck.add("Gott: the circle shrinks toward b at the horizon and stays above it",
-           0.0 if all(float(s.pieces[0].rho[0]) > b_ / (2 * math.pi) for s in surfaces) else 1.0, 0.5)
-    offsets, x, gap = [], 0.0, 1.5
-    for s in surfaces:
-        rho = float(s.pieces[0].rho[0])
-        offsets.append((x + rho, 0.0, 0.0))
-        x += 2 * rho + gap
-    fig = figure_of(surfaces, {"sheet": "cover"}, 8.0, offsets=offsets, meridians=12)
-    base = min(fig.screen(np.asarray(off) + [0, 0, -2.0])[1] for off in offsets)
-    # The narrow cylinders stand closer than their names are wide, so every second name stands a line lower.
-    for k, (s, off) in enumerate(zip(surfaces, offsets)):
-        fig.label(np.array([fig.screen(np.asarray(off))[0], base]), s.label, "t", "small", dy=8 + 36 * (k % 2))
+           0.0 if all(float(s.pieces[0].rho[0]) > b_ / (2 * math.pi) for s in frames) else 1.0, 0.5)
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
     fig.legend("fill", "cover", "the slice $z = 0$ of a moment of constant $\\tau$, away from the strings")
     fig.legend("line", "r", "the circle a circuit of both strings closes, of circumference "
                             "$\\sqrt{a^2c^2\\tau^2 + b^2}$, at three places a length $\\ell$ apart")
     fig.legend("line", "meridian", "straight lines across the circles, every $30°$")
     return [view("cylinders", "Away from the strings", "$\\ell$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
                  settings=f"$a = {a_:.2f}$ and $b = {b_:.2f}\\,\\ell$, the boost and the shift round two strings "
                           "with $4G\\mu/c^2 = 1/3$, $v = 4c/5$, and $d = \\ell/2$.")]
 
@@ -4107,7 +4101,8 @@ def at_rest(ck, src, metric_id, system_id):
 def ring_sequence(ck, src, name, metric_id, system_id, moments, top, params=None, axes=("x", "z")):
     """A flat plane of the two axes, x and z unless named, at each moment, (label, time, fixed,
     functions), with a ring of particles at rest on the unit circle of the chart, which each
-    moment stretches into an ellipse of semi-axes sqrt(g_xx) and sqrt(g_zz), checked."""
+    moment stretches into an ellipse of semi-axes sqrt(g_xx) and sqrt(g_zz), checked. The
+    moments are the frames of the view's movie, ring_movie()."""
     size = 2 * top
     alpha = np.linspace(0, 2 * math.pi, 361)
     surfaces = []
@@ -4119,6 +4114,21 @@ def ring_sequence(ck, src, name, metric_id, system_id, moments, top, params=None
         ring, dots = particles(ck, where, sl, plane, np.cos(alpha), np.sin(alpha))
         surfaces.append(Surface([plane], label=label, time=time, curves=[ring], dots=dots))
     return surfaces
+
+
+def ring_moments(keys, step, key, between):
+    """The moments of a ring's movie, as ring_sequence() takes them: the key moments, each
+    key(i) as the flat view names it, and between them a moment between(t) every `step` or so of
+    the time. Returns the moments and the index of each key among them."""
+    times, at = movie_values(list(keys), step)
+    return [key(at.index(i)) if i in at else between(round(t, 9)) for i, t in enumerate(times)], at
+
+
+def ring_movie(frames, size, variable, **fields):
+    """The figure and the movie of a ring of particles on a flat plane, one frame a moment, seen
+    from well above the plane."""
+    fig = movie_figure(frames, {"sheet": "cover"}, size, FLAT_CAMERA, meridians=12)
+    return fig, movie(frames, variable, [f.time for f in frames], **fields)
 
 
 STACK_CAMERA = Camera(-60, 18)   # a stack of moments seen from low and across both axes of its ellipses
@@ -4187,9 +4197,14 @@ def kasner(ck, src):
     ck.exact("Kasner: the exponents sum to 1, and so do their squares", sum(p) == 1 and sum(q * q for q in p) == 1)
     at_rest(ck, src, "kasner", "cartesian")
     params = {"p_1": "-2/7", "p_2": "3/7", "p_3": "6/7"}
-    moments = [(f"$t = {s}$", float(sp.Rational(s)), {"t": s, "y": 0}, None) for s in ("1/4", "1/2", "1", "2")]
-    surfaces = ring_sequence(ck, src, "Kasner", "kasner", "cartesian", moments, 2.0, params)
-    for s, (_, time, _, _) in zip(surfaces, moments):
+    named = ("1/4", "1/2", "1", "2")
+    # The movie runs through the moments at a steady t, a frame every 0.05 of it.
+    moments, keys = ring_moments([float(sp.Rational(s)) for s in named], 0.05,
+                                 lambda k: (f"$t = {named[k]}$", float(sp.Rational(named[k])), {"t": named[k], "y": 0}, None),
+                                 lambda t: (f"$t = {t:g}$", t, {"t": repr(t), "y": 0}, None))
+    frames = ring_sequence(ck, src, "Kasner", "kasner", "cartesian", moments, 2.0, params)
+    surfaces = [frames[i] for i in keys]
+    for s, (_, time, _, _) in zip(frames, moments):
         P = s.curves[0].points
         a = np.linspace(0, 2 * math.pi, 361)
         want = np.column_stack([time ** (-2 / 7) * np.cos(a), time ** (6 / 7) * np.sin(a)])
@@ -4204,7 +4219,7 @@ def kasner(ck, src):
         ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
         ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
         ("line", "axis", "the axis of time, through the centre of the ring")])
-    fig = sequence_figure(surfaces, {"sheet": "cover"}, 4.0, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig, played = ring_movie(frames, 4.0, "$t$")
     fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
     fig.legend("line", "particles", "a ring of particles at rest in the chart on $x^2 + z^2 = \\ell^2$, with twelve of them "
                                     "marked: an ellipse reaching $t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$")
@@ -4215,7 +4230,7 @@ def kasner(ck, src):
              "diagrams.")
     return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings, input=given,
                  height="$t$, a height of $1.5\\,\\ell$ for each unit of $t$"),
-            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played,
                  settings="$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ and $t$ in the unit of time in which the powers are "
                           "evaluated, with $\\ell$ the ring's radius at $t = 1$, the unit of every length.",
                  input="Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, a point on the Kasner circle, as in the "
@@ -4230,13 +4245,17 @@ def bianchi(ck, src):
     solver = nr.DustSolver("bianchi", "type_i_cartesian", "t", **nr.BIANCHI_DUST)
     src.note("bianchi", "type_i_cartesian", ["einstein_tensor"])
     at_rest(ck, src, "bianchi", "type_i_cartesian")
-    moments = []
-    for t in (0.1, solver.t_ref, 1.0, 2.0):
+    named = (0.1, solver.t_ref, 1.0, 2.0)
+
+    def dust(t):
         y = solver.state(np.array([t]))[:, 0]
         functions = {"a_1": repr(float(y[0])), "a_2": repr(float(y[2])), "a_3": repr(float(y[4]))}
-        moments.append((f"$c\\bar Ht = {t:.2f}$", float(t), {"t": repr(float(t)), "y": 0}, functions))
-    surfaces = ring_sequence(ck, src, "Bianchi I", "bianchi", "type_i_cartesian", moments, 3.5)
-    for s, (_, t, _, fn) in zip(surfaces, moments):
+        return f"$c\\bar Ht = {t:.2f}$", float(t), {"t": repr(float(t)), "y": 0}, functions
+    # The movie runs through the moments at a steady cosmic time, a frame about every 0.05 of c H t.
+    moments, keys = ring_moments(named, 0.05, lambda k: dust(named[k]), dust)
+    frames = ring_sequence(ck, src, "Bianchi I", "bianchi", "type_i_cartesian", moments, 3.5)
+    surfaces = [frames[i] for i in keys]
+    for s, (_, t, _, fn) in zip(frames, moments):
         P = s.curves[0].points
         a = np.linspace(0, 2 * math.pi, 361)
         want = np.column_stack([float(fn["a_1"]) * np.cos(a), float(fn["a_3"]) * np.sin(a)])
@@ -4258,7 +4277,7 @@ def bianchi(ck, src):
         ("line", "particles", "the ring at the four moments of the flat view, twelve of its grains marked"),
         ("line", "worldline", "the world lines of the twelve grains, at rest in the chart"),
         ("line", "axis", "the axis of time, through the centre of the ring")])
-    fig = sequence_figure(surfaces, {"sheet": "cover"}, 7.0, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig, played = ring_movie(frames, 7.0, "$c\\bar Ht$")
     fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
     fig.legend("line", "particles", "a ring of the dust on $x^2 + z^2 = \\ell^2$, with twelve of its grains marked: an "
                                     "ellipse reaching $a_1\\ell$ along $x$ and $a_3\\ell$ along $z$")
@@ -4270,7 +4289,7 @@ def bianchi(ck, src):
              "spacetime diagram.")
     return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings, input=given,
                  height="$c\\bar Ht$, a height of $2.5\\,\\ell$ for each $1/\\bar H$"),
-            view("ring", "A ring of dust", "$\\ell$", surfaces, fig.done(), settings=settings, input=given)]
+            view("ring", "A ring of dust", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings, input=given)]
 
 
 def pp_wave(ck, src):
@@ -4302,8 +4321,10 @@ def pp_wave(ck, src):
     focus = brentq(lambda u: run.sol(u)[n + 90], 0, 1.5, xtol=1e-15)
     ck.add("pp-wave: at the focus every particle is on the x axis", float(np.max(np.abs(run.sol(focus)[n:2 * n]))), 1e-9)
     top = 3.0
-    surfaces = []
-    for u in (-3.0, -0.5, 0.0, focus):
+    # The movie runs through the wave fronts at a steady u, a frame about every 0.1 L of cu.
+    us, keys = movie_values([-3.0, -0.5, 0.0, focus], 0.1)
+    frames = []
+    for u in [u if i in keys else round(u, 9) for i, u in enumerate(us)]:
         sl = FlatPlane(src, "pp_wave", "exact_plane_wave", "x", "y", {"u": repr(u), "v": 0},
                        functions={"A": "exp(-u**2)", "B": "0"})
         where = f"pp-wave, cu = {u:.4f}"
@@ -4316,8 +4337,10 @@ def pp_wave(ck, src):
                float(np.max(np.abs(np.column_stack([cx, cy]) - np.column_stack([X * np.cos(np.append(alpha, 0)),
                                                                                   Y * np.sin(np.append(alpha, 0))])))), 1e-9)
         ring, dots = particles(ck, where, sl, plane, cx, cy)
-        label = "$cu = " + (f"{u:g}" if u != focus else f"{u:.2f}") + "\\,L$"
-        surfaces.append(Surface([plane], label=label, time=u, curves=[ring], dots=dots))
+        # A tenth of L is named as it is, and a wave front between two of them to a hundredth.
+        label = "$cu = " + (f"{u:g}" if abs(10 * u - round(10 * u)) < 1e-6 else f"{u:.2f}") + "\\,L$"
+        frames.append(Surface([plane], label=label, time=u, curves=[ring], dots=dots))
+    surfaces = [frames[i] for i in keys]
     def pp_rows(u):
         w = run.sol(np.atleast_1d(u))
         return w[0], w[n + 90]
@@ -4334,7 +4357,7 @@ def pp_wave(ck, src):
         ("line", "particles", "the ring at the four wave fronts of the flat view, twelve of its particles marked"),
         ("line", "worldline", "the world lines of the twelve particles"),
         ("line", "axis", "the axis of retarded time, through the centre of the ring")])
-    fig = sequence_figure(surfaces, {"sheet": "cover"}, 2 * top, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig, played = ring_movie(frames, 2 * top, "$cu$")
     fig.legend("fill", "cover", "the wave front at each moment, flat")
     fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = L^2$ before the pulse, with twelve of them "
                                     "marked")
@@ -4343,7 +4366,7 @@ def pp_wave(ck, src):
     given = "A pulse of the plus polarisation, $A = e^{-u^2}/L^2$ and $B = 0$, as in the spacetime diagram."
     return [view("tube", "The ring's world tube", "$L$", [tube], tube_fig, settings=settings, input=given,
                  height="$cu$, a height of $L/2$ for each $L$"),
-            view("ring", "A ring of particles", "$L$", surfaces, fig.done(), settings=settings, input=given)]
+            view("ring", "A ring of particles", "$L$", surfaces, fig.done(), movie=played, settings=settings, input=given)]
 
 
 def aichelburg_sexl(ck, src):
@@ -4389,8 +4412,10 @@ def aichelburg_sexl(ck, src):
     ck.add("Aichelburg-Sexl: behind the pulse the ring shrinks as 1 - u/2", float(np.max(np.abs(radius(np.linspace(0.3, 1.5, 50))
                                                                                                 - (1 - np.linspace(0.3, 1.5, 50) / 2)))), 2 * width)
     top = 1.5
-    surfaces = []
-    for u in (-1.0, 0.5, 1.0, 1.5):
+    # The movie runs through the wave fronts at a steady u, a frame every 0.05 of it.
+    us, keys = movie_values([-1.0, 0.5, 1.0, 1.5], 0.05)
+    frames = []
+    for u in [round(u, 9) for u in us]:
         sl = FlatPlane(src, "aichelburg_sexl", "null_cartesian", "x", "y", {"u": repr(u), "v": 0}, params={"G": 1, "E": "1/8", "rho_0": 1})
         where = f"Aichelburg-Sexl, u = {u:g}"
         plane = disc(sl, "plane", top, "the axis the source moves along", "the wave front runs on, flat, to infinity", [], 2 * top)
@@ -4402,7 +4427,8 @@ def aichelburg_sexl(ck, src):
                float(np.max(np.abs(np.column_stack([cx, cy]) - a * np.column_stack([np.cos(np.append(alpha, 0)),
                                                                                     np.sin(np.append(alpha, 0))])))), 1e-9)
         ring, dots = particles(ck, where, sl, plane, cx, cy)
-        surfaces.append(Surface([plane], label=f"$u = {u:g}$", time=u, curves=[ring], dots=dots))
+        frames.append(Surface([plane], label=f"$u = {u:g}$", time=u, curves=[ring], dots=dots))
+    surfaces = [frames[i] for i in keys]
 
     def as_rows(u):
         w = run.sol(np.atleast_1d(u))
@@ -4420,7 +4446,7 @@ def aichelburg_sexl(ck, src):
         ("line", "particles", "the ring at the four wave fronts of the flat view, twelve of its particles marked"),
         ("line", "worldline", "the world lines of the twelve particles"),
         ("line", "axis", "the axis the source moves along, crossed by the shock at $u = 0$")])
-    fig = sequence_figure(surfaces, {"sheet": "cover"}, 2 * top, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig, played = ring_movie(frames, 2 * top, "$u$")
     fig.legend("fill", "cover", "the wave front at each moment, flat")
     fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = (8GE/c^4)^2$ before the shock, "
                                     "with twelve of them marked")
@@ -4431,7 +4457,8 @@ def aichelburg_sexl(ck, src):
              "light of that length in $u$ along the axis, carrying the same energy $E$.")
     return [view("tube", "The ring's world tube", "$8GE/c^4$", [tube], tube_fig, settings=settings, input=given,
                  height="$u$, a height of $1/2$ for each unit of $u$"),
-            view("ring", "A ring of particles", "$8GE/c^4$", surfaces, fig.done(), settings=settings, input=given)]
+            view("ring", "A ring of particles", "$8GE/c^4$", surfaces, fig.done(), movie=played, settings=settings,
+                 input=given)]
 
 
 def khan_penrose(ck, src):
@@ -4447,16 +4474,21 @@ def khan_penrose(ck, src):
              not any(ix[0] in ("x", "y") and ix[1:] == ("\\tau", "\\tau") for ix in gamma))
     sigma_tt = gamma.get(("\\sigma", "\\tau", "\\tau"), sp.Integer(0))
     ck.exact("Khan-Penrose: Gamma^sigma_tautau vanishes on sigma = 0", sigma_tt.subs(R.symbol["\\sigma"], 0) == 0)
-    times = (0.0, 0.6, 1.0, 1.3)
-    moments = [(f"$\\tau = {t:g}$", t, {"tau": repr(t), "sigma": 0}, None) for t in times]
-    surfaces = ring_sequence(ck, src, "Khan-Penrose", "khan_penrose", "cosmological", moments, 4.0, {"L": 1},
-                             axes=("x", "y"))
+    def front(t):
+        return f"$\\tau = {t:g}$", t, {"tau": repr(t), "sigma": 0}, None
+    named = (0.0, 0.6, 1.0, 1.3)
+    # The movie runs through the moments at a steady tau, a frame every 0.025 of it.
+    moments, keys = ring_moments(named, 0.025, lambda k: front(named[k]), front)
+    times = [t for _, t, _, _ in moments]
+    frames = ring_sequence(ck, src, "Khan-Penrose", "khan_penrose", "cosmological", moments, 4.0, {"L": 1},
+                           axes=("x", "y"))
+    surfaces = [frames[i] for i in keys]
 
     def rows(tau):
         tau = np.asarray(tau, dtype=float)
         return (1 + np.sin(tau)) / np.sqrt(np.cos(tau)), (1 - np.sin(tau)) / np.sqrt(np.cos(tau))
     a = np.linspace(0, 2 * math.pi, 361)
-    for s, t in zip(surfaces, times):
+    for s, t in zip(frames, times):
         A, B = rows(t)
         ck.add(f"Khan-Penrose, tau = {t}: the ellipse of semi-axes (1 +- sin tau)/sqrt(cos tau)",
                float(np.max(np.abs(s.curves[0].points[:, :2] - np.column_stack([A * np.cos(a), B * np.sin(a)])))), 1e-12)
@@ -4473,7 +4505,7 @@ def khan_penrose(ck, src):
         ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
         ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
         ("line", "axis", "the axis of $\\tau$, through the centre of the ring")])
-    fig = sequence_figure(surfaces, {"sheet": "cover"}, 8.0, columns=2, camera=FLAT_CAMERA, meridians=12)
+    fig, played = ring_movie(frames, 8.0, "$\\tau$")
     fig.legend("fill", "cover", "the wave front at each moment, flat")
     fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = \\ell^2$, with twelve of them marked: an "
                                     "ellipse reaching $(1 + \\sin\\tau)\\ell/\\sqrt{\\cos\\tau}$ along $x$ and "
@@ -4483,7 +4515,7 @@ def khan_penrose(ck, src):
                 "ring's radius before the collision, the unit of every length.")
     return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings,
                  height="$\\tau$, a height of $3\\,\\ell$ for each unit of $\\tau$"),
-            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), settings=settings)]
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
 
 
 def malament_hogarth(ck, src):
@@ -5455,9 +5487,10 @@ def kantowski_sachs(ck, src):
     the expansion before eta = 0 is the same movie run backward.
 
     The second is the vacuum member, the inside of Schwarzschild's horizon at r_s = 1, where
-    a = sqrt(1/T - 1) and b = T, at five moments from T = 0.9 down to 0.1, set side by side in
-    the order of the proper time of an observer at fixed r since the horizon,
-    c tau = eta + sin(eta) cos(eta) with T = cos^2(eta), since the future lies toward smaller T."""
+    a = sqrt(1/T - 1) and b = T, at five moments from T = 0.9 down to 0.1, played as a movie with
+    a frame every 0.02 r_s of T that runs at a steady proper time of an observer at fixed r since
+    the horizon, c tau = eta + sin(eta) cos(eta) with T = cos^2(eta), each frame's value, since
+    the future lies toward smaller T."""
     reach = 1.0
     marks = [(-0.5, "r", None), (0.0, "r", None), (0.5, "r", None)]
     ends = (("edge", "the cylinder runs on for ever toward $r \\to -\\infty$"),
@@ -5488,17 +5521,22 @@ def kantowski_sachs(ck, src):
                   settings="$b_0 = 1$, the unit of every length, and $\\kappa = 0$, with the moments named by the "
                            "dust chart's time $\\eta$.")]
 
-    vacuum = []
-    for T in KS_VACUUM_MOMENTS:
+    def inside(T):
         sl = Slice(src, "kantowski_sachs", "schwarzschild_interior", "r", "\\phi", {"T": repr(T), **EQUATOR}, {"r_s": 1})
         piece = tube(sl, math.sqrt(1 / T - 1), T, f"Kantowski-Sachs vacuum, T = {T:g} r_s", 6.0)
         eta = math.acos(math.sqrt(T))
-        vacuum.append(Surface([piece], label=f"$T = {T:g}$", time=eta + math.sin(eta) * math.cos(eta)))
-    fig = sequence_figure(vacuum, {"sheet": "cover"}, 6.0, columns=5)
+        return Surface([piece], label=f"$T = {T:g}$", time=eta + math.sin(eta) * math.cos(eta))
+
+    # The movie has a frame every 0.02 r_s of T and runs at a steady proper time, each frame's value.
+    falls, keys = movie_values([-T for T in KS_VACUUM_MOMENTS], 0.02)
+    frames = [inside(round(-T, 9)) for T in falls]
+    vacuum = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, 6.0, meridians=12)
     fig.legend("fill", "cover", "the stretch $|r| \\le r_s$ of the equator of a moment, which $r$ and $\\phi$ cover")
     fig.legend("line", "r", "$r$ constant, at $-r_s/2$, $0$ and $r_s/2$, each a circle of circumference $2\\pi T$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     views.append(view("vacuum", "Vacuum", "$r_s$", vacuum, fig.done(), system="schwarzschild_interior",
+                      movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
                       settings="$r_s = 1$, the unit of every length, with the moments in the order of the proper time "
                                "$c\\tau = r_s\\left(\\eta + \\sin\\eta\\cos\\eta\\right)$ of an observer at fixed $r$ since "
                                "the horizon, where $T = r_s\\cos^2\\eta$."))
@@ -5976,7 +6014,8 @@ CAPTIONS = {
     ],
     ("tolman_bondi", "cloud"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a cloud of dust collapsing from rest, densest at its "
-        "centre, at four moments of $t$, each drawn as its embedding in flat space (vertical scale $\\times 2$). "
+        "centre, as $ct$ runs from the release to $1.3\\,r_b$, each moment drawn as its embedding in flat space "
+        "(vertical scale $\\times 2$). "
         "On it $g_{rr} = (\\partial_rR)^2/(1 + 2E)$, with $R(r, t)$ "
         "the areal radius of the shell $r$, so in the areal radius the surface climbs at "
         "$dz/dR = \\sqrt{-2E/(1 + 2E)}$, set by the energy $E = -GM(r)/c^2r$ of the shell there alone. Every "
@@ -6192,8 +6231,8 @@ CAPTIONS = {
         "reversed in time.",
     ],
     ("kantowski_sachs", "vacuum"): [
-        "The equatorial plane ($\\theta = \\pi/2$) inside the horizon of a Schwarzschild black hole at five moments "
-        "of $T$, from $0.9\\,r_s$ to $0.1\\,r_s$, each drawn as a surface in flat space with every distance along it "
+        "The equatorial plane ($\\theta = \\pi/2$) inside the horizon of a Schwarzschild black hole as $T$ falls "
+        "from $0.9\\,r_s$ to $0.1\\,r_s$, each moment drawn as a surface in flat space with every distance along it "
         "the metric distance. On it the metric is $(r_s/T - 1)\\,dr^2 + T^2d\\phi^2$, so each moment is a flat "
         "cylinder of radius $T$ on which the stretch $|r| \\le r_s$ is $2r_s\\sqrt{r_s/T - 1}$ long.",
         "At the horizon, $T = r_s$, the cylinder has its greatest radius and no length. As $T$ falls toward the "
@@ -6201,7 +6240,8 @@ CAPTIONS = {
         "is squeezed around the axis and stretched along it.",
     ],
     ("misner", "cylinders"): [
-        "The slice $z = 0$ of Misner space at four moments of the Milne time $t$ in the region $T < 0$, each "
+        "The slice $z = 0$ of Misner space as the Milne time runs from $ct = -2\\,\\ell$ to $-0.5\\,\\ell$ in the "
+        "region $T < 0$, each moment "
         "drawn as a surface in flat space with every distance along it the metric distance. On it the metric "
         "is $dy^2 + c^2t^2d\\chi^2$ with $\\chi$ periodic in $\\psi_0/2$, so each moment is a flat cylinder of "
         "circumference $\\psi_0c|t|/2$, here $2\\pi c|t|$.",
@@ -6209,8 +6249,9 @@ CAPTIONS = {
         "the chronology horizon. Beyond it, where $T > 0$, the same circles are closed timelike curves.",
     ],
     ("gott_time_machine", "cylinders"): [
-        "The slice $z = 0$ of Gott's spacetime away from the strings at four moments of Grant's Milne time "
-        "$\\tau$, to the past of the chronology horizon, each drawn as a surface in flat space with every distance "
+        "The slice $z = 0$ of Gott's spacetime away from the strings as Grant's Milne time runs from "
+        "$c\\tau = -2\\,\\ell$ to $-0.25\\,\\ell$, to the past of the chronology horizon, each moment drawn as a "
+        "surface in flat space with every distance "
         "along it the metric distance. On it the metric is $c^2\\tau^2d\\chi^2 + dY^2$, and a circuit of both "
         "strings joins $(\\chi, Y)$ to $(\\chi + a, Y + b)$, so each moment is a flat cylinder of circumference "
         "$\\sqrt{a^2c^2\\tau^2 + b^2}$.",
@@ -6292,7 +6333,8 @@ CAPTIONS = {
         "narrows as a cone and closes on the axis at $u = 2$, in units of $8GE/c^4$.",
     ],
     ("aichelburg_sexl", "ring"): [
-        "The wave front of the Aichelburg-Sexl shock at four values of $u = ct - z$, each drawn as a surface in flat "
+        "The wave front of the Aichelburg-Sexl shock as $u = ct - z$ runs from $-1$ to $1.5$, each front drawn as a "
+        "surface in flat "
         "space with every distance along it the metric distance. A surface of constant $u$ has the metric "
         "$dx^2 + dy^2$ whatever $v$ is on it, so the drawing is a flat disc, and the shock shows in a ring of free "
         "particles at rest on the circle of radius $8GE/c^4$ about the axis before it arrives.",
@@ -6314,8 +6356,9 @@ CAPTIONS = {
         "at $\\tau = \\pi/2$ it flattens without bound onto the plane of $x$ and $\\tau$.",
     ],
     ("khan_penrose", "ring"): [
-        "The wave front, the plane of $x$ and $y$, at four moments on $\\sigma = 0$ where both waves have passed, "
-        "each drawn as a surface in flat space with every distance along it the metric distance. At each moment the "
+        "The wave front, the plane of $x$ and $y$, as $\\tau$ runs from $0$ to $1.3$ on $\\sigma = 0$ where both "
+        "waves have passed, "
+        "each moment drawn as a surface in flat space with every distance along it the metric distance. At each moment the "
         "front has the metric $g_{xx}dx^2 + g_{yy}dy^2$ with constant coefficients, so the drawing is a flat disc, "
         "and the waves show in a ring of free particles at rest on the circle $x^2 + y^2 = \\ell^2$ before they "
         "arrive.",
@@ -6327,7 +6370,7 @@ CAPTIONS = {
         "waves colliding head on.",
     ],
     ("kasner", "ring"): [
-        "The plane $y = 0$ of Kasner's universe at four moments of $t$, each drawn as a surface in flat space with "
+        "The plane $y = 0$ of Kasner's universe as $t$ runs from $1/4$ to $2$, each moment drawn as a surface in flat space with "
         "every distance along it the metric distance. At every moment the plane is flat, $t^{2p_1}dx^2 + "
         "t^{2p_3}dz^2$ being Euclid's plane with its axes scaled, so the drawing is a flat disc, and the uneven "
         "expansion shows in a ring of particles at rest in the chart, which stay at rest because the metric has no "
@@ -6339,7 +6382,8 @@ CAPTIONS = {
         "grow as $t$, and the vacuum field equations require their squares to sum to $1$ as well.",
     ],
     ("bianchi", "ring"): [
-        "The plane $y = 0$ of a Bianchi type I universe of dust at four moments of cosmic time, each drawn as a "
+        "The plane $y = 0$ of a Bianchi type I universe of dust as cosmic time runs from $c\\bar Ht = 0.10$ to $2.00$, "
+        "each moment drawn as a "
         "surface in flat space with every distance along it the metric distance. At every moment the plane is "
         "flat, $a_1^2dx^2 + a_3^2dz^2$ being Euclid's plane with its axes scaled, so the drawing is a flat disc, and "
         "the uneven expansion shows in a ring of the dust itself, whose grains stay at rest in the chart.",
@@ -6351,7 +6395,8 @@ CAPTIONS = {
         "in 1898, and type I is the one whose slices are flat.",
     ],
     ("pp_wave", "ring"): [
-        "The wave front of a plane gravitational wave at four values of its retarded time $u$, each drawn as a surface "
+        "The wave front of a plane gravitational wave as its retarded time runs from $cu = -3\\,L$ to the focus, each "
+        "front drawn as a surface "
         "in flat space with every distance along it the metric distance. A surface of constant $u$ has "
         "the metric $dx^2 + dy^2$ whatever $v$ is on it, so the drawing is a flat disc, and the wave shows in a ring "
         "of free particles at rest on the circle $x^2 + y^2 = L^2$ before the pulse arrives.",

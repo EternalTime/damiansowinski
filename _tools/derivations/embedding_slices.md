@@ -493,7 +493,7 @@ A floor or a whole drawing that is the moment is tinted the same green at 12%, a
 Each slice carries its moment as a label beside its right hand end or its point, in the same green: "$t = 0$", or for a sequence the label its surface carries in the embedding diagram, "$ct = 0.18$", "$v - r = -1.5\,r_s$", so a line and its surface are matched by the same words.
 Each drawing's legend adds one entry, the green line, "the moment the embedding diagram draws", or "the moments the embedding diagram draws" for a sequence.
 Where the embedding has two views, as Reissner-Nordström's and Bertotti-Robinson's, the slices shown are those of the view its buttons have chosen, and the slices follow the buttons as a slider's moment would; in print every view is printed, so every slice is.
-The site's sequences stand side by side in one figure rather than behind a slider, so every moment of a sequence is drawn at once.
+The site's sequences play as movies that pass through every moment rather than standing behind a slider, so every moment of a sequence is drawn at once.
 
 As built in 9ce16f6, the legend reads "the slice of the embedding diagram", or "the slices of the embedding diagram" for a sequence, with the moment after it where the drawing does not name it.
 Since 4cd25e4 and 3fd8142 a label stands on whichever side `slices.place` chooses, from the right hand end of its line round to a point 85% of the way along, exactly on the edge of what it names, and `_tools/README.md` gives the order.
