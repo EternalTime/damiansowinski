@@ -2033,6 +2033,10 @@ class EmbeddingDiagrams(unittest.TestCase):
             for r, rho, z in piece("schwarzschild", pid):
                 near(rho, r, f"Flamm rho at {r}")
                 near(z, sign * 2 * math.sqrt(r - 1), f"Flamm z at {r}")
+            # Tangherlini's slice in five dimensions is the catenoid z = r_h arcosh(r/r_h).
+            for r, rho, z in piece("tangherlini", pid):
+                near(rho, r, f"Tangherlini's catenoid rho at {r}")
+                near(z, sign * math.acosh(r), f"Tangherlini's catenoid z at {r}")
         cap = piece("interior_schwarzschild", "star")
         for r, rho, z in cap:
             near(rho, r, f"cap rho at {r}")
@@ -3222,6 +3226,14 @@ class Slices(unittest.TestCase):
                         "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
                         "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
                     **{f"conformal global_monopole/{v}": {"monopole"} for v in ("static", "ingoing", "outgoing")},
+                    # Tangherlini's black hole in five dimensions and in six are two spacetimes, each
+                    # marked on the drawings of its own charts.
+                    **{f"tangherlini/{s}": {"six"} for s in (
+                        "spherical/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
+                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
+                    **{f"conformal tangherlini/{v}": {"six"} for v in ("spherical", "ingoing", "outgoing")},
+                    "tangherlini/spherical_six/radial": {"five"},
+                    "conformal tangherlini/six": {"five"},
                     "global_monopole/conical/radial": {"black_hole"},
                     "conformal global_monopole/conical": {"black_hole"},
                     # The threaded black hole's bifurcation sphere, its horizon view, lies at v -> -infinity and
@@ -3321,6 +3333,13 @@ class Slices(unittest.TestCase):
             def rstar(r):
                 return sum(math.log(abs(1 - r / ri)) / (1 / ri ** 2 - 0.4 * ri / 3) for ri in roots)
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("tangherlini/eddington_finkelstein"):
+            # Five dimensions at r_h = 1: r_* = r + ln((r - 1)/(r + 1))/2, and the static t = 0 is v = r_*
+            # and u = -r_*, drawn against v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            return (lambda X: sign * (0.5 * math.log(abs((X - 1) / (X + 1))) + (0 if finkelstein else X))), \
+                list(self.reach(surface))
         if key.startswith("global_monopole/eddington_finkelstein"):
             # Letelier's black hole at Delta = 0.19 and r_s = 1: r_* = r/0.81 + ln|0.81 r - 1|/0.81^2,
             # and the static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.

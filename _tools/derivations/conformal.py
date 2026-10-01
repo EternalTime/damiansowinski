@@ -1487,6 +1487,196 @@ def string_black_hole(ck, src):
     return views
 
 
+class TangherliniSix(Tower):
+    """The tower of f = 1 - 1/r^3, Tangherlini's black hole in six dimensions at r_h = 1, whose
+    one real root is r = 1 and whose other two are complex, so that
+
+        r* = r + ln|r - 1|/3 - ln(r^2 + r + 1)/6 - (arctan((2r + 1)/sqrt 3) - pi/6)/sqrt 3,
+
+    with r*(0) = 0 and the surface gravity k = f'(1)/2 = 3/2; both are checked in sympy."""
+
+    def __init__(self, f, r):
+        self.f_sym = sp.simplify(f)
+        assert sp.simplify(self.f_sym - (1 - 1 / r ** 3)) == 0, "f is not 1 - 1/r^3"
+        x = sp.Symbol("x", positive=True)
+        rstar = (x + 1 + sp.log(x) / 3 - sp.log((x + 1) ** 2 + (x + 1) + 1) / 6
+                 - (sp.atan((2 * x + 3) / sp.sqrt(3)) - sp.pi / 6) / sp.sqrt(3))
+        assert sp.simplify(sp.diff(rstar, x) - 1 / self.f_sym.subs(r, x + 1)) == 0, "dr*/dr is not 1/f"
+        self.kp = float(sp.diff(self.f_sym, r).subs(r, 1) / 2)
+        assert self.kp == 1.5
+
+    def rstar(self, r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(divide="ignore"):
+            return (r + np.log(np.abs(r - 1)) / 3 - np.log(r * r + r + 1) / 6
+                    - (np.arctan((2 * r + 1) / np.sqrt(3)) - PI / 6) / np.sqrt(3))
+
+
+def tangherlini(ck, src):
+    """Tangherlini's black hole at r_h = 1 in five and in six dimensions, each Kruskal and
+    Szekeres's square by p = arctan U, q = arctan V with U = -exp(-k u), V = exp(k v),
+    u, v = ct -+ r*, and k = (D - 3)/2r_h the surface gravity.
+
+    In five dimensions f = (r - 1)(r + 1)/r^2 has the roots +-1, r* = r + ln|(r - 1)/(r + 1)|/2
+    and UV = (1 - r)/(1 + r) exp(2r), the Tower of both roots, whose cells I, II, IV and I' are
+    Schwarzschild's. In six, f = 1 - 1/r^3 has one real root, r* is TangherliniSix's, and
+    UV = (1 - r) exp(3r - sqrt 3 (arctan((2r + 1)/sqrt 3) - pi/6))/sqrt(r^2 + r + 1). Both tortoise
+    coordinates vanish at r = 0, so UV = 1 there and the singularity is exactly the pair of
+    straight lines T = +-pi/2. The ingoing coordinates are V = exp(v), U = (UV)(r)/V, one formula
+    for every r > 0 covering I and II, and the outgoing ones their time reverse.
+    """
+    five_fixed = {"psi": "pi/2", **EQUATOR}
+    six_fixed = {"chi": "pi/2", **five_fixed}
+    sph = Plane(src, "tangherlini", "spherical", ("t", "r"), five_fixed, {"r_h": 1})
+    six = Plane(src, "tangherlini", "spherical_six", ("t", "r"), six_fixed, {"r_h": 1})
+    towers = {}
+    for name, plane in (("five", sph), ("six", six)):
+        assert plane.g[0, 1] == 0 and sp.simplify(plane.g[0, 0] * plane.g[1, 1] + 1) == 0
+        T = Tower(-plane.g[0, 0], plane.x1, [1, -1]) if name == "five" else TangherliniSix(-plane.g[0, 0], plane.x1)
+        towers[name] = T
+        for cell, region, lo, hi, future in (("I", "exterior", 1.001, 8, (1, 0)), ("II", "black hole", 0.01, 0.999, (0, -1)),
+                                             ("IV", "white hole", 0.01, 0.999, (0, 1)),
+                                             ("I'", "other exterior", 1.001, 8, (-1, 0))):
+            ck.chart(f"Tangherlini, {name} dimensions, {region}", plane, lambda t, r, T=T, cell=cell: T.pq(cell, t, r),
+                     ck.uniform(-6, 6), ck.uniform(lo, hi), lambda t, r, future=future: future)
+    T5, T6 = towers["five"], towers["six"]
+    ck.limit("Tangherlini: the surface gravities are 1/r_h in five dimensions and 3/2r_h in six", [T5.kp, T6.kp], [1, 1.5], 1e-12)
+
+    def uv_five(r):
+        return (1 - r) / (1 + r) * np.exp(2 * r)
+
+    def uv_six(r):
+        return (1 - r) * np.exp(3 * r - np.sqrt(3) * (np.arctan((2 * r + 1) / np.sqrt(3)) - PI / 6)) / np.sqrt(r * r + r + 1)
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan((1 - r) / (1 + r) * np.exp(2 * r - w)), atan_exp(w)
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        return -atan_exp(-u), np.arctan((r - 1) / (r + 1) * np.exp(2 * r + u))
+    ein = Plane(src, "tangherlini", "eddington_finkelstein_ingoing", ("v", "r"), five_fixed, {"r_h": 1})
+    ck.chart("Tangherlini ingoing Eddington-Finkelstein", ein, ingoing,
+             ck.uniform(-6, 6), ck.uniform(0.01, 8), lambda w, r: (1, -60))
+    eout = Plane(src, "tangherlini", "eddington_finkelstein_outgoing", ("u", "r"), five_fixed, {"r_h": 1})
+    ck.chart("Tangherlini outgoing Eddington-Finkelstein", eout, outgoing,
+             ck.uniform(-6, 6), ck.uniform(0.01, 8), lambda u, r: (1, 60))
+
+    rr = np.linspace(0.05, 5, 50)
+    for name, T, uv, plane in (("five", T5, uv_five, sph), ("six", T6, uv_six, six)):
+        p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+        ck.limit(f"Tangherlini, {name} dimensions: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+        p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
+        ck.limit(f"Tangherlini, {name} dimensions: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
+                 point(p[0], q[0]), [PI, 0], 1e-3)
+        p, q = T.pq("I", np.array([3.0]), np.array([1 + 1e-12]))
+        ck.limit(f"Tangherlini, {name} dimensions: r -> r_h at fixed t lands on the bifurcation sphere",
+                 point(p[0], q[0]), [0, 0], 1e-4)
+        for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
+            pp, qq = T.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
+            ck.limit(f"Tangherlini, {name} dimensions, {cell}: tan p tan q is Kruskal's UV",
+                     np.tan(pp) * np.tan(qq), uv(rr[sel]), 1e-8)
+        K = plane.kretschmann
+        ck.diverges(f"Tangherlini, {name} dimensions: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+        ck.finite(f"Tangherlini, {name} dimensions: the Kretschmann scalar is finite at r = r_h",
+                  K(np.zeros(3), np.array([0.999, 1, 1.001])))
+    ck.limit("Tangherlini: the ingoing and spherical coordinates put one event at one point",
+             ingoing(2.0 + 3 + 0.5 * np.log(0.5), 3.0), T5.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit("Tangherlini: the outgoing and spherical coordinates put one event at one point",
+             outgoing(2.0 - 3 - 0.5 * np.log(0.5), 3.0), T5.pq("I", 2.0, 3.0), 1e-12)
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN, TS = (1.05, 1.25, 1.5, 2, 3), (0.5, 0.75, 0.9), (-4, -2, -1, 0, 1, 2, 4)
+
+    def edges(v):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([-Q4, Q4], "$r = r_h$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.legend("horizon", "the horizon $r = r_h$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    def moment_of(T, view_id, system):
+        m = slices.moments("tangherlini", view_id)[0]
+        lo, hi = m.reach(system, "r")
+        ends = np.linspace(lo, hi, 2)
+        left, right = T.pq("I'", 0 * ends, ends[::-1]), T.pq("I", 0 * ends, ends)
+        return m, [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))]
+
+    def static(vid, label, system, T, mark):
+        v = View(vid, label, box, system)
+        v.fill("region", hexagon)
+        v.fill("cover", exterior)
+        for r in R_OUT:
+            v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+        out = spread(1, np.inf, 500, 14)
+        for tt in TS:
+            v.curve("t", *T.pq("I", np.full_like(out, tt), out))
+        edges(v)
+        for r, text in ((1.25, "$1.25\\,r_h$"), (2, "$2\\,r_h$")):
+            label_on(v, T.pq("I", 0.0, r), text)
+        v.legend("cover", "the region that $t$ and $r > r_h$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("t", "$ct$ constant, in units of $r_h$")
+        v.slice(*mark)
+        return v
+
+    five = moment_of(T5, "five", "spherical")
+    t = spread(-np.inf, np.inf, 500, 9)
+    views = [static("spherical", "Hyperspherical", "spherical", T5, five)]
+
+    v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    rr = spread(0, np.inf, 600, 14)
+    for w in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
+    edges(v)
+    v.legend("cover", "the region that $v$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$v$ constant, an ingoing light ray")
+    v.slice(*five)
+    views.append(v)
+
+    v = View("outgoing", "Outgoing Eddington-Finkelstein", box, "eddington_finkelstein_outgoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [-HALF, -HALF], [HALF, -HALF], [PI, 0], [HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *outgoing(t, np.full_like(t, r)))
+    for u in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *outgoing(np.full_like(rr, u), rr))
+    edges(v)
+    v.legend("cover", "the region that $u$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$u$ constant, an outgoing light ray")
+    v.slice(*five)
+    views.append(v)
+
+    views.append(static("six", "Hyperspherical", "spherical_six", T6, moment_of(T6, "six", "spherical_six")))
+    return views
+
+
 def global_monopole(ck, src):
     """Letelier's black hole in a cloud of strings at Delta = 0.19 and r_s = 1, and the monopole
     with no mass at its centre in the Barriola-Vilenkin chart.
@@ -5853,7 +6043,7 @@ DRAWN = {
     "domain_wall": domain_wall,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
-    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
+    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
@@ -6227,6 +6417,41 @@ CAPTIONS = {
         "The spheres shrink to zero area at the singularity $r = r_d$, where $g_{tt}$ vanishes too. At the extremal "
         "charge $r_d = r_s$ the string metric is $-(1 - r_s/r)^2c^2dt^2 + dr^2 + (r - r_s)^2d\\Omega^2$, whose "
         "moments of constant $t$ are flat.",
+    ],
+    ("tangherlini", "spherical"): [
+        "The Schwarzschild-Tangherlini spacetime in five dimensions, maximally extended, each point in the diagram "
+        "a 3-sphere of radius $r$. The Kruskal coordinates $U = -e^{-u/r_h}$ and $V = e^{v/r_h}$, with "
+        "$u, v = ct \\mp r_*$ and $r_* = r + \\tfrac{1}{2}r_h\\ln|(r - r_h)/(r + r_h)|$, make the metric regular "
+        "through $r = r_h$, where $UV = e^{2r/r_h}(r_h - r)/(r_h + r)$ vanishes. With $p = \\arctan U$ and "
+        "$q = \\arctan V$ the singularity $UV = 1$ lies exactly on the straight lines $T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $r > r_h$ cover the right exterior alone. The horizon is the pair of null lines "
+        "$U = 0$ and $V = 0$, crossing at the bifurcation sphere. The black hole above it ends at $r = 0$ on "
+        "$T = \\pi/2$, the white hole below it begins at $r = 0$ on $T = -\\pi/2$, and both singularities are "
+        "spacelike, as Schwarzschild's are in four dimensions.",
+    ],
+    ("tangherlini", "ingoing"): [
+        "The whole Schwarzschild-Tangherlini spacetime in five dimensions with the ingoing Eddington-Finkelstein "
+        "coordinates $v$ and $r$ on it, each point in the diagram a 3-sphere of radius $r$. From $V = e^{v/r_h}$ "
+        "and $U = e^{2r/r_h}(r_h - r)/\\left((r_h + r)V\\right)$, one formula for every $r > 0$, they cover the "
+        "exterior and the black hole together, and their lines of constant $v$ are ingoing light rays, which "
+        "cross the horizon at 45° and end at $r = 0$.",
+    ],
+    ("tangherlini", "outgoing"): [
+        "The whole Schwarzschild-Tangherlini spacetime in five dimensions with the outgoing Eddington-Finkelstein "
+        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones, each point in the diagram a "
+        "3-sphere of radius $r$. From $U = -e^{-u/r_h}$ and $V = e^{2r/r_h}(r - r_h)/\\left((r + r_h)(-U)\\right)$ "
+        "they cover the exterior and the white hole, and their lines of constant $u$ are outgoing light rays, "
+        "which leave $r = 0$ and cross the horizon outward.",
+    ],
+    ("tangherlini", "six"): [
+        "The Schwarzschild-Tangherlini spacetime in six dimensions, maximally extended, each point in the diagram "
+        "a 4-sphere of radius $r$. The surface gravity of the horizon is $(D - 3)c^2/2r_h$, so the Kruskal "
+        "coordinates are $U = -e^{-3u/2r_h}$ and $V = e^{3v/2r_h}$, with $u, v = ct \\mp r_*$ and $dr_*/dr = "
+        "(1 - r_h^3/r^3)^{-1}$, $r_* = 0$ at $r = 0$. With $p = \\arctan U$ and $q = \\arctan V$ the singularity "
+        "$UV = 1$ lies exactly on the straight lines $T = \\pm\\pi/2$.",
+        "The diagram has the regions of Schwarzschild's, as it does in every dimension $D \\ge 4$, since the plane "
+        "of $t$ and $r$ has one horizon with nonzero surface gravity and a spacelike singularity at $r = 0$. The "
+        "coordinates $t$ and $r > r_h$ cover the right exterior alone.",
     ],
     ("global_monopole", "static"): [
         "Letelier's black hole in a cloud of strings, maximally extended ($\\Delta = 0.19$), each point in the "
