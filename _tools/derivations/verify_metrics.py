@@ -437,6 +437,19 @@ DIMENSIONS = {
     ("misner", "misner"): {"T": "L**2", "\\psi": "1", "y": "L", "z": "L", "\\psi_0": "1"},
     ("misner", "milne"): {"t": "T", "\\chi": "1", "y": "L", "z": "L", "\\psi_0": "1"},
     ("misner", "rindler"): {"\\eta": "1", "\\xi": "L", "y": "L", "z": "L", "\\psi_0": "1"},
+    # Gott's two strings: the centre of momentum chart and one string's conical chart carry the
+    # strings' mass per length, speed and distance from the plane between them; the Rindler and
+    # Milne charts of Grant's covering space carry the rapidity a of the boost round both strings,
+    # a pure number, and the shift b along its axis, a length.
+    ("gott_time_machine", "centre_of_momentum"): {
+        "t": "T", "x": "L", "y": "L", "z": "L",
+        "\\mu": "M/L", "G": "L**3/(M*T**2)", "v": "L/T", "d": "L", "\\alpha": "1", "\\gamma": "1",
+    },
+    ("gott_time_machine", "string_rest"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "\\mu": "M/L", "G": "L**3/(M*T**2)", "d": "L",
+    },
+    ("gott_time_machine", "grant_rindler"): {"\\eta": "1", "\\xi": "L", "Y": "L", "z": "L", "a": "1", "b": "L"},
+    ("gott_time_machine", "grant_milne"): {"\\tau": "T", "\\chi": "1", "Y": "L", "z": "L", "a": "1", "b": "L"},
     # The redshift function sits inside an exponential and so is dimensionless, and the
     # shape function is a length beside r, which is what leaves 1 - b/r dimensionless.
     # In the proper distance chart l is the radial coordinate and the areal radius r is

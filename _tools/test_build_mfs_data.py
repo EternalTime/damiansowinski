@@ -3034,8 +3034,8 @@ class TurningLightConeFigures(unittest.TestCase):
     def test_every_figure_of_light_cones_turns(self):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
-        self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "kerr/dragging", "kerr_newman/dragging",
-                                   "stockum_dust/tipping"})
+        self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging",
+                                   "kerr_newman/dragging", "stockum_dust/tipping"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -3094,9 +3094,9 @@ class TurningLightConeFigures(unittest.TestCase):
             self.assertEqual(turn["centre"][:2], [0, 0], where)
             self.assertAlmostEqual(turn["centre"][2], (min(T) + max(T)) / 2, delta=1e-6, msg=where)
             self.assertEqual([len(mark["fills"]) for mark in turn["slices"]],
-                             [len(mark["fills"]) for mark in figure["slices"]], where)
+                             [len(mark["fills"]) for mark in figure.get("slices", [])], where)
             self.assertEqual([len(mark["lines"]) for mark in turn["slices"]],
-                             [len(mark["lines"]) for mark in figure["slices"]], where)
+                             [len(mark["lines"]) for mark in figure.get("slices", [])], where)
 
     def test_only_the_cosmic_strings_flat_beam_does_not_turn(self):
         # The beam lies in the plane t = 0 seen from straight above, drawn in the plane's own
@@ -3178,6 +3178,10 @@ class Slices(unittest.TestCase):
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
               "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
+              # Gott's region of closed timelike curves, which no moment of Grant's Milne time meets,
+              # and the centre of momentum chart about the strings.
+              "gott_time_machine/grant_rindler/plane", "conformal gott_time_machine/grant_rindler",
+              "gott_time_machine/centre_of_momentum/loop",
               # The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.
               "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
               "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis"}
@@ -3406,7 +3410,7 @@ class Slices(unittest.TestCase):
             # The event on sigma = 0 at tau = t, u = v = sin(t/2): drawn against v - u and u + v, or
             # against sigma and tau.
             return (lambda X: 2 * math.sin(t / 2) if "/double_null/" in key else t), [0.0]
-        if key == "misner/milne/plane":
+        if key in ("misner/milne/plane", "gott_time_machine/grant_milne/plane"):
             return (lambda X: t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "minkowski/rindler")):
             return (lambda X: 0.0), None
@@ -3576,7 +3580,7 @@ class Slices(unittest.TestCase):
                                                                                         math.tan(p + math.pi / 2))
                             cT, R = (a + b) / 2, (b - a) / 2
                             self.assertLess(abs(cT - R * math.tanh(t)), 2e-4 * (1 + a * a + b * b), f"{where} at {(X, T)}")
-                    elif metric_id == "misner":
+                    elif metric_id in ("misner", "gott_time_machine"):
                         # The hyperbola (ct - x)(ct + x) = c^2t^2 of the covering plane, every copy.
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)

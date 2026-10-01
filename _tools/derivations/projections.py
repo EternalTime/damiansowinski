@@ -637,6 +637,19 @@ def bubble(spec, camera=Camera(-90, 30), later=0.75):
 
 
 CAPTIONS = {
+    ("gott_time_machine", "centre_of_momentum", "loop"): [
+        "The slice $z = 0$ of $t$, $x$, and $y$ in the centre of momentum frame, $t$ up, for two strings "
+        "with $4G\\mu/c^2 = 1/3$, each removing a wedge of $120°$, moving at $v = 4c/5$ on the lines "
+        "$y = \\pm\\ell/2$, so that $\\gamma\\sin\\alpha = 1.44$. Each string's wedge opens away from the other "
+        "string, and its two faces are identified at equal times of that string's rest frame: the dashed lines "
+        "are the two faces at one such time, one rising in $t$ and the other falling, and events at equal "
+        "distances along them are one event.",
+        "A rocket leaves the event $A$ at $t = 0$ and $x = 3\\ell/2$, crosses the upper string's wedge from $C$ to "
+        "the same event on the other face, at an earlier $t$, and reaches $B$ at $x = -3\\ell/2$ at $t = 0$. It "
+        "returns below the lower string in the same way and arrives at $A$ as it leaves. Each of the four "
+        "stretches lies inside the future light cone at its start, so the whole "
+        "is a closed timelike curve.",
+    ],
     ("cosmic_string", "conical", "beam"): [
         "The plane $z = 0$ around the string seen from above, $t$ left out, drawn with $r$ as "
         "the radius and the angle $(1 - 4G\\mu/c^2)\\phi$, in which the plane is flat and every light "
@@ -732,6 +745,10 @@ FIGURES = [
     # The deficit the conformal diagram draws with, 4 G mu/c^2 = 0.1, so delta = 36 degrees.
     Projection("cosmic_string", "conical", "beam", "light passing the string", lambda spec: string_rays(spec),
                {"mu": "1/40", "G": 1, "delta": "pi/5"}, {"z": "0"}, fields=("christoffel",)),
+    # Gott's closed timelike curve round both strings, at the values the flat views of Grant's
+    # charts are drawn at: half deficit angle pi/3, v = 4c/5 and d = l/2.
+    Projection("gott_time_machine", "centre_of_momentum", "loop", "a closed timelike curve round both strings",
+               lambda spec: gott_loop(spec), nr.GOTT_STRINGS, {"z": "0"}),
     # Alcubierre's bubble at the speed and with the profile its flat view declares.
     Projection("alcubierre", "cartesian", "bubble", "the bubble in three dimensions", bubble, {}, {"z": "0"},
                input="$v_s = 2$, and Alcubierre's own profile, "
@@ -854,6 +871,98 @@ def string_rays(spec, n=12, half_width=1.8, left=-3.0, right=3.0, height=2.1):
     fig.legend("fill", "wedge", f"the missing wedge, $\\delta = {round(np.degrees(2 * wedge))}°$; its two edges are one line")
     fig.legend("fill", "double", "where light from both sides arrives")
     return fig.done(pad=0.0), sl
+
+
+def gott_loop(spec, x0=1.5, camera=Camera(-65, 24)):
+    """Gott's closed timelike curve round both strings, on the slice z = 0 of the centre of
+    momentum chart, drawn cartesian with t up.
+
+    The upper string moves along +x on y = d and the lower along -x on y = -d. In the rest frame
+    of the upper string, x1 = gamma (x - beta ct), ct1 = gamma (ct - beta x), its wedge is
+    |x1| < (y - d) tan(alpha) and the faces are identified at equal ct1, a rotation by 2 alpha about
+    the string. A = (0, x0, 0) and B = (0, -x0, 0) are in that frame (-+gamma beta x0, +-gamma x0, 0),
+    and the straight path from one to the other round the string meets each face at the foot of the
+    perpendicular from the event, at the distance s = gamma x0 sin(alpha) - d cos(alpha) along the
+    face and at ct1 = 0: the events C and D, which are one event. The return from B to A round the
+    lower string is the same path turned by pi about the t axis. Every stretch is checked timelike
+    and future directed against the published metric, C and D are checked to lie on the faces at
+    one rest time and to be carried onto one another by the rotation, and the curve is checked to
+    close."""
+    sl = Slice(spec.metric, spec.system, ("t", "x", "y"), "cartesian", spec.params, spec.fixed)
+    g = sl.metric((0.0, 0.0, 0.0))
+    if not (np.array_equal(g, np.diag([-1.0, 1.0, 1.0])) and np.array_equal(sl.metric((0.7, -1.3, 2.1)), g)):
+        raise SystemExit(f"{key(spec)}: the published metric on the slice is not Minkowski's")
+    value = {k: float(nr.number(v)) for k, v in spec.params.items()}
+    alpha, beta, d, gamma = value["alpha"], value["v"], value["d"], value["gamma"]
+    if not (abs(gamma - 1 / np.sqrt(1 - beta ** 2)) < 1e-14 and abs(alpha - 4 * np.pi * value["G"] * value["mu"]) < 1e-14):
+        raise SystemExit(f"{key(spec)}: gamma or alpha is not the one v and mu fix")
+    if not gamma * np.sin(alpha) > 1:
+        raise SystemExit(f"{key(spec)}: gamma sin(alpha) <= 1, so the strings make no closed timelike curve")
+
+    def lab(ct1, x1, y):
+        """An event of the upper string's rest frame in the chart's (ct, x, y)."""
+        return np.array([gamma * (ct1 + beta * x1), gamma * (x1 + beta * ct1), y])
+
+    def rest(e):
+        return np.array([gamma * (e[0] - beta * e[1]), gamma * (e[1] - beta * e[0]), e[2]])
+
+    w = gamma * x0
+    s_ = w * np.sin(alpha) - d * np.cos(alpha)
+    if not s_ > 0:
+        raise SystemExit(f"{key(spec)}: the path round the string misses its wedge")
+    A, B = np.array([0.0, x0, 0.0]), np.array([0.0, -x0, 0.0])
+    C = lab(0.0, s_ * np.sin(alpha), d + s_ * np.cos(alpha))
+    D = lab(0.0, -s_ * np.sin(alpha), d + s_ * np.cos(alpha))
+    turn = np.diag([1.0, -1.0, -1.0])
+    E, F = turn @ C, turn @ D
+    # C and D on the two faces at one rest time, and one the rotation of the other about the string.
+    c1, d1 = rest(C), rest(D)
+    rot = np.array([[np.cos(2 * alpha), -np.sin(2 * alpha)], [np.sin(2 * alpha), np.cos(2 * alpha)]])
+    faces = [abs(abs(e[1]) - (e[2] - d) * np.tan(alpha)) for e in (c1, d1)]
+    carried = rot @ (c1[1:] - [0, d]) + [0, d]
+    if not (max(faces) < 1e-12 and abs(c1[0] - d1[0]) < 1e-12 and np.abs(carried - d1[1:]).max() < 1e-12):
+        raise SystemExit(f"{key(spec)}: C and D are not identified events of the wedge's faces")
+    stretches = [(A, C), (D, B), (B, E), (F, A)]
+    speeds = []
+    for a_, b_ in stretches:
+        k = b_ - a_
+        if not (k @ g @ k < 0 and k[0] > 0):
+            raise SystemExit(f"{key(spec)}: a stretch of the curve is not timelike and future directed")
+        speeds.append(float(np.hypot(k[1], k[2]) / k[0]))
+    if not (np.array_equal(stretches[-1][1], stretches[0][0]) and np.array_equal(stretches[1][1], stretches[2][0])):
+        raise SystemExit(f"{key(spec)}: the curve does not close")
+
+    draw = lambda e: sl.to_drawing((e[0], e[1], e[2]))
+    fig = Figure(spec.view, spec.label, camera)
+    top = float(C[0]) * 1.12
+    wide, deep = float(C[1]) * 1.08, float(C[2]) * 1.15
+    fig.line("floor", np.array([[-wide, -deep, 0], [wide, -deep, 0], [wide, deep, 0], [-wide, deep, 0]]), closed=True)
+    fig.line("floor", np.array([[-wide, 0, 0], [wide, 0, 0]]))
+    fig.line("floor", np.array([[0, -deep, 0], [0, deep, 0]]))
+    for sign in (1, -1):
+        fig.line("world", np.array([[-sign * beta * top, sign * d, -top], [sign * beta * top, sign * d, top]]))
+    reach = 1.25 * s_
+    for sign in (1, -1):
+        arm = draw(lab(0.0, sign * reach * np.sin(alpha), d + reach * np.cos(alpha)))
+        for flip in (np.eye(3), np.diag([-1.0, -1.0, 1.0])):
+            fig.line("edge", np.array([flip @ np.array([0.0, d, 0.0]), flip @ arm]))
+    for a_, b_ in ((C, D), (E, F)):
+        fig.line("axis", np.array([draw(a_), draw(b_)]))
+    for a_, b_ in stretches:
+        fig.line("ctc", np.array([draw(a_), draw(b_)]))
+    cones = [future_cone(sl, tuple(e), 0.5, "tau") for e in (A, D, B, F)]
+    for apex, rim in sorted(cones, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    for e, text, anchor, dx, dy in ((A, "$A$", "tl", 6, 4), (B, "$B$", "tr", -6, 4), (C, "$C$", "b", 0, -6),
+                                    (D, "$C$", "t", 0, 6), (E, "$E$", "b", 0, -6), (F, "$E$", "t", 0, 6)):
+        fig.label(draw(e), text, anchor, dx=dx, dy=dy)
+    fig.label(np.array([0.0, 0.0, top]), "$t$", "b", dy=-4)
+    fig.legend("line", "world", "the two strings")
+    fig.legend("line", "edge", "the two faces of each wedge at one time of its string's rest frame")
+    fig.legend("line", "axis", "from an event on one face to the same event on the other")
+    fig.legend("line", "ctc", f"a closed timelike curve, at ${max(speeds):.2f}\\,c$")
+    fig.legend("cone", "cone", "future light cone")
+    return fig.done(), sl
 
 
 def clip_box(P, left, right, height):

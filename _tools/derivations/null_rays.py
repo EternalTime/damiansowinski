@@ -428,6 +428,13 @@ MCV_A = "sinh(3*t/(2*sqrt(15)))**Rational(2, 3)"
 MCV_INPUT = ("A universe of dust and a cosmological constant, $a = \\sinh^{2/3}(3H_0t/2)$ and "
              "$H = H_0\\coth(3H_0t/2)$, the expansion Kayll Lake and Majd Abdelqader chose, with "
              "$H_0 = c/(\\sqrt{15}\\,r_s)$, which is $\\Lambda r_s^2 = 1/5$.")
+
+# Gott's two strings at half deficit angle alpha = pi/3, 4 G mu/c^2 = 1/3, moving at v = 4c/5
+# with d = l/2, where gamma sin(alpha) = 5/(2 sqrt 3) > 1: the boost round both strings has
+# cosh(a/4) = gamma sin(alpha), and the shift is b = 4 gamma v d sin(alpha)/(c sinh(a/4)).
+GOTT = {"a": "4*acosh(5/(2*sqrt(3)))", "b": "8/sqrt(13)"}
+GOTT_A = 4 * math.acosh(5 / (2 * math.sqrt(3)))
+GOTT_STRINGS = {"mu": "1/12", "G": 1, "v": "4/5", "d": "1/2", "alpha": "pi/3", "gamma": "5/3"}
 GM_CONE = {"Delta": "19/100"}
 GM_RH = 100 / 81
 # The black hole on a cosmic string at the deficit the cosmic string is drawn at, 4G mu/c^2 = 0.1.
@@ -607,6 +614,20 @@ DIAGRAMS = [
     Diagram("misner", "rindler", "plane", "$\\eta$ and $\\xi$", ("\\eta", "\\xi"), (0, 2 * math.pi, 0, 2 * math.pi),
             "$\\xi$", "$\\eta$", {"psi_0": "4*pi"}, {"y": "0", "z": "0"}, tau="eta", families=SIDEWAYS,
             periodic=("\\eta",)),
+    # Gott's two strings away from the strings, Grant's generalised Misner space, for strings of
+    # half deficit angle pi/3 at v = 4c/5 and d = l/2: cosh(a/4) = gamma sin(alpha) = 5/(2 sqrt 3)
+    # and b = 4 gamma v d sin(alpha)/(c sinh(a/4)) = 8 l/sqrt 13. The Rindler plane marks the first
+    # two polarised hypersurfaces, xi_n = n b/(2 sinh(n a/2)).
+    Diagram("gott_time_machine", "grant_rindler", "plane", "$\\eta$ and $\\xi$", ("\\eta", "\\xi"),
+            (0, 2, 0, GOTT_A), "$\\xi/\\ell$", "$\\eta$", GOTT, {"Y": "0", "z": "0"}, tau="eta",
+            families=SIDEWAYS, periodic=("\\eta",),
+            lines=(("surface", "r", f"({GOTT['b']})/(2*sinh(({GOTT['a']})/2))",
+                    "the first polarised hypersurface, $\\xi = b/(2\\sinh(a/2))$"),
+                   ("surface", "r", f"({GOTT['b']})/sinh({GOTT['a']})",
+                    "the second, $\\xi = b/\\sinh a$"))),
+    Diagram("gott_time_machine", "grant_milne", "plane", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"),
+            (0, GOTT_A, -2.5, 0), "$\\chi$", "$c\\tau/\\ell$", GOTT, {"Y": "0", "z": "0"}, tau="tau",
+            families=SIDEWAYS, periodic=("\\chi",)),
     Diagram("de_sitter", "static_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r\\sqrt{\\Lambda/3}$", "$ct\\sqrt{\\Lambda/3}$", {"Lambda": 3}, EQUATOR,
             orient="outgoing", cones=(8, 7), areal=True),
@@ -1333,6 +1354,26 @@ CAPTIONS = {
         "timelike curve, of proper length $\\xi\\psi_0/2$.",
         "The light rays run as $\\xi = \\xi_0e^{\\pm\\eta}$, and the cones close toward $\\xi = 0$, the "
         "chronology horizon, where the closed curves turn into closed null geodesics.",
+    ],
+    ("gott_time_machine", "grant_rindler", "plane"): [
+        "The plane of $\\eta$ and $\\xi$ ($Y = z = 0$) in the region of closed timelike curves, with "
+        "$g_{\\eta\\eta} = -\\xi^2$. The edge $\\eta = a$ is the edge $\\eta = 0$ moved by $b$ along $Y$. "
+        "The light rays run as $\\xi = \\xi_0e^{\\pm\\eta}$, and the cones close toward $\\xi = 0$, the "
+        "chronology horizon.",
+        "An event at $\\xi$ and its $n$th image lie $n^2b^2 - 4\\xi^2\\sinh^2(na/2)$ apart in squared "
+        "interval, so a timelike line joins them beyond the $n$th polarised hypersurface, "
+        "$\\xi = nb/(2\\sinh(na/2))$. Those hypersurfaces crowd toward the horizon as $n$ grows, and a "
+        "closed timelike curve passes through every event with $\\xi > 0$.",
+    ],
+    ("gott_time_machine", "grant_milne", "plane"): [
+        "The plane of $\\tau$ and $\\chi$ ($Y = z = 0$) to the past of the chronology horizon, with "
+        "$g_{\\chi\\chi} = c^2\\tau^2$. The edge $\\chi = a$ is the edge $\\chi = 0$ moved by $b$ along "
+        "$Y$. Both families of light rays wind toward $\\tau = 0$, $c\\,d\\tau = \\pm c\\tau\\,d\\chi$, "
+        "and reach it only as $\\chi \\to \\pm\\infty$.",
+        "An event and its $n$th image lie $n^2b^2 + 4c^2\\tau^2\\sinh^2(na/2)$ apart in squared interval, "
+        "which is positive, so no closed timelike curve passes through this region. The closed curve of "
+        "constant $\\tau$ through an event has length $\\sqrt{a^2c^2\\tau^2 + b^2}$, which shrinks to $b$ "
+        "at the horizon.",
     ],
     ("minkowski", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in flat spacetime. "
@@ -4577,6 +4618,12 @@ CLOSED_FORMS.update({
                                    lambda t, chi: t < -0.02),
     ("misner", "rindler", "plane"): (lambda eta, xi: np.log(xi) + eta, lambda eta, xi: np.log(xi) - eta,
                                      lambda eta, xi: xi > 0.02),
+    # Grant's charts of Gott's spacetime are Misner's Rindler and Milne planes.
+    ("gott_time_machine", "grant_rindler", "plane"): (lambda eta, xi: np.log(xi) + eta,
+                                                      lambda eta, xi: np.log(xi) - eta,
+                                                      lambda eta, xi: xi > 0.02),
+    ("gott_time_machine", "grant_milne", "plane"): (lambda t, chi: np.log(-t) - chi, lambda t, chi: np.log(-t) + chi,
+                                                    lambda t, chi: t < -0.02),
 })
 # What light launched along each family of a cylinder does, as its caption says: stays on the
 # cylinder as a null geodesic, or is turned toward or away from the axis.
