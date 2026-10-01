@@ -290,6 +290,31 @@ def check_ellipses(at, piece):
         raise DataError(f"{at} does not say what lies beyond its edge")
 
 
+def check_moments(where, view):
+    """A view that changes from moment to moment plays as a movie and is never set out as
+    separate pictures, as the captain asked on 1 October 2026: more than one surface is a run of
+    moments, each with its label and its time in order, and the view then carries a movie that
+    holds every one of them as a frame, from the first to the last."""
+    surfaces = view["surfaces"]
+    if len(surfaces) < 2:
+        return
+    times = [s.get("time") for s in surfaces]
+    if not all(isinstance(t, (int, float)) for t in times) or not all(b > a for a, b in zip(times, times[1:])):
+        raise DataError(f"{where}: the moments of the view {view['id']!r} are not in the order of their times")
+    if "movie" not in view:
+        raise DataError(f"{where}: the view {view['id']!r} holds {len(surfaces)} moments as separate pictures and "
+                        "no movie to play them")
+    frames = {f.get("value"): f for f in view["movie"].get("frames") or []}
+    for surface in surfaces:
+        frame = frames.get(surface["time"])
+        if frame is None or any(frame.get(k) != surface.get(k) for k in ("label", "pieces", "rings", "curves", "dots")):
+            raise DataError(f"{where}: the movie of the view {view['id']!r} does not hold its moment "
+                            f"{surface.get('label')!r} as a frame")
+    values = sorted(frames)
+    if (values[0], values[-1]) != (times[0], times[-1]):
+        raise DataError(f"{where}: the movie of the view {view['id']!r} does not run from its first moment to its last")
+
+
 def check_movie(where, view):
     """A movie, as _tools/README.md defines it: at least two frames, each a surface with its label
     and a value of the movie's variable, the values strictly increasing, one pass taking a
@@ -365,6 +390,7 @@ def load_embedding(metrics):
             if view.get("system") and view["system"] not in {s["id"] for s in by_id[path.stem]["coordinates"]}:
                 raise DataError(f"{where}: the view {view['id']!r} names {view['system']!r}, which "
                                 f"{path.stem}.json has no coordinate system for")
+            check_moments(where, view)
             if "movie" in view:
                 check_movie(where, view)
             for surface in view["surfaces"] + view.get("movie", {}).get("frames", []):

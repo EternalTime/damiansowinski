@@ -4,6 +4,7 @@
     python3 -m unittest discover -s _tools
 """
 
+import ast
 import contextlib
 import copy
 import decimal
@@ -2822,17 +2823,29 @@ class StacksAndMovies(unittest.TestCase):
     September 2026, from the numbers written and nothing else."""
 
     STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0}   # the height of a unit of time
-    MOVIES = {"frw": "$ct$", "malament_hogarth": "$ct$", "mixmaster": "$c\\tau$", "oppenheimer_snyder": "$c\\tau$",
-              "vaidya": "$v - r$", "cosmic_string": "$\\Delta\\phi$", "milne": "$ct$",
-              "einstein_rosen_waves": "$ct$", "nariai": "$ct$", "domain_wall": "$kct$",
-              "kantowski_sachs": "$\\eta$",
-              "robinson_trautman": "$cu$", "mcvittie": "$ct$"}
+    # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
+    # pictures of their moments until the captain asked on 1 October 2026 for every one of them
+    # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
+    MOVIES = {("frw", "closed"): "$ct$", ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
+              ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("vaidya", "shell"): "$v - r$",
+              ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("milne", "hyperboloids"): "$ct$",
+              ("einstein_rosen_waves", "pulse"): "$ct$", ("nariai", "universe"): "$ct$",
+              ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
+              ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
+              ("tolman_bondi", "cloud"): "$ct$", ("misner", "cylinders"): "$ct$",
+              ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
+              ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
+              ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$"}
 
     def setUp(self):
         self.embedding = embedding_files()
 
     def views(self, metric_id):
         return {v["id"]: v for v in self.embedding[metric_id]["views"]}
+
+    def movies(self):
+        """Every view with a movie, by its spacetime and view."""
+        return {(name, v["id"]): v for name, data in self.embedding.items() for v in data["views"] if "movie" in v}
 
     def test_the_stacks_come_first_with_their_flat_rings_beside_them(self):
         for metric_id in self.STACKS:
@@ -2893,15 +2906,13 @@ class StacksAndMovies(unittest.TestCase):
             self.assertIn(("line", "axis"), [(k, c) for k, c, _ in view["figure"]["legend"]], metric_id)
 
     def test_the_movies_are_these(self):
-        movies = {name: v["movie"]["variable"] for name, data in self.embedding.items() for v in data["views"] if "movie" in v}
-        self.assertEqual(movies, self.MOVIES)
-        self.assertEqual({name for name, data in self.embedding.items() for v in data["views"]
-                          if v.get("movie", {}).get("turns") is False}, {"frw", "milne"})
+        self.assertEqual({key: v["movie"]["variable"] for key, v in self.movies().items()}, self.MOVIES)
+        self.assertEqual({name for (name, _), v in self.movies().items() if v["movie"].get("turns") is False},
+                         {"frw", "milne"})
 
     def test_every_movie_runs_through_its_frames_in_order_and_holds_its_moments(self):
-        for metric_id in self.MOVIES:
-            view = next(v for v in self.embedding[metric_id]["views"] if "movie" in v)
-            movie, where = view["movie"], metric_id
+        for (metric_id, view_id), view in self.movies().items():
+            movie, where = view["movie"], f"{metric_id} {view_id}"
             values = [f["value"] for f in movie["frames"]]
             self.assertGreater(len(values), 30, where)
             self.assertTrue(all(b > a for a, b in zip(values, values[1:])), where)
@@ -2917,6 +2928,8 @@ class StacksAndMovies(unittest.TestCase):
                 self.assertEqual(frame["label"], surface["label"], where)
                 self.assertEqual(frame["pieces"], surface["pieces"], where)
                 self.assertEqual(frame["rings"], surface["rings"], where)
+                self.assertEqual(frame.get("curves"), surface.get("curves"), where)
+                self.assertEqual(frame.get("dots"), surface.get("dots"), where)
             self.assertEqual((values[0], values[-1]), (view["surfaces"][0]["time"], view["surfaces"][-1]["time"]), where)
 
     def test_the_closed_universe_plays_every_frame_as_its_sphere(self):
@@ -2933,9 +2946,11 @@ class StacksAndMovies(unittest.TestCase):
 
     def test_each_movie_with_a_rim_holds_it_still_while_the_rest_moves(self):
         # The flat plane beyond the Malament-Hogarth ball, the clocks released at 4 r_s outside
-        # the collapsing dust and Vaidya's r = 4 r_s stand at z = 0 in every frame, and the
+        # the collapsing dust, Vaidya's r = 4 r_s and the clocks released at 2.5 r_b outside
+        # Tolman-Bondi's cloud stand at z = 0 in every frame, and the
         # Malament-Hogarth well only deepens as the removed event nears.
-        for metric_id, piece in (("malament_hogarth", "flat"), ("oppenheimer_snyder", "exterior"), ("vaidya", None)):
+        for metric_id, piece in (("malament_hogarth", "flat"), ("oppenheimer_snyder", "exterior"), ("vaidya", None),
+                                 ("tolman_bondi", "exterior")):
             view = self.embedding[metric_id]["views"][0]
             for frame in view["movie"]["frames"]:
                 outer = frame["pieces"][-1] if piece is None else next(p for p in frame["pieces"] if p["id"] == piece)
@@ -2975,10 +2990,9 @@ class StacksAndMovies(unittest.TestCase):
         self.assertEqual(frames[-1]["label"], "$\\Delta\\phi = 36° = \\delta$")
 
     def test_only_the_cosmic_string_plays_forward_and_back(self):
-        loops = {name: v["movie"].get("loop", "once") for name, data in self.embedding.items()
-                 for v in data["views"] if "movie" in v}
-        self.assertEqual({name for name, loop in loops.items() if loop != "once"}, {"cosmic_string"})
-        self.assertEqual(loops["cosmic_string"], "pingpong")
+        loops = {key: v["movie"].get("loop", "once") for key, v in self.movies().items()}
+        self.assertEqual({key for key, loop in loops.items() if loop != "once"}, {("cosmic_string", "unroll")})
+        self.assertEqual(loops[("cosmic_string", "unroll")], "pingpong")
         self.assertNotIn("loop", next(v for v in self.embedding["frw"]["views"] if "movie" in v)["movie"])
         view = copy.deepcopy(next(v for v in self.embedding["cosmic_string"]["views"] if "movie" in v))
         build.check_movie("cosmic_string", view)
@@ -3019,9 +3033,8 @@ class StacksAndMovies(unittest.TestCase):
         self.assertTrue(all(abs(a - b) == 1 for a, b in zip(shown, shown[1:]) if a != b))
 
     def test_every_other_movie_plays_once_through_and_starts_again(self):
-        movies = {name: v["movie"] for name, data in self.embedding.items() for v in data["views"]
-                  if "movie" in v and v["movie"].get("loop", "once") == "once"}
-        self.assertEqual(set(movies), set(self.MOVIES) - {"cosmic_string"})
+        movies = {key: v["movie"] for key, v in self.movies().items() if v["movie"].get("loop", "once") == "once"}
+        self.assertEqual(set(movies), set(self.MOVIES) - {("cosmic_string", "unroll")})
         times = list(range(0, 2 * 1000 * max(m["seconds"] for m in movies.values()) + 2000, 7))
         for (name, movie), shown in zip(movies.items(), self.frames_shown(list(movies.values()), times)):
             values, period = [f["value"] for f in movie["frames"]], 1000 * movie["seconds"]
@@ -3030,7 +3043,7 @@ class StacksAndMovies(unittest.TestCase):
             for ms in times:
                 v = values[0] + (values[-1] - values[0]) * (ms % (period * n / (n - 1))) / period
                 want.append(max(k for k in range(n) if k == 0 or values[k] <= v))
-            self.assertEqual(shown, want, name)
+            self.assertEqual(shown, want, str(name))
 
     def test_the_page_plays_a_movie_and_holds_it_still_for_a_reader_who_asks(self):
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
@@ -3039,6 +3052,118 @@ class StacksAndMovies(unittest.TestCase):
         self.assertIn("prefers-reduced-motion: reduce", player.group(0))
         self.assertIn("IntersectionObserver", player.group(0))
         self.assertRegex(page, r"\.mfs-movie-play:active \{ color: var\(--pink-light\); border-color: var\(--pink-light\); \}")
+
+
+class TimeSlicedViewsAreMovies(unittest.TestCase):
+    """No embedding diagram sets the moments of a time out as separate pictures, as the captain
+    asked on 1 October 2026, when Tolman-Bondi's cloud still stood as four of them beside the
+    movies: a view that changes with a time, t, tau, eta, u or any other, plays as a movie with
+    the page's play and pause button and a label naming the frame shown. The script that draws
+    them, the build that reads them and the published files are each held to it."""
+
+    def setUp(self):
+        self.embedding = embedding_files()
+        self.views = [(name, view) for name, data in self.embedding.items() for view in data["views"]]
+
+    def test_every_view_of_more_than_one_moment_is_a_movie(self):
+        sliced = {(name, view["id"]) for name, view in self.views
+                  if len(view["surfaces"]) > 1 or any("time" in s for s in view["surfaces"])}
+        self.assertTrue(sliced)
+        self.assertEqual({key for key in sliced if key not in StacksAndMovies.MOVIES}, set())
+        for name, view in self.views:
+            if (name, view["id"]) in sliced:
+                self.assertIn("movie", view, f"{name} {view['id']}: moments set out as separate pictures")
+
+    def test_no_figure_stands_two_surfaces_side_by_side(self):
+        # A movie draws one frame at a time on one axis, so a figure of more than one place holds
+        # moments as separate pictures, and so does one with a label for each of them.
+        for name, view in self.views:
+            figure, where = view["figure"], f"{name} {view['id']}"
+            self.assertEqual(len(figure["turn"]["origins"]), 1, where)
+            moments = {s["label"] for s in view["surfaces"] if "label" in s}
+            named = [L["text"] for L in figure["labels"] if L["text"] in moments and not L.get("frame")]
+            self.assertEqual(named, [], where)
+
+    def test_every_movie_of_moments_is_played_as_the_others_are(self):
+        # The same shape as FRW's, Bianchi's and the cosmic string's: frames with a label and a
+        # value, one label on the figure that names the frame shown, which is the first, and
+        # nothing a client would have to treat on its own.
+        keys = {"variable", "seconds", "frames", "loop", "turns"}
+        for name, view in self.views:
+            if "movie" not in view:
+                continue
+            movie, where = view["movie"], f"{name} {view['id']}"
+            self.assertLessEqual(set(movie), keys, where)
+            self.assertEqual(movie["seconds"], 5, where)
+            for frame in movie["frames"]:
+                self.assertLessEqual(set(frame), {"label", "value", "pieces", "rings", "curves", "dots"}, where)
+                self.assertNotIn("time", frame, where)
+            shown = [L for L in view["figure"]["labels"] if L.get("frame")]
+            self.assertEqual([L["text"] for L in shown], [movie["frames"][0]["label"]], where)
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        self.assertIn("(movie ? MOVIE_PLAY : '')", page, "the page gives a movie no button")
+
+    def test_the_build_refuses_moments_that_are_not_a_movie(self):
+        view = copy.deepcopy(next(v for v in self.embedding["tolman_bondi"]["views"] if v["id"] == "cloud"))
+        build.check_moments("tolman_bondi", view)
+        still = {k: v for k, v in view.items() if k != "movie"}
+        with self.assertRaises(build.DataError) as raised:
+            build.check_moments("tolman_bondi", still)
+        self.assertIn("separate pictures", str(raised.exception))
+        # A movie that leaves a moment out, or stops short of the last, is refused too.
+        short = copy.deepcopy(view)
+        last = short["surfaces"][-1]["time"]
+        short["movie"]["frames"] = [f for f in short["movie"]["frames"] if f["value"] != last]
+        with self.assertRaises(build.DataError) as raised:
+            build.check_moments("tolman_bondi", short)
+        self.assertIn("does not hold its moment", str(raised.exception))
+        changed = copy.deepcopy(view)
+        changed["movie"]["frames"][0]["rings"] = []
+        with self.assertRaises(build.DataError):
+            build.check_moments("tolman_bondi", changed)
+        beyond = copy.deepcopy(view)
+        beyond["movie"]["frames"].append(dict(beyond["movie"]["frames"][-1], value=last + 1, label="later"))
+        with self.assertRaises(build.DataError) as raised:
+            build.check_moments("tolman_bondi", beyond)
+        self.assertIn("from its first moment to its last", str(raised.exception))
+        unordered = copy.deepcopy(view)
+        unordered["surfaces"].reverse()
+        with self.assertRaises(build.DataError):
+            build.check_moments("tolman_bondi", unordered)
+        # One moment is no sequence, with a movie, as the cosmic string's cone, or without.
+        for metric_id in ("cosmic_string", "schwarzschild"):
+            for one in self.embedding[metric_id]["views"]:
+                build.check_moments(metric_id, one)
+
+    def test_the_script_cannot_draw_moments_as_separate_pictures(self):
+        # view() of the script is run as it stands, without the script's own imports: it refuses
+        # more than one surface without a movie, and the script holds no other way to lay
+        # surfaces out, every view being made by view().
+        source = (build.ROOT / "_tools" / "derivations" / "embedding.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        functions = {node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)}
+        self.assertNotIn("sequence_figure", functions)
+        scope = {}
+        exec(compile(ast.Module(body=[functions["view"]], type_ignores=[]), "embedding.py", "exec"), scope)
+
+        class Moment:
+            def data(self):
+                return {"pieces": []}
+        made = scope["view"]("one", "One", "$r_s$", [Moment()], {})
+        self.assertEqual(len(made["surfaces"]), 1)
+        with self.assertRaises(AssertionError) as raised:
+            scope["view"]("many", "Many", "$r_s$", [Moment(), Moment()], {})
+        self.assertIn("no movie", str(raised.exception))
+        with self.assertRaises(AssertionError):
+            scope["view"]("many", "Many", "$r_s$", [Moment(), Moment()], {}, movie=None)
+        made = scope["view"]("many", "Many", "$r_s$", [Moment(), Moment()], {}, movie={"frames": []})
+        self.assertIn("movie", made)
+        # Every view the script returns is made by view(), so none escapes that refusal: no
+        # function builds the dictionary of a view by hand.
+        builders = [node.name for node in ast.walk(tree) if isinstance(node, ast.FunctionDef) and node.name != "view"
+                    and any(isinstance(d, ast.Dict) and {"surfaces", "figure"} <= {getattr(k, "value", None) for k in d.keys}
+                            for d in ast.walk(node))]
+        self.assertEqual(builders, [])
 
 
 class TurningLightConeFigures(unittest.TestCase):
