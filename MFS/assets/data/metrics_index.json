@@ -573,6 +573,32 @@
     "version": "40afe2794224ede4"
   },
   {
+    "id": "levi_civita",
+    "name": "Levi-Civita",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "cylindrical symmetry",
+      "line mass",
+      "Weyl class",
+      "Kasner",
+      "angular deficit",
+      "conical",
+      "singularity",
+      "curvature singularity",
+      "naked singularity",
+      "not asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "74f8307bea9988b1"
+  },
+  {
     "id": "majumdar_papapetrou",
     "name": "Majumdar-Papapetrou",
     "tags": [

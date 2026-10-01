@@ -26,7 +26,7 @@
   ],
   "signature": "(-,+,+,+)",
   "convention": "The mass parameter $\\sigma$ is dimensionless, $G/c^2$ times the mass per unit length of the source where it is small. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
-  "history": "Tullio Levi-Civita found the static vacuum field with cylindrical symmetry in 1919, in the ninth of his notes on Einsteinian $ds^2$ in Newtonian fields, a series he began in 1917 [levicivita1919, levicivita2011b, maccallum2011]. Levi-Civita introduced the analog of the logarithmic potential of Newtonian gravity and found the other metric coefficients from the vacuum Einstein equations [levicivita2011b, maccallum2011]. For small $\\sigma$ the field is that of an infinitely long homogeneous line of mass in Newton's theory, with $\\sigma$ its mass per unit length, as Levi-Civita noticed himself [herrera2001]. Werner Israel confirmed in 1977 that $\\sigma$ is the mass per unit length [israel1977, maccallum2011]. Levi-Civita's metric is a member of the class of static axisymmetric vacuum solutions Hermann Weyl gave in 1917, and it is the static class of the family Edward Kasner published in 1921 [weyl1917, kasner1921, maccallum2011].¶The solution holds two independent parameters, $\\sigma$ and $C$, as L. Marder established in 1958 [marder1958, herrera2001]. A change of coordinates takes $C$ to $1$ locally, and with $\\phi$ running once round the axis $C$ fixes the angular deficit there [maccallum2011]. William Bonnor pointed out in 1979 that the constant has a global topological meaning and cannot be removed by scale transformations [bonnor1979, herrera2001]. At $\\sigma = 0$ the spacetime is flat, and with $\\phi$ periodic it is the spacetime of a cosmic string [maccallum2011, vilenkin1981]. The metric is also the limit of the $\\gamma$ metric, whose potential is that of a finite rod, as the length of the rod tends to infinity [herrera1999, maccallum2011].¶The curvature is infinite on the axis $\\rho = 0$ for every $\\sigma$ except $0$ and $1/2$, where the spacetime is flat [dasilva1995]. At $\\sigma = 1/2$ it is flat spacetime in the coordinates of a uniformly accelerated frame [wang1997]. M. F. A. da Silva, Luis Herrera, Filipe Paiva, and Nilton Santos found in 1995 that the metric is of Petrov type I except at $\\sigma = -1/2$, $1/4$, and $1$, where it is of type D and has one more symmetry [dasilva1995]. At $\\sigma = -1/2$ that symmetry is a rotation in the plane of $z$ and $\\phi$, and the metric is locally the plane symmetric vacuum Abraham Taub found in 1951 [wang1997, taub1951]. At $\\sigma = 1/4$ it is a Lorentz boost that mixes $t$ and $\\phi$ [wang1997]. Far from its axis Melvin's magnetic universe approaches the Levi-Civita metric with $\\sigma = 1$ [kastor2021].¶A particle on a circular geodesic moves past the static observers at one speed $W$ whatever its radius, with $W^2 = 2\\sigma/(1 - 2\\sigma)$ in units of the speed of light, as round a line of mass in Newton's theory [dasilva1995, herrera2001]. That speed reaches the speed of light at $\\sigma = 1/4$, and Ronald Gautreau and R. B. Hoffman demonstrated in 1969 that no circular geodesic is timelike for $\\sigma \\geq 1/4$ [gautreau1969, dasilva1995]. Bonnor and M. A. P. Martins conjectured in 1991 that the metric does not represent an infinite line of mass if $\\sigma \\geq 1/4$ [bonnormartins1991, dasilva1995]. In 1992 Bonnor and W. Davidson matched it to a cylinder of perfect fluid with $\\sigma$ above $1/4$ and below $1/2$ [bonnordavidson1992, dasilva1995]. A cylinder of dust with equal numbers of particles circling the axis in each sense is a source for $0 \\leq \\sigma \\leq 1/2$, as da Silva, Herrera, Paiva, and Santos found in 1995 [dasilva1995]. For $-1/2 < \\sigma < 1/2$ the source can be a cylinder of perfect fluid and for $|\\sigma| > 1/2$ a wall, with the sign of the fluid's density that of $\\sigma$, as Thomas Philbin found in 1996 [philbin1996].¶A cylindrical shell of anisotropic fluid that satisfies the energy conditions is a source for $0 \\leq \\sigma \\leq 1$, as Anzhong Wang, da Silva, and Santos found in 1997 [wang1997]. Herrera, Santos, Antonio Teixeira, and Wang showed in 2001 that at $\\sigma = 1/2$ the axial and angular coordinates switch meaning, and gave a shell that satisfies the energy conditions for every $\\sigma \\geq 0$ [herrera2001]. By Israel's definition the energy per unit length of their shell is $\\sigma/(4\\sigma^2 - 2\\sigma + 1)$, which is greatest at $\\sigma = 1/2$, where it is $1/2$, and falls to zero as $\\sigma \\to \\infty$ [herrera2001, israel1977]. The Levi-Civita spacetime has no event horizon [herrera2001]. At $\\sigma = 1/2$ their shell has a positive energy density and a positive pressure while the spacetime outside it is flat, which Herrera, Santos, Teixeira, and Wang left unexplained [herrera2001]. Jiří Bičák, Tomáš Ledvinka, Bernd Schmidt, and Martin Žofka demonstrated in 2004 that static cylinders of perfect fluid with their Levi-Civita exteriors exist as unique global solutions for a fairly general equation of state, and that only special cylinders have an exterior with $C = 1$ [bicak2004].",
+  "history": "Tullio Levi-Civita found the static vacuum field with cylindrical symmetry in 1919, in the ninth of his notes on Einsteinian $ds^2$ in Newtonian fields [levicivita1919, levicivita2011b, maccallum2011]. Levi-Civita introduced the analog of the logarithmic potential of Newtonian gravity and found the other metric coefficients from the vacuum Einstein equations [levicivita2011b, maccallum2011]. For small $\\sigma$ the field is that of an infinitely long homogeneous line of mass in Newton's theory, with $\\sigma$ its mass per unit length, as Levi-Civita noticed himself [herrera2001]. Werner Israel confirmed in 1977 that $\\sigma$ is the mass per unit length [israel1977, maccallum2011]. Levi-Civita's metric is a member of the class of static axisymmetric vacuum solutions Hermann Weyl gave in 1917, and it is the static class of the family Edward Kasner published in 1921 [weyl1917, kasner1921, maccallum2011].¶The solution holds two independent parameters, $\\sigma$ and $C$, as L. Marder established in 1958 [marder1958, herrera2001]. A change of coordinates takes $C$ to $1$ locally, and with $\\phi$ running once round the axis $C$ fixes the angular deficit there [maccallum2011]. William Bonnor pointed out in 1979 that the constant has a global topological meaning and cannot be removed by scale transformations [bonnor1979, herrera2001]. At $\\sigma = 0$ the spacetime is flat, and with $\\phi$ periodic it is the spacetime of a cosmic string [maccallum2011, vilenkin1981]. The metric is also the limit of the $\\gamma$ metric, whose potential is that of a finite rod, as the length of the rod tends to infinity [herrera1999, maccallum2011].¶The curvature is infinite on the axis $\\rho = 0$ for every $\\sigma$ except $0$ and $1/2$, where the spacetime is flat [dasilva1995]. At $\\sigma = 1/2$ it is flat spacetime in the coordinates of a uniformly accelerated frame [wang1997]. M. F. A. da Silva, Luis Herrera, Filipe Paiva, and Nilton Santos found in 1995 that the metric is of Petrov type I except at $\\sigma = -1/2$, $1/4$, and $1$, where it is of type D and has one more symmetry [dasilva1995]. At $\\sigma = -1/2$ that symmetry is a rotation in the plane of $z$ and $\\phi$, and the metric is locally the plane symmetric vacuum Abraham Taub found in 1951 [wang1997, taub1951]. At $\\sigma = 1/4$ it is a Lorentz boost that mixes $t$ and $\\phi$ [wang1997]. Far from its axis Melvin's magnetic universe approaches the Levi-Civita metric with $\\sigma = 1$ [kastor2021].¶A particle on a circular geodesic moves past the static observers at one speed $W$ whatever its radius, with $W^2 = 2\\sigma/(1 - 2\\sigma)$ in units of the speed of light, as round a line of mass in Newton's theory [dasilva1995, herrera2001]. That speed reaches the speed of light at $\\sigma = 1/4$, and Ronald Gautreau and R. B. Hoffman demonstrated in 1969 that no circular geodesic is timelike for $\\sigma \\geq 1/4$ [gautreau1969, dasilva1995]. Bonnor and M. A. P. Martins conjectured in 1991 that the metric does not represent an infinite line of mass if $\\sigma \\geq 1/4$ [bonnormartins1991, dasilva1995]. In 1992 Bonnor and W. Davidson matched it to a cylinder of perfect fluid with $\\sigma$ above $1/4$ and below $1/2$ [bonnordavidson1992, dasilva1995]. A cylinder of dust with equal numbers of particles circling the axis in each sense is a source for $0 \\leq \\sigma \\leq 1/2$, as da Silva, Herrera, Paiva, and Santos found in 1995 [dasilva1995]. For $-1/2 < \\sigma < 1/2$ the source can be a cylinder of perfect fluid and for $|\\sigma| > 1/2$ a wall, with the sign of the fluid's density that of $\\sigma$, as Thomas Philbin found in 1996 [philbin1996].¶A cylindrical shell of anisotropic fluid that satisfies the energy conditions is a source for $0 \\leq \\sigma \\leq 1$, as Anzhong Wang, da Silva, and Santos found in 1997 [wang1997]. Herrera, Santos, Antonio Teixeira, and Wang showed in 2001 that at $\\sigma = 1/2$ the axial and angular coordinates switch meaning, and gave a shell that satisfies the energy conditions for every $\\sigma \\geq 0$ [herrera2001]. By Israel's definition the energy per unit length of their shell is $\\sigma/(4\\sigma^2 - 2\\sigma + 1)$, which is greatest at $\\sigma = 1/2$, where it is $1/2$, and falls to zero as $\\sigma \\to \\infty$ [herrera2001, israel1977]. The Levi-Civita spacetime has no event horizon [herrera2001]. At $\\sigma = 1/2$ their shell has a positive energy density and a positive pressure, while the spacetime outside it is flat [herrera2001]. Jiří Bičák, Tomáš Ledvinka, Bernd Schmidt, and Martin Žofka demonstrated in 2004 that static cylinders of perfect fluid with their Levi-Civita exteriors exist as unique global solutions for a fairly general equation of state, and that only special cylinders have an exterior with $C = 1$ [bicak2004].",
   "references": [
     "levicivita1919",
     "levicivita2011b",
@@ -59,7 +59,13 @@
         "\\phi",
         "z"
       ],
-      "domains": [],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\rho \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "\\rho = 0 \\;\\text{(the axis, a curvature singularity unless } \\sigma = 0 \\text{ or } \\sigma = 1/2\\text{)}"
+      ],
       "parameters": [
         {
           "symbol": "\\sigma",
@@ -71,7 +77,1178 @@
         }
       ],
       "convention": "We use Weyl's coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths, and we evaluate $\\rho^{4\\sigma}$ and $\\rho^{4\\sigma(2\\sigma - 1)}$ with $\\rho$ in a fixed unit of length, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
-      "line_element": ""
+      "line_element": "ds^2 = -\\rho^{4\\sigma}c^2dt^2 + \\rho^{4\\sigma(2\\sigma - 1)}\\left(d\\rho^2 + dz^2\\right) + \\dfrac{\\rho^{2(1 - 2\\sigma)}}{C^2}d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\rho^{4\\sigma}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\rho^{4\\sigma(2\\sigma - 1)}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\rho^{4\\sigma(2\\sigma - 1)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\rho^{2(1 - 2\\sigma)}}{C^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\rho^{-4\\sigma}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\rho^{-4\\sigma(2\\sigma - 1)}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\rho^{-4\\sigma(2\\sigma - 1)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "C^2\\rho^{-2(1 - 2\\sigma)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma}{\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sigma}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sigma\\,\\rho^{8\\sigma - 8\\sigma^2}}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2\\sigma - 1\\right)\\rho^{1 - 8\\sigma^2}}{C^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1 - 2\\sigma}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{1 - 2\\sigma}{\\rho}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2\\sigma\\,\\rho^{4\\sigma}}{\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\,\\rho^{4\\sigma}}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sigma\\,\\rho^{4\\sigma}}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2\\sigma - 1\\right)\\rho^{1 - 4\\sigma}}{C^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2\\sigma - 1\\right)\\rho^{1 - 4\\sigma}}{C^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(2\\sigma - 1\\right)\\rho^{1 - 4\\sigma}}{C^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{8\\sigma^2}}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(1 - 2\\sigma\\right)\\rho^{4\\sigma - 8\\sigma^2}}{C^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(1 - 2\\sigma\\right)\\rho^{4\\sigma - 8\\sigma^2}}{C^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(1 - 2\\sigma\\right)\\rho^{4\\sigma - 8\\sigma^2}}{C^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(1 - 2\\sigma\\right)\\rho^{4\\sigma - 8\\sigma^2}}{C^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(2\\sigma - 1\\right)\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(2\\sigma - 1\\right)\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(2\\sigma - 1\\right)\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(2\\sigma - 1\\right)\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{4\\sigma}}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{64\\sigma^2\\left(2\\sigma - 1\\right)^2\\left(4\\sigma^2 - 2\\sigma + 1\\right)}{\\rho^{4(4\\sigma^2 - 2\\sigma + 1)}}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)\\rho^{8\\sigma - 8\\sigma^2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{8\\sigma^2}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{8\\sigma^2}}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2\\,\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(1 - 2\\sigma\\right)\\rho^{4\\sigma - 8\\sigma^2}}{C^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(1 - 2\\sigma\\right)\\rho^{4\\sigma - 8\\sigma^2}}{C^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(1 - 2\\sigma\\right)\\rho^{4\\sigma - 8\\sigma^2}}{C^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(1 - 2\\sigma\\right)\\rho^{4\\sigma - 8\\sigma^2}}{C^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(2\\sigma - 1\\right)\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(2\\sigma - 1\\right)\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(2\\sigma - 1\\right)\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(2\\sigma - 1\\right)\\rho^{4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4\\sigma^2\\left(1 - 2\\sigma\\right)}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)\\rho^{8\\sigma^2 - 4\\sigma}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{4\\sigma}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sigma\\left(2\\sigma - 1\\right)^2}{C^2\\,\\rho^{4\\sigma}}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{4\\sigma}{\\rho}\\dot{t}\\dot{\\rho} = 0",
+        "\\ddot{\\rho} + \\dfrac{2\\sigma\\,\\rho^{8\\sigma - 8\\sigma^2}}{\\rho}\\dot{t}^2 + \\dfrac{2\\sigma\\left(2\\sigma - 1\\right)}{\\rho}\\dot{\\rho}^2 + \\dfrac{\\left(2\\sigma - 1\\right)\\rho^{1 - 8\\sigma^2}}{C^2}\\dot{\\phi}^2 + \\dfrac{2\\sigma\\left(1 - 2\\sigma\\right)}{\\rho}\\dot{z}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2 - 4\\sigma}{\\rho}\\dot{\\rho}\\dot{\\phi} = 0",
+        "\\ddot{z} + \\dfrac{4\\sigma\\left(2\\sigma - 1\\right)}{\\rho}\\dot{\\rho}\\dot{z} = 0"
+      ]
     },
     {
       "id": "kasner",
@@ -82,27 +1259,1188 @@
         "\\phi",
         "z"
       ],
-      "domains": [],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "r = 0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}"
+      ],
       "parameters": [
         {
-          "symbol": "p_t",
-          "description": "Exponent along $t$, $p_t = 2\\sigma/\\Sigma$ with $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+          "symbol": "p_0",
+          "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$ with $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
         },
         {
-          "symbol": "p_z",
-          "description": "Exponent along $z$, $p_z = 2\\sigma(2\\sigma - 1)/\\Sigma$"
+          "symbol": "p_2",
+          "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
         },
         {
-          "symbol": "p_\\phi",
-          "description": "Exponent along $\\phi$, $p_\\phi = (1 - 2\\sigma)/\\Sigma$; the two constraints leave one free exponent"
+          "symbol": "p_3",
+          "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two constraints leave one free exponent"
         },
         {
           "symbol": "\\ell",
-          "description": "Radius of the circle about the axis at unit $r$, a length, $\\ell = \\Sigma^{p_\\phi}/C$ in the unit of length chosen"
+          "description": "Radius of the circle about the axis at unit $r$, a length, $\\ell = \\Sigma^{p_2}/C$ in the unit of length chosen"
         }
       ],
-      "convention": "We use coordinates $(t, r, \\phi, z)$ with $r$ the proper distance from the axis, $r = \\rho^{\\Sigma}/\\Sigma$ with $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$, and $t$ and $z$ those of Weyl's coordinates multiplied by constants, and we evaluate the powers $r^{2p_i}$ with $r$ in a fixed unit of length, so they are dimensionless. The exponents obey $p_t + p_z + p_\\phi = 1$ and $p_t^2 + p_z^2 + p_\\phi^2 = 1$, and every component assumes both conditions. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
-      "line_element": ""
+      "convention": "We use coordinates $(t, r, \\phi, z)$ with $r$ the proper distance from the axis, $r = \\rho^{\\Sigma}/\\Sigma$ with $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$, and $t$ and $z$ those of Weyl's coordinates multiplied by constants, and we evaluate the powers $r^{2p_i}$ with $r$ in a fixed unit of length, so they are dimensionless. The exponents obey $p_0 + p_2 + p_3 = 1$ and $p_0^2 + p_2^2 + p_3^2 = 1$, and every component assumes both conditions. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -r^{2p_0}c^2dt^2 + dr^2 + \\ell^2r^{2p_2}d\\phi^2 + r^{2p_3}dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-r^{2p_0}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\ell^2r^{2p_2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "r^{2p_3}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-r^{-2p_0}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{r^{-2p_2}}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "r^{-2p_3}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{p_0}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,r^{2p_0}}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_2\\,\\ell^2\\,r^{2p_2}}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\,r^{2p_3}}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{p_2}{r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3}{r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{p_3}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_0\\,r^{2p_0}}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\,r^{2p_0}}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,r^{2p_0}}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_2\\,\\ell^2\\,r^{2p_2}}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\,\\ell^2\\,r^{2p_2}}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{p_2\\,\\ell^2\\,r^{2p_2}}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\,r^{2p_3}}{r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\,r^{2p_3}}{r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{p_3\\,r^{2p_3}}{r}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{p_0\\left(1 - p_0\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\left(1 - p_0\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_0\\,p_3\\,r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_3\\,r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{p_0\\left(1 - p_0\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\left(1 - p_0\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_0\\,p_2\\,r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_2\\,r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\left(p_2 - 1\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_2\\left(p_2 - 1\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_2\\,p_3\\,r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\,p_3\\,r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_0\\,p_3\\,r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_3\\,r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_3 - 1\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_3 - 1\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2}}{r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{p_0\\left(p_0 - 1\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\left(p_0 - 1\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_0\\left(p_0 - 1\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\left(p_0 - 1\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_0 + 2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_0 + 2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_0 + 2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_0 + 2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{p_0\\,p_3\\,r^{2p_0 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\,p_3\\,r^{2p_0 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_0\\,p_3\\,r^{2p_0 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_3\\,r^{2p_0 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2 + 2p_3}}{r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = -\\dfrac{16p_0\\,p_2\\,p_3}{r^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{p_0\\left(1 - p_0\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\left(1 - p_0\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_0\\,p_3\\,r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_3\\,r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{p_0\\left(1 - p_0\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\left(1 - p_0\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_0\\,p_2\\,r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_2\\,r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\left(p_2 - 1\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_2\\left(p_2 - 1\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_2\\,p_3\\,r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\,p_3\\,r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_0\\,p_3\\,r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_3\\,r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_3 - 1\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_3 - 1\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2}}{r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{p_0\\left(p_0 - 1\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\left(p_0 - 1\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_0\\left(p_0 - 1\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\left(p_0 - 1\\right)r^{2p_0}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_0 + 2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_0 + 2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_0 + 2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_2\\,\\ell^2\\,r^{2p_0 + 2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{p_0\\,p_3\\,r^{2p_0 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_0\\,p_3\\,r^{2p_0 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_0\\,p_3\\,r^{2p_0 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_0\\,p_3\\,r^{2p_0 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{p_2\\,\\ell^2\\left(1 - p_2\\right)r^{2p_2}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - p_3\\right)r^{2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2 + 2p_3}}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{p_2\\,p_3\\,\\ell^2\\,r^{2p_2 + 2p_3}}{r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2p_0}{r}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{p_0\\,r^{2p_0}}{r}\\dot{t}^2 - \\dfrac{p_2\\,\\ell^2\\,r^{2p_2}}{r}\\dot{\\phi}^2 - \\dfrac{p_3\\,r^{2p_3}}{r}\\dot{z}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2p_2}{r}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} + \\dfrac{2p_3}{r}\\dot{r}\\dot{z} = 0"
+      ]
     }
   ]
 }
