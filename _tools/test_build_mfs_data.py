@@ -3158,7 +3158,10 @@ class Slices(unittest.TestCase):
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
               "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "conformal frw/flat", "conformal frw/open",
-              "misner/rindler/plane", "conformal misner/rindler"}
+              "misner/rindler/plane", "conformal misner/rindler",
+              # The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.
+              "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
+              "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()

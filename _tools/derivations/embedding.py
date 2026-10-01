@@ -4594,6 +4594,54 @@ def levi_civita(ck, src):
                         "flat space carries the slice on to the axis."])]
 
 
+def curzon_chazy(ck, src):
+    """The plane z = 0 of the Curzon-Chazy particle at t = 0 in Weyl's chart, m = 1.
+
+    On it g_rhorho = e^(2m/rho - m^2/rho^2) and g_phiphi = rho^2 e^(2m/rho), so the circle of Weyl's
+    radius rho has radius rho e^(m/rho) on the surface, least, m e, at rho = m and growing without
+    bound both as rho grows and as rho -> 0. The slice has a surface of revolution in flat space where
+    e^(-m^2/rho^2) >= (1 - m/rho)^2, which is rho >= 0.7226 m, found here: a funnel that narrows to a
+    neck at rho = m and widens again below it, until it lies level at rho = 0.7226 m, inside which the
+    circles grow faster than the distance in to them, which is checked. The spherical chart's equator,
+    where r is rho, is checked to give the same surface."""
+    sl = Slice(src, "curzon_chazy", "weyl", "\\rho", "\\phi", {"t": 0, "z": 0}, {"m": 1})
+    stop = float(sp.nsolve(sl.defect, sl.x, 0.72))
+    ck.add("Curzon-Chazy: the surface starts where e^(-m^2/rho^2) = (1 - m/rho)^2",
+           abs(math.exp(-1 / stop ** 2) - (1 - 1 / stop) ** 2), 1e-12)
+    ck.stops("Curzon-Chazy, inside the first surface", sl, np.linspace(0.05, stop, 202)[:-1])
+    top = 5.0
+    size = 2 * float(sl.rho_at(top))
+    plane = Piece("plane", "sheet", sl, stop, top, 0.0, 1,
+                  (("stops", "the circles grow faster than the distance in to them, and nothing in flat space carries the slice on"),
+                   ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                  [(stop, "chartedge", None), (1.0, "surface", "$\\rho = m$"), (2.0, "r", None), (3.0, "r", None),
+                   (4.0, "r", None), (top, "r", "$5\\,m$")], size)
+    ck.isometry("Curzon-Chazy, the plane z = 0", plane)
+    ck.radius("Curzon-Chazy, the plane z = 0, rho e^(m/rho)", plane, lambda r: r * np.exp(1 / r), size)
+    ck.add("Curzon-Chazy: the narrowest circle is at rho = m, of radius m e",
+           abs(float(np.min(plane.rho)) - math.e) + abs(plane.at(1.0)[0] - math.e), 1e-9)
+    other = Slice(src, "curzon_chazy", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1})
+    xs = plane.x[1:]
+    ck.add("Curzon-Chazy, the spherical chart's equator gives the same surface",
+           float(max(np.max(np.abs(other.rho_at(xs) - sl.rho_at(xs))), np.max(np.abs(other.defect_at(xs) - sl.defect_at(xs))))),
+           1e-9)
+    surface = Surface([plane])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *plane.at(1.0), "$\\rho = m$", dx=10)
+    ring_label(fig, [0, 0, 0], *plane.at(stop), f"${stop:.2f}\\,m$", side=-1)
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$5\\,m$")
+    fig.legend("fill", "cover", "the plane $z = 0$ at $t = 0$, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $2$, $3$, $4$ and $5\\,m$")
+    fig.legend("line", "surface", "the narrowest circle, of radius $m\\,e$, at $\\rho = m$")
+    fig.legend("line", "chartedge", f"$\\rho = {stop:.2f}\\,m$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The plane $z = 0$", "$m$", [surface], fig.done(),
+                 settings="$m = GM/c^2 = 1$, the unit of every length.",
+                 stops=[f"Inside $\\rho = {stop:.4f}\\,m$ the circles grow faster than the distance in to them, "
+                        "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat "
+                        "space carries the slice on."])]
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -5053,6 +5101,7 @@ DRAWN = {
     "thin_shell_wormhole": thin_shell_wormhole,
     "levi_civita": levi_civita,
     "kantowski_sachs": kantowski_sachs,
+    "curzon_chazy": curzon_chazy,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -5253,6 +5302,15 @@ CAPTIONS = {
         "turned over, and through its throat at $r_h$ into another, a chain of throats and widest circles "
         "without end, one period of which is drawn. Identifying the two throats closes the slice into a space "
         "of topology $S^1 \\times S^2$.",
+    ],
+    ("curzon_chazy", "equator"): [
+        "The plane $z = 0$ of the Curzon-Chazy particle at one moment ($m = 1$), drawn as a surface in flat space "
+        "with every distance along it the metric distance. On it $g_{\\rho\\rho} = e^{2m/\\rho - m^2/\\rho^2}$ and the "
+        "circle of Weyl's radius $\\rho$ has circumference $2\\pi\\rho\\,e^{m/\\rho}$, least, $2\\pi m\\,e$, at "
+        "$\\rho = m$, and growing without bound as $\\rho \\to 0$.",
+        "The surface narrows from far out to a neck at $\\rho = m$ and widens again toward the singularity, the ring "
+        "of infinite circumference, until it lies level at $\\rho = 0.72\\,m$, where the drawing stops; the same "
+        "plane at every moment is the same surface.",
     ],
     ("melvin", "universe"): [
         "The plane $z = 0$ of Melvin's universe at one moment ($B = 1$), drawn as a surface in flat space with "

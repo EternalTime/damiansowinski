@@ -2,7 +2,7 @@
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
-khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole and levi_civita,
+khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita and curzon_chazy,
 and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
@@ -2035,6 +2035,149 @@ def levi_civita_on_kasner_circle(math, chart):
 
 
 CHARTS["levi_civita"] = [lambda s=s: levi_civita(s) for s in ("weyl", "kasner")]
+
+
+# -- Curzon-Chazy ------------------------------------------------------------------------
+
+def curzon_chazy(system):
+    """The Curzon-Chazy particle, the member of Weyl's static axisymmetric class whose potential
+    is Newton's for a point mass, psi = -m/R and gamma = -m^2 rho^2/(2R^4), in Weyl's canonical
+    chart, where R = sqrt(rho^2 + z^2) is a name the chart defines and every value is printed
+    around it, and in the spherical chart rho = r sin(theta), z = r cos(theta), where R is r.
+    curzon_chazy_pullback checks the second against the first, and curzon_chazy.md beside this
+    file is the derivation."""
+    if system == "weyl":
+        coords, parameters = ["t", "\\rho", "\\phi", "z"], ["m", "R = \\sqrt{\\rho^2 + z^2}"]
+
+        def line(c2):
+            return (f"ds^2 = -e^{{-2m/R}}{c2}dt^2 + e^{{2m/R}}\\left(e^{{-m^2\\rho^2/R^4}}\\left(d\\rho^2 + dz^2\\right)"
+                    " + \\rho^2d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        rho, z, m = probe.symbol["\\rho"], probe.symbol["z"], probe.parameters["m"]
+        R = sp.Symbol("R", positive=True)
+        domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)", "(\\rho, z) \\neq (0, 0) \;\\text{(the singularity)}"]
+        lead, pretty, name = [m, rho, R, z], weyl_distance(rho, z, R), "Weyl"
+        metric = {("\\rho", "\\rho"): "e^{2m/R}e^{-m^2\\rho^2/R^4}", ("z", "z"): "e^{2m/R}e^{-m^2\\rho^2/R^4}"}
+        inverse = {("\\rho", "\\rho"): "e^{-2m/R}e^{m^2\\rho^2/R^4}", ("z", "z"): "e^{-2m/R}e^{m^2\\rho^2/R^4}"}
+        rewrite = [("\\dfrac{2R^3 - 2m\\,\\rho^2}{\\rho\\,R^3}", "\\dfrac{2\\left(R^3 - m\\,\\rho^2\\right)}{\\rho\\,R^3}")]
+    else:
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["m"]
+
+        def line(c2):
+            return (f"ds^2 = -e^{{-2m/r}}{c2}dt^2 + e^{{2m/r}}\\left(e^{{-m^2\\sin^2\\theta/r^2}}"
+                    "\\left(dr^2 + r^2d\\theta^2\\right) + r^2\\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        r, th, m = probe.symbol["r"], probe.symbol["\\theta"], probe.parameters["m"]
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]",
+                   "\\phi \\in [0, 2\\pi)", "r = 0 \;\\text{(the singularity)}"]
+        lead, pretty, name = [m, r, sp.cos(th), sp.sin(th)], weyl_distance(None, None, None), "Spherical"
+        metric = {}
+        inverse = {("\\phi", "\\phi"): "\\dfrac{e^{-2m/r}}{r^2\\sin^2\\theta}"}
+        rewrite = [("\\left(r\\,e^{2m/r}\\sin^2\\theta - m\\,e^{2m/r}\\sin^2\\theta\\right)",
+                    "\\left(r - m\\right)e^{2m/r}\\sin^2\\theta"),
+                   ("\\dfrac{2r - 2m}{r^2}", "\\dfrac{2\\left(r - m\\right)}{r^2}"),
+                   ("\\dfrac{2m^2\\sin^2\\theta - 2m\\,r + 2r^2}{r^3}",
+                    "\\dfrac{2\\left(m^2\\sin^2\\theta - m\\,r + r^2\\right)}{r^3}")]
+    return {
+        "metric_id": "curzon_chazy",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": lead},
+        "pretty": pretty,
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "rewrite": rewrite,
+        "check": curzon_chazy_check,
+    }
+
+
+def weyl_distance(rho, z, R):
+    """A pretty printer for a Weyl chart that names R = sqrt(rho^2 + z^2): every power of
+    rho^2 + z^2 is written as a power of R, every even power of z left over as R^2 - rho^2, so a
+    value is a polynomial in rho and R with at most one z in front, and the exponentials are
+    gathered and written one for each term of their exponent, as the line element writes them.
+    Without a chart's rho, z and R it only gathers the exponentials."""
+
+    def rational(e):
+        if R is None:
+            return sp.factor(e)
+        square = rho ** 2 + z ** 2
+        e = e.replace(lambda p: p.is_Pow and sp.expand(p.base - square) == 0, lambda p: R ** (2 * p.exp))
+        sides = []
+        for side in sp.fraction(sp.together(e)):
+            poly = sp.Poly(sp.expand(side), z)
+            low = min(k for (k,), _ in poly.terms())
+            rest = sum(c * z ** ((k - low) % 2) * (R ** 2 - rho ** 2) ** ((k - low) // 2) for (k,), c in poly.terms())
+            sides.append(z ** low * sp.factor(sp.expand(rest)))
+        return sides[0] / sides[1]
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        exponent, rest = sp.Integer(0), sp.Integer(1)
+        for f in sp.Mul.make_args(sp.powsimp(sp.factor(value))):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            if isinstance(base, sp.exp):
+                exponent += base.args[0] * k
+            else:
+                rest *= f
+        if rest.atoms(sp.exp):
+            raise AssertionError(f"an exponential stands inside a sum of {value}")
+        return sp.Mul(rational(rest), *[sp.exp(rational(term)) for term in sp.Add.make_args(sp.expand(exponent))
+                                        if term != 0])
+
+    return pretty
+
+
+def curzon_chazy_check(chart):
+    """Both charts solve the vacuum equations, and Weyl's two functions solve Weyl's: psi = -m/R
+    is harmonic in the flat space of rho, phi and z, and gamma is its quadrature,
+    d_rho gamma = rho((d_rho psi)^2 - (d_z psi)^2) and d_z gamma = 2 rho d_rho psi d_z psi."""
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(ricci[a][b]) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError("curzon_chazy: the Ricci tensor does not vanish")
+    if chart.coords_tex[1] != "\\rho":
+        return
+    rho, z = chart.symbols[1], chart.symbols[3]
+    m, R = chart.reader.parameters["m"], chart.reader.parameters["R"]
+    psi, gamma = -m / R, -m ** 2 * rho ** 2 / (2 * R ** 4)
+    checks = {"Laplace": sp.diff(rho * sp.diff(psi, rho), rho) / rho + sp.diff(psi, z, 2),
+              "d_rho gamma": sp.diff(gamma, rho) - rho * (sp.diff(psi, rho) ** 2 - sp.diff(psi, z) ** 2),
+              "d_z gamma": sp.diff(gamma, z) - 2 * rho * sp.diff(psi, rho) * sp.diff(psi, z),
+              "g_tt": chart.geo.g[0, 0] + sp.exp(2 * psi),
+              "g_rhorho": chart.geo.g[1, 1] - sp.exp(2 * gamma - 2 * psi)}
+    for label, value in checks.items():
+        if vm.norm(value) != 0:
+            raise AssertionError(f"curzon_chazy: Weyl's {label} fails")
+
+
+def curzon_chazy_pullback():
+    """The spherical chart is Weyl's with rho = r sin(theta), z = r cos(theta): the pullback of
+    Weyl's metric is the spherical one in every slot."""
+    weyl, sph = (cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+                 for spec in (curzon_chazy("weyl"), curzon_chazy("spherical")))
+    t, r, th, ph = sph.symbols
+    T, rho, phi, z = weyl.symbols
+    at = {T: t, rho: r * sp.sin(th), phi: ph, z: r * sp.cos(th)}
+    images = [at[x] for x in weyl.symbols]
+    jacobian = sp.Matrix(4, 4, lambda a, b: sp.diff(images[a], sph.symbols[b]))
+    source = weyl.geo.g.subs(at, simultaneous=True).applyfunc(lambda e: sp.powdenest(sp.simplify(e), force=True))
+    pulled = jacobian.T * source * jacobian
+    for a in range(4):
+        for b in range(a, 4):
+            if sp.simplify(pulled[a, b] - sph.geo.g[a, b]) != 0:
+                raise AssertionError(f"curzon_chazy: the pullback of Weyl's chart misses the spherical chart in slot "
+                                     f"{sph.coords_tex[a]}{sph.coords_tex[b]}")
+
+
+def curzon_chazy_charts():
+    curzon_chazy_pullback()
+    return [curzon_chazy("weyl"), curzon_chazy("spherical")]
+
+
+CHARTS["curzon_chazy"] = curzon_chazy_charts
 
 
 def write(spec):
