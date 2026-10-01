@@ -1745,7 +1745,7 @@ def dilaton_black_hole(ck, src):
     for system, plane in planes.items():
         K = plane.kretschmann
         ck.diverges(f"dilaton black hole {system}: the Kretschmann scalar diverges at r = r_d",
-                    K(0, rd + 1e-2), K(0, rd + 1e-3))
+                    K(0, rd + 1e-5), K(0, rd + 1e-6))
         ck.finite(f"dilaton black hole {system}: the Kretschmann scalar is finite at r = r_s",
                   K(np.zeros(3), np.array([0.999, 1, 1.001])))
 

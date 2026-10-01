@@ -318,6 +318,20 @@ The maximally symmetric vacuum solution with constant positive curvature, driven
 - chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda r^2}{3}\right)c^2 dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda r^2}{3}} + r^2 d\Omega^2$$
 - chart Flat Slicing: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + e^{2Ht}\left(dx^2 + dy^2 + dz^2\right)$$
 
+### Gibbons-Maeda-Garfinkle-Horowitz-Strominger Dilaton Black Hole
+
+The static, spherically symmetric charged black hole of low energy string theory, a solution of Einstein's equations with a Maxwell field and a scalar field, the dilaton, coupled to it. On the plane of time and radius its metric is Schwarzschild's, with one horizon at the Schwarzschild radius for every charge and no inner horizon, and the area of its spheres vanishes at the singularity.
+
+- id: `dilaton_black_hole`
+- tags: non-vacuum, static, stationary, spherically symmetric, charged, charged black hole, black hole, dilaton, scalar field, scalar hair, string theory, string metric, Einstein-Maxwell-dilaton, electric charge, magnetic charge, mass, electromagnetic field, extremal, supersymmetric, singularity, curvature singularity, coordinate singularity, horizon, event horizon, Hawking temperature, black hole shadow, causal structure, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json
+- chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r\left(r - r_d\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)du^2 - 2\,du\,dr + r\left(r - r_d\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r\left(r - r_d\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart String Metric, Magnetic Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{1 - \dfrac{r_s}{r}}{1 - \dfrac{r_d}{r}}c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_s}{r}\right)\left(1 - \dfrac{r_d}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart String Metric, Electric Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{r_d}{r}\right)\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}}\right) + \left(r - r_d\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Einstein Static Universe
 
 Albert Einstein's cosmology of 1917: dust spread uniformly through a round three sphere of fixed radius and held at rest by a positive cosmological constant. Minkowski, de Sitter, and anti-de Sitter space are each conformal to a region of it.
