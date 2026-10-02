@@ -249,6 +249,8 @@ TANGHERLINI_SIX = {"chi": "pi/2", **TANGHERLINI_FIVE}
 # other branch in units of l at r_0 = l.
 BD = {"r_0": "13/12", "ell": "5/12"}
 BD_PLUS = {"r_0": 1, "ell": 1}
+# Sultana and Dyer's black hole in units of its Schwarzschild radius, with the scale factor one at eta = 3 r_s.
+SD = {"r_s": 1, "eta_0": 3}
 # The black string's planes of the time and r hold the angles and the length z along the string fixed.
 STRING_FIVE = {"theta": "pi/2", "phi": "0", "z": "0"}
 STRING_SIX = {"psi": "pi/2", **STRING_FIVE}
@@ -396,6 +398,9 @@ class Diagram:
     null_radius: bool = False       # the drawn radius is a null coordinate, so the areal radius is stationary
                                     # along it exactly on the marginally trapped spheres: that curve is
                                     # marked as the apparent horizon, and no throat is
+    other_trapped: bool = False     # with null_radius: mark as well the marginally trapped spheres of the other
+                                    # null family, where |grad R|^2 divided by the derivative of R along the
+                                    # drawn radius vanishes, as Sultana and Dyer's inner trapping horizon
     quotient: str = None            # a coordinate the metric does not depend on, divided out: the
                                     # plane's metric is g_ab - g_ak g_bk/g_kk; see "Rays of no angular
                                     # momentum"
@@ -1563,6 +1568,16 @@ DIAGRAMS = [
     Diagram("mcvittie", "areal", "radial", "$t$ and $R$", ("t", "R"), (0, 5, 0, 12),
             "$R/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, functions={"H": MCV_H},
             singular_zero="R - r_s", input=MCV_INPUT),
+    # The big bang of the plane of Schwarzschild's time, eta = ct + r_s ln(r/r_s - 1) = 0, is declared as
+    # (r/r_s - 1) e^(ct/r_s) = 1, which is finite on r_s, where the curve runs up the edge of the chart.
+    Diagram("sultana_dyer", "kerr_schild", "radial", "$\\eta$ and $r$", ("\\eta", "r"), (0, 8, 0, 8),
+            "$r/r_s$", "$\\eta/r_s$", SD, EQUATOR, tau="eta", areal=True),
+    Diagram("sultana_dyer", "schwarzschild_time", "radial", "$t$ and $r$", ("t", "r"), (0, 7, -1, 6),
+            "$r/r_s$", "$ct/r_s$", SD, EQUATOR, areal=True, where="(r/r_s - 1)*exp(t/r_s) - 1",
+            singular_zero="(r/r_s - 1)*exp(t/r_s) - 1"),
+    Diagram("sultana_dyer", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 10, 0, 10), "$r/r_s$", "$v/r_s$", SD, EQUATOR, tau="v - r", areal=True,
+            where="v - r", singular_zero="v - r", null_radius=True, other_trapped=True),
     Diagram("dilaton_black_hole", "static", "radial", "$t$ and $r$", ("t", "r"), (0.5, 6.5, -3, 3),
             "$r/r_s$", "$ct/r_s$", DILATON, EQUATOR, orient="ingoing", areal=True),
     Diagram("dilaton_black_hole", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -4930,6 +4945,41 @@ CAPTIONS = {
         "the event at which the horizons of the two holes join, and from then on it is the circle in which the "
         "one event horizon cuts the plane.",
     ],
+    ("sultana_dyer", "kerr_schild", "radial"): [
+        "The plane of $\\eta$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every fixed angle by spherical "
+        "symmetry, drawn with the scale factor one at $\\eta_0 = 3\\,r_s$. The conformal factor $\\eta^4/\\eta_0^4$ drops "
+        "out of the null condition, so the rays are those of Schwarzschild's metric in its Kerr-Schild form: the "
+        "ingoing family keeps $\\eta + r$ and runs at 45°, and the outgoing family has "
+        "$dr/d\\eta = (r - r_s)/(r + r_s)$. The horizon $r = r_s$ is an outgoing ray that keeps its $r$, while its "
+        "areal radius $\\eta^2r_s/\\eta_0^2$ grows with the universe.",
+        "The curvature diverges on $\\eta = 0$, the big bang, and on $r = 0$, and the two meet at the corner of the "
+        "plane, so the black hole is there from the first moment. The dotted curves are where $|\\nabla R|^2$ "
+        "vanishes for the areal radius $R = \\eta^2r/\\eta_0^2$: the line $r = \\eta/2$, the Hubble radius of the "
+        "Einstein-de Sitter universe, beyond which both families gain $R$, and the curve "
+        "$r = (\\sqrt{\\eta^2 + 12r_s\\eta + 4r_s^2} - \\eta - 2r_s)/4$, which leaves $r = 0$ at the big bang and "
+        "climbs toward $r_s$ from inside, within which both families lose $R$.",
+    ],
+    ("sultana_dyer", "schwarzschild_time", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn with the scale factor one at "
+        "$\\eta_0 = 3\\,r_s$. The rays are Schwarzschild's, $ct \\pm r_*$ constant with "
+        "$r_* = r + r_s\\ln(r/r_s - 1)$, since a conformal factor moves no light cone. The spacetime begins on the "
+        "curve $\\eta = 0$, the big bang, where the curvature diverges: $ct = -r_s\\ln(r/r_s - 1)$ falls slowly "
+        "toward $t \\to -\\infty$ far from the hole and climbs to $t \\to +\\infty$ at $r_s$.",
+        "On a moment of $t$ the conformal time $\\eta$ falls toward the horizon and reaches zero at "
+        "$r = r_s(1 + e^{-ct/r_s})$, so every such moment ends on the big bang before it reaches $r_s$. The dotted "
+        "curve is $r = \\eta/2$, the Hubble radius of the Einstein-de Sitter universe, where $|\\nabla R|^2$ "
+        "vanishes for the areal radius $R = \\eta^2r/\\eta_0^2$ and beyond which both families gain $R$.",
+    ],
+    ("sultana_dyer", "eddington_finkelstein_ingoing", "chart"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own coordinates with "
+        "the scale factor one at $\\eta_0 = 3\\,r_s$. The ingoing family is $v = $ const and runs horizontally, since "
+        "$v$ is itself a null coordinate, and the outgoing family has $dv/dr = 2(1 - r_s/r)^{-1}$, vertical at $r_s$ "
+        "and leaning back toward smaller $r$ inside it. The spacetime lies above the line $v = r$, the big bang, "
+        "where the conformal time $\\eta = v - r$ is zero and the curvature diverges.",
+        "The dotted curves are where $|\\nabla R|^2$ vanishes for the areal radius $R = (v - r)^2r/\\eta_0^2$: the "
+        "line $v = 3r$, the Hubble radius of the Einstein-de Sitter universe, and the curve that leaves the corner "
+        "$v = r = 0$ and approaches $r_s$ from inside, within which both families lose $R$.",
+    ],
     ("kastor_traschen", "isotropic", "radial"): [
         "The plane of $\\tau$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) about a single hole, drawn for $H = -3c/(16m)$, "
         "the same at every other angle by spherical symmetry. The rays obey $dr/d\\tau = \\pm c/U^2$ with "
@@ -6666,6 +6716,8 @@ class Chart:
             self.fn["R"] = self.lambdify(sp.sqrt(R2))
             self.fn["dRr"] = self.lambdify(dR2[1] / (2 * sp.sqrt(R2)))
             self.fn["grad2"] = self.lambdify(grad2)
+            if spec.other_trapped:
+                self.fn["grad2_other"] = self.lambdify(sp.cancel(sp.together(grad2 * 2 * sp.sqrt(R2) / dR2[1])))
             self.same_as_grr = sp.simplify(grad2 - gi2[2]) == 0
 
     def lambdify(self, expr):
@@ -7356,7 +7408,9 @@ class Plot:
         Z = self.c.fn[name](x0, r).astype(float)
         if keep is not None:
             Z = np.where(keep(x0, r), Z, np.nan)
-        if self.c.surface is not None or self.c.spec.where:
+        # A declared singular curve may be the edge of the row's `where` itself, as UV = 1 is of Witten's
+        # Kruskal chart, so it is found on the whole grid.
+        if self.c.surface is not None or (self.c.spec.where and name != "szero"):
             Z = np.where(self.c.outside(x0, r), np.nan, Z)
         Z = np.where(np.isfinite(Z), Z, np.nan)
         lines = contourpy.contour_generator(UU, VV, Z, line_type="Separate").lines(0.0)
@@ -7614,6 +7668,9 @@ class Plot:
                 out.append({"kind": "gtt", "lines": lines, "legend": f"$g_{{{t}{t}}} = 0$, {spec.mark_gtt}"})
         if spec.areal:
             throat = self.zero_set("dRr", keep=lambda x0, r: (fn["R"](x0, r) > 1e-6) & here(x0, r), drop_edge=True)
+            if spec.other_trapped:
+                throat = throat + self.zero_set("grad2_other", keep=lambda x0, r: (fn["R"](x0, r) > 1e-6) & here(x0, r),
+                                                drop_edge=True)
             if throat and spec.null_radius:
                 out.append({"kind": "apparent", "lines": throat})
             elif throat and not spec.no_throat:
@@ -8873,6 +8930,12 @@ CLOSED_FORMS = {
     ("rn_metric", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [0.64, 0.36]), lambda t, r: t - _rstar(r, [0.64, 0.36]),
          lambda t, r: (np.abs(r - 0.64) > 0.05) & (np.abs(r - 0.36) > 0.05)),
+    ("sultana_dyer", "kerr_schild", "radial"):
+        (lambda eta, r: eta + r, lambda eta, r: eta - r - 2 * np.log(np.abs(r - 1)), _away(1.0)),
+    ("sultana_dyer", "schwarzschild_time", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), _away(1.0)),
+    ("sultana_dyer", "eddington_finkelstein_ingoing", "chart"):
+        (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), _away(1.0)),
     ("kastor_traschen", "cartesian", "tz"): (_kt_label("axis", -1), _kt_label("axis", 1), _kt_keep),
     ("kastor_traschen", "cartesian", "tx"): (_kt_label("midplane", -1), _kt_label("midplane", 1), _kt_keep),
     ("kastor_traschen", "cylindrical", "radial"): (_kt_label("midplane", -1), _kt_label("midplane", 1), _kt_keep),

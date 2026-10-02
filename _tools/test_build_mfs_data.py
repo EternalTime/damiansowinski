@@ -3519,6 +3519,7 @@ class StacksAndMovies(unittest.TestCase):
               ("einstein_rosen_waves", "pulse"): "$ct$", ("nariai", "universe"): "$ct$",
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
+              ("sultana_dyer", "paraboloid"): "$\\eta$",
               ("kastor_traschen", "two_holes"): "$c\\tau$",
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
               ("photon_rocket", "burn"): "$cu + r$", ("hayward", "history"): "$v - r$",
@@ -5305,6 +5306,16 @@ class Slices(unittest.TestCase):
                 a = math.sinh(1.5 * t / math.sqrt(15)) ** (2 / 3)
                 ends = [a * r * (1 + 1 / (4 * a * r)) ** 2 for r in ends]
             return (lambda X: t), ends
+        if key.startswith("sultana_dyer/"):
+            # A moment of the conformal time eta is level in the Kerr-Schild plane, the curve
+            # ct = eta - ln(r - 1) of Schwarzschild's time, which leaves the drawing toward the horizon,
+            # and the line v = eta + r of the advanced time, r_s = 1, out to the r the embedding reaches.
+            lo, hi = self.reach(surface)
+            if "/schwarzschild_time/" in key:
+                return (lambda X: t - math.log(X - 1)), [hi]
+            if "/eddington_finkelstein_ingoing/" in key:
+                return (lambda X: t + X), [lo, hi]
+            return (lambda X: t), [lo, hi]
         if key.startswith("zipoy_voorhees/prolate_spheroidal/"):
             # The prolate spheroidal x is r/m - 1 of the circles the embedding reaches in r, at m = 1.
             return (lambda X: 0.0), [r - 1 for r in self.reach(surface)]
@@ -5648,6 +5659,17 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - (1 - radius) * math.exp(radius)), 2e-3 * (1 + tp * tp) * (1 + tq * tq),
+                                            f"{where} at {(X, T)}")
+                    elif metric_id == "sultana_dyer":
+                        # Kruskal's map of the ingoing chart at r_s = 1: tan q = e^((eta + r)/2) and
+                        # tan p = (1 - r) e^((r - eta)/2), so each point gives its r, which runs from the
+                        # centre out to the embedding's reach.
+                        hi = self.reach(surface)[1]
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            r = 2 * math.log(tq) - t
+                            self.assertTrue(-2e-3 < r < hi + 2e-2, f"{where} at {(X, T)}")
+                            self.assertLess(abs(tp - (1 - r) * math.exp((r - t) / 2)), 2e-3 * (1 + tp * tp) * (1 + abs(r)),
                                             f"{where} at {(X, T)}")
                     elif metric_id == "mcvittie":
                         # p = F(s_out) and q = -F(s_in), the times the event's two rays left R = r_s:

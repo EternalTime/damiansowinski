@@ -691,6 +691,13 @@ def _hiscock(view):
     return [Mark(m, found) for m in moments("hiscock") for found in [lines(m)] if found]
 
 
+def _sultana_dyer_t(m):
+    """A moment of Sultana and Dyer's conformal time on the plane of Schwarzschild's t and r, r_s = 1:
+    ct = eta - ln(r - 1), outside r_s, as far as the embedding reaches."""
+    r = near(1.0, m.reach("kerr_schild", "r")[1])
+    return [np.column_stack([m.time - np.log(r - 1), r])]
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -1869,6 +1876,14 @@ FLAT = {
     ("curzon_chazy", "spherical", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("mcvittie", "isotropic", "radial"): lambda: one("mcvittie", lambda m: along(m.time, *m.reach("isotropic", "r"))),
     ("mcvittie", "areal", "radial"): lambda: one("mcvittie", _mcvittie_areal),
+    # Sultana and Dyer's moments of the conformal time eta: a line of the Kerr-Schild plane, the curve
+    # ct = eta - r_s ln(r/r_s - 1) of Schwarzschild's time, which runs off the drawing toward the horizon,
+    # and the line v = eta + r of the advanced time.
+    ("sultana_dyer", "kerr_schild", "radial"): lambda: one(
+        "sultana_dyer", lambda m: along(m.time, *m.reach("kerr_schild", "r"))),
+    ("sultana_dyer", "schwarzschild_time", "radial"): lambda: one("sultana_dyer", _sultana_dyer_t),
+    ("sultana_dyer", "eddington_finkelstein_ingoing", "chart"): lambda: one(
+        "sultana_dyer", lambda m: [[(m.time + r, r) for r in m.reach("kerr_schild", "r")]]),
     # The equatorial plane at t = 0 for each deformation, where the prolate spheroidal x is r/m - 1.
     **{("zipoy_voorhees", "spherical", f"equator_{shape}"): lambda shape=shape: one(
         "zipoy_voorhees", lambda m: along(0.0, *m.reach("spherical", "r")), view_id=shape)

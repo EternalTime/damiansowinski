@@ -1173,6 +1173,18 @@ DIMENSIONS = {
     ("bonnor_vaidya", "homothetic"): {
         "V": "L", "R": "L", "\\theta": "1", "\\phi": "1", "M": "L", "Q": "L", "\\mu": "1",
     },
+    # Sultana and Dyer's black hole: the conformal time eta is a length, as FRW's is, with
+    # a d(eta) = c dt, and so are eta_0, where the scale factor a = eta^2/eta_0^2 is one, and the
+    # advanced time v. Schwarzschild's t is a time, and eta a name for ct + r_s ln(r/r_s - 1) there.
+    ("sultana_dyer", "kerr_schild"): {
+        "\\eta": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\eta_0": "L",
+    },
+    ("sultana_dyer", "schwarzschild_time"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\eta_0": "L", "\\eta": "L",
+    },
+    ("sultana_dyer", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\eta_0": "L",
+    },
     # Hartle and Thorne's exterior: the mass and the spin per unit mass are lengths and the
     # quadrupole moment per unit mass an area, so that Kerr's value is q = a^2. R, the star's
     # radius, enters the domain alone, and the rest are names for the functions of r and theta the

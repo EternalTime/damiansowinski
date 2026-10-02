@@ -273,6 +273,11 @@
       "id": "hiscock",
       "kind": "composite",
       "text": "A black hole that forms and evaporates. Schwarzschild's metric is the hole between the collapse and the start of the evaporation [lubbe2009]."
+    },
+    {
+      "id": "sultana_dyer",
+      "kind": "conformal",
+      "text": "Schwarzschild's metric multiplied by the square of the scale factor of a universe of dust, which leaves every light ray where it was and sets the horizon growing with the universe [sultana2005]."
     }
   ],
   "references": [
@@ -350,7 +355,8 @@
     "visser2004",
     "tolman1939",
     "kiselev2003",
-    "lubbe2009"
+    "lubbe2009",
+    "sultana2005"
   ],
   "coordinates": [
     {

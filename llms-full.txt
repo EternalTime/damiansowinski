@@ -1244,6 +1244,18 @@ The spacetime around an infinitely thin, straight string that carries angular mo
 - chart Helical Time: coordinates $(\tau, r, \tilde\phi, z)$, $$ds^2 = -c^2d\tau^2 + dr^2 + r^2d\tilde\phi^2 + dz^2$$
 - chart Extended Source: coordinates $(t, r, \phi, z)$, $$ds^2 = -\left(c\,dt + M\,d\phi\right)^2 + dr^2 + \rho^2d\phi^2 + dz^2$$
 
+### Sultana-Dyer Black Hole in an Expanding Universe
+
+A black hole in the Einstein-de Sitter universe, Schwarzschild's metric multiplied by the square of the scale factor of a flat universe of dust, which Joseph Sultana and Charles Dyer found in 2005. Its event horizon grows with the universe, and its matter is a dust and a null dust that fall into the hole.
+
+- id: `sultana_dyer`
+- tags: black hole, cosmology, expanding universe, FLRW, Einstein-de Sitter, primordial black hole, mass, spherically symmetric, time-dependent, conformal transformation, conformal Killing horizon, dust, null dust, accreting, energy conditions, energy condition violation, negative energy, curvature singularity, big bang, horizon, event horizon, apparent horizon, trapping horizon, Hawking radiation, Hawking temperature, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/sultana_dyer.json
+- chart Kerr-Schild Conformal Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = \dfrac{\eta^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)d\eta^2 + \dfrac{2r_s}{r}d\eta\,dr + \left(1 + \dfrac{r_s}{r}\right)dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Schwarzschild Time: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{\eta^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = \dfrac{\left(v - r\right)^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Szekeres Inhomogeneous Dust Cosmologies
 
 The dust cosmologies Peter Szekeres found in 1975, which in general have no Killing vector. Their shells of matter are spheres, planes, or pseudospheres that are not concentric, each evolving as a shell of the Tolman-Bondi model does, so the density carries a dipole that changes from shell to shell.
