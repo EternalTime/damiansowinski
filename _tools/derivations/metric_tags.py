@@ -214,6 +214,14 @@ REGIONS = {
                "obeys its equation, as the other two charts take it, and comparison_hypersphere is the "
                "sphere the cells are tangent to, a closed universe of dust that is no part of the lattice",
     },
+    "gravitational_instantons": {
+        "regions": [["schwarzschild", "regular"], ["taub_nut"], ["taub_bolt"], ["cp2", "cp2_distance"], ["page"]],
+        "why": "each chart or pair of charts is a space of its own: the Euclidean Schwarzschild solution, "
+               "the self-dual Taub-NUT solution, Taub-bolt, the complex projective plane and Page's space, "
+               "the first three Ricci flat and the last two Einstein spaces with a positive cosmological "
+               "constant; multi_centre leaves V and omega free, and with them it is a vacuum only where "
+               "curl omega = grad V",
+    },
     "majumdar_papapetrou": {
         "regions": [["cartesian"]],
         "why": "isotropic is the single hole, which alone is spherically symmetric, and "
