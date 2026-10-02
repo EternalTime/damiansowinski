@@ -4551,6 +4551,9 @@ class Slices(unittest.TestCase):
               # Behind Ori's shell the mass function is another one, and the conformal diagram draws the
               # shell: the moments embedded are the tail's alone.
               "mass_inflation/ingoing/behind", "conformal mass_inflation/shell",
+              # The Kaluza-Klein black hole of equal charges, another member of the family than the holes of
+              # one charge embedded.
+              "kaluza_klein_black_hole/dyonic/radial", "conformal kaluza_klein_black_hole/equal",
               "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond",
               "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
@@ -4761,6 +4764,18 @@ class Slices(unittest.TestCase):
                     "conformal dilaton_black_hole/string_magnetic": {"einstein", "string_electric"},
                     "dilaton_black_hole/string_electric/radial": {"einstein", "string_magnetic"},
                     "conformal dilaton_black_hole/string_electric": {"einstein", "string_magnetic"},
+                    # The Kaluza-Klein black holes are embedded three ways: the Einstein metric of four
+                    # dimensions, and the fifth circle of the electric hole and of the magnetic one. Each chart's
+                    # drawings mark the moment of its own.
+                    **{f"{place}kaluza_klein_black_hole/{where}": {"einstein", "electric", "magnetic"} - {own}
+                       for place, where, own in (
+                           ("", "electric/radial", "electric"),
+                           ("", "eddington_finkelstein_ingoing/finkelstein", "electric"),
+                           ("", "magnetic/radial", "magnetic"), ("", "einstein/radial", "einstein"),
+                           ("", "einstein_eddington_finkelstein/finkelstein", "einstein"),
+                           ("conformal ", "electric", "electric"), ("conformal ", "ingoing", "electric"),
+                           ("conformal ", "magnetic", "magnetic"), ("conformal ", "einstein", "einstein"),
+                           ("conformal ", "einstein_ingoing", "einstein"))},
                     # Zipoy and Voorhees's oblate and prolate masses are two spacetimes of one line element,
                     # each equatorial drawing marking its own moment.
                     **{f"zipoy_voorhees/{s}/equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
@@ -4889,6 +4904,17 @@ class Slices(unittest.TestCase):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * math.log(X - 1) + (0 if finkelstein else sign * X)), None
+        if key == "kaluza_klein_black_hole/eddington_finkelstein_ingoing/finkelstein":
+            # The static t = 0 at q = 2 r_s = 2: v = sqrt 2 (r + ln(r - 1)), drawn against v - sqrt 2 r.
+            return (lambda X: math.sqrt(2) * math.log(abs(X - 1))), list(self.reach(surface))
+        if key == "kaluza_klein_black_hole/einstein_eddington_finkelstein/finkelstein":
+            # The static t = 0 of the Einstein metric at q = 2 r_s = 2: v = r_*, drawn against v - r, with
+            # r_* = s + (3/2) ln(2s + 2r + 1) - sqrt 2 ln((3r + 1 + 2 sqrt 2 s)/|r - 1|), s = sqrt(r(r + 1)).
+            def above(X):
+                root = math.sqrt(X * (X + 1))
+                return (root + 1.5 * math.log(2 * root + 2 * X + 1)
+                        - math.sqrt(2) * math.log((3 * X + 1 + 2 * math.sqrt(2) * root) / abs(X - 1)) - X)
+            return above, list(self.reach(surface))
         if key.startswith("dilaton_black_hole/eddington_finkelstein"):
             # The plane of t and r is Schwarzschild's at r_s = 1: static t = 0 is v = r + ln(r - 1) and
             # u = -r - ln(r - 1), drawn against v - r and u + r or against v and u.
@@ -5389,7 +5415,8 @@ class Slices(unittest.TestCase):
                                 h = 2e-4 * (X1 - X0)
                                 slope = (abs(Y_of(min(X + h, X1)) - Y_of(max(X - h, X0 + 1e-9 if key.startswith(
                                     ("schwarzschild/edd", "string_black_hole/edd", "oppenheimer_snyder/ext",
-                                     "black_string/edd", "black_string/kerr")) else X0))) / (2 * h)
+                                     "black_string/edd", "black_string/kerr", "kaluza_klein_black_hole/edd",
+                                     "kaluza_klein_black_hole/einstein_edd")) else X0))) / (2 * h)
                                          if X0 < X < X1 else 0)
                                 tol = 1e-4 * (Y1 - Y0) + slope * 1e-4 * (X1 - X0) + 1e-9
                                 self.assertLess(abs(Y - Y_of(X)), 3 * tol, f"{key} {mark['label']} at {u}")

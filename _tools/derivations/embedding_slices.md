@@ -334,6 +334,15 @@ The three embedding views are three spacetimes of one page, each the equator of 
 - `charged_bridge/radial`, the charged bridge with no mass: the line $ct = 0$ from $u = -5\,r_q$ to $5\,r_q$, cut to the box at $|u| = 3\,r_q$.
 - The five conformal views: the line $T = 0$ through the bifurcation sphere, from the farthest circle on one sheet to the farthest on the other, $6\,r_s$ for the neutral bridge and the charged one with a mass and $\sqrt{26}\,r_q$ for the charged one with no mass.
 
+### Kaluza-Klein black holes
+
+- The embedding has three views at the moment $t = 0$, each from $r = r_s$ to $6\,r_s$ on both sheets: the equator in the Einstein metric of four dimensions, and the surface of $r$ and $y$ at $\theta = 0$ of the electric hole and of the magnetic hole.
+- `electric/radial`, `magnetic/radial` and `einstein/radial`: each the line $ct = 0$ from $r_s$ to $6\,r_s$, marking the view read in its own chart; the three charts measure the same events three ways, as the dilaton black hole's do.
+- `eddington_finkelstein_ingoing/finkelstein`, drawn against $v - \sqrt{q/r_s}\,r$: the electric hole's moment, $v = \sqrt{q/r_s}(r + r_s\ln(r/r_s - 1))$, the curve $\sqrt{2}\ln(r - 1)$ at $q = 2\,r_s$.
+- `einstein_eddington_finkelstein/finkelstein`, drawn against $v - r$: the Einstein metric's moment, $v = r_*$, with `slices.kkbh_rstar`.
+- `dyonic/radial` and the conformal view `equal` draw the hole of equal charges, another member of the family than the holes of one charge embedded: not visible.
+- `electric`, `magnetic` and `einstein`, the conformal views: the line $T = 0$ through the bifurcation surface over the same stretch of $r$ on both sides; `ingoing` carries the electric hole's and `einstein_ingoing` the Einstein metric's.
+
 ### Kaluza-Klein monopole
 
 The cigar is the surface of $r$ and $x_5$ on the half axis $\theta = 0$ at $t = 0$ in Gross and Perry's chart, from the nut $r = 0$ out to $r = 16m$ at $m = 1$.

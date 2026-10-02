@@ -621,6 +621,21 @@ A black hole with two horizons and a regular centre, Schwarzschild's metric far 
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2mr^2}{r^3 + 2m\ell^2}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Forming and Evaporating: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2mr^2}{r^3 + 2m\ell^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Kaluza-Klein Black Holes
+
+The charged black holes of gravity in five dimensions with the fifth dimension a small circle, vacuum solutions that four dimensions see as black holes with an electric charge, a magnetic charge, or both, and a scalar field. The electric hole is Schwarzschild's black string set moving around the circle, and Gary Gibbons and David Wiltshire classified the family in 1986.
+
+- id: `kaluza_klein_black_hole`
+- tags: vacuum, stationary, static, five-dimensional, four-dimensional, black hole, charged black hole, charged, electric charge, magnetic charge, dyon, Kaluza-Klein, compact dimension, higher dimensions, black string, boosted black hole, magnetic monopole, Dirac string, dilaton, scalar field, Einstein-Maxwell-dilaton, ergoregion, horizon, event horizon, inner horizon, curvature singularity, extremal, maximal extension, causal structure, black hole thermodynamics, string theory, Gregory-Laflamme instability, Gibbons-Wiltshire, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_black_hole.json
+- chart Electric Charge: coordinates $(t, r, \theta, \phi, y)$, $$ds^2 = -\left(1 - \dfrac{q}{r}\right)c^2dt^2 - \dfrac{2\sqrt{q\left(q - r_s\right)}}{r}c\,dt\,dy + \left(1 + \dfrac{q - r_s}{r}\right)dy^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi, w)$, $$ds^2 = -\left(1 - \dfrac{q}{r}\right)dv^2 - \dfrac{2\sqrt{q\left(q - r_s\right)}}{r}dv\,dw + \left(1 + \dfrac{q - r_s}{r}\right)dw^2 + 2\sqrt{\dfrac{q}{r_s}}\,dv\,dr - 2\sqrt{\dfrac{q - r_s}{r_s}}\,dw\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Magnetic Charge: coordinates $(t, r, \theta, \phi, y)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \left(1 + \dfrac{p - r_s}{r}\right)\left(\dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right) + \left(1 + \dfrac{p - r_s}{r}\right)^{-1}\left(dy + \sqrt{p\left(p - r_s\right)}\left(1 - \cos\theta\right)d\phi\right)^2$$
+- chart Equal Charges: coordinates $(t, \rho, \theta, \phi, y)$, $$ds^2 = -\left(1 - \dfrac{p + r_s}{2\rho}\right)\left(1 - \dfrac{p - r_s}{2\rho}\right)c^2dt^2 + \dfrac{d\rho^2}{\left(1 - \dfrac{p + r_s}{2\rho}\right)\left(1 - \dfrac{p - r_s}{2\rho}\right)} + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \left(dy - \dfrac{1}{\rho}\sqrt{\dfrac{p^2 - r_s^2}{2}}\,c\,dt + \sqrt{\dfrac{p^2 - r_s^2}{2}}\left(1 - \cos\theta\right)d\phi\right)^2$$
+- chart Einstein Metric, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r - r_s}{\sqrt{r\left(r + q - r_s\right)}}c^2dt^2 + \dfrac{\sqrt{r\left(r + q - r_s\right)}}{r - r_s}dr^2 + r\sqrt{r\left(r + q - r_s\right)}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Einstein Metric, Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\dfrac{r - r_s}{\sqrt{r\left(r + q - r_s\right)}}dv^2 + 2\,dv\,dr + r\sqrt{r\left(r + q - r_s\right)}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Kaluza-Klein Monopole
 
 A static vacuum solution of gravity in five dimensions, four of space and one of time, that Rafael Sorkin, and David Gross and Malcolm Perry, found in 1983: Euclidean Taub-NUT space with a time added. The fifth dimension is a circle that shrinks smoothly to a point at the centre, and seen from four dimensions the twist of that circle is the field of a magnetic monopole.

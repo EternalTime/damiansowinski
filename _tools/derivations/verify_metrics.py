@@ -777,6 +777,27 @@ DIMENSIONS = {
     ("kaluza_klein_monopole", "taub_nut"): {
         "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "m": "L",
     },
+    # The Kaluza-Klein black holes keep three lengths: the horizon radius r_s and the charge
+    # lengths q and p. The fifth coordinate y is a length, and so are the advanced time v = ct + ...
+    # and its companion w along the circle.
+    ("kaluza_klein_black_hole", "electric"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "y": "L", "r_s": "L", "q": "L",
+    },
+    ("kaluza_klein_black_hole", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "w": "L", "r_s": "L", "q": "L",
+    },
+    ("kaluza_klein_black_hole", "magnetic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "y": "L", "r_s": "L", "p": "L",
+    },
+    ("kaluza_klein_black_hole", "dyonic"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "y": "L", "r_s": "L", "p": "L",
+    },
+    ("kaluza_klein_black_hole", "einstein"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "q": "L",
+    },
+    ("kaluza_klein_black_hole", "einstein_eddington_finkelstein"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "q": "L",
+    },
     # Van Den Broeck's drive adds one more pure number to Alcubierre's two: B, the factor every
     # length of a slice is multiplied by. The comoving chart is the inside of the bubble, f = 1.
     ("van_den_broeck", "cartesian"): {

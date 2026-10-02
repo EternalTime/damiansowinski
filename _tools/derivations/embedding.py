@@ -4825,6 +4825,93 @@ def kaluza_klein_monopole(ck, src):
                  settings="$m = 1$, the unit of every length, on the surface of $r$ and $x_5$ ($\\theta = 0$).")]
 
 
+def kaluza_klein_black_hole(ck, src):
+    """Three moments t = 0 of the Kaluza-Klein black holes, in units of r_s, each through the
+    bifurcation surface r = r_s into the other exterior.
+
+    The Einstein metric of four dimensions at q = 2 r_s, on its equator: g_rr = sqrt(r(r + a))/(r - r_s)
+    with a = q - r_s, and rho = (r^3 (r + a))^(1/4), so the throat has the radius (q r_s^3)^(1/4),
+    wider than Flamm's by the fourth root of q/r_s.
+
+    The surface of r and y of the electric hole at q = 2 r_s, at theta = 0, where the azimuth moves
+    nothing: g_rr = r/(r - r_s) and g_yy = 1 + a/r. The circle of y has any length L, drawn at
+    L = 2 pi r_s, so the slice sweeps y = r_s phi and the circle at r has the radius
+    rho = r_s sqrt(1 + a/r): sqrt(q r_s) on the horizon, its widest, and r_s far away.
+
+    The surface of r and y of the magnetic hole at p = 2 r_s, at theta = 0, where the potential
+    vanishes: g_rr = (r + a)/(r - r_s) and g_yy = r/(r + a) with a = p - r_s. The period of y is
+    4 pi sqrt(p(p - r_s)), so the slice sweeps y = 2 sqrt(p(p - r_s)) phi and the circle at r has the
+    radius rho = 2 sqrt(p(p - r_s)) sqrt(r/(r + a)): 2 sqrt(r_s(p - r_s)) on the horizon, its
+    narrowest, and 2 sqrt(p(p - r_s)) far away. At r_s = 0 it is the monopole's cigar.
+
+    Each height is checked against scipy's quadrature of sqrt(g_rr - (drho/dr)^2), written by hand."""
+    from scipy.integrate import quad
+    a, top = 1.0, 6.0
+    radii = (1.5, 2.0, 3.0, 4.0, 5.0)
+    legend_radii = "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_s$"
+    k = 2 * math.sqrt(2)
+    cases = (
+        ("einstein", "Einstein metric, four dimensions", "einstein", {"t": 0, **EQUATOR}, {"r_s": 1, "q": 2}, None,
+         lambda r: (r ** 3 * (r + a)) ** 0.25,
+         lambda r: math.sqrt(r * (r + a)) - (r - 1) * ((4 * r + 3 * a) / (4 * (r * (r + a) ** 3) ** 0.25)) ** 2,
+         12.5, "$\\phi$ constant, every $15°$", "the exterior $r > r_s$ that $t$ and $r$ cover",
+         "$r_s = 1$, the unit of every length, and $q = 2\\,r_s$."),
+        ("electric", "The fifth dimension, electric charge", "electric", {"t": 0, "theta": 0}, {"r_s": 1, "q": 2},
+         {"y": "phi"}, lambda r: np.sqrt(1 + a / r),
+         lambda r: r - (r - 1) * a ** 2 / (4 * r ** 3 * (r + a)),
+         14.5, "$y$ constant, every $L/24$", "the surface $\\theta = 0$ at $t = 0$, which $r > r_s$ and $y$ cover",
+         "$r_s = 1$, the unit of every length, $q = 2\\,r_s$, and a circle of length $L = 2\\pi r_s$, on the "
+         "surface of $r$ and $y$ ($\\theta = 0$)."),
+        ("magnetic", "The fifth dimension, magnetic charge", "magnetic", {"t": 0, "theta": 0}, {"r_s": 1, "p": 2},
+         {"y": "2*sqrt(2)*phi"}, lambda r: k * np.sqrt(r / (r + a)),
+         lambda r: (r + a) - (r - 1) * k ** 2 * a ** 2 / (4 * r * (r + a) ** 3),
+         17.0, "$y$ constant, every $\\pi\\sqrt{p(p - r_s)}/6$",
+         "the surface $\\theta = 0$ at $t = 0$, which $r > r_s$ and $y$ cover",
+         "$r_s = 1$, the unit of every length, and $p = 2\\,r_s$, on the surface of $r$ and $y$ ($\\theta = 0$)."),
+    )
+    throat = {"einstein": "the throat $r = r_s$, the bifurcation sphere, where the other exterior begins",
+              "electric": "the horizon $r = r_s$, the widest circle, where the other exterior begins",
+              "magnetic": "the horizon $r = r_s$, the narrowest circle, where the other exterior begins"}
+    views = []
+    for vid, label, system, fixed, params, swept, rho_of, rise2, size, meridian, cover, settings in cases:
+        name = f"Kaluza-Klein black hole, {vid}"
+        sl = Slice(src, "kaluza_klein_black_hole", system, "r", "\\phi", fixed, params, swept=swept)
+        ck.add(f"{name}: the horizon is at r_s", abs(sl.horizons()[0] - 1.0), 1e-12)
+        ck.stops(f"{name}, inside r_s", sl, np.linspace(0.0, 1.0, 402)[1:-1])
+        near = Piece("exterior", "sheet", sl, 1.0, top, 0.0, 1,
+                     (("throat", throat[vid]), ("edge", "the surface runs on to $r \\to \\infty$")),
+                     [(1.0, "horizon", "$r = r_s$")] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+        far = Piece("other_exterior", "sheet2", sl, 1.0, top, 0.0, -1,
+                    (("throat", "the horizon $r = r_s$"), ("edge", "the surface runs on to $r \\to \\infty$")),
+                    [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+        ck.join(f"{name}, the two sheets at the horizon", near, 1.0, far, 1.0)
+
+        def height(r, rise2=rise2):
+            # rise2 is (r - 1)(g_rr - (drho/dr)^2), and with r = 1 + s^2 the 1/sqrt(r - 1) at the horizon is gone.
+            return np.array([quad(lambda s: 2 * math.sqrt(rise2(1 + s * s)), 0.0, math.sqrt(x - 1),
+                                  epsabs=1e-12, epsrel=1e-12, limit=200)[0] for x in np.atleast_1d(r)])
+        for p in (near, far):
+            ck.isometry(f"{name}, {p.id}", p)
+            ck.radius(f"{name}, {p.id}, the closed form of rho", p, rho_of, size)
+            ck.form(f"{name}, {p.id}, the quadrature of its height", p, lambda r, s=p.sense: s * height(r), size)
+        surface = Surface([near, far])
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], *near.at(1.0), "$r = r_s$", dx=14)
+        ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+        ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+        fig.legend("fill", "cover", cover)
+        fig.legend("line", "r", legend_radii)
+        fig.legend("line", "r2", "the same radii on the other exterior")
+        fig.legend("line", "horizon", "the horizon $r = r_s$, where the slice crosses into the other exterior")
+        fig.legend("line", "meridian", meridian)
+        views.append(view(vid, label, "$r_s$", [surface], fig.done(), settings=settings,
+                          stops=["Inside the horizon, $r < r_s$, $g_{rr} < 0$: $r$ is a time there, and a slice of "
+                                 "constant $t$ is not a moment of space."]))
+    ck.add("Kaluza-Klein black hole: the Einstein metric's throat has the radius (q r_s^3)^(1/4)",
+           abs(views[0]["surfaces"][0]["pieces"][0]["points"][0][1] - 2 ** 0.25), 1e-4)
+    return views
+
+
 def witten_black_hole(ck, src):
     """Witten's cigar: the Euclidean section of his black hole in two dimensions, at lambda = 1,
     read in his own chart. With t = -i theta/(lambda c) the metric -tanh^2(lambda r) c^2 dt^2 + dr^2
@@ -9695,6 +9782,7 @@ DRAWN = {
     "boulware_deser": boulware_deser,
     "black_string": black_string,
     "kaluza_klein_monopole": kaluza_klein_monopole,
+    "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "witten_black_hole": witten_black_hole,
     "myers_perry": myers_perry,
     "dilaton_black_hole": dilaton_black_hole,
@@ -10687,6 +10775,40 @@ CAPTIONS = {
         "grows with the distance $s$ from the nut as $d\\rho/ds = 16m^2/(r + 4m)^2$, which is $1$ at $r = 0$, so "
         "the tip is as smooth as the pole of a sphere. The period $16\\pi m$ of $x_5$ is the one that makes it "
         "so; any other would leave the apex of a cone there.",
+    ],
+    ("kaluza_klein_black_hole", "einstein"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a Kaluza-Klein black hole of one charge ($q = 2\\,r_s$) at "
+        "one moment of $t$, in the Einstein metric of four dimensions, drawn as a surface in flat space with "
+        "every distance along it the metric distance. On it the metric is "
+        "$\\sqrt{r(r + q - r_s)}\\,(dr^2/(r - r_s) + r\\,d\\phi^2)$, so the circle at $r$ has the circumference "
+        "$2\\pi(r^3(r + q - r_s))^{1/4}$, longer than $2\\pi r$.",
+        "The slice passes through the bifurcation sphere $r = r_s$, its smallest circle, of radius "
+        "$(q\\,r_s^3)^{1/4} = 1.19\\,r_s$, and runs on into a second exterior, the same surface turned over. "
+        "At $q = r_s$ the surface is Flamm's paraboloid. The magnetic hole with $p = 2\\,r_s$ has the same "
+        "surface.",
+    ],
+    ("kaluza_klein_black_hole", "electric"): [
+        "The surface of $r$ and $y$ ($\\theta = 0$) of the electrically charged hole ($q = 2\\,r_s$) at one "
+        "moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. On "
+        "it the metric is $dr^2/(1 - r_s/r) + (1 + (q - r_s)/r)\\,dy^2$, so the circle of the fifth dimension "
+        "at $r$ has circumference $L\\sqrt{1 + (q - r_s)/r}$. Far from the hole the surface is a cylinder, "
+        "the small circle Klein gave every point of space, drawn with $L = 2\\pi r_s$.",
+        "Toward the hole the circle grows, and it is widest on the horizon $r = r_s$, where its "
+        "circumference is $L\\sqrt{q/r_s}$. The slice passes through the horizon into a second exterior, the "
+        "same surface turned over. At $q = r_s$ the hole has no charge and the surface is a cylinder.",
+    ],
+    ("kaluza_klein_black_hole", "magnetic"): [
+        "The surface of $r$ and $y$ on the half axis $\\theta = 0$ of the magnetically charged hole "
+        "($p = 2\\,r_s$) at one moment of $t$, drawn as a surface in flat space with every distance along it "
+        "the metric distance. On it the metric is $(1 + (p - r_s)/r)\\,dr^2/(1 - r_s/r) + dy^2/(1 + (p - r_s)/r)$, "
+        "so the circle of the fifth dimension at $r$ has circumference "
+        "$4\\pi\\sqrt{p(p - r_s)}\\sqrt{r/(r + p - r_s)}$. Far from the hole the surface is a cylinder of radius "
+        "$2\\sqrt{p(p - r_s)}$.",
+        "Toward the hole the circle shrinks, and on the horizon $r = r_s$ its radius is "
+        "$2\\sqrt{r_s(p - r_s)}$, the narrowest circle of the slice, which runs on into a second exterior, "
+        "the same surface turned over. Inside the horizon the circle goes on shrinking and closes at the "
+        "singularity $r = 0$. At $r_s = 0$ there is no horizon and the surface is the cigar of the "
+        "Kaluza-Klein monopole, closed smoothly at the nut.",
     ],
     ("myers_perry", "rotation"): [
         "The plane of rotation ($\\theta = \\pi/2$) of the Myers-Perry black hole with one spin in five "

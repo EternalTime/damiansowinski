@@ -256,6 +256,16 @@ STRING_SIX = {"psi": "pi/2", **STRING_FIVE}
 # Perry's potential vanishes and the embedding diagram's cigar stands.
 KK_AXIS = {"theta": "0", "phi": "0", "x_5": "0"}
 KK_HOPF = {"theta": "0", "phi": "0", "psi": "0"}
+# The Kaluza-Klein black holes, in units of r_s: the electric hole at q = 2 r_s, a boost of
+# cosh^2(alpha) = 2, the magnetic hole at p = 2 r_s, and the hole of equal charges at p = 3 r_s, whose
+# horizons are 2 r_s and r_s. The electric and the equal charges have the circle divided out, and the
+# magnetic hole's plane lies on the half axis theta = 0, where its potential vanishes.
+KKBH_ELECTRIC = {"r_s": 1, "q": 2}
+KKBH_MAGNETIC = {"r_s": 1, "p": 2}
+KKBH_EQUAL = {"r_s": 1, "p": 3}
+KKBH_CONE = "future cone of no momentum along the circle"
+# X = r, Y = v - sqrt(q/r_s) r at q = 2 r_s, a time function of the ingoing chart at every r.
+KKBH_FINKELSTEIN = ((0, 1), (1, -math.sqrt(2)))
 # Myers and Perry's black hole: the plane transverse to the rotation, theta = 0, and the plane of
 # rotation, theta = pi/2, in five dimensions and in six, and the hole of five dimensions with equal
 # spins. Lengths are in sqrt(mu) in five dimensions and in the cube root of mu in six.
@@ -1269,6 +1279,24 @@ DIAGRAMS = [
             "$r/m$", "$ct/m$", {"m": 1}, KK_HOPF),
     Diagram("kaluza_klein_monopole", "taub_nut", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 16, -8, 8),
             "$\\rho/m$", "$ct/m$", {"m": 1}, KK_HOPF),
+    # The Kaluza-Klein black holes: the rays with no momentum along the circle, which are the rays of
+    # the Einstein metric of four dimensions, on the plane of the time and the radius of each chart.
+    Diagram("kaluza_klein_black_hole", "electric", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$ct/r_s$", KKBH_ELECTRIC, EQUATOR, orient="ingoing", quotient="y",
+            mark_gtt="the ergosurface", cone=KKBH_CONE),
+    Diagram("kaluza_klein_black_hole", "eddington_finkelstein_ingoing", "finkelstein",
+            "against $v - \\sqrt{q/r_s}\\,r$", ("v", "r"), (0, 6, -3, 3), "$r/r_s$",
+            "$(v - \\sqrt{q/r_s}\\,r)/r_s$", KKBH_ELECTRIC, EQUATOR, to_display=KKBH_FINKELSTEIN,
+            tau="v - sqrt(2)*r", quotient="w", mark_gtt="the ergosurface", cone=KKBH_CONE),
+    Diagram("kaluza_klein_black_hole", "magnetic", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$ct/r_s$", KKBH_MAGNETIC, {"theta": "0", "phi": "0", "y": "0"}, orient="ingoing"),
+    Diagram("kaluza_klein_black_hole", "dyonic", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 6, -3, 3),
+            "$\\rho/r_s$", "$ct/r_s$", KKBH_EQUAL, EQUATOR, orient="ingoing", quotient="y", cone=KKBH_CONE),
+    Diagram("kaluza_klein_black_hole", "einstein", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$ct/r_s$", KKBH_ELECTRIC, EQUATOR, orient="ingoing", areal=True),
+    Diagram("kaluza_klein_black_hole", "einstein_eddington_finkelstein", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 6, -3, 3), "$r/r_s$", "$(v - r)/r_s$", KKBH_ELECTRIC, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
     Diagram("hayward", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/m$", "$ct/m$", HAYWARD, EQUATOR, orient="ingoing", areal=True),
     Diagram("hayward", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -3172,6 +3200,65 @@ CAPTIONS = {
         "The edge $\\rho = 2m$ is the nut, a single point of space where the 3-spheres have shrunk away, and the "
         "chart has no points with $\\rho < 2m$. A ray reaches it in a finite time, and the Kretschmann scalar "
         "$384m^2/(\\rho + 2m)^6$ is finite there.",
+    ],
+    ("kaluza_klein_black_hole", "electric", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the electrically charged hole with the "
+        "circle of $y$ divided out, drawn for $q = 2\\,r_s$: the metric orthogonal to the circles. Its null "
+        "curves are the shadows on $t$ and $r$ of the null geodesics with no momentum along $y$, the light "
+        "that carries no electric charge in four dimensions, and each cone is the future cone of those "
+        "directions. They run at $c\\,dt/dr = \\pm\\sqrt{1 + (q - r_s)/r}\\,(1 - r_s/r)^{-1}$, and the cones "
+        "close at the horizon $r_s$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = q$. The black string moves along $y$, and "
+        "between $r = q$ and $r_s$ no observer keeps $y$ fixed. Inside $r_s$ we take the future from the "
+        "ingoing chart, and every ray ends at $r = 0$, where the Kretschmann scalar $12r_s^2/r^6$ diverges.",
+    ],
+    ("kaluza_klein_black_hole", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) with the circle of $w$ divided out, drawn "
+        "for $q = 2\\,r_s$ with $v - \\sqrt{q/r_s}\\,r$ as the vertical axis. The rays with no momentum along "
+        "the circle run at $dv/dr = (\\sqrt{q/r_s} \\pm \\sqrt{1 + (q - r_s)/r})(1 - r_s/r)^{-1}$: the ingoing "
+        "family crosses the horizon $r_s$ with a finite slope, and the outgoing family stands vertical there, "
+        "an outgoing ray that stays where it is.",
+        "Inside $r_s$ both edges of every future cone point to smaller $r$, so every such ray ends at $r = 0$. "
+        "The dotted line is the ergosurface $r = q$. The curves of constant $v$ and $w$ are the ingoing rays "
+        "of the string's rest frame, and in this chart they carry momentum along the circle.",
+    ],
+    ("kaluza_klein_black_hole", "magnetic", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = 0$, $y = 0$) of the magnetically charged hole, drawn for "
+        "$p = 2\\,r_s$ on the half axis where the potential vanishes, each point in the plane a squashed "
+        "3-sphere of $\\theta$, $\\phi$, and $y$. The metric on it is "
+        "$-(1 - r_s/r)\\,c^2dt^2 + (1 + (p - r_s)/r)(1 - r_s/r)^{-1}dr^2$, so the rays run at "
+        "$c\\,dt/dr = \\pm\\sqrt{1 + (p - r_s)/r}\\,(1 - r_s/r)^{-1}$ and the cones close at the horizon $r_s$. "
+        "No Christoffel symbol turns them out of the plane, so they are null geodesics.",
+        "Inside $r_s$ we take the future from the ingoing rays, and every ray ends at $r = 0$, where the "
+        "circle of $y$ has shrunk to a point and the Kretschmann scalar diverges. At $r_s = 0$ that point is "
+        "the nut of the Kaluza-Klein monopole, a regular point.",
+    ],
+    ("kaluza_klein_black_hole", "dyonic", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) of the hole of equal charges with the "
+        "circle of $y$ divided out, drawn for $p = 3\\,r_s$: the metric orthogonal to the circles, which is "
+        "Reissner and Nordström's. $g^{\\rho\\rho}$ vanishes twice, at $\\rho_\\pm = (p \\pm r_s)/2$, which is "
+        "$2\\,r_s$ and $r_s$, and the cones close at both. Between them $\\rho$ is the time and the cones "
+        "point to smaller $\\rho$. Inside $\\rho_-$, $t$ is a time again.",
+        "We take the future in the two inner regions from an ingoing chart, which makes the region between "
+        "the horizons the black hole. The Kretschmann scalar diverges at $\\rho = 0$, a timelike singularity.",
+    ],
+    ("kaluza_klein_black_hole", "einstein", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the Einstein metric of four dimensions, "
+        "drawn for $q = 2\\,r_s$, each point in the plane a 2-sphere of area $4\\pi r\\sqrt{r(r + q - r_s)}$. "
+        "The rays run at $c\\,dt/dr = \\pm\\sqrt{r(r + q - r_s)}/(r - r_s)$, as the rays with no momentum "
+        "along the circle do in five dimensions, and the cones close at the horizon $r_s$.",
+        "Inside $r_s$ we take the future from the ingoing Eddington-Finkelstein chart, which makes that region "
+        "the black hole, where every cone points to the singularity $r = 0$. The spheres have zero area there "
+        "and the Kretschmann scalar diverges.",
+    ],
+    ("kaluza_klein_black_hole", "einstein_eddington_finkelstein", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the Einstein metric of four dimensions, "
+        "drawn for $q = 2\\,r_s$ with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run "
+        "at 45°. The outgoing family has $dv/dr = 2\\sqrt{r(r + q - r_s)}/(r - r_s)$, so it stands vertical at "
+        "the horizon $r_s$, an outgoing ray that stays where it is.",
+        "The cones cross $r_s$ smoothly and keep tipping. Inside, both edges of every future cone point to "
+        "smaller $r$, so every future directed ray ends at the singularity $r = 0$, where the area of the "
+        "spheres vanishes.",
     ],
     ("hayward", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\ell = 12m/7\\sqrt{7} = 0.648\\,m$, "
@@ -8008,6 +8095,12 @@ def _kk_rstar(r):
     return np.sqrt(r * (r + 4)) + 4 * np.arcsinh(np.sqrt(r) / 2)
 
 
+def _kkbh_rstar(r, a=1.0):
+    """The tortoise coordinate of a Kaluza-Klein black hole of one charge at r_s = 1, with
+    a = q - r_s or p - r_s: the integral of sqrt(r(r + a))/(r - 1) from r = 0, slices.kkbh_rstar."""
+    return slices.kkbh_rstar(r, a)
+
+
 def _myers_rstar(r, D=5):
     """The tortoise coordinate on the plane transverse to the rotation of Myers and Perry's black hole
     with one spin. In five dimensions at mu = 1 and a = 3/5, 1/f = 1 + mu/(r^2 - r_+^2) with r_+ = 4/5:
@@ -8380,6 +8473,16 @@ CLOSED_FORMS = {
         (lambda t, r: t + _kk_rstar(r), lambda t, r: t - _kk_rstar(r), lambda t, r: r > 0.05),
     ("kaluza_klein_monopole", "taub_nut", "radial"):
         (lambda t, rho: t + _kk_rstar(rho - 2), lambda t, rho: t - _kk_rstar(rho - 2), lambda t, rho: rho > 2.05),
+    **{("kaluza_klein_black_hole", system, "radial"):
+       (lambda t, r: t + _kkbh_rstar(r), lambda t, r: t - _kkbh_rstar(r), _away(1.0))
+       for system in ("electric", "magnetic", "einstein")},
+    ("kaluza_klein_black_hole", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v - math.sqrt(2) * _rstar(r, [1]) + _kkbh_rstar(r),
+         lambda v, r: v - math.sqrt(2) * _rstar(r, [1]) - _kkbh_rstar(r), _away(1.0)),
+    ("kaluza_klein_black_hole", "dyonic", "radial"):
+        (lambda t, rho: t + _rstar(rho, [2, 1]), lambda t, rho: t - _rstar(rho, [2, 1]), _away(2.0, 1.0)),
+    ("kaluza_klein_black_hole", "einstein_eddington_finkelstein", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _kkbh_rstar(r), _away(1.0)),
     ("tangherlini", "spherical", "radial"):
         (lambda t, r: t + _tangherlini_rstar(r), lambda t, r: t - _tangherlini_rstar(r), _away(1.0)),
     ("tangherlini", "eddington_finkelstein_ingoing", "finkelstein"):

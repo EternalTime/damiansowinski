@@ -153,6 +153,12 @@ REGIONS = {
                "painleve_gullstrand is exact for its line element as written, which is "
                "a vacuum only to first order in the spin",
     },
+    "kaluza_klein_black_hole": {
+        "regions": [["electric", "eddington_finkelstein_ingoing", "magnetic", "dyonic"]],
+        "why": "einstein and einstein_eddington_finkelstein print the metric of four dimensions the "
+               "holes reduce to, which carries a Maxwell field and a scalar field; the entry's "
+               "spacetime is the vacuum of five dimensions",
+    },
     "kastor_traschen": {
         "regions": [["cartesian", "comoving"]],
         "why": "isotropic is the single hole, which alone is spherically symmetric, and "

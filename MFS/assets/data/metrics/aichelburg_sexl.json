@@ -64,6 +64,11 @@
       "id": "siklos",
       "kind": "family",
       "text": "The counterparts of the pp-waves in anti-de Sitter space. Squeezed onto one front, a Siklos wave is the field of a null particle there [podolsky1998impulsive]."
+    },
+    {
+      "id": "kaluza_klein_black_hole",
+      "kind": "family",
+      "text": "A black string moving around a small fifth dimension is a charged black hole to four dimensions. At the speed of light it is a wave of this kind in five dimensions [horowitz2012]."
     }
   ],
   "references": [
@@ -91,7 +96,8 @@
     "east2013",
     "garfinkle1990",
     "khan1971",
-    "podolsky1998impulsive"
+    "podolsky1998impulsive",
+    "horowitz2012"
   ],
   "coordinates": [
     {
