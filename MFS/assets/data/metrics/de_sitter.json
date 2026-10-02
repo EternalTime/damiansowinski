@@ -128,6 +128,11 @@
       "id": "elliptic_de_sitter",
       "kind": "locally_same",
       "text": "Erwin Schrödinger's remedy of 1956 for observers whose horizons part them: every event of de Sitter space made one with the event opposite it on the hyperboloid. An observer then sees one event of every pair, and the space has no global direction of time [schrodinger1956, parikh2003]."
+    },
+    {
+      "id": "gravitational_instantons",
+      "kind": "family",
+      "text": "De Sitter space in imaginary time is a 4-sphere, the simplest compact gravitational instanton. The complex projective plane and Page's space are two more with a positive cosmological constant [gibbonshawking1979, page2009]."
     }
   ],
   "references": [
@@ -169,7 +174,9 @@
     "griffiths2004",
     "hotta1993",
     "schrodinger1956",
-    "parikh2003"
+    "parikh2003",
+    "gibbonshawking1979",
+    "page2009"
   ],
   "coordinates": [
     {

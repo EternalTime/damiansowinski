@@ -12,7 +12,8 @@ schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
-born_infeld_charge, penrose_impulsive_wave and exponential_metric, and Godel's cylindrical chart.
+born_infeld_charge, penrose_impulsive_wave, exponential_metric and gravitational_instantons, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -33,7 +34,8 @@ malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
-misner_brill_lindquist.md, lewis.md, tippett_tsang.md and belinski_zakharov.md beside this file.
+misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md and gravitational_instantons.md
+beside this file.
 """
 import argparse
 import fcntl
@@ -15854,6 +15856,501 @@ def eguchi_hanson_pretty(r, a, theta):
 
 
 CHARTS["eguchi_hanson"] = [lambda s=s: eguchi_hanson(s) for s in EGUCHI_HANSON_CHARTS]
+
+
+# -- The gravitational instantons of 1977 and 1978 ---------------------------------------
+
+INSTANTON_CHARTS = ["schwarzschild", "regular", "taub_nut", "taub_bolt", "multi_centre", "cp2", "cp2_distance", "page"]
+INSTANTON_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+INSTANTON_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def gravitational_instantons(system_id):
+    """The gravitational instantons Hawking, Gibbons, Page and Pope found in 1977 and 1978, each a
+    chart: Riemannian spaces of four dimensions with no time, so no coordinate is scaled by c.
+    The Euclidean Schwarzschild solution in the imaginary time tau and in Gibbons and Hawking's
+    chart regular on the bolt, Hawking's self-dual Taub-NUT solution, Page's Taub-NUT solution with
+    a bolt, Gibbons and Hawking's multi-centre metrics with V and omega free, the Fubini-Study
+    metric on CP^2, and Page's metric on the nontrivial bundle of 2-spheres over the 2-sphere.
+    gravitational_instantons.md records each chart's source."""
+    return {"schwarzschild": instanton_schwarzschild, "regular": instanton_regular,
+            "taub_nut": lambda: instanton_taub("taub_nut"), "taub_bolt": lambda: instanton_taub("taub_bolt"),
+            "multi_centre": instanton_multi_centre, "cp2": instanton_cp2,
+            "cp2_distance": instanton_cp2_distance, "page": instanton_page}[system_id]()
+
+
+def instanton_pretty(swaps=(), merges=(), named=()):
+    """A pretty printer for these charts: a value factored, each sum written in whichever of the
+    forms `swaps` offer leaves it fewest terms, as sin^2 against cos^2, each pair of `merges`,
+    (a, b, product), multiplied back into its product, as (r + n)(r - n) into r^2 - n^2, and each
+    polynomial of `named`, (placeholder, polynomial), written as its placeholder. Factors are
+    matched up to their sign, and the number in front is kept out of the sums."""
+
+    def sign_of(base, poly):
+        if sp.expand(base - poly) == 0:
+            return 1
+        if sp.expand(base + poly) == 0:
+            return -1
+        return 0
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        number, powers = sp.Integer(1), {}
+
+        def put(base, k):
+            nonlocal number
+            if base.is_Add:
+                best = base
+                for swap in swaps:
+                    other = sp.expand(base.subs(swap, simultaneous=True))
+                    if len(sp.Add.make_args(other)) < len(sp.Add.make_args(best)):
+                        best = other
+                base = best
+                for placeholder, poly in named:
+                    s = sign_of(base, poly)
+                    if s:
+                        base, number = placeholder, number * s ** k
+                        break
+            if not base.is_Add and not base.is_Symbol and base.could_extract_minus_sign():
+                base, number = -base, number * (-1) ** k
+            powers[base] = powers.get(base, 0) + k
+
+        for factor in sp.Mul.make_args(sp.factor(value)):
+            base, k = (factor.base, factor.exp) if factor.is_Pow else (factor, sp.Integer(1))
+            if base.is_Number:
+                number *= base ** k
+            else:
+                put(base, k)
+        for a, b, product in merges:
+            found = {}
+            for base in list(powers):
+                for key, poly in (("a", a), ("b", b)):
+                    s = sign_of(base, poly) if base.is_Add else 0
+                    if s and key not in found:
+                        found[key] = (base, s)
+            if len(found) < 2 or powers[found["a"][0]] != powers[found["b"][0]]:
+                continue
+            k = powers.pop(found["a"][0])
+            powers.pop(found["b"][0])
+            number *= (found["a"][1] * found["b"][1]) ** k
+            put(sp.expand(product), k)
+        return _keep_coeff(number, sp.Mul(*[base ** k for base, k in powers.items()]))
+
+    return pretty
+
+
+def instanton_same(chart, pulled, what):
+    """Every slot of a metric carried onto the chart's against the chart's own."""
+    n = len(chart.symbols)
+    for i in range(n):
+        for j in range(i, n):
+            if vm.norm(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"gravitational_instantons: {what} misses the chart in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+def instanton_ricci(chart, constant, what):
+    """The chart's Ricci tensor against a constant times its metric, in every slot."""
+    ricci = chart.geo.ricci_ll()
+    n = len(chart.symbols)
+    for i in range(n):
+        for j in range(i, n):
+            if vm.norm(ricci[i][j] - constant * chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"gravitational_instantons: {what} in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+def instanton_continued(metric_id, system_id, time, replace):
+    """A published Lorentzian chart continued to imaginary time: with x^0 = i tau the component
+    g_00 changes sign and each g_0j takes a factor i, after `replace` has continued the parameters
+    that have to turn with the time, as Taub-NUT's l = i n. Returns the reader, the symbols with
+    tau in the time's place, and the continued metric."""
+    reader, symbols, g = kaluza_klein_published(metric_id, system_id)
+    k = [str(s) for s in symbols].index(time)
+    g = g.subs(replace(reader), simultaneous=True)
+    out = sp.zeros(len(symbols), len(symbols))
+    for i in range(len(symbols)):
+        for j in range(len(symbols)):
+            out[i, j] = g[i, j] * (sp.I if i == k else 1) * (sp.I if j == k else 1)
+    return reader, symbols, out
+
+
+def instanton_schwarzschild():
+    """The Euclidean Schwarzschild solution, Gibbons and Hawking's (3.1) of 1979 with r_s = 2M:
+    Schwarzschild's metric with t = -i tau. It is smooth on r = r_s where tau has the period
+    4 pi r_s, 8 pi M, and r = r_s is then a 2-sphere of area 4 pi r_s^2, the bolt. Checked to be
+    the published metric of schwarzschild continued."""
+    coords = ["\\tau", "r", "\\theta", "\\phi"]
+    line = ("ds^2 = \\left(1 - \\dfrac{r_s}{r}\\right)d\\tau^2 + \\left(1 - \\dfrac{r_s}{r}\\right)^{-1}dr^2 + r^2"
+            + INSTANTON_SPHERE)
+    domains = (["\\tau \\in [0, 4\\pi r_s)", "r \\in [r_s, \\infty)"] + INSTANTON_ANGLES
+               + ["r = r_s \\;\\text{(the bolt, a 2-sphere of radius}\\; r_s\\text{)}"])
+    probe = vm.Reader(coords, ["r_s"], ())
+
+    def check(chart):
+        reader, symbols, g = instanton_continued("schwarzschild", "spherical", "t", lambda reader: {})
+        at = dict(zip(symbols, chart.symbols))
+        at[reader.parameters["r_s"]] = chart.reader.parameters["r_s"]
+        instanton_same(chart, g.subs(at, simultaneous=True), "Schwarzschild's published metric continued to t = -i tau")
+        instanton_ricci(chart, 0, "the Euclidean Schwarzschild solution is not Ricci flat")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "schwarzschild", "name": "Euclidean Schwarzschild", "coords": coords, "domains": domains,
+                   "parameters": ["r_s"], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [probe.symbol["r"], probe.parameters["r_s"]], "flip": False},
+        "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+        "check": check,
+    }
+
+
+def instanton_regular():
+    """Gibbons and Hawking's chart of 1977, regular on the bolt: x = 2 r_s sqrt(1 - r_s/r), their
+    x = 4M (1 - 2M/r)^(1/2), in which the metric is (x/2r_s)^2 d tau^2 + (r/r_s)^4 dx^2 + r^2 d Omega^2.
+    With tau/2r_s an angle of period 2 pi the first two terms are a plane in polar coordinates about
+    x = 0, and x runs to 2 r_s at infinity. The chart names the areal radius r = r_s/(1 - x^2/4r_s^2).
+    Checked to be the Euclidean Schwarzschild chart carried along that map."""
+    coords = ["x", "\\tau", "\\theta", "\\phi"]
+    parameters = ["r_s", "r = \\dfrac{4r_s^3}{4r_s^2 - x^2}"]
+    line = ("ds^2 = \\dfrac{r^4}{r_s^4}dx^2 + \\dfrac{x^2}{4r_s^2}d\\tau^2 + r^2" + INSTANTON_SPHERE)
+    domains = (["x \\in [0, 2r_s)", "\\tau \\in [0, 4\\pi r_s)"] + INSTANTON_ANGLES
+               + ["x = 0 \\;\\text{(the bolt, a 2-sphere of radius}\\; r_s\\text{)}"])
+    probe = vm.Reader(coords, parameters, ())
+    x, rs = probe.symbol["x"], probe.parameters["r_s"]
+    r = sp.Symbol("r", positive=True)
+
+    held = sp.Symbol("INSTANTON_GAP")
+    factored = instanton_pretty(named=[(held, 4 * rs ** 2 - x ** 2)], merges=[(2 * rs - x, 2 * rs + x, 4 * rs ** 2 - x ** 2)])
+
+    def pretty(value):
+        # Every value in x, r_s and the areal radius the chart names: 4 r_s^2 - x^2 = 4 r_s^3/r.
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        number, rest = factored(value).as_coeff_Mul()
+        return _keep_coeff(number, rest.subs(held, 4 * rs ** 3 / r))
+
+    def check(chart):
+        spec = instanton_schwarzschild()
+        source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        own = chart.reader.parameters["r_s"]
+        cx = chart.symbols[0]
+        image = [chart.symbols[1], 4 * own ** 3 / (4 * own ** 2 - cx ** 2), chart.symbols[2], chart.symbols[3]]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        at = dict(zip(source.symbols, image))
+        at[source.reader.parameters["r_s"]] = own
+        instanton_same(chart, J.T * source.geo.g.subs(at, simultaneous=True) * J,
+                       "the Euclidean Schwarzschild chart carried along x = 2 r_s sqrt(1 - r_s/r)")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "regular", "name": "Regular at the Bolt", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [r, x, rs], "factors": [rs, x, r], "flip": False},
+        "pretty": pretty,
+        "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+        "check": check,
+    }
+
+
+def instanton_taub(system_id):
+    """The two Riemannian Taub-NUT solutions that are regular, Gibbons and Hawking's (3.9) and (3.16)
+    of 1979. Both are Taub-NUT's published metric with t = -i tau and l = i n, so that
+    f = (r^2 - 2mr + n^2)/(r^2 - n^2): Hawking's self-dual solution of 1977 has m = n, f = (r - n)/(r + n),
+    and closes on a point, the nut r = n; Page's of 1978 has m = 5n/4, f = (r - 2n)(2r - n)/(2(r^2 - n^2)),
+    and closes on a 2-sphere of radius sqrt(3) n, the bolt r = 2n. tau has the period 8 pi n in both."""
+    bolt = system_id == "taub_bolt"
+    coords = ["r", "\\theta", "\\phi", "\\tau"]
+    if bolt:
+        f = "\\dfrac{\\left(r - 2n\\right)\\left(2r - n\\right)}{2\\left(r^2 - n^2\\right)}"
+        finv = "\\dfrac{2\\left(r^2 - n^2\\right)}{\\left(r - 2n\\right)\\left(2r - n\\right)}"
+        domains = (["r \\in [2n, \\infty)"] + INSTANTON_ANGLES + ["\\tau \\in [0, 8\\pi n)",
+                   "r = 2n \\;\\text{(the bolt, a 2-sphere of radius}\\; \\sqrt{3}\\,n\\text{)}"])
+    else:
+        f, finv = "\\dfrac{r - n}{r + n}", "\\dfrac{r + n}{r - n}"
+        domains = (["r \\in [n, \\infty)"] + INSTANTON_ANGLES + ["\\tau \\in [0, 8\\pi n)",
+                   "r = n \\;\\text{(the nut, a regular point)}"])
+    line = ("ds^2 = " + finv + "dr^2 + \\left(r^2 - n^2\\right)" + INSTANTON_SPHERE + " + " + f
+            + "\\left(d\\tau + 2n\\cos\\theta\\,d\\phi\\right)^2")
+    probe = vm.Reader(coords, ["n"], ())
+    r, n, theta = probe.symbol["r"], probe.parameters["n"], probe.symbol["\\theta"]
+    pretty = instanton_pretty(swaps=[{sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2}],
+                              merges=[(r + n, r - n, r ** 2 - n ** 2)])
+
+    def check(chart):
+        own = chart.reader.parameters["n"]
+        mass = sp.Rational(5, 4) * own if bolt else own
+        reader, symbols, g = instanton_continued(
+            "taub_nut", "spherical", "t",
+            lambda reader: {reader.parameters["l"]: sp.I * own, reader.parameters["m"]: mass})
+        # Taub-NUT's chart is (t, r, theta, phi) and this one (r, theta, phi, tau).
+        order = [3, 0, 1, 2]
+        at = {symbols[k]: chart.symbols[order[k]] for k in range(4)}
+        moved = sp.zeros(4, 4)
+        for i in range(4):
+            for j in range(4):
+                moved[order[i], order[j]] = g[i, j].subs(at, simultaneous=True)
+        instanton_same(chart, moved, "Taub-NUT's published metric continued to t = -i tau and l = i n")
+        instanton_ricci(chart, 0, "the chart is not Ricci flat")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": system_id, "name": "Taub-Bolt" if bolt else "Self-Dual Taub-NUT", "coords": coords,
+                   "domains": domains, "parameters": ["n"], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [r, n], "flip": False},
+        "pretty": pretty,
+        "components": {"metric_components": {("r", "r"): finv, ("\\tau", "\\tau"): f},
+                       "inverse_metric_components": {("r", "r"): f}},
+        "check": check,
+    }
+
+
+def instanton_cp2():
+    """The Fubini-Study metric on the complex projective plane in Gibbons and Pope's coordinates,
+    their (25) of 1978 and Gibbons and Hawking's (3.24): an Einstein space, R_ab = Lambda g_ab, with
+    a nut at r = 0 and a bolt, a 2-sphere of area 6 pi/Lambda, at r = infinity. psi has the period
+    4 pi. The Kretschmann scalar is the constant 16 Lambda^2/3."""
+    coords = ["r", "\\theta", "\\phi", "\\psi"]
+    w = "\\left(1 + \\dfrac{\\Lambda r^2}{6}\\right)"
+    line = ("ds^2 = " + w + "^{-2}dr^2 + \\dfrac{r^2}{4}" + w + "^{-1}" + INSTANTON_SPHERE
+            + " + \\dfrac{r^2}{4}" + w + "^{-2}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2")
+    domains = (["r \\in [0, \\infty)"] + INSTANTON_ANGLES + ["\\psi \\in [0, 4\\pi)",
+               "r = 0 \\;\\text{(the nut, a regular point)}",
+               "r \\to \\infty \\;\\text{(the bolt, a 2-sphere of area}\\; 6\\pi/\\Lambda\\text{)}"])
+    probe = vm.Reader(coords, ["\\Lambda"], ())
+    r, lam, theta = probe.symbol["r"], probe.parameters["Lambda"], probe.symbol["\\theta"]
+    pretty = instanton_pretty(swaps=[{sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2}])
+
+    def check(chart):
+        instanton_ricci(chart, chart.reader.parameters["Lambda"], "the Fubini-Study metric is not Einstein")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "cp2", "name": "Complex Projective Plane", "coords": coords, "domains": domains,
+                   "parameters": ["\\Lambda"], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [r, lam], "flip": False},
+        "pretty": pretty,
+        "ricci_scalar": "4\\Lambda",
+        "kretschmann": "\\dfrac{16\\Lambda^2}{3}",
+        "check": check,
+    }
+
+
+def instanton_cp2_distance():
+    """The Fubini-Study metric in the distance chi from the nut, the form of Gibbons and Pope's
+    Table 1 of 1978: d chi^2 + A (d psi + cos theta d phi)^2 + B (d theta^2 + sin^2 theta d phi^2)
+    with A = (L^2/4) sin^2(chi/L) cos^2(chi/L) and B = (L^2/4) sin^2(chi/L), where L = sqrt(6/Lambda).
+    chi runs from the nut, 0, to the bolt, pi L/2, which the chart in r reaches only at infinity.
+    Checked to be the chart in r carried along r = L tan(chi/L) at Lambda = 6/L^2."""
+    coords = ["\\chi", "\\theta", "\\phi", "\\psi"]
+    line = ("ds^2 = d\\chi^2 + \\dfrac{L^2}{4}\\sin^2(\\chi/L)" + INSTANTON_SPHERE
+            + " + \\dfrac{L^2}{4}\\sin^2(\\chi/L)\\cos^2(\\chi/L)\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2")
+    domains = (["\\chi \\in [0, \\pi L/2]"] + INSTANTON_ANGLES + ["\\psi \\in [0, 4\\pi)",
+               "\\chi = 0 \\;\\text{(the nut, a regular point)}",
+               "\\chi = \\pi L/2 \\;\\text{(the bolt, a 2-sphere of radius}\\; L/2\\text{)}"])
+    probe = vm.Reader(coords, ["L"], ())
+    chi, L, theta = probe.symbol["\\chi"], probe.parameters["L"], probe.symbol["\\theta"]
+    sine = sp.sin(chi / L)
+    cosine = sp.cos(chi / L)
+    # Each sum in whichever of the sines and cosines leaves it fewest terms, so that
+    # (sin + 1)(sin - 1) stands as -cos^2, as the line element has it.
+    pretty = instanton_pretty(swaps=[{sine ** 2: 1 - cosine ** 2}, {sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2},
+                                     {sine ** 2: 1 - cosine ** 2, sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2}],
+                              merges=[(sine + 1, sine - 1, sine ** 2 - 1)])
+
+    def check(chart):
+        spec = instanton_cp2()
+        source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        own, c = chart.reader.parameters["L"], chart.symbols[0]
+        image = [own * sp.tan(c / own)] + list(chart.symbols[1:])
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        at = dict(zip(source.symbols, image))
+        at[source.reader.parameters["Lambda"]] = 6 / own ** 2
+        pulled = J.T * source.geo.g.subs(at, simultaneous=True) * J
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                    raise AssertionError("gravitational_instantons: the chart in r carried along r = L tan(chi/L) "
+                                         f"misses the distance chart in slot {coords[i]}{coords[j]}")
+        instanton_ricci(chart, 6 / own ** 2, "the distance chart is not Einstein with Lambda = 6/L^2")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "cp2_distance", "name": "Complex Projective Plane, Distance", "coords": coords,
+                   "domains": domains, "parameters": ["L"], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [L], "flip": False, "arguments": {chi / L: "\\chi/L"}},
+        "pretty": pretty,
+        "ricci_scalar": "\\dfrac{24}{L^2}",
+        "kretschmann": "\\dfrac{192}{L^4}",
+        "check": check,
+    }
+
+
+def instanton_on_shell(chart):
+    """Gibbons and Hawking's field equation curl omega = grad V for centres on one axis, where
+    omega has the one component omega_phi: d_rho omega = rho d_z V and d_z omega = -rho d_rho V,
+    whose integrability is Laplace's equation, d_z^2 V = -d_rho^2 V - d_rho V/rho. Returns a
+    function that writes every derivative of omega, and every second derivative of V along z, by
+    them, so that a value which vanishes on a solution is exactly zero."""
+    rho, z = chart.symbols[0], chart.symbols[1]
+    V, omega = chart.reader.parameters["V"], chart.reader.parameters["omega"]
+
+    def on_shell(value):
+        value = sp.sympify(value)
+        for _ in range(8):
+            rules = {}
+            for d in value.atoms(sp.Derivative):
+                counts = dict(d.variable_count)
+                kr, kz = counts.get(rho, 0), counts.get(z, 0)
+                if d.expr == omega and kr:
+                    rules[d] = sp.diff(rho * sp.diff(V, z), rho, kr - 1, z, kz)
+                elif d.expr == omega:
+                    rules[d] = sp.diff(-rho * sp.diff(V, rho), z, kz - 1)
+                elif d.expr == V and kz >= 2:
+                    rules[d] = sp.diff(-sp.diff(V, rho, 2) - sp.diff(V, rho) / rho, rho, kr, z, kz - 2)
+            if not rules:
+                break
+            value = value.xreplace(rules).doit()
+        return vm.norm(value)
+
+    return on_shell
+
+
+def instanton_multi_centre():
+    """Gibbons and Hawking's multi-centre metrics of 1978, V dx.dx + (d tau + omega.dx)^2/V on flat
+    three dimensional space with curl omega = grad V, for centres on one axis: cylindrical
+    coordinates (rho, z, phi), V and omega = omega_phi free functions of rho and z, and no component
+    assuming the field equation. With centres off one axis omega has three components, and the chart
+    with all four functions free prints nearly two megabytes; gravitational_instantons.md records
+    that. Checked: the Ricci tensor vanishes on every solution of the field equation; one centre
+    with V = 1 + 2n/R is the self-dual Taub-NUT chart carried along r = R + n; and two centres
+    without the constant are the published two-centre chart of eguchi_hanson."""
+    coords = ["\\rho", "z", "\\phi", "\\tau"]
+    parameters = ["V = V(\\rho,z)", "\\omega = \\omega(\\rho,z)"]
+    line = ("ds^2 = V\\left(d\\rho^2 + dz^2 + \\rho^2d\\phi^2\\right) + V^{-1}\\left(d\\tau + \\omega\\,d\\phi\\right)^2")
+    domains = ["\\rho \\in [0, \\infty)", "z \\in (-\\infty, \\infty)", "\\phi \\in [0, 2\\pi)", "\\tau \\in [0, 8\\pi n)",
+               "(\\rho, z) = (0, z_i) \\;\\text{(the centres, regular points)}"]
+    probe = vm.Reader(coords, parameters, ())
+    rho = probe.symbol["\\rho"]
+    V, omega = probe.parameters["V"], probe.parameters["omega"]
+
+    def check(chart):
+        on_shell = instanton_on_shell(chart)
+        ricci = chart.geo.ricci_ll()
+        for i in range(4):
+            for j in range(i, 4):
+                if on_shell(ricci[i][j]) != 0:
+                    raise AssertionError("gravitational_instantons: the multi-centre chart is not Ricci flat on a "
+                                         f"solution of curl omega = grad V in slot {coords[i]}{coords[j]}")
+        own_rho, own_z = chart.symbols[0], chart.symbols[1]
+        own_V, own_omega = chart.reader.parameters["V"], chart.reader.parameters["omega"]
+
+        def at(potential, twist):
+            def put(e):
+                return e.subs({own_V: potential, own_omega: twist}, simultaneous=True).doit()
+            if sp.simplify(sp.diff(twist, own_rho) - own_rho * sp.diff(potential, own_z)) != 0 or \
+                    sp.simplify(sp.diff(twist, own_z) + own_rho * sp.diff(potential, own_rho)) != 0:
+                raise AssertionError("gravitational_instantons: the twist is not the potential's")
+            return chart.geo.g.applyfunc(put)
+
+        # One centre with the constant kept: Hawking's self-dual Taub-NUT solution.
+        spec = instanton_taub("taub_nut")
+        nut = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        r, theta, phi, tau = nut.symbols
+        n = nut.reader.parameters["n"]
+        R = sp.sqrt(own_rho ** 2 + own_z ** 2)
+        here = at(1 + 2 * n / R, 2 * n * own_z / R)
+        # u = r - n is the distance from the centre, positive, so that sqrt(rho^2 + z^2) is u itself.
+        u = sp.Symbol("u", positive=True)
+        image = [u * sp.sin(theta), u * sp.cos(theta), phi, tau]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (u, theta, phi, tau)[j]))
+        pulled = J.T * here.subs(dict(zip(chart.symbols, image)), simultaneous=True).applyfunc(sp.simplify) * J
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - nut.geo.g[i, j].subs(r, u + n)) != 0:
+                    raise AssertionError("gravitational_instantons: one centre is not the self-dual Taub-NUT chart "
+                                         f"in slot {nut.coords_tex[i]}{nut.coords_tex[j]}")
+        # Two centres without the constant: the published two-centre chart of the Eguchi-Hanson space.
+        reader, symbols, g = kaluza_klein_published("eguchi_hanson", "two_centre")
+        a = reader.parameters["a"]
+        R1, R2 = sp.sqrt(own_rho ** 2 + (own_z - a) ** 2), sp.sqrt(own_rho ** 2 + (own_z + a) ** 2)
+        here = at(a / 8 * (1 / R1 + 1 / R2), a / 8 * ((own_z - a) / R1 + (own_z + a) / R2))
+        theirs = g.subs(dict(zip(symbols, chart.symbols)), simultaneous=True)
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(here[i, j] - theirs[i, j]) != 0:
+                    raise AssertionError("gravitational_instantons: two centres are not the published two-centre "
+                                         f"chart of eguchi_hanson in slot {coords[i]}{coords[j]}")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "multi_centre", "name": "Multi-Centre", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [V, omega, rho], "flip": False},
+        "check": check,
+    }
+
+
+def instanton_page():
+    """Page's metric of 1978 on the nontrivial bundle of 2-spheres over the 2-sphere, as Gibbons and
+    Hawking write it, their (3.25) of 1979, with one constant written another way. The local
+    metric is a limit of Kerr-de Sitter's and solves R_ab = Lambda g_ab for every nu when the
+    coefficient of (d psi + cos theta d phi)^2 carries 16 nu^2/(3 + 6 nu^2 - nu^4)^2; Gibbons and
+    Hawking's 1/(3 + nu^2)^2 is the same number exactly where nu^4 + 4 nu^3 - 6 nu^2 + 12 nu - 3 = 0,
+    nu = 0.2817, the value at which the circle of psi, of period 4 pi, closes smoothly on both
+    bolts chi = 0 and chi = pi. Written their way the metric is Einstein at that one value and
+    the checker would have to reduce every comparison by the quartic; written this way every
+    component is an identity in nu, and _tools/test_gravitational_instantons.py holds the
+    regularity of the bolts to the quartic."""
+    coords = ["\\chi", "\\theta", "\\phi", "\\psi"]
+    parameters = ["\\Lambda", "\\nu", "P = 3 - \\nu^2 - \\nu^2\\left(1 + \\nu^2\\right)\\cos^2\\chi",
+                  "Q = 1 - \\nu^2\\cos^2\\chi", "N = 3 + 6\\nu^2 - \\nu^4"]
+    line = ("ds^2 = \\dfrac{3\\left(1 + \\nu^2\\right)}{\\Lambda}\\left(\\dfrac{Q}{P}d\\chi^2 + \\dfrac{Q}{N}"
+            + INSTANTON_SPHERE + " + \\dfrac{4\\nu^2P\\sin^2\\chi}{N^2Q}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2\\right)")
+    domains = (["\\chi \\in [0, \\pi]"] + INSTANTON_ANGLES + ["\\psi \\in [0, 4\\pi)",
+               "\\chi = 0,\\; \\pi \\;\\text{(the two bolts, 2-spheres)}"])
+    probe = vm.Reader(coords, parameters, ())
+    chi, theta = probe.symbol["\\chi"], probe.symbol["\\theta"]
+    lam, nu = probe.parameters["Lambda"], probe.parameters["nu"]
+    c = sp.cos(chi)
+    named = [(sp.Symbol("PAGE_P"), 3 - nu ** 2 - nu ** 2 * (1 + nu ** 2) * c ** 2, "P"),
+             (sp.Symbol("PAGE_Q"), 1 - nu ** 2 * c ** 2, "Q"),
+             (sp.Symbol("PAGE_N"), 3 + 6 * nu ** 2 - nu ** 4, "N")]
+    turn = {sp.sin(chi) ** 2: 1 - c ** 2}
+    polar = {sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2}
+    pretty = instanton_pretty(swaps=[turn, polar, {**turn, **polar}],
+                              merges=[(1 + nu * c, 1 - nu * c, 1 - nu ** 2 * c ** 2), (nu + 1, nu - 1, nu ** 2 - 1)],
+                              named=[(placeholder, poly) for placeholder, poly, _ in named])
+
+    def check(chart):
+        instanton_ricci(chart, chart.reader.parameters["Lambda"], "Page's metric is not Einstein for every nu")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "page", "name": "Page", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [nu, lam], "flip": False, "overrides": {placeholder: text for placeholder, _, text in named},
+                    "factors": [lam, nu] + [placeholder for placeholder, _, _ in named]},
+        "pretty": pretty,
+        "components": {"metric_components": {
+            ("\\chi", "\\chi"): "\\dfrac{3\\left(1 + \\nu^2\\right)Q}{\\Lambda P}",
+            ("\\theta", "\\theta"): "\\dfrac{3\\left(1 + \\nu^2\\right)Q}{\\Lambda N}",
+            ("\\psi", "\\psi"): "\\dfrac{12\\nu^2\\left(1 + \\nu^2\\right)P\\sin^2\\chi}{\\Lambda N^2Q}"}},
+        "ricci_scalar": "4\\Lambda",
+        "check": check,
+    }
+
+
+CHARTS["gravitational_instantons"] = [lambda s=s: gravitational_instantons(s) for s in INSTANTON_CHARTS]
 
 
 # -- The double Kerr solution ------------------------------------------------------------

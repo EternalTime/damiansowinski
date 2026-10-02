@@ -82,6 +82,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "family",
       "text": "The static pair of opposite magnetic charges in Einstein-Maxwell theory. Gross and Perry's monopole and antimonopole pair is its counterpart in Kaluza-Klein theory [grossperry1983, emparan2000]."
+    },
+    {
+      "id": "gravitational_instantons",
+      "kind": "piece",
+      "text": "The monopole's four dimensions of space are Hawking's self dual Taub-NUT instanton with nut parameter $n = 2m$, and the monopole's centre is its nut [hawking1977, sorkin1983]."
     }
   ],
   "references": [

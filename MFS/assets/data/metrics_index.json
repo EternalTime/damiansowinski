@@ -864,7 +864,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "cedc7108abbcf557",
+    "version": "4dc51f46d77c0f31",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -975,7 +975,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "9ac418d4897cd347",
+    "version": "17109553a9f15cc7",
     "embedding": "4717367b2f2467bd"
   },
   {
@@ -1422,6 +1422,46 @@
     "embedding": "eb3c3b7b2d474485"
   },
   {
+    "id": "gravitational_instantons",
+    "name": "Gravitational Instantons",
+    "tags": [
+      "four-dimensional",
+      "gravitational instanton",
+      "Riemannian",
+      "Euclidean signature",
+      "no time",
+      "Euclidean Schwarzschild",
+      "imaginary time",
+      "Hawking temperature",
+      "black hole thermodynamics",
+      "Euclidean quantum gravity",
+      "path integral",
+      "cigar",
+      "nut",
+      "bolt",
+      "nuts and bolts",
+      "self-dual",
+      "Taub-NUT",
+      "Taub-bolt",
+      "Gibbons-Hawking",
+      "multi-centre",
+      "complex projective plane",
+      "Fubini-Study",
+      "Kähler",
+      "Page metric",
+      "cosmological constant",
+      "positive cosmological constant",
+      "compact",
+      "Euler characteristic",
+      "regular",
+      "exact solution",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "cb795e6e25dfb1b6",
+    "embedding": "a33ae90f2b057aee"
+  },
+  {
     "id": "belinski_zakharov",
     "name": "Gravitational Solitons",
     "tags": [
@@ -1717,7 +1757,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "713fe0d4599e08a9",
+    "version": "58083f91ee283a00",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -1887,7 +1927,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "b09a9c2213374e33",
+    "version": "6a32980d4ba1867f",
     "diagrams": "7dc03a9eedf6e5a2",
     "conformal": "4f803c414fba5da6",
     "embedding": "f1315ee1ffa48ebb"
@@ -3310,7 +3350,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "536769c55600cc4f",
+    "version": "fe61f756c958e0f1",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3710,7 +3750,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "fc5fd5ba6a489d7c",
+    "version": "38d894f8f585de10",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078"
   },

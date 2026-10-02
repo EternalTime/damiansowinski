@@ -368,6 +368,11 @@
       "id": "exponential_metric",
       "kind": "family",
       "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
+    },
+    {
+      "id": "gravitational_instantons",
+      "kind": "dual",
+      "text": "Schwarzschild's metric with $t = -i\\tau/c$ is a space of four dimensions with no time, Hawking's first gravitational instanton. It is smooth on the horizon only if $\\tau$ is a circle of length $4\\pi r_s$, and that length is the inverse of Hawking's temperature [gibbons1977action, gibbonshawking1979]."
     }
   ],
   "references": [
@@ -470,7 +475,8 @@
     "deruelle2011",
     "hoffmann1935",
     "gibbonsrasheed1995",
-    "boonserm2018"
+    "boonserm2018",
+    "gibbons1977action"
   ],
   "coordinates": [
     {
