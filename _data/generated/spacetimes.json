@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 70,
+  "count": 71,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1297,6 +1297,292 @@
           ],
           "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
           "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        }
+      ]
+    },
+    {
+      "id": "bardeen",
+      "name": "Bardeen Regular Black Hole",
+      "short_name": "Bardeen",
+      "description": "A black hole with horizons and no singularity, which James Bardeen proposed in 1968. A ball of de Sitter space sits where Schwarzschild's singularity would be, and Eloy Ayón-Beato and Alberto García showed in 2000 that the field of a magnetic monopole in a nonlinear electrodynamics is its source.",
+      "tags": [
+        "regular black hole",
+        "nonsingular black hole",
+        "black hole",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "mass",
+        "magnetic monopole",
+        "magnetic charge",
+        "nonlinear electrodynamics",
+        "non-vacuum",
+        "de Sitter core",
+        "regular centre",
+        "singularity theorems",
+        "strong energy condition",
+        "weak energy condition",
+        "energy conditions",
+        "horizon",
+        "event horizon",
+        "Cauchy horizon",
+        "inner horizon",
+        "extremal black hole",
+        "mass inflation",
+        "causal structure",
+        "maximal extension",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the length $g$ is the charge of the magnetic monopole. We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "Bardeen took this charged black hole for inspiration. The two share a tower of exteriors and interiors, and Bardeen's has a regular centre where Reissner-Nordström's has a timelike singularity [borde1994, ayonbeato2000]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Bardeen's black hole with the monopole switched off. At $g = 0$ the metric function is Schwarzschild's $1 - r_s/r$, and the singularity is back."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "piece",
+          "text": "The core of Bardeen's black hole. Near the centre $f \\approx 1 - r_sr^2/g^3$, de Sitter's static metric with $\\Lambda = 3r_s/g^3$ [ansoldi2008]."
+        },
+        {
+          "id": "simpson_visser",
+          "kind": "family",
+          "text": "Another black hole with no singularity. Where Bardeen's has a regular centre, Simpson and Visser's has a throat of radius $a$, and its inside bounces into another universe [simpson2019]."
+        }
+      ],
+      "references": [
+        "penrose1965",
+        "borde1997",
+        "ayonbeato2000",
+        "borde1994",
+        "ansoldi2008",
+        "zaslavskii2010",
+        "hawking1973",
+        "sakharov1966",
+        "gliner1966",
+        "frolov1989",
+        "frolov1990closed",
+        "dymnikova1992",
+        "mars1996",
+        "ayonbeato1998",
+        "bronnikov2001",
+        "hayward2006",
+        "bardeen2014",
+        "carballorubio2018",
+        "poisson1990",
+        "simpson2019"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bardeen.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; g < 2r_s/3\\sqrt{3}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "g",
+              "description": "Charge of the magnetic monopole, a length. The black hole has two horizons for $g < 2r_s/3\\sqrt{3}$, one for $g = 2r_s/3\\sqrt{3}$, and none beyond"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3r_s\\,g^2\\left(4g^2 - r^2\\right)}{\\left(r^2 + g^2\\right)^{7/2}}",
+          "kretschmann": "K = \\dfrac{3r_s^2\\left(4r^8 - 12g^2\\,r^6 + 47g^4\\,r^4 - 4g^6\\,r^2 + 8g^8\\right)}{\\left(r^2 + g^2\\right)^7}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; g < 2r_s/3\\sqrt{3}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "g",
+              "description": "Charge of the magnetic monopole, a length. The black hole has two horizons for $g < 2r_s/3\\sqrt{3}$, one for $g = 2r_s/3\\sqrt{3}$, and none beyond"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - r_s r^2/\\left(r^2 + g^2\\right)^{3/2}\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3r_s\\,g^2\\left(4g^2 - r^2\\right)}{\\left(r^2 + g^2\\right)^{7/2}}",
+          "kretschmann": "K = \\dfrac{3r_s^2\\left(4r^8 - 12g^2\\,r^6 + 47g^4\\,r^4 - 4g^6\\,r^2 + 8g^8\\right)}{\\left(r^2 + g^2\\right)^7}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; g < 2r_s/3\\sqrt{3}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "g",
+              "description": "Charge of the magnetic monopole, a length. The black hole has two horizons for $g < 2r_s/3\\sqrt{3}$, one for $g = 2r_s/3\\sqrt{3}$, and none beyond"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - r_s r^2/\\left(r^2 + g^2\\right)^{3/2}\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3r_s\\,g^2\\left(4g^2 - r^2\\right)}{\\left(r^2 + g^2\\right)^{7/2}}",
+          "kretschmann": "K = \\dfrac{3r_s^2\\left(4r^8 - 12g^2\\,r^6 + 47g^4\\,r^4 - 4g^6\\,r^2 + 8g^8\\right)}{\\left(r^2 + g^2\\right)^7}"
         }
       ]
     },
@@ -3322,6 +3608,11 @@
           "id": "nariai",
           "kind": "family",
           "text": "Another vacuum with a positive cosmological constant, the product of de Sitter space of two dimensions and a sphere of the same radius [ortaggio2002]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "composite",
+          "text": "A black hole with de Sitter space at its centre. Inside its inner horizon Bardeen's metric approaches de Sitter's static patch, which keeps the centre regular [ansoldi2008]."
         }
       ],
       "references": [
@@ -3342,7 +3633,8 @@
         "riess1998",
         "perlmutter1999",
         "hawking1973",
-        "ortaggio2002"
+        "ortaggio2002",
+        "ansoldi2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -12071,6 +12363,11 @@
           "id": "simpson_visser",
           "kind": "family",
           "text": "A regular black hole with the same tower of universes, two horizons to each black hole, and another asymptotically flat region where this one has its timelike singularity [simpson2019]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "family",
+          "text": "Reissner-Nordström with the singularity taken out. James Bardeen put in place of $1 - r_s/r + r_q^2/r^2$ a function that is regular at $r = 0$, and kept both horizons [borde1994]."
         }
       ],
       "references": [
@@ -12095,7 +12392,8 @@
         "horowitz1992",
         "earman1993",
         "romans1992",
-        "simpson2019"
+        "simpson2019",
+        "borde1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -12945,6 +13243,11 @@
           "id": "simpson_visser",
           "kind": "generalisation",
           "text": "Schwarzschild's metric with $\\sqrt{r^2 + a^2}$ written for $r$, which swaps the singularity for a sphere of area $4\\pi a^2$ with another universe behind it. At $a = 0$ it is Schwarzschild's [simpson2019]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "generalisation",
+          "text": "Schwarzschild's black hole with a ball of de Sitter space where the singularity was. Its source is a magnetic monopole of charge $g$ in a nonlinear electrodynamics, and at $g = 0$ it is Schwarzschild's [ayonbeato2000]."
         }
       ],
       "references": [
@@ -12995,7 +13298,8 @@
         "podolsky2008",
         "damour2007",
         "ori2005",
-        "simpson2019"
+        "simpson2019",
+        "ayonbeato2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -14309,6 +14613,11 @@
           "id": "kerr",
           "kind": "family",
           "text": "The black bounce set spinning by the Newman-Janis procedure is Kerr's metric when the new length vanishes [mazza2021]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "family",
+          "text": "The regular black hole of 1968. Bardeen's closes over a regular centre with de Sitter space at its core, where the black bounce opens through a throat into another universe [ansoldi2008, simpson2019]."
         }
       ],
       "references": [
@@ -14328,7 +14637,8 @@
         "lima2021",
         "vagnozzi2023",
         "riaz2022",
-        "damour2007"
+        "damour2007",
+        "ansoldi2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/simpson_visser.json",

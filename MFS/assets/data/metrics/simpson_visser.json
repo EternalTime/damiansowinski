@@ -74,6 +74,11 @@
       "id": "kerr",
       "kind": "family",
       "text": "The black bounce set spinning by the Newman-Janis procedure is Kerr's metric when the new length vanishes [mazza2021]."
+    },
+    {
+      "id": "bardeen",
+      "kind": "family",
+      "text": "The regular black hole of 1968. Bardeen's closes over a regular centre with de Sitter space at its core, where the black bounce opens through a throat into another universe [ansoldi2008, simpson2019]."
     }
   ],
   "references": [
@@ -93,7 +98,8 @@
     "lima2021",
     "vagnozzi2023",
     "riaz2022",
-    "damour2007"
+    "damour2007",
+    "ansoldi2008"
   ],
   "coordinates": [
     {
